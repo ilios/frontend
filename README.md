@@ -1,4 +1,5 @@
 # Ilios Frontend
+[![Build Status](https://travis-ci.org/ilios/frontend.svg?branch=master)](https://travis-ci.org/ilios/frontend)
 
 ## MAJOR WORK IN PROGRESS
 
