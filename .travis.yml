@@ -12,5 +12,11 @@ install:
   - npm install
   - bower install
 
+before_script:
+  # Start a server so we can hit the fake API from integration tests
+  - ember server &
+  # wait for the server to be started
+  - until netstat -an 2>/dev/null | grep '4200.*LISTEN'; do true; done
+
 script:
-  - npm test
+  - ember test
