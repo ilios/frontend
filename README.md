@@ -1,5 +1,6 @@
 # Ilios Frontend
 [![Build Status](https://travis-ci.org/ilios/frontend.svg?branch=master)](https://travis-ci.org/ilios/frontend)
+[![Code Climate](https://codeclimate.com/github/ilios/frontend/badges/gpa.svg)](https://codeclimate.com/github/ilios/frontend)
 
 ## MAJOR WORK IN PROGRESS
 
