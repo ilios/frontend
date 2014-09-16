@@ -1,0 +1,8 @@
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  iliosAdministratorEmail: DS.attr('string'),
+  isDeleted: DS.attr('boolean'),
+  programs: DS.hasMany('program', {async: true})
+});

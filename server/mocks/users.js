@@ -10,7 +10,8 @@ module.exports = function(app) {
         email: 'test.user@example.com',
         enabled: true,
         ucUid: '123456789',
-        offerings: [0,1,2,3,4]
+        offerings: [0,1,2,3,4],
+        schools: [0,1]
       },
       {
         id: 1,
@@ -19,7 +20,8 @@ module.exports = function(app) {
         middleName: 'Second',
         email: 'test.person@example.com',
         enabled: true,
-        ucUid: '123456798'
+        ucUid: '123456798',
+        schools: []
       },
   ];
 

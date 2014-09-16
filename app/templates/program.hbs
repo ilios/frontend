@@ -1,0 +1,22 @@
+<fieldset>
+  {{#if isEditing}}
+    <legend>Editing {{title}}</legend>
+    <label {{bindAttr for="view.titleField.elementId"}}>Title</label>
+    {{view Ember.TextField value=title viewName="titleField"}}
+
+    <label {{bindAttr for="view.shortTitleField.elementId"}}>Short Title</label>
+    {{view Ember.TextField value=shortTitle viewName="shortTitleField"}}
+
+    <label {{bindAttr for="view.durationField.elementId"}}>Duration in years</label>
+    {{view Ember.Select content=durationOptions value=duration viewName="durationField"}}
+
+    <button {{action 'save'}}>Save</button>
+
+  {{else}}
+      <legend>{{title}} Program</legend>
+      <p><strong>Title</strong>: {{title}}</p>
+      <p><strong>Short Title</strong>: {{shortTitle}}</p>
+      <p><strong>Duration</strong>: {{duration}} years</p>
+      <button {{action 'edit'}}>Edit</button>
+  {{/if}}
+</fieldset>
