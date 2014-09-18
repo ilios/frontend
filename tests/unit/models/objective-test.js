@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('program', 'Program', {
+moduleForModel('objective', 'Objective', {
   // Specify the other units that are required for this test.
-  needs: ['model:school', 'model:program-year']
+  needs: ['model:competency', 'model:course', 'model:session']
 });
 
 test('it exists', function() {

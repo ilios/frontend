@@ -20,3 +20,27 @@
       <button {{action 'edit'}}>Edit</button>
   {{/if}}
 </fieldset>
+<h2>Program Years:</h2>
+<table class="grid-table">
+  <thead>
+    <tr>
+      <th>Academic Year</th>
+      <th>Competencies</th>
+      <th>Objectives</th>
+      <th>Directors</th>
+      <th>Published</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each programYears}}
+      <tr>
+        <td>{{#link-to 'program-year' id}}{{academicYear}}{{/link-to}}</td>
+        <td>{{competencies.length}}</td>
+        <td>{{objectives.length}}</td>
+        <td>{{directors.length}}</td>
+        <td>{{nicePublished}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<!-- <button {{action 'addNew'}}>Add New Program</button> -->

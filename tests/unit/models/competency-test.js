@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('program', 'Program', {
+moduleForModel('competency', 'Competency', {
   // Specify the other units that are required for this test.
   needs: ['model:school', 'model:program-year']
 });

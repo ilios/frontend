@@ -1,0 +1,114 @@
+<h2>Programs:  View Program Year</h2>
+{{#if isDirty}}
+  <button {{action 'save' this}}>Save Changes</button>
+{{/if}}
+<fieldset>
+    <legend>{{academicYear}} {{program.title}} Program</legend>
+    <p><strong>Title</strong>: {{program.title}}</p>
+    <p><strong>Short Title</strong>: {{program.shortTitle}}</p>
+    <p><strong>Duration</strong>: {{program.duration}} years</p>
+    <p><strong>Academic Year</strong>: {{academicYear}}</p>
+</fieldset>
+{{#view 'accordian'}}
+<ul class="accordion-tabs-minimal">
+  <li class="tab-header-and-content">
+    <a href="#" class="tab-link is-active">Competencies <span class="badge">{{competencies.length}}</span></a>
+    <div class="tab-content">
+      <p>
+        <ul>
+          {{#each competencies}}
+            <li>{{title}}<button {{action 'removeCompetency' this}}>Remove</button></li>
+          {{/each}}
+        </ul>
+        <div class="modal">
+          <label for="add-competency">
+            <div class="btn js-btn">Add Competency</div>
+          </label>
+          <input class="modal-state" id="add-competency" type="checkbox" />
+          <div class="modal-window">
+            <div class="modal-inner">
+              <label class="modal-close" for="add-competency"></label>
+              <h1>Add Competency</h1>
+              <p class='body'>
+                <label {{bindAttr for="view.findCompetencyInput.elementId"}}>Find Comptency</label>
+                {{view Ember.TextField action="findCompetency" viewName="findCompetencyInput"}}
+                <ul>
+                  {{#each comptencySearchResults}}
+                    <li>{{title}}<button {{action 'addCompetency' this}}>Add</button></li>
+                  {{/each}}
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </p>
+    </div>
+  </li>
+  <li class="tab-header-and-content">
+    <a href="#" class="tab-link">Objectives <span class="badge">{{objectives.length}}</span></a>
+    <div class="tab-content">
+      <p>
+        <ul>
+          {{#each objectives}}
+            <li>{{title}}<button {{action 'removeObjective' this}}>Remove</button></li>
+          {{/each}}
+        </ul>
+        <div class="modal">
+          <label for="add-objective">
+            <div class="btn js-btn">Add Objective</div>
+          </label>
+          <input class="modal-state" id="add-objective" type="checkbox" />
+          <div class="modal-window">
+            <div class="modal-inner">
+              <label class="modal-close" for="add-objective"></label>
+              <h1>Add objective</h1>
+              <p class='body'>
+                <label {{bindAttr for="view.findObjectiveInput.elementId"}}>Find Objective</label>
+                {{view Ember.TextField action="findObjective" viewName="findObjectiveInput"}}
+                <ul>
+                  {{#each objectiveSearchResults}}
+                    <li>{{title}}<button {{action 'addObjective' this}}>Add</button></li>
+                  {{/each}}
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </p>
+    </div>
+  </li>
+  <li class="tab-header-and-content">
+    <a href="#" class="tab-link">Directors <span class="badge">{{directors.length}}</span></a>
+    <div class="tab-content">
+      <p>
+        <ul>
+          {{#each directors}}
+            <li>{{fullName}}<button {{action 'removeDirector' this}}>Remove</button></li>
+          {{/each}}
+        </ul>
+        <div class="modal">
+          <label for="add-director">
+            <div class="btn js-btn">Add Director</div>
+          </label>
+          <input class="modal-state" id="add-director" type="checkbox" />
+          <div class="modal-window">
+            <div class="modal-inner">
+              <label class="modal-close" for="add-director"></label>
+              <h1>Add Directors</h1>
+              <p class='body'>
+                <label {{bindAttr for="view.findDirectorInput.elementId"}}>Find Director</label>
+                {{view Ember.TextField action="findDirector" viewName="findDirectorInput"}}
+                <ul>
+                  {{#each directorSearchResults}}
+                    <li>{{fullName}} {{email}}<button {{action 'addDirector' this}}>Add</button></li>
+                  {{/each}}
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </p>
+    </div>
+  </li>
+</ul>
+{{/view}}

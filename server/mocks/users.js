@@ -1,7 +1,6 @@
 module.exports = function(app) {
   var express = require('express');
-  var usersRouter = express.Router();
-  var fixture = [
+  var fixtures = [
       {
         id: 0,
         firstName: 'Test',
@@ -25,16 +24,7 @@ module.exports = function(app) {
       },
   ];
 
-  usersRouter.get('/:id', function(req, res) {
-      if(req.params.id in fixture){
-          res.send({users: fixture[req.params.id]});
-      } else {
-          res.status(404).end();
-      }
-  });
-
-  usersRouter.get('/', function(req, res) {
-    res.send({users: fixture});
-  });
-  app.use('/api/users', usersRouter);
+  var createRouter = require('../helpers/createrouter.js');
+  var router = createRouter('user', fixtures);
+  app.use('/api/users', router);
 };
