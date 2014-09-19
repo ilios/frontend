@@ -1,0 +1,11 @@
+<legend>Editing {{title}}</legend>
+<label {{bindAttr for="view.titleField.elementId"}}>Title</label>
+{{view Ember.TextField value=title viewName="titleField"}}
+
+<label {{bindAttr for="view.shortTitleField.elementId"}}>Short Title</label>
+{{view Ember.TextField value=shortTitle viewName="shortTitleField"}}
+
+<label {{bindAttr for="view.durationField.elementId"}}>Duration in years</label>
+{{view Ember.Select content=durationOptions value=duration viewName="durationField"}}
+
+<button {{action 'save'}}>Save</button>

@@ -14,8 +14,11 @@ Router.map(function() {
   this.resource('programs', function(){
     this.route('new');
   });
-  this.route('program', { path: '/program/:program_id' });
-
+  this.resource('program', { path: '/program/:program_id' }, function(){
+    this.route('edit');
+    this.route('newyear');
+    this.route('year', { path: 'year/:program_year_id' });
+  });
 });
 
 export default Router;

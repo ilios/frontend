@@ -3,7 +3,7 @@ module.exports = function(app) {
   var fixtures = [
     {
       id: 0,
-      startYear: moment().toDate(),
+      startYear: moment().format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,
@@ -15,7 +15,7 @@ module.exports = function(app) {
     },
     {
       id: 1,
-      startYear: moment().subtract(1, 'year').toDate(),
+      startYear: moment().subtract(1, 'year').format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,
@@ -27,7 +27,7 @@ module.exports = function(app) {
     },
     {
       id: 2,
-      startYear: moment().toDate(),
+      startYear: moment().format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,
@@ -39,7 +39,7 @@ module.exports = function(app) {
     },
     {
       id: 3,
-      startYear: moment().subtract(1, 'year').toDate(),
+      startYear: moment().subtract(1, 'year').format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,

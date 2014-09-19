@@ -1,8 +1,7 @@
-/* global moment */
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  startYear: DS.attr('date'),
+  startYear: DS.attr('string'),
   deleted: DS.attr('boolean'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
@@ -13,10 +12,7 @@ export default DS.Model.extend({
   disciplines: DS.hasMany('discipline', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   academicYear: function(){
-    var str = moment(this.get('startYear')).format('YYYY');
-    str += ' - ';
-    str += moment(this.get('startYear')).add(1, 'year').format('YYYY');
-    return str;
+    return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
   }.property('startYear'),
   nicePublished: function(){
     return this.get('publishedAsTbd')?'Published':'Not Published';
