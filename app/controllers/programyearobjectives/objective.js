@@ -8,7 +8,12 @@ export default Ember.ObjectController.extend({
   }.property('programYear.competencies.[]'),
   actions: {
     save: function(){
-      this.get('model').save();
+      this.set('programYear.isDirty', true);
+      this.transitionToRoute(
+        'programyearobjectives',
+        this.get('programYear.program'),
+        this.get('programYear.model')
+      );
     }
   }
 });
