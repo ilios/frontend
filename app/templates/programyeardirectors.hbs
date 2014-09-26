@@ -1,0 +1,31 @@
+<section class='halfwidth'>
+  <ul>
+    {{#each}}
+      <li>
+        <span class='remove' {{action "remove" this}}>{{fa-icon "times-circle"}}</span>
+        {{fullName}} {{email}}
+      </li>
+    {{/each}}
+  </ul>
+</section>
+<section class='halfwidth'>
+  <fieldset>
+    <legend>Add Director</legend>
+    <label {{bind-attr for="view.searchField.elementId"}}>Search</label>
+    {{view Ember.TextField action='search' value=searchTerms viewName="searchField"}}
+    <button {{action 'search'}}>Search</button>
+  </fieldset>
+  {{#if hasResults}}
+    <h5>Search Results</h5>
+    <ul>
+      {{#each searchResults}}
+        <li>
+          <span class='add' {{action "add" this}}>{{fa-icon "times-circle"}}</span>
+          {{fullName}} {{email}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>There are no users in your search not already directors for this program year</p>
+  {{/if}}
+</section>

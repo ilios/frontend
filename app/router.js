@@ -23,10 +23,7 @@ Router.map(function() {
           this.resource('programyearobjectives.objective', { path: ':objective_id' });
           this.route('new');
         });
-        this.resource('programyeardirectors', { path: 'directors' }, function(){
-          this.route('index');
-          this.route('add');
-        });
+        this.resource('programyeardirectors', { path: 'directors' });
       });
     });
   });
