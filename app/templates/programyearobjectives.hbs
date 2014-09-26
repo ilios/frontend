@@ -1,0 +1,16 @@
+<section class='halfwidth'>
+  <ul>
+    {{#each}}
+      <li>
+        {{#link-to 'programyearobjectives.objective' this}}
+          {{title}}
+        {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+  <hr />
+  {{#link-to 'programyearobjectives.new'}}New Objective{{/link-to}}
+</section>
+<section class='halfwidth'>
+  {{outlet}}
+</section>

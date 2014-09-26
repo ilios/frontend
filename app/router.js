@@ -20,8 +20,8 @@ Router.map(function() {
         this.route('index');
         this.resource('programyearcompetencies', { path: 'competencies' });
         this.resource('programyearobjectives', { path: 'objectives' }, function(){
-          this.route('index');
-          this.route('add');
+          this.resource('programyearobjectives.objective', { path: ':objective_id' });
+          this.route('new');
         });
         this.resource('programyeardirectors', { path: 'directors' }, function(){
           this.route('index');

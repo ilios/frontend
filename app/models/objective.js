@@ -11,4 +11,5 @@ export default DS.Model.extend({
   parents: DS.hasMany('objective', {
     inverse: 'children'
   }),
+  programYear: DS.belongsTo('program-year',  {async: true}),
 });
