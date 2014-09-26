@@ -25,7 +25,6 @@
     "connect-restreamer": "^1.0.0",
     "cors": "^2.4.1",
     "ember-cli": "0.0.44",
-    "ember-cli-components": "^0.2.0",
     "ember-cli-ember-data": "0.1.0",
     "ember-cli-font-awesome": "0.0.4",
     "ember-cli-ic-ajax": "0.1.1",
