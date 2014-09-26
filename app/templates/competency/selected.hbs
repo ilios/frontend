@@ -1,14 +1,14 @@
-<li>
+<li {{bind-attr class="visible:visible:hidden"}}>
   {{#if selected}}
     <span class='remove' {{action "remove" this}}>{{fa-icon "times-circle"}}</span>
   {{else}}
-    <span class='add' {{action "add" this}}>{{fa-icon "plus-circle"}}</span>
+    {{fa-icon "circle"}}
   {{/if}}
   {{title}}
-  {{#if hasChildren}}
+  {{#if childSelected}}
     <ul>
       {{#each children}}
-        {{render 'competency' this}}
+        {{render 'competency/selected' this}}
       {{/each}}
     <ul>
   {{/if}}

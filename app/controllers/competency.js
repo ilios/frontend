@@ -6,11 +6,7 @@ export default Ember.ObjectController.extend({
   children: function(){
     return this.get('model.children');
   }.property('model.children.[]'),
-  selected: false,
-  hasChildren: function(){
-    return this.get('children.length') > 0;
-  }.property('children'),
-  selectedObserver: function(){
+  selected: function(){
     var self = this;
     var selected = false;
     this.get('programYear.competencies').forEach(function(competency){
@@ -18,8 +14,26 @@ export default Ember.ObjectController.extend({
         selected = true;
       }
     });
-    this.set('selected', selected);
-  }.observes('programYear.competencies.[]').on('init'),
+    return selected;
+  }.property('programYear.competencies.[]'),
+  childSelected: function(){
+    var self = this;
+    var selected = false;
+    this.get('children').forEach(function(child){
+      self.get('programYear.competencies').forEach(function(competency){
+        if(competency.get('id') === child.get('id')){
+          selected = true;
+        }
+      });
+    });
+    return selected;
+  }.property('programYear.competencies.[]', 'children.[]'),
+  visible: function(){
+    return this.get('selected') || this.get('childSelected');
+  }.property('selected', 'childSelected'),
+  hasChildren: function(){
+    return this.get('children.length') > 0;
+  }.property('children.[]'),
     actions:{
       remove: function(competency){
         var self = this;

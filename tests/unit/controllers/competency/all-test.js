@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:programyearcompetencies', 'ProgramyearcompetenciesController', {
+moduleFor('controller:competency/all', 'CompetencyAllController', {
   // Specify the other units that are required for this test.
   needs: ['controller:programyear']
 });

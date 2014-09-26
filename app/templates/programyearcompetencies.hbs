@@ -1,6 +1,16 @@
-<h3>Comptencies</h3>
+<section class='halfwidth'>
+<h3>Selected Competencies</h3>
 <ul>
   {{#each}}
-    {{render 'competency' this}}
+    {{render 'competency/selected' this}}
   {{/each}}
 </ul>
+</section>
+<section class='halfwidth'>
+<h3>Available Competencies</h3>
+<ul>
+  {{#each}}
+    {{render 'competency/all' this}}
+  {{/each}}
+</ul>
+</section>
