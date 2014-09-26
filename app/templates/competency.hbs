@@ -1,0 +1,15 @@
+<li>
+  {{#if selected}}
+    <span class='remove' {{action "remove" this}}>{{fa-icon "times-circle"}}</span>
+  {{else}}
+    <span class='add' {{action "add" this}}>{{fa-icon "plus-circle"}}</span>
+  {{/if}}
+  {{title}}
+  {{#if hasChildren}}
+    <ul>
+      {{#each children}}
+        {{render 'competency' this}}
+      {{/each}}
+    <ul>
+  {{/if}}
+</li>

@@ -8,3 +8,10 @@
 @import '../components/accordiantabs';
 @import '../components/badges';
 @import '../components/modal';
+
+.add {
+  color: $add-color;
+}
+.remove {
+  color: $remove-color;
+}

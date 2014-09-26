@@ -10,7 +10,7 @@ module.exports = function(app) {
       publishedAsTbd: false,
       program: 0,
       directors: [0],
-      competencies: [0,1,2],
+      competencies: [0,2],
       objectives: [0,1,2,3]
     },
     {
@@ -22,7 +22,7 @@ module.exports = function(app) {
       publishedAsTbd: false,
       program: 0,
       directors: [0],
-      competencies: [0,1,2],
+      competencies: [0,2],
       objectives: [0,1,2,3]
     },
     {
@@ -34,7 +34,7 @@ module.exports = function(app) {
       publishedAsTbd: false,
       program: 0,
       directors: [0],
-      competencies: [0,1,2],
+      competencies: [0,2],
       objectives: [0,1,2,3]
     },
     {
@@ -46,7 +46,7 @@ module.exports = function(app) {
       publishedAsTbd: false,
       program: 0,
       directors: [0],
-      competencies: [0,1,2],
+      competencies: [0,2],
       objectives: [0,1,2,3]
     },
   ];

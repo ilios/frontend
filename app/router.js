@@ -3,7 +3,6 @@ import Ember from 'ember';
 var Router = Ember.Router.extend({
   location: IliosENV.locationType
 });
-
 Router.map(function() {
   this.resource('dashboard', function() {
     this.route('day');
@@ -13,11 +12,23 @@ Router.map(function() {
   });
   this.resource('programs', function(){
     this.route('new');
-  });
-  this.resource('program', { path: '/program/:program_id' }, function(){
-    this.route('edit');
-    this.route('newyear');
-    this.route('year', { path: 'year/:program_year_id' });
+    this.resource('program', { path: ':program_id' }, function(){
+      this.route('index');
+      this.route('edit');
+      this.route('newyear');
+      this.resource('programyear', { path: 'year/:program_year_id' }, function(){
+        this.route('index');
+        this.resource('programyearcompetencies', { path: 'competencies' });
+        this.resource('programyearobjectives', { path: 'objectives' }, function(){
+          this.route('index');
+          this.route('add');
+        });
+        this.resource('programyeardirectors', { path: 'directors' }, function(){
+          this.route('index');
+          this.route('add');
+        });
+      });
+    });
   });
 });
 

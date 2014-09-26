@@ -16,7 +16,7 @@
     border: none;
   }
 
-  li.tab-header-and-content {
+  li.tab-header {
 
     @include media($tab-mode) {
       display: inline;
@@ -39,7 +39,7 @@
     }
   }
 
-  li.tab-header-and-content a.tab-link {
+  li.tab-header a.tab-link {
     background-color: $tab-inactive-color;
     border-top: $tab-border;
     color: $dark-gray;
@@ -62,7 +62,7 @@
       outline: none;
     }
 
-    &.is-active {
+    &.active {
       background-color: $tab-active-background;
       border-bottom: 0;
 
@@ -75,11 +75,9 @@
     }
   }
 
-  li.tab-header-and-content .tab-content {
+  .tab-content {
     padding: $base-spacing $gutter;
     background: $tab-content-background;
-    display: none;
-    overflow: hidden;
     width: 100%;
 
     @include media($tab-mode) {
@@ -87,10 +85,6 @@
       float: left;
       left: 0;
       padding: $base-spacing/2 $gutter/2;
-
-      p {
-        @include columns(2);
-      }
     }
   }
 }
