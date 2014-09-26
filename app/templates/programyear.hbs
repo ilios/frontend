@@ -1,3 +1,8 @@
+<div class="breadcrumb">
+  {{#link-to 'programs'}}All Programs{{/link-to}}
+  {{#link-to 'program' program}}{{program.title}}{{/link-to}}
+</div>
+<br />
 {{#if isDirty}}
   <button {{action 'save' this}}>Save Changes</button>
 {{/if}}

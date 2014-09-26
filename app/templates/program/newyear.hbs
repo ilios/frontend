@@ -1,4 +1,7 @@
-{{#link-to 'program' program}}Return to Program{{/link-to}}
+<div class="breadcrumb">
+  {{#link-to 'programs'}}All Programs{{/link-to}}
+  {{#link-to 'program' program}}{{program.title}}{{/link-to}}
+</div>
 <fieldset>
     <legend>Create a New Program Year</legend>
     <label {{bindAttr for="view.yearChoice.elementId"}}>Academic Year</label>
