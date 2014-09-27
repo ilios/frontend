@@ -2,10 +2,7 @@
   {{#link-to 'programs'}}All Programs{{/link-to}}
   {{#link-to 'program' program}}{{program.title}}{{/link-to}}
 </div>
-<br />
-{{#if isDirty}}
-  <button {{action 'save' this}}>Save Changes</button>
-{{/if}}
+<hr />
 <div class="accordion-tabs-minimal">
   <ul>
     <li class="tab-header">
@@ -28,3 +25,7 @@
     {{outlet}}
   </div>
 </div>
+
+{{#if isDirty}}
+  <button {{action 'save' this}}>Save Changes</button>
+{{/if}}
