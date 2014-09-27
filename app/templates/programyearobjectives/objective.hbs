@@ -1,7 +1,7 @@
 <fieldset>
-  <legend>Edit {{title}}</legend>
+  <legend>Edit Objective</legend>
   <label {{bind-attr for="view.titleField.elementId"}}>Title</label>
-  {{view Ember.TextField value=title viewName="titleField"}}
+  {{view Ember.TextArea value=title viewName="titleField"}}
 
   <label {{bind-attr for="view.competencyField.elementId"}}>Competency</label>
   {{view Ember.Select optionLabelPath="content.title" content=competencies value=competency viewName="competencyField"}}

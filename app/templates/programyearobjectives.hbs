@@ -1,14 +1,24 @@
 <section class='halfwidth'>
-  <ul>
-    {{#each}}
-      <li>
-        {{#link-to 'programyearobjectives.objective' this}}
-          {{title}}
-        {{/link-to}}
-        ({{this.competency.title}})
-      </li>
-    {{/each}}
-  </ul>
+  <table class="grid-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Competency</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each}}
+        <tr>
+          <td>
+            {{title}}
+          </td>
+          <td>{{competency.title}}</td>
+          <td>{{#link-to 'programyearobjectives.objective' this}}edit{{/link-to}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
   <hr />
   {{#link-to 'programyearobjectives.new'}}New Objective{{/link-to}}
 </section>
