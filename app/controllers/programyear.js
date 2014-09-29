@@ -12,7 +12,16 @@ export default Ember.ObjectController.extend({
   actions:{
     save: function(){
       var self = this;
-      this.get('model').save().then(function(){
+
+      var saveArr = [];
+      this.get('model.objectives').forEach(function(objective){
+        if(objective.get('isDirty')){
+          saveArr.push(objective.save());
+        }
+      });
+      saveArr.push(this.get('model').save());
+
+      Ember.RSVP.all(saveArr).then(function(){
         self.set('isDirty', false);
       });
     }
