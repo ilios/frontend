@@ -10,10 +10,14 @@ export default Ember.Controller.extend({
   }.property('programYear.competencies.[]'),
   actions: {
     save: function() {
+      var competency = this.get('competency');
+      if(competency == null){
+        competency = this.get('competencies').get('firstObject');
+      }
       var objective = this.store.createRecord('objective', {
         title: this.get('title'),
         programYear: this.get('programYear.model'),
-        competency: this.get('competency'),
+        competency: competency,
       });
       this.get('programYear').get('objectives').addObject(objective);
       this.set('title', null);
