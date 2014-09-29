@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:programyearobjectives/new', 'ProgramyearobjectivesNewController', {
+moduleFor('controller:objective', 'ObjectiveController', {
   // Specify the other units that are required for this test.
-  needs: ['controller:programyear']
+  needs: ['controller:programyear', 'controller:programyearobjectives']
 });
 
 // Replace this with your real tests.

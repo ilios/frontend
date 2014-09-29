@@ -16,3 +16,9 @@
 .visible {
   display: '';
 }
+.dirty {
+  color: $base-accent-color;
+}
+.clickable {
+  cursor: pointer;
+}

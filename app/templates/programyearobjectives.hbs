@@ -1,4 +1,4 @@
-<section class='halfwidth'>
+<section class='fullwidth'>
   <table class="grid-table">
     <thead>
       <tr>
@@ -9,19 +9,9 @@
     </thead>
     <tbody>
       {{#each}}
-        <tr>
-          <td>
-            {{title}}
-          </td>
-          <td>{{competency.title}}</td>
-          <td>{{#link-to 'programyearobjectives.objective' this}}edit{{/link-to}}</td>
-        </tr>
+        {{render 'objective' this}}
       {{/each}}
     </tbody>
   </table>
-  <hr />
-  {{#link-to 'programyearobjectives.new'}}New Objective{{/link-to}}
-</section>
-<section class='halfwidth'>
-  {{outlet}}
+  <button {{action 'createNew'}}>New Objective</button>
 </section>

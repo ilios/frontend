@@ -1,9 +1,0 @@
-<fieldset>
-  <legend>New Objective</legend>
-  <label {{bind-attr for="view.titleField.elementId"}}>Title</label>
-  {{view Ember.TextArea value=title viewName="titleField"}}
-
-  <label {{bind-attr for="view.competencyField.elementId"}}>Competency</label>
-  {{view Ember.Select optionLabelPath="content.title" content=competencies value=competency viewName="competencyField"}}
-  <button {{action 'save'}}>Create Objective</button>
-</fieldset>
