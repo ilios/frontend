@@ -32,7 +32,7 @@ module.exports = function(app) {
       locked: false,
       archived: false,
       publishedAsTbd: false,
-      program: 0,
+      program: 1,
       directors: [0],
       competencies: [0,2],
       objectives: [0,1,2,3]
@@ -44,7 +44,7 @@ module.exports = function(app) {
       locked: false,
       archived: false,
       publishedAsTbd: false,
-      program: 0,
+      program: 1,
       directors: [0],
       competencies: [0,2],
       objectives: [0,1,2,3]
