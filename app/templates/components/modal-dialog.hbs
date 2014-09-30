@@ -1,0 +1,10 @@
+<div class="modal-dialog">
+  <div class='modal-open' {{action 'toggleVisibility'}}>{{openDialogText}}</div>
+  <div {{bind-attr class=":modal-window showModal:visible"}}>
+    <div class="modal-inner">
+      <div class='modal-close' {{action 'toggleVisibility'}}>{{fa-icon 'times-circle'}}</div>
+      <h1>{{title}}</h1>
+      {{yield}}
+    </div>
+  </div>
+</div>
