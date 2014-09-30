@@ -3,9 +3,11 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   needs: ['programyear'],
   programYear: Ember.computed.alias("controllers.programyear"),
+  directors: Ember.computed.alias("model"),
   sortAscending: true,
   sortProperties: ['fullName'],
   searchTerm: '',
+  showResults: false,
   searchResults: [],
   hasResults: function(){
     return this.get('searchResults').length > 0;
@@ -13,26 +15,18 @@ export default Ember.ArrayController.extend({
   actions: {
     search: function(){
       var self = this;
+      if(this.get('searchTerm').length < 1){
+        this.set('showResults', false);
+        return;
+      }
       this.store.find('user', {searchTerm: this.get('searchTerm')}).then(function(results){
-        var filtered = results.filter(function(result){
-          var exists = false;
-          self.get('model').forEach(function(user){
-            if(user.get('id') === result.get('id')){
-              exists = true;
-            }
-          });
-          return !exists;
-        });
-        self.set('searchResults', filtered);
+        self.set('searchResults', results.sortBy('lastName', 'firstName'));
+        self.set('showResults', true);
       });
     },
     remove: function(user){
       this.get('programYear.directors').removeObject(user);
       this.set('programYear.isDirty', true);
-    },
-    add: function(user){
-      this.get('programYear.directors').addObject(user);
-      this.set('programYear.isDirty', true);
-    },
+    }
   }
 });
