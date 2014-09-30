@@ -1,14 +1,16 @@
-{{#link-to 'programs'}}List Programs{{/link-to}}
+<div class="breadcrumb">
+  {{#link-to 'programs'}}{{t programs.allPrograms}}{{/link-to}}
+</div>
 <fieldset>
-    <legend>Create a New Program</legend>
-    <label {{bindAttr for="view.titleField.elementId"}}>Title:</label>
+    <legend>{{t programs.program.createNew}}</legend>
+    <label {{bindAttr for="view.titleField.elementId"}}>{{t programs.program.title}}:</label>
     {{view Ember.TextField value=title viewName="titleField"}}
 
-    <label {{bindAttr for="view.shortTitleField.elementId"}}>Short Title</label>
+    <label {{bindAttr for="view.shortTitleField.elementId"}}>{{t programs.program.shortTitle}}:</label>
     {{view Ember.TextField value=shortTitle viewName="shortTitleField"}}
 
-    <label {{bindAttr for="view.durationField.elementId"}}>Duration in years</label>
+    <label {{bindAttr for="view.durationField.elementId"}}>{{t programs.program.duration}}:</label>
     {{view Ember.Select content=durationOptions value=duration viewName="durationField"}}
 
-    <button {{action 'save'}}>Save</button>
+    <button {{action 'save'}}>{{t general.save}}</button>
 </fieldset>

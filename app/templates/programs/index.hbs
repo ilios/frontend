@@ -1,21 +1,27 @@
-{{#link-to 'programs.new'}}Add New Program{{/link-to}}
 <table class="grid-table">
   <thead>
     <tr>
-      <th>Program Title</th>
-      <th>Short Title</th>
-      <th>Duration</th>
-      <th>Status</th>
+      <th>{{t "programs.program.title"}}</th>
+      <th>{{t "programs.program.shortTitle"}}</th>
+      <th>{{t "programs.program.duration"}}</th>
+      <th>{{t "general.status"}}</th>
     </tr>
   </thead>
   <tbody>
     {{#each}}
       <tr>
-        <td>{{#link-to 'program' this.id}}{{title}}{{/link-to}}</td>
+        <td>{{#link-to "program" this.id}}{{title}}{{/link-to}}</td>
         <td>{{shortTitle}}</td>
-        <td>{{duration}} years</td>
-        <td>{{nicePublished}}</td>
+        <td>{{t "programs.program.durationYears" countBinding="duration"}}</td>
+        <td>
+          {{#if publishedAsTbd}}
+            {{t "general.published"}}
+          {{else}}
+            {{t "general.notPublished"}}
+          {{/if}}
+        </td>
       </tr>
     {{/each}}
   </tbody>
 </table>
+{{#link-to "programs.new"}}{{t programs.program.createNew}}{{/link-to}}

@@ -1,22 +1,22 @@
 <div class="breadcrumb">
-  {{#link-to 'programs'}}All Programs{{/link-to}}
+  {{#link-to 'programs'}}{{t "programs.allPrograms"}}{{/link-to}}
   {{#link-to 'program' program}}{{program.title}}{{/link-to}}
 </div>
 <div class="accordion-tabs-minimal">
   <ul>
     <li class="tab-header">
       {{#link-to 'programyearcompetencies' program this class='tab-link'}}
-        Competencies <span class="badge">{{competencies.length}}</span>
+        {{t "general.competencies"}} <span class="badge">{{competencies.length}}</span>
       {{/link-to}}
     </li>
     <li class="tab-header">
       {{#link-to 'programyearobjectives' program this class='tab-link'}}
-        Objectives <span class="badge">{{objectives.length}}</span>
+        {{t "general.objectives"}} <span class="badge">{{objectives.length}}</span>
       {{/link-to}}
     </li>
     <li class="tab-header">
       {{#link-to 'programyeardirectors' program this class='tab-link'}}
-        Directors <span class="badge">{{directors.length}}</span>
+        {{t "general.directors"}} <span class="badge">{{directors.length}}</span>
       {{/link-to}}
     </li>
   </ul>
@@ -27,5 +27,5 @@
 
 {{#if isDirty}}
   <hr />
-  <button {{action 'save' this}}>Save Changes</button>
+  <button {{action 'save' this}}>{{t "general.save"}}</button>
 {{/if}}

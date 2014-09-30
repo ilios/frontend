@@ -1,7 +1,7 @@
 <fieldset>
-  <legend>{{title}} Program ({{#link-to 'program.edit' this}}edit{{/link-to}})</legend>
-  <p><strong>Title</strong>: {{title}}</p>
-  <p><strong>Short Title</strong>: {{shortTitle}}</p>
-  <p><strong>Duration</strong>: {{duration}} years</p>
+  <legend>{{title}} ({{#link-to 'program.edit' this}}{{t 'general.edit'}}{{/link-to}})</legend>
+  <p><strong>{{t "programs.program.title"}}</strong>: {{title}}</p>
+  <p><strong>{{t "programs.program.shortTitle"}}</strong>: {{shortTitle}}</p>
+  <p><strong>{{t "programs.program.duration"}}</strong>: {{t "programs.program.durationYears" countBinding="duration"}}</p>
 </fieldset>
 {{outlet}}

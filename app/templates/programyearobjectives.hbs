@@ -2,9 +2,9 @@
   <table class="grid-table">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Competency</th>
-        <th>Actions</th>
+        <th>{{t 'general.title'}}</th>
+        <th>{{t 'general.competency'}}</th>
+        <th>{{t 'general.actions'}}</th>
       </tr>
     </thead>
     <tbody>
@@ -13,5 +13,5 @@
       {{/each}}
     </tbody>
   </table>
-  <button {{action 'createNew'}}>New Objective</button>
+  <button {{action 'createNew'}}>{{t "programs.programYear.objectives.new"}}</button>
 </section>

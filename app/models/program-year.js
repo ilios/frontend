@@ -13,8 +13,5 @@ export default DS.Model.extend({
   objectives: DS.hasMany('objective', {async: true}),
   academicYear: function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
-  }.property('startYear'),
-  nicePublished: function(){
-    return this.get('publishedAsTbd')?'Published':'Not Published';
-  }.property('publishedAsTbd')
+  }.property('startYear')
 });

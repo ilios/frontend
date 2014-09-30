@@ -7,8 +7,5 @@ export default DS.Model.extend({
   isDeleted: DS.attr('boolean'),
   publishedAsTbd: DS.attr('boolean'),
   owningSchool: DS.belongsTo('school'),
-  programYears: DS.hasMany('program-years', {async: true}),
-  nicePublished: function(){
-    return this.get('publishedAsTbd')?'Published':'Not Published';
-  }.property('publishedAsTbd')
+  programYears: DS.hasMany('program-years', {async: true})
 });

@@ -1,20 +1,20 @@
 <section class='halfwidth'>
-  <h3>Selected Directors</h3>
+  <h3>{{t "programs.programYear.directors.selected"}}</h3>
   <ul>
     {{#each}}
       <li>
-        <span class='remove' {{action "remove" this}}>{{fa-icon "times-circle"}}</span>
+        <span {{translateAttr title="programs.programYear.removeDirector"}} class='remove' {{action "remove" this}}>{{fa-icon "times-circle"}}</span>
         {{fullName}} {{email}}
       </li>
     {{/each}}
   </ul>
 </section>
 <section class='halfwidth'>
-  <h3>Available Directors</h3>
+  <h3>{{t "programs.programYear.directors.available"}}</h3>
   <div class="search-bar">
     <div class="search-and-submit">
       {{input action="search" type="search" value=searchTerm placeholder="Search directors"}}
-      <button {{action 'search'}} type="submit">
+      <button {{translateAttr title="programs.programYear.directors.search"}} {{action 'search'}} type="submit">
         {{fa-icon 'search'}}
       </button>
     </div>
@@ -27,7 +27,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>Your search returned no results.</p>
+      <p>{{t "programs.programYear.directors.noResults"}}</p>
     {{/if}}
   {{/if}}
 </section>

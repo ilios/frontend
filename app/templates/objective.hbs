@@ -4,7 +4,7 @@
       {{view Ember.TextArea value=bufferedTitle}}
     {{else}}
       {{shortTitle}}
-      {{#if isShortTitle}}<span class='clickable' {{action 'showFullTitle'}}>...</span>{{/if}}
+      {{#if isShortTitle}}<span {{translateAttr title="programs.programYear.objectives.showFullTitle"}} class='clickable' {{action 'showFullTitle'}}>...</span>{{/if}}
     {{/if}}
   </td>
   <td>

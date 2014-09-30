@@ -1,15 +1,15 @@
 <div class="breadcrumb">
-  {{#link-to 'programs'}}All Programs{{/link-to}}
+  {{#link-to 'programs'}}{{t "programs.allPrograms"}}{{/link-to}}
   {{#link-to 'program' this}}{{title}}{{/link-to}}
 </div>
-<legend>Editing {{title}}</legend>
-<label {{bindAttr for="view.titleField.elementId"}}>Title</label>
+<legend>{{t "programs.program.editingProgram" titleBinding=title}}</legend>
+<label {{bindAttr for="view.titleField.elementId"}}>{{t "programs.program.title"}}</label>
 {{view Ember.TextField value=title viewName="titleField"}}
 
-<label {{bindAttr for="view.shortTitleField.elementId"}}>Short Title</label>
+<label {{bindAttr for="view.shortTitleField.elementId"}}>{{t "programs.program.shortTitle"}}</label>
 {{view Ember.TextField value=shortTitle viewName="shortTitleField"}}
 
-<label {{bindAttr for="view.durationField.elementId"}}>Duration in years</label>
+<label {{bindAttr for="view.durationField.elementId"}}>{{t "programs.program.duration"}}</label>
 {{view Ember.Select content=durationOptions value=duration viewName="durationField"}}
 
-<button {{action 'save'}}>Save</button>
+<button {{action 'save'}}>{{t "general.save"}}</button>

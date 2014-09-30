@@ -1,16 +1,16 @@
 <div class="breadcrumb">
-  {{#link-to 'programs'}}All Programs{{/link-to}}
+  {{#link-to 'programs'}}{{t "programs.allPrograms"}}{{/link-to}}
 </div>
 
 <h2>Program Years:</h2>
 <table class="grid-table">
   <thead>
     <tr>
-      <th>Academic Year</th>
-      <th>Competencies</th>
-      <th>Objectives</th>
-      <th>Directors</th>
-      <th>Published</th>
+      <th>{{t "programs.programYear.academicYear"}}</th>
+      <th>{{t "general.competencies"}}</th>
+      <th>{{t "general.objectives"}}</th>
+      <th>{{t "general.directors"}}</th>
+      <th>{{t "general.status"}}</th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +18,7 @@
       <tr>
         <td>{{#link-to 'programyear' program this}}{{academicYear}}{{/link-to}}</td>
         <td>
-          {{#modal-dialog title='Competencies' openDialogText=competencies.length}}
+          {{#modal-dialog titleTranslation="general.competencies" openDialogText=competencies.length}}
             <p>
               <ul>
                 {{#each competency in competencies}}
@@ -33,7 +33,7 @@
           {{/modal-dialog}}
         </td>
         <td>
-          {{#modal-dialog title='Objectives' openDialogText=objectives.length}}
+          {{#modal-dialog titleTranslation="general.objectives" openDialogText=objectives.length}}
             <p>
               <ul>
                 {{#each objective in objectives}}
@@ -48,7 +48,7 @@
           {{/modal-dialog}}
         </td>
         <td>
-          {{#modal-dialog title='Directors' openDialogText=directors.length}}
+          {{#modal-dialog titleTranslation="general.directors" openDialogText=directors.length}}
             <p>
               <ul>
                 {{#each director in directors}}
@@ -62,9 +62,15 @@
             </p>
           {{/modal-dialog}}
         </td>
-        <td>{{nicePublished}}</td>
+        <td>
+          {{#if publishedAsTbd}}
+            {{t "general.published"}}
+          {{else}}
+            {{t "general.notPublished"}}
+          {{/if}}
+        </td>
       </tr>
     {{/each}}
   </tbody>
 </table>
-{{#link-to 'program.newyear'}}Create a New Program Year{{/link-to}}
+{{#link-to 'program.newyear'}}{{t "programs.programYear.createNew"}}{{/link-to}}
