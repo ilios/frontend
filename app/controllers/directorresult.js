@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  needs: ['programyeardirectors'],
+  needs: ['programyeardirectors', 'programyear'],
   programYearDirectors: Ember.computed.alias("controllers.programyeardirectors"),
+  programYear: Ember.computed.alias("controllers.programyear"),
   selected: function(){
     var self = this;
     var selected = false;
@@ -15,7 +16,7 @@ export default Ember.ObjectController.extend({
   }.property('model', 'programYearDirectors.directors.@each'),
   actions: {
     add: function(user){
-      this.get('programYear.model.directors').addObject(user);
+      this.get('programYearDirectors.directors').addObject(user);
       this.set('programYear.isDirty', true);
     },
   }
