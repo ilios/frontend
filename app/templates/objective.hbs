@@ -21,7 +21,9 @@
     {{#if isEditing}}
       <button {{action 'doneEditing'}}>Done</button>
     {{else}}
-      <button {{action 'edit'}}>Edit</button>
+      {{#action-menu}}
+        <li {{action 'edit'}}>Edit</li>
+      {{/action-menu}}
     {{/if}}
   </td>
 </tr>
