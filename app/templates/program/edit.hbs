@@ -1,7 +1,3 @@
-<div class="breadcrumb">
-  {{#link-to 'programs'}}{{t "programs.allPrograms"}}{{/link-to}}
-  {{#link-to 'program' this}}{{title}}{{/link-to}}
-</div>
 <legend>{{t "programs.program.editingProgram" titleBinding=title}}</legend>
 <label {{bindAttr for="view.titleField.elementId"}}>{{t "programs.program.title"}}</label>
 {{view Ember.TextField value=title viewName="titleField"}}

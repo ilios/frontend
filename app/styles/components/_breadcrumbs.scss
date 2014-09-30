@@ -1,4 +1,4 @@
-.breadcrumb {
+.breadcrumbs {
   $breadcrumb-border-color: $base-border-color;
   $breadcrumb-border: 1px solid $breadcrumb-border-color;
   $breadcrumb-height: $base-spacing * 1.5;
@@ -13,7 +13,7 @@
   text-align: left;
   margin-bottom: $base-spacing;
 
-  a {
+  li {
     @include inline-block;
     background-color: $breadcrumb-background;
     border: $breadcrumb-border;
@@ -46,7 +46,7 @@
     }
 
     &:hover:after {
-      border-left-color: $breadcrumb-inactive-hover-color;;
+      border-left-color: $breadcrumb-inactive-hover-color;
     }
 
     &:after,
