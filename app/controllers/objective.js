@@ -30,7 +30,7 @@ export default Ember.ObjectController.extend({
   }.property('title', 'showFullTitle'),
   competencies: function(){
     return this.get('programYear.competencies');
-  }.property('programYear.competencies.[]'),
+  }.property('programYear.competencies.@each'),
   actions: {
     showFullTitle: function(){
       this.set('showFullTitle', true);

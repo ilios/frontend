@@ -8,7 +8,7 @@ export default Ember.ObjectController.extend({
     this.get('model.competencies').then(function(competencies){
       self.set('competencies', competencies);
     });
-  }.observes('model.competencies.[]'),
+  }.observes('model.competencies.@each'),
   actions:{
     save: function(){
       var self = this;
