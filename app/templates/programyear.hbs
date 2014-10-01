@@ -21,6 +21,11 @@
         {{t "general.topics"}} <span class="badge">{{topics.length}}</span>
       {{/link-to}}
     </li>
+    <li class="tab-header">
+      {{#link-to 'programyear.managestewardingschools' program this class='tab-link'}}
+        {{t "programs.programYear.stewardingSchools"}} <span class="badge">{{stewardingSchools.length}}</span>
+      {{/link-to}}
+    </li>
   </ul>
   <div class="tab-content">
     {{outlet}}

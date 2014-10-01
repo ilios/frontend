@@ -37,6 +37,7 @@ var programs = {
     'removeCompetency': 'Remove Competency',
     'addTopic': 'Add Topic',
     'removeTopic': 'Remove Topic',
+    'stewardingSchools': 'Stewarding Schools',
     'objectives': {
       'showFullTitle': 'Show Full Title Text',
       'new': 'Crete a new objective'
@@ -48,6 +49,10 @@ var programs = {
     'topics': {
       'available': 'Available Topics',
       'selected': 'Selected Topics'
+    },
+    'stewardingSchool': {
+      'available': 'Available Schools',
+      'selected': 'Selected Schools'
     },
     'directors': {
       'available': 'Available Directors',

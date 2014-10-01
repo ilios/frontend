@@ -11,6 +11,7 @@ export default DS.Model.extend({
   competencies: DS.hasMany('competency', {async: true}),
   topics: DS.hasMany('discipline', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
+  stewardingSchools: DS.hasMany('school', {async: true}),
   academicYear: function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
   }.property('startYear')

@@ -12,7 +12,8 @@ module.exports = function(app) {
       directors: [0],
       competencies: [0,2],
       objectives: [0,1,2,3],
-      topics: [0,2]
+      topics: [0,2],
+      stewardingSchools: [1]
     },
     {
       id: 1,
@@ -25,7 +26,8 @@ module.exports = function(app) {
       directors: [0],
       competencies: [0,2],
       objectives: [0,1,2,3],
-      topics: [0,2]
+      topics: [0,2],
+      stewardingSchools: [2]
     },
     {
       id: 2,
@@ -68,6 +70,7 @@ module.exports = function(app) {
         fixtures[req.params.id].competencies = programYear.competencies;
         fixtures[req.params.id].objectives = programYear.objectives;
         fixtures[req.params.id].topics = programYear.topics;
+        fixtures[req.params.id].stewardingSchools = programYear.stewardingSchools;
 
         res.send({'programYear': fixtures[req.params.id]});
     } else {

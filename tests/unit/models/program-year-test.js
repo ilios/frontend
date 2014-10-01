@@ -10,7 +10,8 @@ moduleForModel('program-year', 'ProgramYear', {
     'model:user',
     'model:competency',
     'model:discipline',
-    'model:objective'
+    'model:objective',
+    'model:school'
   ]
 });
 

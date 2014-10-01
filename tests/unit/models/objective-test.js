@@ -12,7 +12,8 @@ moduleForModel('objective', 'Objective', {
     'model:program-year',
     'model:program',
     'model:discipline',
-    'model:user'
+    'model:user',
+    'model:school'
   ]
 });
 
