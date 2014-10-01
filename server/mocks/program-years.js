@@ -11,7 +11,8 @@ module.exports = function(app) {
       program: 0,
       directors: [0],
       competencies: [0,2],
-      objectives: [0,1,2,3]
+      objectives: [0,1,2,3],
+      topics: [0,2]
     },
     {
       id: 1,
@@ -23,7 +24,8 @@ module.exports = function(app) {
       program: 0,
       directors: [0],
       competencies: [0,2],
-      objectives: [0,1,2,3]
+      objectives: [0,1,2,3],
+      topics: [0,2]
     },
     {
       id: 2,
@@ -35,7 +37,8 @@ module.exports = function(app) {
       program: 1,
       directors: [0],
       competencies: [0,2],
-      objectives: [0,1,2,3]
+      objectives: [0,1,2,3],
+      topics: [0,2]
     },
     {
       id: 3,
@@ -64,6 +67,7 @@ module.exports = function(app) {
         fixtures[req.params.id].directors = programYear.directors;
         fixtures[req.params.id].competencies = programYear.competencies;
         fixtures[req.params.id].objectives = programYear.objectives;
+        fixtures[req.params.id].topics = programYear.topics;
 
         res.send({'programYear': fixtures[req.params.id]});
     } else {

@@ -11,7 +11,8 @@ var general = {
   'status': 'Status',
   'title': 'Title',
   'competency': 'Competency',
-  'actions': 'Actions'
+  'actions': 'Actions',
+  'topics': 'Topics'
 };
 translations.general = general;
 
@@ -34,6 +35,8 @@ var programs = {
     'removeDirector': 'Remove Director',
     'addCompetency': 'Add Competency',
     'removeCompetency': 'Remove Competency',
+    'addTopic': 'Add Topic',
+    'removeTopic': 'Remove Topic',
     'objectives': {
       'showFullTitle': 'Show Full Title Text',
       'new': 'Crete a new objective'
@@ -41,6 +44,10 @@ var programs = {
     'competencies': {
       'available': 'Available Competencies',
       'selected': 'Selected Competencies'
+    },
+    'topics': {
+      'available': 'Available Topics',
+      'selected': 'Selected Topics'
     },
     'directors': {
       'available': 'Available Directors',

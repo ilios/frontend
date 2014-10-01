@@ -21,6 +21,7 @@ Router.map(function() {
         this.resource('programyearcompetencies', { path: 'competencies' });
         this.resource('programyearobjectives', { path: 'objectives' });
         this.resource('programyeardirectors', { path: 'directors' });
+        this.resource('programyeartopics', { path: 'topics' });
       });
     });
   });

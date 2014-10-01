@@ -16,6 +16,11 @@
         {{t "general.directors"}} <span class="badge">{{directors.length}}</span>
       {{/link-to}}
     </li>
+    <li class="tab-header">
+      {{#link-to 'programyeartopics' program this class='tab-link'}}
+        {{t "general.topics"}} <span class="badge">{{topics.length}}</span>
+      {{/link-to}}
+    </li>
   </ul>
   <div class="tab-content">
     {{outlet}}

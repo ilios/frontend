@@ -5,7 +5,13 @@ import {
 
 moduleForModel('discipline', 'Discipline', {
   // Specify the other units that are required for this test.
-  needs: ['model:school', 'model:course', 'model:program-year', 'model:session']
+  needs: [
+    'model:school',
+    'model:course',
+    'model:program-year',
+    'model:session',
+    'model:program'
+  ]
 });
 
 test('it exists', function() {

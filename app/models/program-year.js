@@ -9,7 +9,7 @@ export default DS.Model.extend({
   program: DS.belongsTo('program'),
   directors: DS.hasMany('user', {async: true}),
   competencies: DS.hasMany('competency', {async: true}),
-  disciplines: DS.hasMany('discipline', {async: true}),
+  topics: DS.hasMany('discipline', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   academicYear: function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
