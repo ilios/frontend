@@ -10,7 +10,7 @@ export default Ember.ObjectController.extend({
       program.set('duration', this.get('duration'));
       program.set('publishedAsTbd', this.get('publishedAsTbd'));
       program.save();
-      this.transitionTo('program', program);
+      this.transitionToRoute('program', program);
     },
   }
 });

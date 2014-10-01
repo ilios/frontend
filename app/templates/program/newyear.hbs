@@ -1,6 +1,6 @@
 <fieldset>
     <legend>Create a New Program Year</legend>
-    <label {{bindAttr for="view.yearChoice.elementId"}}>Academic Year</label>
+    <label {{bind-attr for="view.yearChoice.elementId"}}>Academic Year</label>
     {{view Ember.Select content=academicYears value=yearChoice viewName="yearChoice"}}
 
     <button {{action 'save'}}>Save</button>

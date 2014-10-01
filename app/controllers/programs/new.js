@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
           self.set('title', null);
           self.set('shortTitle', null);
           self.set('duration', 1);
-          self.transitionTo('programs');
+          self.transitionToRoute('programs');
         });
       });
     }

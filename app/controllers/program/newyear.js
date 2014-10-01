@@ -42,7 +42,7 @@ export default Ember.Controller.extend({
       });
       programYear.save().then(function(programYear){
         self.get('program').get('programYears').addObject(programYear);
-        self.transitionTo('program', self.get('program'));
+        self.transitionToRoute('program', self.get('program'));
       });
     }
   }

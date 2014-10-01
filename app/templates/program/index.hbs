@@ -27,7 +27,7 @@
               <ul>
                 {{#each competency in competencies}}
                   <li>
-                    {{#link-to 'programyearcompetencies' program this}}
+                    {{#link-to 'programyear.managecompetencies' program this}}
                       {{competency.title}}
                     {{/link-to}}
                   </li>
@@ -42,7 +42,7 @@
               <ul>
                 {{#each objective in objectives}}
                   <li>
-                    {{#link-to 'programyearobjectives' program this}}
+                    {{#link-to 'programyear.manageobjectives' program this}}
                       {{objective.title}}
                     {{/link-to}}
                   </li>
@@ -57,7 +57,7 @@
               <ul>
                 {{#each director in directors}}
                   <li>
-                    {{#link-to 'programyeardirectors' program this}}
+                    {{#link-to 'programyear.managedirectors' program this}}
                       {{director.fullName}} {{director.email}}
                     {{/link-to}}
                   </li>

@@ -1,9 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  needs: ['programyear', 'programyearobjectives'],
+  needs: ['programyear'],
   programYear: Ember.computed.alias("controllers.programyear"),
-  programYearObjectives: Ember.computed.alias("controllers.programyearobjectives"),
   isDirty: false,
   isEditing: false,
   isEditingObserver: function(){

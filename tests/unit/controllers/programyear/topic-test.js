@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:directorresult', 'DirectorresultController', {
+moduleFor('controller:programyear/topic', 'ProgramYearTopicController', {
   // Specify the other units that are required for this test.
-  needs: ['controller:programyeardirectors', 'controller:programyear']
+  needs: ['controller:programyear']
 });
 
 // Replace this with your real tests.

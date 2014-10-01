@@ -18,10 +18,10 @@ Router.map(function() {
       this.route('newyear');
       this.resource('programyear', { path: 'year/:program_year_id' }, function(){
         this.route('index');
-        this.resource('programyearcompetencies', { path: 'competencies' });
-        this.resource('programyearobjectives', { path: 'objectives' });
-        this.resource('programyeardirectors', { path: 'directors' });
-        this.resource('programyeartopics', { path: 'topics' });
+        this.route('managecompetencies', { path: 'managecompetencies' });
+        this.route('manageobjectives', { path: 'manageobjectives' });
+        this.route('managedirectors', { path: 'managedirectors' });
+        this.route('managetopics', { path: 'managetopics' });
       });
     });
   });

@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:programyeartopics', 'ProgramyeartopicsRoute', {
+moduleFor('route:programyear/managecompetencies', 'ProgramyearManagecompetenciesRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

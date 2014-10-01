@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  needs: ['programyeardirectors', 'programyear'],
-  programYearDirectors: Ember.computed.alias("controllers.programyeardirectors"),
+  needs: ['programyear/managedirectors', 'programyear'],
+  programYearDirectors: Ember.computed.alias("controllers.programyear/managedirectors"),
   programYear: Ember.computed.alias("controllers.programyear"),
   selected: function(){
     var self = this;

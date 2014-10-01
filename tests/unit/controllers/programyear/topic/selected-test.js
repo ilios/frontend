@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:programyeardirectors', 'ProgramyeardirectorsController', {
+moduleFor('controller:programyear/topic/selected', 'ProgramYearTopicSelectedController', {
   // Specify the other units that are required for this test.
   needs: ['controller:programyear']
 });

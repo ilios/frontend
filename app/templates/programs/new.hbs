@@ -1,12 +1,12 @@
 <fieldset>
     <legend>{{t programs.program.createNew}}</legend>
-    <label {{bindAttr for="view.titleField.elementId"}}>{{t programs.program.title}}:</label>
+    <label {{bind-attr for="view.titleField.elementId"}}>{{t programs.program.title}}:</label>
     {{view Ember.TextField value=title viewName="titleField"}}
 
-    <label {{bindAttr for="view.shortTitleField.elementId"}}>{{t programs.program.shortTitle}}:</label>
+    <label {{bind-attr for="view.shortTitleField.elementId"}}>{{t programs.program.shortTitle}}:</label>
     {{view Ember.TextField value=shortTitle viewName="shortTitleField"}}
 
-    <label {{bindAttr for="view.durationField.elementId"}}>{{t programs.program.duration}}:</label>
+    <label {{bind-attr for="view.durationField.elementId"}}>{{t programs.program.duration}}:</label>
     {{view Ember.Select content=durationOptions value=duration viewName="durationField"}}
 
     <button {{action 'save'}}>{{t general.save}}</button>
