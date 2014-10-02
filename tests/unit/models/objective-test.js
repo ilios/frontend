@@ -13,7 +13,8 @@ moduleForModel('objective', 'Objective', {
     'model:program',
     'model:discipline',
     'model:user',
-    'model:school'
+    'model:school',
+    'model:mesh-descriptor'
   ]
 });
 

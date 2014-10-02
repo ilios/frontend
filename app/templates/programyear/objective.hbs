@@ -19,6 +19,17 @@
   </td>
   <td>
     {{#if isEditing}}
+      {{render 'mesh/picker' this}}
+    {{else}}
+      <ul>
+        {{#each linkedMeshTerms}}
+          <li>{{title}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </td>
+  <td>
+    {{#if isEditing}}
       <button {{action 'doneEditing'}}>Done</button>
     {{else}}
       {{#action-menu}}

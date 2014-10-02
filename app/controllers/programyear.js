@@ -16,9 +16,7 @@ export default Ember.ObjectController.extend({
 
       var saveArr = [];
       this.get('model.objectives').forEach(function(objective){
-        if(objective.get('isDirty')){
-          saveArr.push(objective.save());
-        }
+        saveArr.push(objective.save());
       });
       saveArr.push(this.get('model').save());
 

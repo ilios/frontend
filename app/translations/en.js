@@ -12,7 +12,8 @@ var general = {
   'title': 'Title',
   'competency': 'Competency',
   'actions': 'Actions',
-  'topics': 'Topics'
+  'topics': 'Topics',
+  'meshTerms': 'MeSH Terms'
 };
 translations.general = general;
 
@@ -74,5 +75,15 @@ var navigation = {
   'logo': 'Ilios Logo'
 };
 translations.navigation = navigation;
+
+var mesh = {
+  'buttonTitle': 'Add MeSH ({{count}})',
+  'pickerTitle': 'Choose MeSH Terms',
+  'selected': 'Selected MeSH Terms',
+  'available': 'Available MeSH Terms',
+  'search': 'Search MeSH Terms',
+  'noResults': 'Your seach returned no results.',
+};
+translations.mesh = mesh;
 
 export default translations;

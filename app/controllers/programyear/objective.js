@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import MeshControllerMixin from '../../mixins/meshcontroller';
 
-export default Ember.ObjectController.extend({
+export default Ember.ObjectController.extend(MeshControllerMixin, {
   needs: ['programyear'],
   programYear: Ember.computed.alias("controllers.programyear"),
   isDirty: false,
