@@ -16,8 +16,8 @@ export default Ember.ObjectController.extend(MeshControllerMixin, {
   isShortTitle: function(){
     return this.get('shortTitle') !== this.get('title');
   }.property('title', 'shortTitle', 'showFullTitle'),
-  bufferedTitle: Ember.computed.oneWay('title'),
-  bufferedCompetency: Ember.computed.oneWay('competency'),
+  bufferedTitle: Ember.computed.oneWay('model.title'),
+  bufferedCompetency: Ember.computed.oneWay('model.competency.content'),
   shortTitle: function(){
     var title = this.get('title');
     if(this.get('showFullTitle')){
@@ -28,7 +28,7 @@ export default Ember.ObjectController.extend(MeshControllerMixin, {
     }
     return title;
   }.property('title', 'showFullTitle'),
-  competencies: function(){
+  availableCompetencies: function(){
     return this.get('programYear.competencies');
   }.property('programYear.competencies.@each'),
   actions: {
