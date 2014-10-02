@@ -13,6 +13,13 @@ module.exports = function(app) {
       iliosAdministratorEmail: 'test@example.com',
       isDeleted: false,
       stewardedProgramYears: [0,1]
+    },
+    {
+      id: 2,
+      title: 'Third Test School',
+      iliosAdministratorEmail: 'test@example.com',
+      isDeleted: false,
+      stewardedProgramYears: [1]
     }
   ];
 

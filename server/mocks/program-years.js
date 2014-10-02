@@ -27,7 +27,7 @@ module.exports = function(app) {
       competencies: [0,2],
       objectives: [0,1,2,3],
       topics: [0,2],
-      stewardingSchools: [2]
+      stewardingSchools: [1,2]
     },
     {
       id: 2,
