@@ -14,6 +14,8 @@
       <th>{{t "general.competencies"}}</th>
       <th>{{t "general.objectives"}}</th>
       <th>{{t "general.directors"}}</th>
+      <th>{{t "general.topics"}}</th>
+      <th>{{t "programs.programYear.stewardingSchools"}}</th>
       <th>{{t "general.status"}}</th>
     </tr>
   </thead>
@@ -59,6 +61,36 @@
                   <li>
                     {{#link-to 'programyear.managedirectors' program this}}
                       {{director.fullName}} {{director.email}}
+                    {{/link-to}}
+                  </li>
+                {{/each}}
+              </ul>
+            </p>
+          {{/modal-dialog}}
+        </td>
+        <td>
+          {{#modal-dialog titleTranslation="general.topics" openDialogText=topics.length}}
+            <p>
+              <ul>
+                {{#each topic in topics}}
+                  <li>
+                    {{#link-to 'programyear.managetopics' program this}}
+                      {{topic.title}}
+                    {{/link-to}}
+                  </li>
+                {{/each}}
+              </ul>
+            </p>
+          {{/modal-dialog}}
+        </td>
+        <td>
+          {{#modal-dialog titleTranslation="programs.programYear.stewardingSchools" openDialogText=stewardingSchools.length}}
+            <p>
+              <ul>
+                {{#each school in stewardingSchools}}
+                  <li>
+                    {{#link-to 'programyear.managestewardingschools' program this}}
+                      {{school.title}}
                     {{/link-to}}
                   </li>
                 {{/each}}
