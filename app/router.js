@@ -16,7 +16,7 @@ Router.map(function() {
       this.route('index');
       this.route('edit');
       this.route('newyear');
-      this.resource('programyear', { path: 'year/:program_year_id' }, function(){
+      this.resource('programyear', { path: 'years/:program_year_id' }, function(){
         this.route('index');
         this.route('managecompetencies');
         this.route('manageobjectives');
