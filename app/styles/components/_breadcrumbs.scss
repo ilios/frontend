@@ -26,18 +26,22 @@
     text-decoration: none;
     margin-bottom: 2px;
 
-    &:first-child {
+    &:first-of-type {
       padding-left: $breadcrumb-height/2;
       border-top-left-radius: $base-border-radius;
       border-bottom-left-radius: $base-border-radius;
     }
 
-    &:last-child {
+    &:last-of-type {
       background-color: $breadcrumb-background;
       color: $breadcrumb-color-active;
       border-bottom-right-radius: $base-border-radius;
       border-top-right-radius: $base-border-radius;
       padding-right: $breadcrumb-height/2;
+    }
+
+    &:last-of-type a{
+      color: $breadcrumb-color-active;
     }
 
     &:hover {
@@ -61,8 +65,8 @@
       z-index: 2;
     }
 
-    &:last-child:after,
-    &:last-child:before {
+    &:last-of-type:after,
+    &:last-of-type:before {
        border: none;
     }
 
