@@ -77,7 +77,7 @@ var navigation = {
 translations.navigation = navigation;
 
 var mesh = {
-  'buttonTitle': 'Add MeSH ({{count}})',
+  'buttonTitle': 'Select MeSH ({{count}})',
   'pickerTitle': 'Choose MeSH Terms',
   'selected': 'Selected MeSH Terms',
   'available': 'Available MeSH Terms',
