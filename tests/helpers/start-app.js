@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Application from 'ilios/app';
 import Router from 'ilios/router';
+import customHelpers from './custom-helpers';
 
 export default function startApp(attrs) {
   var App;

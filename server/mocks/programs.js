@@ -14,7 +14,7 @@ module.exports = function(app) {
       id: 1,
       title: 'Second Test Program',
       shortTitle: 'stp',
-      duration: 3,
+      duration: 1,
       isDeleted: false,
       publishedAsTbd: false,
       owningSchool: 0,
