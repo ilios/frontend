@@ -1,0 +1,100 @@
+<tr>
+  <td>
+    {{#if isEditing}}
+      {{view Ember.Select content=academicYears value=bufferedAcademicYear}}
+    {{else}}
+      {{#link-to 'programyear' program this}}{{academicYear}}{{/link-to}}
+    {{/if}}
+  </td>
+  <td>
+    {{#modal-dialog titleTranslation="general.competencies" openDialogText=competencies.length}}
+      <p>
+        <ul>
+          {{#each competency in competencies}}
+            <li>
+              {{#link-to 'programyear.managecompetencies' program this}}
+                {{competency.title}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ul>
+      </p>
+    {{/modal-dialog}}
+  </td>
+  <td>
+    {{#modal-dialog titleTranslation="general.objectives" openDialogText=objectives.length}}
+      <p>
+        <ul>
+          {{#each objective in objectives}}
+            <li>
+              {{#link-to 'programyear.manageobjectives' program this}}
+                {{objective.title}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ul>
+      </p>
+    {{/modal-dialog}}
+  </td>
+  <td>
+    {{#modal-dialog titleTranslation="general.directors" openDialogText=directors.length}}
+      <p>
+        <ul>
+          {{#each director in directors}}
+            <li>
+              {{#link-to 'programyear.managedirectors' program this}}
+                {{director.fullName}} {{director.email}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ul>
+      </p>
+    {{/modal-dialog}}
+  </td>
+  <td>
+    {{#modal-dialog titleTranslation="general.topics" openDialogText=topics.length}}
+      <p>
+        <ul>
+          {{#each topic in topics}}
+            <li>
+              {{#link-to 'programyear.managetopics' program this}}
+                {{topic.title}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ul>
+      </p>
+    {{/modal-dialog}}
+  </td>
+  <td>
+    {{#modal-dialog titleTranslation="programs.programYear.stewardingSchools" openDialogText=stewardingSchools.length}}
+      <p>
+        <ul>
+          {{#each school in stewardingSchools}}
+            <li>
+              {{#link-to 'programyear.managestewardingschools' program this}}
+                {{school.title}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ul>
+      </p>
+    {{/modal-dialog}}
+  </td>
+  <td>
+    {{#if publishedAsTbd}}
+      {{t "general.published"}}
+    {{else}}
+      {{t "general.notPublished"}}
+    {{/if}}
+  </td>
+  <td>
+    {{#if isEditing}}
+      <button {{action 'save'}}>Save</button>
+    {{else}}
+      {{#action-menu}}
+        <li {{action 'edit'}}>Edit</li>
+      {{/action-menu}}
+    {{/if}}
+  </td>
+</tr>

@@ -17,96 +17,13 @@
       <th>{{t "general.topics"}}</th>
       <th>{{t "programs.programYear.stewardingSchools"}}</th>
       <th>{{t "general.status"}}</th>
+      <th>{{t "general.actions"}}</th>
     </tr>
   </thead>
   <tbody>
     {{#each}}
-      <tr>
-        <td>{{#link-to 'programyear' program this}}{{academicYear}}{{/link-to}}</td>
-        <td>
-          {{#modal-dialog titleTranslation="general.competencies" openDialogText=competencies.length}}
-            <p>
-              <ul>
-                {{#each competency in competencies}}
-                  <li>
-                    {{#link-to 'programyear.managecompetencies' program this}}
-                      {{competency.title}}
-                    {{/link-to}}
-                  </li>
-                {{/each}}
-              </ul>
-            </p>
-          {{/modal-dialog}}
-        </td>
-        <td>
-          {{#modal-dialog titleTranslation="general.objectives" openDialogText=objectives.length}}
-            <p>
-              <ul>
-                {{#each objective in objectives}}
-                  <li>
-                    {{#link-to 'programyear.manageobjectives' program this}}
-                      {{objective.title}}
-                    {{/link-to}}
-                  </li>
-                {{/each}}
-              </ul>
-            </p>
-          {{/modal-dialog}}
-        </td>
-        <td>
-          {{#modal-dialog titleTranslation="general.directors" openDialogText=directors.length}}
-            <p>
-              <ul>
-                {{#each director in directors}}
-                  <li>
-                    {{#link-to 'programyear.managedirectors' program this}}
-                      {{director.fullName}} {{director.email}}
-                    {{/link-to}}
-                  </li>
-                {{/each}}
-              </ul>
-            </p>
-          {{/modal-dialog}}
-        </td>
-        <td>
-          {{#modal-dialog titleTranslation="general.topics" openDialogText=topics.length}}
-            <p>
-              <ul>
-                {{#each topic in topics}}
-                  <li>
-                    {{#link-to 'programyear.managetopics' program this}}
-                      {{topic.title}}
-                    {{/link-to}}
-                  </li>
-                {{/each}}
-              </ul>
-            </p>
-          {{/modal-dialog}}
-        </td>
-        <td>
-          {{#modal-dialog titleTranslation="programs.programYear.stewardingSchools" openDialogText=stewardingSchools.length}}
-            <p>
-              <ul>
-                {{#each school in stewardingSchools}}
-                  <li>
-                    {{#link-to 'programyear.managestewardingschools' program this}}
-                      {{school.title}}
-                    {{/link-to}}
-                  </li>
-                {{/each}}
-              </ul>
-            </p>
-          {{/modal-dialog}}
-        </td>
-        <td>
-          {{#if publishedAsTbd}}
-            {{t "general.published"}}
-          {{else}}
-            {{t "general.notPublished"}}
-          {{/if}}
-        </td>
-      </tr>
+      {{render 'program/singleyear' this}}
     {{/each}}
   </tbody>
 </table>
-{{#link-to 'program.newyear'}}{{t "programs.programYear.createNew"}}{{/link-to}}
+<button {{action 'createNewYear'}}>{{t "programs.programYear.createNew"}}</button>
