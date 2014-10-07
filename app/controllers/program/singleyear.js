@@ -45,7 +45,9 @@ export default Ember.ObjectController.extend({
       var programYear = this.get('model');
       programYear.set('startYear', bufferedAcademicYear.substring(0,4));
       programYear.save().then(function(){
-        self.set('isEditing', false);
+        if(!self.get('isDestroyed')){
+          self.set('isEditing', false);
+        }
       });
     }
   }
