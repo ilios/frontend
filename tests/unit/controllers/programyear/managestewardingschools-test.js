@@ -5,7 +5,7 @@ import {
 
 moduleFor('controller:programyear/managestewardingschools', 'ProgramyearManagestewardingschoolsController', {
   // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['controller:programyear']
 });
 
 // Replace this with your real tests.
