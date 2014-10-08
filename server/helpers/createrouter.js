@@ -31,6 +31,16 @@ module.exports = function(name, fixtures) {
     responseObj[name] = obj;
     res.send(responseObj);
   });
+  router.put('/:id', function(req, res) {
+    if(req.params.id in fixtures){
+        responseObj[name] = req.body[name];
+        responseObj[name].id = req.params.id;
+        res.send(responseObj);
+    } else {
+        res.status(404).end();
+    }
+
+  });
 
   return router;
 };
