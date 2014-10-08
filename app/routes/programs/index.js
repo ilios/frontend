@@ -3,6 +3,6 @@ import CurrentUser from '../../mixins/current-user';
 
 export default  Ember.Route.extend(CurrentUser, {
   model: function(){
-    return this.store.find('program', {owningSchool: this.modelFor('programs').get('id')});
+    return this.modelFor('programs').get('programs');
   }
 });

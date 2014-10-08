@@ -1,6 +1,7 @@
 module.exports = function(name, fixtures) {
   var express = require('express');
   var router = express.Router();
+  var nextId = fixtures.length;
   var responseObj = {};
   router.get('/:id', function(req, res) {
       if(req.params.id in fixtures){
@@ -26,8 +27,7 @@ module.exports = function(name, fixtures) {
   });
   router.post('/', function(req, res) {
     var obj = req.body[name];
-    obj.id = fixtures.length;
-    fixtures.push(obj);
+    obj.id = nextId++;
     responseObj[name] = obj;
     res.send(responseObj);
   });
