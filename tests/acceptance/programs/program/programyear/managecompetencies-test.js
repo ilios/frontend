@@ -17,6 +17,7 @@ test('visiting', function() {
 
   andThen(function() {
     equal(currentPath(), 'programs.program.programyear.managecompetencies');
+    equal(find('#program-year-title').text().trim(), 'First Test Program 2014 - 2015 Class of 2018');
   });
 });
 

@@ -14,5 +14,8 @@ export default DS.Model.extend({
   stewardingSchools: DS.hasMany('school', {async: true}),
   academicYear: function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
-  }.property('startYear')
+  }.property('startYear'),
+  classOfYear: function(){
+    return (parseInt(this.get('startYear'))+parseInt(this.get('program.duration')));
+  }.property('startYear', 'program.duration')
 });

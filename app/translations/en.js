@@ -39,6 +39,7 @@ var programs = {
     'addTopic': 'Add Topic',
     'removeTopic': 'Remove Topic',
     'stewardingSchools': 'Stewarding Schools',
+    'classOf': 'Class of {{year}}',
     'objectives': {
       'showFullTitle': 'Show Full Title Text',
       'new': 'Crete a new objective'
