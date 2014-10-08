@@ -29,7 +29,6 @@ test('breadcrumbs /programs.program.index', function() {
   });
 });
 
-
 test('program details /programs.program.index', function() {
   expect(8);
   visit('/programs/0/index');
