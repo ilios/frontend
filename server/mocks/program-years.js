@@ -10,8 +10,8 @@ module.exports = function(app) {
       publishedAsTbd: false,
       program: 0,
       directors: [0],
-      competencies: [0,2],
-      objectives: [0,1,2,3],
+      competencies: [4,2],
+      objectives: [0,1],
       topics: [0,2],
       stewardingSchools: [1]
     },
@@ -24,8 +24,8 @@ module.exports = function(app) {
       publishedAsTbd: false,
       program: 0,
       directors: [0],
-      competencies: [0,2],
-      objectives: [0,1,2,3],
+      competencies: [0,2,4],
+      objectives: [2,3],
       topics: [0,2],
       stewardingSchools: [1,2]
     },
@@ -39,7 +39,7 @@ module.exports = function(app) {
       program: 1,
       directors: [0],
       competencies: [0,2],
-      objectives: [0,1,2,3],
+      objectives: [],
       topics: [0,2]
     },
     {
@@ -52,7 +52,7 @@ module.exports = function(app) {
       program: 1,
       directors: [0],
       competencies: [0,2],
-      objectives: [0,1,2,3]
+      objectives: []
     },
   ];
   var createRouter = require('../helpers/createrouter.js');

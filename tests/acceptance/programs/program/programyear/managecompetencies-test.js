@@ -18,6 +18,8 @@ test('visiting', function() {
   andThen(function() {
     equal(currentPath(), 'programs.program.programyear.managecompetencies');
     equal(find('#program-year-title').text().trim(), 'First Test Program 2014 - 2015 Class of 2018');
+    equal(find('#selected-competencies li:visible').length, 3);
+    equal(find('#available-competencies li').length, 7);
   });
 });
 
@@ -51,29 +53,18 @@ test('badge value', function() {
   });
 });
 
-test('badge value', function() {
-  expect(3);
-  visit('/programs/0/years/0/managecompetencies');
-
-  andThen(function() {
-    equal(find('#selected-competencies li:visible').length, 2);
-    equal(find('#available-competencies li').length, 7);
-    equal(find('#selected-competencies li:visible').text().replace(/\s/g, ""), 'FirstCompetencyThirdCompetency');
-  });
-});
-
 test('test add single', function() {
   expect(5);
   visit('/programs/0/years/0/managecompetencies');
 
   andThen(function() {
-    equal(find('#selected-competencies li.visible').length, 2);
-    click('#available-competencies li.enabled:eq(0) .add').then(function() {
-      equal(find('#selected-competencies li.visible').length, 3);
+    equal(find('#selected-competencies li.visible').length, 3);
+    click('#available-competencies li.enabled:eq(2) .add').then(function() {
+      equal(find('#selected-competencies li.visible').length, 4);
       equal(find('#available-competencies li.enabled').length, 4);
     });
-    click('#available-competencies li.enabled:eq(0) .add').then(function() {
-      equal(find('#selected-competencies li.visible').length, 4);
+    click('#available-competencies li.enabled:eq(3) .add').then(function() {
+      equal(find('#selected-competencies li.visible').length, 5);
       equal(find('#available-competencies li.enabled').length, 3);
     });
   });

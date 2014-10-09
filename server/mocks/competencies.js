@@ -7,7 +7,7 @@ module.exports = function(app) {
       owningSchool: 0,
       parent: null,
       children: [4,5,6],
-      programYears: [0,1,2]
+      programYears: [1,2]
     },
     {
       id: 1,
@@ -32,7 +32,8 @@ module.exports = function(app) {
       id: 4,
       title: 'First Child Competency',
       owningSchool: 0,
-      parent: 0
+      parent: 0,
+      programYears: [0,1]
     },
     {
       id: 5,
@@ -51,17 +52,17 @@ module.exports = function(app) {
   router.get('/:id', function(req, res) {
     var responseObj = {};
     if(req.params.id in fixtures){
-        responseObj[name] = fixtures[req.params.id];
+        responseObj.competency = fixtures[req.params.id];
         res.send(responseObj);
     } else {
         res.status(404).end();
     }
   });
   router.post('/', function(req, res) {
-    var obj = req.body[name];
+    var obj = req.body.competency;
     obj.id = fixtures.length;
     fixtures.push(obj);
-    responseObj[name] = obj;
+    responseObj.competency = obj;
     res.send(responseObj);
   });
 

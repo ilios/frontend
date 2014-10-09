@@ -57,8 +57,8 @@ test('program list /programs.program.index', function() {
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
     equal(find('td:first', firstProgramYearRow).text().trim(), '2013 - 2014');
-    equal(find('td:eq(1)', firstProgramYearRow).text().trim().substring(0,1), '2');
-    equal(find('td:eq(2)', firstProgramYearRow).text().trim().substring(0,1), '4');
+    equal(find('td:eq(1)', firstProgramYearRow).text().trim().substring(0,1), '3');
+    equal(find('td:eq(2)', firstProgramYearRow).text().trim().substring(0,1), '2');
     equal(find('td:eq(3)', firstProgramYearRow).text().trim().substring(0,1), '1');
     equal(find('td:eq(4)', firstProgramYearRow).text().trim().substring(0,1), '2');
     equal(find('td:eq(5)', firstProgramYearRow).text().trim().substring(0,1), '2');
@@ -67,7 +67,7 @@ test('program list /programs.program.index', function() {
     var secondProgramYearRow = find('.container table:first tbody tr:eq(1)');
     equal(find('td:first', secondProgramYearRow).text().trim(), '2014 - 2015');
     equal(find('td:eq(1)', secondProgramYearRow).text().trim().substring(0,1), '2');
-    equal(find('td:eq(2)', secondProgramYearRow).text().trim().substring(0,1), '4');
+    equal(find('td:eq(2)', secondProgramYearRow).text().trim().substring(0,1), '2');
     equal(find('td:eq(3)', secondProgramYearRow).text().trim().substring(0,1), '1');
     equal(find('td:eq(4)', secondProgramYearRow).text().trim().substring(0,1), '2');
     equal(find('td:eq(5)', secondProgramYearRow).text().trim().substring(0,1), '1');

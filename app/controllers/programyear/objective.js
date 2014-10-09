@@ -28,9 +28,39 @@ export default Ember.ObjectController.extend(MeshControllerMixin, {
     }
     return title;
   }.property('title', 'showFullTitle'),
-  availableCompetencies: function(){
-    return this.get('programYear.competencies');
-  }.property('programYear.competencies.@each'),
+  availableCompetencies: [],
+  availableCompetenciesObserver: function(){
+    var self = this;
+    if(this.get('programYear.competencies') == null){
+      return;
+    }
+    this.get('programYear.competencies').then(function(competencies){
+      var promises = [];
+      competencies.forEach(function(competency){
+        promises.push(competency.get('children'));
+      });
+      Ember.RSVP.all(promises).then(function(){
+        var availableCompetencies = self.get('programYear.competencies').filter(function(competency){
+          if(competency.get('children.length') === 0){
+            return true;
+          }
+          var childSelected = false;
+          competency.get('children').forEach(function(child){
+            self.get('programYear.competencies').forEach(function(competency2){
+              if(competency2.get('id') === child.get('id')){
+                childSelected = true;
+              }
+            });
+          });
+          return !childSelected;
+        });
+        availableCompetencies.sort(function(a,b){
+          return Ember.compare(a.get('title'),b.get('title'));
+        });
+        self.set('availableCompetencies', availableCompetencies);
+      });
+    });
+  }.observes('programYear.competencies.@each').on('init'),
   actions: {
     showFullTitle: function(){
       this.set('showFullTitle', true);
