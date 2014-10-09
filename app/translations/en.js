@@ -42,7 +42,7 @@ var programs = {
     'classOf': 'Class of {{year}}',
     'objectives': {
       'showFullTitle': 'Show Full Title Text',
-      'new': 'Crete a new objective'
+      'new': 'Create a new objective'
     },
     'competencies': {
       'available': 'Available Competencies',
