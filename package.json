@@ -4,7 +4,7 @@
   "private": true,
   "directories": {
     "doc": "doc",
-    "test": "test"
+    "test": "tests"
   },
   "scripts": {
     "start": "ember server",
@@ -19,17 +19,18 @@
   "license": "GNU GPL v3",
   "devDependencies": {
     "body-parser": "^1.2.0",
-    "broccoli-asset-rev": "0.0.17",
+    "broccoli-asset-rev": "0.3.0",
     "broccoli-ember-hbs-template-compiler": "^1.6.1",
-    "broccoli-sass": "^0.2.2",
+    "broccoli-sass": "^0.2.3",
     "connect-restreamer": "^1.0.0",
-    "cors": "^2.4.1",
-    "ember-cli": "0.0.44",
-    "ember-cli-ember-data": "0.1.0",
+    "cors": "^2.4.2",
+    "ember-cli": "0.1.1",
+    "ember-cli-content-security-policy": "0.2.0",
     "ember-cli-font-awesome": "0.0.4",
     "ember-cli-ic-ajax": "0.1.1",
-    "ember-cli-inject-live-reload": "^1.0.2",
+    "ember-cli-inject-live-reload": "^1.2.2",
     "ember-cli-qunit": "0.1.0",
+    "ember-data": "1.0.0-beta.10",
     "express": "^4.8.5",
     "glob": "^4.0.5",
     "jshint": "^2.5.5",

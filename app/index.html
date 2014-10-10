@@ -7,20 +7,13 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{BASE_TAG}}
+    {{content-for 'head'}}
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/ilios.css">
   </head>
   <body>
-    <script>
-      window.IliosENV = {{ENV}};
-      window.EmberENV = window.IliosENV.EmberENV;
-    </script>
     <script src="assets/vendor.js"></script>
     <script src="assets/ilios.js"></script>
-    <script>
-      window.Ilios = require('ilios/app')['default'].create(IliosENV.APP);
-    </script>
   </body>
 </html>

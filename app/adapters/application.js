@@ -1,6 +1,7 @@
 import DS from 'ember-data';
+import config from 'ilios/config/environment';
 
 export default DS.RESTAdapter.extend({
-    namespace: IliosENV.adapterNamespace,
-    host: IliosENV.adapterHost
+    namespace: config.adapterNamespace,
+    host: config.adapterHost
 });

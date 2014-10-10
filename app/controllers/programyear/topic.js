@@ -19,7 +19,9 @@ export default Ember.ObjectController.extend({
         this.set('programYear.isDirty', true);
       },
       add: function(discipline){
-        this.get('programYear.topics').addObject(discipline);
+        this.get('programYear.topics').then(function(topics){
+          topics.addObject(discipline);
+        });
         this.set('programYear.isDirty', true);
       },
     }

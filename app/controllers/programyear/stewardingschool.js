@@ -7,7 +7,9 @@ export default Ember.ObjectController.extend({
       this.set('programYear.isDirty', true);
     },
     add: function(school){
-      this.get('programYear.stewardingSchools').addObject(school);
+      this.get('programYear.stewardingSchools').then(function(schools){
+        schools.addObject(school);
+      });
       this.set('programYear.isDirty', true);
     },
   }

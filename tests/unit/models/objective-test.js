@@ -14,7 +14,8 @@ moduleForModel('objective', 'Objective', {
     'model:discipline',
     'model:user',
     'model:school',
-    'model:mesh-descriptor'
+    'model:mesh-descriptor',
+    'model:offering'
   ]
 });
 

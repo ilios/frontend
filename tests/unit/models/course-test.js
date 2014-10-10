@@ -5,7 +5,7 @@ import {
 
 moduleForModel('course', 'Course', {
   // Specify the other units that are required for this test.
-  needs: ['model:session']
+  needs: ['model:session','model:offering']
 });
 
 test('it exists', function() {

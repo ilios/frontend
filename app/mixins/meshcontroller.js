@@ -23,7 +23,9 @@ export default Ember.Mixin.create({
       this.get('model.meshDescriptors').removeObject(descriptor);
     },
     addMeshDescriptor: function(descriptor){
-      this.get('model.meshDescriptors').addObject(descriptor);
+      this.get('model.meshDescriptors').then(function(descriptors){
+        descriptors.addObject(descriptor);
+      });
     }
   }
 });

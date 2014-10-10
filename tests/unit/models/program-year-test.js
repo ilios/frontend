@@ -12,7 +12,11 @@ moduleForModel('program-year', 'ProgramYear', {
     'model:competency',
     'model:discipline',
     'model:objective',
-    'model:school'
+    'model:offering',
+    'model:school',
+    'model:course',
+    'model:session',
+    'model:mesh-descriptor'
   ]
 });
 

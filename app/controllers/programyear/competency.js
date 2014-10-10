@@ -47,10 +47,14 @@ export default Ember.ObjectController.extend({
       },
       add: function(competency){
         var self = this;
-        this.get('programYear.competencies').addObject(competency);
+        this.get('programYear.competencies').then(function(competencies){
+          competencies.addObject(competency);
+        });
         competency.get('children').then(function(competencies){
           competencies.forEach(function(competency){
-            self.get('programYear.competencies').addObject(competency);
+            self.get('programYear.competencies').then(function(competencies){
+              competencies.addObject(competency);
+            });
           });
         });
         this.set('programYear.isDirty', true);

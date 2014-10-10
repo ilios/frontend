@@ -18,7 +18,9 @@ export default Ember.Controller.extend({
           owningSchool: school
         });
         program.save().then(function(newProgram){
-          school.get('programs').pushObject(newProgram);
+          school.get('programs').then(function(programs){
+            programs.pushObject(newProgram);
+          });
           self.set('title', null);
           self.set('shortTitle', null);
           self.set('duration', 1);
