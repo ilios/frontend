@@ -7,7 +7,8 @@ moduleForModel('session', 'Session', {
   needs: [
     'model:course',
     'model:offering',
-    'model:user'
+    'model:user',
+    'model:instructor-group'
   ]
 });
 

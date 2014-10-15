@@ -45,7 +45,7 @@ test('badge value', function() {
     fillIn('.container .search-and-submit input', 'test.person@example.com');
 
     click('#available-directors .search-and-submit button').then(function(){
-      click('#available-directors li .add').then(function(){
+      click('#available-directors li .add:first').then(function(){
         equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '2');
       });
     });
@@ -60,11 +60,11 @@ test('test add single', function() {
 
   andThen(function() {
     equal(find('#selected-directors li').length, 1);
-    equal(find('#available-directors li.enabled').length, 1);
+    equal(find('#available-directors li.enabled').length, 2);
     equal(find('#available-directors li.disabled').length, 1);
     click('#available-directors li.enabled:eq(0) .add').then(function() {
       equal(find('#selected-directors li').length, 2);
-      equal(find('#available-directors li.enabled').length, 0);
+      equal(find('#available-directors li.enabled').length, 1);
     });
   });
 });

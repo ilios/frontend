@@ -3,6 +3,11 @@ var general = {
   'save': 'Save',
   'done': 'Done',
   'edit': 'Edit',
+  'remove': 'Remove',
+  'yes': 'Yes',
+  'no': 'No',
+  'undo': 'Undo',
+  'home': 'Home',
   'published': 'Published',
   'notPublished': 'Not Published',
   'competencies': 'Competencies',
@@ -13,6 +18,7 @@ var general = {
   'competency': 'Competency',
   'actions': 'Actions',
   'topics': 'Topics',
+  'email': 'Email',
   'meshTerms': 'MeSH Terms'
 };
 translations.general = general;
@@ -69,7 +75,7 @@ translations.programs = programs;
 var navigation = {
   'dashboard': 'Dashboard',
   'programs': 'Programs',
-  'instructors': 'Instructors',
+  'instructorGroups': 'Instructor Groups',
   'learnerGroups': 'Learner Group',
   'coursesSessions': 'Courses and Sessions',
   'logout': 'Logout',
@@ -86,5 +92,20 @@ var mesh = {
   'noResults': 'Your seach returned no results.',
 };
 translations.mesh = mesh;
+
+var instructorGroups = {
+  'members': 'Members',
+  'new': 'New Instructor Group',
+  'instructorName': 'Instructor Name',
+  'editingGroup': 'Editing {{title}}',
+  'addInstructor': 'Add Instructor',
+  'availalbeInstructors': 'Available Instructors',
+  'searchInstructors': 'Search Instructors',
+  'noSearchResults': 'Your seach returned no results.',
+  'confirmGroupRemovalTitle': 'Remove Instructor Group',
+  'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} instructor group?',
+  'relatedCourses': 'Related Courses'
+};
+translations.instructorGroups = instructorGroups;
 
 export default translations;

@@ -27,6 +27,10 @@ Router.map(function() {
       });
     });
   });
+  this.resource('instructorgroups', function(){
+    this.route('index');
+    this.route('group', { path: ':instructor_group_id'});
+  });
 });
 
 export default Router;

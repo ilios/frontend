@@ -16,7 +16,8 @@ moduleForModel('program-year', 'ProgramYear', {
     'model:school',
     'model:course',
     'model:session',
-    'model:mesh-descriptor'
+    'model:mesh-descriptor',
+    'model:instructor-group'
   ]
 });
 

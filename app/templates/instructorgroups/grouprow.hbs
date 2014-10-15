@@ -1,0 +1,31 @@
+
+<tr>
+  <td>
+    {{#if isNew}}
+      {{input value=title action='save'}}
+    {{else}}
+      {{#link-to 'instructorgroups.group' this}}{{title}}{{/link-to}}
+    {{/if}}
+  </td>
+  <td>{{users.length}}</td>
+  <td>{{courses.length}}</td>
+  <td>
+    {{#if isNew}}
+      <button {{action 'save'}}>{{t 'general.save'}}</button>
+    {{/if}}
+    {{#action-menu}}
+      <li>{{#link-to 'instructorgroups.group' this}}{{t 'general.edit'}}{{/link-to}}</li>
+      <li>
+        {{#modal-dialog
+          actionReceiver=confirmRemoveModal
+          titleTranslation="instructorGroups.confirmGroupRemovalTitle"
+          openDialogTextTranslation='general.remove'
+        }}
+          <p>{{t 'instructorGroups.confirmGroupRemovalText' titleBinding=title}}</p>
+          <button {{action 'removeGroup' this}}>{{t 'general.yes'}}</button>
+          <button {{action 'cancelRemoveGroup'}}>{{t 'general.no'}}</button>
+        {{/modal-dialog}}
+      </li>
+    {{/action-menu}}
+  </td>
+</tr>

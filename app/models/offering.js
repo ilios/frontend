@@ -5,6 +5,7 @@ var Offering = DS.Model.extend({
     end: DS.attr('date'),
     session: DS.belongsTo('session', {async: true}),
     users: DS.hasMany('user', {async: true}),
+    instructorGroups: DS.hasMany('instructor-group', {async: true}),
     title: function(){
         return this.get('session.title');
     }.property('session.title')

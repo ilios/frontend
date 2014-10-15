@@ -4,7 +4,13 @@ module.exports = function(app) {
         id: 0,
         title: 'First Test Session',
         course: 0,
-        offerings: [0,1,2,3,4]
+        offerings: [0,1,2,4]
+      },
+      {
+        id: 1,
+        title: 'Second Test Session',
+        course: 1,
+        offerings: [3]
       },
   ];
 

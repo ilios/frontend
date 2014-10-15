@@ -1,0 +1,17 @@
+{{input type='text' value=filter placeholder='Filter by title'}}
+<table class='grid-table'>
+  <thead>
+    <tr>
+      <th>{{t 'general.title'}}</th>
+      <th>{{t 'instructorGroups.members'}}</th>
+      <th>{{t 'instructorGroups.relatedCourses'}}</th>
+      <th>{{t 'general.actions'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each filteredContent}}
+      {{render "instructorgroups/grouprow" this}}
+    {{/each}}
+  </tbody>
+</table>
+<button {{action 'createNewGroup'}}>{{t 'instructorGroups.new'}}</button>

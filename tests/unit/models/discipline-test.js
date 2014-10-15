@@ -14,7 +14,8 @@ moduleForModel('discipline', 'Discipline', {
     'model:user',
     'model:competency',
     'model:objective',
-    'model:offering'
+    'model:offering',
+    'model:instructor-group'
   ]
 });
 
