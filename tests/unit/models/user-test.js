@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleForModel('user', 'User', {
-  needs: ['model:offering']
+  needs: ['model:offering', 'model:school']
 });
 
 test('it exists', function() {

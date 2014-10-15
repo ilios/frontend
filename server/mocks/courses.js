@@ -1,6 +1,4 @@
 module.exports = function(app) {
-  var express = require('express');
-  var coursesRouter = express.Router();
   var fixtures = [
       {
         id: 0,
@@ -8,16 +6,7 @@ module.exports = function(app) {
         sessions: [0]
       },
   ];
-
-  coursesRouter.get('/:id', function(req, res) {
-      if(req.params.id in fixtures){
-          res.send({"courses": fixtures[req.params.id]});
-      } else {
-          res.status(404).end();
-      }
-  });
-  coursesRouter.get('/', function(req, res) {
-    res.send({"courses": fixtures});
-  });
-  app.use('/api/courses', coursesRouter);
+  var createRouter = require('../helpers/createrouter.js');
+  var router = createRouter('course', fixtures);
+  app.use('/api/courses', router);
 };

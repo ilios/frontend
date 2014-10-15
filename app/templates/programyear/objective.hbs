@@ -1,0 +1,40 @@
+<tr {{bind-attr class="isActive:active isDirty:dirty"}}>
+  <td>
+    {{#if isEditing}}
+      {{view Ember.TextArea value=bufferedTitle}}
+    {{else}}
+      {{shortTitle}}
+      {{#if isShortTitle}}<span {{translateAttr title="programs.programYear.objectives.showFullTitle"}} class='clickable' {{action 'showFullTitle'}}>...</span>{{/if}}
+    {{/if}}
+  </td>
+  <td>
+    {{#if isEditing}}
+      {{view Ember.Select
+        optionLabelPath="content.title"
+        content=availableCompetencies
+        value=bufferedCompetency}}
+    {{else}}
+  {{competency.title}}
+    {{/if}}
+  </td>
+  <td>
+    {{#if isEditing}}
+      {{render 'mesh/picker' this}}
+    {{else}}
+      <ul>
+        {{#each linkedMeshTerms}}
+          <li>{{title}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </td>
+  <td>
+    {{#if isEditing}}
+      <button {{action 'doneEditing'}}>Done</button>
+    {{else}}
+      {{#action-menu}}
+        <li {{action 'edit'}}>Edit</li>
+      {{/action-menu}}
+    {{/if}}
+  </td>
+</tr>

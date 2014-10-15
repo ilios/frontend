@@ -12,7 +12,10 @@
     "ember-qunit": "0.1.8",
     "ember-qunit-notifications": "0.0.4",
     "qunit": "~1.15.0",
-    "moment": "2.8.3"
+    "moment": "2.8.3",
+    "cldr": "~1.0.2",
+    "ember-i18n": "~2.2.2",
+    "ember-breadcrumbs": "~0.0.2"
   },
   "devDependencies": {
     "bourbon": "3.2.0",

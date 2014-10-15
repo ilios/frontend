@@ -1,0 +1,15 @@
+<li {{bind-attr class="visible:visible:hidden"}}>
+  {{#if selected}}
+    <span {{translateAttr title="programs.programYear.removeCompetency"}} class='remove' {{action "remove" this}}>{{fa-icon "times-circle"}}</span>
+  {{else}}
+    {{fa-icon "circle"}}
+  {{/if}}
+  {{title}}
+  {{#if childSelected}}
+    <ul>
+      {{#each children}}
+        {{render 'programyear/competency/selected' this}}
+      {{/each}}
+    <ul>
+  {{/if}}
+</li>

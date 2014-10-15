@@ -1,0 +1,18 @@
+<section class='fullwidth'>
+  <table class="grid-table">
+    <thead>
+      <tr>
+        <th>{{t 'general.title'}}</th>
+        <th>{{t 'general.competency'}}</th>
+        <th>{{t 'general.meshTerms'}}</th>
+        <th>{{t 'general.actions'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each}}
+        {{render 'programyear/objective' this}}
+      {{/each}}
+    </tbody>
+  </table>
+  <button {{action 'createNew'}}>{{t "programs.programYear.objectives.new"}}</button>
+</section>

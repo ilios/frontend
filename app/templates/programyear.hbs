@@ -1,0 +1,38 @@
+<h4 id='program-year-title'>{{program.title}} {{academicYear}} {{t 'programs.programYear.classOf' yearBinding=classOfYear}}</h3>
+<div class="accordion-tabs-minimal">
+  <ul>
+    <li class="tab-header">
+      {{#link-to 'programyear.managecompetencies' program this class='tab-link'}}
+        {{t "general.competencies"}} <span class="badge">{{competencies.length}}</span>
+      {{/link-to}}
+    </li>
+    <li class="tab-header">
+      {{#link-to 'programyear.manageobjectives' program this class='tab-link'}}
+        {{t "general.objectives"}} <span class="badge">{{objectives.length}}</span>
+      {{/link-to}}
+    </li>
+    <li class="tab-header">
+      {{#link-to 'programyear.managedirectors' program this class='tab-link'}}
+        {{t "general.directors"}} <span class="badge">{{directors.length}}</span>
+      {{/link-to}}
+    </li>
+    <li class="tab-header">
+      {{#link-to 'programyear.managetopics' program this class='tab-link'}}
+        {{t "general.topics"}} <span class="badge">{{topics.length}}</span>
+      {{/link-to}}
+    </li>
+    <li class="tab-header">
+      {{#link-to 'programyear.managestewardingschools' program this class='tab-link'}}
+        {{t "programs.programYear.stewardingSchools"}} <span class="badge">{{stewardingSchools.length}}</span>
+      {{/link-to}}
+    </li>
+  </ul>
+  <div class="tab-content">
+    {{outlet}}
+  </div>
+</div>
+
+{{#if isDirty}}
+  <hr />
+  <button {{action 'save' this}}>{{t "general.save"}}</button>
+{{/if}}

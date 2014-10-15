@@ -1,20 +1,20 @@
 <header class="navigation">
   <div class="navigation-wrapper">
     {{#link-to "dashboard" classNames="logo"}}
-        <img src='images/ilios-logo.png' alt="Ilios Logo" />
+        <img src='images/ilios-logo.png' {{translateAttr alt="navigation.logo"}} {{translateAttr title="navigation.dashboard"}} />
     {{/link-to}}
     <a href="" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
     <div class="nav">
       <ul id="navigation-menu">
-        <li class="nav-link">{{#link-to "dashboard"}}Home{{/link-to}}</li>
-        <li class="nav-link"><a href="/ilios.php/program_management">Programs</a></li>
-        <li class="nav-link"><a href="/ilios.php/instructor_group_management">Instructors</a></li>
-        <li class="nav-link"><a href="/ilios.php/group_management">Learner Groups</a></li>
-        <li class="nav-link"><a href="/ilios.php/course_management">Courses and Sessions</a></li>
+        <li class="nav-link">{{#link-to "dashboard"}}{{t "navigation.dashboard"}}{{/link-to}}</li>
+          <li class="nav-link">{{#link-to "programs"}}{{t "navigation.programs"}}{{/link-to}}</li>
+        <li class="nav-link"><a href="/ilios.php/instructor_group_management">{{t "navigation.instructors"}}</a></li>
+        <li class="nav-link"><a href="/ilios.php/group_management">{{t "navigation.learnerGroups"}}</a></li>
+        <li class="nav-link"><a href="/ilios.php/course_management">{{t "navigation.coursesSessions"}}</a></li>
       </ul>
     </div>
     <div class="navigation-tools">
-      <a href="ilios.php/authentication_controller?logout=yes" class="authentication">Log Out</a>
+      <a href="ilios.php/authentication_controller?logout=yes" class="authentication">{{t "navigation.logout"}}</a>
     </div>
   </div>
 </header>

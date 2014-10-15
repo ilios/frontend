@@ -1,0 +1,16 @@
+<section id='selected-topics' class='halfwidth'>
+<h3>{{t "programs.programYear.topics.selected"}}</h3>
+<ul>
+  {{#each}}
+    {{render 'programyear/topic/selected' this}}
+  {{/each}}
+</ul>
+</section>
+<section id='available-topics' class='halfwidth'>
+<h3>{{t "programs.programYear.topics.available"}}</h3>
+<ul>
+  {{#each}}
+    {{render 'programyear/topic/all' this}}
+  {{/each}}
+</ul>
+</section>

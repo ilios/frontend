@@ -1,0 +1,24 @@
+.add {
+  color: $add-color;
+}
+.remove {
+  color: $remove-color;
+}
+.disabled {
+  color: lighten($base-font-color, 40);
+}
+.enabled {
+  color: $base-font-color;
+}
+.hidden {
+  display: none;
+}
+.visible {
+  display: '';
+}
+.dirty {
+  color: $base-accent-color;
+}
+.clickable {
+  cursor: pointer;
+}

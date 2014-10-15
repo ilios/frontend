@@ -26,6 +26,7 @@
     "cors": "^2.4.1",
     "ember-cli": "0.0.44",
     "ember-cli-ember-data": "0.1.0",
+    "ember-cli-font-awesome": "0.0.4",
     "ember-cli-ic-ajax": "0.1.1",
     "ember-cli-inject-live-reload": "^1.0.2",
     "ember-cli-qunit": "0.1.0",

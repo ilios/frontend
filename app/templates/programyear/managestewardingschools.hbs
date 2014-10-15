@@ -1,0 +1,17 @@
+<section id='selected-schools' class='halfwidth'>
+<h3>{{t "programs.programYear.stewardingSchool.selected"}}</h3>
+<ul>
+  <li>{{fa-icon "circle"}}{{schoolTitle}}</li>
+  {{#each}}
+    {{render 'programyear/stewardingschool/selected' this}}
+  {{/each}}
+</ul>
+</section>
+<section id='available-schools' class='halfwidth'>
+<h3>{{t "programs.programYear.stewardingSchool.available"}}</h3>
+<ul>
+  {{#each}}
+    {{render 'programyear/stewardingschool/all' this}}
+  {{/each}}
+</ul>
+</section>
