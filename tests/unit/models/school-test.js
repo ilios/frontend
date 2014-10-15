@@ -5,7 +5,14 @@ import {
 
 moduleForModel('school', 'School', {
   // Specify the other units that are required for this test.
-  needs: ['model:program', 'model:program-year']
+  needs: [
+    'model:program',
+    'model:program-year',
+    'model:user',
+    'model:competency',
+    'model:discipline',
+    'model:objective'
+  ]
 });
 
 test('it exists', function() {

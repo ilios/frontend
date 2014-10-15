@@ -5,7 +5,14 @@ import {
 
 moduleForModel('competency', 'Competency', {
   // Specify the other units that are required for this test.
-  needs: ['model:school', 'model:program-year']
+  needs: [
+    'model:program',
+    'model:school',
+    'model:program-year',
+    'model:user',
+    'model:discipline',
+    'model:objective'
+  ]
 });
 
 test('it exists', function() {

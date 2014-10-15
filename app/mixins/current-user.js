@@ -1,11 +1,12 @@
 import Ember from 'ember';
+import config from 'ilios/config/environment';
 
 export default Ember.Mixin.create({
     currentUser: null,
     beforeModel: function() {
         var self = this;
-        var url = window.IliosENV.adapterHost + '/' +
-            window.IliosENV.adapterNamespace +
+        var url = config.adapterHost + '/' +
+            config.adapterNamespace +
             '/currentsession';
         return Ember.$.getJSON(url).then(function(data) {
             var promise;

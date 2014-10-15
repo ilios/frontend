@@ -5,7 +5,13 @@ import {
 
 moduleForModel('mesh-descriptor', 'MeshDescriptor', {
   // Specify the other units that are required for this test.
-  needs: ['model:objective']
+  needs: [
+    'model:objective',
+    'model:competency',
+    'model:course',
+    'model:session',
+    'model:program-year'
+  ]
 });
 
 test('it exists', function() {

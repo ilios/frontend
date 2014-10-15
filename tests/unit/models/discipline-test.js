@@ -10,7 +10,11 @@ moduleForModel('discipline', 'Discipline', {
     'model:course',
     'model:program-year',
     'model:session',
-    'model:program'
+    'model:program',
+    'model:user',
+    'model:competency',
+    'model:objective',
+    'model:offering'
   ]
 });
 

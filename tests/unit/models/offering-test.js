@@ -5,7 +5,12 @@ import {
 import Ember from 'ember';
 
 moduleForModel('offering', 'Offering', {
-  needs: ['model:session', 'model:course', 'model:user']
+  needs: [
+    'model:session',
+    'model:course',
+    'model:user',
+    'model:school'
+  ]
 });
 
 test('it exists', function() {

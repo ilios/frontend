@@ -1,17 +1,14 @@
 import Ember from 'ember';
-import Application from 'ilios/app';
-import Router from 'ilios/router';
 import customHelpers from './custom-helpers';
+import Application from '../../app';
+import Router from '../../router';
+import config from '../../config/environment';
 
 export default function startApp(attrs) {
   var App;
 
-  var attributes = Ember.merge({
-    // useful Test defaults
-    rootElement: '#ember-testing',
-    LOG_ACTIVE_GENERATION: false,
-    LOG_VIEW_LOOKUPS: false
-  }, attrs); // but you can override;
+  var attributes = Ember.merge({}, config.APP);
+  attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
 
   Router.reopen({
     location: 'none'
