@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import CurrentUser from '../../mixins/current-user';
 
-export default  Ember.Route.extend(CurrentUser, {
+export default  Ember.Route.extend({
   model: function(){
     return this.modelFor('programs').get('programs');
   }

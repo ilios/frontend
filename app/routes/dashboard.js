@@ -1,7 +1,6 @@
 import Ember from "ember";
-import CurrentUser from '../mixins/current-user';
 
-var DashboardRoute = Ember.Route.extend(CurrentUser, {
+var DashboardRoute = Ember.Route.extend({
 	model: function() {
 		return this.get('currentUser').get('events');
 	},
