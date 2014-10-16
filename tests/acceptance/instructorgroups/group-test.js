@@ -30,6 +30,25 @@ test('breadcrumbs', function() {
   });
 });
 
+test('edit title', function() {
+  expect(4);
+  visit('/instructorgroups/0').then(function(){
+    var input = find('.container input:eq(0)');
+
+    equal(input.length, 1);
+    equal(input.val(), 'First Instructor Group');
+    var newTitle = 'Title Changed';
+    input.val(newTitle);
+    input.trigger('change');
+    click('button:contains("Save")');
+    andThen(function() {
+      equal(input.val(), newTitle);
+      equal(find('.container h3:first').text().trim(), 'Editing ' + newTitle);
+    });
+  });
+
+});
+
 test('list instructors', function() {
   expect(6);
   visit('/instructorgroups/1');
@@ -102,5 +121,30 @@ test('filter courses', function() {
     fillIn('.container fieldset:eq(1) input:eq(0)', 'Second');
     equal(find('.container fieldset:eq(1) li').length, 1);
     equal(find('.container fieldset:eq(1) li:eq(0)').text().trim(), 'Second Test Course');
+  });
+});
+
+
+/**
+ * This test is for a bug discovered that when changing a title and then navigating to another group
+ * the title for the first group would be in the second grouped edit input
+ */
+test('non sticky title edit', function() {
+  expect(4);
+  visit('/instructorgroups/0').then(function(){
+    var input = find('.container input:eq(0)');
+
+    equal(input.length, 1);
+    equal(input.val(), 'First Instructor Group');
+    var newTitle = 'Title Changed';
+    input.val(newTitle);
+    input.trigger('change');
+    click('button:contains("Save")');
+    click('.breadcrumbs a:contains("Instructor Groups")');
+    click('.container table:first tbody tr:first td:eq(0) a');
+    andThen(function() {
+      equal(find('.container input:eq(0)').val(), 'Second Instructor Group');
+      equal(find('.container h3:first').text().trim(), 'Editing Second Instructor Group');
+    });
   });
 });

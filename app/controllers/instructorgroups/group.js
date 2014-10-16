@@ -1,8 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  breadCrumb: Ember.computed.oneWay('model.title'),
-  bufferedTitle: Ember.computed.oneWay('model.title'),
+  breadCrumb: Ember.computed.alias('title'),
+  //buffer the title so the input doesn't make the breadcrumb and page title change
+  bufferedTitle: '',
+  setBufferedTitle: function(){
+    this.set('bufferedTitle', this.get('title'));
+  }.observes('title'),
   isDirty: false,
   userFilter: '',
   courseFilter: '',
@@ -71,7 +75,8 @@ export default Ember.ObjectController.extend({
       var bufferedTitle = this.get('bufferedTitle').trim();
       var instructorGroup = this.get('model');
       instructorGroup.set('title', bufferedTitle);
-      instructorGroup.save().then(function(){
+      instructorGroup.save().then(function(instructorGroup){
+        self.set('model', instructorGroup);
         self.set('isDirty', false);
       });
     }
