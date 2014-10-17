@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    //@todo user should be able to save their prefered dashboard
     afterModel: function() {
-        this.transitionTo('dashboard.week');
+        var preferedDashboard = this.get('currentUser.preferedDashboard');
+        this.transitionTo(preferedDashboard);
     }
 });

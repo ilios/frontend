@@ -25,7 +25,7 @@ header.navigation {
   }
 
   .logo {
-    float: left;    
+    float: left;
     max-height: $navigation-height;
     padding-left: $navigation-padding;
     padding-right: 2em;
@@ -68,7 +68,7 @@ header.navigation {
     }
   }
 
-  ul#navigation-menu {    
+  ul#navigation-menu {
     -webkit-transform-style: preserve-3d; // stop webkit flicker
     clear: both;
     display: none;
@@ -166,7 +166,7 @@ header.navigation {
         content: '⟩';
         position: absolute;
         right: $navigation-submenu-padding / 2;
-      }      
+      }
     }
 
     &:hover > .submenu {
@@ -248,15 +248,30 @@ header.navigation {
     }
   }
 
+  div.user {
+    margin-top: 1.2em;
+    float: left;
+    @include transition (all 0.2s ease-in-out);
+    display: inline;
+    color: white;
+    font-size: .8em;
+    font-weight: 800;
+    padding: .4em .5em;
+
+    @include media($large-screen) {
+      padding: .5em 1em;
+    }
+  }
+
   a.authentication {
     margin-top: 1.2em;
     float: right;
     @include transition (all 0.2s ease-in-out);
     display: inline;
     background: $navigation-nav-button-background;
-    border-radius: $base-border-radius; 
+    border-radius: $base-border-radius;
     color: white;
-    font-size: .8em;  
+    font-size: .8em;
     font-weight: 800;
     text-transform: uppercase;
     padding: .4em .5em;

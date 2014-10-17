@@ -5,7 +5,6 @@ var DashboardDayController = Ember.ArrayController.extend({
     queryParams: ['year','day'],
     year: moment().format('YYYY'),
     day: moment().format('DDD'),
-    currentUser: null,
     calendarEvents: function(){
         var self = this;
         return this.get('model').filter(function(event){

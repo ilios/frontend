@@ -5,7 +5,6 @@ var DashboardWeekController = Ember.ArrayController.extend({
     queryParams: ['year','week'],
     year: moment().format('YYYY'),
     week: moment().format('W'),
-    currentUser: null,
     calendarEvents: function(){
         var self = this;
         return this.get('model').filter(function(event){

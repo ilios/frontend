@@ -5,7 +5,6 @@ import Ember from "ember";
 var DashboardYearController = Ember.ArrayController.extend({
     queryParams: ['year'],
     year: moment().format('YYYY'),
-    currentUser: null,
     calendarEvents: function(){
         var self = this;
         return this.get('model').filter(function(event){
