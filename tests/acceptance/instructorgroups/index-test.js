@@ -69,6 +69,22 @@ test('creategroup', function() {
   });
 });
 
+test('remove new group', function() {
+  expect(5);
+  visit('/instructorgroups/index');
+
+  andThen(function() {
+    click('button:contains("New Instructor Group")');
+    equal(find('.container table:first tbody tr').length, 4);
+    click('button:contains("Remove")').then(function(){
+      equal(find('.container table:first tbody tr').length, 3);
+      equal(find('.container table:first tbody tr:eq(0) td:first').text().trim(), 'First Instructor Group');
+      equal(find('.container table:first tbody tr:eq(1) td:first').text().trim(), 'Second Instructor Group');
+      equal(find('.container table:first tbody tr:eq(2) td:first').text().trim(), 'Third Instructor Group');
+    });
+  });
+});
+
 test('filtergroups', function() {
   expect(3);
   visit('/instructorgroups/index');
