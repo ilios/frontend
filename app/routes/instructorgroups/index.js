@@ -1,11 +1,7 @@
 import Ember from 'ember';
-import CurrentUser from '../../mixins/current-user';
 
-export default  Ember.Route.extend(CurrentUser, {
+export default  Ember.Route.extend({
   model: function() {
-    //@todo the current school obviously shouldn't be a constant
-    return this.store.find('school', 0).then(function(school){
-      return school.get('instructorGroups');
-    });
+    return this.get('currentUser.currentSchool.instructorGroups');
   }
 });
