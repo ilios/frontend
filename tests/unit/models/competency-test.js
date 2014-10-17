@@ -11,7 +11,8 @@ moduleForModel('competency', 'Competency', {
     'model:program-year',
     'model:user',
     'model:discipline',
-    'model:objective'
+    'model:objective',
+    'model:instructor-group'
   ]
 });
 

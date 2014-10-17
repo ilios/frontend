@@ -5,7 +5,8 @@ module.exports = function(app) {
       title: 'First Test School',
       iliosAdministratorEmail: 'test@example.com',
       isDeleted: false,
-      programs: [0,1]
+      programs: [0,1],
+      instructorGroups: [0,1,2]
     },
     {
       id: 1,

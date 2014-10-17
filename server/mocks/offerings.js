@@ -6,7 +6,8 @@ module.exports = function(app) {
       start: moment().toDate(),
       end: moment().add(1, 'hours').toDate(),
       session: 0,
-      users: [0]
+      users: [0],
+      instructorGroups: [2]
     },
     {
       id: 1,
@@ -26,8 +27,9 @@ module.exports = function(app) {
       id: 3,
       start: moment().subtract(1, 'year').toDate(),
       end: moment().subtract(1, 'year').add(1, 'hours').toDate(),
-      session: 0,
-      users: [0]
+      session: 1,
+      users: [0],
+      instructorGroups: [2]
     },
     {
       id: 4,

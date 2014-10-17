@@ -22,6 +22,16 @@ module.exports = function(app) {
         ucUid: '123456798',
         schools: []
       },
+      {
+        id: 2,
+        firstName: 'Cool',
+        lastName: 'Guy',
+        middleName: 'est',
+        email: 'coolguy@example.com',
+        enabled: true,
+        ucUid: '123456777',
+        schools: []
+      },
   ];
 
   var createRouter = require('../helpers/createrouter.js');

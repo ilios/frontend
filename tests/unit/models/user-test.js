@@ -9,7 +9,8 @@ moduleForModel('user', 'User', {
     'model:school',
     'model:session',
     'model:program',
-    'model:program-year'
+    'model:program-year',
+    'model:instructor-group'
   ]
 });
 

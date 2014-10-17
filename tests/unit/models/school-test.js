@@ -11,7 +11,9 @@ moduleForModel('school', 'School', {
     'model:user',
     'model:competency',
     'model:discipline',
-    'model:objective'
+    'model:objective',
+    'model:offering',
+    'model:instructor-group'
   ]
 });
 

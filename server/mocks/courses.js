@@ -5,6 +5,11 @@ module.exports = function(app) {
         title: 'First Test Course',
         sessions: [0]
       },
+      {
+        id: 1,
+        title: 'Second Test Course',
+        sessions: [1]
+      },
   ];
   var createRouter = require('../helpers/createrouter.js');
   var router = createRouter('course', fixtures);

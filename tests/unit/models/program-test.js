@@ -12,7 +12,8 @@ moduleForModel('program', 'Program', {
     'model:competency',
     'model:discipline',
     'model:objective',
-    'model:offering'
+    'model:offering',
+    'model:instructor-group'
   ]
 });
 

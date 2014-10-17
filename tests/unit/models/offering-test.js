@@ -9,7 +9,8 @@ moduleForModel('offering', 'Offering', {
     'model:session',
     'model:course',
     'model:user',
-    'model:school'
+    'model:school',
+    'model:instructor-group'
   ]
 });
 
