@@ -30,17 +30,22 @@ export default Ember.ArrayController.extend({
   }.property('arrangedContent.@each', 'filter'),
   currentSchoolObserver: function(){
     var self = this;
-    this.get('currentUser.currentSchool.instructorGroups').then(function(groups){
-      self.set('model', groups);
+    this.get('currentUser.currentSchool').then(function(school){
+      school.get('instructorGroups').then(function(groups){
+        self.set('model', groups);
+      });
     });
   }.observes('currentUser.currentSchool'),
   actions: {
     createNewGroup: function(){
-      var instructorGroup = this.store.createRecord('instructor-group', {
-        title: null,
-        school: this.get('currentUser.currentSchool'),
+      var self = this;
+      this.get('currentUser.currentSchool').then(function(currentSchool){
+        var instructorGroup = self.store.createRecord('instructor-group', {
+          title: null,
+          school: currentSchool,
+        });
+        self.get('model').pushObject(instructorGroup);
       });
-      this.get('model').pushObject(instructorGroup);
     }
   }
 });

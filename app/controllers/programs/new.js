@@ -9,22 +9,25 @@ export default Ember.Controller.extend({
   actions: {
     save: function() {
       var self = this;
-      var program = this.store.createRecord('program', {
-        title: this.get('title'),
-        shortTitle: this.get('shortTitle'),
-        duration: this.get('duration'),
-        publishedAsTbd: false,
-        owningSchool: this.get('currentUser.currentSchool')
-      });
-      program.save().then(function(newProgram){
-        self.get('currentUser.currentSchool').get('programs').then(function(programs){
-          programs.pushObject(newProgram);
+      this.get('currentSchool').then(function(currentSchool){
+        var program = self.store.createRecord('program', {
+          title: self.get('title'),
+          shortTitle: self.get('shortTitle'),
+          duration: self.get('duration'),
+          publishedAsTbd: false,
+          owningSchool: currentSchool
         });
-        self.set('title', null);
-        self.set('shortTitle', null);
-        self.set('duration', 1);
-        self.transitionToRoute('programs');
+        program.save().then(function(newProgram){
+          currentSchool.get('programs').then(function(programs){
+            programs.pushObject(newProgram);
+          });
+          self.set('title', null);
+          self.set('shortTitle', null);
+          self.set('duration', 1);
+          self.transitionToRoute('programs');
+        });
       });
+
     }
   }
 });

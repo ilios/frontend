@@ -5,8 +5,10 @@ export default Ember.ArrayController.extend({
   sortProperties: ['title'],
   currentSchoolObserver: function(){
     var self = this;
-    this.get('currentUser.currentSchool.programs').then(function(programs){
-      self.set('model', programs);
+    this.get('currentUser.currentSchool').then(function(school){
+      school.get('programs').then(function(programs){
+        self.set('model', programs);
+      });
     });
   }.observes('currentUser.currentSchool')
 });
