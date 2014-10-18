@@ -15,5 +15,5 @@ export default Ember.ObjectProxy.extend({
     }
   }.observes('content').on('init'),
   //will be customizable
-  preferedDashboard: 'dashboard.week'
+  preferredDashboard: 'dashboard.week'
 });
