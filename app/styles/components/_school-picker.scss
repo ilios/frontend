@@ -1,0 +1,10 @@
+.school-picker{
+  $horizontal-bar-mode: $large-screen;
+  @include media ($horizontal-bar-mode) {
+    @include span-columns(12);
+    select{
+      @include inline-block;
+      float: right;
+    }
+  }
+}

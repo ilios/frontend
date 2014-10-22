@@ -66,3 +66,27 @@ test('create program /programs.index', function() {
     equal(currentPath(), 'programs.new');
   });
 });
+
+test('change school', function() {
+  expect(6);
+  visit('/programs');
+  andThen(function() {
+    equal(find('header .user').text().trim(), 'Test User First School');
+    var selector = '.school-picker select';
+    equal(find(selector).length, 1);
+    find(selector).find('option').filter(function() {
+      return this.text === "Second School";
+    }).prop('selected', true);
+    triggerEvent(selector, 'change').then(function(){
+      equal(find('.container table:first tbody tr').length, 0);
+      equal(find('header .user').text().trim(), 'Test User Second School');
+    });
+    find(selector).find('option').filter(function() {
+      return this.text === "First School";
+    }).prop('selected', true);
+    triggerEvent(selector, 'change').then(function(){
+      equal(find('.container table:first tbody tr').length, 2);
+      equal(find('header .user').text().trim(), 'Test User First School');
+    });
+  });
+});

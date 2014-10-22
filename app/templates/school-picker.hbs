@@ -1,0 +1,8 @@
+{{#if currentUser.canChangeSchool}}
+  {{view Ember.Select
+    optionLabelPath="content.title"
+    content=currentUser.schools
+    value=currentSchool
+    selection=selectedSchool
+  }}
+{{/if}}

@@ -12,6 +12,7 @@ var User = DS.Model.extend({
   otherId:  DS.attr('string'),
   offerings: DS.hasMany('offering', {async: true}),
   schools: DS.hasMany('school', {async: true}),
+  primarySchool: DS.belongsTo('school', {async: true}),
   fullName: function() {
       return this.get('firstName') + ' ' + this.get('lastName');
   }.property('firstName', 'lastName'),

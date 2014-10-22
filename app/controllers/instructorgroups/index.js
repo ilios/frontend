@@ -17,7 +17,9 @@ export default Ember.ArrayController.extend({
     var filter = this.get('filter');
     var exp = new RegExp(filter, 'gi');
     var groups = this.get('arrangedContent');
-
+    if(groups == null){
+      return Ember.A();
+    }
     return groups.filter(function(group) {
       if(group.get('title') === null){
         return true;
@@ -26,13 +28,24 @@ export default Ember.ArrayController.extend({
     });
 
   }.property('arrangedContent.@each', 'filter'),
+  currentSchoolObserver: function(){
+    var self = this;
+    this.get('currentUser.currentSchool').then(function(school){
+      school.get('instructorGroups').then(function(groups){
+        self.set('model', groups);
+      });
+    });
+  }.observes('currentUser.currentSchool'),
   actions: {
     createNewGroup: function(){
-      var instructorGroup = this.store.createRecord('instructor-group', {
-        title: null,
-        school: this.get('school'),
+      var self = this;
+      this.get('currentUser.currentSchool').then(function(currentSchool){
+        var instructorGroup = self.store.createRecord('instructor-group', {
+          title: null,
+          school: currentSchool,
+        });
+        self.get('model').pushObject(instructorGroup);
       });
-      this.get('model').pushObject(instructorGroup);
     }
   }
 });

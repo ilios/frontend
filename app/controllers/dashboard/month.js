@@ -5,7 +5,6 @@ var DashboardMonthController = Ember.ArrayController.extend({
     queryParams: ['year','month'],
     year: moment().format('YYYY'),
     month: moment().format('M'),
-    currentUser: null,
     calendarEvents: function(){
         var self = this;
         return this.get('model').filter(function(event){

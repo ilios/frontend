@@ -5,20 +5,20 @@ export default Ember.Controller.extend({
   shortTitle: null,
   duration: 1,
   durationOptions: [1,2,3,4,5,6,7,8,9,10],
-  currentSchool: null,
+  currentSchool: Ember.computed.alias('currentUser.currentSchool'),
   actions: {
     save: function() {
       var self = this;
-      this.store.find('school', this.get('currentSchool').get('id')).then(function(school){
+      this.get('currentSchool').then(function(currentSchool){
         var program = self.store.createRecord('program', {
           title: self.get('title'),
           shortTitle: self.get('shortTitle'),
           duration: self.get('duration'),
           publishedAsTbd: false,
-          owningSchool: school
+          owningSchool: currentSchool
         });
         program.save().then(function(newProgram){
-          school.get('programs').then(function(programs){
+          currentSchool.get('programs').then(function(programs){
             programs.pushObject(newProgram);
           });
           self.set('title', null);
@@ -27,6 +27,7 @@ export default Ember.Controller.extend({
           self.transitionToRoute('programs');
         });
       });
+
     }
   }
 });
