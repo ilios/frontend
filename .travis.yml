@@ -20,3 +20,8 @@ before_script:
 
 script:
   - ember test
+
+#encrypted the IRC room chat.freenode.net##ilios so that it doesn't run on pull requests
+notifications:
+  irc:
+    secure: CNNvi0C+FdiVIEXJmiF0QbpsJPkjV4r83EFUhJepvk8t2kRDMFg1ya+mZinGZ8s0Wgi9d6vsu9+2deb82va59reM/lqItj+oSYEHpW9zq6QZUJ27guyAFzqCKW1JuyPQB0SQ74Jh/jD+iAAj+ho/5Y/3I+0fNaq6+yi6RrI0VeA=
