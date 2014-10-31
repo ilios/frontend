@@ -39,15 +39,25 @@ export default Ember.ObjectController.extend({
     edit: function(){
       this.set('isEditing', true);
     },
+    /**
+     * Save the program year and cohort
+     * Save the program year first so the cohort save sends the correct id in
+     * case the program year is new.
+     */
     save: function(){
       var self = this;
       var bufferedAcademicYear = this.get('bufferedAcademicYear').trim();
       var programYear = this.get('model');
       programYear.set('startYear', bufferedAcademicYear.substring(0,4));
-      programYear.save().then(function(){
-        if(!self.get('isDestroyed')){
-          self.set('isEditing', false);
-        }
+      self.get('model.cohort').then(function(cohort){
+        programYear.save().then(function(){
+          cohort.set('programYear', programYear);
+          cohort.save().then(function(){
+            if(!self.get('isDestroyed')){
+              self.set('isEditing', false);
+            }
+          });
+        });
       });
     }
   }

@@ -31,6 +31,10 @@ Router.map(function() {
     this.route('index');
     this.route('group', { path: ':instructor_group_id'});
   });
+  this.resource('learnergroups', function(){
+    this.route('index');
+    this.route('group', { path: ':learner_group_id'});
+  });
 });
 
 export default Router;

@@ -12,7 +12,8 @@ moduleForModel('competency', 'Competency', {
     'model:user',
     'model:discipline',
     'model:objective',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:cohort'
   ]
 });
 

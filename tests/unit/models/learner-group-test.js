@@ -3,20 +3,17 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('discipline', 'Discipline', {
+moduleForModel('learner-group', 'LearnerGroup', {
   // Specify the other units that are required for this test.
   needs: [
-    'model:school',
-    'model:course',
-    'model:program-year',
-    'model:session',
-    'model:program',
+    'model:cohort',
     'model:user',
-    'model:competency',
-    'model:objective',
-    'model:offering',
     'model:instructor-group',
-    'model:cohort'
+    'model:offering',
+    'model:program-year',
+    'model:course',
+    'model:school',
+    'model:session',
   ]
 });
 

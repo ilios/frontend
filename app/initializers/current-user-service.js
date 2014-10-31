@@ -21,7 +21,10 @@ export default {
           container.lookup('store:main').find('user', data.currentsession.userId).then(function(user){
             //set the cotent property on the current user which allows
             //it to work as an ObjectProxy for the user model
-            var CurrentUserService = CurrentUser.extend({ content: user});
+            var CurrentUserService = CurrentUser.extend({
+                content: user,
+                store: container.lookup('store:main')
+            });
 
             application.register('user:current', CurrentUserService);
             application.inject('route', 'currentUser', 'user:current');

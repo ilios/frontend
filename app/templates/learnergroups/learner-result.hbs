@@ -1,0 +1,8 @@
+<li {{bind-attr class="selected:disabled:enabled"}}>
+  {{#unless selected}}
+    <span {{translateAttr title="learnerGroups.add"}} class='add' {{action "addLearner" this}}>{{fa-icon "plus-circle"}}</span>
+  {{else}}
+    {{fa-icon "circle"}}
+  {{/unless}}
+  {{fullName}} {{email}}
+</li>

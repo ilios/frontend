@@ -19,7 +19,9 @@ var general = {
   'actions': 'Actions',
   'topics': 'Topics',
   'email': 'Email',
-  'meshTerms': 'MeSH Terms'
+  'cohort': 'Cohort',
+  'meshTerms': 'MeSH Terms',
+  'members': 'Menbers'
 };
 translations.general = general;
 
@@ -76,7 +78,7 @@ var navigation = {
   'dashboard': 'Dashboard',
   'programs': 'Programs',
   'instructorGroups': 'Instructor Groups',
-  'learnerGroups': 'Learner Group',
+  'learnerGroups': 'Learner Groups',
   'coursesSessions': 'Courses and Sessions',
   'logout': 'Logout',
   'logo': 'Ilios Logo'
@@ -94,7 +96,6 @@ var mesh = {
 translations.mesh = mesh;
 
 var instructorGroups = {
-  'members': 'Members',
   'new': 'New Instructor Group',
   'instructorName': 'Instructor Name',
   'editingGroup': 'Editing {{title}}',
@@ -107,5 +108,20 @@ var instructorGroups = {
   'relatedCourses': 'Related Courses'
 };
 translations.instructorGroups = instructorGroups;
+
+var learnerGroups = {
+  'learners': 'Learners',
+  'new': 'New Learner Group',
+  'learnerName': 'Learner Name',
+  'editingGroup': 'Editing {{title}}',
+  'addLearner': 'Add Learner',
+  'list': 'All Groups',
+  'confirmGroupRemovalTitle': 'Remove Learner Group',
+  'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} learner group?',
+  'relatedCourses': 'Related Courses',
+  'noGroups': 'There are no learner groups in this cohort.',
+  'selectCohort': 'Please Select a Cohort'
+};
+translations.learnerGroups = learnerGroups;
 
 export default translations;

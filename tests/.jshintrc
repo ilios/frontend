@@ -45,7 +45,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "checkBreadcrumbs"
+    "checkBreadcrumbs",
+    "pickOption"
   ],
   "node": false,
   "browser": false,

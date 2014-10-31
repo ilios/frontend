@@ -51,27 +51,29 @@ test('program details /programs.program.index', function() {
 });
 
 test('program list /programs.program.index', function() {
-  expect(14);
+  expect(16);
   visit('/programs/0/index');
 
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
     equal(find('td:first', firstProgramYearRow).text().trim(), '2013 - 2014');
-    equal(find('td:eq(1)', firstProgramYearRow).text().trim().substring(0,1), '3');
-    equal(find('td:eq(2)', firstProgramYearRow).text().trim().substring(0,1), '2');
-    equal(find('td:eq(3)', firstProgramYearRow).text().trim().substring(0,1), '1');
-    equal(find('td:eq(4)', firstProgramYearRow).text().trim().substring(0,1), '2');
+    equal(find('td:eq(1)', firstProgramYearRow).text().trim(), 'Class of 2017');
+    equal(find('td:eq(2)', firstProgramYearRow).text().trim().substring(0,1), '3');
+    equal(find('td:eq(3)', firstProgramYearRow).text().trim().substring(0,1), '2');
+    equal(find('td:eq(4)', firstProgramYearRow).text().trim().substring(0,1), '1');
     equal(find('td:eq(5)', firstProgramYearRow).text().trim().substring(0,1), '2');
-    equal(find('td:eq(6)', firstProgramYearRow).text().trim(), 'Not Published');
+    equal(find('td:eq(6)', firstProgramYearRow).text().trim().substring(0,1), '2');
+    equal(find('td:eq(7)', firstProgramYearRow).text().trim(), 'Not Published');
 
     var secondProgramYearRow = find('.container table:first tbody tr:eq(1)');
     equal(find('td:first', secondProgramYearRow).text().trim(), '2014 - 2015');
-    equal(find('td:eq(1)', secondProgramYearRow).text().trim().substring(0,1), '2');
+    equal(find('td:eq(1)', secondProgramYearRow).text().trim(), 'Class of 2018');
     equal(find('td:eq(2)', secondProgramYearRow).text().trim().substring(0,1), '2');
-    equal(find('td:eq(3)', secondProgramYearRow).text().trim().substring(0,1), '1');
-    equal(find('td:eq(4)', secondProgramYearRow).text().trim().substring(0,1), '2');
-    equal(find('td:eq(5)', secondProgramYearRow).text().trim().substring(0,1), '1');
-    equal(find('td:eq(6)', secondProgramYearRow).text().trim(), 'Not Published');
+    equal(find('td:eq(3)', secondProgramYearRow).text().trim().substring(0,1), '2');
+    equal(find('td:eq(4)', secondProgramYearRow).text().trim().substring(0,1), '1');
+    equal(find('td:eq(5)', secondProgramYearRow).text().trim().substring(0,1), '2');
+    equal(find('td:eq(6)', secondProgramYearRow).text().trim().substring(0,1), '1');
+    equal(find('td:eq(7)', secondProgramYearRow).text().trim(), 'Not Published');
   });
 });
 
@@ -91,7 +93,7 @@ test('program isEditable /programs.program.index', function() {
 
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
-    click('td:eq(7) ul.menu li:contains("Edit")', firstProgramYearRow);
+    click('td:eq(8) ul.menu li:contains("Edit")', firstProgramYearRow);
     var select = find('td:first select', firstProgramYearRow);
     equal(select.length, 1);
     equal(find('option', select).length, 9);
@@ -107,7 +109,7 @@ test('program re-sort /programs.program.index', function() {
 
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
-    click('td:eq(7) ul.menu li:contains("Edit")', firstProgramYearRow);
+    click('td:eq(8) ul.menu li:contains("Edit")', firstProgramYearRow);
     var select = find('td:first select', firstProgramYearRow);
     select.val('2018 - 2019');
     select.trigger('change');
