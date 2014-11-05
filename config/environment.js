@@ -31,7 +31,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
-    ENV.baseURL = '/'; // Testem prefers this...
+    // Testem prefers this...
+    ENV.baseURL = '/';
     ENV.adapterHost = 'http://localhost:4200';
     ENV.locationType = 'auto';
 
