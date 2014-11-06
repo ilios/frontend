@@ -1,33 +1,7 @@
-<section id='cohort-picker' class='full-width'>
-  {{view Ember.Select
-    optionLabelPath="content.displayTitle"
-    content=arrangedAvailableCohorts
-    value=currentUser.currentCohort
-    prompt=prompt
-  }}
+<section id='select-school' class='full-wdith'>
+  <ul>
+    {{#each school in content}}
+      <li>{{#link-to 'learnergroupsschool' school}}{{school.title}}{{/link-to}}</li>
+    {{/each}}
+  </ul>
 </section>
-{{#if currentUser.currentCohort}}
-  <section id='learner-groups' class='full-width'>
-    {{#if model}}
-      {{input type='text' value=filter placeholder='Filter by title'}}
-      <table class='grid-table'>
-        <thead>
-          <tr>
-            <th>{{t 'general.title'}}</th>
-            <th>{{t 'general.members'}}</th>
-            <th>{{t 'learnerGroups.relatedCourses'}}</th>
-            <th>{{t 'general.actions'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each filteredContent}}
-            {{render "learnergroups/grouprow" this}}
-          {{/each}}
-        </tbody>
-      </table>
-    {{else}}
-      <p>{{t 'learnerGroups.noGroups'}}
-    {{/if}}
-  </section>
-  <button {{action 'createNewGroup'}}>{{t 'learnerGroups.new'}}</button>
-{{/if}}

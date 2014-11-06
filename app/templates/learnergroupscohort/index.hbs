@@ -1,0 +1,23 @@
+<section id='learner-groups' class='full-width'>
+  {{#if model}}
+    {{input type='text' value=filter placeholder='Filter by title'}}
+    <table class='grid-table'>
+      <thead>
+        <tr>
+          <th>{{t 'general.title'}}</th>
+          <th>{{t 'general.members'}}</th>
+          <th>{{t 'learnerGroups.relatedCourses'}}</th>
+          <th>{{t 'general.actions'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each filteredContent}}
+          {{render "learnergroupscohort/grouprow" this}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>{{t 'learnerGroups.noGroups'}}
+  {{/if}}
+</section>
+<button {{action 'createNewGroup'}}>{{t 'learnerGroups.new'}}</button>

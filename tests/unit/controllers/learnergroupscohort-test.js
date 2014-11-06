@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:learnergroups/grouprow', 'LearnergroupsGrouprowController', {
+moduleFor('controller:learnergroupscohort', 'LearnergroupscohortController', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

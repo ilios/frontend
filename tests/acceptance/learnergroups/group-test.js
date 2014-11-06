@@ -14,25 +14,25 @@ module('Acceptance: LearnerGroupsGroup', {
 
 test('visiting', function() {
   expect(1);
-  visit('/learnergroups/0');
+  visit('learnergroups/school/0/cohort/0/group/0');
 
   andThen(function() {
-    equal(currentPath(), 'learnergroups.group');
+    equal(currentPath(), 'learnergroups.learnergroupsschool.learnergroupscohort.group');
   });
 });
 
 test('breadcrumbs', function() {
-  visit('/learnergroups/0');
+  visit('learnergroups/school/0/cohort/0/group/0');
 
   andThen(function() {
-    var expectedCrumbs = ['Home', 'Class of 2017 Learner Groups', 'First Test Group'];
+    var expectedCrumbs = ['Home', 'Learner Groups', 'First School', 'Class of 2017', 'First Test Group'];
     checkBreadcrumbs(expectedCrumbs);
   });
 });
 
 test('edit title', function() {
   expect(4);
-  visit('/learnergroups/0').then(function(){
+  visit('learnergroups/school/0/cohort/0/group/0').then(function(){
     var input = find('#learner-group-title input:eq(0)');
 
     equal(input.length, 1);
@@ -51,7 +51,7 @@ test('edit title', function() {
 
 test('list learners', function() {
   expect(6);
-  visit('/learnergroups/0');
+  visit('learnergroups/school/0/cohort/0/group/0');
 
   andThen(function() {
     var row = find('#learner-group-learners table:first tbody tr:eq(0)');
@@ -69,7 +69,7 @@ test('list learners', function() {
 
 test('add learner', function() {
   expect(11);
-  visit('/learnergroups/1');
+  visit('learnergroups/school/0/cohort/0/group/1');
 
   andThen(function() {
     equal(find('#learner-group-learners table:first tbody tr').length, 1);
@@ -101,7 +101,7 @@ test('add learner', function() {
 
 test('filterlearners', function() {
   expect(3);
-  visit('/learnergroups/0');
+  visit('learnergroups/school/0/cohort/0/group/0');
 
   andThen(function() {
     equal(find('#learner-group-learners table:first tbody tr').length, 2);
@@ -115,15 +115,13 @@ test('filterlearners', function() {
  * When returning from a group following the breadcrumbs the current cohort should be selected and displayed
  */
 test('list link', function() {
-  expect(9);
-  visit('/learnergroups/0');
+  expect(7);
+  visit('learnergroups/school/0/cohort/0/group/0');
   andThen(function() {
-    click('a:contains("Class of 2017 Learner Groups")');
+    click('a:contains("Class of 2017")');
   });
   andThen(function() {
-    equal(currentPath(), 'learnergroups.index');
-    equal(find('#cohort-picker select option').length, 5);
-    equal(find('#cohort-picker select option').text().trim(), 'Please Select a CohortClass of 2014Class of 2017Class of 2018Overridden Title');
+    equal(currentPath(), 'learnergroups.learnergroupsschool.learnergroupscohort.index');
     var row = find('#learner-groups table:first tbody tr:eq(0)');
     equal(find('td:eq(0)', row).text().trim(), 'First Test Group');
     equal(find('td:eq(1)', row).text().trim(), '2');

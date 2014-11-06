@@ -21,7 +21,7 @@ var general = {
   'email': 'Email',
   'cohort': 'Cohort',
   'meshTerms': 'MeSH Terms',
-  'members': 'Menbers'
+  'members': 'Members'
 };
 translations.general = general;
 
@@ -115,12 +115,15 @@ var learnerGroups = {
   'learnerName': 'Learner Name',
   'editingGroup': 'Editing {{title}}',
   'addLearner': 'Add Learner',
+  'learnerGroups': 'Learner Groups',
   'list': 'All Groups',
   'confirmGroupRemovalTitle': 'Remove Learner Group',
   'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} learner group?',
   'relatedCourses': 'Related Courses',
   'noGroups': 'There are no learner groups in this cohort.',
-  'selectCohort': 'Please Select a Cohort'
+  'selectCohort': 'Select Cohort',
+  'selectSchool': 'Select School',
+  'currentSchool': 'Current School',
 };
 translations.learnerGroups = learnerGroups;
 

@@ -15,6 +15,9 @@ export default Ember.ObjectController.extend({
       });
     },
     removeGroup: function(group){
+      group.get('cohort').then(function(cohort){
+        cohort.get('learnerGroups').removeObject(group);
+      });
       group.destroyRecord();
     },
     cancelRemoveGroup: function(){

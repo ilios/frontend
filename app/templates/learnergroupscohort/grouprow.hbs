@@ -3,7 +3,7 @@
     {{#if isNew}}
       {{input value=bufferedTitle action='save'}}
     {{else}}
-      {{#link-to 'learnergroups.group' this}}{{title}}{{/link-to}}
+      {{#link-to 'learnergroupscohort.group' this}}{{title}}{{/link-to}}
     {{/if}}
   </td>
   <td>{{users.length}}</td>
@@ -14,7 +14,7 @@
       <button {{action 'removeGroup' this}}>{{t 'general.remove'}}</button>
     {{else}}
       {{#action-menu}}
-        <li>{{#link-to 'learnergroups.group' this}}{{t 'general.edit'}}{{/link-to}}</li>
+        <li>{{#link-to 'learnergroupscohort.group' this}}{{t 'general.edit'}}{{/link-to}}</li>
         <li>
           {{#modal-dialog
             actionReceiver=confirmRemoveModal

@@ -33,7 +33,13 @@ Router.map(function() {
   });
   this.resource('learnergroups', function(){
     this.route('index');
-    this.route('group', { path: ':learner_group_id'});
+    this.resource('learnergroupsschool', { path: 'school/:school_id'}, function(){
+      this.route('index');
+      this.resource('learnergroupscohort', { path: 'cohort/:cohort_id'}, function(){
+        this.route('index');
+        this.route('group', { path: 'group/:learner_group_id'});
+      });
+    });
   });
 });
 
