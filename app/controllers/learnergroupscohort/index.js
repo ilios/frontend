@@ -3,7 +3,6 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
   needs: ['learnergroupscohort'],
   currentCohort: Ember.computed.alias("controllers.learnergroupscohort.model"),
-  breadCrumbTranslation: 'learnerGroups.list',
   sortAscending: true,
   filter: '',
   sortProperties: ['title'],

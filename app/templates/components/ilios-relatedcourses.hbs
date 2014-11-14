@@ -1,0 +1,18 @@
+<div class='courses'>
+  {{#expander-box titleTranslation='relatedCourses.title'}}
+    {{#if courses.length}}
+      {{input type='text' value=filter placeholderTranslation='relatedCourses.filterPlaceholder'}}
+    {{/if}}
+    <ul>
+      {{#each course in filteredCourses}}
+        <li>{{course.title}}</li>
+      {{else}}
+        {{#if filter}}
+          <li>{{t 'relatedCourses.noCoursesMatchFilter'}}</li>
+        {{else}}
+          <li>{{t 'relatedCourses.noCourses'}}</li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  {{/expander-box}}
+</div>

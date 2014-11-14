@@ -37,7 +37,6 @@ Router.map(function() {
       this.route('index');
       this.resource('learnergroupscohort', { path: 'cohort/:cohort_id'}, function(){
         this.route('index');
-        this.route('group', { path: 'group/:learner_group_id'});
       });
     });
   });

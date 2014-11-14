@@ -8,6 +8,7 @@ var general = {
   'no': 'No',
   'undo': 'Undo',
   'home': 'Home',
+  'add': 'Add',
   'published': 'Published',
   'notPublished': 'Not Published',
   'competencies': 'Competencies',
@@ -21,7 +22,8 @@ var general = {
   'email': 'Email',
   'cohort': 'Cohort',
   'meshTerms': 'MeSH Terms',
-  'members': 'Members'
+  'members': 'Members',
+  'users': 'Users'
 };
 translations.general = general;
 
@@ -113,18 +115,32 @@ var learnerGroups = {
   'learners': 'Learners',
   'new': 'New Learner Group',
   'learnerName': 'Learner Name',
-  'editingGroup': 'Editing {{title}}',
   'addLearner': 'Add Learner',
   'learnerGroups': 'Learner Groups',
   'list': 'All Groups',
   'confirmGroupRemovalTitle': 'Remove Learner Group',
   'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} learner group?',
   'relatedCourses': 'Related Courses',
+  'subGroups': 'Sub Groups',
   'noGroups': 'There are no learner groups in this cohort.',
   'selectCohort': 'Select Cohort',
   'selectSchool': 'Select School',
   'currentSchool': 'Current School',
 };
 translations.learnerGroups = learnerGroups;
+
+var groupMembers = {
+  'filterPlaceholder': 'Filter by name or email',
+  'noSearchResults': 'Your search did not return any results'
+};
+translations.groupMembers = groupMembers;
+
+var relatedCourses = {
+  'title': 'Related Courses',
+  'filterPlaceholder': 'Filter by name',
+  'noCourses': 'There are no related courses',
+  'noCoursesMatchFilter': 'No courses match your filter'
+};
+translations.relatedCourses = relatedCourses;
 
 export default translations;

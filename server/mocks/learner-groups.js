@@ -10,7 +10,7 @@ module.exports = function(app) {
         users: [0,1],
         instructors: [1],
         instructorGroups: [0],
-        offerings: null
+        offerings: [0,1,2,3,4]
       },
       {
         id: 1,
@@ -31,7 +31,7 @@ module.exports = function(app) {
         cohort: 0,
         parent: 0,
         children: [],
-        users: [2],
+        users: [1],
         instructors: [],
         instructorGroups: [],
         offerings: null
@@ -43,7 +43,7 @@ module.exports = function(app) {
         cohort: 0,
         parent: 0,
         children: [],
-        users: [2],
+        users: [1],
         instructors: [],
         instructorGroups: [],
         offerings: null
@@ -53,18 +53,3 @@ module.exports = function(app) {
   var router = createRouter('learnerGroup', fixtures);
   app.use('/api/learnergroups', router);
 };
-
-
-// import DS from 'ember-data';
-//
-// export default DS.Model.extend({
-//   title: DS.attr('string'),
-//   location: DS.attr('string'),
-//   cohort: DS.belongsTo('cohort', {async: true}),
-//   parent: DS.belongsTo('learner-group', {async: true, inverse: 'children'}),
-//   children: DS.hasMany('learner-group', {async: true, inverse: 'parent'}),
-//   users: DS.hasMany('user', {async: true}),
-//   instructors: DS.hasMany('user', {async: true}),
-//   instructorGroups: DS.hasMany('instructor-group', {async: true}),
-//   offerings: DS.hasMany('offering', {async: true}),
-// });
