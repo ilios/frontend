@@ -31,7 +31,7 @@ module.exports = function(app) {
         cohort: 0,
         parent: 0,
         children: [],
-        users: [1],
+        users: [0],
         instructors: [],
         instructorGroups: [],
         offerings: null

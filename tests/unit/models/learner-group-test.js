@@ -56,28 +56,43 @@ test('list courses', function() {
 });
 
 test('list available users', function() {
-  expect(6);
+  expect(4);
   var model = this.subject();
   var store = model.store;
+  var newUsers = [];
+
   Ember.run(function(){
     var parent = store.createRecord('learner-group', {title:'parent'});
     model.set('parent', parent);
-    parent.get('users').then(function(users){
-      for(var i = 0; i < 5; i++){
-        users.pushObject(store.createRecord('user', {firstName: i}));
-      }
-    });
-    for(var i = 10; i < 25; i++){
+    for(var i = 0; i < 5; i++){
+      newUsers[i] = store.createRecord('user', {firstName: i});
+    }
+    for(i = 10; i < 25; i++){
       store.createRecord('user', {firstName: i});
     }
+
+    var sibling = store.createRecord('learner-group', {title:'sibling'});
+    sibling.get('users').then(function(users){
+      users.pushObject(newUsers[0]);
+      users.pushObject(newUsers[1]);
+    });
+    parent.get('children').then(function(children){
+      children.pushObject(sibling);
+    });
+    parent.get('users').then(function(users){
+      for(var i = 0; i < 5; i++){
+        users.pushObject(newUsers[i]);
+      }
+    });
   });
 
   Ember.run(function(){
     model.get('availableUsers').then(function(users){
-      equal(users.get('length'), 5);
-      for(var i = 0; i < 5; i++){
-        equal(users.objectAt(i).get('firstName'), i);
-      }
+      var names = users.mapBy('firstName');
+      equal(users.get('length'), 3);
+      ok(names.contains(2));
+      ok(names.contains(3));
+      ok(names.contains(4));
     });
   });
 });

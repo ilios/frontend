@@ -33,14 +33,33 @@ export default DS.Model.extend({
       });
     });
   }.property('offerings.@each'),
+  childUsers: Ember.computed.mapBy('children', 'users'),
   availableUsers: function(){
     var group = this;
-    return this.get('parent').then(function(parent){
-      if(parent == null){
-        return group.store.find('user');
-      } else {
-        return parent.get('users');
-      }
+    return new Ember.RSVP.Promise(function(resolve) {
+      group.get('parent').then(function(parent){
+        if(parent == null){
+          group.store.find('user').then(function(users){
+            resolve(users);
+          });
+        } else {
+          parent.get('users').then(function(parentUsers){
+            var childUsers = parent.get('childUsers');
+            var selectedUsers = Ember.A();
+            Ember.RSVP.all(childUsers).then(function(){
+              childUsers.forEach(function(userSet){
+                userSet.forEach(function(c){
+                  selectedUsers.pushObject(c);
+                });
+              });
+              var availableUsers = parentUsers.filter(function(user){
+                return !selectedUsers.contains(user);
+              });
+              resolve(availableUsers);
+            });
+          });
+        }
+      });
     });
-  }.property('users','parent.users.@each')
+  }.property('users', 'parent.users.@each', 'parent.childUsers.@each')
 });
