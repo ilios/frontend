@@ -2,38 +2,47 @@
   "framework": "qunit",
   "test_page": "tests/index.html",
   "launchers": {
-    "SL_Chrome": {
-      "command": "saucie  --host=localtest --port=8080",
+    "SauceLabs_Chrome": {
+      "command": "saucie --platformSL='Windows 7' --host='http://localhost' --port=8080",
       "protocol": "tap"
     },
-    "SL_IE_9": {
-      "command": "saucie --browserNameSL='internet explorer' --versionSL='9' --platformSL='Windows 7' --host=localtest --port=8080",
+    "SauceLabs_Firefox": {
+      "command": "saucie --platformSL='Windows 7' --browserNameSL='firefox' --host='http://localhost' --port=8080",
       "protocol": "tap"
     },
-    "SL_IE_10": {
-      "command": "saucie --browserNameSL='internet explorer' --versionSL='10' --platformSL='Windows 8' --host=localtest --port=8080",
+    "SauceLabs_IE_9": {
+      "command": "saucie --browserNameSL='internet explorer' --versionSL='9' --platformSL='Windows 7' --host='http://localhost' --port=8080",
       "protocol": "tap"
     },
-    "SL_IE_11": {
-      "command": "saucie --browserNameSL='internet explorer' --versionSL='11' --platformSL='Windows 8.1' --host=localtest --port=8080",
+    "SauceLabs_IE_10": {
+      "command": "saucie --browserNameSL='internet explorer' --versionSL='10' --platformSL='Windows 8' --host='http://localhost' --port=8080",
       "protocol": "tap"
     },
-    "SL_Safari_7": {
-      "command": "saucie --browserNameSL='safari' --versionSL='7' --platformSL='OS X 10.9' --host=localtest --port=8080",
+    "SauceLabs_IE_11": {
+      "command": "saucie --browserNameSL='internet explorer' --versionSL='11' --platformSL='Windows 8.1' --host='http://localhost' --port=8080",
       "protocol": "tap"
     },
-    "SL_Safari_8": {
-      "command": "saucie --browserNameSL='safari' --versionSL='8' --platformSL='OS X 10.10' --host=localtest --port=8080",
+    "SauceLabs_Safari_7": {
+      "command": "saucie --browserNameSL='safari' --versionSL='7' --platformSL='OS X 10.9' --host='http://localhost' --port=8080",
+      "protocol": "tap"
+    },
+    "SauceLabs_Safari_8": {
+      "command": "saucie --browserNameSL='safari' --versionSL='8' --platformSL='OS X 10.10' --host='http://localhost' --port=8080",
       "protocol": "tap"
     }
   },
 
   "launch_in_ci": [
     "PhantomJS",
-    "SL_Chrome"
+    "SauceLabs_Chrome",
+    "SauceLabs_Firefox",
+    "SauceLabs_Safari_7",
+    /*"SauceLabs_Safari_8",*/
+    /*"SauceLabs_IE_9",*/
+    "SauceLabs_IE_10",
+    "SauceLabs_IE_11"
   ],
   "launch_in_dev": [
-    "PhantomJS",
-    "SL_Chrome"
+    "SauceLabs_Chrome"
   ]
 }
