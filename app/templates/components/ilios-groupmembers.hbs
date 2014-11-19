@@ -1,0 +1,46 @@
+<div class='members'>
+  {{#expander-box title=title}}
+    {{#if users.length}}
+      {{input type='text' value=userFilter placeholderTranslation='groupMembers.filterPlaceholder'}}
+      <table class='grid-table'>
+        <thead>
+          <tr>
+            <th>{{t 'general.users'}}</th>
+            <th>{{t 'general.email'}}</th>
+            <th>{{t 'general.actions'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each user in filteredUsers}}
+            <tr>
+              <td>{{user.fullName}}</td>
+              <td>{{user.email}}</td>
+              <td><button {{action 'remove' user}}>{{t 'general.remove'}}</button></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+    <section class='search'>
+      <div class="search-bar">
+        <div class="search-and-submit">
+          {{input action="search" type="search" value=searchTerms placeholderTranslation="groupMembers.search"}}
+          <button {{translateAttr title="groupMembers.search"}} {{action 'search'}} type="submit">
+            {{fa-icon 'search'}}
+          </button>
+        </div>
+      </div>
+      {{#if showResults}}
+        <ul class='search-results'>
+          {{#each result in searchResults}}
+            {{#selectable-search-result item=result selectedItems=users action='add'}}
+              {{result.fullName}} {{result.email}}
+            {{/selectable-search-result}}
+          {{else}}
+            <li>{{t 'groupMembers.noSearchResults'}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </section>
+  {{/expander-box}}
+</div>

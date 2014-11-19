@@ -13,7 +13,8 @@ moduleForModel('school', 'School', {
     'model:discipline',
     'model:objective',
     'model:offering',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:cohort'
   ]
 });
 

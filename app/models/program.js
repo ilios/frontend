@@ -6,6 +6,6 @@ export default DS.Model.extend({
   duration: DS.attr('number'),
   isDeleted: DS.attr('boolean'),
   publishedAsTbd: DS.attr('boolean'),
-  owningSchool: DS.belongsTo('school'),
+  owningSchool: DS.belongsTo('school', {async: true}),
   programYears: DS.hasMany('program-years', {async: true})
 });

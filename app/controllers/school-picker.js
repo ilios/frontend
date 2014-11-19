@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  currentSchool: Ember.computed.alias('currentUser.currentSchool'),
   selectedSchool: null,
   currentSchoolObserver: function(){
     var self = this;

@@ -2,7 +2,7 @@
 <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}</label>
 {{view Ember.TextField value=bufferedTitle viewName="titleField"}}
 <fieldset>
-  <legend>{{t 'instructorGroups.members'}} <span class="badge">{{users.length}}</span></legend>
+  <legend>{{t 'general.members'}} <span class="badge">{{users.length}}</span></legend>
   {{#if users.length}}
     {{input type='text' value=userFilter placeholder='Filter by name or email'}}
   {{/if}}

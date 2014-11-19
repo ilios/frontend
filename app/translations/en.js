@@ -8,6 +8,7 @@ var general = {
   'no': 'No',
   'undo': 'Undo',
   'home': 'Home',
+  'add': 'Add',
   'published': 'Published',
   'notPublished': 'Not Published',
   'competencies': 'Competencies',
@@ -19,7 +20,10 @@ var general = {
   'actions': 'Actions',
   'topics': 'Topics',
   'email': 'Email',
-  'meshTerms': 'MeSH Terms'
+  'cohort': 'Cohort',
+  'meshTerms': 'MeSH Terms',
+  'members': 'Members',
+  'users': 'Users'
 };
 translations.general = general;
 
@@ -76,7 +80,7 @@ var navigation = {
   'dashboard': 'Dashboard',
   'programs': 'Programs',
   'instructorGroups': 'Instructor Groups',
-  'learnerGroups': 'Learner Group',
+  'learnerGroups': 'Learner Groups',
   'coursesSessions': 'Courses and Sessions',
   'logout': 'Logout',
   'logo': 'Ilios Logo'
@@ -94,7 +98,6 @@ var mesh = {
 translations.mesh = mesh;
 
 var instructorGroups = {
-  'members': 'Members',
   'new': 'New Instructor Group',
   'instructorName': 'Instructor Name',
   'editingGroup': 'Editing {{title}}',
@@ -107,5 +110,37 @@ var instructorGroups = {
   'relatedCourses': 'Related Courses'
 };
 translations.instructorGroups = instructorGroups;
+
+var learnerGroups = {
+  'learners': 'Learners',
+  'new': 'New Learner Group',
+  'learnerName': 'Learner Name',
+  'addLearner': 'Add Learner',
+  'learnerGroups': 'Learner Groups',
+  'list': 'All Groups',
+  'confirmGroupRemovalTitle': 'Remove Learner Group',
+  'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} learner group?',
+  'relatedCourses': 'Related Courses',
+  'subGroups': 'Sub Groups',
+  'noGroups': 'There are no learner groups in this cohort.',
+  'selectCohort': 'Select Cohort',
+  'selectSchool': 'Select School',
+  'currentSchool': 'Current School',
+};
+translations.learnerGroups = learnerGroups;
+
+var groupMembers = {
+  'filterPlaceholder': 'Filter by name or email',
+  'noSearchResults': 'Your search did not return any results'
+};
+translations.groupMembers = groupMembers;
+
+var relatedCourses = {
+  'title': 'Related Courses',
+  'filterPlaceholder': 'Filter by name',
+  'noCourses': 'There are no related courses',
+  'noCoursesMatchFilter': 'No courses match your filter'
+};
+translations.relatedCourses = relatedCourses;
 
 export default translations;

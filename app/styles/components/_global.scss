@@ -16,7 +16,7 @@
 .visible {
   display: '';
 }
-.dirty {
+.dirty, .is-dirty {
   color: $base-accent-color;
 }
 .clickable {

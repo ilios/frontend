@@ -1,0 +1,7 @@
+<section id='select-school' class='full-wdith'>
+  <ul>
+    {{#each school in content}}
+      <li>{{#link-to 'learnergroupsschool' school}}{{school.title}}{{/link-to}}</li>
+    {{/each}}
+  </ul>
+</section>

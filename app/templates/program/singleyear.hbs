@@ -7,6 +7,13 @@
     {{/if}}
   </td>
   <td>
+    {{#if isEditing}}
+      {{input value=cohort.title placeholder=cohort.displayTitle}}
+    {{else}}
+      {{cohort.displayTitle}}
+    {{/if}}
+  </td>
+  <td>
     {{#modal-dialog titleTranslation="general.competencies" openDialogText=competencies.length}}
       <p>
         <ul>

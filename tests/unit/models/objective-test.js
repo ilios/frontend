@@ -15,7 +15,8 @@ moduleForModel('objective', 'Objective', {
     'model:user',
     'model:school',
     'model:mesh-descriptor',
-    'model:offering'
+    'model:offering',
+    'model:cohort'
   ]
 });
 

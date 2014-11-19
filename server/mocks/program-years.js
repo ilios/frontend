@@ -13,7 +13,8 @@ module.exports = function(app) {
       competencies: [4,2],
       objectives: [0,1],
       topics: [0,2],
-      stewardingSchools: [1]
+      stewardingSchools: [1],
+      cohort: 1
     },
     {
       id: 1,
@@ -27,7 +28,8 @@ module.exports = function(app) {
       competencies: [0,2,4],
       objectives: [2,3],
       topics: [0,2],
-      stewardingSchools: [1,2]
+      stewardingSchools: [1,2],
+      cohort: 0
     },
     {
       id: 2,
@@ -40,7 +42,8 @@ module.exports = function(app) {
       directors: [0],
       competencies: [0,2],
       objectives: [],
-      topics: [0,2]
+      topics: [0,2],
+      cohort: 2
     },
     {
       id: 3,
@@ -52,7 +55,8 @@ module.exports = function(app) {
       program: 1,
       directors: [0],
       competencies: [0,2],
-      objectives: []
+      objectives: [],
+      cohort: 3
     },
   ];
   var createRouter = require('../helpers/createrouter.js');

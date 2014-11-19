@@ -17,7 +17,10 @@ moduleForModel('program-year', 'ProgramYear', {
     'model:course',
     'model:session',
     'model:mesh-descriptor',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:cohort',
+    'model:learner-group'
+
   ]
 });
 
