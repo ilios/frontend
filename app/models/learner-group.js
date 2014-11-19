@@ -61,5 +61,19 @@ export default DS.Model.extend({
         }
       });
     });
-  }.property('users', 'parent.users.@each', 'parent.childUsers.@each')
+  }.property('users', 'parent.users.@each', 'parent.childUsers.@each'),
+  destroyChildren: function(){
+    var group = this;
+    return new Ember.RSVP.Promise(function(resolve) {
+      var promises = [];
+      group.get('children').then(function(children){
+        children.forEach(function(child){
+          promises.push(child.destroyChildren().then(function(){
+            child.destroyRecord();
+          }));
+        });
+        resolve(Ember.RSVP.all(promises));
+      });
+    });
+  }
 });

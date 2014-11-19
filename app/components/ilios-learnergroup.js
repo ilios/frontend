@@ -81,6 +81,12 @@ export default Ember.Component.extend({
     searchUsers: function(searchTerms){
       this.set('userSearchTerms', searchTerms);
     },
+    remove: function(){
+      var group = this.get('group');
+      group.destroyChildren().then(function(){
+        group.destroyRecord();
+      });
+    }
   }
 
 });

@@ -77,10 +77,22 @@ test('remove new group', function() {
   andThen(function() {
     click('button:contains("New Learner Group")');
     equal(find('#learner-groups .expander:not(.expander .expander)').length, 3);
-    click('button:contains("Remove")').then(function(){
+    click('button:contains("Remove")', getGroup(2)).then(function(){
     equal(find('#learner-groups .expander:not(.expander .expander)').length, 2);
       equal(getGroupTitle(0), 'First Test Group');
       equal(getGroupTitle(1), 'Second Test Group');
+    });
+  });
+});
+
+test('remove group', function() {
+  expect(3);
+  visit('/learnergroups/school/0/cohort/0/index');
+  andThen(function() {
+    equal(find('#learner-groups .expander:not(.expander .expander)').length, 2);
+    click('button:contains("Remove")', getGroup(0)).then(function(){
+    equal(find('#learner-groups .expander:not(.expander .expander)').length, 1);
+      equal(getGroupTitle(0), 'Second Test Group');
     });
   });
 });
