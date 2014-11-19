@@ -1,7 +1,7 @@
 ---
 language: node_js
 
-sudo: false
+sudo: true
 
 env:
   global:
@@ -17,6 +17,11 @@ cache:
     - node_modules
     - bower_components
 
+before_install:
+  - sudo apt-get update -qq
+  # install netstat
+  - sudo apt-get install net-tools
+
 install:
   - npm install -g bower
   - npm install -g saucie
@@ -25,7 +30,7 @@ install:
 
 before_script:
   # Start a server so we can hit the fake API from integration tests
-  - ember s --host=localtest --live-reload=false &
+  - ember s --live-reload=false &
   # wait for the server to be started
   - until netstat -an 2>/dev/null | grep '4200.*LISTEN'; do true; done
 
