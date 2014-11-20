@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import startApp from '../../../../helpers/start-app';
+import startApp from 'ilios/tests/helpers/start-app';
 
 var App;
 
@@ -13,21 +13,22 @@ module('Acceptance: ProgramsProgramProgramyearManagedirectors', {
 });
 
 test('visiting', function() {
-  visit('/programs/0/years/0/managedirectors');
+  visit('/programs/school/0/program/0/years/0/managedirectors');
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.programyear.managedirectors');
+    equal(currentPath(), 'programs.programsschool.program.programyear.managedirectors');
     equal(find('#program-year-title').text().trim(), 'First Test Program 2014 - 2015 Class of 2018');
   });
 });
 
 test('breadcrumbs', function() {
-  visit('/programs/0/years/0/managedirectors');
+  visit('/programs/school/0/program/0/years/0/managedirectors');
 
   andThen(function() {
     var expectedCrumbs = [
       'Home',
       'All Programs',
+      'First School',
       'First Test Program',
       '2014 - 2015',
       'Directors'
@@ -38,7 +39,7 @@ test('breadcrumbs', function() {
 
 test('badge value', function() {
   expect(2);
-  visit('/programs/0/years/0/managedirectors');
+  visit('/programs/school/0/program/0/years/0/managedirectors');
 
   andThen(function() {
     equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '1');
@@ -54,7 +55,7 @@ test('badge value', function() {
 
 test('test add single', function() {
   expect(5);
-  visit('/programs/0/years/0/managedirectors');
+  visit('/programs/school/0/program/0/years/0/managedirectors');
   fillIn('.container .search-and-submit input', 'test');
   click('#available-directors .search-and-submit button');
 
@@ -71,7 +72,7 @@ test('test add single', function() {
 
 test('test remove single', function() {
   expect(1);
-  visit('/programs/0/years/0/managedirectors');
+  visit('/programs/school/0/program/0/years/0/managedirectors');
   click('#selected-directors li:first .remove');
   andThen(function() {
       equal(find('#selected-directors li.visible').length, 0);

@@ -1,14 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
+  breadCrumbTranslation: 'programs.selectSchool',
   sortAscending: true,
   sortProperties: ['title'],
-  currentSchoolObserver: function(){
-    var self = this;
-    this.get('currentUser.currentSchool').then(function(school){
-      school.get('programs').then(function(programs){
-        self.set('model', programs);
-      });
-    });
-  }.observes('currentUser.currentSchool')
 });

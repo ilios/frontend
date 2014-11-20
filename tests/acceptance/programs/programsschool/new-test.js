@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import startApp from '../../helpers/start-app';
+import startApp from 'ilios/tests/helpers/start-app';
 
 var App;
 
-module('Acceptance: ProgramsNew', {
+module('Acceptance: ProgramsschoolNew', {
   setup: function() {
     App = startApp();
   },
@@ -12,31 +12,31 @@ module('Acceptance: ProgramsNew', {
   }
 });
 
-test('visiting /programs.new', function() {
-  visit('/programs/new');
+test('visiting', function() {
+  visit('/programs/school/0/new');
 
   andThen(function() {
-    equal(currentPath(), 'programs.new');
+    equal(currentPath(), 'programs.programsschool.new');
   });
 });
 
-test('breadcrumbs /programs.new', function() {
-  visit('/programs/new');
+test('breadcrumbs', function() {
+  visit('/programs/school/0/new');
 
   andThen(function() {
-    var expectedCrumbs = ['Home', 'All Programs'];
+    var expectedCrumbs = ['Home', 'All Programs', 'First School'];
     checkBreadcrumbs(expectedCrumbs);
   });
 });
 
-test('add new program /programs.new', function() {
-  visit('/programs/new');
+test('add new program', function() {
+  visit('/programs/school/1/new');
   fillIn('input:eq(0)', 'Created Program');
   fillIn('input:eq(1)', 'crprg');
   click('button:contains("Save")');
 
   andThen(function() {
-    equal(currentPath(), 'programs.index');
+    equal(currentPath(), 'programs.programsschool.index');
     var firstProgramRow = find('.container table:first tbody tr:first');
     equal(find('td:first', firstProgramRow).text().trim(), 'Created Program');
     equal(find('td:eq(1)', firstProgramRow).text().trim(), 'crprg');

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import startApp from '../../../../helpers/start-app';
+import startApp from 'ilios/tests/helpers/start-app';
 
 var App;
 
@@ -13,10 +13,10 @@ module('Acceptance: ProgramsProgramProgramyearManagecompetencies', {
 });
 
 test('visiting', function() {
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.programyear.managecompetencies');
+    equal(currentPath(), 'programs.programsschool.program.programyear.managecompetencies');
     equal(find('#program-year-title').text().trim(), 'First Test Program 2014 - 2015 Class of 2018');
     equal(find('#selected-competencies li:visible').length, 3);
     equal(find('#available-competencies li').length, 7);
@@ -24,12 +24,13 @@ test('visiting', function() {
 });
 
 test('breadcrumbs', function() {
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
 
   andThen(function() {
     var expectedCrumbs = [
       'Home',
       'All Programs',
+      'First School',
       'First Test Program',
       '2014 - 2015',
       'Competencies'
@@ -40,7 +41,7 @@ test('breadcrumbs', function() {
 
 test('badge value', function() {
   expect(3);
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
 
   andThen(function() {
     equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '2');
@@ -55,7 +56,7 @@ test('badge value', function() {
 
 test('test add single', function() {
   expect(5);
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
 
   andThen(function() {
     equal(find('#selected-competencies li.visible').length, 3);
@@ -72,7 +73,7 @@ test('test add single', function() {
 
 test('test add group', function() {
   expect(4);
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
   click('#selected-competencies .remove');
 
   andThen(function() {
@@ -87,7 +88,7 @@ test('test add group', function() {
 
 test('test remove group', function() {
   expect(2);
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
   click('#selected-competencies .remove').then(function(){
     click('#available-competencies li.enabled:eq(0) .add').then(function(){
       click('#selected-competencies .remove:first');
@@ -102,7 +103,7 @@ test('test remove group', function() {
 
 test('test group item', function() {
   expect(2);
-  visit('/programs/0/years/0/managecompetencies');
+  visit('/programs/school/0/program/0/years/0/managecompetencies');
   click('#selected-competencies .remove').then(function(){
     click('#available-competencies li.enabled:eq(0) .add').then(function(){
       click('#selected-competencies .remove:eq(1)');

@@ -30,6 +30,7 @@ translations.general = general;
 var programs = {
   'allPrograms': 'All Programs',
   'programs': 'Programs',
+  'selectSchool': 'Select School',
   'program': {
     'title': 'Program Title',
     'shortTitle': 'Short Title',

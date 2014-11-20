@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import startApp from '../../../helpers/start-app';
+import startApp from 'ilios/tests/helpers/start-app';
 
 var App;
 
-module('Acceptance: ProgramsProgramIndex', {
+module('Acceptance: ProgramsschoolProgramIndex', {
   setup: function() {
     App = startApp();
   },
@@ -12,26 +12,26 @@ module('Acceptance: ProgramsProgramIndex', {
   }
 });
 
-test('visiting /programs.program.index', function() {
-  visit('/programs/0/index');
+test('visiting', function() {
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.index');
+    equal(currentPath(), 'programs.programsschool.program.index');
   });
 });
 
-test('breadcrumbs /programs.program.index', function() {
-  visit('/programs/0/index');
+test('breadcrumbs', function() {
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
-    var expectedCrumbs = ['Home', 'All Programs', 'First Test Program'];
+    var expectedCrumbs = ['Home', 'All Programs', 'First School', 'First Test Program'];
     checkBreadcrumbs(expectedCrumbs);
   });
 });
 
-test('program details /programs.program.index', function() {
+test('program details', function() {
   expect(8);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
     equal(find('.container fieldset legend').text().trim(), 'First Test Program (Edit)');
@@ -40,7 +40,7 @@ test('program details /programs.program.index', function() {
     equal(find('.container fieldset p:eq(2)').text().trim(), 'Duration: 4 years');
   });
 
-  visit('/programs/1/index');
+  visit('/programs/school/0/program/1/index');
 
   andThen(function() {
     equal(find('.container fieldset legend').text().trim(), 'Second Test Program (Edit)');
@@ -52,7 +52,7 @@ test('program details /programs.program.index', function() {
 
 test('program list /programs.program.index', function() {
   expect(16);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
@@ -77,19 +77,19 @@ test('program list /programs.program.index', function() {
   });
 });
 
-test('program year link /programs.program.index', function() {
+test('program year link', function() {
   expect(1);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
   click('.container table:first tbody tr:first td:first a');
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.programyear.managecompetencies');
+    equal(currentPath(), 'programs.programsschool.program.programyear.managecompetencies');
   });
 });
 
-test('program isEditable /programs.program.index', function() {
+test('program isEditable ', function() {
   expect(5);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
@@ -103,9 +103,9 @@ test('program isEditable /programs.program.index', function() {
   });
 });
 
-test('program re-sort /programs.program.index', function() {
+test('program re-sort', function() {
   expect(2);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
     var firstProgramYearRow = find('.container table:first tbody tr:first');
@@ -120,9 +120,9 @@ test('program re-sort /programs.program.index', function() {
   });
 });
 
-test('create program year /programs.program.index', function() {
+test('create program year', function() {
   expect(11);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
 
   andThen(function() {
     click('button:contains("Create a New Program Year")');
@@ -143,13 +143,13 @@ test('create program year /programs.program.index', function() {
   });
 });
 
-test('edit program /programs.program.index', function() {
+test('edit program', function() {
   expect(1);
-  visit('/programs/0/index');
+  visit('/programs/school/0/program/0/index');
   click('.container fieldset legend a:contains("Edit")');
 
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.edit');
+    equal(currentPath(), 'programs.programsschool.program.edit');
   });
 });

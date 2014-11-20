@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import startApp from '../../../../helpers/start-app';
+import startApp from 'ilios/tests/helpers/start-app';
 
 var App;
 
@@ -13,21 +13,22 @@ module('Acceptance: ProgramsProgramProgramyearManagestewardingschools', {
 });
 
 test('visiting', function() {
-  visit('/programs/0/years/0/managestewardingschools');
+  visit('/programs/school/0/program/0/years/0/managestewardingschools');
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.programyear.managestewardingschools');
+    equal(currentPath(), 'programs.programsschool.program.programyear.managestewardingschools');
     equal(find('#program-year-title').text().trim(), 'First Test Program 2014 - 2015 Class of 2018');
   });
 });
 
 test('breadcrumbs', function() {
-  visit('/programs/0/years/0/managestewardingschools');
+  visit('/programs/school/0/program/0/years/0/managestewardingschools');
 
   andThen(function() {
     var expectedCrumbs = [
       'Home',
       'All Programs',
+      'First School',
       'First Test Program',
       '2014 - 2015',
       'Stewarding Schools'
@@ -38,7 +39,7 @@ test('breadcrumbs', function() {
 
 test('badge value', function() {
   expect(3);
-  visit('/programs/0/years/0/managestewardingschools');
+  visit('/programs/school/0/program/0/years/0/managestewardingschools');
 
   andThen(function() {
     equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '1');
@@ -53,7 +54,7 @@ test('badge value', function() {
 
 test('test add single', function() {
   expect(3);
-  visit('/programs/0/years/0/managestewardingschools');
+  visit('/programs/school/0/program/0/years/0/managestewardingschools');
 
   andThen(function() {
     equal(find('#selected-schools li.visible').length, 1);
@@ -66,7 +67,7 @@ test('test add single', function() {
 
 test('test remove single', function() {
   expect(1);
-  visit('/programs/0/years/0/managestewardingschools');
+  visit('/programs/school/0/program/0/years/0/managestewardingschools');
   click('#selected-schools li.visible:first .remove');
   andThen(function() {
       equal(find('#selected-schools li.visible').length, 0);

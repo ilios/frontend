@@ -13,17 +13,21 @@ Router.map(function() {
     this.route('year');
   });
   this.resource('programs', function(){
-    this.route('new');
-    this.resource('program', { path: ':program_id' }, function(){
+    this.route('index');
+    this.resource('programsschool', { path: 'school/:school_id'}, function(){
       this.route('index');
-      this.route('edit');
-      this.resource('programyear', { path: 'years/:program_year_id' }, function(){
+      this.route('new');
+      this.resource('program', { path: 'program/:program_id' }, function(){
         this.route('index');
-        this.route('managecompetencies');
-        this.route('manageobjectives');
-        this.route('managedirectors');
-        this.route('managetopics');
-        this.route('managestewardingschools');
+        this.route('edit');
+        this.resource('programyear', { path: 'years/:program_year_id' }, function(){
+          this.route('index');
+          this.route('managecompetencies');
+          this.route('manageobjectives');
+          this.route('managedirectors');
+          this.route('managetopics');
+          this.route('managestewardingschools');
+        });
       });
     });
   });

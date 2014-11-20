@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import startApp from '../../helpers/start-app';
+import startApp from 'ilios/tests/helpers/start-app';
 
 var App;
 
-module('Acceptance: ProgramsIndex', {
+module('Acceptance: ProgramsSchoolIndex', {
   setup: function() {
     App = startApp();
   },
@@ -12,27 +12,27 @@ module('Acceptance: ProgramsIndex', {
   }
 });
 
-test('visit /programs.index', function() {
+test('visit', function() {
   expect(1);
-  visit('/programs');
+  visit('/programs/school/0/index');
 
   andThen(function() {
-    equal(currentPath(), 'programs.index');
+    equal(currentPath(), 'programs.programsschool.index');
   });
 });
 
-test('breadcrumbs /programs.index', function() {
-  visit('/programs');
+test('breadcrumbs', function() {
+  visit('/programs/school/0/index');
 
   andThen(function() {
-    var expectedCrumbs = ['Home', 'All Programs'];
+    var expectedCrumbs = ['Home', 'All Programs', 'First School'];
     checkBreadcrumbs(expectedCrumbs);
   });
 });
 
-test('program list /programs.index', function() {
+test('program list', function() {
   expect(6);
-  visit('/programs');
+  visit('/programs/school/0/index');
 
   andThen(function() {
     var firstProgramRow = find('.container table:first tbody tr:first');
@@ -47,22 +47,22 @@ test('program list /programs.index', function() {
   });
 });
 
-test('program link /programs.index', function() {
+test('program link', function() {
   expect(1);
-  visit('/programs');
+  visit('/programs/school/0/index');
   click('a:contains("First Test Program")');
 
   andThen(function() {
-    equal(currentPath(), 'programs.program.index');
+    equal(currentPath(), 'programs.programsschool.program.index');
   });
 });
 
-test('create program /programs.index', function() {
+test('create program link', function() {
   expect(1);
-  visit('/programs');
+  visit('/programs/school/0/index');
   click('button:contains("Create a New Program")');
 
   andThen(function() {
-    equal(currentPath(), 'programs.new');
+    equal(currentPath(), 'programs.programsschool.new');
   });
 });
