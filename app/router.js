@@ -29,7 +29,9 @@ Router.map(function() {
   });
   this.resource('instructorgroups', function(){
     this.route('index');
-    this.route('group', { path: ':instructor_group_id'});
+    this.resource('instructorgroupsschool', { path: 'school/:school_id'}, function(){
+      this.route('index');
+    });
   });
   this.resource('learnergroups', function(){
     this.route('index');

@@ -100,6 +100,7 @@ translations.mesh = mesh;
 var instructorGroups = {
   'new': 'New Instructor Group',
   'instructorName': 'Instructor Name',
+  'instructors': 'Instructors',
   'editingGroup': 'Editing {{title}}',
   'addInstructor': 'Add Instructor',
   'availalbeInstructors': 'Available Instructors',
@@ -107,7 +108,9 @@ var instructorGroups = {
   'noSearchResults': 'Your seach returned no results.',
   'confirmGroupRemovalTitle': 'Remove Instructor Group',
   'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} instructor group?',
-  'relatedCourses': 'Related Courses'
+  'relatedCourses': 'Related Courses',
+  'selectSchool': 'Select School',
+  'noGroups': 'There are no instructor groups in this school.',
 };
 translations.instructorGroups = instructorGroups;
 

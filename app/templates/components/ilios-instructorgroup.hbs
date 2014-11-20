@@ -1,0 +1,27 @@
+{{#expander-box
+  title=group.title
+  forceOpen=group.isNew
+  isSaveable=isDirty
+  isRemoveable=true
+  save='save'
+  remove='remove'
+}}
+  <section {{bind-attr class=":instructorgroup isDirty"}}>
+    <div class='title'>
+      <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}</label>
+      {{view Ember.TextField value=bufferedTitle viewName="titleField" width='5em'}}
+    </div>
+    {{ilios-groupmembers
+     titleTranslation='instructorGroups.instructors'
+      users=group.users
+      remove='removeInstructor'
+      add='addInstructor'
+      search='searchUsers'
+      searchResults=userSearchResults
+    }}
+
+    {{ilios-relatedcourses
+      courses=resolvedCourses
+    }}
+  </section>
+{{/expander-box}}

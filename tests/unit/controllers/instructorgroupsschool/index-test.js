@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:instructorgroups/instructor-result', 'InstructorgroupsInstructorResultController', {
+moduleFor('controller:instructorgroupsschool/index', 'InstructorgroupsschoolIndexController', {
   // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['controller:instructorgroupsschool']
 });
 
 // Replace this with your real tests.

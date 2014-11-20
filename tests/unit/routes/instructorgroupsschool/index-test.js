@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:instructorgroups/group', 'InstructorgroupsGroupRoute', {
+moduleFor('route:instructorgroupsschool/index', 'InstructorgroupsschoolIndexRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
