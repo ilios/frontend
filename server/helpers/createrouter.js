@@ -1,4 +1,6 @@
-var defaultGetSingle = function(name, req, res, fixtures){
+var defaultCallbacks = {};
+
+defaultCallbacks.getSingle = function(name, req, res, fixtures){
   var responseObj = {};
   if(req.params.id in fixtures){
     responseObj[name] = fixtures[req.params.id];
@@ -8,7 +10,7 @@ var defaultGetSingle = function(name, req, res, fixtures){
   }
 };
 
-var defaultGetGroup = function(name, req, res, fixtures){
+defaultCallbacks.getGroup = function(name, req, res, fixtures){
   var responseObj = {};
   var response = [];
   if(req.query.ids !== undefined){
@@ -24,7 +26,7 @@ var defaultGetGroup = function(name, req, res, fixtures){
   res.send(responseObj);
 };
 
-var defaultPost = function(name, req, res, fixtures){
+defaultCallbacks.post = function(name, req, res, fixtures){
   var responseObj = {};
   if(req.body === undefined){
     console.log('You need to install the body-parser node library.');
@@ -36,7 +38,7 @@ var defaultPost = function(name, req, res, fixtures){
   res.send(responseObj);
 };
 
-var defaultPut = function(name, req, res, fixtures){
+defaultCallbacks.put = function(name, req, res, fixtures){
   var responseObj = {};
   if(req.params.id in fixtures){
     responseObj[name] = req.body[name];
@@ -48,23 +50,32 @@ var defaultPut = function(name, req, res, fixtures){
 };
 
 
-module.exports = function(name, fixtures, getSingle,  getGroup,  post,  put) {
+module.exports = function(name, fixtures, callbacks) {
+  if(typeof callbacks == 'undefined'){
+    callbacks = {};
+  }
+  var getCallback = function(name){
+    if(callbacks.hasOwnProperty(name) && typeof callbacks[name] == 'function'){
+      return callbacks[name];
+    }
+    return defaultCallbacks[name];
+  };
   var express = require('express');
   var router = express.Router();
   router.get('/:id', function(req, res) {
-    var callback = typeof getSingle !== 'undefined' ? getSingle : defaultGetSingle;
+    var callback = getCallback('getSingle');
     callback(name, req, res, fixtures);
   });
   router.get('/', function(req, res) {
-    var callback = typeof getSingle !== 'undefined' ? getGroup : defaultGetGroup;
+    var callback = getCallback('getGroup');
     callback(name, req, res, fixtures);
   });
   router.post('/', function(req, res) {
-    var callback = typeof getSingle !== 'undefined' ? post : defaultPost;
+    var callback = getCallback('post');
     callback(name, req, res, fixtures);
   });
   router.put('/:id', function(req, res) {
-    var callback = typeof getSingle !== 'undefined' ? put : defaultPut;
+    var callback = getCallback('put');
     callback(name, req, res, fixtures);
   });
 

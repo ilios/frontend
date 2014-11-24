@@ -1,0 +1,9 @@
+<td>{{#link-to 'course' course}}{{course.title}}{{/link-to}}</td>
+<td>{{course.year}}</td>
+<td>{{course.sessions.length}}</td>
+<td>{{course.learners.length}}</td>
+<td>
+  {{#action-menu}}
+    <li>{{#link-to 'course' course}}Edit{{/link-to}}</li>
+  {{/action-menu}}
+</td>

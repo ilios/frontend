@@ -23,7 +23,9 @@ var general = {
   'cohort': 'Cohort',
   'meshTerms': 'MeSH Terms',
   'members': 'Members',
-  'users': 'Users'
+  'users': 'Users',
+  'sessions': 'Sessions',
+  'learners': 'Learners'
 };
 translations.general = general;
 
@@ -84,7 +86,7 @@ var navigation = {
   'programs': 'Programs',
   'instructorGroups': 'Instructor Groups',
   'learnerGroups': 'Learner Groups',
-  'coursesSessions': 'Courses and Sessions',
+  'courses': 'Courses and Sessions',
   'logout': 'Logout',
   'logo': 'Ilios Logo'
 };
@@ -134,6 +136,21 @@ var learnerGroups = {
   'currentSchool': 'Current School',
 };
 translations.learnerGroups = learnerGroups;
+
+var courses = {
+  'currentSchool': 'Current School',
+  'selectSchool': 'Select School',
+  'selectYear': 'Select Educational Year',
+  'new': 'New Course',
+  'noCourses': 'There are no courses in this school',
+  'educationalYear': 'Educational Year',
+  'externalId': 'External ID',
+  'startDate': 'Start Date',
+  'endDate': 'End Date',
+  'level': 'Level',
+  'newSession': 'New Session'
+};
+translations.courses = courses;
 
 var groupMembers = {
   'filterPlaceholder': 'Filter by name or email',

@@ -10,7 +10,8 @@ moduleForModel('user', 'User', {
     'model:session',
     'model:program',
     'model:program-year',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:course'
   ]
 });
 

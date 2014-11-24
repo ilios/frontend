@@ -46,6 +46,16 @@ Router.map(function() {
       });
     });
   });
+  this.resource('courses', function(){
+    this.route('index');
+    this.resource('coursesschool', { path: 'school/:school_id'}, function(){
+      this.route('index');
+      this.resource('coursesyear', { path: 'year/:educational_year_id'}, function(){
+        this.route('index');
+      });
+    });
+  });
+  this.route('course', { path: 'course/:course_id'});
 });
 
 export default Router;

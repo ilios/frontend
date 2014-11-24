@@ -1,0 +1,15 @@
+{{#expander-box
+  title=session.title
+  forceOpen=session.isNew
+  isSaveable=session.isDirty
+  isRemoveable=true
+  save='save'
+  remove='remove'
+}}
+<section {{bind-attr class=":session session.isDirty"}}>
+  <div class='title'>
+    <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}</label>
+    {{view Ember.TextField value=session.title viewName="titleField" width='5em'}}
+  </div>
+</section>
+{{/expander-box}}

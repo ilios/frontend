@@ -1,0 +1,13 @@
+<section id='sessions' class='fullwidth'>
+  {{#if sessions}}
+    {{input type='text' value=filter placeholder='Filter by title'}}
+    {{#each session in filteredContent}}
+      {{ilios-session session=session}}
+    {{/each}}
+  {{else}}
+    <p>{{t 'courses.noSessions'}}</p>
+  {{/if}}
+</section>
+<section class='new fullwidth'>
+  <button {{action 'createNewSessions'}}>{{t 'courses.newSession'}}</button>
+</section>

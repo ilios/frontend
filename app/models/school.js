@@ -8,6 +8,7 @@ export default DS.Model.extend({
   programs: DS.hasMany('program', {async: true}),
   stewardedProgramYears: DS.hasMany('program-year', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
+  courses: DS.hasMany('course', {async: true}),
   cohorts: function(){
     var school = this;
     return new Ember.RSVP.Promise(function(resolve) {

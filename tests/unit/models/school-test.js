@@ -14,7 +14,9 @@ moduleForModel('school', 'School', {
     'model:objective',
     'model:offering',
     'model:instructor-group',
-    'model:cohort'
+    'model:cohort',
+    'model:course',
+    'model:session'
   ]
 });
 

@@ -1,0 +1,31 @@
+<section {{bind-attr class=":course course.isDirty"}}>
+  {{#if course.isDirty}}
+    <button {{action 'save'}}>{{t 'general.save'}}</button>
+  {{/if}}
+  <div class='title'>
+    <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}</label>
+    {{view Ember.TextField value=course.title viewName="titleField"}}
+  </div>
+  <div class='externalId'>
+    <label {{bind-attr for="view.externalIdField.elementId"}}>{{t "courses.externalId"}}</label>
+    {{view Ember.TextField value=course.externalId viewName="externalIdField"}}
+  </div>
+  <div class='startDate'>
+    <label>
+      {{t "courses.startDate"}}
+      {{pikaday-input value=course.startDate  format="MM/DD/YYYY"}}
+    </label>
+  </div>
+  <div class='endDate'>
+    <label>
+      {{t "courses.endDate"}}
+      {{pikaday-input value=course.endDate  format="MM/DD/YYYY"}}
+    </label>
+  </div>
+  <div class='level'>
+    <label {{bind-attr for="view.levelField.elementId"}}>{{t "courses.level"}}</label>
+    {{view Ember.Select content=levelOptions value=course.level viewName="levelField"}}
+  </div>
+</section>
+
+{{ilios-sessions-list sessions=course.sessions}}

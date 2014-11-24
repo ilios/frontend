@@ -8,7 +8,8 @@ moduleForModel('session', 'Session', {
     'model:course',
     'model:offering',
     'model:user',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:school'
   ]
 });
 
