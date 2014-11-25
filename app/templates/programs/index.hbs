@@ -1,28 +1,7 @@
-<h3>{{t "programs.programs"}}</h3>
-<table class="grid-table">
-  <thead>
-    <tr>
-      <th>{{t "programs.program.title"}}</th>
-      <th>{{t "programs.program.shortTitle"}}</th>
-      <th>{{t "programs.program.duration"}}</th>
-      <th>{{t "general.status"}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each}}
-      <tr>
-        <td>{{#link-to "program" this.id}}{{title}}{{/link-to}}</td>
-        <td>{{shortTitle}}</td>
-        <td>{{t "programs.program.durationYears" countBinding="duration"}}</td>
-        <td>
-          {{#if publishedAsTbd}}
-            {{t "general.published"}}
-          {{else}}
-            {{t "general.notPublished"}}
-          {{/if}}
-        </td>
-      </tr>
+<section id='select-school' class='full-wdith'>
+  <ul>
+    {{#each school in content}}
+      <li>{{#link-to 'programsschool' school}}{{school.title}}{{/link-to}}</li>
     {{/each}}
-  </tbody>
-</table>
-{{#link-to "programs.new"}}<button>{{t "programs.program.createNew"}}</button>{{/link-to}}
+  </ul>
+</section>

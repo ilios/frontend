@@ -1,17 +1,7 @@
-{{input type='text' value=filter placeholder='Filter by title'}}
-<table class='grid-table'>
-  <thead>
-    <tr>
-      <th>{{t 'general.title'}}</th>
-      <th>{{t 'general.members'}}</th>
-      <th>{{t 'instructorGroups.relatedCourses'}}</th>
-      <th>{{t 'general.actions'}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each filteredContent}}
-      {{render "instructorgroups/grouprow" this}}
+<section id='select-school' class='full-wdith'>
+  <ul>
+    {{#each school in content}}
+      <li>{{#link-to 'instructorgroupsschool' school}}{{school.title}}{{/link-to}}</li>
     {{/each}}
-  </tbody>
-</table>
-<button {{action 'createNewGroup'}}>{{t 'instructorGroups.new'}}</button>
+  </ul>
+</section>
