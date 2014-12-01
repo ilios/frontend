@@ -8,8 +8,9 @@
 }}
   <section {{bind-attr class=":instructorgroup isDirty"}}>
     <div class='title'>
-      <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}</label>
-      {{view Ember.TextField value=bufferedTitle viewName="titleField" width='5em'}}
+      <label>{{t "general.title"}}
+        {{input value=bufferedTitle}}
+      </label>
     </div>
     {{ilios-groupmembers
      titleTranslation='instructorGroups.instructors'
