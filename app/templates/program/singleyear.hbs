@@ -1,7 +1,7 @@
 <tr>
   <td>
     {{#if isEditing}}
-      {{view Ember.Select content=academicYears value=bufferedAcademicYear}}
+      {{view 'select' content=academicYears value=bufferedAcademicYear}}
     {{else}}
       {{#link-to 'programyear' program this}}{{academicYear}}{{/link-to}}
     {{/if}}

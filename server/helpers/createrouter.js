@@ -26,6 +26,10 @@ var defaultGetGroup = function(name, req, res, fixtures){
 
 var defaultPost = function(name, req, res, fixtures){
   var responseObj = {};
+  if(req.body === undefined){
+    console.log('You need to install the body-parser node library.');
+    return;
+  }
   var obj = req.body[name];
   obj.id = fixtures.length;
   responseObj[name] = obj;

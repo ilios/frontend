@@ -35,8 +35,10 @@ var programs = {
     'title': 'Program Title',
     'shortTitle': 'Short Title',
     'duration': 'Duration',
-    'durationYears.one': '1 year',
-    'durationYears.other': '{{count}} years',
+    'durationYears': {
+      'one': '1 year',
+      'other': '{{count}} years'
+    },
     'editingProgram': 'Editing {{title}}',
     'createNew': 'Create a New Program'
   },

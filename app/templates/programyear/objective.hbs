@@ -1,7 +1,7 @@
 <tr {{bind-attr class="isActive:active isDirty:dirty"}}>
   <td>
     {{#if isEditing}}
-      {{view Ember.TextArea value=bufferedTitle}}
+      {{textarea value=bufferedTitle}}
     {{else}}
       {{shortTitle}}
       {{#if isShortTitle}}<span {{translateAttr title="programs.programYear.objectives.showFullTitle"}} class='clickable' {{action 'showFullTitle'}}>...</span>{{/if}}
@@ -9,7 +9,7 @@
   </td>
   <td>
     {{#if isEditing}}
-      {{view Ember.Select
+      {{view 'select'
         optionLabelPath="content.title"
         content=availableCompetencies
         value=bufferedCompetency}}

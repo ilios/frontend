@@ -18,7 +18,7 @@ var app = new EmberApp();
 // along with the exports of each module as its value.
 
 app.import('bower_components/moment/moment.js');
-app.import('bower_components/cldr/plurals.js');
 app.import('bower_components/ember-i18n/lib/i18n.js');
+app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
 app.import("bower_components/ember-breadcrumbs/dist/ember-breadcrumbs.js");
 module.exports = app.toTree();

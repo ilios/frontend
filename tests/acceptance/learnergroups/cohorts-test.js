@@ -3,7 +3,7 @@ import startApp from '../../helpers/start-app';
 
 var App;
 
-module('Acceptance: LearnerGroupsCohorts', {
+module('Acceptance: LearnerGroupsListCohorts', {
   setup: function() {
     App = startApp();
   },

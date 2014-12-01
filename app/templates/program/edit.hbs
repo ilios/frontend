@@ -1,11 +1,13 @@
 <legend>{{t "programs.program.editingProgram" titleBinding=title}}</legend>
-<label {{bind-attr for="view.titleField.elementId"}}>{{t "programs.program.title"}}</label>
-{{view Ember.TextField value=title viewName="titleField"}}
+<label>{{t "programs.program.title"}}
+  {{input value=title}}
+</label>
 
-<label {{bind-attr for="view.shortTitleField.elementId"}}>{{t "programs.program.shortTitle"}}</label>
-{{view Ember.TextField value=shortTitle viewName="shortTitleField"}}
+<label>{{t "programs.program.shortTitle"}}
+  {{input value=shortTitle}}
+</label>
 
 <label {{bind-attr for="view.durationField.elementId"}}>{{t "programs.program.duration"}}</label>
-{{view Ember.Select content=durationOptions value=duration viewName="durationField"}}
+{{view 'select' content=durationOptions value=duration viewName="durationField"}}
 
 <button {{action 'save'}}>{{t "general.save"}}</button>
