@@ -1,4 +1,3 @@
-/* global CLDR */
 import {
   moduleForModel,
   test
@@ -10,7 +9,7 @@ import Translations from 'ilios/translations/en';
 moduleForModel('cohort', 'Cohort', {
   setup: function(){
     Ember.I18n.translations = Translations;
-    CLDR.defaultLanguage='en';
+    Ember.I18n.locale = 'en';
   },
   // Specify the other units that are required for this test.
   needs: [
