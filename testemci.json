@@ -37,8 +37,6 @@
     "SauceLabs_Chrome",
     "SauceLabs_Firefox",
     "SauceLabs_Safari_7",
-    /*"SauceLabs_Safari_8",*/
-    /*"SauceLabs_IE_9",*/
     "SauceLabs_IE_10",
     "SauceLabs_IE_11"
   ],
