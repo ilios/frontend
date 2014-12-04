@@ -14,7 +14,8 @@ moduleForModel('program', 'Program', {
     'model:objective',
     'model:offering',
     'model:instructor-group',
-    'model:cohort'
+    'model:cohort',
+    'model:course'
   ]
 });
 

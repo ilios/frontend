@@ -1,0 +1,12 @@
+<section id='courses' class='fullwidth'>
+
+  {{#if model}}
+  {{input type='text' value=filter placeholder='Filter by title'}}
+    {{ilios-course-list courses=filteredContent}}
+  {{else}}
+    <p>{{t 'courses.noCourses'}}</p>
+  {{/if}}
+</section>
+<section class='new fullwidth'>
+  <button {{action 'createNewCourse'}}>{{t 'courses.new'}}</button>
+</section>

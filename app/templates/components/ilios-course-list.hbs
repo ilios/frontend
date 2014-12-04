@@ -1,0 +1,16 @@
+<table class="grid-table">
+  <thead>
+    <tr>
+      <th>{{t 'general.title'}}</th>
+      <th>{{t 'courses.educationalYear'}}</th>
+      <th>{{t 'general.sessions'}}</th>
+      <th>{{t 'general.learners'}}</th>
+      <th>{{t 'general.actions'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each course in courses}}
+      {{ilios-course-list-item course=course}}
+    {{/each}}
+  </tbody>
+</table>

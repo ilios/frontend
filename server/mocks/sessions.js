@@ -12,6 +12,18 @@ module.exports = function(app) {
         course: 1,
         offerings: [3]
       },
+      {
+        id: 2,
+        title: 'Third Test Session',
+        course: 0,
+        offerings: []
+      },
+      {
+        id: 3,
+        title: 'Fourth Test Session',
+        course: 0,
+        offerings: []
+      },
   ];
 
   var createRouter = require('../helpers/createrouter.js');
