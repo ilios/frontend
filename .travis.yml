@@ -37,7 +37,7 @@ before_script:
   - until netstat -an 2>/dev/null | grep '4200.*LISTEN'; do true; done
 
 script:
-  - ember test --config-file=testemci.json --port=8080 --host=localtest --env=citests
+  - ember test --config-file=testemci.json --port=8080
 
 #encrypted the IRC room chat.freenode.net##ilios so that it doesn't run on pull requests
 notifications:
