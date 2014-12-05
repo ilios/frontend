@@ -43,21 +43,6 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  //Special setup for running in CI
-  //so saucelabs can connect to the api
-  if (environment === 'citest') {
-      // Testem prefers this...
-    ENV.baseURL = '/';
-    ENV.adapterHost = 'http://localtest:4200';
-    ENV.locationType = 'auto';
-
-    // keep test console output quieter
-    ENV.APP.LOG_ACTIVE_GENERATION = false;
-    ENV.APP.LOG_VIEW_LOOKUPS = false;
-
-    ENV.APP.rootElement = '#ember-testing';
-  }
-
   if (environment === 'production') {
 
   }

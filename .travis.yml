@@ -1,16 +1,13 @@
 ---
 language: node_js
 
-sudo: true
+sudo: false
 
 env:
   global:
-    #set these here becuase they get pullout by testem saucie
+    #set these here becuase they get pulled out by testem saucie
     - SAUCE_USERNAME="ilios"
     - SAUCE_ACCESS_KEY="e7c24f1d-ec10-435d-9cec-d1c38bafa268"
-addons:
-  hosts:
-    - localtest
 
 cache:
   directories:
@@ -20,9 +17,6 @@ cache:
 before_install:
   - "npm config set spin false"
   - "npm install -g npm@^2"
-  - sudo apt-get update -qq
-  # install netstat
-  - sudo apt-get install net-tools
 
 install:
   - npm install -g bower
@@ -31,10 +25,8 @@ install:
   - bower install
 
 before_script:
-  # Start a server so we can hit the fake API from integration tests
-  - ember s --live-reload=false &
-  # wait for the server to be started
-  - until netstat -an 2>/dev/null | grep '4200.*LISTEN'; do true; done
+  - ember s --live-reload=false & # Start a server so we can hit the fake API from integration tests
+  - sleep 10 # wait for the server to be started
 
 script:
   - ember test --config-file=testemci.json --port=8080
