@@ -1,28 +1,30 @@
-<h3>{{t "programs.programs"}}</h3>
-<table class="grid-table">
-  <thead>
-    <tr>
-      <th>{{t "programs.program.title"}}</th>
-      <th>{{t "programs.program.shortTitle"}}</th>
-      <th>{{t "programs.program.duration"}}</th>
-      <th>{{t "general.status"}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each program in model}}
+<section id='programs-school' class='fullwidth'>
+  <h3>{{t "programs.programs"}}</h3>
+  <table class="grid-table">
+    <thead>
       <tr>
-        <td>{{#link-to "program" program.id}}{{program.title}}{{/link-to}}</td>
-        <td>{{program.shortTitle}}</td>
-        <td>{{t "programs.program.durationYears" countBinding="program.duration"}}</td>
-        <td>
-          {{#if program.publishedAsTbd}}
-            {{t "general.published"}}
-          {{else}}
-            {{t "general.notPublished"}}
-          {{/if}}
-        </td>
+        <th>{{t "programs.program.title"}}</th>
+        <th>{{t "programs.program.shortTitle"}}</th>
+        <th>{{t "programs.program.duration"}}</th>
+        <th>{{t "general.status"}}</th>
       </tr>
-    {{/each}}
-  </tbody>
-</table>
-{{#link-to "programsschool.new"}}<button>{{t "programs.program.createNew"}}</button>{{/link-to}}
+    </thead>
+    <tbody>
+      {{#each program in model}}
+        <tr>
+          <td>{{#link-to "program" program.id}}{{program.title}}{{/link-to}}</td>
+          <td>{{program.shortTitle}}</td>
+          <td>{{t "programs.program.durationYears" countBinding="program.duration"}}</td>
+          <td>
+            {{#if program.publishedAsTbd}}
+              {{t "general.published"}}
+            {{else}}
+              {{t "general.notPublished"}}
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{#link-to "programsschool.new"}}<button>{{t "programs.program.createNew"}}</button>{{/link-to}}
+</section>

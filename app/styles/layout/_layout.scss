@@ -1,12 +1,13 @@
-div.container {
+body {
+  margin: 0;
+}
+#site-container {
     @include outer-container;
+    padding-left: 50px;
     section.fullwidth {
         @include span-columns(12);
     }
     section.halfwidth {
         @include span-columns(5);
     }
-}
-li li {
-  padding-left: 1em;
 }

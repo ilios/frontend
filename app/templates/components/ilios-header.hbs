@@ -1,0 +1,11 @@
+<header class="main">
+  {{#link-to "dashboard" classNames="logo"}}
+      <img src='images/ilios-logo.png' {{translateAttr alt="navigation.logo"}} {{translateAttr title="navigation.dashboard"}} />
+  {{/link-to}}
+  <div class="tools">
+    <div class='user'>
+      {{userName}}
+    </div>
+    <a href="ilios.php/authentication_controller?logout=yes" class="authentication">{{t "navigation.logout"}}</a>
+  </div>
+</header>

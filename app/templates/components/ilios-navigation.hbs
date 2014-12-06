@@ -1,0 +1,13 @@
+<div class="sliding-navigation">
+	<a href='#' {{action 'toggleMenuVisibility'}} {{bind-attr class=":sliding-menu-button isMenuVisible"}}>
+		{{fa-icon 'bars'}} {{t 'navigation.menu'}}
+	</a>
+	<nav {{action 'toggleMenuVisibility'}} {{bind-attr class=":sliding-menu-content isMenuVisible"}}>
+		<ul>
+      {{#each item in menuItems}}
+        <li>{{#link-to item.route}}{{fa-icon item.icon}} {{item.name}}{{/link-to}}</li>
+      {{/each}}
+		</ul>
+	</nav>
+	<div {{action 'toggleMenuVisibility'}} {{bind-attr class=":menu-screen isMenuVisible"}}></div>
+</div>

@@ -1,30 +1,32 @@
-<fieldset>
-  {{#with program}}
-    <legend>{{title}} ({{#link-to 'program.edit' this}}{{t 'general.edit'}}{{/link-to}})</legend>
-    <p><strong>{{t "programs.program.title"}}</strong>: {{title}}</p>
-    <p><strong>{{t "programs.program.shortTitle"}}</strong>: {{shortTitle}}</p>
-    <p><strong>{{t "programs.program.duration"}}</strong>: {{t "programs.program.durationYears" countBinding="duration"}}</p>
-  {{/with}}
-</fieldset>
-<h2>Program Years:</h2>
-<table class="grid-table">
-  <thead>
-    <tr>
-      <th>{{t "programs.programYear.academicYear"}}</th>
-      <th>{{t "general.cohort"}}</th>
-      <th>{{t "general.competencies"}}</th>
-      <th>{{t "general.objectives"}}</th>
-      <th>{{t "general.directors"}}</th>
-      <th>{{t "general.topics"}}</th>
-      <th>{{t "programs.programYear.stewardingSchools"}}</th>
-      <th>{{t "general.status"}}</th>
-      <th>{{t "general.actions"}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each}}
-      {{render 'program/singleyear' this}}
-    {{/each}}
-  </tbody>
-</table>
-<button {{action 'createNewYear'}}>{{t "programs.programYear.createNew"}}</button>
+<section id='program' class='fullwidth'>
+  <fieldset>
+    {{#with program}}
+      <legend>{{title}} ({{#link-to 'program.edit' this}}{{t 'general.edit'}}{{/link-to}})</legend>
+      <p><strong>{{t "programs.program.title"}}</strong>: {{title}}</p>
+      <p><strong>{{t "programs.program.shortTitle"}}</strong>: {{shortTitle}}</p>
+      <p><strong>{{t "programs.program.duration"}}</strong>: {{t "programs.program.durationYears" countBinding="duration"}}</p>
+    {{/with}}
+  </fieldset>
+  <h2>Program Years:</h2>
+  <table class="grid-table">
+    <thead>
+      <tr>
+        <th>{{t "programs.programYear.academicYear"}}</th>
+        <th>{{t "general.cohort"}}</th>
+        <th>{{t "general.competencies"}}</th>
+        <th>{{t "general.objectives"}}</th>
+        <th>{{t "general.directors"}}</th>
+        <th>{{t "general.topics"}}</th>
+        <th>{{t "programs.programYear.stewardingSchools"}}</th>
+        <th>{{t "general.status"}}</th>
+        <th>{{t "general.actions"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each}}
+        {{render 'program/singleyear' this}}
+      {{/each}}
+    </tbody>
+  </table>
+  <button {{action 'createNewYear'}}>{{t "programs.programYear.createNew"}}</button>
+</section>

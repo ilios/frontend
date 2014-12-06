@@ -1,4 +1,5 @@
-{{render "navigation"}}
-<div class='container'>
-  {{outlet}}
+{{ilios-header userName=currentUser.fullName}}
+{{ilios-navigation}}
+<div id='site-container'>
+  {{liquid-outlet}}
 </div>

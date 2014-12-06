@@ -37,7 +37,7 @@ test('add new program', function() {
 
   andThen(function() {
     equal(currentPath(), 'programs.programsschool.index');
-    var firstProgramRow = find('.container table:first tbody tr:first');
+    var firstProgramRow = find('#programs-school table:first tbody tr:first');
     equal(find('td:first', firstProgramRow).text().trim(), 'Created Program');
     equal(find('td:eq(1)', firstProgramRow).text().trim(), 'crprg');
     equal(find('td:eq(2)', firstProgramRow).text().trim(), '1 year');
