@@ -41,5 +41,8 @@
     "moment": "^2.8.4",
     "morgan": "^1.5.0",
     "precommit-hook": "^1.0.7"
+  },
+  "dependencies": {
+    "ember-moment": "^1.0.0"
   }
 }

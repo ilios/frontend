@@ -19,6 +19,39 @@ module.exports = function(app) {
         level: 1,
         year: '2013'
       },
+      {
+        id: 2,
+        title: 'Third Test Course',
+        sessions: [],
+        owningSchool: 2,
+        level: 2,
+        externalId: 'ili-tc3',
+        startDate: '2013-09-01',
+        endDate: '2013-12-31',
+        year: '2013'
+      },
+      {
+        id: 3,
+        title: 'Fourth Test Course',
+        sessions: [],
+        owningSchool: 2,
+        level: 1,
+        externalId: 'ili-tc4',
+        startDate: '2014-08-01',
+        endDate: '2014-12-31',
+        year: '2014'
+      },
+      {
+        id: 4,
+        title: 'Fifth Test Course',
+        sessions: [],
+        owningSchool: 2,
+        level: 5,
+        externalId: 'ili-tc5',
+        startDate: '2014-09-01',
+        endDate: '2014-10-31',
+        year: '2014'
+      },
   ];
   var createRouter = require('../helpers/createrouter.js');
 

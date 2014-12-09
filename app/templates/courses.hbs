@@ -1,2 +1,34 @@
-{{bread-crumbs}}
-{{outlet}}
+<section id='courses' class='fullwidth'>
+  <h2 class='page-title'>{{t 'navigation.courses'}}</h2>
+  <div class="filter-tools">
+    <div class="filter">
+      <label>
+        {{input type='checkbox' checked=mycourses}}
+        {{t 'courses.myCourses'}}
+      </label>
+    </div>
+    <div class="filter">
+      {{view 'select'
+      optionLabelPath="content.title"
+      optionValuePath="content.id"
+      content=schools
+      value=school
+    }}
+    </div>
+    <div class="filter">
+      {{view 'select'
+      optionLabelPath="content.title"
+      optionValuePath="content.id"
+      content=educationalYears
+      value=year
+    }}
+    </div>
+
+    <div class="filter">
+      {{input type='text' value=filter placeholder=placeholderValue}}
+    </div>
+  </div>
+  {{ilios-course-list
+    courses=filteredCourses
+  }}
+</section>

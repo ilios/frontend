@@ -25,7 +25,8 @@ var general = {
   'members': 'Members',
   'users': 'Users',
   'sessions': 'Sessions',
-  'learners': 'Learners'
+  'learners': 'Learners',
+  'school': 'School'
 };
 translations.general = general;
 
@@ -140,16 +141,20 @@ translations.learnerGroups = learnerGroups;
 
 var courses = {
   'currentSchool': 'Current School',
+  'courseTitle': 'Course',
   'selectSchool': 'Select School',
   'selectYear': 'Select Educational Year',
   'new': 'New Course',
   'noCourses': 'There are no courses in this school',
   'educationalYear': 'Educational Year',
+  'academicYear': 'Academic Year',
   'externalId': 'External ID',
   'startDate': 'Start Date',
   'endDate': 'End Date',
   'level': 'Level',
-  'newSession': 'New Session'
+  'myCourses': 'My Courses Only',
+  'newSession': 'New Session',
+  'titleFilterPlaceholder': 'Filter by course title',
 };
 translations.courses = courses;
 
