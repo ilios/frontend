@@ -1,4 +1,5 @@
-<fieldset>
+<section id='programs-school-new' class='fullwidth'>
+  <fieldset>
     <legend>{{t "programs.program.createNew"}}</legend>
     <label>{{t "programs.program.title"}}
       {{input value=title}}
@@ -12,4 +13,5 @@
     {{view 'select' content=durationOptions value=duration viewName="durationField"}}
 
     <button {{action 'save'}}>{{t "general.save"}}</button>
-</fieldset>
+  </fieldset>
+</section>

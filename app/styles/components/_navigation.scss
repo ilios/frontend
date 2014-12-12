@@ -1,0 +1,81 @@
+$sliding-menu-border-color: $base-border-color;
+$sliding-menu-background: $background-grey;
+$sliding-menu-color: $text-grey;
+$sliding-menu-border: 1px solid darken($sliding-menu-border-color, 5);
+$sliding-menu-background-hover: darken($sliding-menu-background, 5);
+$sliding-menu-color-hover: #fff;
+
+.sliding-navigation{
+  .sliding-menu-button {
+    i {
+      margin-right: 10px;
+      @include transform(rotate(-90deg));
+    }
+    display: inline-block;
+    font-size: $base-font-size;
+    margin-bottom: $base-line-height;
+    outline: none;
+  	background-color: $sliding-menu-background;
+    color: $sliding-menu-color;
+    padding-top: 0.4em;
+  	text-align: center;
+  	font-size: 0.8em;
+  	height: 45px;
+  	width: 100px;
+    @include transform(rotate(90deg));
+    @include position(fixed, 105px 0px 0px -45px);
+    @include transition(all .25s linear);
+    -webkit-overflow-scrolling: touch;
+    z-index: 999999;
+
+    &.is-menu-visible {
+      @include transform(translateX(220px) rotate(90deg));
+    }
+  }
+
+  .sliding-menu-content {
+    color: $sliding-menu-color;
+    @include position(fixed, 60px auto 0px 0px);
+    @include size(220px 100%);
+    @include transform(translateX(-230px));
+    @include transition(all .25s linear);
+    background: $sliding-menu-background;
+    z-index: 999999;
+    -webkit-overflow-scrolling: touch;
+
+    li {
+      a {
+        padding-left: 20px;
+        color: $sliding-menu-color;
+        border-bottom: $sliding-menu-border;
+        display: inline-block;
+        padding: .5em;
+        width: 100%;
+      }
+      &:hover {
+        background-color: $sliding-menu-background-hover;
+        color: $sliding-menu-color-hover;
+      }
+    }
+
+    &.is-menu-visible {
+      @include transform(translateX(0));
+    }
+  }
+
+  .menu-screen {
+    @include position(fixed, 0px 0px 0px 0px);
+    @include transition;
+    background: $sliding-menu-background;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999998;
+
+    &.is-menu-visible {
+      opacity: 0.5;
+      visibility: visible;
+    }
+  }
+}
+
+// Based on code by Diego Eis

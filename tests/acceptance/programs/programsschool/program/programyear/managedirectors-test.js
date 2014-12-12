@@ -43,7 +43,7 @@ test('badge value', function() {
 
   andThen(function() {
     equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '1');
-    fillIn('.container .search-and-submit input', 'test.person@example.com');
+    fillIn('#available-directors .search-and-submit input', 'test.person@example.com');
 
     click('#available-directors .search-and-submit button').then(function(){
       click('#available-directors li .add:first').then(function(){
@@ -56,7 +56,7 @@ test('badge value', function() {
 test('test add single', function() {
   expect(5);
   visit('/programs/school/0/program/0/years/0/managedirectors');
-  fillIn('.container .search-and-submit input', 'test');
+  fillIn('#available-directors .search-and-submit input', 'test');
   click('#available-directors .search-and-submit button');
 
   andThen(function() {

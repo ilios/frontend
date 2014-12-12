@@ -35,12 +35,12 @@ test('program list', function() {
   visit('/programs/school/0/index');
 
   andThen(function() {
-    var firstProgramRow = find('.container table:first tbody tr:first');
+    var firstProgramRow = find('#programs-school table:first tbody tr:first');
     equal(find('td:first', firstProgramRow).text().trim(), 'First Test Program');
     equal(find('td:eq(1)', firstProgramRow).text().trim(), 'ftp');
     equal(find('td:eq(2)', firstProgramRow).text().trim(), '4 years');
 
-    var secondProgramRow = find('.container table:first tbody tr:eq(1)');
+    var secondProgramRow = find('#programs-school table:first tbody tr:eq(1)');
     equal(find('td:first', secondProgramRow).text().trim(), 'Second Test Program');
     equal(find('td:eq(1)', secondProgramRow).text().trim(), 'stp');
     equal(find('td:eq(2)', secondProgramRow).text().trim(), '1 year');

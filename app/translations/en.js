@@ -88,7 +88,8 @@ var navigation = {
   'learnerGroups': 'Learner Groups',
   'courses': 'Courses and Sessions',
   'logout': 'Logout',
-  'logo': 'Ilios Logo'
+  'logo': 'Ilios Logo',
+  'menu': 'Ilios Menu'
 };
 translations.navigation = navigation;
 
