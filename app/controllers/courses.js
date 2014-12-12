@@ -1,12 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
-  queryParams: ['school', 'year', 'mycourses', 'filter'],
+  queryParams: ['schools', 'year', 'mycourses', 'filter'],
   placeholderValueTranslation: 'courses.titleFilterPlaceholder',
-  school: null,
   year: null,
   mycourses: false,
   filter: null,
+  //initially set the primary school as checked
+  schools: Ember.computed.collect('currentUser.primarySchool.id'),
 
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
@@ -20,6 +21,24 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   sortAscending: true,
   sortProperties: ['title'],
 
+  proxiedSchools: function(){
+    var checked = this.get('schools');
+    if(this.get('availableSchools') === undefined){
+      return [];
+    }
+    return this.get('availableSchools').map(function(school){
+      return Ember.ObjectProxy.create({
+        content: school,
+        checked: checked.contains(school.get('id')),
+      });
+    });
+  }.property('availableSchools.@each'),
+
+  watchProxySchools: function(){
+    var checked = this.get('proxiedSchools').filterBy('checked').mapBy('content.id');
+    this.set('schools', checked);
+  }.observes('proxiedSchools.@each.checked'),
+
   filteredCourses: function(){
     var self = this;
     var filteredCourses = this.get('arrangedContent');
@@ -27,7 +46,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       return Ember.A();
     }
     var titleFilter = this.get('debouncedFilter');
-    var schoolFilter = this.get('school');
+    var checkedSchools = this.get('schools');
     var mycoursesFilter = this.get('mycourses');
     var educationalYearFilter = null;
     if(this.get('year') != null){
@@ -38,7 +57,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       if(titleFilter != null && titleFilter.length > 0 && !course.get('title').match(exp)){
         return false;
       }
-      if(schoolFilter != null && course.get('owningSchool.id') !== schoolFilter){
+      if(!checkedSchools.contains(course.get('owningSchool.id'))){
         return false;
       }
       if(educationalYearFilter != null && course.get('year') !== educationalYearFilter){
@@ -52,5 +71,5 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     });
 
     return filteredCourses;
-  }.property('arrangedContent.@each', 'mycourses', 'debouncedFilter', 'school', 'year'),
+  }.property('arrangedContent.@each', 'mycourses', 'debouncedFilter', 'schools.@each', 'year'),
 });

@@ -12,7 +12,7 @@ export default Ember.Route.extend({
   setupController: function(controller, hash){
     controller.set('model', hash.courses);
     controller.set('educationalYears', hash.educationalYears);
-    controller.set('schools', hash.schools);
+    controller.set('availableSchools', hash.schools);
   },
   queryParams: {
     filter: {

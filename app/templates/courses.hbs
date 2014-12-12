@@ -1,21 +1,21 @@
 <section id='courses' class='fullwidth'>
   <h2 class='page-title'>{{t 'navigation.courses'}}</h2>
   <div class="filter-tools">
-    <div class="filter">
+    <div id='mycoursesfilter' class="filter">
       <label>
         {{input type='checkbox' checked=mycourses}}
         {{t 'courses.myCourses'}}
       </label>
     </div>
-    <div class="filter">
-      {{view 'select'
-      optionLabelPath="content.title"
-      optionValuePath="content.id"
-      content=schools
-      value=school
-    }}
+    <div id='schoolsfilter' class="filter">
+      {{#each school in proxiedSchools}}
+        <label>
+          {{input type='checkbox' checked=school.checked}}
+          {{school.title}}
+        </label>
+      {{/each}}
     </div>
-    <div class="filter">
+    <div id='yearsfilter' class="filter">
       {{view 'select'
       optionLabelPath="content.title"
       optionValuePath="content.id"
@@ -24,7 +24,7 @@
     }}
     </div>
 
-    <div class="filter">
+    <div id='titlefilter' class="filter">
       {{input type='text' value=filter placeholder=placeholderValue}}
     </div>
   </div>

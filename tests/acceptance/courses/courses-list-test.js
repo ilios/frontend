@@ -18,12 +18,10 @@ var getCourse = function(rowNumber){
 
 var isCourseAtPosition = function(courseTitle, position){
   var title = find('td:first a', getCourse(position-1)).text().trim();
-  console.log(courseTitle, find('td:first a', getCourse(position-1)).text().trim());
   return title.indexOf(courseTitle) !== -1;
 };
 
 var isCountCourses = function(num){
-  console.log(find('#courses table tbody tr').length);
   return num === find('#courses table tbody tr').length;
 };
 
@@ -41,12 +39,12 @@ test('filters options', function() {
     var filters = find('#courses .filter');
     equal(filters.length, 4);
 
-    var schoolOptions = find('#courses .filter-tools select:eq(0) > option');
+    var schoolOptions = find('#schoolsfilter label');
     equal(schoolOptions.length, 2);
     equal(schoolOptions.eq(0).text().trim(), 'First School');
     equal(schoolOptions.eq(1).text().trim(), 'Second School');
 
-    var yearOptions = find('#courses .filter-tools select:eq(1) > option');
+    var yearOptions = find('#yearsfilter option');
     equal(yearOptions.length, 2);
     equal(yearOptions.eq(0).text().trim(), '2013');
     equal(yearOptions.eq(1).text().trim(), '2014');
@@ -56,10 +54,10 @@ test('filters options', function() {
 
 test('filter by mycourses', function() {
   expect(1);
-  visit('/courses?school=0&year=0');
+  visit('/courses?schools=%5B"0"%5D&year=0');
 
   andThen(function() {
-    var filter = find('#courses .filter-tools input[type="checkbox"]');
+    var filter = find('#mycoursesfilter input[type="checkbox"]');
     filter.prop('checked', true);
     filter.trigger('change');
     andThen(function() {
@@ -84,9 +82,8 @@ test('filter by school', function() {
   visit('/courses');
 
   andThen(function() {
-    var filter = find('#courses .filter-tools select:eq(0)');
-    filter.val(1);
-    filter.trigger('change');
+    click('#schoolsfilter label:contains("Second School") > input');
+    click('#schoolsfilter label:contains("First School") > input');
     andThen(function() {
       ok(isCountCourses(1));
       ok(isCourseAtPosition('Third Test Course', 1));
@@ -96,10 +93,10 @@ test('filter by school', function() {
 
 test('filter by year', function() {
   expect(3);
-  visit('/courses?school=1');
+  visit('/courses?schools=%5B"1"%5D');
 
   andThen(function() {
-    var filter = find('#courses .filter-tools select:eq(1)');
+    var filter = find('#yearsfilter select');
     filter.val(1);
     filter.trigger('change');
     andThen(function() {
@@ -112,13 +109,23 @@ test('filter by year', function() {
 
 test('filter by title', function() {
   expect(2);
-  visit('/courses?school=0&year=0');
+  visit('/courses?schools=%5B"0"%5D&year=0');
 
   andThen(function() {
-    fillIn('#courses .filter-tools input[type="text"]', 'Second');
+    fillIn('#titlefilter input', 'Second');
     andThen(function() {
       ok(isCountCourses(1));
       ok(isCourseAtPosition('Second Test Course', 1));
     });
+  });
+});
+
+test('visit specific school', function() {
+  expect(2);
+  visit('/courses?schools=%5B"1"%5D');
+
+  andThen(function() {
+    ok(isCountCourses(1));
+    ok(isCourseAtPosition('Third Test Course', 1));
   });
 });
