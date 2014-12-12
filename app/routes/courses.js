@@ -10,6 +10,7 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash(promises);
   },
   setupController: function(controller, hash){
+    this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
     controller.set('model', hash.courses);
     controller.set('educationalYears', hash.educationalYears);
     controller.set('availableSchools', hash.schools);
