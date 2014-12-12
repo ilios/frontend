@@ -1,15 +1,20 @@
 $ilios_orange: #CC6600;
 
-$ilios_light_blue: #45598e;
-$ilios_green: #009828;
-$blue: #102B8A;
-$light-yellow: #FFC94D;
-$light-green: #11B93E;
-$light-blue: #4259ae;
+$background-grey: #f7f7f7;
+$header-grey: #edecec;
+$text-grey: #333333;
 
-$base-accent-color: $light-blue;
+$ilios-red: #d9360b;
+$ilios-green: #84c444;
+$ilios-blue: #009ccc;
+
+$ilios-accent-color: $ilios-blue;
+$ilios-add-color: $ilios-green;
+$ilios-remove-color: $ilios-red;
 
 $visual-grid: false;
 
-$add-color: #009900;
-$remove-color: #990000;
+$base-accent-color: $ilios-accent-color;
+$base-font-color: $text-grey;
+$base-border-color: $background-grey;
+$base-background-color: $background-grey;

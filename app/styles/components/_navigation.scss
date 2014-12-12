@@ -1,6 +1,6 @@
-$sliding-menu-border-color: #d9a10b;
-$sliding-menu-background: $sliding-menu-border-color;
-$sliding-menu-color: #fff;
+$sliding-menu-border-color: $base-border-color;
+$sliding-menu-background: $background-grey;
+$sliding-menu-color: $text-grey;
 $sliding-menu-border: 1px solid darken($sliding-menu-border-color, 5);
 $sliding-menu-background-hover: darken($sliding-menu-background, 5);
 $sliding-menu-color-hover: #fff;
@@ -26,6 +26,7 @@ $sliding-menu-color-hover: #fff;
     @include position(fixed, 105px 0px 0px -45px);
     @include transition(all .25s linear);
     -webkit-overflow-scrolling: touch;
+    z-index: 999999;
 
     &.is-menu-visible {
       @include transform(translateX(220px) rotate(90deg));
@@ -65,13 +66,13 @@ $sliding-menu-color-hover: #fff;
   .menu-screen {
     @include position(fixed, 0px 0px 0px 0px);
     @include transition;
-    background: $sliding-menu-border-color;
+    background: $sliding-menu-background;
     opacity: 0;
     visibility: hidden;
     z-index: 999998;
 
     &.is-menu-visible {
-      opacity: 0;
+      opacity: 0.5;
       visibility: visible;
     }
   }
