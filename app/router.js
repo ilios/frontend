@@ -31,23 +31,18 @@ Router.map(function() {
       });
     });
   });
-  this.resource('instructorgroups', function(){
-    this.route('index');
-    this.resource('instructorgroupsschool', { path: 'school/:school_id'}, function(){
-      this.route('index');
-    });
-  });
-  this.resource('learnergroups', function(){
-    this.route('index');
-    this.resource('learnergroupsschool', { path: 'school/:school_id'}, function(){
-      this.route('index');
-      this.resource('learnergroupscohort', { path: 'cohort/:cohort_id'}, function(){
-        this.route('index');
-      });
-    });
-  });
   this.route('courses');
   this.route('course', { path: 'course/:course_id'});
+  this.route("courseobjective", {path: 'course/:course_id/objective/:objective_id'});
+
+  this.route('instructorgroups');
+  this.route('instructorgroup', { path: 'instructorgroup/:instructor_group_id'});
+
+  this.route('learnergroups');
+  this.route('learnergroup', { path: 'learnergroup/:learner_group_id'});
+
+  this.route("testmodels");
+  this.route("loading");
 
   this.route("testmodels");
 });

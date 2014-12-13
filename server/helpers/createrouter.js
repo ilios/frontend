@@ -23,6 +23,9 @@ defaultCallbacks.getGroup = function(name, req, res, fixtures){
       if(obj[prop] === undefined){
         return filter == 'null';
       }
+      if (filter == 'false'){
+        filter = false;
+      }
       return obj[prop] == filter;
     }
   };

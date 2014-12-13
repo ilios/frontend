@@ -1,0 +1,16 @@
+<span class='content'>
+  {{#unless isEditing}}
+    <span {{action 'edit'}} class='editable'>{{moment date format}}</span>
+  {{else}}
+  <span class='editor'>
+    <span class='control'>
+      {{pikaday-input value=date format="MM/DD/YYYY"}}
+      {{fa-icon 'calendar'}}
+    </span>
+    <span class='actions'>
+      <button {{action 'save'}}>{{fa-icon 'check' classNames='add'}}</button>
+      <button {{action 'cancel'}}>{{fa-icon 'remove' classNames='remove'}}</button>
+    </span>
+  </span>
+  {{/unless}}
+</span>

@@ -6,20 +6,20 @@ export default Ember.ObjectController.extend({
   selected: function(){
     var self = this;
     var selected = false;
-    this.get('programYear.topics').forEach(function(discipline){
+    this.get('programYear.disciplines').forEach(function(discipline){
       if(discipline.get('id') === self.get('model').get('id')){
         selected = true;
       }
     });
     return selected;
-  }.property('programYear.topics.@each'),
+  }.property('programYear.disciplines.@each'),
     actions:{
       remove: function(discipline){
-        this.get('programYear.topics').removeObject(discipline);
+        this.get('programYear.disciplines').removeObject(discipline);
         this.set('programYear.isDirty', true);
       },
       add: function(discipline){
-        this.get('programYear.topics').then(function(topics){
+        this.get('programYear.disciplines').then(function(topics){
           topics.addObject(discipline);
         });
         this.set('programYear.isDirty', true);

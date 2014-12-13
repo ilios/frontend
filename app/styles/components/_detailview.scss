@@ -1,0 +1,192 @@
+//course, session, etc detail view
+.detail-view {
+  border: 2px solid $background-grey;
+  border-top: 0px;
+  margin-top: 0px;
+
+  section {
+    text-align: left;
+    margin: 10px;
+   border:none;
+    @include clearfix;
+
+
+
+    button {
+      font-size: $base-font-size * 0.75;
+
+    }
+
+    &.detail-overview {
+      margin-top: $base-font-size * 2;
+
+      label {
+        display: inline-block;
+        margin-right: $base-font-size * 5;
+
+        & > * {
+          font-weight: normal;
+        }
+      }
+    }
+
+    &.detail-block {
+      border-bottom: 1px dotted $ilios-orange;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      margin-left: .8em;
+      margin-right: .8em;
+
+      .detail-title {
+        color: $ilios-orange;
+        font-size: $base-font-size;
+        font-weight: bold;
+        margin-top: 1em;
+
+        @include span-columns(9 of 12);
+      }
+
+      .detail-actions {
+        text-align: right;
+        margin-top: 1em;
+        vertical-align: middle;
+        padding-right: .3em;
+        @include span-columns(3 of 12);
+        @include omega;
+      }
+
+      .detail-content {
+        margin-top: $base-font-size;
+        margin-bottom: .8em;
+        margin-left: .5em;
+        padding-right: .8em;
+
+        @include span-columns(12 of 12);
+      }
+    }
+  }
+
+  .removable-list{
+    margin-bottom: $base-font-size;
+    ul,li {
+      display: inline;
+    }
+    li {
+      margin-right: $base-font-size;
+      background-color: $background-grey;
+      cursor: pointer;
+    }
+  }
+
+  .selectable-list{
+    @include position(relative);
+    @include clearfix;
+    margin-bottom: $base-font-size;
+    width: 80%;
+    ul{
+      width: 80%;
+      background-color: white;
+      border: 1px solid $base-link-color;
+      @include padding(.5em 1em .5em .5em);
+      overflow-y: scroll;
+      height: 10em;
+
+      ul{
+        margin-left: 2em;
+        width: auto;
+        background-color: transparent;
+        border: none;
+        height: auto;
+        padding: 0;
+        overflow-y: visible;
+      }
+
+      li {
+        color: $base-link-color;
+        cursor: pointer;
+      }
+
+      li.static {
+        color: $base-font-color;
+        cursor: arrow;
+      }
+    }
+
+  }
+
+  .detail-header {
+    @include span-columns(12 of 12);
+    background-color: $background-grey;
+    margin:0px;
+    padding: .8em;
+    /* vertical-align: bottom;*/
+
+    .title {
+      @include span-columns(5 of 12);
+      h2, h4 {
+        display: inline;
+      }
+    }
+    .actions {
+      /*vertical-align: bottom;*/
+      @include span-columns(5 of 12);
+      @include shift(2);
+      text-align:right;
+
+      h5{
+        vertical-align: bottom;
+        display: inline;
+        margin-left: 1em;
+        i{
+          vertical-align: bottom;
+        }
+      }
+    }
+  }
+
+  .detailCollapsedControl {
+    width: 100%;
+    text-align: center;
+    border-top: .75 * $base-font-size solid $ilios-orange;
+    margin-bottom: $base-font-size;
+
+
+
+    span {
+
+      color: white;
+      @include padding(.25em 4em .5em 5em);
+      background-color: $ilios-orange;
+      @include border-bottom-radius(5px);
+      cursor: pointer;
+      -webkit-box-shadow: 0 2px #e2e2e2, inset 0 1px 2px rgba(0,0,0,.34);
+      -moz-box-shadow: 0 2px #e2e2e2, inset 0 1px 2px rgba(0,0,0,.34);
+      box-shadow: 0 2px #e2e2e2, inset 0 1px 2px rgba(0,0,0,.34);
+
+      &:after {
+        padding-left: 1em;
+        content: '\25BC';
+      }
+
+      &.is-expanded:after {
+        content: '\25B2';
+      }
+    }
+  }
+
+  ul.static-list {
+    width: 80%;
+    background-color: white;
+    padding: 1em 2em;
+    border: 2px solid $background-grey;
+    li {
+      font-weight: bold;
+    }
+    ul {
+      margin-left: 1em;
+      li {
+        font-weight: normal;
+      }
+    }
+  }
+}

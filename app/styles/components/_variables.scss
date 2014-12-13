@@ -1,3 +1,9 @@
+// Typography
+$sans-serif: $helvetica;
+$serif: $georgia;
+$base-font-family: $sans-serif;
+$header-font-family: $base-font-family;
+
 $ilios_orange: #CC6600;
 
 $background-grey: #f7f7f7;
@@ -10,11 +16,15 @@ $ilios-blue: #009ccc;
 
 $ilios-accent-color: $ilios-blue;
 $ilios-add-color: $ilios-green;
+$ilios-publish-color: $ilios-green;
 $ilios-remove-color: $ilios-red;
 
 $visual-grid: false;
+
+$publish-button-color: $ilios-green;
 
 $base-accent-color: $ilios-accent-color;
 $base-font-color: $text-grey;
 $base-border-color: $background-grey;
 $base-background-color: $background-grey;
+$base-button-color: $ilios-blue;

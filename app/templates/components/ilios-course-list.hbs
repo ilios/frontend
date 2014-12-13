@@ -1,19 +1,36 @@
-<table class="grid-table">
+<table>
   <thead>
     <tr>
-      <th>{{t 'courses.courseTitle'}}</th>
-      <th>{{t 'general.school'}}</th>
-      <th>{{t 'general.year'}}</th>
-      <th>{{t 'courses.level'}}</th>
-      <th>{{t 'courses.startDate'}}</th>
-      <th>{{t 'courses.endDate'}}</th>
-      <th>{{t 'general.status'}}</th>
-      <th>{{t 'general.actions'}}</th>
+      <th colspan=3>{{t 'courses.courseTitle'}}</th>
+      <th colspan=2>{{t 'general.school'}}</th>
+      <th colspan=2>{{t 'general.year'}}</th>
+      <th colspan=2>{{t 'courses.level'}}</th>
+      <th colspan=2>{{t 'courses.startDate'}}</th>
+      <th colspan=2>{{t 'courses.endDate'}}</th>
+      <th colspan=1>{{t 'general.status'}}</th>
+      <th colspan=1>{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
-    {{#each course in courses}}
-      {{ilios-course-list-item course=course}}
+    {{#each course in sortedCourses}}
+      <td colspan=3 {{action 'edit' course}}>
+        {{course.title}}
+        {{#if course.externalId}}
+          ({{course.externalId}})
+        {{/if}}
+      </td>
+      <td colspan=2 {{action 'edit' course}}>{{course.owningSchool.title}}</td>
+      <td colspan=2 {{action 'edit' course}}>{{course.academicYear}}</td>
+      <td colspan=2 {{action 'edit' course}}>{{course.level}}</td>
+      <td colspan=2 {{action 'edit' course}}>{{moment course.startDate 'MM/DD/YY'}}</td>
+      <td colspan=2 {{action 'edit' course}}>{{moment course.endDate 'MM/DD/YY'}}</td>
+      <td {{action 'edit' course}}>{{status}}</td>
+      <td>
+        {{#action-menu}}
+          <li {{action 'edit' group}}>{{t 'general.edit'}}</li>
+          <li {{action 'remove' group}}>{{t 'general.remove'}}</li>
+        {{/action-menu}}
+      </td>
     {{/each}}
   </tbody>
 </table>
