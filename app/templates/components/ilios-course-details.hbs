@@ -1,0 +1,22 @@
+<section class='course detail-view'>
+  <div class='nav'>
+    {{#link-to 'courses'}}<button>{{t 'courses.backToCourses'}}</button>{{/link-to}}
+  </div>
+  {{editable-text tagName='h2' model=course property='title'}}
+  <section class='overview'>
+    <h3>{{t 'courses.details'}}</h3>
+    <div class='detail-title'>
+      {{t 'general.overview'}}
+    </div>
+    <div class='detail-content'>
+      <label>{{t "general.start"}}: {{editable-date model=course property='startDate'}}</label>
+      <label>{{t "courses.externalId"}}: {{editable-text model=course property='externalId'}}</label>
+      <label>{{t "courses.level"}}: {{editable-select model=course property='level' options=levelOptions}}</label>
+      <label>{{t "general.end"}}: {{editable-date model=course property='endDate'}}</label>
+    </div>
+    <div class='detail-actions'>
+      <button class='un'>{{t 'general.unPublish'}}</button>
+      <button class='add'>{{t 'general.publish'}}</button>
+    </div>
+  </section>
+</section>

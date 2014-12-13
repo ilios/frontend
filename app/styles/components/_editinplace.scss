@@ -1,0 +1,22 @@
+.editinplace {
+  display: inline;
+  .content {
+    display: inline-block;
+  }
+  .editable {
+    color: $ilios-blue;
+    cursor: pointer;
+  }
+
+  .editor {
+    input, select {
+      display: inline;
+      width: auto;
+    }
+    .actions{
+      button {
+        @extend %reset-button;
+      }
+    }
+  }
+}

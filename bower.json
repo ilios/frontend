@@ -17,7 +17,8 @@
     "ember-i18n": "2.*",
     "ember-breadcrumbs": "~0.0.2",
     "pikaday": "~1.2.0",
-    "ember-cli-moment-shim": "~0.0.2"
+    "ember-cli-moment-shim": "~0.0.2",
+    "normalize.css": "~3.0.2"
   },
   "devDependencies": {
     "bourbon": "3.2.0",

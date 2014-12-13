@@ -2,6 +2,7 @@
 @import '../base/base';
 @import '../components/variables';
 @import '../../../bower_components/neat/app/assets/stylesheets/neat';
+@import '../extends/reset-button';
 @import '../layout/layout';
 @import '../components/global';
 @import '../components/header';
@@ -16,3 +17,5 @@
 @import '../components/expander';
 @import '../components/filters';
 @import '../components/buttongroup';
+@import '../components/editinplace';
+@import '../components/detailview';

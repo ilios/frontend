@@ -2,11 +2,16 @@ import {
   moduleForComponent,
   test
 } from 'ember-qunit';
+import Ember from 'ember';
+import { initialize } from 'ilios/initializers/ember-moment';
 
-moduleForComponent('ilios-course', 'IliosCourseComponent', {
-  // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
-  needs: ['component:ilios-sessions-list', 'component:pikaday-input']
+moduleForComponent('editable-date', 'EditableDateComponent', {
+  //initialize the ember-moment helper
+  setup: function (container) {
+    Ember.run(function () {
+      initialize(container);
+    });
+  }
 });
 
 test('it renders', function() {

@@ -27,7 +27,12 @@ var general = {
   'sessions': 'Sessions',
   'learners': 'Learners',
   'school': 'School',
-  'year': 'Year'
+  'year': 'Year',
+  'publish': 'Publish',
+  'unPublish': 'UnPublish',
+  'overview': 'Overview',
+  'start': 'Start',
+  'end': 'End',
 };
 translations.general = general;
 
@@ -155,6 +160,8 @@ var courses = {
   'level': 'Level',
   'myCourses': 'My Courses Only',
   'newSession': 'New Session',
+  'backToCourses': 'Back to Courses List',
+  'details': 'Course Details',
   'titleFilterPlaceholder': 'Filter by course title',
 };
 translations.courses = courses;
