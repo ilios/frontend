@@ -14,7 +14,8 @@ module.exports = function(app) {
       title: 'Second School',
       iliosAdministratorEmail: 'test@example.com',
       isDeleted: false,
-      stewardedProgramYears: [0,1]
+      stewardedProgramYears: [0,1],
+      courses: [2,3,4]
     },
     {
       id: 2,

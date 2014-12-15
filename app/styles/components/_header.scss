@@ -1,44 +1,69 @@
 header.main {
   $header-padding: 1em;
   $header-background: $ilios_orange;
-  $header-color: transparentize(white, 0.2);
+  $header-color: white;
   $header-height: 60px;
   $horizontal-bar-mode: $large-screen;
+  $header-box-width: 250px;
 
   background-color: $header-background;
   border-bottom: 1px solid darken($header-background, 10);
   height: $header-height;
   width: 100%;
   z-index: 999;
-	text-align: center;
+  text-align: center;
+  vertical-align: bottom;
+  margin-bottom: $header-height;
+  @include media($large-screen) {
+    margin-bottom: 0;
+  }
 
   .logo {
     max-height: $header-height;
     padding-left: $header-padding;
-    padding-right: 2em;
-
+    float: left;
+    @include media($large-screen) {
+      width: $header-box-width;
+    }
     img {
       max-height: $header-height;
       padding: .8em 0;
     }
   }
 
+  h1 {
+    display: block;
+    color: $header-color;
+    font-size: $base-font-size * 1.5;
+    padding-top: $header-height / 4;
+    clear: both;
+    margin-bottom: 1em;
+    background: #505050;
+
+    @include media($large-screen) {
+      margin: 0 $header-box-width + 10;
+      background: transparent;
+      clear: none;
+    }
+  }
+
   // Elements on the far right
 
   .tools {
-    @include clearfix;
     display: block;
     padding-right: $header-padding;
     padding-left: $header-padding/2;
     background: transparent;
     float: right;
-    clear: none;
+    @include media($large-screen) {
+      width: $header-box-width;
+    }
     div.user {
       margin-top: 1.2em;
       float: left;
       @include transition (all 0.2s ease-in-out);
       display: inline;
-      color: white;
+      color: $header-color;
       font-size: .8em;
       font-weight: 800;
       padding: .4em .5em;
@@ -55,7 +80,7 @@ header.main {
       display: inline;
       background: $base-accent-color;
       border-radius: $base-border-radius;
-      color: white;
+      color: $header-color;
       font-size: .8em;
       font-weight: 800;
       text-transform: uppercase;

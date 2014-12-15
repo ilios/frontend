@@ -1,8 +1,0 @@
-{{#if currentUser.canChangeSchool}}
-  {{view 'select'
-    optionLabelPath="content.title"
-    content=currentUser.schools
-    value=currentUser.currentSchool
-    selection=selectedSchool
-  }}
-{{/if}}

@@ -1,9 +1,15 @@
-<td>{{#link-to 'course' course}}{{course.title}}{{/link-to}}</td>
-<td>{{course.year}}</td>
-<td>{{course.sessions.length}}</td>
-<td>{{course.learners.length}}</td>
+<td>{{#link-to 'course' course}}{{course.title}} ({{course.externalId}}){{/link-to}}</td>
+<td>{{course.owningSchool.title}}</td>
+<td>{{course.academicYear}}</td>
+<td>{{course.level}}</td>
+<td>{{moment course.startDate 'MM/DD/YY'}}</td>
+<td>{{moment course.endDate 'MM/DD/YY'}}</td>
+<td>{{status}}</td>
 <td>
   {{#action-menu}}
-    <li>{{#link-to 'course' course}}Edit{{/link-to}}</li>
+    <li>{{#link-to 'course' course}}View{{/link-to}}</li>
+    <li>{{#link-to 'course' course}}Publish{{/link-to}}</li>
+    <li>{{#link-to 'course' course}}Archive{{/link-to}}</li>
+    <li>{{#link-to 'course' course}}Rollover{{/link-to}}</li>
   {{/action-menu}}
 </td>
