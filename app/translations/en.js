@@ -26,7 +26,8 @@ var general = {
   'users': 'Users',
   'sessions': 'Sessions',
   'learners': 'Learners',
-  'school': 'School'
+  'school': 'School',
+  'year': 'Year'
 };
 translations.general = general;
 

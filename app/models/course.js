@@ -16,7 +16,10 @@ var Course = DS.Model.extend({
     owningSchool: DS.belongsTo('school', {async: true}),
     relatedUsers: function(){
       return Ember.A();
-    }.property()
+    }.property(),
+    academicYear: function(){
+      return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
+    }.property('year')
 });
 
 export default Course;

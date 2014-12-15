@@ -46,8 +46,8 @@ test('filters options', function() {
 
     var yearOptions = find('#yearsfilter option');
     equal(yearOptions.length, 2);
-    equal(yearOptions.eq(0).text().trim(), '2013');
-    equal(yearOptions.eq(1).text().trim(), '2014');
+    equal(yearOptions.eq(0).text().trim(), '2013 - 2014');
+    equal(yearOptions.eq(1).text().trim(), '2014 - 2015');
   });
 
 });
