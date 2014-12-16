@@ -11,7 +11,8 @@ module.exports = function(app) {
         ucUid: '123456789',
         offerings: [0,1,2,3,4],
         schools: [0,1],
-        primarySchool: 0
+        primarySchool: 0,
+        directedCourses: [0]
       },
       {
         id: 1,
@@ -22,7 +23,8 @@ module.exports = function(app) {
         enabled: true,
         ucUid: '123456798',
         schools: [1],
-        primarySchool: 1
+        primarySchool: 1,
+        directedCourses: [0]
       },
       {
         id: 2,
@@ -32,7 +34,8 @@ module.exports = function(app) {
         email: 'coolguy@example.com',
         enabled: true,
         ucUid: '123456777',
-        schools: []
+        schools: [],
+        directedCourses: [0]
       },
   ];
 

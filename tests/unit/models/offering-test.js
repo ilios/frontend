@@ -10,7 +10,9 @@ moduleForModel('offering', 'Offering', {
     'model:course',
     'model:user',
     'model:school',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:cohort',
+    'model:objective',
   ]
 });
 

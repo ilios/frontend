@@ -10,34 +10,17 @@
     text-align: center;
     @include clearfix;
   }
-  h3 {
-    display: block;
-    background-color: $header-grey;
-    width: 100%;
-    height: $base-font-size * 2;
-    font-size: $base-font-size;
-    @include clearfix;
-  }
   section {
     text-align: left;
-    border: 2px solid $background-grey;
-    border-bottom: 1px dotted $ilios-orange;
     @include clearfix;
-
-    .detail-title {
-      @include span-columns(3);
+    button {
+      font-size: $base-font-size * 0.75;
     }
 
-    .detail-actions {
-      @include span-columns(2);
-    }
-
-    .detail-content {
-      @include span-columns(7);
-    }
-
-    &.overview {
+    &.detail-overview {
       margin-top: $base-font-size * 2;
+      border: 2px solid $background-grey;
+      border-bottom: 1px dotted $ilios-orange;
 
       label {
         display: inline-block;
@@ -47,11 +30,83 @@
           font-weight: normal;
         }
       }
+      h3{
+        display: block;
+        background-color: $header-grey;
+        width: 100%;
+        margin-bottom: $base-font-size;
+        @include clearfix;
+      }
+      .detail-title {
+        color: $ilios-orange;
+        font-size: $base-font-size;
+        font-weight: bold;
+        @include span-columns(2 of 12);
+      }
+
+      .detail-actions {
+        @include span-columns(2 of 12);
+        button {
+          width: $base-font-size * 8;
+        }
+      }
+
+      .detail-content {
+        @include span-columns(8 of 12);
+      }
     }
 
-    button {
-      font-size: $base-font-size * 0.75;
+    &.detail-block {
+      .detail-actions {
+        @include span-columns(2 of 10);
+        button {
+          width: $base-font-size * 8;
+        }
+      }
+
+      .detail-content {
+        @include span-columns(8 of 10);
+      }
     }
   }
 
+  .detail-expander {
+    @include clearfix;
+    margin-top: 1em;
+    border: 2px solid $background-grey;
+    border-bottom: 1px dotted $ilios-orange;
+    min-height: 4 * $base-font-size;
+
+    .detail-expander-toggle {
+      @include span-columns(2 of 12);
+      display: block;
+      color: $ilios-orange;
+      font-size: $base-font-size;
+      margin-top: 1.5 * $base-font-size;
+      &:after {
+        content: '\25BA';
+        margin-left: 1em;
+      }
+
+      &.is-expanded:after {
+        content: '\25BC';
+        margin-left: .95em;
+      }
+    }
+
+    .detail-expander-content {
+      @include span-columns(10 of 12);
+    }
+
+    .removable-list{
+      ul,li {
+        display: inline;
+      }
+      li {
+        margin-right: $base-font-size;
+        background-color: $background-grey;
+        cursor: pointer;
+      }
+    }
+  }
 }

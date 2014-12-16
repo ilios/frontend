@@ -9,7 +9,10 @@ module.exports = function(app) {
         externalId: 'ili-tc1',
         startDate: '2013-08-01',
         endDate: '2013-12-31',
-        year: '2013'
+        year: '2013',
+        cohorts: [0,1],
+        directors: [0,1,2],
+        objectives: [4,5,6]
       },
       {
         id: 1,
@@ -17,7 +20,8 @@ module.exports = function(app) {
         sessions: [1],
         owningSchool: 0,
         level: 1,
-        year: '2013'
+        year: '2013',
+        cohorts: [0,1]
       },
       {
         id: 2,

@@ -1,0 +1,13 @@
+<div {{bind-attr class=":detail-expander"}}>
+  <h3 {{action 'toggleVisibility'}} {{bind-attr class=":detail-expander-toggle isExpanded"}}>
+    {{title}}
+    {{#if count}}
+      ({{count}})
+    {{/if}}
+  </h3>
+  <div {{bind-attr class=":detail-expander-content"}}>
+    {{#if isExpanded}}
+      {{yield}}
+    {{/if}}
+  </div>
+</div>

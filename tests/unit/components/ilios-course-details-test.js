@@ -10,7 +10,11 @@ moduleForComponent('ilios-course-details', 'IliosCourseDetailsComponent', {
     'component:editable-date',
     'component:editable-select',
     'component:pikaday-input',
-    'component:ilios-sessions-list'
+    'component:ilios-sessions-list',
+    'component:detail-expander',
+    'component:ilios-course-details-cohorts',
+    'component:ilios-details-objectives',
+    'helper:fa-icon'
   ]
 });
 

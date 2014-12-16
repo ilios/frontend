@@ -1,8 +1,8 @@
 .grid-table {
-  $table-border-color: $base-border-color;
+  $table-border-color: $background-grey;
   $table-border: 1px solid $table-border-color;
   $table-background: lighten($table-border-color, 10);
-  $table-header-color: lighten($table-background, 10);
+  $table-header-color: $header-grey;
   $table-hover-color: darken($table-background, 5);
   $table-stripe-color: darken($table-background, 4);
   $table-stripe-color-hover: darken($table-stripe-color, 5);

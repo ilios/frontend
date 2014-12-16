@@ -3,7 +3,7 @@
     {{#link-to 'courses'}}<button>{{t 'courses.backToCourses'}}</button>{{/link-to}}
   </div>
   {{editable-text tagName='h2' model=course property='title'}}
-  <section class='overview'>
+  <section class='detail-overview'>
     <h3>{{t 'courses.details'}}</h3>
     <div class='detail-title'>
       {{t 'general.overview'}}
@@ -19,4 +19,45 @@
       <button class='add'>{{t 'general.publish'}}</button>
     </div>
   </section>
+  {{#detail-expander titleTranslation='courses.cohorts' count=course.cohorts.length}}
+    <section class='detail-block'>
+      <div class='detail-content'>
+        {{ilios-course-details-cohorts cohorts=course.cohorts}}
+      </div>
+      <div class='detail-actions'>
+        <button class='add'>{{t 'general.addNew'}}</button>
+      </div>
+    </section>
+  {{/detail-expander}}
+  {{#detail-expander titleTranslation='general.directors' count=course.directors.length}}
+    <section class='detail-block'>
+      <div class='detail-content'>
+        <ul class='removable-list'>
+          {{#each user in course.directors}}
+            <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
+          {{/each}}
+        </ul>
+        <div class="search-bar">
+          <div class="search-and-submit">
+            {{input action="findDirector" type="search" value=searchTerms placeholderTranslation="courses.findDirector"}}
+            <button {{translateAttr title="courses.findDirector"}} {{action 'findDirector'}} type="submit">
+              {{fa-icon 'search'}}
+            </button>
+          </div>
+        </div>
+      </section>
+      </div>
+    </section>
+  {{/detail-expander}}
+  {{#detail-expander titleTranslation='general.objectives' count=course.objectives.length}}
+  <section class='detail-block'>
+    <div class='detail-content'>
+      {{ilios-details-objectives objectives=course.objectives}}
+    </div>
+    <div class='detail-actions'>
+      <button class='add'>{{t 'general.addNew'}}</button>
+    </div>
+  </section>
+  {{/detail-expander}}
+
 </section>

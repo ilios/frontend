@@ -3,12 +3,12 @@ module.exports = function(app) {
       {
         id: 0,
         name: 'First Mesh Term',
-        objectives: [0]
+        objectives: [0,4,6]
       },
       {
         id: 1,
         name: 'Second Mesh Term',
-        objectives: []
+        objectives: [0,4,6]
       },
       {
         id: 2,

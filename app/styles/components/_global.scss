@@ -28,6 +28,11 @@
   padding: 1em;
 }
 
+ul.inline, ul.inline li {
+  display: inline;
+  margin-right: 2em;
+}
+
 button {
   &.add, &.remove {
     color: white;

@@ -14,6 +14,9 @@ var Course = DS.Model.extend({
     publishedAsTBD: DS.attr('boolean'),
     sessions: DS.hasMany('session', {async: true}),
     owningSchool: DS.belongsTo('school', {async: true}),
+    cohorts: DS.hasMany('cohort', {async: true}),
+    directors: DS.hasMany('users', {async: true}),
+    objectives: DS.hasMany('objective', {async: true}),
     relatedUsers: function(){
       return Ember.A();
     }.property(),

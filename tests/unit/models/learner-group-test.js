@@ -16,6 +16,10 @@ moduleForModel('learner-group', 'LearnerGroup', {
     'model:school',
     'model:session',
     'model:program',
+    'model:objective',
+    'model:competency',
+    'model:mesh-descriptor',
+    'model:cohort',
   ]
 });
 

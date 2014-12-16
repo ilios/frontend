@@ -23,6 +23,7 @@ var general = {
   'cohort': 'Cohort',
   'meshTerms': 'MeSH Terms',
   'members': 'Members',
+  'people': 'People',
   'users': 'Users',
   'sessions': 'Sessions',
   'learners': 'Learners',
@@ -33,6 +34,11 @@ var general = {
   'overview': 'Overview',
   'start': 'Start',
   'end': 'End',
+  'addNew': 'Add New',
+  'program': 'Program',
+  'level': 'Level',
+  'description': 'Description',
+  'parentObjectives': 'Parent Objectives'
 };
 translations.general = general;
 
@@ -162,6 +168,7 @@ var courses = {
   'newSession': 'New Session',
   'backToCourses': 'Back to Courses List',
   'details': 'Course Details',
+  'cohorts': 'Cohorts',
   'titleFilterPlaceholder': 'Filter by course title',
 };
 translations.courses = courses;
