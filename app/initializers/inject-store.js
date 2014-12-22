@@ -2,6 +2,7 @@ export function initialize(container, application) {
   application.inject('component:ilios-learnergroup', 'store', 'store:main');
   application.inject('component:ilios-instructorgroup', 'store', 'store:main');
   application.inject('component:ilios-groupmembers', 'store', 'store:main');
+  application.inject('component:ilios-course-details', 'store', 'store:main');
   application.inject('model:learner-group', 'store', 'store:main');
 }
 

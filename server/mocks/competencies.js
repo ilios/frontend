@@ -7,7 +7,8 @@ module.exports = function(app) {
       owningSchool: 0,
       parent: null,
       children: [4,5,6],
-      programYears: [1,2]
+      programYears: [1,2],
+      courses: [0]
     },
     {
       id: 1,
@@ -20,7 +21,8 @@ module.exports = function(app) {
       title: 'Third Competency',
       owningSchool: 0,
       parent: null,
-      programYears: [0,1,2]
+      programYears: [0,1,2],
+      courses: [0]
     },
     {
       id: 3,

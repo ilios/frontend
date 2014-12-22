@@ -16,7 +16,8 @@ moduleForModel('discipline', 'Discipline', {
     'model:objective',
     'model:offering',
     'model:instructor-group',
-    'model:cohort'
+    'model:cohort',
+    'model:mesh-descriptor',
   ]
 });
 

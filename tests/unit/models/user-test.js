@@ -14,6 +14,8 @@ moduleForModel('user', 'User', {
     'model:course',
     'model:cohort',
     'model:objective',
+    'model:competency',
+    'model:mesh-descriptor',
   ]
 });
 

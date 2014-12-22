@@ -6,4 +6,5 @@ export default DS.Model.extend({
   parent: DS.belongsTo('competency', {async: true, inverse: 'children'}),
   children: DS.hasMany('competency', {async: true, inverse: 'parent'}),
   programYears: DS.hasMany('program-year',  {async: true}),
+  courses: DS.hasMany('course',  {async: true}),
 });

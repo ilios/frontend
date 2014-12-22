@@ -1,5 +1,6 @@
 //course, session, etc detail view
 .detail-view {
+  border: 2px solid $background-grey;
   .nav {
     clear: both;
   }
@@ -19,7 +20,6 @@
 
     &.detail-overview {
       margin-top: $base-font-size * 2;
-      border: 2px solid $background-grey;
       border-bottom: 1px dotted $ilios-orange;
 
       label {
@@ -73,7 +73,6 @@
   .detail-expander {
     @include clearfix;
     margin-top: 1em;
-    border: 2px solid $background-grey;
     border-bottom: 1px dotted $ilios-orange;
     min-height: 4 * $base-font-size;
 
@@ -81,32 +80,32 @@
       @include span-columns(2 of 12);
       display: block;
       color: $ilios-orange;
-      font-size: $base-font-size;
+      font-size: $base-font-size * 0.8;
       margin-top: 1.5 * $base-font-size;
       &:after {
         content: '\25BA';
-        margin-left: 1em;
+        float: right;
       }
 
       &.is-expanded:after {
         content: '\25BC';
-        margin-left: .95em;
+        float: right;
       }
     }
 
     .detail-expander-content {
       @include span-columns(10 of 12);
     }
-
-    .removable-list{
-      ul,li {
-        display: inline;
-      }
-      li {
-        margin-right: $base-font-size;
-        background-color: $background-grey;
-        cursor: pointer;
-      }
+  }
+  .removable-list{
+    margin-bottom: $base-font-size;
+    ul,li {
+      display: inline;
+    }
+    li {
+      margin-right: $base-font-size;
+      background-color: $background-grey;
+      cursor: pointer;
     }
   }
 }

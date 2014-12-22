@@ -40,6 +40,37 @@ module.exports = function(app) {
   ];
 
   var createRouter = require('../helpers/createrouter.js');
-  var router = createRouter('user', fixtures);
+
+  var getGroup = function(name, req, res, fixtures){
+    var responseObj = {};
+    var response = [];
+    if(req.query.ids !== undefined){
+      for(var i = 0; i< req.query.ids.length; i++){
+        if(req.query.ids[i] in fixtures){
+          response.push(fixtures[req.query.ids[i]]);
+        }
+      }
+    } else if(req.query.searchTerm !== undefined){
+      var exp = new RegExp(req.query.searchTerm, 'gi');
+
+      for(var j = 0; j< fixtures.length; j++){
+        var obj = fixtures[j];
+        if(
+          obj.firstName.match(exp) ||
+          obj.lastName.match(exp) ||
+          obj.email.match(exp)
+        ){
+          response.push(obj);
+        }
+      }
+    } else {
+      response = fixtures;
+    }
+    responseObj[name] = response;
+    res.send(responseObj);
+  };
+
+  var router = createRouter('user', fixtures, {getGroup: getGroup});
+
   app.use('/api/users', router);
 };

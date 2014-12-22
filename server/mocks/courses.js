@@ -12,7 +12,9 @@ module.exports = function(app) {
         year: '2013',
         cohorts: [0,1],
         directors: [0,1,2],
-        objectives: [4,5,6]
+        objectives: [4,5,6],
+        topics: [0,2],
+        meshDescriptors: [1,2],
       },
       {
         id: 1,

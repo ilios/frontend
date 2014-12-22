@@ -13,6 +13,8 @@ moduleForModel('offering', 'Offering', {
     'model:instructor-group',
     'model:cohort',
     'model:objective',
+    'model:mesh-descriptor',
+    'model:competency',
   ]
 });
 

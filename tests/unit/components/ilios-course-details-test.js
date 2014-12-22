@@ -6,6 +6,7 @@ import {
 moduleForComponent('ilios-course-details', 'IliosCourseDetailsComponent', {
   // specify the other units that are required for this test
   needs: [
+    'component:live-search',
     'component:editable-text',
     'component:editable-date',
     'component:editable-select',
@@ -14,6 +15,7 @@ moduleForComponent('ilios-course-details', 'IliosCourseDetailsComponent', {
     'component:detail-expander',
     'component:ilios-course-details-cohorts',
     'component:ilios-details-objectives',
+    'component:ilios-details-learning-materials',
     'helper:fa-icon'
   ]
 });

@@ -6,4 +6,5 @@ export default DS.Model.extend({
   title: Ember.computed.alias("name"),
   name: DS.attr('string'),
   objectives: DS.hasMany('objectives',  {async: true}),
+  courses: DS.hasMany('course',  {async: true}),
 });

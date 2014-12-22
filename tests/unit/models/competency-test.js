@@ -14,7 +14,9 @@ moduleForModel('competency', 'Competency', {
     'model:objective',
     'model:instructor-group',
     'model:cohort',
-    'model:course'
+    'model:course',
+    'model:session',
+    'model:mesh-descriptor',
   ]
 });
 

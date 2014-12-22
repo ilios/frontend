@@ -22,6 +22,7 @@ var general = {
   'email': 'Email',
   'cohort': 'Cohort',
   'meshTerms': 'MeSH Terms',
+  'mesh': 'MeSH',
   'members': 'Members',
   'people': 'People',
   'users': 'Users',
@@ -38,7 +39,9 @@ var general = {
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
-  'parentObjectives': 'Parent Objectives'
+  'parentObjectives': 'Parent Objectives',
+  'learningMaterials': 'Learning Materials',
+  'findDirector': 'Find Director'
 };
 translations.general = general;
 
@@ -170,6 +173,7 @@ var courses = {
   'details': 'Course Details',
   'cohorts': 'Cohorts',
   'titleFilterPlaceholder': 'Filter by course title',
+  'findDirector': 'Find Director',
 };
 translations.courses = courses;
 

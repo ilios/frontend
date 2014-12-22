@@ -1,0 +1,24 @@
+<div class="live-search">
+  <div class="control">
+    {{input type="search" value=searchTerms placeholder=placeholder}}
+    <button {{bind-attr title=buttonTitle}} {{action 'search'}} type="submit">
+      {{fa-icon 'search'}}
+    </button>
+    {{#if searchTerms.length}}
+      <button class='close' {{action 'clear'}}>
+        {{fa-icon 'close'}}
+      </button>
+    {{/if}}
+  </div>
+  {{#if sortedSearchResults.length}}
+    <ul class='results'>
+      {{#each result in sortedSearchResults}}
+        {{#if result.isActive}}
+          <li {{action 'add' result.targetObject}}>{{fa-icon 'plus-circle' classNames='add'}} {{result.title}}</li>
+        {{else}}
+          <li>{{fa-icon 'circle'}} {{result.title}}</li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>

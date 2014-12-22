@@ -12,7 +12,9 @@ moduleForModel('session', 'Session', {
     'model:school',
     'model:cohort',
     'model:objective',
-    
+    'model:competency',
+    'model:mesh-descriptor',
+
   ]
 });
 

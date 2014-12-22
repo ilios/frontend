@@ -20,39 +20,72 @@
     </div>
   </section>
   {{#detail-expander titleTranslation='courses.cohorts' count=course.cohorts.length}}
-    <section class='detail-block'>
-      <div class='detail-content'>
-        {{ilios-course-details-cohorts cohorts=course.cohorts}}
-      </div>
-      <div class='detail-actions'>
-        <button class='add'>{{t 'general.addNew'}}</button>
-      </div>
-    </section>
+  <section class='detail-block'>
+    <div class='detail-content'>
+      {{ilios-course-details-cohorts cohorts=course.cohorts}}
+    </div>
+    <div class='detail-actions'>
+      <button class='add'>{{t 'general.addNew'}}</button>
+    </div>
+  </section>
   {{/detail-expander}}
-  {{#detail-expander titleTranslation='general.directors' count=course.directors.length}}
-    <section class='detail-block'>
-      <div class='detail-content'>
-        <ul class='removable-list'>
-          {{#each user in course.directors}}
-            <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
-          {{/each}}
-        </ul>
-        <div class="search-bar">
-          <div class="search-and-submit">
-            {{input action="findDirector" type="search" value=searchTerms placeholderTranslation="courses.findDirector"}}
-            <button {{translateAttr title="courses.findDirector"}} {{action 'findDirector'}} type="submit">
-              {{fa-icon 'search'}}
-            </button>
-          </div>
-        </div>
-      </section>
-      </div>
-    </section>
-  {{/detail-expander}}
+  <h3>
+    {{t 'general.directors'}} ({{course.directors.length}})
+  </h3>
+  <section class='detail-block'>
+    <div class='detail-content'>
+      <ul class='removable-list'>
+        {{#each user in sortedDirectors}}
+          <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
+        {{/each}}
+      </ul>
+      {{live-search
+        placeholderTranslation='courses.findDirector'
+        buttonTitleTranslation='courses.findDirector'
+        search='searchDirectors'
+        add='addDirector'
+        searchResults=directorSearchResults
+      }}
+    </div>
+  </section>
   {{#detail-expander titleTranslation='general.objectives' count=course.objectives.length}}
   <section class='detail-block'>
     <div class='detail-content'>
       {{ilios-details-objectives objectives=course.objectives}}
+    </div>
+    <div class='detail-actions'>
+      <button class='add'>{{t 'general.addNew'}}</button>
+    </div>
+  </section>
+  {{/detail-expander}}
+  {{#detail-expander titleTranslation='general.topics' count=course.topics.length}}
+    <section class='detail-block'>
+      <div class='detail-content'>
+        <ul class='removable-list'>
+          {{#each topic in course.topics}}
+          <li {{action 'removeTopic' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
+          {{/each}}
+        </ul>
+      </section>
+    </div>
+  </section>
+  {{/detail-expander}}
+  {{#detail-expander titleTranslation='general.mesh' count=course.meshDescriptors.length}}
+    <section class='detail-block'>
+      <div class='detail-content'>
+        <ul class='removable-list'>
+          {{#each descriptor in course.meshDescriptors}}
+            <li {{action 'removeMeshDescriptor' descriptor}}>{{descriptor.title}} {{fa-icon 'remove'}}</li>
+          {{/each}}
+        </ul>
+      </section>
+    </div>
+  </section>
+  {{/detail-expander}}
+  {{#detail-expander titleTranslation='general.learningMaterials' count=course.learningMaterials.length}}
+  <section class='detail-block'>
+    <div class='detail-content'>
+      {{ilios-details-learning-materials learningMaterials=course.learningMaterials}}
     </div>
     <div class='detail-actions'>
       <button class='add'>{{t 'general.addNew'}}</button>
