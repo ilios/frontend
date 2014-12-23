@@ -18,6 +18,7 @@ moduleForModel('course', 'Course', {
     'model:learner-group',
     'model:competency',
     'model:mesh-descriptor',
+    'model:discipline',
   ]
 });
 

@@ -64,8 +64,14 @@
       padding: $base-font-size * .5;
       border-bottom: 1px solid $base-border-color;
 
-      &:hover{
-        background-color: $header-grey;
+      &.active:hover{
+        background-color: $background-grey;
+        cursor: pointer;
+      }
+
+      &.inactive{
+        color: darken($header-grey, 20);
+        font-style: italic;
       }
     }
   }

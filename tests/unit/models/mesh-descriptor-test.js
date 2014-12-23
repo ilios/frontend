@@ -14,6 +14,7 @@ moduleForModel('mesh-descriptor', 'MeshDescriptor', {
     'model:cohort',
     'model:program-year',
     'model:user',
+    'model:discipline',
   ]
 });
 

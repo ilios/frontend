@@ -12,6 +12,8 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   buttonTitle: '',
   results: [],
   searchTerms: '',
+  minimumTermLength: 2,
+  showMoreInputPrompt: false,
   sortedSearchResults: function(){
     return this.get('results').sortBy('sortTerm');
   }.property('results.@each'),
@@ -27,27 +29,36 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     return this.get('results');
   }.property(),
   watchSeatchTerms: function(){
-    //empty search terms should be sent immediatly to reset the filter
-    if(this.get('searchTerms').length === 0){
-      this.sendAction('search', this.get('searchTerms'));
-    }
-    Ember.run.debounce(this, function(){
-      this.sendAction('search', this.get('searchTerms'));
-    }, 500);
+    this.send('search');
   }.observes('searchTerms'),
   actions: {
     add: function(obj) {
-      this.send('clear');
       this.sendAction('add', obj);
+      this.send('clear');
     },
     remove: function(obj) {
       this.sendAction('remove', obj);
     },
     search: function(){
-      this.sendAction('search', this.get('searchTerms'));
+      if(this.get('searchTerms').length === 0){
+        this.send('clear');
+      } else {
+        Ember.run.debounce(this, function(){
+          if(this.get('searchTerms').length < this.get('minimumTermLength')){
+            this.set('showMoreInputPrompt', true);
+            this.set('results', []);
+          } else {
+            this.set('showMoreInputPrompt', false);
+            this.sendAction('search', this.get('searchTerms'));
+          }
+        }, 500);
+      }
     },
     clear: function() {
+      this.set('results', []);
       this.set('searchTerms', '');
+      this.sendAction('search', '');
+      this.set('showMoreInputPrompt', false);
       this.$().find('input').focus();
     }
   }

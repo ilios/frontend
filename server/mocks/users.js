@@ -51,15 +51,18 @@ module.exports = function(app) {
         }
       }
     } else if(req.query.searchTerm !== undefined){
-      var exp = new RegExp(req.query.searchTerm, 'gi');
-
+      var terms = req.query.searchTerm.replace(/[ ,]+/g, ' ').split(' ').map(function(t){
+        return '(?=.*' + t + ')';
+      }).join('');
+      var exp = new RegExp(terms, 'gi');
       for(var j = 0; j< fixtures.length; j++){
         var obj = fixtures[j];
-        if(
-          obj.firstName.match(exp) ||
-          obj.lastName.match(exp) ||
-          obj.email.match(exp)
-        ){
+        var fullString = [
+          obj.firstName,
+          obj.lastName,
+          obj.email
+        ].join(' ');
+        if (fullString.match(exp)){
           response.push(obj);
         }
       }

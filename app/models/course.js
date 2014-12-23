@@ -17,7 +17,7 @@ var Course = DS.Model.extend({
     cohorts: DS.hasMany('cohort', {async: true}),
     directors: DS.hasMany('users', {async: true}),
     objectives: DS.hasMany('objective', {async: true}),
-    topics: DS.hasMany('competency', {async: true}),
+    topics: DS.hasMany('discipline', {async: true}),
     meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
     relatedUsers: function(){
       return Ember.A();

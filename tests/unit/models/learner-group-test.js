@@ -20,6 +20,7 @@ moduleForModel('learner-group', 'LearnerGroup', {
     'model:competency',
     'model:mesh-descriptor',
     'model:cohort',
+    'model:discipline',
   ]
 });
 

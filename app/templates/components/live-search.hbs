@@ -10,15 +10,21 @@
       </button>
     {{/if}}
   </div>
-  {{#if sortedSearchResults.length}}
+  {{#if showMoreInputPrompt}}
     <ul class='results'>
-      {{#each result in sortedSearchResults}}
-        {{#if result.isActive}}
-          <li {{action 'add' result.targetObject}}>{{fa-icon 'plus-circle' classNames='add'}} {{result.title}}</li>
-        {{else}}
-          <li>{{fa-icon 'circle'}} {{result.title}}</li>
-        {{/if}}
-      {{/each}}
+      <li>{{t 'general.moreInputRequiredPrompt'}}</li>
     </ul>
+  {{else}}
+    {{#if sortedSearchResults.length}}
+      <ul class='results'>
+        {{#each result in sortedSearchResults}}
+          {{#if result.isActive}}
+            <li class='active' {{action 'add' result.targetObject}}>{{fa-icon 'plus-circle' classNames='add'}} {{result.title}}</li>
+          {{else}}
+            <li class='inactive' >{{fa-icon 'circle'}} {{result.title}}</li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    {{/if}}
   {{/if}}
 </div>

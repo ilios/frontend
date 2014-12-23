@@ -41,7 +41,8 @@ var general = {
   'description': 'Description',
   'parentObjectives': 'Parent Objectives',
   'learningMaterials': 'Learning Materials',
-  'findDirector': 'Find Director'
+  'findDirector': 'Find Director',
+  'moreInputRequiredPrompt': 'keep typing...'
 };
 translations.general = general;
 
