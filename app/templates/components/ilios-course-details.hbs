@@ -29,25 +29,21 @@
     </div>
   </section>
   {{/detail-expander}}
-  <h3>
-    {{t 'general.directors'}} ({{course.directors.length}})
-  </h3>
-  <section class='detail-block'>
-    <div class='detail-content'>
-      <ul class='removable-list'>
-        {{#each user in sortedDirectors}}
-          <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
-        {{/each}}
-      </ul>
-      {{live-search
-        placeholderTranslation='courses.findDirector'
-        buttonTitleTranslation='courses.findDirector'
-        search='searchDirectors'
-        add='addDirector'
-        searchResults=directorSearchResults
-      }}
-    </div>
-  </section>
+
+  {{#detail-expander titleTranslation='general.directors' count=course.directors.length}}
+    <ul class='removable-list'>
+      {{#each user in sortedDirectors}}
+        <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
+      {{/each}}
+    </ul>
+    {{live-search
+      placeholderTranslation='courses.findDirector'
+      buttonTitleTranslation='courses.findDirector'
+      search='searchDirectors'
+      add='addDirector'
+      searchResults=directorSearchResults
+    }}
+  {{/detail-expander}}
   {{#detail-expander titleTranslation='general.objectives' count=course.objectives.length}}
   <section class='detail-block'>
     <div class='detail-content'>
