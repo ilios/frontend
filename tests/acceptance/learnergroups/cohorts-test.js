@@ -17,6 +17,7 @@ test('visiting', function() {
   visit('/learnergroups/school/0/index');
 
   andThen(function() {
+    // pauseTest(2000);
     equal(currentPath(), 'learnergroups.learnergroupsschool.index');
   });
 });
@@ -35,7 +36,7 @@ test('list cohorts', function() {
   visit('/learnergroups/school/0/index');
 
   var cohorts = [
-    'Class of 2014',
+    'Class of 2013',
     'Class of 2017',
     'Class of 2018',
     'Overridden Title'

@@ -1,3 +1,4 @@
+/* global window */
 import Ember from 'ember';
 var customHelpers = function() {
   Ember.Test.registerHelper('checkBreadcrumbs', function (app, crumbs) {
@@ -11,6 +12,16 @@ var customHelpers = function() {
       return this.text === optionText;
     }).prop('selected', true);
     return triggerEvent(selector, 'change');
+  });
+  Ember.Test.registerAsyncHelper('pauseTest', function(app, duration) {
+    return Ember.Test.promise(function(resolve) {
+      Ember.Test.adapter.asyncStart();
+      var interval = window.setInterval(function(){
+        window.clearInterval(interval);
+        Ember.Test.adapter.asyncEnd();
+        Ember.run(null, resolve, true);
+      }, duration);
+    });
   });
 }();
 

@@ -98,7 +98,7 @@ test('program isEditable ', function() {
     equal(select.length, 1);
     equal(find('option', select).length, 9);
     equal(find('option', select).text().indexOf('2014 - 2015'), -1);
-    equal(find('option', select).text().trim(), '2009 - 20102010 - 20112011 - 20122012 - 20132013 - 20142015 - 20162016 - 20172017 - 20182018 - 2019');
+    equal(find('option', select).text().trim(), '2010 - 20112011 - 20122012 - 20132013 - 20142015 - 20162016 - 20172017 - 20182018 - 20192019 - 2020');
     equal(select.val(), '2013 - 2014');
   });
 });
@@ -133,12 +133,12 @@ test('create program year', function() {
     equal(select.length, 1);
     equal(find('option', select).length, 8);
     equal(find('option', select).text().indexOf('2014 - 2015'), -1);
-    equal(find('option', select).text().trim(), '2009 - 20102010 - 20112011 - 20122012 - 20132015 - 20162016 - 20172017 - 20182018 - 2019');
-    equal(select.val(), '2018 - 2019');
+    equal(find('option', select).text().trim(), '2010 - 20112011 - 20122012 - 20132015 - 20162016 - 20172017 - 20182018 - 20192019 - 2020');
+    equal(select.val(), '2019 - 2020');
     click('button:contains("Save")').then(function(){
       equal(find('#program table:first tbody tr:eq(0) td:first').text().trim(), '2013 - 2014');
       equal(find('#program table:first tbody tr:eq(1) td:first').text().trim(), '2014 - 2015');
-      equal(find('#program table:first tbody tr:eq(2) td:first').text().trim(), '2018 - 2019');
+      equal(find('#program table:first tbody tr:eq(2) td:first').text().trim(), '2019 - 2020');
     });
   });
 });

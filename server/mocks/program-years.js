@@ -1,9 +1,10 @@
 module.exports = function(app) {
   var moment = require('moment');
+  var baseDate = moment('2014-06-01');
   var fixtures = [
     {
       id: 0,
-      startYear: moment().format('YYYY'),
+      startYear: baseDate.format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,
@@ -18,7 +19,7 @@ module.exports = function(app) {
     },
     {
       id: 1,
-      startYear: moment().subtract(1, 'year').format('YYYY'),
+      startYear: baseDate.subtract(1, 'year').format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,
@@ -33,7 +34,7 @@ module.exports = function(app) {
     },
     {
       id: 2,
-      startYear: moment().format('YYYY'),
+      startYear: baseDate.format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,
@@ -47,7 +48,7 @@ module.exports = function(app) {
     },
     {
       id: 3,
-      startYear: moment().subtract(1, 'year').format('YYYY'),
+      startYear: baseDate.subtract(1, 'year').format('YYYY'),
       deleted: false,
       locked: false,
       archived: false,

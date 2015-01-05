@@ -6,8 +6,8 @@ var container, application;
 module('InjectStoreInitializer', {
   setup: function() {
     Ember.run(function() {
-      container = new Ember.Container();
       application = Ember.Application.create();
+      container = application.__container__;
       application.deferReadiness();
     });
   }
