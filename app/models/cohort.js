@@ -33,7 +33,9 @@ export default DS.Model.extend({
       this.set('displayTitle', this.get('title'));
     } else {
       this.get('programYear').then(function(programYear){
-        var title = Ember.I18n.t('programs.programYear.classOf', {year: programYear.get('classOfYear')});
+        //I dont' know why this is necessary, but sometimes tests fail if we assume that programYear is set here
+        var classOfYear = programYear?programYear.get('classOfYear'):null;
+        var title = Ember.I18n.t('programs.programYear.classOf', {year: classOfYear});
         self.set('displayTitle', title);
       });
     }
