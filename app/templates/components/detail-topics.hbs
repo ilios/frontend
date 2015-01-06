@@ -1,0 +1,12 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.topics'}} ({{topics.length}})
+  </div>
+  <div class='detail-content'>
+    <ul class='removable-list'>
+      {{#each topic in topics}}
+      <li {{action 'removeTopic' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</section>

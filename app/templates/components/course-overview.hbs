@@ -1,0 +1,34 @@
+<section class='detail-overview detail-block'>
+  <div class='detail-title'>
+    {{t 'general.overview'}}
+  </div>
+  <div class='detail-content'>
+    <label>{{t "general.start"}}: {{editable-date model=course property='startDate'}}</label>
+    <label>{{t "courses.externalId"}}: {{editable-text model=course property='externalId'}}</label>
+    <label>{{t "courses.level"}}: {{editable-select model=course property='level' options=levelOptions}}</label>
+    <label>{{t "general.end"}}: {{editable-date model=course property='endDate'}}</label>
+    <label>{{t "general.directors"}}:
+      {{#if editableDirectors}}
+        <span>
+          <ul class='removable-list'>
+            {{#each user in sortedDirectors}}
+            <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
+            {{/each}}
+          </ul>
+        </span>
+        {{live-search
+          placeholderTranslation='courses.findDirector'
+          buttonTitleTranslation='courses.findDirector'
+          search='searchDirectors'
+          add='addDirector'
+          searchResults=directorSearchResults
+        }}
+      {{else}}
+        <span>
+          {{#each user in sortedDirectors}}
+          {{user.fullName}},
+          {{/each}}
+        </span>
+      {{/if}}
+  </div>
+</section>

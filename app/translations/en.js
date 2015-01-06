@@ -11,6 +11,7 @@ var general = {
   'add': 'Add',
   'published': 'Published',
   'notPublished': 'Not Published',
+  'scheduled': 'Scheduled',
   'competencies': 'Competencies',
   'objectives': 'Objectives',
   'directors': 'Directors',
@@ -42,7 +43,8 @@ var general = {
   'parentObjectives': 'Parent Objectives',
   'learningMaterials': 'Learning Materials',
   'findDirector': 'Find Director',
-  'moreInputRequiredPrompt': 'keep typing...'
+  'moreInputRequiredPrompt': 'keep typing...',
+  'printSummary': 'Print Summary'
 };
 translations.general = general;
 
@@ -175,6 +177,8 @@ var courses = {
   'cohorts': 'Cohorts',
   'titleFilterPlaceholder': 'Filter by course title',
   'findDirector': 'Find Director',
+  'expandDetail': 'View All/Edit',
+  'collapseDetail': 'Close'
 };
 translations.courses = courses;
 

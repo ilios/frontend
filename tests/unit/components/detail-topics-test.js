@@ -3,14 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ilios-course-details', 'IliosCourseDetailsComponent', {
+moduleForComponent('detail-topics', 'DetailTopicsComponent', {
   // specify the other units that are required for this test
-  needs: [
-    'component:ilios-sessions-list',
-    'component:course-editing',
-    'component:course-header',
-    'component:course-overview'
-  ]
+  // needs: ['component:foo', 'helper:bar']
 });
 
 test('it renders', function() {

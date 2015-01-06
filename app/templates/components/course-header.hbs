@@ -1,0 +1,12 @@
+<div class='detail-header'>
+  {{editable-text tagName='h2' model=course property='title'}}
+  <h2>{{course.academicYear}}</h2>
+  <span class = 'actions'>
+    <button class='add' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
+    <button class='add' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
+    <button>{{t 'general.printSummary'}}</button>
+    <span class='status'>
+      <h3>{{fa-icon 'clock-o'}} {{t 'general.scheduled'}}</h3>
+    </span>
+  </span>
+</div>

@@ -1,38 +1,48 @@
-<table class='grid-table'>
-  <thead>
-    <tr>
-      <th>{{t 'general.description'}}</th>
-      <th>{{t 'general.parentObjectives'}}</th>
-      <th>{{t 'general.meshTerms'}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each objective in objectives}}
-    <tr>
-      <td>{{objective.shortTitle}}</td>
-      <td>
-        {{#if objective.parents.length}}
-          <ul>
-          {{#each parent in objective.parents}}
-            <li>{{parent.shortTitle}}</li>
-          {{/each}}
-          </ul>
-        {{else}}
-          <button class='add'>{{t 'general.addNew'}}</button>
-        {{/if}}
-      </td>
-      <td>
-        {{#if objective.meshDescriptors.length}}
-          <ul>
-            {{#each descriptor in objective.meshDescriptors}}
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.objectives'}} ({{objectives.length}})
+  </div>
+  <div class='detail-content'>
+    <table class='grid-table'>
+      <thead>
+        <tr>
+          <th>{{t 'general.description'}}</th>
+          <th>{{t 'general.parentObjectives'}}</th>
+          <th>{{t 'general.meshTerms'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each objective in objectives}}
+        <tr>
+          <td>{{objective.shortTitle}}</td>
+          <td>
+            {{#if objective.parents.length}}
+            <ul>
+              {{#each parent in objective.parents}}
+              <li>{{parent.shortTitle}}</li>
+              {{/each}}
+            </ul>
+            {{else}}
+            <button class='add'>{{t 'general.addNew'}}</button>
+            {{/if}}
+          </td>
+          <td>
+            {{#if objective.meshDescriptors.length}}
+            <ul>
+              {{#each descriptor in objective.meshDescriptors}}
               <li>{{descriptor.title}}</li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <button class='add'>{{t 'general.addNew'}}</button>
-        {{/if}}
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+              {{/each}}
+            </ul>
+            {{else}}
+            <button class='add'>{{t 'general.addNew'}}</button>
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class='detail-actions'>
+    <button class='add'>{{t 'general.addNew'}}</button>
+  </div>
+</section>

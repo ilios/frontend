@@ -3,13 +3,14 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ilios-course-details', 'IliosCourseDetailsComponent', {
+moduleForComponent('course-overview', 'CourseOverviewComponent', {
   // specify the other units that are required for this test
   needs: [
-    'component:ilios-sessions-list',
-    'component:course-editing',
-    'component:course-header',
-    'component:course-overview'
+    'component:live-search',
+    'component:editable-text',
+    'component:editable-date',
+    'component:editable-select',
+    'component:pikaday-input',
   ]
 });
 

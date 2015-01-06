@@ -3,9 +3,12 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('detail-expander', 'DetailExpanderComponent', {
+moduleForComponent('course-header', 'CourseHeaderComponent', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: [
+  'component:editable-text',
+  'helper:fa-icon'
+  ]
 });
 
 test('it renders', function() {

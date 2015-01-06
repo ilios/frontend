@@ -4,13 +4,6 @@
   .nav {
     clear: both;
   }
-  h2{
-    display: block;
-    color: $ilios-orange;
-    width: 100%;
-    text-align: center;
-    @include clearfix;
-  }
   section {
     text-align: left;
     @include clearfix;
@@ -30,13 +23,9 @@
           font-weight: normal;
         }
       }
-      h3{
-        display: block;
-        background-color: $header-grey;
-        width: 100%;
-        margin-bottom: $base-font-size;
-        @include clearfix;
-      }
+    }
+
+    &.detail-block {
       .detail-title {
         color: $ilios-orange;
         font-size: $base-font-size;
@@ -55,48 +44,8 @@
         @include span-columns(8 of 12);
       }
     }
-
-    &.detail-block {
-      .detail-actions {
-        @include span-columns(2 of 10);
-        button {
-          width: $base-font-size * 8;
-        }
-      }
-
-      .detail-content {
-        @include span-columns(8 of 10);
-      }
-    }
   }
 
-  .detail-expander {
-    @include clearfix;
-    margin-top: 1em;
-    border-bottom: 1px dotted $ilios-orange;
-    min-height: 4 * $base-font-size;
-
-    .detail-expander-toggle {
-      @include span-columns(2 of 12);
-      display: block;
-      color: $ilios-orange;
-      font-size: $base-font-size * 0.8;
-      margin-top: 1.5 * $base-font-size;
-      &:after {
-        content: '\25BA';
-        float: right;
-      }
-
-      &.is-expanded:after {
-        content: '\25BC';
-        float: right;
-      }
-    }
-
-    .detail-expander-content {
-      @include span-columns(10 of 12);
-    }
-  }
   .removable-list{
     margin-bottom: $base-font-size;
     ul,li {
@@ -106,6 +55,50 @@
       margin-right: $base-font-size;
       background-color: $background-grey;
       cursor: pointer;
+    }
+  }
+
+  .detail-header {
+    @include clearfix;
+    display: block;
+    width: 100%;
+    background-color: $background-grey;
+    padding: .5em;
+    h2 {
+      float: left;
+      margin-right: 1em;
+    }
+    .actions {
+      float: right;
+    }
+
+    .status {
+      margin-left: 1em;
+      h3 {
+        display: inline;
+      }
+    }
+  }
+
+  .detailCollapsedControl {
+    width: 100%;
+    text-align: center;
+    border-top: $base-font-size solid $ilios-orange;
+    margin-bottom: $base-font-size;
+    span {
+      color: white;
+      @include padding(.25em 5em .5em 5em);
+      background-color: $ilios-orange;
+      @include border-bottom-radius(5px);
+      cursor: pointer;
+      &:after {
+        padding-left: 2em;
+        @include triangle(12px, gray, down);
+      }
+
+      &.is-expanded:after {
+        @include triangle(1em, white, up);
+      }
     }
   }
 }

@@ -1,20 +1,30 @@
-<table class='grid-table'>
-  <thead>
-    <tr>
-      <th>{{t 'general.program'}}</th>
-      <th>{{t 'general.cohort'}}</th>
-      <th>{{t 'general.members'}}</th>
-      <th>{{t 'general.level'}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each cohort in cohorts}}
-      <tr>
-        <td>{{cohort.programYear.program.title}}</td>
-        <td>{{cohort.displayTitle}}</td>
-        <td></td>
-        <td></td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'courses.cohorts'}} ({{cohorts.length}})
+  </div>
+  <div class='detail-content'>
+    <table class='grid-table'>
+      <thead>
+        <tr>
+          <th>{{t 'general.program'}}</th>
+          <th>{{t 'general.cohort'}}</th>
+          <th>{{t 'general.members'}}</th>
+          <th>{{t 'general.level'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each cohort in cohorts}}
+        <tr>
+          <td>{{cohort.programYear.program.title}}</td>
+          <td>{{cohort.displayTitle}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class='detail-actions'>
+    <button class='add'>{{t 'general.addNew'}}</button>
+  </div>
+</section>

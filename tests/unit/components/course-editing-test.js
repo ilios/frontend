@@ -3,13 +3,18 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ilios-course-details', 'IliosCourseDetailsComponent', {
+moduleForComponent('course-editing', 'CourseEditingComponent', {
   // specify the other units that are required for this test
   needs: [
-    'component:ilios-sessions-list',
-    'component:course-editing',
     'component:course-header',
-    'component:course-overview'
+    'component:course-overview',
+    'component:ilios-sessions-list',
+    'component:ilios-course-details-cohorts',
+    'component:ilios-details-objectives',
+    'component:ilios-details-learning-materials',
+    'component:detail-topics',
+    'component:detail-mesh',
+    'helper:fa-icon'
   ]
 });
 
