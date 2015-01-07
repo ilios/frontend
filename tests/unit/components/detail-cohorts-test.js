@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ilios-details-learning-materials', 'IliosDetailsLearningMaterialsComponent', {
+moduleForComponent('detail-cohorts', 'DetailCohortsComponent', {
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

@@ -9,11 +9,11 @@ moduleForComponent('course-editing', 'CourseEditingComponent', {
     'component:course-header',
     'component:course-overview',
     'component:ilios-sessions-list',
-    'component:ilios-course-details-cohorts',
-    'component:ilios-details-objectives',
-    'component:ilios-details-learning-materials',
     'component:detail-topics',
     'component:detail-mesh',
+    'component:detail-cohorts',
+    'component:detail-learning-materials',
+    'component:detail-objectives',
     'helper:fa-icon'
   ]
 });

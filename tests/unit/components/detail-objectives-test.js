@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ilios-details-objectives', 'IliosDetailsObjectivesComponent', {
+moduleForComponent('detail-objectives', 'DetailObjectivesComponent', {
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });
