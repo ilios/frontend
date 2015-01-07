@@ -44,7 +44,10 @@ var general = {
   'learningMaterials': 'Learning Materials',
   'findDirector': 'Find Director',
   'moreInputRequiredPrompt': 'keep typing...',
-  'printSummary': 'Print Summary'
+  'printSummary': 'Print Summary',
+  'type': 'Type',
+  'groups': 'Groups',
+  'offerings': 'Offerings',
 };
 translations.general = general;
 
@@ -178,7 +181,8 @@ var courses = {
   'titleFilterPlaceholder': 'Filter by course title',
   'findDirector': 'Find Director',
   'expandDetail': 'View All/Edit',
-  'collapseDetail': 'Close'
+  'collapseDetail': 'Close',
+  'firstOffering': 'First Offering',
 };
 translations.courses = courses;
 

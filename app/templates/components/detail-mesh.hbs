@@ -2,7 +2,7 @@
   <div class='detail-title'>
     {{t 'general.mesh'}} ({{terms.length}})
   </div>
-  <div class='detail-content'>
+  <div class='detail-content-wide'>
     <ul class='removable-list'>
       {{#each term in terms}}
         <li {{action 'removeMeshDescriptor' term}}>{{term.title}} {{fa-icon 'remove'}}</li>

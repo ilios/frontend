@@ -6,7 +6,7 @@
     <table class='grid-table'>
       <thead>
         <tr>
-          <th>{{t 'general.description'}}</th>
+          <th colspan=2>{{t 'general.description'}}</th>
           <th>{{t 'general.parentObjectives'}}</th>
           <th>{{t 'general.meshTerms'}}</th>
         </tr>
@@ -14,7 +14,7 @@
       <tbody>
         {{#each objective in objectives}}
         <tr>
-          <td>{{objective.shortTitle}}</td>
+          <td colspan=2>{{editable-textarea model=objective property='title'}}</td>
           <td>
             {{#if objective.parents.length}}
             <ul>

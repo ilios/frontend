@@ -1,9 +1,6 @@
 //course, session, etc detail view
 .detail-view {
   border: 2px solid $background-grey;
-  .nav {
-    clear: both;
-  }
   section {
     text-align: left;
     @include clearfix;
@@ -13,7 +10,6 @@
 
     &.detail-overview {
       margin-top: $base-font-size * 2;
-      border-bottom: 1px dotted $ilios-orange;
 
       label {
         display: inline-block;
@@ -26,6 +22,9 @@
     }
 
     &.detail-block {
+      border-bottom: 1px dotted $ilios-orange;
+      margin-top: 1em;
+      
       .detail-title {
         color: $ilios-orange;
         font-size: $base-font-size;
@@ -42,6 +41,10 @@
 
       .detail-content {
         @include span-columns(8 of 12);
+      }
+
+      .detail-content-wide {
+        @include span-columns(10 of 12);
       }
     }
   }
@@ -100,5 +103,9 @@
         @include triangle(1em, white, up);
       }
     }
+  }
+
+  table {
+    margin-top: 0;
   }
 }
