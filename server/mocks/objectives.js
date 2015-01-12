@@ -11,7 +11,7 @@ module.exports = function(app) {
     {
       id: 1,
       title: 'Second Objective',
-      competency: null,
+      competency: 4,
       meshDescriptors: []
     },
     {
@@ -37,13 +37,14 @@ module.exports = function(app) {
       title: 'fifth' + longTitle,
       courses: [0],
       meshDescriptors: [],
-      parents: [0]
+      parents: [1]
     },
     {
       id: 6,
       title: 'sixth' + longTitle,
       courses: [0],
-      meshDescriptors: [0,1]
+      meshDescriptors: [0,1],
+      parents: [2]
     },
 
   ];

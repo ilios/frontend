@@ -1,0 +1,18 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.competencies'}} ({{competencies.length}})
+  </div>
+  <div class='detail-content-wide'>
+    <ul class='static-list'>
+      {{#each domain in domains}}
+        <li>{{domain.title}}
+          <ul>
+            {{#each competency in domain.subCompetencies}}
+              <li>{{competency.title}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</section>

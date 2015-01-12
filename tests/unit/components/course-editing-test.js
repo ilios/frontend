@@ -14,6 +14,7 @@ moduleForComponent('course-editing', 'CourseEditingComponent', {
     'component:detail-cohorts',
     'component:detail-learning-materials',
     'component:detail-objectives',
+    'component:detail-competencies',
     'helper:fa-icon'
   ]
 });

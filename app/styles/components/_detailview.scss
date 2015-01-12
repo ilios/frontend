@@ -24,7 +24,7 @@
     &.detail-block {
       border-bottom: 1px dotted $ilios-orange;
       margin-top: 1em;
-      
+
       .detail-title {
         color: $ilios-orange;
         font-size: $base-font-size;
@@ -107,5 +107,20 @@
 
   table {
     margin-top: 0;
+  }
+
+  ul.static-list {
+    background-color: white;
+    padding: 1em 2em;
+    border: 2px solid $background-grey;
+    li {
+      font-weight: bold;
+    }
+    ul {
+      margin-left: 1em;
+      li {
+        font-weight: normal;
+      }
+    }
   }
 }

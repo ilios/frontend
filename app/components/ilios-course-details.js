@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  collapsed: true,
+  collapsed: false,
   actions: {
     expand: function(){
       this.set('collapsed', false);

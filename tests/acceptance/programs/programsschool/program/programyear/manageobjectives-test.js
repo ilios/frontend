@@ -61,7 +61,7 @@ test('objective list', function() {
 
     var secondRow = find('#program-year-directors table:first tbody tr:eq(1)');
     equal(find('td:eq(0)', secondRow).text().trim(), 'Second Objective');
-    equal(find('td:eq(1)', secondRow).text().trim(), '');
+    equal(find('td:eq(1)', secondRow).text().trim(), 'First Child Competency');
     equal(find('td:eq(2)', secondRow).text().trim(), '');
   });
 });
