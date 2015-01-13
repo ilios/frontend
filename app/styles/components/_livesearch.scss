@@ -1,57 +1,7 @@
 .live-search {
-  $search-bar-border-color: $base-border-color;
-  $search-bar-border: 1px solid $search-bar-border-color;
-  $search-bar-background: lighten($search-bar-border-color, 10);
 
   position: relative;
   display: inline-block;
-
-  input {
-    @include box-sizing(border-box);
-    display: block;
-  }
-
-  .control {
-    position: relative;
-
-    input[type=search] {
-      @include appearance(none);
-      width: 100%;
-      padding: .5em .8em;
-      font-size: .9em;
-      font-style: italic;
-      border-radius: $base-border-radius;
-      @include margin(0 0 0 25px);
-    }
-
-    button[type=submit] {
-      @include position(absolute, 0);
-      outline: none;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      padding: 5px 10px;
-
-      img {
-        height: 12px;
-        opacity: .7;
-      }
-    }
-
-    button.close {
-      @include position(absolute, 0 0 0 'auto');
-      outline: none;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      padding: 5px 10px;
-      margin-right: -25px;
-      background-color: transparent;
-      color: $base-font-color;
-      img {
-        height: 12px;
-        opacity: .7;
-      }
-    }
-  }
 
   .results {
     position: absolute;

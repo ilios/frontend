@@ -2,7 +2,6 @@ import Ember from 'ember';
 import LiveSearchItem from 'ilios/mixins/live-search-item';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
-  classNames: ['inputwithclear'],
   keyDown: function(event) {
     if (event.which === 27) {
       this.send('clear');  // ESC key

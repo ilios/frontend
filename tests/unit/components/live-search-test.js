@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('live-search', 'LiveSearchComponent', {
   // specify the other units that are required for this test
-  needs: ['helper:fa-icon']
+  needs: ['helper:fa-icon', 'component:search-box']
 });
 
 test('it renders', function() {

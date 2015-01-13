@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('detail-topics', 'DetailTopicsComponent', {
+moduleForComponent('search-box', 'SearchBoxComponent', {
   // specify the other units that are required for this test
-  needs: ['component:search-box']
+  needs: ['helper:fa-icon']
 });
 
 test('it renders', function() {

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  availableTopics: [],
   actions: {
     save: function(){
       var self = this;
@@ -36,7 +37,29 @@ export default Ember.Component.extend({
           course.save();
         });
       });
-    }
+    },
+    addTopic: function(topic){
+      var course = this.get('course');
+      course.get('topics').then(function(topics){
+        topic.get('courses').then(function(courses){
+          courses.addObject(course);
+          topics.addObject(topic);
+          course.save();
+          topic.save();
+        });
+      });
+    },
+    removeTopic: function(topic){
+      var course = this.get('course');
+      course.get('topics').then(function(topics){
+        topic.get('courses').then(function(courses){
+          courses.removeObject(course);
+          topics.removeObject(topic);
+          course.save();
+          topic.save();
+        });
+      });
+    },
   }
 
 });

@@ -61,6 +61,26 @@
     }
   }
 
+  .selectable-list{
+    @include position(relative);
+    @include clearfix;
+    margin-bottom: $base-font-size;
+    ul{
+      width: 80%;
+      background-color: white;
+      border: 1px solid $base-link-color;
+      @include padding(.5em 1em .5em .5em);
+      overflow-y: scroll;
+      height: 10em;
+
+      li {
+        color: $base-link-color;
+        cursor: pointer;
+      }
+    }
+
+  }
+
   .detail-header {
     @include clearfix;
     display: block;

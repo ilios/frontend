@@ -48,6 +48,7 @@ var general = {
   'type': 'Type',
   'groups': 'Groups',
   'offerings': 'Offerings',
+  'filterPlaceholder': 'Start typing to filter list',
 };
 translations.general = general;
 
@@ -183,6 +184,7 @@ var courses = {
   'expandDetail': 'View All/Edit',
   'collapseDetail': 'Close',
   'firstOffering': 'First Offering',
+  'filterPlaceholder': ''
 };
 translations.courses = courses;
 

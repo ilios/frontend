@@ -5,8 +5,16 @@
   <div class='detail-content-wide'>
     <ul class='removable-list'>
       {{#each topic in topics}}
-      <li {{action 'removeTopic' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
+      <li {{action 'remove' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
       {{/each}}
     </ul>
+    {{search-box value=filter placeholder=placeholder}}
+    <div class='selectable-list'>
+      <ul>
+        {{#each topic in filteredAvailableTopics}}
+          <li {{action 'add' topic}}>{{topic.title}}</li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </section>
