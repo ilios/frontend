@@ -73,9 +73,24 @@
       overflow-y: scroll;
       height: 10em;
 
+      ul{
+        margin-left: 2em;
+        width: auto;
+        background-color: transparent;
+        border: none;
+        height: auto;
+        padding: 0;
+        overflow-y: visible;
+      }
+
       li {
         color: $base-link-color;
         cursor: pointer;
+      }
+
+      li.static {
+        color: $base-font-color;
+        cursor: arrow;
       }
     }
 

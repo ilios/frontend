@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('detail-mesh', 'DetailMeshComponent', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['component:search-box']
 });
 
 test('it renders', function() {

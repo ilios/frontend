@@ -1,3 +1,4 @@
+/* global moment */
 import Ember from 'ember';
 import DS from 'ember-data';
 
@@ -39,5 +40,12 @@ export default DS.Model.extend({
         self.set('displayTitle', title);
       });
     }
-  }.observes('title', 'programYear.classOfYear')
+  }.observes('title', 'programYear.classOfYear'),
+  currentLevel: function(){
+    var startYear = this.get('programYear.startYear');
+    if(startYear){
+      return Math.abs(moment().year(startYear).diff(moment(), 'years'));
+    }
+    return '';
+  }.property('programYear.startYear')
 });

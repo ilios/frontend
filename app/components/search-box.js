@@ -14,8 +14,8 @@ export default Ember.Component.extend({
       this.set('value', '');
     },
     search: function(){
-      if(this.get('value').length === 0){
-        this.sendAction('search', '');
+      if(this.get('value').length === 0 || !this.get('liveSearch')){
+        this.sendAction('search', this.get('value'));
       } else {
         Ember.run.debounce(this, function(){
           this.sendAction('search', this.get('value'));
