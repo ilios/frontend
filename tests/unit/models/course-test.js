@@ -19,6 +19,7 @@ moduleForModel('course', 'Course', {
     'model:competency',
     'model:mesh-descriptor',
     'model:discipline',
+    'model:learning-material',
   ]
 });
 

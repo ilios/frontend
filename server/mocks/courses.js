@@ -15,6 +15,7 @@ module.exports = function(app) {
         objectives: [4,5,6],
         topics: [0,2],
         meshDescriptors: [1,2],
+        learningMaterials: [0,1,2,3]
       },
       {
         id: 1,
@@ -23,7 +24,8 @@ module.exports = function(app) {
         owningSchool: 0,
         level: 1,
         year: '2013',
-        cohorts: [0,1]
+        cohorts: [0,1],
+        learningMaterials: [0,1,2,3]
       },
       {
         id: 2,

@@ -15,6 +15,7 @@ moduleForModel('mesh-descriptor', 'MeshDescriptor', {
     'model:program-year',
     'model:user',
     'model:discipline',
+    'model:learning-material',
   ]
 });
 

@@ -3,9 +3,18 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('learning-materials', 'LearningMaterials', {
+moduleForModel('learning-material', 'LearningMaterial', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: [
+  'model:course',
+  'model:cohort',
+  'model:user',
+  'model:discipline',
+  'model:objective',
+  'model:school',
+  'model:session',
+  'model:mesh-descriptor',
+  ]
 });
 
 test('it exists', function() {

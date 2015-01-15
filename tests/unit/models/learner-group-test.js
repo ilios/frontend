@@ -21,6 +21,7 @@ moduleForModel('learner-group', 'LearnerGroup', {
     'model:mesh-descriptor',
     'model:cohort',
     'model:discipline',
+    'model:learning-material',
   ]
 });
 

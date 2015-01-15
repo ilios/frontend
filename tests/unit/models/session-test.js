@@ -15,6 +15,7 @@ moduleForModel('session', 'Session', {
     'model:competency',
     'model:mesh-descriptor',
     'model:discipline',
+    'model:learning-material',
 
   ]
 });

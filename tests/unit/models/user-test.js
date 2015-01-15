@@ -17,6 +17,7 @@ moduleForModel('user', 'User', {
     'model:competency',
     'model:mesh-descriptor',
     'model:discipline',
+    'model:learning-material',
   ]
 });
 

@@ -18,6 +18,7 @@ moduleForModel('school', 'School', {
     'model:course',
     'model:session',
     'model:mesh-descriptor',
+    'model:learning-material',
   ]
 });
 

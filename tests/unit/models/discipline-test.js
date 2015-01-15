@@ -18,6 +18,7 @@ moduleForModel('discipline', 'Discipline', {
     'model:instructor-group',
     'model:cohort',
     'model:mesh-descriptor',
+    'model:learning-material',
   ]
 });
 

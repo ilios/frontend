@@ -20,7 +20,7 @@ var Course = DS.Model.extend({
     topics: DS.hasMany('discipline', {async: true}),
     isPublished: false,
     isNotPublished: Ember.computed.not('isPublished'),
-    learningMaterials: [],
+    learningMaterials: DS.hasMany('learning-material', {async: true}),
     status: function(){
       return 'implement status';
     },

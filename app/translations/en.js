@@ -49,6 +49,7 @@ var general = {
   'groups': 'Groups',
   'offerings': 'Offerings',
   'filterPlaceholder': 'Start typing to filter list',
+  'required': 'Required'
 };
 translations.general = general;
 
@@ -188,6 +189,13 @@ var courses = {
   'filterPlaceholder': ''
 };
 translations.courses = courses;
+
+var learningMaterials = {
+  'displayName': 'Display Name',
+  'owner': 'Owner',
+  'notes': 'Notes'
+};
+translations.learningMaterials = learningMaterials;
 
 var groupMembers = {
   'filterPlaceholder': 'Filter by name or email',
