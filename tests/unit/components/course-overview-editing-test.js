@@ -3,8 +3,15 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('course-overview', 'CourseOverviewComponent', {
+moduleForComponent('course-overview-editing', 'CourseOverviewEditingComponent', {
   // specify the other units that are required for this test
+  needs: [
+    'component:live-search',
+    'component:editable-text',
+    'component:editable-date',
+    'component:editable-select',
+    'component:pikaday-input',
+  ]
 });
 
 test('it renders', function() {
