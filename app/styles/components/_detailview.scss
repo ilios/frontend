@@ -29,22 +29,19 @@
         color: $ilios-orange;
         font-size: $base-font-size;
         font-weight: bold;
-        @include span-columns(2 of 12);
+        @include span-columns(9 of 12);
       }
 
       .detail-actions {
-        @include span-columns(2 of 12);
-        button {
-          width: $base-font-size * 8;
-        }
+        text-align: right;
+        @include span-columns(3 of 12);
+        @include omega;
       }
 
       .detail-content {
-        @include span-columns(8 of 12);
-      }
-
-      .detail-content-wide {
-        @include span-columns(10 of 12);
+        margin-top: $base-font-size;
+        @include shift(1);
+        @include span-columns(11 of 12);
       }
     }
   }
@@ -65,6 +62,7 @@
     @include position(relative);
     @include clearfix;
     margin-bottom: $base-font-size;
+    width: 80%;
     ul{
       width: 80%;
       background-color: white;
@@ -97,23 +95,28 @@
   }
 
   .detail-header {
-    @include clearfix;
-    display: block;
-    width: 100%;
+    @include span-columns(12 of 12);
     background-color: $background-grey;
     padding: .5em;
-    h2 {
-      float: left;
-      margin-right: 1em;
+    vertical-align: bottom;
+    .title {
+      @include span-columns(5 of 12);
+      h2, h4 {
+        display: inline;
+      }
     }
     .actions {
-      float: right;
-    }
+      vertical-align: bottom;
+      @include span-columns(5 of 12);
+      @include shift(2);
 
-    .status {
-      margin-left: 1em;
-      h3 {
+      h5{
+        vertical-align: bottom;
         display: inline;
+        margin-left: 1em;
+        i{
+          vertical-align: bottom;
+        }
       }
     }
   }
@@ -121,21 +124,24 @@
   .detailCollapsedControl {
     width: 100%;
     text-align: center;
-    border-top: $base-font-size solid $ilios-orange;
+    border-top: .75 * $base-font-size solid $ilios-orange;
     margin-bottom: $base-font-size;
+
+
     span {
+      box-shadow: 2px 2px #e2e2e2;
       color: white;
-      @include padding(.25em 5em .5em 5em);
+      @include padding(.25em 4em .5em 5em);
       background-color: $ilios-orange;
       @include border-bottom-radius(5px);
       cursor: pointer;
       &:after {
-        padding-left: 2em;
-        @include triangle(12px, gray, down);
+        padding-left: 1em;
+        content: '\25BC';
       }
 
       &.is-expanded:after {
-        @include triangle(1em, white, up);
+        content: '\25B2';
       }
     }
   }
@@ -145,6 +151,7 @@
   }
 
   ul.static-list {
+    width: 80%;
     background-color: white;
     padding: 1em 2em;
     border: 2px solid $background-grey;

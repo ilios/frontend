@@ -2,11 +2,15 @@
   <div class='detail-title'>
     {{t 'general.overview'}}
   </div>
+  <div class='detail-actions'>
+    <button>{{t 'general.printSummary'}}</button>
+  </div>
   <div class='detail-content'>
     <label>{{t "general.start"}}: {{editable-date model=course property='startDate'}}</label>
     <label>{{t "courses.externalId"}}: {{editable-text model=course property='externalId'}}</label>
     <label>{{t "courses.level"}}: {{editable-select model=course property='level' options=levelOptions}}</label>
     <label>{{t "general.end"}}: {{editable-date model=course property='endDate'}}</label>
+    <br />
     <label>{{t "general.directors"}}:
       {{#if editableDirectors}}
         <span>
@@ -30,8 +34,5 @@
           {{/each}}
         </span>
       {{/if}}
-  </div>
-  <div class='detail-actions'>
-    <button>{{t 'general.printSummary'}}</button>
   </div>
 </section>

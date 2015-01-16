@@ -2,13 +2,16 @@
   <div class='detail-title'>
     {{t 'general.sessions'}} ({{sessions.length}})
   </div>
+  <div class='detail-actions'>
+    <button {{action 'createNewSessions'}}>{{t 'courses.newSession'}}</button>
+  </div>
   <div class='detail-content'>
     {{#if sessions}}
       {{input type='text' value=filter placeholder='Filter by title'}}
       <table>
         <thead>
           <tr>
-            <th>{{t 'general.title'}}</th>
+            <th colspan=2>{{t 'general.title'}}</th>
             <th>{{t 'general.type'}}</th>
             <th>{{t 'general.groups'}}</th>
             <th>{{t 'courses.firstOffering'}}</th>
@@ -19,7 +22,7 @@
         </thead>
         <tbody>
           {{#each session in filteredContent}}
-            <td>{{session.title}}</td>
+            <td colspan=2>{{session.title}}</td>
             <td>{{session.type}}</td>
             <td>{{session.groups.length}}</td>
             <td>{{session.firstOfferingDate}}</td>
@@ -36,8 +39,5 @@
     {{else}}
       <p>{{t 'courses.noSessions'}}</p>
     {{/if}}
-  </div>
-  <div class='detail-actions'>
-    <button {{action 'createNewSessions'}}>{{t 'courses.newSession'}}</button>
   </div>
 </section>

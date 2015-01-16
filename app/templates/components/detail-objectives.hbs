@@ -2,6 +2,10 @@
   <div class='detail-title'>
     {{t 'general.objectives'}} ({{objectives.length}})
   </div>
+
+  <div class='detail-actions'>
+    <button class='add'>{{t 'general.addNew'}}</button>
+  </div>
   <div class='detail-content'>
     <table class='grid-table'>
       <thead>
@@ -41,8 +45,5 @@
         {{/each}}
       </tbody>
     </table>
-  </div>
-  <div class='detail-actions'>
-    <button class='add'>{{t 'general.addNew'}}</button>
   </div>
 </section>
