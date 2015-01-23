@@ -9,7 +9,14 @@ moduleForModel('session', 'Session', {
     'model:offering',
     'model:user',
     'model:instructor-group',
-    'model:school'
+    'model:school',
+    'model:cohort',
+    'model:objective',
+    'model:competency',
+    'model:mesh-descriptor',
+    'model:discipline',
+    'model:learning-material',
+
   ]
 });
 

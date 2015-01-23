@@ -1,0 +1,42 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'courses.cohorts'}} ({{cohorts.length}})
+  </div>
+  <div class='detail-content'>
+    <table class='grid-table'>
+      <thead>
+        <tr>
+          <th>{{t 'general.program'}}</th>
+          <th>{{t 'general.cohort'}}</th>
+          <th>{{t 'general.level'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each cohort in cohorts}}
+        <tr>
+          <td>{{cohort.programYear.program.title}}</td>
+          <td>{{cohort.displayTitle}}</td>
+          <td>{{cohort.currentLevel}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class='selectable-list'>
+      <ul>
+        {{#each program in filteredPrograms}}
+          <li class='static'>{{program.title}}
+            <ul>
+              {{#each cohort in program.availableCohorts}}
+                <li {{action 'add' cohort}}>{{cohort.displayTitle}}</li>
+
+              {{else}}
+                <li class='static'>{{t 'courses.noAvailableCohorts'}}</li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</section>

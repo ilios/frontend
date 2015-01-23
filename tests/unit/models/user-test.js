@@ -11,7 +11,13 @@ moduleForModel('user', 'User', {
     'model:program',
     'model:program-year',
     'model:instructor-group',
-    'model:course'
+    'model:course',
+    'model:cohort',
+    'model:objective',
+    'model:competency',
+    'model:mesh-descriptor',
+    'model:discipline',
+    'model:learning-material',
   ]
 });
 

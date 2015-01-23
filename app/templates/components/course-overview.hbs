@@ -1,0 +1,19 @@
+<section class='detail-overview detail-block'>
+  <div class='detail-title'>
+    {{t 'general.overview'}}
+  </div>
+  <div class='detail-actions'>
+    <button>{{t 'general.printSummary'}}</button>
+  </div>
+  <div class='detail-content'>
+    {{moment course.startDate}} - {{moment course.endDate}}
+    {{course.externalId}} {{course.level}}
+    <br />
+    {{t "general.directors"}}:
+      <span>
+        {{#each user in sortedDirectors}}
+        {{user.fullName}},
+        {{/each}}
+      </span>
+  </div>
+</section>

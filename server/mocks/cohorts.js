@@ -4,12 +4,14 @@ module.exports = function(app) {
         id: 0,
         title: '',
         programYear: 1,
-        learnerGroups: [0,1,2,3]
+        learnerGroups: [0,1,2,3],
+        courses: [0]
       },
       {
         id: 1,
         title: '',
-        programYear: 0
+        programYear: 0,
+        courses: [0]
       },
       {
         id: 2,

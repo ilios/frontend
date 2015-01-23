@@ -1,0 +1,23 @@
+<section class='course detail-view'>
+  {{course-header course=course}}
+  {{course-overview course=course editableDirectors=true}}
+  {{detail-objectives objectives=course.objectives}}
+  {{detail-learning-materials materials=course.learningMaterials}}
+  {{detail-competencies competencies=course.competencies}}
+  {{detail-topics
+    topics=course.topics
+    availableTopics=availableTopics
+    addTopic='addTopic'
+    removeTopic='removeTopic'
+  }}
+  {{detail-mesh
+    terms=course.meshDescriptors
+    addTerm='addMeshDescriptor'
+    removeTerm='removeMeshDescriptor'
+  }}
+  {{detail-cohorts
+    cohorts=course.cohorts
+    programs=programs
+    add='addCohort'
+  }}
+</section>

@@ -1,0 +1,17 @@
+%reset-button {
+  @extend %button;
+  background-color: transparent;
+  padding: 0;
+  color: $base-font-color;
+
+  &:hover {
+    background-color: transparent;
+    color: $base-font-color;
+  }
+
+  &:active {
+    background-color: transparent;
+    color: $base-font-color;
+    border: none;
+  }
+}

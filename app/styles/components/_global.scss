@@ -27,3 +27,26 @@
   text-align: center;
   padding: 1em;
 }
+
+ul.inline, ul.inline li {
+  display: inline;
+  margin-right: 2em;
+}
+
+button {
+  &.add, &.remove {
+    color: white;
+  }
+  &.add {
+    background-color: $ilios-add-color;
+  }
+  &.remove {
+    background-color: $ilios-remove-color;
+  }
+  &.un {
+    border-radius: $base-border-radius;
+    color: $ilios-blue;
+    border: 1px solid $ilios-blue;
+    background-color: white;
+  }
+}

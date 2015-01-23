@@ -1,3 +1,4 @@
+/* global moment */
 import Ember from 'ember';
 import DS from 'ember-data';
 
@@ -6,6 +7,31 @@ export default DS.Model.extend({
   programYear: DS.belongsTo('program-year', {async: true}),
   courses: DS.hasMany('course', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {async: true}),
+  displayTitle: '',
+  competencies: function(){
+    var self = this;
+    return new Ember.RSVP.Promise(function(resolve) {
+      self.get('programYear').then(function(programYear){
+        if(programYear){
+          programYear.get('competencies').then(function(competencies){
+            resolve(competencies);
+          });
+        }
+      });
+    });
+  }.property('programYear.competencies.@each'),
+  objectives: function(){
+    var self = this;
+    return new Ember.RSVP.Promise(function(resolve) {
+      self.get('programYear').then(function(programYear){
+        if(programYear){
+          programYear.get('objectives').then(function(objectives){
+            resolve(objectives);
+          });
+        }
+      });
+    });
+  }.property('programYear.objectives.@each'),
   topLevelLearnerGroups: function(){
     return this.get('learnerGroups').then(function(groups){
       var parentHash = {};
@@ -26,7 +52,6 @@ export default DS.Model.extend({
       });
     });
   }.property('learnerGroups.@each'),
-  displayTitle: '',
   displayTitleObserver: function(){
     var self = this;
     if(this.get('title.length') > 0){
@@ -39,5 +64,12 @@ export default DS.Model.extend({
         self.set('displayTitle', title);
       });
     }
-  }.observes('title', 'programYear.classOfYear')
+  }.observes('title', 'programYear.classOfYear'),
+  currentLevel: function(){
+    var startYear = this.get('programYear.startYear');
+    if(startYear){
+      return Math.abs(moment().year(startYear).diff(moment(), 'years'));
+    }
+    return '';
+  }.property('programYear.startYear')
 });

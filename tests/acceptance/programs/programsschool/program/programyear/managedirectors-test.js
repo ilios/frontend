@@ -61,11 +61,11 @@ test('test add single', function() {
 
   andThen(function() {
     equal(find('#selected-directors li').length, 1);
-    equal(find('#available-directors li.enabled').length, 2);
+    equal(find('#available-directors li.enabled').length, 1);
     equal(find('#available-directors li.disabled').length, 1);
     click('#available-directors li.enabled:eq(0) .add').then(function() {
       equal(find('#selected-directors li').length, 2);
-      equal(find('#available-directors li.enabled').length, 1);
+      equal(find('#available-directors li.enabled').length, 0);
     });
   });
 });

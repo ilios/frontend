@@ -43,7 +43,7 @@ test('badge value', function() {
 
   andThen(function() {
     equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '2');
-    click('#selected-topics li:eq(0) .remove').then(function(){
+    click('#selected-topics li:visible:eq(0) .remove').then(function(){
       equal(find('.accordion-tabs-minimal a.active .badge').text().trim(), '1');
     });
     click('#available-topics li:visible:eq(0) .add').then(function(){
@@ -57,14 +57,14 @@ test('test add single', function() {
   visit('/programs/school/0/program/0/years/0/managetopics');
 
   andThen(function() {
-    equal(find('#selected-topics li.visible').length, 2);
+    equal(find('#selected-topics li:visible').length, 2);
     click('#available-topics li.enabled:eq(0) .add').then(function() {
       equal(find('#selected-topics li.visible').length, 3);
-      equal(find('#available-topics li.enabled').length, 1);
+      equal(find('#available-topics li.enabled').length, 7);
     });
     click('#available-topics li.enabled:eq(0) .add').then(function() {
       equal(find('#selected-topics li.visible').length, 4);
-      equal(find('#available-topics li.enabled').length, 0);
+      equal(find('#available-topics li.enabled').length, 6);
     });
   });
 });

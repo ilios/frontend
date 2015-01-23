@@ -8,8 +8,9 @@
 }}
 <section {{bind-attr class=":session session.isDirty"}}>
   <div class='title'>
-    <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}</label>
-    {{view Ember.TextField value=session.title viewName="titleField" width='5em'}}
+    <label {{bind-attr for="view.titleField.elementId"}}>{{t "general.title"}}
+      {{input type='textarea' value=session.title}}
+    </label>
   </div>
 </section>
 {{/expander-box}}
