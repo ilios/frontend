@@ -7,7 +7,11 @@ module.exports = function(app) {
     {
       id: 1,
       title: '2014'
-    }
+    },
+    {
+      id: 2,
+      title: '2010'
+    },
   ];
 
   var createRouter = require('../helpers/createrouter.js');

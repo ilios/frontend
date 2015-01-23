@@ -5,7 +5,7 @@ export default Ember.Route.extend({
     var promises = {
         courses: this.store.find('course'),
         educationalYears: this.store.find('educational-year'),
-        schools: this.currentUser.get('schools')
+        schools: this.store.find('school')
     };
     return Ember.RSVP.hash(promises);
   },
