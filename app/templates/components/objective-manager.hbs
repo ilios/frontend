@@ -1,0 +1,15 @@
+{{t 'general.objective'}}: <h2>{{objective.title}}</h2>
+{{availableGroups.length}}
+{{view "select" content=objectiveGroups optionLabelPath="content.title" value=selectedGroup}}
+
+{{#each competency in currentObjectiveGroup.objectivesByCompetency}}
+  <h5>{{competency.title}}</h5>
+  <ul>
+    {{#each objective in competency.objectives}}
+      <li {{action 'selectParent' objective}}>
+        {{input type='checkbox' checked=objective.selected}}
+        {{objective.title}}
+      </li>
+    {{/each}}
+  </ul>
+{{/each}}

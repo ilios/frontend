@@ -14,6 +14,7 @@ var general = {
   'scheduled': 'Scheduled',
   'competencies': 'Competencies',
   'objectives': 'Objectives',
+  'objective': 'Objective',
   'directors': 'Directors',
   'status': 'Status',
   'title': 'Title',
