@@ -9,7 +9,7 @@ export default DS.Model.extend({
   program: DS.belongsTo('program', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   competencies: DS.hasMany('competency', {async: true}),
-  topics: DS.hasMany('discipline', {async: true}),
+  disciplines: DS.hasMany('discipline', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   stewardingSchools: DS.hasMany('school', {async: true}),
   cohort: DS.belongsTo('cohort', {async: true}),

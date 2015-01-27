@@ -40,7 +40,7 @@ export default Ember.Component.extend({
     },
     addTopic: function(topic){
       var course = this.get('course');
-      course.get('topics').then(function(topics){
+      course.get('disciplines').then(function(topics){
         topic.get('courses').then(function(courses){
           courses.addObject(course);
           topics.addObject(topic);
@@ -51,7 +51,7 @@ export default Ember.Component.extend({
     },
     removeTopic: function(topic){
       var course = this.get('course');
-      course.get('topics').then(function(topics){
+      course.get('disciplines').then(function(topics){
         topic.get('courses').then(function(courses){
           courses.removeObject(course);
           topics.removeObject(topic);

@@ -17,7 +17,7 @@ var Course = DS.Model.extend({
     cohorts: DS.hasMany('cohort', {async: true}),
     directors: DS.hasMany('users', {async: true}),
     objectives: DS.hasMany('objective', {async: true}),
-    topics: DS.hasMany('discipline', {async: true}),
+    disciplines: DS.hasMany('discipline', {async: true}),
     isPublished: false,
     isNotPublished: Ember.computed.not('isPublished'),
     learningMaterials: DS.hasMany('learning-material', {async: true}),

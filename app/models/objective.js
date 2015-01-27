@@ -14,7 +14,7 @@ export default DS.Model.extend({
     inverse: 'children',
     async: true
   }),
-  programYear: DS.belongsTo('program-year',  {async: true}),
+  programYears: DS.hasMany('program-year',  {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   treeCompetencies: function(){
     var objective = this;

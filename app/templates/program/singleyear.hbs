@@ -59,10 +59,10 @@
     {{/modal-dialog}}
   </td>
   <td>
-    {{#modal-dialog titleTranslation="general.topics" openDialogText=topics.length}}
+    {{#modal-dialog titleTranslation="general.topics" openDialogText=disciplines.length}}
       <p>
         <ul>
-          {{#each topic in topics}}
+          {{#each topic in disciplines}}
             <li>
               {{#link-to 'programyear.managetopics' program this}}
                 {{topic.title}}

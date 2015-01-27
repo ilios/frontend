@@ -13,7 +13,7 @@ module.exports = function(app) {
       directors: [0],
       competencies: [4,2],
       objectives: [0,1],
-      topics: [0,2],
+      disciplines: [0,2],
       stewardingSchools: [1],
       cohort: 1
     },
@@ -28,7 +28,7 @@ module.exports = function(app) {
       directors: [0],
       competencies: [0,2,4],
       objectives: [2,3],
-      topics: [0,2],
+      disciplines: [0,2],
       stewardingSchools: [1,2],
       cohort: 0
     },
@@ -43,7 +43,7 @@ module.exports = function(app) {
       directors: [0],
       competencies: [0,2],
       objectives: [],
-      topics: [0,2],
+      disciplines: [0,2],
       cohort: 2
     },
     {

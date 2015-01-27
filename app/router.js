@@ -49,6 +49,7 @@ Router.map(function() {
   this.route('courses');
   this.route('course', { path: 'course/:course_id'});
   this.route("courseobjective", {path: 'course/:course_id/objective/:objective_id'});
+  this.route("loading");
 });
 
 export default Router;

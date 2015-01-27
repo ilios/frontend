@@ -15,6 +15,7 @@ export default Ember.Controller.extend({
     this.get('course.cohorts').then(function(cohorts){
       cohorts.forEach(function(cohort){
         cohort.get('objectives').then(function(objectives){
+          console.log('courseobjectives', objectives);
           self.get('model').get('parents').then(function(parents){
             var objectiveProxies = objectives.map(function(objective){
               return Ember.ObjectProxy.create({

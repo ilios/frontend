@@ -33,21 +33,23 @@ test('visiting /courses-list', function() {
 });
 
 test('filters options', function() {
-  expect(7);
+  expect(9);
   visit('/courses');
   andThen(function() {
     var filters = find('#courses .filter');
     equal(filters.length, 4);
 
     var schoolOptions = find('#schoolsfilter label');
-    equal(schoolOptions.length, 2);
+    equal(schoolOptions.length, 3);
     equal(schoolOptions.eq(0).text().trim(), 'First School');
-    equal(schoolOptions.eq(1).text().trim(), 'Second School');
+    equal(schoolOptions.eq(1).text().trim(), 'Third Test School');
+    equal(schoolOptions.eq(2).text().trim(), 'Second School');
 
     var yearOptions = find('#yearsfilter option');
-    equal(yearOptions.length, 2);
+    equal(yearOptions.length, 3);
     equal(yearOptions.eq(0).text().trim(), '2013 - 2014');
     equal(yearOptions.eq(1).text().trim(), '2014 - 2015');
+    equal(yearOptions.eq(2).text().trim(), '2010 - 2011');
   });
 
 });

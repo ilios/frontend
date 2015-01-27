@@ -12,6 +12,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
 
     var topics = this.get('availableTopics').filter(function(topic) {
       return (
+        topic.get('title') !== undefined &&
         topic.get('title').match(exp) &&
         !self.get('topics').contains(topic)
       );
