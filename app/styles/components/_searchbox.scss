@@ -2,7 +2,8 @@
   @include clearfix;
   @include position(relative);
   display: block;
-  height: 1.5em;
+  height: 1.6em;
+  margin-bottom: 10px;
 
   input[type=search] {
     @include appearance(none);
@@ -10,6 +11,7 @@
     font-style: italic;
     border-radius: $base-border-radius;
     width: auto;
+    height: 1.6em;
     @include padding(0 0 0 25px);
   }
 

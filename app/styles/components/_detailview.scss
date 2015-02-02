@@ -1,6 +1,8 @@
 //course, session, etc detail view
 .detail-view {
   border: 2px solid $background-grey;
+  margin-top: 10px;
+  
   section {
     text-align: left;
     margin: 10px;
@@ -108,8 +110,10 @@
   .detail-header {
     @include span-columns(12 of 12);
     background-color: $background-grey;
+    margin:0px;
     padding: .5em;
     /* vertical-align: bottom;*/
+    
     .title {
       @include span-columns(5 of 12);
       h2, h4 {
