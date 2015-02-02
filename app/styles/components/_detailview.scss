@@ -1,13 +1,17 @@
 //course, session, etc detail view
 .detail-view {
   border: 2px solid $background-grey;
-  margin-top: 10px;
+  border-top: 0px;
+  margin-top: 0px;
   
   section {
     text-align: left;
     margin: 10px;
-    border: 0px;
+   border:none;
     @include clearfix;
+    
+  
+
     button {
       font-size: $base-font-size * 0.75;
 
@@ -53,7 +57,7 @@
         margin-top: $base-font-size;
         margin-bottom: .8em;
         margin-left: .5em;
-      
+
         @include span-columns(12 of 12);
       }
     }
