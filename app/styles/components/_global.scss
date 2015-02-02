@@ -50,3 +50,22 @@ button {
     background-color: white;
   }
 }
+h2
+{ font-size: $base-font-size * 1.75;
+  font-weight: normal;
+
+ 
+  
+}
+  
+  h4 {
+    font-weight: normal;
+    margin-left: 10px;
+     color: #666;
+     font-size: $base-font-size * 1.15;
+  }
+
+  .textarea {
+    display: inline;
+  }
+

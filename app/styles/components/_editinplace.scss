@@ -1,19 +1,26 @@
 .editinplace {
   display: inline;
+  // padding: .8em;
+  
   .content {
-    display: inline-block;
+    display: inline;
+    
   }
   .editable {
     color: $ilios-blue;
     cursor: pointer;
+    
   }
 
   .editor {
     input, select {
       display: inline;
       width: auto;
+      // height: auto;
     }
     .actions{
+      display: inline;
+      width: 10%;
       button {
         @extend %reset-button;
       }
