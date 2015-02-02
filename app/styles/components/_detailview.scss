@@ -3,9 +3,12 @@
   border: 2px solid $background-grey;
   section {
     text-align: left;
+    margin: 10px;
+    border: 0px;
     @include clearfix;
     button {
       font-size: $base-font-size * 0.75;
+
     }
 
     &.detail-overview {
@@ -24,24 +27,32 @@
     &.detail-block {
       border-bottom: 1px dotted $ilios-orange;
       margin-top: 1em;
+      margin-bottom: 1em;
+      margin-left: .5em;
 
       .detail-title {
         color: $ilios-orange;
         font-size: $base-font-size;
         font-weight: bold;
+        margin-top: 1em;
+
         @include span-columns(9 of 12);
       }
 
       .detail-actions {
         text-align: right;
+        margin-top: 1em;
+        vertical-align: middle;
         @include span-columns(3 of 12);
         @include omega;
       }
 
       .detail-content {
         margin-top: $base-font-size;
-        @include shift(1);
-        @include span-columns(11 of 12);
+        margin-bottom: .8em;
+        margin-left: .5em;
+      
+        @include span-columns(12 of 12);
       }
     }
   }
@@ -98,7 +109,7 @@
     @include span-columns(12 of 12);
     background-color: $background-grey;
     padding: .5em;
-    vertical-align: bottom;
+    /* vertical-align: bottom;*/
     .title {
       @include span-columns(5 of 12);
       h2, h4 {
@@ -106,9 +117,10 @@
       }
     }
     .actions {
-      vertical-align: bottom;
+      /*vertical-align: bottom;*/
       @include span-columns(5 of 12);
       @include shift(2);
+      text-align:right;
 
       h5{
         vertical-align: bottom;
@@ -128,13 +140,18 @@
     margin-bottom: $base-font-size;
 
 
+
     span {
-      box-shadow: 2px 2px #e2e2e2;
+
       color: white;
       @include padding(.25em 4em .5em 5em);
       background-color: $ilios-orange;
       @include border-bottom-radius(5px);
       cursor: pointer;
+      -webkit-box-shadow: 0 2px #e2e2e2, inset 0 1px 2px rgba(0,0,0,.34);
+      -moz-box-shadow: 0 2px #e2e2e2, inset 0 1px 2px rgba(0,0,0,.34);
+      box-shadow: 0 2px #e2e2e2, inset 0 1px 2px rgba(0,0,0,.34);
+
       &:after {
         padding-left: 1em;
         content: '\25BC';
@@ -146,8 +163,17 @@
     }
   }
 
+  .grid-table  {
+
+    margin-left: .5em;
+    padding-left: .5em;
+  }
+
   table {
     margin-top: 0;
+  }
+
+  th {margin-left: .5em;
   }
 
   ul.static-list {
