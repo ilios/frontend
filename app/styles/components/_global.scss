@@ -50,8 +50,13 @@ button {
     background-color: white;
   }
 }
+
+h1 {
+  font-weight: normal;
+}
+
 h2
-{ font-size: $base-font-size * 1.75;
+{ font-size: $base-font-size * 1.5;
   font-weight: normal;
 
  
@@ -69,3 +74,8 @@ h2
     display: inline;
   }
 
+#site-container {
+margin: 0 auto;
+padding-left: 30px;
+
+}
