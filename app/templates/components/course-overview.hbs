@@ -6,14 +6,38 @@
     <button>{{t 'general.printSummary'}}</button>
   </div>
   <div class='detail-content'>
-    {{moment course.startDate}} - {{moment course.endDate}}
-    {{course.externalId}} {{course.level}}
-    <br />
-    {{t "general.directors"}}:
+    {{#if editing}}
+      <label>{{t "general.start"}}: {{editable-date model=course property='startDate'}}</label>
+      <label>{{t "courses.externalId"}}: {{editable-text model=course property='externalId'}}</label>
+      <label>{{t "courses.level"}}: {{editable-select model=course property='level' options=levelOptions}}</label>
+      <label>{{t "general.end"}}: {{editable-date model=course property='endDate'}}</label>
+      <br />
+      <label>{{t "general.directors"}}:
+        <span>
+          <ul class='removable-list'>
+            {{#each user in sortedDirectors}}
+            <li {{action 'removeDirector' user}}>{{user.fullName}} {{fa-icon 'remove'}}</li>
+            {{/each}}
+          </ul>
+        </span>
+        {{live-search
+          placeholderTranslation='courses.findDirector'
+          buttonTitleTranslation='courses.findDirector'
+          search='searchDirectors'
+          add='addDirector'
+          searchResults=directorSearchResults
+        }}
+    {{else}}
+      {{moment course.startDate}} - {{moment course.endDate}}
+      {{course.externalId}} {{course.level}}
+      <br />
+      {{t "general.directors"}}:
       <span>
         {{#each user in sortedDirectors}}
         {{user.fullName}},
         {{/each}}
       </span>
+
+    {{/if}}
   </div>
 </section>

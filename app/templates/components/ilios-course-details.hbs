@@ -2,7 +2,7 @@
 <div class='detail-view'>
   {{#if collapsed}}
     {{course-header course=course}}
-    {{course-overview course=course editableDirectors=false}}
+    {{course-overview course=course editabe=false}}
     <div {{action 'expand'}} class='detailCollapsedControl'><span>{{t 'courses.expandDetail'}}</span></div>
   {{else}}
     {{course-header course=course}}
