@@ -3,14 +3,14 @@
   border: 2px solid $background-grey;
   border-top: 0px;
   margin-top: 0px;
-  
+
   section {
     text-align: left;
     margin: 10px;
    border:none;
     @include clearfix;
-    
-  
+
+
 
     button {
       font-size: $base-font-size * 0.75;
@@ -117,7 +117,7 @@
     margin:0px;
     padding: .5em;
     /* vertical-align: bottom;*/
-    
+
     .title {
       @include span-columns(5 of 12);
       h2, h4 {
@@ -169,19 +169,6 @@
         content: '\25B2';
       }
     }
-  }
-
-  .grid-table  {
-
-    margin-left: .5em;
-    padding-left: .5em;
-  }
-
-  table {
-    margin-top: 0;
-  }
-
-  th {margin-left: .5em;
   }
 
   ul.static-list {
