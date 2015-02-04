@@ -11,8 +11,10 @@ var general = {
   'add': 'Add',
   'published': 'Published',
   'notPublished': 'Not Published',
+  'scheduled': 'Scheduled',
   'competencies': 'Competencies',
   'objectives': 'Objectives',
+  'objective': 'Objective',
   'directors': 'Directors',
   'status': 'Status',
   'title': 'Title',
@@ -22,12 +24,33 @@ var general = {
   'email': 'Email',
   'cohort': 'Cohort',
   'meshTerms': 'MeSH Terms',
+  'mesh': 'MeSH',
   'members': 'Members',
+  'people': 'People',
   'users': 'Users',
   'sessions': 'Sessions',
   'learners': 'Learners',
   'school': 'School',
-  'year': 'Year'
+  'year': 'Year',
+  'publish': 'Publish',
+  'unPublish': 'UnPublish',
+  'overview': 'Overview',
+  'start': 'Start',
+  'end': 'End',
+  'addNew': 'Add New',
+  'program': 'Program',
+  'level': 'Level',
+  'description': 'Description',
+  'parentObjectives': 'Parent Objectives',
+  'learningMaterials': 'Learning Materials',
+  'findDirector': 'Find Director',
+  'moreInputRequiredPrompt': 'keep typing...',
+  'printSummary': 'Print Summary',
+  'type': 'Type',
+  'groups': 'Groups',
+  'offerings': 'Offerings',
+  'filterPlaceholder': 'Start typing to filter list',
+  'required': 'Required'
 };
 translations.general = general;
 
@@ -155,9 +178,25 @@ var courses = {
   'level': 'Level',
   'myCourses': 'My Courses Only',
   'newSession': 'New Session',
+  'backToCourses': 'Back to Courses List',
+  'details': 'Course Details',
+  'cohorts': 'Program Cohorts',
+  'noAvailableCohorts': 'No available cohorts',
   'titleFilterPlaceholder': 'Filter by course title',
+  'findDirector': 'Find Director',
+  'expandDetail': 'View All/Edit',
+  'collapseDetail': 'Close',
+  'firstOffering': 'First Offering',
+  'filterPlaceholder': ''
 };
 translations.courses = courses;
+
+var learningMaterials = {
+  'displayName': 'Display Name',
+  'owner': 'Owner',
+  'notes': 'Notes'
+};
+translations.learningMaterials = learningMaterials;
 
 var groupMembers = {
   'filterPlaceholder': 'Filter by name or email',

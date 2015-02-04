@@ -3,17 +3,19 @@ module.exports = function(app) {
       {
         id: 0,
         name: 'First Mesh Term',
-        objectives: [0]
+        objectives: [0,4,6],
       },
       {
         id: 1,
         name: 'Second Mesh Term',
-        objectives: []
+        objectives: [0,4,6],
+        courses: [0]
       },
       {
         id: 2,
         name: 'Third Mesh Term',
-        objectives: []
+        objectives: [],
+        courses: [0]
       },
   ];
   var createRouter = require('../helpers/createrouter.js');

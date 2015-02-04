@@ -14,6 +14,13 @@ moduleForModel('instructor-group', 'InstructorGroup', {
     'model:offering',
     'model:session',
     'model:course',
+    'model:cohort',
+    'model:objective',
+    'model:learner-group',
+    'model:competency',
+    'model:mesh-descriptor',
+    'model:discipline',
+    'model:learning-material',
   ]
 });
 

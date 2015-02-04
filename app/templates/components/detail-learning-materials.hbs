@@ -1,0 +1,32 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.learningMaterials'}} ({{materials.length}})
+  </div>
+  <div class='detail-actions'>
+    <button class='add'>{{t 'general.addNew'}}</button>
+  </div>
+  <div class='detail-content'>
+    <table>
+      <thead>
+        <tr>
+          <th colspan=2>{{t 'learningMaterials.displayName'}}</th>
+          <th>{{t 'general.type'}}</th>
+          <th>{{t 'learningMaterials.owner'}}</th>
+          <th>{{t 'general.required'}}</th>
+          <th>{{t 'learningMaterials.notes'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each lm in materials}}
+          <tr>
+            <td colspan=2>{{fa-icon 'external-link-square'}} {{lm.title}}</td>
+            <td>{{lm.type}}</td>
+            <td>{{lm.owner}}</td>
+            <td>{{lm.required}}</td>
+            <td>{{lm.notes}}</td>
+          </t>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

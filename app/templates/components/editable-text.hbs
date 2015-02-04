@@ -1,0 +1,15 @@
+<span class='content'>
+  {{#unless isEditing}}
+    <span {{action 'edit'}} class='editable'>{{text}}</span>
+  {{else}}
+    <span class='editor'>
+      <span class='control'>
+        {{input type='text' value=buffer action='save'}}
+      </span>
+      <span class='actions'>
+        <button {{action 'save'}}>{{fa-icon 'check' classNames='add'}}</button>
+        <button {{action 'cancel'}}>{{fa-icon 'remove' classNames='remove'}}</button>
+      </span>
+    </span>
+  {{/unless}}
+</span>

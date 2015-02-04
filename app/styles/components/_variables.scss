@@ -1,3 +1,9 @@
+// Typography
+$sans-serif: $helvetica;
+$serif: $georgia;
+$base-font-family: $sans-serif;
+$header-font-family: $base-font-family;
+
 $ilios_orange: #CC6600;
 
 $background-grey: #f7f7f7;
@@ -18,3 +24,4 @@ $base-accent-color: $ilios-accent-color;
 $base-font-color: $text-grey;
 $base-border-color: $background-grey;
 $base-background-color: $background-grey;
+$base-button-color: $ilios-blue;

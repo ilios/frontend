@@ -8,6 +8,15 @@ module.exports = function(environment) {
     locationType: 'auto',
     adapterHost: '',
     adapterNamespace: 'api',
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self'",
+      'font-src': "'self'",
+      'connect-src': "'self'",
+      'img-src': "'self'",
+      'style-src': "'self'",
+      'media-src': "'self'"
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -28,6 +37,13 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.adapterHost = 'http://localhost:4200';
+  }
+
+  if (environment === 'tryapi') {
+    ENV.adapterHost = 'http://localhost:8400';
+    ENV.adapterNamespace = 'app_dev.php/api/v1';
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400";
   }
 
   if (environment === 'test') {

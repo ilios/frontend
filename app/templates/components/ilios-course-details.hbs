@@ -1,0 +1,14 @@
+{{#link-to 'courses'}}{{t 'courses.backToCourses'}}{{/link-to}}
+<div class='detail-view'>
+  {{#if collapsed}}
+    {{course-header course=course}}
+    {{course-overview course=course editabe=false}}
+    <div {{action 'expand'}} class='detailCollapsedControl'><span>{{t 'courses.expandDetail'}}</span></div>
+  {{else}}
+    {{course-header course=course}}
+    {{course-editing course=course availableTopics=availableTopics programs=programs}}
+    <div {{action 'collapse'}} class='detailCollapsedControl'><span class='is-expanded'>{{t 'courses.collapseDetail'}}</span></div>
+  {{/if}}
+
+  {{ilios-sessions-list sessions=course.sessions}}
+</div>

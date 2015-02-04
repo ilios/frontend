@@ -16,6 +16,7 @@ moduleForModel('cohort', 'Cohort', {
     'model:program-year',
     'model:course',
     'model:learner-group',
+    'model:learning-material',
     'model:program',
     'model:user',
     'model:competency',

@@ -10,7 +10,13 @@ moduleForModel('offering', 'Offering', {
     'model:course',
     'model:user',
     'model:school',
-    'model:instructor-group'
+    'model:instructor-group',
+    'model:cohort',
+    'model:objective',
+    'model:mesh-descriptor',
+    'model:competency',
+    'model:discipline',
+    'model:learning-material',
   ]
 });
 

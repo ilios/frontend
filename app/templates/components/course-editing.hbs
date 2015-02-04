@@ -1,0 +1,20 @@
+{{course-overview course=course editing=true}}
+{{detail-objectives objectives=course.objectives}}
+{{detail-learning-materials materials=course.learningMaterials}}
+{{detail-competencies competencies=course.competencies}}
+{{detail-topics
+  topics=course.disciplines
+  availableTopics=availableTopics
+  addTopic='addTopic'
+  removeTopic='removeTopic'
+}}
+{{detail-mesh
+  terms=course.meshDescriptors
+  addTerm='addMeshDescriptor'
+  removeTerm='removeMeshDescriptor'
+}}
+{{detail-cohorts
+  cohorts=course.cohorts
+  programs=programs
+  add='addCohort'
+}}

@@ -1,0 +1,10 @@
+{{#link-to 'courses'}}{{t 'courses.backToCourses'}}{{/link-to}}
+<div class='detail-view'>
+  {{course-header course=course}}
+  {{course-overview course=course}}
+  {{objective-manager
+    objective=model
+    objectiveGroups=objectiveGroups
+    multipleParents=false
+  }}
+</div>

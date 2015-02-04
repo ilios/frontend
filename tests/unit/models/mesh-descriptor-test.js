@@ -10,7 +10,12 @@ moduleForModel('mesh-descriptor', 'MeshDescriptor', {
     'model:competency',
     'model:course',
     'model:session',
-    'model:program-year'
+    'model:school',
+    'model:cohort',
+    'model:program-year',
+    'model:user',
+    'model:discipline',
+    'model:learning-material',
   ]
 });
 
