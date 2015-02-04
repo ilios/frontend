@@ -26,7 +26,9 @@ export default DS.Model.extend({
           Ember.RSVP.hash(promises).then(function(hash){
             var cohorts = Ember.A();
             Object.keys(hash).forEach(function(key) {
-              cohorts.pushObject(hash[key]);
+              if(hash[key] != null){
+                cohorts.pushObject(hash[key]);
+              }
             });
             resolve(cohorts);
           });
