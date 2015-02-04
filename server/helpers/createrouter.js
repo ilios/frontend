@@ -13,10 +13,11 @@ defaultCallbacks.getSingle = function(name, req, res, fixtures){
 defaultCallbacks.getGroup = function(name, req, res, fixtures){
   var responseObj = {};
   var response = [];
-  if(req.query.ids !== undefined){
-    for(var i = 0; i< req.query.ids.length; i++){
-      if(req.query.ids[i] in fixtures){
-        response.push(fixtures[req.query.ids[i]]);
+  if(req.query !== undefined && req.query.filters !== undefined && req.query.filters.id !== undefined){
+    var ids = req.query.filters.id;
+    for(var i = 0; i< ids.length; i++){
+      if(ids[i] in fixtures){
+        response.push(fixtures[ids[i]]);
       }
     }
   } else {
