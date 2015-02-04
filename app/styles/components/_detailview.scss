@@ -34,7 +34,8 @@
       border-bottom: 1px dotted $ilios-orange;
       margin-top: 1em;
       margin-bottom: 1em;
-      margin-left: .5em;
+      margin-left: .8em;
+      margin-right: .8em;
 
       .detail-title {
         color: $ilios-orange;
@@ -49,6 +50,7 @@
         text-align: right;
         margin-top: 1em;
         vertical-align: middle;
+        padding-right: .3em;
         @include span-columns(3 of 12);
         @include omega;
       }
@@ -57,6 +59,7 @@
         margin-top: $base-font-size;
         margin-bottom: .8em;
         margin-left: .5em;
+        padding-right: .8em;
 
         @include span-columns(12 of 12);
       }
@@ -115,7 +118,7 @@
     @include span-columns(12 of 12);
     background-color: $background-grey;
     margin:0px;
-    padding: .5em;
+    padding: .8em;
     /* vertical-align: bottom;*/
 
     .title {
