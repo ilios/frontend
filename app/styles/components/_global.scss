@@ -1,6 +1,7 @@
 .add {
   color: $ilios-add-color;
 }
+
 .remove {
   color: $ilios-remove-color;
 }
@@ -48,6 +49,9 @@ button {
     color: $ilios-blue;
     border: 1px solid $ilios-blue;
     background-color: white;
+  }
+  &.publish, &.unpublish {
+    background-color: $ilios-green;
   }
 }
 

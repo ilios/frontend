@@ -4,8 +4,8 @@
     <h4>{{course.academicYear}}</h4>
   </span>
   <span class ='actions'>
-    <button class='add' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
-    <button class='add' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
+    <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
+    <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
     <span class='status'>
       <h5>{{fa-icon 'clock-o'}} {{t 'general.scheduled'}}</h5>
     </span>
