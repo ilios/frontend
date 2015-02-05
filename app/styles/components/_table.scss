@@ -5,7 +5,10 @@ table {
   width: 100%;
   font-size: .9em;
   thead {
-    background-color: $background-grey;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+  background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+  border-top:1px solid #fafafa;
+  border-bottom:1px solid #e0e0e0;
   }
 
 

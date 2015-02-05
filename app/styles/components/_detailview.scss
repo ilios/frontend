@@ -1,8 +1,10 @@
 //course, session, etc detail view
 .detail-view {
-  border: 2px solid $background-grey;
+  border: 2px solid $background-gray;
   border-top: 0px;
   margin-top: 0px;
+  background-color: #fbfbfb;
+  box-shadow: 0 1px 2px #d1d1d1;
 
   section {
     text-align: left;
@@ -116,7 +118,10 @@
 
   .detail-header {
     @include span-columns(12 of 12);
-    background-color: $background-grey;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+  background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+  border-top:1px solid #fafafa;
+  border-bottom:1px solid #e0e0e0;
     margin:0px;
     padding: .8em;
     /* vertical-align: bottom;*/

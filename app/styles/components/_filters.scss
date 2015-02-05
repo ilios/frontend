@@ -4,7 +4,16 @@
   $filter-font-size: $base-font-size * 0.75;
 
   @include clearfix;
-  border: 1px solid $filter-tools-border-color;
+
+  border-bottom:#ccc 1px solid;
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  box-shadow: 0 1px 1px #ececec;
+  -moz-box-shadow: 0 1px 1px #ececec;
+  -webkit-box-shadow: 0 1px 1px #ececec;
+  
+  // border: 1px solid $filter-tools-border-color;
   background: $filter-tools-background;
   padding: $gutter / 2;
   border-radius: $base-border-radius;
