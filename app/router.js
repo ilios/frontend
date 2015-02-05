@@ -49,6 +49,7 @@ Router.map(function() {
   this.route('courses');
   this.route('course', { path: 'course/:course_id'});
 
+  this.route("testmodels");
 });
 
 export default Router;

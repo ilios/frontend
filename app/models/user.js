@@ -11,7 +11,34 @@ var User = DS.Model.extend({
   ucUid:  DS.attr('string'),
   otherId:  DS.attr('string'),
   offerings: DS.hasMany('offering', {async: true}),
-  schools: DS.hasMany('school', {async: true}),
+  learningMaterials: DS.hasMany('learning-material', {async: true}),
+  publishEvents: DS.hasMany('publish-event', {async: true}),
+  reports: DS.hasMany('report', {async: true}),
+  directedCourses: DS.hasMany('course', {async: true}),
+  learnerGroups: DS.hasMany('learner-group', {
+      async: true,
+      inverse: 'users'
+    }
+  ),
+  instructorUserGroups: DS.hasMany('learner-group', {
+      async: true,
+      inverse: 'instructorUsers'
+    }
+  ),
+  instructorGroups: DS.hasMany('instructor-group', {
+      async: true,
+      inverse: 'users'
+    }
+  ),
+  instructorIlmSessions: DS.hasMany('ilm-session', {async: true}),
+  learnerIlmSessions: DS.hasMany('ilm-session', {async: true}),
+  programYears: DS.hasMany('program-year', {async: true}),
+  instructionHours: DS.hasMany('instruction-hours', {async: true}),
+  alerts: DS.hasMany('alert', {async: true}),
+  roles: DS.hasMany('user-role', {async: true}),
+  schools: function(){
+    return [this.get('primarySchool')];
+  }.property('primarySchool'),
   primarySchool: DS.belongsTo('school', {async: true}),
   fullName: function() {
       return this.get('firstName') + ' ' + this.get('lastName');
