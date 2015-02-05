@@ -50,6 +50,8 @@ Router.map(function() {
   this.route('course', { path: 'course/:course_id'});
   this.route("courseobjective", {path: 'course/:course_id/objective/:objective_id'});
   this.route("loading");
+
+  this.route("testmodels");
 });
 
 export default Router;

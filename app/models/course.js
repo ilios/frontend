@@ -11,20 +11,21 @@ var Course = DS.Model.extend({
     deleted: DS.attr('boolean'),
     locked: DS.attr('boolean'),
     archived: DS.attr('boolean'),
-    publishedAsTBD: DS.attr('boolean'),
+    publishedAsTbd: DS.attr('boolean'),
     sessions: DS.hasMany('session', {async: true}),
     owningSchool: DS.belongsTo('school', {async: true}),
-    cohorts: DS.hasMany('cohort', {async: true}),
-    directors: DS.hasMany('users', {async: true}),
-    objectives: DS.hasMany('objective', {async: true}),
-    disciplines: DS.hasMany('discipline', {async: true}),
     isPublished: false,
     isNotPublished: Ember.computed.not('isPublished'),
-    learningMaterials: DS.hasMany('learning-material', {async: true}),
     status: function(){
       return 'implement status';
     },
+    publishEvent: DS.belongsTo('publish-event', {async: true}),
+    directors: DS.hasMany('user', {async: true}),
+    cohorts: DS.hasMany('cohort', {async: true}),
+    disciplines: DS.hasMany('discipline', {async: true}),
+    objectives: DS.hasMany('objective', {async: true}),
     meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
+    learningMaterials: DS.hasMany('course-learning-material', {async: true}),
     relatedUsers: function(){
       return Ember.A();
     }.property(),
