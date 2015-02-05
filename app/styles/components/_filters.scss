@@ -8,6 +8,10 @@
   background: $filter-tools-background;
   padding: $gutter / 2;
   border-radius: $base-border-radius;
+  margin-bottom: -.75em;
+  vertical-align: middle;
+  display: inline-block;
+  width: 100%;
 
   .filter {
     font-size: $filter-font-size;
