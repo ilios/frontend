@@ -6,6 +6,8 @@ export default DS.Model.extend({
   school: DS.belongsTo('school', {async: true}),
   users: DS.hasMany('user', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
+  learnerGroups: DS.hasMany('learner-group', {async: true}),
+  ilmSessions: DS.hasMany('ilm-session', {async: true}),
   courses: [],
   coursesObserver: function(){
     var self = this;

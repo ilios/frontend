@@ -13,6 +13,7 @@ export default DS.Model.extend({
   objectives: DS.hasMany('objective', {async: true}),
   stewardingSchools: DS.hasMany('school', {async: true}),
   cohort: DS.belongsTo('cohort', {async: true}),
+  publishEvent: DS.belongsTo('publish-event', {async: true}),
   academicYear: function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
   }.property('startYear'),

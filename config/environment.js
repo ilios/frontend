@@ -37,6 +37,14 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.adapterHost = 'http://localhost:4200';
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+  }
+
+  if (environment === 'tryapi') {
+    ENV.adapterHost = 'http://localhost:8400';
+    ENV.adapterNamespace = 'app_dev.php/api/v1';
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400";
   }
 
   if (environment === 'tryapi') {
@@ -57,6 +65,9 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
+
   }
 
   if (environment === 'production') {
