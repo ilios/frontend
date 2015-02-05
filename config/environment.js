@@ -37,6 +37,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.adapterHost = 'http://localhost:4200';
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
   }
 
   if (environment === 'tryapi') {
@@ -57,6 +58,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
   }
 
   if (environment === 'production') {
