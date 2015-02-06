@@ -43,7 +43,7 @@ var User = DS.Model.extend({
       defer.resolve([school]);
     });
     return defer.promise;
-   }.property('primarySchool'),
+  }.property('primarySchool'),
   fullName: function() {
       return this.get('firstName') + ' ' + this.get('lastName');
   }.property('firstName', 'lastName'),

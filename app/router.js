@@ -45,6 +45,9 @@ Router.map(function() {
   this.route("loading");
 
   this.route("testmodels");
+  this.route("learnergroups");
+  this.route("learnergroup", { path: 'learnergroup/:learner_group_id'});
+  this.route("instructorgroups");
 });
 
 export default Router;
