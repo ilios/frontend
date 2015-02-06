@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-//[userRole,status,owningUser,,text,type]
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
@@ -8,6 +8,12 @@ export default DS.Model.extend({
   text: DS.attr('string'),
   type: DS.attr('string'),
   token: DS.attr('string'),
+  path: DS.attr('string'),
+  copyrightPermission: DS.attr('boolean'),
+  copyrightRationale: DS.attr('string'),
+  filename: DS.attr('string'),
+  mimetype: DS.attr('string'),
+  filesize: DS.attr('number'),
   webLink: DS.attr('string'),
   userRole: DS.belongsTo('learning-material-user-role', {async: true}),
   status: DS.belongsTo('learning-material-status', {async: true}),

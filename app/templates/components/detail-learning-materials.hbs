@@ -19,11 +19,11 @@
       <tbody>
         {{#each lm in materials}}
           <tr>
-            <td colspan=2>{{fa-icon 'external-link-square'}} {{lm.title}}</td>
-            <td>{{lm.type}}</td>
-            <td>{{lm.owner}}</td>
+            <td colspan=2>{{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}</td>
+            <td>{{lm.learningMaterial.type}}</td>
+            <td>{{lm.learningMaterial.originalAuthor}}</td>
             <td>{{lm.required}}</td>
-            <td>{{lm.notes}}</td>
+            <td>{{lm.learningMaterial.notes}}</td>
           </t>
         {{/each}}
       </tbody>
