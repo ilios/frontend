@@ -13,12 +13,26 @@ defaultCallbacks.getSingle = function(name, req, res, fixtures){
 defaultCallbacks.getGroup = function(name, req, res, fixtures){
   var responseObj = {};
   var response = [];
-  if(req.query !== undefined && req.query.filters !== undefined && req.query.filters.id !== undefined){
-    var ids = req.query.filters.id;
-    for(var i = 0; i< ids.length; i++){
-      if(ids[i] in fixtures){
-        response.push(fixtures[ids[i]]);
+  var filterByProperty = function(obj){
+    if(filter instanceof Array){
+      if(obj[prop] === undefined){
+        return false;
       }
+      return filter.indexOf(obj[prop].toString()) != -1;
+    } else {
+      if(obj[prop] === undefined){
+        return filter == 'null';
+      }
+      return obj[prop] == filter;
+    }
+  };
+  if(req.query !== undefined && req.query.filters !== undefined){
+    for(var id in fixtures){
+      response.push(fixtures[id]);
+    }
+    for(var prop in req.query.filters){
+      var filter = req.query.filters[prop];
+      response = response.filter(filterByProperty);
     }
   } else {
     response = fixtures;
