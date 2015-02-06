@@ -47,13 +47,6 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['connect-src'] += " localhost:8400";
   }
 
-  if (environment === 'tryapi') {
-    ENV.adapterHost = 'http://localhost:8400';
-    ENV.adapterNamespace = 'app_dev.php/api/v1';
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
-    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400";
-  }
-
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
