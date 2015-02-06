@@ -25,9 +25,7 @@ export default DS.Model.extend({
     return new Ember.RSVP.Promise(function(resolve) {
       self.get('programYear').then(function(programYear){
         if(programYear){
-          console.log('callback', programYear.get('objectives'));
           programYear.get('objectives').then(function(objectives){
-            console.log('objectives', objectives.length);
             resolve(objectives);
           });
         }

@@ -2,32 +2,44 @@
   <div class="filter-tools">
     <div id='mycoursesfilter' class="filter">
       <label>
-        {{input type='checkbox' checked=mycourses}}
+        {{input type='checkbox' checked=userCoursesOnly}}
         {{t 'courses.myCourses'}}
       </label>
     </div>
     <div id='schoolsfilter' class="filter">
-      {{#each school in proxiedSchools}}
-        <label>
-          {{input type='checkbox' checked=school.checked}}
-          {{school.title}}
-        </label>
-      {{/each}}
+      {{#if hasMoreThanOneSchool}}
+        {{view "select"
+          content=schools
+          selection=selectedSchool
+          optionLabelPath="content.title"
+        }}
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
     </div>
     <div id='yearsfilter' class="filter">
-      {{view 'select'
-      optionLabelPath="content.academicYearTitle"
-      optionValuePath="content.id"
-      content=educationalYears
-      value=year
-    }}
+      {{view "select"
+        content=years
+        selection=selectedYear
+        optionLabelPath="content.title"
+      }}
     </div>
 
     <div id='titlefilter' class="filter">
-      {{input type='text' value=filter placeholder=placeholderValue}}
+      {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
-  {{ilios-course-list
-    courses=filteredCourses
-  }}
+
+  <section class='grouplist'>
+    <div class='grouplist-list'>
+      {{ilios-course-list
+        courses=filteredCourses
+        edit='editCourse'
+        remove='removeCourse'
+      }}
+    </div>
+    <div class='grouplist-actions'>
+      <button {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
+    </div>
+  </section>
 </section>

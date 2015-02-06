@@ -37,8 +37,12 @@ var User = DS.Model.extend({
   alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
   schools: function(){
-    return [this.get('primarySchool')];
-  }.property('primarySchool'),
+    var defer = Ember.RSVP.defer();
+    this.get('primarySchool').then(function(school){
+      defer.resolve([school]);
+    });
+    return defer.promise;
+   }.property('primarySchool'),
   primarySchool: DS.belongsTo('school', {async: true}),
   fullName: function() {
       return this.get('firstName') + ' ' + this.get('lastName');

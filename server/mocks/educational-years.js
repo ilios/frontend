@@ -15,6 +15,6 @@ module.exports = function(app) {
   ];
 
   var createRouter = require('../helpers/createrouter.js');
-  var router = createRouter('educationalYear', fixtures);
+  var router = createRouter('educationalYears', fixtures);
   app.use('/api/educationalYears', router);
 };

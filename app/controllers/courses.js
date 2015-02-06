@@ -1,75 +1,67 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
-  queryParams: ['schools', 'year', 'mycourses', 'filter'],
+  queryParams: {
+    schoolId: 'school',
+    yearTitle: 'year',
+    titleFilter: 'filter',
+    userCoursesOnly: 'mycourses'
+  },
   placeholderValueTranslation: 'courses.titleFilterPlaceholder',
-  year: null,
-  mycourses: false,
-  filter: null,
-  //initially set the primary school as checked
-  schools: Ember.computed.collect('currentUser.primarySchool.id'),
+  newCourseTitleTranslation: 'courses.newCourseTitle',
+  schoolId: null,
+  yearTitle: null,
+  titleFilter: null,
+  years: [],
+  schools: [],
 
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
   watchFilter: function(){
     Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('filter'),
+  }.observes('titleFilter'),
   setFilter: function(){
-    this.set('debouncedFilter', this.get('filter'));
+    this.set('debouncedFilter', this.get('titleFilter'));
   },
-
-  sortAscending: true,
-  sortProperties: ['title'],
-
-  proxiedSchools: function(){
-    var checked = this.get('schools');
-    if(this.get('availableSchools') === undefined){
-      return [];
-    }
-    return this.get('availableSchools').map(function(school){
-      return Ember.ObjectProxy.create({
-        content: school,
-        checked: checked.contains(school.get('id')),
-      });
-    });
-  }.property('availableSchools.@each'),
-
-  watchProxySchools: function(){
-    var checked = this.get('proxiedSchools').filterBy('checked').mapBy('content.id');
-    this.set('schools', checked);
-  }.observes('proxiedSchools.@each.checked'),
-
+  hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
   filteredCourses: function(){
-    var self = this;
-    var filteredCourses = this.get('arrangedContent');
-    if(filteredCourses == null || filteredCourses.length === 0){
-      return Ember.A();
+    var title = this.get('debouncedFilter');
+    if(title == null){
+      return this.get('content');
     }
-    var titleFilter = this.get('debouncedFilter');
-    var checkedSchools = this.get('schools');
-    var mycoursesFilter = this.get('mycourses');
-    var educationalYearFilter = null;
-    if(this.get('year') != null){
-      educationalYearFilter = this.get('educationalYears').findBy('id', this.get('year')).get('title');
-    }
-    var exp = new RegExp(titleFilter, 'gi');
-    filteredCourses = filteredCourses.filter(function(course) {
-      if(titleFilter != null && titleFilter.length > 0 && !course.get('title').match(exp)){
-        return false;
-      }
-      if(!checkedSchools.contains(course.get('owningSchool.id'))){
-        return false;
-      }
-      if(educationalYearFilter != null && course.get('year') !== educationalYearFilter){
-        return false;
-      }
-      if(mycoursesFilter && !course.get('relatedUsers').contains(self.get('currentUser'))){
-        return false;
-      }
-
-      return true;
+    var exp = new RegExp(title, 'gi');
+    return this.get('content').filter(function(course) {
+      return course.get('title').match(exp);
     });
+  }.property('debouncedFilter', 'content.@each'),
+  watchSelectedSchool: function(){
+    this.set('schoolId', this.get('selectedSchool.id'));
+  }.observes('selectedSchool'),
+  watchSelectedCohort: function(){
+    this.set('yearTitle', this.get('selectedYear.title'));
+  }.observes('selectedYear'),
+  actions: {
+    editCourse: function(course){
+      this.transitionToRoute('course', course);
+    },
+    removeCourse: function(course){
+      course.deleteRecord();
+      course.save().then(function(){
+        this.get('content').removeObject(course);
+      });
+    },
+    addCourse: function(){
+      var self = this;
+      var course = this.store.createRecord('course', {
+        title: this.get('newCourseTitle'),
+        owningSchool: this.get('selectedSchool'),
+        year: this.get('selectedYear.title')
+      });
+      course.save().then(function(){
+        self.get('content').pushObject(course);
+        self.transitionToRoute('course', course);
+      });
 
-    return filteredCourses;
-  }.property('arrangedContent.@each', 'mycourses', 'debouncedFilter', 'schools.@each', 'year'),
+    }
+  },
 });
