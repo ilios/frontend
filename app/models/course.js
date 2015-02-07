@@ -17,8 +17,12 @@ var Course = DS.Model.extend({
     isPublished: false,
     isNotPublished: Ember.computed.not('isPublished'),
     status: function(){
-      return 'implement status';
-    },
+      if(this.get('publishEvent') != null){
+        return Ember.I18n.t('general.published');
+      } else {
+        return Ember.I18n.t('general.notPublished');
+      }
+    }.property('publishEvent'),
     publishEvent: DS.belongsTo('publish-event', {async: true}),
     directors: DS.hasMany('user', {async: true}),
     cohorts: DS.hasMany('cohort', {async: true}),

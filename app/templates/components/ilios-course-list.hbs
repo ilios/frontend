@@ -24,7 +24,7 @@
       <td colspan=2 {{action 'edit' course}}>{{course.level}}</td>
       <td colspan=2 {{action 'edit' course}}>{{moment course.startDate 'MM/DD/YY'}}</td>
       <td colspan=2 {{action 'edit' course}}>{{moment course.endDate 'MM/DD/YY'}}</td>
-      <td {{action 'edit' course}}>{{status}}</td>
+      <td {{action 'edit' course}}>{{course.status}}</td>
       <td>
         {{#action-menu}}
           <li {{action 'edit' group}}>{{t 'general.edit'}}</li>
