@@ -20,6 +20,7 @@ var Session = DS.Model.extend({
     sessionLearningMaterials: DS.hasMany('session-learning-material', {async: true}),
     instructionHours: DS.hasMany('instruction-hour', {async: true}),
     sessionDescription: DS.belongsTo('session-description', {async: true}),
+    ilmSessionFacet: DS.belongsTo('ilm-session', {async: true}),
 
 });
 

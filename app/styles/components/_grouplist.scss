@@ -1,0 +1,25 @@
+.grouplist {
+  @include span-columns(12 of 12);
+  border: 1px solid black;
+  h2 {
+    width: 100%;
+    font-size: $base-font-size;
+    text-align: left;
+    background-color: $background-grey;
+    padding: $base-font-size;
+  }
+  .grouplist-list {
+    @include span-columns(10 of 12);
+    @include pad();
+    tbody tr {
+      cursor: pointer;
+      &:hover {
+        background-color: $background-grey;
+      }
+    }
+  }
+  .grouplist-actions {
+    @include span-columns(2 of 12);
+    @include pad();
+  }
+}

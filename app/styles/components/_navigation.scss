@@ -25,6 +25,9 @@ $sliding-menu-color-hover: #fff;
     border-color: $ilios-orange;
     border-style: solid;
     border-width: 1px 1px 0 1px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 2px 1px 3px rgba(0,0,0,.19), inset 1px 0 2px rgba(0,0,0,.34);
     @include transform(rotate(90deg));
     @include position(fixed, 105px 0px 0px -45px);
     @include transition(all .25s linear);
@@ -45,6 +48,7 @@ $sliding-menu-color-hover: #fff;
     @include transition(all .25s linear);
     background: $sliding-menu-background;
     z-index: 999999;
+    box-shadow: 2px 1px 3px rgba(0,0,0,.19), inset 1px 0 2px rgba(0,0,0,.34);
     -webkit-overflow-scrolling: touch;
     border-right: 1px solid $header-grey;
     li {
@@ -80,5 +84,3 @@ $sliding-menu-color-hover: #fff;
     }
   }
 }
-
-// Based on code by Diego Eis

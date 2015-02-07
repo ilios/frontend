@@ -1,13 +1,43 @@
-<section id='sessions' class='fullwidth'>
-  {{#if sessions}}
-    {{input type='text' value=filter placeholder='Filter by title'}}
-    {{#each session in filteredContent}}
-      {{ilios-session session=session}}
-    {{/each}}
-  {{else}}
-    <p>{{t 'courses.noSessions'}}</p>
-  {{/if}}
-</section>
-<section class='new fullwidth'>
-  <button {{action 'createNewSessions'}}>{{t 'courses.newSession'}}</button>
+<section id='sessions' class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.sessions'}} ({{sessions.length}})
+  </div>
+  <div class='detail-actions'>
+    <button {{action 'createNewSessions'}}>{{t 'courses.newSession'}}</button>
+  </div>
+  <div class='detail-content'>
+    {{#if sessions}}
+      {{input type='text' value=filter placeholder='Filter by title'}}
+      <table>
+        <thead>
+          <tr>
+            <th colspan=2>{{t 'general.title'}}</th>
+            <th>{{t 'general.type'}}</th>
+            <th>{{t 'general.groups'}}</th>
+            <th>{{t 'courses.firstOffering'}}</th>
+            <th>{{t 'general.offerings'}}</th>
+            <th>{{t 'general.status'}}</th>
+            <th>{{t 'general.actions'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each session in filteredContent}}
+            <td colspan=2>{{session.title}}</td>
+            <td>{{session.type}}</td>
+            <td>{{session.groups.length}}</td>
+            <td>{{session.firstOfferingDate}}</td>
+            <td>{{session.offerings.length}}</td>
+            <td>{{session.status}}</td>
+            <td>
+              {{#action-menu}}
+                <li {{action 'edit'}}>Edit</li>
+              {{/action-menu}}
+            </td>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <p>{{t 'courses.noSessions'}}</p>
+    {{/if}}
+  </div>
 </section>

@@ -1,0 +1,42 @@
+.search-box {
+  @include clearfix;
+  @include position(relative);
+  display: block;
+  height: 1.6em;
+  margin-bottom: 10px;
+
+  input[type=search] {
+    @include appearance(none);
+    @include margin(0);
+    font-style: italic;
+    border-radius: $base-border-radius;
+    width: auto;
+    height: 1.6em;
+    @include padding(0 0 0 25px);
+  }
+
+  button[type=submit] {
+    @include position(absolute, 0);
+    background-color: transparent;
+    color: $base-button-color;
+
+    img {
+      opacity: .7;
+    }
+  }
+
+  button.close {
+    @include position(absolute, 0 0 0 'auto');
+    outline: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 5px 10px;
+    margin-right: -25px;
+    background-color: transparent;
+    color: $base-font-color;
+    img {
+      height: 12px;
+      opacity: .7;
+    }
+  }
+}
