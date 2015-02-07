@@ -52,7 +52,7 @@ export default Ember.Route.extend({
     this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
   },
   queryParams: {
-    title: {
+    filter: {
       replace: true
     },
     school: {

@@ -1,7 +1,6 @@
 .add {
   color: $ilios-add-color;
 }
-
 .remove {
   color: $ilios-remove-color;
 }
@@ -28,12 +27,10 @@
   text-align: center;
   padding: 1em;
 }
-
 ul.inline, ul.inline li {
   display: inline;
   margin-right: 2em;
 }
-
 button {
   &.add, &.remove {
     color: white;
@@ -54,34 +51,25 @@ button {
     background-color: $ilios-green;
   }
 }
-
 h1 {
   font-weight: normal;
 }
-
-h2
-{ font-size: $base-font-size * 1.5;
+h2 {
+  font-size: $base-font-size * 1.5;
   font-weight: normal;
-
- 
-  
 }
-  
-  h4 {
-    font-weight: normal;
-    margin-left: 10px;
-     color: #666;
-     font-size: $base-font-size * 1.15;
-  }
-
-  .textarea {
-    display: inline;
-  }
-
+h4 {
+  font-weight: normal;
+  margin-left: 10px;
+   color: #666;
+   font-size: $base-font-size * 1.15;
+}
+.textarea {
+  display: inline;
+}
 #site-container {
-margin: 0 auto;
-padding-left: 30px;
-
+  margin: 0 auto;
+  padding-left: 30px;
 }
 .main-border {
   border: 2px solid $background-grey;
