@@ -1,19 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function(params){
-    var promises = {
-      model: this.store.find('course', params.course_id),
-      availableTopics: this.store.find('discipline'),
-      programs: this.store.find('program')
-    };
-
-    return Ember.RSVP.hash(promises);
-  },
-  setupController: function(controller, hash){
-    controller.set('model', hash.model);
-    controller.set('availableTopics', hash.availableTopics);
-    controller.set('programs', hash.programs);
+  setupController: function(controller, model){
+    this._super(controller, model);
+    this.store.find('discipline').then(function(disciplines){
+      controller.set('availableTopics', disciplines);
+    });
+    this.store.find('program').then(function(programs){
+      controller.set('programs', programs);
+    });
     this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
   }
 });
