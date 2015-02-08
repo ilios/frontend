@@ -19,7 +19,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     });
 
     return topics.sortBy('title');
-  }.property('topics', 'filter'),
+  }.property('topics.@each', 'filter', 'availableTopics.@each'),
   actions: {
     filter: function(filterTerm){
       this.set('filter', filterTerm);
