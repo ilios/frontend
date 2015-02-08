@@ -4,11 +4,11 @@
       <th colspan=3>{{t 'courses.courseTitle'}}</th>
       <th colspan=2>{{t 'general.school'}}</th>
       <th colspan=2>{{t 'general.year'}}</th>
-      <th colspan=2>{{t 'courses.level'}}</th>
+      <th colspan=1>{{t 'courses.level'}}</th>
       <th colspan=2>{{t 'courses.startDate'}}</th>
       <th colspan=2>{{t 'courses.endDate'}}</th>
-      <th colspan=1>{{t 'general.status'}}</th>
-      <th colspan=1>{{t 'general.actions'}}</th>
+      <th colspan=2>{{t 'general.status'}}</th>
+      <th colspan=2>{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
@@ -21,11 +21,11 @@
       </td>
       <td colspan=2 {{action 'edit' course}}>{{course.owningSchool.title}}</td>
       <td colspan=2 {{action 'edit' course}}>{{course.academicYear}}</td>
-      <td colspan=2 {{action 'edit' course}}>{{course.level}}</td>
+      <td colspan=1 {{action 'edit' course}}>{{course.level}}</td>
       <td colspan=2 {{action 'edit' course}}>{{moment course.startDate 'MM/DD/YY'}}</td>
       <td colspan=2 {{action 'edit' course}}>{{moment course.endDate 'MM/DD/YY'}}</td>
-      <td {{action 'edit' course}}>{{course.status}}</td>
-      <td>
+      <td colspan=2 {{action 'edit' course}}>{{course.status}}</td>
+      <td colspan=2>
         {{#action-menu}}
           <li {{action 'edit' group}}>{{t 'general.edit'}}</li>
           <li {{action 'remove' group}}>{{t 'general.remove'}}</li>
