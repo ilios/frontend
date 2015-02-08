@@ -29,16 +29,17 @@ defaultCallbacks.getGroup = function(name, req, res, fixtures){
       return obj[prop] == filter;
     }
   };
+  for(var id in fixtures){
+    response.push(fixtures[id]);
+  }
   if(req.query !== undefined && req.query.filters !== undefined){
-    for(var id in fixtures){
-      response.push(fixtures[id]);
-    }
     for(var prop in req.query.filters){
       var filter = req.query.filters[prop];
       response = response.filter(filterByProperty);
     }
-  } else {
-    response = fixtures;
+  }
+  if(req.query !== undefined && req.query.limit !== undefined){
+    response = response.slice(0, req.query.limit);
   }
   responseObj[name] = response;
   res.send(responseObj);
@@ -69,6 +70,7 @@ defaultCallbacks.put = function(name, req, res, fixtures){
 
 
 module.exports = function(name, fixtures, callbacks) {
+  var pluralize = require('pluralize');
   if(typeof callbacks == 'undefined'){
     callbacks = {};
   }
@@ -80,9 +82,10 @@ module.exports = function(name, fixtures, callbacks) {
   };
   var express = require('express');
   var router = express.Router();
+  var singularName = pluralize(name, 1);
   router.get('/:id', function(req, res) {
     var callback = getCallback('getSingle');
-    callback(name, req, res, fixtures);
+    callback(singularName, req, res, fixtures);
   });
   router.get('/', function(req, res) {
     var callback = getCallback('getGroup');
@@ -90,11 +93,11 @@ module.exports = function(name, fixtures, callbacks) {
   });
   router.post('/', function(req, res) {
     var callback = getCallback('post');
-    callback(name, req, res, fixtures);
+    callback(singularName, req, res, fixtures);
   });
   router.put('/:id', function(req, res) {
     var callback = getCallback('put');
-    callback(name, req, res, fixtures);
+    callback(singularName, req, res, fixtures);
   });
 
   return router;
