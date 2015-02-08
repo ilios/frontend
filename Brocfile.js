@@ -23,6 +23,8 @@ app.import('bower_components/ember-i18n/lib/i18n.js');
 app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
 app.import("bower_components/ember-breadcrumbs/dist/ember-breadcrumbs.js");
 
+app.import("bower_components/d3/d3.min.js");
+
 app.import('bower_components/pikaday/pikaday.js');
 app.import('bower_components/pikaday/css/pikaday.css');
 module.exports = app.toTree();
