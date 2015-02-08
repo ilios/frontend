@@ -17,6 +17,7 @@ module.exports = function(app) {
     'curriculumInventorySequences',
     'departments',
     'disciplines',
+    'educationalYears',
     'ilmSessions',
     'instructionHours',
     'instructorGroups',

@@ -42,6 +42,7 @@
     "liquid-fire": "^0.15.2",
     "moment": "^2.8.4",
     "morgan": "^1.5.0",
+    "pluralize": "^1.1.2",
     "precommit-hook": "^1.0.7"
   },
   "dependencies": {
