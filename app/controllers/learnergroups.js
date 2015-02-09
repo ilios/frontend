@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend(Ember.I18n.TranslateableProperties, {
   queryParams: {
     schoolId: 'school',
+    programId: 'program',
     cohortId: 'cohort',
     titleFilter: 'filter'
   },
@@ -10,9 +11,15 @@ export default Ember.Controller.extend(Ember.I18n.TranslateableProperties, {
   newGroupTitleTranslation: 'learnerGroups.newGroupTitle',
   schoolId: null,
   cohortId: null,
+  programId: null,
   titleFilter: null,
   cohorts: [],
+  sortBy: ['title'],
+  sortedCohorts: Ember.computed.sort('cohorts', 'sortBy'),
+  sortedPrograms: Ember.computed.sort('programs', 'sortBy'),
+  sortedSchools: Ember.computed.sort('schools', 'sortBy'),
   hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
+  hasMoreThanOneProgram: Ember.computed.gt('programs.length', 1),
   filteredGroups: function(){
     var title = this.get('titleFilter');
     if(title == null){
@@ -26,13 +33,18 @@ export default Ember.Controller.extend(Ember.I18n.TranslateableProperties, {
   watchSelectedSchool: function(){
     this.set('schoolId', this.get('selectedSchool.id'));
   }.observes('selectedSchool'),
+  watchSelectedProgram: function(){
+    this.set('programId', this.get('selectedProgram.id'));
+  }.observes('selectedProgram'),
   watchSelectedCohort: function(){
     this.set('cohortId', this.get('selectedCohort.id'));
   }.observes('selectedCohort'),
   title: function(){
     var str = this.get('selectedSchool.title') +
-      ' - ' + this.get('selectedCohort.displayTitle');
-
+      ' - ' + this.get('selectedProgram.title');
+    if(this.get('selectedCohort')){
+      str += ' - ' + this.get('selectedCohort.displayTitle');
+    }
     return str;
   }.property('selectedSchool,title', 'selectedCohort,displayTitle'),
   actions: {

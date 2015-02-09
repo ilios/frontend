@@ -2,18 +2,29 @@
   <div class="filter-tools">
     <div id='schoolsfilter' class="filter">
       {{#if hasMoreThanOneSchool}}
-      {{view "select"
-        content=schools
-        selection=selectedSchool
-        optionLabelPath="content.title"
-      }}
+        {{view "select"
+          content=sortedSchools
+          selection=selectedSchool
+          optionLabelPath="content.title"
+        }}
       {{else}}
         {{selectedSchool.title}}
       {{/if}}
     </div>
+    <div id='programsFilter' class="filter">
+      {{#if hasMoreThanOneProgram}}
+        {{view "select"
+          content=sortedPrograms
+          selection=selectedProgram
+          optionLabelPath="content.title"
+        }}
+      {{else}}
+        {{selectedProgram.title}}
+      {{/if}}
+    </div>
     <div id='cohortsfilter' class="filter">
       {{view "select"
-        content=cohorts
+        content=sortedCohorts
         selection=selectedCohort
         optionLabelPath="content.displayTitle"
       }}
@@ -28,8 +39,10 @@
     <div class='grouplist-list'>
       {{learnergroup-list groups=filteredGroups edit='editGroup' remove='removeGroup'}}
     </div>
-    <div class='grouplist-actions'>
-      <button {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
-    </div>
+    {{#if currenCohort}}
+      <div class='grouplist-actions'>
+        <button {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
+      </div>
+    {{/if}}
   </section>
 </section>
