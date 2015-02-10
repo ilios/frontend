@@ -9,6 +9,7 @@ var general = {
   'undo': 'Undo',
   'home': 'Home',
   'add': 'Add',
+  'addNew': 'Add New',
   'published': 'Published',
   'notPublished': 'Not Published',
   'scheduled': 'Scheduled',
@@ -37,7 +38,6 @@ var general = {
   'overview': 'Overview',
   'start': 'Start',
   'end': 'End',
-  'addNew': 'Add New',
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
@@ -146,20 +146,11 @@ var instructorGroups = {
 translations.instructorGroups = instructorGroups;
 
 var learnerGroups = {
-  'learners': 'Learners',
-  'new': 'New Learner Group',
-  'learnerName': 'Learner Name',
-  'addLearner': 'Add Learner',
-  'learnerGroups': 'Learner Groups',
-  'list': 'All Groups',
-  'confirmGroupRemovalTitle': 'Remove Learner Group',
-  'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} learner group?',
-  'relatedCourses': 'Related Courses',
+  'groupName': 'Group Name',
   'subGroups': 'Sub Groups',
-  'noGroups': 'There are no learner groups in this cohort.',
-  'selectCohort': 'Select Cohort',
-  'selectSchool': 'Select School',
-  'currentSchool': 'Current School',
+  'learners': 'Learners',
+  'titleFilterPlaceholder': 'Filter by group title',
+  'newGroupTitle': 'New Learner Group'
 };
 translations.learnerGroups = learnerGroups;
 

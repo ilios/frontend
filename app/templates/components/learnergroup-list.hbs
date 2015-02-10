@@ -1,0 +1,25 @@
+<table>
+  <thead>
+    <tr>
+      <th colspan=3>{{t 'learnerGroups.groupName'}}</th>
+      <th colspan=2>{{t 'learnerGroups.learners'}}</th>
+      <th colspan=2>{{t 'learnerGroups.subGroups'}}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each group in sortedGroups}}
+      <tr>
+        <td colspan=3 {{action 'edit' group}}>{{group.title}}</td>
+        <td colspan=2 {{action 'edit' group}}>{{group.users.length}}</td>
+        <td colspan=2 {{action 'edit' group}}>{{group.children.length}}</td>
+        <td>
+          {{#action-menu}}
+            <li {{action 'edit' group}}>{{t 'general.edit'}}</li>
+            <li {{action 'remove' group}}>{{t 'general.remove'}}</li>
+          {{/action-menu}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

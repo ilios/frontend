@@ -1,2 +1,48 @@
-{{bread-crumbs}}
-{{outlet}}
+<section id='learnergroups' class='fullwidth main-border'>
+  <div class="filter-tools">
+    <div id='schoolsfilter' class="filter">
+      {{#if hasMoreThanOneSchool}}
+        {{view "select"
+          content=sortedSchools
+          selection=selectedSchool
+          optionLabelPath="content.title"
+        }}
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
+    </div>
+    <div id='programsFilter' class="filter">
+      {{#if hasMoreThanOneProgram}}
+        {{view "select"
+          content=sortedPrograms
+          selection=selectedProgram
+          optionLabelPath="content.title"
+        }}
+      {{else}}
+        {{selectedProgram.title}}
+      {{/if}}
+    </div>
+    <div id='cohortsfilter' class="filter">
+      {{view "select"
+        content=sortedCohorts
+        selection=selectedCohort
+        optionLabelPath="content.displayTitle"
+      }}
+    </div>
+
+    <div id='titlefilter' class="filter">
+      {{input type='text' value=titleFilter placeholder=placeholderValue}}
+    </div>
+  </div>
+  <section class='grouplist'>
+    <h2>{{title}}</h2>
+    <div class='grouplist-list'>
+      {{learnergroup-list groups=filteredGroups edit='editGroup' remove='removeGroup'}}
+    </div>
+    {{#if currenCohort}}
+      <div class='grouplist-actions'>
+        <button {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
+      </div>
+    {{/if}}
+  </section>
+</section>
