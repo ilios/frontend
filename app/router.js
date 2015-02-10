@@ -44,6 +44,8 @@ Router.map(function() {
   this.route("testmodels");
   this.route("loading");
 
+  this.route("visualize");
+
   this.route("testmodels");
   this.route("learnergroups");
   this.route("learnergroup", { path: 'learnergroup/:learner_group_id'});
