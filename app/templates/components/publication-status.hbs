@@ -1,0 +1,9 @@
+{{#if isPublished}}
+  {{fa-icon 'star'}} {{t 'general.published'}}
+{{else}}
+  {{#if isScheduled}}
+    {{fa-icon 'clock-o'}} {{t 'general.scheduled'}}
+  {{else}}
+    {{fa-icon 'star-half-full'}} {{t 'general.notPublished'}}
+  {{/if}}
+{{/if}}

@@ -3,12 +3,10 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('course-header', 'CourseHeaderComponent', {
+moduleForComponent('publication-status', 'PublicationStatusComponent', {
   // specify the other units that are required for this test
   needs: [
-  'component:editable-text',
-  'component:publication-status',
-  'helper:fa-icon'
+    'helper:fa-icon'
   ]
 });
 
