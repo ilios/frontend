@@ -24,7 +24,7 @@
         <div class="search-bar">
           <div class="search-and-submit">
             {{input action="searchMeshDescriptors" type="search" value=searchTerm placeholder="Search mesh terms"}}
-            <button {{translateAttr title="mesh.search"}} {{action 'searchMeshDescriptors'}} type="submit">
+            <button class='search' {{translateAttr title="mesh.search"}} {{action 'searchMeshDescriptors'}} type="submit">
               {{fa-icon 'search'}}
             </button>
           </div>
