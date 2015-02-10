@@ -23,9 +23,9 @@
         <tbody>
           {{#each session in filteredContent}}
             <td colspan=2>{{session.title}}</td>
-            <td>{{session.type}}</td>
-            <td>{{session.groups.length}}</td>
-            <td>{{session.firstOfferingDate}}</td>
+            <td>{{session.sessionType.title}}</td>
+            <td>{{session.learnerGroupCount}}</td>
+            <td>{{moment session.firstOfferingDate 'MM/DD/YYYY h:mma'}}</td>
             <td>{{session.offerings.length}}</td>
             <td>{{session.status}}</td>
             <td>
