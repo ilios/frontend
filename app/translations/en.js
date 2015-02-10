@@ -114,7 +114,8 @@ var navigation = {
   'courses': 'Courses and Sessions',
   'logout': 'Logout',
   'logo': 'Ilios Logo',
-  'menu': 'Ilios Menu'
+  'menu': 'Ilios Menu',
+  'visualizer': 'Visualizer'
 };
 translations.navigation = navigation;
 

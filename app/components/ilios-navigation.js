@@ -28,6 +28,11 @@ export default Ember.Component.extend({
       'route': 'programs',
       'name': Ember.I18n.t('navigation.programs')
     },
+    {
+      'icon': 'area-chart',
+      'route': 'visualize',
+      'name': Ember.I18n.t('navigation.visualizer')
+    },
   ],
   actions: {
     toggleMenuVisibility: function(){
