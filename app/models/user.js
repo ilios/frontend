@@ -67,7 +67,8 @@ var User = DS.Model.extend({
             return events;
         });
       });
-  }.property('offerings.@each', 'offerings.@each.session')
+  }.property('offerings.@each', 'offerings.@each.session'),
+  allRelatedCourses: Ember.computed.alias('directedCourses'),
 });
 
 export default User;

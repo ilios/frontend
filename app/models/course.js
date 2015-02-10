@@ -30,9 +30,6 @@ var Course = DS.Model.extend({
     objectives: DS.hasMany('objective', {async: true}),
     meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
     learningMaterials: DS.hasMany('course-learning-material', {async: true}),
-    relatedUsers: function(){
-      return Ember.A();
-    }.property(),
     academicYear: function(){
       return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
     }.property('year'),

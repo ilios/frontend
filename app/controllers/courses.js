@@ -12,6 +12,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   schoolId: null,
   yearTitle: null,
   titleFilter: null,
+  userCoursesOnly: false,
   years: [],
   schools: [],
 
@@ -26,14 +27,21 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
   filteredCourses: function(){
     var title = this.get('debouncedFilter');
-    if(title == null){
-      return this.get('content');
-    }
+    var filterMyCourses = this.get('userCoursesOnly');
     var exp = new RegExp(title, 'gi');
+    var currentUser = this.get('currentUser');
     return this.get('content').filter(function(course) {
-      return course.get('title').match(exp);
+      if(title == null || course.get('title').match(exp)){
+        if(filterMyCourses === true){
+          return currentUser.get('allRelatedCourses').contains(course);
+        }
+        return true;
+
+      }
+
+      return false;
     });
-  }.property('debouncedFilter', 'content.@each'),
+  }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.allRelatedCourses.@each'),
   watchSelectedSchool: function(){
     this.set('schoolId', this.get('selectedSchool.id'));
   }.observes('selectedSchool'),
