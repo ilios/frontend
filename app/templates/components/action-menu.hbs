@@ -1,8 +1,9 @@
-<div class="action-menu">
-  <div class="container">
-    <p class="button">{{fa-icon 'gear'}}</p>
-    <ul class="menu">
-      {{yield}}
-    </ul>
-  </div>
-</div>
+{{#rl-dropdown-container class="action-menu"}}
+  {{#rl-dropdown-toggle class="button"}}
+    {{fa-icon 'gear'}}
+  {{/rl-dropdown-toggle}}
+
+  {{#rl-dropdown tagName="ul" class="menu" closeOnChildClick="a:link"}}
+    {{yield}}
+  {{/rl-dropdown}}
+{{/rl-dropdown-container}}
