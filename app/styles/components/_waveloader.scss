@@ -31,7 +31,7 @@
       @for $i from 1 through 8 {
         .widget span:nth-child(#{$i}){
             left: $i * 11px;
-            $delay: $i * 2 / 10 + s;
+            $delay: $i * 2 / 10 + 1 + s;
             @include animation-delay($delay);
         }
       }
