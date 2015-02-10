@@ -4,11 +4,10 @@ import {
 } from 'ember-qunit';
 
 moduleForComponent('course-header', 'CourseHeaderComponent', {
-  // specify the other units that are required for this test
   needs: [
-  'component:editable-text',
-  'component:publication-status',
-  'helper:fa-icon'
+    'component:editable-text',
+    'component:publication-status',
+    'helper:fa-icon'
   ]
 });
 

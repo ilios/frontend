@@ -1,7 +1,9 @@
 /* global window */
 import Ember from 'ember';
+import { initialize } from 'ilios/initializers/ember-moment';
+initialize();
 var customHelpers = function() {
-  
+
   var inflector = Ember.Inflector.inflector;
   // inflector.irregular('aamc-pcrs', 'aamc-pcrses');
   inflector.uncountable('aamcPcrs');
