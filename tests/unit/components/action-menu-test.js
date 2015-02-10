@@ -5,7 +5,12 @@ import {
 
 moduleForComponent('action-menu', 'ActionMenuComponent', {
   // specify the other units that are required for this test
-  needs: ['helper:fa-icon']
+  needs: [
+    'helper:fa-icon',
+    'component:rl-dropdown',
+    'component:rl-dropdown-container',
+    'component:rl-dropdown-toggle'
+  ]
 });
 
 test('it renders', function() {
