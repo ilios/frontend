@@ -50,7 +50,8 @@ var general = {
   'groups': 'Groups',
   'offerings': 'Offerings',
   'filterPlaceholder': 'Start typing to filter list',
-  'required': 'Required'
+  'required': 'Required',
+  'loading': 'Loading Ilios'
 };
 translations.general = general;
 
