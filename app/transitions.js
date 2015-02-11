@@ -11,6 +11,6 @@ export default function(){
       topRoutes.push('programs');
       return topRoutes.contains(this);
     }),
-    this.use('toLeft')
+    this.use('crossFade')
   );
 }
