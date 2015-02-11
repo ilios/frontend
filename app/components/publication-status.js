@@ -6,4 +6,5 @@ export default Ember.Component.extend({
   item: null,
   isPublished: Ember.computed.alias('item.isPublished'),
   isScheduled: Ember.computed.alias('item.publishedAsTbd'),
+  showIcon: true
 });
