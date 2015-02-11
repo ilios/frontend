@@ -7,7 +7,10 @@
       </label>
     </div>
     <div id='schoolsfilter' class="filter">
-      {{#if hasMoreThanOneSchool}}
+      <label class="schoolsfilter">
+	{{t 'general.school'}}: 
+      </label>
+        {{#if hasMoreThanOneSchool}}
         {{view "select"
           content=schools
           selection=selectedSchool
