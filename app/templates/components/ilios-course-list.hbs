@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each course in sortedCourses}}
+    {{#each course in courses}}
       <td colspan=3 {{action 'edit' course}}>
         {{course.title}}
         {{#if course.externalId}}
