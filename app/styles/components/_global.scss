@@ -76,6 +76,18 @@ h4 {
   border-top: 0px;
   margin-top: 0px;
 }
+
 .inline-label-data-block {
   display: inline-block;
 }
+
+.published {
+  color: $published-green;
+}
+.notpublished {
+  color:$notpublished-amber;
+}
+.scheduled {
+ color: $scheduled-brown;
+}
+
