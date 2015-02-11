@@ -1,6 +1,9 @@
 <section id='learnergroups' class='fullwidth main-border'>
   <div class="filter-tools">
     <div id='schoolsfilter' class="filter">
+      <label class="schoolsfilter">
+        {{t 'general.school'}}:
+      </label>
       {{#if hasMoreThanOneSchool}}
         {{view "select"
           content=sortedSchools
