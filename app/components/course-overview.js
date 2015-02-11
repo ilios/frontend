@@ -7,31 +7,46 @@ export default Ember.Component.extend({
   sortedDirectors: Ember.computed.sort('course.directors', 'directorsSort'),
   levelOptions: [1,2,3,4,5],
   directorSearchResults: [],
-  directorSearchTerm: '',
-  matchingDirectors: [],
-  watchDirectorSearchTerm: function(){
-    var self = this;
-    var searchTerm = this.get('directorSearchTerm');
-    if(searchTerm.length === 0){
-      this.set('matchingDirectors', []);
-    } else {
-      this.store.find('user', {searchTerm: searchTerm}).then(function(users){
-        self.set('matchingDirectors', users);
+  actions: {
+    searchDirectors: function(searchTerm){
+      if(searchTerm.length < 4){
+        this.set('directorSearchResults', []);
+      } else {
+        var self = this;
+        var ResultObject = Ember.Object.extend(LiveSearchItem, {
+          user: null,
+          targetObject: Ember.computed.alias('user'),
+          title: Ember.computed.alias('user.fullName'),
+          sortTerm: function(){
+            return this.get('user.lastName') + this.get('user.firstName');
+          }.property('user.firstName', 'user.lastName')
+        });
+        this.store.find('user', {searchTerm: searchTerm}).then(function(users){
+
+          var results = users.map(function(user){
+            return ResultObject.create({
+              user: user
+            });
+            // isActive: true,
+          });
+          self.set('directorSearchResults', results);
+        });
+      }
+    },
+    addDirector: function(user){
+      var self = this;
+      var course = this.get('course');
+      course.get('directors').then(function(directors){
+        directors.pushObject(user);
+        user.get('directedCourses').then(function(courses){
+          courses.pushObject(course);
+          user.save();
+          course.save().then(function(){
+            self.set('course', course);
+          });
+        });
       });
-    }
-  }.observes('directorSearchTerm'),
-  replaceDirectorSearchResults: function(){
-    var self = this;
-    this.get('course.directors').then(function(directors){
-      var results = self.get('matchingDirectors').map(function(user){
-        return Ember.Object.extend(LiveSearchItem, {
-          title: user.get('fullName'),
-          isActive: !directors.contains(user),
-          targetObject: user,
-          sortTerm: user.get('lastName') + user.get('firstName')
-        }).create();
-      });
-      self.set('directorSearchResults', results);
-    });
-  }.observes('matchingDirectors.@each', 'course.directors.@each'),
+    },
+
+  }
 });
