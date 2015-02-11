@@ -25,7 +25,11 @@
             <td colspan=2>{{session.title}}</td>
             <td>{{session.sessionType.title}}</td>
             <td>{{session.learnerGroupCount}}</td>
-            <td>{{moment session.firstOfferingDate 'MM/DD/YYYY h:mma'}}</td>
+            <td>
+              {{#if session.firstOfferingDate}}
+                {{moment session.firstOfferingDate 'MM/DD/YYYY h:mma'}}
+              {{/if}}
+            </td>
             <td>{{session.offerings.length}}</td>
             <td>{{session.status}}</td>
             <td>

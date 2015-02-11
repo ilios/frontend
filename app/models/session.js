@@ -1,5 +1,7 @@
+/* global moment */
 import DS from 'ember-data';
 import Ember from 'ember';
+
 
 var Session = DS.Model.extend({
     title: DS.attr('string'),
@@ -24,8 +26,22 @@ var Session = DS.Model.extend({
     ilmSessionFacet: DS.belongsTo('ilm-session', {async: true}),
     offeringLearnerGroupsLength: Ember.computed.mapBy('offerings', 'learnerGroups.length'),
     learnerGroupCount: Ember.computed.sum('offeringLearnerGroupsLength'),
-    offeringDates: Ember.computed.mapBy('offerings', 'startDate'),
-    firstOfferingDate: Ember.computed.max('offeringDates'),
+    offeringsWithStartDate: Ember.computed.filterBy('offerings', 'startDate'),
+    sortedOfferingsByDate: Ember.computed.sort('offeringsWithStartDate', function(a,b){
+      var aDate = moment(a.get('startDate'));
+      var bDate = moment(b.get('startDate'));
+      if(aDate === bDate){
+        return 0;
+      }
+      return aDate > bDate ? 1 : -1;
+    }),
+    firstOfferingDate: function(){
+      var offerings = this.get('sortedOfferingsByDate');
+      if(offerings.length === 0){
+        return null;
+      }
+      return offerings.get('firstObject.startDate');
+    }.property('sortedOfferingsByDate.@each'),
     isPublished: Ember.computed.notEmpty('publishEvent'),
     isNotPublished: Ember.computed.not('isPublished'),
     status: function(){
