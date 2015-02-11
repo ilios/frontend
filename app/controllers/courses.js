@@ -40,7 +40,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       }
 
       return false;
-    });
+    }).sortBy('title');
   }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.allRelatedCourses.@each'),
   watchSelectedSchool: function(){
     this.set('schoolId', this.get('selectedSchool.id'));
