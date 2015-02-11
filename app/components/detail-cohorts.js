@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   cohorts: [],
   programs: [],
+  isAvailalbeCohortsShowing: false,
   filteredPrograms: function(){
     var self = this;
     var programProxy = Ember.ObjectProxy.extend({
@@ -24,11 +25,15 @@ export default Ember.Component.extend({
     }).sortBy('title');
 
     return programs;
-    
+
   }.property('cohorts.@each', 'programs.@each'),
   actions: {
+    showAvailableCohorts: function(){
+      this.set('isAvailalbeCohortsShowing', true);
+    },
     add: function(cohort){
       this.sendAction('add', cohort);
+      this.set('isAvailalbeCohortsShowing', false);
     }
   }
 });
