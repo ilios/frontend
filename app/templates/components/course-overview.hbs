@@ -7,10 +7,22 @@
   </div>
   <div class='detail-content'>
     {{#if editing}}
-      <label>{{t "general.start"}}: {{editable-date model=course property='startDate'}}</label>
-      <label>{{t "courses.externalId"}}: {{editable-text model=course property='externalId'}}</label>
-      <label>{{t "courses.level"}}: {{editable-select model=course property='level' options=levelOptions}}</label>
-      <label>{{t "general.end"}}: {{editable-date model=course property='endDate'}}</label>
+      <div class="inline-label-data-block">
+        <label>{{t "general.start"}}:</label>
+        <div>{{editable-date model=course property='startDate'}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "courses.externalId"}}:</label>
+        <div>{{editable-text model=course property='externalId'}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "courses.level"}}:</label>
+        <div>{{editable-select model=course property='level' options=levelOptions}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "general.end"}}:</label>
+        <div>{{editable-date model=course property='endDate'}}</div>
+      </div>
       <br />
       <label>{{t "general.directors"}}:
         <span>
