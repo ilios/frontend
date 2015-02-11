@@ -22,7 +22,11 @@
         </thead>
         <tbody>
           {{#each session in filteredContent}}
-            <td colspan=2>{{session.title}}</td>
+            <td colspan=2>
+              {{#link-to 'session' session}}
+                {{session.title}}
+              {{/link-to}}
+            </td>
             <td>{{session.sessionType.title}}</td>
             <td>{{session.learnerGroupCount}}</td>
             <td>

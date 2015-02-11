@@ -13,11 +13,13 @@
   </thead>
   <tbody>
     {{#each course in courses}}
-      <td colspan=3 {{action 'edit' course}}>
-        {{course.title}}
-        {{#if course.externalId}}
-          ({{course.externalId}})
-        {{/if}}
+      <td colspan=3>
+        {{#link-to 'course' course}}
+          {{course.title}}
+          {{#if course.externalId}}
+            ({{course.externalId}})
+          {{/if}}
+        {{/link-to}}
       </td>
       <td colspan=2 {{action 'edit' course}}>{{course.owningSchool.title}}</td>
       <td colspan=2 {{action 'edit' course}}>{{course.academicYear}}</td>

@@ -10,7 +10,11 @@
   <tbody>
     {{#each group in sortedGroups}}
       <tr>
-        <td colspan=3 {{action 'edit' group}}>{{group.title}}</td>
+        <td colspan=3>
+          {{#link-to 'learnergroup' group}}
+            {{group.title}}
+          {{/link-to}}
+          </td>
         <td colspan=2 {{action 'edit' group}}>{{group.users.length}}</td>
         <td colspan=2 {{action 'edit' group}}>{{group.children.length}}</td>
         <td>
