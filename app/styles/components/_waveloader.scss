@@ -28,10 +28,10 @@
           @include animation(wave 2.0s infinite ease-in-out);
 
       }
-      @for $i from 1 through 8 {
-        .widget span:nth-child(#{$i}){
+      @for $i from 0 to 8 {
+        .widget span:nth-child(#{$i+1}){
             left: $i * 11px;
-            $delay: $i * 2 / 10 + 1 + s;
+            $delay: $i * 2 / 10 + s;
             @include animation-delay($delay);
         }
       }
