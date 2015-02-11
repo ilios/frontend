@@ -27,7 +27,7 @@
             <td>{{session.learnerGroupCount}}</td>
             <td>{{moment session.firstOfferingDate 'MM/DD/YYYY h:mma'}}</td>
             <td>{{session.offerings.length}}</td>
-            <td>{{publication-status item=session}}</td>
+            <td>{{publication-status item=session showIcon=false}}</td>
             <td>
               {{#action-menu}}
                 <li {{action 'edit'}}>Edit</li>
