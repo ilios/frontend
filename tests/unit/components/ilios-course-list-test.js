@@ -4,8 +4,10 @@ import {
 } from 'ember-qunit';
 
 moduleForComponent('ilios-course-list', 'IliosCourseListComponent', {
-  // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: [
+    'component:publication-status',
+    'helper:fa-icon'
+  ]
 });
 
 test('it renders', function() {

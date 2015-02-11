@@ -3,16 +3,8 @@ import {
   test
 } from 'ember-qunit';
 import Ember from 'ember';
-import { initialize } from 'ilios/initializers/ember-moment';
 
-moduleForComponent('editable-date', 'EditableDateComponent', {
-  //initialize the ember-moment helper
-  setup: function (container) {
-    Ember.run(function () {
-      initialize(container);
-    });
-  }
-});
+moduleForComponent('editable-date', 'EditableDateComponent', {});
 
 test('it renders', function() {
   expect(2);

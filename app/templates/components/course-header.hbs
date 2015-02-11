@@ -6,8 +6,6 @@
   <span class ='actions'>
     <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
     <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
-    <span class='status'>
-      <h5>{{fa-icon 'clock-o'}} {{t 'general.scheduled'}}</h5>
-    </span>
+    {{publication-status item=course}}
   </span>
 </div>

@@ -31,7 +31,7 @@
               {{/if}}
             </td>
             <td>{{session.offerings.length}}</td>
-            <td>{{session.status}}</td>
+            <td>{{publication-status item=session showIcon=false}}</td>
             <td>
               {{#action-menu}}
                 <li {{action 'edit'}}>Edit</li>

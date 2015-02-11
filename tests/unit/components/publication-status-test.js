@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ilios-sessions-list', 'IliosSessionsListComponent', {
+moduleForComponent('publication-status', 'PublicationStatusComponent', {
+  // specify the other units that are required for this test
   needs: [
-    'component:publication-status',
     'helper:fa-icon'
   ]
 });

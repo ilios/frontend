@@ -36,6 +36,7 @@
     "ember-cli-sauce": "0.0.7",
     "ember-data": "1.0.0-beta.14.1",
     "ember-export-application-global": "^1.0.0",
+    "ember-moment": "1.0.0",
     "ember-pikaday": "^0.2.1",
     "ember-rl-dropdown": "0.0.3",
     "express": "^4.8.5",
@@ -45,8 +46,5 @@
     "morgan": "^1.5.0",
     "pluralize": "^1.1.2",
     "precommit-hook": "^1.0.7"
-  },
-  "dependencies": {
-    "ember-moment": "^1.0.0"
   }
 }

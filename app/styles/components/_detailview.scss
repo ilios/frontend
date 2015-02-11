@@ -133,12 +133,12 @@
       @include shift(2);
       text-align:right;
 
-      h5{
-        vertical-align: bottom;
-        display: inline;
+      .status {
+        font-size: $h5-font-size;
+        vertical-align: middle;
         margin-left: 1em;
         i{
-          vertical-align: bottom;
+          vertical-align: middle;
         }
       }
     }

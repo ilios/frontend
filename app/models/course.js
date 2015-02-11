@@ -14,7 +14,7 @@ var Course = DS.Model.extend({
     publishedAsTbd: DS.attr('boolean'),
     sessions: DS.hasMany('session', {async: true}),
     owningSchool: DS.belongsTo('school', {async: true}),
-    isPublished: false,
+    isPublished: Ember.computed.notEmpty('publishEvent.content'),
     isNotPublished: Ember.computed.not('isPublished'),
     status: function(){
       if(this.get('publishEvent') != null){
