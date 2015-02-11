@@ -22,7 +22,13 @@
             <td colspan=2>{{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}</td>
             <td>{{lm.learningMaterial.type}}</td>
             <td>{{lm.learningMaterial.originalAuthor}}</td>
-            <td>{{lm.required}}</td>
+            <td>
+	    {{#if lm.required}}
+	      <span class='add'>{{t 'general.yes'}}</span>
+	    {{else}}
+	      <span class='remove'>{{t 'general.no'}}</span>
+	    {{/if}}
+	    </td>
             <td>{{lm.learningMaterial.notes}}</td>
           </t>
         {{/each}}
