@@ -41,7 +41,6 @@ module.exports = function(app) {
     'sessionTypes',
     'sessions',
     'userRoles',
-    'users',
   ];
 
   for(var i = 0; i < models.length; i++){
