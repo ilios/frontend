@@ -2,7 +2,30 @@
   <div class='detail-title'>
     {{t 'courses.cohorts'}} ({{cohorts.length}})
   </div>
+
+  <div class='detail-actions'>
+    <button {{action 'showAvailableCohorts'}} class='add'>{{t 'general.addNew'}}</button>
+  </div>
   <div class='detail-content'>
+    {{#if isAvailalbeCohortsShowing}}
+      <div class='selectable-list'>
+        <h5>{{t 'courses.availableCohorts'}}</h5>
+        <ul>
+          {{#each program in filteredPrograms}}
+            <li class='static'>{{program.title}}
+              <ul>
+                {{#each cohort in program.availableCohorts}}
+                  <li {{action 'add' cohort}}>{{cohort.displayTitle}}</li>
+
+                {{else}}
+                  <li class='static'>{{t 'courses.noAvailableCohorts'}}</li>
+                {{/each}}
+              </ul>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
     <table>
       <thead>
         <tr>
@@ -21,22 +44,5 @@
         {{/each}}
       </tbody>
     </table>
-
-    <div class='selectable-list'>
-      <ul>
-        {{#each program in filteredPrograms}}
-          <li class='static'>{{program.title}}
-            <ul>
-              {{#each cohort in program.availableCohorts}}
-                <li {{action 'add' cohort}}>{{cohort.displayTitle}}</li>
-
-              {{else}}
-                <li class='static'>{{t 'courses.noAvailableCohorts'}}</li>
-              {{/each}}
-            </ul>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
   </div>
 </section>

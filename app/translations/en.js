@@ -173,6 +173,7 @@ var courses = {
   'backToCourses': 'Back to Courses List',
   'details': 'Course Details',
   'cohorts': 'Program Cohorts',
+  'availableCohorts': 'Availalbe Cohorts',
   'noAvailableCohorts': 'No available cohorts',
   'titleFilterPlaceholder': 'Filter by course title',
   'findDirector': 'Find Director',
