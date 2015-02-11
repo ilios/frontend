@@ -19,7 +19,11 @@
       <tbody>
         {{#each lm in materials}}
           <tr>
-            <td colspan=2>{{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}</td>
+            <td colspan=2>
+              {{#link-to 'courselearningmaterial' lm}}
+                {{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}
+              {{/link-to}}
+            </td>
             <td>{{lm.learningMaterial.type}}</td>
             <td>{{lm.learningMaterial.originalAuthor}}</td>
             <td>

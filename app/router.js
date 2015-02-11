@@ -33,7 +33,8 @@ Router.map(function() {
   });
   this.route('courses');
   this.route('course', { path: 'course/:course_id'});
-  this.route("courseobjective", {path: 'course/:course_id/objective/:objective_id'});
+  this.route("courseobjective", {path: 'courseobjective/:objective_id'});
+  this.route("courselearningmaterial", {path: 'courselearningmaterial/:course_learning_material_id'});
 
   this.route('instructorgroups');
   this.route('instructorgroup', { path: 'instructorgroup/:instructor_group_id'});
@@ -48,6 +49,7 @@ Router.map(function() {
   this.route("learnergroups");
   this.route("learnergroup", { path: 'learnergroup/:learner_group_id'});
   this.route("instructorgroups");
+  this.route("session", {path: 'session/:session_id'});
 });
 
 export default Router;
