@@ -23,7 +23,12 @@
             {{#if objective.parents.length}}
             <ul>
               {{#each parent in objective.parents}}
-              <li>{{parent.shortTitle}}</li>
+                <li>
+                  {{parent.shortTitle}}
+                  {{#if parent.competency}}
+                    ({{parent.competency.title}})
+                  {{/if}}
+                </li>
               {{/each}}
             </ul>
             {{else}}
