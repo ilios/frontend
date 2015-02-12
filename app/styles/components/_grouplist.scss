@@ -1,21 +1,25 @@
 .grouplist {
   @include span-columns(12 of 12);
-  border-bottom-style:solid;
-  border-left-color:#F7F7F7;
-  border-left-style:solid;
-  border-right-color:#F7F7F7;
-  border-right-style:solid;
-  border-width:0 2px 2px;
+  border-style: solid;
+  border-color: $header-grey;
+  border-width: 0 2px 2px;
   margin-top:0;
-  h2 {
-    width: 100%;
-    font-size: $base-font-size;
-    text-align: left;
-    background-color: $background-grey;
-    padding: $base-font-size;
+    .grouplist-header {
+      background-color: $header-grey; 
+      overflow: auto;
+      padding: .2em;
+      .grouplist-title {
+        float: left;
+       h2 {
+          width: 100%;
+          font-size: $base-font-size;
+          text-align: left;
+          margin: .3em 1em;
+	}
+    }
   }
   .grouplist-list {
-    @include span-columns(10 of 12);
+    @include span-columns(12 of 12);
     @include pad();
     tbody tr {
       cursor: pointer;
@@ -26,6 +30,6 @@
   }
   .grouplist-actions {
     @include span-columns(2 of 12);
-    @include pad();
+    float: right;
   }
 }

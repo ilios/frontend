@@ -31,6 +31,14 @@
   </div>
 
   <section class='grouplist'>
+    <div class="grouplist-header clearfix">
+      <div class="grouplist-title">
+        <h2>Results</h2>
+      </div>
+      <div class='grouplist-actions'>
+        <button class='add' {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
+      </div>
+    </div>
     <div class='grouplist-list'>
       {{ilios-course-list
         courses=filteredCourses
@@ -38,8 +46,6 @@
         remove='removeCourse'
       }}
     </div>
-    <div class='grouplist-actions'>
-      <button class='add' {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
-    </div>
   </section>
 </section>
+

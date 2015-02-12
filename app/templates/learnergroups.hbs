@@ -34,15 +34,20 @@
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
-  <section class='grouplist'>
-    <h2>{{title}}</h2>
+
+  <section class='grouplist clearfix'>
+    <div class="grouplist-header">
+      <div class="grouplist-title">
+        <h2>{{title}}</h2>
+      </div>
+      {{#if currenCohort}}
+        <div class='grouplist-actions'>
+          <button class='add' {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
+        </div>
+      {{/if}}
+    </div>
     <div class='grouplist-list'>
       {{learnergroup-list groups=filteredGroups edit='editGroup' remove='removeGroup'}}
     </div>
-    {{#if currenCohort}}
-      <div class='grouplist-actions'>
-        <button class='add' {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
-      </div>
-    {{/if}}
   </section>
 </section>
