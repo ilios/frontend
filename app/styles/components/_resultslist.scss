@@ -1,15 +1,16 @@
-.grouplist {
+.resultslist {
   @include span-columns(12 of 12);
   border-style: solid;
   border-color: $header-grey;
   border-width: 0 2px 2px;
   margin-top:0;
-    .grouplist-header {
+    .resultslist-header {
       background-color: $header-grey; 
       overflow: auto;
       padding: .2em;
-      .grouplist-title {
-        float: left;
+      @include span-columns(12 of 12);
+      .resultslist-title {
+        @include span-columns(10 of 12);
        h2 {
           width: 100%;
           font-size: $base-font-size;
@@ -18,7 +19,7 @@
 	}
     }
   }
-  .grouplist-list {
+  .resultslist-list {
     @include span-columns(12 of 12);
     @include pad();
     tbody tr {
@@ -28,8 +29,8 @@
       }
     }
   }
-  .grouplist-actions {
-    @include span-columns(2 of 12);
-    float: right;
+  .resultslist-actions {
+    @include span-columns(1 of 12);
+    @include omega;
   }
 }

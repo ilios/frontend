@@ -4,7 +4,6 @@
   $filter-font-size: $base-font-size * 0.75;
 
   @include clearfix;
-  border: 1px solid $filter-tools-border-color;
   background: $filter-tools-background;
   padding: $gutter / 2;
   border-radius: $base-border-radius;
