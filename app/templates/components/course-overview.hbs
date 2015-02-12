@@ -24,6 +24,7 @@
         <div>{{editable-date model=course property='endDate'}}</div>
       </div>
       <br />
+      <br />
       <label>{{t "general.directors"}}:
         <span>
           <ul class='removable-list'>
@@ -40,15 +41,36 @@
           searchResults=directorSearchResults
         }}
     {{else}}
-      {{moment course.startDate}} - {{moment course.endDate}}
-      {{course.externalId}} {{course.level}}
+      <div class="inline-label-data-block">
+        <label>{{t "general.start"}}:</label>
+        <div>{{moment course.startDate 'MM/DD/YYYY'}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "courses.externalId"}}:</label>
+        <div>{{course.externalId}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "courses.level"}}:</label>
+        <div>{{course.level}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "general.end"}}:</label>
+        <div>{{moment course.endDate 'MM/DD/YYYY'}}</div>
+      </div>
       <br />
-      {{t "general.directors"}}:
-      <span>
-        {{#each user in sortedDirectors}}
-        {{user.fullName}},
-        {{/each}}
-      </span>
+      <br />
+
+      <div class="inline-label-data-block">
+        <label>{{t "general.directors"}}:</label>
+        <div>
+          <span>
+            {{#each user in sortedDirectors}}
+            {{user.fullName}},
+            {{/each}}
+          </span>
+        </div>
+      </div>
+
 
     {{/if}}
   </div>
