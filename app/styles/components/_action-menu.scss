@@ -15,7 +15,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     padding: 0 ($dropdown-padding * 3.5) 0 ($dropdown-padding / 2);
     position: relative;
     color: $base-font-color;
-    border: 1px solid black;
+    border: 1px solid $medium-gray;
 
     @include media($large-screen) {
       font-size: 1em;
@@ -38,7 +38,8 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
 
   .menu {
     @include transition (all 0.2s ease-in-out);
-    background: $dropdown-background;
+    background: #FFF;
+    border-radius: $base-border-radius;
     box-shadow: 0 2px 2px transparentize(black, .8);
     color: $base-font-color;
     cursor: pointer;
