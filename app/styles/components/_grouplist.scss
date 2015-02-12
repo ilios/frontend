@@ -1,6 +1,7 @@
 .grouplist {
   @include span-columns(12 of 12);
   border-bottom-style:solid;
+  border-bottom-color: #F7F7F7;
   border-left-color:#F7F7F7;
   border-left-style:solid;
   border-right-color:#F7F7F7;
