@@ -4,7 +4,8 @@ import LiveSearchItem from 'ilios/mixins/live-search-item';
 export default Ember.Component.extend({
   editable: false,
   directorsSort: ['lastName', 'firstName'],
-  sortedDirectors: Ember.computed.sort('course.directors', 'directorsSort'),
+  directorsWithFullName: Ember.computed.filterBy('course.directors', 'fullName'),
+  sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
   levelOptions: [1,2,3,4,5],
   directorSearchResults: [],
   actions: {

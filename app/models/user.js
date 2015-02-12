@@ -45,7 +45,12 @@ var User = DS.Model.extend({
     return defer.promise;
   }.property('primarySchool'),
   fullName: function() {
-      return this.get('firstName') + ' ' + this.get('lastName');
+      var first = this.get('firstName');
+      var last = this.get('lastName');
+      if(!first || !last){
+        return '';
+      }
+      return first + ' ' + last;
   }.property('firstName', 'lastName'),
   events: function(){
       var promises = {
