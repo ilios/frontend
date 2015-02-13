@@ -3,11 +3,19 @@ import EditInPlaceMixin from 'ilios/mixins/edit-in-place';
 
 export default Ember.Component.extend(EditInPlaceMixin, {
   text: Ember.computed.oneWay('content'),
+  stripHtml: false,
+  length: 200,
   shortText: function(){
     var text = this.get('text');
     if(text === undefined || text == null){
       return '';
     }
-    return text.substr(0,200);
+    if(this.get('stripHtml')){
+      text = text.replace(/(<([^>]+)>)/ig,"");
+    }
+    if(this.get('length')){
+      text = text.substr(0,this.get('length'));
+    }
+    return text;
   }.property('text')
 });
