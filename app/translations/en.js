@@ -7,6 +7,7 @@ var general = {
   'yes': 'Yes',
   'no': 'No',
   'undo': 'Undo',
+  'results': 'Results',
   'home': 'Home',
   'add': 'Add',
   'addNew': 'Add New',

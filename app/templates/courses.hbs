@@ -30,16 +30,22 @@
     </div>
   </div>
 
-  <section class='grouplist'>
-    <div class='grouplist-list'>
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{ t 'general.results'}}</h2>
+      </div>
+      <div class='resultslist-actions'>
+        <button class='add' {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
+      </div>
+    </div>
+    <div class='resultslist-list'>
       {{ilios-course-list
         courses=filteredCourses
         edit='editCourse'
         remove='removeCourse'
       }}
     </div>
-    <div class='grouplist-actions'>
-      <button class='add' {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
-    </div>
   </section>
 </section>
+

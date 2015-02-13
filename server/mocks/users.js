@@ -32,13 +32,13 @@ module.exports = function(app) {
         //explode the search terms on each space
         var searchTermArray = req.query.searchTerm.split(" ");
 
-        //loop through the searchTermArray and compare each value agains the user Info
+        //loop through the searchTermArray and compare each value against the userInfo
         for (i = 0; i < searchTermArray.length; i++) {
             //set the search term to lowercase
             var term = searchTermArray[i].toLowerCase();
             //search the userInfo string for the term
             var n = userInfo.indexOf(term);
-            //if the index returned is not -1, increment containsSearchTerm
+            //if the index returned is not -1, increment matchedSearchTerms
             if (n > -1) matchedSearchTerms = matchedSearchTerms + 1;
         }
 
