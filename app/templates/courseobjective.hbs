@@ -1,10 +1,11 @@
-{{#link-to 'courses'}}{{t 'courses.backToCourses'}}{{/link-to}}
+{{#link-to 'course' course}}{{t 'general.backToTitle' titleBinding=course.title}}{{/link-to}}
 <div class='detail-view'>
   {{course-header course=course}}
   {{course-overview course=course}}
   {{objective-manager
-    objective=model
+    objective=objective
     objectiveGroups=objectiveGroups
-    multipleParents=false
+    addParent='addParent'
+    removeParent='removeParent'
   }}
 </div>

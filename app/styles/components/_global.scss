@@ -19,6 +19,12 @@
 .dirty, .is-dirty {
   color: $base-accent-color;
 }
+.highlight, .is-highlighted {
+  color: $base-accent-color;
+}
+.clickable, .is-clickable {
+  cursor: pointer;
+}
 .clickable {
   cursor: pointer;
 }
@@ -89,4 +95,3 @@ h4 {
 .scheduled {
  color: $scheduled-brown;
 }
-

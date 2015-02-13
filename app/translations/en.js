@@ -54,7 +54,8 @@ var general = {
   'offerings': 'Offerings',
   'filterPlaceholder': 'Start typing to filter list',
   'required': 'Required',
-  'loading': 'Loading Ilios'
+  'loading': 'Loading Ilios',
+  'backToTitle': 'Back to {{title}}'
 };
 translations.general = general;
 
