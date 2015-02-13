@@ -18,13 +18,13 @@
       <tbody>
         {{#each objective in objectives}}
         <tr>
-          <td colspan=2>{{editable-textarea model=objective property='title'}}</td>
+          <td colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
           <td>
             {{#if objective.parents.length}}
             <ul>
               {{#each parent in objective.parents}}
                 <li>
-                  {{parent.shortTitle}}
+                  {{parent.textTitle}}
                   {{#if parent.competency}}
                     ({{parent.competency.title}})
                   {{/if}}
