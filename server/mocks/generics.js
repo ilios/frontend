@@ -1,5 +1,6 @@
 module.exports = function(app) {
   var createRouter = require('../helpers/createrouter.js');
+  var fixtureStorage = require('../helpers/fixtureStorage.js');
   var models = [
     'aamcMethods',
     'aamcPcrs',
@@ -45,8 +46,8 @@ module.exports = function(app) {
 
   for(var i = 0; i < models.length; i++){
     var str = models[i];
-    var fixtures = require ('../fixtures/' + str + '.js');
-    var router = createRouter(str, fixtures);
+    var fixtures = fixtureStorage.get(str);
+    var router = createRouter(str);
     app.use('/api/' + str, router);
   }
 
