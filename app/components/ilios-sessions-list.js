@@ -2,8 +2,17 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   filter: '',
+
+  //in order to delay rendering until a user is done typing debounce the title filter
+  debouncedFilter: '',
+  watchFilter: function(){
+    Ember.run.debounce(this, this.setFilter, 500);
+  }.observes('filter'),
+  setFilter: function(){
+    this.set('debouncedFilter', this.get('filter'));
+  },
   filteredContent: function(){
-    var filter = this.get('filter');
+    var filter = this.get('debouncedFilter');
     var exp = new RegExp(filter, 'gi');
     var sessions = this.get('sessions');
     if(sessions == null){
@@ -17,5 +26,5 @@ export default Ember.Component.extend({
       return title.match(exp);
     });
     return filtered.sortBy('title');
-  }.property('sessions.@each.title', 'filter'),
+  }.property('sessions.@each.title', 'debouncedFilter'),
 });
