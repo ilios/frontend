@@ -1,7 +1,11 @@
 module.exports = function(app) {
   var createRouter = require('../helpers/createrouter.js');
-  var fixtures = require ('../fixtures/users.js');
-  var getGroup = function(name, req, res, fixtures){
+  var fixtureStorage = require('../helpers/fixtureStorage.js');
+  var fixtures = fixtureStorage.get('users');
+
+  var getGroup = function(name, req, res){
+    var fixtureStorage = require('../helpers/fixtureStorage.js');
+    var fixtures = fixtureStorage.get(name);
     var responseObj = {};
     var response = [];
     var filterByProperty = function(obj){
@@ -66,8 +70,6 @@ module.exports = function(app) {
     responseObj[name] = response;
     res.send(responseObj);
   };
-  var userRouter = createRouter('users', fixtures, {getGroup:getGroup});
+  var userRouter = createRouter('users', {getGroup:getGroup});
   app.use('/api/users', userRouter);
 };
-
-

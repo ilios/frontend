@@ -44,7 +44,7 @@ module.exports = function(environment) {
     ENV.adapterHost = 'http://ilios.dev';
     ENV.adapterNamespace = 'app_dev.php/api/v1';
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
-    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400";
+    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400 ilios.dev";
   }
 
   if (environment === 'test') {

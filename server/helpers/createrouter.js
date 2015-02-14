@@ -1,16 +1,23 @@
 var defaultCallbacks = {};
 
-defaultCallbacks.getSingle = function(name, req, res, fixtures){
+defaultCallbacks.getSingle = function(name, req, res){
+  var pluralize = require('pluralize');
+  var fixtureStorage = require('./fixtureStorage.js');
+  var fixtures = fixtureStorage.get(name);
   var responseObj = {};
+  var singularName = pluralize(name, 1);
   if(req.params.id in fixtures){
-    responseObj[name] = fixtures[req.params.id];
+    responseObj[singularName] = fixtures[req.params.id];
     res.send(responseObj);
   } else {
     res.status(404).end();
   }
 };
 
-defaultCallbacks.getGroup = function(name, req, res, fixtures){
+defaultCallbacks.getGroup = function(name, req, res){
+  var pluralize = require('pluralize');
+  var fixtureStorage = require('./fixtureStorage.js');
+  var fixtures = fixtureStorage.get(name);
   var responseObj = {};
   var response = [];
   var filterByProperty = function(obj){
@@ -45,23 +52,35 @@ defaultCallbacks.getGroup = function(name, req, res, fixtures){
   res.send(responseObj);
 };
 
-defaultCallbacks.post = function(name, req, res, fixtures){
+defaultCallbacks.post = function(name, req, res){
+  var pluralize = require('pluralize');
+  var fixtureStorage = require('./fixtureStorage.js');
+  var fixtures = fixtureStorage.get(name);
   var responseObj = {};
+  var singularName = pluralize(name, 1);
   if(req.body === undefined){
     console.log('You need to install the body-parser node library.');
     return;
   }
-  var obj = req.body[name];
-  obj.id = fixtures.length;
-  responseObj[name] = obj;
-  res.send(responseObj);
+  var obj = req.body[singularName];
+  var id = fixtures.length;
+  obj.id = id;
+  responseObj[singularName] = obj;
+  fixtureStorage.save(name, obj);
+  res.send(fixtureStorage.get(name)[id]);
 };
 
-defaultCallbacks.put = function(name, req, res, fixtures){
+defaultCallbacks.put = function(name, req, res){
+  var pluralize = require('pluralize');
+  var fixtureStorage = require('./fixtureStorage.js');
+  var fixtures = fixtureStorage.get(name);
   var responseObj = {};
+  var singularName = pluralize(name, 1);
   if(req.params.id in fixtures){
-    responseObj[name] = req.body[name];
-    responseObj[name].id = req.params.id;
+    var changedObject = req.body[singularName];
+    changedObject.id = req.params.id;
+    fixtureStorage.save(name, changedObject);
+    responseObj[singularName] = fixtureStorage.get(name)[changedObject.id];
     res.send(responseObj);
   } else {
     res.status(404).end();
@@ -69,8 +88,7 @@ defaultCallbacks.put = function(name, req, res, fixtures){
 };
 
 
-module.exports = function(name, fixtures, callbacks) {
-  var pluralize = require('pluralize');
+module.exports = function(name, callbacks) {
   if(typeof callbacks == 'undefined'){
     callbacks = {};
   }
@@ -82,22 +100,21 @@ module.exports = function(name, fixtures, callbacks) {
   };
   var express = require('express');
   var router = express.Router();
-  var singularName = pluralize(name, 1);
   router.get('/:id', function(req, res) {
     var callback = getCallback('getSingle');
-    callback(singularName, req, res, fixtures);
+    callback(name, req, res);
   });
   router.get('/', function(req, res) {
     var callback = getCallback('getGroup');
-    callback(name, req, res, fixtures);
+    callback(name, req, res);
   });
   router.post('/', function(req, res) {
     var callback = getCallback('post');
-    callback(singularName, req, res, fixtures);
+    callback(name, req, res);
   });
   router.put('/:id', function(req, res) {
     var callback = getCallback('put');
-    callback(singularName, req, res, fixtures);
+    callback(name, req, res);
   });
 
   return router;
