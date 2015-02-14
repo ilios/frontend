@@ -7,7 +7,7 @@
     .resultslist-header {
       background-color: $header-grey; 
       overflow: auto;
-      padding: .2em;
+      padding: .4em;
       @include span-columns(12 of 12);
       .resultslist-title {
         @include span-columns(10 of 12);
