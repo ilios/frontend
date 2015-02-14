@@ -82,7 +82,13 @@ h4 {
   margin-top: 0px;
 }
 
+/* creates an inline block grouping a label on top and its corresponding data below */
 .inline-label-data-block {
+  display: inline-block;
+}
+
+/* set individual items to be inline as needed */
+.inline-label, .inline-data {
   display: inline-block;
 }
 

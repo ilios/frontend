@@ -40,8 +40,7 @@ export default Ember.Controller.extend(Ember.I18n.TranslateableProperties, {
     this.set('cohortId', this.get('selectedCohort.id'));
   }.observes('selectedCohort'),
   title: function(){
-    var str = this.get('selectedSchool.title') +
-      ' - ' + this.get('selectedProgram.title');
+    var str = this.get('selectedProgram.title');
     if(this.get('selectedCohort')){
       str += ' - ' + this.get('selectedCohort.displayTitle');
     }

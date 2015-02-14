@@ -1,6 +1,11 @@
 <section id='learnergroups' class='fullwidth main-border'>
   <div class="filter-tools">
+
     <div id='schoolsfilter' class="filter">
+      <label class="inline-label">
+        {{t 'general.school'}}:
+      </label>
+      <div id="school-selection" class="inline-data">
       {{#if hasMoreThanOneSchool}}
         {{view "select"
           content=sortedSchools
@@ -10,6 +15,7 @@
       {{else}}
         {{selectedSchool.title}}
       {{/if}}
+      </div>
     </div>
     <div id='programsFilter' class="filter">
       {{#if hasMoreThanOneProgram}}
@@ -40,11 +46,11 @@
       <div class="resultslist-title">
         <h2>{{title}}</h2>
       </div>
-      {{#if currenCohort}}
+    {{!-- {{#if currentCohort}} --}}
         <div class='resultslist-actions'>
           <button class='add' {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
         </div>
-      {{/if}}
+    {{!-- {{/if}} --}}
     </div>
     <div class='resultslist-list'>
       {{learnergroup-list groups=filteredGroups edit='editGroup' remove='removeGroup'}}
