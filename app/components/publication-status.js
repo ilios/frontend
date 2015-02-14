@@ -8,10 +8,10 @@ export default Ember.Component.extend({
     'publicationStatus'
   ],
   publicationStatus: function(){
-    if(this.get('isPublished')){
-      return 'published';
-    } else if (this.get('isScheduled')){
+    if(this.get('isScheduled')){
       return 'scheduled';
+    } else if (this.get('isPublished')){
+      return 'published';
     }
 
     return 'notpublished';

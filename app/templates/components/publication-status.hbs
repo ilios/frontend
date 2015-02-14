@@ -1,20 +1,20 @@
 {{#if showIcon}}
-  {{#if isPublished}}
-    {{fa-icon 'star'}}
+  {{#if isScheduled}}
+    {{fa-icon 'clock-o'}}
   {{else}}
-    {{#if isScheduled}}
-      {{fa-icon 'clock-o'}}
+    {{#if isPublished}}
+      {{fa-icon 'star'}}
     {{else}}
       {{fa-icon 'star-half-full'}}
     {{/if}}
   {{/if}}
 {{/if}}
 
-{{#if isPublished}}
-  {{t 'general.published'}}
+{{#if isScheduled}}
+  {{t 'general.scheduled'}}
 {{else}}
-  {{#if isScheduled}}
-    {{t 'general.scheduled'}}
+  {{#if isPublished}}
+    {{t 'general.published'}}
   {{else}}
     {{t 'general.notPublished'}}
   {{/if}}
