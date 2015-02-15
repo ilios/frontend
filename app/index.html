@@ -13,51 +13,9 @@
     <link rel="stylesheet" href="assets/ilios.css">
 
     {{content-for 'head-footer'}}
-    <script type='text/javascript'>
-        setTimeout(function(){
-          $('#browsererrormessage').removeClass('hidden');
-          $('#initialpageloader .waveloader').remove();
-        }, 10000);
-    </script>
   </head>
   <body>
-    <div id='initialpageloader'>
-      <header class="main">
-        <span class='logo'>
-          <img src='images/ilios-logo.png' alt='Ilios Logo' title='Ilios Logo' />
-        </span>
-      </header>
-
-      <div class='content'>
-        <div class='waveloader is-full-screen is-full-size'>
-          <div class="wrapper">
-            <div class="text">Loading Ilios ...</div>
-            <div class='widget'>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-        <p id='browsererrormessage' class='hidden'>
-          It is possible that your browser is not supported by Ilios.
-          Please refresh this page or try a different browser.
-        </p>
-        </div>
-        <noscript>
-          <p>
-            For full functionality of this site it is necessary to enable JavaScript.
-            Here are the <a href="http://www.enable-javascript.com/" target="_blank">
-            instructions how to enable JavaScript in your web browser</a>.
-          </p>
-        </noscript>
-      </div>
-    </div>
+    
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
