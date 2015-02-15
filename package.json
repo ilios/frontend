@@ -46,5 +46,10 @@
     "morgan": "^1.5.0",
     "pluralize": "^1.1.2",
     "precommit-hook": "^1.0.7"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/ilios-prerender"
+    ]
   }
 }
