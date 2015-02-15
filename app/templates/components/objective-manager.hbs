@@ -1,27 +1,44 @@
-<h2> {{t 'general.objective'}}: {{{objective.title}}}</h2>
+<h2> <label>{{objectiveTitle}}:</label> {{{objective.title}}}</h2>
+{{#if availableGroups}}
+  <h3 class='title'>{{parentTitle}}</h3>
 
-{{view "select"
-  content=availableGroups
-  optionLabelPath="content.title"
-  optionValuePath="content.id"
-  value=selectedGroupId
-}}
-
-{{#each competency in currentObjectiveGroup.objectivesByCompetency}}
-  <h5>{{competency.title}}</h5>
-  <ul>
-    {{#each objective in competency.objectives}}
-      {{#if objective.selected}}
-        <li class='highlight clickable' {{action 'removeParent' objective}}>
-          {{input type='checkbox' checked=true}}
-          {{objective.title}}
-        </li>
-      {{else}}
-        <li class='clickable' {{action 'addParent' objective}}>
-          {{input type='checkbox' checked=false}}
-          {{objective.title}}
-        </li>
-      {{/if}}
+  <label class='group-picker'>
+    {{groupTitle}}:
+    {{#if multipleGroups}}
+      {{view "select"
+        content=availableGroups
+        optionLabelPath="content.title"
+        optionValuePath="content.id"
+        value=selectedGroupId
+      }}
+    {{else}}
+      {{currentObjectiveGroup.title}}
+    {{/if}}
+  </label>
+  <div class='parent-picker'>
+    {{#each competency in currentObjectiveGroup.objectivesByCompetency}}
+      <h5 {{bind-attr class='competency.selected:selected'}}>{{competency.title}}</h5>
+      <ul>
+        {{#each objective in competency.objectives}}
+          {{#if objective.selected}}
+            <li class='selected clickable' {{action 'removeParent' objective}}>
+              {{input type='checkbox' checked=true}}
+              {{objective.title}}
+            </li>
+          {{else}}
+            <li class='clickable' {{action 'addParent' objective}}>
+              {{input type='checkbox' checked=false}}
+              {{objective.title}}
+            </li>
+          {{/if}}
+        {{/each}}
+      </ul>
     {{/each}}
-  </ul>
-{{/each}}
+  </div>
+{{else}}
+  <div class='no-group'>
+    <p>
+      {{missingGroupMessage}}
+    </p>
+  </div>
+{{/if}}

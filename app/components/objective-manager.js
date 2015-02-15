@@ -1,9 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['objective-manager'],
   objective: null,
+  objectiveTitle: '',
+  parentTitle: '',
+  groupTitle: '',
   objectiveGroups: [],
   selectedGroupId: null,
+  multipleGroups: Ember.computed.gt('availableGroups.length', 1),
   availableGroups: function(){
     return this.get('objectiveGroups').map(function(group){
       return {

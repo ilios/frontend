@@ -1,8 +1,12 @@
 import Ember from 'ember';
 import ObjectiveGroup from 'ilios/mixins/parent-objective-group';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Ember.I18n.TranslateableProperties, {
   objective: Ember.computed.alias('model'),
+  objectiveTitleTranslation: 'courses.objectiveTitle',
+  objectiveParentTitleTranslation: 'courses.objectiveParentTitle',
+  groupTitleTranslation: 'courses.chooseCohortTitle',
+  missingCohortMessageTranslation: 'courses.missingCohortMessage',
   //course objectives are only linked to a single course
   course: Ember.computed.alias('objective.course'),
   objectiveGroups: [],

@@ -185,7 +185,11 @@ var courses = {
   'expandDetail': 'View All/Edit',
   'collapseDetail': 'Close',
   'firstOffering': 'First Offering',
-  'filterPlaceholder': ''
+  'filterPlaceholder': '',
+  'objectiveTitle': 'Course Objective',
+  'objectiveParentTitle': 'Select Parent Objective',
+  'chooseCohortTitle': 'Select Parent For',
+  'missingCohortMessage': 'Please add at least one cohort to this course.'
 };
 translations.courses = courses;
 
