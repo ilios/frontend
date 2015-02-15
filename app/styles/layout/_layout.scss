@@ -2,6 +2,23 @@ body {
   margin: 0;
   margin-bottom: 40px;
 }
+
+#initialpageloader {
+  .content {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+  p {
+    border: 2px dashed $ilios-orange;
+    color: $ilios-orange;
+    background-color: $background-grey;
+    margin: 2em;
+    padding: 2em;
+    font-weight: bold;
+  }
+}
+
 #site-container {
   @include outer-container;
   padding-left: 50px;
