@@ -9,7 +9,7 @@ moduleFor('controller:programyear/topic/all', 'ProgramYearTopicAllController', {
 });
 
 // Replace this with your real tests.
-test('it exists', function() {
+test('it exists', function(assert) {
   var controller = this.subject();
-  ok(controller);
+  assert.ok(controller);
 });

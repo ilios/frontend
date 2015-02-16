@@ -58,14 +58,14 @@ moduleForModel('cohort', 'Cohort', {
   ]
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });
 
-test('list top level groups', function() {
-  expect(3);
+test('list top level groups', function(assert) {
+  assert.expect(3);
   var model = this.subject();
   var store = model.store;
   Ember.run(function(){
@@ -90,16 +90,16 @@ test('list top level groups', function() {
 
   Ember.run(function(){
     model.get('topLevelLearnerGroups').then(function(topLevelGroups){
-      equal(topLevelGroups.length, 2);
-      equal(topLevelGroups.objectAt(0).get('title'), 'Top Group 1');
-      equal(topLevelGroups.objectAt(1).get('title'), 'Top Group 2');
+      assert.equal(topLevelGroups.length, 2);
+      assert.equal(topLevelGroups.objectAt(0).get('title'), 'Top Group 1');
+      assert.equal(topLevelGroups.objectAt(1).get('title'), 'Top Group 2');
     });
   });
 
 });
 
-test('get display title', function() {
-  expect(2);
+test('get display title', function(assert) {
+  assert.expect(2);
   var model = this.subject();
   var store = model.store;
 
@@ -111,13 +111,13 @@ test('get display title', function() {
 
   Ember.run(function(){
     var displayTitle = model.get('displayTitle');
-    equal(displayTitle, 'Class of 2004');
+    assert.equal(displayTitle, 'Class of 2004');
   });
 
   Ember.run(function(){
     model.set('title', 'testtitle');
     var displayTitle = model.get('displayTitle');
-    equal(displayTitle, 'testtitle');
+    assert.equal(displayTitle, 'testtitle');
   });
 
 });

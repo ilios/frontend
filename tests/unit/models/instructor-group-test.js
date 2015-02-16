@@ -51,14 +51,14 @@ moduleForModel('instructor-group', 'InstructorGroup', {
   ]
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });
 
-test('list courses', function() {
-  expect(3);
+test('list courses', function(assert) {
+  assert.expect(3);
   var model = this.subject();
   var store = model.store;
   Ember.run(function(){
@@ -80,9 +80,9 @@ test('list courses', function() {
 
   Ember.run(function(){
     var courses = model.get('courses');
-    equal(courses.length, 2);
-    equal(courses.objectAt(0).get('title'), 'course1');
-    equal(courses.objectAt(1).get('title'), 'course2');
+    assert.equal(courses.length, 2);
+    assert.equal(courses.objectAt(0).get('title'), 'course1');
+    assert.equal(courses.objectAt(1).get('title'), 'course2');
   });
 
 });
