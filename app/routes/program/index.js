@@ -5,7 +5,9 @@ export default Ember.Route.extend({
     return this.modelFor('program').get('programYears');
   },
   setupController: function(controller, model){
-    controller.set('model', model);
-    controller.set('program', this.modelFor('program'));
+    Ember.run.later(function(){
+      controller.set('model', model);
+      controller.set('program', this.modelFor('program'));
+    });
   }
 });

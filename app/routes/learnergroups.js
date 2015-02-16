@@ -70,17 +70,23 @@ export default Ember.Route.extend({
     return defer.promise;
   },
   setupController: function(controller, hash){
-    controller.set('schools', hash.schools);
-    controller.set('selectedSchool', hash.school);
-    controller.set('selectedCohort', hash.cohort);
-    controller.set('selectedProgram', hash.program);
-    controller.set('cohorts', hash.cohorts);
-    controller.set('programs', hash.programs);
-    controller.set('content', hash.learnerGroups);
-    controller.set('schoolId', parseInt(hash.school.get('id')));
-    controller.set('cohortId', hash.cohort?parseInt(hash.cohort.get('id')): null);
-    controller.set('cohortId', hash.program?parseInt(hash.program.get('id')): null);
-    this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.learnerGroups'));
+    var self = this;
+    Ember.run.later(function(){
+      if(!controller.get('isDestroyed')){
+        controller.set('schools', hash.schools);
+        controller.set('selectedSchool', hash.school);
+        controller.set('selectedCohort', hash.cohort);
+        controller.set('selectedProgram', hash.program);
+        controller.set('cohorts', hash.cohorts);
+        controller.set('programs', hash.programs);
+        controller.set('content', hash.learnerGroups);
+        controller.set('schoolId', parseInt(hash.school.get('id')));
+        controller.set('cohortId', hash.cohort?parseInt(hash.cohort.get('id')): null);
+        controller.set('cohortId', hash.program?parseInt(hash.program.get('id')): null);
+        self.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.learnerGroups'));
+      }
+    });
+
   },
   queryParams: {
     filter: {
