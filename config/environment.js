@@ -38,6 +38,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.adapterHost = 'http://localhost:4200';
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
   }
 
   if (environment === 'vagrant') {
