@@ -58,6 +58,10 @@ export default DS.Model.extend({
     return title.substr(0,200);
   }.property('title'),
   textTitle: function(){
-    return this.get('title').replace(/(<([^>]+)>)/ig,"");
+    var title = this.get('title');
+    if(title === undefined){
+      return '';
+    }
+    return title.replace(/(<([^>]+)>)/ig,"");
   }.property('title')
 });

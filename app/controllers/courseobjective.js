@@ -21,7 +21,8 @@ export default Ember.ObjectController.extend(Ember.I18n.TranslateableProperties,
           newParentChildren.addObject(courseObjective);
           newParent.save().then(function(newParent){
             ourParents.addObject(newParent);
-            courseObjective.save().then(function(){
+            courseObjective.save().then(function(courseObjective){
+              self.set('model', courseObjective);
               self.transitionToRoute('course', self.get('course'), {queryParams: {details: true}});
             });
           });
@@ -36,7 +37,8 @@ export default Ember.ObjectController.extend(Ember.I18n.TranslateableProperties,
           aParent.get('children').removeObject(courseObjective);
           aParent.save();
         });
-        courseObjective.save().then(function(){
+        courseObjective.save().then(function(courseObjective){
+          self.set('model', courseObjective);
           self.transitionToRoute('course', self.get('course'), {queryParams: {details: true}});
         });
       });

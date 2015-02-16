@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   classNames: ['objective-manager'],
   parentTitle: '',
   groupTitle: '',
-  title: '',
+  objective: null,
   objectiveGroups: [],
   selectedGroupId: null,
   multipleGroups: Ember.computed.gt('availableGroups.length', 1),
