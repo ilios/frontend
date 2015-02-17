@@ -23,7 +23,10 @@ export default Ember.Component.extend({
       user: null,
       directors: [],
       targetObject: Ember.computed.alias('user'),
-      title: Ember.computed.alias('user.fullName'),
+      title: function(){
+        return this.get('user.fullName') + ' ' +
+          this.get('user.email');
+      }.property('user.fullName', 'user.email'),
       isActive: function(){
         return !this.get('directors').contains(this.get('user'));
       }.property('user', 'directors.@each'),
