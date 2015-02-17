@@ -6,6 +6,8 @@ export default Ember.Mixin.create({
   buffer: null,
   tagName: 'span',
   content: null,
+  model: null,
+  property: null,
   /**
    * In order to observe the property changes on the dynamic property
    * of the dymanic element we have to add and destroy our own observers.
@@ -19,7 +21,11 @@ export default Ember.Mixin.create({
     }
   },
   willDestroyElement: function() {
-    Ember.removeObserver(this.get('model'), this.get('property'), this.propertyDidChange);
+    var property = this.get('property');
+    var model = this.get('model');
+    if(model && property){
+      Ember.removeObserver(model, property, this.propertyDidChange);
+    }
   },
   propertyDidChange: function(model, property) {
     if(property){

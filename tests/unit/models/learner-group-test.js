@@ -51,14 +51,14 @@ moduleForModel('learner-group', 'LearnerGroup', {
   ]
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });
 
-test('list courses', function() {
-  expect(3);
+test('list courses', function(assert) {
+  assert.expect(3);
   var model = this.subject();
   var store = model.store;
   Ember.run(function(){
@@ -80,15 +80,15 @@ test('list courses', function() {
 
   Ember.run(function(){
     model.get('courses').then(function(courses){
-      equal(courses.length, 2);
-      equal(courses.objectAt(0).get('title'), 'course1');
-      equal(courses.objectAt(1).get('title'), 'course2');
+      assert.equal(courses.length, 2);
+      assert.equal(courses.objectAt(0).get('title'), 'course1');
+      assert.equal(courses.objectAt(1).get('title'), 'course2');
     });
   });
 });
 
-test('list available users', function() {
-  expect(4);
+test('list available users', function(assert) {
+  assert.expect(4);
   var model = this.subject();
   var store = model.store;
   var newUsers = [];
@@ -121,10 +121,10 @@ test('list available users', function() {
   Ember.run(function(){
     model.get('availableUsers').then(function(users){
       var names = users.mapBy('firstName');
-      equal(users.get('length'), 3);
-      ok(names.contains(2));
-      ok(names.contains(3));
-      ok(names.contains(4));
+      assert.equal(users.get('length'), 3);
+      assert.ok(names.contains(2));
+      assert.ok(names.contains(3));
+      assert.ok(names.contains(4));
     });
   });
 });

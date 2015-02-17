@@ -51,13 +51,13 @@ moduleForModel('offering', 'Offering', {
   ]
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });
 
-test('title from session', function() {
+test('title from session', function(assert) {
   var model = this.subject();
   var store = model.store;
   Ember.run(function(){
@@ -67,5 +67,5 @@ test('title from session', function() {
      });
   });
 
-  equal(model.get('title'), 'Test Title');
+  assert.equal(model.get('title'), 'Test Title');
 });

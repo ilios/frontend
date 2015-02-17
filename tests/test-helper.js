@@ -2,11 +2,16 @@ import resolver from './helpers/resolver';
 import {
   setResolver
 } from 'ember-qunit';
+import Ember from 'ember';
+import { initialize } from 'ilios/initializers/ember-moment';
+import customHelpers from './helpers/custom-helpers';
 
 setResolver(resolver);
 
-document.write('<div id="ember-testing-container"><div id="ember-testing"></div></div>');
+//setup ember-moment
+initialize();
 
-QUnit.config.urlConfig.push({ id: 'nocontainer', label: 'Hide container'});
-var containerVisibility = QUnit.urlParams.nocontainer ? 'hidden' : 'visible';
-document.getElementById('ember-testing-container').style.visibility = containerVisibility;
+var inflector = Ember.Inflector.inflector;
+// inflector.irregular('aamc-pcrs', 'aamc-pcrses');
+inflector.uncountable('aamcPcrs');
+inflector.uncountable('aamc-pcrs');
