@@ -16,7 +16,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each objective in objectives}}
+        {{#each objective in sortedObjectives}}
         <tr>
           <td colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
           <td>
