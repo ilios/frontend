@@ -16,7 +16,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each objective in objectives}}
+        {{#each objective in sortedObjectives}}
         <tr>
           <td colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
           <td>
@@ -24,7 +24,9 @@
             <ul>
               {{#each parent in objective.parents}}
                 <li>
-                  {{parent.textTitle}}
+                  {{#link-to 'courseobjective' objective}}
+                    {{parent.textTitle}}
+                  {{/link-to}}
                   {{#if parent.competency}}
                     ({{parent.competency.title}})
                   {{/if}}
@@ -32,7 +34,9 @@
               {{/each}}
             </ul>
             {{else}}
-            <button class='add'>{{t 'general.addNew'}}</button>
+              {{#link-to 'courseobjective' objective}}
+                <button class='add'>{{t 'general.addNew'}}</button>
+              {{/link-to}}
             {{/if}}
           </td>
           <td>

@@ -1,48 +1,49 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['objective-manager'],
+  parentTitle: '',
+  groupTitle: '',
   objective: null,
   objectiveGroups: [],
-  selectedGroup: null,
+  selectedGroupId: null,
+  multipleGroups: Ember.computed.gt('availableGroups.length', 1),
+  availableGroups: function(){
+    return this.get('objectiveGroups').map(function(group){
+      return {
+        id: group.get('id'),
+        title: group.get('title')
+      };
+    }).sortBy('title');
+  }.property('objectiveGroups.@each.id', 'objectiveGroups.@each.title'),
   multipleParents: false,
-  allObjectives: function(){
-    var objectives = [];
-    this.get('objectiveGroups').forEach(function(group){
-      group.get('objectives').forEach(function(obj){
-        objectives.pushObject(obj);
-      });
-    });
-    return objectives;
-  }.property('objectiveGroups.@each'),
   currentObjectiveGroup: function(){
-    var group = this.get('selectedGroup');
-    if(group == null){
-      group = this.get('objectiveGroups').get('firstObject');
-    }
-    if(group !== undefined){
-      return group;
-    }
-    return null;
-  }.property('selectedGroup', 'objectiveGroups.@each'),
-  actions: {
-    selectParent: function(parentObj){
-      var objective = this.get('objective');
-      var parent = parentObj.get('content');
-      if(!this.get('multipleParents')){
-        this.get('allObjectives').filter(function(obj){
-          return obj.get('id') !== parent.get('id');
-        }).setEach('selected', false);
-        parentObj.set('selected', true);
-        objective.get('parents').then(function(parents){
-          parent.get('children').then(function(children){
-            parents.clear();
-            parents.addObject(objective);
-            children.addObject(parent);
-            objective.save();
-            parent.save();
-          });
-        });
+    var selectedGroupId = this.get('selectedGroupId');
+    if(selectedGroupId){
+      var matchingGroups = this.get('objectiveGroups').filterBy('id', selectedGroupId);
+      if(matchingGroups.length > 0){
+        return matchingGroups.get('firstObject');
       }
+    }
+
+    return null;
+  }.property('selectedGroupId', 'objectiveGroups.@each'),
+  watchGroups: function(){
+    Ember.run.later(this, function(){
+      if(this.get('selectedGroupId') == null){
+        var firstGroup = this.get('availableGroups.firstObject');
+        if(firstGroup != null){
+          this.set('selectedGroupId', firstGroup.id);
+        }
+      }
+    }, 500);
+  }.observes('availableGroups.@each'),
+  actions: {
+    addParent: function(parentObj){
+      this.sendAction('addParent', parentObj);
+    },
+    removeParent: function(parentObj){
+      this.sendAction('removeParent', parentObj);
     }
   }
 });

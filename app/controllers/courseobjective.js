@@ -1,36 +1,47 @@
 import Ember from 'ember';
-import ObjectiveGroup from 'ilios/mixins/parent-objective-group';
 
-export default Ember.Controller.extend({
-  course: null,
+export default Ember.ObjectController.extend(Ember.I18n.TranslateableProperties, {
+  objectiveTitleTranslation: 'courses.objectiveTitle',
+  objectiveParentTitleTranslation: 'courses.objectiveParentTitle',
+  groupTitleTranslation: 'courses.chooseCohortTitle',
+  missingCohortMessageTranslation: 'courses.missingCohortMessage',
   objectiveGroups: [],
-  watchCohorts: function(){
-    var self = this;
-    var groups = [];
-    var objectiveGroup = Ember.Object.extend(ObjectiveGroup, {
-      cohort: null,
-      title: Ember.computed.oneWay('cohort.displayTitle')
-    });
-
-    this.get('course.cohorts').then(function(cohorts){
-      cohorts.forEach(function(cohort){
-        cohort.get('objectives').then(function(objectives){
-          self.get('model').get('parents').then(function(parents){
-            var objectiveProxies = objectives.map(function(objective){
-              return Ember.ObjectProxy.create({
-                content: objective,
-                selected: parents.contains(objective)
-              });
+  course: null,
+  actions: {
+    addParent: function(parentProxy){
+      var newParent = parentProxy.get('content');
+      var self = this;
+      var courseObjective = this.get('model');
+      courseObjective.get('parents').then(function(ourParents){
+        newParent.get('children').then(function(newParentChildren){
+          ourParents.forEach(function(aParent){
+            aParent.get('children').removeObject(courseObjective);
+            aParent.save();
+          });
+          newParentChildren.addObject(courseObjective);
+          newParent.save().then(function(newParent){
+            ourParents.addObject(newParent);
+            courseObjective.save().then(function(courseObjective){
+              self.set('model', courseObjective);
+              self.transitionToRoute('course', self.get('course'), {queryParams: {details: true}});
             });
-            var group = objectiveGroup.create({
-              cohort: cohort,
-              objectives: objectiveProxies
-            });
-            groups.pushObject(group);
-            self.set('objectiveGroups', groups);
           });
         });
       });
-    });
-  }.observes('course.cohorts.@each', 'model.parents.@each')
+    },
+    removeParent: function(){
+      var self = this;
+      var courseObjective = this.get('model');
+      courseObjective.get('parents').then(function(ourParents){
+        ourParents.forEach(function(aParent){
+          aParent.get('children').removeObject(courseObjective);
+          aParent.save();
+        });
+        courseObjective.save().then(function(courseObjective){
+          self.set('model', courseObjective);
+          self.transitionToRoute('course', self.get('course'), {queryParams: {details: true}});
+        });
+      });
+    }
+  }
 });

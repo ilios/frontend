@@ -54,7 +54,8 @@ var general = {
   'offerings': 'Offerings',
   'filterPlaceholder': 'Start typing to filter list',
   'required': 'Required',
-  'loading': 'Loading Ilios'
+  'loading': 'Loading Ilios',
+  'backToTitle': 'Back to {{title}}'
 };
 translations.general = general;
 
@@ -184,7 +185,11 @@ var courses = {
   'expandDetail': 'View All/Edit',
   'collapseDetail': 'Close',
   'firstOffering': 'First Offering',
-  'filterPlaceholder': ''
+  'filterPlaceholder': '',
+  'objectiveTitle': 'Course Objective',
+  'objectiveParentTitle': 'Select Parent Objective',
+  'chooseCohortTitle': 'Select Parent For',
+  'missingCohortMessage': 'Please add at least one cohort to this course.'
 };
 translations.courses = courses;
 

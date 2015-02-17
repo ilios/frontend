@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  course: null
+  course: null,
+  editable: true,
 });

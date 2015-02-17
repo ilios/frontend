@@ -4,10 +4,10 @@ export default Ember.Component.extend({
   collapsed: true,
   actions: {
     expand: function(){
-      this.set('collapsed', false);
+      this.sendAction('collapsedState', false);
     },
     collapse: function(){
-      this.set('collapsed', true);
+      this.sendAction('collapsedState', true);
     },
   }
 

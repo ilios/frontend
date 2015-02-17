@@ -1,0 +1,20 @@
+.objective-manager {
+  h2 {
+    padding: .5em;
+    margin-bottom: 1em;
+    background-color: $background-grey;
+  }
+  .selected {
+    color: $base-accent-color;
+  }
+  .parent-picker {
+    li {
+      margin-left: 1em;
+      list-style-position: outside;
+    }
+  }
+  .no-group {
+    font-weight: bold;
+    color: $ilios-orange;
+  }
+}

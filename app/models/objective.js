@@ -5,6 +5,9 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   competency: DS.belongsTo('competency', {async: true}),
   courses: DS.hasMany('course', {async: true}),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple courses, for now we just reflect a many to one relationship
+  course: Ember.computed.alias('courses.firstObject'),
   sessions: DS.hasMany('session', {async: true}),
   children: DS.hasMany('objective', {
     inverse: 'parents',
@@ -55,6 +58,10 @@ export default DS.Model.extend({
     return title.substr(0,200);
   }.property('title'),
   textTitle: function(){
-    return this.get('title').replace(/(<([^>]+)>)/ig,"");
+    var title = this.get('title');
+    if(title === undefined){
+      return '';
+    }
+    return title.replace(/(<([^>]+)>)/ig,"");
   }.property('title')
 });
