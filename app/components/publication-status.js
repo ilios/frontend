@@ -1,17 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  showIcon: true,
   tagName: 'span',
   classNameBindings: [
     ':status',
-    'isPublished:published',
-    'isScheduled:scheduled',
-    'isNotPublished:notpublished'
+    'publicationStatus'
   ],
+  publicationStatus: function(){
+    if(this.get('isScheduled')){
+      return 'scheduled';
+    } else if (this.get('isPublished')){
+      return 'published';
+    }
+
+    return 'notpublished';
+  }.property('isPublished', 'isScheduled'),
   item: null,
   isPublished: Ember.computed.alias('item.isPublished'),
   isScheduled: Ember.computed.alias('item.publishedAsTbd'),
-  isSomething: Ember.computed.or('isPublished', 'isScheduled'),
-  isNotPublished: Ember.computed.not('isSomething'),
-  showIcon: true
 });
