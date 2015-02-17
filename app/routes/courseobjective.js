@@ -9,7 +9,11 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash(promises);
   },
   setupController(controller, hash){
-    controller.set('course', hash.course);
-    controller.set('model', hash.objective);
+    Ember.run.later(function(){
+      if(!controller.get('isDestroyed')){
+        controller.set('course', hash.course);
+        controller.set('model', hash.objective);
+      }
+    });
   }
 });

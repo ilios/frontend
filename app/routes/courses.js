@@ -42,14 +42,19 @@ export default Ember.Route.extend({
     return defer.promise;
   },
   setupController: function(controller, hash){
-    controller.set('schoolId', parseInt(hash.school.get('id')));
-    controller.set('schools', hash.schools);
-    controller.set('yearTitle', parseInt(hash.year.get('title')));
-    controller.set('selectedSchool', hash.school);
-    controller.set('selectedYear', hash.year);
-    controller.set('years', hash.years);
-    controller.set('content', hash.courses);
-    this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
+    var self = this;
+    Ember.run.later(function(){
+      if(!controller.get('isDestroyed')){
+        controller.set('model', hash.courses);
+        controller.set('schoolId', parseInt(hash.school.get('id')));
+        controller.set('schools', hash.schools);
+        controller.set('yearTitle', parseInt(hash.year.get('title')));
+        controller.set('selectedSchool', hash.school);
+        controller.set('selectedYear', hash.year);
+        controller.set('years', hash.years);
+        self.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
+      }
+    });
   },
   queryParams: {
     filter: {
