@@ -7,7 +7,8 @@
     position: absolute;
     background-color: white;
     margin-left: 31px;
-    width: 100%;
+    width: auto;
+    z-index: 100;
     border: 2px solid $base-border-color;
     box-shadow: $base-border-color 2px 2px 1px;
     li{

@@ -11,8 +11,10 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   buttonTitle: '',
   results: [],
   searchTerms: '',
-  minimumTermLength: 2,
+  minimumTermLength: 3,
   showMoreInputPrompt: false,
+  searchReturned: false,
+  searching: false,
   sortedSearchResults: function(){
     return this.get('results').sortBy('sortTerm');
   }.property('results.@each'),
@@ -39,18 +41,19 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       this.sendAction('remove', obj);
     },
     search: function(){
-      if(this.get('searchTerms').length === 0){
+      var length = this.get('searchTerms').replace(/ /g,'').length;
+      if(length === 0){
         this.send('clear');
       } else {
-        Ember.run.debounce(this, function(){
-          if(this.get('searchTerms').length < this.get('minimumTermLength')){
-            this.set('showMoreInputPrompt', true);
-            this.set('results', []);
-          } else {
-            this.set('showMoreInputPrompt', false);
-            this.sendAction('search', this.get('searchTerms'));
-          }
-        }, 500);
+        if(length < this.get('minimumTermLength')){
+          this.set('showMoreInputPrompt', true);
+          this.set('searching', false);
+          this.set('results', []);
+        } else {
+          this.set('showMoreInputPrompt', false);
+          console.log('sending search action');
+          this.sendAction('search', this.get('searchTerms'));
+        }
       }
     },
     clear: function() {
@@ -58,6 +61,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       this.set('searchTerms', '');
       this.sendAction('search', '');
       this.set('showMoreInputPrompt', false);
+      this.set('searching', false);
       this.$().find('input').focus();
     }
   }
