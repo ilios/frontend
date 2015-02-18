@@ -69,14 +69,24 @@
   .removable-list{
     margin-bottom: $base-font-size;
     ul,li {
-      display: inline;
+      display: inline-block;
     }
     li {
-      margin-right: $base-font-size;
+      margin-top: 10px;
+      margin-right: .3em;
       background-color: $background-grey;
       cursor: pointer;
-    }
+      padding: .2em .4em .2em .6em;
+      vertical-align: middle;
+      border-radius: 4px;
+    }  
   }
+
+.removex {
+      display: inline;
+      padding: 0 .4em 0 .4em;
+      margin: 0;
+      }
 
   .selectable-list{
     @include position(relative);
