@@ -4,15 +4,25 @@
   display: inline-block;
 
   .results {
-    position: absolute;
-    background-color: white;
-    margin-left: 31px;
-    width: auto;
+    
+ @include transition (all 0.2s ease-in-out);
+    background: #FFF;
+    border: 1px solid $light-gray;
+    border-radius: $base-border-radius;
+    box-shadow: 0 2px 2px transparentize(black, .8);
+    color: $base-font-color;
+    cursor: pointer;
+    z-index: 99999;
+    overflow: show;
+    // position: absolute;
+    left: 0;
+    top: $dropdown-distance-from-menu;
+    min-width: 191px;
     z-index: 100;
-    border: 2px solid $base-border-color;
-    box-shadow: $base-border-color 2px 2px 1px;
+    
     li{
-      padding: $base-font-size * .5;
+      padding: $base-font-size * .6;
+      padding-left: 1em;
       border-bottom: 1px solid $base-border-color;
 
       &.active:hover{

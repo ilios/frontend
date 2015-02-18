@@ -14,9 +14,9 @@
         <ul class='results'>
           {{#each result in sortedSearchResults}}
             {{#if result.isActive}}
-              <li class='active' {{action 'add' result.targetObject}}>{{fa-icon 'plus-circle' classNames='add'}} {{result.title}}</li>
+              <li class='active' {{action 'add' result.targetObject}}>{{result.title}}</li>
             {{else}}
-              <li class='inactive' >{{fa-icon 'circle'}} {{result.title}}</li>
+              <li class='inactive' > {{result.title}}</li>
             {{/if}}
           {{/each}}
         </ul>
