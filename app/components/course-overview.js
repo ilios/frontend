@@ -27,6 +27,12 @@ export default Ember.Component.extend({
         return this.get('user.fullName') + ' ' +
           this.get('user.email');
       }.property('user.fullName', 'user.email'),
+      userName: function(){
+        return this.get('user.fullName');
+      }.property('user.fullName'),
+      userEmail: function(){
+        return this.get('user.email');
+      }.property('user.email'),
       isActive: function(){
         return !this.get('directors').contains(this.get('user'));
       }.property('user', 'directors.@each'),

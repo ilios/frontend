@@ -14,9 +14,9 @@
         <ul class='results'>
           {{#each result in sortedSearchResults}}
             {{#if result.isActive}}
-              <li class='active' {{action 'add' result.targetObject}}>{{result.title}}</li>
+              <li class='active' {{action 'add' result.targetObject}}><div class='livesearch-results-name'>{{result.userName}}</div> <div class='livesearch-results-email'>{{result.userEmail}}</div></li>
             {{else}}
-              <li class='inactive' > {{result.title}}</li>
+              <li class='inactive'><div class='livesearch-results-name'>{{result.userName}}</div> <div class='livesearch-results-email'>{{result.userEmail}}</div></li>
             {{/if}}
           {{/each}}
         </ul>
