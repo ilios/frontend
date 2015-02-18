@@ -29,7 +29,7 @@
         <span>
           <ul class='removable-list'>
             {{#each user in sortedDirectors}}
-            <li {{action 'removeDirector' user}}>{{user.fullName}} <div class="removex">{{fa-icon 'remove'}}</div></li>
+            <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
             {{/each}}
           </ul>
         </span>
