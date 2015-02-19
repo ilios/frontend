@@ -46,11 +46,11 @@
       <div class="resultslist-title">
         <h2>{{title}}</h2>
       </div>
-    {{!-- {{#if currentCohort}} --}}
+    {{#if selectedCohort}}
         <div class='resultslist-actions'>
           <button class='add' {{action 'addGroup'}}>{{t 'general.addNew'}}</button>
         </div>
-    {{!-- {{/if}} --}}
+    {{/if}}
     </div>
     <div class='resultslist-list'>
       {{learnergroup-list groups=filteredGroups edit='editGroup' remove='removeGroup'}}
