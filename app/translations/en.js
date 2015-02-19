@@ -42,7 +42,10 @@ var general = {
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
-  'parentObjectives': 'Parent Objectives',
+  'parentObjectives': {
+    'one': 'Parent Objective',
+    'other': 'Parent Objectives'
+  },
   'learningMaterials': 'Learning Materials',
   'findDirector': 'Find Director',
   'moreInputRequiredPrompt': 'keep typing...',
