@@ -11,7 +11,11 @@
       <thead>
         <tr>
           <th colspan=2>{{t 'general.description'}}</th>
-          <th>{{t 'general.parentObjectives'}}</th>
+          {{#if isCourse}}
+            <th>{{t 'general.parentObjectives' count=1}}</th>
+          {{else}}
+            <th>{{t 'general.parentObjectives' count=2}}</th>
+          {{/if}}
           <th>{{t 'general.meshTerms'}}</th>
         </tr>
       </thead>
@@ -24,9 +28,16 @@
             <ul>
               {{#each parent in objective.parents}}
                 <li>
-                  {{#link-to 'courseobjective' objective}}
-                    {{parent.textTitle}}
-                  {{/link-to}}
+                  {{#if isCourse}}
+                    {{#link-to 'courseobjective' objective}}
+                      {{parent.textTitle}}
+                    {{/link-to}}
+                  {{/if}}
+                  {{#if isSession}}
+                    {{#link-to 'sessionobjective' objective}}
+                      {{parent.textTitle}}
+                    {{/link-to}}
+                  {{/if}}
                   {{#if parent.competency}}
                     ({{parent.competency.title}})
                   {{/if}}
@@ -34,9 +45,16 @@
               {{/each}}
             </ul>
             {{else}}
-              {{#link-to 'courseobjective' objective}}
-                <button class='add'>{{t 'general.addNew'}}</button>
-              {{/link-to}}
+              {{#if isCourse}}
+                {{#link-to 'courseobjective' objective}}
+                  <button class='add'>{{t 'general.addNew'}}</button>
+                {{/link-to}}
+              {{/if}}
+              {{#if isSession}}
+                {{#link-to 'sessionobjective' objective}}
+                  <button class='add'>{{t 'general.addNew'}}</button>
+                {{/link-to}}
+              {{/if}}
             {{/if}}
           </td>
           <td>
