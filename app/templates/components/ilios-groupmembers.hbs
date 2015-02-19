@@ -5,17 +5,17 @@
       <table>
         <thead>
           <tr>
-            <th>{{t 'general.users'}}</th>
-            <th>{{t 'general.email'}}</th>
-            <th>{{t 'general.actions'}}</th>
+            <th class='text-center'>{{t 'general.users'}}</th>
+            <th class='text-center'>{{t 'general.email'}}</th>
+            <th class='text-center'>{{t 'general.actions'}}</th>
           </tr>
         </thead>
         <tbody>
           {{#each user in filteredUsers}}
             <tr>
-              <td>{{user.fullName}}</td>
-              <td>{{user.email}}</td>
-              <td><button {{action 'remove' user}}>{{t 'general.remove'}}</button></td>
+              <td class='text-center'>{{user.fullName}}</td>
+              <td class='text-center'>{{user.email}}</td>
+              <td class='text-center'><button {{action 'remove' user}}>{{t 'general.remove'}}</button></td>
             </tr>
           {{/each}}
         </tbody>
