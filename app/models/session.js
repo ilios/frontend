@@ -45,13 +45,17 @@ var Session = DS.Model.extend({
     isPublished: Ember.computed.notEmpty('publishEvent'),
     isNotPublished: Ember.computed.not('isPublished'),
     status: function(){
-      if(this.get('publishEvent') != null){
+      if(this.get('publishedAsTbd')){
+        return Ember.I18n.t('general.scheduled');
+      } else if(this.get('isPublished')){
         return Ember.I18n.t('general.published');
       } else {
         return Ember.I18n.t('general.notPublished');
       }
     }.property('publishEvent'),
-
+    searchString: function(){
+      return this.get('title') + this.get('sessionType.title') + this.get('status');
+    }.property('title', 'sessionType.title', 'status')
 });
 
 export default Session;
