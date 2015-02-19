@@ -29,17 +29,17 @@
     <table>
       <thead>
         <tr>
-          <th>{{t 'general.program'}}</th>
-          <th>{{t 'general.cohort'}}</th>
-          <th>{{t 'general.level'}}</th>
+          <th class='text-center'>{{t 'general.program'}}</th>
+          <th class='text-center'>{{t 'general.cohort'}}</th>
+          <th class='text-center'>{{t 'general.level'}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each cohort in cohorts}}
         <tr>
-          <td>{{cohort.programYear.program.title}}</td>
-          <td>{{cohort.displayTitle}}</td>
-          <td>{{cohort.currentLevel}}</td>
+          <td class='text-left'>{{cohort.programYear.program.title}}</td>
+          <td class='text-center'>{{cohort.displayTitle}}</td>
+          <td class='text-center'>{{cohort.currentLevel}}</td>
         </tr>
         {{/each}}
       </tbody>

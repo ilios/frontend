@@ -9,31 +9,31 @@
     <table>
       <thead>
         <tr>
-          <th colspan=2>{{t 'learningMaterials.displayName'}}</th>
-          <th>{{t 'general.type'}}</th>
-          <th>{{t 'learningMaterials.owner'}}</th>
-          <th>{{t 'general.required'}}</th>
-          <th>{{t 'learningMaterials.notes'}}</th>
+          <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
+          <th class='text-center'>{{t 'general.type'}}</th>
+          <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
+          <th class='text-center'>{{t 'general.required'}}</th>
+          <th class='text-left'>{{t 'learningMaterials.notes'}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each lm in materials}}
           <tr>
-            <td colspan=2>
+            <td class='text-left' colspan=2>
               {{#link-to 'courselearningmaterial' lm}}
                 {{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}
               {{/link-to}}
             </td>
-            <td>{{lm.learningMaterial.type}}</td>
-            <td>{{lm.learningMaterial.originalAuthor}}</td>
-            <td>
+            <td class='text-center'>{{lm.learningMaterial.type}}</td>
+            <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+            <td class='text-center'>
 	    {{#if lm.required}}
 	      <span class='add'>{{t 'general.yes'}}</span>
 	    {{else}}
 	      <span class='remove'>{{t 'general.no'}}</span>
 	    {{/if}}
 	    </td>
-            <td>{{lm.learningMaterial.notes}}</td>
+            <td class='text-left'>{{lm.learningMaterial.notes}}</td>
           </t>
         {{/each}}
       </tbody>

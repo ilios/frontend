@@ -10,20 +10,20 @@
     <table>
       <thead>
         <tr>
-          <th colspan=2>{{t 'general.description'}}</th>
+          <th class='text-left' colspan=2>{{t 'general.description'}}</th>
           {{#if isCourse}}
-            <th>{{t 'general.parentObjectives' count=1}}</th>
+            <th class='text-left'>{{t 'general.parentObjectives' count=1}}</th>
           {{else}}
-            <th>{{t 'general.parentObjectives' count=2}}</th>
+            <th class='text-left'>{{t 'general.parentObjectives' count=2}}</th>
           {{/if}}
-          <th>{{t 'general.meshTerms'}}</th>
+          <th class='text-left'>{{t 'general.meshTerms'}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each objective in sortedObjectives}}
         <tr>
-          <td colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
-          <td>
+          <td class='text-left' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
+          <td class='text-left'>
             {{#if objective.parents.length}}
             <ul>
               {{#each parent in objective.parents}}
@@ -57,7 +57,7 @@
               {{/if}}
             {{/if}}
           </td>
-          <td>
+          <td class='text-left'>
             {{#if objective.meshDescriptors.length}}
             <ul>
               {{#each descriptor in objective.meshDescriptors}}

@@ -99,3 +99,17 @@ h4 {
  margin-top: 12px;
   a {color: $ilios-blue;}
 }
+
+/* handle the 'text-align' property */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
