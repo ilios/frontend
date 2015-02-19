@@ -19,6 +19,7 @@
     @include position(absolute, 0);
     background-color: transparent;
     color: $base-button-color;
+    text-align: left;
 
     img {
       opacity: .7;
