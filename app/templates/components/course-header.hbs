@@ -5,7 +5,9 @@
         {{editable-text tagName='h2' model=course property='title'}}
       {{/if}}
     {{else}}
-      <h2>{{course.title}}</h2>
+      {{#if course}}
+        <h2>{{course.title}}</h2>
+      {{/if}}
     {{/if}}
     <h4>{{course.academicYear}}</h4>
   </span>
