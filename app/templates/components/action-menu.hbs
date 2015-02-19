@@ -1,6 +1,9 @@
 {{#rl-dropdown-container class="action-menu"}}
   {{#rl-dropdown-toggle class="button"}}
-    {{fa-icon 'gear'}}
+    {{#if icon}}
+      {{fa-icon icon}}
+    {{/if}}
+    {{title}}
   {{/rl-dropdown-toggle}}
 
   {{#rl-dropdown tagName="ul" class="menu" closeOnChildClick=true}}
