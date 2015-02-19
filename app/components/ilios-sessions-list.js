@@ -12,19 +12,28 @@ export default Ember.Component.extend({
     this.set('debouncedFilter', this.get('filter'));
   },
   filteredContent: function(){
-    var filter = this.get('debouncedFilter');
-    var exp = new RegExp(filter, 'gi');
     var sessions = this.get('sessions');
     if(sessions == null){
       return Ember.A();
     }
+    var filter = this.get('debouncedFilter');
+    var filterExpressions = filter.split(' ').map(function(string){
+      return new RegExp(string, 'gi');
+    });
     var filtered = sessions.filter(function(session) {
-      var title = session.get('title');
-      if(title === null || title === undefined){
+      var searchString = session.get('searchString');
+      if(searchString === null || searchString === undefined){
         return false;
       }
-      return title.match(exp);
+      var matchedSearchTerms = 0;
+      for (var i = 0; i < filterExpressions.length; i++) {
+        if(searchString.match(filterExpressions[i])){
+          matchedSearchTerms++;
+        }
+      }
+      //if the number of matching search terms is equal to the number searched, return true
+      return (matchedSearchTerms === filterExpressions.length);
     });
     return filtered.sortBy('title');
-  }.property('sessions.@each.title', 'debouncedFilter'),
+  }.property('sessions.@each.searchString', 'debouncedFilter'),
 });
