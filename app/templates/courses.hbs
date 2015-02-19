@@ -7,15 +7,20 @@
       </label>
     </div>
     <div id='schoolsfilter' class="filter">
-      {{#if hasMoreThanOneSchool}}
-        {{view "select"
-          content=schools
-          selection=selectedSchool
-          optionLabelPath="content.title"
-        }}
-      {{else}}
-        {{selectedSchool.title}}
-      {{/if}}
+      <label class="inline-label">
+        {{t 'general.school'}}:
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if hasMoreThanOneSchool}}
+          {{view "select"
+            content=schools
+            selection=selectedSchool
+            optionLabelPath="content.title"
+          }}
+        {{else}}
+          {{selectedSchool.title}}
+        {{/if}}
+      </div>
     </div>
     <div id='yearsfilter' class="filter">
       {{view "select"
