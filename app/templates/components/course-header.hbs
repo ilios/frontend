@@ -1,9 +1,11 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if editable}}
-      {{editable-text tagName='h2' model=course property='title'}}
+      {{#if course}}
+        {{editable-text tagName='h2' model=course property='title'}}
+      {{/if}}
     {{else}}
-      {{course.title}}
+      <h2>{{course.title}}</h2>
     {{/if}}
     <h4>{{course.academicYear}}</h4>
   </span>
