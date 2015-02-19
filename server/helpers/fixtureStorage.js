@@ -5,8 +5,12 @@ module.exports = {
     var fixtures = require ('../fixtures/' + name + '.js');
     var changes = this.getChanges(name);
     changes.forEach(function(obj){
-      for(var key in obj){
-        fixtures[obj.id][key] = obj[key];
+      if(!(obj.id in fixtures)){
+        fixtures[obj.id] = obj;
+      } else {
+        for(var key in obj){
+          fixtures[obj.id][key] = obj[key];
+        }
       }
     });
 
