@@ -66,6 +66,15 @@ export default Ember.Controller.extend(Ember.I18n.TranslateableProperties, {
         self.transitionToRoute('learnergroup', group);
       });
 
+    },
+    changeSelectedYear: function(year){
+      this.set('selectedYear', year);
+    },
+    changeSelectedSchool: function(school){
+      this.set('selectedSchool', school);
+    },
+    changeSelectedCohort: function(cohort){
+      this.set('selectedCohort', cohort);
     }
   }
 });
