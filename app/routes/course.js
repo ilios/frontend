@@ -26,14 +26,11 @@ export default Ember.Route.extend({
     return deferred.promise;
   },
   setupController: function(controller, model){
-    var self = this;
-    Ember.run.later(function(){
-      if(!controller.get('isDestroyed')){
-        controller.set('model', model);
-        controller.set('availableTopics', self.get('availableTopics'));
-        controller.set('programs', self.get('programs'));
-        self.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
-      }
-    });
+    if(!controller.get('isDestroyed')){
+      controller.set('model', model);
+      controller.set('availableTopics', this.get('availableTopics'));
+      controller.set('programs', this.get('programs'));
+      this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
+    }
   }
 });
