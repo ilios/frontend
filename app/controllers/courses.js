@@ -70,6 +70,12 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
         self.transitionToRoute('course', course);
       });
 
+    },
+    changeSelectedYear: function(year){
+      this.set('selectedYear', year);
+    },
+    changeSelectedSchool: function(school){
+      this.set('selectedSchool', school);
     }
   },
 });

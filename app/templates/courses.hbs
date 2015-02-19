@@ -12,22 +12,22 @@
       </label>
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
-          {{view "select"
-            content=schools
-            selection=selectedSchool
-            optionLabelPath="content.title"
-          }}
+          {{#action-menu title=selectedSchool.title icon=false}}
+            {{#each school in schools}}
+              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
+            {{/each}}
+          {{/action-menu}}
         {{else}}
           {{selectedSchool.title}}
         {{/if}}
       </div>
     </div>
     <div id='yearsfilter' class="filter">
-      {{view "select"
-        content=years
-        selection=selectedYear
-        optionLabelPath="content.title"
-      }}
+      {{#action-menu title=selectedYear.academicYearTitle icon=false}}
+        {{#each year in years}}
+          <li {{action 'changeSelectedYear' year}}>{{year.academicYearTitle}}</li>
+        {{/each}}
+      {{/action-menu}}
     </div>
 
     <div id='titlefilter' class="filter">
@@ -53,4 +53,3 @@
     </div>
   </section>
 </section>
-

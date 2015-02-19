@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-
+  title: '',
+  icon: 'gear',
   didInsertElement: function(){
     var element = this.get('element');
     Ember.$(".button", element).click(function(){
