@@ -132,21 +132,20 @@
     /* vertical-align: bottom;*/
 
     .title {
-      @include span-columns(5 of 12);
+      @include span-columns(8 of 12);
       h2, h4 {
         display: inline;
       }
     }
     .actions {
       /*vertical-align: bottom;*/
-      @include span-columns(5 of 12);
-      @include shift(2);
+      @include span-columns(4 of 12);
       text-align:right;
 
       .status {
-        font-size: $h5-font-size;
+        font-size: 14px;
         vertical-align: middle;
-        margin-left: 1em;
+        margin-left: .8em;
         i{
           vertical-align: middle;
         }
