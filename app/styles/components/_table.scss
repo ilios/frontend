@@ -1,6 +1,6 @@
 table {
   border-collapse: collapse;
-  margin: ($base-spacing / 2) 0;
+  margin: ($base-line-height * .5em) 0;
   margin-bottom: 76px;
   table-layout: fixed;
   width: 100%;
@@ -13,13 +13,13 @@ table {
   th {
     border-bottom: 1px solid darken($base-border-color, 15);
     font-weight: bold;
-    padding: ($base-spacing / 2) 0;
+    padding: ($base-line-height * .5em / 2) 0;
     text-align: left;
   }
 
   td {
     border: none;
-    padding: ($base-spacing / 2) 0;
+    padding: ($base-line-height * .5em / 2) 0;
   }
 
   tr,

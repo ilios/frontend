@@ -1,8 +1,14 @@
-// Typography
-$sans-serif: $helvetica;
-$serif: $georgia;
-$base-font-family: $sans-serif;
-$header-font-family: $base-font-family;
+// Font Sizes
+$base-font-size: 1em;
+$h1-font-size: $base-font-size * 2.25;
+$h2-font-size: $base-font-size * 2;
+$h3-font-size: $base-font-size * 1.75;
+$h4-font-size: $base-font-size * 1.5;
+$h5-font-size: $base-font-size * 1.25;
+$h6-font-size: $base-font-size;
+
+$base-line-height: 1.5;
+$base-border-radius: 3px;
 
 $ilios_orange: #CC6600;
 
@@ -13,7 +19,7 @@ $text-grey: #333333;
 $ilios-red: #d9360b;
 $ilios-green: #84c444;
 $ilios-blue: #009ccc;
-$published-green:#84c444;
+$published-green: $ilios-green;
 $notpublished-amber: #ffc339;
 $scheduled-brown: #8C4600;
 
@@ -31,4 +37,14 @@ $base-accent-color: $ilios-accent-color;
 $base-font-color: $text-grey;
 $base-border-color: $background-grey;
 $base-background-color: $background-grey;
-$base-button-color: $ilios-blue;
+
+// Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+
+// Neat Breakpoints
+$medium-screen: em(640);
+$large-screen: em(860);
+
+$medium-screen-up: new-breakpoint(min-width $medium-screen 4);
+$large-screen-up: new-breakpoint(min-width $large-screen 8);

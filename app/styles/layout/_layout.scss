@@ -21,7 +21,7 @@ body {
 
 #site-container {
   @include outer-container;
-  padding-left: 50px;
+  padding-left: 40px;
   section.fullwidth {
     @include span-columns(12);
   }
