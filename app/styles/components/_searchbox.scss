@@ -15,10 +15,10 @@
     @include padding(0 0 0 25px);
   }
 
-  button[type=submit] {
+  button[type=search] {
     @include position(absolute, 0);
     background-color: transparent;
-    color: $base-button-color;
+    color: $base-link-color;
     text-align: left;
 
     img {

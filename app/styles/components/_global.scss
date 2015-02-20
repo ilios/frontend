@@ -1,3 +1,30 @@
+
+a {
+  color: $base-link-color;
+  &:visited {
+    color: $base-link-color;
+  }
+  &:hover, &:active, &:focus {
+    color: $hover-link-color;
+    outline: none;
+  }
+}
+
+button {
+  @include appearance(none);
+  -webkit-font-smoothing: antialiased;
+  background-color: $base-link-color;
+  border-radius: $base-border-radius;
+  font-size: $base-font-size * 0.75;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.75em 1em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
 .add {
   color: $ilios-add-color;
 }
@@ -25,9 +52,6 @@
 .clickable, .is-clickable {
   cursor: pointer;
 }
-.clickable {
-  cursor: pointer;
-}
 .page-title {
   color: $base-accent-color;
   text-align: center;
@@ -41,43 +65,18 @@ button {
   &.add, &.remove {
     color: white;
   }
-  &.add {
-    background-color: $ilios-blue;
-  }
   &.remove {
     background-color: $ilios-remove-color;
   }
-  &.un {
-    border-radius: $base-border-radius;
-    color: $ilios-blue;
-    border: 1px solid $ilios-blue;
-    background-color: white;
-  }
   &.publish, &.unpublish {
     background-color: $ilios-green;
-    font-size: .80em;
   }
 }
-h1 {
-  font-weight: normal;
-}
-h2 {
-  font-size: $base-font-size * 1.5;
-  font-weight: normal;
-}
-h4 {
-  font-weight: normal;
-  margin-left: 10px;
-   color: #666;
-   font-size: $base-font-size * 1.15;
-}
+
 .textarea {
   display: inline;
 }
-#site-container {
-  margin: 0 auto;
-  padding-left: 30px;
-}
+
 .main-border {
   border-top: 0px;
   margin-top: 0px;
@@ -97,14 +96,13 @@ h4 {
   color: $published-green;
 }
 .notpublished {
-  color:$notpublished-amber;
+  color: $notpublished-amber;
 }
 .scheduled {
  color: $scheduled-brown;
 }
 .backtolink  {
- margin-top: 12px;
-  a {color: $ilios-blue;}
+ margin-top: $base-font-size;
 }
 
 /* handle the 'text-align' property */
@@ -119,4 +117,3 @@ h4 {
 .text-right {
   text-align: right;
 }
-

@@ -1,5 +1,5 @@
 {{input action='search' type="search" value=value placeholder=placeholder}}
-<button class='search' {{bind-attr title=buttonTitle}} {{action 'search'}} type="submit">
+<button {{bind-attr title=buttonTitle}} {{action 'search'}} type="search">
   {{fa-icon 'search'}}
 </button>
 {{#if value.length}}

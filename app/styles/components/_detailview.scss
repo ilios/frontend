@@ -7,15 +7,8 @@
   section {
     text-align: left;
     margin: 10px;
-   border:none;
+    border:none;
     @include clearfix;
-
-
-
-    button {
-      font-size: $base-font-size * 0.75;
-
-    }
 
     &.detail-overview {
       margin-top: $base-font-size * 2;
@@ -79,7 +72,7 @@
       padding: .2em .4em .2em .6em;
       vertical-align: middle;
       border-radius: 4px;
-    }  
+    }
   }
 
 .removex {
@@ -162,7 +155,6 @@
 
 
     span {
-
       color: white;
       @include padding(.25em 4em .5em 5em);
       background-color: $ilios-orange;

@@ -15,7 +15,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     padding: 0 ($dropdown-padding * 3.5) 0 ($dropdown-padding / 2);
     position: relative;
     color: $base-font-color;
-    border: 1px solid $medium-gray;
+    border: 1px solid $background-grey;
 
     @include media($large-screen) {
       font-size: 1em;

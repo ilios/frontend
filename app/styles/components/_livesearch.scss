@@ -4,10 +4,10 @@
   display: inline-block;
 
   .results {
-    
+
  @include transition (all 0.2s ease-in-out);
     background: #FFF;
-    border: 1px solid $light-gray;
+    border: 1px solid $background-grey;
     border-radius: $base-border-radius;
     box-shadow: 0 2px 2px transparentize(black, .8);
     color: $base-font-color;
@@ -19,7 +19,7 @@
     top: $dropdown-distance-from-menu;
     min-width: 191px;
     z-index: 100;
-    
+
     li{
       padding: $base-font-size * .6;
       padding-left: 1em;
