@@ -58,7 +58,8 @@ var general = {
   'filterPlaceholder': 'Start typing to filter list',
   'required': 'Required',
   'loading': 'Loading Ilios',
-  'backToTitle': 'Back to {{title}}'
+  'backToTitle': 'Back to {{title}}',
+  'clickToEdit': 'Click to edit',
 };
 translations.general = general;
 
@@ -195,6 +196,13 @@ var courses = {
   'missingCohortMessage': 'Please add at least one cohort to this course.'
 };
 translations.courses = courses;
+
+var sessions = {
+  'specialAttireRequired': 'Special Attire Required',
+  'specialEquipmentRequired': 'Special Equipment Required',
+  'supplementalCurriculum': 'Supplemental Curriculum',
+};
+translations.sessions = sessions;
 
 var learningMaterials = {
   'displayName': 'Display Name',

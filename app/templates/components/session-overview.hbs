@@ -1,0 +1,38 @@
+<div class='detail-header'>
+  <span class='title'>
+      {{editable-text tagName='h2' model=session property='title'}}
+  </span>
+  <span class ='actions'>
+    <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
+    <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
+    {{publication-status item=session}}
+  </span>
+</div>
+<section class='detail-overview detail-block'>
+  <div class='detail-title'>
+    {{t 'general.overview'}}
+  </div>
+  <div class='detail-content'>
+    <div class="inline-label-data-block">
+      <label>{{t "general.type"}}:</label>
+      <div>{{editable-select model=session property='sessionType.title' options=sessionTypeOptions}}</div>
+    </div>
+    <div class="inline-label-data-block">
+      <label>{{t "sessions.supplementalCurriculum"}}:</label>
+      <div>{{editable-boolean model=session property='supplemental'}}</div>
+    </div>
+    <div class="inline-label-data-block">
+      <label>{{t "sessions.specialAttireRequired"}}:</label>
+      <div>{{editable-boolean model=session property='attireRequired'}}</div>
+    </div>
+    <div class="inline-label-data-block">
+      <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+      <div>{{editable-boolean model=session property='equipmentRequired'}}</div>
+    </div>
+    <br />
+    <div class="inline-label-data-block">
+      <label>{{t "general.description"}}:</label>
+      <div>{{editable-textarea model=session.sessionDescription property='description'}}</div>
+    </div>
+  </div>
+</section>

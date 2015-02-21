@@ -1,0 +1,27 @@
+{{#link-to 'course' course}}{{t 'general.backToTitle' titleBinding=course.title}}{{/link-to}}
+
+<div class='detail-view'>
+    {{course-header course=course editable=false}}
+    {{course-overview course=course editable=false}}
+    <div class='detail-view-details'>
+      {{session-overview
+        course=course
+        session=session
+        editing=true
+        sessionTypes=sessionTypes
+      }}
+      {{detail-objectives objectives=session.objectives isCourse=false}}
+      {{detail-learning-materials materials=session.learningMaterials isCourse=false}}
+      {{detail-topics
+        topics=session.disciplines
+        availableTopics=availableTopics
+        addTopic='addTopic'
+        removeTopic='removeTopic'
+      }}
+      {{detail-mesh
+        terms=session.meshDescriptors
+        addTerm='addMeshDescriptor'
+        removeTerm='removeMeshDescriptor'
+      }}
+    </div>
+</div>

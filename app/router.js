@@ -50,6 +50,8 @@ Router.map(function() {
   this.route("learnergroup", { path: 'learnergroup/:learner_group_id'});
   this.route("instructorgroups");
   this.route("session", {path: 'session/:session_id'});
+  this.route('sessionobjective', {path: 'sessionobjective/:objective_id'});
+  this.route("sessionlearningmaterial", {path: 'sessionlearningmaterial/:session_learning_material_id'});
 });
 
 export default Router;

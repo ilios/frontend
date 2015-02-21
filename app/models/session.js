@@ -20,7 +20,7 @@ var Session = DS.Model.extend({
     disciplines: DS.hasMany('discipline', {async: true}),
     objectives: DS.hasMany('objective', {async: true}),
     meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
-    sessionLearningMaterials: DS.hasMany('session-learning-material', {async: true}),
+    learningMaterials: DS.hasMany('session-learning-material', {async: true}),
     instructionHours: DS.hasMany('instruction-hour', {async: true}),
     sessionDescription: DS.belongsTo('session-description', {async: true}),
     ilmSessionFacet: DS.belongsTo('ilm-session', {async: true}),
@@ -55,7 +55,7 @@ var Session = DS.Model.extend({
     }.property('publishEvent'),
     searchString: function(){
       return this.get('title') + this.get('sessionType.title') + this.get('status');
-    }.property('title', 'sessionType.title', 'status')
+    }.property('title', 'sessionType.title', 'status'),
 });
 
 export default Session;
