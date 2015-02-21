@@ -81,8 +81,9 @@ button {
   }
 }
 
-.textarea {
-  display: inline;
+textarea {
+  display: inline-block;
+  width: 100%;
 }
 
 .main-border {
