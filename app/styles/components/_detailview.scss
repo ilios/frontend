@@ -123,7 +123,7 @@
 
   .detail-header {
     @include span-columns(12 of 12);
-    background-color:#edecec;
+    background-color:$header-grey;
     margin:0px;
     padding: .8em;
     /* vertical-align: bottom;*/
