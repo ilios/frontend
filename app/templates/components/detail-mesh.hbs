@@ -5,18 +5,24 @@
   <div class='detail-content'>
     <ul class='removable-list'>
       {{#each term in terms}}
-        <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
+        {{#unless printView}}
+          <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
+        {{else}}
+          <li>{{term.title}}</li>
+        {{/unless}}
       {{/each}}
     </ul>
-    {{search-box placeholder=placeholder liveSearch=false search='search'}}
-    {{#if filteredSearchResults.length}}
-      <div class='selectable-list'>
-        <ul>
-          {{#each term in filteredSearchResults}}
-            <li {{action 'add' term}}>{{term.title}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}}
+    {{#unless printView}}
+      {{search-box placeholder=placeholder liveSearch=false search='search'}}
+      {{#if filteredSearchResults.length}}
+        <div class='selectable-list'>
+          <ul>
+            {{#each term in filteredSearchResults}}
+              <li {{action 'add' term}}>{{term.title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+    {{/unless}}
   </div>
 </section>

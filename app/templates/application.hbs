@@ -1,5 +1,11 @@
-{{ilios-header userName=currentUser.fullName title=pageTitle}}
-{{ilios-navigation}}
+{{#if showHeader}}
+  {{ilios-header userName=currentUser.fullName title=pageTitle}}
+{{/if}}
+{{#if showNavigation}}
+  {{ilios-navigation}}
+{{/if}}
 <div id='site-container'>
   {{liquid-outlet}}
 </div>
+
+{{outlet 'fullscreen'}}

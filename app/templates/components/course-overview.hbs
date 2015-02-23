@@ -1,10 +1,14 @@
 <section class='detail-overview detail-block'>
-  <div class='detail-title'>
-    {{t 'general.overview'}}
-  </div>
-  <div class='detail-actions'>
-    <button>{{t 'general.printSummary'}}</button>
-  </div>
+  {{#unless printView}}
+    <div class='detail-title'>
+      {{t 'general.overview'}}
+    </div>
+    <div class='detail-actions'>
+      {{#link-to 'print-course' course}}
+        <button>{{t 'general.printSummary'}}</button>
+      {{/link-to}}
+    </div>
+  {{/unless}}
   <div class='detail-content'>
     {{#if editing}}
       <div class="inline-label-data-block">

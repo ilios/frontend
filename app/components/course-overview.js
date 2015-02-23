@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   editable: false,
+  printView: false,
   directorsSort: ['lastName', 'firstName'],
   directorsWithFullName: Ember.computed.filterBy('course.directors', 'fullName'),
   sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
