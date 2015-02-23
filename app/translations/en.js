@@ -201,6 +201,7 @@ var sessions = {
   'specialAttireRequired': 'Special Attire Required',
   'specialEquipmentRequired': 'Special Equipment Required',
   'supplementalCurriculum': 'Supplemental Curriculum',
+  'type': 'Session Type',
 };
 translations.sessions = sessions;
 
