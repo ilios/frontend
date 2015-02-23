@@ -20,7 +20,7 @@ $sliding-menu-color-hover: #fff;
     color: $sliding-menu-color;
     padding-top: 0.4em;
   	text-align: center;
-  	font-size: 0.9em;
+  	font-size: $base-font-size *  0.9;
   	height: 45px;
   	width: 120px;
     border-color: $ilios-orange;

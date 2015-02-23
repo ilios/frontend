@@ -10,7 +10,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
   .button {
     background: #ffffff;
     cursor: pointer;
-    font-size: .7em;
+    font-size: $base-font-size * 0.7;
     font-weight: 800;
     padding: 0 ($dropdown-padding * 3.5) 0 ($dropdown-padding / 2);
     position: relative;
@@ -18,7 +18,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     border: 1px solid $header-grey;
     line-height: 1.1em;
     @include media($large-screen) {
-      font-size: 1em;
+      font-size: $base-font-size;
       padding: $dropdown-padding / 3 ($dropdown-padding * 2.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     }
   }
