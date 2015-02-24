@@ -2,7 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   filter: '',
-
+  classNames: ['detail-view'],
+  tagName: 'div',
+  course: null,
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
   watchFilter: function(){

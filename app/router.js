@@ -32,9 +32,14 @@ Router.map(function() {
     });
   });
   this.route('courses');
-  this.route('course', { path: 'course/:course_id'});
+  this.resource('course', { path: 'course/:course_id'}, function(){
+      this.route("session", {path: '/session/:session_id'});
+  });
+  this.route('print-course', { path: 'course/:course_id/print'});
   this.route("courseobjective", {path: 'courseobjective/:objective_id'});
   this.route("courselearningmaterial", {path: 'courselearningmaterial/:course_learning_material_id'});
+  this.route("sessionobjective", {path: 'sessionobjective/:objective_id'});
+  this.route("sessionlearningmaterial", {path: 'sessionlearningmaterial/:session_learning_material_id'});
 
   this.route('instructorgroups');
   this.route('instructorgroup', { path: 'instructorgroup/:instructor_group_id'});
@@ -45,11 +50,7 @@ Router.map(function() {
   this.route("testmodels");
   this.route("loading");
 
-  this.route("testmodels");
-  this.route("learnergroups");
-  this.route("learnergroup", { path: 'learnergroup/:learner_group_id'});
-  this.route("instructorgroups");
-  this.route("session", {path: 'session/:session_id'});
+
 });
 
 export default Router;

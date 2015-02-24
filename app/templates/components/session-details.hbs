@@ -1,0 +1,22 @@
+<div class='detail-view'>
+    <div class='detail-view-details'>
+      {{session-overview
+        course=course
+        session=session
+        sessionTypes=sessionTypes
+      }}
+      {{detail-objectives objectives=session.objectives isCourse=false}}
+      {{detail-learning-materials materials=session.learningMaterials isCourse=false}}
+      {{detail-topics
+        topics=session.disciplines
+        availableTopics=availableTopics
+        addTopic='addTopic'
+        removeTopic='removeTopic'
+      }}
+      {{detail-mesh
+        terms=session.meshDescriptors
+        addTerm='addMeshDescriptor'
+        removeTerm='removeMeshDescriptor'
+      }}
+    </div>
+</div>
