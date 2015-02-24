@@ -16,4 +16,10 @@ export default function(){
     }),
     this.use('crossFade')
   );
+  this.transition(
+    this.fromRoute('course.index'),
+    this.toRoute('course.session'),
+    this.use('toRight'),
+    this.reverse('toLeft')
+  );
 }

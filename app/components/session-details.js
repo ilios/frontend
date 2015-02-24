@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   availableTopics: [],
+  sessionTypes: [],
   session: null,
   actions: {
     save: function(){
