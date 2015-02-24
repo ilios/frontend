@@ -64,7 +64,7 @@ header.main {
       @include transition (all 0.2s ease-in-out);
       display: inline;
       color: $header-color;
-      font-size: .8em;
+      font-size:$base-font-size * 0.8;
       font-weight: 800;
       padding: .4em .5em;
 
@@ -81,7 +81,7 @@ header.main {
       background: $base-accent-color;
       border-radius: $base-border-radius;
       color: $header-color;
-      font-size: .8em;
+      font-size: $base-font-size * 0.8;
       font-weight: 800;
       text-transform: uppercase;
       padding: .4em .5em;
