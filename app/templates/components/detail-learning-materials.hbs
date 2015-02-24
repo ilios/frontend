@@ -6,7 +6,8 @@
     <button class='add'>{{t 'general.addNew'}}</button>
   </div>
   <div class='detail-content'>
-    <table>
+   {{#if materials.length}}
+   <table>
       <thead>
         <tr>
           <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
@@ -27,16 +28,17 @@
             <td class='text-center'>{{lm.learningMaterial.type}}</td>
             <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
             <td class='text-center'>
-	    {{#if lm.required}}
-	      <span class='add'>{{t 'general.yes'}}</span>
-	    {{else}}
-	      <span class='remove'>{{t 'general.no'}}</span>
-	    {{/if}}
-	    </td>
+	        {{#if lm.required}}
+	        <span class='add'>{{t 'general.yes'}}</span>
+	        {{else}}
+	        <span class='remove'>{{t 'general.no'}}</span>
+	        {{/if}}
+	        </td>
             <td class='text-left'>{{lm.learningMaterial.notes}}</td>
-          </t>
+          </tr>
         {{/each}}
       </tbody>
     </table>
+   {{/if}}
   </div>
 </section>
