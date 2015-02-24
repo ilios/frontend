@@ -11,9 +11,8 @@ export default Ember.Route.extend({
     this.set('sessionTypes', sessionTypes);
   },
   setupController: function(controller, model){
-    if(!controller.get('isDestroyed')){
-      controller.set('model', model);
-      controller.set('sessionTypes', this.get('sessionTypes'));
-    }
+    controller.set('model', model);
+    controller.set('sessionTypes', this.get('sessionTypes'));
+    this.controllerFor('course').set('showBackToCourseListLink', false);
   }
 });

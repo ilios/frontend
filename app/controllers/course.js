@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
   availableTopics: [],
   programs: [],
   details: false,
+  showBackToCourseListLink: true,
   //pass the state var that ilios-course-details expects
   collapsed: Ember.computed.not('details'),
   actions: {

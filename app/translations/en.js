@@ -202,6 +202,7 @@ var sessions = {
   'specialEquipmentRequired': 'Special Equipment Required',
   'supplementalCurriculum': 'Supplemental Curriculum',
   'type': 'Session Type',
+  'backToSessionList': 'Back to Session List',
 };
 translations.sessions = sessions;
 

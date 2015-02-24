@@ -29,7 +29,9 @@ export default Ember.Mixin.create({
   },
   propertyDidChange: function(model, property) {
     if(property){
-      this.set('content', model.get(property));
+      if(!this.get('isDestroyed')){
+        this.set('content', model.get(property));
+      }
     }
   },
   isModified: function(){
