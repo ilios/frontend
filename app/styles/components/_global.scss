@@ -15,14 +15,23 @@ button {
   -webkit-font-smoothing: antialiased;
   background-color: $base-link-color;
   border-radius: $base-border-radius;
-  font-size: $base-font-size * 0.75;
+  font-size: $base-font-size * 0.85;
   color: white;
   border: none;
   cursor: pointer;
   display: inline-block;
-  padding: 0.75em 1em;
+  padding: 0.3em 1em;
   vertical-align: middle;
   white-space: nowrap;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+h4 {
+  font-size: 1em;
+  color: $medium-grey;
+  margin-left: 8px;
 }
 
 .add {
