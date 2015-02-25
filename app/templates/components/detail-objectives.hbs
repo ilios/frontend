@@ -25,25 +25,32 @@
           <td class='text-left' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
           <td class='text-left'>
             {{#if objective.parents.length}}
-            <ul>
-              {{#each parent in objective.parents}}
-                <li>
-                  {{#if isCourse}}
-                    {{#link-to 'courseobjective' objective}}
-                      {{parent.textTitle}}
-                    {{/link-to}}
-                  {{/if}}
-                  {{#if isSession}}
-                    {{#link-to 'sessionobjective' objective}}
-                      {{parent.textTitle}}
-                    {{/link-to}}
-                  {{/if}}
-                  {{#if parent.competency}}
-                    ({{parent.competency.title}})
-                  {{/if}}
-                </li>
-              {{/each}}
-            </ul>
+              {{#if objective.multipleParents}}
+                {{#if isCourse}}
+                  {{#link-to 'courseobjective' objective}}
+                    {{objective.parents.length}}
+                  {{/link-to}}
+                {{/if}}
+                {{#if isSession}}
+                  {{#link-to 'sessionobjective' objective}}
+                    {{objective.parents.length}}
+                  {{/link-to}}
+                {{/if}}
+              {{else}}
+                {{#if isCourse}}
+                  {{#link-to 'courseobjective' objective}}
+                    {{objective.parents.firstObject.textTitle}}
+                  {{/link-to}}
+                {{/if}}
+                {{#if isSession}}
+                  {{#link-to 'sessionobjective' objective}}
+                    {{objective.parents.firstObject.textTitle}}
+                  {{/link-to}}
+                {{/if}}
+                {{#if objective.parents.firstObject.competency}}
+                  ({{objective.parents.firstObject.competency.title}})
+                {{/if}}
+              {{/if}}
             {{else}}
               {{#if isCourse}}
                 {{#link-to 'courseobjective' objective}}

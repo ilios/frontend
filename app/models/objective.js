@@ -9,6 +9,9 @@ export default DS.Model.extend({
   //link to multiple courses, for now we just reflect a many to one relationship
   course: Ember.computed.alias('courses.firstObject'),
   sessions: DS.hasMany('session', {async: true}),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple sessions, for now we just reflect a many to one relationship
+  session: Ember.computed.alias('sessions.firstObject'),
   children: DS.hasMany('objective', {
     inverse: 'parents',
     async: true
@@ -17,6 +20,7 @@ export default DS.Model.extend({
     inverse: 'children',
     async: true
   }),
+  multipleParents: Ember.computed.gt('parents.length', 1),
   programYears: DS.hasMany('program-year',  {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   treeCompetencies: function(){
