@@ -24,7 +24,7 @@ install:
   - bower install
 
 before_script:
-  - curl -L https://gist.githubusercontent.com/johanneswuerbach/e4950820c0d685fc545e/raw/sauce_connect_setup.sh | bash # Create a sauce tunnel
+  - curl -L https://gist.githubusercontent.com/johanneswuerbach/d1136720c78c85efca8f/raw/sauce-connect.sh | bash # Create a sauce tunnel
   - ember s --live-reload=false & # Start a server so we can hit the fake API from integration tests
   - sleep 10 # wait for the server to be started
 
