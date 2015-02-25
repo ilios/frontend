@@ -15,6 +15,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   userCoursesOnly: false,
   years: [],
   schools: [],
+  newCourses: [],
 
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
@@ -59,17 +60,24 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       });
     },
     addCourse: function(){
-      var self = this;
       var course = this.store.createRecord('course', {
-        title: this.get('newCourseTitle'),
+        title: null,
         owningSchool: this.get('selectedSchool'),
-        year: this.get('selectedYear.title')
+        year: this.get('selectedYear.title'),
+        level: 1,
       });
-      course.save().then(function(){
-        self.get('content').pushObject(course);
-        self.transitionToRoute('course', course);
+      this.get('newCourses').addObject(course);
+    },
+    saveNewCourse: function(newCourse){
+      var self = this;
+      self.get('newCourses').removeObject(newCourse);
+      newCourse.setDatesBasedOnYear();
+      newCourse.save().then(function(savedCourse){
+        self.transitionToRoute('course', savedCourse);
       });
-
+    },
+    removeNewCourse: function(newCourse){
+      this.get('newCourses').removeObject(newCourse);
     },
     changeSelectedYear: function(year){
       this.set('selectedYear', year);

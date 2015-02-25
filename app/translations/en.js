@@ -12,6 +12,7 @@ var general = {
   'home': 'Home',
   'add': 'Add',
   'addNew': 'Add New',
+  'cancel': 'Cancel',
   'published': 'Published',
   'notPublished': 'Not Published',
   'scheduled': 'Scheduled',
@@ -61,6 +62,7 @@ var general = {
   'loading': 'Loading Ilios',
   'backToTitle': 'Back to {{title}}',
   'clickToEdit': 'Click to edit',
+  'academicYear': 'Academic Year',
 };
 translations.general = general;
 
@@ -80,7 +82,6 @@ var programs = {
     'createNew': 'Create a New Program'
   },
   'programYear': {
-    'academicYear': 'Academic Year',
     'createNew': 'Create a New Program Year',
     'addDirector': 'Add Director',
     'removeDirector': 'Remove Director',
@@ -173,7 +174,6 @@ var courses = {
   'noCourses': 'There are no courses in this school',
   'noSessions': 'There are no sessions in this course',
   'educationalYear': 'Educational Year',
-  'academicYear': 'Academic Year',
   'externalId': 'External ID',
   'startDate': 'Start Date',
   'endDate': 'End Date',
@@ -186,6 +186,7 @@ var courses = {
   'availableCohorts': 'Available Cohorts',
   'noAvailableCohorts': 'No available cohorts',
   'titleFilterPlaceholder': 'Filter by course title',
+  'courseTitlePlaceholder': 'Enter a title for this course',
   'findDirector': 'Find Director',
   'expandDetail': 'View All/Edit',
   'collapseDetail': 'Close',

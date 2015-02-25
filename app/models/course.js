@@ -1,3 +1,4 @@
+/* global moment */
 import DS from 'ember-data';
 import Ember from 'ember';
 
@@ -59,6 +60,14 @@ var Course = DS.Model.extend({
     publishedSessions: Ember.computed.filterBy('sessions', 'isPublished'),
     publishedSessionOfferingCounts: Ember.computed.mapBy('publishedSessions', 'offerings.length'),
     publishedOfferingCount: Ember.computed.sum('publishedSessionOfferingCounts'),
+    setDatesBasedOnYear: function(){
+      var today = moment();
+      var firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
+      var startDate = today < firstDayOfYear?firstDayOfYear:today;
+      var endDate = moment(startDate).add('8', 'weeks');
+      this.set('startDate', startDate.toDate());
+      this.set('endDate', endDate.toDate());
+    }
 });
 
 export default Course;
