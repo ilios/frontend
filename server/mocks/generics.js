@@ -27,7 +27,6 @@ module.exports = function(app) {
     'learningMaterialUserRoles',
     'learningMaterials',
     'meshConcepts',
-    'meshDescriptors',
     'meshQualifiers',
     'objectives',
     'offerings',
