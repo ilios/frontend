@@ -12,27 +12,38 @@
     </tr>
   </thead>
   <tbody>
-    {{#each course in courses}}
-      <td class='text-left' colspan=3>
-        {{#link-to 'course' course}}
-          {{course.title}}
-          {{#if course.externalId}}
-            ({{course.externalId}})
-          {{/if}}
-        {{/link-to}}
-      </td>
-      <td class='text-center' colspan=2 {{action 'edit' course}}>{{course.owningSchool.title}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' course}}>{{course.academicYear}}</td>
-      <td class='text-center' colspan=1 {{action 'edit' course}}>{{course.level}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment course.startDate 'MM/DD/YY'}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment course.endDate 'MM/DD/YY'}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' course}}>{{publication-status item=course showIcon=false}}</td>
-      <td class='text-center' colspan=2>
-        {{#action-menu}}
-          <li {{action 'edit' course}}>{{t 'general.edit'}}</li>
-          <li {{action 'remove' course}}>{{t 'general.remove'}}</li>
-        {{/action-menu}}
-      </td>
+    {{#each course in proxiedCourses}}
+      <tr {{bind-attr class='course.showRemoveConfirmation:confirm-removal'}}>
+        <td class='text-left' colspan=3>
+          {{#link-to 'course' course}}
+            {{course.title}}
+            {{#if course.externalId}}
+              ({{course.externalId}})
+            {{/if}}
+          {{/link-to}}
+        </td>
+        <td class='text-center' colspan=2 {{action 'edit' course}}>{{course.owningSchool.title}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' course}}>{{course.academicYear}}</td>
+        <td class='text-center' colspan=1 {{action 'edit' course}}>{{course.level}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment course.startDate 'MM/DD/YY'}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment course.endDate 'MM/DD/YY'}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' course}}>{{publication-status item=course showIcon=false}}</td>
+        <td class='text-center' colspan=2>
+          {{#action-menu}}
+            <li {{action 'edit' course}}>{{t 'general.edit'}}</li>
+            <li {{action 'confirmRemove' course}}>{{t 'general.remove'}}</li>
+          {{/action-menu}}
+        </td>
+      </tr>
+      {{#if course.showRemoveConfirmation}}
+        <tr class='confirm-removal'><td colspan=16>
+          <div class='confirm-message'>
+            {{t 'courses.confirmRemove' publishedOfferingCountBinding=course.publishedOfferingCount}} <br />
+            <button {{action 'remove' course}} class='remove'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' course}} class='cancel'>{{t 'general.cancel'}}</button>
+          </div>
+        </td></tr>
+      {{/if}}
     {{/each}}
   </tbody>
 </table>

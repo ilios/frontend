@@ -56,6 +56,9 @@ var Course = DS.Model.extend({
         }
       });
     }.observes('objectives.@each').on('init'),
+    publishedSessions: Ember.computed.filterBy('sessions', 'isPublished'),
+    publishedSessionOfferingCounts: Ember.computed.mapBy('publishedSessions', 'offerings.length'),
+    publishedOfferingCount: Ember.computed.sum('publishedSessionOfferingCounts'),
 });
 
 export default Course;

@@ -1,11 +1,12 @@
 .resultslist {
+  $remove-background-color: lighten($ilios-red, 40%);
   @include span-columns(12 of 12);
   border-style: solid;
   border-color: $header-grey;
   border-width: 0 2px 2px;
   margin-top:0;
     .resultslist-header {
-      background-color: $header-grey; 
+      background-color: $header-grey;
       overflow: auto;
       padding: .4em;
       @include span-columns(12 of 12);
@@ -32,5 +33,21 @@
   .resultslist-actions {
     @include span-columns(1 of 12);
     @include omega;
+  }
+  tbody tr.confirm-removal {
+    .confirm-message {
+      text-align: center;
+      font-weight: bold;
+      color: $ilios-red;
+      width: 100%;
+    }
+    background-color: $remove-background-color;
+    &:hover {
+      background-color: $remove-background-color;
+    }
+    button.remove {
+      background-color: white;
+      color: $ilios-red;
+    }
   }
 }
