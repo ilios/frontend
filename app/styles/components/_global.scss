@@ -95,6 +95,8 @@ textarea {
 /* creates an inline block grouping a label on top and its corresponding data below */
 .inline-label-data-block {
   display: inline-block;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 /* set individual items to be inline as needed */
@@ -138,7 +140,7 @@ background: #FFF;
     z-index: 99999;
     overflow: show;
 padding: 4px;
-width: 100%;
+// width: 100%;
 
  }
 
