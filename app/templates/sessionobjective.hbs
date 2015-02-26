@@ -1,6 +1,8 @@
 {{#link-to 'course.session' course session}}{{t 'sessions.backToDetails'}}{{/link-to}}
 <div class='detail-view'>
   {{session-overview session=session editable=false}}
+</div>
+<div class='objective-manager'>
   <h2> <label>{{t 'sessions.objectiveTitle'}}:</label> {{{model.title}}}</h2>
   {{#if proxiedObjectives.length}}
     <h3 class='title'>{{t 'sessions.objectiveParentsTitle'}}</h3>
