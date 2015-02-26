@@ -1,5 +1,5 @@
 .resultslist {
-  $remove-background-color: lighten($ilios-red, 40%);
+  // $remove-background-color: lighten($ilios-red, 40%);
   @include span-columns(12 of 12);
   border-style: solid;
   border-color: $header-grey;
@@ -38,8 +38,14 @@
     .confirm-message {
       text-align: center;
       font-weight: bold;
-      color: $ilios-red;
+      color: $ilios-remove-color;
       width: 100%;
+      padding-left: 8em;
+      padding-right: 8em;
+    }
+    .confirm-buttons{
+      padding-top: 1.1em;
+      padding-bottom: 1.5em;
     }
     background-color: $remove-background-color;
     &:hover {
@@ -47,7 +53,7 @@
     }
     button.remove {
       background-color: white;
-      color: $ilios-red;
+      color: $ilios-remove-color;
     }
   }
 }
