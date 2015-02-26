@@ -1,39 +1,73 @@
 <div class='detail-header'>
-  <span class='title'>
-      {{editable-text tagName='h2' model=session property='title'}}
-  </span>
-  <span class ='actions'>
-    <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
-    <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
-    {{publication-status item=session}}
-  </span>
+  {{#if editable}}
+    <span class='title'>
+        {{editable-text tagName='h2' model=session property='title'}}
+    </span>
+    <span class ='actions'>
+      <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
+      <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
+      {{publication-status item=session}}
+    </span>
+  {{else}}
+    <span class='title'>
+        <h2>{{session.title}}</h2>
+    </span>
+    <span class ='actions'>
+      {{publication-status item=session}}
+    </span>
+  {{/if}}
 </div>
 <section class='detail-overview detail-block'>
   <div class='detail-title'>
     {{t 'general.overview'}}
   </div>
   <div class='detail-content'>
-    <div class="inline-label-data-block">
-      <label>{{t "sessions.type"}}:</label>
-      <div>{{editable-select model=session property='sessionType.title' options=sessionTypeOptions}}</div>
-    </div>
-    <br />
-    <div class="inline-label-data-block">
-      <label>{{t "sessions.supplementalCurriculum"}}:</label>
-      <div>{{editable-boolean model=session property='supplemental'}}</div>
-    </div>
-    <div class="inline-label-data-block">
-      <label>{{t "sessions.specialAttireRequired"}}:</label>
-      <div>{{editable-boolean model=session property='attireRequired'}}</div>
-    </div>
-    <div class="inline-label-data-block">
-      <label>{{t "sessions.specialEquipmentRequired"}}:</label>
-      <div>{{editable-boolean model=session property='equipmentRequired'}}</div>
-    </div>
-    <br />
-    <div class="inline-label-data-block">
-      <label>{{t "general.description"}}:</label>
-      <div>{{editable-textarea model=session.sessionDescription property='description'}}</div>
-    </div>
+    {{#if editable}}
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.type"}}:</label>
+        <div>{{editable-select model=session property='sessionType.title' options=sessionTypeOptions}}</div>
+      </div>
+      <br />
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.supplementalCurriculum"}}:</label>
+        <div>{{editable-boolean model=session property='supplemental'}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.specialAttireRequired"}}:</label>
+        <div>{{editable-boolean model=session property='attireRequired'}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+        <div>{{editable-boolean model=session property='equipmentRequired'}}</div>
+      </div>
+      <br />
+      <div class="inline-label-data-block">
+        <label>{{t "general.description"}}:</label>
+        <div>{{editable-textarea model=session.sessionDescription property='description'}}</div>
+      </div>
+    {{else}}
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.type"}}:</label>
+        <div>{{session.sessionType.title}}</div>
+      </div>
+      <br />
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.supplementalCurriculum"}}:</label>
+        <div>{{boolean-check value=session.supplemental}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.specialAttireRequired"}}:</label>
+        <div>{{boolean-check value=session.attireRequired}}</div>
+      </div>
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+        <div>{{boolean-check value=session.equipmentRequired}}</div>
+      </div>
+      <br />
+      <div class="inline-label-data-block">
+        <label>{{t "general.description"}}:</label>
+        <div>{{session.sessionDescription.description}}</div>
+      </div>
+    {{/if}}
   </div>
 </section>
