@@ -25,7 +25,7 @@ export default Ember.Route.extend({
                 content: objective,
                 sessionObjective: sessionObjective,
               });
-            });
+            }).sortBy('textTitle');
             if(!self.get('isDestroyed')){
               self.set('proxiedObjectives', proxiedObjectives);
               self.set('session', session);
