@@ -12,7 +12,6 @@ var general = {
   'home': 'Home',
   'add': 'Add',
   'addNew': 'Add New',
-  'cancel': 'Cancel',
   'published': 'Published',
   'notPublished': 'Not Published',
   'scheduled': 'Scheduled',
