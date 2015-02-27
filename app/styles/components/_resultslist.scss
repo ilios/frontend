@@ -1,5 +1,4 @@
 .resultslist {
-  // $remove-background-color: lighten($ilios-red, 40%);
   @include span-columns(12 of 12);
   border-style: solid;
   border-color: $header-grey;
