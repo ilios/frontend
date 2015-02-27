@@ -205,6 +205,9 @@ var sessions = {
   'supplementalCurriculum': 'Supplemental Curriculum',
   'type': 'Session Type',
   'backToSessionList': 'Back to Session List',
+  'backToDetails': 'Back to Session Details',
+  'objectiveTitle': 'Session Objective',
+  'objectiveParentsTitle': 'Selecte Parent Objectives'
 };
 translations.sessions = sessions;
 
