@@ -129,15 +129,28 @@
     /* vertical-align: bottom;*/
 
     .title {
-      @include span-columns(8 of 12);
+      @include span-columns(7 of 12);
       h2, h4 {
         display: inline;
       }
     }
     .actions {
-      /*vertical-align: bottom;*/
-      @include span-columns(4 of 12);
+      @include span-columns(5 of 12);
       text-align:right;
+      div {
+        display: inline;
+      }
+      .action-menu {
+        display: inline;
+        button {
+          background-color: $ilios-green;
+          color: white;
+          font-weight: normal;
+        }
+        ul {
+          font-size: $base-font-size * .6;
+        }
+      }
 
       .status {
         font-size: $base-font-size;

@@ -100,7 +100,6 @@ defaultCallbacks.delete = function(name, req, res){
   }
 };
 
-
 module.exports = function(name, callbacks) {
   if(typeof callbacks == 'undefined'){
     callbacks = {};

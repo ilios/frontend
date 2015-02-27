@@ -12,8 +12,24 @@
     <h4>{{course.academicYear}}</h4>
   </span>
   <span class ='actions'>
-    <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
-    <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
+    <button {{action 'unpublish'}} class='unpublish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
+    {{#action-menu titleTranslation='general.publish' icon=false}}
+      <li {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{#unless course.allPublicationIssuesLength}}
+        <li {{action 'publish'}}>{{t 'general.publish'}}</li>
+      {{else}}
+        {{#if showCheckLink}}
+          <li>
+            {{#link-to 'course-publicationcheck' course}}
+              {{t 'publish.reviewMissingItems' countBinding=course.allPublicationIssuesLength}}
+            {{/link-to}}
+          </li>
+        {{/if}}
+        {{#unless course.requiredPublicationIssues.length}}
+          <li {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+        {{/unless}}
+      {{/unless}}
+    {{/action-menu}}
     {{publication-status item=course}}
   </span>
 </div>
