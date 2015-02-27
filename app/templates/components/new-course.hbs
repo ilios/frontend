@@ -1,0 +1,16 @@
+<section class='newcourse'>
+  <label>
+    {{t 'general.title'}}
+    {{input value=course.title placeholder=placeholder}}
+  </label>
+  <label>
+    {{t 'general.academicYear'}}
+    {{#action-menu title=currentAcademicYear icon=false}}
+      {{#each year in years}}
+        <li {{action 'setYear' year}}>{{year.academicYearTitle}}</li>
+      {{/each}}
+    {{/action-menu}}
+  </label>
+  <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  <button class='save' {{action 'save'}}>{{t 'general.save'}}</button>
+</section>

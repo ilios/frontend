@@ -63,11 +63,11 @@ defaultCallbacks.post = function(name, req, res){
     return;
   }
   var obj = req.body[singularName];
-  var id = fixtures.length;
+  var id = Object.keys(fixtures).length;
   obj.id = id;
-  responseObj[singularName] = obj;
   fixtureStorage.save(name, obj);
-  res.send(fixtureStorage.get(name)[id]);
+  responseObj[singularName] = fixtureStorage.get(name)[id];
+  res.send(responseObj);
 };
 
 defaultCallbacks.put = function(name, req, res){

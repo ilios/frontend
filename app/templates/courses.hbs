@@ -34,7 +34,6 @@
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
-
   <section class='resultslist'>
     <div class="resultslist-header">
       <div class="resultslist-title">
@@ -44,6 +43,15 @@
         <button class='add' {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
       </div>
     </div>
+
+
+    {{#if newCourses.length}}
+      <section class='resultslist-new'>
+        {{#each course in newCourses}}
+          {{new-course course=course years=years save='saveNewCourse' cancel='removeNewCourse'}}
+        {{/each}}
+      </section>
+    {{/if}}
     <div class='resultslist-list'>
       {{ilios-course-list
         courses=filteredCourses
