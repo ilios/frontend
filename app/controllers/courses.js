@@ -43,12 +43,6 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       return false;
     }).sortBy('title');
   }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.allRelatedCourses.@each'),
-  watchSelectedSchool: function(){
-    this.set('schoolId', this.get('selectedSchool.id'));
-  }.observes('selectedSchool'),
-  watchSelectedCohort: function(){
-    this.set('yearTitle', this.get('selectedYear.title'));
-  }.observes('selectedYear'),
   actions: {
     editCourse: function(course){
       this.transitionToRoute('course', course);
@@ -80,9 +74,11 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       this.get('newCourses').removeObject(newCourse);
     },
     changeSelectedYear: function(year){
+      this.set('yearTitle', year.get('title'));
       this.set('selectedYear', year);
     },
     changeSelectedSchool: function(school){
+      this.set('schoolId', school.get('id'));
       this.set('selectedSchool', school);
     }
   },
