@@ -102,7 +102,6 @@ textarea {
 /* set individual items to be inline as needed */
 .inline-label, .inline-data {
   display: inline-block;
-  
 }
 
 .published {
@@ -130,17 +129,14 @@ textarea {
 .text-right {
   text-align: right;
 }
- input[type=text] {
-background: #FFF;
-    
-    border: 1px solid $header-grey;
-    border-radius: $base-border-radius;
-    color: $base-font-color;
-    cursor: pointer;
-    z-index: 99999;
-    overflow: show;
-padding: 4px;
-// width: 100%;
 
- }
-
+input[type=text] {
+  background: #FFF;
+  border: 1px solid $header-grey;
+  border-radius: $base-border-radius;
+  color: $base-font-color;
+  cursor: pointer;
+  z-index: 99999;
+  overflow: show;
+  padding: 4px;
+}
