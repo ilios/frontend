@@ -3,7 +3,9 @@ import Ember from 'ember';
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'general.filterPlaceholder',
   filter: '',
+  sortBy: ['title'],
   topics: [],
+  sortedTopics: Ember.computed.sort('topics', 'sortBy'),
   availableTopics: [],
   filteredAvailableTopics: function(){
     var self = this;

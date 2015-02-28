@@ -4,7 +4,7 @@
   </div>
   <div class='detail-content'>
     <ul class='removable-list'>
-      {{#each topic in topics}}
+      {{#each topic in sortedTopics}}
       <li {{action 'remove' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
       {{/each}}
     </ul>
