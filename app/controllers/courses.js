@@ -8,7 +8,6 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     userCoursesOnly: 'mycourses'
   },
   placeholderValueTranslation: 'courses.titleFilterPlaceholder',
-  newCourseTitleTranslation: 'courses.newCourseTitle',
   schoolId: null,
   yearTitle: null,
   titleFilter: null,
@@ -33,11 +32,10 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     var currentUser = this.get('currentUser');
     return this.get('content').filter(function(course) {
       if(title == null || course.get('title').match(exp)){
-        if(filterMyCourses === true){
+        if(filterMyCourses){
           return currentUser.get('allRelatedCourses').contains(course);
         }
         return true;
-
       }
 
       return false;

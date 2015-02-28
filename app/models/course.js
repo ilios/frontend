@@ -34,29 +34,24 @@ var Course = DS.Model.extend({
     academicYear: function(){
       return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
     }.property('year'),
-    competencies: [],
-    watchObjectives: function(){
-      var self = this;
+    competencies: function(){
+      var defer = Ember.RSVP.defer();
       this.get('objectives').then(function(objectives){
-        if(objectives.length){
-          var promises = {};
-          objectives.forEach(function(objective){
-            promises[objective.get('id')] = objective.get('treeCompetencies');
+        var promises = objectives.getEach('treeCompetencies');
+        Ember.RSVP.all(promises).then(function(trees){
+          var competencies = trees.reduce(function(array, set){
+              return array.pushObjects(set.toArray());
+          }, []);
+          competencies = competencies.uniq().filter(function(item){
+            return item != null;
           });
-          Ember.RSVP.hash(promises).then(function(hash){
-            var competencies = Ember.A();
-            Object.keys(hash).forEach(function(key) {
-              hash[key].forEach(function(competency){
-                if(competency){
-                  competencies.pushObject(competency);
-                }
-              });
-            });
-            self.set('competencies', competencies.uniq());
-          });
-        }
+          defer.resolve(competencies);
+        });
       });
-    }.observes('objectives.@each').on('init'),
+      return DS.PromiseArray.create({
+        promise: defer.promise
+      });
+    }.property('objectives.@each.treeCompetencies'),
     publishedSessions: Ember.computed.filterBy('sessions', 'isPublished'),
     publishedSessionOfferingCounts: Ember.computed.mapBy('publishedSessions', 'offerings.length'),
     publishedOfferingCount: Ember.computed.sum('publishedSessionOfferingCounts'),
