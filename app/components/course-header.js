@@ -7,18 +7,16 @@ export default Ember.Component.extend({
   actions: {
     unpublish: function(){
       var course = this.get('course');
-      course.set('publishedAsTbd', false);
       course.get('publishEvent').then(function(publishEvent){
+        course.set('publishedAsTbd', false);
         course.set('publishEvent', null);
         course.save();
         if(publishEvent){
-          publishEvent.get('courses').then(function(courses){
-            courses.removeObject(course);
-            if(publishEvent.get('totalRelated') === 0){
-              publishEvent.deleteRecord();
-              publishEvent.save();
-            }
-          });
+          publishEvent.get('courses').removeObject(course);
+          if(publishEvent.get('totalRelated') === 0){
+            publishEvent.deleteRecord();
+          }
+          publishEvent.save();
         }
       });
     },
