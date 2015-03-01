@@ -15,4 +15,7 @@
       {{/each}}
     </ul>
   </div>
+  <div {{bind-attr class=':detail-overlay isSaving:show-overlay'}}>
+    {{wave-loader isFullSize=false}}
+  </div>
 </div>

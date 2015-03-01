@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('detail-topics', 'DetailTopicsComponent', {
   // specify the other units that are required for this test
-  needs: ['component:search-box']
+  needs: ['component:search-box', 'component:wave-loader']
 });
 
 test('it renders', function(assert) {
