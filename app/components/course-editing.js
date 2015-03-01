@@ -38,16 +38,6 @@ export default Ember.Component.extend({
         });
       });
     },
-    addTopic: function(topic){
-      var course = this.get('course');
-      course.get('disciplines').addObject(topic);
-      course.save();
-    },
-    removeTopic: function(topic){
-      var course = this.get('course');
-      course.get('disciplines').removeObject(topic);
-      course.save();
-    },
     addMeshDescriptor: function(descriptor){
       var course = this.get('course');
       course.get('meshDescriptors').then(function(descriptors){

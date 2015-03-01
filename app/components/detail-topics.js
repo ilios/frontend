@@ -4,9 +4,13 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'general.filterPlaceholder',
   filter: '',
   sortBy: ['title'],
-  topics: [],
+  subject: null,
+  isSaving: false,
+  topics: Ember.computed.alias('subject.disciplines'),
   sortedTopics: Ember.computed.sort('topics', 'sortBy'),
   availableTopics: [],
+  tagName: 'section',
+  classNames: ['detail-block'],
   filteredAvailableTopics: function(){
     var self = this;
     var filter = this.get('filter');
@@ -24,14 +28,23 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     return topics.sortBy('title');
   }.property('topics.@each', 'filter', 'availableTopics.@each'),
   actions: {
-    filter: function(filterTerm){
-      this.set('filter', filterTerm);
-    },
     add: function(topic){
-      this.sendAction('addTopic', topic);
+      var self = this;
+      this.set('isSaving', true);
+      var subject = this.get('subject');
+      subject.get('disciplines').addObject(topic);
+      subject.save().then(function(){
+        self.set('isSaving', false);
+      });
     },
     remove: function(topic){
-      this.sendAction('removeTopic', topic);
+      var self = this;
+      this.set('isSaving', true);
+      var subject = this.get('subject');
+      subject.get('disciplines').removeObject(topic);
+      subject.save().then(function(){
+        self.set('isSaving', false);
+      });
     }
   }
 });

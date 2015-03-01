@@ -20,7 +20,7 @@ module.exports = function(app) {
     extended: true
   }));
   app.use(function(req,res,next){
-    setTimeout(next,1000);
+    setTimeout(next, 1000);
   });
 
   // Uncomment to log proxy requests
