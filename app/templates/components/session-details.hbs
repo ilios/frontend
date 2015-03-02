@@ -8,10 +8,8 @@
       {{detail-objectives objectives=session.objectives isCourse=false}}
       {{detail-learning-materials materials=session.learningMaterials isCourse=false}}
       {{detail-topics
-        topics=session.disciplines
+        subject=session
         availableTopics=availableTopics
-        addTopic='addTopic'
-        removeTopic='removeTopic'
       }}
       {{detail-mesh
         terms=session.meshDescriptors
