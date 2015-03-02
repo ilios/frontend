@@ -51,7 +51,7 @@ var cohortProxy = Ember.Object.extend({
           originalObjectives: ourObjectives
         });
       });
-      deferred.resolve(groups);
+      deferred.resolve(groups.sortBy('title'));
     });
     return DS.PromiseArray.create({
       promise: deferred.promise
@@ -62,6 +62,8 @@ var cohortProxy = Ember.Object.extend({
 export default Ember.Component.extend({
   classNames: ['objective-manager'],
   courseObjective: null,
+  showObjectiveList: false,
+  showCohortList: false,
   cohorts: function(){
     var courseObjective = this.get('courseObjective');
     if(!courseObjective){
@@ -111,6 +113,7 @@ export default Ember.Component.extend({
     if(selectedCohortId){
       var matchingGroups = this.get('cohorts').filterBy('id', selectedCohortId);
       if(matchingGroups.length > 0){
+        this.set('showObjectiveList', true);
         return matchingGroups.get('firstObject');
       }
     }
@@ -126,7 +129,12 @@ export default Ember.Component.extend({
         }
       }
     }, 500);
-  }.observes('availableCohorts.@each', 'selectedCohortId'),
+
+    //debounce this to avoid weird saving behavior and animations
+    Ember.run.debounce(this, function(){
+      this.set('showCohortList', this.get('availableCohorts.length') > 0);
+    }, 500);
+  }.observes('availableCohorts.@each', 'selectedCohortId', 'availableCohorts.length').on('init'),
   actions: {
     addParent: function(parentProxy){
       var newParent = parentProxy.get('content');
