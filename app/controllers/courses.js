@@ -8,7 +8,6 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     userCoursesOnly: 'mycourses'
   },
   placeholderValueTranslation: 'courses.titleFilterPlaceholder',
-  newCourseTitleTranslation: 'courses.newCourseTitle',
   schoolId: null,
   yearTitle: null,
   titleFilter: null,
@@ -33,22 +32,15 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     var currentUser = this.get('currentUser');
     return this.get('content').filter(function(course) {
       if(title == null || course.get('title').match(exp)){
-        if(filterMyCourses === true){
+        if(filterMyCourses){
           return currentUser.get('allRelatedCourses').contains(course);
         }
         return true;
-
       }
 
       return false;
     }).sortBy('title');
   }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.allRelatedCourses.@each'),
-  watchSelectedSchool: function(){
-    this.set('schoolId', this.get('selectedSchool.id'));
-  }.observes('selectedSchool'),
-  watchSelectedCohort: function(){
-    this.set('yearTitle', this.get('selectedYear.title'));
-  }.observes('selectedYear'),
   actions: {
     editCourse: function(course){
       this.transitionToRoute('course', course);
@@ -80,9 +72,11 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       this.get('newCourses').removeObject(newCourse);
     },
     changeSelectedYear: function(year){
+      this.set('yearTitle', year.get('title'));
       this.set('selectedYear', year);
     },
     changeSelectedSchool: function(school){
+      this.set('schoolId', school.get('id'));
       this.set('selectedSchool', school);
     }
   },

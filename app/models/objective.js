@@ -24,36 +24,27 @@ export default DS.Model.extend({
   programYears: DS.hasMany('program-year',  {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   treeCompetencies: function(){
-    var objective = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      objective.get('competency').then(function(currentCompetency){
-        var competencies = Ember.A();
-        if(currentCompetency){
-          competencies.pushObject(currentCompetency);
-        }
-
-        objective.get('parents').then(function(parents){
-          var promises = [];
-          parents.forEach(function(parent){
-            promises.pushObject(parent.get('treeCompetencies'));
+    var defer = Ember.RSVP.defer();
+    var self = this;
+    this.get('competency').then(function(competency){
+      self.get('parents').then(function(parents){
+        var promises = parents.getEach('treeCompetencies');
+        Ember.RSVP.all(promises).then(function(trees){
+          var competencies = trees.reduce(function(array, set){
+              return array.pushObjects(set.toArray());
+          }, []);
+          competencies.pushObject(competency);
+          competencies = competencies.uniq().filter(function(item){
+            return item != null;
           });
-          Ember.RSVP.hash(promises).then(function(hash){
-            Object.keys(hash).forEach(function(key) {
-              if(hash[key]){
-                hash[key].forEach(function(competency){
-                  if(competency){
-                    competencies.pushObject(competency);
-                  }
-                });
-              }
-            });
-
-            resolve(competencies);
-          });
+          defer.resolve(competencies);
         });
       });
     });
-  }.property('competency', 'parents.@each.treeCompetencies.@each'),
+    return DS.PromiseArray.create({
+      promise: defer.promise
+    });
+  }.property('competency', 'parents.@each.treeCompetencies'),
   shortTitle: function(){
     var title = this.get('title');
     if(title === undefined){

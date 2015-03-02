@@ -53,7 +53,7 @@ var User = DS.Model.extend({
       return first + ' ' + last;
   }.property('firstName', 'lastName'),
   events: [],
-  allRelatedCourses: Ember.computed.alias('directedCourses'),
+  allRelatedCourses: Ember.computed.oneWay('directedCourses'),
 });
 
 export default User;
