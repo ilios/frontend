@@ -44,10 +44,7 @@ var general = {
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
-  'parentObjectives': {
-    'one': 'Parent Objective',
-    'other': 'Parent Objectives'
-  },
+  'parentObjectives': 'Parent Objectives',
   'learningMaterials': 'Learning Materials',
   'findDirector': 'Find Director',
   'moreInputRequiredPrompt': 'keep typing...',
@@ -193,8 +190,7 @@ var courses = {
   'firstOffering': 'First Offering',
   'filterPlaceholder': '',
   'title': 'Course Title',
-  'objectiveTitle': 'Course Objective',
-  'objectiveParentTitle': 'Select Parent Objective',
+  'objectiveParentTitle': 'Select Parent Objectives',
   'chooseCohortTitle': 'Select Parent For',
   'missingCohortMessage': 'Please add at least one cohort to this course.',
   'confirmRemove': 'Are you sure you want to delete this course, with {{publishedOfferingCount}} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone.',
@@ -210,7 +206,7 @@ var sessions = {
   'backToSessionList': 'Back to Session List',
   'backToDetails': 'Back to Session Details',
   'objectiveTitle': 'Session Objective',
-  'objectiveParentsTitle': 'Selecte Parent Objectives'
+  'missingCourseObjectivesMessage': 'Please add at least one objective to the course.',
 };
 translations.sessions = sessions;
 

@@ -1,0 +1,44 @@
+<h2>{{{courseObjective.title}}}</h2>
+{{#liquid-if availableCohorts.length class="vertical"}}
+  <label class='group-picker'>
+    {{t 'courses.chooseCohortTitle'}}:
+    {{#if multipleCohorts}}
+      {{view "select"
+        content=availableCohorts
+        optionLabelPath="content.title"
+        optionValuePath="content.id"
+        value=selectedCohortId
+      }}
+    {{else}}
+      {{currentCohort.title}}
+    {{/if}}
+  </label>
+  <div class='parent-picker'>
+    {{#liquid-if currentCohort.objectivesByCompetency.length class='crossFade'}}
+      {{#each competency in currentCohort.objectivesByCompetency}}
+        <h5 {{bind-attr class='competency.selected:selected'}}>{{competency.title}}</h5>
+        <ul>
+          {{#each objective in competency.objectives}}
+            {{#if objective.selected}}
+              <li class='selected clickable' {{action 'removeParent' objective}}>
+                {{input type='checkbox' checked=true}}
+                {{objective.title}}
+              </li>
+            {{else}}
+              <li class='clickable' {{action 'addParent' objective}}>
+                {{input type='checkbox' checked=false}}
+                {{objective.title}}
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
+      {{/each}}
+    {{/liquid-if}}
+  </div>
+{{else}}
+  <div class='no-group'>
+    <p>
+      {{t 'courses.missingCohortMessage'}}
+    </p>
+  </div>
+{{/liquid-if}}

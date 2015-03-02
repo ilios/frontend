@@ -1,83 +1,45 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'general.objectives'}} ({{objectives.length}})
+    {{t 'general.objectives'}} ({{subject.objectives.length}})
+    {{#if isManagingParents}}
+      <span class='detail-specific-title'>
+        {{t 'courses.objectiveParentTitle'}}
+      </span>
+    {{/if}}
   </div>
 
   <div class='detail-actions'>
-    <button class='add'>{{t 'general.addNew'}}</button>
+    {{#if isManagingParents}}
+      <button class='add' {{action 'doneManagingParents'}}>{{t 'general.done'}}</button>
+    {{else}}
+      <button class='add'>{{t 'general.addNew'}}</button>
+    {{/if}}
   </div>
   <div class='detail-content'>
-    <table>
-      <thead>
-        <tr>
-          <th class='text-left' colspan=2>{{t 'general.description'}}</th>
-          {{#if isCourse}}
-            <th class='text-left'>{{t 'general.parentObjectives' count=1}}</th>
-          {{else}}
-            <th class='text-left'>{{t 'general.parentObjectives' count=2}}</th>
-          {{/if}}
-          <th class='text-left'>{{t 'general.meshTerms'}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each objective in sortedObjectives}}
-        <tr>
-          <td class='text-left' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
-          <td class='text-left'>
-            {{#if objective.parents.length}}
-              {{#if objective.multipleParents}}
-                {{#if isCourse}}
-                  {{#link-to 'courseobjective' objective}}
-                    {{objective.parents.length}}
-                  {{/link-to}}
-                {{/if}}
-                {{#if isSession}}
-                  {{#link-to 'sessionobjective' objective}}
-                    {{objective.parents.length}}
-                  {{/link-to}}
-                {{/if}}
-              {{else}}
-                {{#if isCourse}}
-                  {{#link-to 'courseobjective' objective}}
-                    {{objective.parents.firstObject.textTitle}}
-                  {{/link-to}}
-                {{/if}}
-                {{#if isSession}}
-                  {{#link-to 'sessionobjective' objective}}
-                    {{objective.parents.firstObject.textTitle}}
-                  {{/link-to}}
-                {{/if}}
-                {{#if objective.parents.firstObject.competency}}
-                  ({{objective.parents.firstObject.competency.title}})
-                {{/if}}
-              {{/if}}
-            {{else}}
-              {{#if isCourse}}
-                {{#link-to 'courseobjective' objective}}
-                  <button class='add'>{{t 'general.addNew'}}</button>
-                {{/link-to}}
-              {{/if}}
-              {{#if isSession}}
-                {{#link-to 'sessionobjective' objective}}
-                  <button class='add'>{{t 'general.addNew'}}</button>
-                {{/link-to}}
-              {{/if}}
-            {{/if}}
-          </td>
-          <td class='text-left'>
-            {{#if objective.meshDescriptors.length}}
-            <ul>
-              {{#each descriptor in objective.meshDescriptors}}
-              <li>{{descriptor.title}}</li>
-              {{/each}}
-            </ul>
-            {{else}}
-            <button class='add'>{{t 'general.addNew'}}</button>
-            {{/if}}
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+    {{#liquid-if isManagingParents class="horizontal"}}
+      {{#if isCourse}}
+        {{course-objective-manager
+          courseObjective=currentlyManagedObjective
+        }}
+      {{/if}}
+      {{#if isSession}}
+        {{session-objective-manager
+          sessionObjective=currentlyManagedObjective
+        }}
+      {{/if}}
+    {{else}}
+      {{#if isCourse}}
+        {{course-objective-list
+          course=subject
+          manageParents="manageParents"
+        }}
+      {{/if}}
+      {{#if isSession}}
+        {{session-objective-list
+          session=subject
+          manageParents="manageParents"
+        }}
+      {{/if}}
+    {{/liquid-if}}
   </div>
 </section>

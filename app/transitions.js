@@ -1,12 +1,26 @@
-import Ember from 'ember';
-
 export default function(){
   this.transition(
+    this.hasClass('horizontal'),
+    this.toModel(true),
+    this.use('toLeft', {duration: 1000}),
+    this.reverse('toRight', {duration: 1000})
+  );
+  this.transition(
+    this.hasClass('vertical'),
+    this.toModel(true),
+    this.use('toDown', {duration: 1000}),
+    this.reverse('toUp', {duration: 1000})
+  );
+  this.transition(
+    this.hasClass('crossFade'),
+    this.toModel(true),
+    this.use('crossFade', {duration: 1000})
+  );
+  this.transition(
     this.toRoute(function(){
-      var topRoutes = Ember.A();
+      var topRoutes = [];
       topRoutes.push('dashboard');
       topRoutes.push('courses');
-      topRoutes.push('course');
       topRoutes.push('learnergroups');
       topRoutes.push('learnergroup');
       topRoutes.push('instructorgroups');
@@ -19,7 +33,7 @@ export default function(){
   this.transition(
     this.fromRoute('course.index'),
     this.toRoute('course.session'),
-    this.use('toRight'),
-    this.reverse('toLeft')
+    this.use('toLeft', {duration: 1000}),
+    this.reverse('toRight', {duration: 1000})
   );
 }
