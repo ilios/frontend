@@ -67,7 +67,58 @@ var Course = DS.Model.extend({
       var endDate = moment(startDate).add('8', 'weeks');
       this.set('startDate', startDate.toDate());
       this.set('endDate', endDate.toDate());
-    }
+    },
+    allPublicationIssuesCollection: Ember.computed.collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+    allPublicationIssuesLength: Ember.computed.sum('allPublicationIssuesCollection'),
+    requiredPublicationIssues: function(){
+      var self = this;
+      var issues = [];
+      var requiredSet = [
+        'startDate',
+        'endDate',
+      ];
+      var requiredLength = [
+        'cohorts',
+      ];
+      requiredSet.forEach(function(val){
+        if(!self.get(val)){
+          issues.push(val);
+        }
+      });
+
+      requiredLength.forEach(function(val){
+        if(self.get(val + '.length') === 0){
+          issues.push(val);
+        }
+      });
+
+      return issues;
+    }.property(
+      'startDate',
+      'endDate',
+      'cohorts.length'
+    ),
+    optionalPublicationIssues: function(){
+      var self = this;
+      var issues = [];
+      var requiredLength = [
+        'disciplines',
+        'objectives',
+        'meshDescriptors',
+      ];
+
+      requiredLength.forEach(function(val){
+        if(self.get(val + '.length') === 0){
+          issues.push(val);
+        }
+      });
+
+      return issues;
+    }.property(
+      'topics.length',
+      'objectives.length',
+      'meshDescriptors.length'
+    )
 });
 
 export default Course;

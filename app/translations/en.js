@@ -26,6 +26,7 @@ var general = {
   'topics': 'Topics',
   'email': 'Email',
   'cohort': 'Cohort',
+  'cohorts': 'Cohorts',
   'meshTerms': 'MeSH Terms',
   'mesh': 'MeSH',
   'members': 'Members',
@@ -191,6 +192,7 @@ var courses = {
   'collapseDetail': 'Close',
   'firstOffering': 'First Offering',
   'filterPlaceholder': '',
+  'title': 'Course Title',
   'objectiveTitle': 'Course Objective',
   'objectiveParentTitle': 'Select Parent Objective',
   'chooseCohortTitle': 'Select Parent For',
@@ -232,5 +234,13 @@ var relatedCourses = {
   'noCoursesMatchFilter': 'No courses match your filter'
 };
 translations.relatedCourses = relatedCourses;
+
+var publish = {
+  'markAsScheduled': 'Mark as Scheduled',
+  'publishAsIs': 'Publish As-is',
+  'reviewMissingItems': 'Review {{count}} Missing Items',
+  'missingItems': 'Missing Items',
+};
+translations.publish = publish;
 
 export default translations;

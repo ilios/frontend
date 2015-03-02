@@ -87,6 +87,18 @@ defaultCallbacks.put = function(name, req, res){
   }
 };
 
+defaultCallbacks.delete = function(name, req, res){
+  var pluralize = require('pluralize');
+  var fixtureStorage = require('./fixtureStorage.js');
+  var fixtures = fixtureStorage.get(name);
+  var singularName = pluralize(name, 1);
+  if(req.params.id in fixtures){
+    fixtureStorage.remove(name, req.params.id);
+    res.send();
+  } else {
+    res.status(404).end();
+  }
+};
 
 module.exports = function(name, callbacks) {
   if(typeof callbacks == 'undefined'){
@@ -114,6 +126,10 @@ module.exports = function(name, callbacks) {
   });
   router.put('/:id', function(req, res) {
     var callback = getCallback('put');
+    callback(name, req, res);
+  });
+  router.delete('/:id', function(req, res) {
+    var callback = getCallback('delete');
     callback(name, req, res);
   });
 

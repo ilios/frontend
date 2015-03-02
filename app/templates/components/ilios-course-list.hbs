@@ -15,7 +15,7 @@
     {{#each course in proxiedCourses}}
       <tr {{bind-attr class='course.showRemoveConfirmation:confirm-removal'}}>
         <td class='text-left' colspan=3>
-          {{#link-to 'course' course}}
+          {{#link-to 'course' course.content}}
             {{course.title}}
             {{#if course.externalId}}
               ({{course.externalId}})
@@ -39,7 +39,7 @@
         <tr class='confirm-removal'><td colspan=16>
           <div class='confirm-message'>
             {{t 'courses.confirmRemove' publishedOfferingCountBinding=course.publishedOfferingCount}} <br />
-           <div class="confirm-buttons"> 
+           <div class="confirm-buttons">
             <button {{action 'remove' course}} class='remove'>{{t 'general.yes'}}</button>
             <button {{action 'cancelRemove' course}} class='cancel'>{{t 'general.cancel'}}</button>
           </div>

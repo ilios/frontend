@@ -7,7 +7,8 @@ moduleForComponent('course-header', 'CourseHeaderComponent', {
   needs: [
     'component:editable-text',
     'component:publication-status',
-    'helper:fa-icon'
+    'component:action-menu',
+    'helper:fa-icon',
   ]
 });
 
