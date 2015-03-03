@@ -3,9 +3,8 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('detail-objectives', 'DetailObjectivesComponent', {
-  // specify the other units that are required for this test
-  needs: ['component:session-objective-list', 'helper:liquid-if', 'view:liquid-if']
+moduleForComponent('session-objective-manager', {
+  needs: ['helper:liquid-if', 'view:liquid-if']
 });
 
 //re-enable when https://github.com/ef4/liquid-fire/issues/189 is resolved
@@ -16,7 +15,7 @@ moduleForComponent('detail-objectives', 'DetailObjectivesComponent', {
 //   var component = this.subject();
 //   assert.equal(component._state, 'preRender');
 //
-//   // appends the component to the page
-//   this.append();
+//   // renders the component to the page
+//   this.render();
 //   assert.equal(component._state, 'inDOM');
 // });

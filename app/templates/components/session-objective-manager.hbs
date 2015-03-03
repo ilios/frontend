@@ -1,0 +1,28 @@
+<h2>{{{sessionObjective.title}}}</h2>
+
+{{#liquid-if showObjectiveList class='crossFade'}}
+  <div class='parent-picker'>
+    <h5>{{course.title}}</h5>
+    <ul>
+      {{#each objective in proxiedObjectives}}
+        {{#if objective.selected}}
+          <li class='selected clickable' {{action 'removeParent' objective}}>
+            {{input type='checkbox' checked=true}}
+            {{objective.textTitle}}
+          </li>
+        {{else}}
+          <li class='clickable' {{action 'addParent' objective}}>
+            {{input type='checkbox' checked=false}}
+            {{objective.textTitle}}
+          </li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+{{else}}
+  <div class='no-group'>
+    <p>
+      {{t 'sessions.missingCourseObjectivesMessage'}}
+    </p>
+  </div>
+{{/liquid-if}}

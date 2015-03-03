@@ -1,9 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  objectives: [],
+  subject: null,
   isCourse: false,
   isSession: Ember.computed.not('isCourse'),
-  sort: ['id'],
-  sortedObjectives: Ember.computed.sort('objectives', 'sort'),
+  isManagingParents: Ember.computed.notEmpty('currentlyManagedObjective'),
+  currentlyManagedObjective: null,
+  actions: {
+    manageParents: function(objective){
+      this.set('currentlyManagedObjective', objective);
+    },
+    doneManagingParents: function(){
+      this.set('currentlyManagedObjective', null);
+    }
+  }
 });

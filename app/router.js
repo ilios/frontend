@@ -36,10 +36,9 @@ Router.map(function() {
       this.route("session", {path: '/session/:session_id'});
   });
   this.route('print-course', { path: 'course/:course_id/print'});
-  this.route("courseobjective", {path: 'courseobjective/:objective_id'});
   this.route("courselearningmaterial", {path: 'courselearningmaterial/:course_learning_material_id'});
   this.route('course-publicationcheck', { path: 'course/:course_id/publicationcheck'});
-  this.route("sessionobjective", {path: 'sessionobjective/:objective_id'});
+
   this.route("sessionlearningmaterial", {path: 'sessionlearningmaterial/:session_learning_material_id'});
 
   this.route('instructorgroups');
@@ -50,7 +49,6 @@ Router.map(function() {
 
   this.route("testmodels");
   this.route("loading");
-
 });
 
 export default Router;

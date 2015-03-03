@@ -2,12 +2,10 @@ import {
   moduleForComponent,
   test
 } from 'ember-qunit';
-import Ember from 'ember';
 
-moduleForComponent('objective-manager', 'ObjectiveManagerComponent', {
-  setup: function() {
-    this.container.register('view:select', Ember.Select);
-  }
+moduleForComponent('course-objective-list', {
+  // specify the other units that are required for this test
+  // needs: ['component:foo', 'helper:bar']
 });
 
 test('it renders', function(assert) {
@@ -17,7 +15,7 @@ test('it renders', function(assert) {
   var component = this.subject();
   assert.equal(component._state, 'preRender');
 
-  // appends the component to the page
-  this.append();
+  // renders the component to the page
+  this.render();
   assert.equal(component._state, 'inDOM');
 });

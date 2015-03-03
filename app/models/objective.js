@@ -21,6 +21,7 @@ export default DS.Model.extend({
     async: true
   }),
   multipleParents: Ember.computed.gt('parents.length', 1),
+  hasParents: Ember.computed.bool('parents.length'),
   programYears: DS.hasMany('program-year',  {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   treeCompetencies: function(){
