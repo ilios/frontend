@@ -1,16 +1,29 @@
 <section class='newcourse'>
-  <label>
-    {{t 'general.title'}}
-    {{input value=course.title placeholder=placeholder}}
-  </label>
-  <label>
-    {{t 'general.academicYear'}}
-    {{#action-menu title=currentAcademicYear icon=false}}
-      {{#each year in years}}
-        <li {{action 'setYear' year}}>{{year.academicYearTitle}}</li>
-      {{/each}}
-    {{/action-menu}}
-  </label>
-  <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-  <button class='save' {{action 'save'}}>{{t 'general.save'}}</button>
+  <div class="newcourse-title">New Course</div>
+  <div class="detail-content">
+    <table>
+      <tr>
+        <td colspan=2>
+          <label class="inline-label-data-block">
+            {{t 'general.title'}}
+            {{input value=course.title placeholder=placeholder}}
+          </label>
+        </td>
+        <td>
+          <label class="inline-label-data-block">
+           {{t 'general.academicYear'}}
+           {{#action-menu title=currentAcademicYear icon=false}}
+           {{#each year in years}}
+           <li {{action 'setYear' year}}>{{year.academicYearTitle}}</li>
+           {{/each}}
+           {{/action-menu}}
+         </label>
+       </td>
+       <td>
+        <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+        <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
+      </td>
+    </tr>
+  </table>
+</div>
 </section>
