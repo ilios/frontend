@@ -5,16 +5,36 @@
     background-color: $background-grey;
   }
   .selected {
-    color: $base-accent-color;
+    color: white;
+    background-color: $ilios-orange;
   }
   .parent-picker {
-    li {
-      margin-left: 1em;
-      list-style-position: outside;
-    }
+
+   ul{
+    line-height: 1.3em;
+    height: auto;
   }
-  .no-group {
-    font-weight: bold;
-    color: $ilios-orange;
+
+  li {
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    list-style-position: outside;
+    padding: .2em 0 .3em 1.5em;
+    text-indent: -1.2em;
+
   }
+}
+.no-group {
+  font-weight: bold;
+  color: $ilios-orange;
+}
+
+h5 {
+  background-color: $header-grey;
+  padding: .2em .5em;
+  margin-left: .8em;
+  margin-right: .8em;
+  font-size: 1em;
+  font-weight: bold;
+}
 }
