@@ -1,0 +1,34 @@
+<section class='newsession'>
+  <div class="newsession-title">{{t 'sessions.new'}}</div>
+  <div class="detail-content">
+    <table>
+      <tr>
+        <td colspan=2>
+          <label class="inline-label-data-block">
+            {{t 'general.title'}}
+            {{input value=session.title placeholder=placeholder}}
+          </label>
+        </td>
+        <td>
+          <div class="inline-label-data-block">
+            <label>{{t "sessions.type"}}:</label>
+            <div>
+              {{#if selectedSessionTypeId}}
+                {{view "select"
+                  content=sortedSessionTypes
+                  value=selectedSessionTypeId
+                  optionValuePath='content.id'
+                  optionLabelPath='content.title'
+                }}
+              {{/if}}
+            </div>
+          </div>
+       </td>
+       <td>
+        <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+        <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
+      </td>
+    </tr>
+  </table>
+</div>
+</section>

@@ -3,12 +3,20 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   sessionTypes: [],
   afterModel: function(){
-    //fetch all the session types from the store, but don't wait on them returning
-    var sessionTypes = this.store.filter('sessionType', {}, function(){
-      return true;
-    });
+    var self = this;
+    var course = this.modelFor('course');
+    var deferred = Ember.RSVP.defer();
+    Ember.run.later(deferred.resolve, function() {
+      var resolve = this;
+      course.get('owningSchool').then(function(school){
+        school.get('sessionTypes').then(function(sessionTypes){
+          self.set('sessionTypes', sessionTypes);
+          resolve();
+        });
+      });
 
-    this.set('sessionTypes', sessionTypes);
+    }, 500);
+    return deferred.promise;
   },
   setupController: function(controller, model){
     controller.set('model', model);

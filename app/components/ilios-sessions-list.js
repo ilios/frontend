@@ -1,10 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   filter: '',
   classNames: ['detail-view'],
   tagName: 'div',
   course: null,
+  newSessions: [],
+  sessionTypes: [],
+  placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
   watchFilter: function(){
@@ -38,4 +41,32 @@ export default Ember.Component.extend({
     });
     return filtered.sortBy('title');
   }.property('sessions.@each.searchString', 'debouncedFilter'),
+  actions: {
+    addNewSession: function(){
+      var self = this;
+      var session = this.store.createRecord('session');
+      this.get('course.owningSchool').then(function(owningSchool){
+        owningSchool.get('sessionTypes').then(function(sessionTypes){
+          //we attempt to load a type with the title of lecture as its the default
+          var lectureType = sessionTypes.findBy('title', 'Lecture');
+          var defaultType = lectureType?lectureType:sessionTypes.get('firstObject');
+          session.set('sessionType', defaultType);
+          self.set('sessionTypes', sessionTypes);
+        });
+      });
+
+      this.get('newSessions').addObject(session);
+    },
+    saveNewSession: function(newSession){
+      this.get('newSessions').removeObject(newSession);
+      var course = this.get('course');
+      newSession.set('course', course);
+      newSession.save().then(function(savedSession){
+        course.get('sessions').addObject(savedSession);
+      });
+    },
+    removeNewSession: function(newSession){
+      this.get('newSessions').removeObject(newSession);
+    },
+  }
 });

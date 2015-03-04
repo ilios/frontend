@@ -2,12 +2,33 @@
   <div class='detail-title'>
     {{t 'general.sessions'}} ({{sessions.length}})
   </div>
-  <div class='detail-actions'>
-    <button class='create' {{action 'createNewSessions'}}>{{t 'courses.newSession'}}</button>
+  <div class="filter-tools">
+    <div id='titlefilter' class="filter">
+      {{input type='text' value=filter placeholder=placeholderValue}}
+    </div>
   </div>
-  <div class='detail-content'>
-    {{#if sessions}}
-      {{input type='text' value=filter placeholder='Filter by title'}}
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{ t 'general.results'}}</h2>
+      </div>
+      <div class='resultslist-actions'>
+        <button class='add' {{action 'addNewSession'}}>{{t 'general.addNew'}}</button>
+      </div>
+    </div>
+    {{#if newSessions.length}}
+      <section class='resultslist-new'>
+        {{#each session in newSessions}}
+          {{new-session
+            session=session
+            sessionTypes=sessionTypes
+            save='saveNewSession'
+            cancel='removeNewSession'
+          }}
+        {{/each}}
+      </section>
+    {{/if}}
+    <div class='resultslist-list'>
       <table>
         <thead>
           <tr>
@@ -41,11 +62,11 @@
                 <li {{action 'edit'}}>Edit</li>
               {{/action-menu}}
             </td>
+          {{else}}
+            <tr><td colspan=8>{{t 'courses.noSessions'}}</td></tr>
           {{/each}}
         </tbody>
       </table>
-    {{else}}
-      <p>{{t 'courses.noSessions'}}</p>
-    {{/if}}
-  </div>
+    </div>
+  </section>
 </section>
