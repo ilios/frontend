@@ -1,0 +1,31 @@
+<div class="live-search">
+  {{search-box value=searchTerms placeholder=placeholder}}
+  {{#if searching}}
+    <ul class='results'>
+      <li>{{t 'general.currentlySearchingPrompt'}}</li>
+    </ul>
+  {{else}}
+    {{#if showMoreInputPrompt}}
+      <ul class='results'>
+        <li>{{t 'general.moreInputRequiredPrompt'}}</li>
+      </ul>
+    {{else}}
+      {{#if sortedSearchResults.length}}
+        <ul class='results'>
+          {{#each user in sortedSearchResults}}
+            <li {{action 'addUser' user}}{{bind-attr class='user.isActive:active:inactive'}}>
+              <div class='livesearch-user-name'>{{user.fullName}}</div>
+              <div class='livesearch-user-email'>{{user.email}}</div>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        {{#if searchReturned}}
+          <ul class='results'>
+            <li>{{t 'general.noSearchResultsPrompt'}}</li>
+          </ul>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</div>

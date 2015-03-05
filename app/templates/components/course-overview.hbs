@@ -33,14 +33,9 @@
             {{/each}}
           </ul>
         </span>
-        {{live-search
-          placeholderTranslation='courses.findDirector'
-          buttonTitleTranslation='courses.findDirector'
-          search='searchDirectors'
-          add='addDirector'
-          searchResults=directorSearchResults
-          searchReturned=directorSearchReturned
-          searching=directorSearchStarted
+        {{user-search
+          addUser='addDirector'
+          currentlyActiveUsers=course.directors
         }}
     {{else}}
       <div class="inline-label-data-block">
