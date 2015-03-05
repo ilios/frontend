@@ -41,20 +41,20 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     });
     return filtered.sortBy('title');
   }.property('sessions.@each.searchString', 'debouncedFilter'),
-  actions: {
-    addNewSession: function(){
-      var self = this;
-      var session = this.store.createRecord('session');
-      this.get('course.owningSchool').then(function(owningSchool){
+  setSessionTypes: function(){
+    var self = this;
+    var course = this.get('course');
+    if(course){
+      course.get('owningSchool').then(function(owningSchool){
         owningSchool.get('sessionTypes').then(function(sessionTypes){
-          //we attempt to load a type with the title of lecture as its the default
-          var lectureType = sessionTypes.findBy('title', 'Lecture');
-          var defaultType = lectureType?lectureType:sessionTypes.get('firstObject');
-          session.set('sessionType', defaultType);
           self.set('sessionTypes', sessionTypes);
         });
       });
-
+    }
+  }.observes('course', 'course.owningSchool', 'course.owningSchool.sessionTypes.@each').on('init'),
+  actions: {
+    addNewSession: function(){
+      var session = this.store.createRecord('session');
       this.get('newSessions').addObject(session);
     },
     saveNewSession: function(newSession){
