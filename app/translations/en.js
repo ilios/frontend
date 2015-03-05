@@ -211,6 +211,7 @@ var sessions = {
   'titleFilterPlaceholder': 'Filter by title, type, or status',
   'sessionTitlePlaceholder': 'Enter a title for this session',
   'new': 'New Session',
+  'loadingSessionTypes': 'Loading Session Types...',
 };
 translations.sessions = sessions;
 

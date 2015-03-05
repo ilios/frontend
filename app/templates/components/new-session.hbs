@@ -20,6 +20,10 @@
                   optionValuePath='content.id'
                   optionLabelPath='content.title'
                 }}
+              {{else}}
+                <select>
+                  <option selected>{{t 'sessions.loadingSessionTypes'}}</option>
+                </select>
               {{/if}}
             </div>
           </div>
