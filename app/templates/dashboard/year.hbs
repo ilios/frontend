@@ -1,8 +1,8 @@
 <section class='fullwidth'>
     <h4>Events for {{year}}</h4>
     <ol>
-        {{#each calendarEvents}}
-                <li>Event: #{{id}} {{title}} {{start}} - {{end}}</li>
+        {{#each event in calendarEvents}}
+                <li>Event: #{{event.id}} {{event.title}} {{event.start}} - {{event.end}}</li>
         {{/each}}
     </ol>
 </section>

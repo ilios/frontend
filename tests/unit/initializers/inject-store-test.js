@@ -1,14 +1,11 @@
 import Ember from 'ember';
-import {
-  module,
-  test
-} from 'ember-qunit';
 import { initialize } from 'ilios/initializers/inject-store';
+import { module, test } from 'qunit';
 
 var container, application;
 
 module('InjectStoreInitializer', {
-  setup: function() {
+  beforeEach: function() {
     Ember.run(function() {
       application = Ember.Application.create();
       container = application.__container__;
