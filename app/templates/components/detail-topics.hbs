@@ -1,21 +1,31 @@
-<div class='detail-title'>
-  {{t 'general.topics'}} ({{topics.length}})
-</div>
-<div {{bind-attr class=':detail-content isSaving'}}>
-  <ul class='removable-list'>
-    {{#each topic in sortedTopics}}
-    <li {{action 'remove' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
-    {{/each}}
-  </ul>
-  {{search-box value=filter placeholder=placeholder}}
-  <div class='selectable-list'>
-    <ul>
-      {{#each topic in filteredAvailableTopics}}
-        <li {{action 'add' topic}}>{{topic.title}}</li>
-      {{/each}}
-    </ul>
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.topics'}} ({{subject.disciplines.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'courses.topicsManageTitle'}}
+      </span>
+    {{/if}}
   </div>
-  <div {{bind-attr class=':detail-overlay isSaving:show-overlay'}}>
-    {{wave-loader isFullSize=false}}
+
+  <div class='detail-actions'>
+    {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'courses.topicsManageTitle'}}</button>
+    {{/if}}
   </div>
-</div>
+  <div class='detail-content'>
+    {{#liquid-if isManaging class="horizontal"}}
+        {{detail-topic-manager
+          availableTopics=availableTopics
+          subject=subject
+        }}
+    {{else}}
+      {{detail-topic-list
+        topics=subject.disciplines
+      }}
+    {{/liquid-if}}
+  </div>
+</section>

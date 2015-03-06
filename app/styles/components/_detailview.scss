@@ -95,6 +95,19 @@
     }
   }
 
+  .inline-list {
+    margin-bottom: $base-font-size;
+    ul,li {
+      display: inline-block;
+    }
+    li {
+      margin-top: 10px;
+      margin-right: .3em;
+      padding: .2em .4em .2em .6em;
+      vertical-align: middle;
+    }
+  }
+
 .removex {
       display: inline;
       padding: 0 .4em 0 .4em;

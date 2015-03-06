@@ -70,8 +70,14 @@ ul.inline, ul.inline li {
   margin-right: 2em;
 }
 button {
-  &.add, &.remove {
+  &.add, &.remove, &.bigadd, &.bigremove {
     color: white;
+  }
+  &.bigadd {
+    background-color: $ilios-green;
+  }
+  &.bigcancel {
+    background-color: $ilios-remove-color;
   }
   &.remove {
     background-color: $ilios-remove-color;

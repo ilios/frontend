@@ -1,0 +1,13 @@
+<ul class='removable-list'>
+  {{#each topic in sortedTopics}}
+  <li {{action 'remove' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
+  {{/each}}
+</ul>
+{{search-box value=filter placeholder=placeholder}}
+<div class='selectable-list'>
+  <ul>
+    {{#each topic in filteredAvailableTopics}}
+      <li {{action 'add' topic}}>{{topic.title}}</li>
+    {{/each}}
+  </ul>
+</div>

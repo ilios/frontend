@@ -1,50 +1,28 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
-  placeholderTranslation: 'general.filterPlaceholder',
-  filter: '',
-  sortBy: ['title'],
+export default Ember.Component.extend({
   subject: null,
-  isSaving: false,
-  topics: Ember.computed.alias('subject.disciplines'),
-  sortedTopics: Ember.computed.sort('topics', 'sortBy'),
-  availableTopics: [],
-  tagName: 'section',
-  classNames: ['detail-block'],
-  filteredAvailableTopics: function(){
-    var self = this;
-    var filter = this.get('filter');
-    var exp = new RegExp(filter, 'gi');
-
-    var topics = this.get('availableTopics').filter(function(topic) {
-      return (
-        topic.get('title') !== undefined &&
-        self.get('topics') &&
-        topic.get('title').match(exp) &&
-        !self.get('topics').contains(topic)
-      );
-    });
-
-    return topics.sortBy('title');
-  }.property('topics.@each', 'filter', 'availableTopics.@each'),
+  isManaging: false,
+  //keep track of our initial state so we can roll back
+  initialTopics: [],
   actions: {
-    add: function(topic){
+    manage: function(){
       var self = this;
-      this.set('isSaving', true);
-      var subject = this.get('subject');
-      subject.get('disciplines').addObject(topic);
-      subject.save().then(function(){
-        self.set('isSaving', false);
+      this.get('subject.disciplines').then(function(topics){
+        self.set('initialTopics', topics.toArray());
+        self.set('isManaging', true);
       });
     },
-    remove: function(topic){
-      var self = this;
-      this.set('isSaving', true);
-      var subject = this.get('subject');
-      subject.get('disciplines').removeObject(topic);
-      subject.save().then(function(){
-        self.set('isSaving', false);
-      });
+    save: function(){
+      this.set('isManaging', false);
+      this.get('subject').save();
+    },
+    cancel: function(){
+      var topics = this.get('subject').get('disciplines');
+      topics.clear();
+      console.log(this.get('initialTopics'));
+      topics.addObjects(this.get('initialTopics'));
+      this.set('isManaging', false);
     }
   }
 });
