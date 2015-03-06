@@ -21,12 +21,12 @@
           {{#each objective in competency.objectives}}
             {{#if objective.selected}}
               <li class='selected clickable' {{action 'removeParent' objective}}>
-                {{input type='checkbox' checked=true}}
+                <input type='radio' checked="checked" />
                 {{objective.title}}
               </li>
             {{else}}
               <li class='clickable' {{action 'addParent' objective}}>
-                {{input type='checkbox' checked=false}}
+                <input type='radio' />
                 {{objective.title}}
               </li>
             {{/if}}
