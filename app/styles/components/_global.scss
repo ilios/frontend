@@ -148,3 +148,31 @@ input[type=text] {
   overflow: show;
   padding: 4px;
 }
+
+/* style a regular select element to look like the actions menu */
+select {
+  /* set the dropdown arrow image as the background to simulate the actions menu dropdown */
+  background: url(/images/select-down-arrow.png) 99% / 2% no-repeat $default-background-color;
+  background-color: $default-background-color;
+  border-color: $header-grey;
+
+  /* handle the text and padding */
+  font-size: 1em;
+  height: 1.8em;
+  line-height: 1.1em;
+  padding-left: .5em; 
+ 
+  /* set up the corners of the select box to mimic the rounded button/input corners */ 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: $base-border-radius;
+  -webkit-border-radius: $base-border-radius;
+  -moz-border-radius: $base-border-radius;
+
+}
+
+select:hover {
+  background-color: $header-grey;
+}
+
