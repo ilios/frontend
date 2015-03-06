@@ -1,10 +1,15 @@
 <span class='content'>
   {{#unless isEditing}}
-    <span {{action 'edit'}} class='editable'>{{selected}}</span>
+    <span {{action 'edit'}} class='editable'>{{displayValue}}</span>
   {{else}}
     <span class='editor'>
       <span class='control'>
-        {{view "select" content=options value=selected}}
+        {{view "select"
+          content=options
+          value=selectedValue
+          optionValuePath=optionValuePath
+          optionLabelPath=optionLabelPath
+        }}
       </span>
       <span class='actions'>
         <button class='save' {{action 'save'}}>{{fa-icon 'check' classNames='add'}}</button>

@@ -8,6 +8,7 @@ export default Ember.Mixin.create({
   content: null,
   model: null,
   property: null,
+  willPersist: true,
   /**
    * In order to observe the property changes on the dynamic property
    * of the dymanic element we have to add and destroy our own observers.
@@ -50,12 +51,17 @@ export default Ember.Mixin.create({
       var self = this;
       var buffer = this.get('buffer');
       this.get('model').set(this.get('property'), buffer);
-      this.get('model').save().then(function(model){
-        self.set('model', model);
-        self.notifyPropertyChange('model');
-        self.set('buffer', null);
-        self.set('isEditing', false);
-      });
+      if(this.get('willPersist')){
+        this.get('model').save().then(function(model){
+          self.set('model', model);
+          self.notifyPropertyChange('model');
+          self.set('buffer', null);
+          self.set('isEditing', false);
+        });
+      } else {
+        this.set('buffer', null);
+        this.set('isEditing', false);
+      }
     }
   }
 });

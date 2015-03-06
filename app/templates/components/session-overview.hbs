@@ -25,7 +25,15 @@
     {{#if editable}}
       <div class="inline-label-data-block">
         <label>{{t "sessions.type"}}:</label>
-        <div>{{editable-select model=session property='sessionType.title' options=sessionTypeOptions}}</div>
+        <div>
+          {{editable-select
+            model=session
+            property='sessionType'
+            options=sortedSessionTypes
+            valuePath='id'
+            labelPath='title'
+          }}
+        </div>
       </div>
       <br />
       <div class="inline-label-data-block">

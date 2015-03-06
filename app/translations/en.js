@@ -207,6 +207,11 @@ var sessions = {
   'backToDetails': 'Back to Session Details',
   'objectiveTitle': 'Session Objective',
   'missingCourseObjectivesMessage': 'Please add at least one objective to the course.',
+  'objectiveParentsTitle': 'Selecte Parent Objectives',
+  'titleFilterPlaceholder': 'Filter by title, type, or status',
+  'sessionTitlePlaceholder': 'Enter a title for this session',
+  'new': 'New Session',
+  'loadingSessionTypes': 'Loading Session Types...',
 };
 translations.sessions = sessions;
 
