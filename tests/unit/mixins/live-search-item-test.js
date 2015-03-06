@@ -1,9 +1,6 @@
-import {
-  module,
-  test
-} from 'ember-qunit';
 import Ember from 'ember';
 import LiveSearchItemMixin from 'ilios/mixins/live-search-item';
+import { module, test } from 'qunit';
 
 module('LiveSearchItemMixin');
 

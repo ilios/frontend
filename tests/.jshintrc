@@ -22,7 +22,6 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "checkBreadcrumbs",
     "pickOption",
     "pauseTest"
   ],

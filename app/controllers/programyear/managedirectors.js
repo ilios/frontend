@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
-  breadCrumbTranslation: 'general.directors',
   needs: ['programyear'],
   programYear: Ember.computed.alias("controllers.programyear"),
   directors: Ember.computed.alias("model"),
