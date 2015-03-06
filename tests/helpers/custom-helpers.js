@@ -2,11 +2,6 @@
 import Ember from 'ember';
 
 var customHelpers = function(app) {
-  Ember.Test.registerHelper('checkBreadcrumbs', function (app, crumbs, assert) {
-    var crumbsElements = find('ul.breadcrumbs li');
-    assert.equal(crumbsElements.length, crumbs.length, "Count Breadcrumbs");
-    assert.equal(crumbsElements.text().replace(/\s/g, ""), crumbs.join('').replace(/ /g, ""));
-  });
   Ember.Test.registerHelper('pickOption', function(app, selector, optionText, assert){
     assert.equal(find(selector).length, 1, selector + ' is not a valid selector');
     find(selector).find('option').filter(function() {

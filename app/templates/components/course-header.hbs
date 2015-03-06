@@ -21,7 +21,7 @@
         {{#if showCheckLink}}
           <li>
             {{#link-to 'course-publicationcheck' course}}
-              {{t 'publish.reviewMissingItems' countBinding=course.allPublicationIssuesLength}}
+              {{t 'publish.reviewMissingItems' countBinding='course.allPublicationIssuesLength'}}
             {{/link-to}}
           </li>
         {{/if}}

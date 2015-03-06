@@ -1,9 +1,6 @@
-import {
-  module,
-  test
-} from 'ember-qunit';
 import Ember from 'ember';
 import EditInPlaceMixin from 'ilios/mixins/edit-in-place';
+import { module, test } from 'qunit';
 
 module('EditInPlaceMixin');
 
