@@ -11,13 +11,32 @@
     <tr>
       <td class='text-left' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
       <td class='text-left'>
-        {{objective-list-parent objective=objective manageParents='manageParents'}}
+        {{#if objective.hasParents}}
+          {{#each parent in objective.parents}}
+            {{#if course.hasMultipleCohorts}}
+              <strong>
+                {{parent.programYear.program.title}}&nbsp
+                {{parent.programYear.cohort.displayTitle}}
+              </strong>
+              <br />
+            {{/if}}
+            <a href='#' {{action 'manageParents' objective}}>
+              {{parent.textTitle}}
+            </a>
+            {{#if parent.competency}}
+              ({{parent.competency.title}})
+            {{/if}}
+            <br /><br />
+          {{/each}}
+        {{else}}
+          <button class='add' {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
+        {{/if}}
       </td>
       <td class='text-left'>
         {{#if objective.meshDescriptors.length}}
         <ul>
           {{#each descriptor in objective.meshDescriptors}}
-          <li>{{descriptor.title}}</li>
+            <li>{{descriptor.title}}</li>
           {{/each}}
         </ul>
         {{else}}
