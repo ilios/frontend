@@ -10,7 +10,8 @@
 
   <div class='detail-actions'>
     {{#if isManagingParents}}
-      <button class='add' {{action 'doneManagingParents'}}>{{t 'general.done'}}</button>
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       <button class='add'>{{t 'general.addNew'}}</button>
     {{/if}}

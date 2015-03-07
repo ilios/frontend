@@ -47,7 +47,8 @@
     "morgan": "^1.5.0",
     "pluralize": "^1.1.2",
     "precommit-hook": "^1.0.7",
-    "ember-noscript": "^1.0.0"
+    "ember-noscript": "^1.0.0",
+    "ember-cli-babel": "^4.1.0"
   },
   "ember-addon": {
     "paths": [

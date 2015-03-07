@@ -150,9 +150,6 @@ export default Ember.Component.extend({
           });
           courseObjective.get('parents').addObject(newParent);
           newParent.get('children').addObject(courseObjective);
-          courseObjective.save();
-          newParent.save();
-          oldParents.save();
         });
       });
     },
@@ -161,8 +158,6 @@ export default Ember.Component.extend({
       var courseObjective = this.get('courseObjective');
       courseObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(courseObjective);
-      removingParent.save();
-      courseObjective.save();
     }
   }
 });
