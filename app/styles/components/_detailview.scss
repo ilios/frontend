@@ -158,26 +158,35 @@
     /* vertical-align: bottom;*/
 
     .title {
-      @include span-columns(7 of 12);
+      @include span-columns(6 of 12);
       h2, h4 {
         display: inline;
       }
     }
     .actions {
-      @include span-columns(5 of 12);
+      @include span-columns(6 of 12);
       text-align:right;
       div {
         display: inline;
       }
-      .action-menu {
-        display: inline;
-        button {
-          background-color: $ilios-green;
-          color: white;
-          font-weight: normal;
+      button {
+        background-color: $ilios-green;
+        color: white;
+        font-weight: normal;
+        &:disabled {
+          background-color: lighten($ilios-green, 30%);
         }
-        ul {
-          font-size: $base-font-size * .6;
+      }
+      .session-publish-menu button {
+        background-color: transparent;
+        color: $ilios-green;
+      }
+      .session-unpublish {
+        background-color: transparent;
+        color: $text-grey;
+        &:disabled {
+          background-color: transparent;
+          color: lighten($text-grey, 40);
         }
       }
 

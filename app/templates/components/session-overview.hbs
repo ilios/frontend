@@ -1,21 +1,32 @@
 <div class='detail-header'>
-  {{#if editable}}
-    <span class='title'>
-        {{editable-text tagName='h2' model=session property='title'}}
-    </span>
-    <span class ='actions'>
-      <button class='publish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
-      <button class='unpublish' {{bind-attr disabled=course.isPublished}}>{{t 'general.publish'}}</button>
-      {{publication-status item=session}}
-    </span>
-  {{else}}
-    <span class='title'>
-        <h2>{{session.title}}</h2>
-    </span>
-    <span class ='actions'>
-      {{publication-status item=session}}
-    </span>
-  {{/if}}
+  <span class='title'>
+    {{#if editable}}
+      {{editable-text tagName='h2' model=session property='title'}}
+    {{else}}
+      <h2>{{session.title}}</h2>
+    {{/if}}
+  </span>
+  <span class ='actions'>
+    <button {{action 'unpublish'}} class='unpublish session-unpublish' {{bind-attr disabled=session.isNotPublished}}>{{fa-icon 'fa-cloud'}} {{t 'publish.unPublishSession'}}</button>
+    {{#action-menu titleTranslation='publish.publishSession' icon='sun-o' classNames='publish-menu session-publish-menu'}}
+      <li {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{#unless session.allPublicationIssuesLength}}
+        <li {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
+      {{else}}
+        {{#if showCheckLink}}
+          <li>
+            {{#link-to 'course.sessionpublicationcheck' session}}
+              {{t 'publish.reviewMissingItems' countBinding=session.allPublicationIssuesLength}}
+            {{/link-to}}
+          </li>
+        {{/if}}
+        {{#unless session.requiredPublicationIssues.length}}
+          <li {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+        {{/unless}}
+      {{/unless}}
+    {{/action-menu}}
+    {{publication-status item=session}}
+  </span>
 </div>
 <section class='detail-overview detail-block'>
   <div class='detail-title'>

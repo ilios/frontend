@@ -10,7 +10,6 @@ var Session = DS.Model.extend({
   supplemental: DS.attr('boolean'),
   deleted: DS.attr('boolean'),
   publishedAsTbd: DS.attr('boolean'),
-
   updatedAt: DS.attr('date'),
   course: DS.belongsTo('course', {async: true}),
   sessionType: DS.belongsTo('session-type', {async: true}),
@@ -49,7 +48,6 @@ var Session = DS.Model.extend({
       }
     });
 
-
     return deferred.promise;
   }.property('sortedOfferingsByDate.@each', 'ilmSessionFacet.dueDate'),
   isPublished: Ember.computed.notEmpty('publishEvent'),
@@ -66,6 +64,53 @@ var Session = DS.Model.extend({
   searchString: function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }.property('title', 'sessionType.title', 'status'),
+  allPublicationIssuesCollection: Ember.computed.collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  allPublicationIssuesLength: Ember.computed.sum('allPublicationIssuesCollection'),
+  requiredPublicationIssues: function(){
+    var self = this;
+    var issues = [];
+    var requiredSet = [
+      'title'
+    ];
+    var requiredLength = ['offerings'];
+    requiredSet.forEach(function(val){
+      if(!self.get(val)){
+        issues.push(val);
+      }
+    });
+
+    requiredLength.forEach(function(val){
+      if(self.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
+  }.property(
+    'title',
+    'offerings.length'
+  ),
+  optionalPublicationIssues: function(){
+    var self = this;
+    var issues = [];
+    var requiredLength = [
+      'disciplines',
+      'objectives',
+      'meshDescriptors',
+    ];
+
+    requiredLength.forEach(function(val){
+      if(self.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
+  }.property(
+    'topics.length',
+    'objectives.length',
+    'meshDescriptors.length'
+  )
 });
 
 export default Session;

@@ -36,8 +36,6 @@ var general = {
   'learners': 'Learners',
   'school': 'School',
   'year': 'Year',
-  'publish': 'Publish',
-  'unPublish': 'UnPublish',
   'overview': 'Overview',
   'start': 'Start',
   'end': 'End',
@@ -213,6 +211,7 @@ var sessions = {
   'sessionTitlePlaceholder': 'Enter a title for this session',
   'new': 'New Session',
   'loadingSessionTypes': 'Loading Session Types...',
+  'title': 'Session Title',
 };
 translations.sessions = sessions;
 
@@ -242,6 +241,10 @@ var publish = {
   'publishAsIs': 'Publish As-is',
   'reviewMissingItems': 'Review {{count}} Missing Items',
   'missingItems': 'Missing Items',
+  'publishSession': 'Publish Session',
+  'unPublishSession': 'UnPublish Session',
+  'publishCourse': 'Publish Course',
+  'unPublishCourse': 'UnPublish Course',
 };
 translations.publish = publish;
 

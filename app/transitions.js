@@ -31,8 +31,8 @@ export default function(){
     this.use('crossFade')
   );
   this.transition(
-    this.fromRoute('course.index'),
-    this.toRoute('course.session'),
+    this.fromRoute('course.index', 'course.session'),
+    this.toRoute('course.session', 'course.sessionpublicationcheck'),
     this.use('toLeft', {duration: 1000}),
     this.reverse('toRight', {duration: 1000})
   );
