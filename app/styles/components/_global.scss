@@ -152,7 +152,7 @@ input[type=text] {
 /* style a regular select element to look like the actions menu */
 select {
   /* set the dropdown arrow image as the background to simulate the actions menu dropdown */
-  background: url(/images/select-down-arrow.png) 99% / 2% no-repeat $default-background-color;
+  background: url(images/select-down-arrow.png) 99% / 2% no-repeat $default-background-color;
   background-color: $default-background-color;
   border-color: $header-grey;
 
@@ -166,8 +166,6 @@ select {
   @include appearance(none);
   @include border-top-radius($base-border-radius);
   @include border-bottom-radius($base-border-radius);
-
-
 }
 
 select:hover {
