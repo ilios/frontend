@@ -163,12 +163,10 @@ select {
   padding-left: .5em; 
  
   /* set up the corners of the select box to mimic the rounded button/input corners */ 
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: $base-border-radius;
-  -webkit-border-radius: $base-border-radius;
-  -moz-border-radius: $base-border-radius;
+  @include appearance(none);
+  @include border-top-radius($base-border-radius);
+  @include border-bottom-radius($base-border-radius);
+
 
 }
 
