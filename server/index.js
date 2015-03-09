@@ -19,9 +19,9 @@ module.exports = function(app) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-  // app.use(function(req,res,next){
-  //   setTimeout(next, 1000);
-  // });
+  app.use(function(req,res,next){
+    setTimeout(next, 1000);
+  });
 
   // Uncomment to log proxy requests
   // var morgan  = require('morgan');
