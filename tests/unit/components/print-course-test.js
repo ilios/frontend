@@ -12,6 +12,7 @@ moduleForComponent('print-course', {
     'component:detail-learning-materials',
     'component:detail-objectives',
     'component:detail-competencies',
+    'component:publication-status',
   ]
 });
 

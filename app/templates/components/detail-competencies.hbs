@@ -1,10 +1,10 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'general.competencies'}} ({{competencies.length}})
+    {{t 'general.competencies'}} ({{course.competencies.length}})
   </div>
   <div class='detail-content'>
     <ul class='static-list'>
-      {{#each domain in domains}}
+      {{#each domain in course.domains}}
         <li>{{domain.title}}
           <ul>
             {{#each competency in domain.subCompetencies}}

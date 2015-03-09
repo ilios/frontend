@@ -4,7 +4,6 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'courses.meshSearchPlaceholder',
   terms: [],
   searchResults: [],
-  printView: false,
   filteredSearchResults: function(){
     var terms = this.get('terms');
     var avail = this.get('searchResults').filter(function(term){
