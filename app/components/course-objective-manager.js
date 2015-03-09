@@ -137,37 +137,29 @@ export default Ember.Component.extend({
   }.observes('availableCohorts.@each', 'selectedCohortId', 'availableCohorts.length').on('init'),
   actions: {
     addParent: function(parentProxy){
-      var newParent = parentProxy.get('content');
-      var self = this;
       var courseObjective = this.get('courseObjective');
-      courseObjective.get('parents').then(function(ourParents){
-        newParent.get('children').then(function(newParentChildren){
-          ourParents.forEach(function(aParent){
-            aParent.get('children').removeObject(courseObjective);
-            aParent.save();
+      var newParent = parentProxy.get('content');
+
+      //remove any other parents in the same cohort
+      newParent.get('programYears').then(function(programYears){
+        var newProgramYear = programYears.get('firstObject');
+        newProgramYear.get('objectives').then(function(oldParents){
+          oldParents.forEach(function(oldParent){
+            if(oldParent.get('id') !== newParent.get('id')){
+              courseObjective.get('parents').removeObject(oldParent);
+              oldParent.get('children').removeObject(courseObjective);
+            }
           });
-          newParentChildren.addObject(courseObjective);
-          newParent.save().then(function(newParent){
-            ourParents.addObject(newParent);
-            courseObjective.save().then(function(courseObjective){
-              self.set('model', courseObjective);
-            });
-          });
+          courseObjective.get('parents').addObject(newParent);
+          newParent.get('children').addObject(courseObjective);
         });
       });
     },
-    removeParent: function(){
-      var self = this;
+    removeParent: function(parentProxy){
+      var removingParent = parentProxy.get('content');
       var courseObjective = this.get('courseObjective');
-      courseObjective.get('parents').then(function(ourParents){
-        ourParents.forEach(function(aParent){
-          aParent.get('children').removeObject(courseObjective);
-          aParent.save();
-        });
-        courseObjective.save().then(function(courseObjective){
-          self.set('model', courseObjective);
-        });
-      });
+      courseObjective.get('parents').removeObject(removingParent);
+      removingParent.get('children').removeObject(courseObjective);
     }
   }
 });

@@ -64,16 +64,12 @@ export default Ember.Component.extend({
       var sessionObjective = this.get('sessionObjective');
       sessionObjective.get('parents').addObject(newParent);
       newParent.get('children').addObject(sessionObjective);
-      newParent.save();
-      sessionObjective.save();
     },
     removeParent: function(parentProxy){
       var removingParent = parentProxy.get('content');
       var sessionObjective = this.get('sessionObjective');
       sessionObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(sessionObjective);
-      removingParent.save();
-      sessionObjective.save();
     }
   }
 });
