@@ -6,13 +6,8 @@ import {
 moduleForComponent('print-course', {
   // specify the other units that are required for this test
   needs: [
-    'component:course-overview',
-    'component:detail-topics',
-    'component:detail-mesh',
-    'component:detail-learning-materials',
-    'component:detail-objectives',
-    'component:detail-competencies',
     'component:publication-status',
+    'component:wave-loader',
   ]
 });
 

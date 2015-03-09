@@ -50,6 +50,43 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
+          {{t 'general.competencies'}} ({{course.competencies.length}})
+        </div>
+        <div class='detail-content'>
+          {{#if course.competencies.isFulfilled}}
+          <ul class='static-list'>
+            {{#each domain in course.domains}}
+              <li>{{domain.title}}
+                <ul>
+                  {{#each competency in domain.subCompetencies}}
+                    <li>{{competency.title}}</li>
+                  {{/each}}
+                </ul>
+              </li>
+            {{/each}}
+          </ul>
+          {{else}}
+            {{wave-loader fullSize=false}}
+          {{/if}}
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.topics'}} ({{course.disciplines.length}})
+        </div>
+
+        <div class='detail-content'>
+          <ul class='inline-list'>
+            {{#each topic in sortedTopics}}
+              <li>{{topic.title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
           {{t 'general.objectives'}} ({{course.objectives.length}})
         </div>
         <div class='detail-content'>
@@ -99,20 +136,6 @@
             </tbody>
           </table>
          {{/if}}
-        </div>
-      </section>
-
-      <section class='detail-block'>
-        <div class='detail-title'>
-          {{t 'general.topics'}} ({{course.disciplines.length}})
-        </div>
-
-        <div class='detail-content'>
-          <ul class='inline-list'>
-            {{#each topic in sortedTopics}}
-              <li>{{topic.title}}</li>
-            {{/each}}
-          </ul>
         </div>
       </section>
 
