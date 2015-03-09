@@ -1,14 +1,11 @@
-import {
-  module,
-  test
-} from 'ember-qunit';
 import Ember from 'ember';
-import { initialize } from 'ilios/initializers/inflector';
+import { initialize } from '../../../initializers/inflector';
+import { module, test } from 'qunit';
 
 var container, application;
 
 module('InflectorInitializer', {
-  setup: function() {
+  beforeEach: function() {
     Ember.run(function() {
       application = Ember.Application.create();
       container = application.__container__;
