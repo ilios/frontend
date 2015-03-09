@@ -20,9 +20,12 @@ export default DS.Model.extend({
     inverse: 'children',
     async: true
   }),
-  multipleParents: Ember.computed.gt('parents.length', 1),
-  hasParents: Ember.computed.bool('parents.length'),
+  hasMultipleParents: Ember.computed.gt('parents.length', 1),
+  hasParents: Ember.computed.gte('parents.length', 1),
   programYears: DS.hasMany('program-year',  {async: true}),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple program years, for now we just reflect a many to one relationship
+  programYear: Ember.computed.alias('programYears.firstObject'),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   treeCompetencies: function(){
     var defer = Ember.RSVP.defer();

@@ -27,6 +27,7 @@ var Course = DS.Model.extend({
     publishEvent: DS.belongsTo('publish-event', {async: true}),
     directors: DS.hasMany('user', {async: true}),
     cohorts: DS.hasMany('cohort', {async: true}),
+    hasMultipleCohorts: Ember.computed.gt('cohorts.length', 1),
     disciplines: DS.hasMany('discipline', {async: true}),
     objectives: DS.hasMany('objective', {async: true}),
     meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),

@@ -7,12 +7,19 @@
     </tr>
   </thead>
   <tbody>
-    {{#each objective in objectiveProxies}}
+    {{#each objective in sortedObjectives}}
     <tr>
       <td class='text-left' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
       <td class='text-left'>
         {{#if objective.hasParents}}
-          <a href='#' {{action 'manageParents' objective}}>{{objective.variableTitle}}</a>
+          {{#each parent in objective.parents}}
+            <a href='#' {{action 'manageParents' objective}}>
+              {{parent.textTitle}}
+            </a>
+            {{#if objective.hasMultipleParents}}
+              <br /><br />
+            {{/if}}
+          {{/each}}
         {{else}}
           <button class='add' {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}
