@@ -119,7 +119,7 @@ textarea {
  margin-top: $base-font-size;
 }
 
-/* handle the 'text-align' property */
+/* handle the horizontal alignment ('text-align') properties */
 .text-left {
   text-align: left;
 }
@@ -130,6 +130,19 @@ textarea {
 
 .text-right {
   text-align: right;
+}
+
+/* handle the vertical-alignment ('vertical-align') properties (for table cells) */
+.text-top {
+  vertical-align: top;
+}
+
+.text-middle {
+  vertical-align: middle;
+}
+
+.text-bottom {
+  vertical-align: bottom;
 }
 
 input[type=text] {
