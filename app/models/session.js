@@ -2,7 +2,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-
 var Session = DS.Model.extend({
   title: DS.attr('string'),
   attireRequired: DS.attr('boolean'),
@@ -47,7 +46,6 @@ var Session = DS.Model.extend({
         deferred.resolve(offerings.get('firstObject.startDate'));
       }
     });
-
     return deferred.promise;
   }.property('sortedOfferingsByDate.@each', 'ilmSessionFacet.dueDate'),
   isPublished: Ember.computed.notEmpty('publishEvent'),
@@ -110,7 +108,26 @@ var Session = DS.Model.extend({
     'topics.length',
     'objectives.length',
     'meshDescriptors.length'
-  )
+  ),
+  associatedLearnerGroups: function(){
+    var deferred = Ember.RSVP.defer();
+    this.get('offerings').then(function(offerings){
+      Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
+        var allGroups = [];
+        offeringLearnerGroups.forEach(function(learnerGroups){
+          learnerGroups.forEach(function(group){
+            allGroups.pushObject(group);
+          });
+        });
+        var groups = allGroups?allGroups.uniq().sortBy('title'):[];
+        deferred.resolve(groups);
+      });
+    });
+
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }.property('offerings.[].learnerGroups.[]'),
 });
 
 export default Session;

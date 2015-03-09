@@ -6,7 +6,8 @@ import {
 moduleForComponent('course-overview', 'CourseOverviewComponent', {
   needs: [
     'component:publication-status',
-    'helper:fa-icon'
+    'helper:fa-icon',
+    'component:wave-loader',
   ]
 });
 
