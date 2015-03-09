@@ -20,18 +20,17 @@ export default Ember.Component.extend({
       let objective = this.get('currentlyManagedObjective');
       objective.get('parents').then(function(newParents){
         var oldParents = self.get('initialParentsForCurrentlyManagedObjective').filter(function(parent){
-          return newParents.contains(parent);
+          return !newParents.contains(parent);
         });
         oldParents.forEach(function(parent){
           parent.get('children').removeObject(objective);
           parent.save();
         });
-        objective.save();
-        objective.get('parents').then(function(parents){
-          parents.save();
-          self.set('currentlyManagedObjective', null);
+        objective.save().then(function(){
+          newParents.save().then(function(){
+            self.set('currentlyManagedObjective', null);
+          });
         });
-
       });
     },
     cancel: function(){

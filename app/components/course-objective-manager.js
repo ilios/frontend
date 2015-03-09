@@ -145,8 +145,10 @@ export default Ember.Component.extend({
         var newProgramYear = programYears.get('firstObject');
         newProgramYear.get('objectives').then(function(oldParents){
           oldParents.forEach(function(oldParent){
-            courseObjective.get('parents').removeObject(oldParent);
-            oldParent.get('children').removeObject(courseObjective);
+            if(oldParent.get('id') !== newParent.get('id')){
+              courseObjective.get('parents').removeObject(oldParent);
+              oldParent.get('children').removeObject(courseObjective);
+            }
           });
           courseObjective.get('parents').addObject(newParent);
           newParent.get('children').addObject(courseObjective);
