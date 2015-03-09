@@ -9,8 +9,8 @@
   <tbody>
     {{#each objective in sortedObjectives}}
     <tr>
-      <td class='text-left' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
-      <td class='text-left'>
+      <td class='text-left text-top' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
+      <td class='text-left text-top'>
         {{#if objective.hasParents}}
           {{#each parent in objective.parents}}
             <a href='#' {{action 'manageParents' objective}}>
@@ -24,7 +24,7 @@
           <button class='add' {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
-      <td class='text-left'>
+      <td class='text-left text-top'>
         {{#if objective.meshDescriptors.length}}
         <ul>
           {{#each descriptor in objective.meshDescriptors}}
