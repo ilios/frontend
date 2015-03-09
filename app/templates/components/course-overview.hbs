@@ -3,7 +3,9 @@
     {{t 'general.overview'}}
   </div>
   <div class='detail-actions'>
-    <button>{{t 'general.printSummary'}}</button>
+    {{#link-to 'print-course' course}}
+      <button>{{t 'general.printSummary'}}</button>
+    {{/link-to}}
   </div>
   <div class='detail-content'>
     {{#if editing}}

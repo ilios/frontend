@@ -1,0 +1,280 @@
+<section id='print-course' class='full-width'>
+  <div class='detail-view print-detail-view'>
+    <div class='detail-view-main-title'>
+      <div class='detail-header'>
+        <span class='title'>
+          <h2>{{course.title}}</h2><h4>{{course.academicYear}}</h4>
+        </span>
+        <span class ='actions'>
+          {{publication-status item=course}}
+        </span>
+      </div>
+    </div>
+    <div class='detail-view-details'>
+      <section class='detail-overview detail-block'>
+        <div class='detail-title'>
+          {{t 'general.overview'}}
+        </div>
+        <div class='detail-content'>
+            <div class="inline-label-data-block">
+              <label>{{t "general.start"}}:</label>
+              <div>{{moment course.startDate 'MM/DD/YYYY'}}</div>
+            </div>
+            <div class="inline-label-data-block">
+              <label>{{t "courses.externalId"}}:</label>
+              <div>{{course.externalId}}</div>
+            </div>
+            <div class="inline-label-data-block">
+              <label>{{t "courses.level"}}:</label>
+              <div>{{course.level}}</div>
+            </div>
+            <div class="inline-label-data-block">
+              <label>{{t "general.end"}}:</label>
+              <div>{{moment course.endDate 'MM/DD/YYYY'}}</div>
+            </div>
+            <br />
+            <br />
+
+            <div class="inline-label-data-block">
+              <label>{{t "general.directors"}}:</label>
+              <div>
+                <span>
+                  {{#each user in sortedDirectors}}
+                    {{user.fullName}},
+                  {{/each}}
+                </span>
+              </div>
+            </div>
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.competencies'}} ({{course.competencies.length}})
+        </div>
+        <div class='detail-content'>
+          {{#if course.competencies.isFulfilled}}
+          <ul class='static-list'>
+            {{#each domain in course.domains}}
+              <li>{{domain.title}}
+                <ul>
+                  {{#each competency in domain.subCompetencies}}
+                    <li>{{competency.title}}</li>
+                  {{/each}}
+                </ul>
+              </li>
+            {{/each}}
+          </ul>
+          {{else}}
+            {{wave-loader fullSize=false}}
+          {{/if}}
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.topics'}} ({{course.disciplines.length}})
+        </div>
+
+        <div class='detail-content'>
+          <ul class='inline-list'>
+            {{#each topic in sortedTopics}}
+              <li>{{topic.title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.objectives'}} ({{course.objectives.length}})
+        </div>
+        <div class='detail-content'>
+          <ul>
+            {{#each objective in course.objectives}}
+              <li>{{objective.textTitle}}
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.learningMaterials'}} ({{course.learningMaterials.length}})
+        </div>
+        <div class='detail-content'>
+         {{#if course.learningMaterials.length}}
+         <table>
+            <thead>
+              <tr>
+                <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
+                <th class='text-center'>{{t 'general.type'}}</th>
+                <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
+                <th class='text-center'>{{t 'general.required'}}</th>
+                <th class='text-left'>{{t 'learningMaterials.notes'}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each lm in course.learningMaterials}}
+                <tr>
+                  <td class='text-left' colspan=2>
+                    {{lm.learningMaterial.title}}
+                  </td>
+                  <td class='text-center'>{{lm.learningMaterial.type}}</td>
+                  <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+                  <td class='text-center'>
+        	        {{#if lm.required}}
+        	          <span class='add'>{{t 'general.yes'}}</span>
+        	        {{else}}
+        	          <span class='remove'>{{t 'general.no'}}</span>
+        	        {{/if}}
+      	        </td>
+                  <td class='text-left'>{{lm.learningMaterial.notes}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+         {{/if}}
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.mesh'}} ({{course.meshDescriptors.length}})
+        </div>
+        <div class='detail-content'>
+          <ul class='inline-list'>
+            {{#each descriptor in sortedMeshDescriptors}}
+              <li>{{descriptor.title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  {{#each session in sortedSessionProxies}}
+    <div class='detail-view print-detail-view'>
+      <div class='detail-view-main-title'>
+        <div class='detail-header'>
+          <span class='title'>
+            <h2>{{session.title}}</h2>
+          </span>
+          <span class ='actions'>
+            {{publication-status item=session}}
+          </span>
+        </div>
+      </div>
+      <section class='detail-overview detail-block'>
+        <div class='detail-title'>
+          {{t 'general.overview'}}
+        </div>
+        <div class='detail-content'>
+          <div class="inline-label-data-block">
+            <label>{{t "sessions.type"}}:</label>
+            <div>{{session.sessionType.title}}</div>
+          </div>
+          <br />
+          <div class="inline-label-data-block">
+            <label>{{t "sessions.supplementalCurriculum"}}:</label>
+            <div>{{boolean-check value=session.supplemental}}</div>
+          </div>
+          <div class="inline-label-data-block">
+            <label>{{t "sessions.specialAttireRequired"}}:</label>
+            <div>{{boolean-check value=session.attireRequired}}</div>
+          </div>
+          <div class="inline-label-data-block">
+            <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+            <div>{{boolean-check value=session.equipmentRequired}}</div>
+          </div>
+          <br />
+          <div class="inline-label-data-block">
+            <label>{{t "general.description"}}:</label>
+            <div>{{session.sessionDescription.textDescription}}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.objectives'}} ({{course.objectives.length}})
+        </div>
+        <div class='detail-content'>
+          <ul>
+            {{#each objective in course.objectives}}
+              <li>{{objective.textTitle}}
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.learningMaterials'}} ({{session.sessionLearningMaterials.length}})
+        </div>
+        <div class='detail-content'>
+         {{#if session.sessionLearningMaterials.length}}
+         <table>
+            <thead>
+              <tr>
+                <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
+                <th class='text-center'>{{t 'general.type'}}</th>
+                <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
+                <th class='text-center'>{{t 'general.required'}}</th>
+                <th class='text-left'>{{t 'learningMaterials.notes'}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each lm in session.sessionLearningMaterials}}
+                <tr>
+                  <td class='text-left' colspan=2>
+                    {{lm.learningMaterial.title}}
+                  </td>
+                  <td class='text-center'>{{lm.learningMaterial.type}}</td>
+                  <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+                  <td class='text-center'>
+                  {{#if lm.required}}
+                    <span class='add'>{{t 'general.yes'}}</span>
+                  {{else}}
+                    <span class='remove'>{{t 'general.no'}}</span>
+                  {{/if}}
+                </td>
+                  <td class='text-left'>{{lm.learningMaterial.notes}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+         {{/if}}
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.topics'}} ({{session.disciplines.length}})
+        </div>
+
+        <div class='detail-content'>
+          <ul class='inline-list'>
+            {{#each topic in session.sortedTopics}}
+              <li>{{topic.title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.mesh'}} ({{session.meshDescriptors.length}})
+        </div>
+        <div class='detail-content'>
+          <ul class='inline-list'>
+            {{#each descriptor in session.sortedMeshDescriptors}}
+              <li>{{descriptor.title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+    </div>
+  {{/each}}
+</section>
