@@ -46,7 +46,9 @@ var Session = DS.Model.extend({
         deferred.resolve(offerings.get('firstObject.startDate'));
       }
     });
-    return deferred.promise;
+    return DS.PromiseObject.create({
+      promise: deferred.promise
+    });
   }.property('sortedOfferingsByDate.@each', 'ilmSessionFacet.dueDate'),
   isPublished: Ember.computed.notEmpty('publishEvent'),
   isNotPublished: Ember.computed.not('isPublished'),
