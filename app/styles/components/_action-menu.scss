@@ -11,15 +11,13 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     background: #ffffff;
     cursor: pointer;
     font-size: $base-font-size * 0.7;
-    font-weight: 800;
-    padding: 0 ($dropdown-padding * 3.5) 0 ($dropdown-padding / 2);
+    padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
     color: $base-font-color;
     border: 1px solid $header-grey;
     line-height: 1.1em;
     @include media($large-screen) {
       font-size: $base-font-size;
-      padding: $dropdown-padding / 3 ($dropdown-padding * 2.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     }
   }
 
@@ -28,7 +26,6 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
   }
 
   .button:after {
-    color: $base-font-color;
     content: "\25BE";
     display: block;
     position: absolute;

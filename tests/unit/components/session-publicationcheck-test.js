@@ -3,17 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('session-overview', {
+moduleForComponent('session-publicationcheck', {
   // specify the other units that are required for this test
-  needs: [
-    'component:editable-text',
-    'component:editable-select',
-    'component:editable-boolean',
-    'component:editable-textarea',
-    'component:publication-status',
-    'component:action-menu',
-    'helper:fa-icon',
-  ]
+  // needs: ['component:foo', 'helper:bar']
 });
 
 test('it renders', function(assert) {

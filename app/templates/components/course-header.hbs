@@ -12,11 +12,11 @@
     <h4>{{course.academicYear}}</h4>
   </span>
   <span class ='actions'>
-    <button {{action 'unpublish'}} class='unpublish' {{bind-attr disabled=course.isNotPublished}}>{{t 'general.unPublish'}}</button>
-    {{#action-menu titleTranslation='general.publish' icon=false}}
+    <button {{action 'unpublish'}} class='unpublish course-unpublish' {{bind-attr disabled=course.isNotPublished}}>{{t 'publish.unPublishCourse'}}</button>
+    {{#action-menu titleTranslation='publish.publishCourse' icon=false classNames='publish-menu course-publish-menu'}}
       <li {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
       {{#unless course.allPublicationIssuesLength}}
-        <li {{action 'publish'}}>{{t 'general.publish'}}</li>
+        <li {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
       {{else}}
         {{#if showCheckLink}}
           <li>

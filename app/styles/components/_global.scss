@@ -82,12 +82,6 @@ button {
   &.remove {
     background-color: $ilios-remove-color;
   }
-  &.publish, &.unpublish {
-    background-color: $ilios-green;
-    &:disabled {
-      background-color: lighten($ilios-green, 30%);
-    }
-  }
 }
 
 textarea {
@@ -160,9 +154,9 @@ select {
   font-size: 1em;
   height: 1.8em;
   line-height: 1.1em;
-  padding-left: .5em; 
- 
-  /* set up the corners of the select box to mimic the rounded button/input corners */ 
+  padding-left: .5em;
+
+  /* set up the corners of the select box to mimic the rounded button/input corners */
   @include appearance(none);
   @include border-top-radius($base-border-radius);
   @include border-bottom-radius($base-border-radius);
@@ -171,4 +165,3 @@ select {
 select:hover {
   background-color: $header-grey;
 }
-
