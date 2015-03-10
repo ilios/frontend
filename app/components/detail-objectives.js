@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   isManagingDescriptors: Ember.computed.notEmpty('manageDescriptorsObjective'),
   mangeMeshObjective: null,
   initialStateForManageMeshObjective: [],
+  newObjectives: [],
   actions: {
     manageParents: function(objective){
       let self = this;
@@ -84,6 +85,29 @@ export default Ember.Component.extend({
         descriptors.addObjects(this.get('initialStateForManageMeshObjective'));
         self.set('manageDescriptorsObjective', null);
       }
-    }
+    },
+    addObjective: function(){
+      var objective = this.store.createRecord('objective');
+      this.get('newObjectives').addObject(objective);
+    },
+    saveNewObjective: function(newObjective){
+      var self = this;
+      self.get('newObjectives').removeObject(newObjective);
+      if(this.get('isCourse')){
+        newObjective.get('courses').addObject(this.get('subject'));
+      }
+      if(this.get('isSession')){
+        newObjective.get('sessions').addObject(this.get('subject'));
+      }
+      newObjective.save().then(function(savedObjective){
+        self.get('subject.objectives').then(function(objectives){
+          objectives.addObject(savedObjective);
+          objectives.save();
+        });
+      });
+    },
+    removeNewObjective: function(newObjective){
+      this.get('newObjectives').removeObject(newObjective);
+    },
   }
 });
