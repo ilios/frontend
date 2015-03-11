@@ -52,8 +52,8 @@
               <td class='text-left'>{{session.sessionType.title}}</td>
               <td class='text-center'>{{session.learnerGroupCount}}</td>
               <td class='text-center'>
-                {{#if session.firstOfferingDate}}
-                  {{moment session.firstOfferingDate 'MM/DD/YYYY h:mma'}}
+                {{#if session.firstOfferingDate.content}}
+                  {{moment session.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
                 {{/if}}
               </td>
               <td class='text-center'>{{session.offerings.length}}</td>
