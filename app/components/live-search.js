@@ -51,7 +51,6 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
           this.set('results', []);
         } else {
           this.set('showMoreInputPrompt', false);
-          console.log('sending search action');
           this.sendAction('search', this.get('searchTerms'));
         }
       }

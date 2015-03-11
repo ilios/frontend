@@ -24,8 +24,7 @@ install:
 
 before_script:
   - curl -L https://gist.githubusercontent.com/johanneswuerbach/e4950820c0d685fc545e/raw/sauce_connect_setup.sh | bash # Create a sauce tunnel
-  - ember s --live-reload=false & # Start a server so we can hit the fake API from integration tests
-  - sleep 10 # wait for the server to be started
+
 
 script:
   - ember test --config-file=testemci.json --port=8080
