@@ -16,7 +16,7 @@
         {{#if showCheckLink}}
           <li>
             {{#link-to 'course.sessionpublicationcheck' session}}
-              {{t 'publish.reviewMissingItems' countBinding=session.allPublicationIssuesLength}}
+              {{t 'publish.reviewMissingItems' countBinding='session.allPublicationIssuesLength'}}
             {{/link-to}}
           </li>
         {{/if}}
