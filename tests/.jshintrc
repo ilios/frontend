@@ -23,7 +23,8 @@
     "currentPath",
     "currentRouteName",
     "pickOption",
-    "pauseTest"
+    "pauseTest",
+    "Pretender"
   ],
   "node": false,
   "browser": false,
