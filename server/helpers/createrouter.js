@@ -96,6 +96,7 @@ defaultCallbacks.delete = function(name, req, res){
   var singularName = pluralize(name, 1);
   if(req.params.id in fixtures){
     fixtureStorage.remove(name, req.params.id);
+    res.status(204);
     res.send();
   } else {
     res.status(404).end();

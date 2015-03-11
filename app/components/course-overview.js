@@ -14,5 +14,12 @@ export default Ember.Component.extend({
       course.save();
       user.save();
     },
+    removeDirector: function(user){
+      var course = this.get('course');
+      course.get('directors').removeObject(user);
+      user.get('directedCourses').removeObject(course);
+      course.save();
+      user.save();
+    },
   }
 });

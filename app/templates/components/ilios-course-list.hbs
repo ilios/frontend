@@ -38,7 +38,7 @@
       {{#if course.showRemoveConfirmation}}
         <tr class='confirm-removal'><td colspan=16>
           <div class='confirm-message'>
-            {{t 'courses.confirmRemove' publishedOfferingCountBinding=course.publishedOfferingCount}} <br />
+            {{t 'courses.confirmRemove' publishedOfferingCountBinding='course.publishedOfferingCount'}} <br />
            <div class="confirm-buttons">
             <button {{action 'remove' course}} class='remove'>{{t 'general.yes'}}</button>
             <button {{action 'cancelRemove' course}} class='cancel'>{{t 'general.cancel'}}</button>

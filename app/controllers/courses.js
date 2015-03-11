@@ -46,10 +46,9 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       this.transitionToRoute('course', course);
     },
     removeCourse: function(course){
+      this.get('content').removeObject(course);
       course.deleteRecord();
-      course.save().then(function(){
-        this.get('content').removeObject(course);
-      });
+      course.save();
     },
     addCourse: function(){
       var course = this.store.createRecord('course', {
