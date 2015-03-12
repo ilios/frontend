@@ -8,6 +8,7 @@ moduleForComponent('print-course', {
   needs: [
     'component:publication-status',
     'component:wave-loader',
+    'component:loading-part',
   ]
 });
 
