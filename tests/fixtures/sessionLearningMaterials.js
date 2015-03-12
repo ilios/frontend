@@ -1,5 +1,21 @@
 export default [
   {
+    'id' : 38121,
+    'publicNotes' : false,
+    'session' : "15076",
+    'learningMaterial' : "9488",
+    'meshDescriptors' : []
+  },
+
+  {
+    'id' : 38122,
+    'publicNotes' : true,
+    'session' : "15076",
+    'learningMaterial' : "9498",
+    'meshDescriptors' : []
+  },
+
+  {
     'id' : 45122,
     'publicNotes' : true,
     'session' : "16492",

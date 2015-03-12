@@ -4,7 +4,7 @@ module.exports = {
     'title' : "Anatomy",
     'owningSchool' : "1",
     'courses' : [ '595','618' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16470','16474','16476','16483','16484','16485','16490','16492','16496','16497','16500','16501','16503','16504','16509','16512','16513','16528','16533','16540','16545','16547','16551','16552','16553','16555','16556' ]
   },
 
@@ -12,9 +12,9 @@ module.exports = {
     'id' : 3,
     'title' : "Anesthesiology",
     'owningSchool' : "1",
-    'courses' : [],
-    'programYears' : [],
-    'sessions' : []
+    'courses' : [ '551' ],
+    'programYears' : [ '42','67' ],
+    'sessions' : [ '15076','15077','15078','15079','15080','15081','15082','15083','15084','15085','15086','15087','15088','15089','15090','15091','15092' ]
   },
 
   4: {
@@ -22,7 +22,7 @@ module.exports = {
     'title' : "Behavioral Science",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16494','16516','16517','16523','16534','16538' ]
   },
 
@@ -31,7 +31,7 @@ module.exports = {
     'title' : "Biochemistry",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16480','16482','16486','16544','16561' ]
   },
 
@@ -40,7 +40,7 @@ module.exports = {
     'title' : "Cell Biology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16471','16482','16526' ]
   },
 
@@ -49,7 +49,7 @@ module.exports = {
     'title' : "Clinical and Translational Research",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -58,7 +58,7 @@ module.exports = {
     'title' : "Clinical Skills",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16492','16497','16500','16501','16509','16528','16533','16540' ]
   },
 
@@ -67,7 +67,7 @@ module.exports = {
     'title' : "Complementary/Alternative Healthcare",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -76,7 +76,7 @@ module.exports = {
     'title' : "Problem Solving",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -85,7 +85,7 @@ module.exports = {
     'title' : "Cultural Competence",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16516','16517','16523' ]
   },
 
@@ -94,7 +94,7 @@ module.exports = {
     'title' : "Embryology",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16470','16545','16547','16551','16556' ]
   },
 
@@ -103,7 +103,7 @@ module.exports = {
     'title' : "Emergency Medicine",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16468','16487','16522' ]
   },
 
@@ -112,7 +112,7 @@ module.exports = {
     'title' : "Epidemiology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -121,7 +121,7 @@ module.exports = {
     'title' : "Ethics, Medical",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16514' ]
   },
 
@@ -130,7 +130,7 @@ module.exports = {
     'title' : "Genetics",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16495','16498','16499','16507','16546' ]
   },
 
@@ -139,7 +139,7 @@ module.exports = {
     'title' : "Geriatrics",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -148,7 +148,7 @@ module.exports = {
     'title' : "Histology",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16475','16477','16479','16484','16485','16502','16503','16505' ]
   },
 
@@ -157,7 +157,7 @@ module.exports = {
     'title' : "Human Sexuality/Sexual Functioning",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -166,7 +166,7 @@ module.exports = {
     'title' : "Humanities, Medical",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -175,7 +175,7 @@ module.exports = {
     'title' : "Immunology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -184,7 +184,7 @@ module.exports = {
     'title' : "Health Informatics",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -193,7 +193,7 @@ module.exports = {
     'title' : "Global Health Issues",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -202,7 +202,7 @@ module.exports = {
     'title' : "Microbiology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -211,7 +211,7 @@ module.exports = {
     'title' : "Neurology",
     'owningSchool' : "1",
     'courses' : [ '618' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16488','16491' ]
   },
 
@@ -220,7 +220,7 @@ module.exports = {
     'title' : "Surgical Specialties",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -229,7 +229,7 @@ module.exports = {
     'title' : "Nutrition",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -238,7 +238,7 @@ module.exports = {
     'title' : "Obstetrics and Gynecology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -247,7 +247,7 @@ module.exports = {
     'title' : "Occupational Health/Medicine",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -256,7 +256,7 @@ module.exports = {
     'title' : "Pathology",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16524','16526','16535' ]
   },
 
@@ -265,7 +265,7 @@ module.exports = {
     'title' : "Pediatrics",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -274,7 +274,7 @@ module.exports = {
     'title' : "Pharmacology",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16473','16482','16489','16491','16493','16515','16519' ]
   },
 
@@ -283,7 +283,7 @@ module.exports = {
     'title' : "Physiology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16488','16491' ]
   },
 
@@ -292,7 +292,7 @@ module.exports = {
     'title' : "Prevention/Health Maintenance",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -301,7 +301,7 @@ module.exports = {
     'title' : "Professional Development",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16469','16472','16510','16511','16514','16541','16550' ]
   },
 
@@ -310,7 +310,7 @@ module.exports = {
     'title' : "Psychiatry",
     'owningSchool' : "1",
     'courses' : [ '618' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -319,7 +319,7 @@ module.exports = {
     'title' : "Public Health",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -328,7 +328,7 @@ module.exports = {
     'title' : "Radiology",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16478','16554' ]
   },
 
@@ -337,7 +337,7 @@ module.exports = {
     'title' : "Societal Problems",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -346,7 +346,7 @@ module.exports = {
     'title' : "Surgery",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -355,7 +355,7 @@ module.exports = {
     'title' : "Anatomy",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -364,7 +364,7 @@ module.exports = {
     'title' : "Bioanalysis/Clinical Chemistry",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -373,7 +373,7 @@ module.exports = {
     'title' : "Biochemistry",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -382,7 +382,7 @@ module.exports = {
     'title' : "Biotechnology",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -391,7 +391,7 @@ module.exports = {
     'title' : "Complementary and Alternative Medicine",
     'owningSchool' : "3",
     'courses' : [ '695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -400,7 +400,7 @@ module.exports = {
     'title' : "Dispensing and distribution systems",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -409,7 +409,7 @@ module.exports = {
     'title' : "Drug Information",
     'owningSchool' : "3",
     'courses' : [ '695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -418,7 +418,7 @@ module.exports = {
     'title' : "Economics",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -427,7 +427,7 @@ module.exports = {
     'title' : "Epidemiology and Biostatistics",
     'owningSchool' : "3",
     'courses' : [ '695','726' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -436,7 +436,7 @@ module.exports = {
     'title' : "Ethics",
     'owningSchool' : "3",
     'courses' : [ '695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -445,7 +445,7 @@ module.exports = {
     'title' : "Extemporaneous compounding",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -454,7 +454,7 @@ module.exports = {
     'title' : "Genetics",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -463,7 +463,7 @@ module.exports = {
     'title' : "Health care delivery systems",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -472,7 +472,7 @@ module.exports = {
     'title' : "History of Medicine",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -481,7 +481,7 @@ module.exports = {
     'title' : "Immunology",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -490,7 +490,7 @@ module.exports = {
     'title' : "Informatics",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -499,7 +499,7 @@ module.exports = {
     'title' : "Law & regulatory affairs",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -508,7 +508,7 @@ module.exports = {
     'title' : "Literature evaluation and research design",
     'owningSchool' : "3",
     'courses' : [ '543','695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -517,7 +517,7 @@ module.exports = {
     'title' : "Medication safety",
     'owningSchool' : "3",
     'courses' : [ '695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -526,7 +526,7 @@ module.exports = {
     'title' : "Medicinal Chemistry",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -535,7 +535,7 @@ module.exports = {
     'title' : "Microbiology",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -544,7 +544,7 @@ module.exports = {
     'title' : "Molecular Biology",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -553,7 +553,7 @@ module.exports = {
     'title' : "Pathology",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -562,7 +562,7 @@ module.exports = {
     'title' : "Patient assessment laboratory",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -571,7 +571,7 @@ module.exports = {
     'title' : "Pharmaceutics/Biopharmaceutics",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -580,7 +580,7 @@ module.exports = {
     'title' : "Pharmacogenomics",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -589,7 +589,7 @@ module.exports = {
     'title' : "Pharmacognosy",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -598,7 +598,7 @@ module.exports = {
     'title' : "Pharmacokinetics",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -607,7 +607,7 @@ module.exports = {
     'title' : "Pharmacotherapy",
     'owningSchool' : "3",
     'courses' : [ '695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -616,7 +616,7 @@ module.exports = {
     'title' : "Pharmacy practice and pharmacist-provided care",
     'owningSchool' : "3",
     'courses' : [ '695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -625,7 +625,7 @@ module.exports = {
     'title' : "Practice Management",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -634,7 +634,7 @@ module.exports = {
     'title' : "Professional communication",
     'owningSchool' : "3",
     'courses' : [ '543','695' ],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -643,7 +643,7 @@ module.exports = {
     'title' : "Social & behavioral aspects of practice",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -652,7 +652,7 @@ module.exports = {
     'title' : "Special populations",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -661,7 +661,7 @@ module.exports = {
     'title' : "Toxicology",
     'owningSchool' : "3",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '58','69' ],
     'sessions' : []
   },
 
@@ -670,7 +670,7 @@ module.exports = {
     'title' : "Family Medicine",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -679,7 +679,7 @@ module.exports = {
     'title' : "Internal Medicine",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -688,7 +688,7 @@ module.exports = {
     'title' : "Acute Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -697,7 +697,7 @@ module.exports = {
     'title' : "Ambulatory Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -706,7 +706,7 @@ module.exports = {
     'title' : "Biostatistics",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -715,7 +715,7 @@ module.exports = {
     'title' : "Chronic Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -724,7 +724,7 @@ module.exports = {
     'title' : "Clinical Reasoning",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -733,7 +733,7 @@ module.exports = {
     'title' : "Communication Skills",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16492','16497','16500','16501','16509','16528','16533','16538','16540' ]
   },
 
@@ -742,7 +742,7 @@ module.exports = {
     'title' : "Community Health",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16572' ]
   },
 
@@ -751,7 +751,7 @@ module.exports = {
     'title' : "Continuing Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -760,7 +760,7 @@ module.exports = {
     'title' : "Critical Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -769,7 +769,7 @@ module.exports = {
     'title' : "Diagnosis of Disease",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -778,7 +778,7 @@ module.exports = {
     'title' : "Domestic Violence/Abuse",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -787,7 +787,7 @@ module.exports = {
     'title' : "End-of-Life Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -796,7 +796,7 @@ module.exports = {
     'title' : "Evidence-Based Medicine",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -805,7 +805,7 @@ module.exports = {
     'title' : "Determinants of Health",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16494','16516','16517','16523','16538' ]
   },
 
@@ -814,7 +814,7 @@ module.exports = {
     'title' : "Gender and Cultural Bias",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16516','16517','16523' ]
   },
 
@@ -823,7 +823,7 @@ module.exports = {
     'title' : "Health Care Financing",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16534' ]
   },
 
@@ -832,7 +832,7 @@ module.exports = {
     'title' : "Health Care Quality Improvement",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -841,7 +841,7 @@ module.exports = {
     'title' : "Health Care Systems",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16534' ]
   },
 
@@ -850,7 +850,7 @@ module.exports = {
     'title' : "Human Development/Life Cycle",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16470','16545','16551' ]
   },
 
@@ -859,7 +859,7 @@ module.exports = {
     'title' : "Human Sexual/Gender Development",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -868,7 +868,7 @@ module.exports = {
     'title' : "Jurisprudence, Medical",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -877,7 +877,7 @@ module.exports = {
     'title' : "Neuroscience",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : [ '16483','16490' ]
   },
 
@@ -886,7 +886,7 @@ module.exports = {
     'title' : "Organ System Pathophysiology",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -895,7 +895,7 @@ module.exports = {
     'title' : "Pain Management",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -904,7 +904,7 @@ module.exports = {
     'title' : "Palliative Care",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -913,7 +913,7 @@ module.exports = {
     'title' : "Physical Diagnosis",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -922,7 +922,7 @@ module.exports = {
     'title' : "Population-Based Medicine",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -931,7 +931,7 @@ module.exports = {
     'title' : "Socioeconomics, Medical",
     'owningSchool' : "1",
     'courses' : [ '595' ],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 
@@ -940,7 +940,7 @@ module.exports = {
     'title' : "Substance Abuse",
     'owningSchool' : "1",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'sessions' : []
   },
 };

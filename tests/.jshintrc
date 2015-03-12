@@ -24,6 +24,7 @@
     "currentRouteName",
     "pickOption",
     "pauseTest",
+    "getText",
     "Pretender"
   ],
   "node": false,

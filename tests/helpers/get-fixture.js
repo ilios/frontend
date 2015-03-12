@@ -23,6 +23,7 @@ import learningMaterialStatusesFixtures from '../fixtures/learningMaterialStatus
 import learningMaterialUserRolesFixtures from '../fixtures/learningMaterialUserRoles';
 import learningMaterialsFixtures from '../fixtures/learningMaterials';
 import meshConceptsFixtures from '../fixtures/meshConcepts';
+import meshDescriptorFixtures from '../fixtures/meshDescriptors';
 import meshQualifiersFixtures from '../fixtures/meshQualifiers';
 import objectivesFixtures from '../fixtures/objectives';
 import offeringsFixtures from '../fixtures/offerings';
@@ -66,6 +67,7 @@ export default function getFixture(modelName){
     learningMaterialUserRoles: learningMaterialUserRolesFixtures,
     learningMaterials: learningMaterialsFixtures,
     meshConcepts: meshConceptsFixtures,
+    meshDescriptors: meshDescriptorFixtures,
     meshQualifiers: meshQualifiersFixtures,
     objectives: objectivesFixtures,
     offerings: offeringsFixtures,

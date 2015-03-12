@@ -1,6 +1,7 @@
 module.exports = {
   9: {
     'id' : 9,
+    'export' : "9",
     'sequence' : "9",
     'sequenceBlocks' : [ '16','18','24','25','26','33','36','53','64' ],
     'program' : "1",
@@ -9,6 +10,7 @@ module.exports = {
 
   10: {
     'id' : 10,
+    'export' : "10",
     'sequence' : "10",
     'sequenceBlocks' : [ '68','70','76','78','82','83','86','93','95' ],
     'program' : "1",

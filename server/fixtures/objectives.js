@@ -1,13 +1,229 @@
 module.exports = {
-  47728: {
-    'id' : 47728,
-    'title' : "Establish and maintain knowledge necessary for the preventive care, diagnosis, treatment, and management of medical problems.",
+  5793: {
+    'id' : 5793,
+    'title' : "Gather complete and focused histories in an organized fashion, appropriate to the clinical situation and specific population",
+    'competency' : "7",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72592' ],
+    'meshDescriptors' : []
+  },
+
+  5794: {
+    'id' : 5794,
+    'title' : "Conduct relevant, complete, and focused physical examinations",
+    'competency' : "8",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72594' ],
+    'meshDescriptors' : []
+  },
+
+  5797: {
+    'id' : 5797,
+    'title' : "Perform common procedures safely and correctly with attention to patient's comfort",
+    'competency' : "11",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72596' ],
+    'meshDescriptors' : []
+  },
+
+  5813: {
+    'id' : 5813,
+    'title' : "Anticipate patients’ needs, conduct discharge planning, and create individualized disease management and/or prevention plans including patient self-management and behavior change",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72597' ],
+    'meshDescriptors' : []
+  },
+
+  5814: {
+    'id' : 5814,
+    'title' : "Establish and maintain knowledge necessary for the preventive care, diagnosis, treatment, and management of medical problems",
     'competency' : "14",
     'courses' : [],
     'programYears' : [],
     'sessions' : [],
     'parents' : [],
+    'children' : [ '72593' ],
+    'meshDescriptors' : []
+  },
+
+  5822: {
+    'id' : 5822,
+    'title' : "Employ strategies for seeking, incorporating and delivering feedback",
+    'competency' : "17",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72600' ],
+    'meshDescriptors' : []
+  },
+
+  5834: {
+    'id' : 5834,
+    'title' : "Demonstrate respect, compassion, accountability, dependability, and integrity when interacting with peers, interprofessional healthcare providers, patients, and families",
+    'competency' : "21",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72599' ],
+    'meshDescriptors' : []
+  },
+
+  5839: {
+    'id' : 5839,
+    'title' : "Participate effectively as a member of the healthcare team with physicians and interprofessional healthcare providers",
+    'competency' : "26",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72598' ],
+    'meshDescriptors' : []
+  },
+
+  47719: {
+    'id' : 47719,
+    'title' : "Gather complete and focused histories in an organized fashion, appropriate to the clinical situation and specific population",
+    'competency' : "7",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47720: {
+    'id' : 47720,
+    'title' : "Conduct relevant, complete, and focused physical examinations",
+    'competency' : "8",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47721: {
+    'id' : 47721,
+    'title' : "Present encounters including reporting of information and development of an assessment and plan efficiently and accurately",
+    'competency' : "9",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47722: {
+    'id' : 47722,
+    'title' : "Document encounters including reporting of information and development of an assessment and plan efficiently and accurately",
+    'competency' : "10",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47723: {
+    'id' : 47723,
+    'title' : "Perform common procedures safely and correctly with attention to patient's comfort",
+    'competency' : "11",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47724: {
+    'id' : 47724,
+    'title' : "Follow universal precautions and sterile technique",
+    'competency' : "11",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47725: {
+    'id' : 47725,
+    'title' : "Demonstrate confidence and efficacy with the primary provider role in the acute and ambulatory settings and the provision of longitudinal care",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47726: {
+    'id' : 47726,
+    'title' : "Manage and prioritize patient care tasks for a group of patients",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47727: {
+    'id' : 47727,
+    'title' : "Anticipate patients’ needs, conduct discharge planning, and create individualized disease management and/or prevention plans including patient self-management and behavior change",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47728: {
+    'id' : 47728,
+    'title' : "Establish and maintain knowledge necessary for the preventive care, diagnosis, treatment, and management of medical problems.",
+    'competency' : "14",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
     'children' : [ '86280','86281','86282','86283','86284','86287','86294','86295' ],
+    'meshDescriptors' : []
+  },
+
+  47729: {
+    'id' : 47729,
+    'title' : "Demonstrate curiosity, objectivity, and the use of scientific reasoning in acquisition of knowledge, and in applying it to patient care.",
+    'competency' : "14",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -16,10 +232,22 @@ module.exports = {
     'title' : "Select, justify and interpret diagnostic clinical tests and imaging",
     'competency' : "13",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86286' ],
+    'meshDescriptors' : []
+  },
+
+  47731: {
+    'id' : 47731,
+    'title' : "Use information technology to access online medical information, manage information, and assimilate evidence from scientific studies in patient care",
+    'competency' : "15",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -28,7 +256,7 @@ module.exports = {
     'title' : "Identify clinical questions as they emerge in patient care activities and identify and apply evidence relevant to answering those questions",
     'competency' : "16",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86297' ],
@@ -40,10 +268,34 @@ module.exports = {
     'title' : "Appraise and assimilate the scientific evidence from the literature and apply it to clinical decision making for individual patients",
     'competency' : "16",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86296' ],
+    'meshDescriptors' : []
+  },
+
+  47734: {
+    'id' : 47734,
+    'title' : "Employ strategies for seeking, incorporating, and delivering feedback",
+    'competency' : "17",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47735: {
+    'id' : 47735,
+    'title' : "Critically reflect on one's own performance to identify strengths and challenges, set individual learning and improvement goals, and engage in appropriate learning activities to meet those goals",
+    'competency' : "17",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -52,10 +304,34 @@ module.exports = {
     'title' : "Apply evidence-based medicine to improve the care of individual patients and population",
     'competency' : "16",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86285' ],
+    'meshDescriptors' : []
+  },
+
+  47737: {
+    'id' : 47737,
+    'title' : "Document professional and personal development in relation to the UCSF MD Competency milestones",
+    'competency' : "17",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47738: {
+    'id' : 47738,
+    'title' : "Establish collaborative and constructive relationships with patients and families",
+    'competency' : "18",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -64,10 +340,46 @@ module.exports = {
     'title' : "Communicate effectively with patients and families of diverse background and cultures",
     'competency' : "19",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86288' ],
+    'meshDescriptors' : []
+  },
+
+  47740: {
+    'id' : 47740,
+    'title' : "Effectively and empathetically discuss serious, sensitive, and difficult topics",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47741: {
+    'id' : 47741,
+    'title' : "Share information and negotiate treatment plans with patients and their families",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47742: {
+    'id' : 47742,
+    'title' : "Elicit and address patients' concerns, needs and preferences and incorporate them into management plans",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -76,10 +388,22 @@ module.exports = {
     'title' : "Communicate effectively with diverse patients and ensure patient understanding",
     'competency' : "19",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86289' ],
+    'meshDescriptors' : []
+  },
+
+  47744: {
+    'id' : 47744,
+    'title' : "Present patient information efficiently in an organized, accurate, and logical fashion appropriate for the clinical situation, including assessment and plan",
+    'competency' : "20",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -88,7 +412,7 @@ module.exports = {
     'title' : "Communicate oral and written clinical information that accurately and efficiently summarizes patient data",
     'competency' : "20",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86292','86298' ],
@@ -100,10 +424,46 @@ module.exports = {
     'title' : "Communicate effectively and respectfully with all members of the interprofessional team involved in a patient's care",
     'competency' : "20",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86293' ],
+    'meshDescriptors' : []
+  },
+
+  47747: {
+    'id' : 47747,
+    'title' : "Form doctor-patient relationships demonstrating sensitivity and responsiveness to culture, race/ethnicity, age, socioeconomic status, gender, sexual orientation, spirituality, disabilities, and other aspects of diversity and identity, and advocate for care for the underserved",
+    'competency' : "21",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47748: {
+    'id' : 47748,
+    'title' : "Demonstrate respect, compassion, accountability, dependability, and integrity when interacting with peers, interprofessional healthcare providers, patients, and families",
+    'competency' : "21",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47749: {
+    'id' : 47749,
+    'title' : "Be responsive to the needs of patients and society and appropriately balance these needs with one's own",
+    'competency' : "22",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -112,7 +472,7 @@ module.exports = {
     'title' : "Show accountability and reliability in interactions with patients, families, and other health professionals",
     'competency' : "23",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86291' ],
@@ -124,10 +484,598 @@ module.exports = {
     'title' : "Practice ethically and with integrity, including maintaining patient confidentiality, obtaining appropriate informed consent, and responding to medical errors",
     'competency' : "24",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '42' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '86290' ],
+    'meshDescriptors' : []
+  },
+
+  47752: {
+    'id' : 47752,
+    'title' : "Adhere to institutional and professional standards and regulation for personal, patient and public safety, adhere to principles of ethical research, and manage conflicts of interest",
+    'competency' : "25",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47753: {
+    'id' : 47753,
+    'title' : "Participate effectively as a member of the healthcare team with physicians and interprofessional healthcare providers",
+    'competency' : "26",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  47754: {
+    'id' : 47754,
+    'title' : "Understand basic principles of healthcare delivery, organization and finance, how costs affect healthcare delivery, and incentives methods for controlling costs",
+    'competency' : "26",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  48728: {
+    'id' : 48728,
+    'title' : "Select and apply basic preventive, curative, and/or palliative therapeutic strategies for the management of clinical conditions",
+    'competency' : "51",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72595' ],
+    'meshDescriptors' : []
+  },
+
+  48730: {
+    'id' : 48730,
+    'title' : "Use a systems approach to identify healthcare systems and quality gaps and to develop solutions",
+    'competency' : "50",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [ '72601' ],
+    'meshDescriptors' : []
+  },
+
+  63770: {
+    'id' : 63770,
+    'title' : "Diagnose and explain clinical problems",
+    'competency' : "13",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  63771: {
+    'id' : 63771,
+    'title' : "Select and apply basic preventive, curative, and/or palliative therapeutic strategies for the management of clinical conditions",
+    'competency' : "51",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  63772: {
+    'id' : 63772,
+    'title' : "Contribute to the development, application, and translation of new medical knowledge through scholarly inquiry, discovery, and dissemination.",
+    'competency' : "52",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  63773: {
+    'id' : 63773,
+    'title' : "Use a systems approach to identify healthcare systems and quality gaps and to develop solutions",
+    'competency' : "50",
+    'courses' : [],
+    'programYears' : [ '42' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66191: {
+    'id' : 66191,
+    'title' : "Exhibit knowledge of and confidence with the pharmacist's role in health care systems (e.g., hospital, ambulatory care, community practice settings) and the provision of longitudinal care",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66192: {
+    'id' : 66192,
+    'title' : "Gather complete patient histories in an organized fashion, appropriate to the situation and inclusive of cultural, social, educational, economic, and other patient-specific factors affecting self-care behaviors, medication use and adherence ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66193: {
+    'id' : 66193,
+    'title' : "Anticipate patient's needs, participate in the creation of individualized disease management and/or prevention plans including patient self-management and behavior change ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66194: {
+    'id' : 66194,
+    'title' : "Analyze, assess and optimize self-care and medication management plans ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66195: {
+    'id' : 66195,
+    'title' : "Prioritize, manage, and document patient care activities efficiently ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66196: {
+    'id' : 66196,
+    'title' : "Provide preventative health services for individuals and populations ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66197: {
+    'id' : 66197,
+    'title' : "Follow universal precautions and sterile technique (e.g., immunization delivery, point-of-care testing) ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66198: {
+    'id' : 66198,
+    'title' : "Describe the importance of discovery and the scientific foundations of health care and apply that understanding to the practice of evidence-based care ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66199: {
+    'id' : 66199,
+    'title' : "Describe the pathophysiology of human disease at molecular, cellular, systems, and whole organism levels ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66200: {
+    'id' : 66200,
+    'title' : "Describe how physical, psychological, social, cultural, and environmental processes contribute to the etiology, pathogenesis, and manifestations of human health and disease ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66201: {
+    'id' : 66201,
+    'title' : "Describe the natural history of illness and strategies for promoting health and preventing illness ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66202: {
+    'id' : 66202,
+    'title' : "Describe medication activity (therapeutic and toxic) at the molecular, cellular, systems, and whole organism levels",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66203: {
+    'id' : 66203,
+    'title' : "Apply mathematical principles to therapeutic and adverse response to medications and pharmacy practice ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66204: {
+    'id' : 66204,
+    'title' : "Apply sound scientific principles and incorporate evidence and best practices when making decisions ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66205: {
+    'id' : 66205,
+    'title' : "Demonstrate the ability to develop and implement evidence-based programs and protocols based upon analysis of epidemiological, pharmacoeconomic, and medication-use data and risk-reduction strategies ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66206: {
+    'id' : 66206,
+    'title' : "Apply quality improvement principles to pharmacy practice ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66207: {
+    'id' : 66207,
+    'title' : "Use information technology to access, evaluate and manage information and to integrate evidence from scientific studies into practice ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66208: {
+    'id' : 66208,
+    'title' : "Apply evidence-based practice, including knowledge of study design and statistics, to the care of individual patients and populations ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66209: {
+    'id' : 66209,
+    'title' : "Analyze one's own performance systematically and develop individualized plans for improvement and learning ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66210: {
+    'id' : 66210,
+    'title' : "Establish and maintain a collaborative and constructive pharmacist-patient relationship ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66211: {
+    'id' : 66211,
+    'title' : "Effectively and empathetically discuss serious, sensitive, or difficult topics with patients ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66212: {
+    'id' : 66212,
+    'title' : "Elicit patients' needs and preferences and incorporate them into the therapeutic management plan ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66213: {
+    'id' : 66213,
+    'title' : "Assess and validate the ability of patients and their agents to obtain, process, understand and use health- and medication-related information",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66214: {
+    'id' : 66214,
+    'title' : "Share relevant information with patients and their agents from diverse backgrounds at a level appropriate for the individual or group ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66215: {
+    'id' : 66215,
+    'title' : "Present information in an organized, logical fashion appropriate for the clinical situation, including assessment and plan",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66216: {
+    'id' : 66216,
+    'title' : "Cooperate, collaborate, communicate and integrate care on interprofessional teams to ensure that care is continuous and reliable",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66217: {
+    'id' : 66217,
+    'title' : "Demonstrate personal/professional development, through ongoing self-directed learning and self reflection",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66218: {
+    'id' : 66218,
+    'title' : "Demonstrate sensitivity and responsiveness to culture, race/ethnicity, age, socioeconomic status, gender, sexual orientation, spirituality, disabilities, and other aspects of diversity and identity ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66219: {
+    'id' : 66219,
+    'title' : "Respond to the needs of patients and society, superseding one's own self-interest ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66220: {
+    'id' : 66220,
+    'title' : "Advocate for access to necessary medications, devices and services for all patients",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66221: {
+    'id' : 66221,
+    'title' : "Practice ethically, including maintaining patient confidentiality, responding to errors in care and professional misconduct (including plagiarism), and understanding principles of ethical research (including conflicts of interest and obtaining appropriate informed consent) ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66222: {
+    'id' : 66222,
+    'title' : "Demonstrate a commitment to caring for and advocating for all patients, including the underserved and/or those populations disproportionately affected by disease ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66223: {
+    'id' : 66223,
+    'title' : "Demonstrate respect, compassion, integrity, accountability and dependability while interacting with patients, families, and other health professionals ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66224: {
+    'id' : 66224,
+    'title' : "Analyze and apply legal and regulatory principles directing drug development and approval and medication distribution, use and management systems ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66225: {
+    'id' : 66225,
+    'title' : "Coordinate, provide, and assess safe, accurate and time-sensitive medication distribution ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66226: {
+    'id' : 66226,
+    'title' : "Identify and describe different types of medication delivery systems ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66227: {
+    'id' : 66227,
+    'title' : "Manage human, physical, medical, informational, fiscal, and technological resources ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66228: {
+    'id' : 66228,
+    'title' : "Describe the health care system and recognize ways to systematically assess and improve health care and prevent medication errors, and apply these skills to a specific problem",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66229: {
+    'id' : 66229,
+    'title' : "Describe basic principles of health care finance, how methods and costs affect health care and medication delivery, and methods for controlling costs while optimizing access",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  66230: {
+    'id' : 66230,
+    'title' : "Identify methods for evaluating cost-effectiveness and cost-benefit of medication use",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '58' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -223,6 +1171,1337 @@ module.exports = {
     'id' : 72344,
     'title' : "Write a rough draft of a research paper and timeline for the final pathway project",
     'courses' : [ '543' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72592: {
+    'id' : 72592,
+    'title' : "Describe elements of the patient’s history, physical exam and planned procedure that significantly influence the anesthetic plan and perioperative risk.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5793' ],
+    'children' : [ '72614','72623','72631','72632','72638','72644','72646','72647','72648','72655','72656','72660','72661','72662','72663','72664','72665' ],
+    'meshDescriptors' : []
+  },
+
+  72593: {
+    'id' : 72593,
+    'title' : "Using clinical reasoning, discuss various elements of a patient's perioperative care and develop an anesthetic plan for the patient that optimizes the patient’s outcome and addresses specific considerations for the preoperative, intraoperative and post-operative periods.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5814' ],
+    'children' : [ '72615','72624','72628','72633','72635','72636','72637','72639','72640','72641','72643','72645','72657','72658','72666','72667','72668','72669','72670','72671','72672','72673' ],
+    'meshDescriptors' : []
+  },
+
+  72594: {
+    'id' : 72594,
+    'title' : "Perform a focused patient history and physical examination that includes all elements pertinent to perioperative risk assessment and procedural considerations.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5794' ],
+    'children' : [ '72622','72674','72675','72676' ],
+    'meshDescriptors' : []
+  },
+
+  72595: {
+    'id' : 72595,
+    'title' : "List appropriate equipment and medication for induction and maintenance of an anesthetic case, and participate in the preparation and execution of a case at least once.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '48728' ],
+    'children' : [ '72616','72617','72625','72626','72627','72629','72630','72677','72678','72679','72680','72681','72682' ],
+    'meshDescriptors' : []
+  },
+
+  72596: {
+    'id' : 72596,
+    'title' : "List all critical elements of an IV catheter insertion, administration of IV medications, effective airway management following induction, safe patient transport and positioning; and demonstrate each of these skills at least once.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5797' ],
+    'children' : [ '72618','72619','72620','72621','72634','72659','72683','72684','72685','72686','72687','72688','72689' ],
+    'meshDescriptors' : []
+  },
+
+  72597: {
+    'id' : 72597,
+    'title' : "Anticipate, interpret and assist in management of a patient’s physiologic changes noted during induction, maintenance, and emergence from anesthesia.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5813' ],
+    'children' : [ '72642','72690','72691' ],
+    'meshDescriptors' : []
+  },
+
+  72598: {
+    'id' : 72598,
+    'title' : "Establish appropriate rapport and demonstrate effective communication with patients and staff in the perioperative setting.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5839' ],
+    'children' : [ '72692','72693','72694','72695','72696' ],
+    'meshDescriptors' : []
+  },
+
+  72599: {
+    'id' : 72599,
+    'title' : "Demonstrate respect, integrity and confidentiality towards patients, staff and faculty in the perioperative setting.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5834' ],
+    'children' : [ '72649','72650','72697','72698','72699','72700' ],
+    'meshDescriptors' : []
+  },
+
+  72600: {
+    'id' : 72600,
+    'title' : "Employ strategies to seek and incorporate feedback during the clerkship and critically reflect on your performance and clinical experiences during both OR sessions and the “Reflections” session.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '5822' ],
+    'children' : [ '72613','72651','72652','72653','72701','72702' ],
+    'meshDescriptors' : []
+  },
+
+  72601: {
+    'id' : 72601,
+    'title' : "Describe the contribution and limitations of anesthesiology to both patient care and health care delivery system.",
+    'courses' : [ '551' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [ '48730' ],
+    'children' : [ '72631','72654','72703' ],
+    'meshDescriptors' : []
+  },
+
+  72602: {
+    'id' : 72602,
+    'title' : "Administer anxiolytic, sedative hypnotic agents and muscle relaxants",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72603: {
+    'id' : 72603,
+    'title' : "Preoxygenate a simulated patient",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72604: {
+    'id' : 72604,
+    'title' : "Mask ventilate a simulated patient",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72605: {
+    'id' : 72605,
+    'title' : "Intubate a simulated patient",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72606: {
+    'id' : 72606,
+    'title' : "Operate the manual breathing system of an anesthesia machine",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72607: {
+    'id' : 72607,
+    'title' : "Operate the automatic breathing system of an anesthesia machine",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72608: {
+    'id' : 72608,
+    'title' : "Adjust inhaled gas mix",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72609: {
+    'id' : 72609,
+    'title' : "Administer and titrate inhalational anesthetic",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72610: {
+    'id' : 72610,
+    'title' : "Engage in activities that require teamwork",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72611: {
+    'id' : 72611,
+    'title' : "Recognize the features of effective communication and utilize it in the context of simulated patient care",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72612: {
+    'id' : 72612,
+    'title' : "Engage in constructive debriefing that improves performance over the course of the simulation session",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72613: {
+    'id' : 72613,
+    'title' : "Engage in constructive debriefing that improves performance over the course of the simulation session",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15076' ],
+    'parents' : [ '72600' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72614: {
+    'id' : 72614,
+    'title' : "Describe the differences between a complex and a non-complex anesthesia case",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72615: {
+    'id' : 72615,
+    'title' : "Describe the difference in management between an expected complex case and a case with an unexpected complexity",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72616: {
+    'id' : 72616,
+    'title' : "List 'ASA' standard monitors",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72617: {
+    'id' : 72617,
+    'title' : "Using clinical reasoning, demonstrate insight for when a patient needs advanced monitoring techniques for a procedure",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72618: {
+    'id' : 72618,
+    'title' : "Understand and apply ultrasound techniques for intraosseous, arterial and central line placement",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72619: {
+    'id' : 72619,
+    'title' : "Demonstrate how to set up and apply kits for intraosseous, arterial and central line placement",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72620: {
+    'id' : 72620,
+    'title' : "Understand the topographic anatomy and practice intraosseous, arterial line and central line placement using task trainers",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72621: {
+    'id' : 72621,
+    'title' : "Understand the topographic anatomy of the lumbar spine and perform a spinal injection in L3/L4 using a task trainer",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15077' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72622: {
+    'id' : 72622,
+    'title' : "Demonstrate comprehensive airway exam and classify the airway",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72594' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72623: {
+    'id' : 72623,
+    'title' : "Describe the three airway axes and maneuvers to align them",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72624: {
+    'id' : 72624,
+    'title' : "Review ASA difficult airway algorithm and devices used in the algorithm",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72625: {
+    'id' : 72625,
+    'title' : "Demonstrate preoxygenation and mask ventilation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72626: {
+    'id' : 72626,
+    'title' : "Manage airway obstruction with jaw trust and/or oral or nasal airways",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72627: {
+    'id' : 72627,
+    'title' : "Perform direct laryngoscopy and intubation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72628: {
+    'id' : 72628,
+    'title' : "Verbally describe signs to confirm correct tube position",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72629: {
+    'id' : 72629,
+    'title' : "Perform insertion of laryngeal mask airway",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72630: {
+    'id' : 72630,
+    'title' : "Perform intubation with a glidescope",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15078' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72631: {
+    'id' : 72631,
+    'title' : "Review of minimum requirements for delivering sedation by non-anesthesiologists",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15079' ],
+    'parents' : [ '72592','72601' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72632: {
+    'id' : 72632,
+    'title' : "Describe the efficacy and side effects of drugs commonly used in sedation/analgesia",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15079' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72633: {
+    'id' : 72633,
+    'title' : "Review of airway management and monitoring for patients undergoing procedures requiring minimal to moderate sedation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15079' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72634: {
+    'id' : 72634,
+    'title' : "State drugs that must be readily available for safe perioperative patient care.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15079' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72635: {
+    'id' : 72635,
+    'title' : "Describe the characteristics of different pain syndromes",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15080' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72636: {
+    'id' : 72636,
+    'title' : "Discuss different options for opioid selection",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15080' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72637: {
+    'id' : 72637,
+    'title' : "Apply basic principles of opioid titration to clinical practice",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15080' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72638: {
+    'id' : 72638,
+    'title' : "Describe strategies for prevention and treatment of opioid toxicity",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15080' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72639: {
+    'id' : 72639,
+    'title' : "Describe common options for non-opioid analgesic adjuncts",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15080' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72640: {
+    'id' : 72640,
+    'title' : "List and define three basic modes of mechanical ventilation.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15081' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72641: {
+    'id' : 72641,
+    'title' : "Choose appropriate initial ventilator settings for a healthy patient, an obese patient, and a patient with COPD.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15081' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72642: {
+    'id' : 72642,
+    'title' : "Identify and interpret ventilator waveforms for basic modes of mechanical ventilation associated with changes in pressure, volume, and flow.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15081' ],
+    'parents' : [ '72597' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72643: {
+    'id' : 72643,
+    'title' : "Define plateau pressure, PEEP, & auto-PEEP, and describe the clinical utility of each.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15081' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72644: {
+    'id' : 72644,
+    'title' : "List causes ventilatory dysynchrony",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15081' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72645: {
+    'id' : 72645,
+    'title' : "Understand why we perform preoperative evaluations",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15082' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72646: {
+    'id' : 72646,
+    'title' : "Describe how perioperative management is influenced by the presence of: respiratory disease, cardiac disease, cognitive dysfunction, and liver disease.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15082' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72647: {
+    'id' : 72647,
+    'title' : "Differentiate co-existing medical conditions that require active evaluation & management from those that do not",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15082' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72648: {
+    'id' : 72648,
+    'title' : "Using clinical reasoning, list 2 examples of when to consult an anesthesiologist before a procedure",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15082' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72649: {
+    'id' : 72649,
+    'title' : "Use personal reflection and advice from mentor or supervisor to create and carry out an ethically appropriate plan when witnessing someone else's medical error or professional misconduct.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15083' ],
+    'parents' : [ '72599' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72650: {
+    'id' : 72650,
+    'title' : "Recognize and maintain appropriate boundaries and professional relationships between student clinician, patient, faculty, and and other perioperative team members",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15083' ],
+    'parents' : [ '72599' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72651: {
+    'id' : 72651,
+    'title' : "Employ strategies to seek and incorporate direct feedback from faculty, residents, and other perioperative care providers to improve one's performance",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15083' ],
+    'parents' : [ '72600' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72652: {
+    'id' : 72652,
+    'title' : "Critically reflect on gaps in performance, skills, knowledge, or understanding of patient care, and request help when needed to engage in appropriate learning activities to improve these deficits.  This should be done daily.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15083' ],
+    'parents' : [ '72600' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72653: {
+    'id' : 72653,
+    'title' : "Reflect on your experiences; Describe what surprised you during the clerkship, Describe what moved you during the clerkship, Describe what inspired you during the clerkship",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15083' ],
+    'parents' : [ '72600' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72654: {
+    'id' : 72654,
+    'title' : "Appreciate the logistical limitations in promoting privacy and dignity and discuss what can be done to maximize these goals",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15083' ],
+    'parents' : [ '72601' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72655: {
+    'id' : 72655,
+    'title' : "List the key elements of a perioperative anesthetic plan.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15084' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72656: {
+    'id' : 72656,
+    'title' : "Describe the components of the ASA physical status scale and analyze its limitations.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15084' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72657: {
+    'id' : 72657,
+    'title' : "Describe the physiological basis and rational for preoxygenation.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15084' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72658: {
+    'id' : 72658,
+    'title' : "List the methods for confirming correct placement of the endotracheal tube following intubation.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15084' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72659: {
+    'id' : 72659,
+    'title' : "Describe the role and contribution of the specialty of anesthesiology to direct patient care and the health care delivery system",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15084' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72660: {
+    'id' : 72660,
+    'title' : "Describe the component to a preoperative case assessment of the procedural and anesthetic risk for a patient.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15085' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72661: {
+    'id' : 72661,
+    'title' : "Differentiate co-existing medical conditions that require active evaluation & management from those that do not",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15085' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72662: {
+    'id' : 72662,
+    'title' : "Identify medications that are important to continue or discontinue in the perioperative period",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15085' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72663: {
+    'id' : 72663,
+    'title' : "State current NPO guidelines for clear liquids vs. all other liquids and food",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15085' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72664: {
+    'id' : 72664,
+    'title' : "List the elements of the airway examination and explain the importance of anticipating the difficult airway",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15085' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72665: {
+    'id' : 72665,
+    'title' : "Analyze situations in which patient should be seen pre-op by an anesthesiology",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15085' ],
+    'parents' : [ '72592' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72666: {
+    'id' : 72666,
+    'title' : "List  the 10 components of the perioperative 'Timeout'.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72667: {
+    'id' : 72667,
+    'title' : "Based on clinical reasoning, recommend appropriate anesthetic options for a given patient, i.e., MAC, general, regional or combinations.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72668: {
+    'id' : 72668,
+    'title' : "Based on clinical reasoning, develop a perioperative plan for anesthesia based on aspects of the patient, the surgical procedure, local skill and resources and the presumed setting of care afterwards.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72669: {
+    'id' : 72669,
+    'title' : "Explain the need or not for premedicatio for a given patient, i.e., anxiolysis, amnesia, analgesia.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72670: {
+    'id' : 72670,
+    'title' : "List the common causes and differential diagnosis for hypoxemia and hypotension.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72671: {
+    'id' : 72671,
+    'title' : "Develop a plan for postoperative patient care that includes safe anesthesia emergence, airway management, pain management and nausea prevention/treatment",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72672: {
+    'id' : 72672,
+    'title' : "Indicate and assist in practices to protect the sedated patient from injury during transport, transfer to OR table, positioning, emergence, and recovery.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72673: {
+    'id' : 72673,
+    'title' : "List the criteria for safe extubation of the trachea",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15086' ],
+    'parents' : [ '72593' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72674: {
+    'id' : 72674,
+    'title' : "Retrieve and synthesize existing influence for EMR",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15087' ],
+    'parents' : [ '72594' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72675: {
+    'id' : 72675,
+    'title' : "Gather preoperative information and previous medical records relevant to the patient situation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15087' ],
+    'parents' : [ '72594' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72676: {
+    'id' : 72676,
+    'title' : "Perform a relevant and focused history and physical examination, including an airway examination to anticipate difficult mask ventilation or tracheal intubation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15087' ],
+    'parents' : [ '72594' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72677: {
+    'id' : 72677,
+    'title' : "Demonstrate appropriate preparation for anesthesia induction.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15088' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72678: {
+    'id' : 72678,
+    'title' : "Perform patient mask ventilation diagnosing and managing airway obstruction with jaw trust and/or oral or nasal airways",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15088' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72679: {
+    'id' : 72679,
+    'title' : "Perform intubation or laryngeal mask airway placement",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15088' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72680: {
+    'id' : 72680,
+    'title' : "Verbally describe signs of proper endotracheal tube placement and clinically confirm",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15088' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72681: {
+    'id' : 72681,
+    'title' : "Initiate patient mechanical ventilation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15088' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72682: {
+    'id' : 72682,
+    'title' : "Perform proper endotracheal extubation",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15088' ],
+    'parents' : [ '72595' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72683: {
+    'id' : 72683,
+    'title' : "State and properly draw up drugs that must be readily available for safe perioperative patient care.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15089' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72684: {
+    'id' : 72684,
+    'title' : "Check oxygen supply, suction, and airway equipment.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15089' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72685: {
+    'id' : 72685,
+    'title' : "Assemble i.v. infusion set and insert i.v. catheter with proper technique",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15089' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72686: {
+    'id' : 72686,
+    'title' : "Administer drugs through stopcock or needleless port",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15089' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72687: {
+    'id' : 72687,
+    'title' : "Demonstrate proper patient transport and transfer from one bed to another",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15089' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72688: {
+    'id' : 72688,
+    'title' : "Assist in positioning patient before surgery",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15089' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72689: {
+    'id' : 72689,
+    'title' : "Apply, use and interpret monitors for blood pressure, ECG, pulse oximetry and capnography",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72596' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72690: {
+    'id' : 72690,
+    'title' : "Anticipate and interpret changes in vital signs based on drug administration and surgical consequences",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72597' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72691: {
+    'id' : 72691,
+    'title' : "Initiate or administer blood products or pharmacologic agents appropriate for management of observed physiologic changes or consequences of surgical procedure",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72597' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72692: {
+    'id' : 72692,
+    'title' : "Communicate with patients and families in an effective, therapeutic, supportive, and culturally sensitive manner that promotes understanding",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72598' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72693: {
+    'id' : 72693,
+    'title' : "Address the concerns, needs and preferences of patients and families incorporating them into the perioperative plan",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72598' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72694: {
+    'id' : 72694,
+    'title' : "Communicate the oral and written preoperative patient information in a logical, accurate and efficient manner to the anesthesia care team",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72598' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72695: {
+    'id' : 72695,
+    'title' : "Communicate effectively and respectfully with all perioperative professionals and support staff",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15090' ],
+    'parents' : [ '72598' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72696: {
+    'id' : 72696,
+    'title' : "Communicate with residents and faculty to promote formative feedback",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15091' ],
+    'parents' : [ '72598' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72697: {
+    'id' : 72697,
+    'title' : "Demonstrate respect for patient, staff & colleagues by punctuality, reliability, preparedness, initiative, integrity, and professional demeanor and behavior in perioperative interactions",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15091' ],
+    'parents' : [ '72599' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72698: {
+    'id' : 72698,
+    'title' : "Demonstrate ethical integrity, confidentiality, appropriate consent, and response to medical errors in patient care",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15091' ],
+    'parents' : [ '72599' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72699: {
+    'id' : 72699,
+    'title' : "Work collaboratively and communicate effectively as a member of the anesthesia care team, adhering to professional standards, patient advocacy, and ethical practice",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15091' ],
+    'parents' : [ '72599' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72700: {
+    'id' : 72700,
+    'title' : "Recognize and maintain appropriate boundaries and professional relationships between student clinician, patient, faculty, and and other perioperative team members",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15091' ],
+    'parents' : [ '72599' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72701: {
+    'id' : 72701,
+    'title' : "Employ strategies to seek and incorporate direct feedback from faculty, residents, and other perioperative care providers to improve one's performance",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15092' ],
+    'parents' : [ '72600' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72702: {
+    'id' : 72702,
+    'title' : "Build on personal & colleague experience to develop a repertoire of responses to challenging situations.",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15092' ],
+    'parents' : [ '72600' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  72703: {
+    'id' : 72703,
+    'title' : "Participate effectively as a member of the anesthesia team with other healthcare providers",
+    'courses' : [],
+    'programYears' : [],
+    'sessions' : [ '15092' ],
+    'parents' : [ '72601' ],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76232: {
+    'id' : 76232,
+    'title' : "Identify emerging issues and trends observed in managed care pharmacy.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76233: {
+    'id' : 76233,
+    'title' : "Describe the implications of ACO’s on managed care companies.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76234: {
+    'id' : 76234,
+    'title' : "Describe pharmaceutical payment methods and common payment benchmarks.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76235: {
+    'id' : 76235,
+    'title' : "Describe specialty pharmaceuticals and how they are handled by managed care companies.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76236: {
+    'id' : 76236,
+    'title' : "Describe how managed care companies make formulary decisions.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76237: {
+    'id' : 76237,
+    'title' : "Describe the role of quality assurance programs and the pharmacy quality measures used to assess cost, safety, and efficacy.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76238: {
+    'id' : 76238,
+    'title' : "Describe and differentiate between drug utilization review (DUR) and drug utilization evaluation (DUE).",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76239: {
+    'id' : 76239,
+    'title' : "Differentiate between clinical, economic, and humanistic outcomes and describe how they influence managed care decision-making.",
+    'courses' : [ '591' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  76240: {
+    'id' : 76240,
+    'title' : "Summarize the role of a managed care pharmacist within a variety of settings, including at a health plan, pharmaceutical company, and pharmacy benefit management company.",
+    'courses' : [ '591' ],
     'programYears' : [],
     'sessions' : [],
     'parents' : [],
@@ -458,7 +2737,7 @@ module.exports = {
     'sessions' : [],
     'parents' : [ '77687' ],
     'children' : [ '76373','76374','76375','76378','76510','76512','76737','76738' ],
-    'meshDescriptors' : [ 'D012151' ]
+    'meshDescriptors' : []
   },
 
   76360: {
@@ -469,7 +2748,7 @@ module.exports = {
     'sessions' : [],
     'parents' : [ '77714' ],
     'children' : [ '76561','76562','76563','76564','76710','76711','76713','76741','76742','76743','84323','84324','84325','84725' ],
-    'meshDescriptors' : [ 'D015982' ]
+    'meshDescriptors' : []
   },
 
   76361: {
@@ -491,7 +2770,7 @@ module.exports = {
     'sessions' : [],
     'parents' : [ '77696' ],
     'children' : [ '76565','76567','76568','76569','76570','76572','76573','76575','76594','76595','76596','76597','76598','76599','76600','76601','76602','76603','76604','76605','76607','76608','76609','76610','76611','76612','76613','76650','76651','76652','76653','76654','76655','76656','76880','76881','76882','84320','84321','84322','84601','84602','84603','84604','84605','84606','84607','84608' ],
-    'meshDescriptors' : [ 'D014644' ]
+    'meshDescriptors' : []
   },
 
   76363: {
@@ -1096,7 +3375,7 @@ module.exports = {
     'sessions' : [ '16476' ],
     'parents' : [ '76350' ],
     'children' : [],
-    'meshDescriptors' : [ 'D001775','D011652' ]
+    'meshDescriptors' : [ 'D001775' ]
   },
 
   76421: {
@@ -5389,15 +7668,111 @@ module.exports = {
     'meshDescriptors' : []
   },
 
+  77686: {
+    'id' : 77686,
+    'title' : "Gather complete and focused histories in an organized fashion, appropriate to the clinical situation and specific population",
+    'competency' : "7",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
   77687: {
     'id' : 77687,
     'title' : "Conduct relevant, complete, and focused physical examinations",
     'competency' : "8",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76359' ],
+    'meshDescriptors' : []
+  },
+
+  77688: {
+    'id' : 77688,
+    'title' : "Present encounters including reporting of information and development of an assessment and plan efficiently and accurately",
+    'competency' : "9",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77689: {
+    'id' : 77689,
+    'title' : "Document encounters including reporting of information and development of an assessment and plan efficiently and accurately",
+    'competency' : "10",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77690: {
+    'id' : 77690,
+    'title' : "Perform common procedures safely and correctly with attention to patient's comfort",
+    'competency' : "11",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77691: {
+    'id' : 77691,
+    'title' : "Follow universal precautions and sterile technique",
+    'competency' : "11",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77692: {
+    'id' : 77692,
+    'title' : "Demonstrate confidence and efficacy with the primary provider role in the acute and ambulatory settings and the provision of longitudinal care",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77693: {
+    'id' : 77693,
+    'title' : "Manage and prioritize patient care tasks for a group of patients",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77694: {
+    'id' : 77694,
+    'title' : "Anticipate patients’ needs, conduct discharge planning, and create individualized disease management and/or prevention plans including patient self-management and behavior change",
+    'competency' : "12",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5406,7 +7781,7 @@ module.exports = {
     'title' : "Establish and maintain knowledge necessary for the preventive care, diagnosis, treatment, and management of medical problems.",
     'competency' : "14",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76350','76353','76354','76356','76357','76358','76371','76372' ],
@@ -5418,7 +7793,7 @@ module.exports = {
     'title' : "Demonstrate curiosity, objectivity, and the use of scientific reasoning in acquisition of knowledge, and in applying it to patient care.",
     'competency' : "14",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76355','76362','76370' ],
@@ -5430,10 +7805,46 @@ module.exports = {
     'title' : "Select, justify and interpret diagnostic clinical tests and imaging",
     'competency' : "13",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76352' ],
+    'meshDescriptors' : []
+  },
+
+  77698: {
+    'id' : 77698,
+    'title' : "Use information technology to access online medical information, manage information, and assimilate evidence from scientific studies in patient care",
+    'competency' : "15",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77699: {
+    'id' : 77699,
+    'title' : "Identify clinical questions as they emerge in patient care activities and identify and apply evidence relevant to answering those questions",
+    'competency' : "16",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77700: {
+    'id' : 77700,
+    'title' : "Appraise and assimilate the scientific evidence from the literature and apply it to clinical decision making for individual patients",
+    'competency' : "16",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5442,7 +7853,7 @@ module.exports = {
     'title' : "Employ strategies for seeking, incorporating, and delivering feedback",
     'competency' : "17",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76366' ],
@@ -5454,10 +7865,22 @@ module.exports = {
     'title' : "Critically reflect on one's own performance to identify strengths and challenges, set individual learning and improvement goals, and engage in appropriate learning activities to meet those goals",
     'competency' : "17",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76364','76365' ],
+    'meshDescriptors' : []
+  },
+
+  77703: {
+    'id' : 77703,
+    'title' : "Apply evidence-based medicine to improve the care of individual patients and population",
+    'competency' : "16",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5466,10 +7889,58 @@ module.exports = {
     'title' : "Document professional and personal development in relation to the UCSF MD Competency milestones",
     'competency' : "17",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76369' ],
+    'meshDescriptors' : []
+  },
+
+  77705: {
+    'id' : 77705,
+    'title' : "Establish collaborative and constructive relationships with patients and families",
+    'competency' : "18",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77706: {
+    'id' : 77706,
+    'title' : "Communicate effectively with patients and families of diverse background and cultures",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77707: {
+    'id' : 77707,
+    'title' : "Effectively and empathetically discuss serious, sensitive, and difficult topics",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77708: {
+    'id' : 77708,
+    'title' : "Share information and negotiate treatment plans with patients and their families",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5478,10 +7949,34 @@ module.exports = {
     'title' : "Elicit and address patients' concerns, needs and preferences and incorporate them into management plans",
     'competency' : "19",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76361' ],
+    'meshDescriptors' : []
+  },
+
+  77710: {
+    'id' : 77710,
+    'title' : "Communicate effectively with diverse patients and ensure patient understanding",
+    'competency' : "19",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77711: {
+    'id' : 77711,
+    'title' : "Present patient information efficiently in an organized, accurate, and logical fashion appropriate for the clinical situation, including assessment and plan",
+    'competency' : "20",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5490,10 +7985,22 @@ module.exports = {
     'title' : "Communicate oral and written clinical information that accurately and efficiently summarizes patient data",
     'competency' : "20",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76363' ],
+    'meshDescriptors' : []
+  },
+
+  77713: {
+    'id' : 77713,
+    'title' : "Communicate effectively and respectfully with all members of the interprofessional team involved in a patient's care",
+    'competency' : "20",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5502,7 +8009,7 @@ module.exports = {
     'title' : "Form doctor-patient relationships demonstrating sensitivity and responsiveness to culture, race/ethnicity, age, socioeconomic status, gender, sexual orientation, spirituality, disabilities, and other aspects of diversity and identity, and advocate for care for the underserved",
     'competency' : "21",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76360' ],
@@ -5514,10 +8021,58 @@ module.exports = {
     'title' : "Demonstrate respect, compassion, accountability, dependability, and integrity when interacting with peers, interprofessional healthcare providers, patients, and families",
     'competency' : "21",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76367' ],
+    'meshDescriptors' : []
+  },
+
+  77716: {
+    'id' : 77716,
+    'title' : "Be responsive to the needs of patients and society and appropriately balance these needs with one's own",
+    'competency' : "22",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77717: {
+    'id' : 77717,
+    'title' : "Show accountability and reliability in interactions with patients, families, and other health professionals",
+    'competency' : "23",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77718: {
+    'id' : 77718,
+    'title' : "Practice ethically and with integrity, including maintaining patient confidentiality, obtaining appropriate informed consent, and responding to medical errors",
+    'competency' : "24",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77719: {
+    'id' : 77719,
+    'title' : "Adhere to institutional and professional standards and regulation for personal, patient and public safety, adhere to principles of ethical research, and manage conflicts of interest",
+    'competency' : "25",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5526,7 +8081,7 @@ module.exports = {
     'title' : "Participate effectively as a member of the healthcare team with physicians and interprofessional healthcare providers",
     'competency' : "26",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76351' ],
@@ -5538,10 +8093,91 @@ module.exports = {
     'title' : "Understand basic principles of healthcare delivery, organization and finance, how costs affect healthcare delivery, and incentives methods for controlling costs",
     'competency' : "26",
     'courses' : [],
-    'programYears' : [],
+    'programYears' : [ '67' ],
     'sessions' : [],
     'parents' : [],
     'children' : [ '76368' ],
+    'meshDescriptors' : []
+  },
+
+  77722: {
+    'id' : 77722,
+    'title' : "Diagnose and explain clinical problems",
+    'competency' : "13",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77723: {
+    'id' : 77723,
+    'title' : "Select and apply basic preventive, curative, and/or palliative therapeutic strategies for the management of clinical conditions",
+    'competency' : "51",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77724: {
+    'id' : 77724,
+    'title' : "Contribute to the development, application, and translation of new medical knowledge through scholarly inquiry, discovery, and dissemination.",
+    'competency' : "52",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  77725: {
+    'id' : 77725,
+    'title' : "Use a systems approach to identify healthcare systems and quality gaps and to develop solutions",
+    'competency' : "50",
+    'courses' : [],
+    'programYears' : [ '67' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  80788: {
+    'id' : 80788,
+    'title' : "Envision themselves as a UCSF Physician who is trained in the  environment of discovery and innovation in order to be clinically,  collaboratively, and adaptively expert.",
+    'courses' : [ '612' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  80789: {
+    'id' : 80789,
+    'title' : "Use each of the systems introduced during Orientation that are in place  to facilitate your individualized journey to that reality.",
+    'courses' : [ '612' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  80790: {
+    'id' : 80790,
+    'title' : "Engage in your communities of classmates, mentors, and near-peers.",
+    'courses' : [ '612' ],
+    'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
     'meshDescriptors' : []
   },
 
@@ -5564,7 +8200,7 @@ module.exports = {
     'sessions' : [],
     'parents' : [],
     'children' : [],
-    'meshDescriptors' : [ 'D001921' ]
+    'meshDescriptors' : []
   },
 
   81079: {
@@ -5616,6 +8252,486 @@ module.exports = {
     'title' : "Perform a full physical examination on an adult patient in logical and fluid sequence while consistently considering patient comfort and modesty, demonstrating additional skills in the examination of eyes and ears using the ophthalmoscope and otoscope, mental status, and the nervous system",
     'courses' : [ '618' ],
     'programYears' : [],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83961: {
+    'id' : 83961,
+    'title' : "Exhibit knowledge of and confidence with the pharmacist's role in health care systems (e.g., hospital, ambulatory care, community practice settings) and the provision of longitudinal care",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83962: {
+    'id' : 83962,
+    'title' : "Gather complete patient histories in an organized fashion, appropriate to the situation and inclusive of cultural, social, educational, economic, and other patient-specific factors affecting self-care behaviors, medication use and adherence ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83963: {
+    'id' : 83963,
+    'title' : "Anticipate patient's needs, participate in the creation of individualized disease management and/or prevention plans including patient self-management and behavior change ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83964: {
+    'id' : 83964,
+    'title' : "Analyze, assess and optimize self-care and medication management plans ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83965: {
+    'id' : 83965,
+    'title' : "Prioritize, manage, and document patient care activities efficiently ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83966: {
+    'id' : 83966,
+    'title' : "Provide preventative health services for individuals and populations ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83967: {
+    'id' : 83967,
+    'title' : "Follow universal precautions and sterile technique (e.g., immunization delivery, point-of-care testing) ",
+    'competency' : "28",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83968: {
+    'id' : 83968,
+    'title' : "Describe the importance of discovery and the scientific foundations of health care and apply that understanding to the practice of evidence-based care ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83969: {
+    'id' : 83969,
+    'title' : "Describe the pathophysiology of human disease at molecular, cellular, systems, and whole organism levels ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83970: {
+    'id' : 83970,
+    'title' : "Describe how physical, psychological, social, cultural, and environmental processes contribute to the etiology, pathogenesis, and manifestations of human health and disease ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83971: {
+    'id' : 83971,
+    'title' : "Describe the natural history of illness and strategies for promoting health and preventing illness ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83972: {
+    'id' : 83972,
+    'title' : "Describe medication activity (therapeutic and toxic) at the molecular, cellular, systems, and whole organism levels",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83973: {
+    'id' : 83973,
+    'title' : "Apply mathematical principles to therapeutic and adverse response to medications and pharmacy practice ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83974: {
+    'id' : 83974,
+    'title' : "Apply sound scientific principles and incorporate evidence and best practices when making decisions ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83975: {
+    'id' : 83975,
+    'title' : "Demonstrate the ability to develop and implement evidence-based programs and protocols based upon analysis of epidemiological, pharmacoeconomic, and medication-use data and risk-reduction strategies ",
+    'competency' : "31",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83976: {
+    'id' : 83976,
+    'title' : "Apply quality improvement principles to pharmacy practice ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83977: {
+    'id' : 83977,
+    'title' : "Use information technology to access, evaluate and manage information and to integrate evidence from scientific studies into practice ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83978: {
+    'id' : 83978,
+    'title' : "Apply evidence-based practice, including knowledge of study design and statistics, to the care of individual patients and populations ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83979: {
+    'id' : 83979,
+    'title' : "Analyze one's own performance systematically and develop individualized plans for improvement and learning ",
+    'competency' : "29",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83980: {
+    'id' : 83980,
+    'title' : "Establish and maintain a collaborative and constructive pharmacist-patient relationship ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83981: {
+    'id' : 83981,
+    'title' : "Effectively and empathetically discuss serious, sensitive, or difficult topics with patients ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83982: {
+    'id' : 83982,
+    'title' : "Elicit patients' needs and preferences and incorporate them into the therapeutic management plan ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83983: {
+    'id' : 83983,
+    'title' : "Assess and validate the ability of patients and their agents to obtain, process, understand and use health- and medication-related information",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83984: {
+    'id' : 83984,
+    'title' : "Share relevant information with patients and their agents from diverse backgrounds at a level appropriate for the individual or group ",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83985: {
+    'id' : 83985,
+    'title' : "Present information in an organized, logical fashion appropriate for the clinical situation, including assessment and plan",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83986: {
+    'id' : 83986,
+    'title' : "Cooperate, collaborate, communicate and integrate care on interprofessional teams to ensure that care is continuous and reliable",
+    'competency' : "27",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83987: {
+    'id' : 83987,
+    'title' : "Demonstrate personal/professional development, through ongoing self-directed learning and self reflection",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83988: {
+    'id' : 83988,
+    'title' : "Demonstrate sensitivity and responsiveness to culture, race/ethnicity, age, socioeconomic status, gender, sexual orientation, spirituality, disabilities, and other aspects of diversity and identity ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83989: {
+    'id' : 83989,
+    'title' : "Respond to the needs of patients and society, superseding one's own self-interest ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83990: {
+    'id' : 83990,
+    'title' : "Advocate for access to necessary medications, devices and services for all patients",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83991: {
+    'id' : 83991,
+    'title' : "Practice ethically, including maintaining patient confidentiality, responding to errors in care and professional misconduct (including plagiarism), and understanding principles of ethical research (including conflicts of interest and obtaining appropriate informed consent) ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83992: {
+    'id' : 83992,
+    'title' : "Demonstrate a commitment to caring for and advocating for all patients, including the underserved and/or those populations disproportionately affected by disease ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83993: {
+    'id' : 83993,
+    'title' : "Demonstrate respect, compassion, integrity, accountability and dependability while interacting with patients, families, and other health professionals ",
+    'competency' : "30",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83994: {
+    'id' : 83994,
+    'title' : "Analyze and apply legal and regulatory principles directing drug development and approval and medication distribution, use and management systems ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83995: {
+    'id' : 83995,
+    'title' : "Coordinate, provide, and assess safe, accurate and time-sensitive medication distribution ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83996: {
+    'id' : 83996,
+    'title' : "Identify and describe different types of medication delivery systems ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83997: {
+    'id' : 83997,
+    'title' : "Manage human, physical, medical, informational, fiscal, and technological resources ",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83998: {
+    'id' : 83998,
+    'title' : "Describe the health care system and recognize ways to systematically assess and improve health care and prevent medication errors, and apply these skills to a specific problem",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  83999: {
+    'id' : 83999,
+    'title' : "Describe basic principles of health care finance, how methods and costs affect health care and medication delivery, and methods for controlling costs while optimizing access",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
+    'sessions' : [],
+    'parents' : [],
+    'children' : [],
+    'meshDescriptors' : []
+  },
+
+  84000: {
+    'id' : 84000,
+    'title' : "Identify methods for evaluating cost-effectiveness and cost-benefit of medication use",
+    'competency' : "32",
+    'courses' : [],
+    'programYears' : [ '69' ],
     'sessions' : [],
     'parents' : [],
     'children' : [],

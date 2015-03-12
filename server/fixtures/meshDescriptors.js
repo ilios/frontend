@@ -1,50 +1,4 @@
 module.exports = {
-  D000005: {
-    'id' : "D000005",
-    'name' : "Abdomen",
-    'annotation' : "GEN: prefer specifics; abdom muscles = ABDOMINAL MUSCLES but RECTUS ABDOMINIS is available; abdominal pain = ABDOMINAL PAIN; abrupt dis requiring emerg surg = ABDOMEN, ACUTE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:07:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000005' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000254','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000601','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000028: {
-    'id' : "D000028",
-    'name' : "Abortion, Induced",
-    'annotation' : "do not use /util except by MeSH definition; for use of an abortifacient here or in ABORTION, CRIMINAL, coord IM with abortifacient agent (IM with no qualif, not /adv eff unless text specifically discusses adverse eff); don't forget also check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:08:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000034','M0000035','M0000036','M0000037','M0000038','M0000039','M0000040','M0000041','M0000042','M0000043','M0000044','M0000045' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000028"
-  },
-
-  D000032: {
-    'id' : "D000032",
-    'name' : "Abortion, Therapeutic",
-    'annotation' : "do not use /util except by MeSH definition; don't forget also check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:08:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000051' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D000042: {
     'id' : "D000042",
     'name' : "Absorption",
@@ -56,36 +10,6 @@ module.exports = {
     'sessions' : [ '16473' ],
     'concepts' : [ 'M0000063' ],
     'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000068: {
-    'id' : "D000068",
-    'name' : "Accreditation",
-    'annotation' : "by the profession; do not confuse with LICENSURE (by the state)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:10:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000097' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000085: {
-    'id' : "D000085",
-    'name' : "Acetates",
-    'annotation' : "GEN or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:11:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000125','M0000126','M0000132' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -118,67 +42,6 @@ module.exports = {
     'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D000136: {
-    'id' : "D000136",
-    'name' : "Acid-Base Equilibrium",
-    'annotation' : "consider also ACID-BASE IMBALANCE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:15:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000210','M0000211' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000137: {
-    'id' : "D000137",
-    'name' : "Acid-Base Imbalance",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:15:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000212' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000137"
-  },
-
-  D000138: {
-    'id' : "D000138",
-    'name' : "Acidosis",
-    'annotation' : "an acid-base imbalance; GEN & unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:15:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000213','M0544043' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000163: {
-    'id' : "D000163",
-    'name' : "Acquired Immunodeficiency Syndrome",
-    'annotation' : "caused by HIV; coord IM with HIV-1 or HIV-2 (IM) if pertinent; /epidemiol: consider also HIV SEROPREVALENCE; AIDS-RELATED OPPORTUNISTIC INFECTIONS is available if particularly discussed: see note there; for lymphoma with AIDS, use LYMPHOMA, AIDS-RELATED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:16:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000245' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000163"
   },
 
   D000173: {
@@ -244,35 +107,6 @@ module.exports = {
     'previousIndexing' : "D000200"
   },
 
-  D000224: {
-    'id' : "D000224",
-    'name' : "Addison Disease",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:20:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000346' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000230: {
-    'id' : "D000230",
-    'name' : "Adenocarcinoma",
-    'annotation' : "coord IM with precoord organ/neopl term (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:21:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000355','M0000356','M0000357','M0000358','M0000359','M0000360' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D000242: {
     'id' : "D000242",
     'name' : "Cyclic AMP",
@@ -320,21 +154,6 @@ module.exports = {
     'previousIndexing' : "D000262"
   },
 
-  D000273: {
-    'id' : "D000273",
-    'name' : "Adipose Tissue",
-    'annotation' : "inflammation = PANNICULITIS; /surg: consider also LIPECTOMY; do not confuse with FAT BODY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:24:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000425','M0486890','M0491310' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D000275: {
     'id' : "D000275",
     'name' : "Adjustment Disorders",
@@ -345,130 +164,6 @@ module.exports = {
     'sessions' : [ '16538' ],
     'concepts' : [ 'M0000427','M0000428','M0000429','M0000430' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000279: {
-    'id' : "D000279",
-    'name' : "Administration, Cutaneous",
-    'annotation' : "NIM but only if discussed: do not index here routinely for every cutaneously administered drug; no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:24:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000434','M0000435','M0000436' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000279"
-  },
-
-  D000284: {
-    'id' : "D000284",
-    'name' : "Administration, Oral",
-    'annotation' : "NIM but only if discussed: do not index here routinely for every orally administered drug; no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:24:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000446' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000284"
-  },
-
-  D000293: {
-    'id' : "D000293",
-    'name' : "Adolescent",
-    'annotation' : "age 13-18 yr; IM as psychol & sociol entity; check tag ADOLESCENT for NIM; Manual 18.5.12, 34.9.5",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:25:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000461','M0000462','M0000463','M0000464','M0000466','M0000467' ],
-    'qualifiers' : [ 'Q000331','Q000502' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000295: {
-    'id' : "D000295",
-    'name' : "Adolescent Medicine",
-    'annotation' : "specialty; when permitted for 'adolescent diseases': Manual 28.9.1; DF: ADOLESCENT MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:25:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000469' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000295"
-  },
-
-  D000297: {
-    'id' : "D000297",
-    'name' : "Adolescent Psychology",
-    'annotation' : "SPEC but also the way a normal adolescent thinks & acts; when SPEC, SPEC qualif; Manual 27.11; DF: ADOLESCENT PSYCHOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:25:10+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000471' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000302: {
-    'id' : "D000302",
-    'name' : "Adrenal Cortex",
-    'annotation' : "PITUITARY-ADRENAL SYSTEM is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:25:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000476' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000302"
-  },
-
-  D000305: {
-    'id' : "D000305",
-    'name' : "Adrenal Cortex Hormones",
-    'annotation' : "GEN only; avoid: prefer specifics; /defic: consider also ADRENAL GLAND HYPOFUNCTION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:25:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000480' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000311: {
-    'id' : "D000311",
-    'name' : "Adrenal Glands",
-    'annotation' : "/surg = probably ADRENALECTOMY; hypothalamo-pituitary-adrenal axis: coord HYPOTHALAMO-HYPOPHYSEAL SYSTEM + PITUITARY-ADRENAL SYSTEM; hyperplasia = ADRENAL GLANDS /pathol (IM) + HYPERPLASIA (NIM); congenital adrenal hyperplasia (CAH) = ADRENAL HYPERPLASIA, CONGENITAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:25:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000486' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -488,145 +183,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D000316: {
-    'id' : "D000316",
-    'name' : "Adrenergic alpha-Agonists",
-    'annotation' : "GEN or unspecified; prefer specifics; do not confuse with ADRENERGIC ALPHA-ANTAGONISTS; DF: ADREN ALPHA AGON or ADREN ALPHA AG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:26:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000492' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000316"
-  },
-
-  D000317: {
-    'id' : "D000317",
-    'name' : "Adrenergic alpha-Antagonists",
-    'annotation' : "GEN or unspecified; prefer specifics; do not confuse with ADRENERGIC ALPHA-AGONISTS; DF: ADREN ALPHA ANTAG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:26:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000493' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000317"
-  },
-
-  D000318: {
-    'id' : "D000318",
-    'name' : "Adrenergic beta-Agonists",
-    'annotation' : "general or unspecified; prefer specifics; do not confuse with ADRENERGIC BETA-ANTAGONISTS; DF: ADREN BETA AGON or ADREN BETA AG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:26:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000494' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000318"
-  },
-
-  D000319: {
-    'id' : "D000319",
-    'name' : "Adrenergic beta-Antagonists",
-    'annotation' : "GEN or unspecified; prefer specifics; do not confuse with ADRENERGIC BETA-AGONISTS; DF: ADREN BETA ANTAG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:26:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000495' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000319"
-  },
-
-  D000375: {
-    'id' : "D000375",
-    'name' : "Aging",
-    'annotation' : "human & animal; IM; aging process anywhere between birth & old age; differentiation from other age-related terms: Manual 28.16, 34.10; 'aging' of lower organisms, cultures, drugs, etc. is probably TIME FACTORS; AGING, PREMATURE is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:28:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000573','M0000574','M0000575' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000473','Q000502','Q000523','Q000528','Q000652','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000402: {
-    'id' : "D000402",
-    'name' : "Airway Obstruction",
-    'annotation' : "acute: chronic airway obstruct, chronic airflow obstruct & COAD (chronic obstruct airway dis) go under LUNG DISEASES, OBSTRUCTIVE (see note there); NASAL OBSTRUCTION is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:29:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000610','M0000611' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000402"
-  },
-
-  D000431: {
-    'id' : "D000431",
-    'name' : "Ethanol",
-    'annotation' : "for 'alcohol' unspecified; /antag: consider also ALCOHOL DETERRENTS; ethanol production by organisms = /metab; /pois: for acute alcohol pois, acute alcoholic intox, binge drinking, but ALCOHOLIC INTOXICATION is available for drunkenness & ALCOHOLISM for chronic alcohol intox; consider also ALCOHOLIC BEVERAGES; hypophysectomy by alcohol injection = HYPOPHYSECTOMY, CHEMICAL & do not index under ETHANOL unless particularly discussed; 'abstinence from alcohol' = TEMPERANCE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:30:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000653','M0000654' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000450: {
-    'id' : "D000450",
-    'name' : "Aldosterone",
-    'annotation' : "/biosyn /physiol permitted; /defic: consider also HYPOALDOSTERONISM; PSEUDOHYPOALDOSTERONISM is also available; consider also RENIN-ANGIOTENSIN-ALDOSTERONE SYSTEM see RENIN-ANGIOTENSIN SYSTEM & do not index under ALDOSTERONE unless particularly discussed",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:31:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000686','M0330742','M0330743' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000471: {
-    'id' : "D000471",
-    'name' : "Alkalosis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:32:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000714' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D000482: {
     'id' : "D000482",
     'name' : "Allantois",
@@ -637,65 +193,6 @@ module.exports = {
     'sessions' : [ '16545','16551' ],
     'concepts' : [ 'M0000726' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000486: {
-    'id' : "D000486",
-    'name' : "Allergy and Immunology",
-    'annotation' : "the discipline (education, history, etc) only; use IMMUNE SYSTEM PHENOMENA or specifics treed under it for immunologic processes and properties; use HYPERSENSITIVITY or specifics treed under it for allergic conditions; the qualifier / immunol is available for use with specific anatomical terms, organisms, diseases, etc",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:33:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000729','M0000730','M0000731' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000529: {
-    'id' : "D000529",
-    'name' : "Complementary Therapies",
-    'annotation' : "General or unspecified; prefer specifics; not for 'alternative health care delivery system' (= DELIVERY OF HEALTH CARE) or specific health service.",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:35:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000813','M0381154','M0381155','M0381156' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000401','Q000451','Q000458','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000550: {
-    'id' : "D000550",
-    'name' : "Amblyopia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:36:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000854','M0332634','M0332635','M0332637','M0332638' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000568: {
-    'id' : "D000568",
-    'name' : "Amenorrhea",
-    'annotation' : "'postpartum amenorrhea' is indexed under AMENORRHEA (IM) + PUERPERIUM (IM) & not LACTATION unless lactation is particularly discussed",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:37:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000887','M0000888' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -713,51 +210,6 @@ module.exports = {
     'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D000641: {
-    'id' : "D000641",
-    'name' : "Ammonia",
-    'annotation' : "a colorless alkaline gas; formed in body during decomposition of organic matter",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:41:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000981' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000653: {
-    'id' : "D000653",
-    'name' : "Amniotic Fluid",
-    'annotation' : "intra-amniotic injections do not go here: use AMNION + INJECTIONS; excess fluid and hydramnios = POLYHYDRAMNIOS; fluid deficiency = OLIGOHYDRAMNIOS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:42:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0000999','M0331853' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000701: {
-    'id' : "D000701",
-    'name' : "Analgesics, Opioid",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:44:29+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001068','M0014482' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000701"
   },
 
   D000708: {
@@ -790,121 +242,17 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D000718: {
-    'id' : "D000718",
-    'name' : "Anatomy, Regional",
-    'annotation' : "the discipline only (education, history, etc); for anatomical structures, use the qualifier / anat with specific organ or organism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:45:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001089' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000740: {
-    'id' : "D000740",
-    'name' : "Anemia",
-    'annotation' : "GEN or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:45:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001119' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000743: {
-    'id' : "D000743",
-    'name' : "Anemia, Hemolytic",
-    'annotation' : "general or unspecified: prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:46:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001123','M0001124','M0001125','M0001126','M0561502' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000748: {
-    'id' : "D000748",
-    'name' : "Anemia, Macrocytic",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:46:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001133' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000755: {
-    'id' : "D000755",
-    'name' : "Anemia, Sickle Cell",
-    'annotation' : "PL 92-294: Natl Sickle Cell Anemia Control Act; sickle cell dis goes here unless specifically HEMOGLOBIN SC DISEASE or HEMOGLOBIN C DISEASE or SICKLE CELL TRAIT or THALASSEMIA; /drug ther: consider also ANTISICKLING AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:46:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001140' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D000758: {
     'id' : "D000758",
     'name' : "Anesthesia",
     'annotation' : "Manual 26.21+",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2014-08-18T20:47:10+00:00",
-    'courses' : [],
+    'courses' : [ '551' ],
     'objectives' : [],
-    'sessions' : [],
+    'sessions' : [ '15076','15077','15078','15079','15080','15081','15082','15083','15084','15085','15086','15087','15088','15089','15090','15091','15092' ],
     'concepts' : [ 'M0001143' ],
     'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000768: {
-    'id' : "D000768",
-    'name' : "Anesthesia, General",
-    'annotation' : "/educ: coord IM (no qualif) with ANESTHESIOLOGY /educ (NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:47:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001154' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000769: {
-    'id' : "D000769",
-    'name' : "Anesthesia, Inhalation",
-    'annotation' : "/educ: coord IM (no qualif) with ANESTHESIOLOGY /educ (NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:47:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001155','M0001156' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -922,20 +270,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D000782"
-  },
-
-  D000787: {
-    'id' : "D000787",
-    'name' : "Angina Pectoris",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:48:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001180' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D000842: {
@@ -968,249 +302,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D000858: {
-    'id' : "D000858",
-    'name' : "Anovulation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:51:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001281' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000858"
-  },
-
-  D000860: {
-    'id' : "D000860",
-    'name' : "Anoxia",
-    'annotation' : "do not confuse entry term HYPOXIA with HYPEROXIA; FETAL HYPOXIA and CEREBRAL ANOXIA are also available; restrict to disease or clinical state in human and vertebrates: do not use for anoxic or hypoxic state in invertebrates or micro-organisms ( = OXYGEN or ANAEROBIOSIS); decrease of oxygen in tissues and cells  = CELL HYPOXIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:51:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001282','M0001283','M0001284','M0001285' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000893: {
-    'id' : "D000893",
-    'name' : "Anti-Inflammatory Agents",
-    'annotation' : "do not confuse with INFLAMMATION MEDIATORS; DF: ANTI INFLAMM AGENTS or ANTIINFLAMM AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:52:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001333' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000894: {
-    'id' : "D000894",
-    'name' : "Anti-Inflammatory Agents, Non-Steroidal",
-    'annotation' : "GEN or unspecified: prefer specifics; DF: NSAID",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:52:38+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001334','M0001335','M0001336','M0001337' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000894"
-  },
-
-  D000900: {
-    'id' : "D000900",
-    'name' : "Anti-Bacterial Agents",
-    'annotation' : "GEN or unspecified; resistance to antibiotics = DRUG RESISTANCE, BACTERIAL or specifics; preop use of antibiotics for prev of infect: index under ANTIBIOTIC PROPHYLAXIS (IM) + specific antibiotic /ther use (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:52:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001344','M0448397','M0448398','M0448399' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000906: {
-    'id' : "D000906",
-    'name' : "Antibodies",
-    'annotation' : "antibodies to IMMUNOGLOBULIN A;  IMMUNOGLOBULIN G;  etc. = ANTIBODIES, ANTI-IDIOTYPIC (IM) + IMMUNOGLOBULIN A;  IMMUNOGLOBULIN G; etc. (IM); ANTIBODY-TOXIN CONJUGATES is available as toxin carrier: see note there",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:52:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001352' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000494','Q000502','Q000506','Q000528','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000911: {
-    'id' : "D000911",
-    'name' : "Antibodies, Monoclonal",
-    'annotation' : "do not coordinate with ANTIBODY FORMATION for biosyn; ANTIBODY-TOXIN CONJUGATES is available as a toxin carrier: see note there",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:53:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001357' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000911"
-  },
-
-  D000915: {
-    'id' : "D000915",
-    'name' : "Antibody Affinity",
-    'annotation' : "do not confuse with BINDING SITES, ANTIBODY or ANTIGENIC DETERMINANTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:53:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001362','M0001363' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000915"
-  },
-
-  D000928: {
-    'id' : "D000928",
-    'name' : "Antidepressive Agents",
-    'annotation' : "GEN or unspecified; prefer specific groups or specific antidepressive agents; consider also DEPRESSION /drug ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:53:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001384','M0001385','M0001386' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000929: {
-    'id' : "D000929",
-    'name' : "Antidepressive Agents, Tricyclic",
-    'annotation' : "GEN or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:53:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001387' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000929"
-  },
-
-  D000930: {
-    'id' : "D000930",
-    'name' : "Antidiarrheals",
-    'annotation' : "consider also DIARRHEA /drug ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:54:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001388','M0001389' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000930"
-  },
-
-  D000931: {
-    'id' : "D000931",
-    'name' : "Antidotes",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:54:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001390' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000938: {
-    'id' : "D000938",
-    'name' : "Antigen-Presenting Cells",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:54:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001402' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D000938"
-  },
-
-  D000941: {
-    'id' : "D000941",
-    'name' : "Antigens",
-    'annotation' : "GEN or unspecified: prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:54:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001407' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000494','Q000502','Q000506','Q000528','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000959: {
-    'id' : "D000959",
-    'name' : "Antihypertensive Agents",
-    'annotation' : "not for ocular hypertension",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:55:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001456' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D000977: {
-    'id' : "D000977",
-    'name' : "Antiparasitic Agents",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:56:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001493' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001011: {
     'id' : "D001011",
     'name' : "Aorta",
@@ -1222,112 +313,6 @@ module.exports = {
     'sessions' : [ '16476' ],
     'concepts' : [ 'M0001539','M0001540' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001021: {
-    'id' : "D001021",
-    'name' : "Aortic Valve",
-    'annotation' : "dis: coord IM with HEART VALVE DISEASES (IM) but note specific aortic valve dis; atresia: index AORTIC VALVE /abnorm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:58:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001553' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001022: {
-    'id' : "D001022",
-    'name' : "Aortic Valve Insufficiency",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:58:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001554' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001022"
-  },
-
-  D001024: {
-    'id' : "D001024",
-    'name' : "Aortic Valve Stenosis",
-    'annotation' : "aortic valve atresia = AORTIC VALVE /abnorm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:58:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001557' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001034: {
-    'id' : "D001034",
-    'name' : "Apgar Score",
-    'annotation' : "check the tags  HUMANS & INFANT, NEWBORN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T20:59:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001568' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001034"
-  },
-
-  D001059: {
-    'id' : "D001059",
-    'name' : "Apoproteins",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:00:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001605' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001059"
-  },
-
-  D001065: {
-    'id' : "D001065",
-    'name' : "Appendix",
-    'annotation' : "/surg: probably APPENDECTOMY; diseases: coord IM with CECAL DISEASES (IM); inflammation = APPENDICITIS; 'ruptured' or 'perforated' appendix: see note under APPENDICITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:00:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001611' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001068: {
-    'id' : "D001068",
-    'name' : "Eating Disorders",
-    'annotation' : "in children, use FEEDING AND EATING DISORDERS OF CHILDHOOD if related to mental disorder",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:00:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001615','M0001616' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -1347,21 +332,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D001145: {
-    'id' : "D001145",
-    'name' : "Arrhythmias, Cardiac",
-    'annotation' : "general: prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:04:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001715' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001158: {
     'id' : "D001158",
     'name' : "Arteries",
@@ -1373,66 +343,6 @@ module.exports = {
     'sessions' : [ '16503','16513' ],
     'concepts' : [ 'M0001731' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001164: {
-    'id' : "D001164",
-    'name' : "Arteriovenous Fistula",
-    'annotation' : "do not confuse with ARTERIOVENOUS ANASTOMOSIS, an anatomical term; coordinate IM with specific artery /abnorm + specific vein /abnorm (IM) or precoordinate vessel/disease headings (IM); Manual 23.19.6+; congenital cerebral arteriovenous fistula = INTRACRANIAL ARTERIOVENOUS MALFORMATIONS (IM) + ARTERIOVENOUS FISTULA  (IM); surgically created arteriovenous fistula = ARTERIOVENOUS SHUNT, SURGICAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:05:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001737','M0501329' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001172: {
-    'id' : "D001172",
-    'name' : "Arthritis, Rheumatoid",
-    'annotation' : "in children = ARTHRITIS, JUVENILE RHEUMATOID; includes PCE: polyarthrite chronique évolutive; tends to be chronic so do not coord with CHRONIC DISEASE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:06:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001750' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001201: {
-    'id' : "D001201",
-    'name' : "Ascites",
-    'annotation' : "do not index here for routine liver cirrhosis or Ehrlich ascites tumor; text must discuss ascites especially; chylous ascites: index CHYLOPERITONEUM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:07:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001791' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001249: {
-    'id' : "D001249",
-    'name' : "Asthma",
-    'annotation' : "ASTHMA, CARDIAC see DYSPNEA, PAROXYSMAL is available; in historical literature consider indexing 'phthisic' here; 'phthisis' probably goes under TUBERCULOSIS, PULMONARY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:09:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001885' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -1452,36 +362,6 @@ module.exports = {
     'previousIndexing' : "D001253"
   },
 
-  D001260: {
-    'id' : "D001260",
-    'name' : "Ataxia Telangiectasia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:10:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001898' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001260"
-  },
-
-  D001281: {
-    'id' : "D001281",
-    'name' : "Atrial Fibrillation",
-    'annotation' : "do not confuse with ATRIAL FLUTTER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:11:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001926' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001284: {
     'id' : "D001284",
     'name' : "Atrophy",
@@ -1492,52 +372,6 @@ module.exports = {
     'objectives' : [ '76763' ],
     'sessions' : [ '16526' ],
     'concepts' : [ 'M0001929' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001294: {
-    'id' : "D001294",
-    'name' : "Attitude to Health",
-    'annotation' : "includes attitude to disease",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:11:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001951' ],
-    'qualifiers' : [ 'Q000208' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001294"
-  },
-
-  D001319: {
-    'id' : "D001319",
-    'name' : "Authorship",
-    'annotation' : "identity or establishment of being the author; do not confuse with WRITING or PUBLISHING: see notes there; no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:12:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001982' ],
-    'qualifiers' : [ 'Q000266','Q000592' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001327: {
-    'id' : "D001327",
-    'name' : "Autoimmune Diseases",
-    'annotation' : "AUTOIMMUNE DISEASES OF THE NERVOUS SYSTEM is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:12:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001989' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
@@ -1604,67 +438,6 @@ module.exports = {
     'previousIndexing' : "D001402"
   },
 
-  D001419: {
-    'id' : "D001419",
-    'name' : "Bacteria",
-    'annotation' : "general; prefer specifics; relation to bacterial disease: Manual 22.12-22.16; presence of bacteria in organs vs infection: Manual 22.11; note many precoordinated bacterial - terms (BACTERIAL PROTEINS; ANTIBODIES, BACTERIAL; etc); 'coliform bacteria' = COLIFORM BACILLI see ENTEROBACTERIACEAE; presence of bacteria in blood = BACTEREMIA: see note there; DF: BACT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:16:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002119' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001424: {
-    'id' : "D001424",
-    'name' : "Bacterial Infections",
-    'annotation' : "GEN: prefer specifics; many texts saying 'sepsis' mean BACTERIAL INFECTIONS: check text; TN 209: differentiation from presence of bacteria in organs; DF: BACT INFECT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:16:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002126' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001424"
-  },
-
-  D001431: {
-    'id' : "D001431",
-    'name' : "Bacteriological Techniques",
-    'annotation' : "NIM; DF: BACTERIOL TECHNIQUES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:17:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002137' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001479: {
-    'id' : "D001479",
-    'name' : "Basal Ganglia",
-    'annotation' : "dis = BASAL GANGLIA DISEASES; do not confuse X ref VENTRAL STRIATUM with CORPUS STRIATUM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:18:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002196','M0002197','M0332426' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001485: {
     'id' : "D001485",
     'name' : "Basement Membrane",
@@ -1691,20 +464,6 @@ module.exports = {
     'sessions' : [ '16502' ],
     'concepts' : [ 'M0002222' ],
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001515: {
-    'id' : "D001515",
-    'name' : "Beer",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:20:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002275' ],
-    'qualifiers' : [ 'Q000009','Q000032','Q000145','Q000191','Q000266','Q000382','Q000469','Q000506','Q000528','Q000592','Q000600','Q000633','Q000656','Q000706','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -1739,20 +498,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D001523: {
-    'id' : "D001523",
-    'name' : "Mental Disorders",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:20:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002288','M0002289','M0002290' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001524: {
     'id' : "D001524",
     'name' : "Behavioral Medicine",
@@ -1763,96 +508,6 @@ module.exports = {
     'objectives' : [ '76560','76561' ],
     'sessions' : [ '16494' ],
     'concepts' : [ 'M0002291','M0002292' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001525: {
-    'id' : "D001525",
-    'name' : "Behavioral Sciences",
-    'annotation' : "SPEC: SPEC qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:20:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002293' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001525"
-  },
-
-  D001639: {
-    'id' : "D001639",
-    'name' : "Bicarbonates",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:25:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002462','M0002463','M0002464','M0330851' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001646: {
-    'id' : "D001646",
-    'name' : "Bile",
-    'annotation' : "stasis = CHOLESTASIS; drugs stimulating or increasing flow of bile = CHOLAGOGUES AND CHOLERETICS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:25:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002472','M0002473' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001660: {
-    'id' : "D001660",
-    'name' : "Biliary Tract Diseases",
-    'annotation' : "GEN: prefer specifics; biliary empyema = EMPYEMA (IM) + BILIARY TRACT DISEASES (IM) or if of gallbladder, EMPYEMA, GALLBLADDER see CHOLECYSTITIS;  inflamm dis = CHOLECYSTITIS or CHOLANGITIS; calculi = BILIARY CALCULI see GALLSTONES but consider also CHOLELITHIASIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:26:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002491' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001663: {
-    'id' : "D001663",
-    'name' : "Bilirubin",
-    'annotation' : "BILIRUBIN ENCEPHALOPATHY see KERNICTERUS is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:26:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002494','M0002495','M0002496','M0002497','M0330853','M0330854','M0330855','M0330856','M0330857' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001671: {
-    'id' : "D001671",
-    'name' : "Biochemistry",
-    'annotation' : "the discipline (education, history, etc) only; use BIOCHEMICAL PHENOMENA or specifics treed under it for chemical processes and reactions of biological systems",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:26:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002508' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
@@ -1874,110 +529,6 @@ module.exports = {
     'previousIndexing' : "D001682"
   },
 
-  D001685: {
-    'id' : "D001685",
-    'name' : "Biological Factors",
-    'annotation' : "differentiate from BIOLOGICAL PRODUCTS; DF: BIOL FACTORS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:27:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002530' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001706: {
-    'id' : "D001706",
-    'name' : "Biopsy",
-    'annotation' : "IM GEN only; NIM with specific organ /pathol (IM) + dis /pathol (IM); coord with specific technique if appropriate",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:27:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002558' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001714: {
-    'id' : "D001714",
-    'name' : "Bipolar Disorder",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:28:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002571','M0002572','M0002573','M0002574' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001743: {
-    'id' : "D001743",
-    'name' : "Urinary Bladder",
-    'annotation' : "inflammation = CYSTITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:29:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002628' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001748: {
-    'id' : "D001748",
-    'name' : "Urinary Bladder Neck Obstruction",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:29:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002634' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001749: {
-    'id' : "D001749",
-    'name' : "Urinary Bladder Neoplasms",
-    'annotation' : "coordinate IM with histological type of neoplasm (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:29:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002635','M0332202' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001760: {
-    'id' : "D001760",
-    'name' : "Bleeding Time",
-    'annotation' : "usually NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:30:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002649','M0002650','M0002651','M0002652','M0002653' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001760"
-  },
-
   D001769: {
     'id' : "D001769",
     'name' : "Blood",
@@ -1989,21 +540,6 @@ module.exports = {
     'sessions' : [ '16471','16502' ],
     'concepts' : [ 'M0002669' ],
     'qualifiers' : [ 'Q000187','Q000276','Q000378','Q000382','Q000469','Q000528','Q000530','Q000531','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001772: {
-    'id' : "D001772",
-    'name' : "Blood Cell Count",
-    'annotation' : "GEN; prefer specifics;  'blood picture' probably goes here or under specifics; usually NIM; coord with disease /blood, not /physiopathol",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:31:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002674','M0002675' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -2038,80 +574,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D001777: {
-    'id' : "D001777",
-    'name' : "Blood Coagulation",
-    'annotation' : "coord BLOOD COAGULATION in diseases with disease /blood, not /physiopathol; 'blood clot' if physiol goes here, if pathol, goes under THROMBOSIS or EMBOLISM; DF: BLOOD COAG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:31:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002681' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001778: {
-    'id' : "D001778",
-    'name' : "Blood Coagulation Disorders",
-    'annotation' : "GEN: prefer specifics; consider also COAGULATION PROTEIN DISORDERS and indentions; see also THROMBOSIS; EMBOLISM and specifics in C14; /genet: consider also BLOOD COAGULATION DISORDERS, INHERITED; DF: BLOOD COAG DIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:31:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002683' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001784: {
-    'id' : "D001784",
-    'name' : "Blood Gas Analysis",
-    'annotation' : "for determ of oxygen & carbon dioxide in the blood; NIM; coord with disease /blood, not /physiopathol",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:31:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002690' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001786: {
-    'id' : "D001786",
-    'name' : "Blood Glucose",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:31:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002696' ],
-    'qualifiers' : [ 'Q000032','Q000096','Q000187','Q000235','Q000276','Q000302','Q000378','Q000502','Q000528','Q000737' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001791: {
-    'id' : "D001791",
-    'name' : "Blood Platelet Disorders",
-    'annotation' : "do not use as coord for platelet factor defic: use COAGULATION PROTEIN DISORDERS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:31:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002703' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001792: {
     'id' : "D001792",
     'name' : "Blood Platelets",
@@ -2138,36 +600,6 @@ module.exports = {
     'sessions' : [ '16488' ],
     'concepts' : [ 'M0002706','M0365970','M0365971','M0365972' ],
     'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001798: {
-    'id' : "D001798",
-    'name' : "Blood Proteins",
-    'annotation' : "GEN: avoid: prefer specifics; electrophoresis = BLOOD PROTEIN ELECTROPHORESIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:32:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002710','M0002711','M0002713' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001800: {
-    'id' : "D001800",
-    'name' : "Blood Specimen Collection",
-    'annotation' : "includes 'handling'",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:32:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002716' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -2202,93 +634,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D001826: {
-    'id' : "D001826",
-    'name' : "Body Fluids",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:32:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002746' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001833: {
-    'id' : "D001833",
-    'name' : "Body Temperature Regulation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:33:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002754','M0002755' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001842: {
-    'id' : "D001842",
-    'name' : "Bone and Bones",
-    'annotation' : "/cytol: consider also OSTEOBLASTS; OSTEOCLASTS; OSTEOCYTES; /embryol: consider also OSTEOGENESIS; /surg: consider also OSTEOTOMY or ARTHRODESIS or FRACTURE FIXATION & its specifics; osteosynthesis not one of the preceding terms goes under BONE AND BONES /surg; differentiate from SKELETON which is almost never used: restrict SKELETON to bone arrangement as a whole & not for 'skeletal' which usually means 'bone' ( = BONE AND BONES); 'disappearing bone' = OSTEOLYSIS, ESSENTIAL; inflammation = OSTEITIS; necrosis = OSTEONECROSIS; 'bone minerals' = BONE AND BONES (IM) + MINERALS (IM) or specific mineral (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:33:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002767','M0002768','M0370192' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001846: {
-    'id' : "D001846",
-    'name' : "Bone Development",
-    'annotation' : "OSTEOGENESIS is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:33:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002775','M0375992' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001853: {
-    'id' : "D001853",
-    'name' : "Bone Marrow",
-    'annotation' : "/cytol = BONE MARROW CELLS; /transpl = BONE MARROW TRANSPLANTATION: do not coord with TRANSPLANTATION, HOMOLOGOUS; inflammation = OSTEOMYELITIS; fibrosis = MYELOFIBROSIS; do not confuse words containing 'myel-' for spinal cord with 'myel-' for bone marrow",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:33:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002783','M0002784','M0002785','M0002786' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001916: {
-    'id' : "D001916",
-    'name' : "Brachial Artery",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:35:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002855' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D001917: {
     'id' : "D001917",
     'name' : "Brachial Plexus",
@@ -2300,139 +645,6 @@ module.exports = {
     'sessions' : [ '16500' ],
     'concepts' : [ 'M0002856' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001919: {
-    'id' : "D001919",
-    'name' : "Bradycardia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:35:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002863' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001921: {
-    'id' : "D001921",
-    'name' : "Brain",
-    'annotation' : "general; /blood supply: consider also CEREBROVASCULAR CIRCULATION; CEREBRAL ARTERIES; CEREBRAL VEINS; CRANIAL SINUSES; /cytol: do not routinely convert to NEURONS; /surg: consider specific neurosurgical procedures in Category E4; inflammation = ENCEPHALITIS & its specifics; infarct = CEREBRAL INFARCTION; malacia = ENCEPHALOMALACIA; brain-isolated, encéphale isolé, cerveau isolé: index DECEREBRATE STATE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:36:02+00:00",
-    'courses' : [],
-    'objectives' : [ '81078' ],
-    'sessions' : [],
-    'concepts' : [ 'M0002865' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001940: {
-    'id' : "D001940",
-    'name' : "Breast",
-    'annotation' : "human only; animal is MAMMARY GLANDS, ANIMAL; /surg: consider also MASTECTOMY & MAMMAPLASTY; inflammation = MASTITIS; tuberc of breast = MASTITIS (IM) + TUBERCULOSIS (IM), not TUBERCULOSIS, ENDOCRINE; self-examination = BREAST SELF-EXAMINATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:37:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002904' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001941: {
-    'id' : "D001941",
-    'name' : "Breast Diseases",
-    'annotation' : "inflamm dis = MASTITIS; tuberc of breast = MASTITIS (IM) + TUBERCULOSIS (IM), not TUBERCULOSIS, ENDOCRINE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:37:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002906','M0458719' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001943: {
-    'id' : "D001943",
-    'name' : "Breast Neoplasms",
-    'annotation' : "human only; BREAST NEOPLASMS, MALE is also available; for animal use MAMMARY NEOPLASMS, ANIMAL or MAMMARY NEOPLASMS, EXPERIMENTAL: Manual 24.5+, 24.6+;  coordinate IM with histological type of neoplasm (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:37:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002909','M0002910','M0445597','M0445598' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D001946: {
-    'id' : "D001946",
-    'name' : "Breech Presentation",
-    'annotation' : "check the tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:37:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002916','M0457460','M0463757','M0463758' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D001946"
-  },
-
-  D002011: {
-    'id' : "D002011",
-    'name' : "Brunner Glands",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:40:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0002993' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002116: {
-    'id' : "D002116",
-    'name' : "Calcitonin",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:45:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003145','M0003146','M0003147' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002118: {
-    'id' : "D002118",
-    'name' : "Calcium",
-    'annotation' : "Ca-40; / antag permitted but consider also CALCIUM CHANNEL BLOCKERS; / blood: note HYPOCALCEMIA and HYPERCALCEMIA are available; / defic: consider also HYPOCALCEMIA & note that CALCIUM, DIETARY is also available; CALCIUM CHANNELS and CALCIUM SIGNALING are also available; metabolic disorders = CALCIUM METABOLISM DISORDERS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:45:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003153' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000145','Q000172','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -2468,127 +680,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D002241: {
-    'id' : "D002241",
-    'name' : "Carbohydrates",
-    'annotation' : "general only; prefer specifics; glucides go here but could also be GLYCOSIDES; carbohydrates in the diet = DIETARY CARBOHYDRATES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:51:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003360','M0003361' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002245: {
-    'id' : "D002245",
-    'name' : "Carbon Dioxide",
-    'annotation' : "in respiration, /physiol permitted; /metab permitted for cell & tissue resp & non-lung tissue but do not use /metab for gas exchange in lung ( = PULMONARY GAS EXCHANGE) or blood CO2 transport ( = /blood but consider also HYPERCAPNIA & HYPOCAPNIA)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:51:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003369' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002248: {
-    'id' : "D002248",
-    'name' : "Carbon Monoxide",
-    'annotation' : "a poisonous gas; /tox permitted but consider also CARBON MONOXIDE POISONING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:51:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003372' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002277: {
-    'id' : "D002277",
-    'name' : "Carcinoma",
-    'annotation' : "do not use for 'cancer' routinely: use only for carcinoma as a histological type: Manual 24.2.1.3; /blood supply /chem /second /secret /ultrastruct permitted; coord IM with precoord organ/neopl term (IM); X ref CARCINOMA, ANAPLASTIC: do not coord with ANAPLASIA unless anaplasia is particularly discussed",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:52:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003424','M0003425','M0003426','M0003427','M0003428' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002280: {
-    'id' : "D002280",
-    'name' : "Carcinoma, Basal Cell",
-    'annotation' : "/blood supply /chem /second /secret /ultrastruct permitted; coord IM with probably SKIN NEOPLASMS (IM); X ref RODENT ULCER: do not coord with ULCER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:52:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003431','M0521708' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002292: {
-    'id' : "D002292",
-    'name' : "Carcinoma, Renal Cell",
-    'annotation' : "coordinate IM with KIDNEY NEOPLASMS (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:53:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003442','M0483485','M0483486','M0483487','M0483488','M0484518' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002292"
-  },
-
-  D002294: {
-    'id' : "D002294",
-    'name' : "Carcinoma, Squamous Cell",
-    'annotation' : "coordinate IM with precoordinated organ/neoplasm term (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:53:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003444' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002302: {
-    'id' : "D002302",
-    'name' : "Cardiac Output",
-    'annotation' : "a physiol concept: do not confuse with the C14 diseases CARDIAC OUTPUT, HIGH or CARDIAC OUTPUT, LOW",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:54:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003452' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D002309: {
     'id' : "D002309",
     'name' : "Cardiology",
@@ -2600,37 +691,6 @@ module.exports = {
     'sessions' : [ '16488' ],
     'concepts' : [ 'M0003461','M0554084','M0554085' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002316: {
-    'id' : "D002316",
-    'name' : "Cardiotonic Agents",
-    'annotation' : "do not confuse with CARDIOTOXINS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:54:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003471' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002316"
-  },
-
-  D002318: {
-    'id' : "D002318",
-    'name' : "Cardiovascular Diseases",
-    'annotation' : "general, prefer specifics; /diag: consider also DIAGNOSTIC TECHNIQUES, CARDIOVASCULAR; DF: CARDIOVASC DIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:54:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003473' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -2666,66 +726,6 @@ module.exports = {
     'previousIndexing' : "D002320"
   },
 
-  D002321: {
-    'id' : "D002321",
-    'name' : "Career Choice",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:55:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003477' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002322: {
-    'id' : "D002322",
-    'name' : "Career Mobility",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:55:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003478','M0003479','M0003480','M0003481' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002322"
-  },
-
-  D002326: {
-    'id' : "D002326",
-    'name' : "Cariogenic Agents",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:55:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003486' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002327: {
-    'id' : "D002327",
-    'name' : "Cariostatic Agents",
-    'annotation' : "D25-26 qualif; consider also DENTAL CARIES /prev or /drug ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:55:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003487','M0556251' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D002339: {
     'id' : "D002339",
     'name' : "Carotid Arteries",
@@ -2737,20 +737,6 @@ module.exports = {
     'sessions' : [ '16528' ],
     'concepts' : [ 'M0003539' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002349: {
-    'id' : "D002349",
-    'name' : "Carpal Tunnel Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:56:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003553' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -2768,36 +754,6 @@ module.exports = {
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D002395: {
-    'id' : "D002395",
-    'name' : "Catecholamines",
-    'annotation' : "if only EPINEPHRINE & NOREPINEPHRINE are discussed index under each & not also here",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:58:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003647' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002398: {
-    'id' : "D002398",
-    'name' : "Catgut",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:58:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003653' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000382','Q000469','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000744','Q000821','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002398"
   },
 
   D002404: {
@@ -2831,22 +787,6 @@ module.exports = {
     'previousIndexing' : "D002405"
   },
 
-  D002407: {
-    'id' : "D002407",
-    'name' : "Catheterization, Swan-Ganz",
-    'annotation' : "DF: CATH SWAN GANZ",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:58:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003671','M0003672' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002407"
-  },
-
   D002423: {
     'id' : "D002423",
     'name' : "Cause of Death",
@@ -2863,21 +803,6 @@ module.exports = {
     'previousIndexing' : "D002423"
   },
 
-  D002432: {
-    'id' : "D002432",
-    'name' : "Cecum",
-    'annotation' : "Inflammation = CECITIS see TYPHLITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T21:59:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003712' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D002448: {
     'id' : "D002448",
     'name' : "Cell Adhesion",
@@ -2892,52 +817,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D002448"
-  },
-
-  D002453: {
-    'id' : "D002453",
-    'name' : "Cell Cycle",
-    'annotation' : "coordinate with specific cell /cytol; permitted with microorganisms",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:01:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003747' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002453"
-  },
-
-  D002455: {
-    'id' : "D002455",
-    'name' : "Cell Division",
-    'annotation' : "coordinate with specific cell /cytol; permitted with microorganisms; for cell division of cytoplasm only, use CYTOKINESIS; note X ref M PHASE: MITOTIC M PHASE and MEIOTIC M PHASE are also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:01:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003750','M0462397' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002463: {
-    'id' : "D002463",
-    'name' : "Cell Membrane Permeability",
-    'annotation' : "coord with substance /pharmacokin (IM) or /metab (IM); for cell membrane only; intracellular membrane permeability: index INTRACELLULAR MEMBRANES + specific organelle + PERMEABILITY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:01:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003760' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D002466: {
@@ -3002,161 +881,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D002534: {
-    'id' : "D002534",
-    'name' : "Hypoxia, Brain",
-    'annotation' : "do not confuse with BRAIN ISCHEMIA, a reduced blood supply",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:04:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003872','M0335358','M0335359','M0335362','M0335363','M0335364' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002583: {
-    'id' : "D002583",
-    'name' : "Uterine Cervical Neoplasms",
-    'annotation' : "coordinate IM with histologic type of neoplasm (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:07:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003943','M0003944' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002584: {
-    'id' : "D002584",
-    'name' : "Cervix Uteri",
-    'annotation' : "inflammation = CERVICITIS; conization = CERVIX UTERI /pathol (IM) + CONIZATION (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:07:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003947' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002585: {
-    'id' : "D002585",
-    'name' : "Cesarean Section",
-    'annotation' : "check the tags FEMALE & PREGNANCY; anesthesia in cesareans: coord IM with ANESTHESIA, OBSTETRICAL (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:07:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0003948','M0003949' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002628: {
-    'id' : "D002628",
-    'name' : "Chemoreceptor Cells",
-    'annotation' : "note category: do not confuse with chemoreceptor proteins",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:09:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004020' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002628"
-  },
-
-  D002637: {
-    'id' : "D002637",
-    'name' : "Chest Pain",
-    'annotation' : "cardiac = probably ANGINA PECTORIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:09:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004035' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002637"
-  },
-
-  D002649: {
-    'id' : "D002649",
-    'name' : "Child Abuse",
-    'annotation' : "check also tag CHILD or specific",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:10:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004047','M0004048','M0571133' ],
-    'qualifiers' : [ 'Q000145','Q000175','Q000191','Q000208','Q000266','Q000331','Q000401','Q000517','Q000523','Q000534','Q000628','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002657: {
-    'id' : "D002657",
-    'name' : "Child Development",
-    'annotation' : "includes infant and child but not adolescents; add the appropriate age check tag",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:10:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004057','M0004058' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002657"
-  },
-
-  D002658: {
-    'id' : "D002658",
-    'name' : "Developmental Disabilities",
-    'annotation' : "check also tag CHILD or specific",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:10:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004059','M0004060','M0004061' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002658"
-  },
-
-  D002791: {
-    'id' : "D002791",
-    'name' : "Cholesterol, Dietary",
-    'annotation' : "/adv eff: coord with disease /etiol, not /chem ind",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:19:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004277' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002791"
-  },
-
   D002800: {
     'id' : "D002800",
     'name' : "Cholinesterase Inhibitors",
@@ -3187,22 +911,6 @@ module.exports = {
     'previousIndexing' : "D002843"
   },
 
-  D002869: {
-    'id' : "D002869",
-    'name' : "Chromosome Aberrations",
-    'annotation' : "coord IM with specific numbered chromosome or sex chromosome (IM) but not with CHROMOSOMES, HUMAN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:25:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004406','M0004407','M0375494' ],
-    'qualifiers' : [ 'Q000139','Q000145','Q000187','Q000196','Q000528','Q000662','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002869"
-  },
-
   D002875: {
     'id' : "D002875",
     'name' : "Chromosomes",
@@ -3218,185 +926,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D002908: {
-    'id' : "D002908",
-    'name' : "Chronic Disease",
-    'annotation' : "IM GEN only; usually NIM with specific dis IM; no qualif when NIM; Manual 23.16+",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:27:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004447','M0004448' ],
-    'qualifiers' : [ 'Q000145','Q000188','Q000191','Q000208','Q000401','Q000451','Q000453','Q000517','Q000523','Q000534','Q000628' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002914: {
-    'id' : "D002914",
-    'name' : "Chylomicrons",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:27:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004455' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002940: {
-    'id' : "D002940",
-    'name' : "Circadian Rhythm",
-    'annotation' : "drug admin based on circadian rhythm = CHRONOTHERAPY: do not coord with CIRCADIAN RHYTHM or DRUG ADMINISTRATION SCHEDULE; jet lag: index JET LAG SYNDROME",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:29:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004500' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002943: {
-    'id' : "D002943",
-    'name' : "Circulatory and Respiratory Physiological Phenomena",
-    'annotation' : "used for searching: indexers and catalogers apply specifics; DF: CIRC RESPIRATORY PHYSIOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:29:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004503' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002943"
-  },
-
-  D002968: {
-    'id' : "D002968",
-    'name' : "Clavicle",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:30:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004545' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002972: {
-    'id' : "D002972",
-    'name' : "Cleft Palate",
-    'annotation' : "do not use /congen & do not coord with INFANT, NEWBORN, DISEASES; when with CLEFT LIP, do not also use ABNORMALITIES, MULTIPLE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:31:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004549','M0574709' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D002982: {
-    'id' : "D002982",
-    'name' : "Clinical Clerkship",
-    'annotation' : "an undergrad med educ program; DF: CLIN CLERKSHIP",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:31:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004565' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002982"
-  },
-
-  D002983: {
-    'id' : "D002983",
-    'name' : "Clinical Competence",
-    'annotation' : "competence in professional activities directly related to patient care: differentiate from PROFESSIONAL COMPETENCE which refers to competence not necessarily related to patient care; DF: CLIN COMPETENCE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:31:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004566','M0004567' ],
-    'qualifiers' : [ 'Q000191','Q000331','Q000592','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D002983"
-  },
-
-  D003027: {
-    'id' : "D003027",
-    'name' : "Cluster Headache",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:34:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004652','M0334705','M0334706' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003027"
-  },
-
-  D003067: {
-    'id' : "D003067",
-    'name' : "Coenzymes",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:37:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004714' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003071: {
-    'id' : "D003071",
-    'name' : "Cognition",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:38:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004721' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003093: {
-    'id' : "D003093",
-    'name' : "Colitis, Ulcerative",
-    'annotation' : "usually chronic so do not coord with CHRONIC DISEASE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:39:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004771' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D003095: {
     'id' : "D003095",
     'name' : "Collagen Diseases",
@@ -3408,172 +937,6 @@ module.exports = {
     'sessions' : [ '16477' ],
     'concepts' : [ 'M0004792' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003106: {
-    'id' : "D003106",
-    'name' : "Colon",
-    'annotation' : "X ref TAENIA COLI: do not confuse with Taenia, a genus of tapeworm; inflammation = COLITIS; /surg: do not confuse with specialty COLORECTAL SURGERY & consider also COLECTOMY or COLOSTOMY; note X refs: coord with specific tissue type if appropriate",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:40:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004808','M0004809','M0004810' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003110: {
-    'id' : "D003110",
-    'name' : "Colonic Neoplasms",
-    'annotation' : "coord IM with histol type of neopl (IM); note SIGMOID NEOPLASMS is available; familial: consider also ADENOMATOUS POLYPOSIS COLI & COLORECTAL NEOPLASMS, HEREDITARY NONPOLYPOSIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:40:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004817','M0332276' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003111: {
-    'id' : "D003111",
-    'name' : "Colonic Polyps",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:40:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004818' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003111"
-  },
-
-  D003127: {
-    'id' : "D003127",
-    'name' : "Colposcopy",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:41:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004840','M0332291' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003135: {
-    'id' : "D003135",
-    'name' : "Common Bile Duct",
-    'annotation' : "inflammation = CHOLANGITIS + COMMON BILE DUCT DISEASES; calculi = COMMON BILE DUCT CALCULI see GALLSTONES but consider also CHOLEDOCHOLITHIASIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:42:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004860' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003141: {
-    'id' : "D003141",
-    'name' : "Communicable Diseases",
-    'annotation' : "/prev = COMMUNICABLE DISEASE CONTROL for GEN only; do not confuse X ref INFECTIOUS DISEASES with INFECTION: see note there",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:42:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004868' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003142: {
-    'id' : "D003142",
-    'name' : "Communication",
-    'annotation' : "includes personal & technological communication; ANIMAL COMMUNICATION is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:42:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004869','M0004870','M0004871','M0004873','M0004874' ],
-    'qualifiers' : [ 'Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003144: {
-    'id' : "D003144",
-    'name' : "Communication Barriers",
-    'annotation' : "language, cultural, sociol, etc., communication barriers; no qualif; coord IM with specific 'barrier' if pertinent (IM) but if language is the barrier, note that MULTILINGUALISM is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:42:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004878','M0585643' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003144"
-  },
-
-  D003146: {
-    'id' : "D003146",
-    'name' : "Communications Media",
-    'annotation' : "GEN or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:42:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004880' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003146"
-  },
-
-  D003154: {
-    'id' : "D003154",
-    'name' : "Community Medicine",
-    'annotation' : "SPEC only: SPEC qualif; DF: COMMUNITY MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:43:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004899' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003160: {
-    'id' : "D003160",
-    'name' : "Comparative Study",
-    'annotation' : "this heading is used as a Publication Type;  do not use for comparison of subject & normal controls; differentiate from the specialties ANATOMY, COMPARATIVE; HISTOLOGY, COMPARATIVE; etc",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:43:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004908' ],
-    'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -3607,21 +970,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D003167: {
-    'id' : "D003167",
-    'name' : "Complement Activation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:43:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0004918' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003167"
-  },
-
   D003238: {
     'id' : "D003238",
     'name' : "Connective Tissue",
@@ -3633,325 +981,6 @@ module.exports = {
     'sessions' : [ '16477','16479','16485' ],
     'concepts' : [ 'M0005025','M0456565','M0456567' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003244: {
-    'id' : "D003244",
-    'name' : "Consciousness Disorders",
-    'annotation' : "prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:46:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005031','M0337397','M0337398','M0337399' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003248: {
-    'id' : "D003248",
-    'name' : "Constipation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:46:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005043','M0444303','M0444304' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003267: {
-    'id' : "D003267",
-    'name' : "Contraception",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:47:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005076','M0005088','M0005089' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003268: {
-    'id' : "D003268",
-    'name' : "Contraception Behavior",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:47:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005091','M0005093','M0005096' ],
-    'qualifiers' : [ 'Q000208','Q000266','Q000523','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003268"
-  },
-
-  D003270: {
-    'id' : "D003270",
-    'name' : "Contraceptive Agents",
-    'annotation' : "chemical, not mechanical ( = CONTRACEPTIVE DEVICES); pregnancy despite use = contraceptive term with no qualifiers, not with /adv eff",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:47:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005102','M0556262' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003270"
-  },
-
-  D003276: {
-    'id' : "D003276",
-    'name' : "Contraceptives, Oral",
-    'annotation' : "pregn despite use: see note on CONTRACEPTIVE AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:47:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005114','M0005115','M0005116' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003278: {
-    'id' : "D003278",
-    'name' : "Contraceptives, Oral, Hormonal",
-    'annotation' : "pregn despite use: see note on CONTRACEPTIVE AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:47:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005118' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003281: {
-    'id' : "D003281",
-    'name' : "Contraceptives, Postcoital",
-    'annotation' : "pregnancy despite use = contraceptive term with no qualifiers, not with /adv eff",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:47:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005121','M0005123','M0494742' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003281"
-  },
-
-  D003294: {
-    'id' : "D003294",
-    'name' : "Seizures, Febrile",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:48:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005138','M0336038','M0336039' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003294"
-  },
-
-  D003298: {
-    'id' : "D003298",
-    'name' : "Coombs' Test",
-    'annotation' : "for erythrocytes only: for lymphocytes consider HISTOCOMPATIBILITY TESTING or CYTOTOXICITY TESTS, IMMUNOLOGIC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:48:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005148','M0571422','M0571423','M0571424' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003324: {
-    'id' : "D003324",
-    'name' : "Coronary Artery Disease",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:49:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005188','M0502868' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003324"
-  },
-
-  D003327: {
-    'id' : "D003327",
-    'name' : "Coronary Disease",
-    'annotation' : "general or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:49:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005191' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003338: {
-    'id' : "D003338",
-    'name' : "Corpus Luteum",
-    'annotation' : "/cytol: consider also LUTEAL CELLS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:50:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005207' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003346: {
-    'id' : "D003346",
-    'name' : "Corticotropin-Releasing Hormone",
-    'annotation' : "DF: CRH",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:50:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005218' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003346"
-  },
-
-  D003361: {
-    'id' : "D003361",
-    'name' : "Cost Allocation",
-    'annotation' : "NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:51:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005232','M0005233' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003361"
-  },
-
-  D003362: {
-    'id' : "D003362",
-    'name' : "Cost-Benefit Analysis",
-    'annotation' : "NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:51:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005234','M0005235','M0005236','M0005238' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003362"
-  },
-
-  D003363: {
-    'id' : "D003363",
-    'name' : "Cost Control",
-    'annotation' : "NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:51:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005239' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003363"
-  },
-
-  D003371: {
-    'id' : "D003371",
-    'name' : "Cough",
-    'annotation' : "/drug ther: consider also ANTITUSSIVE AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:51:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005255' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003404: {
-    'id' : "D003404",
-    'name' : "Creatinine",
-    'annotation' : "do not confuse with CREATINE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:52:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005300','M0005301','M0005302' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003424: {
-    'id' : "D003424",
-    'name' : "Crohn Disease",
-    'annotation' : "coord IM with ILEITIS (IM) or COLITIS (IM) only if site is particularly discussed; usually chronic so do not coord with CHRONIC DISEASE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:53:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005335','M0393456','M0393457','M0393458','M0393459' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003442: {
-    'id' : "D003442",
-    'name' : "Crowns",
-    'annotation' : "note category: anatomical crown of tooth = TOOTH CROWN; do not confuse X ref DENTAL CROWNS with TOOTH CROWN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:54:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005368' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000382','Q000469','Q000523','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000744','Q000821','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -3969,67 +998,6 @@ module.exports = {
     'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D003479: {
-    'id' : "D003479",
-    'name' : "Curriculum",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:55:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005425','M0005426' ],
-    'qualifiers' : [ 'Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003550: {
-    'id' : "D003550",
-    'name' : "Cystic Fibrosis",
-    'annotation' : "a specific disease entity: do not use for fibrocystic states of various organs",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:58:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005551','M0455427','M0455430' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003574: {
-    'id' : "D003574",
-    'name' : "Cytochrome c Group",
-    'annotation' : "spell in titles & translations with lowercase c: cytochrome c; do not confuse with CYTOCHROMES C",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T22:59:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005583' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003574"
-  },
-
-  D003577: {
-    'id' : "D003577",
-    'name' : "Cytochrome P-450 Enzyme System",
-    'annotation' : "GEN or unspecified; prefer specific cytochrome P-450's; /biosyn /physiol permitted",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:00:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005591','M0005592','M0005593' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003577"
   },
 
   D003582: {
@@ -4064,98 +1032,6 @@ module.exports = {
     'previousIndexing' : "D003599"
   },
 
-  D003625: {
-    'id' : "D003625",
-    'name' : "Data Collection",
-    'annotation' : "X ref SURVEYS is GEN or unspecified; prefer specific survey, as DIET SURVEYS; HEALTH SURVEYS; NUTRITION SURVEYS; etc.",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:02:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005664','M0005665','M0005666','M0005667','M0005668','M0005669','M0005670','M0005671','M0005672','M0005673','M0005674','M0005675','M0005676','M0005677' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000331','Q000379','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003627: {
-    'id' : "D003627",
-    'name' : "Data Interpretation, Statistical",
-    'annotation' : "IM GEN only; do not use as routine NIM for an author's interpretation of statistical findings: must be discussed substantively; coord NIM with specific disease or other concept (IM); no qualif; DF: DATA INTERP",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:02:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005680' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003681: {
-    'id' : "D003681",
-    'name' : "Dehydration",
-    'annotation' : "differentiate from DESICCATION, a technique for removing  moisture from matter; /ther: coord with ORAL REHYDRATION THERAPY see FLUID THERAPY if pertinent; do not use X ref WATER STRESS for water stress test: consider IMMERSION; permitted (NIM) with microorganisms, lower animals and plants",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:05:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005757','M0410970' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003693: {
-    'id' : "D003693",
-    'name' : "Delirium",
-    'annotation' : "this is not the French 'délire' ( = DELUSIONS)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:06:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005774','M0337391','M0337392' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003695: {
-    'id' : "D003695",
-    'name' : "Delivery of Health Care",
-    'annotation' : "Public Law 91-515",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:06:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005776','M0005777','M0005778','M0005779','M0005780','M0005781','M0005782','M0005783' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000208','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003695"
-  },
-
-  D003698: {
-    'id' : "D003698",
-    'name' : "Hepatitis Delta Virus",
-    'annotation' : "infection = HEPATITIS D or HEPATITIS D, CHRONIC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:07:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005788','M0005789' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003698"
-  },
-
   D003712: {
     'id' : "D003712",
     'name' : "Dendrites",
@@ -4171,236 +1047,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D003713: {
-    'id' : "D003713",
-    'name' : "Dendritic Cells",
-    'annotation' : "do not confuse with DENDRITES; DENDRITIC CELLS, FOLLICULAR is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:08:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005828','M0459386','M0459387','M0506155','M0506227' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003713"
-  },
-
-  D003731: {
-    'id' : "D003731",
-    'name' : "Dental Caries",
-    'annotation' : "/drug ther: consider also CARIOSTATIC AGENTS; /etiol: consider also CARIOGENIC AGENTS & DIET, CARIOGENIC; /epidemiol: consider also DMF INDEX; DF: DENT CARIES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:08:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005854','M0005855','M0583059' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003732: {
-    'id' : "D003732",
-    'name' : "Dental Caries Activity Tests",
-    'annotation' : "DF: DENT CARIES ACTIVITY TESTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:09:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005856' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000364','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003732"
-  },
-
-  D003733: {
-    'id' : "D003733",
-    'name' : "Dental Caries Susceptibility",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:09:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005857','M0005858' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003750: {
-    'id' : "D003750",
-    'name' : "Dental Fissures",
-    'annotation' : "a degree of dent caries; DF: DENT FISSURES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:12:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005881' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003750"
-  },
-
-  D003751: {
-    'id' : "D003751",
-    'name' : "Dental Fistula",
-    'annotation' : "fistula policy: Manual 23.19+; DF: DENT FISTULA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:12:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005882' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003751"
-  },
-
-  D003773: {
-    'id' : "D003773",
-    'name' : "Dental Plaque",
-    'annotation' : "note categories; from Cat A /chem /ultrastruct permitted; DF: DENT PLAQUE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:16:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005910' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003788: {
-    'id' : "D003788",
-    'name' : "Dental Pulp Diseases",
-    'annotation' : "inflamm dis = PULPITIS; DF: DENT PULP DIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:18:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005930' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003792: {
-    'id' : "D003792",
-    'name' : "Dental Records",
-    'annotation' : "DF: DENT RECORDS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:18:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005936' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000331','Q000592','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003792"
-  },
-
-  D003793: {
-    'id' : "D003793",
-    'name' : "Dental Restoration, Permanent",
-    'annotation' : "dent restoration unspecified probably goes here; DF: DENT RESTORATION PERMANENT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:18:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005937','M0005938' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000364','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003794: {
-    'id' : "D003794",
-    'name' : "Dental Restoration, Temporary",
-    'annotation' : "dent restoration unspecified probably goes under DENTAL RESTORATION, PERMANENT; DF: DENT RESTORATION TEMPORARY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:18:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005939','M0005940','M0334182' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000364','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003814: {
-    'id' : "D003814",
-    'name' : "Dentistry, Operative",
-    'annotation' : "SPEC; SPEC qualif; to restore tooth function (filling, inlay, etc.); do not confuse with SURGERY, ORAL (surg ther of dis, inj or defects of soft tissues of mouth or of jaws); DF: DENT OPERATIVE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:19:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005962' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003824: {
-    'id' : "D003824",
-    'name' : "Denture, Complete",
-    'annotation' : "labeling for ownership or identification = DENTURE IDENTIFICATION MARKING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:20:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005973' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000382','Q000469','Q000523','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000744','Q000821','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003829: {
-    'id' : "D003829",
-    'name' : "Denture, Partial",
-    'annotation' : "labeling for ownership or identification = DENTURE IDENTIFICATION MARKING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:20:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005978' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000382','Q000469','Q000523','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000744','Q000821','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003834: {
-    'id' : "D003834",
-    'name' : "Denture Precision Attachment",
-    'annotation' : "restrict to partial dentures",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:20:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0005985','M0337347' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000382','Q000469','Q000523','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000744','Q000821','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003834"
-  },
-
   D003863: {
     'id' : "D003863",
     'name' : "Depression",
@@ -4412,52 +1058,6 @@ module.exports = {
     'sessions' : [ '16538' ],
     'concepts' : [ 'M0006028','M0006029' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003866: {
-    'id' : "D003866",
-    'name' : "Depressive Disorder",
-    'annotation' : "do not confuse with DEPRESSION: see note there; depression lasting over 2 years = DYSTHYMIC DISORDER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:23:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006032','M0006033','M0006034','M0006035','M0006036','M0006037' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003866"
-  },
-
-  D003881: {
-    'id' : "D003881",
-    'name' : "Dermatomycoses",
-    'annotation' : "fungus dis of skin; coord IM with specific fungus or fungal dis (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:24:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006059','M0006060' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003882: {
-    'id' : "D003882",
-    'name' : "Dermatomyositis",
-    'annotation' : "coord IM with PARANEOPLASTIC SYNDROMES (IM) if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:24:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006061','M0337306','M0337307' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -4478,113 +1078,6 @@ module.exports = {
     'previousIndexing' : "D003896"
   },
 
-  D003920: {
-    'id' : "D003920",
-    'name' : "Diabetes Mellitus",
-    'annotation' : "GEN or unspecified; prefer specifics; pregnancy of diabetic patients  = PREGNANCY IN DIABETICS but do not confuse with DIABETES, GESTATIONAL: see note there; PREDIABETIC STATE is also available & includes subclinical diabetes; /diet ther: consider coord with DIABETIC DIET but see note there; alloxan- & streptozocin-induced diabetes: see note on DIABETES MELLITUS, EXPERIMENTAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:26:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006148' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003933: {
-    'id' : "D003933",
-    'name' : "Diagnosis",
-    'annotation' : "general only; prefer /diag with disease term: Manual 19.7+, 19.8.22; in Chinese traditional medicine, diagnosis & therapy based on overall analysis of the patient's state is bianzheng shizhi: see note under DIAGNOSIS, DIFFERENTIAL; DF: DIAG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:27:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006168','M0006169','M0482526','M0482527' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003937: {
-    'id' : "D003937",
-    'name' : "Diagnosis, Differential",
-    'annotation' : "NIM; no qualif; correct NIM coord for 'mimicking', 'simulating'; Manual 26.13+; in Chinese traditional med index bianzheng shizhi ('differentiation of symptoms & signs') under DIAGNOSIS, DIFFERENTIAL (IM) + MEDICINE, CHINESE TRADITIONAL (IM); DF: DIAG DIFFER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:27:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006172' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003942: {
-    'id' : "D003942",
-    'name' : "Laboratory Techniques and Procedures",
-    'annotation' : "GEN: prefer specifics; Manual 26.7",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006177','M0006178','M0006179','M0006180' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003943: {
-    'id' : "D003943",
-    'name' : "Diagnostic Techniques, Neurological",
-    'annotation' : "GEN or unspecified; prefer specifics; NEUROLOGIC EXAMINATION is also available; DF: DIAG TECHNIQUES NEUROL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:27:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006181' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003943"
-  },
-
-  D003952: {
-    'id' : "D003952",
-    'name' : "Diagnostic Imaging",
-    'annotation' : "general: prefer specific techniques",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:27:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006190','M0006191' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D003952"
-  },
-
-  D003955: {
-    'id' : "D003955",
-    'name' : "Diagnostic Tests, Routine",
-    'annotation' : "do not confuse with PHYSICAL EXAMINATION or MASS SCREENING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:28:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006196','M0006197','M0006198','M0006199','M0006200' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D003964: {
     'id' : "D003964",
     'name' : "Diaphragm",
@@ -4596,82 +1089,6 @@ module.exports = {
     'sessions' : [ '16476' ],
     'concepts' : [ 'M0006209' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D003967: {
-    'id' : "D003967",
-    'name' : "Diarrhea",
-    'annotation' : "in infants = DIARRHEA, INFANTILE + appropriate check tags",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:28:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006212' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004032: {
-    'id' : "D004032",
-    'name' : "Diet",
-    'annotation' : "what a person usually eats: do not confuse with DIET THERAPY, what a physician prescribes to treat a condition; GEN or unspecified; prefer specific diets; /trends: do not confuse with DIET FADS; differentiation among food & diet headings: Manual 31.5; in vet journals consider also ANIMAL FEED; SILAGE; etc.; TN 50: animal diet; consider also DIABETIC DIET",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:33:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006324' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000208','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004037: {
-    'id' : "D004037",
-    'name' : "Diet, Cariogenic",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:33:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006330' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000208','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004037"
-  },
-
-  D004041: {
-    'id' : "D004041",
-    'name' : "Dietary Fats",
-    'annotation' : "/adv eff: coord with disease /etiol, not /chem ind; /ther use: coord with specific disease /diet ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:35:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006335','M0006336' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004043: {
-    'id' : "D004043",
-    'name' : "Dietary Fiber",
-    'annotation' : "/adv eff: coord with disease /etiol, not /chem ind; /ther use: coord with specific dis /diet ther; /defic permitted; low- or high-fiber diet: use /admin",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:36:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006339','M0006340','M0006341' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000145','Q000172','Q000191','Q000266','Q000378','Q000382','Q000469','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000656','Q000706','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -4691,110 +1108,6 @@ module.exports = {
     'previousIndexing' : "D004058"
   },
 
-  D004059: {
-    'id' : "D004059",
-    'name' : "Diffusion of Innovation",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:37:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006365' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004062: {
-    'id' : "D004062",
-    'name' : "DiGeorge Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:38:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006369','M0474269','M0537457' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004062"
-  },
-
-  D004064: {
-    'id' : "D004064",
-    'name' : "Digestive System",
-    'annotation' : "GEN: prefer specifics; /abnorm = DIGESTIVE SYSTEM ABNORMALITIES but consider also specific part of digest syst with /abnorm or specific abnorm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:38:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006371' ],
-    'qualifiers' : [ 'Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000503','Q000528','Q000530','Q000531','Q000557','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004064"
-  },
-
-  D004070: {
-    'id' : "D004070",
-    'name' : "Digitalis",
-    'annotation' : "the plant, not the drug which is probably DIGITALIS GLYCOSIDES; coord with specific PLANT STRUCTURES term if pertinent; for use in therapy coord IM with PHYTOTHERAPY (IM) + disease/drug ther (IM) + PLANT PREPARATIONS or its indentations/ther use (IM or NIM) + specific plant chemical /ther use (IM) if pertinent; Manual 26.29",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:38:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006378' ],
-    'qualifiers' : [ 'Q000009','Q000033','Q000145','Q000166','Q000187','Q000196','Q000201','Q000235','Q000254','Q000276','Q000378','Q000382','Q000469','Q000502','Q000506','Q000528','Q000633','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004194: {
-    'id' : "D004194",
-    'name' : "Disease",
-    'annotation' : "general only as a physiological, pathological, philosophical concept, opposite 'health'; Manual 23.5+;  / econ permitted but consider also economic aspects of disease as ECONOMICS, MEDICAL; / psychol permitted but consider also psychogenic origin of disease as PSYCHOPHYSIOLOGIC DISORDERS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:44:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006564' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000208','Q000209','Q000235','Q000266','Q000523' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004231: {
-    'id' : "D004231",
-    'name' : "Diuresis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:46:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006623' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004232: {
-    'id' : "D004232",
-    'name' : "Diuretics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:46:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006624','M0556174' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004247: {
     'id' : "D004247",
     'name' : "DNA",
@@ -4806,51 +1119,6 @@ module.exports = {
     'sessions' : [ '16486','16498' ],
     'concepts' : [ 'M0006644','M0392703','M0392704' ],
     'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004260: {
-    'id' : "D004260",
-    'name' : "DNA Repair",
-    'annotation' : "coord IM with specific DNA (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:47:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006666','M0006667','M0006668','M0448966' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004260"
-  },
-
-  D004282: {
-    'id' : "D004282",
-    'name' : "Documentation",
-    'annotation' : "med docum: do not coord with MEDICINE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:48:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006702' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000379','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004298: {
-    'id' : "D004298",
-    'name' : "Dopamine",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:49:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006756','M0006757','M0351191' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -4870,20 +1138,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D004314: {
-    'id' : "D004314",
-    'name' : "Down Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:50:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006778','M0335726','M0335727','M0335728' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004333: {
     'id' : "D004333",
     'name' : "Drug Administration Routes",
@@ -4895,21 +1149,6 @@ module.exports = {
     'sessions' : [ '16473','16487' ],
     'concepts' : [ 'M0006812' ],
     'qualifiers' : [ 'Q000662' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004335: {
-    'id' : "D004335",
-    'name' : "Drug and Narcotic Control",
-    'annotation' : "Public Law 91-513; includes international agreement; specify country or state",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:51:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006814','M0006815','M0006817','M0006818','M0006819' ],
-    'qualifiers' : [ 'Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000639','Q000706' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -4930,216 +1169,6 @@ module.exports = {
     'previousIndexing' : "D004347"
   },
 
-  D004351: {
-    'id' : "D004351",
-    'name' : "Drug Resistance",
-    'annotation' : "general or unspecified; prefer specifics; differentiate from DRUG TOLERANCE; resistance of parasites including protozoa goes here",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:52:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006840' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004358: {
-    'id' : "D004358",
-    'name' : "Drug Therapy",
-    'annotation' : "GEN only: prefer /drug ther with disease term: Manual 19.7+, 19.8.26; note X ref CHEMOTHERAPY: prefer specific chem or chem group, e.g., chemotherapy of lymphoma = LYMPHOMA /drug ther + ANTINEOPLASTIC AGENTS /ther use, not DRUG THERAPY; DF: DRUG THER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:52:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006850' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004359: {
-    'id' : "D004359",
-    'name' : "Drug Therapy, Combination",
-    'annotation' : "IM when general; NIM when with specific drugs; differentiate from DRUG COMBINATIONS which is single preparation of multiple drugs; note entry term POLYCHEMOTHERAPY: do not confuse with POLYPHARMACY which is available for the use of multiple drugs administered to the same patient",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:52:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006851','M0533850' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004362: {
-    'id' : "D004362",
-    'name' : "Drug Toxicity",
-    'annotation' : "note category: do not confuse with TOXICOLOGY, the specialty; general or unspecified; prefer specifics or specific drug with /adv eff /pois or /tox; DF: DRUG TOX",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006855','M0479378','M0518978' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004362"
-  },
-
-  D004366: {
-    'id' : "D004366",
-    'name' : "Nonprescription Drugs",
-    'annotation' : "entry term OVER-THE-COUNTER DRUGS: BEHIND-THE-COUNTER DRUGS is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:52:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006860' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004366"
-  },
-
-  D004373: {
-    'id' : "D004373",
-    'name' : "Ductus Arteriosus",
-    'annotation' : "normal; abnormal is probably DUCTUS ARTERIOSUS, PATENT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:52:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006876' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004374: {
-    'id' : "D004374",
-    'name' : "Ductus Arteriosus, Patent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:52:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006877','M0545673' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004386: {
-    'id' : "D004386",
-    'name' : "Duodenum",
-    'annotation' : "inflammation = DUODENITIS; fistula = DUODENAL DISEASES (IM) + INTESTINAL FISTULA (IM); duodenal atresia = DUODENAL OBSTRUCTION /congen (IM) + INTESTINAL ATRESIA (IM); duodenal juice = DUODENUM (IM) + INTESTINAL SECRETIONS (IM) (not DUODENUM /secret)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:53:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006890' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004415: {
-    'id' : "D004415",
-    'name' : "Dyspepsia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:55:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006927' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004417: {
-    'id' : "D004417",
-    'name' : "Dyspnea",
-    'annotation' : "do not confuse with APNEA or other resp disord; use only when text uses DYSPNEA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:55:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006931','M0333092' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004420: {
-    'id' : "D004420",
-    'name' : "Dystocia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:55:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006934' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004435: {
-    'id' : "D004435",
-    'name' : "Eating",
-    'annotation' : "the act of eating: do not confuse with FOOD (the substance eaten) or EATING BEHAVIOR (the manner of eating)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:56:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006952','M0491409' ],
-    'qualifiers' : [ 'Q000187','Q000208','Q000235','Q000276','Q000502','Q000523','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004452: {
-    'id' : "D004452",
-    'name' : "Echocardiography",
-    'annotation' : "GEN only; prefer /ultrasonogr with specific heart dis; note X ref ECHOCARDIOGRAPHY, TRANSTHORACIC; ECHOCARDIOGRAPHY, TRANSESOPHAGEAL is also available; DF: ECHOCARDIOGR",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:57:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0006970','M0006971','M0006972','M0006973','M0006976' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004452"
-  },
-
-  D004493: {
-    'id' : "D004493",
-    'name' : "Education",
-    'annotation' : "GEN only; prefer /educ: Manual 19.7+, 19.8.28; policy: Manual 30.7+; DF: EDUC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:59:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007077','M0007078','M0007079','M0007080','M0007081','M0007082' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004501: {
     'id' : "D004501",
     'name' : "Education, Medical",
@@ -5151,81 +1180,6 @@ module.exports = {
     'sessions' : [ '16469','16472','16510','16511' ],
     'concepts' : [ 'M0007090' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004504: {
-    'id' : "D004504",
-    'name' : "Education, Medical, Undergraduate",
-    'annotation' : "DF: EDUC MED UNDERGRAD",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:59:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007093' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004504"
-  },
-
-  D004517: {
-    'id' : "D004517",
-    'name' : "Education, Professional",
-    'annotation' : "GEN or unspecified; prefer specifics; DF: EDUC PROFESSIONAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:59:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007106' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004518: {
-    'id' : "D004518",
-    'name' : "Education, Professional, Retraining",
-    'annotation' : "coord NIM with specific type (medical, dental, etc.) of continuing educ (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:59:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007107' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004521: {
-    'id' : "D004521",
-    'name' : "Educational Measurement",
-    'annotation' : "DF: EDUC MEASUREMENT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-18T23:59:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007110','M0007111','M0007112' ],
-    'qualifiers' : [ 'Q000191','Q000266','Q000379','Q000592','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004543: {
-    'id' : "D004543",
-    'name' : "Ejaculatory Ducts",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:00:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007146' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -5260,80 +1214,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D004551: {
-    'id' : "D004551",
-    'name' : "Elbow Joint",
-    'annotation' : "primates only; differentiate from ELBOW; Manual 21.58: use FORELIMB (probably IM) + JOINTS (NIM) for non-primate vertebrates",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:01:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007155' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004562: {
-    'id' : "D004562",
-    'name' : "Electrocardiography",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:01:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007174','M0447817','M0447818','M0540456' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004586: {
-    'id' : "D004586",
-    'name' : "Electrophoresis",
-    'annotation' : "GEN or unspecified; prefer specifics; NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:02:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007208','M0007209' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004587: {
-    'id' : "D004587",
-    'name' : "Electrophoresis, Agar Gel",
-    'annotation' : "NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:02:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007210' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004622: {
-    'id' : "D004622",
-    'name' : "Embryo, Mammalian",
-    'annotation' : "human: 0-2 months; use for mammalian embryo as an entity or as tissue; use the qualifier / embryol  with an organ for embryologic aspects of that organ; embryonic tissue or cells in tissue & cell cultures: coordinate EMBRYO, MAMMALIAN + tissues or cell without qualifiers (not with / embryol) + culture term, all probably NIM; EMBRYO, NONMAMMALIAN is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:03:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0510099','M0529598' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004626: {
     'id' : "D004626",
     'name' : "Embryology",
@@ -5364,82 +1244,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D004644: {
-    'id' : "D004644",
-    'name' : "Emotions",
-    'annotation' : "human & animal",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:04:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007305','M0007306','M0007307' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004646: {
-    'id' : "D004646",
-    'name' : "Emphysema",
-    'annotation' : "also available are PULMONARY EMPHYSEMA; SUBCUTANEOUS EMPHYSEMA and PNEUMOMEDIASTINUM see MEDIASTINAL EMPHYSEMA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:04:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007311' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004696: {
-    'id' : "D004696",
-    'name' : "Endocarditis",
-    'annotation' : "rheumatic endocarditis: index under RHEUMATIC HEART DISEASE (IM) + ENDOCARDITIS (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:07:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007392','M0502023' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004703: {
-    'id' : "D004703",
-    'name' : "Endocrine System",
-    'annotation' : "avoid: too general; prefer ENDOCRINE GLANDS; CHROMAFFIN SYSTEM; or NEUROSECRETORY SYSTEMS & their specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:07:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007400' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004703"
-  },
-
-  D004704: {
-    'id' : "D004704",
-    'name' : "Endocrinology",
-    'annotation' : "SPEC: SPEC qualif; DF: ENDOCRINOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:07:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007401','M0007402' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004705: {
     'id' : "D004705",
     'name' : "Endocytosis",
@@ -5453,65 +1257,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D004705"
-  },
-
-  D004707: {
-    'id' : "D004707",
-    'name' : "Endoderm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:07:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007405' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004708: {
-    'id' : "D004708",
-    'name' : "Endodontics",
-    'annotation' : "SPEC: SPEC qualif; ENDODONTICS = the specialty, ROOT CANAL THERAPY = the patient",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:07:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007406' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004715: {
-    'id' : "D004715",
-    'name' : "Endometriosis",
-    'annotation' : "non-neoplastic & nothing to do with 'endometrial carcinoma' ( = ENDOMETRIAL NEOPLASMS); coord IM with specific precoord organ/dis term (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:08:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007413','M0406917','M0406918' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004717: {
-    'id' : "D004717",
-    'name' : "Endometrium",
-    'annotation' : "inflammation = ENDOMETRITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:08:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007416' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D004721: {
@@ -5545,65 +1290,6 @@ module.exports = {
     'previousIndexing' : "D004727"
   },
 
-  D004733: {
-    'id' : "D004733",
-    'name' : "Enema",
-    'annotation' : "barium enema: coordinate with BARIUM SULFATE /diag use, not BARIUM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:08:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007440' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004734: {
-    'id' : "D004734",
-    'name' : "Energy Metabolism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:09:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007441','M0007442' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004755: {
-    'id' : "D004755",
-    'name' : "Enterobacteriaceae",
-    'annotation' : "infection = ENTEROBACTERIACEAE INFECTIONS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:09:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007470','M0007471','M0494112','M0494113','M0494114' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004781: {
-    'id' : "D004781",
-    'name' : "Environmental Exposure",
-    'annotation' : "may or may not result in a disease; coord IM with specific substance (IM); DF: ENVIR EXPOSURE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:10:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007508' ],
-    'qualifiers' : [ 'Q000009','Q000032','Q000145','Q000191','Q000266','Q000331','Q000517','Q000592','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004798: {
     'id' : "D004798",
     'name' : "Enzymes",
@@ -5634,66 +1320,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D004812: {
-    'id' : "D004812",
-    'name' : "Epidemiologic Methods",
-    'annotation' : "IM GEN only; coord NIM with disease /epidemiol (IM); specify geog if pertinent; DF: EPIDEMIOL METHODS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:11:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007544' ],
-    'qualifiers' : [ 'Q000662' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004813: {
-    'id' : "D004813",
-    'name' : "Epidemiology",
-    'annotation' : "SPEC only: SPEC qualif; prefer /epidemiol with diseases: Manual 19.7+, 19.8.31; do not confuse with TOPOGRAPHY, MEDICAL: epidemiol emphasizes disease outbreaks & disease-related conditions, topography emphasizes geography-related events; DF: EPIDEMIOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:11:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007545' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004815: {
-    'id' : "D004815",
-    'name' : "Epidermal Growth Factor",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:11:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007549' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004815"
-  },
-
-  D004817: {
-    'id' : "D004817",
-    'name' : "Epidermis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:12:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007554' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004817"
-  },
-
   D004837: {
     'id' : "D004837",
     'name' : "Epinephrine",
@@ -5705,21 +1331,6 @@ module.exports = {
     'sessions' : [ '16493' ],
     'concepts' : [ 'M0007582','M0007583','M0007584','M0007585','M0007586','M0007587','M0007588','M0007589','M0007590','M0007591','M0362233','M0583086' ],
     'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004841: {
-    'id' : "D004841",
-    'name' : "Episiotomy",
-    'annotation' : "do not use /util except by MeSH definition",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:13:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007595' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -5755,21 +1366,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D004910: {
-    'id' : "D004910",
-    'name' : "Erythrocyte Membrane",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:19:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007707','M0007708' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004910"
-  },
-
   D004912: {
     'id' : "D004912",
     'name' : "Erythrocytes",
@@ -5781,50 +1377,6 @@ module.exports = {
     'sessions' : [ '16502' ],
     'concepts' : [ 'M0007711' ],
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004933: {
-    'id' : "D004933",
-    'name' : "Esophageal Atresia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:20:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007745' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004935: {
-    'id' : "D004935",
-    'name' : "Esophageal Diseases",
-    'annotation' : "inflamm dis = ESOPHAGITIS; hemorrhage: coord IM with HEMORRHAGE, GASTROINTESTINAL (IM); motility disord = ESOPHAGEAL MOTILITY DISORDERS or specific; esophageal varix or varices = ESOPHAGEAL AND GASTRIC VARICES & see note there",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:21:10+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007747' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004947: {
-    'id' : "D004947",
-    'name' : "Esophagus",
-    'annotation' : "/blood supply: ESOPHAGEAL AND GASTRIC VARICES is available: see note there; /surg: consider also ESOPHAGECTOMY; ESOPHAGOPLASTY; or ESOPHAGOSTOMY; inflammation = ESOPHAGITIS; hemorrhage = ESOPHAGEAL DISEASES (IM) + GASTROINTESTINAL HEMORRHAGE (NIM); rupture: index under ESOPHAGUS /inj (IM) + RUPTURE (NIM) or ESOPHAGEAL DISEASES (IM) + RUPTURE, SPONTANEOUS (NIM); peristalsis of the esophagus = ESOPHAGUS /physiol (IM) + PERISTALSIS (NIM); esophageal intubation = ESOPHAGUS (IM) + INTUBATION (IM); esophageal obturator airway = ESOPHAGUS (IM) + INTUBATION /instrum (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:22:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007761' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -5843,35 +1395,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D004958: {
-    'id' : "D004958",
-    'name' : "Estradiol",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:23:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007772','M0007773','M0007774','M0007775','M0007776','M0330336','M0330337','M0330338','M0330339','M0330341','M0330342','M0330343','M0330344','M0330384','M0330444','M0330445','M0330446','M0330447','M0525957','M0529225' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004967: {
-    'id' : "D004967",
-    'name' : "Estrogens",
-    'annotation' : "/defic: consider also HYPOGONADISM & other gonadal disorders in Cat C19; for antagonists consider ANTIESTROGENS or ESTROGEN ANTAGONISTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:24:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007795','M0556153' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D004989: {
     'id' : "D004989",
     'name' : "Ethics",
@@ -5884,68 +1407,6 @@ module.exports = {
     'qualifiers' : [ 'Q000145','Q000266' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D004990: {
-    'id' : "D004990",
-    'name' : "Ethics, Dental",
-    'annotation' : "specify geographic term if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:26:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007850' ],
-    'qualifiers' : [ 'Q000193','Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004992: {
-    'id' : "D004992",
-    'name' : "Ethics, Medical",
-    'annotation' : "restrict to ethics in relation to the physician; BIOETHICS and BIOETHICAL ISSUES are also available; specify geographic term if pertinent; DF: ETHICS MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:26:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007853' ],
-    'qualifiers' : [ 'Q000193','Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D004995: {
-    'id' : "D004995",
-    'name' : "Ethics, Professional",
-    'annotation' : "specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:26:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007858' ],
-    'qualifiers' : [ 'Q000193','Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D004995"
-  },
-
-  D005006: {
-    'id' : "D005006",
-    'name' : "Ethnic Groups",
-    'annotation' : "do not confuse ethnicity with CONTINENTAL POPULATION GROUPS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:27:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0007876','M0007877' ],
-    'qualifiers' : [ 'Q000145','Q000193','Q000208','Q000235','Q000266','Q000331','Q000523','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005006"
   },
 
   D005057: {
@@ -5978,125 +1439,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D005109"
-  },
-
-  D005122: {
-    'id' : "D005122",
-    'name' : "Exudates and Transudates",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:39:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008079','M0008080','M0008081' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005123: {
-    'id' : "D005123",
-    'name' : "Eye",
-    'annotation' : "inflammation of the eye = ENDOPHTHALMITIS or specific -ITIS terms in Category C11, Eye Diseases; COMPOUND EYE, ARTHROPOD is available for arthropods",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:39:10+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008082' ],
-    'qualifiers' : [ 'Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000503','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005145: {
-    'id' : "D005145",
-    'name' : "Face",
-    'annotation' : "usually NIM as site; soft parts = FACE, bones = FACIAL BONES or specifics; /abnorm permitted but FACIAL BONES /abnorm is more likely; facial fractures: see note on FACIAL BONES; craniofacial dysmorphism & craniofacial fibrous dysplasia & long face syndrome: see note also on FACIAL BONES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:41:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008109' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005178: {
-    'id' : "D005178",
-    'name' : "Faculty",
-    'annotation' : "not for Faculté de Médecine nor Facultad de Medicina ( = SCHOOLS, MEDICAL); do not confuse FACULTY with TEACHING: FACULTY suggests differentiation from student or administrator, teaching suggests the imparting of knowledge (Manual 30.10); Manual 30.9, 34.14",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:47:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008163','M0008164','M0008165' ],
-    'qualifiers' : [ 'Q000266','Q000458','Q000592','Q000600','Q000656','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005178"
-  },
-
-  D005187: {
-    'id' : "D005187",
-    'name' : "Fallopian Tubes",
-    'annotation' : "mammalian only; non-mammalian use OVIDUCTS; inflammation = SALPINGITIS; tubal sterilization = STERILIZATION, TUBAL; 'fallopian' is not capitalized in titles or translations",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:48:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008175' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005193: {
-    'id' : "D005193",
-    'name' : "Family Planning Services",
-    'annotation' : "/legis: consider also FAMILY PLANNING POLICY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:48:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008210','M0008213','M0009862' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005223: {
-    'id' : "D005223",
-    'name' : "Fats",
-    'annotation' : "table fats only or fats 'outside the body'; differentiate from LIPIDS ('inside the body' but not body fat which = ADIPOSE TISSUE); do not confuse with DIETARY FATS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:52:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008257' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005227: {
-    'id' : "D005227",
-    'name' : "Fatty Acids",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:52:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008264','M0008265','M0008266','M0008267' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D005246: {
@@ -6174,161 +1516,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D005306: {
-    'id' : "D005306",
-    'name' : "Fertilization",
-    'annotation' : "physiol fertilization only: FERTILIZATION IN VITRO (Cat E2 and E5) is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:59:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008378','M0008379','M0008380','M0008381' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005307: {
-    'id' : "D005307",
-    'name' : "Fertilization in Vitro",
-    'annotation' : "do not check the tags IN VITRO; PREGNANCY; or FEMALE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:59:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008382','M0008383' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005307"
-  },
-
-  D005310: {
-    'id' : "D005310",
-    'name' : "Fetal Alcohol Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008388' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005310"
-  },
-
-  D005312: {
-    'id' : "D005312",
-    'name' : "Fetal Blood",
-    'annotation' : "/transpl: consider also CORD BLOOD STEM CELL TRANSPLANTATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T00:59:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008390','M0008391' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000637','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005312"
-  },
-
-  D005316: {
-    'id' : "D005316",
-    'name' : "Fetal Distress",
-    'annotation' : "do not confuse with RESPIRATORY DISTRESS SYNDROME, NEWBORN (postnatal)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:00:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008399' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005316"
-  },
-
-  D005318: {
-    'id' : "D005318",
-    'name' : "Fetal Heart",
-    'annotation' : "mammals only; use all pertinent qualif (except /blood supply) & do not coord with MYOCARDIUM for HEART; MYOCARDIUM restrictions; not for chick embryo heart ( = CHICK EMBRYO + HEART /embryol)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:00:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008401' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005322: {
-    'id' : "D005322",
-    'name' : "Fetal Membranes, Premature Rupture",
-    'annotation' : "DF: PROM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:01:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008405','M0481507' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005322"
-  },
-
-  D005323: {
-    'id' : "D005323",
-    'name' : "Fetal Monitoring",
-    'annotation' : "during LABOR, OBSTETRIC or during prenatal maternal surg",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:01:10+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008406' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005323"
-  },
-
-  D005333: {
-    'id' : "D005333",
-    'name' : "Fetus",
-    'annotation' : "mammalian only; human: 3d month to term; fetus in fetu: index under FETUS /abnorm; FETUS and PREGNANCY: Manual 18.4.3, 21.55; specialty for fetus & newborn infant = PERINATOLOGY; lithopedion: coordinate FETUS (IM) + CALCINOSIS (IM); intrauterine surgery goes under FETUS /surg; fetal organs & tissues in tissue & cell cultures: coordinate FETUS + organ or tissue without qualifiers + culture term, all probably NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:02:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008419','M0008420','M0464580','M0495795','M0529599' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005334: {
-    'id' : "D005334",
-    'name' : "Fever",
-    'annotation' : "/ther = treatment of FEVER: differentiate from FEVER THERAPY see HYPERTHERMIA, INDUCED ( = high body temp induced to treat dis); /chem ind: consider also HYPERTHERMIA, INDUCED or PYROGENS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:02:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008421' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D005337: {
     'id' : "D005337",
     'name' : "Fibrin",
@@ -6341,35 +1528,6 @@ module.exports = {
     'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D005343: {
-    'id' : "D005343",
-    'name' : "Fibrinolytic Agents",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:04:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008434','M0496901' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005346: {
-    'id' : "D005346",
-    'name' : "Fibroblast Growth Factors",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:05:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008437' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005346"
   },
 
   D005347: {
@@ -6402,22 +1560,6 @@ module.exports = {
     'previousIndexing' : "D005353"
   },
 
-  D005355: {
-    'id' : "D005355",
-    'name' : "Fibrosis",
-    'annotation' : "NIM only as pathol process with no qualif: coord with Cat A term /pathol (IM); several specific fibrosis terms are also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:07:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008452','M0008453' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005355"
-  },
-
   D005360: {
     'id' : "D005360",
     'name' : "Fibula",
@@ -6428,52 +1570,6 @@ module.exports = {
     'sessions' : [ '16513' ],
     'concepts' : [ 'M0008459' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005434: {
-    'id' : "D005434",
-    'name' : "Flow Cytometry",
-    'annotation' : "flow cell sorting & FLUORESCENCE-ACTIVATED CELL SORTING: coord with CELL SEPARATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:13:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008573','M0008574' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005440: {
-    'id' : "D005440",
-    'name' : "Fluid Therapy",
-    'annotation' : "'to restore volume & composition of body fluids...with respect to water-electrolyte balance'; for other nourishment use PARENTERAL FEEDING or specifics; do not use /util except by MeSH definition; coord IM with dis /ther (IM), not dis /diet ther; do not specify route of admin unless particularly significant (& then only NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:14:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008580','M0008581','M0008582','M0008583' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005440"
-  },
-
-  D005460: {
-    'id' : "D005460",
-    'name' : "Fluorides, Topical",
-    'annotation' : "fluoride-containing toothpastes: index TOOTHPASTE (IM) + FLUORIDES (IM), not here; fluoride-containing mouthwashes: index MOUTHWASHES (IM) + FLUORIDES (IM), not here",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:16:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008616','M0008617' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -6523,51 +1619,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D005658: {
-    'id' : "D005658",
-    'name' : "Fungi",
-    'annotation' : "GEN or unspecified; prefer specifics: Manual 22.32; fungal dis = MYCOSES, fungal dis of skin = DERMATOMYCOSES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:37:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008892','M0332501' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005687: {
-    'id' : "D005687",
-    'name' : "Galactorrhea",
-    'annotation' : "usually check tags PREGNANCY & FEMALE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:40:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008935' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005704: {
-    'id' : "D005704",
-    'name' : "Gallbladder",
-    'annotation' : "/surg: consider also CHOLECYSTECTOMY & CHOLECYSTOSTOMY; calculi = GALLSTONES but consider also CHOLECYSTOLITHIASIS; inflammation = CHOLECYSTITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:43:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008957' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D005724: {
     'id' : "D005724",
     'name' : "Ganglia",
@@ -6598,124 +1649,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D005740: {
-    'id' : "D005740",
-    'name' : "Gases",
-    'annotation' : "does not include natural gas ( = GAS, NATURAL see FOSSIL FUELS); does not include blood gases ( = OXYGEN /blood or CARBON DIOXIDE /blood); gas embolism = EMBOLISM, AIR; intestinal gases = GASES + INTESTINES /physiol unless clinically referred to as FLATULENCE (Cat C)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:47:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0008995' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005753: {
-    'id' : "D005753",
-    'name' : "Gastric Mucosa",
-    'annotation' : "/secret permitted but consider GASTRIC JUICE /secret if pertinent; mucosal neoplasms: coordinate IM with STOMACH NEOPLASMS (IM) + histological type of neoplasm (IM); mucosal prolapse: = GASTRIC MUCOSA (IM) + STOMACH DISEASES (NIM) + PROLAPSE (NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:48:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009009','M0009010','M0009011','M0009012' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005755: {
-    'id' : "D005755",
-    'name' : "Gastrins",
-    'annotation' : "general or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:49:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009013','M0009014' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005759: {
-    'id' : "D005759",
-    'name' : "Gastroenteritis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:49:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009018' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005762: {
-    'id' : "D005762",
-    'name' : "Gastroenterology",
-    'annotation' : "SPEC: SPEC qualif; DF: GASTROENTEROL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:50:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009021','M0009022' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005765: {
-    'id' : "D005765",
-    'name' : "Gastrointestinal Agents",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:50:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009026','M0009027','M0009028' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005767: {
-    'id' : "D005767",
-    'name' : "Gastrointestinal Diseases",
-    'annotation' : "general: prefer specifics; inflammatory disease = GASTROENTERITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:51:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009033','M0443706','M0480286' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005770: {
-    'id' : "D005770",
-    'name' : "Gastrointestinal Neoplasms",
-    'annotation' : "GEN: prefer specific precoord; coord IM with histol type of neopl (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:51:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009038','M0449005' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D005791: {
     'id' : "D005791",
     'name' : "Patient Care",
@@ -6730,36 +1663,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D005791"
-  },
-
-  D005796: {
-    'id' : "D005796",
-    'name' : "Genes",
-    'annotation' : "restorer genes: index under SUPPRESSION, GENETIC and probably PLANT INFERTILITY; repressor genes = GENES, REGULATOR but also consider REPRESSOR PROTEINS; lac gene = LAC OPERON but consider also LAC FACTORS or LAC REPRESSORS (see note on REPRESSOR PROTEINS); split genes = EXONS or INTRONS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:55:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009078','M0009080','M0009113' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005801: {
-    'id' : "D005801",
-    'name' : "Genes, Homeobox",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:56:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009090','M0009092' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005801"
   },
 
   D005808: {
@@ -6777,37 +1680,6 @@ module.exports = {
     'previousIndexing' : "D005808"
   },
 
-  D005817: {
-    'id' : "D005817",
-    'name' : "Genetic Counseling",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:58:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009125','M0442311' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000523','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005817"
-  },
-
-  D005820: {
-    'id' : "D005820",
-    'name' : "Genetic Testing",
-    'annotation' : "human and animal; for phenotype or genotype; DF GENET SCREENING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:58:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009131','M0009132','M0526075' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000523','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005820"
-  },
-
   D005823: {
     'id' : "D005823",
     'name' : "Genetics",
@@ -6819,65 +1691,6 @@ module.exports = {
     'sessions' : [ '16498' ],
     'concepts' : [ 'M0009137' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005826: {
-    'id' : "D005826",
-    'name' : "Genetics, Medical",
-    'annotation' : "SPEC; restrict to the field of human genetics dealing with genet or hered disord; see note on GENETICS; DF: GENET MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T01:59:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009144','M0009145' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005829: {
-    'id' : "D005829",
-    'name' : "Geniculate Bodies",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:00:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009150','M0009151','M0009152' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005836: {
-    'id' : "D005836",
-    'name' : "Genitalia, Female",
-    'annotation' : "GEN: prefer specifics; /surg: consider also GYNECOLOGIC SURGICAL PROCEDURES; dis = GENITAL DISEASES, FEMALE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:03:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009161','M0009162' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005837: {
-    'id' : "D005837",
-    'name' : "Genitalia, Male",
-    'annotation' : "GEN: prefer specifics; dis = GENITAL DISEASES, MALE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:03:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009164','M0009165' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -6898,261 +1711,6 @@ module.exports = {
     'previousIndexing' : "D005838"
   },
 
-  D005853: {
-    'id' : "D005853",
-    'name' : "Geriatrics",
-    'annotation' : "specialty; when permitted for 'geriatric diseases': Manual 28.9.1",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:07:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009197','M0009198' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005865: {
-    'id' : "D005865",
-    'name' : "Gestational Age",
-    'annotation' : "mammalian only; for fetus not mother",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:11:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009214' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005865"
-  },
-
-  D005883: {
-    'id' : "D005883",
-    'name' : "Gingival Crevicular Fluid",
-    'annotation' : "note X ref; crevicular refers to the gingival crevice",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:17:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009236' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005883"
-  },
-
-  D005916: {
-    'id' : "D005916",
-    'name' : "Globulins",
-    'annotation' : "GEN; permeability globulins: index under SERUM GLOBULINS; EUGLOBULINS & PSEUDOGLOBULINS are see refs to SERUM GLOBULINS; do not confuse with GLOBULINS, IMMUNE see IMMUNOGLOBULINS, INTRAVENOUS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:29:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009293' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005919: {
-    'id' : "D005919",
-    'name' : "Glomerular Filtration Rate",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:30:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009298' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000662' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005921: {
-    'id' : "D005921",
-    'name' : "Glomerulonephritis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:30:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009300','M0490937' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005922: {
-    'id' : "D005922",
-    'name' : "Glomerulonephritis, IGA",
-    'annotation' : "do not confuse X ref BERGER'S DISEASE with BUERGER'S DISEASE see THROMBOANGIITIS OBLITERANS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:31:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009301' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005922"
-  },
-
-  D005934: {
-    'id' : "D005934",
-    'name' : "Glucagon",
-    'annotation' : "do not confuse with GLUCAGON-LIKE PEPTIDES secreted by the intestine",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:35:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009314' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005938: {
-    'id' : "D005938",
-    'name' : "Glucocorticoids",
-    'annotation' : "GEN: avoid: prefer specifics;",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:36:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009322','M0556156' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005938"
-  },
-
-  D005943: {
-    'id' : "D005943",
-    'name' : "Gluconeogenesis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:36:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009331' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005947: {
-    'id' : "D005947",
-    'name' : "Glucose",
-    'annotation' : "/blood = BLOOD GLUCOSE but consider also HYPERGLYCEMIA & HYPOGLYCEMIA; /defic: consider also HYPOGLYCEMIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:36:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009339','M0330317','M0330318','M0330319','M0330320','M0330321','M0582743' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D005970: {
-    'id' : "D005970",
-    'name' : "Glutamate Synthase",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:39:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009375' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005970"
-  },
-
-  D005981: {
-    'id' : "D005981",
-    'name' : "Glutathione Synthase",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:40:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009394' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D005981"
-  },
-
-  D006003: {
-    'id' : "D006003",
-    'name' : "Glycogen",
-    'annotation' : "/metab consider also GLYCOGENOLYSIS or GLYCOGEN STORAGE DISEASE and specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:42:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009459' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006006: {
-    'id' : "D006006",
-    'name' : "Glycogen Synthase",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:42:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009463','M0009464','M0009465','M0009466' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006006"
-  },
-
-  D006008: {
-    'id' : "D006008",
-    'name' : "Glycogen Storage Disease",
-    'annotation' : "an inborn error of carbohydrate metab; do not use /congen & do not coord with INFANT, NEWBORN, DISEASES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:42:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009469' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006019: {
-    'id' : "D006019",
-    'name' : "Glycolysis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:43:48+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009480','M0473538' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D006025: {
     'id' : "D006025",
     'name' : "Glycosaminoglycans",
@@ -7167,111 +1725,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D006025"
-  },
-
-  D006040: {
-    'id' : "D006040",
-    'name' : "Goals",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:46:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009514' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006040"
-  },
-
-  D006073: {
-    'id' : "D006073",
-    'name' : "Gout",
-    'annotation' : "a rheum dis; /drug ther: consider also GOUT SUPPRESSANTS & its indentions; ARTHRITIS, GOUTY is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:51:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009557' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006080: {
-    'id' : "D006080",
-    'name' : "Ovarian Follicle",
-    'annotation' : "/cytol: consider also THECA CELLS; GRANULOSA CELLS; for follicular development use /physiol, not /growth",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:51:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009571','M0009572','M0402964' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006098: {
-    'id' : "D006098",
-    'name' : "Granulocytes",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:53:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009603' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006098"
-  },
-
-  D006099: {
-    'id' : "D006099",
-    'name' : "Granuloma",
-    'annotation' : "GEN: prefer specifics; coord IM with organ/dis (IM); malignant of nose = GRANULOMA, LETHAL MIDLINE; central giant cell granuloma & giant cell granuloma = GRANULOMA, GIANT CELL; granulomatous dis or granulomatous dis of childhood = GRANULOMATOUS DISEASE, CHRONIC; cholesterol granuloma = GRANULOMA, FOREIGN BODY (IM) + CHOLESTEROL (IM); talc granuloma = GRANULOMA, FOREIGN BODY /etiol (not/chem ind) + TALC /adv eff; xanthogranuloma = XANTHOMATOSIS (IM) + GRANULOMA (IM) but XANTHOGRANULOMA, JUVENILE is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:53:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009605' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006107: {
-    'id' : "D006107",
-    'name' : "Granulosa Cells",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:53:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009617' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006111: {
-    'id' : "D006111",
-    'name' : "Graves Disease",
-    'annotation' : "GRAVES OPHTHALMOPATHY is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:53:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009624' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D006126: {
@@ -7289,52 +1742,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006128: {
-    'id' : "D006128",
-    'name' : "Growth",
-    'annotation' : "General only; prefer /growth with specific organ or organism: Manual 19.7+, 19.8.35",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:54:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009652' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006130: {
-    'id' : "D006130",
-    'name' : "Growth Disorders",
-    'annotation' : "do not confuse with NUTRITION DISORDERS (disord of assimilating & utilizing nutrients)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:54:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009654' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006130"
-  },
-
-  D006132: {
-    'id' : "D006132",
-    'name' : "Growth Plate",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:54:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009657' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006132"
-  },
-
   D006150: {
     'id' : "D006150",
     'name' : "Guanine Nucleotides",
@@ -7346,36 +1753,6 @@ module.exports = {
     'sessions' : [ '16544' ],
     'concepts' : [ 'M0009683' ],
     'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006176: {
-    'id' : "D006176",
-    'name' : "Gynecology",
-    'annotation' : "SPEC: SPEC qualif; corresponding organ term is GENITALIA, FEMALE; DF: GYNECOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:56:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009716' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006197: {
-    'id' : "D006197",
-    'name' : "Hair",
-    'annotation' : "abnormally pulling at one's hair = TRICHOTILLOMANIA; HAIR FOLLICLE is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:57:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009745','M0009746','M0370530' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -7396,20 +1773,6 @@ module.exports = {
     'previousIndexing' : "D006207"
   },
 
-  D006221: {
-    'id' : "D006221",
-    'name' : "Halothane",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:58:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009773','M0351861','M0351862','M0351863' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D006225: {
     'id' : "D006225",
     'name' : "Hand",
@@ -7423,125 +1786,6 @@ module.exports = {
     'qualifiers' : [ 'Q000033','Q000098','Q000196','Q000254','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D006235: {
-    'id' : "D006235",
-    'name' : "Handwashing",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:58:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009791','M0009792','M0009793','M0543886','M0544917' ],
-    'qualifiers' : [ 'Q000191','Q000295','Q000379','Q000592','Q000639' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006235"
-  },
-
-  D006253: {
-    'id' : "D006253",
-    'name' : "Haversian System",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:59:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009811','M0370258' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006260: {
-    'id' : "D006260",
-    'name' : "Head Protective Devices",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:59:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009822','M0009823' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000382','Q000469','Q000592','Q000600','Q000639','Q000656','Q000662','Q000706','Q000744','Q000821','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006262: {
-    'id' : "D006262",
-    'name' : "Health",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T02:59:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009825','M0391144' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000208','Q000266','Q000331','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006266: {
-    'id' : "D006266",
-    'name' : "Health Education",
-    'annotation' : "educ of general public or individuals; educ of patients in & outside hosp = PATIENT EDUCATION AS TOPIC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009830','M0009831' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006278: {
-    'id' : "D006278",
-    'name' : "Medicare",
-    'annotation' : "U.S. only: for Canada & Australia index under NATIONAL HEALTH PROGRAMS + country; specify geog; Public Law 89-97",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:00:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009851','M0009852' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006279: {
-    'id' : "D006279",
-    'name' : "Health Maintenance Organizations",
-    'annotation' : "DF: note short X ref",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:00:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009853' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006279"
-  },
-
-  D006285: {
-    'id' : "D006285",
-    'name' : "Health Planning",
-    'annotation' : "specify geog & add UNITED STATES (NIM) for X ref STATE HEALTH PLANNING, UNITED STATES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:00:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009863','M0009864','M0009865','M0009870','M0009872' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006285"
   },
 
   D006291: {
@@ -7560,37 +1804,6 @@ module.exports = {
     'previousIndexing' : "D006291"
   },
 
-  D006302: {
-    'id' : "D006302",
-    'name' : "Health Services Research",
-    'annotation' : "IM; DF: HEALTH SERV RESEARCH",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:01:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009909','M0009910' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006302"
-  },
-
-  D006308: {
-    'id' : "D006308",
-    'name' : "Health Systems Plans",
-    'annotation' : "Public Law 93-641; specify geog & add UNITED STATES also",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:01:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009921','M0009922' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D006321: {
     'id' : "D006321",
     'name' : "Heart",
@@ -7602,80 +1815,6 @@ module.exports = {
     'sessions' : [ '16482','16485','16488' ],
     'concepts' : [ 'M0009936' ],
     'qualifiers' : [ 'Q000033','Q000187','Q000196','Q000254','Q000294','Q000382','Q000469','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006329: {
-    'id' : "D006329",
-    'name' : "Heart Conduction System",
-    'annotation' : "disord = ARRHYTHMIAS, CARDIAC or HEART BLOCK & their specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:02:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009947','M0009948' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006330: {
-    'id' : "D006330",
-    'name' : "Heart Defects, Congenital",
-    'annotation' : "general only; do not use as coordinate for specific term /abnorm; cyanotic defects probably go here but do not also index under CYANOSIS unless especially discussed",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:02:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009950' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006331: {
-    'id' : "D006331",
-    'name' : "Heart Diseases",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:02:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009951' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006332: {
-    'id' : "D006332",
-    'name' : "Cardiomegaly",
-    'annotation' : "GEN or unspecified; prefer HYPERTROPHY, LEFT VENTRICULAR or HYPERTROPHY, RIGHT VENTRICULAR; note X ref CARDIAC HYPERTROPHY: do not confuse with CARDIOMYOPATHY, HYPERTROPHIC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:02:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009952','M0453089' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006333: {
-    'id' : "D006333",
-    'name' : "Heart Failure",
-    'annotation' : "'scompenso di cuore' is 'heart decompensation' in Italian; do not confuse with CARDIOMYOPATHY, CONGESTIVE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:02:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009953','M0502049','M0502050','M0502052','M0502053','M0504132' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -7695,68 +1834,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006340: {
-    'id' : "D006340",
-    'name' : "Heart Rate, Fetal",
-    'annotation' : "mammals only",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:03:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009961' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006340"
-  },
-
-  D006343: {
-    'id' : "D006343",
-    'name' : "Heart Septal Defects",
-    'annotation' : "general or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:03:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009964' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006349: {
-    'id' : "D006349",
-    'name' : "Heart Valve Diseases",
-    'annotation' : "coordinate IM with specific valve (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:03:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009972' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006349"
-  },
-
-  D006351: {
-    'id' : "D006351",
-    'name' : "Heart Valves",
-    'annotation' : "GEN or unspecified: prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:03:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0009974' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D006352: {
     'id' : "D006352",
     'name' : "Heart Ventricles",
@@ -7768,21 +1845,6 @@ module.exports = {
     'sessions' : [ '16474' ],
     'concepts' : [ 'M0009975','M0449363','M0449364' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006376: {
-    'id' : "D006376",
-    'name' : "Helminths",
-    'annotation' : "GEN or unspecified; prefer specifics; infection = HELMINTHIASIS; coord with specific precoord helminth terms (e.g., ANTIGENS, HELMINTH) if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:05:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010011','M0010012','M0010013','M0010014' ],
-    'qualifiers' : [ 'Q000033','Q000145','Q000166','Q000187','Q000196','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000382','Q000469','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -7802,96 +1864,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006405: {
-    'id' : "D006405",
-    'name' : "Hematology",
-    'annotation' : "SPEC: SPEC qualif; immunohematology is indexed under BLOOD GROUPS; DF: HEMATOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:06:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010047' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006410: {
-    'id' : "D006410",
-    'name' : "Hematopoiesis",
-    'annotation' : "GEN or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:06:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010052','M0010053' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006412: {
-    'id' : "D006412",
-    'name' : "Hematopoietic Stem Cells",
-    'annotation' : "A 11 qualif; /transpl = HEMATOPOIETIC STEM CELL TRANSPLANTATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:06:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010055','M0010056' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006412"
-  },
-
-  D006417: {
-    'id' : "D006417",
-    'name' : "Hematuria",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:06:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010065' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006439: {
-    'id' : "D006439",
-    'name' : "Hemodynamics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:08:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010106' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006442: {
-    'id' : "D006442",
-    'name' : "Hemoglobin A, Glycosylated",
-    'annotation' : "urine: coord IM with HEMOGLOBINURIA (IM); DF: note short X refs",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:08:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010112','M0010113','M0010114','M0010115','M0010116' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006442"
-  },
-
   D006454: {
     'id' : "D006454",
     'name' : "Hemoglobins",
@@ -7907,65 +1879,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006467: {
-    'id' : "D006467",
-    'name' : "Hemophilia A",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:11:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010149','M0574711','M0574712' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006470: {
-    'id' : "D006470",
-    'name' : "Hemorrhage",
-    'annotation' : "GEN or unspecified; prefer specifics; coord IM with organ/dis precoord (IM), not organ /blood supply; consider also terms for presence of blood within cavities, as HEMOTHORAX; HEMATOCOLPOS; etc.",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:11:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010152' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006471: {
-    'id' : "D006471",
-    'name' : "Gastrointestinal Hemorrhage",
-    'annotation' : "coord IM with specific intestinal dis (IM), as colonic hemorrhage = GASTROINTESTINAL HEMORRHAGE (IM) + COLONIC DISEASES (IM); rectal bleeding: see note under RECTUM; X ref HEMATOCHEZIA is red blood in the feces when bleeding is from the lower bowel: do not coord with FECES unless feces are particularly discussed",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:11:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010153','M0010154' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006473: {
-    'id' : "D006473",
-    'name' : "Postpartum Hemorrhage",
-    'annotation' : "check the tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:12:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010156','M0481644','M0481645' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D006487: {
     'id' : "D006487",
     'name' : "Hemostasis",
@@ -7977,95 +1890,6 @@ module.exports = {
     'sessions' : [ '16503' ],
     'concepts' : [ 'M0010180' ],
     'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006501: {
-    'id' : "D006501",
-    'name' : "Hepatic Encephalopathy",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:14:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010199','M0010200','M0335276','M0335277' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006505: {
-    'id' : "D006505",
-    'name' : "Hepatitis",
-    'annotation' : "GEN or unspecified; prefer specifics; probably non-viral; viral hepatitis = HEPATITIS, VIRAL, HUMAN & HEPATITIS, VIRAL, ANIMAL or their specifics; /chem ind = DRUG-INDUCED LIVER INJURY but note HEPATITIS, ALCOHOLIC is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:15:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010205' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006506: {
-    'id' : "D006506",
-    'name' : "Hepatitis A",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:15:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010206' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006515: {
-    'id' : "D006515",
-    'name' : "Hepatitis B virus",
-    'annotation' : "infection = HEPATITIS B or HEPATITIS B, CHRONIC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:16:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010218','M0010219' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006526: {
-    'id' : "D006526",
-    'name' : "Hepatitis C",
-    'annotation' : "chronic = HEPATITIS C, CHRONIC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:17:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010234' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006526"
-  },
-
-  D006528: {
-    'id' : "D006528",
-    'name' : "Carcinoma, Hepatocellular",
-    'annotation' : "human & vet only: note X ref HEPATOMA: also available is HEPATOMA, EXPERIMENTAL see LIVER NEOPLASMS, EXPERIMENTAL for exper anim; coord IM with LIVER NEOPLASMS (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:17:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010236' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -8115,20 +1939,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006628: {
-    'id' : "D006628",
-    'name' : "Hirsutism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:23:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010381' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D006653: {
     'id' : "D006653",
     'name' : "Histology",
@@ -8140,34 +1950,6 @@ module.exports = {
     'sessions' : [ '16475','16502','16505' ],
     'concepts' : [ 'M0010418' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006689: {
-    'id' : "D006689",
-    'name' : "Hodgkin Disease",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:25:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010484','M0010485','M0551750','M0551751','M0551752','M0551753' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006706: {
-    'id' : "D006706",
-    'name' : "Homeostasis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:26:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010506' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -8187,215 +1969,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006760: {
-    'id' : "D006760",
-    'name' : "Hospitalization",
-    'annotation' : "being in a hosp or being placed in a hosp: do not confuse with PATIENT ADMISSION or PATIENT READMISSION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:28:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010589' ],
-    'qualifiers' : [ 'Q000191','Q000331','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006776: {
-    'id' : "D006776",
-    'name' : "Hospitals, Pediatric",
-    'annotation' : "coord IM with hosp ownership term (e.g., HOSPITALS, COUNTY; HOSPITALS, PROPRIETARY; etc.) (IM or NIM) if pertinent; check also tag CHILD or specific; specify geog",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:29:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010608' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006784: {
-    'id' : "D006784",
-    'name' : "Hospitals, Teaching",
-    'annotation' : "coord IM with special hosp (e.g., HOSPITALS, CHRONIC DISEASE; HOSPITALS, MATERNITY; etc.) or med specialty (IM or NIM) if pertinent; specify geog; consider also INTERNSHIP AND RESIDENCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:29:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010616' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006784"
-  },
-
-  D006792: {
-    'id' : "D006792",
-    'name' : "House Calls",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:29:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010625' ],
-    'qualifiers' : [ 'Q000191','Q000639','Q000656','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006805: {
-    'id' : "D006805",
-    'name' : "Human Experimentation",
-    'annotation' : "IM for moral, legal, ethical, sociologic, religious aspect of experiments on humans; coordinate IM with aspect (IM); do not routinely add for research involving human disease, therapy or physiology",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:29:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010644','M0010645','M0535175' ],
-    'qualifiers' : [ 'Q000266','Q000331','Q000592','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006811: {
-    'id' : "D006811",
-    'name' : "Humerus",
-    'annotation' : "disloc at shoulder = SHOULDER DISLOCATION: do not add HUMERUS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:30:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010654' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006816: {
-    'id' : "D006816",
-    'name' : "Huntington Disease",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:30:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010660','M0332772','M0332775','M0332778' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006824: {
-    'id' : "D006824",
-    'name' : "Hybridization, Genetic",
-    'annotation' : "NUCLEIC ACID HYBRIDIZATION is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:30:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010669','M0427129' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006932: {
-    'id' : "D006932",
-    'name' : "Hyperbilirubinemia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:35:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010811' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006934: {
-    'id' : "D006934",
-    'name' : "Hypercalcemia",
-    'annotation' : "high blood calcium levels; do not confuse with HYPOCALCEMIA; X ref is also called Burnett's syndrome or milk-drinker's syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:35:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010814','M0010815' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006944: {
-    'id' : "D006944",
-    'name' : "Hyperglycemic Hyperosmolar Nonketotic Coma",
-    'annotation' : "not for nonketotic hyperglycinemia (= AMINO ACID METABOLISM, INBORN ERRORS + GLYCINE/metab); DF: HHNC or HHNK",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:36:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010825' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006944"
-  },
-
-  D006947: {
-    'id' : "D006947",
-    'name' : "Hyperkalemia",
-    'annotation' : "high blood potassium levels; do not confuse with HYPOKALEMIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:36:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010828' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006955: {
-    'id' : "D006955",
-    'name' : "Hypernatremia",
-    'annotation' : "high blood sodium levels; do not confuse with HYPONATREMIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:37:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010837' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006962: {
-    'id' : "D006962",
-    'name' : "Hyperparathyroidism, Secondary",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:37:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010846' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006962"
-  },
-
   D006965: {
     'id' : "D006965",
     'name' : "Hyperplasia",
@@ -8406,79 +1979,6 @@ module.exports = {
     'objectives' : [ '76763','76825' ],
     'sessions' : [ '16526','16535' ],
     'concepts' : [ 'M0010849' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006966: {
-    'id' : "D006966",
-    'name' : "Hyperprolactinemia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:37:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010850' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D006966"
-  },
-
-  D006967: {
-    'id' : "D006967",
-    'name' : "Hypersensitivity",
-    'annotation' : "IM; use qualif with caution; /drug ther: consider also ANTI-ALLERGIC AGENTS; atopic = HYPERSENSITIVITY, IMMEDIATE; to food = FOOD HYPERSENSITIVITY; to light = PHOTOSENSITIVITY DISORDERS; RESPIRATORY HYPERSENSITIVITY is also available; in occup or environ exposure MULTIPLE CHEMICAL SENSITIVITY is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:37:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010851','M0010852' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006973: {
-    'id' : "D006973",
-    'name' : "Hypertension",
-    'annotation' : "not for intracranial or intraocular pressure; relation to BLOOD PRESSURE: Manuel23.27; Goldblatt kidney or Goldblatt hypertension is HYPERTENSION, GOLDBLATT see HYPERTENSION, RENOVASCULAR; hypertension with kidney disease is probably HYPERTENSION, RENAL, not HYPERTENSION; venous hypertension: index under VENOUS PRESSURE (IM) & do not coordinate with HYPERTENSION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:38:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010859' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006975: {
-    'id' : "D006975",
-    'name' : "Hypertension, Portal",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:38:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010862','M0010863' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006976: {
-    'id' : "D006976",
-    'name' : "Hypertension, Pulmonary",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:38:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010864','M0010865' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
@@ -8499,321 +1999,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D006985: {
-    'id' : "D006985",
-    'name' : "Hyperventilation",
-    'annotation' : "respiratory, not environmental; hyperventilation syndrome: coord IM with /psychol + emotional aspect (IM or NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:38:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010876' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006993: {
-    'id' : "D006993",
-    'name' : "Hypnotics and Sedatives",
-    'annotation' : "CNS depressants; GEN: prefer specifics; DF: HYPNOTICS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:39:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010884','M0010885','M0010886','M0556127','M0556128' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D006996: {
-    'id' : "D006996",
-    'name' : "Hypocalcemia",
-    'annotation' : "low blood calcium levels; do not confuse with HYPERCALCEMIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:39:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010891' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007003: {
-    'id' : "D007003",
-    'name' : "Hypoglycemia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:39:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010901','M0446503','M0446504' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007008: {
-    'id' : "D007008",
-    'name' : "Hypokalemia",
-    'annotation' : "low blood potassium levels; do not confuse with HYPERKALEMIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:40:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010909' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007010: {
-    'id' : "D007010",
-    'name' : "Hyponatremia",
-    'annotation' : "low blood sodium levels; do not confuse with HYPERNATREMIA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:40:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010911' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007011: {
-    'id' : "D007011",
-    'name' : "Hypoparathyroidism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:40:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010912','M0471567' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007022: {
-    'id' : "D007022",
-    'name' : "Hypotension",
-    'annotation' : "only blood pressure; INTRACRANIAL HYPOTENSION and OCULAR HYPOTENSION are also available; relation to BLOOD PRESSURE: Manual 23.27+",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:40:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010927' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007027: {
-    'id' : "D007027",
-    'name' : "Hypothalamic Diseases",
-    'annotation' : "GEN: prefer specifics; coord IM with specific part of hypothalamus (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:41:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010934','M0010935','M0335308','M0335309','M0335310','M0335311','M0335312','M0335313','M0335316' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007027"
-  },
-
-  D007031: {
-    'id' : "D007031",
-    'name' : "Hypothalamus",
-    'annotation' : "GEN or unspecified; prefer specific structures & areas in the hypothalamus; HYPOTHALAMO-HYPOPHYSEAL SYSTEM is available for the hypothalamus-pituitary relationship",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:41:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010939','M0353695','M0353696' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007037: {
-    'id' : "D007037",
-    'name' : "Hypothyroidism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:41:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010948' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007040: {
-    'id' : "D007040",
-    'name' : "Hypoventilation",
-    'annotation' : "respiratory, not environmental",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:41:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010951' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007044: {
-    'id' : "D007044",
-    'name' : "Hysterectomy",
-    'annotation' : "do not use /util except by MeSH definition; abdominal: do not coord with ABDOMEN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:42:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010955' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007045: {
-    'id' : "D007045",
-    'name' : "Hysterectomy, Vaginal",
-    'annotation' : "do not use /util except by MeSH definition",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:42:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0010956' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007082: {
-    'id' : "D007082",
-    'name' : "Ileum",
-    'annotation' : "do not confuse with ILEUS or ILIUM; /surg: consider ILEOSTOMY; inflammation = ILEITIS; ileocecal intussusception or invagination: index under ILEOCECAL VALVE (IM) + INTUSSUSCEPTION (IM) + ILEAL DISEASES (NIM); ileocolic intussusception: index under ILEAL DISEASES (IM) + INTUSSUSCEPTION (IM) but not also COLONIC DISEASES; ileum as smooth muscle is probably MUSCLE, SMOOTH (IM) + ILEUM (NIM); jejuno-ileal bypass or shunt or jejuno-ileostomy in obesity: index under JEJUNOILEAL BYPASS (note XR ref)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:43:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011030' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007090: {
-    'id' : "D007090",
-    'name' : "Image Interpretation, Computer-Assisted",
-    'annotation' : "DF: IMAGE INTERP",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:43:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011043' ],
-    'qualifiers' : [ 'Q000295','Q000379','Q000592','Q000656' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007103: {
-    'id' : "D007103",
-    'name' : "Immobilization",
-    'annotation' : "in Russian lit 'hypokinesia' = IMMOBILIZATION, not see related HYPOKINESIA; immobilization of animals for easy handling can go here if by methods other than RESTRAINT, PHYSICAL (see note there); 'bedridden patients' can go here; not for immobilization of fractures ( = FRACTURE FIXATION: see TN 87); TN 166: do not confuse with BED REST",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:44:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011064','M0337107' ],
-    'qualifiers' : [ 'Q000009','Q000295','Q000331','Q000379','Q000502','Q000523','Q000592','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007107: {
-    'id' : "D007107",
-    'name' : "Immune System",
-    'annotation' : "GEN: prefer specifics; /physiol: consider also IMMUNITY & its indentions",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:44:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011068' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007107"
-  },
-
-  D007108: {
-    'id' : "D007108",
-    'name' : "Immune Tolerance",
-    'annotation' : "do not confuse X ref IMMUNOSUPPRESSION (PHYSIOLOGY) with the Cat E immunol technique IMMUNOSUPPRESSION: Manual 28.21.1",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:44:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011069','M0011070' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007109: {
-    'id' : "D007109",
-    'name' : "Immunity",
-    'annotation' : "IM GEN only for 'immunity' or 'immune process'; NIM with specific disease /immunol (IM); 'immune response': index under ANTIBODY FORMATION (usually discusses B-lymphocytes) or IMMUNITY, CELLULAR (usually discusses T-lymphocytes); TN 242",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:44:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011071' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007125: {
-    'id' : "D007125",
-    'name' : "Immunogenetics",
-    'annotation' : "the discipline (education, history, etc) only; use IMMUNOGENETIC PHENOMENA for genetic phenomena related to the immune system",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:45:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011101' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007125"
-  },
-
   D007150: {
     'id' : "D007150",
     'name' : "Immunohistochemistry",
@@ -8828,186 +2013,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D007150"
-  },
-
-  D007155: {
-    'id' : "D007155",
-    'name' : "Immunologic Factors",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:46:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011157','M0023914','M0456740' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007167: {
-    'id' : "D007167",
-    'name' : "Immunotherapy",
-    'annotation' : "GEN only; do not use /util except by MeSH definition; for ther: coord IM with dis /ther (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:47:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011172' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007167"
-  },
-
-  D007177: {
-    'id' : "D007177",
-    'name' : "Inappropriate ADH Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:47:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011185' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007177"
-  },
-
-  D007223: {
-    'id' : "D007223",
-    'name' : "Infant",
-    'annotation' : "age 1-23 mo; IM as psychol & sociol or social entity: Manual 18.5.11, 34.9.2; NIM as check tag: 18.5.7, 18.5.8; no qualif IM; psychol of the infant = INFANT PSYCHOLOGY see CHILD PSYCHOLOGY & check the tag INFANT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:49:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011265' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007226: {
-    'id' : "D007226",
-    'name' : "Infant Mortality",
-    'annotation' : "a statistical concept & not a substitute for /mortal with INFANT, NEWBORN, DISEASES or with specific diseases in infants; specify geography; check the tag INFANT or INFANT, NEWBORN; PERINATAL MORTALITY is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:49:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011273','M0011274','M0503075' ],
-    'qualifiers' : [ 'Q000208','Q000266','Q000639' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007231: {
-    'id' : "D007231",
-    'name' : "Infant, Newborn",
-    'annotation' : "from birth to 1 mo; IM; qualif permitted: /blood-csf-urine /growth /immunol /metab /physiol /psychol; also a check tag; as IM: Manual 18.5.9, 34.8, 34.9.1; specialty for only newborn inf = NEONATOLOGY, specialty for fetus & newborn inf = PERINATOLOGY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:49:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011285' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000254','Q000276','Q000378','Q000502','Q000523','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007234: {
-    'id' : "D007234",
-    'name' : "Infant, Premature",
-    'annotation' : "check the tag INFANT, NEWBORN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:49:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011288','M0011289' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000254','Q000276','Q000378','Q000502','Q000523','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007239: {
-    'id' : "D007239",
-    'name' : "Infection",
-    'annotation' : "general only as concept of disease caused by microorganisms; many texts saying 'infection' & many saying 'sepsis' mean BACTERIAL INFECTIONS: check text but note that SEPSIS is available; 'infectious disease' can be INFECTION but is more likely COMMUNICABLE DISEASES; policy: Manual 22.12-.19, 23.12+; relation to microorganisms: Manual 22.11-.19 & TN 209; /drug therapy: consider also ANTI-INFECTIVE AGENTS & its specific groups; /prev = INFECTION CONTROL but see note there",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:49:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011294' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007246: {
-    'id' : "D007246",
-    'name' : "Infertility",
-    'annotation' : "general or unspecified as male or female; prefer the specifics; PLANT INFERTILITY is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:50:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011302','M0011303','M0549703' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007247: {
-    'id' : "D007247",
-    'name' : "Infertility, Female",
-    'annotation' : "/chem ind permitted but not for testing of contraceptives",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:50:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011304','M0011305','M0329024','M0549702' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007248: {
-    'id' : "D007248",
-    'name' : "Infertility, Male",
-    'annotation' : "/chem ind permitted but not for testing of contraceptives",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:50:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011306','M0329025','M0549701' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007249: {
-    'id' : "D007249",
-    'name' : "Inflammation",
-    'annotation' : "IM general inflammatory process; look for specific inflamm dis in MeSH as -ITIS; NIM as coord for organ /dis not in MeSH as -ITIS; /drug ther: consider also ANTI-INFLAMMATORY AGENTS & its specifics; ACUTE PHASE REACTION (an early local inflammatory reaction to inj: see MeSH definition) is available; Manual 23.13+; DF: INFLAMM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:50:20+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011307' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D007295: {
@@ -9025,66 +2030,6 @@ module.exports = {
     'previousIndexing' : "D007295"
   },
 
-  D007328: {
-    'id' : "D007328",
-    'name' : "Insulin",
-    'annotation' : "/blood: consider also HYPERINSULINEMIA (excessively high blood insulin levels) but do not confuse with HYPERINSULINISM (excessive secretion of insulin by pancreas); /immunology: consider also INSULIN ANTIBODIES; precursor = PROINSULIN; INSULIN INFUSION SYSTEMS is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:52:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011414','M0011415','M0011416','M0011417','M0011418','M0011419','M0011420','M0011421','M0011422','M0011423','M0011424','M0423851','M0423852','M0423949','M0557300' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007333: {
-    'id' : "D007333",
-    'name' : "Insulin Resistance",
-    'annotation' : "for insulin resistance syndrome X use METABOLIC SYNDROME X",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:53:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011432','M0549710' ],
-    'qualifiers' : [ 'Q000208','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007360: {
-    'id' : "D007360",
-    'name' : "Intelligence",
-    'annotation' : "/genet permitted",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:53:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011478' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000235','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007372: {
-    'id' : "D007372",
-    'name' : "Interferons",
-    'annotation' : "'stimulators' or 'inducers' = INTERFERON INDUCERS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:54:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011491' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D007382: {
     'id' : "D007382",
     'name' : "Intermediate Filaments",
@@ -9099,21 +2044,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D007382"
-  },
-
-  D007388: {
-    'id' : "D007388",
-    'name' : "Internal Medicine",
-    'annotation' : "SPEC: SPEC qualif; when permitted for 'internal diseases': Manual 28.10; DF: INTERNAL MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:55:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011519' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D007395: {
@@ -9147,20 +2077,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D007398: {
-    'id' : "D007398",
-    'name' : "Interpersonal Relations",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:55:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011541','M0011542','M0011543','M0011547','M0011548','M0011549' ],
-    'qualifiers' : [ 'Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D007400: {
     'id' : "D007400",
     'name' : "Interprofessional Relations",
@@ -9176,35 +2092,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D007406: {
-    'id' : "D007406",
-    'name' : "Interview, Psychological",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:55:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011562' ],
-    'qualifiers' : [ 'Q000379','Q000592' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007422: {
-    'id' : "D007422",
-    'name' : "Intestines",
-    'annotation' : "GEN; /secret = INTESTINAL MUCOSA /secret or INTESTINAL SECRETIONS; invagination = INTUSSUSCEPTION; /surg: consider also ENTEROSTOMY & GASTROENTEROSTOMY; inflammation or inflamm dis: see note on INTESTINAL DISEASES; gas cysts = PNEUMATOSIS CYSTOIDES INTESTINALIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:56:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011586' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D007440: {
     'id' : "D007440",
     'name' : "Intubation",
@@ -9216,21 +2103,6 @@ module.exports = {
     'sessions' : [ '16487' ],
     'concepts' : [ 'M0011614' ],
     'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007444: {
-    'id' : "D007444",
-    'name' : "Inulin",
-    'annotation' : "usually /diag use in KIDNEY FUNCTION TESTS; do not confuse with INSULIN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T03:57:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011618' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -9281,51 +2153,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D007565: {
-    'id' : "D007565",
-    'name' : "Jaundice",
-    'annotation' : "general or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:06:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0001126','M0011822' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007583: {
-    'id' : "D007583",
-    'name' : "Jejunum",
-    'annotation' : "inflammation or jejunitis = JEJUNAL DISEASES (IM) + ENTERITIS (IM); jejuno-ileal bypass or shunt or jejuno-ileostomy in obesity: index under JEJUNOILEAL BYPASS (note XR ref)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:07:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011844' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007596: {
-    'id' : "D007596",
-    'name' : "Joints",
-    'annotation' : "GEN; joints of animals: TN 117; differentiation of sites & joints: TN 238; inflammation = ARTHRITIS; /surg: consider also ARTHROPLASTY; joint revision: index as ARTHROPLASTY (IM) + REOPERATION (NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:08:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011865' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D007621: {
     'id' : "D007621",
     'name' : "Karyotyping",
@@ -9337,95 +2164,6 @@ module.exports = {
     'sessions' : [ '16499' ],
     'concepts' : [ 'M0011931' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007657: {
-    'id' : "D007657",
-    'name' : "Ketone Bodies",
-    'annotation' : "acetonemia, acetonuria, ketonemia & ketonuria go here; ketogenesis is probably KETONE BODIES /biosyn",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:13:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011992','M0011993' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007668: {
-    'id' : "D007668",
-    'name' : "Kidney",
-    'annotation' : "kidney tissue or cells in cultures: Manual 18.6.15, 18.7.2, 26.23+; fetal or embryonic kidney tissue or cells in culture: do not use /embryol with KIDNEY; /blood supply: consider also RENAL CIRCULATION; /radionuclide: consider RADIOISOTOPE RENOGRAPHY, a specific kidney function test (see note there); /surg: consider NEPHRECTOMY; cyst = KIDNEY, CYSTIC but KIDNEY, POLYCYSTIC is also available; inflammation = NEPHRITIS; Goldblatt kidney = HYPERTENSION, GOLDBLATT see HYPERTENSION, RENOVASCULAR; nephrostomy: consider NEPHROSTOMY, PERCUTANEOUS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:14:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012006' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007674: {
-    'id' : "D007674",
-    'name' : "Kidney Diseases",
-    'annotation' : "general or unspecified: prefer specifics; inflammatory disease = NEPHRITIS; consider diseases under NEPHR- & RENAL; cyst = KIDNEY, CYSTIC or specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:15:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012014' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007675: {
-    'id' : "D007675",
-    'name' : "Kidney Failure, Acute",
-    'annotation' : "RENAL INSUFFICIENCY, ACUTE is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012015' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007676: {
-    'id' : "D007676",
-    'name' : "Kidney Failure, Chronic",
-    'annotation' : "RENAL INSUFFICIENCY, CHRONIC is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:15:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012016' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007677: {
-    'id' : "D007677",
-    'name' : "Kidney Function Tests",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:15:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012017' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -9442,67 +2180,6 @@ module.exports = {
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D007680: {
-    'id' : "D007680",
-    'name' : "Kidney Neoplasms",
-    'annotation' : "general prefer specifics; coordinate IM with histological type of neoplasm (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:16:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012021','M0332600' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007684: {
-    'id' : "D007684",
-    'name' : "Kidney Tubules",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:16:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012025' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007686: {
-    'id' : "D007686",
-    'name' : "Kidney Tubules, Distal",
-    'annotation' : "'ascending tubules' = ASCENDING LIMB OF LOOP OF HENLE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:16:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012027' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007686"
-  },
-
-  D007687: {
-    'id' : "D007687",
-    'name' : "Kidney Tubules, Proximal",
-    'annotation' : "'descending tubules' = DESCENDING LIMB OF LOOP OF HENLE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:16:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012028' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007687"
   },
 
   D007717: {
@@ -9535,172 +2212,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D007728: {
-    'id' : "D007728",
-    'name' : "Kupffer Cells",
-    'annotation' : "also called reticuloendothelial cells of liver",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:20:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012083' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007728"
-  },
-
-  D007743: {
-    'id' : "D007743",
-    'name' : "Labor, Obstetric",
-    'annotation' : "check tags FEMALE & PREGNANCY; LABOR, INDUCED is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012105' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000266','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007744: {
-    'id' : "D007744",
-    'name' : "Obstetric Labor Complications",
-    'annotation' : "check the tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012106' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007745: {
-    'id' : "D007745",
-    'name' : "Labor Onset",
-    'annotation' : "human only;  check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012108' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007746: {
-    'id' : "D007746",
-    'name' : "Labor Presentation",
-    'annotation' : "check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012109','M0457459' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007747: {
-    'id' : "D007747",
-    'name' : "Labor Stage, First",
-    'annotation' : "human only; check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012110','M0012111' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007748: {
-    'id' : "D007748",
-    'name' : "Labor Stage, Second",
-    'annotation' : "human only; check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012112' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007749: {
-    'id' : "D007749",
-    'name' : "Labor Stage, Third",
-    'annotation' : "human only; check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:21:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012113' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007751: {
-    'id' : "D007751",
-    'name' : "Labor, Induced",
-    'annotation' : "check tags FEMALE & PREGNANCY; amniotomy in inducing labor: coord IM with AMNION /surg (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:22:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012116' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007752: {
-    'id' : "D007752",
-    'name' : "Obstetric Labor, Premature",
-    'annotation' : "check the tags FEMALE & PREGNANCY; PREMATURE BIRTH is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:22:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012117' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007774: {
-    'id' : "D007774",
-    'name' : "Lactation",
-    'annotation' : "check the tag FEMALE usually but occasionally MALE; 'postpartum amenorrhea' is indexed under PUERPERIUM + AMENORRHEA and not LACTATION unless lactation is particularly discussed; ANIMALS, SUCKLING is available but the suckling of an animal goes here: human suckling goes under BREAST FEEDING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:23:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012156','M0012157' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D007797: {
     'id' : "D007797",
     'name' : "Laminin",
@@ -9717,36 +2228,6 @@ module.exports = {
     'previousIndexing' : "D007797"
   },
 
-  D007857: {
-    'id' : "D007857",
-    'name' : "Leadership",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:30:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012270','M0012271' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007858: {
-    'id' : "D007858",
-    'name' : "Learning",
-    'annotation' : "more psychol than educ: Manual 30.12",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:30:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012272','M0505981','M0576176' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D007866: {
     'id' : "D007866",
     'name' : "Leg",
@@ -9758,51 +2239,6 @@ module.exports = {
     'sessions' : [ '16513' ],
     'concepts' : [ 'M0012281' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000254','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007889: {
-    'id' : "D007889",
-    'name' : "Leiomyoma",
-    'annotation' : "solitary; multiple = LEIOMYOMATOSIS; coord IM with precoord organ/neopl term (IM); for X refs FIBROID UTERUS; FIBROIDS, UTERINE & FIBROMA, UTERINE: coord with UTERINE NEOPLASMS (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:33:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012316','M0012317' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007918: {
-    'id' : "D007918",
-    'name' : "Leprosy",
-    'annotation' : "caused by Mycobacterium leprae; GEN or unspecified: prefer specifics; rat leprosy = MYCOBACTERIUM INFECTIONS (IM) + MYCOBACTERIUM LEPRAEMURIUM (IM); /drug ther: consider also LEPROSTATIC AGENTS; ENL (erythema nodosum leprosum): see note at LEPROSY, LEPROMATOUS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:35:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012361' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007938: {
-    'id' : "D007938",
-    'name' : "Leukemia",
-    'annotation' : "general or unspecified; many specific leukemia types are available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:37:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012382' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -9838,144 +2274,6 @@ module.exports = {
     'previousIndexing' : "D007963"
   },
 
-  D007986: {
-    'id' : "D007986",
-    'name' : "Luteinizing Hormone",
-    'annotation' : "do not confuse X ref LUTROPIN with PLACENTAL LUTEOTROPIN; for alpha subunit, coordinate with GLYCOPROTEIN HORMONES, ALPHA SUBUNIT; LUTEINIZING HORMONE, BETA SUBUNIT is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:40:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012444','M0012445' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007990: {
-    'id' : "D007990",
-    'name' : "Libraries",
-    'annotation' : "specify geographic or other site",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012455' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007993: {
-    'id' : "D007993",
-    'name' : "Libraries, Medical",
-    'annotation' : "private & public libraries; includes private collections of books; IM; specify geog or other site; DF: LIBRARIES MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012458','M0012459' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D007999: {
-    'id' : "D007999",
-    'name' : "Library Services",
-    'annotation' : "IM; DF: LIBRARY SERV",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012466' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D007999"
-  },
-
-  D008000: {
-    'id' : "D008000",
-    'name' : "Library Surveys",
-    'annotation' : "IM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012467' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008001: {
-    'id' : "D008001",
-    'name' : "Library Technical Services",
-    'annotation' : "IM; DF: LIBRARY TECHNICAL SERV",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012468' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008001"
-  },
-
-  D008018: {
-    'id' : "D008018",
-    'name' : "Life Cycle Stages",
-    'annotation' : "GEN or unspecified; prefer specifics; coord IM with name of organism with /growth (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012500' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008018"
-  },
-
-  D008019: {
-    'id' : "D008019",
-    'name' : "Life Style",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012501','M0012502' ],
-    'qualifiers' : [ 'Q000208','Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008019"
-  },
-
-  D008021: {
-    'id' : "D008021",
-    'name' : "Life Support Systems",
-    'annotation' : "do not confuse with LIFE SUPPORT CARE: read MeSH definition",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:41:55+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012505' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000331','Q000592','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D008022: {
     'id' : "D008022",
     'name' : "Ligaments",
@@ -10007,141 +2305,6 @@ module.exports = {
     'previousIndexing' : "D008024"
   },
 
-  D008040: {
-    'id' : "D008040",
-    'name' : "Linkage (Genetics)",
-    'annotation' : "DF: LINKAGE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:42:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012530','M0540528' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008040"
-  },
-
-  D008049: {
-    'id' : "D008049",
-    'name' : "Lipase",
-    'annotation' : "/defic: consider also LIPID METABOLISM, INBORN ERRORS & CHOLESTEROL ESTER STORAGE DISEASE & WOLMAN DISEASE; LIPOPROTEIN LIPASE is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:43:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012539','M0012540','M0012541','M0012542','M0012543','M0012544','M0012545','M0012546' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008055: {
-    'id' : "D008055",
-    'name' : "Lipids",
-    'annotation' : "GEN or unspecified only: prefer specifics; differentiate from FATS ('outside the body'); /blood: consider also HYPERLIPIDEMIAS & specifics; dyslipidemia, especially in foreign lit, is probably HYPERLIPIDEMIAS or its specifics; DIETARY FATS is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:43:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012553' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008094: {
-    'id' : "D008094",
-    'name' : "Lithium",
-    'annotation' : "Li-7; Li-6 = LITHIUM (IM) + ISOTOPES (NIM); Li-5, 8, 9 = LITHIUM (IM) + RADIOISOTOPES (IM); therapeutic use of lithium = LITHIUM COMPOUNDS / ther use or specific lithium compound /ther use",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:45:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012622' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000145','Q000172','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008099: {
-    'id' : "D008099",
-    'name' : "Liver",
-    'annotation' : "/blood supply: consider also LIVER CIRCULATION; /cytol: consider also KUPFFER CELLS; /surg: consider also HEPATECTOMY & LIVER TRANSPLANTATION; inflammation = HEPATITIS & its specifics; specialty is HEPATOLOGY see GASTROENTEROLOGY; be careful: do not confuse 'hepatic' with 'intrahepatic': 'intrahepatic' may refer to BILE DUCTS, INTRAHEPATIC & its dis, not LIVER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:45:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012632' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008103: {
-    'id' : "D008103",
-    'name' : "Liver Cirrhosis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:45:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012636','M0012637' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008107: {
-    'id' : "D008107",
-    'name' : "Liver Diseases",
-    'annotation' : "general; prefer specifics; inflammatory disease = HEPATITIS & its specifics; specialty is HEPATOLOGY see GASTROENTEROLOGY; be careful: do not confuse 'hepatic disease' with 'intrahepatic disease': 'intrahepatic disease' may refer to BILE DUCT DISEASES with regard to BILE DUCTS, INTRAHEPATIC, not LIVER DISEASES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:46:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012644','M0012645' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008128: {
-    'id' : "D008128",
-    'name' : "Logic",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:47:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012674' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008138: {
-    'id' : "D008138",
-    'name' : "Loop of Henle",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:47:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012691','M0475591','M0475592' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008138"
-  },
-
   D008168: {
     'id' : "D008168",
     'name' : "Lung",
@@ -10153,98 +2316,6 @@ module.exports = {
     'sessions' : [ '16477','16482' ],
     'concepts' : [ 'M0012740' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008171: {
-    'id' : "D008171",
-    'name' : "Lung Diseases",
-    'annotation' : "general; prefer specifics; inflammatory disease = PNEUMONIA; lung collapse = PULMONARY ATELECTASIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:48:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012744' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008172: {
-    'id' : "D008172",
-    'name' : "Lung Diseases, Fungal",
-    'annotation' : "coordinate IM with specific fungal disease (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:48:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012745' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008173: {
-    'id' : "D008173",
-    'name' : "Lung Diseases, Obstructive",
-    'annotation' : "PULMONARY DISEASE, CHRONIC OBSTRUCTIVE and AIRWAY OBSTRUCTION are also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:48:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012746' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008173"
-  },
-
-  D008175: {
-    'id' : "D008175",
-    'name' : "Lung Neoplasms",
-    'annotation' : "coord IM with histol type of neopl (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:49:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012749','M0012750' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008176: {
-    'id' : "D008176",
-    'name' : "Lung Volume Measurements",
-    'annotation' : "NIM; see FORCED EXPIRATORY FLOW RATES & FORCED EXPIRATORY VOLUME for more cross-refs",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:49:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012751','M0012752' ],
-    'qualifiers' : [ 'Q000295','Q000379','Q000662' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008176"
-  },
-
-  D008180: {
-    'id' : "D008180",
-    'name' : "Lupus Erythematosus, Systemic",
-    'annotation' : "if not specified as 'systemic' it is still probably correct to index here, not also discoid; LUPUS NEPHRITIS is also available; LE CELLS see NEUTROPHILS is also available: use LUPUS ERYTHEMATOSUS, SYSTEMIC /blood or /pathol + NEUTROPHILS for discussion of the LE cells as cells; DF: SLE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:49:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012757','M0012758' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -10278,22 +2349,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D008206: {
-    'id' : "D008206",
-    'name' : "Lymphatic Diseases",
-    'annotation' : "general or unspecified; prefer specifics; note entry term LYMPHADENOPATHY: unspecified goes here but LYMPHADENOPATHY SYNDROME see AIDS-RELATED COMPLEX & IMMUNOBLASTIC LYMPHADENOPATHY are also available; inflammatory disease = LYMPHANGITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:50:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012792','M0012793','M0012794','M0505681' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008206"
-  },
-
   D008208: {
     'id' : "D008208",
     'name' : "Lymphatic System",
@@ -10322,37 +2377,6 @@ module.exports = {
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D008223: {
-    'id' : "D008223",
-    'name' : "Lymphoma",
-    'annotation' : "GEN only or unspecified: prefer specific; do not confuse X ref LYMPHOMA, MALIGNANT with LYMPHOGRANULOMA, MALIGNANT see HODGKIN DISEASE; for lymphoma with AIDS, use LYMPHOMA, AIDS-RELATED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:51:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012817' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008228: {
-    'id' : "D008228",
-    'name' : "Lymphoma, Non-Hodgkin",
-    'annotation' : "general & unspecified only: prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:51:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012821','M0012822','M0012823','M0025075','M0025076','M0025077','M0025078','M0025085','M0025088','M0506847' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008228"
   },
 
   D008264: {
@@ -10385,64 +2409,6 @@ module.exports = {
     'previousIndexing' : "D008279"
   },
 
-  D008286: {
-    'id' : "D008286",
-    'name' : "Malabsorption Syndromes",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:54:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012908' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008305: {
-    'id' : "D008305",
-    'name' : "Malignant Hyperthermia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:55:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012932' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008305"
-  },
-
-  D008382: {
-    'id' : "D008382",
-    'name' : "Marfan Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:58:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013029' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008403: {
-    'id' : "D008403",
-    'name' : "Mass Screening",
-    'annotation' : "coord with disease/diag or /epidemiol or /prev",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:58:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013083','M0013084' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000458','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D008407: {
     'id' : "D008407",
     'name' : "Mast Cells",
@@ -10456,189 +2422,6 @@ module.exports = {
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D008428: {
-    'id' : "D008428",
-    'name' : "Maternal Mortality",
-    'annotation' : "a largely statistical concept, not for individual maternal deaths; IM GEN only; coord NIM with disease /mortal (IM); specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T04:59:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013116' ],
-    'qualifiers' : [ 'Q000208','Q000266','Q000639' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008471: {
-    'id' : "D008471",
-    'name' : "Meconium Aspiration Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:01:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013186' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008471"
-  },
-
-  D008475: {
-    'id' : "D008475",
-    'name' : "Median Nerve",
-    'annotation' : "dis = MEDIAN NEUROPATHY (IM); neopl = MEDIAN NEUROPATHY (IM) + PERIPHERAL NERVOUS SYSTEM NEOPLASMS (IM) + histol type of neopl (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:01:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013191' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008482: {
-    'id' : "D008482",
-    'name' : "Mediastinum",
-    'annotation' : "radiogr is probably PNEUMOMEDIASTINUM, DIAGNOSTIC; inflammation = MEDIASTINITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:02:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013202' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000254','Q000293','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008487: {
-    'id' : "D008487",
-    'name' : "Medical History Taking",
-    'annotation' : "DF: MED HIST TAKING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:02:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013209' ],
-    'qualifiers' : [ 'Q000379','Q000592','Q000662','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008487"
-  },
-
-  D008495: {
-    'id' : "D008495",
-    'name' : "Medical Oncology",
-    'annotation' : "SPEC: SPEC qualif; RADIATION ONCOLOGY is also available; DF: MED ONCOL; specialty only",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:02:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013221','M0529266' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008495"
-  },
-
-  D008501: {
-    'id' : "D008501",
-    'name' : "Medical Records, Problem-Oriented",
-    'annotation' : "DF: POMR",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:02:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013231' ],
-    'qualifiers' : [ 'Q000592','Q000656','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008507: {
-    'id' : "D008507",
-    'name' : "Medically Underserved Area",
-    'annotation' : "no qualif; specify geog; DF: MED UNDERSERV AREA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:02:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013242','M0013243','M0013244' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008525: {
-    'id' : "D008525",
-    'name' : "Medroxyprogesterone",
-    'annotation' : "a synthetic progestational hormone",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:03:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013279','M0473882' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008540: {
-    'id' : "D008540",
-    'name' : "Meiosis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:04:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013301','M0463995' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008540"
-  },
-
-  D008545: {
-    'id' : "D008545",
-    'name' : "Melanoma",
-    'annotation' : "/blood supply /chem /second /secret /ultrastruct permitted; coord IM with precoord organ/neopl term (IM); MELANOMA, EXPERIMENTAL is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:04:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013309' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008564: {
-    'id' : "D008564",
-    'name' : "Membrane Potentials",
-    'annotation' : "coordinate with organ /physiol",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:05:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013339','M0490546' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008564"
   },
 
   D008565: {
@@ -10687,139 +2470,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D008591: {
-    'id' : "D008591",
-    'name' : "Meningomyelocele",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:07:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013375','M0013376','M0337007' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008591"
-  },
-
-  D008593: {
-    'id' : "D008593",
-    'name' : "Menopause",
-    'annotation' : "PERIMENOPAUSE; PREMENOPAUSE; and POSTMENOPAUSE are available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:07:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013380' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008597: {
-    'id' : "D008597",
-    'name' : "Menstrual Cycle",
-    'annotation' : "human & other primates only; for non-primates use ESTROUS CYCLE; do not confuse with MENSTRUATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:07:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013391','M0013394','M0013395' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008597"
-  },
-
-  D008598: {
-    'id' : "D008598",
-    'name' : "Menstruation",
-    'annotation' : "human & other primates only; non-primates = ESTRUS; do not confuse with MENSTRUAL CYCLE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:07:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013398' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008603: {
-    'id' : "D008603",
-    'name' : "Mental Health",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:07:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013409' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000208','Q000266','Q000331','Q000364','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008607: {
-    'id' : "D008607",
-    'name' : "Mental Retardation",
-    'annotation' : "do not equate  /rehabil with EDUCATION OF MENTALLY RETARDED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:07:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013413','M0013414','M0013415','M0337434' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008609: {
-    'id' : "D008609",
-    'name' : "Mental Status Schedule",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:08:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013416' ],
-    'qualifiers' : [ 'Q000266','Q000592','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008611: {
-    'id' : "D008611",
-    'name' : "Mentors",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:08:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013418','M0013419' ],
-    'qualifiers' : [ 'Q000145','Q000193','Q000266','Q000331','Q000523','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008648: {
-    'id' : "D008648",
-    'name' : "Mesoderm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:09:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013475','M0013476','M0503184','M0503185','M0503186' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D008657: {
     'id' : "D008657",
     'name' : "Metabolic Clearance Rate",
@@ -10836,21 +2486,6 @@ module.exports = {
     'previousIndexing' : "D008657"
   },
 
-  D008659: {
-    'id' : "D008659",
-    'name' : "Metabolic Diseases",
-    'annotation' : "GEN: prefer specifics; TN 194: differentiate from DEFICIENCY DISEASES; DF: METAB DIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:10:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013493' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D008660: {
     'id' : "D008660",
     'name' : "Metabolism",
@@ -10862,21 +2497,6 @@ module.exports = {
     'sessions' : [ '16473','16519' ],
     'concepts' : [ 'M0013495','M0487998','M0487999' ],
     'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008661: {
-    'id' : "D008661",
-    'name' : "Metabolism, Inborn Errors",
-    'annotation' : "GEN: prefer specific types; differentiate from DEFICIENCY DISEASES; DF: METAB INBORN ERR",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:10:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013496' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -10906,37 +2526,6 @@ module.exports = {
     'sessions' : [ '16489' ],
     'concepts' : [ 'M0013689' ],
     'qualifiers' : [ 'Q000266','Q000295','Q000592' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008828: {
-    'id' : "D008828",
-    'name' : "Microbiological Techniques",
-    'annotation' : "GEN or unspecified; bacteriologic techniques = BACTERIOLOGICAL TECHNIQUES; virologic techniques = VIROLOGY /methods; mycologic techniques = MYCOLOGY /methods; parasitologic techniques = PARASITOLOGY /methods; do not use /util except by MeSH definition: DF: MICROBIOL TECHNIQUES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:18:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013766' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008828"
-  },
-
-  D008829: {
-    'id' : "D008829",
-    'name' : "Microbiology",
-    'annotation' : "the discipline (education, history, etc) only; use MICROBIOLOGICAL PHENOMENA or specifics treed under it for physiologic characteristics and processes of microorganisms, or the qualifier /microbiol with specific anatomical terms, organisms and diseases",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:18:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013767' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -10986,21 +2575,6 @@ module.exports = {
     'previousIndexing' : "D008870"
   },
 
-  D008903: {
-    'id' : "D008903",
-    'name' : "Minerals",
-    'annotation' : "GEN: prefer specifics; trace minerals = TRACE ELEMENTS; 'bone minerals' = MINERALS (IM) + BONE AND BONES (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:21:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013901' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D008928: {
     'id' : "D008928",
     'name' : "Mitochondria",
@@ -11012,65 +2586,6 @@ module.exports = {
     'sessions' : [ '16471' ],
     'concepts' : [ 'M0013938','M0013939' ],
     'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008934: {
-    'id' : "D008934",
-    'name' : "Mitogens",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:22:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0012279','M0013944' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008934"
-  },
-
-  D008938: {
-    'id' : "D008938",
-    'name' : "Mitosis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:22:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013950','M0463993' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D008938"
-  },
-
-  D008944: {
-    'id' : "D008944",
-    'name' : "Mitral Valve Insufficiency",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:22:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013958' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D008946: {
-    'id' : "D008946",
-    'name' : "Mitral Valve Stenosis",
-    'annotation' : "atresia = MITRAL VALVE /abnorm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:22:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0013960' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -11091,21 +2606,6 @@ module.exports = {
     'previousIndexing' : "D008967"
   },
 
-  D008996: {
-    'id' : "D008996",
-    'name' : "Monoamine Oxidase Inhibitors",
-    'annotation' : "DF: MAO INHIB",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:24:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014029','M0332170','M0332172' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D009000: {
     'id' : "D009000",
     'name' : "Monocytes",
@@ -11121,81 +2621,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009017: {
-    'id' : "D009017",
-    'name' : "Morbidity",
-    'annotation' : "IM GEN only; coord NIM with disease /epidemiol (IM); specify geog if possible",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:25:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014060' ],
-    'qualifiers' : [ 'Q000639' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009024: {
-    'id' : "D009024",
-    'name' : "Morphogenesis",
-    'annotation' : "coordinate with specific organ or organism / embryol or /growth",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:25:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014071' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009024"
-  },
-
-  D009026: {
-    'id' : "D009026",
-    'name' : "Mortality",
-    'annotation' : "a statistical concept, not for individual deaths in case reports ( = FATAL OUTCOME); do not confuse with DEATH, the physiol dying or death; IM GEN only; prefer /mortal with diseases: Manual 19.7+, 19.8.47; specify geog; for human & animal; DF: MORTAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:25:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0011277','M0014073','M0014074','M0014075','M0014076','M0014077','M0014078','M0014079','M0014080' ],
-    'qualifiers' : [ 'Q000208','Q000266','Q000639' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009030: {
-    'id' : "D009030",
-    'name' : "Mosaicism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:25:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014087' ],
-    'qualifiers' : [ 'Q000139','Q000145','Q000187','Q000196','Q000528','Q000662','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009042: {
-    'id' : "D009042",
-    'name' : "Motivation",
-    'annotation' : "human & animal",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:26:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014107','M0014108','M0014109' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000235','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D009046: {
     'id' : "D009046",
     'name' : "Motor Neurons",
@@ -11206,20 +2631,6 @@ module.exports = {
     'objectives' : [],
     'sessions' : [ '16483' ],
     'concepts' : [ 'M0014114' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009047: {
-    'id' : "D009047",
-    'name' : "Motor Neurons, Gamma",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:26:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014115' ],
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
@@ -11285,21 +2696,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009141: {
-    'id' : "D009141",
-    'name' : "Musculoskeletal System",
-    'annotation' : "GEN; must be both musculo + skeletal, otherwise prefer BONE AND BONES or MUSCLES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:31:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014260' ],
-    'qualifiers' : [ 'Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D009154: {
     'id' : "D009154",
     'name' : "Mutation",
@@ -11315,52 +2711,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009164: {
-    'id' : "D009164",
-    'name' : "Mycobacterium Infections",
-    'annotation' : "gram-pos bact infect; GEN; consider also TUBERCULOSIS; DF: MYCOBACT INFECT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:31:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014287' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009172: {
-    'id' : "D009172",
-    'name' : "Mycology",
-    'annotation' : "use for the discipline (education, history, etc) only",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:32:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014303' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009172"
-  },
-
-  D009181: {
-    'id' : "D009181",
-    'name' : "Mycoses",
-    'annotation' : "GEN: prefer specifics; of skin = DERMATOMYCOSES; /drug ther: consider also ANTIFUNGAL AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:32:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014313' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D009186: {
     'id' : "D009186",
     'name' : "Myelin Sheath",
@@ -11372,50 +2722,6 @@ module.exports = {
     'sessions' : [ '16483' ],
     'concepts' : [ 'M0014319','M0014320' ],
     'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009203: {
-    'id' : "D009203",
-    'name' : "Myocardial Infarction",
-    'annotation' : "do not coordinate with ACUTE DISEASE for 'acute infarct'",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:33:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014340' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009205: {
-    'id' : "D009205",
-    'name' : "Myocarditis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:33:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014343','M0393324' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009206: {
-    'id' : "D009206",
-    'name' : "Myocardium",
-    'annotation' : "the heart as tissue, differentiated from the heart as a pump ( = HEART); Manual 21.48; ischemia = MYOCARDIAL ISCHEMIA; inflammation = MYOCARDITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:33:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014344' ],
-    'qualifiers' : [ 'Q000166','Q000201','Q000276','Q000378','Q000473','Q000557','Q000648','Q000737' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -11466,21 +2772,6 @@ module.exports = {
     'previousIndexing' : "D009219"
   },
 
-  D009220: {
-    'id' : "D009220",
-    'name' : "Myositis",
-    'annotation' : "note many specific myositis terms are available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:34:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014368','M0335630','M0335631','M0335632','M0335633' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D009333: {
     'id' : "D009333",
     'name' : "Neck",
@@ -11511,158 +2802,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009357: {
-    'id' : "D009357",
-    'name' : "Neonatal Abstinence Syndrome",
-    'annotation' : "substance-withdrawal symptoms in inf born of an addicted mother; do not use /congen; coord IM with specific substance /adv eff (IM) + check tag INFANT, NEWBORN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:40:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014568','M0014569' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009357"
-  },
-
-  D009358: {
-    'id' : "D009358",
-    'name' : "Congenital, Hereditary, and Neonatal Diseases and Abnormalities",
-    'annotation' : "used for searching: indexers and catalogers apply specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:40:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014570','M0014571','M0374592' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009362: {
-    'id' : "D009362",
-    'name' : "Neoplasm Metastasis",
-    'annotation' : "GEN only for metastatic process or neoplasm metast in general; when IM for GEN only, qualif permitted; unlikely as NIM coord: prefer /second with organ/neopl & histol type for metastatic neopl; policy on metastasis & /second: Manual 19.8.65, 24.3.1, 24.4.1.3+; do not confuse with NEOPLASM INVASIVENESS (Manual 24.4.1.1+), LEUKEMIC INFILTRATION (Manual 24.4.1.2), NEOPLASMS, SECOND PRIMARY (Manual 24.4.1.7) or NEOPLASM, RESIDUAL; DF: NEOPL METASTASIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:40:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014577' ],
-    'qualifiers' : [ 'Q000175','Q000188','Q000235','Q000276','Q000473','Q000503','Q000517','Q000530','Q000531','Q000532','Q000628','Q000648','Q000736' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009367: {
-    'id' : "D009367",
-    'name' : "Neoplasm Staging",
-    'annotation' : "= degree of spread of neopl (do not confuse with 'grading' which = degree of malignancy); staging is given in roman numerals, grading in arabic; Manual 24.4.1.12+; usually NIM with no qualif + neopl terms /pathol (IM); IM as technique & general only & when IM, qualif permitted; relation to /pathol & differentiation from classification: TN 214; DF: NEOPL STAGING",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:40:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014582','M0555398' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009369: {
-    'id' : "D009369",
-    'name' : "Neoplasms",
-    'annotation' : "avoid: too general; prefer specifics; policy: Manual section 24; /chem ind permitted but consider also CARCINOGENS; /class: consider also NEOPLASM STAGING (see note there) but 'grading' = /pathol; /etiol: consider also ONCOGENIC VIRUSES; /vet: Manual 24.6+ or TN 136; TN 135: MeSH terms for neoplasms classed by tissue; /drug ther: consider also ANTINEOPLASTIC AGENTS & its specifics; /genet: consider also GENES, TUMOR SUPPRESSOR /immunol: consider also TUMOR ESCAPE; consider also ANTIGENS, NEOPLASM & ANTIBODIES, NEOPLASM; /microbiol: consider also ONCOGENIC VIRUSES; /nurs = the patient, ONCOLOGIC NURSING = the oncologic specialty; /prev: consider also ANTICARCINOGENIC AGENTS; /radiother = the patient, RADIATION ONCOLOGY = the specialty; consider also BRACHYTHERAPY; /second = NEOPLASM METASTASIS but do not confuse with NEOPLASMS, SECOND PRIMARY; familial: consider also NEOPLASTIC SYNDROMES, HEREDITARY; metastatic cancer of unknown origin: index under NEOPLASM METASTASIS; Tumor Key: TN Suppl",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:40:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014584','M0014585','M0014586' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009393: {
-    'id' : "D009393",
-    'name' : "Nephritis",
-    'annotation' : "familial: consider also NEPHRITIS, HEREDITARY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:42:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014626' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009398: {
-    'id' : "D009398",
-    'name' : "Nephrology",
-    'annotation' : "SPEC; SPEC qualif; DF: NEPHROL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:42:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014632' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009398"
-  },
-
-  D009399: {
-    'id' : "D009399",
-    'name' : "Nephrons",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:42:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014633' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009399"
-  },
-
-  D009404: {
-    'id' : "D009404",
-    'name' : "Nephrotic Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:42:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014639' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009412: {
-    'id' : "D009412",
-    'name' : "Nerve Fibers",
-    'annotation' : "do not confuse X ref MOSSY FIBERS, CEREBELLAR with MOSSY FIBERS, HIPPOCAMPAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:43:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014647','M0014648' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009412"
-  },
-
   D009420: {
     'id' : "D009420",
     'name' : "Nervous System",
@@ -11678,22 +2817,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009436: {
-    'id' : "D009436",
-    'name' : "Neural Tube Defects",
-    'annotation' : "do not confuse X ref SPINAL CORD MYELODYSPLASIA with MYELODYSPLASTIC SYNDROMES, a defect of bone marrow formation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:44:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014686','M0024643','M0024646','M0336865','M0336866','M0336867','M0336868','M0336869','M0338010' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009436"
-  },
-
   D009457: {
     'id' : "D009457",
     'name' : "Neuroglia",
@@ -11704,50 +2827,6 @@ module.exports = {
     'sessions' : [ '16483' ],
     'concepts' : [ 'M0014711' ],
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009460: {
-    'id' : "D009460",
-    'name' : "Neurologic Examination",
-    'annotation' : "NIM; DF: NEUROL EXAM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:45:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014714' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009462: {
-    'id' : "D009462",
-    'name' : "Neurology",
-    'annotation' : "SPEC: SPEC qualif; DF: NEUROL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:45:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014717' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009470: {
-    'id' : "D009470",
-    'name' : "Muscle Spindles",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:45:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014729' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -11767,22 +2846,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009475: {
-    'id' : "D009475",
-    'name' : "Neurons, Afferent",
-    'annotation' : "do not confuse with NEURONS, EFFERENT which activate muscle and secretory cells",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:46:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014737' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009475"
-  },
-
   D009482: {
     'id' : "D009482",
     'name' : "Neurophysiology",
@@ -11796,51 +2859,6 @@ module.exports = {
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D009488: {
-    'id' : "D009488",
-    'name' : "Neurosciences",
-    'annotation' : "use for the discipline only (education, history, etc) only",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:46:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014763' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009489: {
-    'id' : "D009489",
-    'name' : "Neurosecretion",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:46:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014764' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009490: {
-    'id' : "D009490",
-    'name' : "Neurosecretory Systems",
-    'annotation' : "/secret = probably /physiol or NEUROSECRETION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:46:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014765','M0014766','M0014767' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009490"
   },
 
   D009638: {
@@ -11857,366 +2875,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D009644: {
-    'id' : "D009644",
-    'name' : "Norgestrel",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:53:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0014981','M0014983','M0014984','M0014985','M0373572' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009644"
-  },
-
-  D009666: {
-    'id' : "D009666",
-    'name' : "Nose",
-    'annotation' : "nose unspecified, but note specific nasal terms are available; / abnorm permitted for congenital deformities but acquired deformities = NOSE DEFORMITIES, ACQUIRED; / surg: consider also RHINOPLASTY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:54:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015010','M0514973' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009672: {
-    'id' : "D009672",
-    'name' : "Notochord",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:55:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015016','M0503435' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009672"
-  },
-
-  D009765: {
-    'id' : "D009765",
-    'name' : "Obesity",
-    'annotation' : "OBESITY, MORBID is also available; obese hyperglycemic mice are indexed MICE, OBESE: do not add OBESITY or HYPERGLYCEMIA unless disease particularly discussed",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:58:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015159' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009774: {
-    'id' : "D009774",
-    'name' : "Obstetrics",
-    'annotation' : "SPEC: SPEC qualif; do not use for 'obstetric diseases' ( = probably PREGNANCY COMPLICATIONS, etc.)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:58:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015174' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009784: {
-    'id' : "D009784",
-    'name' : "Occupational Diseases",
-    'annotation' : "the patient or disease: differentiate from INDUSTRY (the realm of labor, capital & trade) & OCCUPATIONAL MEDICINE (the med specialty): Manual 31.14, 31.16; coord IM with specific dis (IM); DF: OCCUP DIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T05:59:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015191' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009836: {
-    'id' : "D009836",
-    'name' : "Oligodendroglia",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:01:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015269','M0015270','M0015272','M0380853' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009841: {
-    'id' : "D009841",
-    'name' : "Oligonucleotides",
-    'annotation' : "2-12 nucleotides",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:01:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015278' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009857: {
-    'id' : "D009857",
-    'name' : "Oncogenes",
-    'annotation' : "'oncogene' used by author may refer to ONCOGENES or PROTO-ONCOGENES; do not confuse with ONCOGENS see CARCINOGENS; Manual 24.4.4.3; do not confuse with GENES, NEOPLASM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:02:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015298' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009857"
-  },
-
-  D009895: {
-    'id' : "D009895",
-    'name' : "Opsonin Proteins",
-    'annotation' : "coordinate with ANTIBODIES or specific antibody term if relevant",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:03:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0484835' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000494','Q000502','Q000506','Q000528','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009934: {
-    'id' : "D009934",
-    'name' : "Organization and Administration",
-    'annotation' : "GEN only: prefer /organ: Manual 19.7+, 19.8.49; almost never IM; DF: ORGAN ADMIN but do not confuse with ORGAN for ORGANIZATIONS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:04:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015402','M0015405','M0015406','M0015407','M0015408','M0423449' ],
-    'qualifiers' : [ 'Q000191','Q000592','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009936: {
-    'id' : "D009936",
-    'name' : "Organizational Innovation",
-    'annotation' : "NIM; coord with specific organiz (IM); DF: ORGAN INNOVATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:04:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015412','M0015413' ],
-    'qualifiers' : [ 'Q000191' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009949: {
-    'id' : "D009949",
-    'name' : "Orientation",
-    'annotation' : "human & animal",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:05:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015427' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D009994: {
-    'id' : "D009994",
-    'name' : "Osmolar Concentration",
-    'annotation' : "NIM; no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:07:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015493','M0015494','M0015495' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D009994"
-  },
-
-  D010003: {
-    'id' : "D010003",
-    'name' : "Osteoarthritis",
-    'annotation' : "most common form of arthritis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:07:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015509','M0015510' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010006: {
-    'id' : "D010006",
-    'name' : "Osteoblasts",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:07:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015514' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010010: {
-    'id' : "D010010",
-    'name' : "Osteoclasts",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:08:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015528','M0015529' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010018: {
-    'id' : "D010018",
-    'name' : "Osteomalacia",
-    'annotation' : "softening of bones; manifest of calcium & vitamin D defic",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:08:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015543' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010024: {
-    'id' : "D010024",
-    'name' : "Osteoporosis",
-    'annotation' : "related to aging: note X refs; age-related osteoporosis in men goes here; age-related osteoporosis in women is probably OSTEOPOROSIS, POSTMENOPAUSAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:08:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015551','M0015552','M0015553','M0336965' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010051: {
-    'id' : "D010051",
-    'name' : "Ovarian Neoplasms",
-    'annotation' : "coordinate IM with histologic type of neoplasm (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:10:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015592','M0015593' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010053: {
-    'id' : "D010053",
-    'name' : "Ovary",
-    'annotation' : "OVARY, PLANT is also available; /surg permitted but is probably OVARIECTOMY; /abnorm: agenesis or dysgenesis: coord OVARY /abnorm (IM) with GONADAL DYSGENESIS (IM); /cytol: consider also THECA CELLS; inflammation = OOPHORITIS; polycystic ovary, sclerocystic ovary = POLYCYSTIC OVARY SYNDROME",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:10:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015596' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010066: {
-    'id' : "D010066",
-    'name' : "Ovum Transport",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:10:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015613' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010066"
-  },
-
-  D010092: {
-    'id' : "D010092",
-    'name' : "Oximetry",
-    'annotation' : "for measuremt of blood oxygen using an oximeter: not a synonym for 'oxygen measuremt' ( = OXYGEN /anal)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:11:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015654','M0015655' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010108: {
-    'id' : "D010108",
-    'name' : "Oxyhemoglobins",
-    'annotation' : "Bohr effect is indexed OXYHEMOGLOBINS /metab (IM) + PH (NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:12:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015679','M0015680' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010108"
-  },
-
   D010146: {
     'id' : "D010146",
     'name' : "Pain",
@@ -12227,35 +2885,6 @@ module.exports = {
     'objectives' : [],
     'sessions' : [ '16538' ],
     'concepts' : [ 'M0015742','M0336478','M0336479','M0336480','M0336481','M0336482','M0336483','M0336484' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010179: {
-    'id' : "D010179",
-    'name' : "Pancreas",
-    'annotation' : "/enzymol: consider also PANCREATIN for 'pancreatic enzymes' particularly in ther; /surg: consider also PANCREATECTOMY; note that ISLETS OF LANGERHANS TRANSPLANTATION is also available; inflammation = PANCREATITIS; pancreatic A, B, C cells: index under ISLETS OF LANGERHANS; D cells = SOMATOSTATIN-SECRETING CELLS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:15:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015790' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010195: {
-    'id' : "D010195",
-    'name' : "Pancreatitis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:16:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015809' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
@@ -12276,21 +2905,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D010271: {
-    'id' : "D010271",
-    'name' : "Parasites",
-    'annotation' : "GEN or unspecified only: prefer specifics; for parasiticides, consider ANTI-INFECTIVE AGENTS; ANTHELMINTICS; ANTIPROTOZOAL AGENTS & their specifics; in lower animals: Manual 22.20; relation to parasitic diseases: Manual 22.12-.20; parasites in food or parasitic contamination of food is indexed under FOOD PARASITOLOGY (IM) + specific parasite (IM) + specific food item (IM or NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:19:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015918' ],
-    'qualifiers' : [ 'Q000033','Q000145','Q000166','Q000187','Q000196','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000382','Q000469','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D010275: {
     'id' : "D010275",
     'name' : "Parasympathetic Nervous System",
@@ -12302,126 +2916,6 @@ module.exports = {
     'sessions' : [ '16482','16488','16490' ],
     'concepts' : [ 'M0015922' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010280: {
-    'id' : "D010280",
-    'name' : "Parathyroid Glands",
-    'annotation' : "/surg: consider also PARATHYROIDECTOMY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:20:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015928' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010281: {
-    'id' : "D010281",
-    'name' : "Parathyroid Hormone",
-    'annotation' : "/defic: consider also HYPOPARATHYROIDISM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:20:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015931','M0504226' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010287: {
-    'id' : "D010287",
-    'name' : "Parent-Child Relations",
-    'annotation' : "human only; DF: PARENT CHILD RELAT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:20:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015937' ],
-    'qualifiers' : [ 'Q000208','Q000331' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010288: {
-    'id' : "D010288",
-    'name' : "Parenteral Nutrition",
-    'annotation' : "for nourishment: differentiate from FLUID THERAPY (to replace fluids) or ENTERAL NUTRITION (see note there) or INFUSIONS, PARENTERAL (merely a method of admin drugs & chemicals); do not use /util except by MeSH definition; coord IM with dis /ther (IM), not dis /diet ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:20:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015938','M0015939','M0015940' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010289: {
-    'id' : "D010289",
-    'name' : "Parenteral Nutrition, Total",
-    'annotation' : "do not use /util except by MeSH definition; coord IM with dis /ther (IM), not dis /diet ther; DF: TPN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:20:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015941','M0015942' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010300: {
-    'id' : "D010300",
-    'name' : "Parkinson Disease",
-    'annotation' : "drug ther: consider also ANTIPARKINSON AGENTS; /chem ind = PARKINSON DISEASE, SECONDARY/chem ind",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:21:06+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015963' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010313: {
-    'id' : "D010313",
-    'name' : "Partial Pressure",
-    'annotation' : "NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:21:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0015982' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010336: {
-    'id' : "D010336",
-    'name' : "Pathology",
-    'annotation' : "SPEC only: SPEC qualif; prefer /pathol with organs & diseases: Manual 19.7+, 19.8.52; definition of /pathol applicable to PATHOLOGY: Manual 21.22+, 23.15; 'postmortem pathol': consider AUTOPSY or CADAVER or merely /pathol; DF: PATHOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016013' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -12442,112 +2936,6 @@ module.exports = {
     'previousIndexing' : "D010338"
   },
 
-  D010343: {
-    'id' : "D010343",
-    'name' : "Patient Admission",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016031','M0016032' ],
-    'qualifiers' : [ 'Q000191','Q000331','Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010343"
-  },
-
-  D010346: {
-    'id' : "D010346",
-    'name' : "Patient Care Management",
-    'annotation' : "GEN or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016039' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010347: {
-    'id' : "D010347",
-    'name' : "Patient Care Planning",
-    'annotation' : "for individual patient: do not confuse with PATIENT-CENTERED CARE which is institutional & admin management",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016040','M0016041','M0543172' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000458','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010349: {
-    'id' : "D010349",
-    'name' : "Patient Compliance",
-    'annotation' : "distinguish entry term PATIENT NON-COMPLIANCE from TREATMENT REFUSAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016046','M0024924' ],
-    'qualifiers' : [ 'Q000208','Q000523','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010349"
-  },
-
-  D010351: {
-    'id' : "D010351",
-    'name' : "Patient Discharge",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016050','M0016051' ],
-    'qualifiers' : [ 'Q000191','Q000331','Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010351"
-  },
-
-  D010353: {
-    'id' : "D010353",
-    'name' : "Patient Education as Topic",
-    'annotation' : "do not confuse with the Publication Type PATIENT EDUCATION HANDOUT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:22:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016055' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010372: {
-    'id' : "D010372",
-    'name' : "Pediatrics",
-    'annotation' : "SPEC: SPEC qualif; when permitted for 'pediatric dis': Manual 28.10.1",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:23:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016084' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D010375: {
     'id' : "D010375",
     'name' : "Pedigree",
@@ -12562,38 +2950,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D010375"
-  },
-
-  D010379: {
-    'id' : "D010379",
-    'name' : "Peer Group",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:23:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016095' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010379"
-  },
-
-  D010380: {
-    'id' : "D010380",
-    'name' : "Peer Review",
-    'annotation' : "professionals evaluating professionals",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:23:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016096' ],
-    'qualifiers' : [ 'Q000331','Q000379','Q000592','Q000639','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010380"
   },
 
   D010388: {
@@ -12611,128 +2967,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D010410: {
-    'id' : "D010410",
-    'name' : "Penile Erection",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:25:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016157','M0016158','M0457931' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000523','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010410"
-  },
-
-  D010437: {
-    'id' : "D010437",
-    'name' : "Peptic Ulcer",
-    'annotation' : "GEN: prefer STOMACH ULCER or DUODENAL ULCER but note GASTRODUODENAL ULCER = PEPTIC ULCER; stress ulcer: coord with STRESS, PHYSIOLOGICAL or STRESS, PSYCHOLOGICAL (IM or NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:27:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016210','M0016211' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010465: {
-    'id' : "D010465",
-    'name' : "Perception",
-    'annotation' : "general; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:28:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016252' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010482: {
-    'id' : "D010482",
-    'name' : "Periapical Abscess",
-    'annotation' : "do not confuse with PERIODONTAL ABSCESS: note X refs below; for coord read note on ABSCESS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:29:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016283' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010483: {
-    'id' : "D010483",
-    'name' : "Periapical Diseases",
-    'annotation' : "inflammatory disease = PERIAPICAL PERIODONTITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:29:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016284' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010483"
-  },
-
-  D010484: {
-    'id' : "D010484",
-    'name' : "Periapical Granuloma",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:29:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016285','M0016286','M0016287','M0016288' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010485: {
-    'id' : "D010485",
-    'name' : "Periapical Periodontitis",
-    'annotation' : "general or unspecified",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:29:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016289','M0016290' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010485"
-  },
-
-  D010486: {
-    'id' : "D010486",
-    'name' : "Periapical Tissue",
-    'annotation' : "diseases = PERIAPICAL DISEASES; inflammation = PERIAPICAL PERIODONTITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:29:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016291' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010486"
-  },
-
   D010496: {
     'id' : "D010496",
     'name' : "Pericardium",
@@ -12748,50 +2982,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D010502: {
-    'id' : "D010502",
-    'name' : "Perineum",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:30:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016315' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000254','Q000293','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010510: {
-    'id' : "D010510",
-    'name' : "Periodontal Diseases",
-    'annotation' : "entry term PARODONTOSIS occurs in foreign literature; 'periodontosis' also seen in foreign literature, meaning 'periodontal disease', should not be confused with PERIODONTOSIS see AGGRESSIVE PERIODONTITIS; inflammatory disease = PERIODONTITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:30:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016328','M0016329' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010521: {
-    'id' : "D010521",
-    'name' : "Periosteum",
-    'annotation' : "inflammation = PERIOSTITIS; dental = PERIODONTAL LIGAMENT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:30:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016345' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D010525: {
     'id' : "D010525",
     'name' : "Peripheral Nerves",
@@ -12803,139 +2993,6 @@ module.exports = {
     'sessions' : [ '16485' ],
     'concepts' : [ 'M0016349','M0016350','M0016351','M0016352' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010535: {
-    'id' : "D010535",
-    'name' : "Laparoscopy",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:31:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016363','M0026102' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010537: {
-    'id' : "D010537",
-    'name' : "Peritoneum",
-    'annotation' : "do not confuse with PERITONEAL CAVITY; 'peritoneal cells' = probably PERITONEAL CAVITY/cytol or PERITONEAL FLUID (see ASCITIC FLUID)/pathol but not PERITONEUM/cytol; inflammation = PERITONITIS; PERITONEAL LAVAGE is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:31:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016366','M0410950','M0410951' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010538: {
-    'id' : "D010538",
-    'name' : "Peritonitis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:31:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016367','M0455598','M0455599' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010545: {
-    'id' : "D010545",
-    'name' : "Peroxides",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:31:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016377' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010551: {
-    'id' : "D010551",
-    'name' : "Personality",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:32:11+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016385' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000235','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010565: {
-    'id' : "D010565",
-    'name' : "Persuasive Communication",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:32:31+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016413','M0016414' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010565"
-  },
-
-  D010581: {
-    'id' : "D010581",
-    'name' : "Peyer's Patches",
-    'annotation' : "an area of lymphoid tissue on small intestine mucosa",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:33:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016442' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010581"
-  },
-
-  D010586: {
-    'id' : "D010586",
-    'name' : "Phagocytes",
-    'annotation' : "A 11 qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:33:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016451' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010586"
-  },
-
-  D010587: {
-    'id' : "D010587",
-    'name' : "Phagocytosis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:33:21+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016452' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -13002,37 +3059,6 @@ module.exports = {
     'previousIndexing' : "D010601"
   },
 
-  D010609: {
-    'id' : "D010609",
-    'name' : "Pharyngeal Muscles",
-    'annotation' : "/growth: coordinate with MUSCLE DEVELOPMENT; /embryol: coordinate with MUSCLE DEVELOPMENT if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:34:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016480','M0466575','M0514742','M0514743','M0514744' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010609"
-  },
-
-  D010614: {
-    'id' : "D010614",
-    'name' : "Pharynx",
-    'annotation' : "inflammation = PHARYNGITIS; /surg: consider also PHARYNGECTOMY & PHARYNGOSTOMY; HYPOPHARYNX; NASOPHARYNX; & OROPHARYNX are also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:34:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016486' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D010641: {
     'id' : "D010641",
     'name' : "Phenotype",
@@ -13061,22 +3087,6 @@ module.exports = {
     'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D010786: {
-    'id' : "D010786",
-    'name' : "Photoreceptor Cells",
-    'annotation' : "general or unspecified; prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:41:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016754','M0515612','M0515613' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010786"
   },
 
   D010808: {
@@ -13109,22 +3119,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D010819: {
-    'id' : "D010819",
-    'name' : "Physician's Role",
-    'annotation' : "coord IM with area in which role is played (IM), as 'physician's role in reducing teenage pregnancy'= PHYSICIAN'S ROLE (IM) + PREGNANCY IN ADOLESCENCE (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:42:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016799' ],
-    'qualifiers' : [ 'Q000266','Q000523' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010819"
-  },
-
   D010827: {
     'id' : "D010827",
     'name' : "Physiology",
@@ -13136,113 +3130,6 @@ module.exports = {
     'sessions' : [ '16488' ],
     'concepts' : [ 'M0016812' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010858: {
-    'id' : "D010858",
-    'name' : "Pigmentation",
-    'annotation' : "differentiate from COLOR in that PIGMENTATION is related to PIGMENTS, BIOLOGICAL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:44:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016850' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010895: {
-    'id' : "D010895",
-    'name' : "Pit and Fissure Sealants",
-    'annotation' : "D25-26 qualif; DF: PIT SEALANTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:46:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016901','M0016902','M0016903' ],
-    'qualifiers' : [ 'Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010895"
-  },
-
-  D010902: {
-    'id' : "D010902",
-    'name' : "Pituitary Gland",
-    'annotation' : "general or unspecified: prefer specific lobes; /rad eff: consider also PITUITARY IRRADIATION; /surg: probably HYPOPHYSECTOMY; consider also PITUITARY-ADRENAL SYSTEM & HYPOTHALAMO-HYPOPHYSEAL SYSTEM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:46:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016910','M0332677' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010903: {
-    'id' : "D010903",
-    'name' : "Pituitary Gland, Anterior",
-    'annotation' : "diseases: coordinate IM with PITUITARY DISEASES (IM) or specifics (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:46:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016911' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D010903"
-  },
-
-  D010904: {
-    'id' : "D010904",
-    'name' : "Pituitary Gland, Posterior",
-    'annotation' : "diseases: coordinate IM with PITUITARY DISEASES (IM) or specifics (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:46:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016912','M0332678' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010907: {
-    'id' : "D010907",
-    'name' : "Pituitary Hormones",
-    'annotation' : "GEN or unspecified; prefer specific groups or specific hormone; /defic: consider also HYPOPITUITARISM & its specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:46:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016917' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D010920: {
-    'id' : "D010920",
-    'name' : "Placenta",
-    'annotation' : "mammals only; check the tags FEMALE & PREGNANCY; /blood supply: consider PLACENTAL CIRCULATION; placental serum or placental blood = PLACENTA + BLOOD",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:47:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0016933' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -13277,36 +3164,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D010994: {
-    'id' : "D010994",
-    'name' : "Pleura",
-    'annotation' : "/surg: consider also PNEUMONOLYSIS; inflammation = PLEURISY; PLEURAL CAVITY is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:50:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017040','M0475466','M0475467' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011014: {
-    'id' : "D011014",
-    'name' : "Pneumonia",
-    'annotation' : "general or unspecified; prefer specifics; PNEUMONIA, INTERSTITIAL see LUNG DISEASES, INTERSTITIAL and IDIOPATHIC INTERSTITIAL PNEUMONIAS and its specifics are also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:51:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017064','M0357615','M0520210' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D011030: {
     'id' : "D011030",
     'name' : "Pneumothorax",
@@ -13318,36 +3175,6 @@ module.exports = {
     'sessions' : [ '16468' ],
     'concepts' : [ 'M0017083','M0582924','M0583840' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011041: {
-    'id' : "D011041",
-    'name' : "Poisoning",
-    'annotation' : "a dis concept: the field = TOXICOLOGY; IM; GEN only; prefer /pois with Cat D & J terms: Manual 19.7+, 19.8.57, 19.9+, 25.11.4; /drug ther: consider also ANTIDOTES; sometimes called 'toxicoses' & often called 'intoxication' in foreign lit; DF: POIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:52:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017099','M0332481' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011085: {
-    'id' : "D011085",
-    'name' : "Polycystic Ovary Syndrome",
-    'annotation' : "non-neoplastic",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:54:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017165','M0422470' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -13396,316 +3223,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D011153: {
-    'id' : "D011153",
-    'name' : "Population",
-    'annotation' : "IM human, NIM animal; /genet allowed; differentiate from DEMOGRAPHY (the statist study of population characteristics)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:58:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017287','M0017288' ],
-    'qualifiers' : [ 'Q000235' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011154: {
-    'id' : "D011154",
-    'name' : "Population Characteristics",
-    'annotation' : "used for searching: indexers apply specifics; may be used by catalogers",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:58:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017289','M0017290','M0017291','M0017292','M0017293','M0017294','M0017295' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011154"
-  },
-
-  D011188: {
-    'id' : "D011188",
-    'name' : "Potassium",
-    'annotation' : "an alkali metal; K-39; /physiol permitted; /metab: consider also POTASSIUM CHANNELS & SODIUM-POTASSIUM PUMP; /blood: note see relateds; POTASSIUM, DIETARY is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T06:59:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017374','M0017375' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011218: {
-    'id' : "D011218",
-    'name' : "Prader-Willi Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:00:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017431','M0335754' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011218"
-  },
-
-  D011225: {
-    'id' : "D011225",
-    'name' : "Pre-Eclampsia",
-    'annotation' : "check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:01:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017443' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011225"
-  },
-
-  D011231: {
-    'id' : "D011231",
-    'name' : "Preceptorship",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:01:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017450' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011231"
-  },
-
-  D011237: {
-    'id' : "D011237",
-    'name' : "Predictive Value of Tests",
-    'annotation' : "IM GEN only; coord NIM with specific disease (IM); no qualif; specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:01:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017458' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011247: {
-    'id' : "D011247",
-    'name' : "Pregnancy",
-    'annotation' : "IM for articles on normal pregnancy, NIM as check tag; policy: Manual 18.4+, 28.16+; in children or adolescents, see note under PREGNANCY IN ADOLESCENCE; check tag FEMALE also; surrogate pregnancy = SURROGATE MOTHERS; heterotopic pregnancy = PREGNANCY, ECTOPIC or its specifics (IM) + PREGNANCY; for 'pregnancy' in non-placental organisms: use OVIPARITY; OVOVIVIPARITY; or VIVIPARITY, NONMAMMALIAN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017471' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011248: {
-    'id' : "D011248",
-    'name' : "Pregnancy Complications",
-    'annotation' : "coord IM with dis (IM); /surg: consider also OBSTETRIC SURGICAL PROCEDURES; do not use for heterotopic pregn: see note at PREGNANCY, ECTOPIC; check tags FEMALE & PREGNANCY; Manual 18.4.7; DF: PREGN COMPL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017474' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011254: {
-    'id' : "D011254",
-    'name' : "Pregnancy in Diabetics",
-    'annotation' : "DIABETES MELLITUS, not DIABETES INSIPIDUS; coordinate IM with specific type of diabetes mellitus (IM) if pertinent; DF: PREGN IN DIABETES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017481' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011256: {
-    'id' : "D011256",
-    'name' : "Pregnancy Outcome",
-    'annotation' : "general or unspecified: prefer specific outcome; DF: PREGN OUTCOME",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017483' ],
-    'qualifiers' : [ 'Q000191','Q000208','Q000235','Q000453','Q000523','Q000662' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011256"
-  },
-
-  D011261: {
-    'id' : "D011261",
-    'name' : "Pregnancy Trimester, First",
-    'annotation' : "human only; check tags HUMANS & FEMALE & PREGNANCY; DF: PREGN TRIMESTER FIRST",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017488' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011261"
-  },
-
-  D011262: {
-    'id' : "D011262",
-    'name' : "Pregnancy Trimester, Second",
-    'annotation' : "human only; check tags HUMANS & FEMALE & PREGNANCY; DF: PREGN TRIMESTER SECOND",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017489' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011262"
-  },
-
-  D011263: {
-    'id' : "D011263",
-    'name' : "Pregnancy Trimester, Third",
-    'annotation' : "human only; check tags HUMANS & FEMALE & PREGNANCY; 'at term': consider better LABOR, OBSTETRIC; DF: PREGN TRIMESTER THIRD",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017490' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011263"
-  },
-
-  D011264: {
-    'id' : "D011264",
-    'name' : "Pregnancy Trimesters",
-    'annotation' : "human only; GEN or unspecified; prefer specifics; trimesters are indexed only when the point of the article or substantively discussed: they are not sought out routinely nor indexed when merely mentioned; DF: PREGN TRIMESTERS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:02:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017491' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011264"
-  },
-
-  D011275: {
-    'id' : "D011275",
-    'name' : "Pregnancy, Unwanted",
-    'annotation' : "PREGNANCY, UNPLANNED is also available; check tags  HUMANS & FEMALE & PREGNANCY; DF: PREGN UNWANTED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:03:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017504' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011275"
-  },
-
-  D011292: {
-    'id' : "D011292",
-    'name' : "Premedication",
-    'annotation' : "coord IM with specific drug /ther use (IM); includes anti-anxiety medication; does not include antibiotic premedication ( = ANTIBIOTIC PROPHYLAXIS)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:04:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017533' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011292"
-  },
-
-  D011295: {
-    'id' : "D011295",
-    'name' : "Prenatal Care",
-    'annotation' : "check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:04:14+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017539' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000523','Q000592','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011296: {
-    'id' : "D011296",
-    'name' : "Prenatal Diagnosis",
-    'annotation' : "check tags FEMALE & PREGNANCY; coordinate with FETAL DISEASES only if the article discusses the fetal aspect: Manual 23.34.8.1",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:04:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017540','M0552816' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011296"
-  },
-
-  D011297: {
-    'id' : "D011297",
-    'name' : "Prenatal Exposure Delayed Effects",
-    'annotation' : "for mammals only; note PRECONCEPTION INJURIES; MATERNAL EXPOSURE & PATERNAL EXPOSURE are available for environmental exposure of mother or father; check tags FEMALE & PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:04:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017541' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D011311: {
     'id' : "D011311",
     'name' : "Pressoreceptors",
@@ -13717,21 +3234,6 @@ module.exports = {
     'sessions' : [ '16488' ],
     'concepts' : [ 'M0017563' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011313: {
-    'id' : "D011313",
-    'name' : "Preventive Dentistry",
-    'annotation' : "SPEC only: SPEC qualif; spec concerned with prev of tooth & mouth dis: do not confuse with TOOTH DISEASES /prev or MOUTH DISEASES /prev; see note under DENTAL CARE; for 'see your dentist twice a year'; do not confuse with DENTAL PROPHYLAXIS (see note there) or ORAL HYGIENE (see note there)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:04:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017565' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -13783,139 +3285,6 @@ module.exports = {
     'previousIndexing' : "D011355"
   },
 
-  D011361: {
-    'id' : "D011361",
-    'name' : "Professional Competence",
-    'annotation' : "competence in any profession or discipline: differentiate from CLINICAL COMPETENCE which is restricted to competence in professional activities directly related to patient care",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:07:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017649','M0017650','M0017651' ],
-    'qualifiers' : [ 'Q000191','Q000331','Q000592','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011371: {
-    'id' : "D011371",
-    'name' : "Progeria",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:07:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017668' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011372: {
-    'id' : "D011372",
-    'name' : "Progestins",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:07:26+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017669','M0556171' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011374: {
-    'id' : "D011374",
-    'name' : "Progesterone",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:07:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017672','M0329760','M0329761','M0329762' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011403: {
-    'id' : "D011403",
-    'name' : "Pronation",
-    'annotation' : "refers to foot or forearm; do not confuse with PRONE POSITION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:08:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017734' ],
-    'qualifiers' : [ 'Q000502' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011403"
-  },
-
-  D011412: {
-    'id' : "D011412",
-    'name' : "Propanolamines",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:09:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017745' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011448: {
-    'id' : "D011448",
-    'name' : "Prostaglandin Antagonists",
-    'annotation' : "/biosyn /physiol permitted if by living organism; DF: PG ANTAG",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:10:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017800' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011448"
-  },
-
-  D011467: {
-    'id' : "D011467",
-    'name' : "Prostate",
-    'annotation' : "adenoma, hyperplasia & hypertrophy = PROSTATIC HYPERPLASIA; /surg: probably PROSTATECTOMY; inflammation = PROSTATITIS; PROSTATE-SPECIFIC ANTIGEN (a serine proteinase) is available: do not confuse with prostate-specific acid phosphatase ( = PROSTATE + ACID PHOSPHATASE)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:11:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017823' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011471: {
-    'id' : "D011471",
-    'name' : "Prostatic Neoplasms",
-    'annotation' : "coordinate IM with histological type of neoplasm (IM); note PROSTATIC ADENOMA see PROSTATIC HYPERPLASIA is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:11:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017833','M0017834' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D011485: {
     'id' : "D011485",
     'name' : "Protein Binding",
@@ -13960,51 +3329,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D011528: {
-    'id' : "D011528",
-    'name' : "Protozoan Infections",
-    'annotation' : "GEN; prefer specifics; /drug ther: consider also ANTIPROTOZOAL AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:14:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017925','M0017926' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011565: {
-    'id' : "D011565",
-    'name' : "Psoriasis",
-    'annotation' : "a papulosquamous skin dis; ARTHRITIS, PSORIATIC is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:15:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017974','M0017975' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011570: {
-    'id' : "D011570",
-    'name' : "Psychiatry",
-    'annotation' : "specialty only; do not confuse with MENTAL DISORDERS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:15:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0017986','M0017987' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D011584: {
     'id' : "D011584",
     'name' : "Psychology",
@@ -14020,218 +3344,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D011600: {
-    'id' : "D011600",
-    'name' : "Psychopharmacology",
-    'annotation' : "SPEC: IM, SPEC qualif; NIM coord, no qualif; Manual 27.13: relation to PSYCHOTROPIC DRUGS; DF: PSYCHOPHARMACOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:16:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018034' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011627: {
-    'id' : "D011627",
-    'name' : "Puberty",
-    'annotation' : "human only: for animal use AGING; GROWTH or SEX MATURATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:17:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018081' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000187','Q000208','Q000235','Q000276','Q000378','Q000502','Q000523','Q000528','Q000652' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011628: {
-    'id' : "D011628",
-    'name' : "Puberty, Delayed",
-    'annotation' : "human only",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:17:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018082' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011628"
-  },
-
-  D011629: {
-    'id' : "D011629",
-    'name' : "Puberty, Precocious",
-    'annotation' : "human only",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:17:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018083' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011634: {
-    'id' : "D011634",
-    'name' : "Public Health",
-    'annotation' : "SPEC; SPEC qualif; a venerable hist & modern concept of the health & health problems of 'the public': do not confuse with NATIONAL HEALTH PROGRAMS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:05+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018088','M0018089' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011635: {
-    'id' : "D011635",
-    'name' : "Public Health Administration",
-    'annotation' : "SPEC: SPEC qualif; DF: PUBLIC HEALTH ADMIN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018090' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011643: {
-    'id' : "D011643",
-    'name' : "Publishing",
-    'annotation' : "the industry & the dissemination of knowledge & research; printing & disseminating textual material: do not confuse with WRITING (the act, profession or product) or with AUTHORSHIP (identity as author); med publishing: do not coord with MEDICINE; RETRACTION OF PUBLICATION AS TOPIC is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018110','M0018112' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000331','Q000364','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011650: {
-    'id' : "D011650",
-    'name' : "Pulmonary Alveoli",
-    'annotation' : "DF: PULM ALVEOLI",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018121' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011652: {
-    'id' : "D011652",
-    'name' : "Pulmonary Circulation",
-    'annotation' : "consider also LUNG /blood supply; DF: PULM CIRC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:39+00:00",
-    'courses' : [],
-    'objectives' : [ '76420' ],
-    'sessions' : [],
-    'concepts' : [ 'M0018123' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011654: {
-    'id' : "D011654",
-    'name' : "Pulmonary Edema",
-    'annotation' : "entry term WET LUNG: in shock, consider also SHOCK LUNG see RESPIRATORY DISTRESS SYNDROME, ADULT; DF: PULM EDEMA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018125' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011655: {
-    'id' : "D011655",
-    'name' : "Pulmonary Embolism",
-    'annotation' : "DF: PULM EMBOLISM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:18:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018126','M0018128' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011659: {
-    'id' : "D011659",
-    'name' : "Pulmonary Gas Exchange",
-    'annotation' : "do not coord with OXYGEN or CARBON DIOXIDE unless particularly discussed; DF: PULM GAS EXCHANGE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:19:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018136' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011663: {
-    'id' : "D011663",
-    'name' : "Pulmonary Surfactants",
-    'annotation' : "DF: PULM SURFACTANTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:19:15+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018140' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011663"
-  },
-
-  D011670: {
-    'id' : "D011670",
-    'name' : "Pulpectomy",
-    'annotation' : "removal of pulp from pulp chamber & root canal: differentiate from PULPOTOMY; do not use /util except by MeSH definition",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:19:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018150' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000364','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D011690: {
     'id' : "D011690",
     'name' : "Purkinje Fibers",
@@ -14243,36 +3355,6 @@ module.exports = {
     'sessions' : [ '16474' ],
     'concepts' : [ 'M0018172' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011773: {
-    'id' : "D011773",
-    'name' : "Pyruvates",
-    'annotation' : "do not confuse with PYRUVATE see PYRUVIC ACID",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:24:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018301' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D011826: {
-    'id' : "D011826",
-    'name' : "Radial Nerve",
-    'annotation' : "dis = RADIAL NEUROPATHY; neopl = RADIAL NEUROPATHY (IM) + PERIPHERAL NERVE NEOPLASMS (IM) + histol type of neopl (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:26:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018374' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -14355,38 +3437,6 @@ module.exports = {
     'previousIndexing' : "D011943"
   },
 
-  D011947: {
-    'id' : "D011947",
-    'name' : "Receptors, Antigen, B-Cell",
-    'annotation' : "DF: RECEPT ANTIGEN B CELL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:30:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018562' ],
-    'qualifiers' : [ 'Q000008','Q000032','Q000037','Q000096','Q000097','Q000145','Q000172','Q000187','Q000235','Q000266','Q000276','Q000302','Q000378','Q000502','Q000528','Q000627','Q000648','Q000737','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011947"
-  },
-
-  D011948: {
-    'id' : "D011948",
-    'name' : "Receptors, Antigen, T-Cell",
-    'annotation' : "GEN; prefer specifics; do not confuse their gamma-delta chains with gamma & delta chains which are subunits of CD3 antigens (index under ANTIGENS, CD3); DF: RECEPT ANTIGEN T CELL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:30:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018563' ],
-    'qualifiers' : [ 'Q000008','Q000032','Q000037','Q000096','Q000097','Q000145','Q000172','Q000187','Q000235','Q000266','Q000276','Q000302','Q000378','Q000502','Q000528','Q000627','Q000648','Q000737','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011948"
-  },
-
   D011950: {
     'id' : "D011950",
     'name' : "Receptors, Cholinergic",
@@ -14435,22 +3485,6 @@ module.exports = {
     'previousIndexing' : "D011955"
   },
 
-  D011956: {
-    'id' : "D011956",
-    'name' : "Receptors, Cell Surface",
-    'annotation' : "GEN: prefer specifics; coord IM with specific endogenous substance (IM); for hormone receptors in general coord HORMONES (IM) + RECEPTORS, CELL SURFACE (IM) or RECEPTORS, CYTOPLASMIC AND NUCLEAR (IM), for receptors of specific hormones, coord specific hormone or hormone group (IM) + precoord hormone receptor (e.g., RECEPTORS, ALDOSTERONE) (IM) or precoord hormone-group receptor (e.g., RECEPTORS, GLUCOCORTICOID) (IM); DF: RECEPT CELL SURFACE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:31:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018574','M0018575','M0352710' ],
-    'qualifiers' : [ 'Q000008','Q000032','Q000037','Q000096','Q000097','Q000145','Q000172','Q000187','Q000235','Q000266','Q000276','Q000302','Q000378','Q000502','Q000528','Q000627','Q000648','Q000737','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D011956"
-  },
-
   D011976: {
     'id' : "D011976",
     'name' : "Receptors, Muscarinic",
@@ -14483,173 +3517,6 @@ module.exports = {
     'previousIndexing' : "D011978"
   },
 
-  D012007: {
-    'id' : "D012007",
-    'name' : "Rectum",
-    'annotation' : "/surg: do not confuse with the specialty COLORECTAL SURGERY; rectal bleeding: RECTUM (NIM) + HEMORRHAGE, GASTROINTESTINAL (IM) for bleeding through the rectum; hemorrhaging rectum is RECTAL DISEASES (IM) + HEMORRHAGE, GASTROINTESTINAL (IM); inflammation = PROCTITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:33:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018661' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012023: {
-    'id' : "D012023",
-    'name' : "Reflex, Monosynaptic",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:34:18+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018693' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012023"
-  },
-
-  D012038: {
-    'id' : "D012038",
-    'name' : "Regeneration",
-    'annotation' : "coordinate IM with organ / physiol (IM), not / growth; available also are BONE REGENERATION; LIVER REGENERATION & NERVE REGENERATION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:34:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018714' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012044: {
-    'id' : "D012044",
-    'name' : "Regression Analysis",
-    'annotation' : "IM GEN only; coord NIM with specific disease or other concept (IM); no qualif; specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:34:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018726' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012044"
-  },
-
-  D012077: {
-    'id' : "D012077",
-    'name' : "Renal Artery",
-    'annotation' : "thrombosis: index under RENAL ARTERY OBSTRUCTION (IM) + THROMBOSIS (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:35:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018769' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012079: {
-    'id' : "D012079",
-    'name' : "Renal Circulation",
-    'annotation' : "note specific indentions; consider also KIDNEY /blood supply; DF: RENAL CIRC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:35:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018772','M0448184' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012079"
-  },
-
-  D012080: {
-    'id' : "D012080",
-    'name' : "Renal Osteodystrophy",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:35:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018773','M0018774' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012084: {
-    'id' : "D012084",
-    'name' : "Renin-Angiotensin System",
-    'annotation' : "note X ref but do not index under ALDOSTERONE unless particularly discussed; DF: RA SYSTEM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:35:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018777','M0018778' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012084"
-  },
-
-  D012101: {
-    'id' : "D012101",
-    'name' : "Reproductive and Urinary Physiological Phenomena",
-    'annotation' : "used for searching: indexers and catalogers apply specifics; DF: REPRODUCTIVE URINARY PHYSIOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:36:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018818' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012101"
-  },
-
-  D012106: {
-    'id' : "D012106",
-    'name' : "Research",
-    'annotation' : "GEN; prefer specifics; research as a field or the progress or status of research in a particular field; do not add routinely for specific studies involving 'research':  Manual 29.16; /methods: consider RESEARCH DESIGN",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:36:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018826','M0018827','M0018828','M0018830','M0018832','M0018833','M0018834','M0018835','M0018840','M0018849' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012107: {
-    'id' : "D012107",
-    'name' : "Research Design",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:36:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018830','M0018842','M0018843','M0018844','M0018845','M0018846','M0018847','M0018848','M0018849','M0018850','M0018852','M0018853' ],
-    'qualifiers' : [ 'Q000331','Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D012119: {
     'id' : "D012119",
     'name' : "Respiration",
@@ -14661,67 +3528,6 @@ module.exports = {
     'sessions' : [ '16468' ],
     'concepts' : [ 'M0018878' ],
     'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012123: {
-    'id' : "D012123",
-    'name' : "Pulmonary Ventilation",
-    'annotation' : "MAXIMAL VOLUNTARY VENTILATION & VENTILATION-PERFUSION RATIO are also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:37:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018884','M0018885','M0534063' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012123"
-  },
-
-  D012128: {
-    'id' : "D012128",
-    'name' : "Respiratory Distress Syndrome, Adult",
-    'annotation' : "RESPIRATORY DISTRESS SYNDROME, NEWBORN is also available; do not confuse with SEVERE ACUTE RESPIRATORY SYNDROME",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:37:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018891' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012129: {
-    'id' : "D012129",
-    'name' : "Respiratory Function Tests",
-    'annotation' : "GEN or unspecified; prefer specifics; NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:37:36+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018894','M0018895' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012137: {
-    'id' : "D012137",
-    'name' : "Respiratory System",
-    'annotation' : "GEN: prefer specifics; /abnorm: RESPIRATORY SYSTEM ABNORMALITIES is available but consider also specific part of resp syst with /abnorm or specific abnorm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:38:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018913','M0018914' ],
-    'qualifiers' : [ 'Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -14739,188 +3545,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D012150"
-  },
-
-  D012151: {
-    'id' : "D012151",
-    'name' : "Resuscitation",
-    'annotation' : "do not use /util except by MeSH definition; RESUSCITATION is correct translation for French 'réanimation'",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:38:30+00:00",
-    'courses' : [],
-    'objectives' : [ '76359' ],
-    'sessions' : [],
-    'concepts' : [ 'M0018929' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012160: {
-    'id' : "D012160",
-    'name' : "Retina",
-    'annotation' : "/blood supply = RETINAL VESSELS or RETINAL ARTERY or RETINAL VEIN; inflammation = RETINITIS or CHORIORETINITIS; neopl: majority will be RETINOBLASTOMA (see note there), otherwise retinal neopl goes under RETINAL NEOPLASMS (IM) + histol type of neopl (IM); retinal dystrophy: index under RETINAL DEGENERATION or MACULAR DEGENERATION relying on text & refs; pigment epithelium of retina: coord RETINA with PIGMENT EPITHELIUM OF EYE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:38:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018939' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012175: {
-    'id' : "D012175",
-    'name' : "Retinoblastoma",
-    'annotation' : "coordinate IM with RETINAL NEOPLASMS (IM); /genetics: consider also GENES, RETINOBLASTOMA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:39:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0018961','M0336985','M0336986' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012213: {
-    'id' : "D012213",
-    'name' : "Rheumatic Fever",
-    'annotation' : "Strep infect; rheum fever with heart dis, unspecified or specific = RHEUMATIC HEART DISEASE (IM) + the specific heart dis (IM or NIM), but not HEART DISEASES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:41:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019009' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012214: {
-    'id' : "D012214",
-    'name' : "Rheumatic Heart Disease",
-    'annotation' : "coordinate with specific disease of the heart",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:41:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019010','M0019011' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012216: {
-    'id' : "D012216",
-    'name' : "Rheumatic Diseases",
-    'annotation' : "do not confuse with the specialty RHEUMATOLOGY; /drug ther: consider also ANTIRHEUMATIC AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:41:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019014','M0019015' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012219: {
-    'id' : "D012219",
-    'name' : "Rheumatology",
-    'annotation' : "SPEC only; SPEC qualif; field covers collagen dis, rheum dis & arthritis; DF: RHEUMATOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:41:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019018' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012219"
-  },
-
-  D012254: {
-    'id' : "D012254",
-    'name' : "Ribavirin",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:42:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019062','M0373209','M0373210','M0373211','M0475033','M0475034','M0475035','M0476301' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012254"
-  },
-
-  D012272: {
-    'id' : "D012272",
-    'name' : "Ribs",
-    'annotation' : "/inj permitted: do not coord with THORACIC INJURIES but note RIB FRACTURES is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:43:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019083' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012279: {
-    'id' : "D012279",
-    'name' : "Rickets",
-    'annotation' : "consider also VITAMIN D DEFICIENCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:44:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019095','M0019096' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012306: {
-    'id' : "D012306",
-    'name' : "Risk",
-    'annotation' : "IM GEN only; for risk as a statis concept; note other risk terms in MeSH",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:44:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019126','M0019128' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012307: {
-    'id' : "D012307",
-    'name' : "Risk Factors",
-    'annotation' : "human & animal; an epidemiol concept for risk factors in dis, surg, etc.: do not confuse with RISK, a statist concept & aspect of probability; coord NIM with specific disease or other concept (IM); no qualif; specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:44:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019129' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012307"
   },
 
   D012313: {
@@ -14949,67 +3573,6 @@ module.exports = {
     'sessions' : [ '16498' ],
     'concepts' : [ 'M0019167','M0019168','M0019169','M0019170','M0019171' ],
     'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012387: {
-    'id' : "D012387",
-    'name' : "Root Canal Filling Materials",
-    'annotation' : "IM; coord with specific material if pertinent (IM); D25-26 qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:48:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019260','M0019261' ],
-    'qualifiers' : [ 'Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012387"
-  },
-
-  D012388: {
-    'id' : "D012388",
-    'name' : "Root Canal Irrigants",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:48:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019262' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012388"
-  },
-
-  D012463: {
-    'id' : "D012463",
-    'name' : "Saliva",
-    'annotation' : "SALIVATION and SALIVARY GLANDS are also available; 'salivary IMMUNOGLOBULIN A': index SALIVA/immunol (IM) + IMMUNOGLOBULIN A, SECRETORY (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:51:33+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019372' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012469: {
-    'id' : "D012469",
-    'name' : "Salivary Glands",
-    'annotation' : "GEN; /secret: see also SALIVATION; inflammation = SIALADENITIS; tuberc of salivary glands or tuberc sialadenitis = SIALADENITIS (IM) + TUBERCULOSIS, ORAL (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:51:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019378' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15044,36 +3607,6 @@ module.exports = {
     'previousIndexing' : "D012519"
   },
 
-  D012528: {
-    'id' : "D012528",
-    'name' : "Satiety Response",
-    'annotation' : "human & animal",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:54:10+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019453' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012540: {
-    'id' : "D012540",
-    'name' : "Scapula",
-    'annotation' : "fracture = SCAPULA /inj (IM) + FRACTURES, BONE (IM): do not confuse with SHOULDER FRACTURES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:54:34+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019469' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D012583: {
     'id' : "D012583",
     'name' : "Schwann Cells",
@@ -15085,94 +3618,6 @@ module.exports = {
     'sessions' : [ '16483','16485' ],
     'concepts' : [ 'M0019523' ],
     'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012627: {
-    'id' : "D012627",
-    'name' : "Sebaceous Glands",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:58:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019583' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012661: {
-    'id' : "D012661",
-    'name' : "Semen",
-    'annotation' : "semen donors: coord SEMEN (IM) + TISSUE DONORS (IM); consider also INSEMINATION, ARTIFICIAL, HOMOLOGOUS (husband) (IM) or INSEMINATION, ARTIFICIAL, HETEROLOGOUS (non-husband) (IM) if pertinent; HEMOSPERMIA is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T07:59:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019628','M0019629' ],
-    'qualifiers' : [ 'Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000502','Q000528','Q000530','Q000531','Q000557','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012680: {
-    'id' : "D012680",
-    'name' : "Sensitivity and Specificity",
-    'annotation' : "IM general only; coordinate (NIM) with specific concept (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:00:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019654','M0019655','M0019656' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012723: {
-    'id' : "D012723",
-    'name' : "Sex",
-    'annotation' : "differentiate from SEX FACTORS, largely statist in concept; sex therapy: coord PSYCHOTHERAPY (IM) + SEXUAL DYSFUNCTION, PHYSIOLOGICAL /ther or PSYCHOSEXUAL DYSFUNCTIONS /ther or their indentions /ther (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:01:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019710','M0446358','M0446359' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012736: {
-    'id' : "D012736",
-    'name' : "Sex Education",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:02:24+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019737','M0019738','M0019739','M0019741' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012737: {
-    'id' : "D012737",
-    'name' : "Sex Factors",
-    'annotation' : "NIM; human & animal; do not confuse with SEX DISTRIBUTION or SEX CHARACTERISTICS; Manual 35.6+",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:02:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019742' ],
-    'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15192,21 +3637,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D012770: {
-    'id' : "D012770",
-    'name' : "Shock, Cardiogenic",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:03:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019783' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012770"
-  },
-
   D012782: {
     'id' : "D012782",
     'name' : "Shoulder",
@@ -15222,50 +3652,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D012783: {
-    'id' : "D012783",
-    'name' : "Shoulder Dislocation",
-    'annotation' : "acromioclavicular disloc = ACROMIOCLAVICULAR JOINT + DISLOCATIONS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:03:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019801','M0495741' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012805: {
-    'id' : "D012805",
-    'name' : "Sickle Cell Trait",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:04:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019829' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012809: {
-    'id' : "D012809",
-    'name' : "Colon, Sigmoid",
-    'annotation' : "sigmoiditis = SIGMOID DISEASES (IM) + COLITIS (NIM) but note PROCTOSIGMOIDITIS see PROCTOCOLITIS & RECTOSIGMOIDITIS see PROCTOCOLITIS; diverticulosis & diverticulitis: see note on SIGMOID DISEASES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:05:01+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019835' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D012849: {
     'id' : "D012849",
     'name' : "Sinoatrial Node",
@@ -15276,21 +3662,6 @@ module.exports = {
     'sessions' : [ '16484' ],
     'concepts' : [ 'M0019898' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012863: {
-    'id' : "D012863",
-    'name' : "Skeleton",
-    'annotation' : "the bony frame as a whole; avoid: use BONE AND BONES; 'skeletal' in titles is probably 'bone', 'bone tissue' or 'osseous' which = BONE AND BONES: TN 173; no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:07:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019920' ],
-    'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15310,21 +3681,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D012878: {
-    'id' : "D012878",
-    'name' : "Skin Neoplasms",
-    'annotation' : "coord IM with histol type of neoplasm (IM); coord also with site (NIM) if merely locational but for neoplasms of the head or neck, coord IM with HEAD AND NECK NEOPLASMS or specifics (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:07:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019939','M0333435' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D012886: {
     'id' : "D012886",
     'name' : "Skull",
@@ -15336,21 +3692,6 @@ module.exports = {
     'sessions' : [ '16497' ],
     'concepts' : [ 'M0019947','M0019948' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012907: {
-    'id' : "D012907",
-    'name' : "Smoking",
-    'annotation' : "almost exclusively tobacco smoking: not for smoking marijuana ( = MARIJUANA SMOKING); smokers' patches, smokers' tongue = LEUKOPLAKIA, ORAL; cancer caused by smoking = organ/neopl term with /etiol (not /chem ind) + SMOKING /adv eff (not TOBACCO USE DISORDER); passive smoking = TOBACCO SMOKE POLLUTION; SMOKING CESSATION is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:08:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0019985','M0510199','M0536832','M0570247','M0572317' ],
-    'qualifiers' : [ 'Q000009','Q000097','Q000134','Q000188','Q000191','Q000208','Q000235','Q000266','Q000276','Q000331','Q000378','Q000401','Q000453','Q000473','Q000503','Q000517','Q000523','Q000628','Q000639','Q000652' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15369,22 +3710,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D012919"
-  },
-
-  D012922: {
-    'id' : "D012922",
-    'name' : "Social Change",
-    'annotation' : "specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:09:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020003','M0020004','M0020005','M0020006','M0020007','M0020008' ],
-    'qualifiers' : [ 'Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012922"
   },
 
   D012923: {
@@ -15417,144 +3742,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D012942: {
-    'id' : "D012942",
-    'name' : "Social Sciences",
-    'annotation' : "SPEC: SPEC qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:09:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020047' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012944: {
-    'id' : "D012944",
-    'name' : "Social Support",
-    'annotation' : "human only; no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:09:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020051','M0020052','M0020053' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012944"
-  },
-
-  D012959: {
-    'id' : "D012959",
-    'name' : "Socioeconomic Factors",
-    'annotation' : "NIM; no qualif; Manual 35.7; includes both social & economic aspects: purely economic aspect = ECONOMICS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:10:16+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020080','M0020081','M0020082','M0020083','M0020084' ],
-    'qualifiers' : [ 'Q000266' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012959"
-  },
-
-  D012973: {
-    'id' : "D012973",
-    'name' : "Sodium Hypochlorite",
-    'annotation' : "needle bleaching (as by intravenous drug users) is indexed under SODIUM HYPOCHLORITE + DISINFECTION + NEEDLES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:10:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020108','M0020109','M0373243' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D012982: {
-    'id' : "D012982",
-    'name' : "Sodium, Dietary",
-    'annotation' : "/adv eff: coord with disease /etiol, not /chem ind; /defic = SODIUM /defic but consider also HYPONATREMIA; for intake of table salt index under SODIUM CHLORIDE, DIETARY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:11:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020120' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D012982"
-  },
-
-  D013064: {
-    'id' : "D013064",
-    'name' : "Speech Disorders",
-    'annotation' : "/ther: consider also SPEECH THERAPY; do not confuse with LANGUAGE DISORDERS: read differentiation of SPEECH & LANGUAGE under SPEECH",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:14:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020248','M0337308','M0337309','M0337310','M0337311','M0337312','M0337317' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013091: {
-    'id' : "D013091",
-    'name' : "Spermatogenesis",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:14:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020281','M0020282','M0020283' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013091"
-  },
-
-  D013094: {
-    'id' : "D013094",
-    'name' : "Spermatozoa",
-    'annotation' : "polyspermia & polyspermy = SPERMATOZOA if excessive sperm or = FERTILIZATION if fertilization of ovum by more than one sperm; sperm donors: coordinate SPERMATOZOA (IM) + TISSUE DONORS (IM); consider also INSEMINATION, ARTIFICIAL, HOMOLOGOUS (husband)(IM) or INSEMINATION, ARTIFICIAL, HETEROLOGOUS (non-husband)(IM) if pertinent but note SPERM BANKS is available; SPERM PRESERVATION is available; HEMOSPERMIA is available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:15:02+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020286','M0023034','M0023080' ],
-    'qualifiers' : [ 'Q000002','Q000145','Q000166','Q000187','Q000201','Q000254','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013103: {
-    'id' : "D013103",
-    'name' : "Spherocytosis, Hereditary",
-    'annotation' : "a congen hemolytic anemia; do not use /congen & do not coord with INFANT, NEWBORN, DISEASES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:15:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020294' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D013116: {
     'id' : "D013116",
     'name' : "Spinal Cord",
@@ -15568,144 +3755,6 @@ module.exports = {
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D013119: {
-    'id' : "D013119",
-    'name' : "Spinal Cord Injuries",
-    'annotation' : "coord IM with specific vertebra (NIM) to locate site on spinal cord",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:16:07+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020312','M0335814','M0335815','M0335816','M0335817' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013127: {
-    'id' : "D013127",
-    'name' : "Spinal Nerves",
-    'annotation' : "peripheral nerves; do not use vertebra headings to locate area of spinal nerves",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:16:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020324' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013130: {
-    'id' : "D013130",
-    'name' : "Spinal Stenosis",
-    'annotation' : "coordinate with vertebrae headings if appropriate",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:16:45+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020331' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013130"
-  },
-
-  D013131: {
-    'id' : "D013131",
-    'name' : "Spine",
-    'annotation' : "GEN or unspecified: specific groups of vertebrae are available; /inj = SPINAL INJURIES for GEN or unspecified vertebrae but specific vertebrae are available with /inj; /transpl of the whole spine is unlikely: use /transpl with specific vertebra terms instead; inflammation = SPONDYLITIS; spondylosis = SPONDYLOSIS (see SPINAL OSTEOPHYTOSIS) (IM) + specific vertebrae (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:16:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020332','M0020333' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013154: {
-    'id' : "D013154",
-    'name' : "Spleen",
-    'annotation' : "/inj: consider also SPLENIC RUPTURE but traumatic spleen perforation is indexed under SPLEEN /inj; accessory spleen: index under SPLEEN /abnorm",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:17:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020364' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013167: {
-    'id' : "D013167",
-    'name' : "Spondylitis, Ankylosing",
-    'annotation' : "coordinate with specific vertebra",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:18:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020377' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013172: {
-    'id' : "D013172",
-    'name' : "Spores, Fungal",
-    'annotation' : "coordinate with specific fungus; sporulation: coordinate specific fungus /physiol; Manual 22.31",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:18:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020382','M0495742' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013172"
-  },
-
-  D013192: {
-    'id' : "D013192",
-    'name' : "Staff Development",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:19:17+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020407','M0020408','M0505979' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013192"
-  },
-
-  D013211: {
-    'id' : "D013211",
-    'name' : "Staphylococcus aureus",
-    'annotation' : "infection = STAPHYLOCOCCAL INFECTIONS & do not bother to coord with S. aureus unless particularly discussed (index IM); DF: STAPH AUREUS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:20:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020431' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013211"
   },
 
   D013234: {
@@ -15723,21 +3772,6 @@ module.exports = {
     'previousIndexing' : "D013234"
   },
 
-  D013246: {
-    'id' : "D013246",
-    'name' : "Sterilization, Tubal",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:21:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020500','M0020501','M0020502','M0020503','M0020504','M0020505','M0020506','M0020507','M0020508','M0020509','M0020510','M0020511','M0020512','M0020513','M0020514','M0020515' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013246"
-  },
-
   D013270: {
     'id' : "D013270",
     'name' : "Stomach",
@@ -15749,35 +3783,6 @@ module.exports = {
     'sessions' : [ '16482' ],
     'concepts' : [ 'M0020540' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013285: {
-    'id' : "D013285",
-    'name' : "Strabismus",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:23:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020558','M0020559','M0336191','M0336192','M0336193','M0337318' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013297: {
-    'id' : "D013297",
-    'name' : "Streptococcus pyogenes",
-    'annotation' : "infection: coordinate IM with STREPTOCOCCAL INFECTIONS (IM); note entry term BACTERIA, FLESH-EATING: consider also FASCIITIS, NECROTIZING; DF: STREP PYOGENES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:23:51+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020575','M0020576' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15797,22 +3802,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D013314: {
-    'id' : "D013314",
-    'name' : "Stress, Mechanical",
-    'annotation' : "note category: does not refer to stress response to mechanical stimuli such as vibration (= STRESS, PHYSIOLOGICAL + VIBRATION)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:24:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020603' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013314"
-  },
-
   D013315: {
     'id' : "D013315",
     'name' : "Stress, Psychological",
@@ -15824,36 +3813,6 @@ module.exports = {
     'sessions' : [ '16538' ],
     'concepts' : [ 'M0020604','M0020605','M0390124' ],
     'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013318: {
-    'id' : "D013318",
-    'name' : "Stroke Volume",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:24:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020608','M0020609','M0020610','M0020611' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013318"
-  },
-
-  D013337: {
-    'id' : "D013337",
-    'name' : "Students, Medical",
-    'annotation' : "/educ = EDUCATION, MEDICAL or its specifics; DF: STUDENTS MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:25:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020637' ],
-    'qualifiers' : [ 'Q000145','Q000266','Q000331','Q000523','Q000706' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15883,52 +3842,6 @@ module.exports = {
     'sessions' : [ '16513' ],
     'concepts' : [ 'M0020685' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013484: {
-    'id' : "D013484",
-    'name' : "Supination",
-    'annotation' : "refers to foot or forearm; do not confuse with SUPINE POSITION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:32:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020835' ],
-    'qualifiers' : [ 'Q000502' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013484"
-  },
-
-  D013511: {
-    'id' : "D013511",
-    'name' : "Surgical Procedures, Minor",
-    'annotation' : "IM GEN only; do not use as NIM coord for surg in minor ailments; DF: SURG PROCEDURES MINOR",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:33:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020870' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013513: {
-    'id' : "D013513",
-    'name' : "Obstetric Surgical Procedures",
-    'annotation' : "GEN or unspecified; prefer specifics; consider also PREGNANCY COMPLICATIONS /surg & OBSTETRIC LABOR COMPLICATIONS /surg or /surg with specific pregn & labor compl; check the tags FEMALE & PREGNANCY; DF: OBSTET SURG PROCEDURES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:33:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020871' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000523','Q000534','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -15963,21 +3876,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D013566: {
-    'id' : "D013566",
-    'name' : "Sympathomimetics",
-    'annotation' : "GEN or unspecified; prefer specifics; cardiotonics; consider also SYMPATHETIC NERVOUS SYSTEM /drug eff",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:35:29+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020946','M0020947','M0556219' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D013569: {
     'id' : "D013569",
     'name' : "Synapses",
@@ -15991,22 +3889,6 @@ module.exports = {
     'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D013576: {
-    'id' : "D013576",
-    'name' : "Syndactyly",
-    'annotation' : "do not confuse with POLYDACTYLY; coord IM with FINGERS /abnorm (IM) or TOES /abnorm (IM); ACROCEPHALOSYNDACTYLIA is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:35:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020956','M0405303' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013576"
   },
 
   D013601: {
@@ -16023,37 +3905,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D013601"
-  },
-
-  D013602: {
-    'id' : "D013602",
-    'name' : "T-Lymphocytes, Cytotoxic",
-    'annotation' : "if subpopulations are discussed, coordinate  IM with T-LYMPHOCYTE SUBSETS (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:36:56+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020989','M0373137','M0373138' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D013602"
-  },
-
-  D013610: {
-    'id' : "D013610",
-    'name' : "Tachycardia",
-    'annotation' : "general or unspecified: prefer specific types; exercise tachycardia = HEART RATE (IM) + PHYSICAL EXERTION (NIM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:37:13+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0020996','M0020997' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D013628: {
@@ -16086,35 +3937,6 @@ module.exports = {
     'previousIndexing' : "D013639"
   },
 
-  D013663: {
-    'id' : "D013663",
-    'name' : "Teaching",
-    'annotation' : "differentiate  from FACULTY: Manual 30.10",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:39:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021082','M0021083','M0021084','M0021085','M0021086','M0021087','M0021088','M0021089','M0535072' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013664: {
-    'id' : "D013664",
-    'name' : "Teaching Materials",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:39:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021090' ],
-    'qualifiers' : [ 'Q000191','Q000592','Q000600' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D013723: {
     'id' : "D013723",
     'name' : "Teratogens",
@@ -16129,79 +3951,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D013723"
-  },
-
-  D013736: {
-    'id' : "D013736",
-    'name' : "Testicular Neoplasms",
-    'annotation' : "coordinate IM with histological type of neoplasm (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:42:49+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021191','M0021192','M0333446' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013737: {
-    'id' : "D013737",
-    'name' : "Testis",
-    'annotation' : "torsion = SPERMATIC CORD TORSION; inflammation = ORCHITIS; /abnorm: agenesis or dysgenesis: coord TESTIS /abnorm (IM) with GONADAL DYSGENESIS (IM); /cytol: consider also LEYDIG CELLS; /surg is probably ORCHIECTOMY; excision = ORCHIECTOMY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:42:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021193' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013771: {
-    'id' : "D013771",
-    'name' : "Tetralogy of Fallot",
-    'annotation' : "do not confuse with TRILOGY OF FALLOT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:44:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021243' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013792: {
-    'id' : "D013792",
-    'name' : "Thalidomide",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:45:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021267','M0332437','M0476424' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013799: {
-    'id' : "D013799",
-    'name' : "Theca Cells",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:45:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021274','M0403065','M0403066' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D013848: {
@@ -16245,50 +3994,6 @@ module.exports = {
     'sessions' : [ '16502' ],
     'concepts' : [ 'M0021420','M0021421','M0021422','M0021423','M0021424','M0373252','M0373253','M0406050','M0552764' ],
     'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013923: {
-    'id' : "D013923",
-    'name' : "Thromboembolism",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:50:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021430' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013959: {
-    'id' : "D013959",
-    'name' : "Thyroid Diseases",
-    'annotation' : "general or unspecified; prefer specifics; inflammatory disease (-itis) = THYROIDITIS or specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:52:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021478' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D013961: {
-    'id' : "D013961",
-    'name' : "Thyroid Gland",
-    'annotation' : "/surg: probably THYROIDECTOMY; inflammation = THYROIDITIS; nodule = THYROID NODULE; /abnorm: consider also THYROID DYSGENESIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:52:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021482' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -16340,52 +4045,6 @@ module.exports = {
     'previousIndexing' : "D014057"
   },
 
-  D014059: {
-    'id' : "D014059",
-    'name' : "Tongue",
-    'annotation' : "/surg: consider GLOSSECTOMY; /transpl permitted for tongue grafts as in palate surg; inflammation = GLOSSITIS; tongue thrust: index under TONGUE HABITS; painful or sore tongue = GLOSSALGIA; scrotal tongue = TONGUE, FISSURED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:57:54+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021655','M0021656' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014073: {
-    'id' : "D014073",
-    'name' : "Tooth Bleaching",
-    'annotation' : "to lighten tooth discoloration",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T08:58:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021671' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000364','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014073"
-  },
-
-  D014109: {
-    'id' : "D014109",
-    'name' : "Total Lung Capacity",
-    'annotation' : "usually NIM; DF: TOTAL LUNG CAPAC",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:00:20+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021716' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D014116: {
     'id' : "D014116",
     'name' : "Toxicology",
@@ -16397,21 +4056,6 @@ module.exports = {
     'sessions' : [ '16473' ],
     'concepts' : [ 'M0021722','M0373320' ],
     'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014146: {
-    'id' : "D014146",
-    'name' : "Training Support",
-    'annotation' : "specify agency or government & geographic term if possible",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:01:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021758','M0021759','M0021760','M0021761','M0021762','M0021763' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -16430,37 +4074,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D014167: {
-    'id' : "D014167",
-    'name' : "Transference (Psychology)",
-    'annotation' : "human only; no qualif; DF: TRANSFERENCE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:03:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021802' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014178: {
-    'id' : "D014178",
-    'name' : "Translocation, Genetic",
-    'annotation' : "do not confuse with  PROTEIN BIOSYNTHESIS (RNA-directed formation of peptides)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:03:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021829' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014178"
-  },
-
   D014179: {
     'id' : "D014179",
     'name' : "Neurotransmitter Uptake Inhibitors",
@@ -16475,21 +4088,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D014179"
-  },
-
-  D014181: {
-    'id' : "D014181",
-    'name' : "Transplantation Immunology",
-    'annotation' : "IM; DF: TRANSPL IMMUNOL",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:03:46+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021833' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D014218: {
@@ -16507,36 +4105,6 @@ module.exports = {
     'previousIndexing' : "D014218"
   },
 
-  D014219: {
-    'id' : "D014219",
-    'name' : "Trial of Labor",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:05:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021892' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014246: {
-    'id' : "D014246",
-    'name' : "Trichomonas vaginalis",
-    'annotation' : "do not confuse with the disease TRICHOMONAS VAGINITIS; infection = probably TRICHOMONAS VAGINITIS but if not, coordinate IM with TRICHOMONAS INFECTIONS (IM) + precoord organ/dis term (IM); coordinate with specific protozoan terms (ANTIGENS, PROTOZOAN, etc) if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:06:52+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0021929' ],
-    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000382','Q000469','Q000472','Q000502','Q000528','Q000648','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014246"
-  },
-
   D014261: {
     'id' : "D014261",
     'name' : "Tricuspid Valve",
@@ -16548,81 +4116,6 @@ module.exports = {
     'sessions' : [ '16474' ],
     'concepts' : [ 'M0021947' ],
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014376: {
-    'id' : "D014376",
-    'name' : "Tuberculosis",
-    'annotation' : "caused by various species of Mycobacterium; GEN: prefer specifics; if unspecified as just 'tuberculosis', TUBERCULOSIS, PULMONARY is probably the correct heading but check text carefully; tuberculid: index under TUBERCULOSIS, CUTANEOUS; /drug ther: consider also ANTITUBERCULAR AGENTS; indexing policy: Manual 23.13.2",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:13:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022106' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014439: {
-    'id' : "D014439",
-    'name' : "Tyramine",
-    'annotation' : "a biogenic amine",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:16:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022194','M0022195' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014459: {
-    'id' : "D014459",
-    'name' : "Ulnar Nerve",
-    'annotation' : "dis = ULNAR NEUROPATHY; neopl = ULNAR NEUROPATHY (IM) + PERIPHERAL NERVOUS SYSTEM NEOPLASMS (IM) + histol type of neopl (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:17:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022229' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014463: {
-    'id' : "D014463",
-    'name' : "Ultrasonography",
-    'annotation' : "general only; prefer /ultrasonogr with organs & diseases: Manual 19.7+, 19.8.77; entry term ECHOTOMOGRAPHY is seen in foreign liturature: if so, use 'ultrasonography' or 'ultrasonic diagnosis' or 'ultrasonic imaging' in translations & not 'echotomography'; note many specific ultrasonographic technipues are available; DF: ULTRASONOGR",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:17:42+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022233','M0022234','M0022235','M0022236' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014465: {
-    'id' : "D014465",
-    'name' : "Ultrasonics",
-    'annotation' : "/adv eff permitted but consider also ULTRASONOGRAPHY /adv eff & ULTRASONIC THERAPY /adv eff; ultrasonic or sonographic imaging of organs is organ /ultrasonogr",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:17:48+00:00",
-    'courses' : [ '595' ],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022238' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -16642,352 +4135,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D014508: {
-    'id' : "D014508",
-    'name' : "Urea",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:19:10+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022315','M0373262','M0373263' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014513: {
-    'id' : "D014513",
-    'name' : "Ureter",
-    'annotation' : "do not confuse with URETHRA, espec in Romance lang: uretère (French), uréter (Span), uretere (Ital) = URETER, while urètre (French), uretra (Span), uretra (Ital) = URETHRA; /surg: consider URETEROSTOMY & URINARY DIVERSION (TN 189: probably do not index under URETER); ureteral catheterization: coord NIM with URINARY CATHETERIZATION (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:19:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022322' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014521: {
-    'id' : "D014521",
-    'name' : "Urethra",
-    'annotation' : "do not confuse with URETER, especially in Romance language: see note on URETER; inflammation = URETHRITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:19:48+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022331','M0573218' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014532: {
-    'id' : "D014532",
-    'name' : "Uridine Diphosphate Glucose",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:20:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022347' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014532"
-  },
-
-  D014544: {
-    'id' : "D014544",
-    'name' : "Uridine Triphosphate",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:21:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022360','M0022361' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014544"
-  },
-
-  D014549: {
-    'id' : "D014549",
-    'name' : "Urinary Incontinence",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:21:25+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022370' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014550: {
-    'id' : "D014550",
-    'name' : "Urinary Incontinence, Stress",
-    'annotation' : "stress refers to coughing, sneezing & other forces",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:21:28+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022371' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014551: {
-    'id' : "D014551",
-    'name' : "Urinary Tract",
-    'annotation' : "GEN: prefer specific organ; /radiogr = UROGRAPHY but for general only: prefer /radiogr with specific organs of the urinary tract; /surg: consider also UROLOGIC SURGICAL PROCEDURES; dis = UROLOGIC DISEASES; neopl = UROLOGIC NEOPLASMS but prefer specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:21:32+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022372' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000503','Q000528','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014551"
-  },
-
-  D014552: {
-    'id' : "D014552",
-    'name' : "Urinary Tract Infections",
-    'annotation' : "general or unspecified; prefer specific organ/disease term coordinated with specific infection term",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:21:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022373' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014555: {
-    'id' : "D014555",
-    'name' : "Urination Disorders",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:21:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022377' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014563: {
-    'id' : "D014563",
-    'name' : "Urodynamics",
-    'annotation' : "same relation to URINARY TRACT that HEMODYNAMICS is to CARDIOVASCULAR SYSTEM; urine volume: index under URINE probably NIM",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:22:03+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022389' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014563"
-  },
-
-  D014566: {
-    'id' : "D014566",
-    'name' : "Urogenital System",
-    'annotation' : "must be both uro + genital; GEN or unspecified; prefer specifics; UROGENITAL ABNORMALITIES is available but consider also specific urogenital organs with /abnorm; UROGRAPHY is available but consider also specific organs with  /radiogr; /surg: consider also UROGENITAL SURGICAL PROCEDURES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:22:12+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022393' ],
-    'qualifiers' : [ 'Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014592: {
-    'id' : "D014592",
-    'name' : "Uterine Hemorrhage",
-    'annotation' : "'vaginal bleeding' usually refers to uterine bleeding through the vagina & goes here but check text for bleeding from vaginal injuries, vaginal diseases, vaginal tumors, etc (index under proper VAGINA term)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:23:19+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022428','M0549706' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014593: {
-    'id' : "D014593",
-    'name' : "Uterine Inertia",
-    'annotation' : "check tags FEMALE and PREGNANCY",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:23:23+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022430' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014599: {
-    'id' : "D014599",
-    'name' : "Uterus",
-    'annotation' : "/blood supply: consider PLACENTAL CIRCULATION; /surg: consider HYSTERECTOMY or HYSTEROTOMY; inflammation = ENDOMETRITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:23:44+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022439' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014612: {
-    'id' : "D014612",
-    'name' : "Vaccines",
-    'annotation' : "GEN: prefer specifics; prev use = VACCINES or specific vaccine (IM) + disease /prev (IM); ther use = VACCINES or specific vaccine /ther use (IM) + DISEASE /drug ther (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:24:16+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022453' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014621: {
-    'id' : "D014621",
-    'name' : "Vagina",
-    'annotation' : "'vaginal bleeding' is probably UTERINE HEMORRHAGE but check text; inflammation = VAGINITIS or specifics; surg: consider COLPOTOMY; 'vaginal opening' (assessing SEXUAL MATURATION by repeated daily inspection of laboratory animals): index SEXUAL MATURATION + VAGINA",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:24:40+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022473' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014623: {
-    'id' : "D014623",
-    'name' : "Vaginal Diseases",
-    'annotation' : "inflammatory disease = VAGINITIS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:24:47+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022482' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014626: {
-    'id' : "D014626",
-    'name' : "Vaginal Smears",
-    'annotation' : "do not use /util except by MeSH definition; note X ref CERVICAL SMEARS: do not coord with CERVIX UTERI; X ref PAPANICOLAOU SMEAR: when called Pap smears, capitalize Pap in titles & translations",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:24:58+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022486','M0022487' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014644: {
-    'id' : "D014644",
-    'name' : "Genetic Variation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:26:02+00:00",
-    'courses' : [],
-    'objectives' : [ '76362' ],
-    'sessions' : [],
-    'concepts' : [ 'M0022526' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014644"
-  },
-
-  D014655: {
-    'id' : "D014655",
-    'name' : "Vascular Resistance",
-    'annotation' : "do not confuse with VASCULAR CAPACITANCE, blood volume within a vessel",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:26:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022538','M0449375','M0449762' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014657: {
-    'id' : "D014657",
-    'name' : "Vasculitis",
-    'annotation' : "general or unspecified; consider SYSTEMIC VASCULITIS; ARTERITIS; or PHLEBITIS & their indentions; VASCULITIS, HEMORRHAGIC see PURPURA, SCHOENLEIN-HENOCH is also available",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:26:35+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022540' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014657"
-  },
-
-  D014664: {
-    'id' : "D014664",
-    'name' : "Vasodilation",
-    'annotation' : "coord IM with specific vessel or specific organ /blood supply; the physiol process; pathol dilat = specific blood vessel (IM) + DILATATION, PATHOLOGIC (NIM) or ANEURYSM and its specifics",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:26:53+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022556','M0448316' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014664"
-  },
-
   D014680: {
     'id' : "D014680",
     'name' : "Veins",
@@ -17001,22 +4148,6 @@ module.exports = {
     'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
-  },
-
-  D014690: {
-    'id' : "D014690",
-    'name' : "Venous Pressure",
-    'annotation' : "IM GEN only; NIM for pressure within a specific vessel; CENTRAL VENOUS PRESSURE & PORTAL PRESSURE are also available; venous hypertension: index under VENOUS PRESSURE (IM) & do not coord with HYPERTENSION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:27:55+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022592' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014690"
   },
 
   D014699: {
@@ -17033,183 +4164,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D014699"
-  },
-
-  D014777: {
-    'id' : "D014777",
-    'name' : "Virus Diseases",
-    'annotation' : "GEN: prefer specifics; /drug ther: consider also ANTIVIRAL AGENTS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:31:37+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022758' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014780: {
-    'id' : "D014780",
-    'name' : "Viruses",
-    'annotation' : "general or unspecified; prefer specific taxonomic group or genus; do not confuse 'slow viruses' with VIRUS LATENCY: slow cause disease with very long preclinical course & very slow progression, VIRUS LATENCY is the ability of a virus to lie dormant in a cell; presence of viruses in blood = VIREMIA; many pre-coordinated viral terms are available such as VIRAL PROTEINS; RNA, VIRAL, etc.; policy: Manual 22.18, 22.24+",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:31:41+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022761','M0022763','M0022764' ],
-    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000254','Q000276','Q000302','Q000378','Q000472','Q000528','Q000648','Q000737' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014781: {
-    'id' : "D014781",
-    'name' : "Viscera",
-    'annotation' : "GEN & unspecified only: prefer specific organ term",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:31:43+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022765' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014785: {
-    'id' : "D014785",
-    'name' : "Vision, Ocular",
-    'annotation' : "differentiate from VISUAL PERCEPTION which takes place in the brain, vision takes place in the eye; visual stimulation: probably PHOTIC STIMULATION but check text for possible non-light (non-photic) stimulation",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:31:50+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022769','M0521377' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014794: {
-    'id' : "D014794",
-    'name' : "Visual Fields",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:32:08+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022779' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014795: {
-    'id' : "D014795",
-    'name' : "Visual Pathways",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:32:09+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022780','M0333074' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D014795"
-  },
-
-  D014805: {
-    'id' : "D014805",
-    'name' : "Vitamin B 12",
-    'annotation' : "therapeutic use: coordinate disease with /drug ther, not /diet ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:32:30+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022794','M0022795','M0373269' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014807: {
-    'id' : "D014807",
-    'name' : "Vitamin D",
-    'annotation' : "/defic = VITAMIN D DEFICIENCY or RICKETS; /ther use: coordinate disease with /drug ther, not /diet ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:32:38+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022797' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014815: {
-    'id' : "D014815",
-    'name' : "Vitamins",
-    'annotation' : "deficiency = AVITAMINOSIS but prefer specific precoordinated vitamin deficiency terms (avitaminosis A = VITAMIN A DEFICIENCY etc); ther use: coordinate disease term with /drug ther, not /diet ther",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:33:04+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022811' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014855: {
-    'id' : "D014855",
-    'name' : "Wallerian Degeneration",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:34:39+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022867' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014882: {
-    'id' : "D014882",
-    'name' : "Water-Electrolyte Balance",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:35:22+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0022898','M0022899','M0022900','M0449382' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014943: {
-    'id' : "D014943",
-    'name' : "World Health",
-    'annotation' : "no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:37:27+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023013','M0023014' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000208','Q000266','Q000331','Q000364','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
   },
 
   D014945: {
@@ -17257,36 +4211,6 @@ module.exports = {
     'courseLearningMaterials' : []
   },
 
-  D014955: {
-    'id' : "D014955",
-    'name' : "Wrist Joint",
-    'annotation' : "primates only; use CARPUS, ANIMAL for non-primate vertebrates; differentiate from wrist; wrist ganglion is indexed under WRIST (IM) + SYNOVIAL CYST (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:37:57+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023029' ],
-    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014956: {
-    'id' : "D014956",
-    'name' : "Writing",
-    'annotation' : "the act or profession of writing or its product, i.e., being a writer or creating text for books, articles, speeches, etc.: do not confuse with PUBLISHING (the industry & dissemination of knowledge & research) or LITERATURE (literary production) or AUTHORSHIP (identity as author) or JOURNALISM (writing for publication in the media); 'medical writing' can go here but consider JOURNALISM; style of writing goes here; editing for publication goes under PUBLISHING; writing for periodicals goes under PERIODICALS AS TOPIC; HANDWRITING is also available; includes typewriting; letters & correspondence of biographees & famous persons are indexed as CORRESPONDENCE AS TOPIC (IM) + required biog terms & hist tags",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2014-08-19T09:37:59+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023030' ],
-    'qualifiers' : [ 'Q000266','Q000592' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D014965: {
     'id' : "D014965",
     'name' : "X-Rays",
@@ -17298,21 +4222,6 @@ module.exports = {
     'sessions' : [ '16478' ],
     'concepts' : [ 'M0023040','M0023041' ],
     'qualifiers' : [ 'Q000009' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D014983: {
-    'id' : "D014983",
-    'name' : "Xeroderma Pigmentosum",
-    'annotation' : "if non-neoplastic, coordinate IM with precoordinated organ/disease term (IM); if neoplastic, coordinate IM with organ/neoplasm term (IM); do not confuse KAPOSI DISEASE with SARCOMA, KAPOSI",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023063' ],
-    'qualifiers' : [ 'Q000097','Q000098','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000556','Q000557','Q000601','Q000628','Q000648','Q000652','Q000662','Q000736','Q000737','Q000821' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
@@ -17330,144 +4239,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D015017"
-  },
-
-  D015043: {
-    'id' : "D015043",
-    'name' : "Zollinger-Ellison Syndrome",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023152' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D015122: {
-    'id' : "D015122",
-    'name' : "6-Mercaptopurine",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023263','M0329507','M0352351','M0352352','M0352353','M0352354','M0474764' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
-  D015139: {
-    'id' : "D015139",
-    'name' : "Blotting, Southern",
-    'annotation' : "'Southern' (developed by E.M. Southern) is capitalized in titles & translations",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023274','M0380690' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015139"
-  },
-
-  D015148: {
-    'id' : "D015148",
-    'name' : "Cardiotocography",
-    'annotation' : "monitors fetal heart rate; /drug eff /rad eff permitted; do not use /util except by MeSH definition; DF: CARDIOTOCOGR",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023283','M0023284' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015148"
-  },
-
-  D015149: {
-    'id' : "D015149",
-    'name' : "Tocolytic Agents",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023285' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015149"
-  },
-
-  D015150: {
-    'id' : "D015150",
-    'name' : "Echocardiography, Doppler",
-    'annotation' : "GEN or unspecified; prefer specifics; /drug eff /rad eff permitted; do not use /util except by MeSH definition; DF: ECHOCARDIOGR DOPPLER",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023286','M0023287','M0023290' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000187','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000528','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015150"
-  },
-
-  D015152: {
-    'id' : "D015152",
-    'name' : "Blotting, Northern",
-    'annotation' : "'northern' is not capitalized in titles or translations",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023295','M0380834' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015152"
-  },
-
-  D015153: {
-    'id' : "D015153",
-    'name' : "Blotting, Western",
-    'annotation' : "'western' is not capitalized in titles or translations; DF: WESTERN BLOT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023296','M0380750' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000379','Q000592','Q000639','Q000656','Q000662','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015153"
-  },
-
-  D015212: {
-    'id' : "D015212",
-    'name' : "Inflammatory Bowel Diseases",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023374' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015212"
   },
 
   D015220: {
@@ -17518,118 +4289,6 @@ module.exports = {
     'previousIndexing' : "D015222"
   },
 
-  D015231: {
-    'id' : "D015231",
-    'name' : "Sexually Transmitted Diseases, Bacterial",
-    'annotation' : "GEN: prefer specifics; DF: SEX TRANSM DIS BACT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023404' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000635','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015231"
-  },
-
-  D015272: {
-    'id' : "D015272",
-    'name' : "Pulmonary Medicine",
-    'annotation' : "specialty only; do not confuse with LUNG DISEASES",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023512' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015272"
-  },
-
-  D015275: {
-    'id' : "D015275",
-    'name' : "Tumor Lysis Syndrome",
-    'annotation' : "lymphoproliferative disord caused by anticancer drugs; coord IM with /etiol (not /chem ind) + anticancer drug /adv eff (IM) + required neopl coords /drug ther (IM or NIM) if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023515' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015275"
-  },
-
-  D015279: {
-    'id' : "D015279",
-    'name' : "Organizational Culture",
-    'annotation' : "'beliefs & values shared by all members of the organization'; NIM; coord with specific organization (IM); no qualif",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023521' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015279"
-  },
-
-  D015289: {
-    'id' : "D015289",
-    'name' : "Leukotrienes",
-    'annotation' : "eicosanoids; GEN or unspecified; prefer specifics; /biosyn /physiol permitted",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023536' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015289"
-  },
-
-  D015331: {
-    'id' : "D015331",
-    'name' : "Cohort Studies",
-    'annotation' : "IM GEN only; coord NIM with specific disease (IM); no qualif; specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023601','M0023602','M0023603','M0023604','M0023605' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015331"
-  },
-
-  D015340: {
-    'id' : "D015340",
-    'name' : "Epidemiologic Research Design",
-    'annotation' : "GEN or unspecified; prefer specifics; coord IM with subject of research (IM)",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023613' ],
-    'qualifiers' : [ 'Q000662' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015340"
-  },
-
   D015388: {
     'id' : "D015388",
     'name' : "Organelles",
@@ -17646,68 +4305,6 @@ module.exports = {
     'previousIndexing' : "D015388"
   },
 
-  D015394: {
-    'id' : "D015394",
-    'name' : "Molecular Structure",
-    'annotation' : "almost never IM; do not confuse with MOLECULAR CONFORMATION; AMINO ACID SEQUENCE; BASE SEQUENCE; and CARBOHYDRATE SEQUENCE are also available; protein architecture = PROTEIN CONFORMATION or its specifics; DF: MOL STRUCT",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023719' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015394"
-  },
-
-  D015397: {
-    'id' : "D015397",
-    'name' : "Program Evaluation",
-    'annotation' : "do not confuse with terms indented under QUALITY OF HEALTH CARE",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023722','M0023723','M0023724','M0023725','M0023726' ],
-    'qualifiers' : [ 'Q000191','Q000379','Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015397"
-  },
-
-  D015398: {
-    'id' : "D015398",
-    'name' : "Signal Transduction",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023727','M0023728','M0023729','M0023730' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015398"
-  },
-
-  D015431: {
-    'id' : "D015431",
-    'name' : "Weight Loss",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023779' ],
-    'qualifiers' : [ 'Q000187','Q000208','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015431"
-  },
-
   D015438: {
     'id' : "D015438",
     'name' : "Health Behavior",
@@ -17721,37 +4318,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D015438"
-  },
-
-  D015444: {
-    'id' : "D015444",
-    'name' : "Exercise",
-    'annotation' : "restrict to humans: for animals use PHYSICAL CONDITIONING, ANIMAL; EXERCISE THERAPY & EXERCISE TEST are also available; includes body building unless article specifies WEIGHT LIFTING; do not confuse with PHYSICAL EXERTION",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023801','M0023802','M0023803','M0518921' ],
-    'qualifiers' : [ 'Q000502','Q000523' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015444"
-  },
-
-  D015456: {
-    'id' : "D015456",
-    'name' : "Leukemia, Biphenotypic, Acute",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023813' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015456"
   },
 
   D015505: {
@@ -17770,67 +4336,6 @@ module.exports = {
     'previousIndexing' : "D015505"
   },
 
-  D015510: {
-    'id' : "D015510",
-    'name' : "Clinical Medicine",
-    'annotation' : "DF: CLIN MED",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023871' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000193','Q000266','Q000295','Q000331','Q000364','Q000379','Q000458','Q000592','Q000639','Q000706' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015510"
-  },
-
-  D015519: {
-    'id' : "D015519",
-    'name' : "Bone Density",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023878','M0023879' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015519"
-  },
-
-  D015551: {
-    'id' : "D015551",
-    'name' : "Autoimmunity",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023918','M0023919' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015551"
-  },
-
-  D015588: {
-    'id' : "D015588",
-    'name' : "Observer Variation",
-    'annotation' : "IM GEN only; coord NIM with disease /epidemiol (IM) or specific non-disease term /statist (IM); no qualif; specify geog if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023931','M0023932','M0023933' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : []
-  },
-
   D015600: {
     'id' : "D015600",
     'name' : "Glasgow Coma Scale",
@@ -17844,52 +4349,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D015600"
-  },
-
-  D015657: {
-    'id' : "D015657",
-    'name' : "Respiratory Transport",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0023996' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015657"
-  },
-
-  D015701: {
-    'id' : "D015701",
-    'name' : "Near Drowning",
-    'annotation' : "only Cat C qualif if pertinent",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024086' ],
-    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000175','Q000191','Q000201','Q000209','Q000266','Q000276','Q000378','Q000382','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015701"
-  },
-
-  D015735: {
-    'id' : "D015735",
-    'name' : "Mifepristone",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024116','M0024117','M0351242','M0474322','M0474323' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000031','Q000032','Q000037','Q000097','Q000134','Q000138','Q000145','Q000176','Q000191','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015735"
   },
 
   D015777: {
@@ -17908,22 +4367,6 @@ module.exports = {
     'previousIndexing' : "D015777"
   },
 
-  D015796: {
-    'id' : "D015796",
-    'name' : "HLA-B27 Antigen",
-    'annotation' : "DF: HLA B27",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024196','M0024197' ],
-    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000494','Q000502','Q000506','Q000528','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015796"
-  },
-
   D015813: {
     'id' : "D015813",
     'name' : "Substance Abuse Detection",
@@ -17938,21 +4381,6 @@ module.exports = {
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
     'previousIndexing' : "D015813"
-  },
-
-  D015870: {
-    'id' : "D015870",
-    'name' : "Gene Expression",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024297' ],
-    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015870"
   },
 
   D015877: {
@@ -17987,144 +4415,997 @@ module.exports = {
     'previousIndexing' : "D015878"
   },
 
-  D015914: {
-    'id' : "D015914",
-    'name' : "Estrogen Replacement Therapy",
-    'annotation' : "coord IM with specific estrogen (IM or NIM) and also specific progestational agent (IM or NIM) if pertinent; check tag FEMALE; DF: ESTROGEN REPLACE",
+  D016023: {
+    'id' : "D016023",
+    'name' : "Integrins",
+    'annotation' : "prefer specifics",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76431' ],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0024497' ],
+    'qualifiers' : [ 'Q000008','Q000032','Q000037','Q000096','Q000097','Q000134','Q000145','Q000172','Q000187','Q000235','Q000266','Q000276','Q000302','Q000378','Q000502','Q000528','Q000627','Q000648','Q000737','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D016023"
+  },
+
+  D016292: {
+    'id' : "D016292",
+    'name' : "Conscious Sedation",
+    'annotation' : "coordinate IM with specific procedure (IM) or specific sedative, analgesic or anesthetic (IM with no qualifiers)",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024350','M0024351','M0024352','M0407953' ],
+    'sessions' : [ '16522' ],
+    'concepts' : [ 'M0024899' ],
     'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000379','Q000401','Q000451','Q000523','Q000592','Q000639','Q000656','Q000662','Q000706','Q000744','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
-    'previousIndexing' : "D015914"
+    'previousIndexing' : "D016292"
   },
 
-  D015980: {
-    'id' : "D015980",
-    'name' : "Public Health Practice",
-    'annotation' : "GEN or unspecified; prefer specifics",
+  D016635: {
+    'id' : "D016635",
+    'name' : "Universal Precautions",
+    'annotation' : "restrict to 'prudent prev measures' in contacts with patients having communicable dis; IM; coord IM with specific dis /prev (IM)",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024415' ],
-    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000592','Q000706','Q000941' ],
+    'sessions' : [ '16468' ],
+    'concepts' : [ 'M0025354' ],
+    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000295','Q000331','Q000379','Q000639','Q000706' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
-    'previousIndexing' : "D015980"
+    'previousIndexing' : "D016635"
   },
 
-  D015981: {
-    'id' : "D015981",
-    'name' : "Epidemiologic Factors",
-    'annotation' : "IM GEN only; for epidemiol factors of a disease, index only as disease /epidemiol (IM); no qualif; DF: EPIDEMIOL FACTORS",
+  D016678: {
+    'id' : "D016678",
+    'name' : "Genome",
+    'annotation' : "general or unspecified; prefer specifics; coordinate IM with animal /genet (IM) or organism /genet (IM)",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024416' ],
-    'qualifiers' : [],
+    'sessions' : [ '16495','16498' ],
+    'concepts' : [ 'M0025412' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
-    'previousIndexing' : "D015981"
+    'previousIndexing' : "D016678"
   },
 
-  D015982: {
-    'id' : "D015982",
-    'name' : "Bias (Epidemiology)",
-    'annotation' : "do not use for 'bias' as prejudice or subjectivity ( = PREJUDICE); IM GEN only; coord NIM with disease /epidemiol (IM), not /etiol; specify geog if pertinent; DF: BIAS",
-    'createdAt' : "2010-01-01T00:00:00+00:00",
-    'updatedAt' : "2010-01-01T00:00:00+00:00",
-    'courses' : [],
-    'objectives' : [ '76360' ],
-    'sessions' : [],
-    'concepts' : [ 'M0024417','M0024418','M0024419','M0024420','M0024421','M0024422','M0024423','M0024424' ],
-    'qualifiers' : [],
-    'sessionLearningMaterials' : [],
-    'courseLearningMaterials' : [],
-    'previousIndexing' : "D015982"
-  },
-
-  D015986: {
-    'id' : "D015986",
-    'name' : "Confounding Factors (Epidemiology)",
-    'annotation' : "IM GEN only; coord NIM with disease /epidemiol (IM), not /etiol; no qualif; specify geog if pertinent; DF: CONFOUNDING FACTORS",
+  D016923: {
+    'id' : "D016923",
+    'name' : "Cell Death",
+    'annotation' : "NIM; not for micro-organisms",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024436' ],
+    'sessions' : [ '16526' ],
+    'concepts' : [ 'M0025750' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D016923"
+  },
+
+  D017006: {
+    'id' : "D017006",
+    'name' : "Rotator Cuff",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16500','16552' ],
+    'concepts' : [ 'M0025841' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017006"
+  },
+
+  D017203: {
+    'id' : "D017203",
+    'name' : "Interview",
+    'annotation' : "this heading is used as a Publication Type; interviews as a subject are indexed under the main heading INTERVIEWS AS TOPIC",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16516','16523' ],
+    'concepts' : [ 'M0026105' ],
     'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
 
-  D015987: {
-    'id' : "D015987",
-    'name' : "Effect Modifiers (Epidemiology)",
-    'annotation' : "IM GEN only; coord NIM with disease /epidemiol (IM); no qualif; specify geog if pertinent; DF: EFF MODIFIERS",
+  D017209: {
+    'id' : "D017209",
+    'name' : "Apoptosis",
+    'annotation' : "do not confuse with NECROSIS, pathological cell death; unspecified probably goes here; PROGRAMMED CELL DEATH, TYPE II see AUTOPHAGY is also available",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76762' ],
+    'sessions' : [ '16526' ],
+    'concepts' : [ 'M0026116','M0493496','M0493497' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017209"
+  },
+
+  D017277: {
+    'id' : "D017277",
+    'name' : "Drug Approval",
+    'annotation' : "by govt regulatory agency, U.S. (not restricted to FDA) or foreign",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024437','M0024438','M0024439','M0024440' ],
+    'sessions' : [ '16473' ],
+    'concepts' : [ 'M0026225','M0026226','M0026227','M0026228','M0026229' ],
+    'qualifiers' : [ 'Q000191','Q000266','Q000331','Q000364','Q000379','Q000458','Q000706' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D017434: {
+    'id' : "D017434",
+    'name' : "Protein Structure, Tertiary",
+    'annotation' : "IM general; coord NIM with specific protein (IM); PROTEIN MOTIFS see MOTIFS, AMINO ACID is available",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16493' ],
+    'concepts' : [ 'M0026452' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000502','Q000528' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017434"
+  },
+
+  D017539: {
+    'id' : "D017539",
+    'name' : "Tunica Intima",
+    'annotation' : "/pathol is more likely than 'diseases of the tunica intima'; coord IM with specific blood vessel (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16503' ],
+    'concepts' : [ 'M0026597','M0026598','M0026599' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017539"
+  },
+
+  D017615: {
+    'id' : "D017615",
+    'name' : "Enteric Nervous System",
+    'annotation' : "a major division of the autonomic nerv syst",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16488' ],
+    'concepts' : [ 'M0026688' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D017628: {
+    'id' : "D017628",
+    'name' : "Microglia",
+    'annotation' : "a type of neuroglia; A 11 qualif",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16483' ],
+    'concepts' : [ 'M0026694' ],
+    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017628"
+  },
+
+  D017667: {
+    'id' : "D017667",
+    'name' : "Adipocytes",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0026722' ],
+    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017667"
+  },
+
+  D017729: {
+    'id' : "D017729",
+    'name' : "Presynaptic Terminals",
+    'annotation' : "distal terminations of axons: note X ref; A 11 qualif except /cytol",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16482' ],
+    'concepts' : [ 'M0026794' ],
+    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017729"
+  },
+
+  D017920: {
+    'id' : "D017920",
+    'name' : "Antiporters",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16480','16482' ],
+    'concepts' : [ 'M0027075','M0027076','M0381291' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017920"
+  },
+
+  D017933: {
+    'id' : "D017933",
+    'name' : "Peripheral Nervous System",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16483','16490' ],
+    'concepts' : [ 'M0027092' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017933"
+  },
+
+  D017983: {
+    'id' : "D017983",
+    'name' : "Receptors, Catecholamine",
+    'annotation' : "GEN; prefer specifics; DF: RECEPT CATECHOLAMINE",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16493' ],
+    'concepts' : [ 'M0027157' ],
+    'qualifiers' : [ 'Q000008','Q000032','Q000037','Q000096','Q000097','Q000145','Q000172','Q000187','Q000235','Q000266','Q000276','Q000302','Q000378','Q000502','Q000528','Q000627','Q000648','Q000737','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D017983"
+  },
+
+  D018160: {
+    'id' : "D018160",
+    'name' : "Receptors, Cytoplasmic and Nuclear",
+    'annotation' : "general or unspecified; prefer specifics; for hormone receptors, see note at RECEPTORS, CELL SURFACE",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76497' ],
+    'sessions' : [ '16486' ],
+    'concepts' : [ 'M0027371','M0027372','M0027373','M0352721','M0352724','M0536280' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D018160"
+  },
+
+  D018377: {
+    'id' : "D018377",
+    'name' : "Neurotransmitter Agents",
+    'annotation' : "general; prefer specifics",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [ '595' ],
+    'objectives' : [],
+    'sessions' : [ '16544' ],
+    'concepts' : [ 'M0014762','M0027603','M0373093','M0373094','M0373095','M0373098','M0529646' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D018482: {
+    'id' : "D018482",
+    'name' : "Muscle, Skeletal",
+    'annotation' : "/growth: coordinate with MUSCLE DEVELOPMENT; /embryol: coordinate with MUSCLE DEVELOPMENT if pertinent",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76493' ],
+    'sessions' : [ '16484','16485' ],
+    'concepts' : [ 'M0027720','M0027721','M0027723','M0027724','M0027725' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D018482"
+  },
+
+  D018528: {
+    'id' : "D018528",
+    'name' : "ATP-Binding Cassette Transporters",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16480','16482' ],
+    'concepts' : [ 'M0027776' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D018528"
+  },
+
+  D018740: {
+    'id' : "D018740",
+    'name' : "Genetic Heterogeneity",
+    'annotation' : "DF: GENET HETEROGENEITY",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76655' ],
+    'sessions' : [ '16498','16507' ],
+    'concepts' : [ 'M0028075' ],
+    'qualifiers' : [ 'Q000187','Q000266','Q000528' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D018864: {
+    'id' : "D018864",
+    'name' : "Cultural Diversity",
+    'annotation' : "IM; coord with specific ethnic, racial, religious or other cultural aspect (IM); specify geog if pertinent",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16517' ],
+    'concepts' : [ 'M0020054','M0028217','M0028218' ],
+    'qualifiers' : [],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D018864"
+  },
+
+  D018954: {
+    'id' : "D018954",
+    'name' : "Drugs, Essential",
+    'annotation' : "'essential to meet the health needs of a population'; IM GEN; for specific drug as essential, coord IM with drug (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16519' ],
+    'concepts' : [ 'M0028324' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000138','Q000145','Q000176','Q000191','Q000266','Q000302','Q000378','Q000493','Q000494','Q000506','Q000528','Q000592','Q000600','Q000627','Q000633','Q000737','Q000744' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D018954"
+  },
+
+  D019390: {
+    'id' : "D019390",
+    'name' : "Arrestins",
+    'annotation' : "regulatory proteins; do not confuse with ARRESTIN",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16544' ],
+    'concepts' : [ 'M0028856' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D019390"
+  },
+
+  D019540: {
+    'id' : "D019540",
+    'name' : "Area Under Curve",
+    'annotation' : "a measure of drug bioavailability after a single dose; DF: note short X ref",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16515' ],
+    'concepts' : [ 'M0029025' ],
     'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : []
   },
 
-  D015992: {
-    'id' : "D015992",
-    'name' : "Body Mass Index",
+  D019680: {
+    'id' : "D019680",
+    'name' : "Trinucleotide Repeat Expansion",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024445' ],
+    'sessions' : [ '16495' ],
+    'concepts' : [ 'M0029211' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D019680"
+  },
+
+  D019683: {
+    'id' : "D019683",
+    'name' : "Penetrance",
+    'annotation' : "frequency a gene or gene combination is manifested in the phenotype",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76653' ],
+    'sessions' : [ '16507' ],
+    'concepts' : [ 'M0029217' ],
     'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
-    'previousIndexing' : "D015992"
+    'previousIndexing' : "D019683"
   },
 
-  D015997: {
-    'id' : "D015997",
-    'name' : "Neonatal Screening",
-    'annotation' : "check tag INFANT, NEWBORN",
+  D019898: {
+    'id' : "D019898",
+    'name' : "Autocrine Communication",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024457' ],
-    'qualifiers' : [ 'Q000009','Q000145','Q000191','Q000266','Q000295','Q000331','Q000379','Q000401','Q000451','Q000458','Q000523','Q000592','Q000639','Q000656','Q000662','Q000744','Q000941' ],
+    'sessions' : [ '16544' ],
+    'concepts' : [ 'M0029554' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D019966: {
+    'id' : "D019966",
+    'name' : "Substance-Related Disorders",
+    'annotation' : "consider also PSYCHOSES, SUBSTANCE-INDUCED or PSYCHOSES, ALCOHOLIC; /diag: consider SUBSTANCE ABUSE DETECTION",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16538' ],
+    'concepts' : [ 'M0029648','M0029650','M0029651','M0029652','M0029653','M0029654','M0029655','M0029656','M0029657','M0029658','M0029659' ],
+    'qualifiers' : [ 'Q000097','Q000134','Q000145','Q000150','Q000175','Q000178','Q000188','Q000191','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000534','Q000601','Q000628','Q000652','Q000736','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D020033: {
+    'id' : "D020033",
+    'name' : "Protein Isoforms",
+    'annotation' : "IM general only; coordinate NIM with specific protein (IM); for enzymes use ISOENZYMES",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16486' ],
+    'concepts' : [ 'M0029740','M0495713' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D020168: {
+    'id' : "D020168",
+    'name' : "P-Glycoprotein",
+    'annotation' : "P-GLYCOPROTEINS is also available",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16480','16482' ],
+    'concepts' : [ 'M0029890' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
-    'previousIndexing' : "D015997"
+    'previousIndexing' : "D020168"
   },
 
-  D016001: {
-    'id' : "D016001",
-    'name' : "Confidence Intervals",
-    'annotation' : "IM GEN only; coord NIM with specific disease or other concept (IM); no qualif",
+  D020169: {
+    'id' : "D020169",
+    'name' : "Caspases",
+    'annotation' : "CASPASES, EFFECTOR and CASPASES, INITIATOR and specifics are available",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2010-01-01T00:00:00+00:00",
     'courses' : [],
     'objectives' : [],
-    'sessions' : [],
-    'concepts' : [ 'M0024462' ],
+    'sessions' : [ '16526' ],
+    'concepts' : [ 'M0029891' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D020169"
+  },
+
+  D020286: {
+    'id' : "D020286",
+    'name' : "Pericytes",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16503' ],
+    'concepts' : [ 'M0029935' ],
+    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D020286"
+  },
+
+  D020397: {
+    'id' : "D020397",
+    'name' : "Goblet Cells",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76411' ],
+    'sessions' : [ '16474' ],
+    'concepts' : [ 'M0030041' ],
+    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D020558: {
+    'id' : "D020558",
+    'name' : "GTP Phosphohydrolases",
+    'annotation' : "GTP PHOSPHOHYDROLASE ACTIVATORS is available",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16544' ],
+    'concepts' : [ 'M0328195' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D020641: {
+    'id' : "D020641",
+    'name' : "Polymorphism, Single Nucleotide",
+    'annotation' : "do not confuse with POLYMORPHISM, SINGLE-STRANDED CONFORMATIONAL",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16495' ],
+    'concepts' : [ 'M0328041' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D020641"
+  },
+
+  D020710: {
+    'id' : "D020710",
+    'name' : "RGS Proteins",
+    'annotation' : "do not confuse with GTP-BINDING PROTEIN REGULATORS; not the same as RGS tripeptide",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16544' ],
+    'concepts' : [ 'M0328278' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D020710"
+  },
+
+  D020896: {
+    'id' : "D020896",
+    'name' : "Hypovolemia",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16468' ],
+    'concepts' : [ 'M0328462','M0328905' ],
+    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D020896"
+  },
+
+  D021581: {
+    'id' : "D021581",
+    'name' : "Active Transport, Cell Nucleus",
+    'annotation' : "IM general only; coordinate NIM with CELL NUCLEUS /metab (IM) + substance /metab (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16482' ],
+    'concepts' : [ 'M0352614','M0354406','M0354407' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528','Q000941' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D021581"
+  },
+
+  D021601: {
+    'id' : "D021601",
+    'name' : "trans-Golgi Network",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76394' ],
+    'sessions' : [ '16471' ],
+    'concepts' : [ 'M0354386','M0357543' ],
+    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D021601"
+  },
+
+  D022002: {
+    'id' : "D022002",
+    'name' : "Hemidesmosomes",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0356381' ],
+    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D022002"
+  },
+
+  D022041: {
+    'id' : "D022041",
+    'name' : "Euchromatin",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76393' ],
+    'sessions' : [ '16471','16498' ],
+    'concepts' : [ 'M0091502' ],
+    'qualifiers' : [ 'Q000145','Q000187','Q000201','Q000235','Q000276','Q000302','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D022041"
+  },
+
+  D022423: {
+    'id' : "D022423",
+    'name' : "Myeloid Cells",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16502' ],
+    'concepts' : [ 'M0358025' ],
+    'qualifiers' : [ 'Q000145','Q000166','Q000187','Q000201','Q000276','Q000378','Q000382','Q000469','Q000473','Q000502','Q000528','Q000530','Q000531','Q000557','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D024042: {
+    'id' : "D024042",
+    'name' : "Collagen Type I",
+    'annotation' : "precursors: coord IM with PROCOLLAGEN (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76429' ],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0004773','M0004788','M0017622','M0017623','M0017630','M0369293' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D024042"
+  },
+
+  D024043: {
+    'id' : "D024043",
+    'name' : "Collagen Type II",
+    'annotation' : "precursors: coord IM with PROCOLLAGEN (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76429' ],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0004777','M0017625','M0369296' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D024043"
+  },
+
+  D024061: {
+    'id' : "D024061",
+    'name' : "Collagen Type III",
+    'annotation' : "precursors: coord IM with PROCOLLAGEN (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76429' ],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0004778','M0017626','M0369299' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D024061"
+  },
+
+  D024141: {
+    'id' : "D024141",
+    'name' : "Collagen Type IV",
+    'annotation' : "precursors: coord IM with PROCOLLAGEN (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76429' ],
+    'sessions' : [ '16477' ],
+    'concepts' : [ 'M0004772','M0004779','M0017627','M0369423','M0369424' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D024141"
+  },
+
+  D026901: {
+    'id' : "D026901",
+    'name' : "Membrane Transport Proteins",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [ '595' ],
+    'objectives' : [],
+    'sessions' : [ '16482' ],
+    'concepts' : [ 'M0016369','M0379230','M0379231' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D026901"
+  },
+
+  D027981: {
+    'id' : "D027981",
+    'name' : "Symporters",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16480' ],
+    'concepts' : [ 'M0381333' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D027981"
+  },
+
+  D030541: {
+    'id' : "D030541",
+    'name' : "Databases, Genetic",
+    'annotation' : "DATABASES, NUCLEIC ACID and DATABASES, PROTEIN are also available",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16498' ],
+    'concepts' : [ 'M0388144','M0388145','M0392164' ],
+    'qualifiers' : [ 'Q000145','Q000191','Q000266','Q000331','Q000592','Q000600','Q000639','Q000656','Q000706','Q000941' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D033183: {
+    'id' : "D033183",
+    'name' : "Interdisciplinary Communication",
+    'annotation' : "use only for communication across disciplines; for relations between individuals in different disciplines, use instead INTERPROFESSIONAL RELATIONS; coord IM with specific disciplines (IM)",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16572' ],
+    'concepts' : [ 'M0011554' ],
     'qualifiers' : [],
     'sessionLearningMaterials' : [],
     'courseLearningMaterials' : [],
-    'previousIndexing' : "D016001"
+    'previousIndexing' : "D033183"
+  },
+
+  D034582: {
+    'id' : "D034582",
+    'name' : "Integumentary System",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16556' ],
+    'concepts' : [ 'M0405841' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000254','Q000293','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000601','Q000736','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D034861: {
+    'id' : "D034861",
+    'name' : "Abdominal Wall",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16492','16496' ],
+    'concepts' : [ 'M0351760' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000196','Q000254','Q000294','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000531','Q000601','Q000736','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D034861"
+  },
+
+  D035422: {
+    'id' : "D035422",
+    'name' : "Pleural Cavity",
+    'annotation' : "PLEURA is also available",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16545','16551' ],
+    'concepts' : [ 'M0017041' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D035422"
+  },
+
+  D035441: {
+    'id' : "D035441",
+    'name' : "Thoracic Wall",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16492' ],
+    'concepts' : [ 'M0407552' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D045125: {
+    'id' : "D045125",
+    'name' : "Cardiovascular Physiological Processes",
+    'annotation' : "general or unspecified; prefer specifics",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16488' ],
+    'concepts' : [ 'M0447202' ],
+    'qualifiers' : [ 'Q000187','Q000528','Q000941' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D050479: {
+    'id' : "D050479",
+    'name' : "Neurotransmitter Transport Proteins",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [ '595' ],
+    'objectives' : [],
+    'sessions' : [ '16544' ],
+    'concepts' : [ 'M0475593' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744','Q000819' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D050723: {
+    'id' : "D050723",
+    'name' : "Fractures, Bone",
+    'annotation' : "coord IM with specific bone /inj (IM) but note many precoordinated Bone/Fracture terms and many specific types of fractures",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16522' ],
+    'concepts' : [ 'M0477404' ],
+    'qualifiers' : [ 'Q000097','Q000134','Q000139','Q000145','Q000150','Q000151','Q000175','Q000178','Q000188','Q000191','Q000196','Q000201','Q000208','Q000209','Q000235','Q000266','Q000276','Q000378','Q000382','Q000401','Q000451','Q000453','Q000469','Q000473','Q000503','Q000517','Q000523','Q000530','Q000531','Q000532','Q000534','Q000601','Q000628','Q000652','Q000662','Q000736','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D051966: {
+    'id' : "D051966",
+    'name' : "Phospholipase C gamma",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76871' ],
+    'sessions' : [ '16493','16544' ],
+    'concepts' : [ 'M0225967','M0225969','M0225970','M0225971' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D052097: {
+    'id' : "D052097",
+    'name' : "Quadriceps Muscle",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16540' ],
+    'concepts' : [ 'M0483163','M0483164','M0483165','M0483166','M0483167' ],
+    'qualifiers' : [ 'Q000002','Q000033','Q000098','Q000166','Q000187','Q000196','Q000201','Q000254','Q000276','Q000293','Q000294','Q000378','Q000382','Q000469','Q000473','Q000502','Q000503','Q000528','Q000530','Q000531','Q000557','Q000601','Q000637','Q000648','Q000736','Q000737','Q000821' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : [],
+    'previousIndexing' : "D052097"
+  },
+
+  D054799: {
+    'id' : "D054799",
+    'name' : "Phospholipase C beta",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76871' ],
+    'sessions' : [ '16493','16544' ],
+    'concepts' : [ 'M0225976','M0225977','M0225978','M0225979','M0225980' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D054803: {
+    'id' : "D054803",
+    'name' : "Phospholipase C delta",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [ '76871' ],
+    'sessions' : [ '16493','16544' ],
+    'concepts' : [ 'M0225981','M0225983','M0225984','M0225985','M0400960' ],
+    'qualifiers' : [ 'Q000008','Q000009','Q000032','Q000037','Q000096','Q000097','Q000134','Q000138','Q000145','Q000172','Q000176','Q000187','Q000191','Q000235','Q000266','Q000276','Q000302','Q000378','Q000493','Q000494','Q000502','Q000506','Q000528','Q000557','Q000592','Q000600','Q000627','Q000633','Q000648','Q000652','Q000737','Q000744' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
+  },
+
+  D055648: {
+    'id' : "D055648",
+    'name' : "Cell Physiological Processes",
+    'annotation' : "general or unspecified; prefer specifics",
+    'createdAt' : "2010-01-01T00:00:00+00:00",
+    'updatedAt' : "2010-01-01T00:00:00+00:00",
+    'courses' : [],
+    'objectives' : [],
+    'sessions' : [ '16475' ],
+    'concepts' : [ 'M0519227' ],
+    'qualifiers' : [ 'Q000187','Q000235','Q000276','Q000502','Q000528' ],
+    'sessionLearningMaterials' : [],
+    'courseLearningMaterials' : []
   },
 };

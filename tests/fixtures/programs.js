@@ -8,7 +8,20 @@ export default [
     'publishedAsTbd' : false,
     'publishEvent' : "15302",
     'owningSchool' : "1",
-    'programYears' : [],
+    'programYears' : [ '42','67' ],
     'curriculumInventoryReports' : [ '9','10' ]
+  },
+
+  {
+    'id' : 7,
+    'title' : "Doctor of Pharmacy",
+    'shortTitle' : "PharmD",
+    'duration' : 4,
+    'deleted' : false,
+    'publishedAsTbd' : false,
+    'publishEvent' : "13",
+    'owningSchool' : "3",
+    'programYears' : [ '58','69' ],
+    'curriculumInventoryReports' : []
   },
 ];

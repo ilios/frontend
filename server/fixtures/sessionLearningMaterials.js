@@ -1,4 +1,20 @@
 module.exports = {
+  38121: {
+    'id' : 38121,
+    'publicNotes' : false,
+    'session' : "15076",
+    'learningMaterial' : "9488",
+    'meshDescriptors' : []
+  },
+
+  38122: {
+    'id' : 38122,
+    'publicNotes' : true,
+    'session' : "15076",
+    'learningMaterial' : "9498",
+    'meshDescriptors' : []
+  },
+
   45122: {
     'id' : 45122,
     'publicNotes' : true,

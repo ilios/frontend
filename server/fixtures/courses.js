@@ -84,7 +84,7 @@ module.exports = {
     'disciplines' : [ '118','132' ],
     'objectives' : [ '72323','72324','72325','72326','72327','72328','72329','72330','72344' ],
     'meshDescriptors' : [],
-    'learningMaterials' : [ '1080' ],
+    'learningMaterials' : [],
     'sessions' : []
   },
 
@@ -109,6 +109,30 @@ module.exports = {
     'sessions' : []
   },
 
+  551: {
+    'id' : 551,
+    'title' : "Anesthesia 110 Core Clerkship (2014-15)",
+    'level' : 3,
+    'year' : 2014,
+    'startDate' : "2014-04-28T00:00:00+00:00",
+    'endDate' : "2014-06-20T00:00:00+00:00",
+    'deleted' : false,
+    'externalId' : "Anesthesia110_2014",
+    'locked' : false,
+    'archived' : false,
+    'publishedAsTbd' : false,
+    'clerkshipType' : "1",
+    'owningSchool' : "1",
+    'publishEvent' : "57352",
+    'directors' : [ '4136','5393' ],
+    'cohorts' : [],
+    'disciplines' : [ '3' ],
+    'objectives' : [ '72592','72593','72594','72595','72596','72597','72598','72599','72600','72601' ],
+    'meshDescriptors' : [ 'D000758' ],
+    'learningMaterials' : [],
+    'sessions' : [ '15076','15077','15078','15079','15080','15081','15082','15083','15084','15085','15086','15087','15088','15089','15090','15091','15092' ]
+  },
+
   582: {
     'id' : 582,
     'title' : "Microbiology & Immunology in Pharm",
@@ -128,7 +152,30 @@ module.exports = {
     'disciplines' : [],
     'objectives' : [ '76271','76272','76273','76274','76275','76276','76277','76278','76279','76280','76281' ],
     'meshDescriptors' : [],
-    'learningMaterials' : [ '1158','1165','1169' ],
+    'learningMaterials' : [],
+    'sessions' : []
+  },
+
+  591: {
+    'id' : 591,
+    'title' : "Introduction to Managed Care Pharmacy",
+    'level' : 1,
+    'year' : 2013,
+    'startDate' : "2014-04-16T00:00:00+00:00",
+    'endDate' : "2014-05-28T00:00:00+00:00",
+    'deleted' : false,
+    'externalId' : "CP161.02",
+    'locked' : false,
+    'archived' : false,
+    'publishedAsTbd' : false,
+    'owningSchool' : "3",
+    'publishEvent' : "52181",
+    'directors' : [ '4710' ],
+    'cohorts' : [ '57' ],
+    'disciplines' : [],
+    'objectives' : [ '76232','76233','76234','76235','76236','76237','76238','76239','76240' ],
+    'meshDescriptors' : [],
+    'learningMaterials' : [],
     'sessions' : []
   },
 
@@ -147,10 +194,10 @@ module.exports = {
     'owningSchool' : "1",
     'publishEvent' : "58390",
     'directors' : [ '8','83','3687','3767','8510' ],
-    'cohorts' : [],
+    'cohorts' : [ '66' ],
     'disciplines' : [ '2','5','15','16','19','21','25','48','50','57','172' ],
     'objectives' : [ '76350','76351','76352','76353','76354','76355','76356','76357','76358','76359','76360','76361','76362','76363','76364','76365','76366','76367','76368','76369','76370','76371','76372' ],
-    'meshDescriptors' : [ 'D000701','D000894','D006019','D006487','D006728','D007249','D008021','D008566','D010599','D010766','D012959','D014179','D014465','D014945','D014947','D016207','D018377','D019344','D026901','D050479' ],
+    'meshDescriptors' : [ 'D006487','D006728','D008566','D010599','D010766','D014179','D014945','D014947','D018377','D026901','D050479' ],
     'learningMaterials' : [ '1247' ],
     'sessions' : [ '16468','16469','16470','16471','16472','16473','16474','16475','16476','16477','16478','16479','16480','16481','16482','16483','16484','16485','16486','16487','16488','16489','16490','16491','16492','16493','16494','16495','16496','16497','16498','16499','16500','16501','16502','16503','16504','16505','16506','16507','16509','16510','16511','16512','16513','16514','16515','16516','16517','16519','16522','16523','16524','16526','16528','16533','16534','16535','16538','16540','16541','16542','16543','16544','16545','16546','16547','16549','16550','16551','16552','16553','16554','16555','16556','16559','16560','16561','16562','16563','16564','16567','16569','16571','16572','16573','16574','16575','16576','16577','16578','16579','16580','16581','16582','17304','17386','17387','17389','17547','17548','17549','17550','17551','17552','17553','17555','17556','17557','17558','18588','18630','18631','18783','19060','19543','19544','19569','19578','19594' ]
   },
@@ -174,7 +221,30 @@ module.exports = {
     'disciplines' : [],
     'objectives' : [ '77306','77307','77308' ],
     'meshDescriptors' : [],
-    'learningMaterials' : [ '1198' ],
+    'learningMaterials' : [],
+    'sessions' : []
+  },
+
+  612: {
+    'id' : 612,
+    'title' : "Class of 2018 (2014-15)",
+    'level' : 1,
+    'year' : 2014,
+    'startDate' : "2014-09-01T00:00:00+00:00",
+    'endDate' : "2015-08-31T00:00:00+00:00",
+    'deleted' : false,
+    'externalId' : "Class of 2018 (201",
+    'locked' : false,
+    'archived' : false,
+    'publishedAsTbd' : false,
+    'owningSchool' : "1",
+    'publishEvent' : "59914",
+    'directors' : [ '429','453','458','523','3518','7541','11434' ],
+    'cohorts' : [ '66' ],
+    'disciplines' : [],
+    'objectives' : [ '80788','80789','80790' ],
+    'meshDescriptors' : [],
+    'learningMaterials' : [],
     'sessions' : []
   },
 
@@ -193,7 +263,7 @@ module.exports = {
     'owningSchool' : "1",
     'publishEvent' : "63187",
     'directors' : [ '8','63','85','3341','3917','4406','5115' ],
-    'cohorts' : [],
+    'cohorts' : [ '41','66' ],
     'disciplines' : [ '2','37','54' ],
     'objectives' : [ '81077','81078','81079','81080','81081','81082','81083' ],
     'meshDescriptors' : [],
@@ -216,7 +286,7 @@ module.exports = {
     'owningSchool' : "1",
     'publishEvent' : "58817",
     'directors' : [ '8','39','560','3383','3885','4408' ],
-    'cohorts' : [],
+    'cohorts' : [ '41' ],
     'disciplines' : [],
     'objectives' : [ '86280','86281','86282','86283','86284','86285','86286','86287','86288','86289','86290','86291','86292','86293','86294','86295','86296','86297','86298' ],
     'meshDescriptors' : [],
@@ -239,11 +309,11 @@ module.exports = {
     'owningSchool' : "3",
     'publishEvent' : "62725",
     'directors' : [ '4713','6404','11476' ],
-    'cohorts' : [],
+    'cohorts' : [ '57' ],
     'disciplines' : [ '105','107','109','110','118','119','129','130','132' ],
     'objectives' : [ '89257','89258','89259','89260','89261','89262','89263','89264' ],
     'meshDescriptors' : [],
-    'learningMaterials' : [ '1478','1481','1482','1483','1484','1523' ],
+    'learningMaterials' : [],
     'sessions' : []
   },
 
@@ -262,11 +332,11 @@ module.exports = {
     'owningSchool' : "3",
     'publishEvent' : "60762",
     'directors' : [ '11455' ],
-    'cohorts' : [],
+    'cohorts' : [ '68' ],
     'disciplines' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'learningMaterials' : [ '1421' ],
+    'learningMaterials' : [],
     'sessions' : []
   },
 
@@ -306,11 +376,11 @@ module.exports = {
     'owningSchool' : "3",
     'publishEvent' : "60726",
     'directors' : [ '4706','4716','4735','4744','4763','11295' ],
-    'cohorts' : [],
+    'cohorts' : [ '68' ],
     'disciplines' : [ '109' ],
     'objectives' : [ '92281','92282','92283','92284','92285','92286','92287','92288' ],
     'meshDescriptors' : [],
-    'learningMaterials' : [ '1453','1454' ],
+    'learningMaterials' : [],
     'sessions' : []
   },
 };
