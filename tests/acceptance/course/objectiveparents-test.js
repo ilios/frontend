@@ -23,7 +23,7 @@ module('Acceptance: Course - Objective Parents', {
   }
 });
 
-test('list objectives', function(assert) {
+test('manage parents', function(assert) {
   assert.expect(50);
   visit('/course/595?details=true');
   andThen(function() {

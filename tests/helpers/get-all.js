@@ -56,8 +56,5 @@ export default function getAll(queryParams, model){
       });
     }
   }
-  if(queryParams.limit){
-    response = response.slice(0, queryParams.limit);
-  }
   return response;
 }

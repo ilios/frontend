@@ -140,11 +140,14 @@
       li {
         color: $base-link-color;
         cursor: pointer;
-      }
-
-      li.static {
-        color: $base-font-color;
-        cursor: arrow;
+        &.static {
+          color: $base-font-color;
+          cursor: arrow;
+        }
+        &.disabled {
+          cursor: arrow;
+          color: lighten($base-font-color, 40);
+        }
       }
     }
 

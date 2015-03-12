@@ -16,7 +16,7 @@
   <div class='parent-picker'>
     {{#liquid-if showCohortList class='crossFade'}}
       {{#each competency in currentCohort.objectivesByCompetency}}
-        <h5 {{bind-attr class='competency.selected:selected'}}>{{competency.title}}</h5>
+        <h5 {{bind-attr class=':competency-title competency.selected:selected'}}>{{competency.title}}</h5>
         <ul>
           {{#each objective in competency.objectives}}
             {{#if objective.selected}}

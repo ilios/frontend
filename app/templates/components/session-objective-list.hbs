@@ -26,13 +26,15 @@
       </td>
       <td class='text-left text-top'>
         {{#if objective.meshDescriptors.length}}
-        <ul>
-          {{#each descriptor in objective.meshDescriptors}}
-          <li>{{descriptor.title}}</li>
-          {{/each}}
-        </ul>
+          <ul>
+            <a href='#' {{action 'manageDescriptors' objective}}>
+              {{#each descriptor in objective.meshDescriptors}}
+                <li>{{descriptor.title}}</li>
+              {{/each}}
+            </a>
+          </ul>
         {{else}}
-        <button class='add'>{{t 'general.addNew'}}</button>
+          <button class='add' {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
     </tr>

@@ -1,0 +1,15 @@
+<ul class='removable-list'>
+  {{#each term in sortedTerms}}
+    <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
+  {{/each}}
+</ul>
+{{search-box placeholder=placeholder liveSearch=false search='search'}}
+{{#if searchResults.length}}
+  <div class='selectable-list'>
+    <ul class='mesh-search-results'>
+      {{#each term in searchResults}}
+        <li {{bind-attr class='term.isActive::disabled'}} {{action 'add' term}}>{{term.title}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

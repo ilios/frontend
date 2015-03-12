@@ -13,28 +13,6 @@ export default Ember.Component.extend({
           self.set('session', session);
         }
       });
-    },
-    addMeshDescriptor: function(descriptor){
-      var session = this.get('session');
-      session.get('meshDescriptors').then(function(descriptors){
-        descriptor.get('sessions').then(function(sessions){
-          sessions.addObject(session);
-          descriptors.addObject(descriptor);
-          session.save();
-          descriptor.save();
-        });
-      });
-    },
-    removeMeshDescriptor: function(descriptor){
-      var session = this.get('session');
-      session.get('meshDescriptors').then(function(descriptors){
-        descriptor.get('sessions').then(function(sessions){
-          sessions.removeObject(session);
-          descriptors.removeObject(descriptor);
-          session.save();
-          descriptor.save();
-        });
-      });
     }
   }
 

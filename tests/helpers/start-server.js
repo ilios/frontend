@@ -3,6 +3,7 @@ import Ember from 'ember';
 import getAll from './get-all';
 import getOne from './get-one';
 import getName from './get-name';
+import getQuery from './get-query';
 import getFixture from './get-fixture';
 
 export default function startServer() {
@@ -11,7 +12,17 @@ export default function startServer() {
       var obj = {};
       var name = getName(request.params.model);
       var fixture = getFixture(name);
-      obj[name] = getAll(request.queryParams, fixture);
+      var results;
+      if('q' in request.queryParams){
+        results = getQuery(request.queryParams.q, name, fixture, request.queryParams.limit);
+      } else {
+        results = getAll(request.queryParams, fixture);
+      }
+
+      if(request.queryParams.limit){
+        results = results.slice(0, request.queryParams.limit);
+      }
+      obj[name] = results;
       return [200, {"Content-Type": "application/json"}, JSON.stringify(obj)];
     });
     this.get('/api/:model/:id', function(request) {
