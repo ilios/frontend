@@ -1,23 +1,23 @@
 module.exports = {
-  1: {
+  undefined: {
     'name' : "University of California, San Francisco, School Of Medicine",
     'aamcCode' : "108",
-    'streetAddress' : "513 Parnassus Ave",
-    'city' : "San Francisco",
-    'state' : "CA",
-    'zipCode' : "94143",
-    'countryCode' : "US",
+    'addressStreet' : "513 Parnassus Ave",
+    'address_city' : "San Francisco",
+    'address_state_or_province' : "CA",
+    'addressZipCode' : "94143",
+    'addressCountryCode' : "US",
     'school' : "1"
   },
 
-  3: {
+  undefined: {
     'name' : "Pharmacy",
     'aamcCode' : "00000",
-    'streetAddress' : "",
-    'city' : "",
-    'state' : "",
-    'zipCode' : "",
-    'countryCode' : "",
+    'addressStreet' : "",
+    'address_city' : "",
+    'address_state_or_province' : "",
+    'addressZipCode' : "",
+    'addressCountryCode' : "",
     'school' : "3"
   },
 };

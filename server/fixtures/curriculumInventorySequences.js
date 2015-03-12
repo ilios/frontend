@@ -1,9 +1,9 @@
 module.exports = {
-  9: {
+  undefined: {
     'report' : "9"
   },
 
-  10: {
+  undefined: {
     'report' : "10"
   },
 };
