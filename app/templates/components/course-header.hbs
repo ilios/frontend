@@ -12,24 +12,25 @@
     <h4>{{course.academicYear}}</h4>
   </span>
   <span class ='actions'>
-    <button {{action 'unpublish'}} class='unpublish course-unpublish' {{bind-attr disabled=course.isNotPublished}}>{{t 'publish.unPublishCourse'}}</button>
-    {{#action-menu titleTranslation='publish.publishCourse' icon=false classNames='publish-menu course-publish-menu'}}
-      <li {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
-      {{#unless course.allPublicationIssuesLength}}
-        <li {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
-      {{else}}
-        {{#if showCheckLink}}
-          <li>
-            {{#link-to 'course-publicationcheck' course}}
-              {{t 'publish.reviewMissingItems' countBinding='course.allPublicationIssuesLength'}}
-            {{/link-to}}
-          </li>
-        {{/if}}
-        {{#unless course.requiredPublicationIssues.length}}
-          <li {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
-        {{/unless}}
-      {{/unless}}
+    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu'}}
+      {{#if showAsIs}}
+        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+      {{/if}}
+      {{#if showPublish}}
+        <li class='good' {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
+      {{/if}}
+      {{#if showReview}}
+        {{#link-to 'course-publicationcheck' course}}
+          <li class='good' >{{t 'publish.reviewMissingItems' countBinding='course.allPublicationIssuesLength'}}</li>
+        {{/link-to}}
+      {{/if}}
+      {{#if showTbd}}
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{/if}}
+      {{#if showUnPublish}}
+        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishCourse'}}</li>
+      {{/if}}
+
     {{/action-menu}}
-    {{publication-status item=course}}
   </span>
 </div>

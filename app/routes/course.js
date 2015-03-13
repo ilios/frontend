@@ -30,5 +30,6 @@ export default Ember.Route.extend({
     controller.set('availableTopics', this.get('availableTopics'));
     controller.set('programs', this.get('programs'));
     this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
+    this.controllerFor('course').set('showBackToCourseListLink', true);
   }
 });

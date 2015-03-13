@@ -17,13 +17,16 @@ var Course = DS.Model.extend({
   owningSchool: DS.belongsTo('school', {async: true}),
   isPublished: Ember.computed.notEmpty('publishEvent.content'),
   isNotPublished: Ember.computed.not('isPublished'),
+  isScheduled: Ember.computed.oneWay('publishedAsTbd'),
   status: function(){
-    if(this.get('publishEvent') != null){
-      return Ember.I18n.t('general.published');
-    } else {
-      return Ember.I18n.t('general.notPublished');
+    if(this.get('publishedAsTbd')){
+      return Ember.I18n.t('general.scheduled');
     }
-  }.property('publishEvent'),
+    if(this.get('isPublished')){
+      return Ember.I18n.t('general.published');
+    }
+    return Ember.I18n.t('general.notPublished');
+  }.property('isPublished', 'publishedAsTbd'),
   publishEvent: DS.belongsTo('publish-event', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),

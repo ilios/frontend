@@ -50,8 +50,9 @@ var Session = DS.Model.extend({
       promise: deferred.promise
     });
   }.property('sortedOfferingsByDate.@each', 'ilmSessionFacet.dueDate'),
-  isPublished: Ember.computed.notEmpty('publishEvent'),
+  isPublished: Ember.computed.notEmpty('publishEvent.content'),
   isNotPublished: Ember.computed.not('isPublished'),
+  isScheduled: Ember.computed.oneWay('publishedAsTbd'),
   status: function(){
     if(this.get('publishedAsTbd')){
       return Ember.I18n.t('general.scheduled');
