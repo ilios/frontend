@@ -1,5 +1,11 @@
 <div class="wrapper">
-  <div class="text">{{t 'general.loading'}} ...</div>
+  <div class="text">
+    {{#if translationKey}}
+      {{t translationKey}} ...
+    {{else}}
+      &nbsp;
+    {{/if}}
+  </div>
   <div class='widget'>
     <span></span>
     <span></span>
