@@ -25,7 +25,7 @@
     "pickOption",
     "pauseTest",
     "getText",
-    "Pretender"
+    "server"
   ],
   "node": false,
   "browser": false,

@@ -11,10 +11,10 @@ import CurrentUser from '../services/current-user';
  */
 export default {
   name: 'current-user-service',
-  after: ['store'],
+  after: ['store', 'ember-cli-mirage'],
   initialize: function(container, application) {
     application.deferReadiness();
-    var url = '/' + config.adapterNamespace + '/currentsession';
+    var url = config.adapterHost + '/' + config.adapterNamespace + '/currentsession';
     ajax(url).then(function(data) {
       container.lookup('store:main').find('user', data.currentsession.userId).then(function(user){
         //set the cotent property on the current user which allows
