@@ -24,8 +24,9 @@ export default Ember.Component.extend({
         deferred.resolve(course);
       });
     });
-
-    return deferred.promise;
+    return DS.PromiseObject.create({
+      promise:deferred.promise
+    });
   }.property('sessionObjective.courses.@each'),
   proxiedObjectives: function(){
     var sessionObjective = this.get('sessionObjective');
@@ -55,7 +56,9 @@ export default Ember.Component.extend({
     //debounce setting showObjectiveList to avoid animating changes when
     //a save causes the proxied list to change
     Ember.run.debounce(this, function(){
-      this.set('showObjectiveList', this.get('proxiedObjectives.length') > 0);
+      if(!this.get('isDestroyed')){
+        this.set('showObjectiveList', this.get('proxiedObjectives.length') > 0);
+      }
     }, 500);
   }.observes('proxiedObjectives.length').on('init'),
   actions: {

@@ -7,12 +7,7 @@
 import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
-  name: 'Pete',
-  age: 20,
+  title: (i) => `session ${i}`,
+  deleted: false,
 
-  email: (i) => `person${i}@test.com`,
-
-  admin: function() {
-    return this.age > 30;
-  }
 });

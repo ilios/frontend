@@ -25,6 +25,7 @@
     "pickOption",
     "pauseTest",
     "getText",
+    "getElementText",
     "server"
   ],
   "node": false,

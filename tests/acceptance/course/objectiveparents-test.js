@@ -4,94 +4,161 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import startServer from 'ilios/tests/helpers/start-server';
-import mockCurrentUser from 'ilios/tests/helpers/mock-currentuser';
 
 var application;
-var server;
-
+var url = '/course/1?details=true';
+var fixtures = {};
 module('Acceptance: Course - Objective Parents', {
   beforeEach: function() {
-    mockCurrentUser(4136);
     application = startApp();
-    server = startServer();
+    server.create('user', {id: 4136});
+    server.create('school');
+    // server.create('educationalYear', {id: 2013});
+    fixtures.program = server.create('program');
+    fixtures.programYear = server.create('programYear', {
+      cohort: 1,
+      program: 1,
+      objectives: [1,2,3],
+      competencies: [1,2]
+    });
+    fixtures.cohort = server.create('cohort', {
+      courses: [1],
+      programYear: 1
+    });
+    fixtures.competencies = [];
+    fixtures.competencies.pushObject(server.create('competency', {
+      owningSchool: 1,
+      programYears: [1],
+      objectives: [1],
+    }));
+    fixtures.competencies.pushObject(server.create('competency', {
+      owningSchool: 1,
+      programYears: [1],
+      objectives: [2,3],
+    }));
+    fixtures.parentObjectives = [];
+    fixtures.parentObjectives.pushObject(server.create('objective', {
+        children: [4],
+        programYears: [1],
+        competency: 1
+    }));
+    fixtures.parentObjectives.pushObject(server.create('objective', {
+        competency: 2,
+        programYears: [1],
+    }));
+    fixtures.parentObjectives.pushObject(server.create('objective', {
+        competency: 2,
+        programYears: [1],
+    }));
+    fixtures.courseObjectives = [];
+    fixtures.courseObjectives.pushObject(server.create('objective', {
+      courses: [1],
+      parents: [1]
+    }));
+    fixtures.courseObjectives.pushObject(server.create('objective', {
+      courses: [1]
+    }));
+    fixtures.course = server.create('course', {
+      year: 2013,
+      owningSchool: 1,
+      objectives: [4,5],
+      cohorts: [1]
+    });
   },
 
   afterEach: function() {
     Ember.run(application, 'destroy');
-    server.shutdown();
   }
 });
 
-test('manage parents', function(assert) {
-  assert.expect(50);
-  visit('/course/595?details=true');
+test('list parent objectives by competency', function(assert) {
+  assert.expect(16);
+  visit(url);
+  andThen(function() {
+    let tds = find('.course-objective-list tbody tr:eq(0) td');
+    assert.equal(tds.length, 3);
+    click('a', tds.eq(1));
+    assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
+    let objectiveManager = find('.objective-manager').eq(0);
+    let objective = fixtures.courseObjectives[0];
+    assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
+    andThen(function() {
+      let expectedCohortTitle = 'Select Parent For: ' + fixtures.program.title + fixtures.cohort.title;
+      assert.equal(getElementText(find('.group-picker', objectiveManager)), getText(expectedCohortTitle));
+      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+      let competencyTitles = find('.competency-title', parentPicker);
+      assert.equal(competencyTitles.length, fixtures.competencies.length);
+      //every competency is in the list
+      for(let i = 0; i < fixtures.programYear.competencies.length; i++){
+        let competency = fixtures.competencies[fixtures.programYear.competencies[i] - 1];
+        assert.equal(getElementText(competencyTitles.eq(i)), getText(competency.title));
+        let ul = find('ul', parentPicker).eq(i);
+        let items = find('li', ul);
+        let cohortObjectives = competency.objectives;
+        assert.equal(cohortObjectives.length, cohortObjectives.length);
+        for (let j = 0; j < cohortObjectives.length; j++){
+          let li = items.eq(j);
+          assert.equal(getElementText(li), getText(fixtures.parentObjectives[cohortObjectives[j] - 1].title));
+          if(objective.parents.indexOf(cohortObjectives[j]) !== -1){
+            assert.ok(competencyTitles.eq(i).hasClass('selected'));
+            assert.ok($(li).hasClass('selected'));
+          } else {
+            assert.ok(!$(li).hasClass('selected'));
+          }
+        }
+      }
+    });
+  });
+});
+
+test('change course objective parent', function(assert) {
+  assert.expect(4);
+  visit(url);
   andThen(function() {
     let tds = find('.course-objective-list tbody tr:eq(0) td');
     click('a', tds.eq(1));
-    assert.equal(getText(find('.detail-specific-title')), 'SelectParentObjectives');
-    let objectiveManager = find('.objective-manager').eq(0);
-    assert.equal(getText(find('h2', objectiveManager)), 'Describeandexplainthegeneralorganizationofthebodyand,inmoredetail,theanatomyofthemusculoskeletalandnervoussystems,includingselectedfeaturesofembryologicaldevelopment(earlydevelopment,gastrulation,neurulation,segmentation,&developmentofthemusculoskeletalsystem).');
     andThen(function() {
-      assert.equal(getText(find('.group-picker', objectiveManager)), 'SelectParentFor:DoctorofMedicineClassof2018');
+      let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      let competencies = find('.competency-title', parentPicker);
-      assert.equal(competencies.length, 23);
-      let expectedCompetencies = [
-        'BoundariesandPriorities',
-        'CommunicationandInformationSharingwithPatientsandFamilies',
-        'CommunicationwiththeMedicalTeam',
-        'Doctor-PatientRelationship',
-        'EthicalPrinciples',
-        'Evidence-BasedMedicine',
-        'HealthcareDeliverySystems',
-        'HistoryTaking',
-        'InformationManagement',
-        'InquiryandDiscovery',
-        'Institutional,Regulatory,andProfessionalSocietyStandards',
-        'KnowledgeforPractice',
-        'MedicalNotes',
-        'OralCasePresentation',
-        'PatientManagement',
-        'PhysicalExam',
-        'Problem-SolvingandDiagnosis',
-        'ProceduresandSkills',
-        'ProfessionalRelationships',
-        'ReflectionandSelf-Improvement',
-        'SystemsImprovement',
-        'Treatment',
-        'WorkHabits,Appearance,andEtiquette',
-      ];
-      let objectiveCountForCompetency = [
-        1,
-        5,
-        3,
-        1,
-        1,
-        3,
-        2,
-        1,
-        1,
-        1,
-        1,
-        2,
-        1,
-        1,
-        3,
-        1,
-        2,
-        2,
-        2,
-        3,
-        1,
-        1,
-        1,
-      ];
-      for(let i=0; i < 23; i++){
-        let ul = find('ul', parentPicker).eq(i);
-        assert.equal(getText(competencies.eq(i)), expectedCompetencies[i]);
-        assert.equal(find('li', ul).length, objectiveCountForCompetency[i]);
-      }
+      click('li:eq(1)', parentPicker);
+      assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
+      assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
+      assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+      assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
     });
+  });
+});
+
+test('save changes', function(assert) {
+  assert.expect(1);
+  visit(url);
+  andThen(function() {
+    click('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    click('.detail-objectives:eq(0) button.bigadd');
+  });
+  andThen(function(){
+    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+    assert.equal(getElementText(td), getText(
+      fixtures.parentObjectives[1].title +
+      '(' + fixtures.competencies[fixtures.parentObjectives[1].competency - 1].title + ')'
+    ));
+  });
+});
+
+test('cancel changes', function(assert) {
+  assert.expect(1);
+  visit(url);
+  andThen(function() {
+    click('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    click('.detail-objectives:eq(0) button.bigcancel');
+  });
+  andThen(function(){
+    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+    assert.equal(getElementText(td), getText(
+      fixtures.parentObjectives[0].title +
+      '(' + fixtures.competencies[fixtures.parentObjectives[0].competency - 1].title + ')'
+    ));
   });
 });

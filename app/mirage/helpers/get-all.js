@@ -4,6 +4,9 @@ export default function getAll(db, request){
   //turn /api/programyears?limit=1 into 'programYears'
   var modelRegex = /\/api\/([a-z]+).*/i;
   var modelName = getName(request.url.match(modelRegex)[1]);
+  if (!db[modelName]) {
+    console.error("Mirage: The route handler for " + request.url + " is requesting data from the " + modelName + " collection, but that collection doesn't exist. To create it, create an empty fixture file or factory.");
+  }
   var results = db[modelName];
   /*
    * querParams is kind of a mess and comes with values like filters[id]: [4,5,6]

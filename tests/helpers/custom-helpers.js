@@ -9,8 +9,11 @@ var customHelpers = function(app) {
     }).prop('selected', true);
     return triggerEvent(selector, 'change');
   });
-  Ember.Test.registerHelper('getText', function(app, element){
+  Ember.Test.registerHelper('getElementText', function(app, element){
     return element.text().replace(/[\t\n\s]+/g, "");
+  });
+  Ember.Test.registerHelper('getText', function(app, string){
+    return string.replace(/[\t\n\s]+/g, "");
   });
 }();
 

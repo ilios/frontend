@@ -4,67 +4,172 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import startServer from 'ilios/tests/helpers/start-server';
-import mockCurrentUser from 'ilios/tests/helpers/mock-currentuser';
 
 var application;
-var server;
-
+var url = '/course/1/session/1';
+var fixtures = {};
 module('Acceptance: Session - Objective Parents', {
   beforeEach: function() {
-    mockCurrentUser(4136);
     application = startApp();
-    server = startServer();
+    server.create('user', {id: 4136});
+    server.create('school');
+    fixtures.parentObjectives = [];
+    fixtures.parentObjectives.pushObject(server.create('objective', {
+        children: [4,5],
+        courses: [1]
+    }));
+    fixtures.parentObjectives.pushObject(server.create('objective', {
+        courses: [1],
+        children: [4]
+    }));
+    fixtures.parentObjectives.pushObject(server.create('objective', {
+        courses: [1],
+    }));
+    fixtures.sessionObjectives = [];
+    fixtures.sessionObjectives.pushObject(server.create('objective', {
+      sessions: [1],
+      parents: [1,2]
+    }));
+    fixtures.sessionObjectives.pushObject(server.create('objective', {
+      sessions: [1],
+      parents: [1]
+    }));
+    fixtures.sessionObjectives.pushObject(server.create('objective', {
+      sessions: [1],
+    }));
+    fixtures.course = server.create('course', {
+      year: 2013,
+      owningSchool: 1,
+      objectives: [1,2,3],
+    });
+    fixtures.session = server.create('session', {
+      course: 1,
+      objectives: [4,5,6]
+    });
   },
 
   afterEach: function() {
     Ember.run(application, 'destroy');
-    server.shutdown();
   }
 });
 
-test('manage parents', function(assert) {
-  assert.expect(26);
-  visit('/course/595/session/16555');
+test('list course objectives', function(assert) {
+  assert.expect(11);
+  visit(url);
   andThen(function() {
     let tds = find('.session-objective-list tbody tr:eq(0) td');
+    assert.equal(tds.length, 3);
     click('a', tds.eq(1));
-    assert.equal(getText(find('.detail-specific-title')), 'SelectParentObjectives');
+    assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
     let objectiveManager = find('.objective-manager').eq(0);
-    assert.equal(getText(find('h2', objectiveManager)), 'Describethearticulationsandmovementsattheelbowandwristjoints.');
+    let objective = fixtures.sessionObjectives[0];
+    assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
     andThen(function() {
+      let expectedCourseTitle = fixtures.course.title;
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      let courseObjectives = find('li', parentPicker);
-      assert.equal(courseObjectives.length, 23);
-      let expectedParents = [
-        'Describeandexplainthegeneralorganizationofthebodyand,inmoredetail,theanatomyofthemusculoskeletalandnervoussystems,includingselectedfeaturesofembryologicaldevelopment(earlydevelopment,gastrulation,neurulation,segmentation,&developmentofthemusculoskeletalsystem).',
-        'OnthebasisoftheDanoviccase,appreciatewhichdisciplinesareneededtoprovidecomprehensiveandcoordinatedhealthcaretoatraumapatient.',
-        'Identifyanatomicalstructuresandtheirrelationshipsonselectedplainfilms,CTscans,ultrasound,andMRI.',
-        'Describedifferencesbetweenthenormalandpathologichistologicalappearanceofbasiccells&tissuesincludingneoplasia.',
-        'Explainthebasicmechanismsinvolvedintheresponseoftissuetoinjury(inflammationandwoundhealing).',
-        'Describethepropertiesandfunctionofbiologicmembranesandmembranetransporters,particularlyastheyrelatetothemovementofdrugswithinorganisms.',
-        'Describethegeneralpropertiesofproteinfunctionandregulationparticularlyastheyrelatetotheactionofsignalingmolecules(hormones,neurotransmitters,cytokines)andmajorclassesofdrugs.',
-        'Describeandapplybasicprinciplesofpharmacodynamics(theactionofdrugsinbiologicsystems)andpharmacokinetics(theactionofbiologicsystemsupondrugmolecules),focusingondrugsthatinterferewiththeparasympatheticarmoftheANS.',
-        'Contrastanddifferentiateindividualandpopulationhealthissues.',
-        'Describetheclinicalprinciplesusedintheevaluationoftraumapatients.',
-        'Describehowbias,behavior,socioeconomicstatusandcultureinfluencehealthanddisease.',
-        'Describethebiopsychosocialmodelandbeabletoapplythismodeltoclinicalcasescenarios.',
-        'Describethebasicprinciplesofgeneexpression,geneticvariationandinheritanceandexaminetheimplicationofgeneticvariationinmedicine.',
-        'Synthesizeandsummarizeinformationforbenefitofpeers.',
-        'Explainthemeaningandroleofcompetencies,astheyrelatetoyouradvancementinmedicalschoolanddescribeasetofcompetenciesthatarebestmaturedinthecontextofsmallgrouplearning.',
-        'Criticallyreflectonone\'sownperformancetoidentifystrengthsandchallenges,setindividuallearningandimprovementgoals,andengageinappropriatelearningactivitiestomeetthosegoals',
-        'Employstrategiesforseekingandincorporatingfeedbackfromallavailableresources',
-        'Showaccountabilityandreliabilityininteractionswithpeers,facultymembers,patients,families,andotherhealthprofessionals',
-        'Describethecomponentsofatypicalhospitalbill,thegeneraltypesofhealthcarecoveragethatmightcoverthesecharges,andtheconceptof“costshifting”.',
-        'DocumentprofessionalandpersonaldevelopmentinrelationtotheUCSFMDCompetencymilestones.',
-        'Demonstratecuriosity,objectivity,andtheuseofscientificreasoninginacquisitionofknowledge,andinapplyingittopatientcare.',
-        'Describetheanatomicalrelationshipsneededtoperformandavoidcomplicationsofavarietyofprocedures.',
-        'Describenormalimmunologicalresponsestopathogensandhowtheimmunesystemcancausedisease.',
-      ];
-
-      for(let i=0; i < 23; i++){
-        assert.equal(getText(courseObjectives.eq(i)), expectedParents[i]);
+      assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));
+      //every course objective in the list
+      let ul = find('ul', parentPicker).eq(0);
+      let items = find('li', ul);
+      assert.equal(items.length, fixtures.course.objectives.length);
+      for(let i = 0; i < fixtures.course.objectives.length; i++){
+        let li = items.eq(i);
+        assert.equal(getElementText(li), getText(fixtures.parentObjectives[fixtures.course.objectives[i] - 1].title));
+        if(objective.parents.indexOf(fixtures.course.objectives[i]) !== -1){
+          assert.ok($(li).hasClass('selected'));
+        } else {
+          assert.ok(!$(li).hasClass('selected'));
+        }
       }
     });
+  });
+});
+
+test('change session objective parent', function(assert) {
+  assert.expect(3);
+  visit(url);
+  andThen(function() {
+    click('.session-objective-list tbody tr:eq(0) td:eq(1) a');
+    andThen(function() {
+      let objectiveManager = find('.objective-manager').eq(0);
+      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+      click('li:eq(0)', parentPicker);
+      click('li:eq(1)', parentPicker);
+      assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+      assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+      assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+    });
+  });
+});
+
+test('deselect all parents for session objective', function(assert) {
+  assert.expect(3);
+  visit(url);
+  andThen(function() {
+    click('.session-objective-list tbody tr:eq(0) td:eq(1) a');
+    andThen(function() {
+      let objectiveManager = find('.objective-manager').eq(0);
+      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+      click('li:eq(1)', parentPicker);
+      click('li:eq(0)', parentPicker);
+      andThen(function(){
+        for(let i = 0; i < 3; i++){
+          let item = find('li', parentPicker).eq(i);
+          assert.ok(!item.hasClass('selected'));
+        }
+      });
+
+    });
+  });
+});
+
+test('multiple parents for session objective', function(assert) {
+  assert.expect(3);
+  visit(url);
+  andThen(function() {
+    click('.session-objective-list tbody tr:eq(1) td:eq(1) a');
+    andThen(function() {
+      let objectiveManager = find('.objective-manager').eq(0);
+      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+      click('li:eq(1)', parentPicker);
+      assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
+      assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+      assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+    });
+  });
+});
+
+test('save changes', function(assert) {
+  assert.expect(1);
+  visit(url);
+  andThen(function() {
+    click('.session-objective-list tbody tr:eq(1) td:eq(1) a');
+    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
+    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    click('.detail-objectives:eq(0) button.bigadd');
+    andThen(function(){
+      let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
+      assert.equal(getElementText(td), getText(
+        fixtures.parentObjectives[1].title
+      ));
+    });
+  });
+
+});
+
+test('cancel changes', function(assert) {
+  assert.expect(1);
+  visit(url);
+  andThen(function() {
+    click('.session-objective-list tbody tr:eq(1) td:eq(1) a');
+    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
+    click('.detail-objectives:eq(0) button.bigcancel');
+  });
+  andThen(function(){
+    let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
+    assert.equal(getElementText(td), getText(
+      fixtures.parentObjectives[0].title
+    ));
   });
 });
