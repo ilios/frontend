@@ -1,180 +1,215 @@
 a {
-  color: $base-link-color;
-  &:visited {
     color: $base-link-color;
-  }
-  &:hover, &:active, &:focus {
-    color: $hover-link-color;
-    outline: none;
-  }
+    &:visited {
+        color: $base-link-color;
+    }
+    &:hover, &:active, &:focus {
+        color: $hover-link-color;
+        outline: none;
+    }
 }
 
 button {
-  @include appearance(none);
-  -webkit-font-smoothing: antialiased;
-  background-color: $base-link-color;
-  border-radius: $base-border-radius;
-  font-size: $base-font-size * 0.85;
-  color: white;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  padding: 0.3em 1em;
-  vertical-align: middle;
-  white-space: nowrap;
+    @include appearance(none);
+    -webkit-font-smoothing: antialiased;
+    background-color: $base-link-color;
+    border-radius: $base-border-radius;
+    font-size: $base-font-size * 0.85;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.3em 1em;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 h2 {
-  font-size: 1.25em;
+    font-size: 1.25em;
 }
 h4 {
-  font-size: 1em;
-  color: $medium-grey;
-  margin-left: 8px;
+    font-size: 1em;
+    color: $medium-grey;
+    margin-left: 8px;
 }
 
 .add, .yes {
-  color: $ilios-add-color;
+    color: $ilios-add-color;
 }
 .remove, .no {
-  color: $ilios-remove-color;
+    color: $ilios-remove-color;
 }
 .disabled {
-  color: lighten($base-font-color, 40);
+    color: lighten($base-font-color, 40);
 }
 .enabled {
-  color: $base-font-color;
+    color: $base-font-color;
 }
 .hidden {
-  display: none;
+    display: none;
 }
 .visible {
-  display: '';
+    display: '';
 }
 .dirty, .is-dirty {
-  color: $base-accent-color;
+    color: $base-accent-color;
 }
 .highlight, .is-highlighted {
-  color: $base-accent-color;
+    color: $base-accent-color;
 }
 .clickable, .is-clickable {
-  cursor: pointer;
+    cursor: pointer;
 }
 .page-title {
-  color: $base-accent-color;
-  text-align: center;
-  padding: 1em;
+    color: $base-accent-color;
+    text-align: center;
+    padding: 1em;
 }
 ul.inline, ul.inline li {
-  display: inline;
-  margin-right: 2em;
+    display: inline;
+    margin-right: 2em;
 }
 button {
-  &.add, &.remove, &.bigadd, &.bigremove {
-    color: white;
-  }
-  &.bigadd {
-    background-color: $ilios-green;
-  }
-  &.bigcancel {
-    background-color: $ilios-remove-color;
-  }
-  &.remove {
-    background-color: $ilios-remove-color;
-  }
+    &.add, &.remove, &.bigadd, &.bigremove {
+        color: white;
+    }
+    &.bigadd {
+        background-color: $ilios-green;
+    }
+    &.bigcancel {
+        background-color: $ilios-remove-color;
+    }
+    &.remove {
+        background-color: $ilios-remove-color;
+    }
 }
 
 textarea {
-  display: inline-block;
-  width: 100%;
+    display: inline-block;
+    width: 100%;
+    background: #FFF;
+    border: 1px solid $header-grey;
+    border-radius: $base-border-radius;
+    color: $base-font-color;
+    cursor: pointer;
+    z-index: 99999;
+    overflow: show;
+    padding: 4px;
+    min-height: 8em;    
 }
 
 .main-border {
-  border-top: 0px;
-  margin-top: 0px;
+    border-top: 0px;
+    margin-top: 0px;
 }
 
 /* creates an inline block grouping a label on top and its corresponding data below */
 .inline-label-data-block {
-  display: inline-block;
-  margin-left: 1em;
-  margin-right: 1em;
+    display: inline-block;
+    margin-right: 1em;
 }
 
 /* set individual items to be inline as needed */
 .inline-label, .inline-data {
-  display: inline-block;
+    display: inline-block;
 }
 
 .published {
-  color: $published-green;
+    color: $published-green;
 }
 .notpublished {
-  color: $notpublished-amber;
+    color: $notpublished-amber;
 }
 .scheduled {
- color: $scheduled-brown;
+    color: $scheduled-brown;
 }
 .backtolink  {
- margin-top: $base-font-size;
+    margin-top: $base-font-size;
 }
 
 /* handle the horizontal alignment ('text-align') properties */
 .text-left {
-  text-align: left;
+    text-align: left;
 }
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 .text-right {
-  text-align: right;
+    text-align: right;
 }
 
 /* handle the vertical-alignment ('vertical-align') properties (for table cells) */
 .text-top {
-  vertical-align: top;
+    vertical-align: top;
 }
 
 .text-middle {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 
 .text-bottom {
-  vertical-align: bottom;
+    vertical-align: bottom;
 }
 
 input[type=text] {
-  background: #FFF;
-  border: 1px solid $header-grey;
-  border-radius: $base-border-radius;
-  color: $base-font-color;
-  cursor: pointer;
-  z-index: 99999;
-  overflow: show;
-  padding: 4px;
+    background: #FFF;
+    font-style: italic;
+    border: 1px solid $header-grey;
+    border-radius: $base-border-radius;
+    color: $base-font-color;
+    cursor: pointer;
+    z-index: 99999;
+    overflow: show;
+    padding: 4px 4px 4px 8px;
+    min-width: 220px;
 }
 
 /* style a regular select element to look like the actions menu */
 select {
-  /* set the dropdown arrow image as the background to simulate the actions menu dropdown */
-  background: url(images/select-down-arrow.png) 99% / 2% no-repeat $default-background-color;
-  background-color: $default-background-color;
-  border-color: $header-grey;
+    /* set the dropdown arrow image as the background to simulate the actions menu dropdown */
+    background: url(images/select-down-arrow.png) 99% / 2% no-repeat $default-background-color;
+    background-color: $default-background-color;
+    border-color: $header-grey;
 
-  /* handle the text and padding */
-  font-size: 1em;
-  height: 1.8em;
-  line-height: 1.1em;
-  padding-left: .5em;
+    /* handle the text and padding */
+    font-size: 1em;
+    height: 1.8em;
+    line-height: 1.1em;
+    padding-left: .5em;
 
-  /* set up the corners of the select box to mimic the rounded button/input corners */
-  @include appearance(none);
-  @include border-top-radius($base-border-radius);
-  @include border-bottom-radius($base-border-radius);
+    /* set up the corners of the select box to mimic the rounded button/input corners */
+    @include appearance(none);
+    @include border-top-radius($base-border-radius);
+    @include border-bottom-radius($base-border-radius);
 }
 
 select:hover {
-  background-color: $header-grey;
+    background-color: $header-grey;
+}
+/*scrollbar style */
+
+::-webkit-scrollbar {
+    width:9px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    background:rgba(0,0,0,0.02);
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    background:rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:rgba(0,0,0,0.4);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background:rgba(0,0,0,0.05);
 }

@@ -5,6 +5,7 @@
   border-width: 0 2px 2px;
   border-top: 0px;
   margin-top: -4px;
+    font-size: $base-font-size;
 
   section {
     text-align: left;
@@ -18,6 +19,7 @@
       label {
         display: inline-block;
         margin-right: $base-font-size * 5;
+          font-weight: bold;
 
         & > * {
           font-weight: normal;
@@ -101,9 +103,7 @@
       display: inline-block;
     }
     li {
-      margin-top: 10px;
       margin-right: .3em;
-      padding: .2em .4em .2em .6em;
       vertical-align: middle;
     }
   }
