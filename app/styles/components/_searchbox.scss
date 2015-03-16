@@ -1,44 +1,49 @@
 .search-box {
-  @include clearfix;
-  @include position(relative);
-  display: block;
-  height: 1.6em;
-  margin-bottom: 10px;
-
-  input[type=search] {
-    @include appearance(none);
-    @include margin(0);
-    font-style: italic;
-    border-radius: $base-border-radius;
-    width: auto;
+    @include clearfix;
+    @include position(relative);
+    display: block;
     height: 1.6em;
-    @include padding(0 0 0 25px);
-    margin-left: .3em;
-  }
-
-  button[type=search] {
-    @include position(absolute, 0);
-    background-color: transparent;
-    color: $base-link-color;
-    text-align: left;
-
-    img {
-      opacity: .7;
+    margin-bottom: 10px;
+    input[type=search] {
+        @include appearance(none);
+        @include margin(0);
+        font-style: italic;
+        border-radius: $base-border-radius;
+        width: auto;
+        height: 1.6em;
+        @include padding(0 0 0 28px);
+        background: #FFF;
+        border: 1px solid $input-box-grey;
+        border-radius: $base-border-radius;
+        color: $base-font-color;
+        cursor: pointer;
+        z-index: 99999;
+        overflow: show;
+        min-width: 220px;
     }
-  }
-
-  button.close {
-    @include position(absolute, 0 0 0 'auto');
-    outline: none;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    padding: 5px 10px;
-    margin-right: -25px;
-    background-color: transparent;
-    color: $base-font-color;
-    img {
-      height: 12px;
-      opacity: .7;
+    button[type=search] {
+        @include position(absolute, 0);
+        background-color: transparent;
+        color: $base-link-color;
+        text-align: left;
+        padding-left: 6px;
+        margin-right: 2px;
+        img {
+            opacity: .7;
+        }
     }
-  }
+    button.close {
+        @include position(absolute, 0 0 0 'auto');
+        outline: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        padding: 5px 10px;
+        margin-right: -25px;
+        background-color: transparent;
+        color: $base-font-color;
+        img {
+            height: 12px;
+            opacity: .7;
+        }
+    }
 }
