@@ -17,6 +17,7 @@ var general = {
   'notPublished': 'Not Published',
   'scheduled': 'Scheduled',
   'competencies': 'Competencies',
+  'courses': 'Courses',
   'objectives': 'Objectives',
   'objective': 'Objective',
   'directors': 'Directors',
