@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 /* _toggles.scss */
 
 /*  
+=======
+/*
+>>>>>>> generated toggle components after they broke on new build
  * Copyright (c) 2013 Thibaut Courouble
  * http://www.cssflow.com
  *
@@ -72,7 +76,7 @@
 
 .switch-label:after {
   content: attr(data-on);
-  left: 9px;
+  left: 11px;
   color: white;
   text-shadow: 0 1px rgba(0, 0, 0, 0.2);
   opacity: 0;
