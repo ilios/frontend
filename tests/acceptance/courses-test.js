@@ -55,8 +55,8 @@ test('filters options', function(assert) {
   andThen(function() {
     var filters = find('#courses .filter');
     assert.equal(filters.length, 4);
-
     assert.equal(find('#school-selection').eq(0).text().trim(), fixtures.schools[0].title);
+    click('#yearsfilter button');
     var yearOptions = find('#yearsfilter ul.dropdown-menu li');
     assert.equal(yearOptions.length, fixtures.educationalYears.length);
     for(let i = 0; i < fixtures.educationalYears.length; i++){

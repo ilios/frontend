@@ -1,12 +1,11 @@
-{{#rl-dropdown-container class="action-menu"}}
-  {{#rl-dropdown-toggle class="button"}}
-    {{#if icon}}
-      {{fa-icon icon}}
-    {{/if}}
-    {{title}}
-  {{/rl-dropdown-toggle}}
-
-  {{#rl-dropdown tagName="ul" class="dropdown-menu" closeOnChildClick=true}}
+<button class="button rl-dropdown-toggle" {{action "toggleDropdown"}}>
+  {{#if icon}}
+    {{fa-icon icon}}
+  {{/if}}
+  {{title}}
+</button>
+<ul class='dropdown-menu' {{action "toggleDropdown"}}>
+  {{#if dropdownExpanded}}
     {{yield}}
-  {{/rl-dropdown}}
-{{/rl-dropdown-container}}
+  {{/if}}
+</ul>
