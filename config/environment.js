@@ -36,7 +36,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.adapterHost = 'http://localhost:4200';
+    ENV.adapterHost = '';
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
   }

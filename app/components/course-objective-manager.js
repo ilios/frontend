@@ -132,7 +132,9 @@ export default Ember.Component.extend({
 
     //debounce this to avoid weird saving behavior and animations
     Ember.run.debounce(this, function(){
-      this.set('showCohortList', this.get('availableCohorts.length') > 0);
+      if(!this.get('isDestroyed')){
+        this.set('showCohortList', this.get('availableCohorts.length') > 0);
+      }
     }, 500);
   }.observes('availableCohorts.@each', 'selectedCohortId', 'availableCohorts.length').on('init'),
   actions: {

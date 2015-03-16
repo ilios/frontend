@@ -3,20 +3,6 @@
     {{t 'general.mesh'}} ({{terms.length}})
   </div>
   <div class='detail-content'>
-    <ul class='removable-list'>
-      {{#each term in terms}}
-        <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
-      {{/each}}
-    </ul>
-    {{search-box placeholder=placeholder liveSearch=false search='search'}}
-    {{#if filteredSearchResults.length}}
-      <div class='selectable-list'>
-        <ul>
-          {{#each term in filteredSearchResults}}
-            <li {{action 'add' term}}>{{term.title}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}}
+    {{mesh-manager addTerm='add' removeTerm='remove' terms=terms}}
   </div>
 </section>

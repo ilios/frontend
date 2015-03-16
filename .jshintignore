@@ -2,5 +2,4 @@ node_modules
 bower_components
 dist
 tmp
-server/fixtures
-tests/fixtures
+app/mirage/fixtures

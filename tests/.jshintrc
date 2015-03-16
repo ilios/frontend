@@ -24,7 +24,9 @@
     "currentRouteName",
     "pickOption",
     "pauseTest",
-    "Pretender"
+    "getText",
+    "getElementText",
+    "server"
   ],
   "node": false,
   "browser": false,

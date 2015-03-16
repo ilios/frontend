@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('detail-mesh', 'DetailMeshComponent', {
   // specify the other units that are required for this test
-  needs: ['component:search-box']
+  needs: ['component:search-box', 'component:mesh-manager']
 });
 
 test('it renders', function(assert) {

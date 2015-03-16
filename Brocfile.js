@@ -2,10 +2,7 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp({
-  //disable hinting because otherwise testfixtures take FOREVER to be checked
-  hinting: false
-});
+var app = new EmberApp();
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

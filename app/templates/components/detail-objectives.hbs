@@ -6,10 +6,15 @@
         {{t 'courses.objectiveParentTitle'}}
       </span>
     {{/if}}
+    {{#if isManagingDescriptors}}
+      <span class='detail-specific-title'>
+        {{t 'courses.objectiveDescriptorTitle'}}
+      </span>
+    {{/if}}
   </div>
 
   <div class='detail-actions'>
-    {{#if isManagingParents}}
+    {{#if isManaging}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
@@ -17,30 +22,37 @@
     {{/if}}
   </div>
   <div class='detail-content'>
-    {{#liquid-if isManagingParents class="horizontal"}}
-      {{#if isCourse}}
-        {{course-objective-manager
-          courseObjective=currentlyManagedObjective
-        }}
-      {{/if}}
-      {{#if isSession}}
-        {{session-objective-manager
-          sessionObjective=currentlyManagedObjective
-        }}
-      {{/if}}
-    {{else}}
+    {{#liquid-unless isManaging class="horizontal"}}
       {{#if isCourse}}
         {{course-objective-list
           course=subject
           manageParents="manageParents"
+          manageDescriptors="manageDescriptors"
         }}
       {{/if}}
       {{#if isSession}}
         {{session-objective-list
           session=subject
           manageParents="manageParents"
+          manageDescriptors="manageDescriptors"
         }}
       {{/if}}
-    {{/liquid-if}}
+    {{else}}
+      {{#if isManagingParents}}
+        {{#if isCourse}}
+          {{course-objective-manager
+            courseObjective=mangeParentsObjective
+          }}
+        {{/if}}
+        {{#if isSession}}
+          {{session-objective-manager
+            sessionObjective=mangeParentsObjective
+          }}
+        {{/if}}
+      {{/if}}
+      {{#if isManagingDescriptors}}
+        {{objective-manage-descriptors objective=manageDescriptorsObjective}}
+      {{/if}}
+    {{/liquid-unless}}
   </div>
 </section>

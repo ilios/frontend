@@ -34,7 +34,7 @@ export default Ember.Component.extend({
         }.property('content', 'currentlyActiveUsers.@each')
       });
       this.set('searching', true);
-      this.store.find('user', {searchTerm: searchTerms}).then(function(users){
+      this.store.find('user', {q: searchTerms}).then(function(users){
         var results = users.map(function(user){
           return userProxy.create({
             content: user,

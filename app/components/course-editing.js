@@ -12,28 +12,6 @@ export default Ember.Component.extend({
         }
       });
     },
-    addMeshDescriptor: function(descriptor){
-      var course = this.get('course');
-      course.get('meshDescriptors').then(function(descriptors){
-        descriptor.get('courses').then(function(courses){
-          courses.addObject(course);
-          descriptors.addObject(descriptor);
-          course.save();
-          descriptor.save();
-        });
-      });
-    },
-    removeMeshDescriptor: function(descriptor){
-      var course = this.get('course');
-      course.get('meshDescriptors').then(function(descriptors){
-        descriptor.get('courses').then(function(courses){
-          courses.removeObject(course);
-          descriptors.removeObject(descriptor);
-          course.save();
-          descriptor.save();
-        });
-      });
-    },
     addCohort: function(cohort){
       var course = this.get('course');
       course.get('cohorts').then(function(cohorts){

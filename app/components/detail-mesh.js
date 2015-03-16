@@ -2,7 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'courses.meshSearchPlaceholder',
-  terms: [],
+  subject: null,
+  terms: Ember.computed.oneWay('subject.meshDescriptors'),
+  isCourse: false,
+  isSession: false,
   searchResults: [],
   filteredSearchResults: function(){
     var terms = this.get('terms');
@@ -19,11 +22,29 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
         self.set('searchResults', descriptors);
       });
     },
-    add: function(term){
-      this.sendAction('addTerm', term);
+    add: function(descriptor){
+      var subject = this.get('subject');
+      subject.get('meshDescriptors').addObject(descriptor);
+      if(this.get('isCourse')){
+        descriptor.get('courses').addObject(this.get('subject'));
+      }
+      if(this.get('isSession')){
+        descriptor.get('sessions').addObject(this.get('subject'));
+      }
+      subject.save();
+      descriptor.save();
     },
-    remove: function(term){
-      this.sendAction('removeTerm', term);
+    remove: function(descriptor){
+      var subject = this.get('subject');
+      subject.get('meshDescriptors').removeObject(descriptor);
+      if(this.get('isCourse')){
+        descriptor.get('courses').removeObject(this.get('subject'));
+      }
+      if(this.get('isSession')){
+        descriptor.get('sessions').removeObject(this.get('subject'));
+      }
+      subject.save();
+      descriptor.save();
     }
   }
 });

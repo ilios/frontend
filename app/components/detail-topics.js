@@ -20,7 +20,6 @@ export default Ember.Component.extend({
     cancel: function(){
       var topics = this.get('subject').get('disciplines');
       topics.clear();
-      console.log(this.get('initialTopics'));
       topics.addObjects(this.get('initialTopics'));
       this.set('isManaging', false);
     }
