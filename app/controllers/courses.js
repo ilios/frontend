@@ -77,6 +77,13 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     changeSelectedSchool: function(school){
       this.set('schoolId', school.get('id'));
       this.set('selectedSchool', school);
+    },
+    //called by the 'toggle-mycourses' component
+    toggleMyCourses: function(){
+      //get the current userCoursesOnly status and flip it
+      var newStatus = (! this.get('userCoursesOnly'));
+      //then set it to the new status
+      this.set('userCoursesOnly', newStatus);
     }
   },
 });

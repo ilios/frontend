@@ -1,27 +1,12 @@
-/*
+/* _toggles.scss */
+
+/*  
  * Copyright (c) 2013 Thibaut Courouble
  * http://www.cssflow.com
  *
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-
-body {
-  font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #404040;
-  background: white;
-}
-
-.container {
-  margin: 50px auto;
-  width: 280px;
-  text-align: center;
-}
-
-.container > .switch {
-  display: block;
-  margin: 12px auto;
-}
 
 .switch {
   position: relative;
