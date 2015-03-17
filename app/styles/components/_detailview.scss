@@ -52,6 +52,12 @@
         padding-right: .3em;
         @include span-columns(3 of 12);
         @include omega;
+        button {
+          margin-bottom: 1em;
+        }
+        button:last-of-type{
+          margin-bottom: 0;
+        }
       }
 
       .detail-content {

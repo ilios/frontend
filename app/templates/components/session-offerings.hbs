@@ -1,0 +1,19 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.offerings'}} ({{offerings.length}})
+  </div>
+
+  <div class='detail-actions'>
+    <button class='add'>{{t 'general.addNew'}}</button>
+    <button class='add'>{{t 'sessions.openSmallGroupGenerator'}}</button>
+  </div>
+  <div class='detail-content'>
+    {{#if offerings.length}}
+      {{#each block in offeringBlocks}}
+        {{offering-block block=block}}
+      {{/each}}
+    {{else}}
+      <p>{{t 'sessions.noOfferings'}}</p>
+    {{/if}}
+  </div>
+</section>

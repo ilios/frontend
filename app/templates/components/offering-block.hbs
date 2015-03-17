@@ -1,0 +1,90 @@
+<section class='offering-block'>
+  <div class='offering-block-date'>
+    <span class='offering-block-date-dayofweek'>{{block.dayOfWeek}}</span>
+    <span class='offering-block-date-dayofmonth'>{{block.dayOfMonth}}</span>
+  </div>
+  <div class='offering-block-times'>
+    {{#each offeringTimeBlock in block.offeringTimeBlocks}}
+      {{#unless offeringTimeBlock.isMultiDay}}
+        <div class= 'offering-block-time'>
+          <div class= 'offering-block-time-time'>
+            <span class='offering-block-time-time-starttime'>{{t 'general.starts'}}: {{offeringTimeBlock.startTime}}</span>
+            <span class='offering-block-time-time-endtime'>{{t 'general.ends'}}: {{offeringTimeBlock.endTime}}</span>
+          </div>
+          <div class='offering-block-time-offerings'>
+            {{#each offering in offeringTimeBlock.sortedOfferings}}
+              <div class='offering-block-time-offering'>
+                <span class='offering-block-time-offering-learner_groups offering-detail-box'>
+                  <ul>
+                    {{#each learnerGroup in offering.learnerGroups}}
+                      <li>{{learnerGroup.title}}</li>
+                    {{else}}
+                      <li>{{fa-icon 'user-plus'}}</li>
+                    {{/each}}
+                  </ul>
+                </span>
+                <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
+                <span class='offering-block-time-offering-instructors offering-detail-box'>
+                  <ul>
+                    {{#each instructor in offering.allInstructors}}
+                      <li>{{instructor.fullName}}</li>
+                    {{else}}
+                      <li>{{fa-icon 'user-plus'}}</li>
+                    {{/each}}
+                  </ul>
+                </span>
+                <span class='offering-block-time-offering-actions offering-detail-box'>
+                  {{#action-menu}}
+                  {{/action-menu}}
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{else}}
+        <div class= 'offering-block-time'>
+          <div class= 'multiday-offering-block-time-time'>
+            <span class='multiday-offering-block-time-time-description'>
+              {{t 'sessions.multiday'}}
+            </span>
+            <span class='multiday-offering-block-time-time-starts'>
+              {{t 'general.starts'}} {{offeringTimeBlock.longStartText}}
+            </span>
+            <span class='multiday-offering-block-time-time-ends'>
+              {{t 'general.ends'}} {{offeringTimeBlock.longEndText}}
+            </span>
+          </div>
+          <div class='multiday-offering-block-time-offerings'>
+            {{#each offering in offeringTimeBlock.sortedOfferings}}
+              <div class='offering-block-time-offering'>
+                <span class='offering-block-time-offering-learner_groups offering-detail-box'>
+                  <ul>
+                    {{#each learnerGroup in offering.learnerGroups}}
+                      <li>{{learnerGroup.title}}</li>
+                    {{else}}
+                      <li>{{fa-icon 'user-plus'}}</li>
+                    {{/each}}
+                  </ul>
+                </span>
+                <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
+                <span class='offering-block-time-offering-instructors offering-detail-box'>
+                  <ul>
+                    {{#each instructor in offering.allInstructors}}
+                      <li>{{instructor.fullName}}</li>
+                    {{else}}
+                      <li>{{fa-icon 'user-plus'}}</li>
+                    {{/each}}
+                  </ul>
+                </span>
+                <span class='offering-block-time-offering-actions offering-detail-box'>
+                  {{#action-menu}}
+                  {{/action-menu}}
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{/unless}}
+    {{/each}}
+  </div>
+</section>

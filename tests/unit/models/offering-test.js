@@ -56,16 +56,3 @@ test('it exists', function(assert) {
   // var store = this.store();
   assert.ok(!!model);
 });
-
-test('title from session', function(assert) {
-  var model = this.subject();
-  var store = model.store;
-  Ember.run(function(){
-     store.createRecord('session', {id:99, title:'Test Title'});
-     var session = store.find('session', 99).then(function(session){
-       model.set('session', session);
-     });
-  });
-
-  assert.equal(model.get('title'), 'Test Title');
-});

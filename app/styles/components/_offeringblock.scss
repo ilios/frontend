@@ -1,0 +1,48 @@
+.offering-block {
+  @include span-columns(12 of 12);
+  .offering-block-date{
+    @include span-columns(12 of 12);
+    @include omega();
+    .offering-block-date-dayofweek, .offering-block-date-dayofmonth {
+      width: 100%;
+      display: block;
+    }
+  }
+  .offering-block-time {
+    margin-bottom: 2em;
+    @include span-columns(12 of 12);
+    @include fill-parent();
+    .offering-block-time-time {
+      @include span-columns(3 of 12);
+
+      .offering-block-time-time-starttime, .offering-block-time-time-endtime {
+        display: block;
+      }
+    }
+    .offering-block-time-offerings {
+      @include span-columns(8 of 12);
+      @include shift(1);
+      .offering-block-time-offering {
+        .offering-detail-box{
+          @include span-columns(2 of 8);
+          @include omega(4n);
+        }
+      }
+    }
+
+    .multiday-offering-block-time-time {
+      @include span-columns(12 of 12);
+      @include omega();
+    }
+    .multiday-offering-block-time-offerings {
+      @include span-columns(8 of 12);
+      @include shift(4);
+      .offering-block-time-offering {
+        .offering-detail-box{
+          @include span-columns(2 of 8);
+          @include omega(4n);
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
-@import '../../../bower_components/bourbon/dist/bourbon';
+@import '../bourbon';
 @import '../components/variables';
-@import '../../../bower_components/neat/app/assets/stylesheets/neat';
+@import '../neat';
 @import '../components/reset';
 @import '../layout/layout';
 @import '../components/global';
@@ -18,3 +18,4 @@
 @import '../components/objectivemanager';
 @import '../components/noscript';
 @import '../components/initialpage';
+@import '../components/offeringblock';

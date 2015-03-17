@@ -230,7 +230,7 @@ export default [
     'offerings' : [ '46288' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructorUsers' : [ '4214','11286' ]
   },
 
   {
@@ -244,7 +244,7 @@ export default [
     'offerings' : [ '46289' ],
     'instructorGroups' : [],
     'users' : [ '11267' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '484','485' ]
   },
 
   {
@@ -258,7 +258,7 @@ export default [
     'offerings' : [ '46290' ],
     'instructorGroups' : [],
     'users' : [ '11266' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '8349','11271' ]
   },
 
   {
@@ -272,7 +272,7 @@ export default [
     'offerings' : [ '46291' ],
     'instructorGroups' : [],
     'users' : [ '11262' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '486','7840' ]
   },
 
   {
@@ -286,7 +286,7 @@ export default [
     'offerings' : [ '46292' ],
     'instructorGroups' : [],
     'users' : [ '11261' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '4380','7739' ]
   },
 
   {
@@ -300,7 +300,7 @@ export default [
     'offerings' : [ '46293' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructorUsers' : [ '499','8462' ]
   },
 
   {
@@ -314,7 +314,7 @@ export default [
     'offerings' : [ '49803' ],
     'instructorGroups' : [],
     'users' : [ '11260' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '495','11287' ]
   },
 
   {
@@ -328,7 +328,7 @@ export default [
     'offerings' : [ '49804' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructorUsers' : [ '7846','7847' ]
   },
 
   {
@@ -342,7 +342,7 @@ export default [
     'offerings' : [ '49805' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructorUsers' : [ '11288','11289' ]
   },
 
   {
@@ -356,7 +356,7 @@ export default [
     'offerings' : [ '49806' ],
     'instructorGroups' : [],
     'users' : [ '11258' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '3827','8523' ]
   },
 
   {
@@ -370,7 +370,7 @@ export default [
     'offerings' : [ '46282' ],
     'instructorGroups' : [],
     'users' : [ '11257' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '493','494' ]
   },
 
   {
@@ -384,7 +384,7 @@ export default [
     'offerings' : [ '46283' ],
     'instructorGroups' : [],
     'users' : [ '11264' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '515','516' ]
   },
 
   {
@@ -398,7 +398,7 @@ export default [
     'offerings' : [ '46284' ],
     'instructorGroups' : [],
     'users' : [ '11270' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '498','11348' ]
   },
 
   {
@@ -412,7 +412,7 @@ export default [
     'offerings' : [ '46285' ],
     'instructorGroups' : [],
     'users' : [ '11265' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '509','510' ]
   },
 
   {
@@ -426,7 +426,7 @@ export default [
     'offerings' : [ '46286' ],
     'instructorGroups' : [],
     'users' : [ '11268','11269' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '4069','11290' ]
   },
 
   {
@@ -440,7 +440,7 @@ export default [
     'offerings' : [ '46287' ],
     'instructorGroups' : [],
     'users' : [ '11256' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '3620','7737' ]
   },
 
   {
@@ -454,7 +454,7 @@ export default [
     'offerings' : [ '49807' ],
     'instructorGroups' : [],
     'users' : [ '11263' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '4049','11291' ]
   },
 
   {
@@ -468,7 +468,7 @@ export default [
     'offerings' : [ '49808' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructorUsers' : [ '3880','9648' ]
   },
 
   {
@@ -482,7 +482,7 @@ export default [
     'offerings' : [ '49809' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructorUsers' : [ '11292','11453' ]
   },
 
   {
@@ -496,7 +496,7 @@ export default [
     'offerings' : [ '49810' ],
     'instructorGroups' : [],
     'users' : [ '11259' ],
-    'instructorUsers' : []
+    'instructorUsers' : [ '3836','7830' ]
   },
 
   {
