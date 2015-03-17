@@ -1,11 +1,6 @@
 <section id='courses' class='fullwidth main-border'>
   <div class="filter-tools">
-    <div id='mycoursesfilter' class="filter">
-      <label>
-        {{input type='checkbox' checked=userCoursesOnly}}
-        {{t 'courses.myCourses'}}
-      </label>
-    </div>
+    {{toggle-mycourses isChecked=mycoursesfilter toggleCourse='toggleMyCourseFilter'}}
     <div id='schoolsfilter' class="filter">
       <label class="inline-label">
         {{t 'general.school'}}:
