@@ -6,7 +6,8 @@ export default Ember.Component.extend({
   sortTypes: ['title'],
   sessionTypes: [],
   sortedSessionTypes: Ember.computed.sort('sessionTypes', 'sortTypes'),
-  showCheckLink: true,menuTitle: Ember.computed.oneWay('session.status'),
+  showCheckLink: true,
+  menuTitle: Ember.computed.oneWay('session.status'),
   menuIcon: function(){
     if(this.get('session.publishedAsTbd')){
       return 'clock-o';
@@ -69,7 +70,7 @@ export default Ember.Component.extend({
           publishEvent = self.store.createRecord('publish-event', {
             administrator: self.get('currentUser')
           });
-          publishEvent.save().then(function(){
+          publishEvent.save().then(function(publishEvent){
             session.set('publishEvent', publishEvent);
             session.save();
           });
@@ -87,7 +88,7 @@ export default Ember.Component.extend({
           publishEvent = self.store.createRecord('publish-event', {
             administrator: self.get('currentUser')
           });
-          publishEvent.save().then(function(){
+          publishEvent.save().then(function(publishEvent){
             session.set('publishEvent', publishEvent);
             session.save();
           });

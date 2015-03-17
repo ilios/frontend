@@ -20,7 +20,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   debouncedFilter: null,
   watchFilter: function(){
     Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('titleFilter'),
+  }.observes('filter'),
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },

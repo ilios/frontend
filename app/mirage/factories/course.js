@@ -1,3 +1,4 @@
+/* global moment */
 /*
   This is an example factory definition. Factories are
   used inside acceptance tests.
@@ -11,6 +12,8 @@ export default Mirage.Factory.extend({
   year: 2013,
   owningSchool: 1,
   deleted: false,
+  startDate: () => moment().format(),
+  endDate: () => moment().add(7, 'weeks').format(),
 
 });
 

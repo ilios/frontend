@@ -6,8 +6,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
-
-var schools;
 var fixtures = {};
 
 module('Acceptance: Courses', {
