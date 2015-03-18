@@ -10,7 +10,8 @@ export default [
     'learnerGroups' : [ '4722' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3636' ],
     'recurringEvents' : []
   },
 
@@ -25,7 +26,8 @@ export default [
     'learnerGroups' : [ '4723' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -40,7 +42,8 @@ export default [
     'learnerGroups' : [ '4724' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '37' ],
     'recurringEvents' : []
   },
 
@@ -55,7 +58,8 @@ export default [
     'learnerGroups' : [ '4725' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '11298' ],
     'recurringEvents' : []
   },
 
@@ -70,7 +74,8 @@ export default [
     'learnerGroups' : [ '4726' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '11297' ],
     'recurringEvents' : []
   },
 
@@ -85,7 +90,8 @@ export default [
     'learnerGroups' : [ '4727' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4606' ],
     'recurringEvents' : []
   },
 
@@ -100,7 +106,8 @@ export default [
     'learnerGroups' : [ '4728' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3766' ],
     'recurringEvents' : []
   },
 
@@ -115,7 +122,8 @@ export default [
     'learnerGroups' : [ '4729' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4271' ],
     'recurringEvents' : []
   },
 
@@ -130,7 +138,8 @@ export default [
     'learnerGroups' : [ '4730' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '11299' ],
     'recurringEvents' : []
   },
 
@@ -145,7 +154,8 @@ export default [
     'learnerGroups' : [ '4731' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4808' ],
     'recurringEvents' : []
   },
 
@@ -160,7 +170,8 @@ export default [
     'learnerGroups' : [ '4732' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '7780' ],
     'recurringEvents' : []
   },
 
@@ -175,7 +186,8 @@ export default [
     'learnerGroups' : [ '4733' ],
     'publishEvent' : "58497",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '7777' ],
     'recurringEvents' : []
   },
 
@@ -190,7 +202,8 @@ export default [
     'learnerGroups' : [ '4722' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '9779','9791' ],
     'recurringEvents' : []
   },
 
@@ -205,7 +218,8 @@ export default [
     'learnerGroups' : [ '4723' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '8976' ],
     'recurringEvents' : []
   },
 
@@ -220,7 +234,8 @@ export default [
     'learnerGroups' : [ '4724' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3693','11304' ],
     'recurringEvents' : []
   },
 
@@ -235,7 +250,8 @@ export default [
     'learnerGroups' : [ '4725' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '135' ],
     'recurringEvents' : []
   },
 
@@ -250,7 +266,8 @@ export default [
     'learnerGroups' : [ '4726' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '9909','11305' ],
     'recurringEvents' : []
   },
 
@@ -265,7 +282,8 @@ export default [
     'learnerGroups' : [ '4727' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '5280','11306' ],
     'recurringEvents' : []
   },
 
@@ -280,7 +298,8 @@ export default [
     'learnerGroups' : [ '4728' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '9842' ],
     'recurringEvents' : []
   },
 
@@ -295,7 +314,8 @@ export default [
     'learnerGroups' : [ '4729' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '492','11396' ],
     'recurringEvents' : []
   },
 
@@ -310,7 +330,8 @@ export default [
     'learnerGroups' : [ '4730' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4193' ],
     'recurringEvents' : []
   },
 
@@ -325,7 +346,8 @@ export default [
     'learnerGroups' : [],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -340,7 +362,8 @@ export default [
     'learnerGroups' : [ '4732' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '498','9711' ],
     'recurringEvents' : []
   },
 
@@ -355,7 +378,8 @@ export default [
     'learnerGroups' : [ '4733' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4311','9605' ],
     'recurringEvents' : []
   },
 
@@ -370,7 +394,8 @@ export default [
     'learnerGroups' : [ '4722' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '63' ],
     'recurringEvents' : []
   },
 
@@ -385,7 +410,8 @@ export default [
     'learnerGroups' : [ '4723' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4576' ],
     'recurringEvents' : []
   },
 
@@ -400,7 +426,8 @@ export default [
     'learnerGroups' : [ '4724' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '453' ],
     'recurringEvents' : []
   },
 
@@ -415,7 +442,8 @@ export default [
     'learnerGroups' : [ '4725' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3369','3856' ],
     'recurringEvents' : []
   },
 
@@ -430,7 +458,8 @@ export default [
     'learnerGroups' : [ '4726' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '83' ],
     'recurringEvents' : []
   },
 
@@ -445,7 +474,8 @@ export default [
     'learnerGroups' : [ '4727' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -460,7 +490,8 @@ export default [
     'learnerGroups' : [ '4728' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '583' ],
     'recurringEvents' : []
   },
 
@@ -475,7 +506,8 @@ export default [
     'learnerGroups' : [ '4729' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '492','9814' ],
     'recurringEvents' : []
   },
 
@@ -490,7 +522,8 @@ export default [
     'learnerGroups' : [ '4730' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '4383' ],
     'recurringEvents' : []
   },
 
@@ -505,7 +538,8 @@ export default [
     'learnerGroups' : [ '4731' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '37' ],
     'recurringEvents' : []
   },
 
@@ -520,7 +554,8 @@ export default [
     'learnerGroups' : [ '4732' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '39' ],
     'recurringEvents' : []
   },
 
@@ -535,7 +570,8 @@ export default [
     'learnerGroups' : [ '4733' ],
     'publishEvent' : "59678",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '429' ],
     'recurringEvents' : []
   },
 
@@ -550,7 +586,8 @@ export default [
     'learnerGroups' : [ '4745' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -565,7 +602,8 @@ export default [
     'learnerGroups' : [ '4746' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -580,7 +618,8 @@ export default [
     'learnerGroups' : [ '4747' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -595,7 +634,8 @@ export default [
     'learnerGroups' : [ '4748' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -610,7 +650,8 @@ export default [
     'learnerGroups' : [ '4749' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -625,7 +666,8 @@ export default [
     'learnerGroups' : [ '4750' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -640,7 +682,8 @@ export default [
     'learnerGroups' : [ '4735' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -655,7 +698,8 @@ export default [
     'learnerGroups' : [ '4736' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -670,7 +714,8 @@ export default [
     'learnerGroups' : [ '4737' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -685,7 +730,8 @@ export default [
     'learnerGroups' : [ '4738' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -700,7 +746,8 @@ export default [
     'learnerGroups' : [ '4739' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -715,7 +762,8 @@ export default [
     'learnerGroups' : [ '4740' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -730,7 +778,8 @@ export default [
     'learnerGroups' : [],
     'publishEvent' : "58469",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -745,7 +794,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -760,7 +810,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -775,7 +826,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -790,7 +842,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -805,7 +858,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -820,7 +874,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -835,7 +890,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -850,7 +906,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -865,7 +922,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -880,7 +938,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -895,7 +954,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -910,7 +970,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -925,7 +986,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -940,7 +1002,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -955,7 +1018,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -970,7 +1034,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -985,7 +1050,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1000,7 +1066,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1015,7 +1082,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1030,7 +1098,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1045,7 +1114,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1060,7 +1130,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1075,7 +1146,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1090,7 +1162,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1105,7 +1178,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1120,7 +1194,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1135,7 +1210,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1150,7 +1226,8 @@ export default [
     'learnerGroups' : [ '4741' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1165,7 +1242,8 @@ export default [
     'learnerGroups' : [ '4742' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1180,7 +1258,8 @@ export default [
     'learnerGroups' : [ '4743' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1195,7 +1274,8 @@ export default [
     'learnerGroups' : [ '4744' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1210,7 +1290,8 @@ export default [
     'learnerGroups' : [ '4751' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1225,7 +1306,8 @@ export default [
     'learnerGroups' : [ '4752' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1240,7 +1322,8 @@ export default [
     'learnerGroups' : [ '4753' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1255,7 +1338,8 @@ export default [
     'learnerGroups' : [ '4754' ],
     'publishEvent' : "59683",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '3396','11073' ],
     'recurringEvents' : []
   },
 
@@ -1270,7 +1354,8 @@ export default [
     'learnerGroups' : [],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1285,7 +1370,8 @@ export default [
     'learnerGroups' : [],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 
@@ -1300,7 +1386,8 @@ export default [
     'learnerGroups' : [ '4731' ],
     'publishEvent' : "59677",
     'instructorGroups' : [],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [ '9669' ],
     'recurringEvents' : []
   },
 
@@ -1315,7 +1402,8 @@ export default [
     'learnerGroups' : [ '4715' ],
     'publishEvent' : "58469",
     'instructorGroups' : [ '206' ],
-    'users' : [],
+    'learners' : [],
+    'instructors' : [],
     'recurringEvents' : []
   },
 ];

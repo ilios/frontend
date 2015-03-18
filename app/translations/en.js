@@ -41,6 +41,8 @@ var general = {
   'overview': 'Overview',
   'start': 'Start',
   'end': 'End',
+  'starts': 'Starts',
+  'ends': 'Ends',
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
@@ -61,6 +63,10 @@ var general = {
   'backToTitle': 'Back to {{title}}',
   'clickToEdit': 'Click to edit',
   'academicYear': 'Academic Year',
+  'groupName': 'Group Name',
+  'dateTime': 'Date/Time',
+  'location': 'Location',
+  'instructors': 'Instructors',
 };
 translations.general = general;
 
@@ -140,7 +146,6 @@ translations.mesh = mesh;
 var instructorGroups = {
   'new': 'New Instructor Group',
   'instructorName': 'Instructor Name',
-  'instructors': 'Instructors',
   'editingGroup': 'Editing {{title}}',
   'addInstructor': 'Add Instructor',
   'availalbeInstructors': 'Available Instructors',
@@ -155,7 +160,6 @@ var instructorGroups = {
 translations.instructorGroups = instructorGroups;
 
 var learnerGroups = {
-  'groupName': 'Group Name',
   'subGroups': 'Sub Groups',
   'learners': 'Learners',
   'titleFilterPlaceholder': 'Filter by group title',
@@ -216,6 +220,10 @@ var sessions = {
   'new': 'New Session',
   'loadingSessionTypes': 'Loading Session Types...',
   'title': 'Session Title',
+  'noOfferings': 'This session has no offerings',
+  'noOfferingLearnerGroups': 'No Groups',
+  'openSmallGroupGenerator': 'Open Offering Small Group Generator',
+  'multiday': 'Multiday',
 };
 translations.sessions = sessions;
 

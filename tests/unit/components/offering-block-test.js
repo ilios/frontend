@@ -3,18 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('session-details', {
+moduleForComponent('offering-block', {
   // specify the other units that are required for this test
-  needs: [
-    'component:course-header',
-    'component:course-overview',
-    'component:session-overview',
-    'component:detail-objectives',
-    'component:detail-learning-materials',
-    'component:detail-topics',
-    'component:detail-mesh',
-    'component:session-offerings',
-  ]
+  // needs: ['component:foo', 'helper:bar']
 });
 
 test('it renders', function(assert) {

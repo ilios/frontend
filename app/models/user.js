@@ -10,7 +10,10 @@ var User = DS.Model.extend({
   enabled:  DS.attr('boolean'),
   ucUid:  DS.attr('string'),
   otherId:  DS.attr('string'),
-  offerings: DS.hasMany('offering', {async: true}),
+  offerings: DS.hasMany('offering', {
+      async: true,
+      inverse: 'users'
+  }),
   learningMaterials: DS.hasMany('learning-material', {async: true}),
   publishEvents: DS.hasMany('publish-event', {async: true}),
   reports: DS.hasMany('report', {async: true}),
@@ -28,6 +31,11 @@ var User = DS.Model.extend({
   instructorGroups: DS.hasMany('instructor-group', {
       async: true,
       inverse: 'users'
+    }
+  ),
+  instructedOfferings: DS.hasMany('offering', {
+      async: true,
+      inverse: 'instructors'
     }
   ),
   instructorIlmSessions: DS.hasMany('ilm-session', {async: true}),
