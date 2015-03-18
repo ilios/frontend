@@ -18,10 +18,25 @@
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      <button class='add'>{{t 'general.addNew'}}</button>
+      <button class='add' {{action 'addObjective'}}>{{t 'general.addNew'}}</button>
     {{/if}}
   </div>
   <div class='detail-content'>
+    {{#if newObjectives.length}}
+      <section class='resultslist-new'>
+        {{#each objective in newObjectives}}
+          <section class='newobjective'>
+            <label>
+              {{t 'general.title'}}:
+              {{textarea value=objective.title}}
+            </label>
+            <br />
+            <button class='cancel' {{action 'removeNewObjective' objective}}>{{t 'general.cancel'}}</button>
+            <button class='done' {{action 'saveNewObjective' objective}}>{{t 'general.done'}}</button>
+          </section>
+        {{/each}}
+      </section>
+    {{/if}}
     {{#liquid-unless isManaging class="horizontal"}}
       {{#if isCourse}}
         {{course-objective-list
