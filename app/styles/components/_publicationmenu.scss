@@ -1,0 +1,24 @@
+.publication-menu {
+  .button, .button:hover{
+    background-color: white;
+  }
+  &.published button{
+    color: $published-green;
+  }
+  &.notpublished button{
+    color: $notpublished-amber;
+  }
+  &.scheduled button{
+    color: $scheduled-brown;
+  }
+  ul.dropdown-menu li {
+    &.danger:hover {
+      color: white;
+      background-color: $ilios-red;
+    }
+    &.good:hover {
+      color: white;
+      background-color: $ilios-green;
+    }
+  }
+}

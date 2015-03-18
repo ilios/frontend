@@ -7,25 +7,25 @@
     {{/if}}
   </span>
   <span class ='actions'>
-    <button {{action 'unpublish'}} class='unpublish session-unpublish' {{bind-attr disabled=session.isNotPublished}}>{{fa-icon 'fa-cloud'}} {{t 'publish.unPublishSession'}}</button>
-    {{#action-menu titleTranslation='publish.publishSession' icon='sun-o' classNames='publish-menu session-publish-menu'}}
-      <li {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
-      {{#unless session.allPublicationIssuesLength}}
-        <li {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
-      {{else}}
-        {{#if showCheckLink}}
-          <li>
-            {{#link-to 'course.sessionpublicationcheck' session}}
-              {{t 'publish.reviewMissingItems' countBinding='session.allPublicationIssuesLength'}}
-            {{/link-to}}
-          </li>
-        {{/if}}
-        {{#unless session.requiredPublicationIssues.length}}
-          <li {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
-        {{/unless}}
-      {{/unless}}
+    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu'}}
+      {{#if showAsIs}}
+        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+      {{/if}}
+      {{#if showPublish}}
+        <li class='good' {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
+      {{/if}}
+      {{#if showReview}}
+        {{#link-to 'course.sessionpublicationcheck' course session}}
+          <li class='good' >{{t 'publish.reviewMissingItems' countBinding='session.allPublicationIssuesLength'}}</li>
+        {{/link-to}}
+      {{/if}}
+      {{#if showTbd}}
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{/if}}
+      {{#if showUnPublish}}
+        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishSession'}}</li>
+      {{/if}}
     {{/action-menu}}
-    {{publication-status item=session}}
   </span>
 </div>
 <section class='detail-overview detail-block'>

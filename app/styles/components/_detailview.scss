@@ -167,46 +167,15 @@
     /* vertical-align: bottom;*/
 
     .title {
-      @include span-columns(6 of 12);
+      @include span-columns(9 of 12);
       h2, h4 {
         display: inline;
       }
     }
     .actions {
-      @include span-columns(6 of 12);
-      text-align:right;
-      div {
-        display: inline;
-      }
-      button {
-        background-color: $ilios-green;
-        color: white;
-        font-weight: normal;
-        &:disabled {
-          background-color: lighten($ilios-green, 30%);
-        }
-      }
-      .session-publish-menu button {
-        background-color: transparent;
-        color: $ilios-green;
-      }
-      .session-unpublish {
-        background-color: transparent;
-        color: $text-grey;
-        &:disabled {
-          background-color: transparent;
-          color: lighten($text-grey, 40);
-        }
-      }
-
-      .status {
-        font-size: $base-font-size;
-        vertical-align: middle;
-        margin-left: .8em;
-        i{
-          vertical-align: middle;
-        }
-      }
+      text-align: right;
+      @include span-columns(2 of 12);
+      @include shift(1);
     }
   }
 

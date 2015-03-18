@@ -6,7 +6,7 @@
       showCheckLink=false
       editable=false
     }}
-    {{#link-to 'course.session' course model}}{{t 'general.backToTitle' titleBinding=model.title}}{{/link-to}}
+    {{#link-to 'course.session' course model}}{{t 'general.backToTitle' titleBinding='model.title'}}{{/link-to}}
 
     {{session-publicationcheck session=model}}
   </div>
