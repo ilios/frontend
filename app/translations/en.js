@@ -230,7 +230,17 @@ translations.sessions = sessions;
 var learningMaterials = {
   'displayName': 'Display Name',
   'owner': 'Owner',
-  'notes': 'Notes'
+  'contentAuthor': 'Content Author',
+  'notes': 'Notes',
+  'file': 'File',
+  'link': 'Web Link',
+  'citation': 'Citation',
+  'userRole': 'User Role',
+  'status': 'Status',
+  'copyrightPermission': 'Copyright Permission',
+  'copyrightAgreement': "The file I am attempting to upload is my own or I have express permission to reproduce and/or distribute this item and does not contain any protected health information. My use of this file is in compliance with Government and University policies on copyright and information security and my educational program's guidelines for professional conduct. This file also adheres to the Terms and Conditions for this application.",
+  'copyrightRationale':'Copyright Rationale',
+
 };
 translations.learningMaterials = learningMaterials;
 

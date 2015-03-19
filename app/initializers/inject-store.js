@@ -8,6 +8,7 @@ export function initialize(container, application) {
   application.inject('component:session-overview', 'store', 'store:main');
   application.inject('component:mesh-manager', 'store', 'store:main');
   application.inject('component:detail-objectives', 'store', 'store:main');
+  application.inject('component:detail-learning-materials', 'store', 'store:main');
   application.inject('model:learner-group', 'store', 'store:main');
 }
 

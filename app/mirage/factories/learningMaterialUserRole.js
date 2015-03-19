@@ -1,6 +1,5 @@
 import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
-  title: (i) => `session ${i}`,
-  deleted: false,
+  title: (i) => `role ${i}`,
 });

@@ -6,6 +6,7 @@ export default function getAll(db, request){
   var modelName = getName(request.url.match(modelRegex)[1]);
   if (!db[modelName]) {
     console.error("Mirage: The route handler for " + request.url + " is requesting data from the " + modelName + " collection, but that collection doesn't exist. To create it, create an empty fixture file or factory.");
+    return;
   }
   var results = db[modelName];
   /*

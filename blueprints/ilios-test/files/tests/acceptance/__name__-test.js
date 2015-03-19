@@ -14,7 +14,7 @@ module('Acceptance: <%= classifiedModuleName %>', {
     server.create('user', {id: 4136});
 
     fixtures.schools = [];
-    fixtures.schools.pushObjects(server.createList('schools', 2));
+    fixtures.schools.pushObjects(server.createList('school', 2));
   },
 
   afterEach: function() {

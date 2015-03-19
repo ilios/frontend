@@ -65,7 +65,7 @@ export default Ember.Component.extend({
       course.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
           publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser')
+            administrator: self.get('currentUser.content')
           });
           publishEvent.save().then(function(publishEvent){
             course.set('publishEvent', publishEvent);
@@ -83,7 +83,7 @@ export default Ember.Component.extend({
       course.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
           publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser')
+            administrator: self.get('currentUser.content')
           });
           publishEvent.save().then(function(publishEvent){
             course.set('publishEvent', publishEvent);

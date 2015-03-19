@@ -1,0 +1,57 @@
+
+<label>{{t 'learningMaterials.displayName'}}
+  {{input type='text' value=learningMaterial.title}}
+</label> <br />
+<label>{{t 'learningMaterials.owner'}}
+  <span class='owninguser'>{{learningMaterial.owningUser.fullName}}</span>
+</label> <br />
+<label>{{t 'learningMaterials.contentAuthor'}}
+  {{input type='text' value=learningMaterial.originalAuthor}}
+</label> <br />
+<label>{{t 'learningMaterials.status'}}
+  {{view "select"
+    content=learningMaterialStatuses
+    value=learningMaterial.status.content
+    optionValuePath='content'
+    optionLabelPath='content.title'
+  }}
+</label> <br />
+<label>{{t 'learningMaterials.userRole'}}
+  {{view "select"
+    content=learningMaterialUserRoles
+    value=learningMaterial.userRole.content
+    optionValuePath='content'
+    optionLabelPath='content.title'
+  }}
+</label> <br />
+<label>{{t 'general.description'}}
+  {{textarea value=learningMaterial.description}}
+</label> <br />
+
+{{#if isFile}}
+  <label>{{t 'learningMaterials.copyrightPermission'}}
+    {{input type='checkbox' checked=learningMaterial.copyrightPermission}}
+    {{t 'learningMaterials.copyrightAgreement'}}
+  </label> <br />
+  {{#unless learningMaterial.copyrightPermission}}
+    <label>{{t 'learningMaterials.copyrightRationale'}}
+      {{input type='text' value=learningMaterial.copyrightRationale}}
+    </label> <br />
+  {{/unless}}
+{{/if}}
+
+{{#if isCitation}}
+  <label>{{t 'learningMaterials.citation'}}
+    {{textarea value=learningMaterial.citation}}
+  </label>
+{{/if}}
+
+{{#if isLink}}
+  <label>{{t 'learningMaterials.link'}}
+    {{input type='text' value=learningMaterial.link}}
+  </label> <br />
+{{/if}}
+
+<br />
+<button class='cancel' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+<button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
