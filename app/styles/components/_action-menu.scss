@@ -6,7 +6,6 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
 .action-menu {
   display: inline-block;
   position: relative;
-
   .button {
     background: #ffffff;
     cursor: pointer;
@@ -19,23 +18,34 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     @include media($large-screen) {
       font-size: $base-font-size;
     }
-  }
+    &:hover {
+      background-color: $dropdown-background-hover;
+    }
+    &:after {
+      content: "\25BE";
+      display: block;
+      position: absolute;
+      right: $dropdown-padding / 2;
+      top: $dropdown-padding / 3;
+    }
 
-  .button:hover{
-    background-color: $dropdown-background-hover;
   }
+  &.blend-button .button {
+    font-size: $base-font-size * 0.85;
+    color: white;
+    background-color: $base-link-color;
+    border-radius: $base-border-radius;
+    padding: 0.5em 2em 0.5em 1em;
+    vertical-align: middle;
 
-  .button:after {
-    content: "\25BE";
-    display: block;
-    position: absolute;
-    right: $dropdown-padding / 2;
-    top: $dropdown-padding / 3;
+    &:hover {
+      background-color: darken($base-link-color, 3);
+    }
   }
 
   .dropdown-menu {
     @include transition (all 0.2s ease-in-out);
-    background: #FFF;
+    background-color: white;
     border-radius: $base-border-radius;
     box-shadow: 0 2px 2px transparentize(black, .8);
     color: $base-font-color;
@@ -49,28 +59,23 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     text-align: left;
     padding: 4px 0;
     margin: 5px 0 0;
-  }
-
-  .dropdown-menu li {
-    a {
+    a, a:visited {
       color: $base-font-color;
     }
-    color: $base-font-color;
-    padding: $dropdown-padding / 2 $dropdown-padding;
-  }
-
-  .dropdown-menu li:hover {
-    background: $dropdown-background-hover;
-  }
-
-  .dropdown-menu li:first-child {
-    border-top-left-radius: $base-border-radius;
-    border-top-right-radius: $base-border-radius;
-  }
-
-  .dropdown-menu li:last-child {
-    border: none;
-    border-bottom-left-radius: $base-border-radius;
-    border-bottom-right-radius: $base-border-radius;
+    li {
+      padding: $dropdown-padding / 2 $dropdown-padding;
+      &:hover {
+        background: $dropdown-background-hover;
+      }
+      &:first-child {
+        border-top-left-radius: $base-border-radius;
+        border-top-right-radius: $base-border-radius;
+      }
+      &:last-child {
+        border: none;
+        border-bottom-left-radius: $base-border-radius;
+        border-bottom-right-radius: $base-border-radius;
+      }
+    }
   }
 }

@@ -28,6 +28,7 @@ export default {
         application.inject('route', 'currentUser', 'user:current');
         application.inject('controller', 'currentUser', 'user:current');
         application.inject('view', 'currentUser', 'user:current');
+        application.inject('component', 'currentUser', 'user:current');
         application.advanceReadiness();
       });
     });

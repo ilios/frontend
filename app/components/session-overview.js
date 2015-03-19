@@ -68,7 +68,7 @@ export default Ember.Component.extend({
       session.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
           publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser')
+            administrator: self.get('currentUser.content')
           });
           publishEvent.save().then(function(publishEvent){
             session.set('publishEvent', publishEvent);
@@ -86,7 +86,7 @@ export default Ember.Component.extend({
       session.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
           publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser')
+            administrator: self.get('currentUser.content')
           });
           publishEvent.save().then(function(publishEvent){
             session.set('publishEvent', publishEvent);

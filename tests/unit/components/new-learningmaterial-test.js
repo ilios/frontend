@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('detail-learning-materials', 'DetailLearningMaterialsComponent', {
+moduleForComponent('new-learningmaterial', {
   // specify the other units that are required for this test
-  needs: ['component:action-menu']
+  // needs: ['component:foo', 'helper:bar']
 });
 
 test('it renders', function(assert) {
@@ -15,7 +15,7 @@ test('it renders', function(assert) {
   var component = this.subject();
   assert.equal(component._state, 'preRender');
 
-  // appends the component to the page
-  this.append();
+  // renders the component to the page
+  this.render();
   assert.equal(component._state, 'inDOM');
 });
