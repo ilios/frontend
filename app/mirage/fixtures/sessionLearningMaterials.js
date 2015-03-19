@@ -1,6 +1,7 @@
 export default [
   {
     'id' : 47172,
+    'required' : false,
     'publicNotes' : false,
     'session' : "16471",
     'learningMaterial' : "26390",
@@ -9,6 +10,7 @@ export default [
 
   {
     'id' : 47200,
+    'required' : false,
     'publicNotes' : false,
     'session' : "16491",
     'learningMaterial' : "26416",
@@ -17,6 +19,7 @@ export default [
 
   {
     'id' : 47208,
+    'required' : false,
     'publicNotes' : false,
     'session' : "16471",
     'learningMaterial' : "26424",
@@ -25,6 +28,7 @@ export default [
 
   {
     'id' : 47239,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "26455",
@@ -33,6 +37,7 @@ export default [
 
   {
     'id' : 47240,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "26456",
@@ -41,6 +46,7 @@ export default [
 
   {
     'id' : 47241,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "26457",
@@ -49,6 +55,7 @@ export default [
 
   {
     'id' : 47242,
+    'required' : false,
     'publicNotes' : false,
     'session' : "16556",
     'learningMaterial' : "26458",
@@ -57,6 +64,7 @@ export default [
 
   {
     'id' : 47243,
+    'required' : false,
     'publicNotes' : false,
     'session' : "16556",
     'learningMaterial' : "26459",
@@ -65,6 +73,7 @@ export default [
 
   {
     'id' : 47355,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26544",
@@ -73,6 +82,7 @@ export default [
 
   {
     'id' : 47360,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26550",
@@ -81,6 +91,7 @@ export default [
 
   {
     'id' : 47361,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26551",
@@ -89,6 +100,7 @@ export default [
 
   {
     'id' : 47394,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26557",
@@ -97,6 +109,7 @@ export default [
 
   {
     'id' : 47395,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26558",
@@ -105,6 +118,7 @@ export default [
 
   {
     'id' : 47396,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26559",
@@ -113,6 +127,7 @@ export default [
 
   {
     'id' : 47397,
+    'required' : false,
     'publicNotes' : false,
     'session' : "16473",
     'learningMaterial' : "26560",
@@ -121,6 +136,7 @@ export default [
 
   {
     'id' : 49240,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26718",
@@ -129,6 +145,7 @@ export default [
 
   {
     'id' : 49241,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26719",
@@ -137,6 +154,7 @@ export default [
 
   {
     'id' : 49244,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26722",
@@ -145,6 +163,7 @@ export default [
 
   {
     'id' : 49245,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26723",
@@ -153,6 +172,7 @@ export default [
 
   {
     'id' : 49252,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26730",
@@ -161,6 +181,7 @@ export default [
 
   {
     'id' : 49253,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26731",
@@ -169,6 +190,7 @@ export default [
 
   {
     'id' : 49254,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26732",
@@ -177,6 +199,7 @@ export default [
 
   {
     'id' : 49255,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26733",
@@ -185,6 +208,7 @@ export default [
 
   {
     'id' : 49256,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26734",
@@ -193,6 +217,7 @@ export default [
 
   {
     'id' : 49257,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26735",
@@ -201,6 +226,7 @@ export default [
 
   {
     'id' : 49274,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "26752",
@@ -209,6 +235,7 @@ export default [
 
   {
     'id' : 49281,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26759",
@@ -217,6 +244,7 @@ export default [
 
   {
     'id' : 49359,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26801",
@@ -225,6 +253,7 @@ export default [
 
   {
     'id' : 49360,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16471",
     'learningMaterial' : "26802",
@@ -233,6 +262,7 @@ export default [
 
   {
     'id' : 49397,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26842",
@@ -241,6 +271,7 @@ export default [
 
   {
     'id' : 49398,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26843",
@@ -249,6 +280,7 @@ export default [
 
   {
     'id' : 49399,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26844",
@@ -257,6 +289,7 @@ export default [
 
   {
     'id' : 49403,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16480",
     'learningMaterial' : "26848",
@@ -265,6 +298,7 @@ export default [
 
   {
     'id' : 49523,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26929",
@@ -273,6 +307,7 @@ export default [
 
   {
     'id' : 49524,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26930",
@@ -281,6 +316,7 @@ export default [
 
   {
     'id' : 49531,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26937",
@@ -289,6 +325,7 @@ export default [
 
   {
     'id' : 49532,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26938",
@@ -297,6 +334,7 @@ export default [
 
   {
     'id' : 49548,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "26957",
@@ -305,6 +343,7 @@ export default [
 
   {
     'id' : 49549,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "26958",
@@ -313,6 +352,7 @@ export default [
 
   {
     'id' : 49550,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "26959",
@@ -321,6 +361,7 @@ export default [
 
   {
     'id' : 49551,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "26960",
@@ -329,6 +370,7 @@ export default [
 
   {
     'id' : 49553,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26962",
@@ -337,6 +379,7 @@ export default [
 
   {
     'id' : 49554,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16473",
     'learningMaterial' : "26963",
@@ -345,6 +388,7 @@ export default [
 
   {
     'id' : 49636,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "27037",
@@ -353,6 +397,7 @@ export default [
 
   {
     'id' : 49637,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "27038",
@@ -361,6 +406,7 @@ export default [
 
   {
     'id' : 49638,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "27039",
@@ -369,6 +415,7 @@ export default [
 
   {
     'id' : 49639,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16491",
     'learningMaterial' : "27040",
@@ -377,6 +424,7 @@ export default [
 
   {
     'id' : 50711,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "28030",
@@ -385,6 +433,7 @@ export default [
 
   {
     'id' : 50712,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "28031",
@@ -393,6 +442,7 @@ export default [
 
   {
     'id' : 50758,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "28077",
@@ -401,6 +451,7 @@ export default [
 
   {
     'id' : 50760,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "28079",
@@ -409,6 +460,7 @@ export default [
 
   {
     'id' : 51107,
+    'required' : true,
     'publicNotes' : true,
     'session' : "16556",
     'learningMaterial' : "28414",
