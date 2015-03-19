@@ -10,7 +10,7 @@ export default [
     'status' : "1",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Molecular Biology of the Cell, Fifth Edition, Part III, “Internal Organization of the Cell” ",
+    'citation' : "Molecular Biology of the Cell, Fifth Edition, Part III, “Internal Organization of the Cell” ",
     'type' : "citation"
   },
 
@@ -25,7 +25,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Chapters 7 and 8 in Basic & Clinical Pharmacology, 12th edition discuss these two drug groups. ",
+    'citation' : "Chapters 7 and 8 in Basic & Clinical Pharmacology, 12th edition discuss these two drug groups. ",
     'type' : "citation"
   },
 
@@ -40,7 +40,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : " Wheater's Functional Histology (a general reference text book) ",
+    'citation' : " Wheater's Functional Histology (a general reference text book) ",
     'type' : "citation"
   },
 
@@ -55,7 +55,7 @@ export default [
     'status' : "1",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Langman’s Medical Embryology 12th edition Review pp. 70-74 section beginning with “Molecular regulation…” is optional (pp. 74-79)",
+    'citation' : "Langman’s Medical Embryology 12th edition Review pp. 70-74 section beginning with “Molecular regulation…” is optional (pp. 74-79)",
     'type' : "citation"
   },
 
@@ -70,7 +70,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Langman’s Medical Embryology 12th edition “Vertebrae and the vertebral column” and “Ribs and sternum” pp. 142-144 “Limbs” pp. 151-157",
+    'citation' : "Langman’s Medical Embryology 12th edition “Vertebrae and the vertebral column” and “Ribs and sternum” pp. 142-144 “Limbs” pp. 151-157",
     'type' : "citation"
   },
 
@@ -85,7 +85,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "“Molecular regulation of limb development” section has more detail than is required, pp. 134-134, 147-151",
+    'citation' : "“Molecular regulation of limb development” section has more detail than is required, pp. 134-134, 147-151",
     'type' : "citation"
   },
 
@@ -100,7 +100,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://embryology.med.unsw.edu.au/Movies/mesoderm.htm",
+    'link' : "http://embryology.med.unsw.edu.au/Movies/mesoderm.htm",
     'type' : "link"
   },
 
@@ -115,7 +115,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://missinglink.ucsf.edu/restricted/simbryo/site/index.html",
+    'link' : "http://missinglink.ucsf.edu/restricted/simbryo/site/index.html",
     'type' : "link"
   },
 
@@ -150,7 +150,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "https://courses.ucsf.edu/pluginfile.php/186776/mod_page/content/10/PROF14_ComponentsPropsCellMembrane_ILM.pdf",
+    'link' : "https://courses.ucsf.edu/pluginfile.php/186776/mod_page/content/10/PROF14_ComponentsPropsCellMembrane_ILM.pdf",
     'type' : "link"
   },
 
@@ -165,7 +165,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Boron and Boulpaep, Medical Physiology, 2nd ed., Saunders, 2009, pp. 113-132.",
+    'citation' : "Boron and Boulpaep, Medical Physiology, 2nd ed., Saunders, 2009, pp. 113-132.",
     'type' : "citation"
   },
 
@@ -180,7 +180,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Alberts et al., Essential Cell Biology, 3rd ed.,Garland Publishing, 2010, pp. 372- 420.",
+    'citation' : "Alberts et al., Essential Cell Biology, 3rd ed.,Garland Publishing, 2010, pp. 372- 420.",
     'type' : "citation"
   },
 
@@ -195,7 +195,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Chapter 1, Basic and Clinical Pharmacology, 12th edition",
+    'citation' : "Chapter 1, Basic and Clinical Pharmacology, 12th edition",
     'type' : "citation"
   },
 
@@ -210,7 +210,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Chapter 5, Basic and Clinical Pharmacology, 12th edition. Read the first section on p. 69, and the section entitled “The Food & Drug Administration” on pp. 73-77. Look over Figure 5-1 and read through Table 5-2 on p. 74.",
+    'citation' : "Chapter 5, Basic and Clinical Pharmacology, 12th edition. Read the first section on p. 69, and the section entitled “The Food & Drug Administration” on pp. 73-77. Look over Figure 5-1 and read through Table 5-2 on p. 74.",
     'type' : "citation"
   },
 
@@ -225,7 +225,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Chapter 65, Basic and Clinical Pharmacology, 12th edition. Read the sections “Legal Factors (USA)”, “Who May Prescribe”, and “Socioeconomic Factors” on pp. 1144-1148.",
+    'citation' : "Chapter 65, Basic and Clinical Pharmacology, 12th edition. Read the sections “Legal Factors (USA)”, “Who May Prescribe”, and “Socioeconomic Factors” on pp. 1144-1148.",
     'type' : "citation"
   },
 
@@ -240,7 +240,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'text' : "Prilosec, Nexium and Stereoisomers. Med Lett Drugs Ther. 2003 Jun 23;45(1159):51-2.",
+    'citation' : "Prilosec, Nexium and Stereoisomers. Med Lett Drugs Ther. 2003 Jun 23;45(1159):51-2.",
     'type' : "citation"
   },
 
@@ -455,7 +455,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://www.nytimes.com/2014/09/07/business/just-13-and-working-risky-12-hour-shifts-in-the-tobacco-fields.html?hp&action=click&pgtype=Homepage&version=HpSumSmallMediaHigh&module=second-column-region&region=top-news&WT.nav=top-news&_r=0",
+    'link' : "http://www.nytimes.com/2014/09/07/business/just-13-and-working-risky-12-hour-shifts-in-the-tobacco-fields.html?hp&action=click&pgtype=Homepage&version=HpSumSmallMediaHigh&module=second-column-region&region=top-news&WT.nav=top-news&_r=0",
     'type' : "link"
   },
 
@@ -510,7 +510,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://lecture.ucsf.edu/ets/Play/873e5821fd144b5490b341bc6e5fe9bf1d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
+    'link' : "http://lecture.ucsf.edu/ets/Play/873e5821fd144b5490b341bc6e5fe9bf1d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
     'type' : "link"
   },
 
@@ -525,7 +525,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://lecture.ucsf.edu/ets/Play/ae335a297b0641bbbcda15fd164a91581d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
+    'link' : "http://lecture.ucsf.edu/ets/Play/ae335a297b0641bbbcda15fd164a91581d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
     'type' : "link"
   },
 
@@ -540,7 +540,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://lecture.ucsf.edu/ets/Play/ae335a297b0641bbbcda15fd164a91581d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
+    'link' : "http://lecture.ucsf.edu/ets/Play/ae335a297b0641bbbcda15fd164a91581d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
     'type' : "link"
   },
 
@@ -595,7 +595,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://www.library.ucsf.edu/db/micromedex-20",
+    'link' : "http://www.library.ucsf.edu/db/micromedex-20",
     'type' : "link"
   },
 
@@ -610,7 +610,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "https://online.epocrates.com/",
+    'link' : "https://online.epocrates.com/",
     'type' : "link"
   },
 
@@ -765,7 +765,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://lecture.ucsf.edu/ets/Play/d8dd0ad52cee413e8fa4ca7f2282025a1d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
+    'link' : "http://lecture.ucsf.edu/ets/Play/d8dd0ad52cee413e8fa4ca7f2282025a1d?catalog=efbe12ed-39f1-4fbe-b79e-6bd1ad364935",
     'type' : "link"
   },
 
@@ -800,7 +800,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "https://courses.ucsf.edu/mod/page/view.php?id=111731",
+    'link' : "https://courses.ucsf.edu/mod/page/view.php?id=111731",
     'type' : "link"
   },
 
@@ -815,7 +815,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "https://courses.ucsf.edu/mod/page/view.php?id=111736",
+    'link' : "https://courses.ucsf.edu/mod/page/view.php?id=111736",
     'type' : "link"
   },
 
@@ -890,7 +890,7 @@ export default [
     'status' : "2",
     'owningUser' : "4136",
     'courseLearningMaterials' : [],
-    'webLink' : "http://lecture.ucsf.edu/ets/Play/0e2277e8e49146e6bf431ac1e65954fc1d?catalog=d9c00909-118d-465f-9ee1-2886902b9a78",
+    'link' : "http://lecture.ucsf.edu/ets/Play/0e2277e8e49146e6bf431ac1e65954fc1d?catalog=d9c00909-118d-465f-9ee1-2886902b9a78",
     'type' : "link"
   },
 
