@@ -37,6 +37,7 @@
   display: block;
   height: inherit;
   font-size: 10px;
+  font-weight: bold;
   text-transform: uppercase;
   background: #5accef;
   border-radius: inherit;
@@ -64,15 +65,14 @@
 
 .switch-label:before {
   content: attr(data-off);
-  right: 11px;
+  right: 7px;
   color: white;
-   text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-  /*text-shadow: 0 1px rgba(255, 255, 255, 0.5);*/
+  text-shadow: 0 1px rgba(0, 0, 0, 0.2);
 }
 
 .switch-label:after {
   content: attr(data-on);
-  left: 11px;
+  left: 9px;
   color: white;
   text-shadow: 0 1px rgba(0, 0, 0, 0.2);
   opacity: 0;
