@@ -1,15 +1,26 @@
 .offering-block {
+     font-size: .9em;
   @include span-columns(12 of 12);
   .offering-block-date{
     @include span-columns(12 of 12);
     @include omega();
-    .offering-block-date-dayofweek, .offering-block-date-dayofmonth {
+    .offering-block-date-dayofweek,  {
       width: 100%;
       display: block;
+        color: $ilios_orange;
+        font-size: $base-font-size * 1.2;
+        font-weight: bold;
     }
+      .offering-block-date-dayofmonth{
+          color: $medium-grey;
+         
+         
+      
+      }
   }
   .offering-block-time {
-    margin-bottom: 2em;
+    margin-top: 1em;
+      margin-bottom: 2em;
     @include span-columns(12 of 12);
     @include fill-parent();
     .offering-block-time-time {
@@ -17,13 +28,17 @@
 
       .offering-block-time-time-starttime, .offering-block-time-time-endtime {
         display: block;
+           color: $medium-grey;
+          
       }
     }
     .offering-block-time-offerings {
+        
       @include span-columns(8 of 12);
       @include shift(1);
       .offering-block-time-offering {
         .offering-detail-box{
+           padding: .8em;
           @include span-columns(2 of 8);
           @include omega(4n);
         }
