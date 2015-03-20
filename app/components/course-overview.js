@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
 export default Ember.Component.extend({
   editable: false,
@@ -6,6 +7,16 @@ export default Ember.Component.extend({
   directorsWithFullName: Ember.computed.filterBy('course.directors', 'fullName'),
   sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
   levelOptions: [1,2,3,4,5],
+  classNames: ['course-overview'],
+  sortedClerkshipTypes: function(){
+    var deferred = Ember.RSVP.defer();
+    this.store.find('course-clerkship-type').then(function(clerkshipTypes){
+      deferred.resolve(clerkshipTypes.sortBy('title'));
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }.property(),
   actions: {
     addDirector: function(user){
       var course = this.get('course');

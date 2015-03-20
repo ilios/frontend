@@ -14,6 +14,7 @@ moduleForModel('alert-change-type', 'AlertChangeType', {
     'model:competency',
     'model:course-learning-material',
     'model:course',
+    'model:course-clerkship-type',
     'model:curriculum-inventory-academic-level',
     'model:curriculum-inventory-export',
     'model:curriculum-inventory-institution',

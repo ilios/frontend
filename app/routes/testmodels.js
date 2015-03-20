@@ -10,6 +10,7 @@ export default Ember.Route.extend({
         competencies: this.store.find('competency', {limit: 2}),
         courselearningmaterials: this.store.find('course-learning-material', {limit: 2}),
         courses: this.store.find('course', {limit: 2}),
+        courseClerkshipTypes: this.store.find('course-clerkship-type', {limit: 2}),
         curriculuminventoryinstitutions: this.store.find('curriculum-inventory-institution', {limit: 2}),
         curriculuminventoryreports: this.store.find('curriculum-inventory-report', {limit: 2}),
         curriculuminventoryexports: this.store.find('curriculum-inventory-export', {limit: 2}),

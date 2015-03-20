@@ -15,6 +15,7 @@ export default function() {
       'alerts',
       'cohorts',
       'competencies',
+      'courseClerkshipTypes',
       'courseLearningMaterials',
       'courses',
       'curriculumInventoryAcademicLevels',
