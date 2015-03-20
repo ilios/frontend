@@ -1,0 +1,7 @@
+<div id='mycoursesfilter' class="filter">
+  <label class='switch switch-green switch-wide' {{action 'toggleMyCourses'}}>
+    <input class='switch-input' {{bind-attr checked=isChecked }} type='checkbox' />
+    <span class="switch-label" data-on='{{t 'courses.myCourses'}}' data-off='{{t 'courses.allCourses'}}'></span>
+    <span class="switch-handle"></span>
+  </label>
+</div>
