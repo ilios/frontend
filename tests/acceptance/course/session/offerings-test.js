@@ -16,6 +16,7 @@ module('Acceptance: Session - Offerings', {
     server.create('course', {
       sessions: [1]
     });
+    server.create('sessionType');
 
     fixtures.users =  [];
     fixtures.users.pushObject(server.create('user', {id: 4136}));

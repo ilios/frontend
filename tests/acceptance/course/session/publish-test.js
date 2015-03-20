@@ -15,6 +15,7 @@ module('Acceptance: Session - Publish', {
     server.create('school');
     server.create('course');
     server.create('offering');
+    server.create('sessionType');
     server.create('publishEvent', {
       administrator: 4136,
       sessions: [1, 2],

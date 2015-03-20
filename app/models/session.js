@@ -131,6 +131,7 @@ var Session = DS.Model.extend({
       promise: deferred.promise
     });
   }.property('offerings.[].learnerGroups.[]'),
+  isIndependentLearning: Ember.computed.notEmpty('ilmSessionFacet.content'),
 });
 
 export default Session;

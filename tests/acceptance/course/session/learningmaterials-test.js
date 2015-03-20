@@ -15,6 +15,7 @@ module('Acceptance: Session - Learning Materials', {
     server.create('school');
     server.create('educationalYear');
     server.create('course');
+    server.create('sessionType');
     fixtures.statuses = server.createList('learningMaterialStatus', 5);
     fixtures.roles = server.createList('learningMaterialUserRole', 3);
     fixtures.learningMaterials = [];

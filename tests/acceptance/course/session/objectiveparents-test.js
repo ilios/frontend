@@ -13,6 +13,7 @@ module('Acceptance: Session - Objective Parents', {
     application = startApp();
     server.create('user', {id: 4136});
     server.create('school');
+    server.create('sessionType');
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
         children: [4,5],

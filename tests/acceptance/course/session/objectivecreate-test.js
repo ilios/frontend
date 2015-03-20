@@ -14,6 +14,7 @@ module('Acceptance: Session - Objective Create', {
     server.create('user', {id: 4136});
     server.create('school');
     server.create('course');
+    server.create('sessionType');
     fixtures.objective = server.create('objective', {
       sessions: [1],
     });

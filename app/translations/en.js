@@ -224,6 +224,9 @@ var sessions = {
   'noOfferingLearnerGroups': 'No Groups',
   'openSmallGroupGenerator': 'Open Offering Small Group Generator',
   'multiday': 'Multiday',
+  'independentLearning': 'Independent Learning',
+  'hours': 'Hours',
+  'dueBy': 'Due By',
 };
 translations.sessions = sessions;
 

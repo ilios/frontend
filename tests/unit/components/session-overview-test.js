@@ -14,6 +14,7 @@ moduleForComponent('session-overview', {
     'component:action-menu',
     'helper:fa-icon',
     'component:wave-loader',
+    'component:boolean-check',
   ]
 });
 
