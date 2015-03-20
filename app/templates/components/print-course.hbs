@@ -275,6 +275,47 @@
           </ul>
         </div>
       </section>
+
+      <section class='detail-block'>
+        <div class='detail-title'>
+          {{t 'general.offerings'}} ({{session.offerings.length}})
+        </div>
+        <div class='detail-content'>
+          {{#if session.offerings.length}}
+            <table>
+               <thead>
+                 <tr>
+                   <th class='text-left'>{{t 'general.time'}}</th>
+                   <th class='text-left'>{{t 'general.location'}}</th>
+                   <th class='text-left'>{{t 'general.instructors'}}</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 {{#each offering in session.offerings}}
+                   <tr>
+                     <td class='text-left'>
+                       {{moment offering.startDate 'MM/DD/YYYY LT'}} -
+                       {{moment offering.endDate 'MM/DD/YYYY LT'}}
+                     </td>
+                     <td class='text-left'>{{offering.room}}</td>
+                     <td class='text-left'>
+                       <ul>
+                         {{#each user in offering.allInstructors}}
+                           <li>{{user.fullName}}</li>
+                         {{/each}}
+                       </ul>
+                     </td>
+                   </tr>
+                 {{/each}}
+               </tbody>
+             </table>
+          {{else}}
+            <p>{{t 'sessions.noOfferings'}}</p>
+          {{/if}}
+        </div>
+      </section>
+
+
     </div>
   {{/each}}
 </section>

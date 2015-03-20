@@ -43,6 +43,7 @@ var general = {
   'end': 'End',
   'starts': 'Starts',
   'ends': 'Ends',
+  'time': 'Time',
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
