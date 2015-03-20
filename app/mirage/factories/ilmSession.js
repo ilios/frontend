@@ -1,7 +1,7 @@
+/* global moment */
 import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
-  title: (i) => `session ${i}`,
-  deleted: false,
-  sessionType: 1
+  hours: (i) => (i+1) * 5,
+  dueDate: () => moment().format(),
 });

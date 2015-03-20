@@ -1,8 +1,11 @@
+/* global moment */
 import Ember from 'ember';
+
 
 export default Ember.Component.extend({
   session: null,
   editable: true,
+  classNames: ['session-overview'],
   sortTypes: ['title'],
   sessionTypes: [],
   sortedSessionTypes: Ember.computed.sort('sessionTypes', 'sortTypes'),
@@ -96,6 +99,27 @@ export default Ember.Component.extend({
           session.save();
         }
       });
-    }
-  }
+    },
+    toggleIndependentLearning: function(){
+      var session = this.get('session');
+      if(session.get('isIndependentLearning')){
+        session.get('ilmSessionFacet').then(function(ilmSession){
+          session.set('ilmSessionFacet', null);
+          ilmSession.deleteRecord();
+          session.save();
+          ilmSession.save();
+        });
+      } else {
+        var ilmSession= this.store.createRecord('ilm-session', {
+          session: session,
+          hours: 1,
+          dueDate: moment().add(6, 'weeks').toDate()
+        });
+        ilmSession.save().then(function(savedIlmSession){
+          session.set('ilmSessionFacet', savedIlmSession);
+          session.save();
+        });
+      }
+    },
+  },
 });

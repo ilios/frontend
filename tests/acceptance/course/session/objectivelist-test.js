@@ -16,6 +16,7 @@ module('Acceptance: Session - Objective List', {
     server.create('course', {
       sessions: [1]
     });
+    server.create('sessionType');
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
         children: [3,4],

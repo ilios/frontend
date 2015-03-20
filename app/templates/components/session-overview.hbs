@@ -34,7 +34,7 @@
   </div>
   <div class='detail-content'>
     {{#if editable}}
-      <div class="inline-label-data-block">
+      <div class="inline-label-data-block sessiontype">
         <label>{{t "sessions.type"}}:</label>
         <div>
           {{editable-select
@@ -62,8 +62,23 @@
       </div>
       <br />
       <div class="inline-label-data-block">
+        <label>{{t "sessions.independentLearning"}}:</label>
+        <div class='independentlearningcontrol' {{action 'toggleIndependentLearning'}}>{{boolean-check value=session.isIndependentLearning}}</div>
+      </div>
+      {{#if session.isIndependentLearning}}
+        <div class="inline-label-data-block sessionilmhours">
+          <label>{{t "sessions.hours"}}:</label>
+          {{editable-text model=session.ilmSessionFacet.content property='hours'}}
+        </div>
+        <div class="inline-label-data-block sessionilmduedate">
+          <label>{{t "sessions.dueBy"}}:</label>
+          <div>{{editable-date model=session.ilmSessionFacet.content property='dueDate'}}</div>
+        </div>
+      {{/if}}
+      <br />
+      <div class="inline-label-data-block sessiondescription">
         <label>{{t "general.description"}}:</label>
-        <div>{{editable-textarea model=session.sessionDescription property='description'}}</div>
+        <div>{{editable-textarea model=session.sessionDescription.content property='description'}}</div>
       </div>
     {{else}}
       <div class="inline-label-data-block">
@@ -82,6 +97,11 @@
       <div class="inline-label-data-block">
         <label>{{t "sessions.specialEquipmentRequired"}}:</label>
         <div>{{boolean-check value=session.equipmentRequired}}</div>
+      </div>
+      <br />
+      <div class="inline-label-data-block">
+        <label>{{t "sessions.independentLearning"}}:</label>
+        <div>{{boolean-check value=isIndependentLearning}}</div>
       </div>
       <br />
       <div class="inline-label-data-block">

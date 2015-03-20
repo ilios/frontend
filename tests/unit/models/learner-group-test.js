@@ -23,7 +23,6 @@ moduleForModel('learner-group', 'LearnerGroup', {
     'model:department',
     'model:discipline',
     'model:educational-year',
-    'model:ilm-session-facet',
     'model:ilm-session',
     'model:instruction-hour',
     'model:instructor-group',

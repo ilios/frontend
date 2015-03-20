@@ -16,6 +16,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', {
     server.create('course', {
       sessions: [1]
     });
+    server.create('sessionType');
 
     fixtures.meshDescriptors = [];
     fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
