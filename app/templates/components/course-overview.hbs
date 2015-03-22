@@ -28,12 +28,11 @@
       <div class="inline-label-data-block clerkshiptype">
         <label>{{t "courses.clerkshipType"}}:</label>
         <div>
-          {{editable-select
-            model=course
-            property='clerkshipType'
-            options=sortedClerkshipTypes
-            valuePath='id'
-            labelPath='title'
+          {{inplace-select
+            value=course.clerkshipType.id
+            options=clerkshipTypeOptions
+            save='changeClerkshipType'
+            selectPromptTranslation='courses.notAClerkship'
           }}
         </div>
       </div>

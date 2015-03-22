@@ -43,6 +43,7 @@
     "ember-noscript": "^1.0.0",
     "ember-pikaday": "^0.2.1",
     "ember-rl-dropdown": "0.0.3",
+    "emberx-select": "1.1.0",
     "glob": "^4.0.5",
     "liquid-fire": "0.16.3",
     "moment": "^2.8.4",

@@ -204,6 +204,7 @@ var courses = {
   'meshSearchPlaceholder': 'Search MeSH',
   'topicsManageTitle': 'Manage Topics',
   'clerkshipType': 'Clerkship Type',
+  'notAClerkship': 'Not a Clerkship',
 };
 translations.courses = courses;
 

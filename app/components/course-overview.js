@@ -3,12 +3,13 @@ import DS from 'ember-data';
 
 export default Ember.Component.extend({
   editable: false,
+  course: null,
   directorsSort: ['lastName', 'firstName'],
   directorsWithFullName: Ember.computed.filterBy('course.directors', 'fullName'),
   sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
   levelOptions: [1,2,3,4,5],
   classNames: ['course-overview'],
-  sortedClerkshipTypes: function(){
+  clerkshipTypeOptions: function(){
     var deferred = Ember.RSVP.defer();
     this.store.find('course-clerkship-type').then(function(clerkshipTypes){
       deferred.resolve(clerkshipTypes.sortBy('title'));
@@ -32,5 +33,29 @@ export default Ember.Component.extend({
       course.save();
       user.save();
     },
+    changeClerkshipType: function(newId){
+      var course = this.get('course');
+      if(newId){
+        this.store.find('course-clerkship-type', newId).then(function(type){
+          course.set('clerkshipType', type);
+          type.get('courses').then(function(courses){
+            courses.addObject(course);
+            course.save();
+            courses.save();
+          });
+        });
+      } else {
+        course.get('clerkshipType').then(function(type){
+          if(type){
+            type.get('courses').then(function(courses){
+              courses.removeObject(course);
+              course.set('clerkshipType', null);
+              courses.save();
+              course.save();
+            });
+          }
+        });
+      }
+    }
   }
 });
