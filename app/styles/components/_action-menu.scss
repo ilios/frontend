@@ -78,4 +78,9 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
       }
     }
   }
+
+  &.right-edge .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
 }

@@ -7,7 +7,7 @@
     {{/if}}
   </span>
   <span class ='actions'>
-    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu'}}
+    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
       {{#if showAsIs}}
         <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
       {{/if}}
