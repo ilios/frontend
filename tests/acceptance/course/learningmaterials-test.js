@@ -208,6 +208,32 @@ test('create new citation learning material', function(assert) {
 
 });
 
+test('issue #345 second new learning material defaults', function(assert) {
+  visit(url);
+  var container;
+  andThen(function() {
+    container = find('.detail-learning-materials');
+    click(find('.detail-actions .button', container));
+    click(find('.detail-actions ul li:eq(0)', container));
+  });
+  andThen(function(){
+    assert.equal(getElementText(find('select:eq(0) option:selected', container)), getText(fixtures.statuses[0].title));
+    assert.equal(getElementText(find('select:eq(1) option:selected', container)), getText(fixtures.roles[0].title));
+    click('.detail-learning-materials .newlearningmaterial .cancel');
+  });
+  andThen(function(){
+    click(find('.detail-actions .button', container));
+    click(find('.detail-actions ul li:eq(0)', container));
+  });
+  andThen(function(){
+    click(find('.detail-actions .button', container));
+    click(find('.detail-actions ul li:eq(0)', container));
+    assert.equal(getElementText(find('select:eq(0) option:selected', container)), getText(fixtures.statuses[0].title));
+    assert.equal(getElementText(find('select:eq(1) option:selected', container)), getText(fixtures.roles[0].title));
+  });
+
+});
+
 test('cancel new learning material', function(assert) {
   visit(url);
   andThen(function() {
