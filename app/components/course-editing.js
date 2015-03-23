@@ -11,18 +11,6 @@ export default Ember.Component.extend({
           self.set('course', course);
         }
       });
-    },
-    addCohort: function(cohort){
-      var course = this.get('course');
-      course.get('cohorts').then(function(cohorts){
-        cohort.get('courses').then(function(courses){
-          courses.addObject(course);
-          cohorts.addObject(cohort);
-          course.save();
-          cohort.save();
-        });
-      });
     }
   }
-
 });

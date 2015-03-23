@@ -176,6 +176,7 @@ var courses = {
   'new': 'New Course',
   'noCourses': 'There are no courses in this school',
   'noSessions': 'There are no sessions in this course',
+  'noCohorts': 'There are no cohorts in this course',
   'educationalYear': 'Educational Year',
   'externalId': 'External ID',
   'startDate': 'Start Date',
@@ -206,6 +207,7 @@ var courses = {
   'topicsManageTitle': 'Manage Topics',
   'clerkshipType': 'Clerkship Type',
   'notAClerkship': 'Not a Clerkship',
+  'cohortsManageTitle': 'Manage Cohorts',
 };
 translations.courses = courses;
 

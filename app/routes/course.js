@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   availableTopics: [],
-  program: [],
   afterModel: function(course){
     var self = this;
     var deferred = Ember.RSVP.defer();
@@ -10,13 +9,11 @@ export default Ember.Route.extend({
       var resolve = this;
       course.get('owningSchool').then(function(school){
         var promises = {
-          'availableTopics': school.get('disciplines'),
-          'programs': self.store.find('program')
+          'availableTopics': school.get('disciplines')
         };
         Ember.RSVP.hash(promises).then(function(hash){
           if(!self.get('isDestroyed')){
             self.set('availableTopics', hash.availableTopics);
-            self.set('programs', hash.programs);
           }
           resolve();
         });
@@ -28,7 +25,6 @@ export default Ember.Route.extend({
   setupController: function(controller, model){
     controller.set('model', model);
     controller.set('availableTopics', this.get('availableTopics'));
-    controller.set('programs', this.get('programs'));
     this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
     this.controllerFor('course').set('showBackToCourseListLink', true);
   }
