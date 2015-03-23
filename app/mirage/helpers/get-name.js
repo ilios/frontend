@@ -3,6 +3,7 @@ var models = [
   'aamcPcrs',
   'alertChangeTypes',
   'courseLearningMaterials',
+  'courseClerkshipTypes',
   'curriculumInventoryAcademicLevels',
   'curriculumInventoryExports',
   'curriculumInventoryInstitutions',

@@ -3,8 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('curriculum-inventory-academic-level', 'CurriculumInventoryAcademicLevel', {
-  // Specify the other units that are required for this test.
+moduleForModel('course-clerkship-type', {
   needs: [
     'model:aamc-method',
     'model:aamc-pcrs',

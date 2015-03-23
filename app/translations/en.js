@@ -204,6 +204,8 @@ var courses = {
   'confirmRemove': 'Are you sure you want to delete this course, with {{publishedOfferingCount}} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone.',
   'meshSearchPlaceholder': 'Search MeSH',
   'topicsManageTitle': 'Manage Topics',
+  'clerkshipType': 'Clerkship Type',
+  'notAClerkship': 'Not a Clerkship',
 };
 translations.courses = courses;
 
