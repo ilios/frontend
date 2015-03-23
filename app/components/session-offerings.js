@@ -79,7 +79,7 @@ var OfferingDateBlock = OfferingBlock.extend({
       offeringGroupArray.pushObject(offeringGroups[key]);
     }
 
-    return offeringGroupArray.sortBy('startTime');
+    return offeringGroupArray.sortBy('timeKey');
   }.property('offerings.@each.{startDate,endDate}')
 });
 
