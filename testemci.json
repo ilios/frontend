@@ -1,6 +1,7 @@
 {
   "framework": "qunit",
   "test_page": "tests/index.html",
+  "parallel": 2,
   "launchers": {
     "SauceLabs_Chrome": {
       "command": "./node_modules/.bin/ember-cli-sauce --platformSL='Windows 7' --no-ct -u <url>",
