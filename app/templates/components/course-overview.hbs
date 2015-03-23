@@ -33,6 +33,7 @@
             options=clerkshipTypeOptions
             save='changeClerkshipType'
             selectPromptTranslation='courses.notAClerkship'
+            clickPromptTranslation='courses.notAClerkship'
           }}
         </div>
       </div>
@@ -69,7 +70,13 @@
       </div>
       <div class="inline-label-data-block clerkshiptype">
         <label>{{t "courses.clerkshipType"}}:</label>
-        <div>{{course.clerkshipType.title}}</div>
+        <div>
+          {{#if course.clerkshipType}}
+            {{course.clerkshipType.title}}
+          {{else}}
+            {{t 'courses.notAClerkship'}}
+          {{/if}}
+        </div>
       </div>
       <br />
       <br />

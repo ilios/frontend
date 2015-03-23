@@ -4,7 +4,7 @@ import layout from '../templates/components/inplace-select';
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   layout: layout,
   tagName: 'span',
-  classNames: ['inplace-select'],
+  classNames: ['editinplace', 'inplace-select'],
   value: null,
   //we use a computed value in case an objecte gets passed in that doesn't yet exist
   // like course.clerkshipType.id when no clerkship type has been set

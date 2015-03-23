@@ -80,10 +80,14 @@ test('pick clerkship type', function(assert) {
     year: 2013,
     owningSchool: 1,
   });
+  visit(url);
+  andThen(function() {
+    assert.equal(getElementText(find('.course-overview .clerkshiptype div')), getText('Not a Clerkship'));
+  });
   visit(url + '?details=true');
   andThen(function() {
     var container = find('.course-overview');
-    assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Click to edit'));
+    assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
     click(find('.clerkshiptype .editable', container));
     andThen(function(){
       let options = find('.clerkshiptype select option', container);
@@ -120,7 +124,7 @@ test('remove clerkship type', function(assert) {
       pickOption(find('.clerkshiptype select', container), 'Not a Clerkship', assert);
       click(find('.clerkshiptype .actions .save', container));
       andThen(function(){
-        assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Click to edit'));
+        assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
       });
     });
   });
