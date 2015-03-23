@@ -1,4 +1,4 @@
-a {
+a, .link {
     color: $base-link-color;
     &:visited {
         color: $base-link-color;
@@ -95,7 +95,7 @@ textarea {
     z-index: 99999;
     overflow: show;
     padding: 4px;
-    min-height: 8em;    
+    min-height: 8em;
 }
 
 .main-border {

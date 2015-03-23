@@ -11,6 +11,7 @@ export function initialize(container, application) {
   application.inject('component:detail-objectives', 'store', 'store:main');
   application.inject('component:detail-learning-materials', 'store', 'store:main');
   application.inject('component:detail-cohorts', 'store', 'store:main');
+  application.inject('component:learningmaterial-manager', 'store', 'store:main');
   application.inject('model:learner-group', 'store', 'store:main');
 }
 

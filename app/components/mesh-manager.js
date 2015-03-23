@@ -13,8 +13,13 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'courses.meshSearchPlaceholder',
   terms: [],
   searchResults: [],
-  sortBy: ['title'],
-  sortedTerms: Ember.computed.sort('terms', 'sortBy'),
+  sortedTerms: function(){
+    var terms = this.get('terms');
+    if(!terms || terms.length === 0){
+      return [];
+    }
+    return terms.sortBy('title');
+  }.property('terms.@each.title'),
   actions: {
     search: function(query){
       var self = this;
