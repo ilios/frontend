@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   filter: '',
-  classNames: ['detail-view'],
+  classNames: ['detail-view', 'sessions-list'],
   tagName: 'div',
   course: null,
   newSessions: [],
@@ -58,11 +58,13 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       this.get('newSessions').addObject(session);
     },
     saveNewSession: function(newSession){
+      var self = this;
       this.get('newSessions').removeObject(newSession);
       var course = this.get('course');
       newSession.set('course', course);
       newSession.save().then(function(savedSession){
         course.get('sessions').addObject(savedSession);
+        self.sendAction('openSession', course, savedSession);
       });
     },
     removeNewSession: function(newSession){
