@@ -36,7 +36,7 @@
     "ember-cli-mirage": "0.0.23",
     "ember-cli-neat": "0.0.2",
     "ember-cli-qunit": "^0.3.9",
-    "ember-cli-sauce": "0.0.7",
+    "ember-cli-sauce": "^1.0.0",
     "ember-cli-uglify": "1.0.1",
     "ember-data": "^1.0.0-beta.15",
     "ember-export-application-global": "^1.0.2",
