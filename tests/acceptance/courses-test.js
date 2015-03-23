@@ -18,21 +18,6 @@ module('Acceptance: Courses', {
     fixtures.educationalYears = [];
     fixtures.educationalYears.pushObject(server.create('educationalYear', {id: 2013}));
     fixtures.educationalYears.pushObject(server.create('educationalYear', {id: 2014}));
-
-    fixtures.correctCourses = [];
-    fixtures.correctCourses.pushObjects(server.createList('course', 5, {
-      year: 2014,
-      owningSchool: 1,
-    }));
-
-    server.createList('course', 5, {
-      year: 2013,
-      owningSchool: 1,
-    });
-    server.createList('course', 5, {
-      year: 2014,
-      owningSchool: 2,
-    });
   },
 
   afterEach: function() {
@@ -44,6 +29,35 @@ test('visiting /courses', function(assert) {
   visit('/courses');
   andThen(function() {
     assert.equal(currentPath(), 'courses');
+  });
+});
+
+test('filters by year', function(assert) {
+  assert.expect(2);
+  var firstCourse = server.create('course', {
+    year: 2013,
+    owningSchool: 1,
+  });
+  var secondCourse = server.create('course', {
+    year: 2014,
+    owningSchool: 1
+  });
+  visit('/courses');
+  andThen(function() {
+    click('#yearsfilter button');
+    var yearOptions = find('#yearsfilter ul.dropdown-menu li');
+    click(yearOptions.eq(0));
+    andThen(function(){
+      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
+    });
+  });
+  andThen(function() {
+    click('#yearsfilter button');
+    var yearOptions = find('#yearsfilter ul.dropdown-menu li');
+    click(yearOptions.eq(1));
+    andThen(function(){
+      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
+    });
   });
 });
 
@@ -59,18 +73,6 @@ test('filters options', function(assert) {
     assert.equal(yearOptions.length, fixtures.educationalYears.length);
     for(let i = 0; i < fixtures.educationalYears.length; i++){
       assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), fixtures.educationalYears[i].title);
-    }
-  });
-});
-
-test('courses in list', function(assert) {
-  assert.expect(fixtures.correctCourses.length + 1);
-  visit('/courses');
-  andThen(function() {
-    let courseRows = find('.resultslist-list tbody tr');
-    assert.equal(courseRows.length, fixtures.correctCourses.length);
-    for (let i = 0; i < fixtures.correctCourses.length; i++){
-      assert.equal(getElementText(find('td:eq(0)', courseRows.eq(i))),getText(fixtures.correctCourses[i].title));
     }
   });
 });
