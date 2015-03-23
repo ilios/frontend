@@ -12,7 +12,9 @@ export default Ember.Route.extend({
         self.store.find('educational-year').then(function(years){
           var year = null;
           if(params.yearTitle != null){
-            year = years.filterBy('title', params.yearTitle).get('firstObject');
+            year = years.find(function(year){
+              return parseInt(year.get('title')) === parseInt(params.yearTitle);
+            });
           }
           if(year == null){
             year = years.sortBy('title').get('lastObject');
