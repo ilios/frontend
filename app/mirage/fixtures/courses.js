@@ -59,7 +59,7 @@ export default [
     'clerkshipType' : "1",
     'owningSchool' : "1",
     'publishEvent' : "57352",
-    'directors' : [ '4136' ],
+    'directors' : [],
     'cohorts' : [],
     'disciplines' : [ '3' ],
     'objectives' : [],

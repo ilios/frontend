@@ -61,6 +61,30 @@ test('filters by year', function(assert) {
   });
 });
 
+test('filters by mycourses', function(assert) {
+  assert.expect(5);
+  var firstCourse = server.create('course', {
+    year: 2014,
+    owningSchool: 1
+  });
+  var secondCourse = server.create('course', {
+    year: 2014,
+    owningSchool: 1,
+    directors: [4136]
+  });
+  visit('/courses');
+  andThen(function() {
+    assert.equal(find('.resultslist-list tbody tr').length, 2);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondCourse.title));
+    click('#mycoursesfilter label');
+    andThen(function(){
+      assert.equal(find('.resultslist-list tbody tr').length, 1);
+      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
+    });
+  });
+});
+
 test('filters options', function(assert) {
   assert.expect(5);
   visit('/courses');
