@@ -13,6 +13,10 @@ export default Ember.Component.extend({
   debouncedFilter: null,
   debouncedSearchTerms: '',
   watchTerms: function(){
+    //send clear events immediatly
+    if(this.get('searchTerms').length === 0){
+      this.set('debouncedSearchTerms', this.get('searchTerms'));
+    }
     Ember.run.debounce(this, this.setDebouncedTerms, 500);
   }.observes('searchTerms'),
   setDebouncedTerms: function(){
@@ -21,12 +25,15 @@ export default Ember.Component.extend({
   searchForUsers: function(){
     var self = this;
     var searchTerms = this.get('searchTerms');
-    if(searchTerms.replace(/ /g,'').length < 3){
+    var noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
+    this.set('showMoreInputPrompt', false);
+    this.set('searchReturned', false);
+    this.set('results', []);
+    if(noWhiteSpaceTerm.length === 0){
+      return;
+    } else if(noWhiteSpaceTerm.length < 3){
       this.set('showMoreInputPrompt', true);
     } else {
-      this.set('showMoreInputPrompt', false);
-      this.set('searchReturned', false);
-      this.set('results', []);
       var userProxy = Ember.ObjectProxy.extend({
         currentlyActiveUsers: null,
         isActive: function(){
