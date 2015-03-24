@@ -73,7 +73,10 @@ var Session = DS.Model.extend({
     var requiredSet = [
       'title'
     ];
-    var requiredLength = ['offerings'];
+    var requiredLength = [];
+    if(!this.get('isIndependentLearning')){
+      requiredLength.pushObject('offerings');
+    }
     requiredSet.forEach(function(val){
       if(!self.get(val)){
         issues.push(val);
@@ -89,7 +92,8 @@ var Session = DS.Model.extend({
     return issues;
   }.property(
     'title',
-    'offerings.length'
+    'offerings.length',
+    'isIndependentLearning'
   ),
   optionalPublicationIssues: function(){
     var self = this;
@@ -110,7 +114,9 @@ var Session = DS.Model.extend({
   }.property(
     'topics.length',
     'objectives.length',
-    'meshDescriptors.length'
+    'meshDescriptors.length',
+    'offerings.length',
+    'isIndependentLearning'
   ),
   associatedLearnerGroups: function(){
     var deferred = Ember.RSVP.defer();

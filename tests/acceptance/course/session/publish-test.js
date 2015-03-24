@@ -16,6 +16,9 @@ module('Acceptance: Session - Publish', {
     server.create('course');
     server.create('offering');
     server.create('sessionType');
+    server.create('ilmSession', {
+      session: 4
+    });
     server.create('publishEvent', {
       administrator: 4136,
       sessions: [1, 2],
@@ -34,6 +37,10 @@ module('Acceptance: Session - Publish', {
     fixtures.draftSession = server.create('session', {
       course: 1,
       offerings: [1],
+    });
+    fixtures.ilmSession = server.create('session', {
+      course: 1,
+      ilmSessionFacet: 1
     });
   },
 
@@ -184,6 +191,17 @@ test('check unpublish published session', function(assert) {
 
     andThen(function(){
       assert.equal(getElementText(find('.button', menu)), getText('Not Published'));
+    });
+  });
+});
+
+test('check publish requirements for ilm session', function(assert) {
+  visit('/course/1/session/' + fixtures.ilmSession.id);
+  andThen(function() {
+    let menu = find('.session-publication-menu').eq(0);
+    click('.button', menu).then(function(){
+      assert.equal(getElementText(find('li:eq(0)', menu)), getText('Publish As-is'));
+      assert.equal(getElementText(find('li:eq(1)', menu)), getText('Review 3 Missing Items'));
     });
   });
 });
