@@ -21,7 +21,7 @@
         overflow: show;
         min-width: 220px;
     }
-    button[type=search] {
+    button[type=search], span[type=search] {
         @include position(absolute, 0);
         background-color: transparent;
         color: $base-link-color;
@@ -31,6 +31,12 @@
         img {
             opacity: .7;
         }
+    }
+    /* use inline-block displayed span instead of button for inset magnifying glass icon
+       to allow searches to work in Safari */
+    span[type=search] {
+      display: inline-block;
+      width: 20px;
     }
     button.close {
         @include position(absolute, 0 0 0 'auto');
