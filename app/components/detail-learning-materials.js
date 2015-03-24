@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  currentUser: Ember.inject.service(),
   store: Ember.inject.service(),
   subject: null,
   isCourse: false,
@@ -123,7 +124,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
             }
             var lm = self.get('store').createRecord('learning-material', {
               type: type,
-              owningUser: self.get('currentUser.content'),
+              owningUser: self.get('currentUser.model'),
               status: defaultStatus,
               userRole: roles.get('firstObject'),
             });

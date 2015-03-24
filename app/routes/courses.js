@@ -1,39 +1,42 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  currentUser: Ember.inject.service(),
   model: function(params) {
     var self = this;
     var defer = Ember.RSVP.defer();
 
     Ember.run.later(defer.resolve, function() {
       var resolve = this;
-      var schoolId = params.schoolId == null ? self.get('currentUser.primarySchool.id') : params.schoolId;
-      self.store.find('school', schoolId).then(function(school){
-        self.store.find('educational-year').then(function(years){
-          var year = null;
-          if(params.yearTitle != null){
-            year = years.find(function(year){
-              return parseInt(year.get('title')) === parseInt(params.yearTitle);
-            });
-          }
-          if(year == null){
-            year = years.sortBy('title').get('lastObject');
-          }
-          self.store.find('course', {
-            filters: {
-              owningSchool: school.get('id'),
-              year: year.get('title'),
-              deleted: false
-            },
-            limit: 500
-          }).then(function(courses){
-            self.get('currentUser.schools').then(function(schools){
-              resolve({
-                school: school,
-                schools: schools,
-                year: year,
-                years: years.sortBy('title'),
-                courses: courses
+      self.get('currentUser.model').then(function(currentUser){
+        var schoolId = params.schoolId == null ? currentUser.get('primarySchool.id') : params.schoolId;
+        self.store.find('school', schoolId).then(function(school){
+          self.store.find('educational-year').then(function(years){
+            var year = null;
+            if(params.yearTitle != null){
+              year = years.find(function(year){
+                return parseInt(year.get('title')) === parseInt(params.yearTitle);
+              });
+            }
+            if(year == null){
+              year = years.sortBy('title').get('lastObject');
+            }
+            self.store.find('course', {
+              filters: {
+                owningSchool: school.get('id'),
+                year: year.get('title'),
+                deleted: false
+              },
+              limit: 500
+            }).then(function(courses){
+              currentUser.get('schools').then(function(schools){
+                resolve({
+                  school: school,
+                  schools: schools,
+                  year: year,
+                  years: years.sortBy('title'),
+                  courses: courses
+                });
               });
             });
           });

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  currentUser: Ember.inject.service(),
   model: function(params) {
     var self = this;
     var defer = Ember.RSVP.defer();
