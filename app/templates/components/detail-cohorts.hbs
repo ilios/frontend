@@ -4,10 +4,20 @@
   </div>
 
   <div class='detail-actions'>
-    <button {{action 'showAvailableCohorts'}} class='add'>{{t 'general.addNew'}}</button>
+    {{#if isManaging}}
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'courses.cohortsManageTitle'}}</button>
+    {{/if}}
   </div>
   <div class='detail-content'>
-    {{#if isAvailalbeCohortsShowing}}
+    {{#if isManaging}}
+      <ul class='removable-list'>
+        {{#each cohort in cohorts}}
+          <li {{action 'remove' cohort}}>{{cohort.title}} {{fa-icon 'remove'}}</li>
+        {{/each}}
+      </ul>
       <div class='selectable-list'>
         <h5>{{t 'courses.availableCohorts'}}</h5>
         <ul>
@@ -25,24 +35,29 @@
           {{/each}}
         </ul>
       </div>
+    {{else}}
+      {{#if cohorts.length}}
+        <table>
+          <thead>
+            <tr>
+              <th class='text-left'>{{t 'general.program'}}</th>
+              <th class='text-center'>{{t 'general.cohort'}}</th>
+              <th class='text-center'>{{t 'general.level'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each cohort in cohorts}}
+            <tr>
+              <td class='text-left'>{{cohort.programYear.program.title}}</td>
+              <td class='text-center'>{{cohort.displayTitle}}</td>
+              <td class='text-center'>{{cohort.currentLevel}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        {{t 'courses.noCohorts'}}
+      {{/if}}
     {{/if}}
-    <table>
-      <thead>
-        <tr>
-          <th class='text-center'>{{t 'general.program'}}</th>
-          <th class='text-center'>{{t 'general.cohort'}}</th>
-          <th class='text-center'>{{t 'general.level'}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each cohort in cohorts}}
-        <tr>
-          <td class='text-left'>{{cohort.programYear.program.title}}</td>
-          <td class='text-center'>{{cohort.displayTitle}}</td>
-          <td class='text-center'>{{cohort.currentLevel}}</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
   </div>
 </section>
