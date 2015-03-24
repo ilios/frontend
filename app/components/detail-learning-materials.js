@@ -24,14 +24,25 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     addNewLearningMaterial: function(type){
       var self = this;
       if(type === 'file' || type === 'citation' || type === 'link'){
-        var lm = this.store.createRecord('learning-material', {
-          type: type,
-          owningUser: self.get('currentUser.content'),
-
+        this.get('learningMaterialStatuses').then(function(statuses){
+          self.get('learningMaterialUserRoles').then(function(roles){
+            //default the status to Final if that status exists
+            var defaultStatus = statuses.find(function(status){
+              return status.get('title') === 'Final';
+            });
+            if(!defaultStatus){
+              defaultStatus = statuses.get('firstObject');
+            }
+            var lm = self.store.createRecord('learning-material', {
+              type: type,
+              owningUser: self.get('currentUser.content'),
+              status: defaultStatus,
+              userRole: roles.get('firstObject'),
+            });
+            self.get('newLearningMaterials').addObject(lm);
+          });
         });
-        this.get('newLearningMaterials').addObject(lm);
       }
-
     },
     saveNewLearningMaterial: function(lm){
       var self = this;
