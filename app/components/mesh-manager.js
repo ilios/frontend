@@ -29,6 +29,9 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
         self.set('searchResults', results);
       });
     },
+    clear: function(){
+      this.set('searchResults', []);
+    },
     add: function(term){
       this.sendAction('add', term.get('content'));
     },

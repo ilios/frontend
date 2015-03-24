@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   actions: {
     clear: function() {
       this.set('value', '');
+      this.sendAction('clear');
     },
     search: function(){
       if(this.get('value').length === 0 || !this.get('liveSearch')){

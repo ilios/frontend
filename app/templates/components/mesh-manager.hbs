@@ -3,7 +3,7 @@
     <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
   {{/each}}
 </ul>
-{{search-box placeholder=placeholder liveSearch=false search='search'}}
+{{search-box placeholder=placeholder liveSearch=false search='search' clear='clear'}}
 {{#if searchResults.length}}
   <div class='selectable-list'>
     <ul class='mesh-search-results'>
