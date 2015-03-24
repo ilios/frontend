@@ -49,9 +49,7 @@ export default DS.Model.extend({
     return new Ember.RSVP.Promise(function(resolve) {
       group.get('parent').then(function(parent){
         if(parent == null){
-          group.store.find('user').then(function(users){
-            resolve(users);
-          });
+          resolve(false);
         } else {
           parent.get('users').then(function(parentUsers){
             var childUsers = parent.get('childUsers');

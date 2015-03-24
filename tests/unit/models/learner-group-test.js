@@ -128,3 +128,22 @@ test('list available users', function(assert) {
     });
   });
 });
+
+test('top level groups return false for the list of available users', function(assert) {
+  assert.expect(1);
+  var model = this.subject();
+  var store = model.store;
+  var newUsers = [];
+
+  Ember.run(function(){
+    for(var i = 0; i < 10; i++){
+      newUsers[i] = store.createRecord('user', {firstName: i});
+    }
+  });
+
+  Ember.run(function(){
+    model.get('availableUsers').then(function(users){
+      assert.ok(!users);
+    });
+  });
+});
