@@ -19,11 +19,25 @@ module('Acceptance: Course - Cohorts', {
     });
     server.create('programYear', {
       program: 1,
-      cohort: 1
+      cohort: 1,
+      objectives: [1]
     });
     server.create('programYear', {
       program: 1,
-      cohort: 2
+      cohort: 2,
+      objectives: [2]
+    });
+    fixtures.parentObjective1 = server.create('objective', {
+      programYears: [1],
+      children: [3],
+    });
+    fixtures.parentObjective2 = server.create('objective', {
+      programYears: [2],
+      children: [3],
+    });
+    fixtures.courseObjective = server.create('objective', {
+      courses: [1],
+      parents: [1,2]
     });
     fixtures.cohorts = [];
     fixtures.cohorts.pushObject(server.create('cohort', {
@@ -37,7 +51,8 @@ module('Acceptance: Course - Cohorts', {
     fixtures.course = server.create('course', {
       year: 2013,
       owningSchool: 1,
-      cohorts: [1]
+      cohorts: [1],
+      objectives: [3]
     });
   },
 
@@ -105,6 +120,26 @@ test('cancel cohort chages', function(assert) {
       andThen(function(){
         assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('program 0'));
         assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText(fixtures.cohorts[0].title));
+      });
+    });
+  });
+});
+
+test('removing a cohort remove course objectives parents linked to that cohort', function(assert) {
+  assert.expect(3);
+  visit(url);
+  andThen(function() {
+    var parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    assert.equal(parents.length, 2);
+    var container = find('');
+    click('.detail-cohorts .detail-actions .add');
+    andThen(function(){
+      click('.detail-cohorts .removable-list li:eq(0)');
+      click('.detail-cohorts button.bigadd');
+      andThen(function(){
+        var parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+        assert.equal(parents.length, 1);
+        assert.equal(getElementText(parents), getText(fixtures.parentObjective2.title));
       });
     });
   });

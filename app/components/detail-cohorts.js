@@ -56,6 +56,24 @@ export default Ember.Component.extend({
         });
         oldCohorts.forEach(function(cohort){
           cohort.get('courses').removeObject(course);
+          cohort.get('programYear').then(function(programYear){
+            course.get('objectives').then(function(objectives){
+              objectives.forEach(function(objective){
+                objective.get('parents').then(function(parents){
+                  parents.forEach(function(parent){
+                    parent.get('programYears').then(function(parentProgramYears){
+                      if(parentProgramYears.contains(programYear)){
+                        parents.removeObject(parent);
+                        parent.get('children').removeObject(objective);
+                        objective.save();
+                        parent.save();
+                      }
+                    });
+                  });
+                });
+              });
+            });
+          });
           cohort.save();
         });
         course.save().then(function(){
@@ -82,17 +100,3 @@ export default Ember.Component.extend({
     }
   }
 });
-
-
-// addCohort: function(cohort){
-//   var course = this.get('course');
-//   course.get('cohorts').then(function(cohorts){
-//     cohort.get('courses').then(function(courses){
-//       courses.addObject(course);
-//       cohorts.addObject(cohort);
-//       course.save();
-//       cohort.save();
-//     });
-//   });
-// }
-// }
