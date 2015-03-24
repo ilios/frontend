@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   group: null,
   bufferedTitle: Ember.computed.oneWay('group.title'),
   isDirty: false,
@@ -16,7 +17,7 @@ export default Ember.Component.extend({
   }.observes('group.courses').on('init'),
   replaceSearchResults: function(){
     var self = this;
-    this.store.find('user', {searchTerm: this.get('userSearchTerms')}).then(function(users){
+    this.get('store').find('user', {searchTerm: this.get('userSearchTerms')}).then(function(users){
       self.set('userSearchResults', users.sortBy('lastName', 'firstName'));
     });
   }.observes('userSearchTerms'),

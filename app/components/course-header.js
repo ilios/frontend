@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   course: null,
   editable: true,
   showCheckLink: true,
@@ -64,7 +65,7 @@ export default Ember.Component.extend({
       course.set('publishedAsTbd', true);
       course.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
-          publishEvent = self.store.createRecord('publish-event', {
+          publishEvent = self.get('store').createRecord('publish-event', {
             administrator: self.get('currentUser.content')
           });
           publishEvent.save().then(function(publishEvent){
@@ -82,7 +83,7 @@ export default Ember.Component.extend({
       course.set('publishedAsTbd', false);
       course.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
-          publishEvent = self.store.createRecord('publish-event', {
+          publishEvent = self.get('store').createRecord('publish-event', {
             administrator: self.get('currentUser.content')
           });
           publishEvent.save().then(function(publishEvent){

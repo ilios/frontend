@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   subject: null,
   classNames: ['detail-objectives'],
   isCourse: false,
@@ -87,7 +88,7 @@ export default Ember.Component.extend({
       }
     },
     addObjective: function(){
-      var objective = this.store.createRecord('objective');
+      var objective = this.get('store').createRecord('objective');
       this.get('newObjectives').addObject(objective);
     },
     saveNewObjective: function(newObjective){

@@ -2,13 +2,14 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   course: null,
   cohorts: Ember.computed.oneWay('course.cohorts'),
   isManaging: false,
   previousCohorts: [],
   classNames: ['detail-cohorts'],
   programs: function(){
-    return this.store.find('program');
+    return this.get('store').find('program');
   }.property(),
   filteredPrograms: function(){
     var self = this;

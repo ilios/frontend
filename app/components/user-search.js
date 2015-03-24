@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   results: [],
   searchTerms: null,
   searching: false,
@@ -41,7 +42,7 @@ export default Ember.Component.extend({
         }.property('content', 'currentlyActiveUsers.@each')
       });
       this.set('searching', true);
-      this.store.find('user', {q: searchTerms}).then(function(users){
+      this.get('store').find('user', {q: searchTerms}).then(function(users){
         var results = users.map(function(user){
           return userProxy.create({
             content: user,

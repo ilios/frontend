@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   group: null,
   bufferedTitle: Ember.computed.oneWay('group.title'),
   isDirty: false,
@@ -58,7 +59,7 @@ export default Ember.Component.extend({
         'parent': this.get('parent')
       };
       Ember.RSVP.hash(promises).then(function(hash){
-        var learnerGroup = self.store.createRecord('learner-group', {
+        var learnerGroup = self.get('store').createRecord('learner-group', {
           title: null,
           cohort: hash.cohort,
           parent: hash.parent,
