@@ -16,12 +16,6 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     return avail.sortBy('title');
   }.property('searchResults.@each', 'terms.@each'),
   actions: {
-    search: function(query){
-      var self = this;
-      this.store.find('mesh-descriptor', {q: query}).then(function(descriptors){
-        self.set('searchResults', descriptors);
-      });
-    },
     add: function(descriptor){
       var subject = this.get('subject');
       subject.get('meshDescriptors').addObject(descriptor);

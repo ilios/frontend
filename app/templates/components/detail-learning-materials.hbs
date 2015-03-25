@@ -1,71 +1,92 @@
 <section class='detail-block'>
   <div class='detail-title'>
     {{t 'general.learningMaterials'}} ({{materials.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'courses.learningMaterialManageTitle'}}
+      </span>
+    {{/if}}
   </div>
   <div class='detail-actions'>
-    {{#action-menu title=newButtonTitle icon='plus' classNames='blend-button'}}
-      <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
-      <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'learningMaterials.link'}}</li>
-      <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'learningMaterials.citation'}}</li>
-    {{/action-menu}}
+    {{#if isManaging}}
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      {{#action-menu title=newButtonTitle icon='plus' classNames='blend-button'}}
+        <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
+        <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'learningMaterials.link'}}</li>
+        <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'learningMaterials.citation'}}</li>
+      {{/action-menu}}
+    {{/if}}
   </div>
   <div class='detail-content'>
-   {{#if newLearningMaterials.length}}
-    {{#each lm in newLearningMaterials}}
-      {{new-learningmaterial
-        learningMaterial=lm
+    {{#liquid-if isManaging class="horizontal"}}
+      {{learningmaterial-manager
+        learningMaterial=managingMaterial
         learningMaterialStatuses=learningMaterialStatuses
-        learningMaterialUserRoles=learningMaterialUserRoles
-        save='saveNewLearningMaterial'
-        remove='removeNewLearningMaterial'}}
-    {{/each}}
-   {{/if}}
-   {{#if materials.length}}
-   <table>
-      <thead>
-        <tr>
-          <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
-          <th class='text-center'>{{t 'general.type'}}</th>
-          <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
-          <th class='text-center'>{{t 'general.required'}}</th>
-          <th class='text-left'>{{t 'learningMaterials.notes'}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each lm in materials}}
-          <tr>
-            <td class='text-left' colspan=2>
-              {{#if isCourse}}
-                {{#link-to 'courselearningmaterial' lm}}
-                  {{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}
-                {{/link-to}}
-              {{/if}}
-              {{#if isSession}}
-                {{#link-to 'sessionlearningmaterial' lm}}
-                  {{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}
-                {{/link-to}}
-              {{/if}}
-            </td>
-            <td class='text-center'>{{lm.learningMaterial.type}}</td>
-            <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
-            <td class='text-center'>
-    	        {{#if lm.required}}
-    	          <span class='add'>{{t 'general.yes'}}</span>
-    	        {{else}}
-    	          <span class='remove'>{{t 'general.no'}}</span>
-    	        {{/if}}
-  	        </td>
-            <td class='text-center'>
-    	        {{#if lm.publicNotes}}
-    	          <span class='add'>{{t 'general.yes'}}</span>
-    	        {{else}}
-    	          <span class='remove'>{{t 'general.no'}}</span>
-    	        {{/if}}
-  	        </td>
-          </tr>
+        isCourse=isCourse
+      }}
+    {{else}}
+      {{#if newLearningMaterials.length}}
+        {{#each lm in newLearningMaterials}}
+          {{new-learningmaterial
+            learningMaterial=lm
+            learningMaterialStatuses=learningMaterialStatuses
+            learningMaterialUserRoles=learningMaterialUserRoles
+            save='saveNewLearningMaterial'
+            remove='removeNewLearningMaterial'}}
         {{/each}}
-      </tbody>
-    </table>
-   {{/if}}
+      {{/if}}
+      {{#if materials.length}}
+        <table>
+          <thead>
+            <tr>
+              <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
+              <th class='text-center'>{{t 'general.type'}}</th>
+              <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
+              <th class='text-center'>{{t 'general.required'}}</th>
+              <th class='text-center'>{{t 'learningMaterials.notes'}}</th>
+              <th class='text-center'>{{t 'general.mesh'}}</th>
+              <th class='text-center'>{{t 'general.status'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each lm in materials}}
+              <tr>
+                <td class='text-left clickable link' colspan=2 {{action 'manage' lm}}>
+                  {{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}
+                </td>
+                <td class='text-center'>{{lm.learningMaterial.type}}</td>
+                <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+                <td class='text-center'>
+        	        {{#if lm.required}}
+        	          <span class='add'>{{t 'general.yes'}}</span>
+        	        {{else}}
+        	          <span class='remove'>{{t 'general.no'}}</span>
+        	        {{/if}}
+                </td>
+                <td class='text-center'>
+        	        {{#if lm.publicNotes}}
+        	          <span class='add'>{{t 'general.yes'}}</span>
+        	        {{else}}
+        	          <span class='remove'>{{t 'general.no'}}</span>
+        	        {{/if}}
+                </td>
+                <td class='text-center'>
+                  <ul>
+                    {{#each descriptor in lm.meshDescriptors}}
+                      <li>{{descriptor.title}}</li>
+                    {{/each}}
+                  </ul>
+                </td>
+                <td class='text-center'>
+                  {{lm.learningMaterial.status.title}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+    {{/liquid-if}}
   </div>
 </section>

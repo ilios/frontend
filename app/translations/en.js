@@ -208,6 +208,7 @@ var courses = {
   'clerkshipType': 'Clerkship Type',
   'notAClerkship': 'Not a Clerkship',
   'cohortsManageTitle': 'Manage Cohorts',
+  'learningMaterialManageTitle': 'Manage Learning Material',
 };
 translations.courses = courses;
 
@@ -241,6 +242,7 @@ var learningMaterials = {
   'owner': 'Owner',
   'contentAuthor': 'Content Author',
   'notes': 'Notes',
+  'showNotesToStudents': 'Show Notes to Students',
   'file': 'File',
   'link': 'Web Link',
   'citation': 'Citation',

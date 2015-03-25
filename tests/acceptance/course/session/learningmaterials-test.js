@@ -16,12 +16,22 @@ module('Acceptance: Session - Learning Materials', {
     server.create('educationalYear');
     server.create('course');
     server.create('sessionType');
-    fixtures.statuses = server.createList('learningMaterialStatus', 5);
+    fixtures.statuses = [];
+    fixtures.statuses.pushObject(server.create('learningMaterialStatus', {
+      learningMaterials: [1]
+    }));
+    fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 5));
     fixtures.roles = server.createList('learningMaterialUserRole', 3);
+    fixtures.meshDescriptors = [];
+    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
+      sessionLearningMaterials: [1],
+    }));
+    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 5));
     fixtures.learningMaterials = [];
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      type: 'file'
+      type: 'file',
+      status: 1
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
@@ -35,6 +45,7 @@ module('Acceptance: Session - Learning Materials', {
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
       learningMaterial: 1,
       session: 1,
+      meshDescriptors: [1]
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
       learningMaterial: 2,
@@ -74,6 +85,13 @@ test('list learning materials', function(assert) {
       assert.equal(getElementText(find('td:eq(2)', row)), getText(lm.originalAuthor));
       let required = sessionLm.required?'Yes':'No';
       assert.equal(getElementText(find('td:eq(3)', row)), getText(required));
+      let meshTerms = find('td:eq(5) li', row);
+      if('meshDescriptors' in sessionLm){
+        assert.equal(meshTerms.length, sessionLm.meshDescriptors.length);
+        for(let i = 0; i < sessionLm.meshDescriptors.length; i++){
+          assert.equal(getElementText(meshTerms.eq(i)), getText(fixtures.meshDescriptors[sessionLm.meshDescriptors[i] - 1].name));
+        }
+      }
     }
   });
 });
@@ -251,4 +269,96 @@ test('cancel new learning material', function(assert) {
 
   });
 
+});
+
+test('view learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[0].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[0].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[0].description));
+    });
+  });
+});
+
+test('edit learning material', function(assert) {
+  visit(url);
+  andThen(function() {
+    var material = fixtures.sessionLearningMaterials[0];
+    click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      click(find('.required input', container));
+      click(find('.publicnotes input', container));
+      click(find('.status .editable', container)).then(function(){
+        pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
+        click(find('.status .save', container));
+      });
+      andThen(function(){
+        let removableItems = find('.removable-list li', container);
+        assert.equal(removableItems.length, material.meshDescriptors.length);
+        for (let i = 0; i < material.meshDescriptors.length; i++){
+          assert.equal(getElementText(removableItems.eq(i)),getText(fixtures.meshDescriptors[material.meshDescriptors[i] - 1].name));
+        }
+
+        let searchBox = find('.search-box', container);
+        assert.equal(searchBox.length, 1);
+        searchBox = searchBox.eq(0);
+        let searchBoxInput = find('input', searchBox);
+        assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
+        fillIn(searchBoxInput, 'descriptor');
+        click('button', searchBox);
+        andThen(function(){
+          let searchResults = find('.mesh-search-results li', container);
+          assert.equal(searchResults.length, fixtures.meshDescriptors.length);
+          click('.removable-list li:eq(0)', container);
+          click(searchResults[1]);
+          click('.detail-learning-materials .bigadd');
+        });
+        andThen(function(){
+          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('No'));
+          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'));
+          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(5)')), getText(fixtures.meshDescriptors[1].name));
+          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
+        });
+      });
+    });
+  });
+});
+
+test('cancel editing learning material', function(assert) {
+  visit(url);
+  andThen(function() {
+    var material = fixtures.sessionLearningMaterials[0];
+    click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      click(find('.required input', container));
+      click(find('.publicnotes input', container));
+      click(find('.status .editable', container)).then(function(){
+        pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
+        click(find('.status .save', container));
+      });
+      let removableItems = find('.removable-list li', container);
+      let searchBox = find('.search-box', container).eq(0);
+      let searchBoxInput = find('input', searchBox);
+      fillIn(searchBoxInput, 'descriptor');
+      click('button', searchBox);
+      andThen(function(){
+        let searchResults = find('.mesh-search-results li', container);
+        click('.removable-list li:eq(0)', container);
+        click(searchResults[1]);
+        click('.detail-learning-materials .bigcancel');
+      });
+      andThen(function(){
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('Yes'));
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(5)')), getText(fixtures.meshDescriptors[0].name));
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[0].title));
+      });
+    });
+  });
 });

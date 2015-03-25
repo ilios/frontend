@@ -1,0 +1,62 @@
+<div class="inline-label-data-block">
+  <label>{{t "general.required"}}:</label>
+  <div class='required'>{{editable-boolean model=learningMaterial property='required'}}</div>
+</div><br />
+<div class="inline-label-data-block">
+  <label>{{t "learningMaterials.showNotesToStudents"}}:</label>
+  <div class='publicnotes'>{{editable-boolean model=learningMaterial property='publicNotes'}}</div>
+</div><br />
+<div class="inline-label-data-block">
+  <label>{{t "learningMaterials.showNotesToStudents"}}:</label>
+  <div class='notes'>{{editable-textarea model=learningMaterial property='notes'}}</div>
+</div><br />
+<label>{{t 'learningMaterials.displayName'}}
+  <span class='displayname'>{{learningMaterial.learningMaterial.title}}</span>
+</label> <br />
+<label>{{t 'learningMaterials.owner'}}
+  <span class='owninguser'>{{learningMaterial.learningMaterial.owningUser.fullName}}</span>
+</label> <br />
+<label>{{t 'learningMaterials.contentAuthor'}}
+  <span class='originalauthor'>{{learningMaterial.learningMaterial.originalAuthor}}</span>
+</label> <br />
+<div class="inline-label-data-block">
+  <label>{{t "learningMaterials.status"}}:</label>
+  <div class='status'>
+    {{inplace-select
+      value=learningMaterial.learningMaterial.status.id
+      options=statusOptions
+      save='changeStatus'
+    }}
+  </div>
+</div><br />
+<label>{{t 'learningMaterials.userRole'}}
+  <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
+</label> <br />
+<label>{{t 'general.description'}}
+  <span class='description'>{{learningMaterial.learningMaterial.description}}</span>
+</label> <br />
+
+{{#if isFile}}
+  <label>{{t 'learningMaterials.copyrightPermission'}}
+    <span class='copyrightpermission'>{{learningMaterial.learningMaterial.copyrightPermission}}</span>
+  </label> <br />
+  {{#unless learningMaterial.copyrightPermission}}
+    <label>{{t 'learningMaterials.copyrightRationale'}}
+      <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
+    </label> <br />
+  {{/unless}}
+{{/if}}
+
+{{#if isCitation}}
+  <label>{{t 'learningMaterials.citation'}}
+    <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
+  </label>
+{{/if}}
+
+{{#if isLink}}
+  <label>{{t 'learningMaterials.link'}}
+    <span class='link'>{{learningMaterial.learningMaterial.link}}</span>
+  </label> <br />
+{{/if}}
+<label>{{t 'general.mesh'}}</label>
+{{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}

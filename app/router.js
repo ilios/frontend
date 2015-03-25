@@ -37,10 +37,7 @@ Router.map(function() {
     this.route('sessionpublicationcheck', {path: '/session/:session_id/publicationcheck'});
   });
   this.route('print-course', { path: 'course/:course_id/print'});
-  this.route("courselearningmaterial", {path: 'courselearningmaterial/:course_learning_material_id'});
   this.route('course-publicationcheck', { path: 'course/:course_id/publicationcheck'});
-
-  this.route("sessionlearningmaterial", {path: 'sessionlearningmaterial/:session_learning_material_id'});
 
   this.route('instructorgroups');
   this.route('instructorgroup', { path: 'instructorgroup/:instructor_group_id'});
