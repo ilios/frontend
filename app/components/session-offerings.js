@@ -10,6 +10,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   session: null,
   placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
   offerings: Ember.computed.oneWay('session.offerings'),
+  newButtonTitleTranslation: 'general.add',
   offeringBlocks: function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){

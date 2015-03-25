@@ -5,7 +5,9 @@ import {
 
 moduleForComponent('session-offerings', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: [
+    'component:action-menu',
+  ]
 });
 
 test('it renders', function(assert) {

@@ -14,6 +14,7 @@ moduleForComponent('session-details', {
     'component:detail-topics',
     'component:detail-mesh',
     'component:session-offerings',
+    'component:action-menu',
   ]
 });
 
