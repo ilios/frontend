@@ -129,3 +129,30 @@ test('remove clerkship type', function(assert) {
     });
   });
 });
+
+test('open and close details', function(assert) {
+  var course = server.create('course', {
+    year: 2013,
+    owningSchool: 1
+  });
+  visit(url);
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.index');
+    var details = find('#course-details .detail-view-details');
+    assert.equal(find('.detail-title', details).length, 1);
+    click('.detailCollapsedControl', details).then(function(){
+      assert.equal(find('.detail-title', details).length, 7);
+      assert.equal(currentURL(), '/course/1?details=true');
+    });
+  });
+
+  andThen(function() {
+    var details = find('#course-details .detail-view-details');
+    assert.equal(find('.detail-title', details).length, 7);
+    click('.detailCollapsedControl', details).then(function(){
+      assert.equal(find('.detail-title', details).length, 1);
+      assert.equal(currentURL(), '/course/1');
+    });
+  });
+});
