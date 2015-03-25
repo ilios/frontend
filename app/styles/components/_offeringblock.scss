@@ -1,47 +1,57 @@
 .offering-block {
-     font-size: .9em;
   @include span-columns(12 of 12);
-  .offering-block-date{
+  font-size: .9em;
+
+  .offering-block-date {
     @include span-columns(12 of 12);
     @include omega();
-    .offering-block-date-dayofweek,  {
-      width: 100%;
+
+    .offering-block-date-dayofweek {
+      color: $ilios_orange;
       display: block;
-        color: $ilios_orange;
-        font-size: $base-font-size * 1.2;
-        font-weight: bold;
+      font-size: $base-font-size * 1.2;
+      font-weight: bold;
+      width: 100%;
     }
-      .offering-block-date-dayofmonth{
-          color: $medium-grey;
-         
-         
-      
+
+    .offering-block-date-dayofmonth {
+      color: $medium-grey;
       }
-  }
+    }
+
   .offering-block-time {
-    margin-top: 1em;
-      margin-bottom: 2em;
     @include span-columns(12 of 12);
     @include fill-parent();
+    margin-bottom: 2em;
+    margin-top: 1em;
+
     .offering-block-time-time {
       @include span-columns(3 of 12);
-
-      .offering-block-time-time-starttime, .offering-block-time-time-endtime {
-        display: block;
-           color: $medium-grey;
-          
-      }
     }
+
+    .offering-block-time-time-starttime,
+    .offering-block-time-time-endtime {
+      color: $medium-grey;
+      display: block;
+      font-weight: bold;
+    }
+
+    .offering-block-time-time-starttime-label,
+    .offering-block-time-time-endtime-label {
+      font-weight: normal;
+    }
+
     .offering-block-time-offerings {
-        
+
       @include span-columns(8 of 12);
       @include shift(1);
-      .offering-block-time-offering {
-        .offering-detail-box{
-           padding: .8em;
-          @include span-columns(2 of 8);
-          @include omega(4n);
-        }
+    }
+
+    .offering-block-time-offering {
+      .offering-detail-box {
+        padding: .8em;
+        @include span-columns(2 of 8);
+        @include omega(4n);
       }
     }
 
@@ -49,14 +59,16 @@
       @include span-columns(12 of 12);
       @include omega();
     }
+
     .multiday-offering-block-time-offerings {
       @include span-columns(8 of 12);
       @include shift(4);
-      .offering-block-time-offering {
-        .offering-detail-box{
-          @include span-columns(2 of 8);
-          @include omega(4n);
-        }
+    }
+
+    .offering-block-time-offering {
+      .offering-detail-box{
+        @include span-columns(2 of 8);
+        @include omega(4n);
       }
     }
   }

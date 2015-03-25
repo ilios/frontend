@@ -8,8 +8,8 @@
       {{#unless offeringTimeBlock.isMultiDay}}
         <div class= 'offering-block-time'>
           <div class= 'offering-block-time-time'>
-            <span class='offering-block-time-time-starttime'>{{t 'general.starts'}}: {{offeringTimeBlock.startTime}}</span>
-            <span class='offering-block-time-time-endtime'>{{t 'general.ends'}}: {{offeringTimeBlock.endTime}}</span>
+            <span class='offering-block-time-time-starttime'><label class='offering-block-time-time-starttime-label'>{{t 'general.starts'}}:</label> {{offeringTimeBlock.startTime}}</span>
+            <span class='offering-block-time-time-endtime'><label class='offering-block-time-time-endtime-label'>{{t 'general.ends'}}:</label> {{offeringTimeBlock.endTime}}</span>
           </div>
           <div class='offering-block-time-offerings'>
             {{#each offering in offeringTimeBlock.sortedOfferings}}
