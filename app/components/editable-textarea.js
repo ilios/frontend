@@ -6,11 +6,11 @@ export default Ember.Component.extend(EditInPlaceMixin, {
     if(this.get('content')){
       return this.get('content');
     }
+    
     return Ember.I18n.t('general.clickToEdit');
   }.property('content'),
   stripHtml: false,
-  length: 200,
-  shortText: function(){
+  displayText: function(){
     var text = this.get('text');
     if(text === undefined || text == null){
       return '';
@@ -18,9 +18,6 @@ export default Ember.Component.extend(EditInPlaceMixin, {
     if(this.get('stripHtml')){
       text = text.replace(/(<([^>]+)>)/ig,"");
     }
-    if(this.get('length')){
-      text = text.substr(0,this.get('length'));
-    }
     return text;
-  }.property('text')
+  }.property('text', 'stripHtml')
 });
