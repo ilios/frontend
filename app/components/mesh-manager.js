@@ -8,6 +8,7 @@ var ProxiedDescriptors = Ember.ObjectProxy.extend({
   }.property('content', 'terms.@each')
 });
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  store: Ember.inject.service(),
   layout: layout,
   classNames: ['mesh-manager'],
   placeholderTranslation: 'courses.meshSearchPlaceholder',
@@ -24,7 +25,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     search: function(query){
       var self = this;
       var terms = this.get('terms');
-      this.store.find('mesh-descriptor', {q: query}).then(function(descriptors){
+      this.get('store').find('mesh-descriptor', {q: query}).then(function(descriptors){
         let results = descriptors.map(function(descriptor){
           return ProxiedDescriptors.create({
             content: descriptor,

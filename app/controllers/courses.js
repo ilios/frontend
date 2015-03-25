@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
+  currentUser: Ember.inject.service(),
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',
@@ -29,7 +30,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     var title = this.get('debouncedFilter');
     var filterMyCourses = this.get('userCoursesOnly');
     var exp = new RegExp(title, 'gi');
-    var currentUser = this.get('currentUser');
+    var currentUser = this.get('currentUser.model');
     return this.get('content').filter(function(course) {
       if(title == null || course.get('title').match(exp)){
         if(filterMyCourses){
@@ -40,7 +41,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
 
       return false;
     }).sortBy('title');
-  }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.allRelatedCourses.@each'),
+  }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.model.allRelatedCourses.@each'),
   actions: {
     editCourse: function(course){
       this.transitionToRoute('course', course);

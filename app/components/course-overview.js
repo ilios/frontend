@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
   editable: false,
   course: null,
   directorsSort: ['lastName', 'firstName'],
@@ -11,7 +12,7 @@ export default Ember.Component.extend({
   classNames: ['course-overview'],
   clerkshipTypeOptions: function(){
     var deferred = Ember.RSVP.defer();
-    this.store.find('course-clerkship-type').then(function(clerkshipTypes){
+    this.get('store').find('course-clerkship-type').then(function(clerkshipTypes){
       deferred.resolve(clerkshipTypes.sortBy('title'));
     });
     return DS.PromiseArray.create({
@@ -36,7 +37,7 @@ export default Ember.Component.extend({
     changeClerkshipType: function(newId){
       var course = this.get('course');
       if(newId){
-        this.store.find('course-clerkship-type', newId).then(function(type){
+        this.get('store').find('course-clerkship-type', newId).then(function(type){
           course.set('clerkshipType', type);
           type.get('courses').then(function(courses){
             courses.addObject(course);

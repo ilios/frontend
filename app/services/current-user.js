@@ -1,8 +1,23 @@
 import Ember from 'ember';
+import DS from 'ember-data';
+import config from 'ilios/config/environment';
+import ajax from 'ic-ajax';
 
-export default Ember.ObjectProxy.extend({
-  strore: null,
-  currentUser: Ember.computed.alias('content'),
+export default Ember.Service.extend({
+  store: Ember.inject.service(),
+  model: function(){
+    var deferred = Ember.RSVP.defer();
+    var self = this;
+    var url = config.adapterHost + '/' + config.adapterNamespace + '/currentsession';
+    ajax(url).then(function(data) {
+      self.get('store').find('user', data.currentsession.userId).then(function(user){
+        deferred.resolve(user);
+      });
+    });
+    return DS.PromiseObject.create({
+      promise: deferred.promise
+    });
+  }.property(),
   currentSchoolBuffer: null,
   currentSchool: function(key, value) {
     if (arguments.length > 1) {
@@ -16,12 +31,12 @@ export default Ember.ObjectProxy.extend({
         resolve(buffer);
       }
 
-      resolve(self.get('primarySchool'));
+      resolve(self.get('model.primarySchool'));
     });
-  }.property('currentUser'),
+  }.property('model.primarySchool'),
   canChangeSchool: function(){
-    return this.get('schools.length') > 1;
-  }.property('schools.@each'),
+    return this.get('currentUsr.schools.length') > 1;
+  }.property('currentUsr.schools.@each'),
   availableCohortsObserver: function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){
@@ -29,7 +44,7 @@ export default Ember.ObjectProxy.extend({
         self.set('currentCohort', null);
       }
     });
-  }.observes('availableCohorts'),
+  }.observes('availableCohorts.@each'),
   currentCohort: null,
   availableCohorts: function(){
     var self = this;

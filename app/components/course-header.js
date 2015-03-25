@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
   course: null,
   editable: true,
   showCheckLink: true,
@@ -64,8 +66,8 @@ export default Ember.Component.extend({
       course.set('publishedAsTbd', true);
       course.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
-          publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser.content')
+          publishEvent = self.get('store').createRecord('publish-event', {
+            administrator: self.get('currentUser.model')
           });
           publishEvent.save().then(function(publishEvent){
             course.set('publishEvent', publishEvent);
@@ -82,8 +84,8 @@ export default Ember.Component.extend({
       course.set('publishedAsTbd', false);
       course.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
-          publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser.content')
+          publishEvent = self.get('store').createRecord('publish-event', {
+              administrator: self.get('currentUser.model')
           });
           publishEvent.save().then(function(publishEvent){
             course.set('publishEvent', publishEvent);

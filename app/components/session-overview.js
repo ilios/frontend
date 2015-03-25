@@ -3,6 +3,8 @@ import Ember from 'ember';
 
 
 export default Ember.Component.extend({
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
   session: null,
   editable: true,
   classNames: ['session-overview'],
@@ -70,8 +72,8 @@ export default Ember.Component.extend({
       session.set('publishedAsTbd', true);
       session.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
-          publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser.content')
+          publishEvent = self.get('store').createRecord('publish-event', {
+            administrator: self.get('currentUser.model')
           });
           publishEvent.save().then(function(publishEvent){
             session.set('publishEvent', publishEvent);
@@ -88,8 +90,8 @@ export default Ember.Component.extend({
       session.set('publishedAsTbd', false);
       session.get('publishEvent').then(function(publishEvent){
         if(!publishEvent){
-          publishEvent = self.store.createRecord('publish-event', {
-            administrator: self.get('currentUser.content')
+          publishEvent = self.get('store').createRecord('publish-event', {
+            administrator: self.get('currentUser.model')
           });
           publishEvent.save().then(function(publishEvent){
             session.set('publishEvent', publishEvent);
@@ -110,7 +112,7 @@ export default Ember.Component.extend({
           ilmSession.save();
         });
       } else {
-        var ilmSession= this.store.createRecord('ilm-session', {
+        var ilmSession= this.get('store').createRecord('ilm-session', {
           session: session,
           hours: 1,
           dueDate: moment().add(6, 'weeks').toDate()

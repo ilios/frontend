@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  store: Ember.inject.service(),
   placeholderTranslation: 'courses.meshSearchPlaceholder',
   subject: null,
   terms: Ember.computed.oneWay('subject.meshDescriptors'),

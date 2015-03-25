@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
   subject: null,
   isCourse: false,
   isManaging: Ember.computed.notEmpty('managingMaterial'),
@@ -14,13 +16,13 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   learningMaterialStatuses: function(){
     var self = this;
     return DS.PromiseArray.create({
-      promise: self.store.find('learning-material-status')
+      promise: self.get('store').find('learning-material-status')
     });
   }.property(),
   learningMaterialUserRoles: function(){
     var self = this;
     return DS.PromiseArray.create({
-      promise: self.store.find('learning-material-user-role')
+      promise: self.get('store').find('learning-material-user-role')
     });
   }.property(),
   actions: {
@@ -120,9 +122,9 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
             if(!defaultStatus){
               defaultStatus = statuses.get('firstObject');
             }
-            var lm = self.store.createRecord('learning-material', {
+            var lm = self.get('store').createRecord('learning-material', {
               type: type,
-              owningUser: self.get('currentUser.content'),
+              owningUser: self.get('currentUser.model'),
               status: defaultStatus,
               userRole: roles.get('firstObject'),
             });
@@ -137,14 +139,14 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       var lmCollectionType;
       self.get('newLearningMaterials').removeObject(lm);
       if(this.get('isCourse')){
-        subjectLm = this.store.createRecord('course-learning-material', {
+        subjectLm = this.get('store').createRecord('course-learning-material', {
           learningMaterial: lm,
           course: this.get('subject')
         });
         lmCollectionType = 'courseLearningMaterials';
       }
       if(this.get('isSession')){
-        subjectLm = this.store.createRecord('session-learning-material', {
+        subjectLm = this.get('store').createRecord('session-learning-material', {
           learningMaterial: lm,
           session: this.get('subject')
         });

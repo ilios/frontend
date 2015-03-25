@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  currentUser: Ember.inject.service(),
   schoolTitle: '',
   schoolTitleObserver: function(){
-    var self = this;    
+    var self = this;
     var currentUser = this.get('currentUser');
     if(currentUser){
       currentUser.get('currentSchool').then(function(school){

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  store: Ember.inject.service(),
   filter: '',
   classNames: ['detail-view', 'sessions-list'],
   tagName: 'div',
@@ -54,7 +55,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   }.observes('course', 'course.owningSchool', 'course.owningSchool.sessionTypes.@each').on('init'),
   actions: {
     addNewSession: function(){
-      var session = this.store.createRecord('session');
+      var session = this.get('store').createRecord('session');
       this.get('newSessions').addObject(session);
     },
     saveNewSession: function(newSession){
