@@ -1,15 +1,19 @@
 .publication-menu {
   .button, .button:hover{
     background-color: white;
+      border: 1px solid transparent
   }
   &.published button{
     color: $published-green;
+      border: 1px solid $published-green;
   }
   &.notpublished button{
     color: $notpublished-amber;
+      border: 1px solid $notpublished-amber;
   }
   &.scheduled button{
     color: $scheduled-brown;
+      border: 1px solid $scheduled-brown;
   }
   ul.dropdown-menu li {
     &.danger:hover {
