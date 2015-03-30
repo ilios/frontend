@@ -4,8 +4,10 @@
   </div>
 
   <div class='detail-actions'>
-    <button class='add'>{{t 'general.addNew'}}</button>
-    <button class='add'>{{t 'sessions.openSmallGroupGenerator'}}</button>
+    {{#action-menu title=newButtonTitle icon='plus' classNames='blend-button right-edge'}}
+      <li>{{t 'general.addNew'}}</li>
+      <li>{{t 'sessions.openSmallGroupGenerator'}}</li>
+    {{/action-menu}}
   </div>
   <div class='detail-content'>
     {{#if offerings.length}}
