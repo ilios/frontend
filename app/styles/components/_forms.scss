@@ -1,9 +1,9 @@
 .form-container {
   @include outer-container;
-  //@include span-columns(10);
   
-  .form-column-full {
+  .form-column-whole {
     @include span-columns(10 of 10);
+    background-color: orange;
     
     .form-label {
       @include span-columns(3 of 10);
@@ -15,7 +15,7 @@
 
   }
 
-  .form-column-half-left, .form-column-half-right {
+  .form-column-half-1, .form-column-half-2 {
     @include span-columns(5 of 10);
 
     .form-label {
@@ -29,74 +29,60 @@
     .form-data-checkbox {
       @include span-columns(1 of 5);
     }
-    
 
   }
 
-  .form-column-half-left {
+  .form-column-quarter {
+    @include span-columns(2 of 10);
+
+    .form-label, .form-data {
+      @include span-columns(1 of 2);
+    }
+
+  }
+
+  .form-column-quarter-1 {
+    @include span-columns(4 of 10);  
+    background-color: yellow;
+
+    .form-label {
+      @include span-columns(3 of 4);
+    }
+  }
+
+  .form-column-quarter-2 {
+    background-color: lightgreen;
+  }
+
+  .form-column-quarter-3 {
+    background-color: lightblue;
+  }
+
+  .form-column-quarter-4 {
+    background-color: lightorange;
+  }    
+
+  .form-column-half-1 {
     background-color: pink;  
   }
 
-  .form-column-half-right {
+  .form-column-half-2 {
     background-color: green;
     @include omega();
   }
-  
-  /*.form-column-third { 
-    @include span-columns(4 of 12);
-  }*/
-
 }
 
 /* put the universal (non parent-dependent) styles below here */
-  .form-label {
-    text-align: right;
-    margin-bottom: .6em;
-  }
-
-  .form-data {
-    text-align: left;
-  }
-
-/*
-  
-
-  
-
-  .form-column {
-    display: inline-block;
-    //@include omega();
-  }
-
-  .form-input-row {
-    margin-bottom: .6em;
-    display: block;
-  }
-
-  
-
-
-  .form-data-text {
-    @include span-columns(4 of 12);
-  }
-
-  .form-data-select {
-    @include span-columns(9 of 12);
-  }
-
-  .form-data-submit {
-    @include span-columns(4 of 12);
-  }
-
-  .form-data {
-    text-align: left;
-    display: inline-block;
-  }
-
+.form-label {
+  text-align: right;
+  margin-bottom: .6em;
 }
 
-*/
+.form-data {
+  text-align: left;
+}
 
-/*.form-column-left, .form-column-right {
-  @include span-columns(6);
-}*/
+.slug {
+  color: #009ccc;
+}
+

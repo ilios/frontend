@@ -68,6 +68,7 @@ var general = {
   'dateTime': 'Date/Time',
   'location': 'Location',
   'instructors': 'Instructors',
+  'other': 'Other',
 };
 translations.general = general;
 
