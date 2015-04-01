@@ -1,13 +1,16 @@
-<section class='newsession'>
+<section class='newsession form-container'>
   <div class="newsession-title">{{t 'sessions.new'}}</div>
   <div class="detail-content">
-    <label class="inline-label-data-block">
-      {{t 'general.title'}}: 
-      {{input value=session.title placeholder=placeholder}}
-    </label>
-    <div class="inline-label-data-block">
-      <label>{{t "sessions.type"}}:
-        {{#if sortedSessionTypes}}
+    <!-- <div class="form-column-wide form-column"> -->
+      <label class="form-column form-column-full">
+        <div class="form-label">{{t 'general.title'}}:</div> 
+        <div class="form-data form-data-text form-input-row">{{input value=session.title placeholder=placeholder}}</div>
+      </label>
+    
+      <label class="form-column form-column-full">
+        <div class="form-label">{{t "sessions.type"}}:</div>
+        <div class="form-data form-data-select form-input-row">
+          {{#if sortedSessionTypes}}
           {{view "select"
             content=sortedSessionTypes
             value=selectedSessionTypeId
@@ -19,10 +22,29 @@
             <option selected>{{t 'sessions.loadingSessionTypes'}}</option>
           </select>
         {{/if}}
+        </div>
       </label>
-    </div>
-    <br />
-    <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-    <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
-</div>
+    <!-- <div class="form-input-row"> -->
+        <label class="form-column-half-left">
+          <div class="form-label">{{t 'sessions.specialAttireRequired'}}:</div>
+          <div class="form-data-checkbox">{{input type='checkbox' checked=isPropertyChecked}}</div>
+        </label>
+        <label class="form-column-half-right">
+          <div class="form-label">{{t 'sessions.specialEquipmentRequired'}}:</div>
+          <div class="form-data-checkbox">{{input type='checkbox' checked=isPropertyChecked}}</div>
+        </label>
+      <!-- </div> --> <!-- //form-input-row -->
+    <!-- </div> --><!-- //form-column-wide -->
+    <!-- start the columns that split left/right -->
+    <!-- <div class="form-column-left form-column"> -->
+     <!-- <div class="form-input-row"> -->
+      <label class="form-column-half-left">
+        <div class="form-label"></div>
+        <div class="form-data-submit">
+          <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+          <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
+        </div>
+      </label>
+    <!-- </div> --><!-- //form-input-row -->
+  </div> <!-- //detail-content -->
 </section>

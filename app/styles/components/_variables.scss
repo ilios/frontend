@@ -37,7 +37,9 @@ $ilios-publish-color: $ilios-green;
 $ilios-remove-color: #aa443e;
 $remove-background-color: #f1dedd;
 
-$visual-grid: false;
+$visual-grid: true;
+$visual-grid-index: front;
+$visual-grid-color: lightblue;
 
 $publish-button-color: $ilios-green;
 

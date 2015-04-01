@@ -1,0 +1,102 @@
+.form-container {
+  @include outer-container;
+  //@include span-columns(10);
+  
+  .form-column-full {
+    @include span-columns(10 of 10);
+    
+    .form-label {
+      @include span-columns(3 of 10);
+    } 
+
+    .form-data {
+      @include span-columns(7 of 10);
+    }
+
+  }
+
+  .form-column-half-left, .form-column-half-right {
+    @include span-columns(5 of 10);
+
+    .form-label {
+      @include span-columns(3 of 5);
+    }
+
+    .form-data {
+      @include span-columns(2 of 5);
+    }
+    
+    .form-data-checkbox {
+      @include span-columns(1 of 5);
+    }
+    
+
+  }
+
+  .form-column-half-left {
+    background-color: pink;  
+  }
+
+  .form-column-half-right {
+    background-color: green;
+    @include omega();
+  }
+  
+  /*.form-column-third { 
+    @include span-columns(4 of 12);
+  }*/
+
+}
+
+/* put the universal (non parent-dependent) styles below here */
+  .form-label {
+    text-align: right;
+    margin-bottom: .6em;
+  }
+
+  .form-data {
+    text-align: left;
+  }
+
+/*
+  
+
+  
+
+  .form-column {
+    display: inline-block;
+    //@include omega();
+  }
+
+  .form-input-row {
+    margin-bottom: .6em;
+    display: block;
+  }
+
+  
+
+
+  .form-data-text {
+    @include span-columns(4 of 12);
+  }
+
+  .form-data-select {
+    @include span-columns(9 of 12);
+  }
+
+  .form-data-submit {
+    @include span-columns(4 of 12);
+  }
+
+  .form-data {
+    text-align: left;
+    display: inline-block;
+  }
+
+}
+
+*/
+
+/*.form-column-left, .form-column-right {
+  @include span-columns(6);
+}*/
