@@ -1,12 +1,12 @@
 <section class='newsession form-container'>
   <div class="newsession-title">{{t 'sessions.new'}}</div>
   <div class="detail-content">
-      <label class="form-column form-column-whole">
+      <label class="form-column form-column-100">
         <div class="form-label">{{t 'general.title'}}:</div> 
         <div class="form-data form-data-text form-input-row">{{input value=session.title placeholder=placeholder}}</div>
       </label>
     
-      <label class="form-column form-column-whole">
+      <label class="form-column form-column-100">
         <div class="form-label">{{t "sessions.type"}}:</div>
         <div class="form-data form-data-select form-input-row">
           {{#if sortedSessionTypes}}
@@ -23,46 +23,34 @@
         {{/if}}
         </div>
       </label>
-        <label class="form-column-half-1">
+        <label class="form-column-50-1">
           <div class="form-label">{{t 'sessions.specialAttireRequired'}}:</div>
           <div class="form-data-checkbox">{{input type='checkbox' checked=isPropertyChecked}}</div>
         </label>
-        <label class="form-column-half-2">
+        <label class="form-column-50-2">
           <div class="form-label">{{t 'sessions.specialEquipmentRequired'}}:</div>
           <div class="form-data-checkbox">{{input type='checkbox' checked=isPropertyChecked}}</div>
         </label>
-        <label class="form-column-quarter-1 form-column-quarter">
+        <label class="form-column-33-1 form-column-33">
           <div class="form-label">{{t 'sessions.independentLearning'}}:</div>
           <div class="form-data-checkbox">{{input type='checkbox' checked=isPropertyChecked}}</div>
         </label>
-        <label class="form-column-quarter-2 form-column-quarter">
+        <label class="form-column-33-2 form-column-33">
           <div class="form-label">{{t 'sessions.hours'}}:</div>
-          <div class="form-data"><span class="slug">1</span></div>
+          <div class="form-data-numeric"><span class="slug">1</span></div>
         </label>
-        <label class="form-column-quarter-3 form-column-quarter">
+        <label class="form-column-33-3 form-column-33">
           <div class="form-label">{{t 'sessions.dueBy'}}:</div>
-          <div class="form-data"><span class="slug">mm/dd/yyyy</span></div>
+          <div class="form-data-date"><span class="slug">mm/dd/yyyy</span></div>
         </label>
-     <!-- <label class="form-column-quarter-4 form-column-quarter">
-        <div class="form-label">{{t 'general.other'}}:</div>
-        <div class="form-data"><span class="slug">N/A</span></div>
-     </label> -->
 
-        <label class="form-column form-column-whole">
+        <label class="form-column form-column-100">
           <div class="form-label">{{t 'general.description'}}:</div> 
           <div class="form-data form-data-text form-input-row"><span class="slug">Begin typing to enter description...</span></div>
         </label>
-     
-        <label class="form-column-half-1">
-          <div class="form-label"></div>
-          <div class="form-data-submit">
-            <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-            <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
-          </div>
-        </label>
-        <label class="form-column-half-2">
-          <div class="form-label"></div>
-          <div class="form-data-submit">
+
+        <label class="form-column-100 form-data-submit">
+          <div>
             <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
             <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
           </div>

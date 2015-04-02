@@ -1,9 +1,14 @@
+/* In order to enforce table-like alignment using divs, from */
+
+
+
 .form-container {
   @include outer-container;
   
-  .form-column-whole {
+  /* set the styling for the 100% width column */
+  .form-column-100 {
     @include span-columns(10 of 10);
-    background-color: orange;
+    //background-color: orange;
     
     .form-label {
       @include span-columns(3 of 10);
@@ -12,10 +17,15 @@
     .form-data {
       @include span-columns(7 of 10);
     }
+    /* handle a the submit button alignment for a  100%-wide 1-column form or 50%-wide 2 column form */
+    &.form-data-submit {
+      @include shift(7);
+    }
 
   }
 
-  .form-column-half-1, .form-column-half-2 {
+  /* Set the styling for the 50% width columns */
+  .form-column-50-1, .form-column-50-2 {
     @include span-columns(5 of 10);
 
     .form-label {
@@ -25,14 +35,26 @@
     .form-data {
       @include span-columns(2 of 5);
     }
-    
-    .form-data-checkbox {
-      @include span-columns(1 of 5);
-    }
 
   }
 
-  .form-column-quarter {
+  .form-column-50-1 {
+    //background-color: pink;
+    
+    /* handle a the submit button alignment for a  50%-wide 1-column form */
+    .form-data-submit {
+      @include shift(3);
+    }
+  }
+
+  .form-column-50-2 {
+    //background-color: green;
+    //be sure to leave this in to clear the row by pushing the div out to the margins...
+    @include omega();
+  }
+
+  /* set the styling of the 33% width columns */
+  .form-column-33 {
     @include span-columns(2 of 10);
 
     .form-label, .form-data {
@@ -41,41 +63,35 @@
 
   }
 
-  .form-column-quarter-1 {
+  .form-column-33-1 {
     @include span-columns(4 of 10);  
-    background-color: yellow;
+    //background-color: yellow;
 
     .form-label {
       @include span-columns(3 of 4);
     }
   }
 
-  .form-column-quarter-2 {
-    background-color: lightgreen;
+  .form-column-33-2 {
+    //background-color: lightgreen;
   }
 
-  .form-column-quarter-3 {
-    background-color: lightblue;
+  .form-column-33-3 {
+    //background-color: lightblue;
   }
-
-  .form-column-quarter-4 {
-    background-color: lightorange;
-  }    
-
-  .form-column-half-1 {
-    background-color: pink;  
-  }
-
-  .form-column-half-2 {
-    background-color: green;
-    @include omega();
-  }
+  
 }
 
 /* put the universal (non parent-dependent) styles below here */
+.form-data-checkbox,
+.form-data-numeric,
+.form-data-date {
+  @include span-columns(1);
+}
+
 .form-label {
   text-align: right;
-  margin-bottom: .6em;
+  margin-bottom: .4em;
 }
 
 .form-data {
