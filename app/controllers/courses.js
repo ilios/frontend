@@ -21,7 +21,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   debouncedFilter: null,
   watchFilter: function(){
     Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('filter'),
+  }.observes('titleFilter'),
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },
@@ -32,14 +32,15 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     var exp = new RegExp(title, 'gi');
     var currentUser = this.get('currentUser.model');
     return this.get('content').filter(function(course) {
-      if(title == null || course.get('title').match(exp)){
-        if(filterMyCourses){
-          return currentUser.get('allRelatedCourses').contains(course);
-        }
-        return true;
+      let match = true;
+      if(title != null && !course.get('title').match(exp)){
+        match = false;
+      }
+      if(filterMyCourses && !currentUser.get('allRelatedCourses').contains(course)){
+        match = false;
       }
 
-      return false;
+      return match;
     }).sortBy('title');
   }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.model.allRelatedCourses.@each'),
   actions: {
