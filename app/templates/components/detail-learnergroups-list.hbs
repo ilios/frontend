@@ -1,0 +1,12 @@
+<ul class='inline-list'>
+  {{#each learnerGroup in sortedLearnerGroups}}
+    <li>
+      <em>
+        {{learnerGroup.allParentsTitle}}
+      </em>
+      <strong>
+        {{learnerGroup.title}}
+      </strong>
+    </li>
+  {{/each}}
+</ul>
