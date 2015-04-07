@@ -132,6 +132,30 @@
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Sessions Switch */
+.switch.on-off, .switch.yes-no {
+  width: 55px;
+
+  > .switch-input ~ .switch-label {
+    background: $toggle-background-grey;
+  }
+
+  .switch-input:checked ~ .switch-handle {
+    left: 33px;
+  }
+
+  /* the no/off selection */
+  .switch-label:before {
+    right: 10px;
+  }
+
+  /* the yes/on selection */
+  .switch-label:after {
+    left: 7px;
+  }
+
+}
+
 /* Calendar Switch*/
 
 .switch-wide {
