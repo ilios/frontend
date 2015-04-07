@@ -6,11 +6,10 @@
   margin-top:0;
   .resultslist-header {
     background-color: $header-grey;
-    overflow: auto;
     padding: .4em;
     @include span-columns(12 of 12);
     .resultslist-title {
-      @include span-columns(10 of 12);
+      @include span-columns(1 of 12);
       h2 {
         width: 100%;
         font-size: $base-font-size;
@@ -30,8 +29,8 @@
     }
   }
   .resultslist-actions {
-    @include span-columns(1 of 12);
-    @include omega;
+    @include span-columns(2 of 12);
+    @include shift(9);
   }
   tbody tr.confirm-removal {
     .confirm-message {
