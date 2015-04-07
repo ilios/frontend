@@ -92,10 +92,12 @@
 
 .form-label {
   text-align: right;
+  font-weight: bold;
 }
 
 .form-data {
   text-align: left;
+  font-weight: normal;
 
   &.switch, &.form-data-checkbox {
 
