@@ -15,5 +15,5 @@ export default DS.Model.extend({
       inverse: 'learnerIlmSessions'
     }
   ),
-  sessions: DS.hasMany('session', {async: true})
+  session: DS.belongsTo('session', {async: true})
 });

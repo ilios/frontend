@@ -1,0 +1,31 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'courses.learnerGroups'}} ({{subject.learnerGroups.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'courses.learnerGroupsManageTitle'}}
+      </span>
+    {{/if}}
+  </div>
+
+  <div class='detail-actions'>
+    {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'courses.learnerGroupsManageTitle'}}</button>
+    {{/if}}
+  </div>
+  <div class='detail-content'>
+    {{#liquid-if isManaging class="horizontal"}}
+        {{detail-learnergroups-manager
+          subject=subject
+          cohorts=cohorts
+        }}
+    {{else}}
+      {{detail-learnergroups-list
+        learnerGroups=subject.learnerGroups
+      }}
+    {{/liquid-if}}
+  </div>
+</section>

@@ -1,0 +1,38 @@
+<ul class='removable-list'>
+  {{#each learnerGroup in sortedLearnerGroups}}
+    <li {{action 'remove' learnerGroup}}>
+      <em>
+        {{learnerGroup.allParentsTitle}}
+      </em>
+      <strong>
+        {{learnerGroup.title}}
+      </strong>
+      {{fa-icon 'remove'}}
+    </li>
+  {{/each}}
+</ul>
+{{search-box value=filter placeholder=placeholder}}
+<div class='selectable-list'>
+  <h5>{{t 'courses.availalbeLearnerGroups'}}</h5>
+  <ul>
+    {{#each cohort in filteredCohorts}}
+      <li class='static'>{{cohort.displayTitle}}
+        <ul>
+          {{#each learnerGroup in cohort.filteredAvailableLearnerGroups}}
+            <li {{action 'add' learnerGroup}}>
+              <em>
+                {{learnerGroup.allParentsTitle}}
+              </em>
+              <strong>
+                {{learnerGroup.title}}
+              </strong>
+            </li>
+
+          {{else}}
+            <li class='static'>{{t 'courses.noAvailalbeLearnerGroups'}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</div>

@@ -5,6 +5,13 @@
       session=session
       sessionTypes=sessionTypes
     }}
+    {{#liquid-if session.isIndependentLearning class='vertical'}}
+      {{detail-learnergroups
+        subject=session.ilmSessionFacet
+        cohorts=session.course.cohorts
+        isIlmSession=true
+      }}
+    {{/liquid-if}}
     {{detail-objectives subject=session isCourse=false}}
     {{detail-learning-materials subject=session isCourse=false}}
     {{detail-topics

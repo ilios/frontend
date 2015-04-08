@@ -83,5 +83,41 @@ export default DS.Model.extend({
         resolve(Ember.RSVP.all(promises));
       });
     });
-  }
+  },
+  allParentsTitle: function(){
+    var title = '';
+    if(this.get('parent.content')){
+      if(this.get('parent.allParentsTitle')){
+        title += this.get('parent.allParentsTitle');
+      }
+      title += this.get('parent.title') + ' -> ';
+    }
+
+    return title;
+  }.property('title', 'parent.{title,allParentsTitle}'),
+  allDescendants: function(){
+    var deferred = Ember.RSVP.defer();
+    this.get('children').then(function(learnerGroups){
+      var groups = [];
+      var promises = [];
+      learnerGroups.forEach(function(learnerGroup){
+        groups.pushObject(learnerGroup);
+        var promise = new Ember.RSVP.Promise(function(resolve) {
+          learnerGroup.get('allDescendants').then(function(descendants){
+            descendants.forEach(function(descendant){
+              groups.pushObject(descendant);
+            });
+            resolve();
+          });
+        });
+        promises.pushObject(promise);
+      });
+      Ember.RSVP.all(promises).then(function(){
+        deferred.resolve(groups);
+      });
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }.property('children.@each.allDescendants.@each'),
 });

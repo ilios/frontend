@@ -210,6 +210,10 @@ var courses = {
   'notAClerkship': 'Not a Clerkship',
   'cohortsManageTitle': 'Manage Cohorts',
   'learningMaterialManageTitle': 'Manage Learning Material',
+  'learnerGroups': 'Learner Groups',
+  'learnerGroupsManageTitle': 'Manage Learner Groups',
+  'availalbeLearnerGroups': 'Available Learner Groups',
+  'noAvailalbeLearnerGroups': 'There are no unselected groups in this cohort',
 };
 translations.courses = courses;
 

@@ -136,7 +136,7 @@ var Session = DS.Model.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('offerings.[].learnerGroups.[]'),
+  }.property('offerings.@each.learnerGroups.@each'),
   isIndependentLearning: Ember.computed.notEmpty('ilmSessionFacet.content'),
 });
 
