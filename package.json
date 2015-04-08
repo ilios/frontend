@@ -46,6 +46,7 @@
     "ember-noscript": "^1.0.2",
     "ember-pikaday": "0.6.0",
     "ember-rl-dropdown": "0.2.0",
+    "ember-try": "kategengler/ember-try#master",
     "emberx-select": "1.1.1",
     "liquid-fire": "0.19.2",
     "moment": "^2.10.0",

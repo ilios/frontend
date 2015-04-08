@@ -1,6 +1,7 @@
 ---
 language: node_js
-
+node_js:
+  - "0.12"
 sudo: false
 
 env:
@@ -8,6 +9,22 @@ env:
     #set these here becuase they get pulled out by testem saucie
     - SAUCE_USERNAME="ilios"
     - SAUCE_ACCESS_KEY="e7c24f1d-ec10-435d-9cec-d1c38bafa268"
+    - START_SAUCE_CONNECT=false
+    - EMBER_VERSION='ilios-current'
+    - TESTEM_LAUNCHER='PhantomJS'
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMBER_VERSION='ember-beta'
+    - env: EMBER_VERSION='ember-canary'
+  include:
+    - env: "TESTEM_LAUNCHER='SauceLabs_Chrome,SauceLabs_Firefox' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SauceLabs_IE_10,SauceLabs_IE_11' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SauceLabs_Safari_7' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SauceLabs_Safari_8' START_SAUCE_CONNECT=true"
+    - env: "EMBER_VERSION='ember-beta'"
+    - env: "EMBER_VERSION='ember-canary'"
 
 cache:
   directories:
@@ -20,13 +37,13 @@ before_install:
 install:
   - npm install -g bower
   - npm install
-  - bower install
 
 before_script:
-  - ember start-sauce-connect # Create a sauce tunnel
+  # Create a sauce tunnel
+  - if [ "$START_SAUCE_CONNECT" = true ]; then ember start-sauce-connect; fi
 
 script:
-  - ember test --config-file=testemci.json --port=8080
+  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER}
 
 #encrypted the IRC room chat.freenode.net##ilios so that it doesn't run on pull requests
 notifications:

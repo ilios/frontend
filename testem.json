@@ -1,6 +1,33 @@
 {
   "framework": "qunit",
   "test_page": "tests/index.html?hidepassed",
+  "parallel": 2,
+  "launchers": {
+    "SauceLabs_Chrome": {
+      "command": "./node_modules/.bin/ember-cli-sauce --platformSL='Windows 7' --no-ct -u <url>",
+      "protocol": "tap"
+    },
+    "SauceLabs_Firefox": {
+      "command": "./node_modules/.bin/ember-cli-sauce --platformSL='Windows 7' --browserNameSL='firefox' --no-ct -u <url>",
+      "protocol": "tap"
+    },
+    "SauceLabs_IE_10": {
+      "command": "./node_modules/.bin/ember-cli-sauce --browserNameSL='internet explorer' --versionSL='10' --platformSL='Windows 8' --no-ct -u <url>",
+      "protocol": "tap"
+    },
+    "SauceLabs_IE_11": {
+      "command": "./node_modules/.bin/ember-cli-sauce --browserNameSL='internet explorer' --versionSL='11' --platformSL='Windows 8.1' --no-ct -u <url>",
+      "protocol": "tap"
+    },
+    "SauceLabs_Safari_7": {
+      "command": "./node_modules/.bin/ember-cli-sauce --browserNameSL='safari' --versionSL='7' --platformSL='OS X 10.9' --no-ct -u <url>",
+      "protocol": "tap"
+    },
+    "SauceLabs_Safari_8": {
+      "command": "./node_modules/.bin/ember-cli-sauce --browserNameSL='safari' --versionSL='8' --platformSL='OS X 10.10' --no-ct -u <url>",
+      "protocol": "tap"
+    }
+  },
   "launch_in_ci": [
     "PhantomJS"
   ],
