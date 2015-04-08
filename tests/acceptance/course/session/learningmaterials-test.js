@@ -230,8 +230,10 @@ test('issue #345 second new learning material defaults', function(assert) {
   var container;
   andThen(function() {
     container = find('.detail-learning-materials');
-    click(find('.detail-actions .button', container));
-    click(find('.detail-actions ul li:eq(0)', container));
+    click(find('.detail-actions .button', container)).then(function(){
+      click(find('.detail-actions ul li:eq(0)', container));
+
+    });
   });
   andThen(function(){
     assert.equal(getElementText(find('select:eq(0) option:selected', container)), getText(fixtures.statuses[0].title));
@@ -239,12 +241,16 @@ test('issue #345 second new learning material defaults', function(assert) {
     click('.detail-learning-materials .newlearningmaterial .cancel');
   });
   andThen(function(){
-    click(find('.detail-actions .button', container));
-    click(find('.detail-actions ul li:eq(0)', container));
+    click(find('.detail-actions .button', container)).then(function(){
+      click(find('.detail-actions ul li:eq(0)', container));
+
+    });
   });
   andThen(function(){
-    click(find('.detail-actions .button', container));
-    click(find('.detail-actions ul li:eq(0)', container));
+    click(find('.detail-actions .button', container)).then(function(){
+      click(find('.detail-actions ul li:eq(0)', container));
+      
+    });
     assert.equal(getElementText(find('select:eq(0) option:selected', container)), getText(fixtures.statuses[0].title));
     assert.equal(getElementText(find('select:eq(1) option:selected', container)), getText(fixtures.roles[0].title));
   });

@@ -47,9 +47,11 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     var course = this.get('course');
     if(course){
       course.get('owningSchool').then(function(owningSchool){
-        owningSchool.get('sessionTypes').then(function(sessionTypes){
-          self.set('sessionTypes', sessionTypes);
-        });
+        if(owningSchool){
+          owningSchool.get('sessionTypes').then(function(sessionTypes){
+            self.set('sessionTypes', sessionTypes);
+          });
+        }
       });
     }
   }.observes('course', 'course.owningSchool', 'course.owningSchool.sessionTypes.@each').on('init'),

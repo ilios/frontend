@@ -96,9 +96,11 @@ test('save cohort chages', function(assert) {
     var container = find('.detail-cohorts');
     click(find('.detail-actions .add', container));
     andThen(function(){
-      click(find('.removable-list li:eq(0)', container));
-      click(find('.selectable-list li ul li:eq(1)', container));
-      click('button.bigadd', container);
+      click(find('.removable-list li:eq(0)', container)).then(function(){
+        click(find('.selectable-list li ul li:eq(1)', container)).then(function(){
+          click('button.bigadd', container);
+        });
+      });
       andThen(function(){
         assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('program 0'));
         assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText(fixtures.cohorts[1].title));
@@ -114,9 +116,11 @@ test('cancel cohort chages', function(assert) {
     var container = find('.detail-cohorts');
     click(find('.detail-actions .add', container));
     andThen(function(){
-      click(find('.removable-list li:eq(0)', container));
-      click(find('.selectable-list li ul li:eq(1)', container));
-      click('button.bigcancel', container);
+      click(find('.removable-list li:eq(0)', container)).then(function(){
+        click(find('.selectable-list li ul li:eq(1)', container)).then(function(){
+          click('button.bigcancel', container);
+        });
+      });
       andThen(function(){
         assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('program 0'));
         assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText(fixtures.cohorts[0].title));

@@ -61,11 +61,11 @@ test('list course objectives', function(assert) {
     let tds = find('.session-objective-list tbody tr:eq(0) td');
     assert.equal(tds.length, 3);
     click('a', tds.eq(1));
-    assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
-    let objectiveManager = find('.objective-manager').eq(0);
-    let objective = fixtures.sessionObjectives[0];
-    assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
     andThen(function() {
+      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
+      let objectiveManager = find('.objective-manager').eq(0);
+      let objective = fixtures.sessionObjectives[0];
+      assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
       let expectedCourseTitle = fixtures.course.title;
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
       assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));
@@ -95,10 +95,12 @@ test('change session objective parent', function(assert) {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
       click('li:eq(0)', parentPicker);
-      click('li:eq(1)', parentPicker);
-      assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-      assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
-      assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+      click('li:eq(2)', parentPicker);
+      andThen(function(){
+        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+        assert.ok(find('li:eq(2)', parentPicker).hasClass('selected'));
+        assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+      });
     });
   });
 });
@@ -133,9 +135,11 @@ test('multiple parents for session objective', function(assert) {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
       click('li:eq(1)', parentPicker);
-      assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
-      assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-      assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+      andThen(function(){
+        assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
+        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+        assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+      });
     });
   });
 });
