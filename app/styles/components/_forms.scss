@@ -1,0 +1,111 @@
+/* In order to enforce table-like alignment using divs, from */
+.form-container {
+  @include outer-container;
+  
+  /* set the styling for the 100% width column */
+  .form-column-100 {
+    @include span-columns(10 of 10);
+    //background-color: orange;
+    
+    .form-label {
+      @include span-columns(3 of 10);
+    } 
+
+    .form-data {
+      @include span-columns(7 of 10);
+
+      /*enforce a default width of 500px for text input on 100% width row*/
+      input[type=text], input[type=textarea] {
+        min-width: 500px;
+      }
+    }
+    
+    /* handle a the submit button alignment for a  100%-wide 1-column form or 50%-wide 2 column form */
+    &.form-data-submit {
+        @include shift(7);
+    }
+  }
+
+  /* Set the styling for the 50% width columns */
+  .form-column-50-1, 
+  .form-column-50-2 {
+    @include span-columns(5 of 10);
+
+    .form-label {
+      @include span-columns(3 of 5);
+    }
+
+    .form-data {
+      @include span-columns(2 of 5);
+    }
+
+  }
+
+  .form-column-50-1 {
+    /* handle a the submit button alignment for a  50%-wide 1-column form */
+    &.form-data-submit {
+        @include shift(2);
+    }
+    
+  }
+
+  .form-column-50-2 {
+    //be sure to leave this in to clear the row by pushing the div out to the margins...
+    @include omega();
+  }
+
+  /* set the styling of the 33% width columns */
+  .form-column-33 {
+    @include span-columns(2 of 10);
+
+    .form-label, .form-data {
+      @include span-columns(1 of 2);
+    }
+
+  }
+
+  .form-column-33-1 {
+    @include span-columns(4 of 10);
+
+    .form-label {
+      @include span-columns(3 of 4);
+    }
+
+  }
+
+  /* handle the input field widths for 50% and 33%-width columns */
+  .form-column-50, .form-column-33 {
+    
+    .form-data input[type=text]{
+      /* explicitly override the default min-width of text input fields */
+      min-width: 100px;
+      max-width: 100px;
+    }
+  }
+  
+}
+
+/* put the universal (non parent-dependent) styles below here */
+.form-label, .form-data {
+  margin-bottom: .4em;
+}
+
+.form-label {
+  text-align: right;
+  font-weight: bold;
+}
+
+.form-data {
+  text-align: left;
+  font-weight: normal;
+
+  &.switch, &.form-data-checkbox {
+
+    /* this width should match what is in _toggles.scss */
+    &.on-off, &.yes-no {
+      width: 55px;
+    }
+
+  }
+
+}
