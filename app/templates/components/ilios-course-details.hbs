@@ -7,7 +7,6 @@
       {{#if collapsed}}
         <div {{action 'expand'}} class='detailCollapsedControl'><span>{{t 'courses.expandDetail'}}</span></div>
       {{else}}
-        <div {{action 'collapse'}} class='detailCollapsedControl'><span class='is-expanded'>{{t 'courses.collapseDetail'}}</span></div>
         {{course-editing course=course availableTopics=availableTopics programs=programs}}
         <div {{action 'collapse'}} class='detailCollapsedControl'><span class='is-expanded'>{{t 'courses.collapseDetail'}}</span></div>
       {{/if}}
