@@ -10,7 +10,7 @@
 
   section {
     text-align: left;
-    margin: 10px;
+    margin: 10px 10px 0px 10px;
     border:none;
     @include clearfix;
 
@@ -30,8 +30,6 @@
 
     &.detail-block {
       border-bottom: 1px dotted $ilios-orange;
-      margin-top: 1em;
-      margin-bottom: 1em;
       margin-left: .8em;
       margin-right: .8em;
       padding-left: .8em;
@@ -183,7 +181,6 @@
   .detailCollapsedControl {
     width: 100%;
     text-align: center;
-    border-top: .75 * $base-font-size solid $ilios-orange;
     margin-bottom: $base-font-size;
 
 

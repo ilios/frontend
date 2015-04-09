@@ -194,7 +194,7 @@ var courses = {
   'titleFilterPlaceholder': 'Filter by course title',
   'courseTitlePlaceholder': 'Enter a title for this course',
   'findDirector': 'Find Director',
-  'expandDetail': 'View All/Edit',
+  'expandDetail': 'View Details',
   'collapseDetail': 'Close',
   'firstOffering': 'First Offering',
   'filterPlaceholder': '',
