@@ -126,6 +126,8 @@ test('long objective', function(assert) {
     let td = find('.course-objective-list tbody tr:eq(0) td:eq(0)');
     assert.equal(getElementText(td), getText(longTitle.substring(0,200)));
     click('i:eq(0)', td);
-    assert.equal(getElementText(td), getText(longTitle));
+    andThen(function(){
+      assert.equal(getElementText(td), getText(longTitle));
+    });
   });
 });

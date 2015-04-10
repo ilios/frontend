@@ -102,17 +102,19 @@ test('filters by year', function(assert) {
   });
   visit('/courses');
   andThen(function() {
-    click('#yearsfilter button');
-    var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-    click(yearOptions.eq(0));
+    click('#yearsfilter button').then(function(){
+      var yearOptions = find('#yearsfilter ul.dropdown-menu li');
+      click(yearOptions.eq(0));
+    });
     andThen(function(){
       assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
     });
   });
   andThen(function() {
-    click('#yearsfilter button');
-    var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-    click(yearOptions.eq(1));
+    click('#yearsfilter button').then(function(){
+      var yearOptions = find('#yearsfilter ul.dropdown-menu li');
+      click(yearOptions.eq(1));
+    });
     andThen(function(){
       assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
     });
@@ -151,10 +153,12 @@ test('filters options', function(assert) {
     assert.equal(filters.length, 4);
     assert.equal(find('#school-selection').eq(0).text().trim(), fixtures.schools[0].title);
     click('#yearsfilter button');
-    var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-    assert.equal(yearOptions.length, fixtures.educationalYears.length);
-    for(let i = 0; i < fixtures.educationalYears.length; i++){
-      assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), fixtures.educationalYears[i].title);
-    }
+    andThen(function(){
+      var yearOptions = find('#yearsfilter ul.dropdown-menu li');
+      assert.equal(yearOptions.length, fixtures.educationalYears.length);
+      for(let i = 0; i < fixtures.educationalYears.length; i++){
+        assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), fixtures.educationalYears[i].title);
+      }
+    });
   });
 });

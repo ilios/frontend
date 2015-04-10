@@ -66,11 +66,11 @@ export default Ember.Component.extend({
   showCohortList: false,
   cohorts: function(){
     var courseObjective = this.get('courseObjective');
+    var groups = [];
     if(!courseObjective){
       return [];
     }
     var deferred = Ember.RSVP.defer();
-    var groups = [];
     courseObjective.get('courses').then(function(courses){
       var course = courses.get('firstObject');
       course.get('cohorts').then(function(cohorts){
@@ -101,7 +101,11 @@ export default Ember.Component.extend({
   selectedCohortId: null,
   multipleCohorts: Ember.computed.gt('availableCohorts.length', 1),
   availableCohorts: function(){
-    return this.get('cohorts').map(function(cohort){
+    var cohorts = this.get('cohorts');
+    if(!cohorts){
+      return [];
+    }
+    return cohorts.map(function(cohort){
       return {
         id: cohort.get('id'),
         title: cohort.get('title')

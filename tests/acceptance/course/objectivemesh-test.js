@@ -60,10 +60,12 @@ test('manage terms', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.course-objective-list tbody tr:eq(1) td:eq(2) a', detailObjectives);
-    assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptors');
-    let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+    click('.course-objective-list tbody tr:eq(1) td:eq(2) a', detailObjectives).then(function(){
+      assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptors');
+    });
+
     andThen(function() {
+      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let objective = fixtures.courseObjectives[1];
       let removableItems = find('.removable-list li', meshManager);
       assert.equal(removableItems.length, objective.meshDescriptors.length);
@@ -93,8 +95,9 @@ test('manage terms', function(assert) {
             assert.ok(!$(searchResults[i]).hasClass('disabled'));
           }
         }
-        click('.removable-list li:eq(0)', meshManager);
-        assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+        click('.removable-list li:eq(0)', meshManager).then(function(){
+          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+        });
         click(searchResults[0]);
         andThen(function(){
           assert.ok($(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
@@ -123,8 +126,8 @@ test('save terms', function(assert) {
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
     click('.course-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives);
-    let meshManager = find('.mesh-manager', detailObjectives).eq(0);
     andThen(function() {
+      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
       fillIn(searchBoxInput, 'descriptor');
       click('.search-box button', meshManager);
@@ -149,8 +152,8 @@ test('cancel changes', function(assert) {
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
     click('.course-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives);
-    let meshManager = find('.mesh-manager', detailObjectives).eq(0);
     andThen(function() {
+      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
       fillIn(searchBoxInput, 'descriptor');
       click('.search-box button', meshManager);

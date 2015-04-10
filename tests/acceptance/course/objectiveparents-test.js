@@ -78,11 +78,12 @@ test('list parent objectives by competency', function(assert) {
     let tds = find('.course-objective-list tbody tr:eq(0) td');
     assert.equal(tds.length, 3);
     click('a', tds.eq(1));
-    assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
-    let objectiveManager = find('.objective-manager').eq(0);
-    let objective = fixtures.courseObjectives[0];
-    assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
+
     andThen(function() {
+      let objectiveManager = find('.objective-manager').eq(0);
+      let objective = fixtures.courseObjectives[0];
+      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
+      assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
       let expectedCohortTitle = 'Select Parent For: ' + fixtures.program.title + fixtures.cohort.title;
       assert.equal(getElementText(find('.group-picker', objectiveManager)), getText(expectedCohortTitle));
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -121,10 +122,12 @@ test('change course objective parent', function(assert) {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
       click('li:eq(1)', parentPicker);
-      assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
-      assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
-      assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-      assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+      andThen(function(){
+        assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
+        assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
+        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+        assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+      });
     });
   });
 });
