@@ -121,8 +121,9 @@ test('filter groups', function(assert) {
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){
-      fillIn(find('input', container), 'group 5');
-      assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
+      fillIn(find('input', container), 'group 5').then(function(){
+        assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
+      });
     });
   });
 });
@@ -132,9 +133,10 @@ test('add group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
-    andThen(function(){
+    click('.detail-actions .add', container).then(function(){
       click('.selectable-list ul li.static:eq(1) ul li:eq(0)', container);
+    });
+    andThen(function(){
       assert.equal(getElementText(find('.removable-list', container)), 'learnergroup0learnergroup2');
       assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1learnergroup1->learnergroup4learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
       assert.equal(getElementText(find('.selectable-list li.static').eq(1)), getText('cohort1learnergroup3'));
@@ -152,9 +154,10 @@ test('add sub group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
-    andThen(function(){
+    click('.detail-actions .add', container).then(function(){
       click('.selectable-list ul li.static:eq(0) ul li:eq(1)', container);
+    });
+    andThen(function(){
       assert.equal(getElementText(find('.removable-list', container)), 'learnergroup0learnergroup1->learnergroup4');
       assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
       assert.equal(getElementText(find('.selectable-list li.static').eq(1)), getText('cohort1learnergroup2learnergroup3'));
