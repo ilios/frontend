@@ -43,7 +43,7 @@ before_script:
   - if [ "$START_SAUCE_CONNECT" = true ]; then ember start-sauce-connect; fi
 
 script:
-  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER}
+  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
 
 #encrypted the IRC room chat.freenode.net##ilios so that it doesn't run on pull requests
 notifications:
