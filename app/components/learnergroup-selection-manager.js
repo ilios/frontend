@@ -9,8 +9,6 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   cohorts: [],
   learnerGroups: Ember.computed.alias('subject.learnerGroups'),
   sortedLearnerGroups: Ember.computed.sort('learnerGroups', 'sortBy'),
-  tagName: 'section',
-  classNames: ['detail-block'],
   filteredCohorts: function(){
     var self = this;
     var cohortProxy = Ember.ObjectProxy.extend({
@@ -54,7 +52,8 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
         });
       }.property('content.learnerGroups.@each', 'content.learnerGroups.@each.allDescendants.@each', 'filter', 'selectedLearnerGroups.@each'),
     });
-    return this.get('cohorts').map(function(cohort){
+    var cohorts = this.get('cohorts')?this.get('cohorts'):[];
+    return cohorts.map(function(cohort){
       var proxy = cohortProxy.create({
         content: cohort,
         filter: self.get('filter'),
@@ -62,7 +61,6 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       });
       return proxy;
     }).sortBy('title');
-
   }.property('cohorts.@each', 'filter', 'learnerGroups.@each'),
 
   actions: {

@@ -28,6 +28,12 @@ var Offering = DS.Model.extend({
     endDayOfYear: moment('endDate', 'DDDD'),
     endYear: moment('endDate', 'YYYY'),
     endTime: moment('endDate', 'HHmm'),
+    startYearAndDayOfYear: moment('startDate', 'DDDDYYYY'),
+    endYearAndDayOfYear: moment('endDate', 'DDDDYYYY'),
+    isSingleDay: function(){
+      return this.get('startYearAndDayOfYear') === this.get('endYearAndDayOfYear');
+    }.property('startYearAndDayOfYear', 'endYearAndDayOfYear'),
+    isMultiDay: Ember.computed.not('isSingleDay'),
     dateKey: function(){
       return this.get('startYear') + this.get('startDayOfYear');
     }.property('startDayOfYear', 'startYear'),
