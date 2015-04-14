@@ -145,7 +145,7 @@ var Course = DS.Model.extend({
 
     return issues;
   }.property(
-    'topics.length',
+    'disciplines.length',
     'objectives.length',
     'meshDescriptors.length'
   ),

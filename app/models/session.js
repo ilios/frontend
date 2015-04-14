@@ -53,6 +53,7 @@ var Session = DS.Model.extend({
   isPublished: Ember.computed.notEmpty('publishEvent.content'),
   isNotPublished: Ember.computed.not('isPublished'),
   isScheduled: Ember.computed.oneWay('publishedAsTbd'),
+  isIndependentLearning: Ember.computed.notEmpty('ilmSessionFacet.content'),
   status: function(){
     if(this.get('publishedAsTbd')){
       return Ember.I18n.t('general.scheduled');
@@ -112,11 +113,9 @@ var Session = DS.Model.extend({
 
     return issues;
   }.property(
-    'topics.length',
+    'disciplines.length',
     'objectives.length',
-    'meshDescriptors.length',
-    'offerings.length',
-    'isIndependentLearning'
+    'meshDescriptors.length'
   ),
   associatedLearnerGroups: function(){
     var deferred = Ember.RSVP.defer();
@@ -137,7 +136,6 @@ var Session = DS.Model.extend({
       promise: deferred.promise
     });
   }.property('offerings.@each.learnerGroups.@each'),
-  isIndependentLearning: Ember.computed.notEmpty('ilmSessionFacet.content'),
 });
 
 export default Session;
