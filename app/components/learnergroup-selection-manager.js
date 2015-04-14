@@ -44,7 +44,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
             promises.pushObject(promise);
           });
           Ember.RSVP.all(promises).then(function(){
-            defer.resolve(learnerGroups.filter(activeGroupFilter).sortBy('title'));
+            defer.resolve(learnerGroups.filter(activeGroupFilter).sortBy('sortTitle'));
           });
         });
         return DS.PromiseArray.create({
