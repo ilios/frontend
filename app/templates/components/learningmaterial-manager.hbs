@@ -1,14 +1,14 @@
 <div class="inline-label-data-block">
   <label>{{t "general.required"}}:</label>
-  <div class='required'>{{editable-boolean model=learningMaterial property='required'}}</div>
+  <div class='required'>{{inplace-boolean value=learningMaterial.required save='changeRequired'}}</div>
 </div><br />
 <div class="inline-label-data-block">
   <label>{{t "learningMaterials.showNotesToStudents"}}:</label>
-  <div class='publicnotes'>{{editable-boolean model=learningMaterial property='publicNotes'}}</div>
+  <div class='publicnotes'>{{inplace-boolean value=learningMaterial.publicNotes save='changePublicNotes'}}</div>
 </div><br />
 <div class="inline-label-data-block">
   <label>{{t "learningMaterials.showNotesToStudents"}}:</label>
-  <div class='notes'>{{editable-textarea model=learningMaterial property='notes'}}</div>
+  <div class='notes'>{{inplace-textarea value=learningMaterial.notes save='changeNotes'}}</div>
 </div><br />
 <label>{{t 'learningMaterials.displayName'}}
   <span class='displayname'>{{learningMaterial.learningMaterial.title}}</span>

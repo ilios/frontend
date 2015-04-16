@@ -11,19 +11,19 @@
     {{#if editing}}
       <div class="inline-label-data-block coursestartdate">
         <label>{{t "general.start"}}:</label>
-        <div>{{editable-date model=course property='startDate'}}</div>
+        <div>{{inplace-date value=course.startDate save='changeStartDate'}}</div>
       </div>
       <div class="inline-label-data-block courseexternalid">
         <label>{{t "courses.externalId"}}:</label>
-        <div>{{editable-text model=course property='externalId'}}</div>
+        <div>{{inplace-text value=course.externalId save='changeExternalId'}}</div>
       </div>
       <div class="inline-label-data-block courselevel">
         <label>{{t "courses.level"}}:</label>
-        <div>{{editable-select model=course property='level' options=levelOptions}}</div>
+        <div>{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
       </div>
       <div class="inline-label-data-block courseenddate">
         <label>{{t "general.end"}}:</label>
-        <div>{{editable-date model=course property='endDate'}}</div>
+        <div>{{inplace-date value=course.endDate save='changeStartDate'}}</div>
       </div>
       <div class="inline-label-data-block clerkshiptype">
         <label>{{t "courses.clerkshipType"}}:</label>

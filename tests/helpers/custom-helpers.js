@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 var customHelpers = function(app) {
   Ember.Test.registerHelper('pickOption', function(app, selector, optionText, assert){
-    assert.equal(find(selector).length, 1, selector + ' is not a valid selector');
+    assert.equal(find(selector).length, 1, selector + ' is a valid selector');
     find(selector).find('option').filter(function() {
       return this.text === optionText;
     }).prop('selected', true);

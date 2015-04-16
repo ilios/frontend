@@ -1,12 +1,12 @@
 <span class='content'>
   {{#unless isEditing}}
     <span class='editable'>
-      {{big-text text=displayText action='edit'}}
+      {{big-text text=workingValue action='edit' promptText=clickPrompt}}
     </span>
   {{else}}
     <span class='editor'>
       <span class='control'>
-        {{textarea type='text' value=buffer action='save'}}
+        {{textarea type='text' value=workingValue action='save'}}
       </span>
       <span class='actions'>
         <button class='save' {{action 'save'}}>{{fa-icon 'check' classNames='add'}}</button>

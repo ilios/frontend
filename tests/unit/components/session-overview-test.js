@@ -6,10 +6,10 @@ import {
 moduleForComponent('session-overview', {
   // specify the other units that are required for this test
   needs: [
-    'component:editable-text',
-    'component:editable-select',
-    'component:editable-boolean',
-    'component:editable-textarea',
+    'component:inplace-text',
+    'component:inplace-select',
+    'component:inplace-boolean',
+    'component:inplace-textarea',
     'component:publication-status',
     'component:action-menu',
     'helper:fa-icon',
