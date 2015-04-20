@@ -1,0 +1,96 @@
+{{#liquid-if isEditing class='horizontal'}}
+  <div class='offering-edit'>
+    <span class='actions'>
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    </span>
+    <div class="inline-label-data-block offering-edit-start-day">
+      {{#if isMultiDate}}
+        <label>{{t "general.startDate"}}:</label>
+      {{else}}
+        <label>{{t "general.date"}}:</label>
+      {{/if}}
+      <div>{{input value=startDay}}</div>
+    </div> <br />
+    {{#liquid-if isMultiDay class='vertical'}}
+      <div class="inline-label-data-block offering-edit-end-day">
+        <label>{{t "general.endDate"}}:</label>
+        <div>{{input value=endDay}}</div>
+      </div> <br />
+    {{/liquid-if}}
+    <div class="inline-label-data-block offering-edit-start-time">
+      <label>{{t "general.startTime"}}:</label>
+      <div>{{input value=startTime}}</div>
+    </div> <br />
+    <div class="inline-label-data-block offering-edit-end-time">
+      <label>{{t "general.endTime"}}:</label>
+      <div>{{input value=endTime}}</div>
+    </div> <br />
+    <div class="inline-label-data-block offering-edit-ismultiday">
+      <label class='switch switch-green switch-wide' {{action 'toggleMultiDay'}}>
+        <input class='switch-input' {{bind-attr checked=isMultiDay }} type='checkbox' />
+        <span class="switch-label" data-on='{{t 'general.multiDay'}}' data-off='{{t 'general.singleDay'}}'></span>
+        <span class="switch-handle"></span>
+      </label>
+    </div><br />
+    <div class="inline-label-data-block offering-edit-room">
+      <label>{{t "general.location"}}:</label>
+      <div>{{input value=room}}</div>
+    </div> <br />
+    <div class="offering-edit-learner_groups">
+      <label>{{t "learnerGroups.learners"}}:</label>
+      {{learnergroup-selection-manager
+        subject=this
+        cohorts=cohorts
+      }}
+    </div> <br />
+    <div class="offering-edit-instructorgroups">
+      <label>{{t "general.instructorGroups"}}:</label>
+      {{instructorgroup-selection-manager
+        subject=this
+        availableInstructorGroups=availableInstructorGroups
+      }}
+    </div> <br />
+    <div class="offering-edit-instructors">
+      <label>{{t "general.instructors"}}:</label>
+      <span>
+        <ul class='removable-list'>
+          {{#each user in sortedInstructors}}
+          <li {{action 'removeInstructor' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+          {{/each}}
+        </ul>
+      </span>
+      {{user-search
+        addUser='addInstructor'
+        currentlyActiveUsers=allInstructors
+      }}
+    </div>
+  </div>
+{{else}}
+  <div class='offering-block-time-offering'>
+    <span class='offering-block-time-offering-learner_groups offering-detail-box'>
+      <ul>
+        {{#each learnerGroup in offering.learnerGroups}}
+          <li>{{learnerGroup.title}}</li>
+        {{else}}
+          <li>{{fa-icon 'user-plus'}}</li>
+        {{/each}}
+      </ul>
+    </span>
+    <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
+    <span class='offering-block-time-offering-instructors offering-detail-box'>
+      <ul>
+        {{#each instructor in offering.allInstructors}}
+          <li>{{instructor.fullName}}</li>
+        {{else}}
+          <li>{{fa-icon 'user-plus'}}</li>
+        {{/each}}
+      </ul>
+    </span>
+    <span class='offering-block-time-offering-actions offering-detail-box'>
+      {{#action-menu}}
+        <li {{action 'edit'}}>{{t 'general.edit'}}</li>
+      {{/action-menu}}
+    </span>
+  </div>
+{{/liquid-if}}

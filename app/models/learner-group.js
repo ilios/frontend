@@ -94,7 +94,11 @@ export default DS.Model.extend({
     }
 
     return title;
-  }.property('title', 'parent.{title,allParentsTitle}'),
+  }.property('parent.{title,allParentsTitle}'),
+  sortTitle: function(){
+    var title = this.get('allParentsTitle') + this.get('title');
+    return title.replace(/([\s->]+)/ig,"");
+  }.property('title', 'allParentsTitle'),
   allDescendants: function(){
     var deferred = Ember.RSVP.defer();
     this.get('children').then(function(learnerGroups){

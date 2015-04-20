@@ -44,6 +44,11 @@ var general = {
   'starts': 'Starts',
   'ends': 'Ends',
   'time': 'Time',
+  'startTime': 'Start Time',
+  'endTime': 'End Time',
+  'startDate': 'Start Date',
+  'endDate': 'End Date',
+  'date': 'Date',
   'program': 'Program',
   'level': 'Level',
   'description': 'Description',
@@ -68,7 +73,10 @@ var general = {
   'dateTime': 'Date/Time',
   'location': 'Location',
   'instructors': 'Instructors',
+  'instructorGroups': 'Instructor Groups',
   'other': 'Other',
+  'singleDay': 'Single Day',
+  'multiDay': 'Multi Day',
 };
 translations.general = general;
 
@@ -213,7 +221,9 @@ var courses = {
   'learnerGroups': 'Learner Groups',
   'learnerGroupsManageTitle': 'Manage Learner Groups',
   'availalbeLearnerGroups': 'Available Learner Groups',
-  'noAvailalbeLearnerGroups': 'There are no unselected groups in this cohort',
+  'noAvailalbeLearnerGroups': 'There are no unselected learner groups in this cohort',
+  'availalbeInstructorGroups': 'Available Instructor Groups',
+  'noAvailalbeInstructorGroups': 'There are no unselected instructor groups in this school',
 };
 translations.courses = courses;
 

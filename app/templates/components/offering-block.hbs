@@ -13,31 +13,7 @@
           </div>
           <div class='offering-block-time-offerings'>
             {{#each offering in offeringTimeBlock.sortedOfferings}}
-              <div class='offering-block-time-offering'>
-                <span class='offering-block-time-offering-learner_groups offering-detail-box'>
-                  <ul>
-                    {{#each learnerGroup in offering.learnerGroups}}
-                      <li>{{learnerGroup.title}}</li>
-                    {{else}}
-                      <li>{{fa-icon 'user-plus'}}</li>
-                    {{/each}}
-                  </ul>
-                </span>
-                <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
-                <span class='offering-block-time-offering-instructors offering-detail-box'>
-                  <ul>
-                    {{#each instructor in offering.allInstructors}}
-                      <li>{{instructor.fullName}}</li>
-                    {{else}}
-                      <li>{{fa-icon 'user-plus'}}</li>
-                    {{/each}}
-                  </ul>
-                </span>
-                <span class='offering-block-time-offering-actions offering-detail-box'>
-                  {{#action-menu}}
-                  {{/action-menu}}
-                </span>
-              </div>
+              {{offering-manager offering=offering save='save'}}
             {{/each}}
           </div>
         </div>
@@ -55,32 +31,8 @@
             </span>
           </div>
           <div class='multiday-offering-block-time-offerings'>
-            {{#each offering in offeringTimeBlock.sortedOfferings}}
-              <div class='offering-block-time-offering'>
-                <span class='offering-block-time-offering-learner_groups offering-detail-box'>
-                  <ul>
-                    {{#each learnerGroup in offering.learnerGroups}}
-                      <li>{{learnerGroup.title}}</li>
-                    {{else}}
-                      <li>{{fa-icon 'user-plus'}}</li>
-                    {{/each}}
-                  </ul>
-                </span>
-                <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
-                <span class='offering-block-time-offering-instructors offering-detail-box'>
-                  <ul>
-                    {{#each instructor in offering.allInstructors}}
-                      <li>{{instructor.fullName}}</li>
-                    {{else}}
-                      <li>{{fa-icon 'user-plus'}}</li>
-                    {{/each}}
-                  </ul>
-                </span>
-                <span class='offering-block-time-offering-actions offering-detail-box'>
-                  {{#action-menu}}
-                  {{/action-menu}}
-                </span>
-              </div>
+            {{#each offering in offeringTimeBlock.offerings}}
+              {{offering-manager offering=offering save='save'}}
             {{/each}}
           </div>
         </div>

@@ -12,9 +12,14 @@ var url = '/course/1/session/1';
 module('Acceptance: Session - Offerings', {
   beforeEach: function() {
     application = startApp();
-    server.create('school');
+    server.create('school', {
+      instructorGroups: [1,2]
+    });
+    server.create('cohort');
     server.create('course', {
-      sessions: [1]
+      sessions: [1],
+      cohorts: [1],
+      owningSchool: 1
     });
     server.create('sessionType');
 
@@ -43,20 +48,24 @@ module('Acceptance: Session - Offerings', {
     fixtures.instructorGroups = [];
     fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
       users: [2,3,6,7],
-      offerings: [1]
+      offerings: [1],
+      school: 1
     }));
     fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
       users: [4,5],
-      offerings: [1, 2, 3]
+      offerings: [1, 2, 3],
+      school: 1
     }));
     fixtures.learnerGroups = [];
     fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
       users: [2,3],
-      offerings: [1]
+      offerings: [1],
+      cohort: 1,
     }));
     fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
       users: [4,5],
-      offerings: [1, 2, 3]
+      offerings: [1, 2, 3],
+      cohort: 1,
     }));
     fixtures.offerings = [];
     let today = moment().hour(8);
@@ -87,7 +96,8 @@ module('Acceptance: Session - Offerings', {
     }));
     fixtures.session = server.create('session', {
       course: 1,
-      offerings: [1, 2, 3]
+      offerings: [1, 2, 3],
+      owningSchool: 1
     });
   },
 
@@ -194,5 +204,76 @@ test('instructors', function(assert) {
         assert.equal(getElementText(instructors.eq(i)), getText(instructorTitle));
       }
     }
+  });
+});
+
+test('create new offering', function(assert) {
+  assert.expect();
+  visit(url);
+  var container;
+  andThen(function() {
+    container = find('.session-offerings');
+    click('.detail-actions button', container).then(function(){
+      click('.detail-actions li:eq(0)', container);
+    });
+  });
+  andThen(function(){
+    fillIn(find('.offering-edit-start-day input', container), '2001-09-11');
+    fillIn(find('.offering-edit-start-time input', container), '02:15');
+    fillIn(find('.offering-edit-end-time input', container), '03:23');
+    fillIn(find('.offering-edit-room input', container), 'testing palace');
+    click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
+    click('.offering-edit-instructorgroups li:eq(0)', container);
+    fillIn(find('.offering-edit-instructors input', container), '0 guy').then(function(){
+      click(find('.offering-edit-instructors .results li:eq(0)', container));
+      click(find('.bigadd', container));
+    });
+  });
+  andThen(function(){
+    let block = find('.session-offerings .offering-block:eq(0)');
+    assert.equal(getElementText(find('.offering-block-date-dayofweek', block)), getText('Tuesday'));
+    assert.equal(getElementText(find('.offering-block-date-dayofmonth', block)), getText('September 11th'));
+    assert.equal(getElementText(find('.offering-block-time-time-starttime', block)), getText('Starts: 2:15AM'));
+    assert.equal(getElementText(find('.offering-block-time-time-endtime', block)), getText('Ends: 3:23AM'));
+    assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
+    assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
+    assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
+  });
+});
+
+test('create new multiday offering', function(assert) {
+  assert.expect();
+  visit(url);
+  var container;
+  andThen(function() {
+    container = find('.session-offerings');
+    click('.detail-actions button', container).then(function(){
+      click('.detail-actions li:eq(0)', container);
+    });
+  });
+  andThen(function(){
+    click('.offering-edit-ismultiday label', container).then(function(){
+      fillIn(find('.offering-edit-start-day input', container), '2001-09-11');
+      fillIn(find('.offering-edit-end-day input', container), '2001-09-12');
+      fillIn(find('.offering-edit-start-time input', container), '14:15');
+      fillIn(find('.offering-edit-end-time input', container), '12:23');
+      fillIn(find('.offering-edit-room input', container), 'testing palace');
+      click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
+      click('.offering-edit-instructorgroups li:eq(0)', container);
+      fillIn(find('.offering-edit-instructors input', container), '0 guy').then(function(){
+        click(find('.offering-edit-instructors .results li:eq(0)', container));
+        click(find('.bigadd', container));
+      });
+    });
+  });
+  andThen(function(){
+    let block = find('.session-offerings .offering-block:eq(0)');
+    let expectedText = 'Multiday' +
+      'Starts Tuesday September 11th @ 2:15PM' +
+      'Ends Wednesday September 12th @ 12:23PM';
+    assert.equal(getElementText(find('.multiday-offering-block-time-time', block)), getText(expectedText));
+    assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
+    assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
+    assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
   });
 });

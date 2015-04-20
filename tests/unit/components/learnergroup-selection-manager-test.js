@@ -3,8 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('detail-learnergroups-manager', {
-  // Specify the other units that are required for this test
+moduleForComponent('learnergroup-selection-manager', {
   needs: ['component:search-box']
 });
 

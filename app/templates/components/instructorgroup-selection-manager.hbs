@@ -1,0 +1,21 @@
+<ul class='removable-list'>
+  {{#each instructorGroup in sortedInstructorGroups}}
+    <li {{action 'remove' instructorGroup}}>
+      {{instructorGroup.title}}
+      {{fa-icon 'remove'}}
+    </li>
+  {{/each}}
+</ul>
+{{search-box value=filter placeholder=placeholder}}
+<div class='selectable-list'>
+  <h5>{{t 'courses.availalbeInstructorGroups'}}</h5>
+  <ul>
+    {{#each instructorGroup in filteredAvailableInstructorGroups}}
+      <li {{action 'add' instructorGroup}}>
+          {{instructorGroup.title}}
+      </li>
+    {{else}}
+      <li class='static'>{{t 'courses.noAvailalbeInstructorGroups'}}</li>
+    {{/each}}
+  </ul>
+</div>

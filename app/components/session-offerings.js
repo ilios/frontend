@@ -5,12 +5,14 @@ import { moment as momentHelper } from 'ember-moment/computed';
 import layout from '../templates/components/session-offerings';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  store: Ember.inject.service(),
   layout: layout,
   classNames: ['session-offerings'],
   session: null,
   placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
   offerings: Ember.computed.oneWay('session.offerings'),
   newButtonTitleTranslation: 'general.add',
+  newOfferings: [],
   offeringBlocks: function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
@@ -35,7 +37,21 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('offerings.@each.{startDate,endDate,room,instructorGroups.@each}')
+  }.property('offerings.@each.{startDate,endDate,room,instructorGroups.@each}'),
+  actions: {
+    add: function(){
+      var self = this;
+      var offering = this.get('store').createRecord('offering', {
+        session: self.get('session'),
+        startDate: moment().hour(8).minute(0).second(0).format(),
+        endDate: moment().hour(9).minute(0).second(0).format(),
+      });
+      this.get('newOfferings').addObject(offering);
+    },
+    removeNewOffering: function(offering){
+      this.get('newOfferings').removeObject(offering);
+    }
+  }
 });
 
 var OfferingBlock = Ember.Object.extend({
@@ -87,7 +103,7 @@ var OfferingDateBlock = OfferingBlock.extend({
 var OfferingTimeBlock = OfferingBlock.extend({
   timeKey: null,
   isMultiDay: function(){
-    return this.get('endDate').diff(this.get('startDate'), 'days') > 0;
+    return this.get('startDate').format('DDDDYYYY') !== this.get('endDate').format('DDDDYYYY');
   }.property('startDate', 'endDate'),
   //pull our times out of the key
   startDate: function(){
