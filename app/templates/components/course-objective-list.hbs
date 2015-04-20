@@ -9,7 +9,9 @@
   <tbody>
     {{#each objective in sortedObjectives}}
     <tr>
-      <td class='text-left text-top' colspan=2>{{editable-textarea model=objective length=200 stripHtml=true property='title'}}</td>
+      <td class='text-left text-top' colspan=2>
+        {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
+      </td>
       <td class='text-left text-top'>
         {{#if objective.hasParents}}
           {{#each parent in objective.parents}}

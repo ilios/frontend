@@ -10,13 +10,14 @@ export default Ember.Component.extend({
   ellipsis: 'ellipsis-h',
   lengths: Ember.computed.collect('length', 'slippage'),
   totalLength: Ember.computed.sum('lengths'),
+  promptText: '',
   showIcons: function(){
     return this.get('displayText') !== this.get('cleanText');
   }.property('displayText', 'text'),
   cleanText: function(){
     var text = this.get('text');
     if(text === undefined || text == null){
-      return '';
+      return this.get('promptText');
     }
     //strip any possible HTML out of the text
     return text.replace(/(<([^>]+)>)/ig,"");

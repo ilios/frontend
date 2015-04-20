@@ -1,7 +1,7 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if editable}}
-      {{editable-text tagName='h2' model=session property='title'}}
+      {{inplace-text value=session.title save='changeTitle'}}
     {{else}}
       <h2>{{session.title}}</h2>
     {{/if}}
@@ -37,28 +37,26 @@
       <div class="inline-label-data-block sessiontype">
         <label>{{t "sessions.type"}}:</label>
         <div>
-          {{editable-select
-            model=session
-            property='sessionType'
+          {{inplace-select
+            value=session.sessionType.id
             options=sortedSessionTypes
-            valuePath='id'
-            labelPath='title'
+            save='changeSessionType'
           }}
         </div>
       </div>
       <br />
       <br />
-      <div class="inline-label-data-block">
+      <div class="inline-label-data-block sessionsupplemental">
         <label>{{t "sessions.supplementalCurriculum"}}:</label>
-        <div>{{editable-boolean model=session property='supplemental'}}</div>
+        <div>{{inplace-boolean value=session.supplemental save='changeSupplemental'}}</div>
       </div>
-      <div class="inline-label-data-block">
+      <div class="inline-label-data-block sessionspecialattire">
         <label>{{t "sessions.specialAttireRequired"}}:</label>
-        <div>{{editable-boolean model=session property='attireRequired'}}</div>
+        <div>{{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}</div>
       </div>
-      <div class="inline-label-data-block">
+      <div class="inline-label-data-block sessionsepcialequiptment">
         <label>{{t "sessions.specialEquipmentRequired"}}:</label>
-        <div>{{editable-boolean model=session property='equipmentRequired'}}</div>
+        <div>{{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}</div>
       </div>
       <br />
       <div class="inline-label-data-block">
@@ -68,17 +66,17 @@
       {{#if session.isIndependentLearning}}
         <div class="inline-label-data-block sessionilmhours">
           <label>{{t "sessions.hours"}}:</label>
-          {{editable-text model=session.ilmSessionFacet.content property='hours'}}
+          {{inplace-text value=session.ilmSessionFacet.hours save='changeIlmHours'}}
         </div>
         <div class="inline-label-data-block sessionilmduedate">
           <label>{{t "sessions.dueBy"}}:</label>
-          <div>{{editable-date model=session.ilmSessionFacet.content property='dueDate'}}</div>
+          <div>{{inplace-date value=session.ilmSessionFacet.dueDate save='changeIlmDueDate'}}</div>
         </div>
       {{/if}}
       <br />
       <div class="inline-label-data-block sessiondescription">
         <label>{{t "general.description"}}:</label>
-        <div>{{editable-textarea model=session.sessionDescription.content property='description'}}</div>
+        <div>{{inplace-textarea value=session.sessionDescription.description save='changeDescription'}}</div>
       </div>
     {{else}}
       <div class="inline-label-data-block">

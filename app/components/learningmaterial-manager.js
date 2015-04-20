@@ -50,7 +50,18 @@ export default Ember.Component.extend({
           materials.removeObject(subject);
         });
       });
-
-    }
+    },
+    changeRequired: function(value){
+      this.get('learningMaterial').set('required', value);
+      this.get('learningMaterial').save();
+    },
+    changePublicNotes: function(value){
+      this.get('learningMaterial').set('publicNotes', value);
+      this.get('learningMaterial').save();
+    },
+    changeNotes: function(value){
+      this.get('learningMaterial').set('notes', value);
+      this.get('learningMaterial').save();
+    },
   }
 });

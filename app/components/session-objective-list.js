@@ -13,6 +13,13 @@ export default Ember.Component.extend({
     },
     manageDescriptors: function(objective){
       this.sendAction('manageDescriptors', objective);
-    }
+    },
+    changeObjectiveTitle: function(value, id){
+      var objective = this.get('objectives').findBy('id', id);
+      if(objective){
+        objective.set('title', value);
+        objective.save();
+      }
+    },
   }
 });

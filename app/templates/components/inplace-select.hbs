@@ -3,7 +3,7 @@
 {{else}}
   <span class='editor'>
     <span class='control'>
-      {{#x-select value=computedValue action="changeSelection"}}
+      {{#x-select value=workingValue action="changeSelection"}}
         {{#if showSelectPrompt}}
           {{#x-option value=null}}{{selectPrompt}}{{/x-option}}
         {{/if}}

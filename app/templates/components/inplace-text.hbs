@@ -1,15 +1,16 @@
 <span class='content'>
   {{#unless isEditing}}
-    <span {{action 'edit'}} class='editable'>{{displayValue}}</span>
+    <span {{action 'edit'}} class='editable'>
+      {{#if workingValue}}
+        {{workingValue}}
+      {{else}}
+        {{clickPrompt}}
+      {{/if}}
+    </span>
   {{else}}
     <span class='editor'>
       <span class='control'>
-        {{view "select"
-          content=options
-          value=selectedValue
-          optionValuePath=optionValuePath
-          optionLabelPath=optionLabelPath
-        }}
+        {{input type='text' value=workingValue action='save'}}
       </span>
       <span class='actions'>
         <button class='save' {{action 'save'}}>{{fa-icon 'check' classNames='add'}}</button>

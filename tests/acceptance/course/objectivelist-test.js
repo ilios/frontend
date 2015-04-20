@@ -131,3 +131,32 @@ test('long objective', function(assert) {
     });
   });
 });
+
+test('edit objective title', function(assert) {
+  assert.expect(3);
+  var objective = server.create('objective', {
+    courses: [1],
+  });
+
+  fixtures.course = server.create('course', {
+    year: 2013,
+    owningSchool: 1,
+    objectives: [1]
+  });
+  visit(url);
+  andThen(function() {
+    var container = find('.course-objective-list');
+    let td = find('tbody tr:eq(0) td:eq(0)', container);
+    assert.equal(getElementText(td), getText(objective.title));
+    click('.editable span', td);
+    andThen(function(){
+      var textArea = find('textarea', td);
+      assert.equal(getText(textArea.val()), getText(objective.title));
+      fillIn(textArea, 'new title');
+      click(find('.actions .save', td));
+    });
+    andThen(function(){
+      assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('new title'));
+    });
+  });
+});

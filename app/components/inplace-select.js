@@ -1,22 +1,13 @@
 import Ember from 'ember';
-import layout from '../templates/components/inplace-select';
+import InPlace from 'ilios/mixins/inplace';
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
-  layout: layout,
-  tagName: 'span',
+export default Ember.Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-select'],
-  value: null,
-  //we use a computed value in case an objecte gets passed in that doesn't yet exist
-  // like course.clerkshipType.id when no clerkship type has been set
-  computedValue: Ember.computed.oneWay('value'),
   selectPromptTranslation: null,
-  clickPromptTranslation: 'general.clickToEdit',
   showSelectPrompt: Ember.computed.notEmpty('selectPromptTranslation'),
   options: [],
   optionLabelPath: 'title',
   optionValuePath: 'id',
-  isEditing: false,
-  buffer: null,
   displayValue: function(){
     var self = this;
     var displayValue;
@@ -55,23 +46,4 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
 
     return proxies;
   }.property('options.@each', 'optionLabelPath', 'optionValuePath', 'selectPromptTranslation'),
-  actions: {
-    changeSelection: function(newValue){
-      this.set('computedValue', newValue);
-    },
-    edit: function(){
-      this.set('buffer', this.get('computedValue'));
-      this.set('isEditing', true);
-    },
-    cancel: function(){
-      this.set('computedValue', this.get('buffer'));
-      this.set('buffer', null);
-      this.set('isEditing', false);
-    },
-    save: function(){
-      this.sendAction('save', this.get('computedValue'));
-      this.set('buffer', null);
-      this.set('isEditing', false);
-    }
-  }
 });

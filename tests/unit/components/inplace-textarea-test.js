@@ -3,19 +3,19 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('editable-textarea', 'EditableTextareaComponent', {
-  // specify the other units that are required for this test
+moduleForComponent('inplace-textarea', {
+  // Specify the other units that are required for this test
   needs: ['component:big-text']
 });
 
 test('it renders', function(assert) {
   assert.expect(2);
 
-  // creates the component instance
+  // Creates the component instance
   var component = this.subject();
   assert.equal(component._state, 'preRender');
 
-  // appends the component to the page
-  this.append();
+  // Renders the component to the page
+  this.render();
   assert.equal(component._state, 'inDOM');
 });

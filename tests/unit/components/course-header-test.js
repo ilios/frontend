@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('course-header', 'CourseHeaderComponent', {
   needs: [
-    'component:editable-text',
+    'component:inplace-text',
     'component:publication-status',
     'component:action-menu',
     'helper:fa-icon',

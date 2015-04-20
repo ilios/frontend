@@ -8,7 +8,17 @@ export default Ember.Component.extend({
   directorsSort: ['lastName', 'firstName'],
   directorsWithFullName: Ember.computed.filterBy('course.directors', 'fullName'),
   sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
-  levelOptions: [1,2,3,4,5],
+  levelOptions: function(){
+    var arr = [];
+    for(let i=1;i<=5; i++){
+      arr.pushObject(Ember.Object.create({
+        id: i,
+        title: i
+      }));
+    }
+
+    return arr;
+  }.property(),
   classNames: ['course-overview'],
   clerkshipTypeOptions: function(){
     var deferred = Ember.RSVP.defer();
@@ -57,6 +67,22 @@ export default Ember.Component.extend({
           }
         });
       }
-    }
+    },
+    changeStartDate: function(newDate){
+      this.get('course').set('startDate', newDate);
+      this.get('course').save();
+    },
+    changeEndDate: function(newDate){
+      this.get('course').set('endDate', newDate);
+      this.get('course').save();
+    },
+    changeExternalId: function(value){
+      this.get('course').set('externalId', value);
+      this.get('course').save();
+    },
+    changeLevel: function(value){
+      this.get('course').set('level', value);
+      this.get('course').save();
+    },
   }
 });

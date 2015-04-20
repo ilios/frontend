@@ -6,10 +6,10 @@ import {
 moduleForComponent('learningmaterial-manager', {
   // specify the other units that are required for this test
   needs: [
-    'component:editable-boolean',
     'component:mesh-manager',
     'component:search-box',
-    'component:editable-textarea',
+    'component:inplace-boolean',
+    'component:inplace-textarea',
     'component:inplace-select'
   ]
 });

@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('new-session', {
   // specify the other units that are required for this test
-  needs: ['component:editable-select']
+  needs: ['component:inplace-select']
 });
 
 test('it renders', function(assert) {

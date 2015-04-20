@@ -96,5 +96,9 @@ export default Ember.Component.extend({
         }
       });
     },
+    changeTitle: function(newTitle){
+      this.get('course').set('title', newTitle);
+      this.get('course').save();
+    },
   }
 });
