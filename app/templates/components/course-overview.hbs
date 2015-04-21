@@ -8,7 +8,7 @@
     {{/link-to}}
   </div>
   <div class='detail-content'>
-    {{#if editing}}
+    {{#if editable}}
       <div class="inline-label-data-block coursestartdate">
         <label>{{t "general.start"}}:</label>
         <div>{{inplace-date value=course.startDate save='changeStartDate'}}</div>
