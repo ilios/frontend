@@ -2,7 +2,7 @@
   <div class="backtolink">{{#link-to 'course' course}}{{t 'sessions.backToSessionList'}}{{/link-to}}</div>
   {{session-details
     session=model
-    course=course
+    course=course.model
     availableTopics=course.availableTopics
     programs=course.programs
     sessionTypes=sessionTypes
