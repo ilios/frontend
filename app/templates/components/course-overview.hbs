@@ -8,7 +8,7 @@
     {{/link-to}}
   </div>
   <div class='detail-content'>
-    {{#if editing}}
+    {{#if editable}}
       <div class="inline-label-data-block coursestartdate">
         <label>{{t "general.start"}}:</label>
         <div>{{inplace-date value=course.startDate save='changeStartDate'}}</div>
@@ -58,7 +58,13 @@
       </div>
       <div class="inline-label-data-block courseexternalid">
         <label>{{t "courses.externalId"}}:</label>
-        <div>{{course.externalId}}</div>
+        <div>
+          {{#if course.externalId.length}}
+            {{course.externalId}}
+          {{else}}
+            {{t 'general.none'}}
+          {{/if}}
+        </div>
       </div>
       <div class="inline-label-data-block courselevel">
         <label>{{t "courses.level"}}:</label>
@@ -94,21 +100,5 @@
     {{/if}}
     <br />
     <br />
-    <div class="inline-label-data-block">
-      <label>{{t "general.associatedGroups"}}:</label>
-      <div>
-        {{#if course.associatedLearnerGroups.isFulfilled}}
-          <span>
-            {{#each group in course.associatedLearnerGroups}}
-              {{group.title}},
-            {{else}}
-              {{t 'general.none'}}
-            {{/each}}
-          </span>
-        {{else}}
-          {{loading-part}}
-        {{/if}}
-      </div>
-    </div>
   </div>
 </section>

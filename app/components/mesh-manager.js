@@ -14,6 +14,10 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'courses.meshSearchPlaceholder',
   terms: [],
   searchResults: [],
+  searching: false,
+  searchReturned: false,
+  sortTerms: ['title'],
+  sortedSearchResults: Ember.computed.sort('searchResults', 'sortTerms'),
   sortedTerms: function(){
     var terms = this.get('terms');
     if(!terms || terms.length === 0){
@@ -24,6 +28,8 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   actions: {
     search: function(query){
       var self = this;
+      this.set('searchReturned', false);
+      this.set('searching', true);
       var terms = this.get('terms');
       this.get('store').find('mesh-descriptor', {q: query}).then(function(descriptors){
         let results = descriptors.map(function(descriptor){
@@ -32,11 +38,15 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
             terms: terms
           });
         });
+        self.set('searchReturned', true);
+        self.set('searching', false);
         self.set('searchResults', results);
       });
     },
     clear: function(){
       this.set('searchResults', []);
+      this.set('searchReturned', false);
+      this.set('searching', false);
     },
     add: function(term){
       this.sendAction('add', term.get('content'));
