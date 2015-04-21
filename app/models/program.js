@@ -12,5 +12,7 @@ export default DS.Model.extend({
   cohortPromises: Ember.computed.mapBy('programYears', 'cohort'),
   cohorts: Ember.computed.mapBy('cohortPromises', 'content'),
   publishEvent: DS.belongsTo('publish-event', {async: true}),
-  curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true})
+  curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
+  courseCounts: Ember.computed.mapBy('programYears', 'cohort.courses.length'),
+  courseCount: Ember.computed.sum('courseCounts'),
 });

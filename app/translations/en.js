@@ -18,6 +18,7 @@ var general = {
   'scheduled': 'Scheduled',
   'competencies': 'Competencies',
   'courses': 'Courses',
+  'programs': 'Programs',
   'objectives': 'Objectives',
   'objective': 'Objective',
   'directors': 'Directors',
@@ -77,57 +78,17 @@ var general = {
   'other': 'Other',
   'singleDay': 'Single Day',
   'multiDay': 'Multi Day',
+  'classOf': 'Class of {{year}}',
 };
 translations.general = general;
 
 var programs = {
-  'allPrograms': 'All Programs',
-  'programs': 'Programs',
-  'selectSchool': 'Select School',
-  'program': {
-    'title': 'Program Title',
-    'shortTitle': 'Short Title',
-    'duration': 'Duration',
-    'durationYears': {
-      'one': '1 year',
-      'other': '{{count}} years'
-    },
-    'editingProgram': 'Editing {{title}}',
-    'createNew': 'Create a New Program'
-  },
-  'programYear': {
-    'createNew': 'Create a New Program Year',
-    'addDirector': 'Add Director',
-    'removeDirector': 'Remove Director',
-    'addCompetency': 'Add Competency',
-    'removeCompetency': 'Remove Competency',
-    'addTopic': 'Add Topic',
-    'removeTopic': 'Remove Topic',
-    'stewardingSchools': 'Stewarding Schools',
-    'classOf': 'Class of {{year}}',
-    'objectives': {
-      'showFullTitle': 'Show Full Title Text',
-      'new': 'Create a new objective'
-    },
-    'competencies': {
-      'available': 'Available Competencies',
-      'selected': 'Selected Competencies'
-    },
-    'topics': {
-      'available': 'Available Topics',
-      'selected': 'Selected Topics'
-    },
-    'stewardingSchool': {
-      'available': 'Available Schools',
-      'selected': 'Selected Schools'
-    },
-    'directors': {
-      'available': 'Available Directors',
-      'selected': 'Selected Directors',
-      'noResults': 'Your seach returned no results.',
-      'search': 'Search for directors'
-    }
-  }
+  'programTitle': 'Program Title',
+  'titleFilterPlaceholder': 'Filter by Program Title',
+  'programTitlePlaceholder': 'Enter a title for this program',
+  'new': 'New Program',
+  'confirmRemove': 'Are you sure you want to delete this program, with {{programYearCount}} program years and {{courseCount}} courses? This action will remove all courses and activities related to this program, and cannot be undone.',
+
 };
 translations.programs = programs;
 

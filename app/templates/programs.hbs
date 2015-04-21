@@ -1,1 +1,52 @@
-Comming soon...
+<section id='programs' class='fullwidth main-border'>
+  <div class="filter-tools">
+    <div id='schoolsfilter' class="filter">
+      <label class="inline-label">
+        {{t 'general.school'}}:
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if hasMoreThanOneSchool}}
+          {{#action-menu title=selectedSchool.title icon=false}}
+            {{#each school in schools}}
+              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
+            {{/each}}
+          {{/action-menu}}
+        {{else}}
+          {{selectedSchool.title}}
+        {{/if}}
+      </div>
+    </div>
+    <!--  some empty filters to move title all the way to the right-->
+    <div class="filter"></div>
+    <div class="filter"></div>
+    <div id='titlefilter' class="filter">
+      {{input type='text' value=titleFilter placeholder=placeholderValue}}
+    </div>
+  </div>
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{t 'general.programs'}}</h2>
+      </div>
+      <div class='resultslist-actions'>
+        <button class='add' {{action 'addProgram'}}>{{t 'general.addNew'}}</button>
+      </div>
+    </div>
+
+
+    {{#if newPrograms.length}}
+      <section class='resultslist-new'>
+        {{#each program in newPrograms}}
+          {{new-program program=program save='saveNewProgram' cancel='removeNewProgram'}}
+        {{/each}}
+      </section>
+    {{/if}}
+    <div class='resultslist-list'>
+      {{program-list
+        programs=filteredPrograms
+        edit='editProgram'
+        remove='removeProgram'
+      }}
+    </div>
+  </section>
+</section>

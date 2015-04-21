@@ -1,0 +1,40 @@
+<table>
+  <thead>
+    <tr>
+      <th class='text-center' colspan=3>{{t 'programs.programTitle'}}</th>
+      <th class='text-center' colspan=2>{{t 'general.school'}}</th>
+      <th class='text-center' colspan=2>{{t 'general.status'}}</th>
+      <th class='text-center' colspan=2>{{t 'general.actions'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each program in proxiedPrograms}}
+      <tr class="{{if program.showRemoveConfirmation 'confirm-removal'}}">
+        <td class='text-left' colspan=3>
+          {{#link-to 'program' program.content}}
+            {{program.title}}
+          {{/link-to}}
+        </td>
+        <td class='text-center' colspan=2 {{action 'edit' program}}>{{program.owningSchool.title}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' program}}>{{publication-status item=program showIcon=false}}</td>
+        <td class='text-center' colspan=2>
+          {{#action-menu}}
+            <li {{action 'edit' program}}>{{t 'general.edit'}}</li>
+            <li {{action 'confirmRemove' program}}>{{t 'general.remove'}}</li>
+          {{/action-menu}}
+        </td>
+      </tr>
+      {{#if program.showRemoveConfirmation}}
+        <tr class='confirm-removal'><td colspan=16>
+          <div class='confirm-message'>
+            {{t 'programs.confirmRemove' programYearCount=program.programYears.length courseCount=program.courseCount}} <br />
+           <div class="confirm-buttons">
+            <button {{action 'remove' program}} class='remove'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' program}} class='cancel'>{{t 'general.cancel'}}</button>
+          </div>
+          </div>
+        </td></tr>
+      {{/if}}
+    {{/each}}
+  </tbody>
+</table>
