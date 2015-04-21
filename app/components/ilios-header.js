@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  userName: ''
+  currentUser: Ember.inject.service(),
+  userName: Ember.computed.oneWay('currentUser.model.fullName'),
 });
