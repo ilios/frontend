@@ -4,9 +4,10 @@
   {{/link-to}}
   <div class="tools">
     <div class='user'>
-      {{userName}}
+      {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
+        <li>{{t "navigation.logout"}}</li>
+      {{/action-menu}}
     </div>
-    <a href="ilios.php/authentication_controller?logout=yes" class="authentication">{{t "navigation.logout"}}</a>
   </div>
   <h1>{{title}}</h1>
 </header>
