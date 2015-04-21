@@ -27,6 +27,7 @@ Router.map(function() {
   this.route("loading");
   this.route('programs');
   this.route('learnergroups');
+  this.route('program', { path: 'program/:program_id'});
 });
 
 export default Router;
