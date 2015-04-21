@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['detail-topics'],
   subject: null,
   isManaging: false,
   //keep track of our initial state so we can roll back
