@@ -94,21 +94,5 @@
     {{/if}}
     <br />
     <br />
-    <div class="inline-label-data-block">
-      <label>{{t "general.associatedGroups"}}:</label>
-      <div>
-        {{#if course.associatedLearnerGroups.isFulfilled}}
-          <span>
-            {{#each group in course.associatedLearnerGroups}}
-              {{group.title}},
-            {{else}}
-              {{t 'general.none'}}
-            {{/each}}
-          </span>
-        {{else}}
-          {{loading-part}}
-        {{/if}}
-      </div>
-    </div>
   </div>
 </section>
