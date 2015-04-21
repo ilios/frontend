@@ -28,10 +28,6 @@ matrix:
     - env: "EMBER_VERSION='ember-beta'"
     - env: "EMBER_VERSION='ember-canary'"
 
-cache:
-  directories:
-    - node_modules
-
 before_install:
   - "npm config set spin false"
   - "npm install -g npm@^2"
