@@ -13,7 +13,7 @@ moduleForComponent('session-overview', {
     'component:publication-status',
     'component:action-menu',
     'helper:fa-icon',
-    'component:wave-loader',
+    'component:pulse-loader',
     'component:boolean-check',
   ]
 });

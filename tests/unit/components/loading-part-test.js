@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('loading-part', {
   // specify the other units that are required for this test
-  needs: ['component:wave-loader']
+  needs: ['component:pulse-loader']
 });
 
 test('it renders', function(assert) {
