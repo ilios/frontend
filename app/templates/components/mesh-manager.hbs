@@ -4,12 +4,25 @@
   {{/each}}
 </ul>
 {{search-box placeholder=placeholder liveSearch=false search='search' clear='clear'}}
-{{#if searchResults.length}}
-  <div class='selectable-list'>
-    <ul class='mesh-search-results'>
-      {{#each term in searchResults}}
-        <li {{bind-attr class='term.isActive::disabled'}} {{action 'add' term}}>{{term.title}}</li>
-      {{/each}}
-    </ul>
-  </div>
+
+{{#if searching}}
+  <ul class='results'>
+    <li>{{t 'general.currentlySearchingPrompt'}}</li>
+  </ul>
+{{else}}
+  {{#if sortedSearchResults.length}}
+    <div class='selectable-list'>
+      <ul class='mesh-search-results'>
+        {{#each term in sortedSearchResults}}
+          <li {{bind-attr class='term.isActive::disabled'}} {{action 'add' term}}>{{term.title}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{else}}
+    {{#if searchReturned}}
+      <ul class='results'>
+        <li>{{t 'general.noSearchResultsPrompt'}}</li>
+      </ul>
+    {{/if}}
+  {{/if}}
 {{/if}}
