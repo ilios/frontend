@@ -7,7 +7,7 @@ moduleForComponent('print-course', {
   // specify the other units that are required for this test
   needs: [
     'component:publication-status',
-    'component:wave-loader',
+    'component:pulse-loader',
     'component:loading-part',
   ]
 });

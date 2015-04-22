@@ -1,0 +1,27 @@
+.pulseloader {
+  @include keyframes(pulse) {
+    0% {
+      stroke-dashoffset: 691;
+     }
+
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .text {
+    color: $ilios-orange;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  &.is-full-size {
+    @include align-items(center);
+    @include display(flex);
+    min-height: 100px;
+  }
+
+  .path {
+    @include animation(pulse 2.2s infinite ease-in-out);
+  }
+}
