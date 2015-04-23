@@ -27,7 +27,10 @@ Router.map(function() {
   this.route("loading");
   this.route('programs');
   this.route('learnergroups');
-  this.route('program', { path: 'program/:program_id'});
+  this.resource('program', { path: 'program/:program_id'}, function(){
+    this.route("programYear", {path: '/programyear/:program-year_id'});
+    this.route('publicationcheck');
+  });
 });
 
 export default Router;

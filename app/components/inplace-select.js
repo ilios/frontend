@@ -46,4 +46,12 @@ export default Ember.Component.extend(InPlace, {
 
     return proxies;
   }.property('options.@each', 'optionLabelPath', 'optionValuePath', 'selectPromptTranslation'),
+  actions: {
+    changeSelection: function(newValue){
+      this.set('workingValue', newValue);
+      if(this.get('saveOnChange')){
+        this.send('save');
+      }
+    },
+  }
 });

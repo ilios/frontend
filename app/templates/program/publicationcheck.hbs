@@ -1,0 +1,31 @@
+<div class='program-publication-check'>
+  <section class='detail-block'>
+    <div class='detail-title'>
+      {{t 'publish.missingItems'}} ({{model.allPublicationIssuesLength}})
+    </div>
+    <div class='detail-content'>
+      <table>
+        <thead>
+          <tr>
+              <th>{{t 'general.title'}}</th>
+              <th>{{t 'programs.programTitleShort'}}</th>
+              <th>{{t 'programs.durationInYears'}}</th>
+              <th>{{t 'general.programYears'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{model.title}}</td>
+            <td>{{model.shortTitle}}</td>
+            <td>{{model.duration}}</td>
+            {{#if model.programYears.length}}
+              <td class='yes'>{{t 'general.yes'}} ({{model.programYears.length}})</td>
+            {{else}}
+              <td class='no'>{{t 'general.no'}}</td>
+            {{/if}}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

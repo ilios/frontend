@@ -1,0 +1,29 @@
+<div class='detail-header'>
+  <span class='title'>
+    {{#if program}}
+      {{inplace-text tagName='h2' value=program.title save='changeTitle'}}
+    {{/if}}
+  </span>
+  <span class ='actions'>
+    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :program-publication-menu :right-edge'}}
+      {{#if showAsIs}}
+        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+      {{/if}}
+      {{#if showPublish}}
+        <li class='good' {{action 'publish'}}>{{t 'publish.publishProgram'}}</li>
+      {{/if}}
+      {{#if showReview}}
+        {{#link-to 'program.publicationcheck' program}}
+          <li class='good' >{{t 'publish.reviewMissingItems' countBinding='program.allPublicationIssuesLength'}}</li>
+        {{/link-to}}
+      {{/if}}
+      {{#if showTbd}}
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{/if}}
+      {{#if showUnPublish}}
+        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishProgram'}}</li>
+      {{/if}}
+
+    {{/action-menu}}
+  </span>
+</div>

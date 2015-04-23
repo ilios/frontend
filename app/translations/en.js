@@ -36,6 +36,7 @@ var general = {
   'people': 'People',
   'users': 'Users',
   'sessions': 'Sessions',
+  'programYears': 'Program Years',
   'learners': 'Learners',
   'school': 'School',
   'year': 'Year',
@@ -88,7 +89,11 @@ var programs = {
   'programTitlePlaceholder': 'Enter a title for this program',
   'new': 'New Program',
   'confirmRemove': 'Are you sure you want to delete this program, with {{programYearCount}} program years and {{courseCount}} courses? This action will remove all courses and activities related to this program, and cannot be undone.',
-
+  'backToPrograms': 'Back to Programs',
+  'programTitleShort': 'Program Title (short)',
+  'durationInYears': 'Duration (in Years)',
+  'noProgramYears': 'There are no program years in this program',
+  'matriculationYear': 'Matriculation year',
 };
 translations.programs = programs;
 
@@ -254,6 +259,8 @@ var publish = {
   'unPublishSession': 'UnPublish Session',
   'publishCourse': 'Publish Course',
   'unPublishCourse': 'UnPublish Course',
+  'publishProgram': 'Publish Program',
+  'unPublishProgram': 'UnPublish Program',
 };
 translations.publish = publish;
 
