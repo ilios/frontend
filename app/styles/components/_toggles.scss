@@ -162,7 +162,7 @@
   position: relative;
   display: inline-block;
   vertical-align: top;
-  width: 106px;
+  width: 96px;
   height: 20px;
   padding: 3px;
   background-color: white;
@@ -176,7 +176,11 @@
 }
 
 .switch-wide > .switch-input:checked ~ .switch-handle {
+<<<<<<< HEAD
   left: 20px;
+=======
+  left: 13px;
+>>>>>>> added calendar toggle styling, aligned section title, toggle, and actions for offerings, refs #424
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -185,7 +189,7 @@
 }
 
 .switch-wide > .switch-input:checked ~ .switch-label {
-  background: #4fb845;
+  background: $toggle-background-grey;
  
 }
 
@@ -212,13 +216,42 @@
 }
 
 .switch-blue > .switch-input:checked ~ .switch-label {
-  background: #009ccc;
+  background: $toggle-background-grey;
 }
 
 .switch-blue > .switch-input:checked ~ .switch-handle {
-  left: 104px;
+  left: 96px;
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
+
+.switch.calendar {
+  width: 120px;
+
+  .switch-input:checked ~ .switch-label {
+    background: #5accef;
+  }
+
+  .switch-input ~ .switch-label {
+    background: $toggle-background-grey;
+    color: #ddd;
+  }
+
+  .switch-input:checked ~ .switch-handle {
+    left: 98px;
+  }
+
+  /* the no/off selection */
+  .switch-label:before {
+    right: 12px;
+  }
+
+  /* the yes/on selection */
+  .switch-label:after {
+    left: 12px;
+  }
+
+}
+
 
 /* Offerings */
 .switch-offering {
