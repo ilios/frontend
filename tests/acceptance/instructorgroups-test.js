@@ -230,6 +230,56 @@ test('cancel remove instructorgroup', function(assert) {
   });
 });
 
+test('confirmation of remove message', function(assert) {
+  server.create('user', {id: 4136});
+  server.createList('user', 5, {
+    instructorGroups: [1]
+  });
+  server.create('course', {
+    sessions: [1]
+  });
+  server.create('course', {
+    sessions: [2]
+  });
+  server.create('session', {
+    course: 1,
+    offerings: [1]
+  });
+  server.create('session', {
+    course: 2,
+    offerings: [2]
+  });
+  server.create('offering', {
+    instructorGroups: [1],
+    session: 1
+  });
+  server.create('offering', {
+    instructorGroups: [1],
+    session: 2
+  });
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    school: 1,
+    users: [2,3,4,5,6],
+    offerings: [1,2]
+  });
+  assert.expect(5);
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(1, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
+      click('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(1)').then(function(){
+        assert.ok(find('.resultslist-list tbody tr:eq(0)').hasClass('confirm-removal'));
+        assert.ok(find('.resultslist-list tbody tr:eq(1)').hasClass('confirm-removal'));
+        assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
+      });
+    });
+  });
+});
+
 test('click edit takes you to instructorgroup route', function(assert) {
   assert.expect(2);
   server.create('user', {id: 4136});

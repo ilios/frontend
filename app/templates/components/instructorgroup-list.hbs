@@ -27,9 +27,9 @@
         </td>
       </tr>
       {{#if instructorGroup.showRemoveConfirmation}}
-        <tr class='confirm-removal'><td colspan=16>
+        <tr class='confirm-removal'><td colspan=9>
           <div class='confirm-message'>
-            {{t 'instructorGroups.confirmRemove' instructorGroupYearCount=instructorGroup.instructorGroupYears.length courseCount=instructorGroup.courseCount}} <br />
+            {{t 'instructorGroups.confirmRemove' instructorCount=instructorGroup.users.length courseCount=instructorGroup.courses.length}} <br />
            <div class="confirm-buttons">
             <button {{action 'remove' instructorGroup}} class='remove'>{{t 'general.yes'}}</button>
             <button {{action 'cancelRemove' instructorGroup}} class='cancel'>{{t 'general.cancel'}}</button>
