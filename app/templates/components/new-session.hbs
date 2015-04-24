@@ -1,11 +1,11 @@
 <section class='newsession form-container'>
   <div class="newsession-title">{{t 'sessions.new'}}</div>
   <div class="detail-content">
-    <label class="form-column form-column-100">
+    <label class="form-col form-col-12">
       <div class="form-label">{{t 'general.title'}}:</div> 
       <div class="form-data form-data-text form-input-row">{{input value=session.title placeholder=placeholder}}</div>
     </label>
-    <label class="form-column form-column-100">
+    <label class="form-col form-col-12">
       <div class="form-label">{{t "sessions.type"}}:</div>
       <div class="form-data form-data-select form-input-row">
       {{#if sortedSessionTypes}}
@@ -22,7 +22,7 @@
       {{/if}}
       </div>
     </label>
-    <label class="form-column-100 form-data-submit">
+    <label class="form-col-12 form-data-submit">
       <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
       <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
     </label>
