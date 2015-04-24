@@ -19,13 +19,14 @@ matrix:
   allow_failures:
     - env: EMBER_VERSION='ember-beta'
     - env: EMBER_VERSION='ember-canary'
-    - env: "TESTEM_LAUNCHER='SauceLabs_IE_10' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true"
   include:
-    - env: "TESTEM_LAUNCHER='SauceLabs_Chrome' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SauceLabs_Firefox' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SauceLabs_IE_10' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SauceLabs_IE_11' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SauceLabs_Safari_7' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_firefox' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_safari_8' START_SAUCE_CONNECT=true"
     - env: "EMBER_VERSION='ember-beta'"
     - env: "EMBER_VERSION='ember-canary'"
 
