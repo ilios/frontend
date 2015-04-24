@@ -34,14 +34,14 @@ before_install:
 
 install:
   - npm install -g bower
-  - npm install
+  - travis_retry npm install
 
 before_script:
   # Create a sauce tunnel
   - if [ "$START_SAUCE_CONNECT" = true ]; then ember start-sauce-connect; fi
 
 script:
-  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
+  - travis_wait ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
 
 after_script:
   # Destroy the sauce tunnel
