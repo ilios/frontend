@@ -65,20 +65,18 @@ test('list groups', function(assert) {
   var secondInstructorgroup = server.create('instructorGroup', {
     school: 1
   });
-  assert.expect(9);
+  assert.expect(7);
   visit('/instructorgroups');
   andThen(function() {
     assert.equal(2, find('.resultslist-list tbody tr').length);
     var rows = find('.resultslist-list tbody tr');
     assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))),getText('school 0'));
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 5);
-    assert.equal(getElementText(find('td:eq(3)', rows.eq(0))), 2);
+    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 5);
+    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
 
     assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondInstructorgroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))),getText('school 0'));
+    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
     assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
-    assert.equal(getElementText(find('td:eq(3)', rows.eq(1))), 0);
   });
 });
 
@@ -194,8 +192,8 @@ test('remove instructorgroup', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(1)').then(function(){
+    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
+      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
         click('.confirm-buttons .remove');
       });
     });
@@ -218,8 +216,8 @@ test('cancel remove instructorgroup', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(1)').then(function(){
+    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
+      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
         click('.confirm-buttons .cancel');
       });
     });
@@ -270,8 +268,8 @@ test('confirmation of remove message', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(1)').then(function(){
+    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
+      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
         assert.ok(find('.resultslist-list tbody tr:eq(0)').hasClass('confirm-removal'));
         assert.ok(find('.resultslist-list tbody tr:eq(1)').hasClass('confirm-removal'));
         assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
@@ -291,8 +289,8 @@ test('click edit takes you to instructorgroup route', function(assert) {
   });
   visit('/instructorgroups');
   andThen(function() {
-    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
-      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(0)');
+    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
+      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0)');
       assert.equal(getElementText(edit), 'Edit');
       click(edit);
     });
