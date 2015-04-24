@@ -1,0 +1,271 @@
+import Ember from 'ember';
+import {
+  module,
+  test
+} from 'qunit';
+import startApp from 'ilios/tests/helpers/start-app';
+
+var application;
+var fixtures = {};
+
+module('Acceptance: Instructor Groups', {
+  beforeEach: function() {
+    application = startApp();
+  },
+
+  afterEach: function() {
+    Ember.run(application, 'destroy');
+  }
+});
+
+test('visiting /instructorgroups', function(assert) {
+  server.create('user', {id: 4136});
+  server.create('school');
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(currentPath(), 'instructorgroups');
+  });
+});
+
+test('list groups', function(assert) {
+  server.create('user', {id: 4136});
+  server.createList('user', 5, {
+    instructorGroups: [1]
+  });
+  server.create('course', {
+    sessions: [1]
+  });
+  server.create('course', {
+    sessions: [2]
+  });
+  server.create('session', {
+    course: 1,
+    offerings: [1]
+  });
+  server.create('session', {
+    course: 2,
+    offerings: [2]
+  });
+  server.create('offering', {
+    instructorGroups: [1],
+    session: 1
+  });
+  server.create('offering', {
+    instructorGroups: [1],
+    session: 2
+  });
+  server.create('school', {
+    instructorGroups: [1,2]
+  });
+  var firstInstructorgroup = server.create('instructorGroup', {
+    school: 1,
+    users: [2,3,4,5,6],
+    offerings: [1,2]
+  });
+  var secondInstructorgroup = server.create('instructorGroup', {
+    school: 1
+  });
+  assert.expect(9);
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(2, find('.resultslist-list tbody tr').length);
+    var rows = find('.resultslist-list tbody tr');
+    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))),getText('school 0'));
+    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 5);
+    assert.equal(getElementText(find('td:eq(3)', rows.eq(0))), 2);
+
+    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondInstructorgroup.title));
+    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))),getText('school 0'));
+    assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
+    assert.equal(getElementText(find('td:eq(3)', rows.eq(1))), 0);
+  });
+});
+
+test('filters by title', function(assert) {
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1,2,3]
+  });
+  var firstInstructorgroup = server.create('instructorGroup', {
+    title: 'specialfirstinstructorgroup',
+    school: 1,
+  });
+  var secondInstructorgroup = server.create('instructorGroup', {
+    title: 'specialsecondinstructorgroup',
+    school: 1
+  });
+  var regularInstructorgroup = server.create('instructorGroup', {
+    title: 'regularinstructorgroup',
+    school: 1
+  });
+  assert.expect(15);
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(3, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+
+    //put these in nested later blocks because there is a 500ms debounce on the title filter
+    fillIn('#titlefilter input', 'first');
+    Ember.run.later(function(){
+      assert.equal(1, find('.resultslist-list tbody tr').length);
+      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+      fillIn('#titlefilter input', 'second');
+      andThen(function(){
+        Ember.run.later(function(){
+          assert.equal(1, find('.resultslist-list tbody tr').length);
+          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondInstructorgroup.title));
+          fillIn('#titlefilter input', 'special');
+          andThen(function(){
+            Ember.run.later(function(){
+              assert.equal(2, find('.resultslist-list tbody tr').length);
+              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
+
+              fillIn('#titlefilter input', '');
+              andThen(function(){
+                Ember.run.later(function(){
+                  assert.equal(3, find('.resultslist-list tbody tr').length);
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+                }, 750);
+              });
+            }, 750);
+          });
+        }, 750);
+      });
+    }, 750);
+  });
+});
+
+test('add new instructorgroup', function(assert) {
+  server.create('user', {id: 4136});
+  server.create('school');
+  assert.expect(1);
+  visit('/instructorgroups');
+  andThen(function() {
+    click('.resultslist-actions .add');
+    fillIn('.newinstructorgroup-title', 'new test tile');
+    click('.newinstructorgroup .done');
+  });
+  andThen(function(){
+    assert.equal(currentPath(), 'instructorgroup');
+  });
+});
+
+test('cancel adding new instructorgroup', function(assert) {
+  assert.expect(6);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    school: 1,
+  });
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(1, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.resultslist-actions .add').then(function(){
+      assert.equal(find('.newinstructorgroup').length, 1);
+      click('.newinstructorgroup .cancel');
+    });
+  });
+  andThen(function(){
+    assert.equal(find('.newinstructorgroup').length, 0);
+    assert.equal(1, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+  });
+});
+
+test('remove instructorgroup', function(assert) {
+  assert.expect(3);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    school: 1,
+  });
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(1, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
+      click('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(1)').then(function(){
+        click('.confirm-buttons .remove');
+      });
+    });
+  });
+  andThen(function(){
+    assert.equal(0, find('.resultslist-list tbody tr').length);
+  });
+});
+
+test('cancel remove instructorgroup', function(assert) {
+  assert.expect(4);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    school: 1,
+  });
+  visit('/instructorgroups');
+  andThen(function() {
+    assert.equal(1, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
+      click('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(1)').then(function(){
+        click('.confirm-buttons .cancel');
+      });
+    });
+  });
+  andThen(function(){
+    assert.equal(1, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+  });
+});
+
+test('click edit takes you to instructorgroup route', function(assert) {
+  assert.expect(2);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    school: 1,
+  });
+  visit('/instructorgroups');
+  andThen(function() {
+    click('.resultslist-list tbody tr:eq(0) td:eq(4) button').then(function(){
+      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(4) li:eq(0)');
+      assert.equal(getElementText(edit), 'Edit');
+      click(edit);
+    });
+  });
+  andThen(function(){
+    assert.equal(currentURL(), '/instructorgroup/1');
+  });
+});
+
+test('click title takes you to instructorgroup route', function(assert) {
+  assert.expect(1);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    school: 1,
+  });
+  visit('/instructorgroups');
+  andThen(function() {
+    click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
+  });
+  andThen(function(){
+    assert.equal(currentURL(), '/instructorgroup/1');
+  });
+});

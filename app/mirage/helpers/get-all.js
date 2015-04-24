@@ -53,7 +53,7 @@ export default function getAll(db, request){
             //sometimes we are looking for empty values like courses with no sessions
             if(obj[param] === undefined && value !== 'null'){
               match = false;
-            }
+            } else
             //convert everything to a string and do a strict comparison
             if(obj[param].toString() !== value.toString()){
               match = false;
