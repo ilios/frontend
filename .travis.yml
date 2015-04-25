@@ -26,7 +26,6 @@ matrix:
     - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true"
     - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true"
     - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SL_safari_8' START_SAUCE_CONNECT=true"
     - env: "EMBER_VERSION='ember-beta'"
     - env: "EMBER_VERSION='ember-canary'"
 
