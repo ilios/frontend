@@ -1,0 +1,40 @@
+<table>
+  <thead>
+    <tr>
+      <th class='text-left' colspan=2>{{t 'instructorGroups.instructorGroupTitle'}}</th>
+      <th class='text-center'>{{t 'instructorGroups.members'}}</th>
+      <th class='text-center'>{{t 'instructorGroups.associatedCourses'}}</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each instructorGroup in proxiedInstructorGroups}}
+      <tr class="{{if instructorGroup.showRemoveConfirmation 'confirm-removal'}}">
+        <td class='text-left' colspan=2>
+          {{#link-to 'instructorgroup' instructorGroup.content}}
+            {{instructorGroup.title}}
+          {{/link-to}}
+        </td>
+        <td class='text-center'>{{instructorGroup.users.length}}</td>
+        <td class='text-center'>{{instructorGroup.courses.length}}</td>
+        <td class='text-right'>
+          {{#action-menu}}
+            <li {{action 'edit' instructorGroup}}>{{t 'general.edit'}}</li>
+            <li {{action 'confirmRemove' instructorGroup}}>{{t 'general.remove'}}</li>
+          {{/action-menu}}
+        </td>
+      </tr>
+      {{#if instructorGroup.showRemoveConfirmation}}
+        <tr class='confirm-removal'><td colspan=5>
+          <div class='confirm-message'>
+            {{t 'instructorGroups.confirmRemove' instructorCount=instructorGroup.users.length courseCount=instructorGroup.courses.length}} <br />
+           <div class="confirm-buttons">
+            <button {{action 'remove' instructorGroup}} class='remove'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' instructorGroup}} class='cancel'>{{t 'general.cancel'}}</button>
+          </div>
+          </div>
+        </td></tr>
+      {{/if}}
+    {{/each}}
+  </tbody>
+</table>

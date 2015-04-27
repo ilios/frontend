@@ -120,18 +120,13 @@ var mesh = {
 translations.mesh = mesh;
 
 var instructorGroups = {
+  'instructorGroupTitle': 'Instructor Group Title',
+  'titleFilterPlaceholder': 'Filter by Instructor Group Title',
+  'instructorGroupTitlePlaceholder': 'Enter a title for this instructor group',
   'new': 'New Instructor Group',
-  'instructorName': 'Instructor Name',
-  'editingGroup': 'Editing {{title}}',
-  'addInstructor': 'Add Instructor',
-  'availalbeInstructors': 'Available Instructors',
-  'searchInstructors': 'Search Instructors',
-  'noSearchResults': 'Your seach returned no results.',
-  'confirmGroupRemovalTitle': 'Remove Instructor Group',
-  'confirmGroupRemovalText': 'Are you sure you want to remove the {{title}} instructor group?',
-  'relatedCourses': 'Related Courses',
-  'selectSchool': 'Select School',
-  'noGroups': 'There are no instructor groups in this school.',
+  'confirmRemove': 'Are you sure you want to delete this instructor group, with {{instructorCount}} instructors and {{courseCount}} courses? This action cannot be undone.',
+  'members': 'Members',
+  'associatedCourses': 'Associated Courses',
 };
 translations.instructorGroups = instructorGroups;
 

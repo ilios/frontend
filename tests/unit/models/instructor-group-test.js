@@ -79,10 +79,11 @@ test('list courses', function(assert) {
   });
 
   Ember.run(function(){
-    var courses = model.get('courses');
-    assert.equal(courses.length, 2);
-    assert.equal(courses.objectAt(0).get('title'), 'course1');
-    assert.equal(courses.objectAt(1).get('title'), 'course2');
+    model.get('courses').then(function(courses){
+      assert.equal(courses.length, 2);
+      assert.equal(courses.objectAt(0).get('title'), 'course1');
+      assert.equal(courses.objectAt(1).get('title'), 'course2');
+    });
   });
 
 });
