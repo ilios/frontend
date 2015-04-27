@@ -22,28 +22,37 @@ export default DS.Model.extend({
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
   courses: function(){
+    var defer = Ember.RSVP.defer();
     var group = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      group.get('offerings').then(function(offerings){
-        var promises = offerings.map(function(offering){
-          return offering.get('session').then(function(session){
-            return session.get('course');
-          });
-        });
-        Ember.RSVP.hash(promises).then(function(hash){
-          var courses = Ember.A();
-          Object.keys(hash).forEach(function(key) {
-            var course = hash[key];
-            if(!courses.contains(course)){
-              courses.pushObject(course);
-            }
-          });
-          resolve(courses);
+    group.get('offerings').then(function(offerings){
+      var promises = offerings.map(function(offering){
+        return offering.get('session').then(function(session){
+          return session.get('course');
         });
       });
+      Ember.RSVP.hash(promises).then(function(hash){
+        var courses = Ember.A();
+        Object.keys(hash).forEach(function(key) {
+          var course = hash[key];
+          if(!courses.contains(course)){
+            courses.pushObject(course);
+          }
+        });
+        defer.resolve(courses);
+      });
+    });
+    return DS.PromiseArray.create({
+      promise: defer.promise
     });
   }.property('offerings.@each'),
   childUsers: Ember.computed.mapBy('children', 'users'),
+  childUserLengths: Ember.computed.mapBy('childUsers', 'length'),
+  childUsersTotal: Ember.computed.sum('childUserLengths'),
+  childrenUsersCounts: Ember.computed.mapBy('children', 'childUsersTotal'),
+  childrenUsersTotal: Ember.computed.sum('childrenUsersCounts'),
+  usersCount: function(){
+    return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
+  }.property('users.length', 'childUsersTotal', 'childrenUsersTotal'),
   availableUsers: function(){
     var group = this;
     return new Ember.RSVP.Promise(function(resolve) {

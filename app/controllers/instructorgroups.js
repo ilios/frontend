@@ -25,9 +25,9 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   filteredInstructorGroups: function(){
     var title = this.get('debouncedFilter');
     var exp = new RegExp(title, 'gi');
-    return this.get('content').filter(function(course) {
+    return this.get('content').filter(function(instructorGroup) {
       let match = true;
-      if(title != null && !course.get('title').match(exp)){
+      if(title != null && !instructorGroup.get('title').match(exp)){
         match = false;
       }
 

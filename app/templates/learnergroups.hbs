@@ -1,1 +1,81 @@
-Coming soon...
+<section id='learnerGroups' class='fullwidth main-border'>
+  <div class="filter-tools">
+    <div id='schoolsfilter' class="filter">
+      <label class="inline-label">
+        {{t 'general.school'}}:
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if hasMoreThanOneSchool}}
+          {{#action-menu title=selectedSchool.title icon=false}}
+            {{#each school in schools}}
+              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
+            {{/each}}
+          {{/action-menu}}
+        {{else}}
+          {{selectedSchool.title}}
+        {{/if}}
+      </div>
+    </div>
+    <div id='programsfilter' class="filter">
+      <label class="inline-label">
+        {{t 'general.program'}}:
+      </label>
+      <div id="program-selection" class="inline-data">
+        {{#if hasMoreThanOneProgram}}
+          {{#action-menu title=selectedProgram.title icon=false}}
+            {{#each program in programs}}
+              <li {{action 'changeSelectedProgram' program}}>{{program.title}}</li>
+            {{/each}}
+          {{/action-menu}}
+        {{else}}
+          {{selectedProgram.title}}
+        {{/if}}
+      </div>
+    </div>
+    <div id='programyearsfilter' class="filter">
+      <label class="inline-label">
+        {{t 'general.cohort'}}:
+      </label>
+      <div id="programyear-selection" class="inline-data">
+        {{#if hasMoreThanOneProgramYear}}
+          {{#action-menu title=selectedProgramYear.cohort.displayTitle icon=false}}
+            {{#each programYear in programYears}}
+              <li {{action 'changeSelectedProgramYear' programYear}}>{{programYear.cohort.displayTitle}}</li>
+            {{/each}}
+          {{/action-menu}}
+        {{else}}
+          {{selectedProgramYear.cohort.displayTitle}}
+        {{/if}}
+      </div>
+    </div>
+    <div id='titlefilter' class="filter">
+      {{input type='text' value=titleFilter placeholder=placeholderValue}}
+    </div>
+  </div>
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{t 'general.learnerGroups'}}</h2>
+      </div>
+      <div class='resultslist-actions'>
+        <button class='add' {{action 'addLearnerGroup'}}>{{t 'general.addNew'}}</button>
+      </div>
+    </div>
+
+
+    {{#if newLearnerGroups.length}}
+      <section class='resultslist-new'>
+        {{#each learnerGroup in newLearnerGroups}}
+          {{new-learnergroup learnerGroup=learnerGroup save='saveNewLearnerGroup' cancel='removeNewLearnerGroup'}}
+        {{/each}}
+      </section>
+    {{/if}}
+    <div class='resultslist-list'>
+      {{learnergroup-list
+        learnerGroups=filteredLearnerGroups
+        edit='editLearnerGroup'
+        remove='removeLearnerGroup'
+      }}
+    </div>
+  </section>
+</section>

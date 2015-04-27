@@ -1,29 +1,40 @@
 <table>
   <thead>
     <tr>
-      <th class='text-left' colspan=3>{{t 'learnerGroups.groupName'}}</th>
-      <th class='text-center' colspan=2>{{t 'learnerGroups.learners'}}</th>
-      <th class='text-center' colspan=2>{{t 'learnerGroups.subGroups'}}</th>
-      <th class='text-center'>{{t 'general.actions'}}</th>
+      <th class='text-left' colspan=2>{{t 'learnerGroups.learnerGroupTitle'}}</th>
+      <th class='text-center'>{{t 'learnerGroups.members'}}</th>
+      <th class='text-center'>{{t 'learnerGroups.subgroups'}}</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
-    {{#each group in sortedGroups}}
-      <tr>
-        <td class='text-left' colspan=3>
-          {{#link-to 'learnergroup' group}}
-            {{group.title}}
+    {{#each learnerGroup in proxiedLearnerGroups}}
+      <tr class="{{if learnerGroup.showRemoveConfirmation 'confirm-removal'}}">
+        <td class='text-left' colspan=2>
+          {{#link-to 'learnergroup' learnerGroup.content}}
+            {{learnerGroup.title}}
           {{/link-to}}
-          </td>
-        <td class='text-center' colspan=2 {{action 'edit' group}}>{{group.users.length}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' group}}>{{group.children.length}}</td>
-        <td class='text-center'>
+        </td>
+        <td class='text-center'>{{learnerGroup.usersCount}}</td>
+        <td class='text-center'>{{learnerGroup.children.length}}</td>
+        <td class='text-right'>
           {{#action-menu}}
-            <li {{action 'edit' group}}>{{t 'general.edit'}}</li>
-            <li {{action 'remove' group}}>{{t 'general.remove'}}</li>
+            <li {{action 'edit' learnerGroup}}>{{t 'general.edit'}}</li>
+            <li {{action 'confirmRemove' learnerGroup}}>{{t 'general.remove'}}</li>
           {{/action-menu}}
         </td>
       </tr>
+      {{#if learnerGroup.showRemoveConfirmation}}
+        <tr class='confirm-removal'><td colspan=5>
+          <div class='confirm-message'>
+            {{t 'learnerGroups.confirmRemove' learnerCount=learnerGroup.usersCount subgroupCount=learnerGroup.children.length}} <br />
+           <div class="confirm-buttons">
+            <button {{action 'remove' learnerGroup}} class='remove'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' learnerGroup}} class='cancel'>{{t 'general.cancel'}}</button>
+          </div>
+          </div>
+        </td></tr>
+      {{/if}}
     {{/each}}
   </tbody>
 </table>
