@@ -3,13 +3,16 @@ body {
   margin-bottom: 40px;
 }
 
+// scss-lint:disable IdSelector
 #site-container {
   @include outer-container;
   padding-left: 40px;
-  section.fullwidth {
+
+  .fullwidth {
     @include span-columns(12);
   }
-  section.halfwidth {
+
+  .halfwidth {
     @include span-columns(5);
   }
 }

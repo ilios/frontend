@@ -1,7 +1,8 @@
+// scss-lint:disable QualifyingElement
 header.main {
   $header-padding: 1em;
-  $header-background: $ilios_orange;
-  $header-color: white;
+  $header-background: $ilios-orange;
+  $header-color: $white;
   $header-height: 60px;
   $horizontal-bar-mode: $large-screen;
   $header-box-width: 250px;
@@ -9,22 +10,25 @@ header.main {
   background-color: $header-background;
   border-bottom: 1px solid darken($header-background, 10);
   height: $header-height;
-  width: 100%;
-  z-index: 999;
+  margin-bottom: $header-height;
   text-align: center;
   vertical-align: bottom;
-  margin-bottom: $header-height;
+  width: 100%;
+  z-index: 999;
+
   @include media($large-screen) {
     margin-bottom: 0;
   }
 
   .logo {
+    float: left;
     max-height: $header-height;
     padding-left: $header-padding;
-    float: left;
+
     @include media($large-screen) {
       width: $header-box-width;
     }
+
     img {
       max-height: $header-height;
       padding: .8em 0;
@@ -32,40 +36,41 @@ header.main {
   }
 
   h1 {
-    display: block;
-    color: $header-color;
-    font-size: $base-font-size * 1.5;
-    padding-top: $header-height / 4;
+    background: $header-grey;
     clear: both;
+    color: $header-color;
+    display: block;
+    font-size: $base-font-size * 1.5;
     margin-bottom: 1em;
-    background: #505050;
+    padding-top: $header-height / 4;
 
     @include media($large-screen) {
-      margin: 0 $header-box-width + 10;
       background: transparent;
       clear: none;
+      margin: 0 $header-box-width + 10;
     }
   }
 
   // Elements on the far right
-
   .tools {
-    display: block;
-    padding-right: $header-padding;
-    padding-left: $header-padding/2;
     background: transparent;
+    display: block;
     float: right;
+    padding-left: $header-padding/2;
+    padding-right: $header-padding;
+
     @include media($large-screen) {
       width: $header-box-width;
     }
-    div.user {
-      margin-top: 1.2em;
-      float: left;
-      @include transition (all 0.2s ease-in-out);
-      display: inline;
+
+    .user {
+      @include transition (all .2s ease-in-out);
       color: $header-color;
-      font-size:$base-font-size * 0.8;
+      display: inline;
+      float: left;
+      font-size: $base-font-size * .8;
       font-weight: 800;
+      margin-top: 1.2em;
       padding: .4em .5em;
 
       @include media($large-screen) {
@@ -73,18 +78,18 @@ header.main {
       }
     }
 
-    a.authentication {
-      margin-top: 1.2em;
-      float: right;
-      @include transition (all 0.2s ease-in-out);
-      display: inline;
+    .authentication {
+      @include transition (all .2s ease-in-out);
       background: $base-accent-color;
       border-radius: $base-border-radius;
       color: $header-color;
-      font-size: $base-font-size * 0.8;
+      display: inline;
+      float: right;
+      font-size: $base-font-size * .8;
       font-weight: 800;
-      text-transform: uppercase;
+      margin-top: 1.2em;
       padding: .4em .5em;
+      text-transform: uppercase;
 
       @include media($large-screen) {
         padding: .5em 1em;

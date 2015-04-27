@@ -1,40 +1,42 @@
 .objective-manager {
+
   h2 {
-    padding: .5em;
-    margin-bottom: 1em;
     background-color: $background-grey;
+    margin-bottom: 1em;
+    padding: .5em;
   }
+
   .selected {
-    color: white;
     background-color: $ilios-orange;
+    color: $white;
   }
+
   .parent-picker {
+    ul {
+      height: auto;
+      line-height: 1.3em;
+    }
 
-   ul{
-    line-height: 1.3em;
-    height: auto;
+    li {
+      list-style-position: outside;
+      margin-left: 1.5em;
+      margin-right: 1.5em;
+      padding: .2em 0 .3em 1.5em;
+      text-indent: -1.2em;
+    }
   }
 
-  li {
-    margin-left: 1.5em;
-    margin-right: 1.5em;
-    list-style-position: outside;
-    padding: .2em 0 .3em 1.5em;
-    text-indent: -1.2em;
-
+  .no-group {
+    color: $ilios-orange;
+    font-weight: bold;
   }
-}
-.no-group {
-  font-weight: bold;
-  color: $ilios-orange;
-}
 
-h5 {
-  background-color: $header-grey;
-  padding: .2em .5em;
-  margin-left: .8em;
-  margin-right: .8em;
-  font-size: .9em;
-  font-weight: bold;
-}
+  h5 {
+    background-color: $header-grey;
+    font-size: .9em;
+    font-weight: bold;
+    margin-left: .8em;
+    margin-right: .8em;
+    padding: .2em .5em;
+  }
 }

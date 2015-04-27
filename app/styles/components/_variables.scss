@@ -1,6 +1,8 @@
 //default properties
-$default-background-color: white;
-$default-text-color: black;
+$white: #fff;
+$black: #000;
+$default-background-color: $white;
+$default-text-color: $black;
 
 // Font Sizes
 $base-font-size: 1em;
@@ -14,23 +16,26 @@ $h6-font-size: $base-font-size;
 $base-line-height: 1.5;
 $base-border-radius: 3px;
 
-$ilios_orange: #CC6600;
+$ilios-orange: #c60;
 
 $background-grey: #fbfbfb;
 $toggle-background-grey: #eceeef;
 $light-grey: #fefefe;
 $header-grey: #edecec;
-$text-grey: #333333;
-$medium-grey: #666666;
+$text-grey: #333;
+$medium-grey: #666;
 $input-box-grey: #cbcbcb;
+$switch-label-blue: #5accef;
+$switch-blue: #47a8d8;
+$switch-green: #4fb845;
+$wave-loader-yellow: #ffc339;
 
 $ilios-red: #d9360b;
 $ilios-green: #84c444;
 $ilios-blue: #009ccc;
 $published-green: $ilios-green;
 $notpublished-amber: #ffc339;
-$scheduled-brown: #8C4600;
-
+$scheduled-brown: #8c4600;
 
 $ilios-accent-color: $ilios-blue;
 $ilios-add-color: $ilios-green;
@@ -41,7 +46,7 @@ $warning-color: #ffc339;
 
 $visual-grid: false;
 $visual-grid-index: front;
-$visual-grid-color: lightblue;
+$visual-grid-color: #add8e6;
 
 $publish-button-color: $ilios-green;
 

@@ -142,7 +142,7 @@ test('open and close details', function(assert) {
     assert.equal(currentPath(), 'course.index');
     var details = find('#course-details .detail-view-details');
     assert.equal(find('.detail-title', details).length, 1);
-    click('.detailCollapsedControl', details).then(function(){
+    click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 7);
       assert.equal(currentURL(), '/course/1?details=true');
     });
@@ -151,7 +151,7 @@ test('open and close details', function(assert) {
   andThen(function() {
     var details = find('#course-details .detail-view-details');
     assert.equal(find('.detail-title', details).length, 7);
-    click('.detailCollapsedControl', details).then(function(){
+    click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 1);
       assert.equal(currentURL(), '/course/1');
     });

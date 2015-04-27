@@ -1,10 +1,11 @@
 table {
   border-collapse: collapse;
+  font-size: $base-font-size * .9;
   margin: ($base-line-height * .5em) 0;
   margin-bottom: 76px;
   table-layout: fixed;
   width: 100%;
-  font-size: $base-font-size * 0.9;
+
   thead {
     background-color: $background-grey;
   }
@@ -18,14 +19,14 @@ table {
   }
 
   td {
-    border: none;
+    border: 0;
     padding: ($base-line-height * .5em / 2) 0;
   }
 
   tr,
   td,
   th {
+    padding: 1em .5em .5em;
     vertical-align: middle;
-    padding: 1em .5em .5em.5em;
   }
 }
