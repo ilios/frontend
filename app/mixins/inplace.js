@@ -16,18 +16,6 @@ export default Ember.Mixin.create(Ember.I18n.TranslateableProperties, {
     //which can be used during the save process
     condition: null,
     actions: {
-      changeSelection: function(newValue){
-        this.set('workingValue', newValue);
-        if(this.get('saveOnChange')){
-          this.send('save');
-        }
-      },
-      toggleValue: function(){
-        this.set('workingValue', !this.get('workingValue'));
-        if(this.get('saveOnChange')){
-          this.send('save');
-        }
-      },
       edit: function(){
         this.set('isEditing', true);
       },

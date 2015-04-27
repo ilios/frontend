@@ -89,15 +89,17 @@ test('filters by title', function(assert) {
 test('add new program', function(assert) {
   server.create('user', {id: 4136});
   server.create('school');
-  assert.expect(1);
+  assert.expect(3);
   visit('/programs');
   andThen(function() {
     click('.resultslist-actions .add');
-    fillIn('.newprogram-title', 'new test tile');
+    fillIn('.newprogram input', 'new test title');
     click('.newprogram .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'program');
+    assert.equal(currentPath(), 'program.index');
+    assert.equal(getElementText(find('.title .content')), getText('new test title'));
+    assert.equal(getElementText(find('.programduration div')), 4);
   });
 });
 

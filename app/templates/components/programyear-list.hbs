@@ -1,0 +1,95 @@
+<section id='programyears' class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.programYears'}} ({{programYears.length}})
+  </div>
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{t 'general.programYears'}}</h2>
+      </div>
+      <div class='resultslist-actions'>
+        <button class='add' {{action 'addNewProgramYear'}}>{{t 'general.addNew'}}</button>
+      </div>
+    </div>
+    {{#if newProgramYears.length}}
+      <section class='resultslist-new'>
+        {{#each programYear in newProgramYears}}
+          {{new-programyear
+            programYear=programYear
+            availableProgramStartYears=availableProgramStartYears
+            save='saveNewProgramYear'
+            cancel='removeNewProgramYear'
+          }}
+        {{/each}}
+      </section>
+    {{/if}}
+    {{#if sortedContent.length}}
+      <div class='resultslist-list'>
+        <table>
+          <thead>
+            <tr>
+              <th class='text-left'>{{t 'programs.matriculationYear'}}</th>
+              <th class='text-left' >{{t 'general.cohort'}}</th>
+              <th class='text-left' >{{t 'general.competencies'}}</th>
+              <th class='text-left' >{{t 'general.objectives'}}</th>
+              <th class='text-left' >{{t 'general.directors'}}</th>
+              <th class='text-left' >{{t 'general.topics'}}</th>
+              <th class='text-center' >{{t 'general.status'}}</th>
+              <th class='text-center' >{{t 'general.actions'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each programYear in sortedContent}}
+              <tr>
+                <td class='text-left'>
+                  {{#link-to 'program.programYear' program programYear}}
+                    {{fa-icon 'external-link-square'}} {{programYear.academicYear}}
+                  {{/link-to}}
+                </td>
+                <td class='text-left'>{{programYear.cohort.displayTitle}}</td>
+
+                <td class='text-left'>
+                  {{#if programYear.competencies.length}}
+                    {{programYear.competencies.length}}
+                  {{else}}
+                    {{fa-icon 'warning' classNames='warning'}}
+                  {{/if}}
+                </td>
+                <td class='text-left'>
+                  {{#if programYear.objectives.length}}
+                    {{programYear.objectives.length}}
+                  {{else}}
+                    {{fa-icon 'warning' classNames='warning'}}
+                  {{/if}}
+                </td>
+                <td class='text-left'>
+                  {{#if programYear.directors.length}}
+                    {{programYear.directors.length}}
+                  {{else}}
+                    {{fa-icon 'warning' classNames='warning'}}
+                  {{/if}}
+                </td>
+                <td class='text-left'>
+                  {{#if programYear.disciplines.length}}
+                    {{programYear.disciplines.length}}
+                  {{else}}
+                    {{fa-icon 'warning' classNames='warning'}}
+                  {{/if}}
+                </td>
+
+                <td class='text-center'>{{publication-status item=programYear showIcon=false}}</td>
+                <td class='text-center'>
+                  {{#action-menu}}
+                    <li {{action 'edit'}}>Edit</li>
+                  {{/action-menu}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{else}}
+      {{t 'programs.noProgramYears'}}
+    {{/if}}
+  </section>
+</section>

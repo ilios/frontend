@@ -1,1 +1,7 @@
-{{outlet}}
+<div class="backtolink">{{#link-to 'programs'}}{{t 'programs.backToPrograms'}}{{/link-to}}</div>
+<section class='full-width'>
+  {{program-details
+    program=model
+  }}
+  {{liquid-outlet}}
+</section>

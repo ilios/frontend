@@ -126,6 +126,9 @@ textarea {
 .backtolink  {
     margin-top: $base-font-size;
 }
+.warning {
+  color: $warning-color;
+}
 
 /* handle the horizontal alignment ('text-align') properties */
 .text-left {
