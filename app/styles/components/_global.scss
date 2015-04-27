@@ -37,20 +37,28 @@ button {
     }
 
     &.cancel {
-      color: $ilios-red;
-      border: 1px solid $ilios-red;
 
-      &:hover {
-        background-color: $ilios-red;
+      &.text {
+        color: $ilios-red;
+        border: 1px solid $ilios-red;
+
+        &:hover {
+          background-color: $ilios-red;
+          color: white;
+        }
       }
     }
 
     &.done {
-      color: $ilios-green;
-      border: 1px solid $ilios-green;
-  
-      &:hover {
-        background-color: $ilios-green;
+
+      &.text {
+        color: $ilios-green;
+        border: 1px solid $ilios-green;
+
+        &:hover {
+          background-color: $ilios-green;
+          color: white;
+        }
       }
     }
 }
