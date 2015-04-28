@@ -53,7 +53,7 @@
     //be sure to leave this in to clear the row by pushing the div out to the margins...
     @include omega();
   }
-  
+
   /* set the styling of the 33% width columns by specifying 4 columns in the class */
   .form-col-4 {
     @include span-columns(2 of 10);
@@ -121,6 +121,7 @@
 .form-label {
   text-align: right;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .form-data {
