@@ -65,13 +65,13 @@
       </div>
     </div>
     {{#if session.isIndependentLearning}}
-    <div class="form-col-4 sessionilmhours">
+    <div class="form-col-4 form-col-4-middle sessionilmhours">
       <label class="form-label">{{t "sessions.hours"}}:</label>
       <div class="form-data">{{inplace-text value=session.ilmSessionFacet.hours save='changeIlmHours'}}</div>
     </div>
-    <div class="form-col-4 sessionilmduedate">
+    <div class="form-col-4 form-col-4-right sessionilmduedate">
       <label class="form-label">{{t "sessions.dueBy"}}:</label>
-      <div>{{inplace-date value=session.ilmSessionFacet.dueDate save='changeIlmDueDate'}}</div>
+      <div class="form-data">{{inplace-date value=session.ilmSessionFacet.dueDate save='changeIlmDueDate'}}</div>
     </div>
     {{/if}}
     <div class="form-col-12 sessiondescription">

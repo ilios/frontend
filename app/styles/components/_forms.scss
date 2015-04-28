@@ -53,14 +53,42 @@
     //be sure to leave this in to clear the row by pushing the div out to the margins...
     @include omega();
   }
-
+  
   /* set the styling of the 33% width columns by specifying 4 columns in the class */
   .form-col-4 {
     @include span-columns(2 of 10);
+    @include omega();
 
     .form-label, .form-data {
       @include span-columns(1 of 2);
+      @include omega();
     }
+
+    .form-data {
+      
+      .editinplace .editor .actions {
+        display: block;
+        text-align: right;
+        width: 90px;
+      }
+      
+    }
+
+    .editinplace .editor input, 
+    .editinplace .editor select,
+    .form-data input[type=text] {
+      /* explicitly override the default min-width of text input fields */
+      min-width: 90px;
+      max-width: 90px;
+      width: 90px;
+    }
+
+    &.form-col-4-middle .form-label,
+    &.form-col-4-right .form-label {
+      margin-right: 15px;
+
+    }
+
 
   }
 
@@ -74,7 +102,7 @@
   }
 
   /* handle the input field widths for 50% (6 columns) and 33%-width (4 columns) columns */
-  .form-col-6, .form-col-4 {
+  .form-col-6 {
     
     .form-data input[type=text]{
       /* explicitly override the default min-width of text input fields */
