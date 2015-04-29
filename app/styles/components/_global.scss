@@ -22,6 +22,48 @@ button {
     padding: 0.3em 1em;
     vertical-align: middle;
     white-space: nowrap;
+
+    &.cancel, &.done {
+      background-color: white;
+      box-sizing:border-box;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      font-weight: bold;
+    
+      &:hover {
+        color: white;
+      }
+
+      &.text {
+       min-width: 66px;
+      }
+    }
+
+    &.cancel {
+
+      &.text {
+        color: $ilios-red;
+        border: 1px solid $ilios-red;
+
+        &:hover {
+          background-color: $ilios-red;
+          color: white;
+        }
+      }
+    }
+
+    &.done {
+
+      &.text {
+        color: $ilios-green;
+        border: 1px solid $ilios-green;
+
+        &:hover {
+          background-color: $ilios-green;
+          color: white;
+        }
+      }
+    }
 }
 
 h2 {
