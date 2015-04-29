@@ -29,10 +29,13 @@ button {
       -moz-box-sizing:border-box;
       -webkit-box-sizing:border-box;
       font-weight: bold;
-      min-width: 66px;
     
       &:hover {
         color: white;
+      }
+
+      &.text {
+       min-width: 66px;
       }
     }
 
