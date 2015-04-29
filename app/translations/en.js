@@ -38,6 +38,7 @@ var general = {
   'sessions': 'Sessions',
   'programYears': 'Program Years',
   'learners': 'Learners',
+  'learnerGroups': 'Learner Groups',
   'school': 'School',
   'year': 'Year',
   'overview': 'Overview',
@@ -131,10 +132,13 @@ var instructorGroups = {
 translations.instructorGroups = instructorGroups;
 
 var learnerGroups = {
-  'subGroups': 'Sub Groups',
-  'learners': 'Learners',
-  'titleFilterPlaceholder': 'Filter by group title',
-  'newGroupTitle': 'New Learner Group'
+  'learnerGroupTitle': 'Learner Group Title',
+  'titleFilterPlaceholder': 'Filter by Learner Group Title',
+  'learnerGroupTitlePlaceholder': 'Enter a title for this learner group',
+  'new': 'New Learner Group',
+  'confirmRemove': 'Are you sure you want to delete this learner group, with {{learnerCount}} learners and {{subgroupCount}} subgroups? This action cannot be undone.',
+  'members': 'Members',
+  'subgroups': 'Subgroups',
 };
 translations.learnerGroups = learnerGroups;
 

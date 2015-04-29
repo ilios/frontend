@@ -26,6 +26,7 @@ Router.map(function() {
   this.route("testmodels");
   this.route("loading");
   this.route('programs');
+  this.route('learnergroup', { path: 'learnergroup/:learner_group_id'});
   this.route('learnergroups');
   this.resource('program', { path: 'program/:program_id'}, function(){
     this.route("programYear", {path: '/programyear/:program-year_id'});

@@ -1,15 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  groups: [],
-  sortBy: ['title'],
-  sortedGroups: Ember.computed.sort('groups', 'sortBy'),
+  learnerGroups: [],
+  proxiedLearnerGroups: function(){
+    return this.get('learnerGroups').map(function(learnerGroup){
+      return Ember.ObjectProxy.create({
+        content: learnerGroup,
+        showRemoveConfirmation: false
+      });
+    });
+  }.property('learnerGroups.@each'),
   actions: {
-    edit: function(group){
-      this.sendAction('edit', group);
+    edit: function(learnerGroupProxy){
+      this.sendAction('edit', learnerGroupProxy.get('content'));
     },
-    remove: function(group){
-      this.sendAction('remove', group);
+    remove: function(learnerGroupProxy){
+      this.sendAction('remove', learnerGroupProxy.get('content'));
+    },
+    cancelRemove: function(learnerGroupProxy){
+      learnerGroupProxy.set('showRemoveConfirmation', false);
+    },
+    confirmRemove: function(learnerGroupProxy){
+      learnerGroupProxy.set('showRemoveConfirmation', true);
     },
   }
 });
