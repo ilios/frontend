@@ -1,5 +1,5 @@
 {{input action='search' type="search" value=value placeholder=placeholder}}
-<span class="search-icon">
+<span class="search-icon" {{action 'search'}}>
   {{fa-icon 'search'}}
 </span>
 {{#if value.length}}
