@@ -1,7 +1,7 @@
 //course, session, etc detail view
 .detail-view {
   background-color: $background-grey;
-    border-style: solid;
+  border-style: solid;
   border-color: $header-grey;
   border-width: 0 2px 2px;
   border-top: 0px;
@@ -15,6 +15,7 @@
   .session-offerings {
     section {
       &.detail-block {
+
         .detail-title {
           @include span-columns(2 of 12);
           @include omega();
@@ -28,6 +29,23 @@
           @include shift(6.5 of 12);
           @include span-columns(2 of 12);
           @include omega();
+        }
+
+        .detail-content {
+          .detail-content-header {
+
+            background-color: $header-grey;
+            height: 42px;
+            
+            div {
+              @include span-columns (12 / 5);
+              @include pad(10px default default default);
+
+              label {
+                font-weight: bold;
+              }
+            }
+          }
         }
       }
     }

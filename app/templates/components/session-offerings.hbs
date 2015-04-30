@@ -16,7 +16,25 @@
       <li>{{t 'sessions.openSmallGroupGenerator'}}</li>
     {{/action-menu}}
   </div>
+  
   <div class='detail-content'>
+    <div class='detail-content-header'>
+      <div>
+        <label>{{ t 'general.dateTime' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.groupName' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.location' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.instructors' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.actions' }}</label>
+      </div>
+    </div>
     {{#each offering in newOfferings}}
       {{offering-manager
         offering=offering
