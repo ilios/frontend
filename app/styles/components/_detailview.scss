@@ -74,7 +74,30 @@
       }
     }
 
-    /* put the default detail-block settings here */
+      /*because it is the only section with filter-tools within the header,
+        special handling/tweaking is required for the sessions detail section specifically */
+      &#sessions {
+
+        &.detail-block {
+
+          .detail-title {
+            @include span-columns(4);
+          }
+
+          .filter-tools {
+            @include shift(3);
+            @include span-columns(3);
+            @include pad(0);
+            margin-top: .1em;
+          }
+
+          .detail-actions {
+            @include span-columns(2);
+            @include omega();
+          }
+        }
+      }
+
     &.detail-block {
       border-bottom: 1px dotted $ilios-orange;
       margin-left: .8em;
@@ -87,7 +110,6 @@
         font-size: $base-font-size;
         font-weight: bold;
         margin-top: 1em;
-
         @include span-columns(9 of 12);
       }
 
