@@ -1,13 +1,59 @@
 //course, session, etc detail view
 .detail-view {
   background-color: $background-grey;
-    border-style: solid;
+  border-style: solid;
   border-color: $header-grey;
   border-width: 0 2px 2px;
   border-top: 0px;
   margin-top: -4px;
     font-size: $base-font-size;
 
+  /* Because certain sections are styled differently from others (ie, some headers have togglesa and others do not, 
+     put the non-default, section type-specific styling here, put the defaults below */
+
+  /* session-offerings section */
+  .session-offerings {
+    section {
+      &.detail-block {
+
+        .detail-title {
+          @include span-columns(2 of 12);
+          @include omega();
+        }
+        .calendar-toggle {
+          @include span-columns(2 of 12);
+          @include omega();
+          margin-top: 1em;
+        }
+        .detail-actions{
+          @include shift(6.5 of 12);
+          @include span-columns(2 of 12);
+          @include omega();
+        }
+
+        .detail-content {
+          .detail-content-header {
+
+            background-color: $header-grey;
+            height: 42px;
+            
+            div {
+              @include span-columns (12 / 5);
+              @include pad(10px default default default);
+
+              label {
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
+  /* detail view defaults should go below here */
   section {
     text-align: left;
     margin: 10px 10px 0px 10px;
@@ -28,6 +74,7 @@
       }
     }
 
+    /* put the default detail-block settings here */
     &.detail-block {
       border-bottom: 1px dotted $ilios-orange;
       margin-left: .8em;

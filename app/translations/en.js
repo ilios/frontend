@@ -217,6 +217,12 @@ var sessions = {
 };
 translations.sessions = sessions;
 
+var offerings = {
+  'calendarOn': 'Calendar On',
+  'calendarOff': 'Calendar Off',
+};
+translations.offerings = offerings;
+
 var learningMaterials = {
   'displayName': 'Display Name',
   'owner': 'Owner',

@@ -2,6 +2,13 @@
   <div class='detail-title'>
     {{t 'general.offerings'}} ({{offerings.length}})
   </div>
+  <div class='calendar-toggle'>
+    <label class='switch switch-blue switch-wide calendar'>
+      <input class='switch-input' type='checkbox' checked="checked"/>
+      <span class="switch-label" data-on='{{t 'offerings.calendarOn'}}' data-off='{{t 'offerings.calendarOff'}}'></span>
+      <span class="switch-handle"></span>
+    </label>
+  </div>
 
   <div class='detail-actions'>
     {{#action-menu title=newButtonTitle icon='plus' classNames='blend-button right-edge'}}
@@ -9,6 +16,7 @@
       <li>{{t 'sessions.openSmallGroupGenerator'}}</li>
     {{/action-menu}}
   </div>
+  
   <div class='detail-content'>
     {{#each offering in newOfferings}}
       {{offering-manager
@@ -19,6 +27,23 @@
       }}
     {{/each}}
     {{#if offerings.length}}
+    <div class='detail-content-header'>
+      <div>
+        <label>{{ t 'general.dateTime' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.groupName' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.location' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.instructors' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.actions' }}</label>
+      </div>
+    </div>
       {{#each block in offeringBlocks}}
         {{offering-block block=block}}
       {{/each}}
