@@ -102,9 +102,9 @@ export default Ember.Component.extend({
         }
       });
     },
-    toggleIndependentLearning: function(){
+    saveIndependentLearning: function(value){
       var session = this.get('session');
-      if(session.get('isIndependentLearning')){
+      if(!value){
         session.get('ilmSessionFacet').then(function(ilmSession){
           session.set('ilmSessionFacet', null);
           ilmSession.deleteRecord();

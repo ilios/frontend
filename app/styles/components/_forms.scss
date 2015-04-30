@@ -2,8 +2,8 @@
 .form-container {
   @include outer-container;
   
-  /* set the styling for the 100% width column */
-  .form-column-100 {
+  /* set the styling for the 100% width column by specifying '12' columns in the class*/
+  .form-col-12 {
     @include span-columns(10 of 10);
     //background-color: orange;
     
@@ -13,10 +13,10 @@
 
     .form-data {
       @include span-columns(7 of 10);
-
+      @include omega();
       /*enforce a default width of 500px for text input on 100% width row*/
-      input[type=text], input[type=textarea] {
-        min-width: 500px;
+      input[type=text], textarea {
+        width: 75%;
       }
     }
     
@@ -26,9 +26,9 @@
     }
   }
 
-  /* Set the styling for the 50% width columns */
-  .form-column-50-1, 
-  .form-column-50-2 {
+  /* Set the styling for the 50% width columns by specifying '6' columns in the class*/
+  .form-col-6-left, 
+  .form-col-6-right {
     @include span-columns(5 of 10);
 
     .form-label {
@@ -41,7 +41,7 @@
 
   }
 
-  .form-column-50-1 {
+  .form-col-6-left {
     /* handle a the submit button alignment for a  50%-wide 1-column form */
     &.form-data-submit {
         @include shift(2);
@@ -49,22 +49,50 @@
     
   }
 
-  .form-column-50-2 {
+  .form-col-6-right {
     //be sure to leave this in to clear the row by pushing the div out to the margins...
     @include omega();
   }
 
-  /* set the styling of the 33% width columns */
-  .form-column-33 {
+  /* set the styling of the 33% width columns by specifying 4 columns in the class */
+  .form-col-4 {
     @include span-columns(2 of 10);
+    @include omega();
 
     .form-label, .form-data {
       @include span-columns(1 of 2);
+      @include omega();
     }
+
+    .form-data {
+      
+      .editinplace .editor .actions {
+        display: block;
+        text-align: right;
+        width: 90px;
+      }
+      
+    }
+
+    .editinplace .editor input, 
+    .editinplace .editor select,
+    .form-data input[type=text] {
+      /* explicitly override the default min-width of text input fields */
+      min-width: 90px;
+      max-width: 90px;
+      width: 90px;
+    }
+
+    &.form-col-4-middle .form-label,
+    &.form-col-4-right .form-label {
+      margin-right: 15px;
+
+    }
+
 
   }
 
-  .form-column-33-1 {
+  .form-col-4-left {
     @include span-columns(4 of 10);
 
     .form-label {
@@ -73,8 +101,8 @@
 
   }
 
-  /* handle the input field widths for 50% and 33%-width columns */
-  .form-column-50, .form-column-33 {
+  /* handle the input field widths for 50% (6 columns) and 33%-width (4 columns) columns */
+  .form-col-6 {
     
     .form-data input[type=text]{
       /* explicitly override the default min-width of text input fields */
@@ -93,6 +121,7 @@
 .form-label {
   text-align: right;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .form-data {

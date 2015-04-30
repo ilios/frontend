@@ -175,7 +175,7 @@
   background-image: linear-gradient(to bottom, #eeeeee, white 25px);
 }
 
-switch-wide > .switch-input:checked ~ .switch-handle {
+.switch-wide > .switch-input:checked ~ .switch-handle {
   left: 20px;
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
