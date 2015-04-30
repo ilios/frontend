@@ -316,7 +316,7 @@ test('edit learning material', function(assert) {
         let searchBoxInput = find('input', searchBox);
         assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
         fillIn(searchBoxInput, 'descriptor');
-        click('button', searchBox);
+        click('span.search-icon', searchBox);
         andThen(function(){
           let searchResults = find('.mesh-search-results li', container);
           assert.equal(searchResults.length, fixtures.meshDescriptors.length);
@@ -352,7 +352,7 @@ test('cancel editing learning material', function(assert) {
       let searchBox = find('.search-box', container).eq(0);
       let searchBoxInput = find('input', searchBox);
       fillIn(searchBoxInput, 'descriptor');
-      click('button', searchBox);
+      click('span.search-icon', searchBox);
       andThen(function(){
         let searchResults = find('.mesh-search-results li', container);
         click('.removable-list li:eq(0)', container);

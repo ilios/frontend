@@ -109,7 +109,7 @@ test('manage terms', function(assert) {
       let searchBoxInput = find('input', searchBox);
       assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
       fillIn(searchBoxInput, 'descriptor');
-      click('button', searchBox);
+      click('span.search-icon', searchBox);
       andThen(function(){
         let searchResults = find('.mesh-search-results li', meshManager);
         assert.equal(searchResults.length, fixtures.meshDescriptors.length);
@@ -157,7 +157,7 @@ test('save terms', function(assert) {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
       fillIn(searchBoxInput, 'descriptor');
-      click('.search-box button', meshManager);
+      click('.search-box span.search-icon', meshManager);
       andThen(function(){
         let searchResults = find('.mesh-search-results li', meshManager);
         click('.removable-list li:eq(0)', meshManager);
@@ -183,7 +183,7 @@ test('cancel changes', function(assert) {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
       fillIn(searchBoxInput, 'descriptor');
-      click('.search-box button', meshManager);
+      click('.search-box span.search-icon', meshManager);
       andThen(function(){
         let searchResults = find('.mesh-search-results li', meshManager);
         click('.removable-list li:eq(0)', meshManager);
