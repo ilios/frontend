@@ -55,13 +55,9 @@
       <label class="form-label">{{t "sessions.specialEquipmentRequired"}}:</label>
       <div class="form-data">{{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}</div>
     </div>
-    <div class="form-col-4-left">
+    <div class="form-col-4-left independentlearningcontrol">
       <label class="form-label">{{t "sessions.independentLearning"}}:</label>
-      <div class="form-data" {{action 'toggleIndependentLearning'}} class='control form-data switch yes-no switch-green independentlearningcontrol'>
-        <input {{ bind-attr checked=session.isIndependentLearning }} type='checkbox' class="switch-input" />
-        <span class="switch-label" data-on='{{t 'general.yes'}}' data-off='{{t 'general.no'}}'></span>
-        <span class="switch-handle"></span>
-      </div>
+      <div class="form-data">{{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}</div>
     </div>
     {{#if session.isIndependentLearning}}
     <div class="form-col-4 form-col-4-middle sessionilmhours">
