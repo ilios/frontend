@@ -18,7 +18,16 @@
   </div>
   
   <div class='detail-content'>
-    <div class='detail-content-header'>
+    {{#each offering in newOfferings}}
+      {{offering-manager
+        offering=offering
+        isEditing=true
+        save='removeNewOffering'
+        cancel='removeNewOffering'
+      }}
+    {{/each}}
+    {{#if offerings.length}}
+      <div class='detail-content-header'>
       <div>
         <label>{{ t 'general.dateTime' }}</label>
       </div>
@@ -35,15 +44,6 @@
         <label>{{ t 'general.actions' }}</label>
       </div>
     </div>
-    {{#each offering in newOfferings}}
-      {{offering-manager
-        offering=offering
-        isEditing=true
-        save='removeNewOffering'
-        cancel='removeNewOffering'
-      }}
-    {{/each}}
-    {{#if offerings.length}}
       {{#each block in offeringBlocks}}
         {{offering-block block=block}}
       {{/each}}
