@@ -162,7 +162,7 @@
   position: relative;
   display: inline-block;
   vertical-align: top;
-  width: 96px;
+  width: 106px;
   height: 20px;
   padding: 3px;
   background-color: white;
@@ -182,11 +182,6 @@
 
 .switch-green > .switch-input:checked ~ .switch-label {
   background: #4fb845;
-}
-
-.switch-wide > .switch-input:checked ~ .switch-label {
-  background: $toggle-background-grey;
- 
 }
 
 .switch-wide > .switch-input:checked ~ .switch-handle {
@@ -216,7 +211,7 @@
 }
 
 .switch-blue > .switch-input:checked ~ .switch-handle {
-  left: 96px;
+  left: 106px;
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
