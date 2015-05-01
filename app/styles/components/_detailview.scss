@@ -13,7 +13,9 @@
 
   /* session-offerings section */
   .session-offerings {
+    
     section {
+      
       &.detail-block {
 
         .detail-title {
@@ -74,11 +76,15 @@
       }
     }
 
-      /*because it is the only section with filter-tools within the header,
-        special handling/tweaking is required for the sessions detail section specifically */
-      &#sessions {
+    &.detail-block {
+      border-bottom: 1px dotted $ilios-orange;
+      margin-left: .8em;
+      margin-right: .8em;
+      padding-left: .8em;
+      padding-right: .8em;
 
-        &.detail-block {
+      /* special handling for the detail-blocks that contain a filter element */
+      &.filter-detail-block {
 
           .detail-title {
             @include span-columns(4);
@@ -95,15 +101,7 @@
             @include span-columns(2);
             @include omega();
           }
-        }
       }
-
-    &.detail-block {
-      border-bottom: 1px dotted $ilios-orange;
-      margin-left: .8em;
-      margin-right: .8em;
-      padding-left: .8em;
-      padding-right: .8em;
 
       .detail-title {
         color: $ilios-orange;
