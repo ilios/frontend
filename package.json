@@ -7,15 +7,17 @@
     "doc": "doc",
     "test": "tests"
   },
+  "cacheDirectories": ["node_modules", "bower_components"],
   "scripts": {
-    "start": "ember server",
+    "start": "./node_modules/ember-cli/bin/ember serve",
     "build": "ember build",
     "test": "ember test",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "repository": "https://github.com/ilios/frontend",
   "engines": {
-    "node": "^0.12.2"
+    "node": "^0.12.2",
+    "npm": "2.7.x"
   },
   "author": "",
   "license": "GNU GPL v3",
