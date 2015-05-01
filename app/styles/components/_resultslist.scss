@@ -27,6 +27,14 @@
         background-color: $background-grey;
       }
     }
+
+    thead tr {
+      background-color: $header-grey;
+
+      th {
+        border: none;
+      }
+    }
   }
   .resultslist-actions {
     @include span-columns(2 of 12);
