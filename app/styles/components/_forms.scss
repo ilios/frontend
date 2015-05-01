@@ -22,7 +22,8 @@
     
     /* handle a the submit button alignment for a  100%-wide 1-column form or 50%-wide 2 column form */
     &.form-data-submit {
-        @include shift(7);
+        @include shift(7 of 10);
+        @include span-columns(2 of 10);   
     }
   }
 
