@@ -11,6 +11,11 @@
         {{t 'courses.objectiveDescriptorTitle'}}
       </span>
     {{/if}}
+    {{#if isManagingCompetency}}
+      <span class='detail-specific-title'>
+        {{t 'programs.objectiveCompetencyManagerTitle'}}
+      </span>
+    {{/if}}
   </div>
 
   <div class='detail-actions'>
@@ -52,6 +57,13 @@
           manageDescriptors="manageDescriptors"
         }}
       {{/if}}
+      {{#if isProgramYear}}
+        {{programyear-objective-list
+          programYear=subject
+          manageDescriptors="manageDescriptors"
+          mangeCompetency="mangeCompetency"
+        }}
+      {{/if}}
     {{else}}
       {{#if isManagingParents}}
         {{#if isCourse}}
@@ -67,6 +79,9 @@
       {{/if}}
       {{#if isManagingDescriptors}}
         {{objective-manage-descriptors objective=manageDescriptorsObjective}}
+      {{/if}}
+      {{#if isManagingCompetency}}
+        {{objective-manage-competency objective=manageCompetencyObjective}}
       {{/if}}
     {{/liquid-unless}}
   </div>

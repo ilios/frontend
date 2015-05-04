@@ -1,0 +1,32 @@
+<h2>{{{objective.title}}}</h2>
+
+<h4>
+  {{t 'programs.currentCompetency'}}:
+  {{#if objective.competency}}
+    <span {{action 'removeCurrentCompetency'}} class='clickable'>
+      {{fa-icon 'times'}} {{objective.competency.title}}
+    </span>
+  {{else}}
+    {{t 'general.none'}}
+  {{/if}}
+</h4>
+
+{{#if showCompetencyList}}
+  <ul class='tree-list selectable'>
+    {{#each domain in filteredDomains}}
+      <li class='static'>{{domain.title}}
+        <ul>
+          {{#each competency in domain.subCompetencies}}
+            <li {{action 'changeCompetency' competency}}>{{competency.title}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <div class='no-group'>
+    <p>
+      {{t 'programs.missingCompetenciesMessage'}}
+    </p>
+  </div>
+{{/if}}

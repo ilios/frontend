@@ -163,7 +163,7 @@ test('check link', function(assert) {
   visit(url);
   andThen(function() {
     click('.programyear-list tbody tr:eq(0) td:eq(0) a').then(function(){
-      assert.equal(currentPath(), 'program.programYear');
+      assert.equal(currentPath(), 'program.programyear');
     });
   });
 });

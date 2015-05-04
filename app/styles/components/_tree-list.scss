@@ -1,0 +1,19 @@
+.tree-list {
+  li {
+    color: $base-link-color;
+    cursor: pointer;
+
+    ul {
+      margin-left: 2em;
+    }
+  }
+
+  &.removable li {
+    background-color: $header-grey;
+  }
+
+  &.selectable {
+    background-color: white;
+    border: 1px solid $base-link-color;
+  }
+}

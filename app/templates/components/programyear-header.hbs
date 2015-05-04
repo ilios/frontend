@@ -1,0 +1,29 @@
+<div class='detail-header'>
+  <span class='title'>
+    {{#if programYear}}
+      <h2>{{programYear.academicYear}}</h2>
+    {{/if}}
+  </span>
+  <span class ='actions'>
+    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :programyear-publication-menu :right-edge'}}
+      {{#if showAsIs}}
+        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+      {{/if}}
+      {{#if showPublish}}
+        <li class='good' {{action 'publish'}}>{{t 'publish.publishProgramYear'}}</li>
+      {{/if}}
+      {{#if showReview}}
+        {{#link-to 'program.publicationcheck' programYear}}
+          <li class='good' >{{t 'publish.reviewMissingItems' countBinding='programYear.allPublicationIssuesLength'}}</li>
+        {{/link-to}}
+      {{/if}}
+      {{#if showTbd}}
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{/if}}
+      {{#if showUnPublish}}
+        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishProgramYear'}}</li>
+      {{/if}}
+
+    {{/action-menu}}
+  </span>
+</div>

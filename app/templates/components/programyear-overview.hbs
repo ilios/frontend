@@ -1,0 +1,21 @@
+<section class='detail-overview detail-block'>
+  <div class='detail-title'>
+    {{t 'general.overview'}}
+  </div>
+  <div class='detail-content'>
+    <label>{{t "general.directors"}}:</label>
+      <span>
+        <ul class='removable-list'>
+          {{#each user in sortedDirectors}}
+          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+          {{/each}}
+        </ul>
+      </span>
+      {{user-search
+        addUser='addDirector'
+        currentlyActiveUsers=programYear.directors
+      }}
+    <br />
+    <br />
+  </div>
+</section>

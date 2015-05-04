@@ -10,18 +10,22 @@ export default DS.Model.extend({
   aamcPcrses: DS.hasMany('aamc-pcrs',  {async: true}),
   programYears: DS.hasMany('program-year',  {async: true}),
   courses: DS.hasMany('course',  {async: true}),
-  isDomain: Ember.computed.empty('parent.id'),
-  domain: null,
-  watchParent: function(){
-    var competency = this;
-    if(this.get('isDomain')){
-      this.set('domain', this);
-    } else {
-      this.get('parent').then(function(parent){
-        if(parent != null){
-          competency.set('domain', parent.get('domain'));
-        }
-      });
-    }
-  }.observes('isDomain', 'parent.domain').on('init'),
+  isDomain: Ember.computed.empty('parent.content'),
+  domain: function(){
+    return new Ember.RSVP.Promise(
+      resolve => {
+        this.get('parent').then(
+          parent => {
+            if(!parent){
+              resolve(this);
+            } else {
+              parent.get('domain').then(
+                domain => resolve(domain)
+              );
+            }
+          }
+        );
+      }
+    );  
+  }.property('parent','parent.domain'),
 });
