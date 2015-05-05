@@ -1,0 +1,40 @@
+<div class='detail-view'>
+  <div class='detail-view-main-title'>
+      {{learnergroup-header learnerGroup=learnerGroup}}
+  </div>
+  <div class='detail-view-details'>
+    {{learnergroup-overview learnerGroup=learnerGroup}}
+    {{learnergroup-subgroup-list parentGroup=learnerGroup}}
+
+    <section class='detail-block toplevelgroupmembers'>
+      <div class='detail-title'>
+        {{t 'learnerGroups.topGroupMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}}
+      </div>
+      <div class='detail-content'>
+        {{learnergroup-members
+          topLevelGroup=learnerGroup.topLevelGroup
+          cohort=learnerGroup.cohort
+          members=topLevelGroupMembersNotInThisGroup
+          showMoveToCohortOption=true
+          showMoveToTopLevelGroupOption=true
+        }}
+      </div>
+    </section>
+
+    <section class='detail-block cohortmembers'>
+      <div class='detail-title'>
+        {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}}
+      </div>
+      <div class='detail-content'>
+        {{learnergroup-members
+          topLevelGroup=learnerGroup.topLevelGroup
+          cohort=learnerGroup.cohort
+          members=cohortMembersNotInAnyGroup
+          showMoveToTopLevelGroupOption=true
+          overrideCurrentGroupDisplay=notInThisGroup
+        }}
+      </div>
+    </section>
+
+  </div>
+</div>

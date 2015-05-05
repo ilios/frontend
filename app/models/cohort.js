@@ -7,6 +7,7 @@ export default DS.Model.extend({
   programYear: DS.belongsTo('program-year', {async: true}),
   courses: DS.hasMany('course', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {async: true}),
+  users: DS.hasMany('user', {async: true}),
   displayTitle: '',
   competencies: function(){
     var self = this;

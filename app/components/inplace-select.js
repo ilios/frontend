@@ -8,9 +8,13 @@ export default Ember.Component.extend(InPlace, {
   options: [],
   optionLabelPath: 'title',
   optionValuePath: 'id',
+  displayValueOverride: null,
   displayValue: function(){
     var self = this;
     var displayValue;
+    if(this.get('displayValueOverride')){
+      return this.get('displayValueOverride');
+    }
     if(this.get('value') && this.get('proxiedOptions')){
       let option = this.get('proxiedOptions').find(function(option){
         return option.get('value') === self.get('value');

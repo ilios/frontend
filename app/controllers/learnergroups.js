@@ -43,7 +43,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
   }.property('debouncedFilter', 'content.@each'),
   actions: {
     editLearnerGroup: function(learnerGroup){
-      this.transitionToRoute('learnergroup', learnerGroup);
+      this.transitionToRoute('learnerGroup', learnerGroup);
     },
     removeLearnerGroup: function(learnerGroup){
       this.get('content').removeObject(learnerGroup);
@@ -60,9 +60,7 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     saveNewLearnerGroup: function(newLearnerGroup){
       var self = this;
       self.get('newLearnerGroups').removeObject(newLearnerGroup);
-      newLearnerGroup.save().then(function(savedLearnerGroup){
-        self.transitionToRoute('learnergroup', savedLearnerGroup);
-      });
+      newLearnerGroup.save();
     },
     removeNewLearnerGroup: function(newLearnerGroup){
       this.get('newLearnerGroups').removeObject(newLearnerGroup);
