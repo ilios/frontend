@@ -1,0 +1,14 @@
+<div class='detail-view'>
+  <div class='detail-view-main-title'>
+      {{programyear-header programYear=programYear}}
+  </div>
+  <div class='detail-view-details'>
+    {{programyear-overview programYear=programYear}}
+    {{programyear-competencies programYear=programYear}}
+    {{detail-objectives subject=programYear isProgramYear=true}}
+    {{detail-topics
+      availableTopics=programYear.program.owningSchool.disciplines
+      subject=programYear
+    }}
+  </div>
+</div>

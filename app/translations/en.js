@@ -95,6 +95,10 @@ var programs = {
   'durationInYears': 'Duration (in Years)',
   'noProgramYears': 'There are no program years in this program',
   'matriculationYear': 'Matriculation year',
+  'competenciesManageTitle': 'Manage Competencies',
+  'missingCompetenciesMessage': 'Please add at least one competency to this program year.',
+  'currentCompetency': 'Current Competency',
+  'objectiveCompetencyManagerTitle': 'Select Objective Competency',
 };
 translations.programs = programs;
 
@@ -266,6 +270,8 @@ var publish = {
   'unPublishCourse': 'UnPublish Course',
   'publishProgram': 'Publish Program',
   'unPublishProgram': 'UnPublish Program',
+  'publishProgramYear': 'Publish Program Year',
+  'unPublishProgramYear': 'UnPublish Program Year',
 };
 translations.publish = publish;
 

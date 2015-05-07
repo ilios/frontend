@@ -60,29 +60,34 @@ var Course = DS.Model.extend({
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
-    this.get('competencies').then(function(competencies){
-      competencies.forEach(function(competency){
-        var domain = competency.get('domain');
-        if(!domainContainer.hasOwnProperty(domain.get('id'))){
-          domainIds.pushObject(domain.get('id'));
-          domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
-            content: domain,
-            subCompetencies: []
-          });
-        }
-        if(competency.get('id') !== domain.get('id')){
-          var subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-          if(!subCompetencies.contains(competency)){
-            subCompetencies.pushObject(competency);
-            subCompetencies.sortBy('title');
+    var promises = [];
+    this.get('competencies').forEach(function(competency){
+      promises.pushObject(competency.get('domain').then(
+        domain => {
+          if(!domainContainer.hasOwnProperty(domain.get('id'))){
+            domainIds.pushObject(domain.get('id'));
+            domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
+              content: domain,
+              subCompetencies: []
+            });
+          }
+          if(competency.get('id') !== domain.get('id')){
+            var subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
+            if(!subCompetencies.contains(competency)){
+              subCompetencies.pushObject(competency);
+              subCompetencies.sortBy('title');
+            }
           }
         }
-      });
+      ));
+    });
+    Ember.RSVP.all(promises).then(function(){
       var domains = domainIds.map(function(id){
         return domainContainer[id];
-      });
-      defer.resolve(domains.sortBy('title'));
+      }).sortBy('title');
+      defer.resolve(domains);
     });
+
     return DS.PromiseArray.create({
       promise: defer.promise
     });

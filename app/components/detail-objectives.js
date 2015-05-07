@@ -5,14 +5,18 @@ export default Ember.Component.extend({
   subject: null,
   classNames: ['detail-objectives'],
   isCourse: false,
-  isSession: Ember.computed.not('isCourse'),
-  isManaging: Ember.computed.or('isManagingParents', 'isManagingDescriptors'),
+  isSession: false,
+  isProgramYear: false,
+  isManaging: Ember.computed.or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
   isManagingParents: Ember.computed.notEmpty('mangeParentsObjective'),
   mangeParentsObjective: null,
   initialStateForManageParentsObjective: [],
   isManagingDescriptors: Ember.computed.notEmpty('manageDescriptorsObjective'),
   mangeMeshObjective: null,
   initialStateForManageMeshObjective: [],
+  isManagingCompetency: Ember.computed.notEmpty('manageCompetencyObjective'),
+  manageCompetencyObjective: null,
+  initialStateForManageCompetencyObjective: null,
   newObjectives: [],
   actions: {
     manageParents: function(objective){
@@ -27,6 +31,13 @@ export default Ember.Component.extend({
       objective.get('meshDescriptors').then(function(descriptors){
         self.set('initialStateForManageMeshObjective', descriptors.toArray());
         self.set('manageDescriptorsObjective', objective);
+      });
+    },
+    mangeCompetency: function(objective){
+      let self = this;
+      objective.get('competency').then(function(competency){
+        self.set('initialStateForManageCompetencyObjective', competency);
+        self.set('manageCompetencyObjective', objective);
       });
     },
     save: function(){
@@ -68,6 +79,21 @@ export default Ember.Component.extend({
           });
         });
       }
+      if(this.get('isManagingCompetency')){
+        let objective = this.get('manageCompetencyObjective');
+        objective.get('competency').then(function(newCompetency){
+          let oldCompetency = self.get('initialStateForManageCompetencyObjective');
+          oldCompetency.get('objectives').removeObject(objective);
+          oldCompetency.save();
+          if(newCompetency){
+            newCompetency.get('objectives').addObject(objective);
+            newCompetency.save();
+          }
+          objective.save().then(function(){
+            self.set('manageCompetencyObjective', null);
+          });
+        });
+      }
     },
     cancel: function(){
       var self = this;
@@ -86,6 +112,12 @@ export default Ember.Component.extend({
         descriptors.addObjects(this.get('initialStateForManageMeshObjective'));
         self.set('manageDescriptorsObjective', null);
       }
+
+      if(this.get('isManagingCompetency')){
+        let objective = this.get('manageCompetencyObjective');
+        objective.set('competency', this.get('initialStateForManageCompetencyObjective'));
+        self.set('manageCompetencyObjective', null);
+      }
     },
     addObjective: function(){
       var objective = this.get('store').createRecord('objective');
@@ -99,6 +131,9 @@ export default Ember.Component.extend({
       }
       if(this.get('isSession')){
         newObjective.get('sessions').addObject(this.get('subject'));
+      }
+      if(this.get('isProgramYear')){
+        newObjective.get('programYears').addObject(this.get('subject'));
       }
       newObjective.save().then(function(savedObjective){
         self.get('subject.objectives').then(function(objectives){

@@ -54,7 +54,7 @@ module('Acceptance: Session - Objective Parents', {
   }
 });
 
-test('list course objectives', function(assert) {
+test('list session objectives', function(assert) {
   assert.expect(11);
   visit(url);
   andThen(function() {

@@ -1,0 +1,41 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.competencies'}}
+  </div>
+  {{#if isManaging}}
+    <span class='detail-specific-title'>
+      {{t 'programs.competenciesManageTitle'}}
+    </span>
+  {{/if}}
+
+  <div class='detail-actions'>
+    {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'programs.competenciesManageTitle'}}</button>
+    {{/if}}
+  </div>
+  <div class='detail-content'>
+    {{#liquid-if isManaging class="horizontal"}}
+        {{programyear-competency-manager
+          availableCompetencies=programYear.program.owningSchool.competencies
+          selectedCompetencies=bufferCompetencies
+          add='addCompetencyToBuffer'
+          remove='removeCompetencyFromBuffer'
+        }}
+    {{else}}
+    <ul class='static-list'>
+      {{#each domain in programYear.domains}}
+        <li>{{domain.title}}
+          <ul>
+            {{#each competency in domain.subCompetencies}}
+              <li>{{competency.title}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+    {{/liquid-if}}
+  </div>
+</section>

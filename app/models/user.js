@@ -40,7 +40,7 @@ var User = DS.Model.extend({
   ),
   instructorIlmSessions: DS.hasMany('ilm-session', {async: true}),
   learnerIlmSessions: DS.hasMany('ilm-session', {async: true}),
-  programYears: DS.hasMany('program-year', {async: true}),
+  directedProgramYears: DS.hasMany('program-year', {async: true}),
   instructionHours: DS.hasMany('instruction-hours', {async: true}),
   alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),

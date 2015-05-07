@@ -1,0 +1,30 @@
+<section class='halfwidth'>
+  <ul class='tree-list removable'>
+    {{#each domain in selectedDomains}}
+      <li {{action 'removeDomain' domain}}>
+        {{fa-icon 'times'}} {{domain.title}}
+        <ul>
+          {{#each competency in domain.subCompetencies}}
+            <li class='removable' {{action 'removeCompetency' competency}}>
+              {{fa-icon 'times'}} {{competency.title}}
+            </li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</section>
+
+<section class='halfwidth'>
+  <ul class='tree-list selectable'>
+    {{#each domain in filteredDomains}}
+      <li {{action 'addDomain' domain}}>{{domain.title}}
+        <ul>
+          {{#each competency in domain.subCompetencies}}
+            <li {{action 'addCompetency' competency}}>{{competency.title}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</section>
