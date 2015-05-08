@@ -175,6 +175,11 @@ textarea {
 /* handle the horizontal alignment ('text-align') properties */
 .text-left {
     text-align: left;
+
+    /* for left-aligned items in the first column of a table, add padding */
+    &.first-col {
+      padding-left: 2em;
+    }
 }
 
 .text-center {
