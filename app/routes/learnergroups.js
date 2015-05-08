@@ -59,7 +59,7 @@ export default Ember.Route.extend({
                   programYear = programYears.sortBy('id').get('lastObject');
                 }
                 programYear.get('cohort').then(function(cohort){
-                  cohort.get('learnerGroups').then(function(learnerGroups){
+                  cohort.get('topLevelLearnerGroups').then(function(learnerGroups){
                     resolve({
                       school: school,
                       schools: schools,

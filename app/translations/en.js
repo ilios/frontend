@@ -143,6 +143,15 @@ var learnerGroups = {
   'confirmRemove': 'Are you sure you want to delete this learner group, with {{learnerCount}} learners and {{subgroupCount}} subgroups? This action cannot be undone.',
   'members': 'Members',
   'subgroups': 'Subgroups',
+  'defaultInstructors': 'Default Instructors',
+  'defaultLocation': 'Default Location',
+  'removeLearnerToCohort': 'Remove Learner to {{cohort}}',
+  'switchLearnerToGroup': 'Switch Learner to {{{group}}}',
+  'associatedCourses': 'Associated Courses',
+  'noSubgroups': 'There are no subgroups in this learner group',
+  'topGroupMembersNotInGroup': '{{groupTitle}} Members NOT in this Subgroup',
+  'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
+  'notInThisGroup': 'Not in this group',
 };
 translations.learnerGroups = learnerGroups;
 

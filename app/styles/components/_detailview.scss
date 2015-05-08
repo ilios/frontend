@@ -8,14 +8,14 @@
   margin-top: -4px;
     font-size: $base-font-size;
 
-  /* Because certain sections are styled differently from others (ie, some headers have togglesa and others do not, 
+  /* Because certain sections are styled differently from others (ie, some headers have togglesa and others do not,
      put the non-default, section type-specific styling here, put the defaults below */
 
   /* session-offerings section */
   .session-offerings {
-    
+
     section {
-      
+
       &.detail-block {
 
         .detail-title {
@@ -38,7 +38,7 @@
 
             background-color: $header-grey;
             height: 42px;
-            
+
             div {
               @include span-columns (12 / 5);
               @include pad(10px default default default);
@@ -232,7 +232,7 @@
         display: inline;
       }
     }
-    .actions {
+    .actions, .info {
       text-align: right;
       @include span-columns(2 of 12);
       @include shift(1);

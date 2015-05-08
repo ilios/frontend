@@ -45,6 +45,7 @@ var User = DS.Model.extend({
   alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
   primarySchool: DS.belongsTo('school', {async: true}),
+  cohorts: DS.hasMany('cohort', {async: true}),
   schools: function(){
     var defer = Ember.RSVP.defer();
     this.get('primarySchool').then(function(school){

@@ -1,0 +1,43 @@
+<section class='detail-overview detail-block'>
+  <div class='detail-title'>
+    {{learnerGroup.title}} {{t 'learnerGroups.members'}} ({{learnerGroup.usersOnlyAtThisLevel.length}})
+  </div>
+  <div class='detail-content'>
+    {{learnergroup-members
+      topLevelGroup=learnerGroup.topLevelGroup
+      cohort=learnerGroup.cohort
+      members=learnerGroup.usersOnlyAtThisLevel
+      showMoveToCohortOption=true
+      showMoveToTopLevelGroupOption=true
+    }}
+    <br />
+    <div class="inline-label-data-block learnergrouplocation">
+      <label>{{t "learnerGroups.defaultLocation"}}:</label>
+      <div>{{inplace-text value=learnerGroup.location save='changeLocation'}}</div>
+    </div> <br />
+
+    <label>{{t "learnerGroups.defaultInstructors"}}:</label>
+     <span>
+       <ul class='removable-list'>
+         {{#each user in sortedInstructorUsers}}
+          <li {{action 'removeInstructorUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+         {{/each}}
+       </ul>
+     </span>
+     {{user-search
+       addUser='addInstructorUser'
+       currentlyActiveUsers=learnerGroup.instructorUsers
+    }}
+  </div>
+
+  <div class="inline-label-data-block learnergroupcourses">
+    <label>{{t "learnerGroups.associatedCourses"}}:</label>
+    <div>
+      {{#if associatedCoursesString.length}}
+        {{big-text text=associatedCoursesString}}
+      {{else}}
+        {{t 'general.none'}}
+      {{/if}}
+    </div>
+  </div> <br />
+</section>

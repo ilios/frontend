@@ -302,7 +302,7 @@ test('add new learnergroup', function(assert) {
     click('.newlearnergroup .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'learnergroup');
+    assert.equal(currentPath(), 'learnergroups');
   });
 });
 
