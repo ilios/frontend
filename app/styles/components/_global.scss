@@ -34,8 +34,9 @@ button {
         color: white;
       }
 
+      /* force the width of the done/cancel buttons, so they are always the same size */
       &.text {
-       min-width: 66px;
+       width: 75px;
       }
     }
 
