@@ -48,7 +48,7 @@ before_script:
 
 script:
   - scss-lint
-  - travis_wait ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
+  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
 
 after_script:
   # Destroy the sauce tunnel
