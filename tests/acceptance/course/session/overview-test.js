@@ -234,7 +234,7 @@ test('change special attire', function(assert) {
   });
 });
 
-test('change special equiptment', function(assert) {
+test('change special equipment', function(assert) {
   var session = server.create('session', {
     course: 1,
     sessionType: 2
@@ -242,10 +242,10 @@ test('change special equiptment', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.session-overview');
-    assert.ok(!find('.sessionsepcialequiptment .editinplace input', container).is(':checked'));
-    click(find('.sessionsepcialequiptment .editinplace .control', container));
+    assert.ok(!find('.sessionspecialequipment .editinplace input', container).is(':checked'));
+    click(find('.sessionspecialequipment .editinplace .control', container));
     andThen(function(){
-      assert.ok(find('.sessionsepcialequiptment .editinplace input', container).is(':checked'));
+      assert.ok(find('.sessionspecialequipment .editinplace input', container).is(':checked'));
     });
   });
 });

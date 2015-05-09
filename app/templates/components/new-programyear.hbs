@@ -1,8 +1,8 @@
 <section class='form-container'>
   <div class="detail-content">
-    <label class="form-column form-column-100">
-      <div class="form-label">{{t "general.academicYear"}}:</div>
-      <div class="form-data form-data-select form-input-row">
+    <div class="form-col-12">
+      <label class="form-label">{{t "general.academicYear"}}:</label>
+      <div class="form-data">
         {{view "select"
           content=academicYears
           value=programYear.startYear
@@ -10,10 +10,10 @@
           optionLabelPath='content.title'
         }}
       </div>
-    </label>
-    <label class="form-column-100 form-data-submit">
-      <button class='cancel' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-      <button class='done' {{action 'save'}}>{{t 'general.done'}}</button>
-    </label>
+    </div>
+    <div class="form-col-6 form-data-submit">
+      <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+    </div>
   </div>
 </section>

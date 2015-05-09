@@ -186,7 +186,7 @@ test('new program year', function(assert) {
   var newAcademicYear = currentYear+1 + ' - ' + (currentYear+2);
   andThen(function() {
     var container = find('.programyear-list');
-    click('.resultslist-actions .add', container);
+    click('.detail-actions .add', container);
     andThen(function(){
       let items = find('.newprogramyear option');
       assert.equal(items.length, 9);

@@ -18,6 +18,11 @@
       input[type=text], textarea {
         width: 75%;
       }
+
+      /* for smaller select dropdowns (eg, years), set a minimum width, so it looks nicer */
+      select {
+        min-width: 33%;
+      }
     }
     
     /* handle a the submit button alignment for a  100%-wide 1-column form or 50%-wide 2 column form */
@@ -28,9 +33,9 @@
   }
 
   /* Set the styling for the 50% width columns by specifying '6' columns in the class*/
-  .form-col-6-left, 
-  .form-col-6-right {
+  .form-col-6 {
     @include span-columns(5 of 10);
+    @include omega(2n);
 
     .form-label {
       @include span-columns(3 of 5);
@@ -40,19 +45,13 @@
       @include span-columns(2 of 5);
     }
 
-  }
-
-  .form-col-6-left {
-    /* handle a the submit button alignment for a  50%-wide 1-column form */
     &.form-data-submit {
-        @include shift(2);
+        @include shift(1);
+        @include span-columns(4);
+        margin-top: 1em;
+        text-align: right;
     }
-    
-  }
 
-  .form-col-6-right {
-    //be sure to leave this in to clear the row by pushing the div out to the margins...
-    @include omega();
   }
 
   /* set the styling of the 33% width columns by specifying 4 columns in the class */
