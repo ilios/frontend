@@ -87,7 +87,7 @@ module('Acceptance: Session - Independent Learning', {
 test('initial selected groups', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     var selectedGroups = find('.inline-list li', container);
     assert.equal(selectedGroups.length, fixtures.ilmSession.learnerGroups.length);
@@ -102,7 +102,7 @@ test('initial selected groups', function(assert) {
 test('check groups', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){
@@ -117,7 +117,7 @@ test('check groups', function(assert) {
 test('filter groups', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){
@@ -131,7 +131,7 @@ test('filter groups', function(assert) {
 test('add group', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container).then(function(){
       click('.selectable-list ul li.static:eq(1) ul li:eq(0)', container);
@@ -152,7 +152,7 @@ test('add group', function(assert) {
 test('add sub group', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container).then(function(){
       click('.selectable-list ul li.static:eq(0) ul li:eq(1)', container);
@@ -173,7 +173,7 @@ test('add sub group', function(assert) {
 test('add group with children', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){
@@ -190,7 +190,7 @@ test('add group with children', function(assert) {
 test('add group with children and remove one child', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){
@@ -212,7 +212,7 @@ test('add group with children and remove one child', function(assert) {
 test('remove group', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){
@@ -229,7 +229,7 @@ test('remove group', function(assert) {
 test('undo change', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
     click('.detail-actions .add', container);
     andThen(function(){

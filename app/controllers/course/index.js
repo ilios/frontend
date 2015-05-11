@@ -5,7 +5,7 @@ export default Ember.ArrayController.extend({
   course: Ember.computed.alias("controllers.course.model"),
   actions: {
     openSession: function(course, session){
-      this.transitionToRoute('course.session', course, session);
+      this.transitionToRoute('session.index', course, session);
     }
   }
 });

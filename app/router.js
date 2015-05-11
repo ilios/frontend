@@ -14,8 +14,9 @@ Router.map(function() {
   });
   this.route('courses');
   this.resource('course', { path: 'course/:course_id'}, function(){
-    this.route("session", {path: '/session/:session_id'});
-    this.route('sessionpublicationcheck', {path: '/session/:session_id/publicationcheck'});
+    this.resource("session", {path: '/session/:session_id'}, function(){
+      this.route('publicationcheck', {path: '/publicationcheck'});
+    });
   });
   this.route('print-course', { path: 'course/:course_id/print'});
   this.route('course-publicationcheck', { path: 'course/:course_id/publicationcheck'});

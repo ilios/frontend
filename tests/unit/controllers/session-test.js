@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:course/session', {
+moduleFor('controller:session', {
   // Specify the other units that are required for this test.
-  needs: ['controller:course']
+  // needs: ['controller:foo']
 });
 
 // Replace this with your real tests.

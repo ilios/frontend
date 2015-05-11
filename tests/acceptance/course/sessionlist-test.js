@@ -69,7 +69,7 @@ test('new session', function(assert) {
     });
   });
   andThen(function(){
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     assert.equal(getElementText(find('.title .content', container)), getText(newTitle));
   });

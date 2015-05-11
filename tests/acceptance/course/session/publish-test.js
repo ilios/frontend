@@ -53,7 +53,7 @@ test('check published session', function(assert) {
   visit('/course/1/session/' + fixtures.publishedSession.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     let menu = find('.session-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Published'));
@@ -73,7 +73,7 @@ test('check scheduled session', function(assert) {
   visit('/course/1/session/' + fixtures.scheduledSession.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     let menu = find('.session-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Scheduled'));
@@ -93,7 +93,7 @@ test('check draft session', function(assert) {
   visit('/course/1/session/' + fixtures.draftSession.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     let menu = find('.session-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Not Published'));
