@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:course-publicationcheck', {
+moduleFor('route:course/publicationcheck', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
