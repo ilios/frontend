@@ -4,9 +4,7 @@ module.exports = {
   scenarios: [
     {
       name: 'ilios-current',
-      dependencies: {
-        "ember": "1.11.1"
-      }
+      dependencies: {}
     },
     {
       name: 'ember-release',

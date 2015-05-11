@@ -5,6 +5,10 @@ node_js:
   - "iojs"
 sudo: false
 
+cache:
+  directories:
+    - node_modules
+
 env:
   global:
     #set these here becuase they get pulled out by testem saucie
@@ -36,13 +40,15 @@ before_install:
 install:
   - npm install -g bower
   - travis_retry npm install
+  - gem install scss-lint
 
 before_script:
   # Create a sauce tunnel
   - if [ "$START_SAUCE_CONNECT" = true ]; then ember start-sauce-connect; fi
 
 script:
-  - travis_wait ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
+  - scss-lint
+  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
 
 after_script:
   # Destroy the sauce tunnel

@@ -7,7 +7,7 @@
     @include omega();
 
     .offering-block-date-dayofweek {
-      color: $ilios_orange;
+      color: $ilios-orange;
       display: block;
       font-size: $base-font-size * 1.2;
       font-weight: bold;
@@ -48,9 +48,9 @@
 
     .offering-block-time-offering {
       .offering-detail-box {
-        padding: .8em;
-        @include span-columns(2 of 10);
+        @include span-columns(2 of 8);
         @include omega(4n);
+        padding: .8em;
       }
     }
 
@@ -62,13 +62,6 @@
     .multiday-offering-block-time-offerings {
       @include span-columns(8 of 12);
       @include shift(4);
-    }
-
-    .offering-block-time-offering {
-      .offering-detail-box{
-        @include span-columns(2 of 8);
-        @include omega(4n);
-      }
     }
   }
 }

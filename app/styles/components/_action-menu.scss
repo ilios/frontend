@@ -6,23 +6,27 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
 .action-menu {
   display: inline-block;
   position: relative;
+
   .button {
-    background: #ffffff;
+    background: $white;
+    border: 1px solid $header-grey;
+    color: $base-font-color;
     cursor: pointer;
-    font-size: $base-font-size * 0.7;
+    font-size: $base-font-size * .7;
+    line-height: 1.1em;
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
-    color: $base-font-color;
-    border: 1px solid $header-grey;
-    line-height: 1.1em;
+
     @include media($large-screen) {
       font-size: $base-font-size;
     }
+
     &:hover {
       background-color: $dropdown-background-hover;
     }
+
     &:after {
-      content: "\25BE";
+      content: '\25BE';
       display: block;
       position: absolute;
       right: $dropdown-padding / 2;
@@ -30,63 +34,71 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     }
 
   }
+
   &.blend-button .button {
-    font-size: $base-font-size * 0.85;
-    color: white;
     background-color: $base-link-color;
     border-radius: $base-border-radius;
-    padding: 0.5em 2em 0.5em 1em;
+    color: $white;
+    font-size: $base-font-size * .85;
+    padding: .5em 2em .5em 1em;
     vertical-align: middle;
 
     &:hover {
       background-color: darken($base-link-color, 3);
     }
   }
+
   &.user-menu .button {
-    font-weight: normal;
-      color: white;
     background-color: transparent;
+    border: 0;
     border-radius: $base-border-radius;
-    padding: 0.5em 2em 0.5em 1em;
+    color: $white;
+    font-weight: normal;
+    padding: .5em 2em .5em 1em;
     vertical-align: middle;
-    border: none;
-    
+
     &:hover {
-      background-color: white;
+      background-color: $white;
       color: $ilios-orange;
     }
   }
 
   .dropdown-menu {
-    @include transition (all 0.2s ease-in-out);
-    background-color: white;
+    @include transition (all .2s ease-in-out);
+    background-color: $white;
     border-radius: $base-border-radius;
-    box-shadow: 0 2px 2px transparentize(black, .8);
+    box-shadow: 0 2px 2px transparentize($black, .8);
     color: $base-font-color;
     cursor: pointer;
-    z-index: 99999;
-    overflow: visible;
-    white-space:nowrap;
-    position: absolute;
-    top: 100%;
     left: 0;
-    text-align: left;
-    padding: 4px 0;
     margin: 5px 0 0;
-    a, a:visited {
+    overflow: visible;
+    padding: 4px 0;
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    white-space: nowrap;
+    z-index: 99999;
+
+    a,
+    a:visited {
       color: $base-font-color;
     }
+
     li {
       padding: $dropdown-padding / 2 $dropdown-padding;
+
       &:hover {
         background: $dropdown-background-hover;
       }
+
       &:first-child {
         border-top-left-radius: $base-border-radius;
         border-top-right-radius: $base-border-radius;
       }
+
       &:last-child {
-        border: none;
+        border: 0;
         border-bottom-left-radius: $base-border-radius;
         border-bottom-right-radius: $base-border-radius;
       }
@@ -94,7 +106,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
   }
 
   &.right-edge .dropdown-menu {
-    right: 0;
     left: auto;
+    right: 0;
   }
 }

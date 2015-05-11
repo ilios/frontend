@@ -1,28 +1,34 @@
 .publication-menu {
-  .button, .button:hover{
-    background-color: white;
-      border: 1px solid transparent
+  .button,
+  .button:hover {
+    background-color: $white;
+    border: 1px solid transparent;
   }
-  &.published button{
+
+  &.published button {
+    border: 1px solid $published-green;
     color: $published-green;
-      border: 1px solid $published-green;
   }
-  &.notpublished button{
+
+  &.notpublished button {
+    border: 1px solid $notpublished-amber;
     color: $notpublished-amber;
-      border: 1px solid $notpublished-amber;
   }
-  &.scheduled button{
+
+  &.scheduled button {
+    border: 1px solid $scheduled-brown;
     color: $scheduled-brown;
-      border: 1px solid $scheduled-brown;
   }
-  ul.dropdown-menu li {
+
+  .dropdown-menu li {
     &.danger:hover {
-      color: white;
       background-color: $ilios-red;
+      color: $white;
     }
+
     &.good:hover {
-      color: white;
       background-color: $ilios-green;
+      color: $white;
     }
   }
 }

@@ -1,7 +1,8 @@
 .pulseloader {
-margin-top: 50px;
-    margin-left: 150px;
-    @include keyframes(pulse) {
+  margin-left: 150px;
+  margin-top: 50px;
+  
+  @include keyframes(pulse) {
     0% {
       stroke-dashoffset: 691;
      }

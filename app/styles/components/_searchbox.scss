@@ -1,46 +1,50 @@
 .search-box {
-    @include clearfix;
-    @include position(relative);
-    display: block;
+  @include clearfix;
+  @include position(relative);
+  display: block;
+  height: 1.6em;
+  margin-bottom: 10px;
+
+  // scss-lint:disable QualifyingElement
+  input[type=search] {
+    @include appearance(none);
+    @include margin(0);
+    @include padding(0 0 0 28px);
+    background: $white;
+    border: 1px solid $input-box-grey;
+    border-radius: $base-border-radius;
+    color: $base-font-color;
+    cursor: pointer;
+    font-style: italic;
     height: 1.6em;
-    margin-bottom: 10px;
-    input[type=search] {
-        @include appearance(none);
-        @include margin(0);
-        font-style: italic;
-        border-radius: $base-border-radius;
-        width: auto;
-        height: 1.6em;
-        @include padding(0 0 0 28px);
-        background: #FFF;
-        border: 1px solid $input-box-grey;
-        border-radius: $base-border-radius;
-        color: $base-font-color;
-        cursor: pointer;
-        z-index: 99999;
-        overflow: show;
-        min-width: 220px;
+    min-width: 220px;
+    overflow: show;
+    width: auto;
+    z-index: 99999;
+  }
+
+  .search-icon {
+    @include position(absolute, 0);
+    color: $base-link-color;
+    display: inline-block;
+    margin-right: 2px;
+    padding-left: 6px;
+    width: 20px;
+  }
+
+  button.close {
+    @include position(absolute, 0 0 0 'auto');
+    background-color: transparent;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    color: $base-font-color;
+    margin-right: -25px;
+    outline: none;
+    padding: 5px 10px;
+
+    img {
+      height: 12px;
+      opacity: .7;
     }
-    .search-icon {
-        @include position(absolute, 0);
-        color: $base-link-color;
-        display: inline-block;
-        padding-left: 6px;
-        margin-right: 2px;
-        width: 20px;
-    }
-    button.close {
-        @include position(absolute, 0 0 0 'auto');
-        outline: none;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        padding: 5px 10px;
-        margin-right: -25px;
-        background-color: transparent;
-        color: $base-font-color;
-        img {
-            height: 12px;
-            opacity: .7;
-        }
-    }
+  }
 }

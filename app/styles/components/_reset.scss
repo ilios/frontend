@@ -1,10 +1,9 @@
 body {
-  font-size: $base-font-size;
+  background-color: $white;
   color: $base-font-color;
-  background-color: white;
-  -webkit-font-smoothing: antialiased;
   font-family: $helvetica;
   font-size: $base-font-size;
+  -webkit-font-smoothing: antialiased;
   line-height: $base-line-height;
 }
 
@@ -12,22 +11,27 @@ h1 {
   font-size: $h1-font-size;
   font-weight: normal;
 }
+
 h2 {
   font-size: $h2-font-size;
   font-weight: normal;
 }
+
 h3 {
   font-size: $h3-font-size;
   font-weight: normal;
 }
+
 h4 {
   font-size: $h4-font-size;
   font-weight: normal;
 }
+
 h5 {
   font-size: $h5-font-size;
   font-weight: normal;
 }
+
 h6 {
   font-size: $h6-font-size;
   font-weight: normal;
@@ -67,5 +71,5 @@ a {
 }
 
 hr {
-  border: none;
+  border: 0;
 }

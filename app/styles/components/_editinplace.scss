@@ -11,23 +11,26 @@
   }
 
   .editor {
-    input, select {
+    input,
+    select {
+      background: $white;
+      border: 1px solid $header-grey;
+      border-radius: $base-border-radius;
+      color: $base-font-color;
+      cursor: pointer;
       display: inline;
-         background: #FFF;
-    border: 1px solid $header-grey;
-    border-radius: $base-border-radius;
-    color: $base-font-color;
-    cursor: pointer;
-    z-index: 99999;
-    overflow: show;
-    padding: 4px;
+      overflow: show;
+      padding: 4px;
+      z-index: 99999;
     }
-    .actions{
+
+    .actions {
       display: inline;
+
       button {
         background: transparent;
-        padding: 0 .2em 0 .2em;
         margin: 0;
+        padding: 0 .2em;
       }
     }
   }
