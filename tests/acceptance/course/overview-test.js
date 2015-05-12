@@ -239,7 +239,7 @@ test('change end date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.courseenddate .editinplace .actions .save', container));
       andThen(function(){
-        assert.equal(getElementText(find('.coursestartdate div', container)), newDate.format('MM/DD/YY'));
+        assert.equal(getElementText(find('.courseenddate div', container)), newDate.format('MM/DD/YY'));
       });
 
     });
