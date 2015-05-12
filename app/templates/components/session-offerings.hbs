@@ -16,7 +16,7 @@
       <li>{{t 'sessions.openSmallGroupGenerator'}}</li>
     {{/action-menu}}
   </div>
-  
+
   <div class='detail-content'>
     {{#each offering in newOfferings}}
       {{offering-manager
@@ -27,26 +27,24 @@
       }}
     {{/each}}
     {{#if offerings.length}}
-    <div class='detail-content-header'>
-      <div>
-        <label>{{ t 'general.dateTime' }}</label>
+      <div class='detail-content-header'>
+        <div>
+          <label>{{ t 'general.dateTime' }}</label>
+        </div>
+        <div>
+          <label>{{ t 'general.groupName' }}</label>
+        </div>
+        <div>
+          <label>{{ t 'general.location' }}</label>
+        </div>
+        <div>
+          <label>{{ t 'general.instructors' }}</label>
+        </div>
+        <div>
+          <label>{{ t 'general.actions' }}</label>
+        </div>
       </div>
-      <div>
-        <label>{{ t 'general.groupName' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.location' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.instructors' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.actions' }}</label>
-      </div>
-    </div>
-      {{#each block in offeringBlocks}}
-        {{offering-block block=block}}
-      {{/each}}
+      {{session-offerings-list session=session}}
     {{else}}
       <p>{{t 'sessions.noOfferings'}}</p>
     {{/if}}

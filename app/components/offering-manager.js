@@ -6,6 +6,7 @@ import DS from 'ember-data';
 export default Ember.Component.extend({
   offering: null,
   isEditing: false,
+  editable: true,
   sortBy: ['lastName', 'firstName'],
   sortedInstructors: Ember.computed.sort('instructors', 'sortBy'),
   startDay: null,

@@ -87,10 +87,12 @@
         {{/each}}
       </ul>
     </span>
-    <span class='offering-block-time-offering-actions offering-detail-box'>
-      {{#action-menu}}
-        <li {{action 'edit'}}>{{t 'general.edit'}}</li>
-      {{/action-menu}}
-    </span>
+    {{#if editable}}
+      <span class='offering-block-time-offering-actions offering-detail-box'>
+        {{#action-menu}}
+          <li {{action 'edit'}}>{{t 'general.edit'}}</li>
+        {{/action-menu}}
+      </span>
+    {{/if}}
   </div>
 {{/liquid-if}}

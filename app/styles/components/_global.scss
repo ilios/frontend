@@ -141,6 +141,11 @@ h4 {
   cursor: pointer;
 }
 
+.editable,
+.is-editable {
+  color: $ilios-blue;
+}
+
 .page-title {
   color: $base-accent-color;
   padding: 1em;

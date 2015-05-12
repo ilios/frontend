@@ -13,7 +13,7 @@
           </div>
           <div class='offering-block-time-offerings'>
             {{#each offering in offeringTimeBlock.sortedOfferings}}
-              {{offering-manager offering=offering save='save'}}
+              {{offering-manager offering=offering save='save' editable=editable}}
             {{/each}}
           </div>
         </div>
@@ -32,7 +32,7 @@
           </div>
           <div class='multiday-offering-block-time-offerings'>
             {{#each offering in offeringTimeBlock.offerings}}
-              {{offering-manager offering=offering save='save'}}
+              {{offering-manager offering=offering save='save' editable=editable}}
             {{/each}}
           </div>
         </div>
