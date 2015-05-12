@@ -14,7 +14,9 @@ module('Acceptance: Session - Learning Materials', {
     fixtures.user = server.create('user', {id: 4136});
     server.create('school');
     server.create('educationalYear');
-    server.create('course');
+    server.create('course', {
+      sessions: [1]
+    });
     server.create('sessionType');
     fixtures.statuses = [];
     fixtures.statuses.pushObject(server.create('learningMaterialStatus', {
@@ -31,15 +33,35 @@ module('Acceptance: Session - Learning Materials', {
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
       type: 'file',
-      status: 1
+      owningUser: 4136,
+      status: 1,
+      userRole: 1,
+      copyrightPermission: true,
+      sessionLearningMaterials: [1],
+    }));
+    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      originalAuthor: 'Jennifer Johnson',
+      type: 'file',
+      owningUser: 4136,
+      status: 1,
+      userRole: 1,
+      copyrightPermission: false,
+      copyrightRationale: 'reason is thus',
+      sessionLearningMaterials: [2],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
-      type: 'link'
+      type: 'link',
+      link: 'www.example.com',
+      status: 1,
+      sessionLearningMaterials: [3],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
-      type: 'citation'
+      type: 'citation',
+      citation: 'a citation',
+      status: 1,
+      sessionLearningMaterials: [4],
     }));
     fixtures.sessionLearningMaterials = [];
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
@@ -57,10 +79,14 @@ module('Acceptance: Session - Learning Materials', {
       session: 1,
       publicNotes: false,
     }));
+    fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
+      learningMaterial: 4,
+      session: 1,
+    }));
 
     fixtures.session = server.create('session', {
       course: 1,
-      learningMaterials: [1, 2, 3],
+      learningMaterials: [1, 2, 3, 4],
     });
   },
 
@@ -249,7 +275,6 @@ test('issue #345 second new learning material defaults', function(assert) {
   andThen(function(){
     click(find('.detail-actions .button', container)).then(function(){
       click(find('.detail-actions ul li:eq(0)', container));
-      
     });
     assert.equal(getElementText(find('select:eq(0) option:selected', container)), getText(fixtures.statuses[0].title));
     assert.equal(getElementText(find('select:eq(1) option:selected', container)), getText(fixtures.roles[0].title));
@@ -277,7 +302,7 @@ test('cancel new learning material', function(assert) {
 
 });
 
-test('view learning material details', function(assert) {
+test('view copyright file learning material details', function(assert) {
   visit(url);
   andThen(function() {
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
@@ -286,6 +311,60 @@ test('view learning material details', function(assert) {
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[0].title));
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[0].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[0].description));
+      assert.equal(getElementText(find('.copyrightpermission', container)), getText('Yes'));
+      assert.equal(find('.copyrightrationale', container).length, 0);
+    });
+  });
+});
+
+test('view rationale file learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(1) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
+      assert.equal(getElementText(find('.copyrightrationale', container)), getText(fixtures.learningMaterials[1].copyrightRationale));
+      assert.equal(find('.citation', container).length, 0);
+      assert.equal(find('.link', container).length, 0);
+    });
+  });
+});
+
+test('view link learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(2) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[2].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
+      assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
+      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(find('.copyrightrationale', container).length, 0);
+      assert.equal(find('.citation', container).length, 0);
+      assert.equal(find('.copyrightpermission', container).length, 0);
+    });
+  });
+});
+
+test('view citation learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(3) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[3].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[3].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[3].description));
+      assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
+      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(find('.copyrightrationale', container).length, 0);
+      assert.equal(find('.file', container).length, 0);
+      assert.equal(find('.copyrightpermission', container).length, 0);
     });
   });
 });
