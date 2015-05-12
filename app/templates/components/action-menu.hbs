@@ -1,4 +1,7 @@
 <button class="button rl-dropdown-toggle" {{action "toggleDropdown"}}>
+  {{#if icon}}
+    {{fa-icon icon}}
+  {{/if}}
   {{title}}
 </button>
 <ul class='dropdown-menu' {{action "toggleDropdown"}}>
