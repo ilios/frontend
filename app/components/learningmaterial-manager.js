@@ -16,6 +16,15 @@ export default Ember.Component.extend({
       });
     }).sortBy('title');
   }.property('learningMaterialStatuses.@each'),
+  isFile: function(){
+    return this.get('learningMaterial.learningMaterial.type') === 'file';
+  }.property('learningMaterial.learningMaterial.type'),
+  isLink: function(){
+    return this.get('learningMaterial.learningMaterial.type') === 'link';
+  }.property('learningMaterial.learningMaterial.type'),
+  isCitation: function(){
+    return this.get('learningMaterial.learningMaterial.type') === 'citation';
+  }.property('learningMaterial.learningMaterial.type'),
   actions: {
     changeStatus: function(statusId){
       var newStatus = this.get('learningMaterialStatuses').findBy('id', statusId);

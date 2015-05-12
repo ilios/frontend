@@ -38,9 +38,13 @@
 
 {{#if isFile}}
   <label>{{t 'learningMaterials.copyrightPermission'}}
-    <span class='copyrightpermission'>{{learningMaterial.learningMaterial.copyrightPermission}}</span>
+    {{#if learningMaterial.learningMaterial.copyrightPermission}}
+      <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
+    {{else}}
+      <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
+    {{/if}}
   </label> <br />
-  {{#unless learningMaterial.copyrightPermission}}
+  {{#unless learningMaterial.learningMaterial.copyrightPermission}}
     <label>{{t 'learningMaterials.copyrightRationale'}}
       <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
     </label> <br />
@@ -50,7 +54,7 @@
 {{#if isCitation}}
   <label>{{t 'learningMaterials.citation'}}
     <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
-  </label>
+  </label> <br />
 {{/if}}
 
 {{#if isLink}}

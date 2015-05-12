@@ -32,17 +32,32 @@ module('Acceptance: Course - Learning Materials', {
       owningUser: 4136,
       status: 1,
       userRole: 1,
+      copyrightPermission: true,
       courseLearningMaterials: [1],
+    }));
+    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      originalAuthor: 'Jennifer Johnson',
+      type: 'file',
+      owningUser: 4136,
+      status: 1,
+      userRole: 1,
+      copyrightPermission: false,
+      copyrightRationale: 'reason is thus',
+      courseLearningMaterials: [2],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
       type: 'link',
+      link: 'www.example.com',
       status: 1,
+      courseLearningMaterials: [3],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       type: 'citation',
+      citation: 'a citation',
       status: 1,
+      courseLearningMaterials: [4],
     }));
     fixtures.courseLearningMaterials = [];
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
@@ -54,17 +69,22 @@ module('Acceptance: Course - Learning Materials', {
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
       learningMaterial: 2,
       course: 1,
-      publicNotes: false,
+      required: false,
     }));
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
       learningMaterial: 3,
+      course: 1,
+      publicNotes: false,
+    }));
+    fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
+      learningMaterial: 4,
       course: 1,
     }));
 
     fixtures.course = server.create('course', {
       year: 2013,
       owningSchool: 1,
-      learningMaterials: [1, 2, 3],
+      learningMaterials: [1, 2, 3, 4],
     });
   },
 
@@ -282,7 +302,7 @@ test('cancel new learning material', function(assert) {
 
 });
 
-test('view learning material details', function(assert) {
+test('view copyright file learning material details', function(assert) {
   visit(url);
   andThen(function() {
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
@@ -291,6 +311,60 @@ test('view learning material details', function(assert) {
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[0].title));
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[0].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[0].description));
+      assert.equal(getElementText(find('.copyrightpermission', container)), getText('Yes'));
+      assert.equal(find('.copyrightrationale', container).length, 0);
+    });
+  });
+});
+
+test('view rationale file learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(1) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
+      assert.equal(getElementText(find('.copyrightrationale', container)), getText(fixtures.learningMaterials[1].copyrightRationale));
+      assert.equal(find('.citation', container).length, 0);
+      assert.equal(find('.link', container).length, 0);
+    });
+  });
+});
+
+test('view link learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(2) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[2].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
+      assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
+      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(find('.copyrightrationale', container).length, 0);
+      assert.equal(find('.citation', container).length, 0);
+      assert.equal(find('.copyrightpermission', container).length, 0);
+    });
+  });
+});
+
+test('view citation learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(3) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[3].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[3].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[3].description));
+      assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
+      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(find('.copyrightrationale', container).length, 0);
+      assert.equal(find('.file', container).length, 0);
+      assert.equal(find('.copyrightpermission', container).length, 0);
     });
   });
 });
