@@ -1,0 +1,10 @@
+<section id='session-details' class='full-width session-details'>
+  <div class="backtolink">{{#link-to 'course' courseController.model}}{{t 'sessions.backToSessionList'}}{{/link-to}}</div>
+  {{session-details
+    session=model
+    course=courseController.model
+    availableTopics=courseController.availableTopics
+    programs=courseController.programs
+    sessionTypes=sessionController.sessionTypes
+  }}
+</section>

@@ -98,7 +98,7 @@ module('Acceptance: Session - Learning Materials', {
 test('list learning materials', function(assert) {
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.session.learningMaterials.length);

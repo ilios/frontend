@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:course/sessionpublicationcheck', {
+moduleFor('controller:session/index', {
   // Specify the other units that are required for this test.
-  needs: ['controller:course']
+  needs: ['controller:course', 'controller:session']
 });
 
 // Replace this with your real tests.

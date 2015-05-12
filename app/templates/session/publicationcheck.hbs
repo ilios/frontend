@@ -1,0 +1,14 @@
+<div class='detail-view'>
+  <div class='detail-view-details'>
+    {{session-overview
+      course=courseController.model
+      session=sessionController.model
+      showCheckLink=false
+      sessionTypes=sessionController.sessionTypes
+    }}
+
+    {{#link-to 'session.index' courseController.model sessionController.model}}{{t 'general.backToTitle' titleBinding='sessionController.model.title'}}{{/link-to}}
+
+    {{session-publicationcheck session=sessionController.model}}
+  </div>
+</div>

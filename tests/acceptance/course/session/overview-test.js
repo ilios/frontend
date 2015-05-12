@@ -44,7 +44,7 @@ test('check fields', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     assert.equal(getElementText(find('.sessiontype div', container)), getText(fixtures.selectedSessionType.title));
     assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
@@ -63,7 +63,7 @@ test('check remove ilm', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     assert.equal(find('.sessionilmhours', container).length, 1);
     assert.equal(find('.sessionilmduedate', container).length, 1);
@@ -88,7 +88,7 @@ test('check add ilm', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     click(find('.independentlearningcontrol input', container));
     andThen(function(){
@@ -110,7 +110,7 @@ test('change ilm hours', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     assert.equal(find('.sessionilmhours', container).length, 1);
     var container = find('#session-details .sessionilmhours');
     assert.equal(getElementText(find('.content', container)), ilmSession.hours);
