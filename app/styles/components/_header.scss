@@ -10,15 +10,10 @@ header.main {
   background-color: $header-background;
   border-bottom: 1px solid darken($header-background, 10);
   height: $header-height;
-  margin-bottom: $header-height;
   text-align: center;
   vertical-align: bottom;
   width: 100%;
   z-index: 999;
-
-  @include media($large-screen) {
-    margin-bottom: 0;
-  }
 
   .logo {
     float: left;
@@ -36,19 +31,10 @@ header.main {
   }
 
   h1 {
-    background: $header-grey;
-    clear: both;
     color: $header-color;
-    display: block;
+    display: inline-block;
     font-size: $base-font-size * 1.5;
     margin-bottom: 1em;
-    padding-top: $header-height / 4;
-
-    @include media($large-screen) {
-      background: transparent;
-      clear: none;
-      margin: 0 $header-box-width + 10;
-    }
   }
 
   // Elements on the far right
@@ -75,28 +61,6 @@ header.main {
 
       @include media($large-screen) {
         padding: .5em 1em;
-      }
-    }
-
-    .authentication {
-      @include transition (all .2s ease-in-out);
-      background: $base-accent-color;
-      border-radius: $base-border-radius;
-      color: $header-color;
-      display: inline;
-      float: right;
-      font-size: $base-font-size * .8;
-      font-weight: 800;
-      margin-top: 1.2em;
-      padding: .4em .5em;
-      text-transform: uppercase;
-
-      @include media($large-screen) {
-        padding: .5em 1em;
-      }
-
-      &:hover {
-        background: lighten($base-accent-color, 10);
       }
     }
   }
