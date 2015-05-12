@@ -19,15 +19,15 @@
   </div>
 
   <div class='detail-actions'>
-    {{#if isManaging}}
+    {{#liquid-if isManaging class='horizontal'}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       <button class='add' {{action 'addObjective'}}>{{t 'general.addNew'}}</button>
-    {{/if}}
+    {{/liquid-if}}
   </div>
   <div class='detail-content'>
-    {{#if newObjectives.length}}
+    {{#liquid-if newObjectives.length class='vertical'}}
       <section class='resultslist-new'>
         {{#each objective in newObjectives}}
           <section class='newobjective'>
@@ -41,7 +41,7 @@
           </section>
         {{/each}}
       </section>
-    {{/if}}
+    {{/liquid-if}}
     {{#liquid-unless isManaging class="horizontal"}}
       {{#if isCourse}}
         {{course-objective-list
