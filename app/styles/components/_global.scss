@@ -148,8 +148,7 @@ h4 {
 }
 
 ul {
-  &.inline,
-  li {
+  &.inline{
     display: inline;
     margin-right: 2em;
   }
