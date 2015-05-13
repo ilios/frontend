@@ -21,7 +21,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
         !self.get('instructorGroups').contains(group)
       );
     }).sortBy('title');
-  }.property('instructorGroups.@each', 'filter', 'availableInstructorGroups.@each'),
+  }.property('instructorGroups.@each', 'filter', 'availableInstructorGroups.@each.title'),
   actions: {
     add: function(instructorGroup){
       var subject = this.get('subject');

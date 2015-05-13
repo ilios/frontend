@@ -11,6 +11,10 @@
         cohorts=session.course.cohorts
         isIlmSession=true
       }}
+      {{detail-instructorgroups
+        subject=session.ilmSessionFacet
+        isIlmSession=true
+      }}
     {{/liquid-if}}
     {{detail-objectives subject=session isSession=true}}
     {{detail-learning-materials subject=session isCourse=false}}

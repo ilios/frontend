@@ -1,0 +1,31 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'courses.instructorGroups'}} ({{subject.instructorGroups.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'courses.instructorGroupsManageTitle'}}
+      </span>
+    {{/if}}
+  </div>
+
+  <div class='detail-actions'>
+    {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'courses.instructorGroupsManageTitle'}}</button>
+    {{/if}}
+  </div>
+  <div class='detail-content'>
+    {{#liquid-if isManaging class="horizontal"}}
+        {{instructorgroup-selection-manager
+          subject=subject
+          availableInstructorGroups=subject.session.course.owningSchool.instructorGroups
+        }}
+    {{else}}
+      {{detail-instructorgroups-list
+        instructorGroups=subject.instructorGroups
+      }}
+    {{/liquid-if}}
+  </div>
+</section>
