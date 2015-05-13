@@ -200,6 +200,8 @@ var courses = {
   'learnerGroupsManageTitle': 'Manage Learner Groups',
   'availalbeLearnerGroups': 'Available Learner Groups',
   'noAvailalbeLearnerGroups': 'There are no unselected learner groups in this cohort',
+  'instructorGroups': 'Instructor Groups',
+  'instructorGroupsManageTitle': 'Manage Instructor Groups',
   'availalbeInstructorGroups': 'Available Instructor Groups',
   'noAvailalbeInstructorGroups': 'There are no unselected instructor groups in this school',
 };
