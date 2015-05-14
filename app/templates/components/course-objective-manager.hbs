@@ -1,5 +1,5 @@
 <h2>{{{courseObjective.title}}}</h2>
-{{#liquid-if showCohortList class="crossFade"}}
+{{#liquid-if showCohortList class="horizontal"}}
   <label class='group-picker'>
     {{t 'courses.chooseCohortTitle'}}:
     {{#if multipleCohorts}}
@@ -14,7 +14,7 @@
     {{/if}}
   </label>
   <div class='parent-picker'>
-    {{#liquid-if showCohortList class='crossFade'}}
+    {{#liquid-if showCohortList class='vertical'}}
       {{#each competency in currentCohort.objectivesByCompetency}}
         <h5 {{bind-attr class=':competency-title competency.selected:selected'}}>{{competency.title}}</h5>
         <ul>

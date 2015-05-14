@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import scrollTo from '../utils/scroll-to';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
@@ -20,24 +21,24 @@ export default Ember.Component.extend({
   newObjectives: [],
   actions: {
     manageParents: function(objective){
-      let self = this;
-      objective.get('parents').then(function(parents){
-        self.set('initialStateForManageParentsObjective', parents.toArray());
-        self.set('mangeParentsObjective', objective);
+      objective.get('parents').then((parents) => {
+        scrollTo(".detail-objectives");
+        this.set('initialStateForManageParentsObjective', parents.toArray());
+        this.set('mangeParentsObjective', objective);
       });
     },
     manageDescriptors: function(objective){
-      let self = this;
-      objective.get('meshDescriptors').then(function(descriptors){
-        self.set('initialStateForManageMeshObjective', descriptors.toArray());
-        self.set('manageDescriptorsObjective', objective);
+      objective.get('meshDescriptors').then((meshDescriptors) => {
+        scrollTo(".detail-objectives");
+        this.set('initialStateForManageMeshObjective', meshDescriptors.toArray());
+        this.set('manageDescriptorsObjective', objective);
       });
     },
     mangeCompetency: function(objective){
-      let self = this;
-      objective.get('competency').then(function(competency){
-        self.set('initialStateForManageCompetencyObjective', competency);
-        self.set('manageCompetencyObjective', objective);
+      objective.get('competency').then((competency) => {
+        scrollTo(".detail-objectives");
+        this.set('initialStateForManageCompetencyObjective', competency);
+        this.set('manageCompetencyObjective', objective);
       });
     },
     save: function(){
@@ -55,6 +56,7 @@ export default Ember.Component.extend({
           objective.save().then(function(){
             newParents.save().then(function(){
               self.set('mangeParentsObjective', null);
+              scrollTo("#objective-" + objective.get('id'));
             });
           });
         });
@@ -75,6 +77,7 @@ export default Ember.Component.extend({
           objective.save().then(function(){
             newDescriptors.save().then(function(){
               self.set('manageDescriptorsObjective', null);
+              scrollTo("#objective-" + objective.get('id'));
             });
           });
         });
@@ -91,6 +94,7 @@ export default Ember.Component.extend({
           }
           objective.save().then(function(){
             self.set('manageCompetencyObjective', null);
+            scrollTo("#objective-" + objective.get('id'));
           });
         });
       }
@@ -103,6 +107,7 @@ export default Ember.Component.extend({
         parents.clear();
         parents.addObjects(this.get('initialStateForManageParentsObjective'));
         self.set('mangeParentsObjective', null);
+        scrollTo("#objective-" + objective.get('id'));
       }
 
       if(this.get('isManagingDescriptors')){
@@ -111,12 +116,14 @@ export default Ember.Component.extend({
         descriptors.clear();
         descriptors.addObjects(this.get('initialStateForManageMeshObjective'));
         self.set('manageDescriptorsObjective', null);
+        scrollTo("#objective-" + objective.get('id'));
       }
 
       if(this.get('isManagingCompetency')){
         let objective = this.get('manageCompetencyObjective');
         objective.set('competency', this.get('initialStateForManageCompetencyObjective'));
         self.set('manageCompetencyObjective', null);
+        scrollTo("#objective-" + objective.get('id'));
       }
     },
     addObjective: function(){

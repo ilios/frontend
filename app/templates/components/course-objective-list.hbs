@@ -8,7 +8,7 @@
   </thead>
   <tbody>
     {{#each objective in sortedObjectives}}
-    <tr>
+    <tr id="objective-{{objective.id}}">
       <td class='text-left text-top' colspan=2>
         {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
       </td>
