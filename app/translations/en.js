@@ -13,6 +13,7 @@ var general = {
   'add': 'Add',
   'addNew': 'Add New',
   'none': 'None',
+  'close': 'Close',
   'published': 'Published',
   'notPublished': 'Not Published',
   'scheduled': 'Scheduled',

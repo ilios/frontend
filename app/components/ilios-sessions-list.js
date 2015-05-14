@@ -17,8 +17,20 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   setFilter: function(){
     this.set('debouncedFilter', this.get('filter'));
   },
-  filteredContent: function(){
+  proxiedSessions: Ember.computed('sessions.@each', function() {
     var sessions = this.get('sessions');
+    if(sessions == null){
+      return Ember.A();
+    }
+    return sessions.map(session => {
+      return Ember.ObjectProxy.create({
+        content: session,
+        expandOfferings: false
+      });
+    });
+  }),
+  filteredContent: function(){
+    var sessions = this.get('proxiedSessions');
     if(sessions == null){
       return Ember.A();
     }
@@ -41,7 +53,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       return (matchedSearchTerms === filterExpressions.length);
     });
     return filtered.sortBy('title');
-  }.property('sessions.@each.searchString', 'debouncedFilter'),
+  }.property('proxiedSessions.@each.searchString', 'debouncedFilter'),
   setSessionTypes: function(){
     var self = this;
     var course = this.get('course');
@@ -73,5 +85,8 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     removeNewSession: function(newSession){
       this.get('newSessions').removeObject(newSession);
     },
+    toggleExpandedOffering(sessionProxy){
+      sessionProxy.set('expandOfferings', !sessionProxy.get('expandOfferings'));
+    }
   }
 });

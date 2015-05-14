@@ -51,7 +51,14 @@
                   {{moment session.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
                 {{/if}}
               </td>
-              <td class='text-center'>{{session.offerings.length}}</td>
+              <td class='text-center clickable editable' {{action 'toggleExpandedOffering' session}}>
+                {{session.offerings.length}}
+                {{#if session.expandOfferings}}
+                  {{fa-icon 'caret-down'}}
+                {{else}}
+                  {{fa-icon 'eye'}}
+                {{/if}}
+              </td>
               <td class='text-center'>{{publication-status item=session showIcon=false}}</td>
               <td class='text-center'>
                 {{#action-menu}}
@@ -59,6 +66,24 @@
                 {{/action-menu}}
               </td>
             </tr>
+            {{#if session.expandOfferings}}
+              <tr class='active-background'>
+                <td colspan=8 class='text-right' {{action 'toggleExpandedOffering' session}}>
+                  {{t 'general.close'}}
+                  {{fa-icon 'times'}}
+                </td>
+              </tr>
+              <tr class='active-background'>
+                <td colspan=8>
+                  {{#if session.offerings.length}}
+                    {{session-offerings-list session=session.content editable=false}}
+                  {{else}}
+                    <p>{{t 'sessions.noOfferings'}}</p>
+                  {{/if}}
+
+                </td>
+              </tr>
+            {{/if}}
           {{else}}
             <tr><td colspan=8>{{t 'courses.noSessions'}}</td></tr>
           {{/each}}

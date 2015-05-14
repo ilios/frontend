@@ -296,6 +296,11 @@ $colapse-control-shadow-grey: #e2e2e2;
       }
     }
   }
+
+  .active-background,
+  .active-background:hover {
+    background-color: $active-background-color;
+  }
 }
 
 .print-detail-view {

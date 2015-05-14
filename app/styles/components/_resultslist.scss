@@ -25,10 +25,14 @@
     @include span-columns(12 of 12);
     @include pad();
     tbody tr {
-      cursor: pointer;
 
       &:hover {
         background-color: $background-grey;
+      }
+
+      &.active-background,
+      &.active-background:hover {
+        background-color: $active-background-color;
       }
     }
 
