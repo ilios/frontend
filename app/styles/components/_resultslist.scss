@@ -28,7 +28,7 @@
       cursor: pointer;
 
       &:hover {
-        background-color: $background-grey;
+        background-color: rgba(91, 209, 245, .6);
       }
     }
 
@@ -49,9 +49,13 @@
         color: $white;
       }
 
-      tbody tr:hover {
-        background-color: rgba(180, 236, 255, .6);
-      }
+      tbody tr {
+        curson: pointer;
+        
+        &:hover {
+           background-color: rgba(180, 236, 255, .6);
+        }
+      }  
     }
   }
 
