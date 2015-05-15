@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   cleanText: function(){
     var text = this.get('text');
     if(text === undefined || text == null){
-      return this.get('promptText');
+      return this.get('promptText')?this.get('promptText'):'';
     }
     //strip any possible HTML out of the text
     return text.replace(/(<([^>]+)>)/ig,"");
