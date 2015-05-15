@@ -10,8 +10,13 @@ $colapse-control-shadow-grey: #e2e2e2;
   font-size: $base-font-size;
   margin-top: -4px;
 
-  // Because certain sections are styled differently from others (ie, some headers have togglesa and others do not,
+  // Because certain sections are styled differently from others (ie, some headers have toggles and others do not,
   // put the non-default, section type-specific styling here, put the defaults below
+
+  //for the entire sessions section, we want to distinguish it with a different bg-color
+  &.sessions-list {
+    background-color: $active-background-color;
+  }
 
   // session-offerings section
   .session-offerings {
@@ -112,6 +117,10 @@ $colapse-control-shadow-grey: #e2e2e2;
         font-size: $base-font-size;
         font-weight: bold;
         margin-top: 1em;
+
+        &.sessions {
+          color: $text-blue;
+        }
       }
 
       .detail-actions {
