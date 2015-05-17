@@ -12,7 +12,7 @@ export default DS.Model.extend({
   competencies: DS.hasMany('competency', {async: true}),
   disciplines: DS.hasMany('discipline', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
-  stewardingSchools: DS.hasMany('school', {async: true}),
+  stewards: DS.hasMany('program-year-steward', {async: true}),
   cohort: DS.belongsTo('cohort', {async: true}),
   publishEvent: DS.belongsTo('publish-event', {async: true}),
   academicYear: function(){

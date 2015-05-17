@@ -22,6 +22,7 @@ var models = [
   'meshDescriptors',
   'meshQualifiers',
   'programYears',
+  'programYearStewards',
   'publishEvents',
   'recurringEvents',
   'sessionDescriptions',

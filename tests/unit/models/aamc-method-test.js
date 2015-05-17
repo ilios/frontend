@@ -38,6 +38,7 @@ moduleForModel('aamc-method', 'AamcMethod', {
     'model:offering',
     'model:program-year',
     'model:program',
+    'model:program-year-steward',
     'model:publish-event',
     'model:recurring-event',
     'model:report',

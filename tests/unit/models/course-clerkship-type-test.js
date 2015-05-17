@@ -36,6 +36,7 @@ moduleForModel('course-clerkship-type', {
     'model:objective',
     'model:offering',
     'model:program-year',
+    'model:program-year-steward',
     'model:program',
     'model:publish-event',
     'model:recurring-event',

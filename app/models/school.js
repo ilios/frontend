@@ -13,7 +13,7 @@ export default DS.Model.extend({
   disciplines: DS.hasMany('discipline', {async: true}),
   curriculumInventoryInsitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
-  stewardedProgramYears: DS.hasMany('program-year', {async: true}),
+  programYearStewards: DS.hasMany('program-year-steward', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
   courses: DS.hasMany('course', {async: true}),
   cohorts: function(){

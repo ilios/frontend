@@ -37,6 +37,7 @@ moduleForModel('course-learning-material', 'CourseLearningMaterial', {
     'model:objective',
     'model:offering',
     'model:program-year',
+    'model:program-year-steward',
     'model:program',
     'model:publish-event',
     'model:recurring-event',
