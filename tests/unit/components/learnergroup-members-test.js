@@ -4,6 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleForComponent('learnergroup-members', {
+  unit: true,
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

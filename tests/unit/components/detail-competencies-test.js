@@ -4,6 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleForComponent('detail-competencies', 'DetailCompetenciesComponent', {
+  unit: true,
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });
