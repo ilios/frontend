@@ -19,21 +19,22 @@ export default Ember.Service.extend({
     });
   }.property(),
   currentSchoolBuffer: null,
-  currentSchool: function(key, value) {
-    if (arguments.length > 1) {
+  currentSchool: Ember.computed('model.primarySchool', {
+    set: function(key, value){
       this.set('currentSchoolBuffer', value);
-    }
-    var self = this;
-    //always return a promise even if the school has been set manaully (by the school-picker for instance)
-    return new Ember.RSVP.Promise(function(resolve) {
-      var buffer = self.get('currentSchoolBuffer');
-      if(buffer != null){
-        resolve(buffer);
-      }
+    },
+    get: function() {
+      //always return a promise even if the school has been set manaully (by the school-picker for instance)
+      return new Ember.RSVP.Promise((resolve) => {
+        var buffer = this.get('currentSchoolBuffer');
+        if(buffer != null){
+          resolve(buffer);
+        }
 
-      resolve(self.get('model.primarySchool'));
-    });
-  }.property('model.primarySchool'),
+        resolve(this.get('model.primarySchool'));
+      });
+    }
+  }),
   canChangeSchool: function(){
     return this.get('currentUsr.schools.length') > 1;
   }.property('currentUsr.schools.@each'),
