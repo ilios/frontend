@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/learnergroup/2';
+var url = '/learnergroups/2';
 module('Acceptance: Learner Group - Membership', {
   beforeEach: function() {
     application = startApp();

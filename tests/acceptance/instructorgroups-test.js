@@ -23,7 +23,7 @@ test('visiting /instructorgroups', function(assert) {
   server.create('school');
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(currentPath(), 'instructorgroups');
+    assert.equal(currentPath(), 'instructorGroups');
   });
 });
 
@@ -150,7 +150,7 @@ test('add new instructorgroup', function(assert) {
     click('.newinstructorgroup .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'instructorgroup');
+    assert.equal(currentPath(), 'instructorGroup');
   });
 });
 
@@ -296,7 +296,7 @@ test('click edit takes you to instructorgroup route', function(assert) {
     });
   });
   andThen(function(){
-    assert.equal(currentURL(), '/instructorgroup/1');
+    assert.equal(currentURL(), '/instructorgroups/1');
   });
 });
 
@@ -314,6 +314,6 @@ test('click title takes you to instructorgroup route', function(assert) {
     click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
-    assert.equal(currentURL(), '/instructorgroup/1');
+    assert.equal(currentURL(), '/instructorgroups/1');
   });
 });

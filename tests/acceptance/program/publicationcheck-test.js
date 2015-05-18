@@ -31,9 +31,9 @@ module('Acceptance: Program - Publication Check', {
 });
 
 test('full program count', function(assert) {
-  visit('/program/' + fixtures.fullProgram.id + '/publicationcheck');
+  visit('/programs/' + fixtures.fullProgram.id + '/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'program.publicationcheck');
+    assert.equal(currentPath(), 'program.publicationCheck');
     var items = find('.program-publication-check .detail-content table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('program 0'));
     assert.equal(getElementText(items.eq(1)), getText('short_0'));
@@ -43,9 +43,9 @@ test('full program count', function(assert) {
 });
 
 test('empty program count', function(assert) {
-  visit('/program/' + fixtures.emptyProgram.id + '/publicationcheck');
+  visit('/programs/' + fixtures.emptyProgram.id + '/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'program.publicationcheck');
+    assert.equal(currentPath(), 'program.publicationCheck');
     var items = find('.program-publication-check .detail-content table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('program 1'));
     assert.equal(getElementText(items.eq(1)), getText('short_1'));

@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/program/1';
+var url = '/programs/1';
 module('Acceptance: Program - ProgramYear List', {
   beforeEach: function() {
     application = startApp();
@@ -163,7 +163,7 @@ test('check link', function(assert) {
   visit(url);
   andThen(function() {
     click('.programyear-list tbody tr:eq(0) td:eq(0) a').then(function(){
-      assert.equal(currentPath(), 'program.programyear');
+      assert.equal(currentPath(), 'program.programYear');
     });
   });
 });

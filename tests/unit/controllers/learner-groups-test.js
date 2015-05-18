@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:program/programyear', {
+moduleFor('controller:learnerGroups', {
   // Specify the other units that are required for this test.
-  needs: ['controller:program']
+  // needs: ['controller:foo']
 });
 
 // Replace this with your real tests.

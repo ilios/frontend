@@ -7,7 +7,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
 var fixtures = {};
-var url = '/course/1?details=true';
+var url = '/courses/1?details=true';
 module('Acceptance: Course - Objective Create', {
   beforeEach: function() {
     application = startApp();

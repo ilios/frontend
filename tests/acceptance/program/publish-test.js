@@ -40,7 +40,7 @@ module('Acceptance: Program - Publish', {
 });
 
 test('check published program', function(assert) {
-  visit('/program/' + fixtures.published.id);
+  visit('/programs/' + fixtures.published.id);
 
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
@@ -60,7 +60,7 @@ test('check published program', function(assert) {
 });
 
 test('check scheduled program', function(assert) {
-  visit('/program/' + fixtures.scheduled.id);
+  visit('/programs/' + fixtures.scheduled.id);
 
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
@@ -80,7 +80,7 @@ test('check scheduled program', function(assert) {
 });
 
 test('check draft program', function(assert) {
-  visit('/program/' + fixtures.draft.id);
+  visit('/programs/' + fixtures.draft.id);
 
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
@@ -100,7 +100,7 @@ test('check draft program', function(assert) {
 });
 
 test('check publish draft program', function(assert) {
-  visit('/program/' + fixtures.draft.id);
+  visit('/programs/' + fixtures.draft.id);
 
 
   andThen(function() {
@@ -116,7 +116,7 @@ test('check publish draft program', function(assert) {
 });
 
 test('check schedule draft program', function(assert) {
-  visit('/program/' + fixtures.draft.id);
+  visit('/programs/' + fixtures.draft.id);
   andThen(function() {
     let menu = find('.program-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -130,7 +130,7 @@ test('check schedule draft program', function(assert) {
 });
 
 test('check publish scheduled program', function(assert) {
-  visit('/program/' + fixtures.scheduled.id);
+  visit('/programs/' + fixtures.scheduled.id);
   andThen(function() {
     let menu = find('.program-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -144,7 +144,7 @@ test('check publish scheduled program', function(assert) {
 });
 
 test('check unpublish scheduled program', function(assert) {
-  visit('/program/' + fixtures.scheduled.id);
+  visit('/programs/' + fixtures.scheduled.id);
   andThen(function() {
     let menu = find('.program-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -158,7 +158,7 @@ test('check unpublish scheduled program', function(assert) {
 });
 
 test('check schedule published program', function(assert) {
-  visit('/program/' + fixtures.published.id);
+  visit('/programs/' + fixtures.published.id);
   andThen(function() {
     let menu = find('.program-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -181,7 +181,7 @@ test('check schedule published program', function(assert) {
 });
 
 test('check unpublish published program', function(assert) {
-  visit('/program/' + fixtures.published.id);
+  visit('/programs/' + fixtures.published.id);
   andThen(function() {
     let menu = find('.program-publication-menu').eq(0);
     click('.button', menu).then(function(){

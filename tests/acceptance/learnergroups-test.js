@@ -23,7 +23,7 @@ test('visiting /learnergroups', function(assert) {
   server.create('school');
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(currentPath(), 'learnergroups');
+    assert.equal(currentPath(), 'learnerGroups');
   });
 });
 
@@ -302,7 +302,7 @@ test('add new learnergroup', function(assert) {
     click('.newlearnergroup .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'learnergroups');
+    assert.equal(currentPath(), 'learnerGroups');
   });
 });
 
@@ -491,7 +491,7 @@ test('click edit takes you to learnergroup route', function(assert) {
     });
   });
   andThen(function(){
-    assert.equal(currentURL(), '/learnergroup/1');
+    assert.equal(currentURL(), '/learnergroups/1');
   });
 });
 
@@ -521,6 +521,6 @@ test('click title takes you to learnergroup route', function(assert) {
     click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
-    assert.equal(currentURL(), '/learnergroup/1');
+    assert.equal(currentURL(), '/learnergroups/1');
   });
 });

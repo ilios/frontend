@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/program/1/programyear/1';
+var url = '/programs/1/programyears/1';
 module('Acceptance: Program Year - Competencies', {
   beforeEach: function() {
     application = startApp();

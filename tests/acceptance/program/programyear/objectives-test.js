@@ -8,7 +8,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
-var url = '/program/1/programyear/1';
+var url = '/programs/1/programyears/1';
 module('Acceptance: Program Year - Objectives', {
   beforeEach: function() {
     application = startApp();

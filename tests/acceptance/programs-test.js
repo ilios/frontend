@@ -195,7 +195,7 @@ test('click edit takes you to program route', function(assert) {
     });
   });
   andThen(function(){
-    assert.equal(currentURL(), '/program/1');
+    assert.equal(currentURL(), '/programs/1');
   });
 });
 
@@ -213,6 +213,6 @@ test('click title takes you to program route', function(assert) {
     click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
-    assert.equal(currentURL(), '/program/1');
+    assert.equal(currentURL(), '/programs/1');
   });
 });

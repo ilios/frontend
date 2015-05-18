@@ -15,12 +15,12 @@ export default Ember.Component.extend({
     },
     {
       'icon': 'mortar-board',
-      'route': 'learnergroups',
+      'route': 'learnerGroups',
       'name': Ember.I18n.t('navigation.learnerGroups')
     },
     {
       'icon': 'user-md',
-      'route': 'instructorgroups',
+      'route': 'instructorGroups',
       'name': Ember.I18n.t('navigation.instructorGroups')
     },
     {

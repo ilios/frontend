@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/course/1';
+var url = '/courses/1';
 module('Acceptance: Course - Overview', {
   beforeEach: function() {
     application = startApp();
@@ -144,7 +144,7 @@ test('open and close details', function(assert) {
     assert.equal(find('.detail-title', details).length, 1);
     click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 7);
-      assert.equal(currentURL(), '/course/1?details=true');
+      assert.equal(currentURL(), '/courses/1?details=true');
     });
   });
 
@@ -153,7 +153,7 @@ test('open and close details', function(assert) {
     assert.equal(find('.detail-title', details).length, 7);
     click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 1);
-      assert.equal(currentURL(), '/course/1');
+      assert.equal(currentURL(), '/courses/1');
     });
   });
 });

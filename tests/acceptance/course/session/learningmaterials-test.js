@@ -7,7 +7,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
 var fixtures = {};
-var url = '/course/1/session/1';
+var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Learning Materials', {
   beforeEach: function() {
     application = startApp();

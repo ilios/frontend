@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/course/1/session/1';
+var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Overview', {
   beforeEach: function() {
     application = startApp();

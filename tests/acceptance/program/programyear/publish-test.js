@@ -40,10 +40,10 @@ module('Acceptance: Program Year - Publish', {
 });
 
 test('check published program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.published.id);
+  visit('/programs/1/programyears/' + fixtures.published.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     let menu = find('.programyear-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Published'));
@@ -60,10 +60,10 @@ test('check published program year', function(assert) {
 });
 
 test('check scheduled program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.scheduled.id);
+  visit('/programs/1/programyears/' + fixtures.scheduled.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     let menu = find('.programyear-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Scheduled'));
@@ -80,10 +80,10 @@ test('check scheduled program year', function(assert) {
 });
 
 test('check draft program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.draft.id);
+  visit('/programs/1/programyears/' + fixtures.draft.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     let menu = find('.programyear-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Not Published'));
@@ -100,7 +100,7 @@ test('check draft program year', function(assert) {
 });
 
 test('check publish draft program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.draft.id);
+  visit('/programs/1/programyears/' + fixtures.draft.id);
 
 
   andThen(function() {
@@ -116,7 +116,7 @@ test('check publish draft program year', function(assert) {
 });
 
 test('check schedule draft program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.draft.id);
+  visit('/programs/1/programyears/' + fixtures.draft.id);
   andThen(function() {
     let menu = find('.programyear-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -130,7 +130,7 @@ test('check schedule draft program year', function(assert) {
 });
 
 test('check publish scheduled program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.scheduled.id);
+  visit('/programs/1/programyears/' + fixtures.scheduled.id);
   andThen(function() {
     let menu = find('.programyear-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -144,7 +144,7 @@ test('check publish scheduled program year', function(assert) {
 });
 
 test('check unpublish scheduled program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.scheduled.id);
+  visit('/programs/1/programyears/' + fixtures.scheduled.id);
   andThen(function() {
     let menu = find('.programyear-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -158,7 +158,7 @@ test('check unpublish scheduled program year', function(assert) {
 });
 
 test('check schedule published program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.published.id);
+  visit('/programs/1/programyears/' + fixtures.published.id);
   andThen(function() {
     let menu = find('.programyear-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -181,7 +181,7 @@ test('check schedule published program year', function(assert) {
 });
 
 test('check unpublish published program year', function(assert) {
-  visit('/program/1/programyear/' + fixtures.published.id);
+  visit('/programs/1/programyears/' + fixtures.published.id);
   andThen(function() {
     let menu = find('.programyear-publication-menu').eq(0);
     click('.button', menu).then(function(){

@@ -6,7 +6,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
-var url = '/course/1?details=true';
+var url = '/courses/1?details=true';
 var fixtures = {};
 module('Acceptance: Course - Objective Parents', {
   beforeEach: function() {
