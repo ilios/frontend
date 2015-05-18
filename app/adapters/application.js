@@ -6,9 +6,10 @@ export default DS.RESTAdapter.extend({
     namespace: config.adapterNamespace,
     host: config.adapterHost,
     coalesceFindRequests: true,
-    findMany: function(store, type, ids, records) {
+    findMany: function(store, type, ids, snapshots) {
+      let url = this.buildURL(type.typeKey, ids, snapshots, 'findMany');
       return this.ajax(
-        this.buildURL(type.typeKey, ids, records),
+        url,
         'GET',
         { data: {
           filters: { id: ids },
