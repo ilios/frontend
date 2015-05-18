@@ -50,7 +50,7 @@ module('Acceptance: Session - Publish', {
 });
 
 test('check published session', function(assert) {
-  visit('/course/1/session/' + fixtures.publishedSession.id);
+  visit('/courses/1/sessions/' + fixtures.publishedSession.id);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -70,7 +70,7 @@ test('check published session', function(assert) {
 });
 
 test('check scheduled session', function(assert) {
-  visit('/course/1/session/' + fixtures.scheduledSession.id);
+  visit('/courses/1/sessions/' + fixtures.scheduledSession.id);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -90,7 +90,7 @@ test('check scheduled session', function(assert) {
 });
 
 test('check draft session', function(assert) {
-  visit('/course/1/session/' + fixtures.draftSession.id);
+  visit('/courses/1/sessions/' + fixtures.draftSession.id);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -110,7 +110,7 @@ test('check draft session', function(assert) {
 });
 
 test('check publish draft session', function(assert) {
-  visit('/course/1/session/' + fixtures.draftSession.id);
+  visit('/courses/1/sessions/' + fixtures.draftSession.id);
 
 
   andThen(function() {
@@ -126,7 +126,7 @@ test('check publish draft session', function(assert) {
 });
 
 test('check schedule draft session', function(assert) {
-  visit('/course/1/session/' + fixtures.draftSession.id);
+  visit('/courses/1/sessions/' + fixtures.draftSession.id);
   andThen(function() {
     let menu = find('.session-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -140,7 +140,7 @@ test('check schedule draft session', function(assert) {
 });
 
 test('check publish scheduled session', function(assert) {
-  visit('/course/1/session/' + fixtures.scheduledSession.id);
+  visit('/courses/1/sessions/' + fixtures.scheduledSession.id);
   andThen(function() {
     let menu = find('.session-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -154,7 +154,7 @@ test('check publish scheduled session', function(assert) {
 });
 
 test('check unpublish scheduled session', function(assert) {
-  visit('/course/1/session/' + fixtures.scheduledSession.id);
+  visit('/courses/1/sessions/' + fixtures.scheduledSession.id);
   andThen(function() {
     let menu = find('.session-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -168,7 +168,7 @@ test('check unpublish scheduled session', function(assert) {
 });
 
 test('check schedule published session', function(assert) {
-  visit('/course/1/session/' + fixtures.publishedSession.id);
+  visit('/courses/1/sessions/' + fixtures.publishedSession.id);
   andThen(function() {
     let menu = find('.session-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -182,7 +182,7 @@ test('check schedule published session', function(assert) {
 });
 
 test('check unpublish published session', function(assert) {
-  visit('/course/1/session/' + fixtures.publishedSession.id);
+  visit('/courses/1/sessions/' + fixtures.publishedSession.id);
   andThen(function() {
     let menu = find('.session-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -196,7 +196,7 @@ test('check unpublish published session', function(assert) {
 });
 
 test('check publish requirements for ilm session', function(assert) {
-  visit('/course/1/session/' + fixtures.ilmSession.id);
+  visit('/courses/1/sessions/' + fixtures.ilmSession.id);
   andThen(function() {
     let menu = find('.session-publication-menu').eq(0);
     click('.button', menu).then(function(){

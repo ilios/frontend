@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/learnergroup/2';
+var url = '/learnergroups/2';
 module('Acceptance: Learner Group - Overview', {
   beforeEach: function() {
     application = startApp();
@@ -189,7 +189,7 @@ test('change location', function(assert) {
 });
 
 test('no associated courses', function(assert) {
-  visit('learnergroup/3');
+  visit('/learnergroups/3');
   andThen(function() {
     assert.equal(getElementText(find('.detail-header .title h2')),getText('cohort 0 -> learnergroup 0 -> learnergroup 2'));
     assert.equal(getElementText(find('.detail-overview .learnergroupcourses')), getText('Associated Courses: None'));

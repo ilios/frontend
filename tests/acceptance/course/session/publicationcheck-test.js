@@ -57,7 +57,7 @@ test('full session count', function(assert) {
     sessionType: 1,
     sessionDescription: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
     var items = find('.session-publication-check .detail-content table tbody td');
@@ -74,7 +74,7 @@ test('empty session count', function(assert) {
   server.createList('session', 2, {
     course: 1
   });
-  visit('/course/1/session/2/publicationcheck');
+  visit('/courses/1/sessions/2/publicationcheck');
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
     var items = find('.session-publication-check .detail-content table tbody td');
@@ -93,7 +93,7 @@ test('check fields', function(assert) {
     sessionType: 1,
     sessionDescription: 1,
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -113,7 +113,7 @@ test('check remove ilm', function(assert) {
     course: 1,
     ilmSessionFacet: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -138,7 +138,7 @@ test('check add ilm', function(assert) {
     sessionType: 1,
     description: 'some text',
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -160,7 +160,7 @@ test('change ilm hours', function(assert) {
     course: 1,
     ilmSessionFacet: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -188,7 +188,7 @@ test('change ilm due date', function(assert) {
     course: 1,
     ilmSessionFacet: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview .sessionilmduedate');
     var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
@@ -214,7 +214,7 @@ test('change title', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview .detail-header .title');
     assert.equal(getElementText(container), getText('session 0'));
@@ -236,7 +236,7 @@ test('change type', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview');
     assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
@@ -260,7 +260,7 @@ test('change suplimental', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview');
     assert.ok(!find('.sessionsupplemental .editinplace input', container).is(':checked'));
@@ -276,7 +276,7 @@ test('change special attire', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview');
     assert.ok(!find('.sessionspecialattire .editinplace input', container).is(':checked'));
@@ -292,7 +292,7 @@ test('change special equipment', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview');
     assert.ok(!find('.sessionspecialequipment .editinplace input', container).is(':checked'));
@@ -309,7 +309,7 @@ test('change description', function(assert) {
     sessionType: 1,
     sessionDescription: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var description = getText('session description 0');
     var container = find('.session-overview .sessiondescription');
@@ -332,7 +332,7 @@ test('add description', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit('/course/1/session/1/publicationcheck');
+  visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview .sessiondescription');
     assert.equal(getElementText(find('.content', container)), getText('Click to edit'));

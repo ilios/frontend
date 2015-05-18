@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/learnergroup/1';
+var url = '/learnergroups/1';
 module('Acceptance: Learner Group - Subgroups', {
   beforeEach: function() {
     application = startApp();
@@ -160,6 +160,6 @@ test('click title takes you to learnergroup route', function(assert) {
     click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
-    assert.equal(currentURL(), '/learnergroup/2');
+    assert.equal(currentURL(), '/learnergroups/2');
   });
 });
