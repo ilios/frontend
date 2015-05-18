@@ -23,7 +23,7 @@ test('visiting /learnergroups', function(assert) {
   server.create('school');
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(currentPath(), 'learnergroups');
+    assert.equal(currentPath(), 'learnerGroups');
   });
 });
 
@@ -302,7 +302,7 @@ test('add new learnergroup', function(assert) {
     click('.newlearnergroup .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'learnergroups');
+    assert.equal(currentPath(), 'learnerGroups');
   });
 });
 

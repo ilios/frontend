@@ -43,7 +43,7 @@ test('check published program year', function(assert) {
   visit('/program/1/programyear/' + fixtures.published.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     let menu = find('.programyear-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Published'));
@@ -63,7 +63,7 @@ test('check scheduled program year', function(assert) {
   visit('/program/1/programyear/' + fixtures.scheduled.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     let menu = find('.programyear-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Scheduled'));
@@ -83,7 +83,7 @@ test('check draft program year', function(assert) {
   visit('/program/1/programyear/' + fixtures.draft.id);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     let menu = find('.programyear-publication-menu').eq(0);
     let button = find('.button' ,menu);
     assert.equal(getElementText(button), getText('Not Published'));

@@ -37,7 +37,7 @@ test('list directors', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     var container = find('.programyear-overview').eq(0);
     var items = find('.removable-list li', container);
     assert.equal(items.length, 3);
@@ -51,7 +51,7 @@ test('search directors', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     var container = find('.programyear-overview').eq(0);
     fillIn(find('.search-box input', container), 'guy').then(function(){
       var searchResults = find('.results li', container);
@@ -76,7 +76,7 @@ test('add director', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     var container = find('.programyear-overview').eq(0);
     var items = find('.removable-list li', container);
     assert.equal(items.length, 3);
@@ -102,7 +102,7 @@ test('remove director', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'program.programyear');
+    assert.equal(currentPath(), 'program.programYear');
     var container = find('.programyear-overview').eq(0);
     click('.removable-list li:eq(0)', container).then(function(){
       var items = find('.removable-list li', container);

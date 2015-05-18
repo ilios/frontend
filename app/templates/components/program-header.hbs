@@ -13,7 +13,7 @@
         <li class='good' {{action 'publish'}}>{{t 'publish.publishProgram'}}</li>
       {{/if}}
       {{#if showReview}}
-        {{#link-to 'program.publicationcheck' program}}
+        {{#link-to 'program.publicationCheck' program}}
           <li class='good' >{{t 'publish.reviewMissingItems' countBinding='program.allPublicationIssuesLength'}}</li>
         {{/link-to}}
       {{/if}}

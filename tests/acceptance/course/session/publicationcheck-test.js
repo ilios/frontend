@@ -59,7 +59,7 @@ test('full session count', function(assert) {
   });
   visit('/course/1/session/1/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.publicationcheck');
+    assert.equal(currentPath(), 'course.session.publicationCheck');
     var items = find('.session-publication-check .detail-content table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('session 0'));
     assert.equal(getElementText(items.eq(1)), getText('Yes (1)'));
@@ -76,7 +76,7 @@ test('empty session count', function(assert) {
   });
   visit('/course/1/session/2/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.publicationcheck');
+    assert.equal(currentPath(), 'course.session.publicationCheck');
     var items = find('.session-publication-check .detail-content table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('session 1'));
     assert.equal(getElementText(items.eq(1)), getText('No'));
@@ -96,7 +96,7 @@ test('check fields', function(assert) {
   visit('/course/1/session/1/publicationcheck');
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.publicationcheck');
+    assert.equal(currentPath(), 'course.session.publicationCheck');
     var container = find('.session-overview');
     assert.equal(getElementText(find('.sessiontype div', container)), getText('session type 0'));
     assert.equal(getElementText(find('.sessiondescription .content', container)), getText('session description 0'));
@@ -116,7 +116,7 @@ test('check remove ilm', function(assert) {
   visit('/course/1/session/1/publicationcheck');
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.publicationcheck');
+    assert.equal(currentPath(), 'course.session.publicationCheck');
     var container = find('.session-overview');
     assert.equal(find('.sessionilmhours', container).length, 1);
     assert.equal(find('.sessionilmduedate', container).length, 1);
@@ -141,7 +141,7 @@ test('check add ilm', function(assert) {
   visit('/course/1/session/1/publicationcheck');
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.publicationcheck');
+    assert.equal(currentPath(), 'course.session.publicationCheck');
     var container = find('.session-overview');
     click(find('.independentlearningcontrol input', container));
     andThen(function(){
@@ -163,7 +163,7 @@ test('change ilm hours', function(assert) {
   visit('/course/1/session/1/publicationcheck');
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.publicationcheck');
+    assert.equal(currentPath(), 'course.session.publicationCheck');
     assert.equal(find('.sessionilmhours', container).length, 1);
     var container = find('.session-overview .sessionilmhours');
     assert.equal(getElementText(find('.content', container)), ilmSession.hours);

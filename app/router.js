@@ -14,24 +14,24 @@ Router.map(function() {
   });
   this.route('courses');
   this.resource('course', { path: 'course/:course_id'}, function(){
-    this.route('publicationcheck', { path: '/publicationcheck'});
+    this.route('publicationCheck', { path: '/publicationcheck'});
     this.resource("session", {path: '/session/:session_id'}, function(){
-      this.route('publicationcheck', {path: '/publicationcheck'});
+      this.route('publicationCheck', {path: '/publicationcheck'});
     });
   });
-  this.route('print-course', { path: 'course/:course_id/print'});
+  this.route('printCourse', { path: 'course/:course_id/print'});
 
-  this.route('instructorgroups');
-  this.route('instructorgroup', { path: 'instructorgroup/:instructor_group_id'});
+  this.route('instructorGroups', { path: 'instructorgroups'});
+  this.route('instructorGroup', { path: 'instructorgroup/:instructor_group_id'});
 
-  this.route("testmodels");
+  this.route("testModels");
   this.route("loading");
   this.route('programs');
   this.route('learnerGroup', { path: 'learnergroup/:learner_group_id'});
-  this.route('learnergroups');
+  this.route('learnerGroups', { path: 'learnergroups'});
   this.resource('program', { path: 'program/:program_id'}, function(){
-    this.route("programyear", {path: '/programyear/:program-year_id'});
-    this.route('publicationcheck');
+    this.route("programYear", {path: '/programyear/:program-year_id'});
+    this.route('publicationCheck', { path: '/publicationcheck'});
   });
 });
 

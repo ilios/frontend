@@ -47,7 +47,7 @@ module('Acceptance: Course - Publication Check', {
 test('full course count', function(assert) {
   visit('/course/' + fixtures.fullCourse.id + '/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'course.publicationcheck');
+    assert.equal(currentPath(), 'course.publicationCheck');
     var items = find('.course-publication-check .detail-content table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('course 0'));
     assert.equal(getElementText(items.eq(1)), getText('Yes (1)'));
@@ -60,7 +60,7 @@ test('full course count', function(assert) {
 test('empty course count', function(assert) {
   visit('/course/' + fixtures.emptyCourse.id + '/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'course.publicationcheck');
+    assert.equal(currentPath(), 'course.publicationCheck');
     var items = find('.course-publication-check .detail-content table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('course 1'));
     assert.equal(getElementText(items.eq(1)), getText('No'));
