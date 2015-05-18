@@ -1,4 +1,4 @@
-$colapse-control-shadow-grey: #e2e2e2;
+$collapse-control-shadow-grey: #e2e2e2;
 
 // scss-lint:disable SelectorDepth NestingDepth
 .detail-view {
@@ -271,7 +271,7 @@ $colapse-control-shadow-grey: #e2e2e2;
       @include padding(.25em 4em .5em 5em);
       @include border-bottom-radius(5px);
       background-color: $ilios-orange;
-      box-shadow: 0 2px $colapse-control-shadow-grey, inset 0 1px 2px rgba(0, 0, 0, .34);
+      box-shadow: 0 2px $collapse-control-shadow-grey, inset 0 1px 2px rgba(0, 0, 0, .34);
       color: $white;
       cursor: pointer;
 

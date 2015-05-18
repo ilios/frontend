@@ -1,3 +1,4 @@
+// scss-lint:disable SelectorDepth NestingDepth
 .resultslist {
   @include span-columns(12 of 12);
   border-color: $header-grey;
@@ -50,10 +51,10 @@
       }
 
       tbody tr {
-        curson: pointer;
+        cursor: pointer;
         
         &:hover {
-           background-color: rgba(180, 236, 255, .6);
+          background-color: rgba(180, 236, 255, .6);
         }
       }  
     }
