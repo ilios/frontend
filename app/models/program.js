@@ -8,7 +8,10 @@ export default DS.Model.extend({
   deleted: DS.attr('boolean'),
   publishedAsTbd: DS.attr('boolean'),
   owningSchool: DS.belongsTo('school', {async: true}),
-  programYears: DS.hasMany('program-years', {async: true}),
+  programYears: DS.hasMany('program-year', {
+      async: true,
+      inverse: 'program'
+  }),
   cohortPromises: Ember.computed.mapBy('programYears', 'cohort'),
   cohorts: Ember.computed.mapBy('cohortPromises', 'content'),
   publishEvent: DS.belongsTo('publish-event', {async: true}),

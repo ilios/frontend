@@ -40,6 +40,7 @@ export default function() {
       'objectives',
       'offerings',
       'programYears',
+      'programYearStewards',
       'programs',
       'publishEvents',
       'recurringEvents',

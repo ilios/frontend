@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('learning-material-status', 'LearningMaterialStatus', {
+moduleForModel('program-year-steward', {
   needs: [
     'model:aamc-method',
     'model:aamc-pcrs',
@@ -36,7 +36,6 @@ moduleForModel('learning-material-status', 'LearningMaterialStatus', {
     'model:objective',
     'model:offering',
     'model:program-year',
-    'model:program-year-steward',
     'model:program',
     'model:publish-event',
     'model:recurring-event',

@@ -1,0 +1,33 @@
+<section class='halfwidth'>
+  <ul class='tree-list removable'>
+    {{#each schoolProxy in stewardSchools}}
+      <li>
+        <span class='removable' {{action 'removeSchool' schoolProxy.content}}>
+          {{fa-icon 'times'}} {{schoolProxy.title}}
+        </span>
+        <ul>
+          {{#each department in schoolProxy.departments}}
+            <li class='removable' {{action 'removeDepartment' schoolProxy.content department}}>
+              {{fa-icon 'times'}} {{department.title}}
+            </li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</section>
+
+
+<section class='halfwidth'>
+  <ul class='tree-list selectable'>
+    {{#each schoolProxy in availableSchools}}
+      <li {{action 'addSchool' schoolProxy}}>{{schoolProxy.title}}
+        <ul>
+          {{#each department in schoolProxy.departments}}
+            <li {{action 'addDepartment' schoolProxy department}}>{{department.title}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</section>

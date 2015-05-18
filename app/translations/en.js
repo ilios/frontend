@@ -100,6 +100,8 @@ var programs = {
   'missingCompetenciesMessage': 'Please add at least one competency to this program year.',
   'currentCompetency': 'Current Competency',
   'objectiveCompetencyManagerTitle': 'Select Objective Competency',
+  'stewardingSchoolsAndDepartments': 'Stewarding Schools and Departments',
+  'stewardsManageTitle': 'Manage Stewards',
 };
 translations.programs = programs;
 

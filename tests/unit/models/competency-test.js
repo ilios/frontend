@@ -36,6 +36,7 @@ moduleForModel('competency', 'Competency', {
     'model:mesh-qualifier',
     'model:objective',
     'model:offering',
+    'model:program-year-steward',
     'model:program-year',
     'model:program',
     'model:publish-event',

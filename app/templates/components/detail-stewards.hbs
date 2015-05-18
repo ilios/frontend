@@ -1,0 +1,42 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'programs.stewardingSchoolsAndDepartments'}} ({{programYear.stewards.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'programs.stewardsManageTitle'}}
+      </span>
+    {{/if}}
+  </div>
+
+  <div class='detail-actions'>
+    {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'programs.stewardsManageTitle'}}</button>
+    {{/if}}
+  </div>
+  <div class='detail-content'>
+    {{#liquid-if isManaging class="horizontal"}}
+        {{detail-steward-manager
+          stewards=bufferStewards
+          add='addStewardToBuffer'
+          remove='removeStewardFromBuffer'
+        }}
+    {{else}}
+      <ul class='static-list'>
+        {{#each schoolProxy in stewardsBySchool}}
+          <li>{{schoolProxy.title}}
+            {{#if schoolProxy.stewardingDepartments.length}}
+              <ul>
+                {{#each department in schoolProxy.stewardingDepartments}}
+                  <li>{{department.title}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/liquid-if}}
+  </div>
+</section>
