@@ -94,6 +94,7 @@ test('check add ilm', function(assert) {
     andThen(function(){
       assert.equal(find('.sessionilmhours', container).length, 1);
       assert.equal(find('.sessionilmduedate', container).length, 1);
+      assert.equal(find('.sessionassociatedgroups', container).length, 0);
       assert.equal(getElementText(find('.sessionilmhours .content', container)), 1);
     });
   });

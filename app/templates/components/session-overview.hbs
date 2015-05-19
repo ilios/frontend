@@ -73,21 +73,23 @@
       <label class="form-label">{{t "general.description"}}:</label>
       <div class="form-data">{{inplace-textarea value=session.sessionDescription.description save='changeDescription'}}</div>
     </div>
-    <div class="form-col-12">
-      <label>{{t "general.associatedGroups"}}:</label>
-      <div>
-      {{#if session.associatedLearnerGroups.isFulfilled}}
-        <span>
-          {{#each group in session.associatedLearnerGroups}}
-          {{group.title}},
-          {{else}}
-            {{t 'general.none'}}
-          {{/each}}
-        </span>
-      {{else}}
-        {{loading-part}}
-      {{/if}}
+    {{#unless session.isIndependentLearning}}
+      <div class="form-col-12 sessionassociatedgroups">
+        <label>{{t "general.associatedGroups"}}:</label>
+        <div>
+        {{#if session.associatedLearnerGroups.isFulfilled}}
+          <span>
+            {{#each group in session.associatedLearnerGroups}}
+              {{group.title}},
+            {{else}}
+              {{t 'general.none'}}
+            {{/each}}
+          </span>
+        {{else}}
+          {{loading-part}}
+        {{/if}}
+        </div>
       </div>
-    </div>
+    {{/unless}}
   </div>
 </section>

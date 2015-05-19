@@ -1,0 +1,21 @@
+{{#if sortedInstructorGroups.length}}
+  <h3>{{t 'general.instructorGroups'}}</h3>
+  <ul class='inline-list'>
+    {{#each instructorGroup in sortedInstructorGroups}}
+      <li>
+        {{instructorGroup.title}}
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
+
+{{#if sortedInstructors.length}}
+  <h3>{{t 'general.instructors'}}</h3>
+  <ul class='inline-list'>
+    {{#each user in sortedInstructors}}
+      <li>
+        {{user.fullName}}
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}

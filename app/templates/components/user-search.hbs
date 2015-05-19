@@ -12,11 +12,18 @@
     {{else}}
       {{#if sortedSearchResults.length}}
         <ul class='results'>
-          {{#each user in sortedSearchResults}}
-            <li {{action 'addUser' user}}{{bind-attr class='user.isActive:active:inactive'}}>
-              <div class='livesearch-user-name'>{{user.fullName}}</div>
-              <div class='livesearch-user-email'>{{user.email}}</div>
-            </li>
+          {{#each proxy in sortedSearchResults}}
+            {{#if proxy.isUser}}
+              <li {{action 'addUser' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
+                <div class='livesearch-user-name'>{{proxy.fullName}}</div>
+                <div class='livesearch-user-email'>{{proxy.email}}</div>
+              </li>
+            {{/if}}
+            {{#if proxy.isInstructorGroup}}
+              <li {{action 'addInstructorGroup' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
+                {{proxy.title}}
+              </li>
+            {{/if}}
           {{/each}}
         </ul>
       {{else}}
