@@ -12,8 +12,18 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Independent Learning', {
   beforeEach: function() {
     application = startApp();
-    server.create('user', {id: 4136});
-    server.create('school');
+    server.create('user', {
+      id: 4136,
+      primarySchool: 1
+    });
+    server.createList('user', 3, {
+      instructorIlmSessions: [1]
+    });
+    server.createList('user', 3);
+    fixtures.school = server.create('school', {
+      instructorGroups: [1,2,3,4,5],
+      courses: [1]
+    });
     server.create('educationalYear');
     server.create('program', {
       programYears: [1,2]
@@ -64,14 +74,25 @@ module('Acceptance: Session - Independent Learning', {
       learnerGroups: [4,5]
     }));
     fixtures.course = server.create('course', {
-      cohorts: [1,2]
+      cohorts: [1,2],
+      owningSchool: 1
     });
 
+    fixtures.instructorGroups = [];
+    fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 3,{
+      ilmSession: 1,
+      school: 1
+    }));
+    fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 2,{
+      school: 1
+    }));
     fixtures.sessionType = server.create('sessionType');
     fixtures.sessionDescription = server.create('sessionDescription');
     fixtures.ilmSession = server.create('ilmSession', {
       session: 1,
-      learnerGroups: [1]
+      learnerGroups: [1],
+      instructorGroups: [1,2,3],
+      instructors: [2,3,4]
     });
     fixtures.session = server.create('session', {
       course: 1,
@@ -84,7 +105,7 @@ module('Acceptance: Session - Independent Learning', {
   }
 });
 
-test('initial selected groups', function(assert) {
+test('initial selected learner groups', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -99,7 +120,7 @@ test('initial selected groups', function(assert) {
   });
 });
 
-test('check groups', function(assert) {
+test('check learner groups', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -114,7 +135,7 @@ test('check groups', function(assert) {
   });
 });
 
-test('filter groups', function(assert) {
+test('filter learner groups', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -128,7 +149,7 @@ test('filter groups', function(assert) {
   });
 });
 
-test('add group', function(assert) {
+test('add learner group', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -149,7 +170,7 @@ test('add group', function(assert) {
   });
 });
 
-test('add sub group', function(assert) {
+test('add learner sub group', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -170,7 +191,7 @@ test('add sub group', function(assert) {
   });
 });
 
-test('add group with children', function(assert) {
+test('add learner group with children', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -187,7 +208,7 @@ test('add group with children', function(assert) {
   });
 });
 
-test('add group with children and remove one child', function(assert) {
+test('add learner group with children and remove one child', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -209,7 +230,7 @@ test('add group with children and remove one child', function(assert) {
   });
 });
 
-test('remove group', function(assert) {
+test('remove learner group', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -226,7 +247,7 @@ test('remove group', function(assert) {
   });
 });
 
-test('undo change', function(assert) {
+test('undo learner group change', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
@@ -240,6 +261,262 @@ test('undo change', function(assert) {
     andThen(function(){
       var selectedGroups = find('.inline-list li', container);
       assert.equal(getElementText(selectedGroups), 'learnergroup0');
+    });
+  });
+});
+
+test('initial selected instructors', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    assert.equal(getElementText(find('.detail-title', container)), getText('Instructors(6)'));
+    var selectedGroups = find('.inline-list:eq(0) li', container);
+    assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
+    for(let i = 0; i < fixtures.ilmSession.instructorGroups.length; i++){
+      let expectedTitle = getText(fixtures.instructorGroups[fixtures.ilmSession.instructorGroups[i] - 1].title);
+      let title = getElementText(selectedGroups.eq(i));
+      assert.equal(title, expectedTitle);
+    }
+
+    var selectedUsers = find('.inline-list:eq(1) li', container);
+    assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
+    assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+  });
+});
+
+test('manage instructors lists', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container);
+    andThen(function(){
+      var selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+
+      var selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
+      assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+    });
+  });
+});
+
+test('manage instructors search users', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container);
+    andThen(function(){
+      let searchBox = find('.search-box', container);
+      assert.equal(searchBox.length, 1);
+      searchBox = searchBox.eq(0);
+      let searchBoxInput = find('input', searchBox);
+      assert.equal(searchBoxInput.attr('placeholder'), 'Find Instructor or Group');
+      fillIn(searchBoxInput, 'guy');
+      click('span.search-icon', searchBox).then(()=>{
+        let searchResults = find('.live-search .results li', container);
+        assert.equal(searchResults.length, 7);
+        let expectedResults = '0 guy Mc0son 1 guy Mc1son 2 guy Mc2son 3 guy Mc3son 4 guy Mc4son 5 guy Mc5son 6 guy Mc6son';
+        assert.equal(getElementText(searchResults), getText(expectedResults));
+
+        let activeResults = find('.live-search .results li.active', container);
+        assert.equal(getElementText(activeResults), getText('0 guy Mc0son 4 guy Mc4son 5 guy Mc5son 6 guy Mc6son'));
+
+        let inActiveResults = find('.live-search .results li.inactive', container);
+        assert.equal(getElementText(inActiveResults), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+      });
+    });
+  });
+});
+
+
+test('manage instructors search groups', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container);
+    andThen(function(){
+      let searchBox = find('.search-box', container);
+      assert.equal(searchBox.length, 1);
+      searchBox = searchBox.eq(0);
+      let searchBoxInput = find('input', searchBox);
+      assert.equal(searchBoxInput.attr('placeholder'), 'Find Instructor or Group');
+      fillIn(searchBoxInput, 'group');
+      click('span.search-icon', searchBox).then(()=>{
+        let searchResults = find('.live-search .results li', container);
+        assert.equal(searchResults.length, 5);
+        let expectedResults = 'instructorgroup 0 instructorgroup 1 instructorgroup 2 instructorgroup 3 instructorgroup 4';
+        assert.equal(getElementText(searchResults), getText(expectedResults));
+
+        let activeResults = find('.live-search .results li.active', container);
+        assert.equal(getElementText(activeResults), getText('instructorgroup 3 instructorgroup 4'));
+
+        let inActiveResults = find('.live-search .results li.inactive', container);
+        assert.equal(getElementText(inActiveResults), getText('instructorgroup 0 instructorgroup 1 instructorgroup 2'));
+      });
+    });
+  });
+});
+
+test('add instructor group', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container).then(function(){
+      let input = find('.search-box input', container);
+      fillIn(input, 'group');
+      click('span.search-icon', container).then(()=>{
+        click('.live-search .results li:eq(3)');
+      });
+    });
+    andThen(function(){
+      let selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, 4);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3'));
+
+      let selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
+      assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+      click('.bigadd', container);
+      andThen(function(){
+        let selectedGroups = find('.inline-list:eq(0) li', container);
+        assert.equal(selectedGroups.length, 4);
+        assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3'));
+
+        let selectedUsers = find('.inline-list:eq(1) li', container);
+        assert.equal(selectedUsers.length, 3);
+        assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+      });
+    });
+  });
+});
+
+test('add instructor', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container).then(function(){
+      let input = find('.search-box input', container);
+      fillIn(input, 'guy');
+      click('span.search-icon', container).then(()=>{
+        click('.live-search .results li:eq(4)');
+      });
+    });
+    andThen(function(){
+      var selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+
+      var selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, 4);
+      assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son 4 guy Mc4son'));
+      click('.bigadd', container);
+    });
+    andThen(function(){
+      var selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, 3);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+
+      var selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, 4);
+      assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son 4 guy Mc4son'));
+    });
+  });
+});
+
+test('remove instructor group', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container).then(function(){
+      click('.inline-list:eq(0) li:eq(0)', container);
+    });
+    andThen(function(){
+      let selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, 2);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));
+
+      let selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, 3);
+      assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+      click('.bigadd', container);
+      andThen(function(){
+        let selectedGroups = find('.inline-list:eq(0) li', container);
+        assert.equal(selectedGroups.length, 2);
+        assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));
+
+        let selectedUsers = find('.inline-list:eq(1) li', container);
+        assert.equal(selectedUsers.length, 3);
+        assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+      });
+    });
+  });
+});
+
+test('remove instructor', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container).then(function(){
+      click('.inline-list:eq(1) li:eq(0)', container);
+    });
+    andThen(function(){
+      let selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, 3);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+
+      let selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, 2);
+      assert.equal(getElementText(selectedUsers), getText('2 guy Mc2son 3 guy Mc3son'));
+      click('.bigadd', container);
+      andThen(function(){
+        let selectedGroups = find('.inline-list:eq(0) li', container);
+        assert.equal(selectedGroups.length, 3);
+        assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+
+        let selectedUsers = find('.inline-list:eq(1) li', container);
+        assert.equal(selectedUsers.length, 2);
+        assert.equal(getElementText(selectedUsers), getText('2 guy Mc2son 3 guy Mc3son'));
+      });
+    });
+  });
+});
+
+test('undo instructor/group changes', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    var container = find('.detail-instructors');
+    click('.detail-actions .add', container).then(function(){
+      click('.inline-list:eq(0) li:eq(0)', container);
+      click('.inline-list:eq(1) li:eq(0)', container);
+    });
+    andThen(function(){
+      let selectedGroups = find('.inline-list:eq(0) li', container);
+      assert.equal(selectedGroups.length, 2);
+      assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));
+
+      let selectedUsers = find('.inline-list:eq(1) li', container);
+      assert.equal(selectedUsers.length, 2);
+      assert.equal(getElementText(selectedUsers), getText('2 guy Mc2son 3 guy Mc3son'));
+      click('.bigcancel', container);
+      andThen(function(){
+        let selectedGroups = find('.inline-list:eq(0) li', container);
+        assert.equal(selectedGroups.length, 3);
+        assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+
+        let selectedUsers = find('.inline-list:eq(1) li', container);
+        assert.equal(selectedUsers.length, 3);
+        assert.equal(getElementText(selectedUsers), getText('1 guy Mc1son 2 guy Mc2son 3 guy Mc3son'));
+      });
     });
   });
 });

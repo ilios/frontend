@@ -82,6 +82,7 @@ var general = {
   'singleDay': 'Single Day',
   'multiDay': 'Multi Day',
   'classOf': 'Class of {{year}}',
+  'findInstructorOrGroup': 'Find Instructor or Group',
 };
 translations.general = general;
 
@@ -203,8 +204,8 @@ var courses = {
   'learnerGroupsManageTitle': 'Manage Learner Groups',
   'availalbeLearnerGroups': 'Available Learner Groups',
   'noAvailalbeLearnerGroups': 'There are no unselected learner groups in this cohort',
-  'availalbeInstructorGroups': 'Available Instructor Groups',
-  'noAvailalbeInstructorGroups': 'There are no unselected instructor groups in this school',
+  'instructors': 'Instructors',
+  'instructorsManageTitle': 'Manage Instructors',
 };
 translations.courses = courses;
 
