@@ -285,6 +285,11 @@ var publish = {
   'unPublishProgram': 'UnPublish Program',
   'publishProgramYear': 'Publish Program Year',
   'unPublishProgramYear': 'UnPublish Program Year',
+  message: {
+    'publish': 'Published Successfully',
+    'schedule': 'Scheduled Successfully',
+    'unPublish': 'UnPublished Successfully',
+  }
 };
 translations.publish = publish;
 

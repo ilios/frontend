@@ -5,6 +5,13 @@
   {{ilios-navigation}}
 {{/if}}
 <div id='site-container'>
+  <div class='flash-messages'>
+    {{#each flashMessages.arrangedQueue as |flash|}}
+      {{#flash-message flash=flash as |component flash|}}
+        {{t flash.message}}
+      {{/flash-message}}
+    {{/each}}
+  </div>
   {{liquid-outlet}}
 </div>
 
