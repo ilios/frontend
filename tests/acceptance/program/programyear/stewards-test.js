@@ -7,7 +7,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
 var fixtures = {};
-var url = '/program/1/programyear/1';
+var url = '/programs/1/programyears/1';
 module('Acceptance: Program Year - Stewards', {
   beforeEach: function() {
     application = startApp();
