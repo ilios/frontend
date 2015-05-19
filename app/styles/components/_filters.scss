@@ -1,10 +1,8 @@
 .filter-tools {
   $filter-tools-border-color: $base-border-color;
-  $filter-tools-background: $background-grey;
   $filter-font-size: $base-font-size * 1;
 
   @include clearfix;
-  background: $filter-tools-background;
   border-radius: $base-border-radius;
   padding: 1em 0 1em .5em;
 

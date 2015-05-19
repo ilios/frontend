@@ -18,7 +18,7 @@
         <td class='text-center'>{{learnerGroup.usersCount}}</td>
         <td class='text-center'>{{learnerGroup.children.length}}</td>
         <td class='text-right'>
-          {{#action-menu}}
+          {{#action-menu classNames='right-edge'}}
             <li {{action 'edit' learnerGroup}}>{{t 'general.edit'}}</li>
             <li {{action 'confirmRemove' learnerGroup}}>{{t 'general.remove'}}</li>
           {{/action-menu}}
