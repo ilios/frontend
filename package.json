@@ -7,15 +7,10 @@
     "doc": "doc",
     "test": "tests"
   },
-  "cacheDirectories": [
-    "node_modules",
-    "bower_components"
-  ],
   "scripts": {
-    "start": "./node_modules/ember-cli/bin/ember serve",
+    "start": "ember serve",
     "build": "ember build",
-    "test": "ember test",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "test": "ember test"
   },
   "repository": "https://github.com/ilios/frontend",
   "engines": {
