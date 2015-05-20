@@ -1,8 +1,12 @@
 .flash-messages {
+  @include position(fixed, 0 0 null 0);
+  z-index: 500;
+
   @mixin flash($color) {
     background-color: $color;
     color: darken($color, 25%);
     display: block;
+    opacity: .75;
     padding: $base-font-size / 2;
     text-align: center;
 

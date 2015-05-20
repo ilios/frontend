@@ -29,7 +29,7 @@ $sliding-menu-color-hover: #fff;
     padding-top: .4em;
     text-align: center;
     width: 120px;
-    z-index: 999999;
+    z-index: 200;
 
     i {
       @include transform(rotate(-90deg));
@@ -52,7 +52,7 @@ $sliding-menu-color-hover: #fff;
     color: $sliding-menu-color;
     -webkit-overflow-scrolling: touch;
     padding-top: 2em;
-    z-index: 999999;
+    z-index: 200;
 
     li {
       a {
@@ -81,7 +81,7 @@ $sliding-menu-color-hover: #fff;
     background: $sliding-menu-background;
     opacity: 0;
     visibility: hidden;
-    z-index: 999998;
+    z-index: 200;
 
     &.is-menu-visible {
       visibility: visible;

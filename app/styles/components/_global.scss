@@ -170,7 +170,7 @@ textarea {
   overflow: show;
   padding: 4px;
   width: 100%;
-  z-index: 99999;
+  z-index: 100;
 }
 
 .main-border {
@@ -254,7 +254,7 @@ input[type=text] {
   min-width: 220px;
   overflow: show;
   padding: 4px 4px 4px 8px;
-  z-index: 99999;
+  z-index: 100;
 }
 
 //style a regular select element to look like the actions menu
