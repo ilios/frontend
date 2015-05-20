@@ -4,6 +4,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   currentUser: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
   store: Ember.inject.service(),
   session: null,
   editable: true,
@@ -53,7 +54,7 @@ export default Ember.Component.extend({
   actions: {
     unpublish: function(){
       var session = this.get('session');
-      session.get('publishEvent').then(function(publishEvent){
+      session.get('publishEvent').then(publishEvent => {
         session.set('publishedAsTbd', false);
         session.set('publishEvent', null);
         if(publishEvent){
@@ -63,42 +64,50 @@ export default Ember.Component.extend({
           }
           publishEvent.save();
         }
-        session.save();
+        session.save().then(() => {
+          this.get('flashMessages').success('publish.message.unPublish');
+        });
       });
     },
     publishAsTbd: function(){
-      var self = this;
       var session = this.get('session');
       session.set('publishedAsTbd', true);
-      session.get('publishEvent').then(function(publishEvent){
+      session.get('publishEvent').then(publishEvent => {
         if(!publishEvent){
-          publishEvent = self.get('store').createRecord('publish-event', {
-            administrator: self.get('currentUser.model')
+          publishEvent = this.get('store').createRecord('publish-event', {
+            administrator: this.get('currentUser.model')
           });
-          publishEvent.save().then(function(publishEvent){
+          publishEvent.save().then(publishEvent => {
             session.set('publishEvent', publishEvent);
-            session.save();
+            session.save().then(() => {
+              this.get('flashMessages').success('publish.message.schedule');
+            });
           });
         } else {
-          session.save();
+          session.save().then(() => {
+            this.get('flashMessages').success('publish.message.schedule');
+          });
         }
       });
     },
     publish: function(){
       var session = this.get('session');
-      var self = this;
       session.set('publishedAsTbd', false);
-      session.get('publishEvent').then(function(publishEvent){
+      session.get('publishEvent').then(publishEvent => {
         if(!publishEvent){
-          publishEvent = self.get('store').createRecord('publish-event', {
-            administrator: self.get('currentUser.model')
+          publishEvent = this.get('store').createRecord('publish-event', {
+            administrator: this.get('currentUser.model')
           });
-          publishEvent.save().then(function(publishEvent){
+          publishEvent.save().then(publishEvent => {
             session.set('publishEvent', publishEvent);
-            session.save();
+            session.save().then(() => {
+              this.get('flashMessages').success('publish.message.publish');
+            });
           });
         } else {
-          session.save();
+          session.save().then(() => {
+            this.get('flashMessages').success('publish.message.publish');
+          });
         }
       });
     },
