@@ -57,8 +57,15 @@ export default Ember.Component.extend({
           if(publishEvent.get('totalRelated') === 0){
             publishEvent.deleteRecord();
           }
-          publishEvent.save();
-          this.get('flashMessages').success('publish.message.unPublish');
+          publishEvent.save().then(() => {
+            course.save().then(()=>{
+              this.get('flashMessages').success('publish.message.unPublish');
+            });
+          });
+        } else {
+          course.save().then(()=>{
+            this.get('flashMessages').success('publish.message.unPublish');
+          });
         }
       });
     },
@@ -72,12 +79,14 @@ export default Ember.Component.extend({
           });
           publishEvent.save().then(publishEvent => {
             course.set('publishEvent', publishEvent);
-            course.save();
-            this.get('flashMessages').success('publish.message.schedule');
+            course.save().then(()=>{
+              this.get('flashMessages').success('publish.message.schedule');
+            });
           });
         } else {
-          this.get('flashMessages').success('publish.message.schedule');
-          course.save();
+          course.save().then(()=>{
+            this.get('flashMessages').success('publish.message.schedule');
+          });
         }
       });
     },
@@ -91,12 +100,14 @@ export default Ember.Component.extend({
           });
           publishEvent.save().then(publishEvent => {
             course.set('publishEvent', publishEvent);
-            course.save();
-            this.get('flashMessages').success('publish.message.publish');
+            course.save().then(()=>{
+              this.get('flashMessages').success('publish.message.publish');
+            });
           });
         } else {
-          this.get('flashMessages').success('publish.message.publish');
-          course.save();
+          course.save().then(()=>{
+            this.get('flashMessages').success('publish.message.publish');
+          });
         }
       });
     },
