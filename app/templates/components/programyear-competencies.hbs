@@ -1,12 +1,13 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'general.competencies'}}
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'programs.competenciesManageTitle'}}
+      </span>
+    {{else}}
+      {{t 'general.competencies'}}
+    {{/if}}
   </div>
-  {{#if isManaging}}
-    <span class='detail-specific-title'>
-      {{t 'programs.competenciesManageTitle'}}
-    </span>
-  {{/if}}
 
   <div class='detail-actions'>
     {{#if isManaging}}
