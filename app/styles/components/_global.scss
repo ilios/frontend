@@ -264,8 +264,10 @@ select {
   @include border-top-radius($base-border-radius);
   @include border-bottom-radius($base-border-radius);
   //set the dropdown arrow image as the background to simulate the actions menu dropdown
-  background: url('images/select-down-arrow.png') 99% / 2% no-repeat $default-background-color;
+  background: url('images/select-down-arrow.png') no-repeat;
   background-color: $default-background-color;
+  background-position: right 4px bottom 8px;
+  background-size: 12px 12px;
   border-color: $header-grey;
 
   //handle the text and padding
