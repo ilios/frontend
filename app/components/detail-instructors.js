@@ -39,7 +39,6 @@ export default Ember.Component.extend({
           return group.save();
         }));
 
-        promises.pushObject(group.save());
       });
       this.get('instructorGroupBuffer').forEach(function(group){
         promises.pushObject(group.get('ilmSessions').then(ilmSessions => {
@@ -50,8 +49,8 @@ export default Ember.Component.extend({
         }));
       });
 
-      let removableInstructors = instructorGroups.filter(user => !this.get('instructorBuffer').contains(user));
       let instructors = ilmSession.get('instructors');
+      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').contains(user));
 
       instructors.clear();
       removableInstructors.forEach(user => {
@@ -59,8 +58,6 @@ export default Ember.Component.extend({
           ilmSessions.removeObject(ilmSession);
           return user.save();
         }));
-
-        promises.pushObject(user.save());
       });
       this.get('instructorBuffer').forEach(function(user){
         promises.pushObject(user.get('instructorIlmSessions').then(ilmSessions => {
