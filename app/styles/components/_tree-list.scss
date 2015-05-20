@@ -1,4 +1,7 @@
 .tree-list {
+  border: 1px solid $base-link-color;
+  padding: $base-font-size;
+
   li {
     color: $base-link-color;
     cursor: pointer;
@@ -8,12 +11,11 @@
     }
   }
 
-  &.removable li {
+  &.removable {
     background-color: $header-grey;
   }
 
   &.selectable {
     background-color: $white;
-    border: 1px solid $base-link-color;
   }
 }
