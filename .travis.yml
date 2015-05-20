@@ -41,6 +41,7 @@ before_install:
 install:
   - npm install -g bower
   - travis_retry npm install
+  - bower install
   - gem install scss-lint
 
 before_script:
