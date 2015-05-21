@@ -44,25 +44,17 @@
         cohorts=cohorts
       }}
     </div> <br />
-    <div class="offering-edit-instructorgroups">
-      <label>{{t "general.instructorGroups"}}:</label>
-      {{instructorgroup-selection-manager
-        subject=this
-        availableInstructorGroups=availableInstructorGroups
-      }}
-    </div> <br />
     <div class="offering-edit-instructors">
       <label>{{t "general.instructors"}}:</label>
-      <span>
-        <ul class='removable-list'>
-          {{#each user in sortedInstructors}}
-          <li {{action 'removeInstructor' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-          {{/each}}
-        </ul>
-      </span>
-      {{user-search
-        addUser='addInstructor'
-        currentlyActiveUsers=allInstructors
+      {{instructor-selection-manager
+        subject=offering
+        addInstructor='addInstructorToBuffer'
+        addInstructorGroup='addInstructorGroupToBuffer'
+        removeInstructor='removeInstructorFromBuffer'
+        removeInstructorGroup='removeInstructorGroupFromBuffer'
+        availableInstructorGroups=currentUser.model.primarySchool.instructorGroups
+        instructorGroups=instructorGroupBuffer
+        instructors=instructorBuffer
       }}
     </div>
   </div>

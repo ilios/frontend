@@ -223,10 +223,17 @@ test('create new offering', function(assert) {
     fillIn(find('.offering-edit-end-time input', container), '03:23');
     fillIn(find('.offering-edit-room input', container), 'testing palace');
     click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
-    click('.offering-edit-instructorgroups li:eq(0)', container);
-    fillIn(find('.offering-edit-instructors input', container), '0 guy').then(function(){
-      click(find('.offering-edit-instructors .results li:eq(0)', container));
-      click(find('.bigadd', container));
+    let input = find('.search-box input', container);
+    fillIn(input, 'guy');
+    click('span.search-icon', container).then(()=>{
+      click('.live-search .results li:eq(0)').then(() => {
+        fillIn(input, 'group');
+        click('span.search-icon', container).then(()=>{
+          click('.live-search .results li:eq(0)').then(()=> {
+            click(find('.bigadd', container));
+          });
+        });
+      });
     });
   });
   andThen(function(){
@@ -259,10 +266,17 @@ test('create new multiday offering', function(assert) {
       fillIn(find('.offering-edit-end-time input', container), '12:23');
       fillIn(find('.offering-edit-room input', container), 'testing palace');
       click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
-      click('.offering-edit-instructorgroups li:eq(0)', container);
-      fillIn(find('.offering-edit-instructors input', container), '0 guy').then(function(){
-        click(find('.offering-edit-instructors .results li:eq(0)', container));
-        click(find('.bigadd', container));
+      let input = find('.search-box input', container);
+      fillIn(input, 'guy');
+      click('span.search-icon', container).then(()=>{
+        click('.live-search .results li:eq(0)').then(() => {
+          fillIn(input, 'group');
+          click('span.search-icon', container).then(()=>{
+            click('.live-search .results li:eq(0)').then(()=> {
+              click(find('.bigadd', container));
+            });
+          });
+        });
       });
     });
   });

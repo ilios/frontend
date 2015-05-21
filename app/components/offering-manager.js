@@ -4,6 +4,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default Ember.Component.extend({
+  currentUser: Ember.inject.service(),
   offering: null,
   isEditing: false,
   editable: true,
@@ -18,6 +19,8 @@ export default Ember.Component.extend({
   instructors: [],
   instructorGroups: [],
   learnerGroups: [],
+  instructorGroupBuffer: [],
+  instructorBuffer: [],
   cohorts: Ember.computed.alias('offering.session.course.cohorts'),
   availableInstructorGroups: Ember.computed.alias('offering.session.course.owningSchool.instructorGroups'),
   setup: function(){
@@ -46,6 +49,16 @@ export default Ember.Component.extend({
             self.set('learnerGroups', learnerGroups.toArray());
           }
         });
+        offering.get('instructorGroups').then(instructorGroups => {
+          if(!self.get('isDestroyed')){
+            self.set('instructorGroupBuffer', instructorGroups.toArray());
+          }
+        });
+        offering.get('instructors').then(instructors => {
+          if(!self.get('isDestroyed')){
+            self.set('instructorBuffer', instructors.toArray());
+          }
+        });
       }
     }
   }.on('init'),
@@ -67,44 +80,45 @@ export default Ember.Component.extend({
     });
   }.property('instructors.@each', 'instructorGroups.@each.users.@each'),
   actions: {
-    save: function() {
+    save() {
       var self = this;
       var offering = this.get('offering');
-      var promises = [];
-      promises.pushObject(offering.get('instructors').then(function(currentOfferings){
-        var newItems = self.get('instructors');
-        currentOfferings.filter(function(item){
-          return newItems.contains(item);
-        }).invoke(function(item){
-          promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.removeObject(offering);
-          }));
-        });
-        currentOfferings.clear();
-        currentOfferings.addObjects(newItems);
-        newItems.invoke(function(item){
-          promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.addObject(offering);
-          }));
-        });
-      }));
-      promises.pushObject(offering.get('instructorGroups').then(function(currentOfferings){
-        var newItems = self.get('instructorGroups');
-        currentOfferings.filter(function(item){
-          return newItems.contains(item);
-        }).invoke(function(item){
-          promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.removeObject(offering);
-          }));
-        });
-        currentOfferings.clear();
-        currentOfferings.addObjects(newItems);
-        newItems.invoke(function(item){
-          promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.addObject(offering);
-          }));
-        });
-      }));
+      let promises = [];
+      let instructorGroups = offering.get('instructorGroups');
+      let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').contains(group));
+      instructorGroups.clear();
+      removableInstructorGroups.forEach(group => {
+        promises.pushObject(group.get('offerings').then(offerings => {
+          offerings.removeObject(offering);
+          return group.save();
+        }));
+      });
+      this.get('instructorGroupBuffer').forEach(function(group){
+        promises.pushObject(group.get('offerings').then(offerings => {
+          offerings.pushObject(offering);
+          return group.save().then(newGroup => {
+            instructorGroups.pushObject(newGroup);
+          });
+        }));
+      });
+
+      let instructors = offering.get('instructors');
+      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').contains(user));
+      instructors.clear();
+      removableInstructors.forEach(user => {
+        promises.pushObject(user.get('offerings').then(offerings => {
+          offerings.removeObject(offering);
+          return user.save();
+        }));
+      });
+      this.get('instructorBuffer').forEach(function(user){
+        promises.pushObject(user.get('offerings').then(offerings => {
+          offerings.pushObject(offering);
+          return user.save().then(newUser => {
+            instructors.pushObject(newUser);
+          });
+        }));
+      });
       promises.pushObject(offering.get('learnerGroups').then(function(currentOfferings){
         var newItems = self.get('learnerGroups');
         currentOfferings.filter(function(item){
@@ -115,10 +129,10 @@ export default Ember.Component.extend({
           }));
         });
         currentOfferings.clear();
-        currentOfferings.addObjects(newItems);
+        currentOfferings.pushObjects(newItems);
         newItems.invoke(function(item){
           promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.addObject(offering);
+            offerings.pushObject(offering);
           }));
         });
       }));
@@ -132,10 +146,12 @@ export default Ember.Component.extend({
       offering.set('room', this.get('room'));
       offering.set('startDate', startDate.toDate());
       offering.set('endDate', endDate.toDate());
-      promises.addObject(offering.save());
+      promises.pushObject(offering.save());
       Ember.RSVP.all(promises).then(function(){
         self.sendAction('save', offering);
-        self.set('isEditing', false);
+        if(!self.get('isDestroyed')){
+          self.set('isEditing', false);
+        }
       });
     },
     edit: function(){
@@ -143,13 +159,21 @@ export default Ember.Component.extend({
     },
     cancel: function(){
       this.setup();
+      this.set('instructorGroupBuffer', []);
+      this.set('instructorBuffer', []);
       this.set('isEditing', false);
     },
-    addInstructor: function(user){
-      this.get('instructors').addObject(user);
+    addInstructorGroupToBuffer(instructorGroup){
+      this.get('instructorGroupBuffer').pushObject(instructorGroup);
     },
-    removeInstructor: function(user){
-      this.get('instructors').removeObject(user);
+    addInstructorToBuffer(instructor){
+      this.get('instructorBuffer').pushObject(instructor);
+    },
+    removeInstructorGroupFromBuffer(instructorGroup){
+      this.get('instructorGroupBuffer').removeObject(instructorGroup);
+    },
+    removeInstructorFromBuffer(instructor){
+      this.get('instructorBuffer').removeObject(instructor);
     },
     toggleMultiDay: function(){
       this.set('isMultiDay', !this.get('isMultiDay'));
