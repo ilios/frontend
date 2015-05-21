@@ -1,6 +1,8 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'general.objectives'}} ({{subject.objectives.length}})
+    {{#unless isManaging}}
+      {{t 'general.objectives'}} ({{subject.objectives.length}})
+    {{/unless}}
     {{#if isManagingParents}}
       <span class='detail-specific-title'>
         {{t 'courses.objectiveParentTitle'}}

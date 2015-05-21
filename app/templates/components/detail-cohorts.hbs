@@ -1,6 +1,12 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'courses.cohorts'}} ({{cohorts.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'courses.cohortsManageTitle'}}
+      </span>
+    {{else}}
+      {{t 'courses.cohorts'}} ({{cohorts.length}})
+    {{/if}}
   </div>
 
   <div class='detail-actions'>
