@@ -1,9 +1,7 @@
 {{#each userProxy in proxiedMembers}}
-  <div class="form-col-6 learnergroup-username">
-    <div class="form-data">{{userProxy.fullName}}</div>
-  </div>
-  <div class="form-col-6 learnergroup-group-membership">
-    <div class="form-data">
+  <div class="form-col-12">
+    <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+    <div class="form-data learnergroup-group-membership">
       {{inplace-select
         value=userProxy.lowestGroupInTree.id
         options=learnerGroupOptions
