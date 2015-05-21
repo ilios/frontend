@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
-  subject: null,
   instructors: [],
   availableInstructorGroups: [],
   sortInstructorsBy: ['title'],

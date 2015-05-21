@@ -1,5 +1,5 @@
 <div class="live-search">
-  {{search-box value=searchTerms placeholder=placeholder}}
+  {{search-box value=searchTerms placeholder=placeholder search='search'}}
   {{#if searching}}
     <ul class='results'>
       <li>{{t 'general.currentlySearchingPrompt'}}</li>
@@ -10,9 +10,9 @@
         <li>{{t 'general.moreInputRequiredPrompt'}}</li>
       </ul>
     {{else}}
-      {{#if sortedSearchResults.length}}
+      {{#if results.length}}
         <ul class='results'>
-          {{#each proxy in sortedSearchResults}}
+          {{#each proxy in results}}
             {{#if proxy.isUser}}
               <li {{action 'addUser' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
                 <div class='livesearch-user-name'>{{proxy.fullName}}</div>
