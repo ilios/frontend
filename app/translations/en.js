@@ -83,6 +83,8 @@ var general = {
   'multiDay': 'Multi Day',
   'classOf': 'Class of {{year}}',
   'findInstructorOrGroup': 'Find Instructor or Group',
+  'selected': 'Selected',
+  'available': 'Available',
 };
 translations.general = general;
 
@@ -104,6 +106,8 @@ var programs = {
   'objectiveCompetencyManagerTitle': 'Select Objective Competency',
   'stewardingSchoolsAndDepartments': 'Stewarding Schools and Departments',
   'stewardsManageTitle': 'Manage Stewards',
+  'noUnselectedCompetencies': 'There are no unselected competencies',
+  'noSelectedCompetencies': 'There are no selected competencies',
 };
 translations.programs = programs;
 
