@@ -18,7 +18,8 @@ module.exports = function(environment) {
       'media-src': "'self'"
     },
     flashMessageDefaults: {
-      timeout: 5000,
+      timeout: 7000,
+      disappearTimeout: 5000,
       types: [ 'success', 'warning', 'info', 'alert' ],
       injectionFactories: []
     },

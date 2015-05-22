@@ -9,6 +9,7 @@
     opacity: .75;
     padding: $base-font-size / 2;
     text-align: center;
+    transition: all 2s linear;
 
     a {
       color: darken($color, 40%);
@@ -18,6 +19,10 @@
       &:hover {
         color: darken($color, 90%);
       }
+    }
+
+    &.disappearing {
+      opacity: 0;
     }
   }
 
