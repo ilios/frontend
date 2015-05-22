@@ -29,7 +29,7 @@ $sliding-menu-color-hover: #fff;
     padding-top: .4em;
     text-align: center;
     width: 120px;
-    z-index: 200;
+    z-index: 201;
 
     i {
       @include transform(rotate(-90deg));
@@ -52,7 +52,7 @@ $sliding-menu-color-hover: #fff;
     color: $sliding-menu-color;
     -webkit-overflow-scrolling: touch;
     padding-top: 2em;
-    z-index: 200;
+    z-index: 201;
 
     li {
       a {
