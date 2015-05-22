@@ -28,12 +28,12 @@
     tbody tr {
 
       &:hover {
-        background-color: rgba(91, 209, 245, .6);
+        background-color: rgba(239, 251, 255, .8);
       }
 
       &.active-background,
       &.active-background:hover {
-        background-color: $active-background-color;
+        background-color: rgba(239, 251, 255, .8);
       }
     }
 
@@ -58,7 +58,7 @@
         cursor: pointer;
         
         &:hover {
-          background-color: rgba(180, 236, 255, .6);
+          background-color: rgba(203, 231, 240, .9);
         }
       }  
     }
