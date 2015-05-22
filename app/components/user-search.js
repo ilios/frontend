@@ -8,8 +8,6 @@ export default Ember.Component.extend({
   showMoreInputPrompt: false,
   searchReturned: false,
   currentlyActiveUsers: [],
-  sortBy: ['lastName', 'firstName'],
-  sortedSearchResults: Ember.computed.sort('results', 'sortBy'),
   placeholder: null,
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
@@ -17,29 +15,22 @@ export default Ember.Component.extend({
   availableInstructorGroups: [],
   currentlyActiveInstructorGroups: [],
   integrateInstructorGroups: Ember.computed.notEmpty('availableInstructorGroups'),
-  watchTerms: function(){
-    //send clear events immediatly
-    if(this.get('searchTerms').length === 0){
-      this.set('debouncedSearchTerms', this.get('searchTerms'));
-    }
-    Ember.run.debounce(this, this.setDebouncedTerms, 500);
-  }.observes('searchTerms'),
-  setDebouncedTerms: function(){
-    this.set('debouncedSearchTerms', this.get('searchTerms'));
-  },
-  searchForUsers: function(){
-    var self = this;
-    var searchTerms = this.get('searchTerms');
-    var noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
-    this.set('showMoreInputPrompt', false);
-    this.set('searchReturned', false);
-    this.set('results', []);
-    if(noWhiteSpaceTerm.length === 0){
-      return;
-    } else if(noWhiteSpaceTerm.length < 3){
-      this.set('showMoreInputPrompt', true);
-    } else {
-      var userProxy = Ember.ObjectProxy.extend({
+  actions: {
+    search: function(searchTerms){
+      this.set('showMoreInputPrompt', false);
+      this.set('searchReturned', false);
+      let noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
+      if(noWhiteSpaceTerm.length === 0){
+        this.set('results', []);
+        this.set('searching', false);
+        return;
+      } else if(noWhiteSpaceTerm.length < 3){
+        this.set('results', []);
+        this.set('showMoreInputPrompt', true);
+        return;
+      }
+      this.set('searching', true);
+      let userProxy = Ember.ObjectProxy.extend({
         isUser: true,
         currentlyActiveUsers: [],
         isActive: function(){
@@ -49,7 +40,7 @@ export default Ember.Component.extend({
           return this.get('content.lastName')+this.get('content.firstName');
         }),
       });
-      var instructorGroupProxy = Ember.ObjectProxy.extend({
+      let instructorGroupProxy = Ember.ObjectProxy.extend({
         isInstructorGroup: true,
         currentlyActiveInstructorGroups: [],
         isActive: function(){
@@ -57,40 +48,38 @@ export default Ember.Component.extend({
         }.property('content', 'currentlyActiveInstructorGroups.@each'),
         sortTerm: Ember.computed.oneWay('content.title'),
       });
-      this.set('searching', true);
-      this.get('store').find('user', {q: searchTerms}).then(function(users){
-        var results = users.map(function(user){
+      this.get('store').find('user', {q: searchTerms}).then(users => {
+        let results = users.map(user => {
           return userProxy.create({
             content: user,
-            currentlyActiveUsers: self.get('currentlyActiveUsers'),
+            currentlyActiveUsers: this.get('currentlyActiveUsers'),
           });
         });
 
-        if(self.get('integrateInstructorGroups')){
-          var exp = new RegExp(searchTerms, 'gi');
+        if(this.get('integrateInstructorGroups')){
+          let exp = new RegExp(searchTerms, 'gi');
 
-          let filteredGroups = self.get('availableInstructorGroups').filter(group => {
+          let filteredGroups = this.get('availableInstructorGroups').filter(group => {
             return group.get('title').match(exp);
           });
           let instructorGroupProxies = filteredGroups.map(group => {
             return instructorGroupProxy.create({
               content: group,
-              currentlyActiveInstructorGroups: self.get('currentlyActiveInstructorGroups'),
+              currentlyActiveInstructorGroups: this.get('currentlyActiveInstructorGroups'),
             });
           });
 
           results.pushObjects(instructorGroupProxies);
           results.sortBy('sortTerm');
         }
-        self.set('searching', false);
-        self.set('searchReturned', true);
-        self.set('results', results);
-      });
-    }
 
-  }.observes('debouncedSearchTerms'),
-  actions: {
+        this.set('results', results);
+        this.set('searching', false);
+        this.set('searchReturned', true);
+      });
+    },
     addUser: function(user){
+      this.set('searchTerms', '');
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
       if(!this.get('currentlyActiveUsers').contains(user)){
@@ -98,6 +87,7 @@ export default Ember.Component.extend({
       }
     },
     addInstructorGroup: function(group){
+      this.set('searchTerms', '');
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
       if(!this.get('currentlyActiveInstructorGroups').contains(group)){
