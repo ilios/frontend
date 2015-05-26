@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   currentUser: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
   store: Ember.inject.service(),
   course: null,
   editable: true,
@@ -47,7 +48,7 @@ export default Ember.Component.extend({
   actions: {
     unpublish: function(){
       var course = this.get('course');
-      course.get('publishEvent').then(function(publishEvent){
+      course.get('publishEvent').then(publishEvent => {
         course.set('publishedAsTbd', false);
         course.set('publishEvent', null);
         course.save();
@@ -56,43 +57,57 @@ export default Ember.Component.extend({
           if(publishEvent.get('totalRelated') === 0){
             publishEvent.deleteRecord();
           }
-          publishEvent.save();
+          publishEvent.save().then(() => {
+            course.save().then(()=>{
+              this.get('flashMessages').success('publish.message.unPublish');
+            });
+          });
+        } else {
+          course.save().then(()=>{
+            this.get('flashMessages').success('publish.message.unPublish');
+          });
         }
       });
     },
     publishAsTbd: function(){
-      var self = this;
       var course = this.get('course');
       course.set('publishedAsTbd', true);
-      course.get('publishEvent').then(function(publishEvent){
+      course.get('publishEvent').then(publishEvent => {
         if(!publishEvent){
-          publishEvent = self.get('store').createRecord('publish-event', {
-            administrator: self.get('currentUser.model')
+          publishEvent = this.get('store').createRecord('publish-event', {
+            administrator: this.get('currentUser.model')
           });
-          publishEvent.save().then(function(publishEvent){
+          publishEvent.save().then(publishEvent => {
             course.set('publishEvent', publishEvent);
-            course.save();
+            course.save().then(()=>{
+              this.get('flashMessages').success('publish.message.schedule');
+            });
           });
         } else {
-          course.save();
+          course.save().then(()=>{
+            this.get('flashMessages').success('publish.message.schedule');
+          });
         }
       });
     },
     publish: function(){
       var course = this.get('course');
-      var self = this;
       course.set('publishedAsTbd', false);
-      course.get('publishEvent').then(function(publishEvent){
+      course.get('publishEvent').then(publishEvent => {
         if(!publishEvent){
-          publishEvent = self.get('store').createRecord('publish-event', {
-              administrator: self.get('currentUser.model')
+          publishEvent = this.get('store').createRecord('publish-event', {
+              administrator: this.get('currentUser.model')
           });
-          publishEvent.save().then(function(publishEvent){
+          publishEvent.save().then(publishEvent => {
             course.set('publishEvent', publishEvent);
-            course.save();
+            course.save().then(()=>{
+              this.get('flashMessages').success('publish.message.publish');
+            });
           });
         } else {
-          course.save();
+          course.save().then(()=>{
+            this.get('flashMessages').success('publish.message.publish');
+          });
         }
       });
     },

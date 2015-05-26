@@ -44,8 +44,12 @@ $ilios-add-color: $ilios-green;
 $ilios-publish-color: $ilios-green;
 $ilios-remove-color: #aa443e;
 $remove-background-color: #f1dedd;
-$warning-color: #ffc339;
 $active-background-color: #effbff;
+
+$success-color: $ilios-green;
+$warning-color: #ffc339;
+$info-color: $ilios-blue;
+$alert-color: $ilios-red;
 
 $visual-grid: false;
 $visual-grid-index: front;

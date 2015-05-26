@@ -17,6 +17,12 @@ module.exports = function(environment) {
       'style-src': "'self'",
       'media-src': "'self'"
     },
+    flashMessageDefaults: {
+      timeout: 7000,
+      disappearTimeout: 5000,
+      types: [ 'success', 'warning', 'info', 'alert' ],
+      injectionFactories: []
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
