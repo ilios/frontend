@@ -2,7 +2,7 @@
 language: node_js
 node_js:
   - "0.12"
-  - "iojs"
+
 sudo: false
 
 cache:
@@ -15,42 +15,40 @@ env:
     - SAUCE_USERNAME="ilios"
     - SAUCE_ACCESS_KEY="e7c24f1d-ec10-435d-9cec-d1c38bafa268"
     - START_SAUCE_CONNECT=false
-    - EMBER_VERSION='ilios-current'
+    - JS_TESTS=true
+    - SCSS_LINT=false
     - TESTEM_LAUNCHER='PhantomJS'
 
 matrix:
   fast_finish: true
   allow_failures:
-    - env: EMBER_VERSION='ember-beta'
-    - env: EMBER_VERSION='ember-canary'
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true JS_TESTS=true"
   include:
-    - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SL_firefox' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true"
-    - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true"
-    - env: "EMBER_VERSION='ember-beta'"
-    - env: "EMBER_VERSION='ember-canary'"
+    - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "TESTEM_LAUNCHER='SL_firefox' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "JS_TESTS=false SCSS_LINT=true"
 
 before_install:
   - "npm config set spin false"
   - "npm install -g npm@^2"
 
 install:
-  - npm install -g bower
-  - travis_retry npm install
-  - bower install
-  - gem install scss-lint
+  - if [ "$JS_TESTS" = true ]; then npm install -g bower; fi
+  - if [ "$JS_TESTS" = true ]; then travis_retry npm install; fi
+  - if [ "$JS_TESTS" = true ]; then travis_retry bower install; fi
+  - if [ "$SCSS_LINT" = true ]; then travis_retry gem install scss-lint; fi
 
 before_script:
   # Create a sauce tunnel
-  - if [ "$START_SAUCE_CONNECT" = true ]; then ember start-sauce-connect; fi
+  - if [ "$START_SAUCE_CONNECT" = true ]; then travis_retry ember start-sauce-connect; fi
 
 script:
-  - scss-lint
-  - ember try ${EMBER_VERSION} test --port=8080 --launch=${TESTEM_LAUNCHER} --skip-cleanup
+  - if [ "$SCSS_LINT" = true ]; then scss-lint; fi
+  - if [ "$JS_TESTS" = true ]; then node_modules/.bin/ember test --port=8080 --launch=${TESTEM_LAUNCHER}; fi
 
 after_script:
   # Destroy the sauce tunnel
