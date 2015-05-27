@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default function() {
     this.namespace = 'api';
-    this.timing = 1000;
+    this.timing = 100;
 
     //hardcode the current session user id
     this.get('/currentsession', {currentsession: {userId: 4136}});
