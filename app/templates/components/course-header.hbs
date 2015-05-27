@@ -11,7 +11,7 @@
     {{/if}}
     <h4>{{course.academicYear}}</h4>
   </span>
-  <span class ='actions'>
+  <span class ='header-actions'>
     {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
       {{#if showAsIs}}
         <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
