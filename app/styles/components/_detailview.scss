@@ -252,6 +252,7 @@ $collapse-control-shadow-grey: #e2e2e2;
       h4 {
         display: inline;
       }
+      
       input {
         @include span-columns(6 of 8);
       }
