@@ -22,8 +22,8 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
+    # IE10 builds allowed to fail until https://github.com/edgycircle/ember-pikaday/issues/21 is fixed
     - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true"
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true JS_TESTS=true"
   include:
     - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true JS_TESTS=true"
     - env: "TESTEM_LAUNCHER='SL_firefox' START_SAUCE_CONNECT=true JS_TESTS=true"
