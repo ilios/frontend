@@ -5,44 +5,28 @@ export default Ember.Component.extend({
   objective: null,
   programYear: Ember.computed.oneWay('objective.programYear'),
   showCompetencyList: Ember.computed.notEmpty('programYear.competencies'),
-  classNames: ['objective-manage-competency'],
-  filteredCompetencies: function(){
+  classNames: ['objective-manager', 'objective-manage-competency'],
+  competencies: function(){
     if(!this.get('programYear')){
       return [];
     }
-    var defer = Ember.RSVP.defer();
-    this.get('programYear.competencies').then(
-      availableCompetencies => {
-        var promise = this.get('objective.competency');
-        if(!promise){
-          defer.resolve(availableCompetencies);
-        } else {
-          promise.then(
-            currentCompetency => {
-              if(!currentCompetency){
-                defer.resolve(availableCompetencies);
-              } else {
-                var filtered = availableCompetencies.filter(
-                  competency => currentCompetency.get('id') !== competency.get('id')
-                );
-                defer.resolve(filtered);
-              }
-            }
-          );
-        }
-      }
-    );
 
     return DS.PromiseArray.create({
-      promise: defer.promise
+      promise: this.get('programYear.competencies')
     });
   }.property('programYear.competencies.@each', 'objective.competency'),
-  filteredDomains: function(){
+  domains: function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
     var promises = [];
-    this.get('filteredCompetencies').forEach(function(competency){
+    let competencyProxy = Ember.ObjectProxy.extend({
+      selectedCompetency: null,
+      selected: Ember.computed('content', 'selectedCompetency', function(){
+        return this.get('content.id') === this.get('selectedCompetency.id');
+      }),
+    });
+    this.get('competencies').forEach((competency) =>{
       promises.pushObject(competency.get('domain').then(
         domain => {
           if(!domainContainer.hasOwnProperty(domain.get('id'))){
@@ -55,7 +39,10 @@ export default Ember.Component.extend({
           if(competency.get('id') !== domain.get('id')){
             var subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
             if(!subCompetencies.contains(competency)){
-              subCompetencies.pushObject(competency);
+              subCompetencies.pushObject(competencyProxy.create({
+                content: competency,
+                selectedCompetency: this.get('objective.competency')
+              }));
               subCompetencies.sortBy('title');
             }
           }
@@ -74,7 +61,7 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('filteredCompetencies.@each.domain'),
+  }.property('competencies.@each.domain', 'objective.competency'),
   actions: {
     changeCompetency: function(competency){
       this.get('objective').set('competency', competency);
