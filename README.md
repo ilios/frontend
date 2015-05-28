@@ -56,6 +56,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 Every day these for profit companies make developing Ilios possible.  Without the free tier of service they offer to open source software we would be nowhere so if you have a chance to pay them for something please do.
 
+
+- [GitHub](https://github.com)
 - [![Travis CI](https://travis-ci.com/img/brand-standards/logo-downloads/TravisCI-Full-Color.png)](https://travis-ci.org/)  
 - [Sauce Labs](https://saucelabs.com/)
 - [Heroku](https://www.heroku.com)
