@@ -58,7 +58,7 @@ Every day these for profit companies make developing Ilios possible.  Without th
 
 
 - [GitHub](https://github.com)
-- [![Travis CI](https://travis-ci.com/img/brand-standards/logo-downloads/TravisCI-Full-Color.png)](https://travis-ci.org/)  
+- [Travis CI](https://travis-ci.org/)  
 - [Sauce Labs](https://saucelabs.com/)
 - [Heroku](https://www.heroku.com)
 - [BrowserStack](https://www.browserstack.com)
