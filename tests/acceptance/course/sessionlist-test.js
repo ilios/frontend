@@ -120,7 +120,7 @@ test('no offerings', function(assert) {
   });
 });
 
-test('close offering details by cliking number', function(assert) {
+test('close offering details by clicking number', function(assert) {
   visit(url);
 
   andThen(function() {
@@ -150,18 +150,21 @@ test('close offering details with close button', function(assert) {
 
 test('new session', function(assert) {
   visit(url);
-  var newTitle = 'new session title, woohoo';
+  let newTitle = 'new session title, woohoo';
   andThen(function() {
-    var container = find('.sessions-list');
-    click('.sessions-list .detail-actions .add');
+    let container = find('.sessions-list');
+    click('.detail-actions .add', container);
     andThen(function(){
-      fillIn('.sessions-list .newsession input:eq(0)', newTitle);
-      click('.sessions-list .newsession .done');
+      fillIn('.sessions-list .new-session input:eq(0)', newTitle);
+      click('.new-session .done', container);
+      andThen(function(){
+        assert.equal(getElementText(find('.savedsession', container)), getText(newTitle + 'Saved Successfully'));
+
+        var rows = find('tbody tr', container);
+        assert.equal(rows.length, fixtures.sessions.length + 1);
+        assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(newTitle));
+      });
     });
   });
-  andThen(function(){
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    assert.equal(getElementText(find('.title .content', container)), getText(newTitle));
-  });
+
 });

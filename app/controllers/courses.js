@@ -53,24 +53,35 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       course.save();
     },
     addCourse: function(){
-      var course = this.store.createRecord('course', {
-        title: null,
-        owningSchool: this.get('selectedSchool'),
-        year: this.get('selectedYear.title'),
-        level: 1,
+      var courseProxy = Ember.ObjectProxy.create({
+        isSaved: false,
+        content: this.store.createRecord('course', {
+          title: null,
+          owningSchool: this.get('selectedSchool'),
+          year: this.get('selectedYear.title'),
+          level: 1,
+        })
       });
-      this.get('newCourses').addObject(course);
+      this.get('newCourses').addObject(courseProxy);
     },
     saveNewCourse: function(newCourse){
-      var self = this;
-      self.get('newCourses').removeObject(newCourse);
+      let courseProxy = this.get('newCourses').find(proxy => {
+        return proxy.get('content') === newCourse;
+      });
       newCourse.setDatesBasedOnYear();
-      newCourse.save().then(function(savedCourse){
-        self.transitionToRoute('course', savedCourse);
+      newCourse.save().then(savedCourse => {
+        courseProxy.set('content', savedCourse);
+        courseProxy.set('isSaved', true);
+        if(savedCourse.get('year') === this.get('selectedYear.title')){
+          this.get('model').pushObject(savedCourse);
+        }
       });
     },
     removeNewCourse: function(newCourse){
-      this.get('newCourses').removeObject(newCourse);
+      let courseProxy = this.get('newCourses').find(proxy => {
+        return proxy.get('content') === newCourse;
+      });
+      this.get('newCourses').removeObject(courseProxy);
     },
     changeSelectedYear: function(year){
       this.set('yearTitle', year.get('title'));

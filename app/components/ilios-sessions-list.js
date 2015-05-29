@@ -69,21 +69,30 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   }.observes('course', 'course.owningSchool', 'course.owningSchool.sessionTypes.@each').on('init'),
   actions: {
     addNewSession: function(){
-      var session = this.get('store').createRecord('session');
-      this.get('newSessions').addObject(session);
+      var sessionProxy = Ember.ObjectProxy.create({
+        isSaved: false,
+        content: this.get('store').createRecord('session')
+      });
+
+      this.get('newSessions').addObject(sessionProxy);
     },
     saveNewSession: function(newSession){
-      var self = this;
-      this.get('newSessions').removeObject(newSession);
+      let sessionProxy = this.get('newSessions').find(proxy => {
+        return proxy.get('content') === newSession;
+      });
       var course = this.get('course');
       newSession.set('course', course);
-      newSession.save().then(function(savedSession){
+      newSession.save().then(savedSession => {
         course.get('sessions').addObject(savedSession);
-        self.sendAction('openSession', course, savedSession);
+        sessionProxy.set('content', savedSession);
+        sessionProxy.set('isSaved', true);
       });
     },
     removeNewSession: function(newSession){
-      this.get('newSessions').removeObject(newSession);
+      let sessionProxy = this.get('newSessions').find(proxy => {
+        return proxy.get('content') === newSession;
+      });
+      this.get('newSessions').removeObject(sessionProxy);
     },
     toggleExpandedOffering(sessionProxy){
       sessionProxy.set('expandOfferings', !sessionProxy.get('expandOfferings'));

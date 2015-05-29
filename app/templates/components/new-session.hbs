@@ -1,30 +1,28 @@
-<section class='newsession form-container'>
-  <div class="newsession-title">{{t 'sessions.new'}}</div>
-  <div class="detail-content">
-    <label class="form-col form-col-12">
-      <div class="form-label">{{t 'general.title'}}:</div> 
-      <div class="form-data form-data-text form-input-row">{{input value=session.title placeholder=placeholder}}</div>
-    </label>
-    <label class="form-col form-col-12">
-      <div class="form-label">{{t "sessions.type"}}:</div>
-      <div class="form-data form-data-select form-input-row">
-      {{#if sortedSessionTypes}}
-        {{view "select"
-          content=sortedSessionTypes
-          value=selectedSessionTypeId
-          optionValuePath='content.id'
-          optionLabelPath='content.title'
-        }}
-      {{else}}
-        <select>
-          <option selected>{{t 'sessions.loadingSessionTypes'}}</option>
-        </select>
-      {{/if}}
-      </div>
-    </label>
-    <div class="form-col-12 form-data-submit">
-      <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+<div class="new-result-title">{{t 'sessions.new'}}</div>
+<div class="detail-content">
+  <label class="form-col form-col-12">
+    <div class="form-label">{{t 'general.title'}}:</div>
+    <div class="form-data form-data-text form-input-row">{{input value=session.title placeholder=placeholder}}</div>
+  </label>
+  <label class="form-col form-col-12">
+    <div class="form-label">{{t "sessions.type"}}:</div>
+    <div class="form-data form-data-select form-input-row">
+    {{#if sortedSessionTypes}}
+      {{view "select"
+        content=sortedSessionTypes
+        value=selectedSessionTypeId
+        optionValuePath='content.id'
+        optionLabelPath='content.title'
+      }}
+    {{else}}
+      <select>
+        <option selected>{{t 'sessions.loadingSessionTypes'}}</option>
+      </select>
+    {{/if}}
     </div>
+  </label>
+  <div class="form-col-6 form-data-submit">
+    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
   </div>
-</section>
+</div>

@@ -38,7 +38,7 @@
     }
 
     thead tr {
-      background-color: $header-grey;  
+      background-color: $header-grey;
     }
 
     thead th {
@@ -56,11 +56,11 @@
 
       tbody tr {
         cursor: pointer;
-        
+
         &:hover {
           background-color: rgba(203, 231, 240, .9);
         }
-      }  
+      }
     }
   }
 
@@ -102,36 +102,31 @@
     margin-top: .2em;
   }
 
-  .newcourse {
-    border: 1px solid $header-grey;
-    margin: 4.5em 1em 0;
-    padding: 1em;
+  .resultslist-new {
+    clear: both;
 
-    table {
-      margin: 0 auto;
-      width: 70%;
+    .new-result {
+      border: 1px solid $header-grey;
+      margin: 1em 0;
+      padding: 1em;
 
-      label {
-        font-weight: bold;
-      }
-
-      input {
-        display: inline-block;
+      button {
+        display: inline;
         margin-right: 1em;
-        width: 100%;
-      }
-
-      td {
-        vertical-align: bottom;
       }
     }
-  }
 
-  .newcourse-title {
-    color: $ilios-orange;
-    font-size: $base-font-size;
-    font-weight: bold;
-    margin-bottom: 1em;
-  }
+    .saved-result {
+      border: 1px solid $ilios-green;
+      margin: 1em 0;
+      padding: 1em;
+    }
 
+    .new-result-title {
+      color: $ilios-orange;
+      font-size: $base-font-size;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
+  }
 }

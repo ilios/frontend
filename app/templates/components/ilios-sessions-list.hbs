@@ -13,13 +13,22 @@
   <section class='resultslist'>
     {{#if newSessions.length}}
       <section class='resultslist-new'>
-        {{#each session in newSessions}}
-          {{new-session
-            session=session
-            sessionTypes=sessionTypes
-            save='saveNewSession'
-            cancel='removeNewSession'
-          }}
+        {{#each sessionProxy in newSessions}}
+          {{#liquid-unless sessionProxy.isSaved class='horizontal'}}
+            {{new-session
+              session=sessionProxy.content
+              sessionTypes=sessionTypes
+              save='saveNewSession'
+              cancel='removeNewSession'
+            }}
+          {{else}}
+            <div class='savedsession saved-result'>
+              {{#link-to 'session.index' course sessionProxy.content}}
+                {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
+              {{/link-to}}
+              {{t 'general.savedSuccessfully'}}
+            </div>
+          {{/liquid-unless}}
         {{/each}}
       </section>
     {{/if}}

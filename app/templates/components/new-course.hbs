@@ -1,29 +1,23 @@
-<section class='newcourse'>
-  <div class="newcourse-title">{{t 'courses.new'}}</div>
-  <div class="detail-content">
-    <table>
-      <tr>
-        <td colspan=2>
-          <label class="inline-label-data-block">
-            {{t 'general.title'}}
-            {{input value=course.title placeholder=placeholder}}
-          </label>
-        </td>
-        <td>
-          <label class="inline-label-data-block">
-           {{t 'general.academicYear'}}
-           {{#action-menu title=currentAcademicYear icon=false}}
-           {{#each year in years}}
-           <li {{action 'setYear' year}}>{{year.academicYearTitle}}</li>
-           {{/each}}
-           {{/action-menu}}
-         </label>
-       </td>
-       <td>
-        <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-        <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-      </td>
-    </tr>
-  </table>
+<div class="new-result-title">{{t 'courses.new'}}</div>
+<div class="detail-content">
+  <label class="form-col form-col-12">
+    <div class="form-label">{{t 'general.title'}}:</div>
+    <div class="form-data form-data-text form-input-row">
+      {{input value=course.title placeholder=placeholder}}
+    </div>
+  </label>
+  <label class="form-col form-col-12">
+    <div class="form-label">{{t "general.academicYear"}}:</div>
+    <div class="form-data form-data-select form-input-row new-course-year">
+      {{#action-menu title=currentAcademicYear icon=false}}
+        {{#each year in years}}
+          <li {{action 'setYear' year}}>{{year.academicYearTitle}}</li>
+        {{/each}}
+      {{/action-menu}}
+    </div>
+  </label>
+  <div class="form-col-6 form-data-submit">
+    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  </div>
 </div>
-</section>
