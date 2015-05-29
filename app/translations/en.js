@@ -242,6 +242,7 @@ translations.sessions = sessions;
 var offerings = {
   'calendarOn': 'Calendar On',
   'calendarOff': 'Calendar Off',
+  'confirmRemove': 'Are you sure you want to delete this offering with {{learnerGroupCount}} learner groups? This action cannot be undone.',
 };
 translations.offerings = offerings;
 

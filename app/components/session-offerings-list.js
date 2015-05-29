@@ -36,7 +36,18 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('offerings.@each.{startDate,endDate,room,instructorGroups.@each}')
+  }.property('offerings.@each.{startDate,endDate,room,instructorGroups.@each}'),
+  actions: {
+    removeOffering: function(offering){
+      let session = this.get('session');
+      session.get('offerings').then(offerings => {
+        offerings.removeObject(offering);
+        session.save();
+        offering.deleteRecord();
+        offering.save();
+      });
+    },
+  }
 });
 
 var OfferingBlock = Ember.Object.extend({

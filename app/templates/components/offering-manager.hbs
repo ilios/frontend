@@ -58,7 +58,7 @@
     </div>
   </div>
 {{else}}
-  <div class='offering-block-time-offering'>
+  <div class='offering-block-time-offering  {{if showRemoveConfirmation "offering-confirm-removal"}}'>
     <span class='offering-block-time-offering-learner_groups offering-detail-box'>
       <ul>
         {{#each learnerGroup in offering.learnerGroups}}
@@ -81,7 +81,21 @@
     {{#if editable}}
       <span class='offering-block-time-offering-actions offering-detail-box'>
         <span class='clickable' {{action 'edit'}}>{{fa-icon 'edit'}}</span>
+        <span class='clickable remove' {{action 'confirmRemove'}}>{{fa-icon 'trash'}}</span>
       </span>
     {{/if}}
+    {{#if showRemoveConfirmation class='vertical'}}
+      <div class='confirm-removal'>
+        <div class='confirm-message'>
+          {{t 'offerings.confirmRemove' learnerGroupCount=offering.learnerGroups.length}} <br />
+          <div class="confirm-buttons">
+            <button {{action 'remove' course}} class='remove text'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' course}} class='cancel text'>{{t 'general.cancel'}}</button>
+         </div>
+        </div>
+      </div>
+    {{/if}}
   </div>
+
+
 {{/liquid-if}}

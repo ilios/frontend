@@ -291,3 +291,45 @@ test('create new multiday offering', function(assert) {
     assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
   });
 });
+
+test('confirm removal message', function(assert) {
+  assert.expect(2);
+  visit(url);
+  andThen(function() {
+    let offering = find('.offering-block-time-offering:eq(0)');
+    click('.offering-block-time-offering-actions .remove', offering).then(function(){
+      assert.ok(offering.hasClass('offering-confirm-removal'));
+      assert.equal(getElementText(find('.confirm-message', offering)), getText('Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel'));
+    });
+  });
+});
+
+test('remove offering', function(assert) {
+  assert.expect(2);
+  visit(url);
+  andThen(function() {
+    let offerings = find('.offering-block-time-offering');
+    assert.equal(offerings.length, 3);
+    let offering = find('.offering-block-time-offering').eq(0);
+    click('.offering-block-time-offering-actions .remove', offering).then(function(){
+      click('.remove', offering).then(function(){
+        assert.equal(find('.offering-block-time-offering').length, 2);
+      });
+    });
+  });
+});
+
+test('cancel remove offering', function(assert) {
+  assert.expect(2);
+  visit(url);
+  andThen(function() {
+    let offerings = find('.offering-block-time-offering');
+    assert.equal(offerings.length, 3);
+    let offering = find('.offering-block-time-offering').eq(0);
+    click('.offering-block-time-offering-actions .remove', offering).then(function(){
+      click('.cancel', offering).then(function(){
+        assert.equal(find('.offering-block-time-offering').length, 3);
+      });
+    });
+  });
+});
