@@ -14,9 +14,10 @@
       </td>
       <td class='text-left text-top'>
         {{#if objective.competency}}
-            <a href='#' {{action 'mangeCompetency' objective}}>
-              {{objective.competency.title}}
-            </a>
+          <a href='#' {{action 'mangeCompetency' objective}}>
+            {{objective.competency.title}}
+          </a>
+          ({{objective.competency.domain.title}})
         {{else}}
           <button class='add' {{action 'mangeCompetency' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}

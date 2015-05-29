@@ -20,6 +20,16 @@ export default Ember.Component.extend({
     var domainContainer = {};
     var domainIds = [];
     var promises = [];
+    let domainProxy = Ember.ObjectProxy.extend({
+      selectedCompetency: null,
+      subCompetencies: [],
+      selected: Ember.computed('subCompetencies.@each', 'selectedCompetency', function(){
+        let selectedSubCompetencies = this.get('subCompetencies').filter(competencyProxy => {
+          return competencyProxy.get('id') === this.get('selectedCompetency.id');
+        });
+        return selectedSubCompetencies.length > 0;
+      }),
+    });
     let competencyProxy = Ember.ObjectProxy.extend({
       selectedCompetency: null,
       selected: Ember.computed('content', 'selectedCompetency', function(){
@@ -31,9 +41,10 @@ export default Ember.Component.extend({
         domain => {
           if(!domainContainer.hasOwnProperty(domain.get('id'))){
             domainIds.pushObject(domain.get('id'));
-            domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
+            domainContainer[domain.get('id')] = domainProxy.create({
               content: domain,
-              subCompetencies: []
+              selectedCompetency: this.get('objective.competency'),
+              subCompetencies: [],
             });
           }
           if(competency.get('id') !== domain.get('id')){
