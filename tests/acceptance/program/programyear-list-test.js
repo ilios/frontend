@@ -169,6 +169,22 @@ test('check link', function(assert) {
 });
 
 test('new program year', function(assert) {
+  server.createList('user', 3, {
+    directedProgramYears: [1]
+  });
+  server.createList('competency', 3, {
+    programYears: [1]
+  });
+  server.createList('discipline', 3, {
+    programYears: [1]
+  });
+  server.createList('objective', 3, {
+    programYears: [1]
+  });
+  server.create('programYearSteward', {
+    department: 1,
+    programYear: 1
+  });
   var program = server.create('program', {
     owningSchool: 1,
     programYears: [1]
@@ -177,7 +193,12 @@ test('new program year', function(assert) {
   var firstProgramYear = server.create('programYear', {
     program: 1,
     startYear: currentYear,
-    cohort: 1
+    cohort: 1,
+    directors: [2,3,4],
+    competencies: [1,2,3],
+    disciplines: [1,2,3],
+    objectives: [1,2,3],
+    stewards: [1],
   });
   server.create('cohort', {
     programYear: 1
@@ -214,7 +235,16 @@ test('new program year', function(assert) {
     assert.equal(rows.length, 2);
     assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(currentYear + ' - ' + (currentYear+1)));
     assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), getText('cohort0'));
+    let firstRowTds = find('td', rows.eq(0));
+    for(let i =2; i<5; i++){
+      assert.equal(getElementText(firstRowTds.eq(i)), 3);
+    }
     assert.equal(getElementText(find('td:eq(0)', rows.eq(1))), getText(newAcademicYear));
     assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), getText('Class of ' + (currentYear+1+program.duration)));
+
+    let secondRowTds = find('td', rows.eq(1));
+    for(let i =2; i<5; i++){
+      assert.equal(getElementText(secondRowTds.eq(i)), 3);
+    }
   });
 });

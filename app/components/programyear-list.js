@@ -29,17 +29,69 @@ export default Ember.Component.extend({
     },
     saveNewProgramYear: function(newProgramYear){
       var self = this;
+      let latestProgramYear = this.get('sortedContent').get('lastObject');
       this.get('newProgramYears').removeObject(newProgramYear);
       var program = this.get('program');
       newProgramYear.set('program', program);
-      newProgramYear.save().then(function(savedProgramYear){
-        program.get('programYears').addObject(savedProgramYear);
-        var cohort = self.get('store').createRecord('cohort', {
-          programYear: savedProgramYear
+      let promises = [];
+      if(latestProgramYear){
+        promises.pushObject(latestProgramYear.get('directors').then(directors => {
+          newProgramYear.get('directors').pushObjects(directors.toArray());
+          directors.forEach(user=>{
+            promises.pushObject(user.get('directedProgramYears').then(programYears => {
+              programYears.pushObject(newProgramYear);
+              return user.save();
+            }));
+          });
+        }));
+        promises.pushObject(latestProgramYear.get('competencies').then(competencies => {
+          newProgramYear.get('competencies').pushObjects(competencies.toArray());
+          competencies.forEach(competency=>{
+            promises.pushObject(competency.get('programYears').then(programYears => {
+              programYears.pushObject(newProgramYear);
+              return competency.save();
+            }));
+          });
+        }));
+        promises.pushObject(latestProgramYear.get('disciplines').then(disciplines => {
+          newProgramYear.get('disciplines').pushObjects(disciplines.toArray());
+          disciplines.forEach(discipline=>{
+            promises.pushObject(discipline.get('programYears').then(programYears => {
+              programYears.pushObject(newProgramYear);
+              return discipline.save();
+            }));
+          });
+        }));
+        promises.pushObject(latestProgramYear.get('objectives').then(objectives => {
+          newProgramYear.get('objectives').pushObjects(objectives.toArray());
+          objectives.forEach(objective=>{
+            promises.pushObject(objective.get('programYears').then(programYears => {
+              programYears.pushObject(newProgramYear);
+              return objective.save();
+            }));
+          });
+        }));
+        promises.pushObject(latestProgramYear.get('stewards').then(stewards => {
+          newProgramYear.get('stewards').pushObjects(stewards.toArray());
+          stewards.forEach(steward=>{
+            promises.pushObject(steward.get('programYears').then(programYears => {
+              programYears.pushObject(newProgramYear);
+              return steward.save();
+            }));
+          });
+        }));
+      }
+      Ember.RSVP.all(promises).then(()=>{
+        newProgramYear.save().then(function(savedProgramYear){
+          program.get('programYears').addObject(savedProgramYear);
+          var cohort = self.get('store').createRecord('cohort', {
+            programYear: savedProgramYear
+          });
+          cohort.save();
+          program.save();
         });
-        cohort.save();
-        program.save();
       });
+
     },
     removeNewProgramYear: function(newProgramYear){
       this.get('newProgramYears').removeObject(newProgramYear);
