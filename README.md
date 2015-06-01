@@ -51,3 +51,14 @@ Make use of the many generators for code, try `ember help generate` for more det
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
+## Open Source Heroes
+
+Every day these for profit companies make developing Ilios possible.  Without the free tier of service they offer to open source software we would be nowhere so if you have a chance to pay them for something please do.
+
+
+- [GitHub](https://github.com)
+- [Travis CI](https://travis-ci.org/)  
+- [Sauce Labs](https://saucelabs.com/)
+- [Heroku](https://www.heroku.com)
+- [BrowserStack](https://www.browserstack.com)
