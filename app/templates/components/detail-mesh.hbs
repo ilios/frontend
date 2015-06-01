@@ -1,8 +1,35 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'general.mesh'}} ({{terms.length}})
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'courses.meshManageTitle'}}
+      </span>
+    {{else}}
+      {{t 'general.mesh'}} ({{terms.length}})
+    {{/if}}
+  </div>
+
+  <div class='detail-actions'>
+    {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button class='add' {{action 'manage'}}>{{t 'courses.meshManageTitle'}}</button>
+    {{/if}}
   </div>
   <div class='detail-content'>
-    {{mesh-manager add='add' remove='remove' terms=terms}}
+    {{#liquid-if isManaging class="horizontal"}}
+        {{mesh-manager
+          terms=bufferTerms
+          add='addTermToBuffer'
+          remove='removeTermFromBuffer'
+        }}
+    {{else}}
+    <ul class='inline-list'>
+      {{#each term in sortedTerms}}
+        <li>{{term.title}}</li>
+      {{/each}}
+    </ul>
+    {{/liquid-if}}
   </div>
 </section>
