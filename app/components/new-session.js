@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+  tagName: 'section',
+  classNames: ['new-session', 'new-result', 'form-container'],
   placeholderTranslation: 'sessions.sessionTitlePlaceholder',
   session: null,
   sessionTypes: [],

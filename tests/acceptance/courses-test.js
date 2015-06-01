@@ -162,3 +162,44 @@ test('filters options', function(assert) {
     });
   });
 });
+
+test('new course', function(assert) {
+  assert.expect(3);
+  visit('/courses');
+  let newTitle = 'new course title, woohoo';
+  andThen(function() {
+    let container = find('.resultslist');
+    click('.resultslist-actions .add', container);
+    andThen(function(){
+      fillIn('.new-course input:eq(0)', newTitle);
+      click('.new-course .done', container);
+      andThen(function(){
+        assert.equal(getElementText(find('.savedcourse', container)), getText(newTitle + 'Saved Successfully'));
+
+        var rows = find('tbody tr', container);
+        assert.equal(rows.length, 1);
+        assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(newTitle));
+      });
+    });
+  });
+});
+
+test('new course in another year does not display in list', function(assert) {
+  assert.expect(1);
+  visit('/courses');
+  let newTitle = 'new course title, woohoo';
+  andThen(function() {
+    let container = find('.resultslist');
+    click('.resultslist-actions .add', container);
+    andThen(function(){
+      fillIn('.new-course input:eq(0)', newTitle);
+      click('.new-course-year button').then(function(){
+        click(find('.new-course-year ul.dropdown-menu li:eq(0)'));
+      });
+      click('.new-course .done', container).then(function(){
+        var rows = find('tbody tr', container);
+        assert.equal(rows.length, 0);
+      });
+    });
+  });
+});

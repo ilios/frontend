@@ -38,12 +38,19 @@
         <button class='add' {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
       </div>
     </div>
-
-
     {{#if newCourses.length}}
       <section class='resultslist-new'>
-        {{#each course in newCourses}}
-          {{new-course course=course years=years save='saveNewCourse' cancel='removeNewCourse'}}
+        {{#each courseProxy in newCourses}}
+          {{#liquid-unless courseProxy.isSaved class='horizontal'}}
+            {{new-course course=courseProxy.content years=years save='saveNewCourse' cancel='removeNewCourse'}}
+          {{else}}
+            <div class='savedcourse saved-result'>
+              {{#link-to 'course' courseProxy.content}}
+                {{fa-icon 'external-link-square'}} {{courseProxy.title}}
+              {{/link-to}}
+              {{t 'general.savedSuccessfully'}}
+            </div>
+          {{/liquid-unless}}
         {{/each}}
       </section>
     {{/if}}

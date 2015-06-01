@@ -85,6 +85,7 @@ var general = {
   'findInstructorOrGroup': 'Find Instructor or Group',
   'selected': 'Selected',
   'available': 'Available',
+  'savedSuccessfully': 'Saved Successfully',
 };
 translations.general = general;
 
