@@ -1,28 +1,26 @@
 <h2>{{{objective.title}}}</h2>
 
-<h4>
-  {{t 'programs.currentCompetency'}}:
-  {{#if objective.competency}}
-    <span {{action 'removeCurrentCompetency'}} class='clickable'>
-      {{fa-icon 'times'}} {{objective.competency.title}}
-    </span>
-  {{else}}
-    {{t 'general.none'}}
-  {{/if}}
-</h4>
-
 {{#if showCompetencyList}}
-  <ul class='tree-list selectable'>
-    {{#each domain in filteredDomains}}
-      <li class='static'>{{domain.title}}
+  <div class='parent-picker'>
+    {{#each domain in domains}}
+      <h5 {{bind-attr class=':competency-title domain.selected:selected'}}>{{domain.title}}</h5>
         <ul>
-          {{#each competency in domain.subCompetencies}}
-            <li {{action 'changeCompetency' competency}}>{{competency.title}}</li>
+          {{#each competencyProxy in domain.subCompetencies}}
+            {{#if competencyProxy.selected}}
+              <li class='selected clickable' {{action 'removeCurrentCompetency' competencyProxy.content}}>
+                {{input type='checkbox' checked=true}}
+                {{competencyProxy.title}}
+              </li>
+            {{else}}
+              <li class='clickable' {{action 'changeCompetency' competencyProxy.content}}>
+                {{input type='checkbox' checked=false}}
+                {{competencyProxy.title}}
+              </li>
+            {{/if}}
           {{/each}}
         </ul>
-      </li>
     {{/each}}
-  </ul>
+  </div>
 {{else}}
   <div class='no-group'>
     <p>

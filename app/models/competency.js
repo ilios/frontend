@@ -12,7 +12,7 @@ export default DS.Model.extend({
   courses: DS.hasMany('course',  {async: true}),
   isDomain: Ember.computed.empty('parent.content'),
   domain: function(){
-    return new Ember.RSVP.Promise(
+    let promise = new Ember.RSVP.Promise(
       resolve => {
         this.get('parent').then(
           parent => {
@@ -26,6 +26,9 @@ export default DS.Model.extend({
           }
         );
       }
-    );  
+    );
+    return DS.PromiseObject.create({
+      promise: promise
+    });
   }.property('parent','parent.domain'),
 });

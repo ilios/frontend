@@ -86,8 +86,10 @@ export default Ember.Component.extend({
         let objective = this.get('manageCompetencyObjective');
         objective.get('competency').then(function(newCompetency){
           let oldCompetency = self.get('initialStateForManageCompetencyObjective');
-          oldCompetency.get('objectives').removeObject(objective);
-          oldCompetency.save();
+          if(oldCompetency){
+            oldCompetency.get('objectives').removeObject(objective);
+            oldCompetency.save();
+          }
           if(newCompetency){
             newCompetency.get('objectives').addObject(objective);
             newCompetency.save();
