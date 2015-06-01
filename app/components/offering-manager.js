@@ -23,6 +23,7 @@ export default Ember.Component.extend({
   instructorBuffer: [],
   cohorts: Ember.computed.alias('offering.session.course.cohorts'),
   availableInstructorGroups: Ember.computed.alias('offering.session.course.owningSchool.instructorGroups'),
+  showRemoveConfirmation: false,
   setup: function(){
     var self = this;
     var offering = this.get('offering');
@@ -177,6 +178,15 @@ export default Ember.Component.extend({
     },
     toggleMultiDay: function(){
       this.set('isMultiDay', !this.get('isMultiDay'));
+    },
+    remove: function(){
+      this.sendAction('remove', this.get('offering'));
+    },
+    cancelRemove: function(){
+      this.set('showRemoveConfirmation', false);
+    },
+    confirmRemove: function(){
+      this.set('showRemoveConfirmation', true);
     },
   }
 });

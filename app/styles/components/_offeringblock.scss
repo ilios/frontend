@@ -42,15 +42,49 @@
     }
 
     .offering-block-time-offerings {
-
       @include span-columns(10 of 12);
     }
 
     .offering-block-time-offering {
+      @include span-columns(10 of 10);
+
+      &.offering-confirm-removal {
+        border: 1px solid $remove-background-color;
+      }
+
       .offering-detail-box {
         @include span-columns(2 of 8);
         @include omega(4n);
         padding: .8em;
+      }
+    }
+
+    .confirm-removal {
+      @include span-columns(8 of 8);
+      background-color: $remove-background-color;
+
+      .confirm-message {
+        color: $ilios-remove-color;
+        font-weight: bold;
+        padding-left: 8em;
+        padding-right: 8em;
+        text-align: center;
+        width: 100%;
+      }
+
+      .confirm-buttons {
+        padding-bottom: 1.5em;
+        padding-top: 1.1em;
+      }
+
+
+      &:hover {
+        background-color: $remove-background-color;
+      }
+
+      .remove {
+        background-color: $white;
+        color: $ilios-remove-color;
       }
     }
 
