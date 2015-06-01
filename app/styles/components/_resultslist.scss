@@ -36,6 +36,7 @@
         background-color: rgba(239, 251, 255, .8);
       }
     }
+     
 
     thead tr {
       background-color: $header-grey;  
@@ -58,9 +59,10 @@
         cursor: pointer;
         
         &:hover {
-          background-color: rgba(203, 231, 240, .9);
+          background-color: rgba(203, 231, 240, .7);
         }
       }  
+     
     }
   }
 
@@ -135,3 +137,9 @@
   }
 
 }
+.sessions-hover:hover {
+            background-size: cover;
+            -mix-blend-mode: multiply;
+            background-color: rgba(183, 211, 220, 1);
+  
+        }   

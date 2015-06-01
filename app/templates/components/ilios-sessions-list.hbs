@@ -39,7 +39,7 @@
         <tbody>
           {{#each session in filteredContent}}
             <tr>
-              <td class='text-left' colspan=2>
+              <td class='text-left sessions-hover' colspan=2>
                 {{#link-to 'session.index' course session}}
                   {{fa-icon 'external-link-square'}} {{session.title}}
                 {{/link-to}}
@@ -51,7 +51,7 @@
                   {{moment session.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
                 {{/if}}
               </td>
-              <td class='text-center clickable editable' {{action 'toggleExpandedOffering' session}}>
+              <td class='text-center clickable editable sessions-hover' {{action 'toggleExpandedOffering' session}}>
                 {{session.offerings.length}}
                 {{#if session.expandOfferings}}
                   {{fa-icon 'caret-down'}}
