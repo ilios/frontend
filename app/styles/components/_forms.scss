@@ -38,13 +38,33 @@
   .form-col-6 {
     @include span-columns(5 of 10);
     @include omega(2n);
+    display: table;
+
+    &.multi-row {
+      @include clearfix;
+      display: table;
+      .form-label {
+        @include span-columns(2 of 5);
+        display: table;
+      }
+
+      .form-data {
+        @include span-columns(3 of 5);
+        @include omega();
+        display: table;
+      }
+    }
 
     .form-label {
       @include span-columns(3 of 5);
+      display: table;
     }
 
     .form-data {
       @include span-columns(2 of 5);
+      @include omega();
+      white-space: nowrap;
+      display: table;
 
       // scss-lint:disable QualifyingElement
       input[type=text] {
