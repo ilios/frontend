@@ -8,24 +8,11 @@
     {{/link-to}}
   </div>
   <div class='detail-content form-container'>
-      <div class="inline-label-data form-col-3 multi-row">
-        <label class='form-label coursestartdate'>{{t "general.start"}}:</label>
-        <div class="form-data">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
-        <label class="form-label courseenddate">{{t "general.end"}}:</label>
-        <div>{{inplace-date value=course.endDate save='changeEndDate'}}</div>
-      </div>
-      <div class="inline-label-data form-col-3">
+      <div class="form-col-6 multi-row">
         <label class="form-label courseexternalid">{{t "courses.externalId"}}:</label>
         <div class="form-data">{{inplace-text value=course.externalId save='changeExternalId'}}</div>
-      </div>
-      <div class="inline-label-data form-col-3">
-        <label class="form-label courselevel">{{t "courses.level"}}:</label>
-        <div class="form-data">{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
-      </div>
-      
-      <div class="inline-label-data form-col-3">
         <label class="form-label clerkshiptype">{{t "courses.clerkshipType"}}:</label>
-        <div>
+        <div class="form-data">
           {{inplace-select
             value=course.clerkshipType.id
             options=clerkshipTypeOptions
@@ -34,7 +21,16 @@
             clickPromptTranslation='courses.notAClerkship'
           }}
         </div>
+        <label class="form-label courselevel">{{t "courses.level"}}:</label>
+        <div class="form-data">{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
       </div>
+
+      <div class="form-col-6 multi-row">
+        <label class='form-label coursestartdate'>{{t "general.start"}}:</label>
+        <div class="form-data">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
+        <label class="form-label courseenddate">{{t "general.end"}}:</label>
+        <div class="form-data">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
+      </div>  
       <div class="form-col-12">
       <label>{{t "general.directors"}}:</label>
         <span>
