@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/ilios/frontend.png?label=ready&title=Ready)](https://waffle.io/ilios/frontend)
 # Ilios Frontend
 [![Build Status](https://travis-ci.org/ilios/frontend.svg?branch=master)](https://travis-ci.org/ilios/frontend)
 [![Code Climate](https://codeclimate.com/github/ilios/frontend/badges/gpa.svg)](https://codeclimate.com/github/ilios/frontend)
