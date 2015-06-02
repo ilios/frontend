@@ -59,7 +59,8 @@
         cursor: pointer;
         
         &:hover {
-          background-color: rgba(203, 231, 240, .7);
+          border-top:1px dotted $header-blue;
+             border-bottom:1px dotted $header-blue;
         }
       }  
      
