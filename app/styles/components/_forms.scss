@@ -111,6 +111,44 @@
 
   }
 
+  .form-col-3 {
+    @include span-columns(2 of 10);
+
+    .form-label, .form-data {
+      
+
+      &.multi-row {
+        @include row();
+      }
+    }
+
+    .form-label {
+      @include span-columns(1 of 2);
+      text-align: right;
+    }
+
+    .form-data {
+      @include span-columns(1 of 2);
+      @include omega();
+
+      .editinplace .editor .actions {
+        // scss-lint:disable SelectorDepth
+        display: block;
+        text-align: right;
+        width: 90px;
+      }
+
+    }
+
+    // scss-lint:disable QualifyingElement
+    .editinplace .editor,
+    .form-data input[type=text] {
+      //explicitly override the default min-width of text input fields
+      max-width: 90px;
+      min-width: 90px;
+      width: 90px;
+    }
+  }
 }
 
 //put the universal (non parent-dependent) styles below here
