@@ -1,7 +1,8 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if programYear}}
-      <h2>{{programYear.academicYear}}</h2>
+    <h2>{{t 'programs.matriculationYear'}} {{programYear.academicYear}}</h2>
+    <h4>{{programYear.cohort.displayTitle}}</h4>
     {{/if}}
   </span>
   <span class ='actions'>
