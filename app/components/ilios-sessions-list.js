@@ -11,6 +11,9 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
+  willInsertElement: function(){
+    Ember.set(this, 'newSessions', []);
+  },
   watchFilter: function(){
     Ember.run.debounce(this, this.setFilter, 500);
   }.observes('filter'),
