@@ -100,7 +100,7 @@ var programs = {
   'programTitleShort': 'Program Title (short)',
   'durationInYears': 'Duration (in Years)',
   'noProgramYears': 'There are no program years in this program',
-  'matriculationYear': 'Matriculation year',
+  'matriculationYear': 'Matriculation Year',
   'competenciesManageTitle': 'Manage Competencies',
   'missingCompetenciesMessage': 'Please add at least one competency to this program year.',
   'currentCompetency': 'Current Competency',
