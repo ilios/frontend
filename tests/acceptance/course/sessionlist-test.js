@@ -168,3 +168,25 @@ test('new session', function(assert) {
   });
 
 });
+
+test('new session goes away when we navigate #643', function(assert) {
+  visit(url);
+  let newTitle = 'new session title, woohoo';
+  andThen(function() {
+    let container = find('.sessions-list');
+    click('.detail-actions .add', container).then(()=> {
+      fillIn('.sessions-list .new-session input:eq(0)', newTitle);
+      click('.new-session .done', container).then(()=>{
+        click('.savedsession a', container).then(()=> {
+          assert.equal(currentPath(), 'course.session.index');
+          click('#session-details .backtolink a');
+        });
+      });
+    });
+    andThen(function(){
+      assert.equal(currentPath(), 'course.index');
+      assert.equal(find('.savedsession').length, 0);
+    });
+  });
+
+});
