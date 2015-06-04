@@ -132,6 +132,7 @@ var mesh = {
   'available': 'Available MeSH Terms',
   'search': 'Search MeSH Terms',
   'noResults': 'Your seach returned no results.',
+  'targetItemTitle': 'Select MeSH for: {{title}}',
 };
 translations.mesh = mesh;
 

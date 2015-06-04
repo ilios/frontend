@@ -14,6 +14,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderTranslation: 'courses.meshSearchPlaceholder',
   terms: [],
   searchResults: [],
+  targetItemTitle: '',
   searching: false,
   searchReturned: false,
   sortTerms: ['title'],

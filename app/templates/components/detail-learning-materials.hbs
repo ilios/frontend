@@ -1,11 +1,17 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{#if isManaging}}
+    {{#unless isManaging}}
+      {{t 'general.learningMaterials'}} ({{materials.length}})
+    {{/unless}}
+    {{#if isManagingMaterial}}
       <span class='detail-specific-title'>
         {{t 'courses.learningMaterialManageTitle'}}
       </span>
-    {{else}}
-      {{t 'general.learningMaterials'}} ({{materials.length}})
+    {{/if}}
+    {{#if isManagingMesh}}
+      <span class='detail-specific-title'>
+        {{t 'courses.objectiveDescriptorTitle'}}
+      </span>
     {{/if}}
   </div>
   <div class='detail-actions'>
@@ -22,11 +28,26 @@
   </div>
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
-      {{learningmaterial-manager
-        learningMaterial=managingMaterial
-        learningMaterialStatuses=learningMaterialStatuses
-        isCourse=isCourse
-      }}
+      {{#if isManagingMaterial}}
+        {{learningmaterial-manager
+          learningMaterial=managingMaterial
+          valueBuffer=bufferMaterial
+          learningMaterialStatuses=learningMaterialStatuses
+          isCourse=isCourse
+          changeStatus='changeStatus'
+          changeNotes='changeNotes'
+          changeRequired='changeRequired'
+          changePublicNotes='changePublicNotes'
+        }}
+      {{/if}}
+      {{#if isManagingMesh}}
+        {{mesh-manager
+          terms=bufferTerms
+          add='addTermToBuffer'
+          remove='removeTermFromBuffer'
+          targetItemTitle=meshMaterial.learningMaterial.title
+        }}
+      {{/if}}
     {{else}}
       {{#if newLearningMaterials.length}}
         {{#each lm in newLearningMaterials}}
@@ -52,36 +73,42 @@
             </tr>
           </thead>
           <tbody>
-            {{#each lm in materials}}
+            {{#each lmProxy in proxyMaterials}}
               <tr>
-                <td class='text-left clickable link' colspan=2 {{action 'manage' lm}}>
-                  {{fa-icon 'external-link-square'}} {{lm.learningMaterial.title}}
+                <td class='text-left clickable link' colspan=2 {{action 'manageMaterial' lmProxy.content}}>
+                  {{fa-icon 'external-link-square'}} {{lmProxy.learningMaterial.title}}
                 </td>
-                <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+                <td class='text-center'>{{lmProxy.learningMaterial.type}}</td>
+                <td class='text-center'>{{lmProxy.learningMaterial.originalAuthor}}</td>
                 <td class='text-center'>
-        	        {{#if lm.required}}
+        	        {{#if lmProxy.required}}
         	          <span class='add'>{{t 'general.yes'}}</span>
         	        {{else}}
         	          <span class='remove'>{{t 'general.no'}}</span>
         	        {{/if}}
                 </td>
                 <td class='text-center'>
-        	        {{#if lm.publicNotes}}
+        	        {{#if lmProxy.publicNotes}}
         	          <span class='add'>{{t 'general.yes'}}</span>
         	        {{else}}
         	          <span class='remove'>{{t 'general.no'}}</span>
         	        {{/if}}
                 </td>
                 <td class='text-center'>
-                  <ul>
-                    {{#each descriptor in lm.meshDescriptors}}
-                      <li>{{descriptor.title}}</li>
-                    {{/each}}
-                  </ul>
+                  {{#if lmProxy.sortedDescriptors.length}}
+                    <ul>
+                      <a href='#' {{action 'manageDescriptors' lmProxy.content}}>
+                        {{#each descriptor in lmProxy.sortedDescriptors}}
+                          <li>{{descriptor.title}}</li>
+                        {{/each}}
+                      </a>
+                    </ul>
+                  {{else}}
+                    <button {{action 'manageDescriptors' lmProxy.content}}>{{t 'general.addNew'}}</button>
+                  {{/if}}
                 </td>
                 <td class='text-center'>
-                  {{lm.learningMaterial.status.title}}
+                  {{lmProxy.learningMaterial.status.title}}
                 </td>
               </tr>
             {{/each}}
