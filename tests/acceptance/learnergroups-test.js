@@ -297,7 +297,7 @@ test('add new learnergroup', function(assert) {
   assert.expect(1);
   visit('/learnergroups');
   andThen(function() {
-    click('.resultslist-actions .add');
+    click('.resultslist-actions button');
     fillIn('.newlearnergroup-title', 'new test tile');
     click('.newlearnergroup .done');
   });
@@ -332,7 +332,7 @@ test('cancel adding new learnergroup', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.resultslist-actions .add').then(function(){
+    click('.resultslist-actions button').then(function(){
       assert.equal(find('.newlearnergroup').length, 1);
       click('.newlearnergroup .cancel');
     });

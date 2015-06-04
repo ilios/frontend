@@ -99,7 +99,7 @@ test('pick clerkship type', function(assert) {
         assert.equal(getElementText(options.eq(i)), getText(title));
       }
       pickOption(find('.clerkshiptype select', container), fixtures.clerkshipTypes[1].title, assert);
-      click(find('.clerkshiptype .actions .save', container));
+      click(find('.clerkshiptype .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(fixtures.clerkshipTypes[1].title));
       });
@@ -123,7 +123,7 @@ test('remove clerkship type', function(assert) {
     click(find('.clerkshiptype .editable', container));
     andThen(function(){
       pickOption(find('.clerkshiptype select', container), 'Not a Clerkship', assert);
-      click(find('.clerkshiptype .actions .save', container));
+      click(find('.clerkshiptype .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
       });
@@ -176,7 +176,7 @@ test('change title', function(assert) {
       var input = find('.title .editinplace input', container);
       assert.equal(getText(input.val()), getText('course 0'));
       fillIn(input, 'test new title');
-      click(find('.title .editinplace .actions .save', container));
+      click(find('.title .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.title h2', container)), getText('test new title'));
       });
@@ -206,7 +206,7 @@ test('change start date', function(assert) {
       assert.equal(interactor.selectedYear(), moment(course.startDate).format('YYYY'));
       var newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
       interactor.selectDate(newDate.toDate());
-      click(find('.coursestartdate .editinplace .actions .save', container));
+      click(find('.coursestartdate .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.coursestartdate div', container)), newDate.format('MM/DD/YY'));
       });
@@ -237,7 +237,7 @@ test('change end date', function(assert) {
       assert.equal(interactor.selectedYear(), moment(course.endDate).format('YYYY'));
       var newDate = moment(course.endDate).add(1, 'year').add(1, 'month');
       interactor.selectDate(newDate.toDate());
-      click(find('.courseenddate .editinplace .actions .save', container));
+      click(find('.courseenddate .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.courseenddate div', container)), newDate.format('MM/DD/YY'));
       });
@@ -265,7 +265,7 @@ test('change externalId', function(assert) {
       var input = find('.courseexternalid .editinplace input', container);
       assert.equal(getText(input.val()), getText('abc123'));
       fillIn(input, 'testnewid');
-      click(find('.courseexternalid .editinplace .actions .save', container));
+      click(find('.courseexternalid .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.courseexternalid div', container)), getText('testnewid'));
       });
@@ -294,7 +294,7 @@ test('change level', function(assert) {
         assert.equal(getElementText(options.eq(i)), i+1);
       }
       pickOption(find('.courselevel select', container), '1', assert);
-      click(find('.courselevel .actions .save', container));
+      click(find('.courselevel .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.courselevel .editable', container)), 1);
       });

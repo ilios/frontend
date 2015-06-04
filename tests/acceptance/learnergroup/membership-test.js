@@ -112,7 +112,7 @@ test('top level group members', function(assert) {
       assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 -> learner group 2'));
 
       pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 -> learner group 1', assert);
-      click(find('.learnergroup-group-membership:eq(0) .actions .save', container));
+      click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         let container = find('.detail-overview');
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 3'));
@@ -144,7 +144,7 @@ test('cohort members', function(assert) {
       assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 -> learner group 2'));
 
       pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 -> learner group 1', assert);
-      click(find('.learnergroup-group-membership:eq(0) .actions .save', container));
+      click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         let container = find('.detail-overview');
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 3'));
@@ -163,7 +163,7 @@ test('move group member to another subgroup', function(assert) {
     let container = find('.detail-overview');
     click('.learnergroup-group-membership:eq(0) .editable').then(function(){
       pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 -> learner group 2', assert);
-      click(find('.learnergroup-group-membership:eq(0) .actions .save', container));
+      click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 1'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (1)'));
@@ -183,7 +183,7 @@ test('remove group member back to cohort', function(assert) {
     let container = find('.detail-overview');
     click('.learnergroup-group-membership:eq(0) .editable').then(function(){
       pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Remove Learner to cohort 0', assert);
-      click(find('.learnergroup-group-membership:eq(0) .actions .save', container));
+      click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 1'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (1)'));

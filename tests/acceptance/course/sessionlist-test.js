@@ -153,7 +153,7 @@ test('new session', function(assert) {
   let newTitle = 'new session title, woohoo';
   andThen(function() {
     let container = find('.sessions-list');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       fillIn('.sessions-list .new-session input:eq(0)', newTitle);
       click('.new-session .done', container);

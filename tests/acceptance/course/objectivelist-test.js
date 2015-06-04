@@ -153,7 +153,7 @@ test('edit objective title', function(assert) {
       var textArea = find('textarea', td);
       assert.equal(getText(textArea.val()), getText(objective.title));
       fillIn(textArea, 'new title');
-      click(find('.actions .save', td));
+      click(find('.actions .done', td));
     });
     andThen(function(){
       assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('new title'));

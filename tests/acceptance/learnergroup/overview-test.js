@@ -104,7 +104,7 @@ test('change title', function(assert) {
       var input = find('.title .editinplace input', container);
       assert.equal(getText(input.val()), getText('learner group 1'));
       fillIn(input, 'test new title');
-      click(find('.title .editinplace .actions .save', container));
+      click(find('.title .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.title h2', container)), getText('cohort 0 -> learner group 0 -> test new title'));
       });
@@ -180,7 +180,7 @@ test('change location', function(assert) {
       var input = find('.learnergrouplocation .editinplace input', container);
       assert.equal(getText(input.val()), getText('room 101'));
       fillIn(input, 'test new location');
-      click(find('.learnergrouplocation .editinplace .actions .save', container));
+      click(find('.learnergrouplocation .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.learnergrouplocation div', container)), getText('test new location'));
       });

@@ -169,7 +169,7 @@ test('new course', function(assert) {
   let newTitle = 'new course title, woohoo';
   andThen(function() {
     let container = find('.resultslist');
-    click('.resultslist-actions .add', container);
+    click('.resultslist-actions button', container);
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
       click('.new-course .done', container);
@@ -190,7 +190,7 @@ test('new course in another year does not display in list', function(assert) {
   let newTitle = 'new course title, woohoo';
   andThen(function() {
     let container = find('.resultslist');
-    click('.resultslist-actions .add', container);
+    click('.resultslist-actions button', container);
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
       click('.new-course-year button').then(function(){

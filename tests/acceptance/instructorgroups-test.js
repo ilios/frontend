@@ -145,7 +145,7 @@ test('add new instructorgroup', function(assert) {
   assert.expect(1);
   visit('/instructorgroups');
   andThen(function() {
-    click('.resultslist-actions .add');
+    click('.resultslist-actions button');
     fillIn('.newinstructorgroup-title', 'new test tile');
     click('.newinstructorgroup .done');
   });
@@ -167,7 +167,7 @@ test('cancel adding new instructorgroup', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-actions .add').then(function(){
+    click('.resultslist-actions button').then(function(){
       assert.equal(find('.newinstructorgroup').length, 1);
       click('.newinstructorgroup .cancel');
     });

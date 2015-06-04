@@ -120,7 +120,7 @@ test('change ilm hours', function(assert) {
       var input = find('.editinplace input', container);
       assert.equal(getText(input.val()), ilmSession.hours);
       fillIn(input, 23);
-      click(find('.editinplace .actions .save', container));
+      click(find('.editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.content', container)), 23);
       });
@@ -149,7 +149,7 @@ test('change ilm due date', function(assert) {
       assert.equal(interactor.selectedYear(), moment(ilmSession.dueDate).format('YYYY'));
       var newDate = moment(ilmSession.dueDate).add(1, 'year').add(1, 'month');
       interactor.selectDate(newDate.toDate());
-      click(find('.editinplace .actions .save', container));
+      click(find('.editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('div', container)), newDate.format('MM/DD/YY'));
       });
@@ -171,7 +171,7 @@ test('change title', function(assert) {
       var input = find('.editinplace input', container);
       assert.equal(getText(input.val()), getText('session 0'));
       fillIn(input, 'test new title');
-      click(find('.editinplace .actions .save', container));
+      click(find('.editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(container), getText('test new title'));
       });
@@ -195,7 +195,7 @@ test('change type', function(assert) {
       assert.equal(getElementText(options.eq(0)), getText(fixtures.selectedSessionType.title));
       assert.equal(getElementText(options.eq(1)), getText(fixtures.otherSessionType.title));
       pickOption(find('.sessiontype select', container), fixtures.otherSessionType.title, assert);
-      click(find('.sessiontype .actions .save', container));
+      click(find('.sessiontype .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.sessiontype .editable', container)), getText(fixtures.otherSessionType.title));
       });
@@ -267,7 +267,7 @@ test('change description', function(assert) {
       var input = find('.editinplace textarea', container);
       assert.equal(getText(input.val()), description);
       fillIn(input, 'test new description');
-      click(find('.editinplace .actions .save', container));
+      click(find('.editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.content', container)), getText('test new description'));
       });
@@ -289,7 +289,7 @@ test('add description', function(assert) {
       var input = find('.editinplace textarea', container);
       assert.equal(getText(input.val()), '');
       fillIn(input, 'test new description');
-      click(find('.editinplace .actions .save', container));
+      click(find('.editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.content', container)), getText('test new description'));
       });
