@@ -28,12 +28,7 @@
     tbody tr {
 
       &:hover {
-        background-color: rgba(239, 251, 255, .8);
-      }
-
-      &.active-background,
-      &.active-background:hover {
-        background-color: rgba(239, 251, 255, .8);
+       
       }
     }
      
@@ -56,10 +51,12 @@
       }
 
       tbody tr {
-        cursor: pointer;
+          border-top: 1px solid $active-background-color;
+border-bottom: 1px solid $active-background-color;
         
-        &:hover {
-          background-color: rgba(203, 231, 240, .7);
+        &:hover td {
+             border-top: 1px solid $hover-border;
+border-bottom: 1px solid $hover-border;
         }
       }  
      
@@ -138,8 +135,6 @@
 
 }
 .sessions-hover:hover {
-            background-size: cover;
-            -mix-blend-mode: multiply;
-            background-color: rgba(183, 211, 220, 1);
-  
+            
+   cursor: pointer;
         }   
