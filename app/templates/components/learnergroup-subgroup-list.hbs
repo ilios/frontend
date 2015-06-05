@@ -3,7 +3,7 @@
     {{t 'learnerGroups.subgroups'}} ({{learnerGroups.length}})
   </div>
   <div class='detail-actions'>
-    <button class='add' {{action 'addLearnerGroup'}}>{{t 'general.addNew'}}</button>
+    <button {{action 'addLearnerGroup'}}>{{t 'general.addNew'}}</button>
   </div>
   <div class='detail-content'>
     {{#if newLearnerGroups.length}}
@@ -41,7 +41,7 @@
                   {{t 'learnerGroups.confirmRemove' learnerCount=learnerGroup.usersCount subgroupCount=learnerGroup.children.length}} <br />
                  <div class="confirm-buttons">
                   <button {{action 'removeLearnerGroup' learnerGroup}} class='text remove'>{{t 'general.yes'}}</button>
-                  <button {{action 'cancelRemove' learnerGroup}} class='text cancel'>{{t 'general.cancel'}}</button>
+                  <button {{action 'cancelRemove' learnerGroup}} class='text done'>{{t 'general.cancel'}}</button>
                 </div>
                 </div>
               </td></tr>

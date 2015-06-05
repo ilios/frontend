@@ -66,7 +66,7 @@ test('add new learnergroup', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.learnergroup-subgroup-list');
-    click('.add', container);
+    click('button', container);
     fillIn('.newlearnergroup input', 'a new test title');
     click('.newlearnergroup .done');
   });
@@ -89,7 +89,7 @@ test('cancel adding new learnergroup', function(assert) {
     assert.equal(find('.resultslist-list tbody tr', container).length, 2);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)', container)),getText('learnergroup 1'));
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)', container)),getText('learnergroup 2'));
-    click('.add', container).then(function(){
+    click('button', container).then(function(){
       assert.equal(find('.newlearnergroup').length, 1);
       click('.newlearnergroup .cancel');
     });
@@ -128,7 +128,7 @@ test('cancel remove learnergroup', function(assert) {
     assert.equal(find('.resultslist-list tbody tr', container).length, 2);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)', container)),getText('learnergroup 1'));
     click('.resultslist-list tbody tr:eq(0) td:eq(2) span').then(function(){
-      click('.confirm-buttons .cancel').then(() => {
+      click('.confirm-buttons .done').then(() => {
           assert.equal(find('.resultslist-list tbody tr').length, 2);
           assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)', container)),getText('learnergroup 1'));
           assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)', container)),getText('learnergroup 2'));

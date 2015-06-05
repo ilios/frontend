@@ -66,7 +66,7 @@ test('manager', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.programyear-competencies');
-    click('.add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       assert.equal(getElementText(find('.tree-list.selectable', container)), getText('competency3competency4competency5'));
       assert.equal(getElementText(find('.tree-list.removable', container)), getText('competency0competency1competency2'));
 

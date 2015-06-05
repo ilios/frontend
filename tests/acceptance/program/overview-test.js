@@ -48,7 +48,7 @@ test('change title', function(assert) {
       var input = find('.title .editinplace input', container);
       assert.equal(getText(input.val()), getText('program 0'));
       fillIn(input, 'test new title');
-      click(find('.title .editinplace .actions .save', container));
+      click(find('.title .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.title h2', container)), getText('test new title'));
       });
@@ -69,7 +69,7 @@ test('change short title', function(assert) {
       var input = find('.programtitleshort .editinplace input', container);
       assert.equal(getText(input.val()), getText(program.shortTitle));
       fillIn(input, 'test new short title');
-      click(find('.programtitleshort .editinplace .actions .save', container));
+      click(find('.programtitleshort .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.programtitleshort div', container)), getText('test new short title'));
       });
@@ -93,7 +93,7 @@ test('change duration', function(assert) {
         assert.equal(getElementText(options.eq(i)), i+1);
       }
       pickOption(find('.programduration select', container), '9', assert);
-      click(find('.programduration .editinplace .actions .save', container));
+      click(find('.programduration .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.programduration div', container)), 9);
       });
@@ -111,7 +111,7 @@ test('leave duration at 1', function(assert) {
     var container = find('.detail-overview');
     click(find('.programduration .editable', container));
     andThen(function(){
-      click(find('.programduration .editinplace .actions .save', container));
+      click(find('.programduration .editinplace .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.programduration div', container)), 1);
       });

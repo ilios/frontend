@@ -23,7 +23,7 @@
             {{/if}}
           {{/each}}
         {{else}}
-          <button class='add' {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
+          <button {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
       <td class='text-left text-top'>
@@ -36,7 +36,7 @@
             </a>
           </ul>
         {{else}}
-          <button class='add' {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
+          <button {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
     </tr>

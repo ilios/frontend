@@ -380,7 +380,7 @@ test('edit learning material', function(assert) {
       click(find('.publicnotes input', container));
       click(find('.status .editable', container)).then(function(){
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
-        click(find('.status .save', container));
+        click(find('.status .done', container));
       });
       andThen(function(){
         let removableItems = find('.removable-list li', container);
@@ -425,7 +425,7 @@ test('cancel editing learning material', function(assert) {
       click(find('.publicnotes input', container));
       click(find('.status .editable', container)).then(function(){
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
-        click(find('.status .save', container));
+        click(find('.status .done', container));
       });
       let removableItems = find('.removable-list li', container);
       let searchBox = find('.search-box', container).eq(0);

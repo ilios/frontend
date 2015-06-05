@@ -54,7 +54,7 @@ test('manage topics', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-topics');
-    click(find('.detail-actions .add', container));
+    click(find('.detail-actions button', container));
     andThen(function(){
       assert.equal(getElementText(find('.removable-list li', container)), getText('topic 0'));
       assert.equal(getElementText(find('.selectable-list li', container)), getText('topic 1'));
@@ -67,7 +67,7 @@ test('save topic chages', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-topics');
-    click(find('.detail-actions .add', container));
+    click(find('.detail-actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-list li:eq(1)', container)).then(function(){
@@ -86,7 +86,7 @@ test('cancel topic chages', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-topics');
-    click(find('.detail-actions .add', container));
+    click(find('.detail-actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-list li:eq(1)', container)).then(function(){

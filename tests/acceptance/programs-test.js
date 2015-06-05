@@ -92,7 +92,7 @@ test('add new program', function(assert) {
   assert.expect(3);
   visit('/programs');
   andThen(function() {
-    click('.resultslist-actions .add');
+    click('.resultslist-actions button');
     fillIn('.newprogram input', 'new test title');
     click('.newprogram .done');
   });
@@ -116,7 +116,7 @@ test('cancel adding new program', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
-    click('.resultslist-actions .add').then(function(){
+    click('.resultslist-actions button').then(function(){
       assert.equal(find('.newprogram').length, 1);
       click('.newprogram .cancel');
     });
@@ -167,7 +167,7 @@ test('cancel remove program', function(assert) {
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
     click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
       click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        click('.confirm-buttons .cancel');
+        click('.confirm-buttons .done');
       });
     });
   });

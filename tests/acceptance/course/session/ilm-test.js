@@ -125,7 +125,7 @@ test('check learner groups', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       var cohorts = find('.selectable-list li.static');
       assert.equal(cohorts.length, fixtures.course.cohorts.length);
@@ -140,7 +140,7 @@ test('filter learner groups', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       fillIn(find('input', container), 'group 5').then(function(){
         assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
@@ -154,7 +154,7 @@ test('add learner group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.selectable-list ul li.static:eq(1) ul li:eq(0)', container);
     });
     andThen(function(){
@@ -175,7 +175,7 @@ test('add learner sub group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.selectable-list ul li.static:eq(0) ul li:eq(1)', container);
     });
     andThen(function(){
@@ -196,7 +196,7 @@ test('add learner group with children', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       click('.selectable-list ul li.static:eq(0) ul li:eq(0)', container);
       click('.bigadd', container);
@@ -213,7 +213,7 @@ test('add learner group with children and remove one child', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       click('.selectable-list ul li.static:eq(0) ul li:eq(0)', container);
       click('.removable-list li:eq(2)', container);
@@ -235,7 +235,7 @@ test('remove learner group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       click('.removable-list li:eq(0)', container);
       click('.bigadd', container);
@@ -252,7 +252,7 @@ test('undo learner group change', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-learnergroups');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       click('.selectable-list ul li ul li:eq(0)', container);
       click('.removable-list li:eq(0)', container);
@@ -290,7 +290,7 @@ test('manage instructors lists', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       var selectedGroups = find('.inline-list:eq(0) li', container);
       assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
@@ -308,7 +308,7 @@ test('manage instructors search users', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       let searchBox = find('.search-box', container);
       assert.equal(searchBox.length, 1);
@@ -338,7 +338,7 @@ test('manage instructors search groups', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container);
+    click('.detail-actions button', container);
     andThen(function(){
       let searchBox = find('.search-box', container);
       assert.equal(searchBox.length, 1);
@@ -367,7 +367,7 @@ test('add instructor group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       let input = find('.search-box input', container);
       fillIn(input, 'group');
       click('span.search-icon', container).then(()=>{
@@ -401,7 +401,7 @@ test('add instructor', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       let input = find('.search-box input', container);
       fillIn(input, 'guy');
       click('span.search-icon', container).then(()=>{
@@ -435,7 +435,7 @@ test('remove instructor group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.inline-list:eq(0) li:eq(0)', container);
     });
     andThen(function(){
@@ -465,7 +465,7 @@ test('remove instructor', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.inline-list:eq(1) li:eq(0)', container);
     });
     andThen(function(){
@@ -495,7 +495,7 @@ test('undo instructor/group changes', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions .add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.inline-list:eq(0) li:eq(0)', container);
       click('.inline-list:eq(1) li:eq(0)', container);
     });

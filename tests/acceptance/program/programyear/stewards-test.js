@@ -88,7 +88,7 @@ test('save', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-stewards');
-    click('.add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
       assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 school 1 department 2 school 2'));
       click('.tree-list.selectable li:eq(0) ul li:eq(0)', container);
@@ -112,7 +112,7 @@ test('select school and all departments', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-stewards');
-    click('.add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.tree-list.selectable li:eq(0)', container);
       andThen(function(){
         assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 1 school 2 department 3'));
@@ -134,7 +134,7 @@ test('select all departments but not school', function(assert) {
   andThen(function() {
     var container = find('.detail-stewards');
     //click and then wait for each department in the list
-    click('.add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.tree-list.selectable li:eq(0) li', container).then(()=>{
         click('.tree-list.selectable li:eq(0) li', container).then(()=>{
           click('.tree-list.selectable li:eq(0) li', container).then(()=>{
@@ -166,7 +166,7 @@ test('remove solo school with no departments', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-stewards');
-    click('.add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       click('.tree-list.removable>li:eq(2) span', container);
       andThen(function(){
         assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
@@ -187,7 +187,7 @@ test('cancel', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-stewards');
-    click('.add', container).then(function(){
+    click('.detail-actions button', container).then(function(){
       assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
       assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 school 1 department 2 school 2'));
       click('.tree-list.selectable li:eq(0) ul li:eq(0)', container);

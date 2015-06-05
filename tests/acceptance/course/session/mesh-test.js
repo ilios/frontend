@@ -53,7 +53,7 @@ test('manage mesh', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
-    click(find('.detail-actions .add', container));
+    click(find('.detail-actions button', container));
     andThen(function() {
       let meshManager = find('.mesh-manager', container);
       let removableItems = find('.removable-list li', meshManager);
@@ -106,7 +106,7 @@ test('save mesh changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
-    click(find('.detail-actions .add', container));
+    click(find('.detail-actions button', container));
     andThen(function() {
       let meshManager = find('.mesh-manager', container);
       fillIn(find('.search-box input', meshManager).eq(0), 'descriptor');
@@ -136,7 +136,7 @@ test('cancel mesh changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
-    click(find('.detail-actions .add', container));
+    click(find('.detail-actions button', container));
     andThen(function() {
       let meshManager = find('.mesh-manager', container);
       fillIn(find('.search-box input', meshManager).eq(0), 'descriptor');
