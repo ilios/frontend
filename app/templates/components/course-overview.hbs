@@ -9,10 +9,10 @@
   </div>
   <div class='detail-content form-container'>
       <div class="form-col-6 multi-row">
-        <label class="form-label courseexternalid">{{t "courses.externalId"}}:</label>
-        <div class="form-data">{{inplace-text value=course.externalId save='changeExternalId'}}</div>
-        <label class="form-label clerkshiptype">{{t "courses.clerkshipType"}}:</label>
-        <div class="form-data">
+        <label class="form-label">{{t "courses.externalId"}}:</label>
+        <div class="form-data courseexternalid">{{inplace-text value=course.externalId save='changeExternalId'}}</div>
+        <label class="form-label">{{t "courses.clerkshipType"}}:</label>
+        <div class="form-data clerkshiptype">
           {{inplace-select
             value=course.clerkshipType.id
             options=clerkshipTypeOptions
@@ -21,15 +21,15 @@
             clickPromptTranslation='courses.notAClerkship'
           }}
         </div>
-        <label class="form-label courselevel">{{t "courses.level"}}:</label>
-        <div class="form-data">{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
+        <label class="form-label">{{t "courses.level"}}:</label>
+        <div class="form-data courselevel">{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
       </div>
 
       <div class="form-col-6 multi-row">
-        <label class='form-label coursestartdate'>{{t "general.start"}}:</label>
-        <div class="form-data">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
-        <label class="form-label courseenddate">{{t "general.end"}}:</label>
-        <div class="form-data">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
+        <label class='form-label'>{{t "general.start"}}:</label>
+        <div class="form-data coursestartdate">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
+        <label class="form-label">{{t "general.end"}}:</label>
+        <div class="form-data courseenddate">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
       </div>  
       <div class="form-col-12">
       <label>{{t "general.directors"}}:</label>
