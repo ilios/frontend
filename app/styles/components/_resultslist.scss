@@ -12,7 +12,7 @@
     padding: .4em;
 
     .resultslist-title {
-      @include span-columns(1 of 12);
+      @include span-columns(2 of 12);
       h2 {
         font-size: $base-font-size;
         margin: .3em 1em;
@@ -66,7 +66,8 @@
 
   .resultslist-actions {
     @include span-columns(2 of 12);
-    @include shift(9);
+    @include shift(8);
+    text-align: right;
   }
 
   tbody .confirm-removal {
