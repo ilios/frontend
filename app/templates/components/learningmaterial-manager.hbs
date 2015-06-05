@@ -56,7 +56,19 @@
     </div>
   </div>
   {{!-- {{#if learningMaterial.learningMaterial.filename}} --}}
-    {{#if learningMaterial.learningMaterial.copyrightRationale}}
+  {{#if learningMaterial.learningMaterial.copyrightPermission}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
+      <div class="form-data">
+      {{#if learningMaterial.learningMaterial.copyrightPermission}}
+        <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
+      {{else}}
+        <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
+      {{/if}}
+      </div>
+    </div>
+  {{/if}}
+  {{#if learningMaterial.learningMaterial.copyrightRationale}}
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
       <div class="form-data">
