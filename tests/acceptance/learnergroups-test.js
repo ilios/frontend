@@ -407,7 +407,7 @@ test('cancel remove learnergroup', function(assert) {
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
     click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
       click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        click('.confirm-buttons .cancel');
+        click('.confirm-buttons .done');
       });
     });
   });

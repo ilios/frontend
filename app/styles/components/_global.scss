@@ -46,12 +46,6 @@ button {
     font-weight: bold;
     width: 1.5em;
 
-    &.text {
-      border-style: solid;
-      border-width: 1px;
-      width: 95px;
-    }
-
     &:hover {
       color: $white;
     }
@@ -81,6 +75,12 @@ button {
     &:hover {
       background-color: $ilios-green;
     }
+  }
+  
+  &.text {
+    border-style: solid;
+    border-width: 1px;
+    width: 95px;
   }
 }
 

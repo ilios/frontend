@@ -95,6 +95,11 @@
     .remove {
       background-color: $white;
       color: $ilios-remove-color;
+
+      &:hover {
+        background-color: $ilios-remove-color;
+        color: $white;
+      }
     }
   }
 

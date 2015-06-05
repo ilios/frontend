@@ -29,8 +29,8 @@
           <div class='confirm-message'>
             {{t 'learnerGroups.confirmRemove' learnerCount=learnerGroup.usersCount subgroupCount=learnerGroup.children.length}} <br />
            <div class="confirm-buttons">
-            <button {{action 'remove' learnerGroup}} class='remove'>{{t 'general.yes'}}</button>
-            <button {{action 'cancelRemove' learnerGroup}} class='cancel'>{{t 'general.cancel'}}</button>
+            <button {{action 'remove' learnerGroup}} class='remove text'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' learnerGroup}} class='done text'>{{t 'general.cancel'}}</button>
           </div>
           </div>
         </td></tr>
