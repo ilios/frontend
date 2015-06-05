@@ -8,7 +8,11 @@
 
     <section class='detail-block toplevelgroupmembers'>
       <div class='detail-title'>
-        {{t 'learnerGroups.topGroupMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}}
+        {{#if learnerGroup.isTopLevelGroup}}
+          {{t 'learnerGroups.topGroupMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}}
+        {{else}}
+          {{t 'learnerGroups.subGroupMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}}
+        {{/if}}
       </div>
       <div class='detail-content'>
         {{learnergroup-members

@@ -215,4 +215,5 @@ export default DS.Model.extend({
       promise: promise
     });
   }.property('parent', 'parent.topLevelGroup'),
+  isTopLevelGroup: Ember.computed.empty('parent.content'),
 });

@@ -159,7 +159,8 @@ var learnerGroups = {
   'switchLearnerToGroup': 'Switch Learner to {{{group}}}',
   'associatedCourses': 'Associated Courses',
   'noSubgroups': 'There are no subgroups in this learner group',
-  'topGroupMembersNotInGroup': '{{groupTitle}} Members NOT in this Subgroup',
+  'topGroupMembersNotInGroup': '{{groupTitle}} Members NOT in this group',
+  'subGroupMembersNotInGroup': '{{groupTitle}} Members NOT in this Subgroup',
   'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
   'notInThisGroup': 'Not in this group',
 };
