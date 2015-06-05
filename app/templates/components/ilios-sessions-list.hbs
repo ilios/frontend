@@ -32,8 +32,8 @@
         {{/each}}
       </section>
     {{/if}}
-    <div class='sessions resultslist-list'>
-      <table>
+    <div class='resultslist-list'>
+      <table class='active-background'>
         <thead>
           <tr>
             <th class='text-left' colspan=2>{{t 'general.title'}}</th>
@@ -76,13 +76,13 @@
               </td>
             </tr>
             {{#if session.expandOfferings}}
-              <tr class='active-background'>
+              <tr class='donthover'>
                 <td colspan=8 class='text-right' {{action 'toggleExpandedOffering' session}}>
                   {{t 'general.close'}}
                   {{fa-icon 'times'}}
                 </td>
               </tr>
-              <tr class='active-background'>
+              <tr>
                 <td colspan=8>
                   {{#if session.offerings.length}}
                     {{session-offerings-list session=session.content editable=false}}
