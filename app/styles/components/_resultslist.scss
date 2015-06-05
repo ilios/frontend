@@ -25,15 +25,20 @@
   .resultslist-list {
     @include span-columns(12 of 12);
     @include pad();
-    tbody tr {
 
-      &:hover {
-        background-color: rgba(239, 251, 255, .8);
+    tbody tr {
+      border-bottom: 1px solid transparent;
+      border-top: 1px solid transparent;
+
+      &:hover,
+      &:hover td {
+        border-bottom: 1px solid $hover-border;
+        border-top: 1px solid $hover-border;
       }
 
-      &.active-background,
-      &.active-background:hover {
-        background-color: rgba(239, 251, 255, .8);
+      &.donthover {
+        border-bottom: 0;
+        border-top: 0;
       }
     }
 
@@ -45,21 +50,17 @@
       border: 0;
     }
 
-    &.sessions {
+    .active-background {
+      tbody tr {
+        background-color: rgba(239, 251, 255, .8);
+      }
+
       thead tr {
         background-color: $text-blue;
       }
 
       thead th {
         color: $white;
-      }
-
-      tbody tr {
-        cursor: pointer;
-
-        &:hover {
-          background-color: rgba(203, 231, 240, .9);
-        }
       }
     }
   }
