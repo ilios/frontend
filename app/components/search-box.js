@@ -15,6 +15,8 @@ export default Ember.Component.extend({
       this.sendAction('clear');
     },
     search: function(){
+      //place focus into the search box when search icon is clicked
+      this.$('input[type="search"]').focus();
       if(this.get('value').length === 0 || !this.get('liveSearch')){
         this.sendAction('search', this.get('value'));
       } else {
