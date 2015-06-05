@@ -192,6 +192,16 @@ $collapse-control-shadow-grey: #e2e2e2;
     }
   }
 
+  .columnar-list {
+    @include media($medium-screen) {
+      @include column-count(3);
+    }
+
+    @include media($large-screen) {
+      @include column-count(4);
+    }
+  }
+
   .removex {
     display: inline;
     margin: 0;
@@ -252,7 +262,7 @@ $collapse-control-shadow-grey: #e2e2e2;
       h4 {
         display: inline;
       }
-      
+
       input {
         @include span-columns(6 of 8);
       }

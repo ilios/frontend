@@ -46,7 +46,7 @@ test('list topics', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-topics');
-    var items = find('ul.inline-list li', container);
+    var items = find('ul.columnar-list li', container);
     assert.equal(items.length, fixtures.session.disciplines.length);
     assert.equal(getElementText(items.eq(0)), getText('topic 0'));
   });
@@ -78,7 +78,7 @@ test('save topic chages', function(assert) {
         });
       });
       andThen(function(){
-        assert.equal(getElementText(find('ul.inline-list li', container)), getText('topic 1'));
+        assert.equal(getElementText(find('ul.columnar-list li', container)), getText('topic 1'));
       });
     });
   });
@@ -97,7 +97,7 @@ test('cancel topic chages', function(assert) {
         });
       });
       andThen(function(){
-        assert.equal(getElementText(find('ul.inline-list li', container)), getText('topic 0'));
+        assert.equal(getElementText(find('ul.columnar-list li', container)), getText('topic 0'));
       });
     });
   });
