@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.notes'}}:</label>
+    <label class="form-label">{{t 'learningMaterials.instructionalNotes'}}:</label>
     <div class="form-data notes">
       {{inplace-textarea value=learningMaterial.notes save='changeNotes'}}
     </div>
@@ -55,9 +55,6 @@
       <span class='description'>{{ learningMaterial.learningMaterial.description }}</span>
     </div>
   </div>
-  <div>Is file => {{learningMaterial.learningMaterial.filename}}</div>
-  <div>Is link => {{learningMaterial.learningMaterial.link}}</div>
-  <div>Is citation => {{learningMaterial.learningMaterial.citation}}</div>
   {{#if learningMaterial.learningMaterial.filename}}
     {{#if learningMaterial.learningMaterial.copyrightPermission}}
     <div class="form-col-12">
@@ -85,8 +82,8 @@
   </div>
   {{/if}}
   <div class="form-col-12">
-    <label>{{t 'general.mesh'}}:</label>
-    <div>
+    <label class="search-widget-label">{{t 'general.mesh'}}:</label>
+    <div class="search-widget">
       {{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}
     </div>
   </div>

@@ -41,8 +41,8 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
     <div class="form-data">
-      {{input type='checkbox' checked=learningMaterial.copyrightPermission}}
-      {{t 'learningMaterials.copyrightAgreement'}}
+      <p id="lm-copyright-agreement-text">{{input type='checkbox' checked=learningMaterial.copyrightPermission}}
+      {{t 'learningMaterials.copyrightAgreement'}}</p>
     </div>
   </div>
   {{#unless learningMaterial.copyrightPermission}}
@@ -52,9 +52,9 @@
   </div>
   {{/unless}}
   {{/if}}
-
-<br />
-<button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-<button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+<div class="form-col-12 form-data-submit">
+  <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+  <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+</div>
 </div>
 

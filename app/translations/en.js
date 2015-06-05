@@ -254,6 +254,7 @@ var learningMaterials = {
   'owner': 'Owner',
   'contentAuthor': 'Content Author',
   'notes': 'Notes',
+  'instructionalNotes': 'Instructional Notes',
   'showNotesToStudents': 'Show Notes to Students',
   'file': 'File',
   'link': 'Web Link',

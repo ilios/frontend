@@ -17,8 +17,13 @@
       //enforce a default width of 500px for text input on 100% width ro
       // scss-lint:disable QualifyingElement
       input[type=text],
-      textarea {
+      textarea{
         width: 75%;
+      }
+
+      //handle the paragraph text width (eg, copyrightAgreement)
+      p {
+        width: 90%;
       }
 
       //for smaller select dropdowns (eg, years), set a minimum width, so it looks nicer
@@ -29,8 +34,10 @@
 
     //handle a the submit button alignment for a  100%-wide 1-column form or 50%-wide 2 column form
     &.form-data-submit {
-      @include shift(7 of 10);
-      @include span-columns(2 of 10);
+      @include shift(1 of 10);
+      @include span-columns(8 of 10);
+      margin-top: .2em;
+      text-align: right;
     }
   }
 
@@ -119,8 +126,17 @@
   margin-bottom: .4em;
 }
 
-.form-label {
+.search-widget {
+  //fix the half-line that is cut off 
+  margin-left: 1px;
+}
+
+.form-label,
+.search-widget-label {
   font-weight: bold;
+}
+
+.form-label {
   text-align: right;
   white-space: nowrap;
 }
