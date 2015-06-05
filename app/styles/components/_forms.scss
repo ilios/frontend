@@ -43,6 +43,7 @@
     &.multi-row {
       @include clearfix;
       display: table;
+      
       .form-label {
         @include span-columns(2 of 5);
         display: table;
@@ -63,8 +64,8 @@
     .form-data {
       @include span-columns(2 of 5);
       @include omega();
-      white-space: nowrap;
       display: table;
+      white-space: nowrap;
     }
 
     &.form-data-submit {
@@ -94,7 +95,6 @@
         text-align: right;
         width: 90px;
       }
-
     }
 
     // scss-lint:disable QualifyingElement
@@ -109,10 +109,7 @@
     &.form-col-4-middle .form-label,
     &.form-col-4-right .form-label {
       margin-right: 15px;
-
     }
-
-
   }
 
   .form-col-4-left {
