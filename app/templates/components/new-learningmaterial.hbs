@@ -45,13 +45,26 @@
       {{t 'learningMaterials.copyrightAgreement'}}</p>
     </div>
   </div>
-  {{#unless learningMaterial.copyrightPermission}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
-    <div class="form-data">{{input type='text' value=learningMaterial.copyrightRationale}}</div>
-  </div>
-  {{/unless}}
+    {{#unless learningMaterial.copyrightPermission}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
+      <div class="form-data">{{input type='text' value=learningMaterial.copyrightRationale}}</div>
+    </div>
+    {{/unless}}
   {{/if}}
+  {{#if isLink}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.url'}}:</label>
+    <div class="form-data">{{input type='text' value=learningMaterial.link}}</div>
+  </div>
+  {{/if}}
+  {{#if isCitation}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+    <div class="form-data citation">{{textarea value=learningMaterial.citation}}</div>
+  </div>
+  {{/if}}
+
 <div class="form-col-12 form-data-submit">
   <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
   <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>

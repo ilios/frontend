@@ -55,16 +55,16 @@
       <span class='description'>{{ learningMaterial.learningMaterial.description }}</span>
     </div>
   </div>
-  {{#if learningMaterial.learningMaterial.filename}}
-    {{#if learningMaterial.learningMaterial.copyrightPermission}}
+  {{!-- {{#if learningMaterial.learningMaterial.filename}} --}}
+    {{#if learningMaterial.learningMaterial.copyrightRationale}}
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
       <div class="form-data">
         <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
       </div>
     </div>
-    {{/if}}
   {{/if}}
+  {{!-- {{/if}} --}}
   {{#if learningMaterial.learningMaterial.citation}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
@@ -76,8 +76,8 @@
   {{#if learningMaterial.learningMaterial.link}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.link'}}:</label>
-    <div class="form-data">
-      <span class='link'>{{learningMaterial.learningMaterial.link}}</span>
+    <div class="form-data weblink">
+      <span class='link'><a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a></span>
     </div>
   </div>
   {{/if}}

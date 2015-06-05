@@ -258,6 +258,7 @@ var learningMaterials = {
   'showNotesToStudents': 'Show Notes to Students',
   'file': 'File',
   'link': 'Web Link',
+  'url': 'URL',
   'citation': 'Citation',
   'userRole': 'User Role',
   'status': 'Status',
