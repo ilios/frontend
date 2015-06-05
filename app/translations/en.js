@@ -97,6 +97,7 @@ var programs = {
   'confirmRemove': 'Are you sure you want to delete this program, with {{programYearCount}} program years and {{courseCount}} courses? This action will remove all courses and activities related to this program, and cannot be undone.',
   'backToPrograms': 'Back to Programs',
   'backToProgramYears': 'Back to Program Years',
+  'backToProgramYear': 'Back to Program Year',
   'programTitleShort': 'Program Title (short)',
   'durationInYears': 'Duration (in Years)',
   'noProgramYears': 'There are no program years in this program',

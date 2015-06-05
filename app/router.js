@@ -30,8 +30,10 @@ Router.map(function() {
   this.route('learnerGroup', { path: 'learnergroups/:learner_group_id'});
   this.route('learnerGroups', { path: 'learnergroups'});
   this.resource('program', { path: 'programs/:program_id'}, function(){
-    this.route("programYear", {path: '/programyears/:program-year_id'});
     this.route('publicationCheck', { path: '/publicationcheck'});
+    this.resource("programYear", {path: '/programyears/:program-year_id'}, function(){
+      this.route('publicationCheck', {path: '/publicationcheck'});
+    });
   });
 });
 
