@@ -81,7 +81,7 @@ test('check fields', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'learnerGroup');
-    assert.equal(getElementText(find('.detail-header .title h2')),getText('cohort 0 -> learner group 0 -> learner group 1'));
+    assert.equal(getElementText(find('.detail-header .title h2')),getText('cohort 0  learner group 0  learner group 1'));
     assert.equal(getElementText(find('.detail-header .info')),getText('Members: 2'));
     assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (2)'));
     assert.equal(getElementText(find('.detail-overview .learnergrouplocation')), getText('DefaultLocation:room101'));
@@ -98,7 +98,7 @@ test('change title', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-header');
-    assert.equal(getElementText(find('.title h2', container)), getText('cohort 0 -> learner group 0 -> learner group 1'));
+    assert.equal(getElementText(find('.title h2', container)), getText('cohort 0  learner group 0  learner group 1'));
     click(find('.title h2 .editable', container));
     andThen(function(){
       var input = find('.title .editinplace input', container);
@@ -106,7 +106,7 @@ test('change title', function(assert) {
       fillIn(input, 'test new title');
       click(find('.title .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.title h2', container)), getText('cohort 0 -> learner group 0 -> test new title'));
+        assert.equal(getElementText(find('.title h2', container)), getText('cohort 0  learner group 0  test new title'));
       });
     });
   });
@@ -191,7 +191,7 @@ test('change location', function(assert) {
 test('no associated courses', function(assert) {
   visit('/learnergroups/3');
   andThen(function() {
-    assert.equal(getElementText(find('.detail-header .title h2')),getText('cohort 0 -> learnergroup 0 -> learnergroup 2'));
+    assert.equal(getElementText(find('.detail-header .title h2')),getText('cohort 0 learnergroup 0 learnergroup 2'));
     assert.equal(getElementText(find('.detail-overview .learnergroupcourses')), getText('Associated Courses: None'));
   });
 });

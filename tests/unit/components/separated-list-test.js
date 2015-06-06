@@ -1,11 +1,9 @@
-import {
-  moduleForComponent,
-  test
-} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('learnergroup-header', {
+moduleForComponent('separated-list', 'Unit | Component | separated list', {
   // Specify the other units that are required for this test
-  needs: ['component:inplace-text', 'helper:fa-icon', 'component:separated-list']
+  // needs: ['component:foo', 'helper:bar'],
+  unit: true
 });
 
 test('it renders', function(assert) {

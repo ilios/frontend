@@ -129,7 +129,7 @@ test('check learner groups', function(assert) {
     andThen(function(){
       var cohorts = find('.selectable-list li.static');
       assert.equal(cohorts.length, fixtures.course.cohorts.length);
-      assert.equal(getElementText(cohorts.eq(0)), getText('cohort0learnergroup1learnergroup1->learnergroup4learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
+      assert.equal(getElementText(cohorts.eq(0)), getText('cohort0 learnergroup1 learnergroup1 learnergroup4 learnergroup1 learnergroup5 learnergroup1 learnergroup5 learnergroup6'));
     });
 
   });
@@ -143,7 +143,7 @@ test('filter learner groups', function(assert) {
     click('.detail-actions button', container);
     andThen(function(){
       fillIn(find('input', container), 'group 5').then(function(){
-        assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
+        assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1 learnergroup5learnergroup1 learnergroup5 learnergroup6'));
       });
     });
   });
@@ -159,7 +159,7 @@ test('add learner group', function(assert) {
     });
     andThen(function(){
       assert.equal(getElementText(find('.removable-list', container)), 'learnergroup0learnergroup2');
-      assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1learnergroup1->learnergroup4learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
+      assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1learnergroup1 learnergroup4learnergroup1 learnergroup5learnergroup1 learnergroup5 learnergroup6'));
       assert.equal(getElementText(find('.selectable-list li.static').eq(1)), getText('cohort1learnergroup3'));
       click('.bigadd', container);
     });
@@ -179,14 +179,14 @@ test('add learner sub group', function(assert) {
       click('.selectable-list ul li.static:eq(0) ul li:eq(1)', container);
     });
     andThen(function(){
-      assert.equal(getElementText(find('.removable-list', container)), 'learnergroup0learnergroup1->learnergroup4');
-      assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6'));
+      assert.equal(getElementText(find('.removable-list', container)), getText('learnergroup0 learnergroup1 learnergroup4'));
+      assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1learnergroup1 learnergroup5learnergroup1 learnergroup5 learnergroup6'));
       assert.equal(getElementText(find('.selectable-list li.static').eq(1)), getText('cohort1learnergroup2learnergroup3'));
       click('.bigadd', container);
     });
     andThen(function(){
       var selectedGroups = find('.inline-list li', container);
-      assert.equal(getElementText(selectedGroups), 'learnergroup0learnergroup1->learnergroup4');
+      assert.equal(getElementText(selectedGroups), getText('learnergroup0 learnergroup1 learnergroup4'));
     });
   });
 });
@@ -203,7 +203,7 @@ test('add learner group with children', function(assert) {
     });
     andThen(function(){
       var selectedGroups = find('.inline-list li', container);
-      assert.equal(getElementText(selectedGroups), 'learnergroup0learnergroup1learnergroup1->learnergroup4learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6');
+      assert.equal(getElementText(selectedGroups), getText('learnergroup0 learnergroup1 learnergroup1 learnergroup4 learnergroup1 learnergroup5 learnergroup1 learnergroup5 learnergroup6'));
     });
   });
 });
@@ -218,14 +218,14 @@ test('add learner group with children and remove one child', function(assert) {
       click('.selectable-list ul li.static:eq(0) ul li:eq(0)', container);
       click('.removable-list li:eq(2)', container);
       andThen(function(){
-        assert.equal(getElementText(find('.removable-list', container)), 'learnergroup0learnergroup1learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6');
-        assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1->learnergroup4'));
+        assert.equal(getElementText(find('.removable-list', container)), getText('learnergroup0 learnergroup1 learnergroup1 learnergroup5 learnergroup1 learnergroup5 learnergroup6'));
+        assert.equal(getElementText(find('.selectable-list li.static').eq(0)), getText('cohort0learnergroup1 learnergroup4'));
         click('.bigadd', container);
       });
     });
     andThen(function(){
       var selectedGroups = find('.inline-list li', container);
-      assert.equal(getElementText(selectedGroups), 'learnergroup0learnergroup1learnergroup1->learnergroup5learnergroup1->learnergroup5->learnergroup6');
+      assert.equal(getElementText(selectedGroups), getText('learnergroup0 learnergroup1 learnergroup1 learnergroup5 learnergroup1 learnergroup5 learnergroup6'));
     });
   });
 });
