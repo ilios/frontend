@@ -7,27 +7,12 @@
       <button>{{t 'general.printSummary'}}</button>
     {{/link-to}}
   </div>
-  <div class='detail-content'>
-    {{#if editable}}
-      <div class="inline-label-data-block coursestartdate">
-        <label>{{t "general.start"}}:</label>
-        <div>{{inplace-date value=course.startDate save='changeStartDate'}}</div>
-      </div>
-      <div class="inline-label-data-block courseexternalid">
-        <label>{{t "courses.externalId"}}:</label>
-        <div>{{inplace-text value=course.externalId save='changeExternalId'}}</div>
-      </div>
-      <div class="inline-label-data-block courselevel">
-        <label>{{t "courses.level"}}:</label>
-        <div>{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
-      </div>
-      <div class="inline-label-data-block courseenddate">
-        <label>{{t "general.end"}}:</label>
-        <div>{{inplace-date value=course.endDate save='changeEndDate'}}</div>
-      </div>
-      <div class="inline-label-data-block clerkshiptype">
-        <label>{{t "courses.clerkshipType"}}:</label>
-        <div>
+  <div class='detail-content form-container'>
+      <div class="form-col-6 multi-row">
+        <label class="form-label">{{t "courses.externalId"}}:</label>
+        <div class="form-data courseexternalid">{{inplace-text value=course.externalId save='changeExternalId'}}</div>
+        <label class="form-label">{{t "courses.clerkshipType"}}:</label>
+        <div class="form-data clerkshiptype">
           {{inplace-select
             value=course.clerkshipType.id
             options=clerkshipTypeOptions
@@ -36,9 +21,17 @@
             clickPromptTranslation='courses.notAClerkship'
           }}
         </div>
+        <label class="form-label">{{t "courses.level"}}:</label>
+        <div class="form-data courselevel">{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
       </div>
-      <br />
-      <br />
+
+      <div class="form-col-6 multi-row">
+        <label class='form-label'>{{t "general.start"}}:</label>
+        <div class="form-data coursestartdate">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
+        <label class="form-label">{{t "general.end"}}:</label>
+        <div class="form-data courseenddate">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
+      </div>  
+      <div class="form-col-12">
       <label>{{t "general.directors"}}:</label>
         <span>
           <ul class='removable-list'>
@@ -51,54 +44,6 @@
           addUser='addDirector'
           currentlyActiveUsers=course.directors
         }}
-    {{else}}
-      <div class="inline-label-data-block coursestartdate">
-        <label>{{t "general.start"}}:</label>
-        <div>{{moment course.startDate 'MM/DD/YY'}}</div>
       </div>
-      <div class="inline-label-data-block courseexternalid">
-        <label>{{t "courses.externalId"}}:</label>
-        <div>
-          {{#if course.externalId.length}}
-            {{course.externalId}}
-          {{else}}
-            {{t 'general.none'}}
-          {{/if}}
-        </div>
-      </div>
-      <div class="inline-label-data-block courselevel">
-        <label>{{t "courses.level"}}:</label>
-        <div>{{course.level}}</div>
-      </div>
-      <div class="inline-label-data-block courseenddate">
-        <label>{{t "general.end"}}:</label>
-        <div>{{moment course.endDate 'MM/DD/YY'}}</div>
-      </div>
-      <div class="inline-label-data-block clerkshiptype">
-        <label>{{t "courses.clerkshipType"}}:</label>
-        <div>
-          {{#if course.clerkshipType}}
-            {{course.clerkshipType.title}}
-          {{else}}
-            {{t 'courses.notAClerkship'}}
-          {{/if}}
-        </div>
-      </div>
-      <br />
-      <br />
-
-      <div class="inline-label-data-block">
-        <label>{{t "general.directors"}}:</label>
-        <div>
-          <span>
-            {{#each user in sortedDirectors}}
-            {{user.fullName}},
-            {{/each}}
-          </span>
-        </div>
-      </div>
-    {{/if}}
-    <br />
-    <br />
   </div>
 </section>

@@ -38,20 +38,34 @@
   .form-col-6 {
     @include span-columns(5 of 10);
     @include omega(2n);
+    display: table;
+
+    &.multi-row {
+      @include clearfix;
+      display: table;
+      
+      .form-label {
+        @include span-columns(2 of 5);
+        display: table;
+      }
+
+      .form-data {
+        @include span-columns(3 of 5);
+        @include omega();
+        display: table;
+      }
+    }
 
     .form-label {
       @include span-columns(3 of 5);
+      display: table;
     }
 
     .form-data {
       @include span-columns(2 of 5);
-
-      // scss-lint:disable QualifyingElement
-      input[type=text] {
-        //explicitly override the default min-width of text input fields
-        max-width: 100px;
-        min-width: 100px;
-      }
+      @include omega();
+      display: table;
+      white-space: nowrap;
     }
 
     &.form-data-submit {
@@ -81,7 +95,6 @@
         text-align: right;
         width: 90px;
       }
-
     }
 
     // scss-lint:disable QualifyingElement
@@ -96,10 +109,7 @@
     &.form-col-4-middle .form-label,
     &.form-col-4-right .form-label {
       margin-right: 15px;
-
     }
-
-
   }
 
   .form-col-4-left {
@@ -108,9 +118,7 @@
     .form-label {
       @include span-columns(3 of 4);
     }
-
   }
-
 }
 
 //put the universal (non parent-dependent) styles below here
