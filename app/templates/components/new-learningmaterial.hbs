@@ -1,58 +1,73 @@
+<div class="form-container">
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
+    <div class="form-data">{{input type='text' value=learningMaterial.title}}</div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.status'}}:</label>
+    <div class="form-data">
+    {{view "select"
+      content=learningMaterialStatuses
+      value=learningMaterial.status.content
+      optionValuePath='content'
+      optionLabelPath='content.title'
+    }}
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.owner'}}:</label>
+    <div class="form-data"><span class='owninguser'>{{learningMaterial.owningUser.fullName}}</span></div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
+    <div class="form-data">{{input type='text' value=learningMaterial.originalAuthor}}</div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
+    <div class="form-data">
+    {{view "select"
+      content=learningMaterialUserRoles
+      value=learningMaterial.userRole.content
+      optionValuePath='content'
+      optionLabelPath='content.title'
+    }}
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.description'}}:</label>
+    <div class="form-data">{{textarea value=learningMaterial.description}}</div>
+  </div>
+  {{#if isFile}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
+    <div class="form-data">
+      <p id="lm-copyright-agreement-text">{{input type='checkbox' checked=learningMaterial.copyrightPermission}}
+      {{t 'learningMaterials.copyrightAgreement'}}</p>
+    </div>
+  </div>
+    {{#unless learningMaterial.copyrightPermission}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
+      <div class="form-data">{{input type='text' value=learningMaterial.copyrightRationale}}</div>
+    </div>
+    {{/unless}}
+  {{/if}}
+  {{#if isLink}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.url'}}:</label>
+    <div class="form-data">{{input type='text' value=learningMaterial.link}}</div>
+  </div>
+  {{/if}}
+  {{#if isCitation}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+    <div class="form-data citation">{{textarea value=learningMaterial.citation}}</div>
+  </div>
+  {{/if}}
 
-<label>{{t 'learningMaterials.displayName'}}
-  {{input type='text' value=learningMaterial.title}}
-</label> <br />
-<label>{{t 'learningMaterials.owner'}}
-  <span class='owninguser'>{{learningMaterial.owningUser.fullName}}</span>
-</label> <br />
-<label>{{t 'learningMaterials.contentAuthor'}}
-  {{input type='text' value=learningMaterial.originalAuthor}}
-</label> <br />
-<label>{{t 'learningMaterials.status'}}
-  {{view "select"
-    content=learningMaterialStatuses
-    value=learningMaterial.status.content
-    optionValuePath='content'
-    optionLabelPath='content.title'
-  }}
-</label> <br />
-<label>{{t 'learningMaterials.userRole'}}
-  {{view "select"
-    content=learningMaterialUserRoles
-    value=learningMaterial.userRole.content
-    optionValuePath='content'
-    optionLabelPath='content.title'
-  }}
-</label> <br />
-<label>{{t 'general.description'}}
-  {{textarea value=learningMaterial.description}}
-</label> <br />
-
-{{#if isFile}}
-  <label>{{t 'learningMaterials.copyrightPermission'}}
-    {{input type='checkbox' checked=learningMaterial.copyrightPermission}}
-    {{t 'learningMaterials.copyrightAgreement'}}
-  </label> <br />
-  {{#unless learningMaterial.copyrightPermission}}
-    <label>{{t 'learningMaterials.copyrightRationale'}}
-      {{input type='text' value=learningMaterial.copyrightRationale}}
-    </label> <br />
-  {{/unless}}
-{{/if}}
-
-{{#if isCitation}}
-  <label>{{t 'learningMaterials.citation'}}
-    {{textarea value=learningMaterial.citation}}
-  </label>
-{{/if}}
-
-{{#if isLink}}
-  <label>{{t 'learningMaterials.link'}}
-    {{input type='text' value=learningMaterial.link}}
-  </label> <br />
-{{/if}}
-
-<br />
-<button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-<button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+<div class="form-col-12 form-data-submit">
+  <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+  <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+</div>
+</div>
 
