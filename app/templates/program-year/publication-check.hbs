@@ -1,0 +1,46 @@
+<div class="backtolink">{{#link-to 'programYear' model}}{{t 'programs.backToProgramYear'}}{{/link-to}}</div>
+<div class='programyear-publication-check'>
+  <section class='detail-block'>
+    <div class='detail-title'>
+      {{t 'publish.missingItems'}} ({{model.allPublicationIssuesLength}})
+    </div>
+    <div class='detail-content'>
+      <table>
+        <thead>
+          <tr>
+              <th>{{t 'programs.matriculationYear'}}</th>
+              <th>{{t 'general.directors'}}</th>
+              <th>{{t 'general.topics'}}</th>
+              <th>{{t 'general.competencies'}}</th>
+              <th>{{t 'general.objectives'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{model.academicYear}}</td>
+            {{#if model.directors.length}}
+              <td class='yes'>{{t 'general.yes'}} ({{model.directors.length}})</td>
+            {{else}}
+              <td class='no'>{{t 'general.no'}}</td>
+            {{/if}}
+            {{#if model.disciplines.length}}
+              <td class='yes'>{{t 'general.yes'}} ({{model.disciplines.length}})</td>
+            {{else}}
+              <td class='no'>{{t 'general.no'}}</td>
+            {{/if}}
+            {{#if model.competencies.length}}
+              <td class='yes'>{{t 'general.yes'}} ({{model.competencies.length}})</td>
+            {{else}}
+              <td class='no'>{{t 'general.no'}}</td>
+            {{/if}}
+            {{#if model.objectives.length}}
+              <td class='yes'>{{t 'general.yes'}} ({{model.objectives.length}})</td>
+            {{else}}
+              <td class='no'>{{t 'general.no'}}</td>
+            {{/if}}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

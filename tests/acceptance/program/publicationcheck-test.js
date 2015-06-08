@@ -8,20 +8,30 @@ import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
 var fixtures = {};
-module('Acceptance: Program - Publication Check', {
+module('Acceptance: Program Year - Publication Check', {
   beforeEach: function() {
     application = startApp();
     server.create('user', {id: 4136});
     server.create('school');
-    server.create('programYear');
-    fixtures.fullProgram = server.create('program', {
+    server.create('objective');
+    server.create('discipline');
+    server.create('competency');
+    server.create('program', {
+      programYears: [1]
+    });
+    fixtures.fullProgramYear = server.create('programYear', {
       startYear: 2013,
       owningSchool: 1,
-      programYears: [1],
+      program: 1,
+      directors: [4136],
+      objectives: [1],
+      disciplines: [1],
+      competencies: [1],
     });
-    fixtures.emptyProgram = server.create('program', {
+    fixtures.emptyProgramYear = server.create('programYear', {
       startYear: 2013,
-      owningSchool: 1
+      owningSchool: 1,
+      program: 1
     });
   },
 
@@ -31,25 +41,27 @@ module('Acceptance: Program - Publication Check', {
 });
 
 test('full program count', function(assert) {
-  visit('/programs/' + fixtures.fullProgram.id + '/publicationcheck');
+  visit('/programs/1/programyears/' + fixtures.fullProgramYear.id + '/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'program.publicationCheck');
-    var items = find('.program-publication-check .detail-content table tbody td');
-    assert.equal(getElementText(items.eq(0)), getText('program 0'));
-    assert.equal(getElementText(items.eq(1)), getText('short_0'));
-    assert.equal(getElementText(items.eq(2)), 4);
+    assert.equal(currentPath(), 'program.programYear.publicationCheck');
+    var items = find('.programyear-publication-check .detail-content table tbody td');
+    assert.equal(getElementText(items.eq(0)), getText('2013 - 2014'));
+    assert.equal(getElementText(items.eq(1)), getText('Yes (1)'));
+    assert.equal(getElementText(items.eq(2)), getText('Yes (1)'));
     assert.equal(getElementText(items.eq(3)), getText('Yes (1)'));
+    assert.equal(getElementText(items.eq(4)), getText('Yes (1)'));
   });
 });
 
 test('empty program count', function(assert) {
-  visit('/programs/' + fixtures.emptyProgram.id + '/publicationcheck');
+  visit('/programs/1/programyears/' + fixtures.emptyProgramYear.id + '/publicationcheck');
   andThen(function() {
-    assert.equal(currentPath(), 'program.publicationCheck');
-    var items = find('.program-publication-check .detail-content table tbody td');
-    assert.equal(getElementText(items.eq(0)), getText('program 1'));
-    assert.equal(getElementText(items.eq(1)), getText('short_1'));
-    assert.equal(getElementText(items.eq(2)), 4);
+    assert.equal(currentPath(), 'program.programYear.publicationCheck');
+    var items = find('.programyear-publication-check .detail-content table tbody td');
+    assert.equal(getElementText(items.eq(0)), getText('2013 - 2014'));
+    assert.equal(getElementText(items.eq(1)), getText('No'));
+    assert.equal(getElementText(items.eq(2)), getText('No'));
     assert.equal(getElementText(items.eq(3)), getText('No'));
+    assert.equal(getElementText(items.eq(4)), getText('No'));
   });
 });

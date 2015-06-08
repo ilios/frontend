@@ -1,11 +1,8 @@
-import {
-  moduleFor,
-  test
-} from 'ember-qunit';
+import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('controller:program/programYear', {
+moduleFor('controller:program-year/publication-check', {
   // Specify the other units that are required for this test.
-  needs: ['controller:program']
+  needs: ['controller:program', 'controller:programYear']
 });
 
 // Replace this with your real tests.
