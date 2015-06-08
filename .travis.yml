@@ -18,19 +18,20 @@ env:
     - JS_TESTS=true
     - SCSS_LINT=false
     - TESTEM_LAUNCHER='PhantomJS'
+    - SEND_COVERAGE=true
 
 matrix:
   fast_finish: true
   allow_failures:
     # IE10 builds allowed to fail until https://github.com/edgycircle/ember-pikaday/issues/21 is fixed
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
   include:
-    - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true JS_TESTS=true"
-    - env: "TESTEM_LAUNCHER='SL_firefox' START_SAUCE_CONNECT=true JS_TESTS=true"
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true"
-    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true JS_TESTS=true"
-    - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true JS_TESTS=true"
-    - env: "JS_TESTS=false SCSS_LINT=true"
+    - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
+    - env: "TESTEM_LAUNCHER='SL_firefox' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_10' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
+    - env: "TESTEM_LAUNCHER='SL_internet_explorer_11' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
+    - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
+    - env: "JS_TESTS=false SCSS_LINT=true SEND_COVERAGE=false"
 
 before_install:
   - "npm config set spin false"
@@ -53,6 +54,7 @@ script:
 after_script:
   # Destroy the sauce tunnel
   - if [ "$START_SAUCE_CONNECT" = true ]; then ember stop-sauce-connect; fi
+  - if [ "$SEND_COVERAGE" = true ]; then CODECLIMATE_REPO_TOKEN=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6 node_modules/.bin/codeclimate < $TRAVIS_BUILD_DIR/lcov.dat; fi
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
