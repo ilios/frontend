@@ -2,7 +2,7 @@
   {{#each learnerGroup in sortedLearnerGroups}}
     <li {{action 'remove' learnerGroup}}>
       <em>
-        {{learnerGroup.allParentsTitle}}
+        {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
       </em>
       <strong>
         {{learnerGroup.title}}
@@ -21,7 +21,7 @@
           {{#each learnerGroup in cohort.filteredAvailableLearnerGroups}}
             <li {{action 'add' learnerGroup}}>
               <em>
-                {{learnerGroup.allParentsTitle}}
+                {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
               </em>
               <strong>
                 {{learnerGroup.title}}

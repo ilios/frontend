@@ -135,16 +135,24 @@ export default DS.Model.extend({
     });
   },
   allParentsTitle: function(){
-    var title = '';
-    if(this.get('parent.content')){
-      if(this.get('parent.allParentsTitle')){
-        title += this.get('parent.allParentsTitle');
-      }
-      title += this.get('parent.title') + ' -> ';
-    }
+    let title = '';
+    this.get('allParentTitles').forEach(str => {
+      title += str + ' > ';
+    });
 
     return title;
-  }.property('parent.{title,allParentsTitle}'),
+  }.property('allParentTitles'),
+  allParentTitles: function(){
+    let titles = [];
+    if(this.get('parent.content')){
+      if(this.get('parent.allParentTitles')){
+        titles.pushObjects(this.get('parent.allParentTitles'));
+      }
+      titles.pushObject(this.get('parent.title'));
+    }
+
+    return titles;
+  }.property('parent.{title,allParentTitles}'),
   sortTitle: function(){
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");

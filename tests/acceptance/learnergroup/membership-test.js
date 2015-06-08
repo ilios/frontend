@@ -71,19 +71,19 @@ test('this group members', function(assert) {
     assert.equal(currentPath(), 'learnerGroup');
     assert.equal(getElementText(find('.detail-title', container)), getText('learner group 1 Members (2)'));
     assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('1 guy Mc1son'));
-    assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 -> learner group 1'));
+    assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 > learner group 1'));
     assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(1)'), container), getText('2 guy Mc2son'));
-    assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(1)'), container), getText('learner group 0 -> learner group 1'));
+    assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(1)'), container), getText('learner group 0 > learner group 1'));
 
     click('.learnergroup-group-membership:eq(0) .editable').then(function(){
       let options = find('.learnergroup-group-membership:eq(0) select option', container);
       assert.equal(options.length, 6);
       assert.equal(getElementText(options.eq(0)), getText('Remove Learner to cohort 0'));
       assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0'));
-      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 -> learner group 1'));
-      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 -> learner group 1 -> learner group 3'));
-      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 -> learner group 1 -> learner group 4'));
-      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 -> learner group 2'));
+      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1'));
+      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
+      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
+      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 2'));
     });
   });
 });
@@ -94,9 +94,9 @@ test('top level group members', function(assert) {
     let container = find('.toplevelgroupmembers');
     assert.equal(getElementText(find('.detail-title', container)), getText('learner group 0 Members NOT in this Subgroup'));
     assert.equal(getElementText(find('.learnergroup-username:eq(0)', container)), getText('3 guy Mc3son'));
-    assert.equal(getElementText(find('.learnergroup-group-membership:eq(0)', container)), getText('learner group 0 -> learner group 1 -> learner group 3'));
+    assert.equal(getElementText(find('.learnergroup-group-membership:eq(0)', container)), getText('learner group 0 > learner group 1 > learner group 3'));
     assert.equal(getElementText(find('.learnergroup-username:eq(1)', container)), getText('4 guy Mc4son'));
-    assert.equal(getElementText(find('.learnergroup-group-membership:eq(1)', container)), getText('learner group 0 -> learner group 1  -> learner group 3'));
+    assert.equal(getElementText(find('.learnergroup-group-membership:eq(1)', container)), getText('learner group 0 > learner group 1  > learner group 3'));
     assert.equal(getElementText(find('.learnergroup-username:eq(2)', container)), getText('5 guy Mc5son'));
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(2)', container)), getText('learner group 0'));
     assert.equal(getElementText(find('.learnergroup-username:eq(3)', container)), getText('6 guy Mc6son'));
@@ -106,12 +106,12 @@ test('top level group members', function(assert) {
       assert.equal(options.length, 6);
       assert.equal(getElementText(options.eq(0)), getText('Remove Learner to cohort 0'));
       assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0'));
-      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 -> learner group 1'));
-      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 -> learner group 1 -> learner group 3'));
-      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 -> learner group 1 -> learner group 4'));
-      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 -> learner group 2'));
+      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1'));
+      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
+      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
+      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 2'));
 
-      pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 -> learner group 1', assert);
+      pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 > learner group 1', assert);
       click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         let container = find('.detail-overview');
@@ -138,12 +138,12 @@ test('cohort members', function(assert) {
       let options = find('.learnergroup-group-membership:eq(0) select option', container);
       assert.equal(options.length, 5);
       assert.equal(getElementText(options.eq(0)), getText('Switch Learner to learner group 0'));
-      assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0 -> learner group 1'));
-      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 -> learner group 1 -> learner group 3'));
-      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 -> learner group 1 -> learner group 4'));
-      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 -> learner group 2'));
+      assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0 > learner group 1'));
+      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
+      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
+      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 2'));
 
-      pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 -> learner group 1', assert);
+      pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 > learner group 1', assert);
       click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         let container = find('.detail-overview');
@@ -162,16 +162,16 @@ test('move group member to another subgroup', function(assert) {
   andThen(function() {
     let container = find('.detail-overview');
     click('.learnergroup-group-membership:eq(0) .editable').then(function(){
-      pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 -> learner group 2', assert);
+      pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 > learner group 2', assert);
       click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
       andThen(function(){
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 1'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (1)'));
         assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('2 guy Mc2son'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 -> learner group 1'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 > learner group 1'));
 
         assert.equal(getElementText(find('.toplevelgroupmembers .learnergroup-username:eq(0)')), getText('1 guy Mc1son'));
-        assert.equal(getElementText(find('.toplevelgroupmembers .learnergroup-group-membership:eq(0)')), getText('learner group 0 -> learner group 2'));
+        assert.equal(getElementText(find('.toplevelgroupmembers .learnergroup-group-membership:eq(0)')), getText('learner group 0 > learner group 2'));
       });
     });
   });
@@ -188,7 +188,7 @@ test('remove group member back to cohort', function(assert) {
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 1'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (1)'));
         assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('2 guy Mc2son'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 -> learner group 1'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 > learner group 1'));
 
         assert.equal(getElementText(find('.cohortmembers .learnergroup-username:eq(0)')), getText('1 guy Mc1son'));
         assert.equal(getElementText(find('.cohortmembers .learnergroup-group-membership:eq(0)')), getText('Not in this group'));

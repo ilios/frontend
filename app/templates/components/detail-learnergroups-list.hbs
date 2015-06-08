@@ -2,7 +2,7 @@
   {{#each learnerGroup in sortedLearnerGroups}}
     <li>
       <em>
-        {{learnerGroup.allParentsTitle}}
+        {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
       </em>
       <strong>
         {{learnerGroup.title}}
