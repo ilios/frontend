@@ -1,0 +1,50 @@
+<div class="backtolink">{{#link-to 'instructorGroups'}}{{t 'instructorGroups.backToInstructorGroups'}}{{/link-to}}</div>
+<div class='detail-view'>
+  <div class='detail-view-main-title'>
+    <div class='detail-header'>
+      <span class='title'>
+        <h2>
+          {{instructorGroup.school.title}} >
+          {{inplace-text tagName='span' value=instructorGroup.title save='changeTitle'}}
+        </h2>
+      </span>
+      <span class='info'>
+        {{t 'instructorGroups.members'}}: {{instructorGroup.users.length}}
+      </span>
+    </div>
+  </div>
+  <div class='detail-view-details instructorgroup-overview'>
+    <section class='detail-overview detail-block'>
+      <div class='detail-title'>
+        {{instructorGroup.title}} {{t 'instructorGroups.members'}} ({{instructorGroup.users.length}})
+      </div>
+      <div class='detail-content'>
+        <label>{{t "general.instructors"}}:</label>
+        <span>
+          <ul class='removable-list'>
+            {{#each user in sortedUsers}}
+            <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+            {{/each}}
+          </ul>
+        </span>
+        {{user-search
+          addUser='addUser'
+          currentlyActiveUsers=instructorGroup.users
+        }}
+      </div>
+
+      <div class="inline-label-data-block instructorgroupcourses">
+        <label>{{t "instructorGroups.associatedCourses"}}:</label>
+        <div>
+          <ul>
+            {{#each sortedCourses as |course|}}
+              <li>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.title}}{{/link-to}}</li>
+            {{else}}
+              {{t 'general.none'}}
+            {{/each}}
+          </ul>
+        </div>
+      </div> <br />
+    </section>
+  </div>
+</div>
