@@ -1,4 +1,32 @@
 <section class='fullwidth'>
     <p> Hello {{currentUser.model.fullName}},</p>
 </section>
+
+{{#el-monthly-calendar date="2015-06-01" events=model as |weeks|}}
+  <div class="row">
+    {{#each weeks.firstObject.days as |day|}}
+      <div class="cell title">
+        {{day.dayName}}
+      </div>
+    {{/each}}
+  </div>
+  {{#each weeks as |week|}}
+    <div class="week">
+      {{#each week.days as |day|}}
+        <div class="day">
+          {{formatted-date day.date type='monthly-day'}}
+
+          <div class="events">
+            {{#each day.events as |event|}}
+              <div class="event">
+                {{event.name}}
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+{{/el-monthly-calendar}}
+
 {{outlet}}
