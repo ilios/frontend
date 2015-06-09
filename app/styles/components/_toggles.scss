@@ -64,7 +64,7 @@ $offering-switch-blue: #009ccc;
   color: $white;
   content: attr(data-off);
   right: 7px;
-  text-shadow: 0 1px rgba(0, 0, 0, .2);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .4);
 }
 
 .switch-label:after {
