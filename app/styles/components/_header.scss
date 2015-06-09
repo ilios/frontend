@@ -24,9 +24,13 @@ header.main {
       width: $header-box-width;
     }
 
-    img {
-      max-height: $header-height;
+    span.image {
+      background-image: url('images/ilios-logo.png');
+      background-repeat: no-repeat;
+      display: block;
+      height: 42px;
       padding: .8em 0;
+      width: 84px;
     }
   }
 
