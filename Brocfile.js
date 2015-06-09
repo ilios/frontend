@@ -1,8 +1,27 @@
-/* global require, module */
+/* global require, module, process */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var fingerprintOptions = {
+  enabled: false,
+  prepend: ''
+};
+
+var env = process.env.EMBER_ENV || 'development';
+
+if(env === 'production'){
+  fingerprintOptions.enabled = true;
+  //ilioscdn cloudfront location
+  fingerprintOptions.prepend = 'https://d2eu2qqtzbi1jy.cloudfront.net/';
+}
+
+if(env === 'heroku'){
+  fingerprintOptions.enabled = true;
+}
+
+var app = new EmberApp({
+  fingerprint: fingerprintOptions,
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

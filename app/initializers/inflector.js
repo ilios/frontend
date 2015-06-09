@@ -8,6 +8,5 @@ export function initialize(/* container, application */) {
 
 export default {
   name: 'inflector',
-  before: ['ember-cli-mirage'],
   initialize: initialize
 };
