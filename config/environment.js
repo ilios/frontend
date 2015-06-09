@@ -59,12 +59,15 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
 
   }
-  //production is what we use to deploy to heroku for demo purposes
-  //this is not really production, but its hard to change the name
-  if (environment === 'production') {
+
+  if (environment === 'heroku') {
     ENV['ember-cli-mirage'] = {
       enabled: true
     };
+  }
+
+  if (environment === 'production') {
+    ENV.adapterNamespace = 'api/v1';
   }
 
   return ENV;
