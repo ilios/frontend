@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   model: function(){
     var deferred = Ember.RSVP.defer();
     var self = this;
-    var url = config.adapterHost + '/' + config.adapterNamespace + '/currentsession';
+    var url = '/' + config.adapterNamespace + '/currentsession';
     ajax(url).then(function(data) {
       self.get('store').find('user', data.currentsession.userId).then(function(user){
         deferred.resolve(user);

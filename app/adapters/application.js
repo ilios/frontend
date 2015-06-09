@@ -4,7 +4,6 @@ import config from 'ilios/config/environment';
 
 export default DS.RESTAdapter.extend({
     namespace: config.adapterNamespace,
-    host: config.adapterHost,
     coalesceFindRequests: true,
     findMany: function(store, type, ids, snapshots) {
       let url = this.buildURL(type.typeKey, ids, snapshots, 'findMany');
