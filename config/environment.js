@@ -45,13 +45,6 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
   }
 
-  if (environment === 'vagrant') {
-    ENV.adapterHost = 'http://ilios.dev';
-    ENV.adapterNamespace = 'app_dev.php/api/v1';
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
-    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400 ilios.dev";
-  }
-
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
