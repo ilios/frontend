@@ -9,13 +9,24 @@ $collapse-control-shadow-grey: #e2e2e2;
   border-width: 0 2px 2px;
   font-size: $base-font-size;
   margin-top: -4px;
-
+    
   // Because certain sections are styled differently from others (ie, some headers have toggles and others do not,
   // put the non-default, section type-specific styling here, put the defaults below
 
   //for the entire sessions section, we want to distinguish it with a different bg-color
-  &.sessions-list {
+  
+    &.sessions-list {
     background-color: $active-background-color;
+  }
+    &.sessions {
+    background-color: $active-background-color;
+        thead tr {
+        background-color: $text-blue;
+      }
+
+      thead th {
+        color: $white;
+      }
   }
 
   // session-offerings section
@@ -91,6 +102,7 @@ $collapse-control-shadow-grey: #e2e2e2;
       margin-right: .8em;
       padding-left: .8em;
       padding-right: .8em;
+       
 
       // special handling for the detail-blocks that contain a filter element
       &.filter-detail-block {
