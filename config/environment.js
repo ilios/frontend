@@ -70,5 +70,9 @@ module.exports = function(environment) {
     ENV.adapterNamespace = 'api/v1';
   }
 
+  if (environment === 'staging') {
+    ENV.adapterNamespace = 'api/v1';
+  }
+
   return ENV;
 };
