@@ -86,6 +86,10 @@ var general = {
   'selected': 'Selected',
   'available': 'Available',
   'savedSuccessfully': 'Saved Successfully',
+  'day': 'Day',
+  'week': 'Week',
+  'month': 'Month',
+  'today': 'Today',
 };
 translations.general = general;
 

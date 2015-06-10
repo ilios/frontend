@@ -1,4 +1,8 @@
 .el-calendar {
-  height: 800px;
+  height: 1000px;
   width: 100%;
+
+  .event {
+    overflow: hidden;
+  }
 }

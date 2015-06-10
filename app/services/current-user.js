@@ -75,5 +75,18 @@ export default Ember.Service.extend({
     });
   }.property('currentSchool'),
   //will be customizable
-  preferredDashboard: 'dashboard.week'
+  preferredDashboard: 'dashboard.week',
+  events: function(from, to){
+    var deferred = Ember.RSVP.defer();
+    this.get('model').then(user => {
+      var url = '/' + config.adapterNamespace + '/userevents/' +
+      user.get('id') + '?from=' + from + '&to=' + to;
+      ajax(url).then(data => {
+        deferred.resolve(data.userevent);
+      });
+    });
+
+    return deferred.promise;
+  },
+
 });

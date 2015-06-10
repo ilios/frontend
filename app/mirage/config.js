@@ -6,7 +6,9 @@ export default function() {
     this.timing = 100;
 
     //hardcode the current session user id
-    this.get('/currentsession', {currentsession: {userId: 4136}});
+    this.get('/currentsession', function() {
+      return {currentsession: {userId: 4136}};
+    });
 
     var models = [
       'aamcMethods',
@@ -66,4 +68,6 @@ export default function() {
       this.put('/' + route + '/:id', inflector.singularize(model));
       this.delete('/' + route + '/:id', inflector.singularize(model));
     }
+
+    this.get('/userevents/4136', 'userevent');
 }
