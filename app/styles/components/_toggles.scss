@@ -33,21 +33,6 @@ $offering-switch-blue: #009ccc;
   background-image: linear-gradient(to bottom, #eeeeee, white 25px);
 }
 
-
-//{
-//  @include background-image(linear-gradient(top bottom, $switch-grey, $white 25px));
-//  background-color: $white;
-//  border-radius: 18px;
-//  box-shadow: inset 0 -1px $white, inset 0 1px 1px rgba(0, 0, 0, .05);
-//  cursor: pointer;
-//  display: inline-block;
-//  height: 20px;
-//  padding: 3px;
-//  position: relative;
-//  vertical-align: top;
-//  width: 56px;
-//}
-
 .switch-input {
   left: 0;
   opacity: 0;
@@ -82,7 +67,7 @@ $offering-switch-blue: #009ccc;
 .switch-label:before {
  content: attr(data-off);
   right: 11px;
-  color: #aaa;
+  color: $white;
   text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 
