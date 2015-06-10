@@ -22,7 +22,7 @@
     }
   }
 
-  .resultslist-list{
+  .resultslist-list {
     @include span-columns(12 of 12);
     @include pad();
 
@@ -114,7 +114,6 @@
 
     .new-result {
       border: 1px solid $header-grey;
-        background-color: $white;
       margin: 1em 0;
       padding: 1em;
 
