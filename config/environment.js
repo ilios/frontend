@@ -6,7 +6,6 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    adapterHost: '',
     adapterNamespace: 'api',
     contentSecurityPolicy: {
       'default-src': "'none'",
@@ -42,23 +41,14 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.adapterHost = '';
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
-  }
-
-  if (environment === 'vagrant') {
-    ENV.adapterHost = 'http://ilios.dev';
-    ENV.adapterNamespace = 'app_dev.php/api/v1';
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
-    ENV.contentSecurityPolicy['connect-src'] += " localhost:8400 ilios.dev";
   }
 
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
     ENV.locationType = 'none';
-    ENV.adapterHost = '';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -69,12 +59,19 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
 
   }
-  //production is what we use to deploy to heroku for demo purposes
-  //this is not really production, but its hard to change the name
-  if (environment === 'production') {
+
+  if (environment === 'heroku') {
     ENV['ember-cli-mirage'] = {
       enabled: true
     };
+  }
+
+  if (environment === 'production') {
+    ENV.adapterNamespace = 'api/v1';
+  }
+
+  if (environment === 'staging') {
+    ENV.adapterNamespace = 'api/v1';
   }
 
   return ENV;
