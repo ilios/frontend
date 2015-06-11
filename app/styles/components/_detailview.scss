@@ -310,13 +310,8 @@ $collapse-control-shadow-grey: #e2e2e2;
       color: $white;
       cursor: pointer;
 
-      &:after {
-        content: '\25BC';
+      >i.fa {
         padding-left: 1em;
-      }
-
-      &.is-expanded:after {
-        content: '\25B2';
       }
     }
   }
