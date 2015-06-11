@@ -7,7 +7,7 @@
     <label class="form-label">{{t 'learningMaterials.status'}}:</label>
     <div class="form-data status">
     {{inplace-select
-      value=learningMaterial.learningMaterial.status.id
+      value=valueBuffer.status.id
       options=statusOptions
       save='changeStatus'
     }}
@@ -16,19 +16,19 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'general.required'}}:</label>
     <div class="form-data required">
-      {{inplace-boolean value=learningMaterial.required save='changeRequired'}}
+      {{inplace-boolean value=valueBuffer.required save='changeRequired'}}
     </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.instructionalNotes'}}:</label>
     <div class="form-data notes">
-      {{inplace-textarea value=learningMaterial.notes save='changeNotes'}}
+      {{inplace-textarea value=valueBuffer.notes save='changeNotes'}}
     </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.showNotesToStudents'}}:</label>
     <div class="form-data publicnotes">
-      {{inplace-boolean value=learningMaterial.publicNotes save='changePublicNotes'}}
+      {{inplace-boolean value=valueBuffer.publicNotes save='changePublicNotes'}}
     </div>
   </div>
   <div class="form-col-12">
@@ -93,10 +93,4 @@
     </div>
   </div>
   {{/if}}
-  <div class="form-col-12">
-    <label class="search-widget-label">{{t 'general.mesh'}}:</label>
-    <div class="search-widget">
-      {{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}
-    </div>
-  </div>
 </div> <!-- /.form-container -->

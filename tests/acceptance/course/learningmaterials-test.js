@@ -21,10 +21,14 @@ module('Acceptance: Course - Learning Materials', {
     fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 5));
     fixtures.roles = server.createList('learningMaterialUserRole', 3);
     fixtures.meshDescriptors = [];
+    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor'));
     fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
       courseLearningMaterials: [1],
     }));
-    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 5));
+    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
+      courseLearningMaterials: [1],
+    }));
+    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 3));
     fixtures.learningMaterials = [];
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
@@ -64,7 +68,7 @@ module('Acceptance: Course - Learning Materials', {
       learningMaterial: 1,
       course: 1,
       required: false,
-      meshDescriptors: [1]
+      meshDescriptors: [2,3]
     }));
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
       learningMaterial: 2,
@@ -382,33 +386,11 @@ test('edit learning material', function(assert) {
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
         click(find('.status .done', container));
       });
+      click('.detail-learning-materials button.bigadd');
       andThen(function(){
-        let removableItems = find('.removable-list li', container);
-        assert.equal(removableItems.length, material.meshDescriptors.length);
-        for (let i = 0; i < material.meshDescriptors.length; i++){
-          assert.equal(getElementText(removableItems.eq(i)),getText(fixtures.meshDescriptors[material.meshDescriptors[i] - 1].name));
-        }
-
-        let searchBox = find('.search-box', container);
-        assert.equal(searchBox.length, 1);
-        searchBox = searchBox.eq(0);
-        let searchBoxInput = find('input', searchBox);
-        assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
-        fillIn(searchBoxInput, 'descriptor');
-        click('span.search-icon', searchBox);
-        andThen(function(){
-          let searchResults = find('.mesh-search-results li', container);
-          assert.equal(searchResults.length, fixtures.meshDescriptors.length);
-          click('.removable-list li:eq(0)', container);
-          click(searchResults[1]);
-          click('.detail-learning-materials .bigadd');
-        });
-        andThen(function(){
-          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
-          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'));
-          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(5)')), getText(fixtures.meshDescriptors[1].name));
-          assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
-        });
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'));
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
       });
     });
   });
@@ -427,22 +409,127 @@ test('cancel editing learning material', function(assert) {
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
         click(find('.status .done', container));
       });
-      let removableItems = find('.removable-list li', container);
-      let searchBox = find('.search-box', container).eq(0);
-      let searchBoxInput = find('input', searchBox);
-      fillIn(searchBoxInput, 'descriptor');
-      click('span.search-icon', searchBox);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', container);
-        click('.removable-list li:eq(0)', container);
-        click(searchResults[1]);
-        click('.detail-learning-materials .bigcancel');
-      });
+      click('.detail-learning-materials button.bigcancel');
       andThen(function(){
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('No'));
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('Yes'));
-        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(5)')), getText(fixtures.meshDescriptors[0].name));
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[0].title));
+      });
+    });
+  });
+});
+
+test('manage terms', function(assert) {
+  assert.expect(24);
+  visit(url);
+  andThen(function() {
+    let container = find('.detail-learning-materials').eq(0);
+    click('.detail-content tbody tr:eq(0) td:eq(5) a', container).then(function(){
+      assert.equal(getElementText(find('.detail-specific-title', container)), 'SelectMeSHDescriptors');
+    });
+
+    andThen(function() {
+      let meshManager = find('.mesh-manager', container).eq(0);
+      let material = fixtures.courseLearningMaterials[0];
+      let removableItems = find('.removable-list li', meshManager);
+      assert.equal(removableItems.length, material.meshDescriptors.length);
+      for (let i = 0; i < material.meshDescriptors.length; i++){
+        assert.equal(getElementText(removableItems.eq(i)),getText(fixtures.meshDescriptors[material.meshDescriptors[i] - 1].name));
+      }
+
+      let searchBox = find('.search-box', meshManager);
+      assert.equal(searchBox.length, 1);
+      searchBox = searchBox.eq(0);
+      let searchBoxInput = find('input', searchBox);
+      assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
+      fillIn(searchBoxInput, 'descriptor');
+      click('span.search-icon', searchBox);
+      andThen(function(){
+        let searchResults = find('.mesh-search-results li', meshManager);
+        assert.equal(searchResults.length, fixtures.meshDescriptors.length);
+
+        for(let i = 0; i < fixtures.meshDescriptors.length; i++){
+          assert.equal(getElementText($(searchResults[i])), getText(fixtures.meshDescriptors[i].name));
+        }
+
+        for (let i = 0; i < fixtures.meshDescriptors.length; i++){
+          if(material.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
+            assert.ok($(searchResults[i]).hasClass('disabled'));
+          } else {
+            assert.ok(!$(searchResults[i]).hasClass('disabled'));
+          }
+        }
+        click('.removable-list li:eq(0)', meshManager).then(function(){
+          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+        });
+        click(searchResults[0]);
+        andThen(function(){
+          assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'));
+
+          let newExpectedMesh = [
+            fixtures.meshDescriptors[0].name,
+            fixtures.meshDescriptors[2].name
+          ];
+          removableItems = find('.removable-list li', meshManager);
+          assert.equal(removableItems.length, 2);
+          for (let i = 0; i < 2; i++){
+            assert.equal(getElementText(removableItems.eq(i)), getText(newExpectedMesh[i]));
+          }
+        });
+      });
+    });
+  });
+});
+
+test('save terms', function(assert) {
+  assert.expect(1);
+  visit(url);
+  andThen(function() {
+    let container = find('.detail-learning-materials').eq(0);
+    click('.detail-content tbody tr:eq(0) td:eq(5) a', container);
+    andThen(function() {
+      let meshManager = find('.mesh-manager', container).eq(0);
+      let searchBoxInput = find('.search-box input', meshManager);
+      fillIn(searchBoxInput, 'descriptor');
+      click('.search-box span.search-icon', meshManager);
+      andThen(function(){
+        let searchResults = find('.mesh-search-results li', meshManager);
+        click('.removable-list li:eq(0)', meshManager);
+        click(searchResults[0]);
+        click('button.bigadd', container);
+        andThen(function(){
+          let expectedMesh = fixtures.meshDescriptors[0].name + fixtures.meshDescriptors[2].name;
+          let tds = find('.detail-content tbody tr:eq(0) td');
+          assert.equal(getElementText(tds.eq(5)), getText(expectedMesh));
+        });
+      });
+    });
+  });
+});
+
+test('cancel term changes', function(assert) {
+  assert.expect(1);
+  visit(url);
+  andThen(function() {
+    let container = find('.detail-learning-materials').eq(0);
+    click('.detail-content tbody tr:eq(0) td:eq(5) a', container);
+    andThen(function() {
+      let meshManager = find('.mesh-manager', container).eq(0);
+      let searchBoxInput = find('.search-box input', meshManager);
+      fillIn(searchBoxInput, 'descriptor');
+      click('.search-box span.search-icon', meshManager);
+      andThen(function(){
+        let searchResults = find('.mesh-search-results li', meshManager);
+        click('.removable-list li:eq(0)', meshManager);
+        click(searchResults[2]);
+        click(searchResults[3]);
+        click(searchResults[4]);
+        click('button.bigcancel', container);
+        andThen(function(){
+          let tds = find('.detail-content tbody tr:eq(0) td');
+          let expectedMesh = fixtures.meshDescriptors[1].name + fixtures.meshDescriptors[2].name;
+          assert.equal(getElementText(tds.eq(5)), getText(expectedMesh));
+        });
       });
     });
   });

@@ -5,14 +5,18 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   store: Ember.inject.service(),
   subject: null,
   isCourse: false,
-  isManaging: Ember.computed.notEmpty('managingMaterial'),
+  isManaging: Ember.computed.or('isManagingMaterial', 'isManagingMesh'),
+  isManagingMaterial: Ember.computed.notEmpty('managingMaterial'),
+  isManagingMesh: Ember.computed.notEmpty('meshMaterial'),
   managingMaterial: null,
+  meshMaterial: null,
   isSession: Ember.computed.not('isCourse'),
   materials: Ember.computed.alias('subject.learningMaterials'),
   newLearningMaterials: [],
   classNames: ['detail-learning-materials'],
   newButtonTitleTranslation: 'general.add',
-  cancelBuffer: null,
+  bufferMaterial: null,
+  bufferTerms: [],
   learningMaterialStatuses: function(){
     var self = this;
     return DS.PromiseArray.create({
@@ -25,90 +29,93 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       promise: self.get('store').find('learning-material-user-role')
     });
   }.property(),
+  proxyMaterials: Ember.computed('materials.@each', function(){
+    let materialProxy = Ember.ObjectProxy.extend({
+      sortTerms: ['title'],
+      sortedDescriptors: Ember.computed.sort('content.meshDescriptors', 'sortTerms')
+    });
+    return this.get('materials').map(material => {
+      return materialProxy.create({
+        content: material
+      });
+    });
+  }),
   actions: {
-    manage: function(learningMaterial){
-      var self = this;
-      var buffer = {};
-      buffer.publicNotes = learningMaterial.get('publicNotes');
-      buffer.required = learningMaterial.get('required');
-      learningMaterial.get('meshDescriptors').then(function(descriptors){
-        buffer.descriptors = descriptors.toArray();
-        learningMaterial.get('learningMaterial').then(function(parent){
-          parent.get('status').then(function(status){
-            buffer.status = status;
-            self.set('cancelBuffer', buffer);
-            self.set('managingMaterial', learningMaterial);
-          });
+    manageMaterial: function(learningMaterial){
+      var buffer = Ember.Object.create();
+      buffer.set('publicNotes', learningMaterial.get('publicNotes'));
+      buffer.set('required', learningMaterial.get('required'));
+      learningMaterial.get('learningMaterial').then( parent => {
+        parent.get('status').then(status => {
+          buffer.set('status',status);
+          this.set('bufferMaterial', buffer);
+          this.set('managingMaterial', learningMaterial);
         });
+      });
+    },
+    manageDescriptors: function(learningMaterial){
+      learningMaterial.get('meshDescriptors').then(descriptors => {
+        this.set('bufferTerms', descriptors.toArray());
+        this.set('meshMaterial', learningMaterial);
       });
     },
     save: function(){
-      var self = this;
-      var buffer = this.get('cancelBuffer');
-      var learningMaterial = this.get('managingMaterial');
-      learningMaterial.get('meshDescriptors').then(function(newDescriptors){
-        let oldDescriptors = buffer.descriptors.filter(function(descriptor){
-          return !newDescriptors.contains(descriptor);
+      if(this.get('isManagingMaterial')){
+        var buffer = this.get('bufferMaterial');
+        var learningMaterial = this.get('managingMaterial');
+        learningMaterial.set('publicNotes', buffer.get('publicNotes'));
+        learningMaterial.set('required', buffer.get('required'));
+        learningMaterial.get('learningMaterial').then( parent => {
+          parent.set('status', buffer.get('status'));
+          buffer.set('status',status);
+          this.set('bufferMaterial', null);
+          this.set('managingMaterial', null);
         });
-        if(self.get('isCourse')){
-          oldDescriptors.forEach(function(descriptor){
-            descriptor.get('courseLearningMaterials').removeObject(learningMaterial);
-            descriptor.save();
-          });
-          newDescriptors.forEach(function(descriptor){
-            descriptor.get('courseLearningMaterials').addObject(learningMaterial);
-          });
-        }
-        if(self.get('isSession')){
-          oldDescriptors.forEach(function(descriptor){
-            descriptor.get('sessionLearningMaterials').removeObject(learningMaterial);
-            descriptor.save();
-          });
-          newDescriptors.forEach(function(descriptor){
-            descriptor.get('sessionLearningMaterials').addObject(learningMaterial);
-          });
-        }
-        learningMaterial.get('learningMaterial').then(function(parent){
-          parent.get('status').then(function(status){
-            if(!buffer.status || status.get('id') !== buffer.status.get('id')){
-              if(buffer.status){
-                buffer.status.get('learningMaterials').then(function(lms){
-                  lms.removeObject(parent);
-                  buffer.status.save();
-                });
-              }
-              status.get('learningMaterials').then(function(lms){
-                lms.addObject(parent);
-                status.save();
-              });
-              parent.save();
-            }
-            learningMaterial.save().then(function(){
-              newDescriptors.save().then(function(){
-                self.set('managingMaterial', null);
-                self.set('cancelBuffer', null);
-              });
-            });
-          });
-        });
+      }
 
-      });
+      if(this.get('isManagingMesh')){
+        let lm = this.get('meshMaterial');
+        let terms = lm .get('meshDescriptors');
+        let promises = [];
+
+        let oldTerms = terms.filter(term => {
+          return !this.get('bufferTerms').contains(term);
+        });
+        terms.clear();
+        terms.addObjects(this.get('bufferTerms'));
+        this.get('bufferTerms').forEach((term)=>{
+          if(this.get('isCourse')){
+            term.get('courseLearningMaterials').pushObject(lm);
+            promises.pushObject(term.save());
+          }
+          if(this.get('isSession')){
+            term.get('sessionLearningMaterials').pushObject(lm);
+            promises.pushObject(term.save());
+          }
+        });
+        oldTerms.forEach(term => {
+          if(this.get('isCourse')){
+            term.get('courseLearningMaterials').removeObject(lm);
+            promises.pushObject(term.save());
+          }
+          if(this.get('isSession')){
+            term.get('sessionLearningMaterials').removeObject(lm);
+            promises.pushObject(term.save());
+          }
+        });
+        promises.pushObject(lm.save());
+        Ember.RSVP.all(promises).then(()=> {
+          this.set('meshMaterial', null);
+          this.set('bufferTerms', []);
+        });
+      }
     },
     cancel: function(){
-      var self = this;
-      var learningMaterial = this.get('managingMaterial');
-      var buffer = this.get('cancelBuffer');
-      learningMaterial.set('publicNotes', buffer.publicNotes);
-      learningMaterial.set('required', buffer.required);
-      learningMaterial.get('meshDescriptors').then(function(descriptors){
-        descriptors.clear();
-        descriptors.addObjects(buffer.descriptors);
-        self.set('managingMaterial', null);
-        self.set('cancelBuffer', null);
-      });
-      learningMaterial.get('learningMaterial').then(function(parent){
-        parent.set('status', buffer.status);
-      });
+      this.set('bufferMaterial', null);
+      this.set('managingMaterial', null);
+      this.set('bufferTerms', []);
+      this.set('meshMaterial', null);
+
     },
     addNewLearningMaterial: function(type){
       var self = this;
@@ -170,5 +177,23 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     removeNewLearningMaterial: function(lm){
       this.get('newLearningMaterials').removeObject(lm);
     },
-  }
+    addTermToBuffer: function(term){
+      this.get('bufferTerms').addObject(term);
+    },
+    removeTermFromBuffer: function(term){
+      this.get('bufferTerms').removeObject(term);
+    },
+    changeStatus: function(newStatus){
+      this.get('bufferMaterial').set('status', newStatus);
+    },
+    changeRequired: function(value){
+      this.get('bufferMaterial').set('required', value);
+    },
+    changePublicNotes: function(value){
+      this.get('bufferMaterial').set('publicNotes', value);
+    },
+    changeNotes: function(value){
+      this.get('bufferMaterial').set('notes', value);
+    }
+  },
 });

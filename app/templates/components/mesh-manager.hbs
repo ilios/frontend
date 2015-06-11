@@ -1,3 +1,6 @@
+{{#if targetItemTitle}}
+  <h2>{{t 'mesh.targetItemTitle' title=targetItemTitle}}</h2>
+{{/if}}
 <ul class='removable-list'>
   {{#each term in sortedTerms}}
     <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
