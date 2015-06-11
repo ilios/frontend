@@ -92,7 +92,7 @@ test('top level group members', function(assert) {
   visit(url);
   andThen(function() {
     let container = find('.toplevelgroupmembers');
-    assert.equal(getElementText(find('.detail-title', container)), getText('learner group 0 Members NOT in this Subgroup'));
+    assert.equal(getElementText(find('.detail-title', container)), getText('learner group 0 Learner Assignments'));
     assert.equal(getElementText(find('.learnergroup-username:eq(0)', container)), getText('3 guy Mc3son'));
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(0)', container)), getText('learner group 0 > learner group 1 > learner group 3'));
     assert.equal(getElementText(find('.learnergroup-username:eq(1)', container)), getText('4 guy Mc4son'));
