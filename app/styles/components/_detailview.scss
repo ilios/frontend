@@ -10,8 +10,29 @@ $collapse-control-shadow-grey: #e2e2e2;
   font-size: $base-font-size;
   margin-top: -4px;
 
+  
   // Because certain sections are styled differently from others (ie, some headers have toggles and others do not,
-  // put the non-default, section type-specific styling here, put the defaults below
+  // put the non-default, detail-view type-specific styling here, put the defaults below
+  
+  //sessions
+  &.session-detail-view {
+    background-color: $active-background-color;
+    
+    .detail-block {
+      border-bottom: 1px dotted $text-blue;
+      
+      .detail-title {
+        color: $text-blue;
+      }
+      
+      table thead {
+        background-color: $text-blue;
+        color: $white;
+      }
+    }
+  }
+
+  
 
   //for the entire sessions section, we want to distinguish it with a different bg-color
   &.sessions-list {
