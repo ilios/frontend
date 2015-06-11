@@ -5,6 +5,7 @@ import {
 import Ember from 'ember';
 
 moduleForComponent('detail-steward-manager', {
+  unit: true,
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

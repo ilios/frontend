@@ -33,7 +33,9 @@ matrix:
     - env: "TESTEM_LAUNCHER='SL_safari_7' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
     - env: "JS_TESTS=false SCSS_LINT=true SEND_COVERAGE=false"
 
+
 before_install:
+  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
   - "npm config set spin false"
   - "npm install -g npm@^2"
 

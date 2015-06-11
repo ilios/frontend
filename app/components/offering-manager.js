@@ -115,9 +115,8 @@ export default Ember.Component.extend({
       this.get('instructorBuffer').forEach(function(user){
         promises.pushObject(user.get('offerings').then(offerings => {
           offerings.pushObject(offering);
-          return user.save().then(newUser => {
-            instructors.pushObject(newUser);
-          });
+          instructors.pushObject(user);
+          return user.save();
         }));
       });
       promises.pushObject(offering.get('learnerGroups').then(function(currentOfferings){
