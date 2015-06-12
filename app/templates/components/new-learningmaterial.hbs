@@ -54,6 +54,10 @@
     </div>
     {{/unless}}
   {{/if}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.file'}}:</label>
+    <div class="form-data">{{file-upload url="/api/v1/upload"}}</div>
+  </div>
   {{#if isLink}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.url'}}:</label>
