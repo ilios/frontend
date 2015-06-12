@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import scrollTo from '../utils/scroll-to';
 
 export default Ember.Component.extend({
   course: null,
@@ -10,6 +11,8 @@ export default Ember.Component.extend({
     },
     collapse: function(){
       this.sendAction('collapsedState', true);
+      //when the button is clicked to collapse, animate the focus to the top of the page
+      scrollTo("body");
     },
   }
 
