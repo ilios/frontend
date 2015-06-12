@@ -24,5 +24,6 @@
     "tooltipster": "~3.3.0",
     "ember-simple-auth": "0.8.0",
     "qunit": "~1.17.1"
+    "ember-uploader": "0.3.7"
   }
 }
