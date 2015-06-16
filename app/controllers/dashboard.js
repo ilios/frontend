@@ -8,9 +8,6 @@ export default Ember.Controller.extend({
   queryParams: ['date','view'],
   date: null,
   view: 'week',
-  isMonthView: Ember.computed.equal('view', 'month'),
-  isWeekView: Ember.computed.equal('view', 'week'),
-  isDayView: Ember.computed.equal('view', 'day'),
   selectedDate: Ember.computed('date', function(){
     if(this.get('date')){
       return moment(this.get('date'), 'DDDDYYYY').format();
@@ -34,6 +31,7 @@ export default Ember.Controller.extend({
     return view;
   }),
   calendarDate: momentHelper('selectedDate', 'YYYY-MM-DD'),
+
   userEvents: Ember.computed('currentUser', 'fromTimeStamp', 'toTimeStamp', function(){
     return DS.PromiseArray.create({
       promise: this.get('currentUser').events(this.get('fromTimeStamp'), this.get('toTimeStamp'))

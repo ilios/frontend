@@ -3,6 +3,7 @@ import { default as CalendarEvent } from 'el-calendar/components/calendar-event'
 
 export default CalendarEvent.extend({
   viewType: 'day',
+  event: null,
   classNameBindings: [':event', ':ilios-event', 'event.eventClass', 'viewType'],
 
   style: Ember.computed('viewType', function() {

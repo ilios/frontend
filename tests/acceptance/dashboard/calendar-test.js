@@ -14,6 +14,7 @@ module('Acceptance: Dashboard Calendar', {
     application = startApp();
     server.create('user', {id: 4136});
     let today = moment().hour(8);
+    fixtures.today = today;
     server.create('userevent', {
       name: 'session 0',
       startDate: today.format(),
@@ -32,6 +33,6 @@ test('load calendar', function(assert) {
     assert.equal(currentPath(), 'dashboard.index');
     let events = find('div.event');
     assert.equal(events.length, 1);
-    assert.equal(getElementText(events), getText('session 0'));
+    assert.equal(getElementText(events), getText(fixtures.today.format('hh:mm') + ': session 0'));
   });
 });

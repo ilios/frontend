@@ -1,0 +1,102 @@
+{{#if isDayView}}
+  {{#el-daily-calendar date=calendarDate events=userEvents as |hours|}}
+    <div class="row week-titles">
+      <div class="cell">
+      </div>
+      <div class="cell title">
+        {{formatted-date calendarDate type='daily-header'}}
+      </div>
+    </div>
+    <div class="week">
+      <ul class="week-hours">
+        {{#each hours as |hour|}}
+          <li class="week-hour">{{hour.formattedHour}}</li>
+        {{/each}}
+      </ul>
+
+      <ul class="week-day-full">
+        <li class="event-column">
+          {{#each hours as |hour|}}
+            {{#each hour.events as |event|}}
+              {{ilios-calendar-event event=event viewType='day-event'}}
+            {{/each}}
+          {{/each}}
+        </li>
+        {{#each hours as |hour|}}
+          <li class="day-hour">
+            <div class="day-half-hour"></div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/el-daily-calendar}}
+{{/if}}
+
+{{#if isWeekView}}
+  {{#el-weekly-calendar date=calendarDate events=userEvents as |days|}}
+    <div class="row week-titles">
+    <div class="cell">
+    </div>
+    {{#each days as |day|}}
+      <div class="cell title">
+        {{formatted-date day.date type='weekly-header'}}
+      </div>
+    {{/each}}
+    </div>
+    <div class="week">
+    <ul class="week-hours">
+      {{#each days.firstObject.hours as |hour|}}
+        <li class="week-hour">{{hour.formattedHour}}</li>
+      {{/each}}
+    </ul>
+    {{#each days as |day|}}
+      <ul class="week-day">
+        <li class="event-column">
+          {{#each day.events as |event|}}
+            {{ilios-calendar-event event=event viewType='week-event'}}
+          {{/each}}
+        </li>
+        {{#each day.hours as |hour|}}
+          <li class="day-hour">
+            <div class="day-half-hour"></div>
+          </li>
+        {{/each}}
+      </ul>
+    {{/each}}
+    </div>
+  {{/el-weekly-calendar}}
+{{/if}}
+
+{{#if isMonthView}}
+  {{#el-monthly-calendar date=calendarDate events=userEvents as |weeks|}}
+    <div class="row month-titles">
+      <div class="cell">
+      </div>
+      <div class="cell title">
+        {{moment calendarDate 'MMMM YYYY'}}
+      </div>
+    </div>
+    <div class="row">
+      {{#each weeks.firstObject.days as |day|}}
+        <div class="cell title">
+          {{day.dayName}}
+        </div>
+      {{/each}}
+    </div>
+    {{#each weeks as |week|}}
+      <div class="week">
+        {{#each week.days as |day|}}
+          <div class="day">
+            {{formatted-date day.date type='monthly-day'}}
+
+            <div class="events">
+              {{#each day.events as |event|}}
+                {{ilios-calendar-event event=event viewType='month-event'}}
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  {{/el-monthly-calendar}}
+{{/if}}
