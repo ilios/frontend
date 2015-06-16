@@ -23,8 +23,13 @@
     .day {
       border: 1px solid $grey;
       margin-right: .25rem;
-      overflow-y: auto;
+      overflow-y: hidden;
       padding: .25rem;
+
+      .events {
+        height: 7rem;
+        overflow-y: auto;
+      }
     }
 
     .ilios-event.month-event {
@@ -79,7 +84,7 @@
   .ilios-event {
     border-bottom: 3px solid $white;
     line-height: .9em;
-  
+
     .ilios-event-time {
       color: $maroon;
       display: block;
