@@ -48,6 +48,10 @@
     position: absolute;
   }
 
+  .event-column {
+    border-left: 1px solid $grey;
+  }
+
   .ilios-event {
 
     .ilios-event-time {
