@@ -46,7 +46,9 @@
     </div>
     {{#each days as |day|}}
       <div class="cell title">
-        {{formatted-date day.date type='weekly-header'}}
+        {{#link-to 'dashboard' (query-params view="day" date=day.formattedDate)}}
+          {{formatted-date day.date type='weekly-header'}}
+        {{/link-to}}
       </div>
     {{/each}}
     </div>
@@ -94,7 +96,9 @@
       <div class="week">
         {{#each week.days as |day|}}
           <div class="day">
-            {{formatted-date day.date type='monthly-day'}}
+            {{#link-to 'dashboard' (query-params view="day" date=day.formattedDate)}}
+              {{formatted-date day.date type='monthly-day'}}
+            {{/link-to}}
 
             <div class="events">
               {{#each day.events as |event|}}
