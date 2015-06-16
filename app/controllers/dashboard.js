@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
   view: 'week',
   selectedDate: Ember.computed('date', function(){
     if(this.get('date')){
-      return moment(this.get('date'), 'DDDDYYYY').format();
+      return moment(this.get('date'), 'YYYYMMDD').format();
     }
 
     return moment().format();
@@ -42,11 +42,11 @@ export default Ember.Controller.extend({
       this.set('view', view);
     },
     goForward(){
-      let newDate = moment(this.get('selectedDate')).add(1, this.get('selectedView')).format('DDDDYYYY');
+      let newDate = moment(this.get('selectedDate')).add(1, this.get('selectedView')).format('YYYYMMDD');
       this.set('date', newDate);
     },
     goBack(){
-      let newDate = moment(this.get('selectedDate')).subtract(1, this.get('selectedView')).format('DDDDYYYY');
+      let newDate = moment(this.get('selectedDate')).subtract(1, this.get('selectedView')).format('YYYYMMDD');
       this.set('date', newDate);
     },
     gotoToday(){
