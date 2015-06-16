@@ -86,10 +86,6 @@ var general = {
   'selected': 'Selected',
   'available': 'Available',
   'savedSuccessfully': 'Saved Successfully',
-  'day': 'Day',
-  'week': 'Week',
-  'month': 'Month',
-  'today': 'Today',
 };
 translations.general = general;
 
@@ -309,5 +305,16 @@ var publish = {
   }
 };
 translations.publish = publish;
+
+var calendar = {
+  'weekOf': 'Week of {{date}}',
+  'day': 'Day',
+  'week': 'Week',
+  'month': 'Month',
+  'today': 'Today',
+};
+translations.calendar = calendar;
+
+
 
 export default translations;

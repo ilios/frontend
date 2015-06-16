@@ -4,7 +4,7 @@
       <div class="cell">
       </div>
       <div class="cell title">
-        {{formatted-date date type='daily-header'}}
+        {{moment fullCalendarDate 'MMMM Do YYYY'}}
       </div>
     </div>
     <div class="week">
@@ -34,6 +34,13 @@
 
 {{#if isWeekView}}
   {{#el-weekly-calendar date=date events=events as |days|}}
+    <div class="row">
+      <div class="cell">
+      </div>
+      <div class="cell title">
+        {{t 'calendar.weekOf' date=weekOf}}
+      </div>
+    </div>
     <div class="row week-titles">
     <div class="cell">
     </div>
