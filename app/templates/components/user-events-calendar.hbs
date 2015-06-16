@@ -1,10 +1,10 @@
 {{#if isDayView}}
-  {{#el-daily-calendar date=calendarDate events=userEvents as |hours|}}
+  {{#el-daily-calendar date=date events=events as |hours|}}
     <div class="row week-titles">
       <div class="cell">
       </div>
       <div class="cell title">
-        {{formatted-date calendarDate type='daily-header'}}
+        {{formatted-date date type='daily-header'}}
       </div>
     </div>
     <div class="week">
@@ -33,7 +33,7 @@
 {{/if}}
 
 {{#if isWeekView}}
-  {{#el-weekly-calendar date=calendarDate events=userEvents as |days|}}
+  {{#el-weekly-calendar date=date events=events as |days|}}
     <div class="row week-titles">
     <div class="cell">
     </div>
@@ -68,12 +68,12 @@
 {{/if}}
 
 {{#if isMonthView}}
-  {{#el-monthly-calendar date=calendarDate events=userEvents as |weeks|}}
+  {{#el-monthly-calendar date=date events=events as |weeks|}}
     <div class="row month-titles">
       <div class="cell">
       </div>
       <div class="cell title">
-        {{moment calendarDate 'MMMM YYYY'}}
+        {{moment date 'MMMM YYYY'}}
       </div>
     </div>
     <div class="row">

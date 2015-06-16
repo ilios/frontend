@@ -12,7 +12,6 @@
 
 }
 
-
 .month-calendar {
   .el-calendar {
     height: 1000px;
@@ -32,9 +31,31 @@
 
       span {
         background-color: transparent;
-        display: inline;
         font-size: .5em;
         font-weight: normal;
+      }
+
+      .ilios-event-time {
+        display: inline;
+      }
+    }
+  }
+}
+
+.week-calendar {
+  .el-calendar {
+    span {
+      font-size: .8em;
+    }
+  }
+}
+
+.week-calendar,
+.month-calendar {
+  .el-calendar {
+    .ilios-event {
+      .ilios-event-end {
+        display: none;
       }
     }
   }

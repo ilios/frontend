@@ -1,7 +1,6 @@
 <section class='fullwidth'>
     <p> Hello {{currentUser.model.fullName}},</p>
 </section>
-
 <section class='fullwidth calendar-controls'>
   <ul class='inline calendar-view-picker'>
     <li>{{fa-icon 'calendar'}}</li>
@@ -18,5 +17,5 @@
 </section>
 
 <section class='fullwidth'>
-  {{user-events-calendar userEvents=userEvents view=selectedView}}
+  {{user-events-calendar events=userEvents date=calendarDate view=selectedView}}
 </section>

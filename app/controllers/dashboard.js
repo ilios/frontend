@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
       this.set('date', newDate);
     },
     gotoToday(){
-      let newDate = moment().format('DDDDYYYY');
+      let newDate = moment().format('YYYYMMDD');
       this.set('date', newDate);
     }
   }

@@ -1,6 +1,11 @@
 {{#if event}}
   <span class='ilios-event-time'>
-    {{moment event.startDate 'hh:mm'}}
+    <span class='ilios-event-start'>
+      {{moment event.startDate 'hh:mma'}}
+    </span>
+    <span class='ilios-event-end'>
+      - {{moment event.endDate 'hh:mma'}}
+    </span>
   </span>
   <span class='ilios-event-location'>
     {{event.location}}:
