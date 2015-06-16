@@ -78,11 +78,13 @@
 
   .ilios-event {
     border-bottom: 3px solid $white;
-
+    line-height: .9em;
+  
     .ilios-event-time {
       color: $maroon;
       display: block;
       font-weight: bold;
+      padding-bottom: .5em;
     }
 
     .ilios-event-location {
