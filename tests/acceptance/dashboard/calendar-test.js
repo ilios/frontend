@@ -33,6 +33,6 @@ test('load calendar', function(assert) {
     assert.equal(currentPath(), 'dashboard.index');
     let events = find('div.event');
     assert.equal(events.length, 1);
-    assert.equal(getElementText(events), getText(fixtures.today.format('hh:mm') + ': session 0'));
+    assert.equal(getElementText(events), getText(fixtures.today.format('h:mma') + '-' + fixtures.today.clone().add(1, 'hour').format('h:mma') + ': session 0'));
   });
 });
