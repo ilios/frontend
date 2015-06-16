@@ -77,8 +77,9 @@
     border-bottom: 3px solid $white;
 
     .ilios-event-time {
-      background-color: $header-grey;
+      color: $maroon;
       display: block;
+      font-weight: bold;
     }
 
     .ilios-event-location {
@@ -143,6 +144,7 @@
     &.problem-based-learning {
       background-color: #fe7a78;
       border-left: 4px solid darken(#fe7a78, 15%);
+
     }
 
     &.small-group {
