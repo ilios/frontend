@@ -14,14 +14,17 @@
 
 .month-calendar {
   .el-calendar {
-    height: 1000px;
 
     .week {
-      overflow-y: visible;
+      overflow-y: hidden;
+      padding-top: .25rem;
     }
 
     .day {
-      overflow-y: scroll;
+      border: 1px solid $grey;
+      margin-right: .25rem;
+      overflow-y: auto;
+      padding: .25rem;
     }
 
     .ilios-event.month-event {
