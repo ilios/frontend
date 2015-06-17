@@ -312,6 +312,7 @@ var calendar = {
   'week': 'Week',
   'month': 'Month',
   'today': 'Today',
+  'backToCalendar': 'Back to Calendar',
 };
 translations.calendar = calendar;
 

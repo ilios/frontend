@@ -5,9 +5,11 @@ export default Ember.Component.extend({
   view: null,
   events: [],
   date: null,
+  selectedEvent: null,
   isMonthView: Ember.computed.equal('view', 'month'),
   isWeekView: Ember.computed.equal('view', 'week'),
   isDayView: Ember.computed.equal('view', 'day'),
+  isEventView: Ember.computed.notEmpty('selectedEvent'),
   classNameBindings: ['calendarTypeClass'],
   calendarTypeClass: Ember.computed('view', function(){
     return this.get('view') + '-calendar';
@@ -23,5 +25,10 @@ export default Ember.Component.extend({
   }),
   weekOf: Ember.computed('date', function(){
     return moment(this.get('fullCalendarDate')).startOf('week').format('MMMM Do YYYY');
-  })
+  }),
+  actions: {
+    selectEvent(event){
+      this.sendAction('selectEvent', event);
+    }
+  }
 });

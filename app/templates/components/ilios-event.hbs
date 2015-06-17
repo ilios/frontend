@@ -1,0 +1,22 @@
+{{#if event}}
+  <h2>{{event.name}}</h2>
+  <span class='ilios-event-time'>
+    <span class='ilios-event-start'>
+      {{moment event.startDate 'h:mma'}}
+    </span>
+    <span class='ilios-event-end'>
+      - {{moment event.endDate 'h:mma'}}
+    </span>
+  </span>
+  <span class='ilios-event-location'>
+    {{event.location}}:
+  </span>
+
+  This is where details will go for:
+  <ol>
+    <li>Course info</li>
+    <li>Session info</li>
+    <li>Leaning Materials</li>
+    <li>etc...</li>
+  </ol>
+{{/if}}

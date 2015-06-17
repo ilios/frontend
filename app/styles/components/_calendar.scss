@@ -10,6 +10,10 @@
     float: left;
   }
 
+  .calendar-back {
+    float: left;
+  }
+
 }
 
 .month-calendar {
@@ -32,7 +36,7 @@
       }
     }
 
-    .ilios-event.month-event {
+    .ilios-calendar-event.month-event {
       height: 1.5em;
       padding: 0;
       position: relative;
@@ -81,7 +85,8 @@
     border-left: 1px solid $grey;
   }
 
-  .ilios-event {
+
+  .ilios-calendar-event {
     border-bottom: 3px solid $white;
     line-height: .9em;
 
@@ -99,6 +104,14 @@
 
     &.day-event {
       width: 100%;
+    }
+
+    &.single-event {
+      @include border-top-radius($base-border-radius);
+      @include border-bottom-radius($base-border-radius);
+      padding: 2em;
+      width: 100%;
+
     }
 
     &.clerkship {
@@ -447,4 +460,11 @@
       border-left: 4px solid darken(#fe7a78, 15%);
     }
   }
+}
+
+.ilios-event {
+  @include border-top-radius($base-border-radius);
+  @include border-bottom-radius($base-border-radius);
+  border: 1px solid $grey;
+  background-color: $background-grey;
 }

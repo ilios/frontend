@@ -4,7 +4,7 @@ import { default as CalendarEvent } from 'el-calendar/components/calendar-event'
 export default CalendarEvent.extend({
   viewType: 'day',
   event: null,
-  classNameBindings: [':event', ':ilios-event', 'event.eventClass', 'viewType'],
+  classNameBindings: [':event', ':ilios-calendar-event', 'event.eventClass', 'viewType'],
 
   style: Ember.computed('viewType', function() {
     let escape = Ember.Handlebars.Utils.escapeExpression;
@@ -15,4 +15,7 @@ export default CalendarEvent.extend({
       );
     }
   }),
+  click(){
+    this.sendAction('action', this.get('event'));
+  }
 });
