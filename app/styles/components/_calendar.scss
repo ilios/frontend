@@ -472,6 +472,6 @@
 .ilios-event {
   @include border-top-radius($base-border-radius);
   @include border-bottom-radius($base-border-radius);
-  border: 1px solid $grey;
   background-color: $background-grey;
+  border: 1px solid $grey;
 }
