@@ -18,7 +18,6 @@ module('Acceptance: Dashboard Calendar', {
     fixtures.endOfMonth = fixtures.today.clone().endOf('month').hour(22).minute(59);
     fixtures.startOfWeek = fixtures.today.clone().startOf('week');
     fixtures.endOfWeek = fixtures.today.clone().endOf('week').hour(22).minute(59);
-    console.log(fixtures);
     server.create('userevent', {
       name: 'start of month',
       startDate: fixtures.startOfMonth.format(),
