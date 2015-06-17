@@ -1,16 +1,18 @@
 {{#if event}}
-  <span class='ilios-event-time'>
-    <span class='ilios-event-start'>
-      {{moment event.startDate 'h:mma'}}
+  {{#tool-tipster title=toolTipMessage contentAsHTML=true}}
+    <span class='ilios-event-time'>
+      <span class='ilios-event-start'>
+        {{moment event.startDate 'h:mma'}}
+      </span>
+      <span class='ilios-event-end'>
+        - {{moment event.endDate 'h:mma'}}
+      </span>
     </span>
-    <span class='ilios-event-end'>
-      - {{moment event.endDate 'h:mma'}}
+    <span class='ilios-event-location'>
+      {{event.location}}:
     </span>
-  </span>
-  <span class='ilios-event-location'>
-    {{event.location}}:
-  </span>
-  <span class='ilios-event-name'>
-    {{event.name}}
-  </span>
+    <span class='ilios-event-name'>
+      {{event.name}}
+    </span>
+  {{/tool-tipster}}
 {{/if}}
