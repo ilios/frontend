@@ -66,6 +66,18 @@ module.exports = function(environment) {
     };
   }
 
+  //Just like dev except we can use proxy to get data from the API
+  // Example for vagrant ember serve --env=proxy --proxy='http://10.10.10.10'
+  if (environment === 'proxy') {
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    };
+    ENV.adapterNamespace = 'api/v1';
+
+  }
+
   if (environment === 'production') {
     ENV.adapterNamespace = 'api/v1';
   }

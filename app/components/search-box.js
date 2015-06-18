@@ -22,7 +22,7 @@ export default Ember.Component.extend({
       } else {
         Ember.run.debounce(this, function(){
           this.sendAction('search', this.get('value'));
-        }, 500);
+        }, 1000);
       }
     },
   }
