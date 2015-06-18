@@ -45,6 +45,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       var buffer = Ember.Object.create();
       buffer.set('publicNotes', learningMaterial.get('publicNotes'));
       buffer.set('required', learningMaterial.get('required'));
+      buffer.set('notes', learningMaterial.get('notes'));
       learningMaterial.get('learningMaterial').then( parent => {
         parent.get('status').then(status => {
           buffer.set('status',status);
@@ -61,13 +62,19 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
     },
     save: function(){
       if(this.get('isManagingMaterial')){
-        var buffer = this.get('bufferMaterial');
-        var learningMaterial = this.get('managingMaterial');
+        let buffer = this.get('bufferMaterial');
+        let learningMaterial = this.get('managingMaterial');
+        let promises = [];
         learningMaterial.set('publicNotes', buffer.get('publicNotes'));
         learningMaterial.set('required', buffer.get('required'));
-        learningMaterial.get('learningMaterial').then( parent => {
+        learningMaterial.set('notes', buffer.get('notes'));
+        promises.pushObject(learningMaterial.save());
+        promises.pushObject(learningMaterial.get('learningMaterial').then( parent => {
           parent.set('status', buffer.get('status'));
-          buffer.set('status',status);
+          promises.pushObject(parent.save());
+        }));
+
+        Ember.RSVP.all(promises).then(()=> {
           this.set('bufferMaterial', null);
           this.set('managingMaterial', null);
         });
