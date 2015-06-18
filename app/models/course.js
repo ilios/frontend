@@ -1,8 +1,9 @@
 /* global moment */
 import DS from 'ember-data';
 import Ember from 'ember';
+import PublishableModel from 'ilios/mixins/publishable-model';
 
-var Course = DS.Model.extend({
+var Course = DS.Model.extend(PublishableModel, {
   title: DS.attr('string'),
   startDate: DS.attr('date'),
   endDate: DS.attr('date'),
@@ -12,23 +13,9 @@ var Course = DS.Model.extend({
   deleted: DS.attr('boolean'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
-  publishedAsTbd: DS.attr('boolean'),
   sessions: DS.hasMany('session', {async: true}),
   owningSchool: DS.belongsTo('school', {async: true}),
   clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
-  isPublished: Ember.computed.notEmpty('publishEvent.content'),
-  isNotPublished: Ember.computed.not('isPublished'),
-  isScheduled: Ember.computed.oneWay('publishedAsTbd'),
-  status: function(){
-    if(this.get('publishedAsTbd')){
-      return Ember.I18n.t('general.scheduled');
-    }
-    if(this.get('isPublished')){
-      return Ember.I18n.t('general.published');
-    }
-    return Ember.I18n.t('general.notPublished');
-  }.property('isPublished', 'publishedAsTbd'),
-  publishEvent: DS.belongsTo('publish-event', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
   disciplines: DS.hasMany('discipline', {async: true}),
@@ -103,52 +90,19 @@ var Course = DS.Model.extend({
     this.set('startDate', startDate.toDate());
     this.set('endDate', endDate.toDate());
   },
-  allPublicationIssuesCollection: Ember.computed.collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
-  allPublicationIssuesLength: Ember.computed.sum('allPublicationIssuesCollection'),
+  requiredPublicationSetFields: ['startDate', 'endDate'],
+  requiredPublicationLengthFields: ['cohorts'],
+  optionalPublicationSetFields: [],
+  optionalPublicationLengthFields: ['disciplines', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: function(){
-    var self = this;
-    var issues = [];
-    var requiredSet = [
-      'startDate',
-      'endDate',
-    ];
-    var requiredLength = [
-      'cohorts',
-    ];
-    requiredSet.forEach(function(val){
-      if(!self.get(val)){
-        issues.push(val);
-      }
-    });
-
-    requiredLength.forEach(function(val){
-      if(self.get(val + '.length') === 0){
-        issues.push(val);
-      }
-    });
-
-    return issues;
+    return this.getRequiredPublicationIssues();
   }.property(
     'startDate',
     'endDate',
     'cohorts.length'
   ),
   optionalPublicationIssues: function(){
-    var self = this;
-    var issues = [];
-    var requiredLength = [
-      'disciplines',
-      'objectives',
-      'meshDescriptors',
-    ];
-
-    requiredLength.forEach(function(val){
-      if(self.get(val + '.length') === 0){
-        issues.push(val);
-      }
-    });
-
-    return issues;
+    return this.getOptionalPublicationIssues();
   }.property(
     'disciplines.length',
     'objectives.length',

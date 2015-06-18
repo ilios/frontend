@@ -4,7 +4,7 @@ import Publishable from 'ilios/mixins/publishable';
 
 export default Ember.Component.extend(Publishable, {
   session: null,
-  publishTarget: Ember.computed.alias('session'),
+  publishTarget: Ember.computed.oneWay('session'),
   publishEventCollectionName: 'sessions',
   editable: true,
   classNames: ['session-overview'],
@@ -23,7 +23,7 @@ export default Ember.Component.extend(Publishable, {
           ilmSession.save();
         });
       } else {
-        var ilmSession= this.get('store').createRecord('ilm-session', {
+        var ilmSession = this.get('store').createRecord('ilm-session', {
           session: session,
           hours: 1,
           dueDate: moment().add(6, 'weeks').toDate()

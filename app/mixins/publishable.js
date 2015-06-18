@@ -24,10 +24,9 @@ export default Ember.Mixin.create({
       this.get('publishTarget.requiredPublicationIssues.length') === 0 &&
       this.get('publishTarget.allPublicationIssuesLength') !== 0
     );
-  }.property('publishTarget.isPublished', 'publishTarget.requiredPublicationIssues.length', 'publishTarget.allPublicationIssuesLength'),
+  }.property('publishTarget.isPublished','publishTarget.isScheduled', 'publishTarget.requiredPublicationIssues.length', 'publishTarget.allPublicationIssuesLength'),
   showReview: function(){
-    return this.get('publishTarget.allPublicationIssuesLength') > 0 &&
-    this.get('showCheckLink');
+    return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.get('showCheckLink');
   }.property('publishTarget.allPublicationIssuesLength', 'showCheckLink'),
   showPublish: function(){
     return (
