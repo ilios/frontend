@@ -9,14 +9,16 @@ export default Ember.Component.extend({
   searchReturned: false,
   currentlyActiveUsers: [],
   placeholder: null,
-  //in order to delay rendering until a user is done typing debounce the title filter
-  debouncedFilter: null,
-  debouncedSearchTerms: '',
   availableInstructorGroups: [],
   currentlyActiveInstructorGroups: [],
+  currentlySearchingForTerm: false,
   integrateInstructorGroups: Ember.computed.notEmpty('availableInstructorGroups'),
   actions: {
     search: function(searchTerms){
+      if(this.get('currentlySearchingForTerm') === searchTerms){
+        return;
+      }
+      this.set('currentlySearchingForTerm', searchTerms);
       this.set('showMoreInputPrompt', false);
       this.set('searchReturned', false);
       let noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
@@ -60,7 +62,7 @@ export default Ember.Component.extend({
           let exp = new RegExp(searchTerms, 'gi');
 
           let filteredGroups = this.get('availableInstructorGroups').filter(group => {
-            return group.get('title').match(exp);
+            return group.get('title') && group.get('title').match(exp);
           });
           let instructorGroupProxies = filteredGroups.map(group => {
             return instructorGroupProxy.create({
