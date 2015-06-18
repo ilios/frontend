@@ -1,0 +1,477 @@
+.calendar-controls {
+  color: $ilios-blue;
+  margin-bottom: 1em;
+
+  .calendar-view-picker {
+    float: right;
+  }
+
+  .calendar-time-picker {
+    float: left;
+  }
+
+  .calendar-back {
+    float: left;
+  }
+
+}
+
+.month-calendar {
+  .el-calendar {
+
+    .week {
+      overflow-y: hidden;
+      padding-top: .25rem;
+    }
+
+    .day {
+      border: 1px solid $grey;
+      margin-right: .25rem;
+      overflow-y: hidden;
+      padding: .25rem;
+
+      .events {
+        height: 7rem;
+        overflow-y: auto;
+        padding-bottom: 4rem;
+      }
+    }
+
+    .ilios-calendar-event.month-event {
+      height: 1.5em;
+      padding: 0;
+      position: relative;
+
+      span {
+        background-color: transparent;
+        font-size: .5em;
+        font-weight: normal;
+      }
+
+      .ilios-event-time {
+        color: $black;
+        display: inline;
+      }
+
+      .ilios-event-end,
+      .ilios-event-location {
+        display: none;
+      }
+    }
+  }
+}
+
+.week-calendar {
+  .el-calendar {
+    span {
+      font-size: .8em;
+    }
+  }
+}
+
+.week-calendar,
+.month-calendar {
+  .el-calendar {
+    .ilios-event {
+      .ilios-event-end {
+        display: none;
+      }
+    }
+  }
+}
+
+// scss-lint:disable ColorVariable
+.el-calendar {
+
+  .event {
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .event-column {
+    border-left: 1px solid $grey;
+  }
+
+
+  .ilios-calendar-event {
+    border-bottom: 3px solid $white;
+    line-height: .9em;
+
+    .ilios-event-time {
+      color: $maroon;
+      display: block;
+      font-weight: bold;
+      padding-bottom: .5em;
+    }
+
+    .ilios-event-location {
+      display: inline;
+      font-weight: bold;
+    }
+
+    &.day-event {
+      width: 100%;
+    }
+
+    &.single-event {
+      @include border-top-radius($base-border-radius);
+      @include border-bottom-radius($base-border-radius);
+      padding: 2em;
+      width: 100%;
+
+    }
+
+    &.clerkship {
+      background-color: #32edfc;
+      border-left: 4px solid darken(#32edfc, 15%);
+    }
+
+    &.exam {
+      background-color: #ceccfe;
+      border-left: 4px solid darken(#ceccfe, 15%);
+    }
+
+    &.holiday {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.hospice {
+      background-color: #ceccfe;
+      border-left: 4px solid darken(#ceccfe, 15%);
+    }
+
+    &.laboratory {
+      background-color: #ffcc67;
+      border-left: 4px solid darken(#ffcc67, 15%);
+    }
+
+    &.large-group-presentation {
+      background-color: #99cdff;
+      border-left: 4px solid darken(#99cdff, 15%);
+    }
+
+    &.lecture {
+      background-color: #00cc65;
+      border-left: 4px solid darken(#00cc65, 15%);
+    }
+
+    &.opt-review-session {
+      background-color: #ff0;
+      border-left: 4px solid darken(#ff0, 15%);
+    }
+
+    &.osce {
+      background-color: #cdffff;
+      border-left: 4px solid darken(#cdffff, 15%);
+    }
+
+    &.physical-exam {
+      background-color: #ffb1b1;
+      border-left: 4px solid darken(#ffb1b1, 15%);
+    }
+
+    &.problem-based-learning {
+      background-color: #fe7a78;
+      border-left: 4px solid darken(#fe7a78, 15%);
+
+    }
+
+    &.small-group {
+      background-color: #fe7a78;
+      border-left: 4px solid darken(#fe7a78, 15%);
+    }
+
+    &.preceptorship {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.reading-day {
+      background-color: #ed81ee;
+      border-left: 4px solid darken(#ed81ee, 15%);
+    }
+
+    &.rounds {
+      background-color: #32edfc;
+      border-left: 4px solid darken(#32edfc, 15%);
+    }
+
+    &.outpatient-clinic {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.call {
+      background-color: #32edfc;
+      border-left: 4px solid darken(#32edfc, 15%);
+    }
+
+    &.team-based-learning {
+      background-color: #fe7a78;
+      border-left: 4px solid darken(#fe7a78, 15%);
+    }
+
+    &.exam-institutional-clinical {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.exam-institutional-writ-comp {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.exam-institutional-oral {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.exam-national-norm-standard-subj {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.multisource-assessment {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.narrative-assessment {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.practical-lab {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.stimulated-recall {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.self-assessment {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.clinical-doc-review {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.rating-checklist {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.exam-licensure-clinical {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.exam-licensure-writ-comp {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.participation {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.oral-patient-presentation {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.peer-assessment {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.portfolio-assessment {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.research-project-assessment {
+      background-color: #c79376;
+      border-left: 4px solid darken(#c79376, 15%);
+    }
+
+    &.independent-learning {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.reflection {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.self-directed-learning {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.concept-mapping {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.conference {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.discussion-large {
+      background-color: #00cc65;
+      border-left: 4px solid darken(#00cc65, 15%);
+    }
+
+    &.team-building {
+      background-color: #fe7a78;
+      border-left: 4px solid darken(#fe7a78, 15%);
+    }
+
+    &.simulation {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.case-based-instruction {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.demonstration {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.games {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.journal-club {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.mentorship {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.learner-patient-presentation {
+      background-color: #32edfc;
+      border-left: 4px solid darken(#32edfc, 15%);
+    }
+
+    &.faculty-patient-presentation {
+      background-color: #32edfc;
+      border-left: 4px solid darken(#32edfc, 15%);
+    }
+
+    &.peer-teaching {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.research {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.role-play-drama {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.performance {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.tutorial {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.service-learning-activity {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.clinical-performance {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.panel-presentation {
+      background-color: #00cc65;
+      border-left: 4px solid darken(#00cc65, 15%);
+    }
+
+    &.learner-project-presentation {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.movie {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.social-event {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.deadline {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.ceremony {
+      background-color: #fff;
+      border-left: 4px solid darken(#fff, 15%);
+    }
+
+    &.ambulatory-clinical-experience {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.inpatient-clinical-experience {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.ward-rounds {
+      background-color: #ddd;
+      border-left: 4px solid darken(#ddd, 15%);
+    }
+
+    &.discussion-small {
+      background-color: #fe7a78;
+      border-left: 4px solid darken(#fe7a78, 15%);
+    }
+
+    &.workshop {
+      background-color: #fe7a78;
+      border-left: 4px solid darken(#fe7a78, 15%);
+    }
+  }
+}
+
+.ilios-event {
+  @include border-top-radius($base-border-radius);
+  @include border-bottom-radius($base-border-radius);
+  background-color: $background-grey;
+  border: 1px solid $grey;
+}

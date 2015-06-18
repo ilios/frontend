@@ -306,4 +306,16 @@ var publish = {
 };
 translations.publish = publish;
 
+var calendar = {
+  'weekOf': 'Week of {{date}}',
+  'day': 'Day',
+  'week': 'Week',
+  'month': 'Month',
+  'today': 'Today',
+  'backToCalendar': 'Back to Calendar',
+};
+translations.calendar = calendar;
+
+
+
 export default translations;

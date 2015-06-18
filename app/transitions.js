@@ -12,6 +12,11 @@ export default function(){
     this.reverse('toUp', {duration: 1000})
   );
   this.transition(
+    this.hasClass('crossFade'),
+    this.toValue(true),
+    this.use('crossFade', {duration: 1000})
+  );
+  this.transition(
     this.toRoute(function(){
       var topRoutes = [];
       topRoutes.push('dashboard');
