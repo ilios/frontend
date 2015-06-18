@@ -13,8 +13,7 @@ export default Ember.Route.extend({
         self.store.find('school', schoolId).then(function(school){
           self.store.find('instructorGroup', {
             filters: {
-              school: school.get('id'),
-              deleted: false
+              school: school.get('id')
             },
             limit: 500
           }).then(function(instructorGroups){
