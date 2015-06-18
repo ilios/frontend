@@ -383,18 +383,32 @@ test('edit learning material', function(assert) {
     var material = fixtures.sessionLearningMaterials[0];
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
-      var container = $('.learningmaterial-manager');
+      let container = $('.learningmaterial-manager');
       click(find('.required input', container));
       click(find('.publicnotes input', container));
       click(find('.status .editable', container)).then(function(){
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
         click(find('.status .done', container));
       });
+      let newNote = 'text text.  Woo hoo!';
+      click(find('.notes .editable span', container)).then(function(){
+        fillIn('.notes textarea', newNote);
+        return click(find('.notes .done', container)).then(function(){
+          assert.equal(getElementText(find('.notes', container)), getText(newNote));
+        });
+      });
       click('.detail-learning-materials button.bigadd');
       andThen(function(){
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'));
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
+
+        click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+        andThen(function(){
+          let container = $('.learningmaterial-manager');
+          assert.equal(getElementText(find('.notes', container)), getText(newNote));
+          assert.equal(getElementText(find('.status', container)), getText('status 2'));
+        });
       });
     });
   });
