@@ -140,10 +140,8 @@ export default Ember.Component.extend({
       var session = this.get('session');
       var type = this.get('sessionTypes').findBy('id', newId);
       session.set('clerkshipType', type);
-      type.get('sessions').then(function(sessions){
-        sessions.addObject(session);
-        session.save();
-        sessions.save();
+      session.save().then(newSession => {
+        type.get('sessions').addObject(newSession);
       });
     },
     changeSupplemental: function(value){
