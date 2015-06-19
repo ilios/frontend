@@ -35,6 +35,7 @@ Router.map(function() {
       this.route('publicationCheck', {path: '/publicationcheck'});
     });
   });
+  this.route('fourOhFour', { path: "*path"});
 });
 
 export default Router;

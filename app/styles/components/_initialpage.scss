@@ -1,5 +1,6 @@
 // scss-lint:disable IdSelector
-#initialpageloader {
+#initialpageloader,
+.full-screen-error {
   p {
     background-color: $background-grey;
     border: 2px dashed $ilios-orange;
@@ -7,5 +8,6 @@
     font-weight: bold;
     margin: 2em;
     padding: 2em;
+    text-align: center;
   }
 }

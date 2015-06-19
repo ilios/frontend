@@ -86,6 +86,7 @@ var general = {
   'selected': 'Selected',
   'available': 'Available',
   'savedSuccessfully': 'Saved Successfully',
+  'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again."
 };
 translations.general = general;
 
