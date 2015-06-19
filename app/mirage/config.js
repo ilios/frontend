@@ -69,5 +69,9 @@ export default function() {
       this.delete('/' + route + '/:id', inflector.singularize(model));
     }
 
-    this.get('/userevents/4136', 'userevent');
+    this.get('/userevents/4136', function(db) {
+      return {
+        userEvents: db.userevents
+      };
+    });
 }
