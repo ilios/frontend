@@ -1,3 +1,4 @@
+/* global moment */
 import Ember from 'ember';
 import {
   module,
@@ -17,7 +18,8 @@ module('Acceptance: Session - Publish', {
     server.create('offering');
     server.create('sessionType');
     server.create('ilmSession', {
-      session: 4
+      session: 4,
+      dueDate: moment().format()
     });
     server.create('publishEvent', {
       administrator: 4136,

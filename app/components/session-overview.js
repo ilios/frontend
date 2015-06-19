@@ -1,116 +1,18 @@
 /* global moment */
 import Ember from 'ember';
+import Publishable from 'ilios/mixins/publishable';
 
-
-export default Ember.Component.extend({
-  currentUser: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
-  store: Ember.inject.service(),
+export default Ember.Component.extend(Publishable, {
   session: null,
+  publishTarget: Ember.computed.oneWay('session'),
+  publishEventCollectionName: 'sessions',
   editable: true,
   classNames: ['session-overview'],
   sortTypes: ['title'],
   sessionTypes: [],
   sortedSessionTypes: Ember.computed.sort('sessionTypes', 'sortTypes'),
   showCheckLink: true,
-  menuTitle: Ember.computed.oneWay('session.status'),
-  menuIcon: function(){
-    if(this.get('session.publishedAsTbd')){
-      return 'clock-o';
-    }
-    if(this.get('session.isPublished')){
-      return 'star';
-    }
-    return 'cloud';
-  }.property('session.isPublished', 'session.publishedAsTbd'),
-  showTbd: Ember.computed.not('session.isScheduled'),
-  showAsIs: function(){
-    return (
-      (!this.get('session.isPublished') || this.get('session.isScheduled')) &&
-      this.get('session.requiredPublicationIssues.length') === 0 &&
-      this.get('session.allPublicationIssuesLength') !== 0
-    );
-  }.property('session.isPublished', 'session.requiredPublicationIssues.length', 'session.allPublicationIssuesLength'),
-  showReview: function(){
-    return this.get('session.allPublicationIssuesLength') > 0 &&
-    this.get('showCheckLink');
-  }.property('session.allPublicationIssuesLength', 'showCheckLink'),
-  showPublish: function(){
-    return (
-      (!this.get('session.isPublished') || this.get('session.isScheduled')) &&
-      this.get('session.allPublicationIssuesLength') === 0
-    );
-  }.property('session.isPublished', 'session.allPublicationIssuesLength'),
-  showUnPublish: Ember.computed.or('session.isPublished', 'session.isScheduled'),
-  publicationStatus: function(){
-    if(this.get('session.isScheduled')){
-      return 'scheduled';
-    } else if (this.get('session.isPublished')){
-      return 'published';
-    }
-
-    return 'notpublished';
-  }.property('session.isPublished', 'session.isScheduled'),
   actions: {
-    unpublish: function(){
-      var session = this.get('session');
-      session.get('publishEvent').then(publishEvent => {
-        session.set('publishedAsTbd', false);
-        session.set('publishEvent', null);
-        if(publishEvent){
-          publishEvent.get('sessions').removeObject(session);
-          if(publishEvent.get('totalRelated') === 0){
-            publishEvent.deleteRecord();
-          }
-          publishEvent.save();
-        }
-        session.save().then(() => {
-          this.get('flashMessages').success('publish.message.unPublish');
-        });
-      });
-    },
-    publishAsTbd: function(){
-      var session = this.get('session');
-      session.set('publishedAsTbd', true);
-      session.get('publishEvent').then(publishEvent => {
-        if(!publishEvent){
-          publishEvent = this.get('store').createRecord('publish-event', {
-            administrator: this.get('currentUser.model')
-          });
-          publishEvent.save().then(publishEvent => {
-            session.set('publishEvent', publishEvent);
-            session.save().then(() => {
-              this.get('flashMessages').success('publish.message.schedule');
-            });
-          });
-        } else {
-          session.save().then(() => {
-            this.get('flashMessages').success('publish.message.schedule');
-          });
-        }
-      });
-    },
-    publish: function(){
-      var session = this.get('session');
-      session.set('publishedAsTbd', false);
-      session.get('publishEvent').then(publishEvent => {
-        if(!publishEvent){
-          publishEvent = this.get('store').createRecord('publish-event', {
-            administrator: this.get('currentUser.model')
-          });
-          publishEvent.save().then(publishEvent => {
-            session.set('publishEvent', publishEvent);
-            session.save().then(() => {
-              this.get('flashMessages').success('publish.message.publish');
-            });
-          });
-        } else {
-          session.save().then(() => {
-            this.get('flashMessages').success('publish.message.publish');
-          });
-        }
-      });
-    },
     saveIndependentLearning: function(value){
       var session = this.get('session');
       if(!value){
@@ -121,7 +23,7 @@ export default Ember.Component.extend({
           ilmSession.save();
         });
       } else {
-        var ilmSession= this.get('store').createRecord('ilm-session', {
+        var ilmSession = this.get('store').createRecord('ilm-session', {
           session: session,
           hours: 1,
           dueDate: moment().add(6, 'weeks').toDate()

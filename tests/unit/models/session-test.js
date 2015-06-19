@@ -68,14 +68,15 @@ test('check required publication items', function(assert) {
   assert.equal(model.get('requiredPublicationIssues').length, 0);
 });
 
-test('check rquired ILM publication items', function(assert) {
+test('check required ILM publication items', function(assert) {
   var model = this.subject();
   var store = this.store();
   Ember.run(function(){
     model.set('title', 'nothing');
     assert.equal(model.get('requiredPublicationIssues').length, 1);
-    model.set('ilmSessionFacet', store.createRecord('ilmSession'));
-    assert.equal(model.get('requiredPublicationIssues').length, 0);
+    let ilmSession = store.createRecord('ilmSession');
+    model.set('ilmSessionFacet', ilmSession);
+    assert.equal(model.get('requiredPublicationIssues').length, 1);
   });
 });
 
