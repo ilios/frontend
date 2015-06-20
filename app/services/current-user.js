@@ -82,7 +82,7 @@ export default Ember.Service.extend({
       var url = '/' + config.adapterNamespace + '/userevents/' +
       user.get('id') + '?from=' + from + '&to=' + to;
       ajax(url).then(data => {
-        let events = data.userevent;
+        let events = data.userEvents;
         deferred.resolve(events.sortBy('startDate'));
       });
     });
