@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   isEditing: false,
   editable: true,
   sortBy: ['lastName', 'firstName'],
+  classNames: ['offering-manager'],
   sortedInstructors: Ember.computed.sort('instructors', 'sortBy'),
   startDay: null,
   endDay: null,
@@ -16,53 +17,10 @@ export default Ember.Component.extend({
   endTime: null,
   room: null,
   isMultiDay: false,
-  instructors: [],
-  instructorGroups: [],
-  learnerGroups: [],
-  instructorGroupBuffer: [],
-  instructorBuffer: [],
   cohorts: Ember.computed.alias('offering.session.course.cohorts'),
   availableInstructorGroups: Ember.computed.alias('offering.session.course.owningSchool.instructorGroups'),
   showRemoveConfirmation: false,
-  setup: function(){
-    var self = this;
-    var offering = this.get('offering');
-    if(offering){
-      if(!this.get('isDestroyed')){
-        this.set('startDay', moment(offering.get('startDate')).format('YYYY-MM-DD'));
-        this.set('startTime', moment(offering.get('startDate')).format('HH:mm'));
-        this.set('endDay', moment(offering.get('startDate')).format('YYYY-MM-DD'));
-        this.set('endTime', moment(offering.get('endDate')).format('HH:mm'));
-        this.set('room', offering.get('room'));
-        this.set('isMultiDay', offering.get('isMultiDay'));
-        offering.get('instructors').then(function(instructors){
-          if(!self.get('isDestroyed')){
-            self.set('instructors', instructors.toArray());
-          }
-        });
-        offering.get('instructorGroups').then(function(instructorGroups){
-          if(!self.get('isDestroyed')){
-            self.set('instructorGroups', instructorGroups.toArray());
-          }
-        });
-        offering.get('learnerGroups').then(function(learnerGroups){
-          if(!self.get('isDestroyed')){
-            self.set('learnerGroups', learnerGroups.toArray());
-          }
-        });
-        offering.get('instructorGroups').then(instructorGroups => {
-          if(!self.get('isDestroyed')){
-            self.set('instructorGroupBuffer', instructorGroups.toArray());
-          }
-        });
-        offering.get('instructors').then(instructors => {
-          if(!self.get('isDestroyed')){
-            self.set('instructorBuffer', instructors.toArray());
-          }
-        });
-      }
-    }
-  }.on('init'),
+  buffer: null,
   allInstructors: function(){
     var self = this;
     var defer = Ember.RSVP.defer();
@@ -82,101 +40,110 @@ export default Ember.Component.extend({
   }.property('instructors.@each', 'instructorGroups.@each.users.@each'),
   actions: {
     save() {
-      var self = this;
       var offering = this.get('offering');
       let promises = [];
-      let instructorGroups = offering.get('instructorGroups');
-      let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').contains(group));
-      instructorGroups.clear();
-      removableInstructorGroups.forEach(group => {
-        promises.pushObject(group.get('offerings').then(offerings => {
-          offerings.removeObject(offering);
-          return group.save();
-        }));
-      });
-      this.get('instructorGroupBuffer').forEach(function(group){
-        promises.pushObject(group.get('offerings').then(offerings => {
-          offerings.pushObject(offering);
-          return group.save().then(newGroup => {
-            instructorGroups.pushObject(newGroup);
-          });
-        }));
-      });
-
-      let instructors = offering.get('instructors');
-      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').contains(user));
-      instructors.clear();
-      removableInstructors.forEach(user => {
-        promises.pushObject(user.get('offerings').then(offerings => {
-          offerings.removeObject(offering);
-          return user.save();
-        }));
-      });
-      this.get('instructorBuffer').forEach(function(user){
-        promises.pushObject(user.get('offerings').then(offerings => {
-          offerings.pushObject(offering);
-          instructors.pushObject(user);
-          return user.save();
-        }));
-      });
-      promises.pushObject(offering.get('learnerGroups').then(function(currentOfferings){
-        var newItems = self.get('learnerGroups');
-        currentOfferings.filter(function(item){
-          return newItems.contains(item);
-        }).invoke(function(item){
-          promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.removeObject(offering);
-          }));
+      promises.push(offering.get('instructorGroups').then(instructorGroups => {
+        let removableInstructorGroups = instructorGroups.filter(group => !this.get('buffer.instructorGroups').contains(group));
+        instructorGroups.clear();
+        removableInstructorGroups.forEach(group => {
+          group.get('offerings').removeObject(offering);
         });
-        currentOfferings.clear();
-        currentOfferings.pushObjects(newItems);
-        newItems.invoke(function(item){
-          promises.pushObject(item.get('offerings').then(function(offerings){
-            offerings.pushObject(offering);
-          }));
+        this.get('buffer.instructorGroups').forEach(group => {
+          group.get('offerings').pushObject(offering);
+          instructorGroups.pushObject(group);
         });
       }));
-      var startDate = moment(this.get('startDay') + this.get('startTime'), 'YYYY-MM-DDHH:mm');
-      var endDate;
-      if(this.get('isMultiDay')){
-        endDate = moment(this.get('endDay') + this.get('endTime'), 'YYYY-MM-DDHH:mm');
+      promises.push(offering.get('instructors').then(instructors => {
+        let removableInstructors = instructors.filter(user => !this.get('buffer.instructors').contains(user));
+        instructors.clear();
+        removableInstructors.forEach(user => {
+          user.get('offerings').removeObject(offering);
+        });
+        this.get('buffer.instructors').forEach(user => {
+          user.get('offerings').pushObject(offering);
+          instructors.pushObject(user);
+        });
+      }));
+      promises.push(offering.get('learnerGroups').then(learnerGroups => {
+        let removeableLearnerGroups = learnerGroups.filter(group => !this.get('buffer.learnerGroups').contains(group));
+        learnerGroups.clear();
+        removeableLearnerGroups.forEach(group => {
+          group.get('offerings').removeObject(offering);
+        });
+        this.get('buffer.learnerGroups').forEach(group => {
+          group.get('offerings').pushObject(offering);
+          learnerGroups.pushObject(group);
+        });
+      }));
+      let startDate = moment(this.get('buffer.startDate'));
+      let endDate;
+      if(this.get('buffer.isMultiDay')){
+        endDate = moment(this.get('buffer.endDate'));
       } else {
-        endDate = moment(this.get('startDay') + this.get('endTime'), 'YYYY-MM-DDHH:mm');
+        endDate = startDate.clone();
+        let endTime = moment(this.get('buffer.endDate'));
+        endDate.hour(endTime.format('HH'));
+        endDate.minute(endTime.format('mm'));
       }
-      offering.set('room', this.get('room'));
+
+      offering.set('room', this.get('buffer.room'));
       offering.set('startDate', startDate.toDate());
       offering.set('endDate', endDate.toDate());
       promises.pushObject(offering.save());
-      Ember.RSVP.all(promises).then(function(){
-        self.sendAction('save', offering);
-        if(!self.get('isDestroyed')){
-          self.set('isEditing', false);
+      Ember.RSVP.all(promises).then(() => {
+        if(!this.get('isDestroyed')){
+          this.set('isEditing', false);
+          this.set('buffer', null);
+          this.sendAction('save', offering);
         }
       });
     },
     edit: function(){
-      this.set('isEditing', true);
+      let offering = this.get('offering');
+      if(offering){
+        let buffer = Ember.Object.create({
+          startDate: moment(offering.get('startDate')).toDate(),
+          endDate: moment(offering.get('endDate')).toDate(),
+          room: offering.get('room'),
+          isMultiDay: offering.get('isMultiDay')
+        });
+
+        let collections = [
+          'instructors',
+          'instructorGroups',
+          'learnerGroups'
+        ];
+        let promises = collections.map(collection => {
+          return offering.get(collection).then(values => {
+            let arr = [];
+            arr.pushObjects(values.toArray());
+            buffer.set(collection, arr);
+          });
+        });
+        Ember.RSVP.all(promises).then(() => {
+          this.set('buffer', buffer);
+          this.set('isEditing', true);
+        });
+      }
     },
     cancel: function(){
-      this.setup();
-      this.set('instructorGroupBuffer', []);
-      this.set('instructorBuffer', []);
+      this.set('buffer', null);
       this.set('isEditing', false);
     },
     addInstructorGroupToBuffer(instructorGroup){
-      this.get('instructorGroupBuffer').pushObject(instructorGroup);
+      this.get('buffer.instructorGroups').pushObject(instructorGroup);
     },
     addInstructorToBuffer(instructor){
-      this.get('instructorBuffer').pushObject(instructor);
+      this.get('buffer.instructors').pushObject(instructor);
     },
     removeInstructorGroupFromBuffer(instructorGroup){
-      this.get('instructorGroupBuffer').removeObject(instructorGroup);
+      this.get('buffer.instructorGroups').removeObject(instructorGroup);
     },
     removeInstructorFromBuffer(instructor){
-      this.get('instructorBuffer').removeObject(instructor);
+      this.get('buffer.instructors').removeObject(instructor);
     },
     toggleMultiDay: function(){
-      this.set('isMultiDay', !this.get('isMultiDay'));
+      this.set('buffer.isMultiDay', !this.get('buffer.isMultiDay'));
     },
     remove: function(){
       this.sendAction('remove', this.get('offering'));
@@ -186,6 +153,20 @@ export default Ember.Component.extend({
     },
     confirmRemove: function(){
       this.set('showRemoveConfirmation', true);
+    },
+    changeEndTime(date){
+      let newEnd = moment(date);
+      let endDate = moment(this.get('buffer.endDate'));
+      endDate.hour(newEnd.format('HH'));
+      endDate.minute(newEnd.format('mm'));
+      this.set('buffer.endDate', endDate.toDate());
+    },
+    changeStartTime(date){
+      let newEnd = moment(date);
+      let startDate = moment(this.get('buffer.startDate'));
+      startDate.hour(newEnd.format('HH'));
+      startDate.minute(newEnd.format('mm'));
+      this.set('buffer.startDate', startDate.toDate());
     },
   }
 });

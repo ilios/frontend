@@ -51,7 +51,7 @@
     "ember-moment": "1.1.1",
     "ember-normalize": "0.0.2",
     "ember-noscript": "^1.0.2",
-    "ember-pikaday": "0.6.0",
+    "ember-pikaday": "0.7.2",
     "ember-rl-dropdown": "0.2.0",
     "ember-try": "0.0.5",
     "emberx-select": "1.1.1",

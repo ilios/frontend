@@ -1,0 +1,15 @@
+{{#x-select value=hour action="changeHour" classNames='hour'}}
+  {{#each hours as |hour|}}
+    {{#x-option value=hour}}{{hour}}{{/x-option}}
+  {{/each}}
+{{/x-select}}
+{{#x-select value=minute action="changeMinute" classNames='minute'}}
+  {{#each minutes as |minute|}}
+    {{#x-option value=minute}}{{minute}}{{/x-option}}
+  {{/each}}
+{{/x-select}}
+{{#x-select value=ampm action="changeAmPm" classNames='ampm'}}
+  {{#each ampms as |ampm|}}
+    {{#x-option value=ampm}}{{ampm}}{{/x-option}}
+  {{/each}}
+{{/x-select}}

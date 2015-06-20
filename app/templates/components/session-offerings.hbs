@@ -18,14 +18,6 @@
   </div>
 
   <div class='detail-content'>
-    {{#each offering in newOfferings}}
-      {{offering-manager
-        offering=offering
-        isEditing=true
-        save='removeNewOffering'
-        cancel='removeNewOffering'
-      }}
-    {{/each}}
     {{#if offerings.length}}
       <div class='detail-content-header'>
         <div>
