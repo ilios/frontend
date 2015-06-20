@@ -54,17 +54,12 @@ export default Ember.Mixin.create({
           publishEvent.get(this.get('publishEventCollectionName')).removeObject(publishTarget);
           if(publishEvent.get('totalRelated') === 0){
             publishEvent.deleteRecord();
+            publishEvent.save();
           }
-          publishTarget.save().then(()=>{
-            publishEvent.save().then(() => {
-              this.get('flashMessages').success('publish.message.unPublish');
-            });
-          });
-        } else {
-          publishTarget.save().then(()=>{
-            this.get('flashMessages').success('publish.message.unPublish');
-          });
         }
+        publishTarget.save().then(()=>{
+          this.get('flashMessages').success('publish.message.unPublish');
+        });
       });
     },
     publishAsTbd: function(){
