@@ -7,7 +7,7 @@
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
           {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each school in schools}}
+            {{#each schools as |school|}}
               <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -36,7 +36,7 @@
 
     {{#if newInstructorGroups.length}}
       <section class='resultslist-new'>
-        {{#each instructorGroup in newInstructorGroups}}
+        {{#each newInstructorGroups as |instructorGroup|}}
           {{new-instructorgroup instructorGroup=instructorGroup save='saveNewInstructorGroup' cancel='removeNewInstructorGroup'}}
         {{/each}}
       </section>

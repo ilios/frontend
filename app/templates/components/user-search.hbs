@@ -12,7 +12,7 @@
     {{else}}
       {{#if results.length}}
         <ul class='results'>
-          {{#each proxy in results}}
+          {{#each results as |proxy|}}
             {{#if proxy.isUser}}
               <li {{action 'addUser' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
                 <div class='livesearch-user-name'>{{proxy.fullName}}</div>

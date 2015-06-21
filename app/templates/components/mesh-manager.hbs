@@ -2,7 +2,7 @@
   <h2>{{t 'mesh.targetItemTitle' title=targetItemTitle}}</h2>
 {{/if}}
 <ul class='removable-list'>
-  {{#each term in sortedTerms}}
+  {{#each sortedTerms as |term|}}
     <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
   {{/each}}
 </ul>
@@ -16,7 +16,7 @@
   {{#if sortedSearchResults.length}}
     <div class='selectable-list'>
       <ul class='mesh-search-results'>
-        {{#each term in sortedSearchResults}}
+        {{#each sortedSearchResults as |term|}}
           <li {{bind-attr class='term.isActive::disabled'}} {{action 'add' term}}>{{term.title}}</li>
         {{/each}}
       </ul>

@@ -22,7 +22,7 @@
         <label>{{t "general.instructors"}}:</label>
         <span>
           <ul class='removable-list'>
-            {{#each user in sortedUsers}}
+            {{#each sortedUsers as |user|}}
             <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
             {{/each}}
           </ul>

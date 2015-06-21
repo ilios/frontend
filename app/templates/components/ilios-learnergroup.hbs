@@ -27,7 +27,7 @@
 
     <div class='subgroups'>
       {{#expander-box titleTranslation='learnerGroups.subGroups'}}
-        {{#each child in group.children}}
+        {{#each group.children as |child|}}
           {{ilios-learnergroup group=child}}
         {{/each}}
         <section>

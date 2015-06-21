@@ -4,7 +4,7 @@
   <div class='parent-picker'>
     <h5>{{course.title}}</h5>
     <ul>
-      {{#each objective in proxiedObjectives}}
+      {{#each proxiedObjectives as |objective|}}
         {{#if objective.selected}}
           <li class='selected clickable' {{action 'removeParent' objective}}>
             {{input type='checkbox' checked=true}}

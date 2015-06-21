@@ -1,3 +1,3 @@
-{{#each block in offeringBlocks}}
+{{#each offeringBlocks as |block|}}
   {{offering-block block=block removeOffering='removeOffering' editable=editable}}
 {{/each}}

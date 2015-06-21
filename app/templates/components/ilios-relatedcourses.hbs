@@ -4,7 +4,7 @@
       {{input type='text' value=filter placeholderTranslation='relatedCourses.filterPlaceholder'}}
     {{/if}}
     <ul>
-      {{#each course in filteredCourses}}
+      {{#each filteredCourses as |course|}}
         <li>{{course.title}}</li>
       {{else}}
         {{#if filter}}

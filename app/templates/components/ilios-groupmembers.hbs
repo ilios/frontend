@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each user in filteredUsers}}
+          {{#each filteredUsers as |user|}}
             <tr>
               <td class='text-center'>{{user.fullName}}</td>
               <td class='text-center'>{{user.email}}</td>
@@ -32,7 +32,7 @@
       </div>
       {{#if showResults}}
         <ul class='search-results'>
-          {{#each result in searchResults}}
+          {{#each searchResults as |result|}}
             {{#selectable-search-result item=result selectedItems=users action='add'}}
               {{result.fullName}} {{result.email}}
             {{/selectable-search-result}}

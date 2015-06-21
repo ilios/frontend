@@ -13,7 +13,7 @@
   <section class='resultslist'>
     {{#if newSessions.length}}
       <section class='resultslist-new'>
-        {{#each sessionProxy in newSessions}}
+        {{#each newSessions as |sessionProxy|}}
           {{#liquid-unless sessionProxy.isSaved class='horizontal'}}
             {{new-session
               session=sessionProxy.content
@@ -46,7 +46,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each session in filteredContent}}
+          {{#each filteredContent as |session|}}
             <tr>
               <td class='text-left' colspan=2>
                 {{#link-to 'session.index' course session}}

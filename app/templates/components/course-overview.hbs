@@ -30,12 +30,12 @@
         <div class="form-data coursestartdate">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
         <label class="form-label">{{t "general.end"}}:</label>
         <div class="form-data courseenddate">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
-      </div>  
+      </div>
       <div class="form-col-12">
       <label>{{t "general.directors"}}:</label>
         <span>
           <ul class='removable-list'>
-            {{#each user in sortedDirectors}}
+            {{#each sortedDirectors as |user|}}
             <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
             {{/each}}
           </ul>

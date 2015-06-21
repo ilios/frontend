@@ -12,7 +12,7 @@
     {{else}}
       {{#if sortedSearchResults.length}}
         <ul class='results'>
-          {{#each result in sortedSearchResults}}
+          {{#each sortedSearchResults as |result|}}
             {{#if result.isActive}}
               <li class='active' {{action 'add' result.targetObject}}>{{result.title}}</li>
             {{else}}

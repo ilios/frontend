@@ -1,5 +1,5 @@
 <ul class='columnar-list'>
-  {{#each topic in sortedTopics}}
+  {{#each sortedTopics as |topic|}}
     <li>{{topic.title}}</li>
   {{/each}}
 </ul>

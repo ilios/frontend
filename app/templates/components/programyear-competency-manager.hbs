@@ -1,11 +1,11 @@
 <section class='halfwidth'>
   <h5>{{t 'general.selected'}}</h5>
   <ul class='tree-list removable'>
-    {{#each domain in selectedDomains}}
+    {{#each selectedDomains as |domain|}}
       <li {{action 'removeDomain' domain}}>
         {{domain.title}}
         <ul>
-          {{#each competency in domain.subCompetencies}}
+          {{#each domain.subCompetencies as |competency|}}
             <li class='removable' {{action 'removeCompetency' competency}}>
               {{competency.title}}
             </li>
@@ -21,10 +21,10 @@
 <section class='halfwidth'>
   <h5>{{t 'general.available'}}</h5>
   <ul class='tree-list selectable'>
-    {{#each domain in filteredDomains}}
+    {{#each filteredDomains as |domain|}}
       <li {{action 'addDomain' domain}}>{{domain.title}}
         <ul>
-          {{#each competency in domain.subCompetencies}}
+          {{#each domain.subCompetencies as |competency|}}
             <li {{action 'addCompetency' competency}}>{{competency.title}}</li>
           {{/each}}
         </ul>

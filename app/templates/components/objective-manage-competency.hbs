@@ -2,10 +2,10 @@
 
 {{#if showCompetencyList}}
   <div class='parent-picker'>
-    {{#each domain in domains}}
+    {{#each domains as |domain|}}
       <h5 {{bind-attr class=':competency-title domain.selected:selected'}}>{{domain.title}}</h5>
         <ul>
-          {{#each competencyProxy in domain.subCompetencies}}
+          {{#each domain.subCompetencies as |competencyProxy|}}
             {{#if competencyProxy.selected}}
               <li class='selected clickable' {{action 'removeCurrentCompetency' competencyProxy.content}}>
                 {{input type='checkbox' checked=true}}

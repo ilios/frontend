@@ -20,17 +20,17 @@
   <div class='detail-content'>
     {{#if isManaging}}
       <ul class='removable-list'>
-        {{#each cohort in cohorts}}
+        {{#each cohorts as |cohort|}}
           <li {{action 'remove' cohort}}>{{cohort.title}} {{fa-icon 'remove'}}</li>
         {{/each}}
       </ul>
       <div class='selectable-list'>
         <h5>{{t 'courses.availableCohorts'}}</h5>
         <ul>
-          {{#each program in filteredPrograms}}
+          {{#each filteredPrograms as |program|}}
             <li class='static'>{{program.title}}
               <ul>
-                {{#each cohort in program.availableCohorts}}
+                {{#each program.availableCohorts as |cohort|}}
                   <li {{action 'add' cohort}}>{{cohort.displayTitle}}</li>
 
                 {{else}}
@@ -52,7 +52,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each cohort in cohorts}}
+            {{#each cohorts as |cohort|}}
             <tr>
               <td class='text-left'>{{cohort.programYear.program.title}}</td>
               <td class='text-center'>{{cohort.displayTitle}}</td>

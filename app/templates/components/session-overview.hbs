@@ -79,7 +79,7 @@
         <div>
         {{#if session.associatedLearnerGroups.isFulfilled}}
           <span>
-            {{#each group in session.associatedLearnerGroups}}
+            {{#each session.associatedLearnerGroups as |group|}}
               {{group.title}},
             {{else}}
               {{t 'general.none'}}

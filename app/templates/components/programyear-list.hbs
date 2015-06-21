@@ -8,7 +8,7 @@
   <section class='resultslist'>
     {{#if newProgramYears.length}}
       <section class='resultslist-new'>
-        {{#each programYear in newProgramYears}}
+        {{#each newProgramYears as |programYear|}}
           {{new-programyear
             programYear=programYear
             availableProgramStartYears=availableProgramStartYears
@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each programYear in sortedContent}}
+            {{#each sortedContent as |programYear|}}
               <tr>
                 <td class='text-left'>
                   {{#link-to 'programYear.index' program programYear}}

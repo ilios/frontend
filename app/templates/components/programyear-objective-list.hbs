@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each objective in sortedObjectives}}
+    {{#each sortedObjectives as |objective|}}
     <tr id="objective-{{objective.id}}">
       <td class='text-left text-top' colspan=2>
         {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
@@ -26,7 +26,7 @@
         {{#if objective.meshDescriptors.length}}
           <ul>
             <a href='#' {{action 'manageDescriptors' objective}}>
-              {{#each descriptor in objective.meshDescriptors}}
+              {{#each objective.meshDescriptors as |descriptor|}}
                 <li>{{descriptor.title}}</li>
               {{/each}}
             </a>

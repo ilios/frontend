@@ -4,7 +4,7 @@
 	</a>
 	<nav {{action 'toggleMenuVisibility'}} {{bind-attr class=":sliding-menu-content isMenuVisible"}}>
 		<ul>
-      {{#each item in menuItems}}
+      {{#each menuItems as |item|}}
         <li>{{#link-to item.route}}{{fa-icon item.icon}} {{item.name}}{{/link-to}}</li>
       {{/each}}
 		</ul>

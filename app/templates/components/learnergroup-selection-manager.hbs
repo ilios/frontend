@@ -1,5 +1,5 @@
 <ul class='removable-list'>
-  {{#each learnerGroup in sortedLearnerGroups}}
+  {{#each sortedLearnerGroups as |learnerGroup|}}
     <li {{action 'remove' learnerGroup}}>
       <em>
         {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
@@ -15,10 +15,10 @@
 <div class='selectable-list'>
   <h5>{{t 'courses.availalbeLearnerGroups'}}</h5>
   <ul>
-    {{#each cohort in filteredCohorts}}
+    {{#each filteredCohorts as |cohort|}}
       <li class='static'>{{cohort.displayTitle}}
         <ul>
-          {{#each learnerGroup in cohort.filteredAvailableLearnerGroups}}
+          {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
             <li {{action 'add' learnerGroup}}>
               <em>
                 {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}

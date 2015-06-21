@@ -76,7 +76,7 @@
   <div class='offering-block-time-offering  {{if showRemoveConfirmation "offering-confirm-removal"}}'>
     <span class='offering-block-time-offering-learner_groups offering-detail-box'>
       <ul>
-        {{#each learnerGroup in offering.learnerGroups}}
+        {{#each offering.learnerGroups as |learnerGroup|}}
           <li>{{learnerGroup.title}}</li>
         {{else}}
           <li>{{fa-icon 'group'}}</li>
@@ -86,7 +86,7 @@
     <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
     <span class='offering-block-time-offering-instructors offering-detail-box'>
       <ul>
-        {{#each instructor in offering.allInstructors}}
+        {{#each offering.allInstructors as |instructor|}}
           <li>{{instructor.fullName}}</li>
         {{else}}
           <li>{{fa-icon 'user-plus'}}</li>

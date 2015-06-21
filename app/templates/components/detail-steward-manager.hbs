@@ -1,12 +1,12 @@
 <section class='halfwidth'>
   <ul class='tree-list removable'>
-    {{#each schoolProxy in stewardSchools}}
+    {{#each stewardSchools as |schoolProxy|}}
       <li>
         <span class='removable' {{action 'removeSchool' schoolProxy.content}}>
           {{fa-icon 'times'}} {{schoolProxy.title}}
         </span>
         <ul>
-          {{#each department in schoolProxy.departments}}
+          {{#each schoolProxy.departments as |department|}}
             <li class='removable' {{action 'removeDepartment' schoolProxy.content department}}>
               {{fa-icon 'times'}} {{department.title}}
             </li>
@@ -20,10 +20,10 @@
 
 <section class='halfwidth'>
   <ul class='tree-list selectable'>
-    {{#each schoolProxy in availableSchools}}
+    {{#each availableSchools as |schoolProxy|}}
       <li {{action 'addSchool' schoolProxy}}>{{schoolProxy.title}}
         <ul>
-          {{#each department in schoolProxy.departments}}
+          {{#each schoolProxy.departments as |department|}}
             <li {{action 'addDepartment' schoolProxy department}}>{{department.title}}</li>
           {{/each}}
         </ul>

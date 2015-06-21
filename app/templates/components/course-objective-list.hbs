@@ -7,14 +7,14 @@
     </tr>
   </thead>
   <tbody>
-    {{#each objective in sortedObjectives}}
+    {{#each sortedObjectives as |objective|}}
     <tr id="objective-{{objective.id}}">
       <td class='text-left text-top' colspan=2>
         {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
       </td>
       <td class='text-left text-top'>
         {{#if objective.hasParents}}
-          {{#each parent in objective.parents}}
+          {{#each objective.parents as |parent|}}
             {{#if course.hasMultipleCohorts}}
               <strong>
                 {{parent.programYear.program.title}}&nbsp
@@ -38,7 +38,7 @@
         {{#if objective.meshDescriptors.length}}
           <ul>
             <a href='#' {{action 'manageDescriptors' objective}}>
-              {{#each descriptor in objective.meshDescriptors}}
+              {{#each objective.meshDescriptors as |descriptor|}}
                 <li>{{descriptor.title}}</li>
               {{/each}}
             </a>

@@ -27,10 +27,10 @@
         }}
     {{else}}
     <ul class='static-list'>
-      {{#each domain in programYear.domains}}
+      {{#each programYear.domains as |domain|}}
         <li>{{domain.title}}
           <ul>
-            {{#each competency in domain.subCompetencies}}
+            {{#each domain.subCompetencies as |competency|}}
               <li>{{competency.title}}</li>
             {{/each}}
           </ul>

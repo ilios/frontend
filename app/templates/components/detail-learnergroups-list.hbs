@@ -1,5 +1,5 @@
 <ul class='inline-list'>
-  {{#each learnerGroup in sortedLearnerGroups}}
+  {{#each sortedLearnerGroups as |learnerGroup|}}
     <li>
       <em>
         {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}

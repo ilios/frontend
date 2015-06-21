@@ -4,7 +4,7 @@
     <span class='offering-block-date-dayofmonth'>{{block.dayOfMonth}}</span>
   </div>
   <div class='offering-block-times'>
-    {{#each offeringTimeBlock in block.offeringTimeBlocks}}
+    {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
       {{#unless offeringTimeBlock.isMultiDay}}
         <div class= 'offering-block-time'>
           <div class= 'offering-block-time-time'>
@@ -12,7 +12,7 @@
             <span class='offering-block-time-time-endtime'><label class='offering-block-time-time-endtime-label'>{{t 'general.ends'}}:</label> {{offeringTimeBlock.endTime}}</span>
           </div>
           <div class='offering-block-time-offerings'>
-            {{#each offering in offeringTimeBlock.sortedOfferings}}
+            {{#each offeringTimeBlock.sortedOfferings as |offering|}}
               {{offering-manager offering=offering save='save' remove='removeOffering' editable=editable}}
             {{/each}}
           </div>
@@ -31,7 +31,7 @@
             </span>
           </div>
           <div class='multiday-offering-block-time-offerings'>
-            {{#each offering in offeringTimeBlock.offerings}}
+            {{#each offeringTimeBlock.offerings as |offering|}}
               {{offering-manager offering=offering save='save' remove='removeOffering' editable=editable}}
             {{/each}}
           </div>
