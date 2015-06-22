@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     {{#each proxiedCourses as |course|}}
-      <tr {{bind-attr class='course.showRemoveConfirmation:confirm-removal'}}>
+      <tr class="{{if course.showRemoveConfirmation 'confirm-removal'}}">
         <td class='text-left' colspan=3>
           {{#link-to 'course' course.content}}
             {{course.title}}

@@ -6,7 +6,7 @@
   save='save'
   remove='remove'
 }}
-  <section {{bind-attr class=":learnergroup isDirty"}}>
+  <section class="learnergroup {{if isDirty is-dirty}}">
     <div class='title'>
       <label>{{t "general.title"}}
         {{input value=bufferedTitle}}

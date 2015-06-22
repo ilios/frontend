@@ -1,5 +1,5 @@
-<div {{bind-attr class=":expander isExpanded"}}>
-  <div {{action 'toggleVisibility'}} {{bind-attr class=":expander-toggle isExpanded"}}>
+<div class="expander {{if isExpanded 'is-expanded'}}">
+  <div {{action 'toggleVisibility'}} class="expander-toggle {{if isExpanded 'is-expanded'}}">
     <a href="javascript:void(0)" >{{title}}</a>
     <div class='tools'>
       {{#if isSaveable}}
@@ -10,7 +10,7 @@
       {{/if}}
     </div>
   </div>
-  <div {{bind-attr class=":expander-content isExpanded::hidden"}}>
+  <div class="expander-content {{unless isExpanded 'hidden'}}">
       {{yield}}
   </div>
 </div>

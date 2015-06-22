@@ -4,7 +4,7 @@
   {{else}}
     <button {{action 'toggleVisibility'}}>{{openDialogButtonText}}</button>
   {{/if}}
-  <div {{bind-attr class=":modal-window showModal:visible"}}>
+  <div class="modal-window {{if showModal 'visible'}}">
     <div class="modal-inner">
       <div class='modal-close' {{action 'toggleVisibility'}}>{{fa-icon 'times-circle'}}</div>
       <h1>{{title}}</h1>

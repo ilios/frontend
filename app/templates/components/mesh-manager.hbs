@@ -17,7 +17,7 @@
     <div class='selectable-list'>
       <ul class='mesh-search-results'>
         {{#each sortedSearchResults as |term|}}
-          <li {{bind-attr class='term.isActive::disabled'}} {{action 'add' term}}>{{term.title}}</li>
+          <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>{{term.title}}</li>
         {{/each}}
       </ul>
     </div>

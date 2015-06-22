@@ -16,7 +16,7 @@
   <div class='parent-picker'>
     {{#liquid-if showCohortList class='vertical'}}
       {{#each currentCohort.objectivesByCompetency as |competency|}}
-        <h5 {{bind-attr class=':competency-title competency.selected:selected'}}>{{competency.title}}</h5>
+        <h5 class="competency-title {{if competency.selected 'selected'}}">{{competency.title}}</h5>
         <ul>
           {{#each competency.objectives as |objective|}}
             {{#if objective.selected}}
