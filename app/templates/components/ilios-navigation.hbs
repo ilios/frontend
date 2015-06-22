@@ -1,13 +1,13 @@
 <div class="sliding-navigation">
-	<a href='#' {{action 'toggleMenuVisibility'}} class="sliding-menu-button {{if isMenuVisible is-menu-visible}}">
+	<a href='#' {{action 'toggleMenuVisibility'}} class="sliding-menu-button {{if isMenuVisible 'is-menu-visible'}}">
 		{{fa-icon 'bars'}} {{t 'navigation.menu'}}
 	</a>
-	<nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible is-menu-visible}}">
+	<nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible 'is-menu-visible'}}">
 		<ul>
       {{#each menuItems as |item|}}
         <li>{{#link-to item.route}}{{fa-icon item.icon}} {{item.name}}{{/link-to}}</li>
       {{/each}}
 		</ul>
 	</nav>
-	<div {{action 'toggleMenuVisibility'}} class="menu-screen {{if isMenuVisible is-menu-visible}}"></div>
+	<div {{action 'toggleMenuVisibility'}} class="menu-screen {{if isMenuVisible 'is-menu-visible'}}"></div>
 </div>
