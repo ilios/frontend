@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import {
   moduleForComponent,
   test
@@ -5,7 +6,15 @@ import {
 
 moduleForComponent('ilios-header', 'IliosHeaderComponent', {
   // specify the other units that are required for this test
-  needs: ['component:action-menu']
+  needs: ['component:action-menu'],
+  setup: function () {
+    this.registry.register('service:-routing', Ember.Object.extend({
+      availableRoutes: function() { return ['index']; },
+      hasRoute: function(name) { return name === 'index'; },
+      isActiveForRoute: function() { return true; },
+      generateURL: function() { return "/"; }
+    }));
+  }
 });
 
 test('it renders', function(assert) {

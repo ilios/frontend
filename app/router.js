@@ -6,12 +6,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('dashboard', function() {
-    this.route('day');
-    this.route('week');
-    this.route('month');
-    this.route('year');
-  });
+  this.resource('dashboard');
   this.route('courses');
   this.resource('course', { path: 'courses/:course_id'}, function(){
     this.route('publicationCheck', { path: '/publicationcheck'});

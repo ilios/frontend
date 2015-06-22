@@ -36,7 +36,7 @@ test('load month calendar', function(assert) {
   });
   visit('/dashboard?view=month');
   andThen(function() {
-    assert.equal(currentPath(), 'dashboard.index');
+    assert.equal(currentPath(), 'dashboard');
     let events = find('div.event');
     assert.equal(events.length, 2);
     let eventInfo = '';
@@ -63,7 +63,7 @@ test('load week calendar', function(assert) {
   });
   visit('/');
   andThen(function() {
-    assert.equal(currentPath(), 'dashboard.index');
+    assert.equal(currentPath(), 'dashboard');
     let events = find('div.event');
     assert.equal(events.length, 2);
     let eventInfo = '';
@@ -95,7 +95,7 @@ test('load day calendar', function(assert) {
   });
   visit('/dashboard?view=day');
   andThen(function() {
-    assert.equal(currentPath(), 'dashboard.index');
+    assert.equal(currentPath(), 'dashboard');
     let events = find('div.event');
     assert.equal(events.length, 1);
     let eventInfo = '';
