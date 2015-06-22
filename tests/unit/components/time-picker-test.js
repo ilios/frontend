@@ -1,19 +1,24 @@
+/* global moment */
+import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('time-picker', 'Unit | Component | time picker', {
   // Specify the other units  that are required for this test
-  needs: ['helper:is-equal'],
-  unit: true
+  // needs: ['helper:is-equal'],
+  integration: true
 });
 
 test('it renders', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
 
-  // Creates the component instance
-  var component = this.subject();
-  assert.equal(component._state, 'preRender');
+  let today = moment();
+  let date = today.toDate();
+  this.set('date', date);
+  this.render(hbs`{{time-picker date=date}}`);
 
-  // Renders the component to the page
-  this.render();
-  assert.equal(component._state, 'inDOM');
+  let selects = this.$('select');
+  assert.equal(selects.length, 3);
+  assert.equal($(selects[0]).val(), today.format('h'));
+  assert.equal($(selects[1]).val(), today.format('m'));
+  assert.equal($(selects[2]).val(), today.format('a'));
 });
