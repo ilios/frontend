@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('time-picker', 'Unit | Component | time picker', {
   // Specify the other units  that are required for this test
-  needs: ['component:x-select', 'component:x-option'],
+  needs: ['helper:is-equal'],
   unit: true
 });
 

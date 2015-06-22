@@ -1,15 +1,21 @@
-{{#x-select value=hour action="changeHour" classNames='hour'}}
-  {{#each hours as |hour|}}
-    {{#x-option value=hour}}{{hour}}{{/x-option}}
+<select {{action 'changeHour' on='change'}} class='hour'>
+  {{#each hours as |listHour|}}
+    <option value="{{listHour}}" selected={{is-equal listHour hour}}>
+      {{listHour}}
+    </option>
   {{/each}}
-{{/x-select}}
-{{#x-select value=minute action="changeMinute" classNames='minute'}}
-  {{#each minutes as |minute|}}
-    {{#x-option value=minute}}{{minute}}{{/x-option}}
+</select>
+<select {{action 'changeMinute' on='change'}} class='minute'>
+  {{#each minutes as |listMinute|}}
+    <option value="{{listMinute}}" selected={{is-equal listMinute minute}}>
+      {{listMinute}}
+    </option>
   {{/each}}
-{{/x-select}}
-{{#x-select value=ampm action="changeAmPm" classNames='ampm'}}
-  {{#each ampms as |ampm|}}
-    {{#x-option value=ampm}}{{ampm}}{{/x-option}}
+</select>
+<select {{action 'changeAmPm' on='change'}} class='ampm'>
+  {{#each ampms as |listAmPm|}}
+    <option value="{{listAmPm}}" selected={{is-equal listAmPm ampm}}>
+      {{listAmPm}}
+    </option>
   {{/each}}
-{{/x-select}}
+</select>

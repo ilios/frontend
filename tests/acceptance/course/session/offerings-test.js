@@ -209,7 +209,7 @@ test('instructors', function(assert) {
 });
 
 test('create new offering', function(assert) {
-  assert.expect();
+  assert.expect(13);
   visit(url);
   var container;
   andThen(function() {
@@ -260,7 +260,7 @@ test('create new offering', function(assert) {
 });
 
 test('create new multiday offering', function(assert) {
-  assert.expect();
+  assert.expect(10);
   visit(url);
   var container;
   andThen(function() {
@@ -316,50 +316,6 @@ test('create new multiday offering', function(assert) {
     assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
   });
 });
-
-// test('create new multiday offering', function(assert) {
-//   assert.expect();
-//   visit(url);
-//   var container;
-//   andThen(function() {
-//     container = find('.session-offerings');
-//     click('.detail-actions button', container).then(function(){
-//       click('.detail-actions li:eq(0)', container);
-//     });
-//   });
-//   andThen(function(){
-//     click('.offering-edit-ismultiday label', container).then(function(){
-//       fillIn(find('.offering-edit-start-day input', container), '2001-09-11');
-//       fillIn(find('.offering-edit-end-day input', container), '2001-09-12');
-//       fillIn(find('.offering-edit-start-time input', container), '14:15');
-//       fillIn(find('.offering-edit-end-time input', container), '12:23');
-//       fillIn(find('.offering-edit-room input', container), 'testing palace');
-//       click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
-//       let input = find('.search-box input', container);
-//       fillIn(input, 'guy');
-//       click('span.search-icon', container).then(()=>{
-//         click('.live-search .results li:eq(0)').then(() => {
-//           fillIn(input, 'group');
-//           click('span.search-icon', container).then(()=>{
-//             click('.live-search .results li:eq(0)').then(()=> {
-//               click(find('.bigadd', container));
-//             });
-//           });
-//         });
-//       });
-//     });
-//   });
-//   andThen(function(){
-//     let block = find('.session-offerings .offering-block:eq(0)');
-//     let expectedText = 'Multiday' +
-//       'Starts Tuesday September 11th @ 2:15PM' +
-//       'Ends Wednesday September 12th @ 12:23PM';
-//     assert.equal(getElementText(find('.multiday-offering-block-time-time', block)), getText(expectedText));
-//     assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
-//     assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
-//     assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
-//   });
-// });
 
 test('confirm removal message', function(assert) {
   assert.expect(2);
