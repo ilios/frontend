@@ -55,7 +55,7 @@
     "ember-rl-dropdown": "0.2.0",
     "ember-try": "0.0.5",
     "emberx-select": "1.1.1",
-    "liquid-fire": "0.19.4",
+    "liquid-fire": "0.20.4",
     "moment": "^2.10.0",
     "pluralize": "^1.1.2"
   },
