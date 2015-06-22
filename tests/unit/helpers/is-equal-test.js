@@ -5,6 +5,10 @@ module('Unit | Helper | is equal');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  var result = isEqual(42);
+  var result = isEqual(42, 42);
+  assert.ok(result);
+  result = isEqual(42, '42');
+  assert.ok(!result);
+  result = isEqual('42', '42');
   assert.ok(result);
 });
