@@ -19,6 +19,6 @@ test('it renders', function(assert) {
   let selects = this.$('select');
   assert.equal(selects.length, 3);
   assert.equal($(selects[0]).val(), today.format('h'));
-  assert.equal($(selects[1]).val(), today.format('m'));
+  assert.equal($(selects[1]).val(), today.format('mm'));
   assert.equal($(selects[2]).val(), today.format('a'));
 });
