@@ -14,7 +14,7 @@
       {{/if}}
       {{#if showReview}}
         {{#link-to 'program.publicationCheck' program}}
-          <li class='good' >{{t 'publish.reviewMissingItems' countBinding='program.allPublicationIssuesLength'}}</li>
+          <li class='good' >{{t 'publish.reviewMissingItems' count=program.allPublicationIssuesLength}}</li>
         {{/link-to}}
       {{/if}}
       {{#if showTbd}}

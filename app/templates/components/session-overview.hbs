@@ -16,7 +16,7 @@
       {{/if}}
       {{#if showReview}}
         {{#link-to 'session.publicationCheck' course session}}
-          <li class='good' >{{t 'publish.reviewMissingItems' countBinding='session.allPublicationIssuesLength'}}</li>
+          <li class='good' >{{t 'publish.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
         {{/link-to}}
       {{/if}}
       {{#if showTbd}}
