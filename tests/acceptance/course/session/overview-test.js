@@ -211,10 +211,10 @@ test('change suplimental', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.session-overview');
-    assert.ok(!find('.sessionsupplemental .editinplace input', container).is(':checked'));
+    assert.ok(!find('.sessionsupplemental .editinplace input', container).is(':checked'), 'initiall not checked');
     click(find('.sessionsupplemental .editinplace .control', container));
     andThen(function(){
-      assert.ok(find('.sessionsupplemental .editinplace input', container).is(':checked'));
+      assert.ok(find('.sessionsupplemental .editinplace input', container).is(':checked'), 'result of clicking it checked');
     });
   });
 });
@@ -227,7 +227,7 @@ test('change special attire', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.session-overview');
-    assert.ok(!find('.sessionspecialattire .editinplace input', container).is(':checked'));
+    assert.ok(!find('.sessionspecialattire .editinplace input', container).is(':checked'), 'initiall not checked');
     click(find('.sessionspecialattire .editinplace .control', container));
     andThen(function(){
       assert.ok(find('.sessionspecialattire .editinplace input', container).is(':checked'));
@@ -243,7 +243,7 @@ test('change special equipment', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.session-overview');
-    assert.ok(!find('.sessionspecialequipment .editinplace input', container).is(':checked'));
+    assert.ok(!find('.sessionspecialequipment .editinplace input', container).is(':checked'), 'initiall not checked');
     click(find('.sessionspecialequipment .editinplace .control', container));
     andThen(function(){
       assert.ok(find('.sessionspecialequipment .editinplace input', container).is(':checked'));
