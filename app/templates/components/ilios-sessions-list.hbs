@@ -46,46 +46,46 @@
           </tr>
         </thead>
         <tbody>
-          {{#each filteredContent as |session|}}
+          {{#each filteredContent as |sessionProxy|}}
             <tr>
               <td class='text-left' colspan=2>
-                {{#link-to 'session.index' course session}}
-                  {{fa-icon 'external-link-square'}} {{session.title}}
+                {{#link-to 'session.index' course sessionProxy.content}}
+                  {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
                 {{/link-to}}
               </td>
-              <td class='text-left'>{{session.sessionType.title}}</td>
-              <td class='text-center'>{{session.learnerGroupCount}}</td>
+              <td class='text-left'>{{sessionProxy.sessionType.title}}</td>
+              <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
               <td class='text-center'>
-                {{#if session.firstOfferingDate.content}}
-                  {{moment session.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
+                {{#if sessionProxy.firstOfferingDate.content}}
+                  {{moment sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
                 {{/if}}
               </td>
-              <td class='text-center clickable editable' {{action 'toggleExpandedOffering' session}}>
-                {{session.offerings.length}}
-                {{#if session.expandOfferings}}
+              <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>
+                {{sessionProxy.offerings.length}}
+                {{#if sessionProxy.expandOfferings}}
                   {{fa-icon 'caret-down'}}
                 {{else}}
                   {{fa-icon 'eye'}}
                 {{/if}}
               </td>
-              <td class='text-center'>{{publication-status item=session showIcon=false}}</td>
+              <td class='text-center'>{{publication-status item=sessionProxy.content showIcon=false}}</td>
               <td class='text-center'>
                 {{#action-menu}}
                   <li {{action 'edit'}}>Edit</li>
                 {{/action-menu}}
               </td>
             </tr>
-            {{#if session.expandOfferings}}
+            {{#if sessionProxy.expandOfferings}}
               <tr class='donthover'>
-                <td colspan=8 class='text-right' {{action 'toggleExpandedOffering' session}}>
+                <td colspan=8 class='text-right' {{action 'toggleExpandedOffering' sessionProxy}}>
                   {{t 'general.close'}}
                   {{fa-icon 'times'}}
                 </td>
               </tr>
               <tr>
                 <td colspan=8>
-                  {{#if session.offerings.length}}
-                    {{session-offerings-list session=session.content editable=false}}
+                  {{#if sessionProxy.offerings.length}}
+                    {{session-offerings-list session=sessionProxy.content editable=false}}
                   {{else}}
                     <p>{{t 'sessions.noOfferings'}}</p>
                   {{/if}}
