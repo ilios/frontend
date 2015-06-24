@@ -39,7 +39,7 @@
               <label>{{t "general.directors"}}:</label>
               <div>
                 <span>
-                  {{#each user in sortedDirectors}}
+                  {{#each sortedDirectors as |user|}}
                     {{user.fullName}},
                   {{/each}}
                 </span>
@@ -55,10 +55,10 @@
         <div class='detail-content'>
           {{#if course.competencies.isFulfilled}}
           <ul class='static-list'>
-            {{#each domain in course.domains}}
+            {{#each course.domains as |domain|}}
               <li>{{domain.title}}
                 <ul>
-                  {{#each competency in domain.subCompetencies}}
+                  {{#each domain.subCompetencies as |competency|}}
                     <li>{{competency.title}}</li>
                   {{/each}}
                 </ul>
@@ -78,7 +78,7 @@
 
         <div class='detail-content'>
           <ul class='inline-list'>
-            {{#each topic in sortedTopics}}
+            {{#each sortedTopics as |topic|}}
               <li>{{topic.title}}</li>
             {{/each}}
           </ul>
@@ -91,7 +91,7 @@
         </div>
         <div class='detail-content'>
           <ul>
-            {{#each objective in course.objectives}}
+            {{#each course.objectives as |objective|}}
               <li>{{objective.textTitle}}</li>
             {{/each}}
           </ul>
@@ -116,7 +116,7 @@
               </tr>
             </thead>
             <tbody>
-              {{#each lm in course.learningMaterials}}
+              {{#each course.learningMaterials as |lm|}}
                 <tr>
                   <td class='text-left' colspan=2>
                     {{lm.learningMaterial.title}}
@@ -145,7 +145,7 @@
         </div>
         <div class='detail-content'>
           <ul class='inline-list'>
-            {{#each descriptor in sortedMeshDescriptors}}
+            {{#each sortedMeshDescriptors as |descriptor|}}
               <li>{{descriptor.title}}</li>
             {{/each}}
           </ul>
@@ -154,7 +154,7 @@
     </div>
   </div>
 
-  {{#each session in sortedSessionProxies}}
+  {{#each sortedSessionProxies as |session|}}
     <div class='detail-view print-detail-view'>
       <div class='detail-view-main-title'>
         <div class='detail-header'>
@@ -202,7 +202,7 @@
         </div>
         <div class='detail-content'>
           <ul>
-            {{#each objective in course.objectives}}
+            {{#each course.objectives as |objective|}}
               <li>{{objective.textTitle}}</li>
             {{/each}}
           </ul>
@@ -226,7 +226,7 @@
               </tr>
             </thead>
             <tbody>
-              {{#each lm in session.sessionLearningMaterials}}
+              {{#each session.sessionLearningMaterials as |lm|}}
                 <tr>
                   <td class='text-left' colspan=2>
                     {{lm.learningMaterial.title}}
@@ -256,7 +256,7 @@
 
         <div class='detail-content'>
           <ul class='inline-list'>
-            {{#each topic in session.sortedTopics}}
+            {{#each session.sortedTopics as |topic|}}
               <li>{{topic.title}}</li>
             {{/each}}
           </ul>
@@ -269,7 +269,7 @@
         </div>
         <div class='detail-content'>
           <ul class='inline-list'>
-            {{#each descriptor in session.sortedMeshDescriptors}}
+            {{#each session.sortedMeshDescriptors as |descriptor|}}
               <li>{{descriptor.title}}</li>
             {{/each}}
           </ul>
@@ -291,7 +291,7 @@
                  </tr>
                </thead>
                <tbody>
-                 {{#each offering in session.offerings}}
+                 {{#each session.offerings as |offering|}}
                    <tr>
                      <td class='text-left'>
                        {{moment offering.startDate 'MM/DD/YYYY LT'}} -
@@ -300,7 +300,7 @@
                      <td class='text-left'>{{offering.room}}</td>
                      <td class='text-left'>
                        <ul>
-                         {{#each user in offering.allInstructors}}
+                         {{#each offering.allInstructors as |user|}}
                            <li>{{user.fullName}}</li>
                          {{/each}}
                        </ul>

@@ -48,9 +48,7 @@ export default Ember.Component.extend({
         newLearnerGroup.save().then(
           savedLearnerGroup => {
             this.get('parentGroup').get('children').addObject(savedLearnerGroup);
-            this.get('parentGroup').save();
             cohort.get('learnerGroups').addObject(savedLearnerGroup);
-            cohort.save();
           }
         );
       });

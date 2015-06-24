@@ -31,7 +31,7 @@
   <div class='detail-content'>
     {{#liquid-if newObjectives.length class='vertical'}}
       <section class='resultslist-new'>
-        {{#each objective in newObjectives}}
+        {{#each newObjectives as |objective|}}
           <section class='newobjective'>
             <label>
               {{t 'general.title'}}:

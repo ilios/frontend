@@ -12,15 +12,15 @@
     {{else}}
       {{#if results.length}}
         <ul class='results'>
-          {{#each proxy in results}}
+          {{#each results as |proxy|}}
             {{#if proxy.isUser}}
-              <li {{action 'addUser' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
+              <li {{action 'addUser' proxy.content}}class="{{if proxy.isActive 'active' 'inactive'}}">
                 <div class='livesearch-user-name'>{{proxy.fullName}}</div>
                 <div class='livesearch-user-email'>{{proxy.email}}</div>
               </li>
             {{/if}}
             {{#if proxy.isInstructorGroup}}
-              <li {{action 'addInstructorGroup' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
+              <li {{action 'addInstructorGroup' proxy.content}}class="{{if proxy.isActive 'active' 'inactive'}}">
                 {{proxy.title}}
               </li>
             {{/if}}

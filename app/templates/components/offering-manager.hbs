@@ -1,67 +1,82 @@
 {{#liquid-if isEditing class='horizontal'}}
-  <div class='offering-edit'>
-    <span class='actions'>
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    </span>
-    <div class="inline-label-data-block offering-edit-start-day">
-      {{#if isMultiDate}}
-        <label>{{t "general.startDate"}}:</label>
-      {{else}}
-        <label>{{t "general.date"}}:</label>
-      {{/if}}
-      <div>{{input value=startDay}}</div>
-    </div> <br />
-    {{#liquid-if isMultiDay class='vertical'}}
-      <div class="inline-label-data-block offering-edit-end-day">
-        <label>{{t "general.endDate"}}:</label>
-        <div>{{input value=endDay}}</div>
-      </div> <br />
-    {{/liquid-if}}
-    <div class="inline-label-data-block offering-edit-start-time">
-      <label>{{t "general.startTime"}}:</label>
-      <div>{{input value=startTime}}</div>
-    </div> <br />
-    <div class="inline-label-data-block offering-edit-end-time">
-      <label>{{t "general.endTime"}}:</label>
-      <div>{{input value=endTime}}</div>
-    </div> <br />
-    <div class="inline-label-data-block offering-edit-ismultiday">
-      <label class='switch switch-green switch-wide' {{action 'toggleMultiDay'}}>
-        <input class='switch-input' {{bind-attr checked=isMultiDay }} type='checkbox' />
-        <span class="switch-label" data-on='{{t 'general.multiDay'}}' data-off='{{t 'general.singleDay'}}'></span>
-        <span class="switch-handle"></span>
-      </label>
-    </div><br />
-    <div class="inline-label-data-block offering-edit-room">
-      <label>{{t "general.location"}}:</label>
-      <div>{{input value=room}}</div>
-    </div> <br />
-    <div class="offering-edit-learner_groups">
-      <label>{{t "general.learnerGroups"}}:</label>
-      {{learnergroup-selection-manager
-        subject=this
-        cohorts=cohorts
-      }}
-    </div> <br />
-    <div class="offering-edit-instructors">
-      <label>{{t "general.instructors"}}:</label>
-      {{instructor-selection-manager
-        addInstructor='addInstructorToBuffer'
-        addInstructorGroup='addInstructorGroupToBuffer'
-        removeInstructor='removeInstructorFromBuffer'
-        removeInstructorGroup='removeInstructorGroupFromBuffer'
-        availableInstructorGroups=currentUser.model.primarySchool.instructorGroups
-        instructorGroups=instructorGroupBuffer
-        instructors=instructorBuffer
-      }}
+  <div class="form-container">
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.startDate'}}:</label>
+      <div class="form-data startdate">
+        {{pikaday-input value=buffer.startDate format='MM/DD/YYYY'}}
+      </div>
     </div>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.startTime'}}:</label>
+      <div class="form-data">
+        <span class='starttime'>
+          {{time-picker date=buffer.startDate action='changeStartTime'}}
+        </span>
+      </div>
+    </div>
+    {{#if buffer.isMultiDay}}
+      <div class="form-col-12">
+        <label class="form-label">{{t 'general.endDate'}}:</label>
+        <div class="form-data enddate">
+          {{pikaday-input value=buffer.endDate format='MM/DD/YYYY'}}
+        </div>
+      </div>
+    {{/if}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.endTime'}}:</label>
+      <div class="form-data">
+        <span class='endtime'>
+          {{time-picker date=buffer.endDate action='changeEndTime'}}
+        </span>
+      </div>
+    </div>
+    <div class="form-col-12">
+      <div class="form-data ismultiday">
+        <label class='switch switch-green switch-wide' {{action 'toggleMultiDay'}}>
+          <input class='switch-input' checked={{buffer.isMultiDay}} type='checkbox' />
+          <span class="switch-label" data-on='{{t 'general.multiDay'}}' data-off='{{t 'general.singleDay'}}'></span>
+          <span class="switch-handle"></span>
+        </label>
+      </div>
+    </div>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.location'}}:</label>
+      <div class="form-data"><span class='room'>{{input value=buffer.room}}</span></div>
+    </div>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.learnerGroups'}}:</label>
+      <div class="form-data learner-groups">
+        {{learnergroup-selection-manager
+          subject=buffer
+          cohorts=cohorts
+        }}
+      </div>
+    </div>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.instructors'}}:</label>
+      <div class="form-data instructor-groups">
+        {{instructor-selection-manager
+          addInstructor='addInstructorToBuffer'
+          addInstructorGroup='addInstructorGroupToBuffer'
+          removeInstructor='removeInstructorFromBuffer'
+          removeInstructorGroup='removeInstructorGroupFromBuffer'
+          availableInstructorGroups=currentUser.model.primarySchool.instructorGroups
+          instructorGroups=buffer.instructorGroups
+          instructors=buffer.instructors
+        }}
+      </div>
+    </div>
+    <div class="form-col-6 form-data-submit">
+      <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+    </div>
+
   </div>
 {{else}}
   <div class='offering-block-time-offering  {{if showRemoveConfirmation "offering-confirm-removal"}}'>
     <span class='offering-block-time-offering-learner_groups offering-detail-box'>
       <ul>
-        {{#each learnerGroup in offering.learnerGroups}}
+        {{#each offering.learnerGroups as |learnerGroup|}}
           <li>{{learnerGroup.title}}</li>
         {{else}}
           <li>{{fa-icon 'group'}}</li>
@@ -71,7 +86,7 @@
     <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
     <span class='offering-block-time-offering-instructors offering-detail-box'>
       <ul>
-        {{#each instructor in offering.allInstructors}}
+        {{#each offering.allInstructors as |instructor|}}
           <li>{{instructor.fullName}}</li>
         {{else}}
           <li>{{fa-icon 'user-plus'}}</li>

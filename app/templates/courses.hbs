@@ -8,7 +8,7 @@
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
           {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each school in schools}}
+            {{#each schools as |school|}}
               <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -19,7 +19,7 @@
     </div>
     <div id='yearsfilter' class="filter">
       {{#action-menu title=selectedYear.academicYearTitle icon=false}}
-        {{#each year in years}}
+        {{#each years as |year|}}
           <li {{action 'changeSelectedYear' year}}>{{year.academicYearTitle}}</li>
         {{/each}}
       {{/action-menu}}
@@ -40,7 +40,7 @@
     </div>
     {{#if newCourses.length}}
       <section class='resultslist-new'>
-        {{#each courseProxy in newCourses}}
+        {{#each newCourses as |courseProxy|}}
           {{#liquid-unless courseProxy.isSaved class='horizontal'}}
             {{new-course course=courseProxy.content years=years save='saveNewCourse' cancel='removeNewCourse'}}
           {{else}}

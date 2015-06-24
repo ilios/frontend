@@ -50,7 +50,7 @@
       {{/if}}
     {{else}}
       {{#if newLearningMaterials.length}}
-        {{#each lm in newLearningMaterials}}
+        {{#each newLearningMaterials as |lm|}}
           {{new-learningmaterial
             learningMaterial=lm
             learningMaterialStatuses=learningMaterialStatuses
@@ -73,7 +73,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each lmProxy in proxyMaterials}}
+            {{#each proxyMaterials as |lmProxy|}}
               <tr>
                 <td class='text-left clickable link' colspan=2 {{action 'manageMaterial' lmProxy.content}}>
                   {{fa-icon 'external-link-square'}} {{lmProxy.learningMaterial.title}}
@@ -98,7 +98,7 @@
                   {{#if lmProxy.sortedDescriptors.length}}
                     <ul>
                       <a href='#' {{action 'manageDescriptors' lmProxy.content}}>
-                        {{#each descriptor in lmProxy.sortedDescriptors}}
+                        {{#each lmProxy.sortedDescriptors as |descriptor|}}
                           <li>{{descriptor.title}}</li>
                         {{/each}}
                       </a>

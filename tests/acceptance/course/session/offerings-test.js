@@ -5,6 +5,7 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
@@ -68,7 +69,7 @@ module('Acceptance: Session - Offerings', {
       cohort: 1,
     }));
     fixtures.offerings = [];
-    let today = moment().hour(8);
+    let today = moment().hour(9);
     fixtures.today = today;
     fixtures.offerings.pushObject(server.create('offering', {
       session: 1,
@@ -208,21 +209,31 @@ test('instructors', function(assert) {
 });
 
 test('create new offering', function(assert) {
-  assert.expect();
+  assert.expect(13);
   visit(url);
   var container;
   andThen(function() {
     container = find('.session-offerings');
     click('.detail-actions button', container).then(function(){
-      click('.detail-actions li:eq(0)', container);
+      return click('.detail-actions li:eq(0)', container).then(function(){
+        return click(find('.offering-detail-box span', container).eq(0));
+      });
     });
   });
   andThen(function(){
-    fillIn(find('.offering-edit-start-day input', container), '2001-09-11');
-    fillIn(find('.offering-edit-start-time input', container), '02:15');
-    fillIn(find('.offering-edit-end-time input', container), '03:23');
-    fillIn(find('.offering-edit-room input', container), 'testing palace');
-    click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
+    var interactor = openDatepicker(find('.startdate input', container).eq(0));
+    interactor.selectDate(new Date(2011, 8, 11));
+
+    let startBoxes = find('.offering-manager .starttime select', container);
+    pickOption(startBoxes[0], '2', assert);
+    pickOption(startBoxes[1], '15', assert);
+    pickOption(startBoxes[2], 'AM', assert);
+    let endBoxes = find('.offering-manager .endtime select', container);
+    pickOption(endBoxes[0], '3', assert);
+    pickOption(endBoxes[1], '23', assert);
+    pickOption(endBoxes[2], 'AM', assert);
+    fillIn(find('.offering-manager .room input', container), 'testing palace');
+    click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
     let input = find('.search-box input', container);
     fillIn(input, 'guy');
     click('span.search-icon', container).then(()=>{
@@ -230,7 +241,7 @@ test('create new offering', function(assert) {
         fillIn(input, 'group');
         click('span.search-icon', container).then(()=>{
           click('.live-search .results li:eq(0)').then(()=> {
-            click(find('.bigadd', container));
+            click(find('.done', container));
           });
         });
       });
@@ -238,7 +249,7 @@ test('create new offering', function(assert) {
   });
   andThen(function(){
     let block = find('.session-offerings .offering-block:eq(0)');
-    assert.equal(getElementText(find('.offering-block-date-dayofweek', block)), getText('Tuesday'));
+    assert.equal(getElementText(find('.offering-block-date-dayofweek', block)), getText('Sunday'));
     assert.equal(getElementText(find('.offering-block-date-dayofmonth', block)), getText('September 11th'));
     assert.equal(getElementText(find('.offering-block-time-time-starttime', block)), getText('Starts: 2:15AM'));
     assert.equal(getElementText(find('.offering-block-time-time-endtime', block)), getText('Ends: 3:23AM'));
@@ -249,23 +260,35 @@ test('create new offering', function(assert) {
 });
 
 test('create new multiday offering', function(assert) {
-  assert.expect();
+  assert.expect(10);
   visit(url);
   var container;
   andThen(function() {
     container = find('.session-offerings');
     click('.detail-actions button', container).then(function(){
-      click('.detail-actions li:eq(0)', container);
+      return click('.detail-actions li:eq(0)', container).then(function(){
+        return click(find('.offering-detail-box span', container).eq(0));
+      });
     });
   });
   andThen(function(){
-    click('.offering-edit-ismultiday label', container).then(function(){
-      fillIn(find('.offering-edit-start-day input', container), '2001-09-11');
-      fillIn(find('.offering-edit-end-day input', container), '2001-09-12');
-      fillIn(find('.offering-edit-start-time input', container), '14:15');
-      fillIn(find('.offering-edit-end-time input', container), '12:23');
-      fillIn(find('.offering-edit-room input', container), 'testing palace');
-      click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
+    click('.offering-manager .ismultiday label', container).then(function(){
+      var startDateInteractor = openDatepicker(find('.startdate input', container));
+      startDateInteractor.selectDate(new Date(2011, 8, 11));
+
+      var endDateInteractor = openDatepicker(find('.enddate input', container));
+      endDateInteractor.selectDate(new Date(2011, 8, 12));
+
+      let startBoxes = find('.offering-manager .starttime select', container);
+      pickOption(startBoxes[0], '2', assert);
+      pickOption(startBoxes[1], '15', assert);
+      pickOption(startBoxes[2], 'AM', assert);
+      let endBoxes = find('.offering-manager .endtime select', container);
+      pickOption(endBoxes[0], '12', assert);
+      pickOption(endBoxes[1], '23', assert);
+      pickOption(endBoxes[2], 'PM', assert);
+      fillIn(find('.offering-manager .room input', container), 'testing palace');
+      click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
       let input = find('.search-box input', container);
       fillIn(input, 'guy');
       click('span.search-icon', container).then(()=>{
@@ -273,7 +296,7 @@ test('create new multiday offering', function(assert) {
           fillIn(input, 'group');
           click('span.search-icon', container).then(()=>{
             click('.live-search .results li:eq(0)').then(()=> {
-              click(find('.bigadd', container));
+              click(find('.done', container));
             });
           });
         });
@@ -281,10 +304,12 @@ test('create new multiday offering', function(assert) {
     });
   });
   andThen(function(){
+    let today = moment().format('dddd MMMM Do');
+
     let block = find('.session-offerings .offering-block:eq(0)');
     let expectedText = 'Multiday' +
-      'Starts Tuesday September 11th @ 2:15PM' +
-      'Ends Wednesday September 12th @ 12:23PM';
+      'Starts Sunday September 11th @ 2:15AM' +
+      'Ends ' + today + ' @ 12:23PM';
     assert.equal(getElementText(find('.multiday-offering-block-time-time', block)), getText(expectedText));
     assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
     assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));

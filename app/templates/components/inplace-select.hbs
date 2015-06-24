@@ -7,7 +7,7 @@
         {{#if showSelectPrompt}}
           {{#x-option value=null}}{{selectPrompt}}{{/x-option}}
         {{/if}}
-        {{#each option in proxiedOptions}}
+        {{#each proxiedOptions as |option|}}
           {{#x-option value=option.value}}{{option.label}}{{/x-option}}
         {{/each}}
       {{/x-select}}

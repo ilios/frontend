@@ -1,4 +1,4 @@
-/* global require, module, process */
+/* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 var env = EmberApp.env() || 'development';
@@ -26,8 +26,8 @@ var app = new EmberApp({
   minifyCSS: { enabled: isProductionLikeBuild },
   minifyJS: { enabled: isProductionLikeBuild },
 
-  tests: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
-  hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+  tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+  hinting: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
 });
 
 app.import('bower_components/ember-i18n/lib/i18n.js');

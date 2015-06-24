@@ -7,7 +7,7 @@
       sessionTypes=sessionController.sessionTypes
     }}
 
-    {{#link-to 'session.index' courseController.model sessionController.model}}{{t 'general.backToTitle' titleBinding='sessionController.model.title'}}{{/link-to}}
+    {{#link-to 'session.index' courseController.model sessionController.model}}{{t 'general.backToTitle' title=sessionController.model.title}}{{/link-to}}
 
     {{session-publicationcheck session=sessionController.model}}
   </div>

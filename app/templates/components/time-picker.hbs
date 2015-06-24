@@ -1,0 +1,21 @@
+<select {{action 'changeHour' on='change'}} class='hour'>
+  {{#each hours as |listHour|}}
+    <option value="{{listHour}}" selected={{is-equal listHour hour}}>
+      {{listHour}}
+    </option>
+  {{/each}}
+</select>
+<select {{action 'changeMinute' on='change'}} class='minute'>
+  {{#each minutes as |listMinute|}}
+    <option value="{{listMinute}}" selected={{is-equal listMinute minute}}>
+      {{listMinute}}
+    </option>
+  {{/each}}
+</select>
+<select {{action 'changeAmPm' on='change'}} class='ampm'>
+  {{#each ampms as |listAmPm|}}
+    <option value="{{listAmPm}}" selected={{is-equal listAmPm ampm}}>
+      {{listAmPm}}
+    </option>
+  {{/each}}
+</select>

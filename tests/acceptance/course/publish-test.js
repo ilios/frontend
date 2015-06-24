@@ -18,7 +18,11 @@ module('Acceptance: Course - Publish', {
     });
     server.create('publishEvent', {
       administrator: 4136,
-      courses: [1, 2],
+      courses: [1],
+    });
+    server.create('publishEvent', {
+      administrator: 4136,
+      courses: [2],
     });
     fixtures.publishedCourse = server.create('course', {
       year: 2013,
@@ -29,7 +33,7 @@ module('Acceptance: Course - Publish', {
     fixtures.scheduledCourse = server.create('course', {
       year: 2013,
       owningSchool: 1,
-      publishEvent: 1,
+      publishEvent: 2,
       publishedAsTbd: true,
       cohorts: [1],
     });

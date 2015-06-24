@@ -7,7 +7,7 @@
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
           {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each school in schools}}
+            {{#each schools as |school|}}
               <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -23,7 +23,7 @@
       <div id="program-selection" class="inline-data">
         {{#if hasMoreThanOneProgram}}
           {{#action-menu title=selectedProgram.title icon=false}}
-            {{#each program in programs}}
+            {{#each programs as |program|}}
               <li {{action 'changeSelectedProgram' program}}>{{program.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -39,7 +39,7 @@
       <div id="programyear-selection" class="inline-data">
         {{#if hasMoreThanOneProgramYear}}
           {{#action-menu title=selectedProgramYear.cohort.displayTitle icon=false}}
-            {{#each programYear in programYears}}
+            {{#each programYears as |programYear|}}
               <li {{action 'changeSelectedProgramYear' programYear}}>{{programYear.cohort.displayTitle}}</li>
             {{/each}}
           {{/action-menu}}
@@ -65,7 +65,7 @@
 
     {{#if newLearnerGroups.length}}
       <section class='resultslist-new'>
-        {{#each learnerGroup in newLearnerGroups}}
+        {{#each newLearnerGroups as |learnerGroup|}}
           {{new-learnergroup learnerGroup=learnerGroup save='saveNewLearnerGroup' cancel='removeNewLearnerGroup'}}
         {{/each}}
       </section>

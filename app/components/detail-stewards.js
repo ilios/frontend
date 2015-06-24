@@ -56,44 +56,40 @@ export default Ember.Component.extend({
     },
     save: function(){
       let programYear = this.get('programYear');
-      let stewards = programYear.get('stewards');
-      let removableStewards = stewards.filter(steward => !this.get('bufferStewards').contains(steward));
-      stewards.clear();
-      var promises = [];
-      removableStewards.forEach(steward => {
-        steward.deleteRecord();
-        promises.pushObject(steward.get('school').then(school => {
-          school.get('programYearStewards').removeObject(steward);
-          return school.save();
-        }));
-        promises.pushObject(steward.get('department').then(department => {
-          if(department){
-            department.get('programYearStewards').removeObject(steward);
-            return department.save();
-          }
-        }));
-        promises.pushObject(steward.save());
-      });
-      this.get('bufferStewards').forEach(function(steward){
-        steward.set('programYear', programYear);
-        promises.pushObject(steward.save().then(newSteward => {
-          stewards.pushObject(newSteward);
-          promises.pushObject(newSteward.get('school').then(school => {
-            school.get('programYearStewards').addObject(newSteward);
-            return school.save();
+      programYear.get('stewards').then(stewards => {
+        let removableStewards = stewards.filter(steward => !this.get('bufferStewards').contains(steward));
+        stewards.clear();
+        var promises = [];
+        removableStewards.forEach(steward => {
+          promises.pushObject(steward.get('school').then(school => {
+            school.get('programYearStewards').removeObject(steward);
           }));
-          promises.pushObject(newSteward.get('department').then(department => {
+          promises.pushObject(steward.get('department').then(department => {
             if(department){
-              department.get('programYearStewards').addObject(newSteward);
-              return department.save();
+              department.get('programYearStewards').removeObject(steward);
             }
           }));
-        }));
+          steward.deleteRecord();
+          promises.pushObject(steward.save());
+        });
+        this.get('bufferStewards').forEach(function(steward){
+          steward.set('programYear', programYear);
+          stewards.pushObject(steward);
+          promises.pushObject(steward.get('school').then(school => {
+            school.get('programYearStewards').addObject(steward);
+          }));
+          promises.pushObject(steward.get('department').then(department => {
+            if(department){
+              department.get('programYearStewards').addObject(steward);
+            }
+          }));
+          promises.pushObject(steward.save());
+        });
+        Ember.RSVP.all(promises).then( () => {
+          this.set('isManaging', false);
+        });
       });
-      promises.pushObject(programYear.save());
-      Ember.RSVP.all(promises).then( () => {
-        this.set('isManaging', false);
-      });
+
     },
     cancel: function(){
       this.set('bufferStewards', []);

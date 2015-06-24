@@ -8,7 +8,7 @@ export default DS.Model.extend({
   programs: DS.hasMany('program', {async: true}),
   programYears: DS.hasMany('program-year', {async: true}),
   relatedCounts: Ember.computed.collect(
-    'session.length',
+    'sessions.length',
     'courses.length',
     'programs.length',
     'programYears.length'

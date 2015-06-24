@@ -1,5 +1,5 @@
 <ul class='removable-list'>
-  {{#each instructorGroup in sortedInstructorGroups}}
+  {{#each sortedInstructorGroups as |instructorGroup|}}
     <li {{action 'remove' instructorGroup}}>
       {{instructorGroup.title}}
       {{fa-icon 'remove'}}
@@ -10,7 +10,7 @@
 <div class='selectable-list'>
   <h5>{{t 'courses.availalbeInstructorGroups'}}</h5>
   <ul>
-    {{#each instructorGroup in filteredAvailableInstructorGroups}}
+    {{#each filteredAvailableInstructorGroups as |instructorGroup|}}
       <li {{action 'add' instructorGroup}}>
           {{instructorGroup.title}}
       </li>

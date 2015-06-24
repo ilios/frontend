@@ -6,7 +6,7 @@
   save='save'
   remove='remove'
 }}
-  <section {{bind-attr class=":learnergroup isDirty"}}>
+  <section class="learnergroup {{if isDirty is-dirty}}">
     <div class='title'>
       <label>{{t "general.title"}}
         {{input value=bufferedTitle}}
@@ -27,7 +27,7 @@
 
     <div class='subgroups'>
       {{#expander-box titleTranslation='learnerGroups.subGroups'}}
-        {{#each child in group.children}}
+        {{#each group.children as |child|}}
           {{ilios-learnergroup group=child}}
         {{/each}}
         <section>

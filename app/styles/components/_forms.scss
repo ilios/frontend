@@ -50,7 +50,7 @@
     &.multi-row {
       @include clearfix;
       display: table;
-      
+
       .form-label {
         @include span-columns(2 of 5);
         display: table;
@@ -126,6 +126,12 @@
       @include span-columns(3 of 4);
     }
   }
+
+  .form-data .time-picker {
+    select {
+      min-width: 4em;
+    }
+  }
 }
 
 //put the universal (non parent-dependent) styles below here
@@ -136,7 +142,7 @@
 }
 
 .search-widget {
-  //fix the half-line that is cut off 
+  //fix the half-line that is cut off
   margin-left: 1px;
 }
 

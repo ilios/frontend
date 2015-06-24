@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('detail-instructors-list', 'Unit | Component | detail instructors list', {
+  unit: true,
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

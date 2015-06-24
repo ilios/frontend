@@ -25,11 +25,11 @@
         }}
     {{else}}
       <ul class='static-list'>
-        {{#each schoolProxy in stewardsBySchool}}
+        {{#each stewardsBySchool as |schoolProxy|}}
           <li>{{schoolProxy.title}}
             {{#if schoolProxy.stewardingDepartments.length}}
               <ul>
-                {{#each department in schoolProxy.stewardingDepartments}}
+                {{#each schoolProxy.stewardingDepartments as |department|}}
                   <li>{{department.title}}</li>
                 {{/each}}
               </ul>

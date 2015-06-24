@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each program in proxiedPrograms}}
+    {{#each proxiedPrograms as |program|}}
       <tr class="{{if program.showRemoveConfirmation 'confirm-removal'}}">
         <td class='text-left' colspan=3>
           {{#link-to 'program' program.content}}

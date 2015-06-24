@@ -10,7 +10,7 @@
     <div class="form-label">{{t "general.academicYear"}}:</div>
     <div class="form-data form-data-select form-input-row new-course-year">
       {{#action-menu title=currentAcademicYear icon=false}}
-        {{#each year in years}}
+        {{#each years as |year|}}
           <li {{action 'setYear' year}}>{{year.academicYearTitle}}</li>
         {{/each}}
       {{/action-menu}}

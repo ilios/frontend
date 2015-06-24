@@ -155,9 +155,6 @@ export default Ember.Component.extend({
             );
             promises.pushObject(promise);
           }
-          Ember.RSVP.all(promises).then(()=>{
-            user.save();
-          });
         }
       );
     }

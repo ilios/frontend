@@ -31,7 +31,14 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
     var filterMyCourses = this.get('userCoursesOnly');
     var exp = new RegExp(title, 'gi');
     var currentUser = this.get('currentUser.model');
-    return this.get('content').filter(function(course) {
+    let courses = [];
+    courses.pushObjects(this.get('model').toArray());
+    let savedNewCoursesInThisYear = this.get('newCourses')
+      .filter(proxy => proxy.get('isSaved'))
+      .filter(proxy => proxy.get('year') === this.get('selectedYear.title'));
+
+    courses.pushObjects(savedNewCoursesInThisYear);
+    return courses.filter(function(course) {
       let match = true;
       if(title != null && !course.get('title').match(exp)){
         match = false;
@@ -42,13 +49,19 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
 
       return match;
     }).sortBy('title');
-  }.property('debouncedFilter', 'content.@each', 'userCoursesOnly', 'currentUser.model.allRelatedCourses.@each'),
+  }.property(
+    'debouncedFilter',
+    'model.@each',
+    'userCoursesOnly',
+    'currentUser.model.allRelatedCourses.@each',
+    'newCourses.@each.isSaved'
+  ),
   actions: {
     editCourse: function(course){
       this.transitionToRoute('course', course);
     },
     removeCourse: function(course){
-      this.get('content').removeObject(course);
+      this.get('model').removeObject(course);
       course.deleteRecord();
       course.save();
     },
@@ -72,9 +85,6 @@ export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, 
       newCourse.save().then(savedCourse => {
         courseProxy.set('content', savedCourse);
         courseProxy.set('isSaved', true);
-        if(savedCourse.get('year') === this.get('selectedYear.title')){
-          this.get('model').pushObject(savedCourse);
-        }
       });
     },
     removeNewCourse: function(newCourse){
