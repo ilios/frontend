@@ -11,6 +11,7 @@ var fixtures = {};
 module('Acceptance: Learner Groups', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
   },
 
   afterEach: function() {

@@ -66,7 +66,9 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
-
+    ENV['simple-auth'] = {
+      store: 'simple-auth-session-store:ephemeral'
+    }
   }
 
   if (environment === 'heroku') {

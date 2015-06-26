@@ -13,6 +13,7 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Offerings', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('school', {
       instructorGroups: [1,2]
     });

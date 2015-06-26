@@ -11,6 +11,7 @@ var url = '/courses/1?details=true';
 module('Acceptance: Course - Topics', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school', {
       disciplines: [1,2]

@@ -9,12 +9,22 @@ export default Ember.Service.extend({
   model: function(){
     let deferred = Ember.RSVP.defer();
     let currentUserId = this.get('currentUserId');
-    if(currentUserId){
+    if (!currentUserId) {
+      var url = '/auth/whoami';
+      ajax(url).then(data => {
+        if(data.userId){
+          this.set('currentUserId', data.userId);
+          this.get('store').find('user', data.userId).then(function(user){
+            deferred.resolve(user);
+          });
+        } else {
+          deferred.resolve(null);
+        }
+      });
+    } else {
       this.get('store').find('user', currentUserId).then(function(user){
         deferred.resolve(user);
       });
-    } else {
-      deferred.resolve(null);
     }
 
     return DS.PromiseObject.create({

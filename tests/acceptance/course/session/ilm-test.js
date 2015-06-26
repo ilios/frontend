@@ -12,6 +12,7 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Independent Learning', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {
       id: 4136,
       primarySchool: 1

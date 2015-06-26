@@ -11,6 +11,7 @@ var fixtures = {};
 module('Acceptance: Courses', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     fixtures.schools = [];
     fixtures.schools.pushObjects(server.createList('school', 2));

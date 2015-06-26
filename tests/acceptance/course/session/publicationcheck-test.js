@@ -11,6 +11,7 @@ var application;
 module('Acceptance: Session - Publication Check', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('course', {
       sessions: [1,2]

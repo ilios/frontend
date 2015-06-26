@@ -42,6 +42,7 @@
     "ember-cli-qunit": "0.3.14",
     "ember-cli-sauce": "^1.0.0",
     "ember-cli-simple-auth": "^0.8.0",
+    "ember-cli-simple-auth-testing": "0.8.0",
     "ember-cli-simple-auth-token": "^0.7.2",
     "ember-cli-tooltipster": "0.0.9",
     "ember-cli-uglify": "^1.0.1",

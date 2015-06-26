@@ -13,6 +13,7 @@ var url = '/courses/1';
 module('Acceptance: Course - Overview', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
     fixtures.clerkshipTypes = [];

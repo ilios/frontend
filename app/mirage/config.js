@@ -261,7 +261,7 @@ export default function() {
     this.delete('/api/users/:id', 'user');
     this.post('/api/users', 'user');
 
-    this.get('/api//userevents/4136', function(db) {
+    this.get('/api/userevents/4136', function(db) {
       return {
         userEvents: db.userevents
       };
@@ -274,6 +274,12 @@ export default function() {
       let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
       return {
         jwt: encodedData
+      };
+    });
+
+    this.get('/auth/whoami', function() {
+      return {
+        userId: 4136
       };
     });
 }
