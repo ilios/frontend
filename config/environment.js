@@ -22,6 +22,15 @@ module.exports = function(environment) {
       types: [ 'success', 'warning', 'info', 'alert' ],
       injectionFactories: []
     },
+    'simple-auth': {
+      authorizer: 'simple-auth-authorizer:token'
+    },
+    'simple-auth-token': {
+      serverTokenEndpoint: '/auth/login',
+      serverTokenRefreshEndpoint: '/auth/refresh',
+      tokenPropertyName: 'jwt',
+      authorizationPrefix: 'Token ',
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

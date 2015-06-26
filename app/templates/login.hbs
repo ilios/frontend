@@ -1,0 +1,22 @@
+<form {{action 'authenticate' on='submit'}}>
+  <div class='form-container'>
+    <div class="detail-content">
+      <label class="form-col form-col-12">
+        <div class="form-label">{{t 'auth.username'}}:</div>
+        <div class="form-data form-data-text form-input-row">
+          {{input id='identification' value=identification}}
+        </div>
+      </label>
+      <label class="form-col form-col-12">
+        <div class="form-label">{{t 'auth.password'}}:</div>
+        <div class="form-data form-data-text form-input-row">
+          {{input id='password' type='password' value=password}}
+        </div>
+      </label>
+
+      <div class="form-col-6 form-data-submit">
+        <button type='submit' class='done text'>{{t 'auth.login'}}</button>
+      </div>
+    </div>
+  </div>
+</form>
