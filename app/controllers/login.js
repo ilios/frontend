@@ -9,13 +9,11 @@ export default Ember.Controller.extend({
       let authenticator = 'simple-auth-authenticator:jwt';
 
       this.get('session').authenticate(authenticator, credentials).then(() => {
-        //doing this as here until ember-simple-auth is an injectable service
-        var url = '/auth/whoami';
-        ajax(url).then(data => {
-          if(data.userId){
-            this.get('currentUser').set('currentUserId', data.userId);
-          }
-        });
+        let jwt = this.get('session').get('secure.jwt');
+        let sections = jwt.split('.');
+        let js = window.atob(sections[1]);
+        let obj = $.parseJSON(js);
+        this.get('currentUser').set('currentUserId', obj.user_id);
       });
     }
   }
