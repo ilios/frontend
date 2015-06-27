@@ -30,6 +30,7 @@ module.exports = function(environment) {
       serverTokenEndpoint: '/auth/login',
       serverTokenRefreshEndpoint: '/auth/refresh',
       tokenPropertyName: 'jwt',
+      authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
     },
     EmberENV: {
