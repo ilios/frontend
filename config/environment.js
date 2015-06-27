@@ -24,7 +24,8 @@ module.exports = function(environment) {
       injectionFactories: []
     },
     'simple-auth': {
-      authorizer: 'simple-auth-authorizer:token'
+      authorizer: 'simple-auth-authorizer:token',
+      store: 'simple-auth-session-store:local-storage'
     },
     'simple-auth-token': {
       serverTokenEndpoint: '/auth/login',

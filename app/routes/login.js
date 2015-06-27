@@ -17,8 +17,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
           if(!token.jwt){
             let shibbolethLoginUrl = config.loginUrl;
             if(EmberConfig.redirectAfterShibLogin){
-              let basePath = window.location.href.replace(/(.+\w\/)(.+)/,"/$2");
-              let attemptedRoute = encodeURIComponent(basePath + '/login');
+              let attemptedRoute = encodeURIComponent(window.location.href);
                shibbolethLoginUrl += '?target=' + attemptedRoute;
             }
             window.location.replace(shibbolethLoginUrl);
