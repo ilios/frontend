@@ -282,4 +282,29 @@ export default function() {
         userId: 4136
       };
     });
+
+    this.get('/auth/config', function() {
+      return { config: {
+        type: 'form'
+      }};
+      // return { config: {
+      //   type: 'shibboleth',
+      //   shibbolethLoginUrl: '/fakeshiblogin'
+      // }};
+    });
+
+    this.get('/auth/token', function() {
+      //un comment to send unauthenticated user data
+      // return {
+      //   jwt: null
+      // };
+
+      let header = '{"alg":"none"}';
+      let body = '{"iss": "ilios","aud": "ilios","iat": "1435288723","exp": "1435317523","user_id": 4136}';
+
+      let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
+      return {
+        jwt: encodedData
+      };
+    });
 }

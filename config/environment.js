@@ -7,6 +7,7 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
     adapterNamespace: 'api',
+    redirectAfterShibLogin: true,
     contentSecurityPolicy: {
       'default-src': "'none'",
       'script-src': "'self'",
@@ -52,6 +53,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
+    ENV.redirectAfterShibLogin = false;
   }
 
   if (environment === 'test') {

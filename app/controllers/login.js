@@ -9,8 +9,7 @@ export default Ember.Controller.extend({
 
       this.get('session').authenticate(authenticator, credentials).then(() => {
         let jwt = this.get('session').get('secure.jwt');
-        let sections = jwt.split('.');
-        let js = window.atob(sections[1]);
+        let js = atob(jwt.split('.')[1]);
         let obj = $.parseJSON(js);
         this.get('currentUser').set('currentUserId', obj.user_id);
       });
