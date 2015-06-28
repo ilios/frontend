@@ -277,8 +277,9 @@ export default function() {
       if(!('password' in attrs) || !attrs.password){
         errors.push('Password required');
       }
+      let username = attrs.username.toLowerCase();
       if(errors.length === 0){
-        if(attrs.username === 'demo' && attrs.password === 'demo'){
+        if(username === 'demo' && attrs.password === 'demo'){
           let header = '{"alg":"none"}';
           let body = '{"iss": "ilios","aud": "ilios","iat": "1435288723","exp": "1435317523","user_id": 4136}';
 
