@@ -1,5 +1,8 @@
 <div class='login-form'>
   <h2>{{t 'auth.login'}}</h2>
+  {{#each errors as |error|}}
+    <div class='error'>{{error}}</div>
+  {{/each}}
   <form {{action 'authenticate' on='submit'}}>
     <div class='form-container'>
       <div class="detail-content">

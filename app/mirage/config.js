@@ -1,4 +1,5 @@
 import getAll from './helpers/get-all';
+import Mirage from 'ember-cli-mirage';
 
 export default function() {
     this.timing = 100;
@@ -267,14 +268,29 @@ export default function() {
       };
     });
 
-    this.post('/auth/login', function() {
-      let header = '{"alg":"none"}';
-      let body = '{"iss": "ilios","aud": "ilios","iat": "1435288723","exp": "1435317523","user_id": 4136}';
+    this.post('/auth/login', function(db, request) {
+      let errors = [];
+      var attrs = JSON.parse(request.requestBody);
+      if(!('username' in attrs) || !attrs.username){
+        errors.push('Username required');
+      }
+      if(!('password' in attrs) || !attrs.password){
+        errors.push('Password required');
+      }
+      if(errors.length === 0){
+        if(attrs.username === 'demo' && attrs.password === 'demo'){
+          let header = '{"alg":"none"}';
+          let body = '{"iss": "ilios","aud": "ilios","iat": "1435288723","exp": "1435317523","user_id": 4136}';
 
-      let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
-      return {
-        jwt: encodedData
-      };
+          let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
+          return {
+            jwt: encodedData
+          };
+        } else {
+          errors.push('Incorrect username or password');
+        }
+      }
+      return new Mirage.Response(400, {}, {errors: errors});
     });
 
     this.get('/auth/whoami', function() {

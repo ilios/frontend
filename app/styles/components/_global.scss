@@ -140,6 +140,11 @@ h4 {
   color: $ilios-blue;
 }
 
+.error,
+.is-error {
+  color: $alert-color;
+}
+
 .page-title {
   color: $base-accent-color;
   padding: 1em;
