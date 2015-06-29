@@ -11,6 +11,7 @@ var url = '/programs/1/programyears/1';
 module('Acceptance: Program Year - Stewards', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school', {
       departments: [1,2,5,6,7,8,9],

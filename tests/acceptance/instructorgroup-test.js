@@ -13,6 +13,7 @@ var url = '/instructorgroups/1';
 module('Acceptance: Instructor Group Details', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.createList('user', 2, {
       instructorGroups: [1]

@@ -12,6 +12,7 @@ var url = '/courses/1';
 module('Acceptance: Course - Session List', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
     fixtures.sessionTypes = server.createList('sessionType', 1, {

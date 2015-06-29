@@ -6,11 +6,13 @@
     </span>
   {{/link-to}}
   <div class="tools">
-    <div class='user'>
-      {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
-        <li>{{t "navigation.logout"}}</li>
-      {{/action-menu}}
-    </div>
+    {{#if session.isAuthenticated}}
+      <div class='user'>
+        {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
+          <li>{{t "navigation.logout"}}</li>
+        {{/action-menu}}
+      </div>
+    {{/if}}
   </div>
   <h1>{{title}}</h1>
 </header>

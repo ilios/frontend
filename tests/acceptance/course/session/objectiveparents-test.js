@@ -11,6 +11,7 @@ var fixtures = {};
 module('Acceptance: Session - Objective Parents', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
     server.create('sessionType');

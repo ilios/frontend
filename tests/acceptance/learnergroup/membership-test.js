@@ -13,6 +13,7 @@ var url = '/learnergroups/2';
 module('Acceptance: Learner Group - Membership', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.createList('user', 2, {
       cohorts: [1],

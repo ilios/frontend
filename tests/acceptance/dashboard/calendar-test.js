@@ -12,6 +12,7 @@ var fixtures = {};
 module('Acceptance: Dashboard Calendar', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
   },
 

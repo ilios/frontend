@@ -317,6 +317,13 @@ var calendar = {
 };
 translations.calendar = calendar;
 
+var auth = {
+  'username': 'Username',
+  'password': 'Password',
+  'login': 'Login',
+};
+translations.auth = auth;
+
 
 
 export default translations;

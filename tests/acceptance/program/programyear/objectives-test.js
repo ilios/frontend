@@ -12,6 +12,7 @@ var url = '/programs/1/programyears/1';
 module('Acceptance: Program Year - Objectives', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school', {
       owningSchool: 1,

@@ -11,6 +11,8 @@ var url = '/courses/1?details=true';
 module('Acceptance: Course - Learning Materials', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
+
     fixtures.user = server.create('user', {id: 4136});
     server.create('school');
     server.create('educationalYear');

@@ -7,12 +7,13 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
     adapterNamespace: 'api',
+    redirectAfterShibLogin: true,
     contentSecurityPolicy: {
       'default-src': "'none'",
       'script-src': "'self'",
       'font-src': "'self'",
       'connect-src': "'self'",
-      'img-src': "'self'",
+      'img-src': "'self' data:",
       'style-src': "'self'",
       'media-src': "'self'"
     },
@@ -21,6 +22,17 @@ module.exports = function(environment) {
       extendTimeout: 4000,
       types: [ 'success', 'warning', 'info', 'alert' ],
       injectionFactories: []
+    },
+    'simple-auth': {
+      authorizer: 'simple-auth-authorizer:token',
+      store: 'simple-auth-session-store:local-storage'
+    },
+    'simple-auth-token': {
+      serverTokenEndpoint: '/auth/login',
+      serverTokenRefreshEndpoint: '/auth/refresh',
+      tokenPropertyName: 'jwt',
+      authorizationHeaderName: 'X-JWT-Authorization',
+      authorizationPrefix: 'Token ',
     },
     EmberENV: {
       FEATURES: {
@@ -43,6 +55,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
+    ENV.redirectAfterShibLogin = false;
   }
 
   if (environment === 'test') {
@@ -57,7 +70,9 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
-
+    ENV['simple-auth'] = {
+      store: 'simple-auth-session-store:ephemeral'
+    }
   }
 
   if (environment === 'heroku') {

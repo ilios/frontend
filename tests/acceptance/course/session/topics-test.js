@@ -11,6 +11,7 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Topics', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('sessionType');
     server.create('school', {

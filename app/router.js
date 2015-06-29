@@ -31,6 +31,7 @@ Router.map(function() {
     });
   });
   this.route('fourOhFour', { path: "*path"});
+  this.route('login');
 });
 
 export default Router;

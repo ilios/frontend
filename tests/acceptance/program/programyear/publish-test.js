@@ -11,6 +11,7 @@ var fixtures = {};
 module('Acceptance: Program Year - Publish', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
     server.create('publishEvent', {

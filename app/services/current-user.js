@@ -5,19 +5,32 @@ import ajax from 'ic-ajax';
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
+  currentUserId: null,
   model: function(){
-    var deferred = Ember.RSVP.defer();
-    var self = this;
-    var url = '/' + config.adapterNamespace + '/currentsession';
-    ajax(url).then(function(data) {
-      self.get('store').find('user', data.currentsession.userId).then(function(user){
+    let deferred = Ember.RSVP.defer();
+    let currentUserId = this.get('currentUserId');
+    if (!currentUserId) {
+      var url = '/auth/whoami';
+      ajax(url).then(data => {
+        if(data.userId){
+          this.set('currentUserId', data.userId);
+          this.get('store').find('user', data.userId).then(function(user){
+            deferred.resolve(user);
+          });
+        } else {
+          deferred.resolve(null);
+        }
+      });
+    } else {
+      this.get('store').find('user', currentUserId).then(function(user){
         deferred.resolve(user);
       });
-    });
+    }
+
     return DS.PromiseObject.create({
       promise: deferred.promise
     });
-  }.property(),
+  }.property('currentUserId'),
   currentSchoolBuffer: null,
   currentSchool: Ember.computed('model.primarySchool', {
     set: function(key, value){
@@ -36,8 +49,8 @@ export default Ember.Service.extend({
     }
   }),
   canChangeSchool: function(){
-    return this.get('currentUsr.schools.length') > 1;
-  }.property('currentUsr.schools.@each'),
+    return this.get('currentUser.schools.length') > 1;
+  }.property('model.schools.@each'),
   availableCohortsObserver: function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){
@@ -79,12 +92,17 @@ export default Ember.Service.extend({
   events: function(from, to){
     var deferred = Ember.RSVP.defer();
     this.get('model').then(user => {
-      var url = '/' + config.adapterNamespace + '/userevents/' +
-      user.get('id') + '?from=' + from + '&to=' + to;
-      ajax(url).then(data => {
-        let events = data.userEvents;
-        deferred.resolve(events.sortBy('startDate'));
-      });
+      if( user ){
+        var url = '/' + config.adapterNamespace + '/userevents/' +
+        user.get('id') + '?from=' + from + '&to=' + to;
+        ajax(url).then(data => {
+          let events = data.userEvents;
+          deferred.resolve(events.sortBy('startDate'));
+        });
+      } else {
+        deferred.resolve([]);
+      }
+
     });
 
     return deferred.promise;

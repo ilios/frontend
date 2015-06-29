@@ -11,6 +11,7 @@ var fixtures = {};
 module('Acceptance: Programs', {
   beforeEach: function() {
     application = startApp();
+    authenticateSession();
   },
 
   afterEach: function() {
