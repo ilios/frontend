@@ -21,7 +21,7 @@
       }
     }
 
-    &.disappearing {
+    &.exiting {
       opacity: 0;
     }
   }
@@ -41,7 +41,11 @@
   .alert-alert {
     @include flash($alert-color);
   }
-
+  
+  .alert:first-of-type {
+    margin-top: 60px;
+  }
+  
   .alert:last-of-type {
     @include border-bottom-radius(5px);
     margin-bottom: $base-font-size /2;

@@ -1,8 +1,10 @@
 {{#if showHeader}}
   {{ilios-header title=pageTitle session=session}}
 {{/if}}
-{{#if showNavigation}}
-  {{ilios-navigation}}
+{{#if session.isAuthenticated}}
+  {{#if showNavigation}}
+    {{ilios-navigation}}
+  {{/if}}
 {{/if}}
 <div id='site-container'>
   <div class='flash-messages'>

@@ -120,7 +120,6 @@ var navigation = {
   'instructorGroups': 'Instructor Groups',
   'learnerGroups': 'Learner Groups',
   'courses': 'Courses and Sessions',
-  'logout': 'Logout',
   'logo': 'Ilios Logo',
   'menu': 'Ilios Menu'
 };
@@ -321,6 +320,8 @@ var auth = {
   'username': 'Username',
   'password': 'Password',
   'login': 'Login',
+  'logout': 'Logout',
+  'confirmLogout': 'You have successfully logged out of Ilios. To help protect your account and the security of others, please close all browser windows.',
 };
 translations.auth = auth;
 
