@@ -57,7 +57,7 @@ script:
 after_script:
   # Destroy the sauce tunnel
   - if [ "$START_SAUCE_CONNECT" = true ]; then ember stop-sauce-connect; fi
-  - if [ "$SEND_COVERAGE" = true ]; then CODECLIMATE_REPO_TOKEN=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6 node_modules/.bin/codeclimate < $TRAVIS_BUILD_DIR/lcov.dat; fi
+  - if [ "$SEND_COVERAGE" = true ]; then CODECLIMATE_REPO_TOKEN=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6 node_modules/.bin/codeclimate-test-reporter < lcov.dat; fi
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
