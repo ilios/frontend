@@ -19,7 +19,7 @@ module.exports = function(environment) {
     },
     flashMessageDefaults: {
       timeout: 2000,
-      extendTimeout: 4000,
+      extendedTimeout: 3000,
       types: [ 'success', 'warning', 'info', 'alert' ],
       injectionFactories: []
     },

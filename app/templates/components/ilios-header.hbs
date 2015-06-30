@@ -9,7 +9,7 @@
     {{#if session.isAuthenticated}}
       <div class='user'>
         {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
-          <li>{{t "navigation.logout"}}</li>
+          <li {{action 'logout'}}>{{t "auth.logout"}}</li>
         {{/action-menu}}
       </div>
     {{/if}}
