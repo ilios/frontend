@@ -1,3 +1,4 @@
+/* global moment */
 import getAll from './helpers/get-all';
 import Mirage from 'ember-cli-mirage';
 
@@ -280,8 +281,10 @@ export default function() {
       let username = attrs.username.toLowerCase();
       if(errors.length === 0){
         if(username === 'demo' && attrs.password === 'demo'){
+          let now = moment();
+          let nextWeek = now.clone().add(1, 'week');
           let header = '{"alg":"none"}';
-          let body = '{"iss": "ilios","aud": "ilios","iat": "1435288723","exp": "1435317523","user_id": 4136}';
+          let body = `{"iss": "ilios","aud": "ilios","iat": "${now.format('X')}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
 
           let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
           return {
@@ -315,9 +318,10 @@ export default function() {
       // return {
       //   jwt: null
       // };
-
+      let now = moment();
+      let nextWeek = now.clone().add(1, 'week');
       let header = '{"alg":"none"}';
-      let body = '{"iss": "ilios","aud": "ilios","iat": "1435288723","exp": "1435317523","user_id": 4136}';
+      let body = `{"iss": "ilios","aud": "ilios","iat": "${now.format('X')}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
 
       let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
       return {
