@@ -116,7 +116,10 @@ test('click month day number and go to day', function(assert) {
   visit('/dashboard?view=month');
   andThen(function() {
     let dayOfMonth = today.date();
-    click(find('.day a').eq(dayOfMonth)).then(()=>{
+    let link = find('.day a').filter(function(){
+      return parseInt($(this).text()) === dayOfMonth;
+    }).eq(0);
+    click(link).then(()=>{
       assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&view=day');
     });
   });
