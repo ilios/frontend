@@ -3,12 +3,11 @@
   <label class='group-picker'>
     {{t 'courses.chooseCohortTitle'}}:
     {{#if multipleCohorts}}
-      {{view "select"
-        content=availableCohorts
-        optionLabelPath="content.title"
-        optionValuePath="content.id"
-        value=selectedCohortId
-      }}
+      {{#x-select value=selectedCohortId action="changeSelectedCohort"}}
+        {{#each availableCohorts as |cohort|}}
+          {{#x-option value=cohort.id}}{{cohort.title}}{{/x-option}}
+        {{/each}}
+      {{/x-select}}
     {{else}}
       {{currentCohort.title}}
     {{/if}}

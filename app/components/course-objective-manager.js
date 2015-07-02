@@ -32,18 +32,20 @@ var cohortProxy = Ember.Object.extend({
     return '';
   }.property('cohort.displayTitle', 'cohort.programYear.program.title'),
   objectivesByCompetency: function(){
-    var deferred = Ember.RSVP.defer();
-
-    var objectives = this.get('objectives');
-    var promises = this.get('objectives').mapBy('competency');
-
-    Ember.RSVP.hash(promises).then(function(hash){
-      var competencies = [];
-      for(var i in hash){
-        competencies.pushObject(hash[i]);
-      }
-      var groups = competencies.uniq().map(function(competency){
-        var ourObjectives = objectives.filter(function(objective){
+    let deferred = Ember.RSVP.defer();
+    let objectives = this.get('objectives');
+    let competencies = [];
+    let promises = [];
+    objectives.forEach(objective => {
+      promises.pushObject(objective.get('competency').then(competency => {
+        competencies.pushObject(competency);
+      }));
+    });
+    Ember.RSVP.all(promises).then(() => {
+      let groups = competencies.uniq().filter(competency => {
+        return !!competency;
+      }).map(competency => {
+        let ourObjectives = objectives.filter(objective => {
           return objective.get('competency').get('id') === competency.get('id');
         });
         return competencyGroup.create({
@@ -56,7 +58,7 @@ var cohortProxy = Ember.Object.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('objectives.@each')
+  }.property('objectives.[]')
 });
 
 export default Ember.Component.extend({
@@ -166,6 +168,9 @@ export default Ember.Component.extend({
       var courseObjective = this.get('courseObjective');
       courseObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(courseObjective);
+    },
+    changeSelectedCohort(id){
+      this.set('selectedCohortId', id);
     }
   }
 });
