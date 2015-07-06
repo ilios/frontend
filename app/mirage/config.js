@@ -4,7 +4,8 @@ import Mirage from 'ember-cli-mirage';
 
 export default function() {
     this.timing = 100;
-
+    
+    this.pretender.post.call(this.pretender, '/write-blanket-coverage', this.pretender.passthrough);
     this.get('/api/aamcmethods', getAll);
     this.get('/api/aamcmethods/:id', 'aamcMethod');
     this.put('/api/aamcmethods/:id', 'aamcMethod');
