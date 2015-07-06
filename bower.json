@@ -16,7 +16,7 @@
     "loader.js": "ember-cli/loader.js#3.2.0",
     "neat": "~1.7.1",
     "normalize.css": "~3.0.2",
-    "pretender": "~0.6.0",
+    "pretender": "pretender#master",
     "qunit": "~1.17.1",
     "pikaday": "1.3.2",
     "moment": "~2.10.3",
