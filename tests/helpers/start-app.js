@@ -1,3 +1,4 @@
+/* global QUnit */
 import Ember from 'ember';
 import Application from '../../app';
 import Router from '../../router';
@@ -15,6 +16,7 @@ export default function startApp(attrs) {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
+    // QUnit.config.testTimeout = 100000;
   });
 
   return application;
