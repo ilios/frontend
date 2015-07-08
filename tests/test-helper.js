@@ -17,6 +17,3 @@ var inflector = Ember.Inflector.inflector;
 // inflector.irregular('aamc-pcrs', 'aamc-pcrses');
 inflector.uncountable('aamcPcrs');
 inflector.uncountable('aamc-pcrs');
-
-//set a default language
-Ember.I18n.locale = 'en';

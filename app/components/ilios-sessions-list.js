@@ -1,14 +1,16 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   filter: '',
   classNames: ['detail-view', 'sessions-list'],
   tagName: 'div',
   course: null,
   newSessions: [],
   sessionTypes: [],
-  placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
+  placeholderValue: t('sessions.titleFilterPlaceholder'),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
   willInsertElement: function(){

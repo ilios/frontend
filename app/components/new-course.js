@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
+  i18n: Ember.inject.service(),
   tagName: 'section',
   classNames: ['new-course', 'new-result', 'form-container'],
-  placeholderTranslation: 'courses.courseTitlePlaceholder',
+  placeholder: t('courses.courseTitlePlaceholder'),
   course: null,
   years: [],
   currentAcademicYear: function(){

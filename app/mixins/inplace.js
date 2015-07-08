@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create(Ember.I18n.TranslateableProperties, {
+export default Ember.Mixin.create({
+    i18n: Ember.inject.service(),
     tagName: 'span',
     value: null,
     //we use a working value in case an objecte gets passed in that doesn't yet exist
@@ -9,7 +10,14 @@ export default Ember.Mixin.create(Ember.I18n.TranslateableProperties, {
     resetWorkingValue: function(){
       this.set('workingValue', this.get('value'));
     }.observes('value').on('init'),
-    clickPromptTranslation: 'general.clickToEdit',
+    clickPromptTranslation: null,
+    clickPrompt: Ember.computed('i18n.locale', 'clickPromptTranslation', function() {
+      if(this.get('clickPromptTranslation')){
+        return this.get('i18n').t(this.get('selectPromptTranslation'));
+      }
+      
+      return this.get('i18n').t('general.clickToEdit');
+    }),
     isEditing: false,
     saveOnChange: false,
     //allows the calling object to send some context like an id

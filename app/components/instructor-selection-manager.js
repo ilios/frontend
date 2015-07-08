@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
+  i18n: Ember.inject.service(),
   instructors: [],
   availableInstructorGroups: [],
   sortInstructorsBy: ['title'],
@@ -8,7 +10,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   instructorGroups: [],
   sortGroupsBy: ['title'],
   sortedInstructorGroups: Ember.computed.sort('instructorGroups', 'sortGroupsBy'),
-  userSearchPlaceholderTranslation: 'general.findInstructorOrGroup',
+  userSearchPlaceholder: t('general.findInstructorOrGroup'),
   actions: {
     addInstructor(user){
       this.sendAction('addInstructor', user);

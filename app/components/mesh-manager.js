@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/mesh-manager';
+import { translationMacro as t } from "ember-i18n";
 
 var ProxiedDescriptors = Ember.ObjectProxy.extend({
   terms: [],
@@ -7,11 +8,13 @@ var ProxiedDescriptors = Ember.ObjectProxy.extend({
     return !this.get('terms').contains(this.get('content'));
   }.property('content', 'terms.@each')
 });
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+
+export default Ember.Component.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   layout: layout,
   classNames: ['mesh-manager'],
-  placeholderTranslation: 'courses.meshSearchPlaceholder',
+  placeholder: t('courses.meshSearchPlaceholder'),
   terms: [],
   searchResults: [],
   targetItemTitle: '',

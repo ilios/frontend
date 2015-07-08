@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
+  i18n: Ember.inject.service(),
   learnerGroup: null,
-  notInThisGroupTranslation: 'learnerGroups.notInThisGroup',
+  notInThisGroup: t('learnerGroups.notInThisGroup'),
   topLevelGroupMembersNotInThisGroup: function(){
     var deferred = Ember.RSVP.defer();
     this.get('learnerGroup.usersOnlyAtThisLevel').then(currentUsers => {

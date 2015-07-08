@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
-  placeholderTranslation: 'programs.programTitlePlaceholder',
+export default Ember.Component.extend({
+  i18n: Ember.inject.service(),
+  placeholder: t('programs.programTitlePlaceholder'),
   program: null,
   actions: {
     save: function(){

@@ -1,13 +1,15 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.ArrayController.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.ArrayController.extend({
   store: Ember.inject.service(),
   currentUser: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   queryParams: {
     schoolId: 'school',
     titleFilter: 'filter',
   },
-  placeholderValueTranslation: 'instructorGroups.titleFilterPlaceholder',
+  placeholderValue: t('instructorGroups.titleFilterPlaceholder'),
   schoolId: null,
   titleFilter: null,
   schools: [],

@@ -3,6 +3,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
+  i18n: Ember.inject.service(),
   title: DS.attr('string'),
   programYear: DS.belongsTo('program-year', {async: true}),
   courses: DS.hasMany('course', {async: true}),
@@ -61,7 +62,7 @@ export default DS.Model.extend({
       this.get('programYear').then(function(programYear){
         //I dont' know why this is necessary, but sometimes tests fail if we assume that programYear is set here
         var classOfYear = programYear?programYear.get('classOfYear'):null;
-        var title = Ember.I18n.t('general.classOf', {year: classOfYear});
+        var title = self.get('i18n').t('general.classOf', {year: classOfYear});
         self.set('displayTitle', title);
       });
     }

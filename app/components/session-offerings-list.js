@@ -3,7 +3,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { moment as momentHelper } from 'ember-moment/computed';
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
   store: Ember.inject.service(),
   session: null,
   offerings: Ember.computed.oneWay('session.offerings'),

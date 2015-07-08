@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   classNames: ['detail-mesh'],
-  placeholderTranslation: 'courses.meshSearchPlaceholder',
+  placeholder: t('courses.meshSearchPlaceholder'),
   subject: null,
   terms: Ember.computed.oneWay('subject.meshDescriptors'),
   isCourse: false,
