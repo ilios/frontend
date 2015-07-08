@@ -30,7 +30,4 @@ var app = new EmberApp({
   hinting: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
 });
 
-app.import('bower_components/ember-i18n/lib/i18n.js');
-app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
-
 module.exports = app.toTree();
