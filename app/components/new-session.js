@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
+  i18n: Ember.inject.service(),
   tagName: 'section',
   classNames: ['new-session', 'new-result', 'form-container'],
-  placeholderTranslation: 'sessions.sessionTitlePlaceholder',
+  placeholder: t('sessions.sessionTitlePlaceholder'),
   session: null,
   sessionTypes: [],
   sortedSessionTypes: [],

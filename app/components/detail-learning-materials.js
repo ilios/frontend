@@ -1,8 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+import { translationMacro as t } from "ember-i18n";
+
+export default Ember.Component.extend({
   currentUser: Ember.inject.service(),
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   subject: null,
   isCourse: false,
   isManaging: Ember.computed.or('isManagingMaterial', 'isManagingMesh'),
@@ -14,7 +17,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   materials: Ember.computed.alias('subject.learningMaterials'),
   newLearningMaterials: [],
   classNames: ['detail-learning-materials'],
-  newButtonTitleTranslation: 'general.add',
+  newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
   learningMaterialStatuses: function(){

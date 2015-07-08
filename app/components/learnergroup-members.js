@@ -3,6 +3,7 @@ import DS from 'ember-data';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   classNames: ['learnergroup-members', 'form-container'],
   tagName: 'section',
   cohort: null,
@@ -19,7 +20,7 @@ export default Ember.Component.extend({
         if(this.get('showMoveToCohortOption')){
           options.pushObject(Ember.Object.create({
             id: -1,
-            title: Ember.I18n.t('learnerGroups.removeLearnerToCohort', {cohort: cohort.get('displayTitle')})
+            title: this.get('i18n').t('learnerGroups.removeLearnerToCohort', {cohort: cohort.get('displayTitle')})
           }));
         }
         this.get('topLevelGroup').then(
@@ -27,7 +28,7 @@ export default Ember.Component.extend({
             if(this.get('showMoveToTopLevelGroupOption')){
               options.pushObject(Ember.Object.create({
                 id: topLevelGroup.get('id'),
-                title: Ember.I18n.t('learnerGroups.switchLearnerToGroup', {group: topLevelGroup.get('allParentsTitle') + ' ' + topLevelGroup.get('title')})
+                title: this.get('i18n').t('learnerGroups.switchLearnerToGroup', {group: topLevelGroup.get('allParentsTitle') + ' ' + topLevelGroup.get('title')})
               }));
             }
             topLevelGroup.get('allDescendants').then(
@@ -36,7 +37,7 @@ export default Ember.Component.extend({
                   group => {
                     return Ember.Object.create({
                       id: group.get('id'),
-                      title: Ember.I18n.t('learnerGroups.switchLearnerToGroup', {group: group.get('allParentsTitle') + ' ' + group.get('title')}),
+                      title: this.get('i18n').t('learnerGroups.switchLearnerToGroup', {group: group.get('allParentsTitle') + ' ' + group.get('title')}),
                       sortTitle: group.get('sortTitle')
                     });
                   }

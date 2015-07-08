@@ -35,6 +35,9 @@ module.exports = function(environment) {
       authorizationPrefix: 'Token ',
       timeFactor: 1000
     },
+    i18n: {
+      defaultLocale: 'en'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

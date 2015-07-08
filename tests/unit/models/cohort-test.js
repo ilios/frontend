@@ -8,7 +8,7 @@ import Translations from 'ilios/translations/en';
 
 moduleForModel('cohort', 'Cohort', {
   setup: function(){
-    Ember.I18n.translations = Translations;
+    this.get('i18n').translations = Translations;
     Ember.I18n.locale = 'en';
   },
   // Specify the other units that are required for this test.

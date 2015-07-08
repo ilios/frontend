@@ -5,6 +5,9 @@ export default Ember.Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-select'],
   selectPromptTranslation: null,
   showSelectPrompt: Ember.computed.notEmpty('selectPromptTranslation'),
+  selectPrompt: Ember.computed('i18n.locale', 'selectPromptTranslation', function() {
+    return this.get('i18n').t(this.get('selectPromptTranslation'));
+  }),
   options: [],
   optionLabelPath: 'title',
   optionValuePath: 'id',

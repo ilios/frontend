@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default Ember.Mixin.create({
+  i18n: Ember.inject.service(),
   publishedAsTbd: DS.attr('boolean'),
   publishEvent: DS.belongsTo('publish-event', {async: true}),
   isPublished: Ember.computed.notEmpty('publishEvent.content'),
@@ -9,13 +10,13 @@ export default Ember.Mixin.create({
   isScheduled: Ember.computed.oneWay('publishedAsTbd'),
   status: function(){
     if(this.get('publishedAsTbd')){
-      return Ember.I18n.t('general.scheduled');
+      return this.get('i18n').t('general.scheduled');
     }
     if(this.get('isPublished')){
-      return Ember.I18n.t('general.published');
+      return this.get('i18n').t('general.published');
     }
-    return Ember.I18n.t('general.notPublished');
-  }.property('isPublished', 'publishedAsTbd'),
+    return this.get('i18n').t('general.notPublished');
+  }.property('i18n.locale', 'isPublished', 'publishedAsTbd'),
   allPublicationIssuesCollection: Ember.computed.collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
   allPublicationIssuesLength: Ember.computed.sum('allPublicationIssuesCollection'),
   requiredPublicationSetFields: [],

@@ -2,6 +2,7 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  i18n: Ember.inject.service(),
   currentUser: Ember.inject.service(),
   model: function(params) {
     var self = this;
@@ -93,7 +94,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         controller.set('selectedProgram', hash.program);
         controller.set('programYears', hash.programYears);
         controller.set('selectedProgramYear', hash.programYear);
-        self.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.learnerGroups'));
+        self.controllerFor('application').set('pageTitle', self.get('i18n').t('navigation.learnerGroups'));
       }
     });
   },

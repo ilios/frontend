@@ -1,15 +1,17 @@
 /* global moment */
 import Ember from 'ember';
 import layout from '../templates/components/session-offerings';
+import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
+export default Ember.Component.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   layout: layout,
   classNames: ['session-offerings'],
   session: null,
-  placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
+  placeholderValue: t('sessions.titleFilterPlaceholder'),
   offerings: Ember.computed.oneWay('session.offerings'),
-  newButtonTitleTranslation: 'general.add',
+  newButtonTitle: t('general.add'),
   newOfferings: [],
   actions: {
     add: function(){

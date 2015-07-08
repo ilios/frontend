@@ -2,6 +2,7 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  i18n: Ember.inject.service(),
   availableTopics: [],
   afterModel: function(course){
     var self = this;
@@ -26,7 +27,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   setupController: function(controller, model){
     controller.set('model', model);
     controller.set('availableTopics', this.get('availableTopics'));
-    this.controllerFor('application').set('pageTitle', Ember.I18n.t('navigation.courses'));
+    this.controllerFor('application').set('pageTitle', this.get('i18n').t('navigation.courses'));
     this.controllerFor('course').set('showBackToCourseListLink', true);
   }
 });
