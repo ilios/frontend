@@ -117,7 +117,7 @@ export default {
     'learnerGroups': "Groupes des Étudiants",
     'courses': "Des Cours et Séances",
     'logo': "Ilios Logo",
-    'menu': "Ilios Menu'
+    'menu': "Ilios Menu",
   },
   'mesh': {
     'buttonTitle': "Sélectionner MeSH ({{count}})",
