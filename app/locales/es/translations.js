@@ -294,5 +294,12 @@ export default {
     'login': 'Inicio',
     'logout': 'Cerrar aplicación',
     'confirmLogout': 'Usted ha cerrado la aplicación Ilios con éxito. Para asistir con la protección de su cuenta y la seguridad de otros, favor de cerrar todas las ventanas del navegador.',
+  },
+  'language': {
+    'select': {
+      'en': 'English (en_US)',
+      'es': 'Español (es_MX)',
+      'fr': 'Français (fr)'
+    }
   }
 };
