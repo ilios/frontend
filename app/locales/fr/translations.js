@@ -193,7 +193,7 @@ export default {
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer ce cours, avec {{publishedOfferingCount}} offres publié? Cela supprimera toutes sessions et offres pour ce cours, et ne peut pas être défait.",
     'meshSearchPlaceholder': "Rechercher MeSH",
     'meshManageTitle': "Manager MeSH",
-    'topicsManageTitle': "Manager Niveaux",
+    'topicsManageTitle': "Manager Sujêts",
     'clerkshipType': "Genre de stage",
     'notAClerkship': "Pas une stage",
     'cohortsManageTitle': "Manager des cohortes",
