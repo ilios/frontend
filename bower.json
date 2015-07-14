@@ -25,5 +25,8 @@
     "ember-simple-auth": "0.8.0",
     "qunit": "~1.17.1"
     "ember-uploader": "0.3.7"
+  },
+  "resolutions": {
+    "FakeXMLHttpRequest": "~1.0.0"
   }
 }
