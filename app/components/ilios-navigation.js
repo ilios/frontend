@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   i18n: Ember.inject.service(),
   isMenuVisible: false,
-  menuItems: Ember.computed(function(){
+  menuItems: Ember.computed('i18n.locale', function(){
     return [
       {
         'icon': 'home',
