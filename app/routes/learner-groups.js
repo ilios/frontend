@@ -94,7 +94,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         controller.set('selectedProgram', hash.program);
         controller.set('programYears', hash.programYears);
         controller.set('selectedProgramYear', hash.programYear);
-        self.controllerFor('application').set('pageTitle', self.get('i18n').t('navigation.learnerGroups'));
+        self.controllerFor('application').set('pageTitleTranslation', 'navigation.learnerGroups');
       }
     });
   },

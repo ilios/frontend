@@ -40,7 +40,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         controller.set('model', hash.instructorGroups);
         controller.set('schools', hash.schools);
         controller.set('selectedSchool', hash.school);
-        self.controllerFor('application').set('pageTitle', self.get('i18n').t('navigation.instructorGroups'));
+        self.controllerFor('application').set('pageTitleTranslation', 'navigation.instructorGroups');
       }
     });
   },

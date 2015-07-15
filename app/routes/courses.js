@@ -57,7 +57,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         controller.set('selectedSchool', hash.school);
         controller.set('selectedYear', hash.year);
         controller.set('years', hash.years);
-        self.controllerFor('application').set('pageTitle', self.get('i18n').t('navigation.courses'));
+        self.controllerFor('application').set('pageTitleTranslation', 'navigation.courses');
       }
     });
   },
