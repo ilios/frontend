@@ -22,9 +22,9 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
             }
             window.location.replace(shibbolethLoginUrl);
           } else {
-            let authenticator = 'simple-auth-authenticator:jwt-resolved';
+            let authenticator = 'simple-auth-authenticator:jwt';
 
-            this.get('session').authenticate(authenticator, token.jwt).then(() => {
+            this.get('session').authenticate(authenticator, {jwt: token.jwt}).then(() => {
               let jwt = this.get('session').get('secure.jwt');
               let js = atob(jwt.split('.')[1]);
               let obj = $.parseJSON(js);
