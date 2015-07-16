@@ -294,5 +294,12 @@ export default {
     'login': "Login",
     'logout': "Déconnexion",
     'confirmLogout': "Vous avez réussi accomplir une fermeture de session en Ilios. Afin de nous aider à protéger votre compte et de la securité des autres, s'il vous plait fermer toutes les fenêtres du navigateur.",
+  },
+  'language': {
+    'select': {
+      'en': 'English (en_US)',
+      'es': 'Español (es_MX)',
+      'fr': 'Français (fr)'
+    }
   }
 };

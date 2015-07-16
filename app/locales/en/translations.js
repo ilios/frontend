@@ -294,5 +294,12 @@ export default {
     'login': 'Login',
     'logout': 'Logout',
     'confirmLogout': 'You have successfully logged out of Ilios. To help protect your account and the security of others, please close all browser windows.',
+  },
+  'language': {
+    'select': {
+      'en': 'English (en_US)',
+      'es': 'Español (es_MX)',
+      'fr': 'Français (fr)'
+    }
   }
 };

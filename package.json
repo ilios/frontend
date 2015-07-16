@@ -51,7 +51,7 @@
     "ember-deploy-s3-index": "^0.4.0",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
-    "ember-i18n": "4.0.0",
+    "ember-i18n": "^4.0.0",
     "ember-inflector": "^1.6.1",
     "ember-moment": "1.1.1",
     "ember-normalize": "0.0.2",

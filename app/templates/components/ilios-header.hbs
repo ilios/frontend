@@ -10,6 +10,9 @@
       <div class='user'>
         {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
           <li {{action 'logout'}}>{{t "auth.logout"}}</li>
+          {{#each locales as |loc|}}
+            <li {{action 'changeLocale' loc.id}}>{{loc.text}}</li>
+          {{/each}}
         {{/action-menu}}
       </div>
     {{/if}}

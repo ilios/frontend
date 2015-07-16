@@ -27,7 +27,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   setupController: function(controller, model){
     controller.set('model', model);
     controller.set('availableTopics', this.get('availableTopics'));
-    this.controllerFor('application').set('pageTitle', this.get('i18n').t('navigation.courses'));
+    this.controllerFor('application').set('pageTitleTranslation', 'navigation.courses');
     this.controllerFor('course').set('showBackToCourseListLink', true);
   }
 });
