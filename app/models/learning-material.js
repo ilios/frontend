@@ -11,6 +11,7 @@ export default DS.Model.extend({
   copyrightPermission: DS.attr('boolean'),
   copyrightRationale: DS.attr('string'),
   filename: DS.attr('string'),
+  fileHash: DS.attr('string'),
   mimetype: DS.attr('string'),
   filesize: DS.attr('number'),
   link: DS.attr('string'),

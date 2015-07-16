@@ -11,6 +11,10 @@ export default EmberUploader.FileField.extend({
       url: uploadUrl
     });
 
+    uploader.on('didUpload', e=> {
+      this.sendAction('finishedUploading', e);
+    });
+
     if (!Ember.isEmpty(files)) {
       uploader.upload(files[0]);
     }

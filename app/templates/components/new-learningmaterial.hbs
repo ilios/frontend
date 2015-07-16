@@ -55,7 +55,7 @@
     {{/unless}}
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.file'}}:</label>
-      <div class="form-data">{{file-upload url="/upload"}}</div>
+      <div class="form-data">{{file-upload finishedUploading='setFile' url="/upload"}}</div>
     </div>
   {{/if}}
   {{#if isLink}}

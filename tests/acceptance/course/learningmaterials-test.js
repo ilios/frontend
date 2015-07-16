@@ -40,6 +40,8 @@ module('Acceptance: Course - Learning Materials', {
       userRole: 1,
       copyrightPermission: true,
       courseLearningMaterials: [1],
+      fileHash: '01234567890123456789012345678901',
+      filename: 'testing.txt'
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
@@ -50,6 +52,8 @@ module('Acceptance: Course - Learning Materials', {
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
       courseLearningMaterials: [2],
+      fileHash: '01234567890123456789012345678901',
+      filename: 'testing.txt'
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
