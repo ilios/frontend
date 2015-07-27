@@ -22,7 +22,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
             }
             window.location.replace(shibbolethLoginUrl);
           } else {
-            let authenticator = 'simple-auth-authenticator:jwt';
+            let authenticator = 'authenticator:ilios-jwt';
 
             this.get('session').authenticate(authenticator, {jwt: token.jwt}).then(() => {
               let jwt = this.get('session').get('secure.jwt');
