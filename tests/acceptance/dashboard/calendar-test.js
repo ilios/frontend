@@ -107,20 +107,20 @@ test('load day calendar', function(assert) {
 });
 
 test('click month day number and go to day', function(assert) {
-  let today = moment().hour(8);
+  let aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
   server.create('userevent', {
-    name: 'today',
-    startDate: today.format(),
-    endDate: today.clone().add(1, 'hour').format()
+    name: 'start of month',
+    startDate: aDayInTheMonth.format(),
+    endDate: aDayInTheMonth.clone().add(1, 'hour').format()
   });
   visit('/dashboard?view=month');
   andThen(function() {
-    let dayOfMonth = today.date();
+    let dayOfMonth = aDayInTheMonth.date();
     let link = find('.day a').filter(function(){
       return parseInt($(this).text()) === dayOfMonth;
     }).eq(0);
     click(link).then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&view=day');
+      assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&view=day');
     });
   });
 });
