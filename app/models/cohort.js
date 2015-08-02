@@ -41,9 +41,8 @@ export default DS.Model.extend({
       let promises = [];
       
       groups.forEach(group => {
-        promises.pushObject(group.get('parent').then(parent => {
-          let tlg = parent == null?group:parent;
-          topLevelGroups.pushObject(tlg);
+        promises.pushObject(group.get('topLevelGroup').then(topLevelGroup => {
+          topLevelGroups.pushObject(topLevelGroup);
         }));
       });
       Ember.RSVP.all(promises).then(() => {

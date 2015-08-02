@@ -34,7 +34,6 @@ export default Ember.Component.extend({
         this.get('content.topLevelLearnerGroups').then(function(cohortGroups){
           let learnerGroups = [];
           var promises = [];
-
           cohortGroups.forEach(function(learnerGroup){
             learnerGroups.pushObject(learnerGroup);
             var promise = new Ember.RSVP.Promise(function(resolve) {

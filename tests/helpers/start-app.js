@@ -1,3 +1,4 @@
+// jshint unused:false
 /* global QUnit */
 import Ember from 'ember';
 import Application from '../../app';
@@ -15,7 +16,7 @@ export default function startApp(attrs) {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
-    QUnit.config.testTimeout = 1000;
+    // QUnit.config.testTimeout = 100000;
   });
 
   return application;
