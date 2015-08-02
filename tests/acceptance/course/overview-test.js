@@ -78,7 +78,7 @@ test('check detail fields', function(assert) {
 });
 
 test('pick clerkship type', function(assert) {
-  var course = server.create('course', {
+  server.create('course', {
     year: 2013,
     owningSchool: 1,
   });
@@ -109,12 +109,12 @@ test('pick clerkship type', function(assert) {
 });
 
 test('remove clerkship type', function(assert) {
-  var course = server.create('course', {
+  server.create('course', {
     year: 2013,
     owningSchool: 1,
     clerkshipType: 3,
   });
-  var clerkshipType = server.create('courseClerkshipType', {
+  server.create('courseClerkshipType', {
     courses: [1]
   });
   visit(url + '?details=true');
@@ -133,7 +133,7 @@ test('remove clerkship type', function(assert) {
 });
 
 test('open and close details', function(assert) {
-  var course = server.create('course', {
+  server.create('course', {
     year: 2013,
     owningSchool: 1
   });
@@ -160,7 +160,7 @@ test('open and close details', function(assert) {
 });
 
 test('change title', function(assert) {
-  var course = server.create('course', {
+  server.create('course', {
     year: 2013,
     owningSchool: 1,
   });
@@ -248,7 +248,7 @@ test('change end date', function(assert) {
 });
 
 test('change externalId', function(assert) {
-  var course = server.create('course', {
+  server.create('course', {
     year: 2013,
     owningSchool: 1,
     externalId: 'abc123'
@@ -275,7 +275,7 @@ test('change externalId', function(assert) {
 });
 
 test('change level', function(assert) {
-  var course = server.create('course', {
+  server.create('course', {
     year: 2013,
     owningSchool: 1,
     level: 3

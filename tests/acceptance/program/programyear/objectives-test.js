@@ -1,11 +1,9 @@
-/* global moment */
 import Ember from 'ember';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var url = '/programs/1/programyears/1';

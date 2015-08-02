@@ -6,7 +6,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
-var fixtures = {};
 var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Mesh Terms', {
   beforeEach: function() {

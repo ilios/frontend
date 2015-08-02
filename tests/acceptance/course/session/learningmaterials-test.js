@@ -381,7 +381,6 @@ test('view citation learning material details', function(assert) {
 test('edit learning material', function(assert) {
   visit(url);
   andThen(function() {
-    var material = fixtures.sessionLearningMaterials[0];
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       let container = $('.learningmaterial-manager');
@@ -418,7 +417,6 @@ test('edit learning material', function(assert) {
 test('cancel editing learning material', function(assert) {
   visit(url);
   andThen(function() {
-    var material = fixtures.sessionLearningMaterials[0];
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');

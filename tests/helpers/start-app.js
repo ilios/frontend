@@ -1,7 +1,6 @@
 /* global QUnit */
 import Ember from 'ember';
 import Application from '../../app';
-import Router from '../../router';
 import config from '../../config/environment';
 import initializeTestHelpers from 'simple-auth-testing/test-helpers';
 initializeTestHelpers();
@@ -16,7 +15,7 @@ export default function startApp(attrs) {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
-    // QUnit.config.testTimeout = 100000;
+    QUnit.config.testTimeout = 1000;
   });
 
   return application;

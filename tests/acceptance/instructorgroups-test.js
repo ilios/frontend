@@ -6,7 +6,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
-var fixtures = {};
 
 module('Acceptance: Instructor Groups', {
   beforeEach: function() {

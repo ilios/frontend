@@ -1,14 +1,11 @@
-/* global moment */
 import Ember from 'ember';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
-var fixtures = {};
 var url = '/learnergroups/1';
 module('Acceptance: Learner Group - Subgroups', {
   beforeEach: function() {
@@ -157,7 +154,6 @@ test('click title takes you to learnergroup route', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    var container = find('.learnergroup-subgroup-list');
     click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
