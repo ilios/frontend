@@ -55,7 +55,8 @@ before_script:
 
 script:
   - if [ "$SCSS_LINT" = true ]; then scss-lint; fi
-  - if [ "$JS_TESTS" = true ]; then node_modules/.bin/ember test --port=8080 --launch=${TESTEM_LAUNCHER}; fi
+  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = false ]; then node_modules/.bin/ember test --port=8080 --launch=${TESTEM_LAUNCHER}; fi
+  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = true ]; then node_modules/.bin/ember test --port=8080 --test-page='tests/index.html?hidepassed&coverage' --launch=${TESTEM_LAUNCHER}; fi
 
 after_script:
   # Destroy the sauce tunnel
