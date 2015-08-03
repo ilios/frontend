@@ -24,5 +24,19 @@ export default Ember.Component.extend({
     remove: function(){
       this.sendAction('remove', this.get('learningMaterial'));
     },
+    changeSelectedStatus(){
+      let selectedEl = this.$('select')[0];
+      let selectedIndex = selectedEl.selectedIndex;
+      let learningMaterialStatuses = this.get('learningMaterialStatuses');
+      let status = learningMaterialStatuses.toArray()[selectedIndex];
+      this.set('learningMaterial.status', status);
+    },
+    changeSelectedRole(){
+      let selectedEl = this.$('select')[1];
+      let selectedIndex = selectedEl.selectedIndex;
+      let learningMaterialUserRoles = this.get('learningMaterialUserRoles');
+      let role = learningMaterialUserRoles.toArray()[selectedIndex];
+      this.set('learningMaterial.userRole', role);
+    },
   }
 });
