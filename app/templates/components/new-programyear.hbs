@@ -3,12 +3,13 @@
     <div class="form-col-12">
       <label class="form-label">{{t "general.academicYear"}}:</label>
       <div class="form-data">
-        {{view "select"
-          content=academicYears
-          value=programYear.startYear
-          optionValuePath='content.id'
-          optionLabelPath='content.title'
-        }}
+        <select {{action 'changeSelectedYear' on='change'}}>
+          {{#each academicYears as |year|}}
+            <option value="{{year}}" selected={{is-equal year programYear.startYear}}>
+              {{year}}
+            </option>
+          {{/each}}
+        </select>
       </div>
     </div>
     <div class="form-col-6 form-data-submit">
@@ -17,4 +18,3 @@
     </div>
   </div>
 </section>
-
