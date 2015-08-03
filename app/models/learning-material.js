@@ -1,11 +1,22 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
   uploadDate: DS.attr('date'),
   originalAuthor: DS.attr('string'),
-  type: DS.attr('string'),
+  type: Ember.computed('filename', 'citation', 'link', function(){
+    if (this.get('filename')) {
+      return 'file';
+    }
+    if (this.get('citation')) {
+      return 'citation';
+    }
+    if (this.get('link')) {
+      return 'link';
+    }
+  }),
   token: DS.attr('string'),
   path: DS.attr('string'),
   copyrightPermission: DS.attr('boolean'),
