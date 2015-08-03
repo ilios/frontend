@@ -45,7 +45,7 @@ before_install:
 
 install:
   - if [ "$JS_TESTS" = true ]; then npm install -g bower; fi
-  - if [ "$JS_TESTS" = true ]; then travis_retry npm install; fi
+  - if [ "$JS_TESTS" = true ]; then travis_retry npm install --no-optional; fi
   - if [ "$JS_TESTS" = true ]; then travis_retry bower install; fi
   - if [ "$SCSS_LINT" = true ]; then travis_retry gem install scss-lint; fi
 
