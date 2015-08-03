@@ -8,12 +8,13 @@
     <div class="form-label">{{t "sessions.type"}}:</div>
     <div class="form-data form-data-select form-input-row">
     {{#if sortedSessionTypes}}
-      {{view "select"
-        content=sortedSessionTypes
-        value=selectedSessionTypeId
-        optionValuePath='content.id'
-        optionLabelPath='content.title'
-      }}
+      <select {{action 'changeSessionType' on='change'}}>
+        {{#each sortedSessionTypes as |sessionType|}}
+          <option value="{{sessionType}}" selected={{is-equal sessionType.id session.sessionType.id}}>
+            {{sessionType.title}}
+          </option>
+        {{/each}}
+      </select>
     {{else}}
       <select>
         <option selected>{{t 'sessions.loadingSessionTypes'}}</option>

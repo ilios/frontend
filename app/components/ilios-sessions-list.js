@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   tagName: 'div',
   course: null,
   newSessions: [],
-  sessionTypes: [],
   placeholderValue: t('sessions.titleFilterPlaceholder'),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
@@ -59,27 +58,25 @@ export default Ember.Component.extend({
     });
     return filtered.sortBy('title');
   }.property('proxiedSessions.@each.searchString', 'debouncedFilter'),
-  setSessionTypes: function(){
-    var self = this;
-    var course = this.get('course');
-    if(course){
-      course.get('owningSchool').then(function(owningSchool){
-        if(owningSchool){
-          owningSchool.get('sessionTypes').then(function(sessionTypes){
-            self.set('sessionTypes', sessionTypes);
-          });
-        }
-      });
-    }
-  }.observes('course', 'course.owningSchool', 'course.owningSchool.sessionTypes.@each').on('init'),
   actions: {
-    addNewSession: function(){
-      var sessionProxy = Ember.ObjectProxy.create({
-        isSaved: false,
-        content: this.get('store').createRecord('session')
-      });
+    addNewSession(){
+      this.get('course.owningSchool').then(owningSchool => {
+        owningSchool.get('sessionTypes').then(sessionTypes => {
+          //we attempt to load a type with the title of lecture as its the default
+          let lectureType = sessionTypes.findBy('title', 'Lecture');
+          let defaultType = lectureType?lectureType:sessionTypes.get('firstObject');
+          let session = this.get('store').createRecord('session', {
+            sessionType: defaultType
+          });
+          let sessionProxy = Ember.ObjectProxy.create({
+            isSaved: false,
+            content: session
+          });
 
-      this.get('newSessions').addObject(sessionProxy);
+          this.get('newSessions').addObject(sessionProxy);
+        });
+      });
+      
     },
     saveNewSession: function(newSession){
       let sessionProxy = this.get('newSessions').find(proxy => {
