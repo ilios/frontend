@@ -17,7 +17,7 @@
           {{#liquid-unless sessionProxy.isSaved class='horizontal'}}
             {{new-session
               session=sessionProxy.content
-              sessionTypes=sessionTypes
+              sessionTypes=course.owningSchool.sessionTypes
               save='saveNewSession'
               cancel='removeNewSession'
             }}

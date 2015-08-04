@@ -6,12 +6,13 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.status'}}:</label>
     <div class="form-data">
-    {{view "select"
-      content=learningMaterialStatuses
-      value=learningMaterial.status.content
-      optionValuePath='content'
-      optionLabelPath='content.title'
-    }}
+      <select {{action 'changeSelectedStatus' on='change'}}>
+        {{#each learningMaterialStatuses as |status|}}
+          <option value="{{status}}" selected={{is-equal status learningMaterial.status}}>
+            {{status.title}}
+          </option>
+        {{/each}}
+      </select>
     </div>
   </div>
   <div class="form-col-12">
@@ -25,12 +26,13 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
     <div class="form-data">
-    {{view "select"
-      content=learningMaterialUserRoles
-      value=learningMaterial.userRole.content
-      optionValuePath='content'
-      optionLabelPath='content.title'
-    }}
+      <select {{action 'changeSelectedRole' on='change'}}>
+        {{#each learningMaterialUserRoles as |role|}}
+          <option value="{{role}}" selected={{is-equal role learningMaterial.userRole}}>
+            {{role.title}}
+          </option>
+        {{/each}}
+      </select>
     </div>
   </div>
   <div class="form-col-12">
@@ -70,4 +72,3 @@
   <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
 </div>
 </div>
-

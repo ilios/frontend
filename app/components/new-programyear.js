@@ -7,10 +7,7 @@ export default Ember.Component.extend({
   academicYears: function(){
     return this.get('availableProgramStartYears').map(
       startYear => {
-        return {
-          id: startYear,
-          title: startYear + ' - ' + (startYear+1)
-        };
+        return startYear + ' - ' + (startYear+1);
       }
     );
   }.property('availableProgramStartYears.@each'),
@@ -20,6 +17,13 @@ export default Ember.Component.extend({
     },
     cancel: function(){
       this.sendAction('cancel', this.get('programYear'));
-    }
+    },
+    changeSelectedYear(){
+      let selectedEl = this.$('select')[0];
+      let selectedIndex = selectedEl.selectedIndex;
+      let availableProgramStartYears = this.get('availableProgramStartYears');
+      let year = availableProgramStartYears.toArray()[selectedIndex];
+      this.set('programYear.startYear', year);
+    },
   }
 });
