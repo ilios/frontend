@@ -1,14 +1,11 @@
-/* global moment */
 import Ember from 'ember';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
-var fixtures = {};
 var url = '/instructorgroups/1';
 module('Acceptance: Instructor Group Details', {
   beforeEach: function() {

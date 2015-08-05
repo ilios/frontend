@@ -89,7 +89,7 @@ test('empty session count', function(assert) {
 
 //also test all the session overview fields (Issue #496)
 test('check fields', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 1,
     sessionDescription: 1,
@@ -110,7 +110,7 @@ test('check remove ilm', function(assert) {
   var ilmSession = server.create('ilmSession', {
     session: 1
   });
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     ilmSessionFacet: 1
   });
@@ -134,7 +134,7 @@ test('check remove ilm', function(assert) {
 
 test('check add ilm', function(assert) {
 
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 1,
     description: 'some text',
@@ -157,7 +157,7 @@ test('change ilm hours', function(assert) {
   var ilmSession = server.create('ilmSession', {
     session: 1
   });
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     ilmSessionFacet: 1
   });
@@ -185,7 +185,7 @@ test('change ilm due date', function(assert) {
   var ilmSession = server.create('ilmSession', {
     session: 1
   });
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     ilmSessionFacet: 1
   });
@@ -211,7 +211,7 @@ test('change ilm due date', function(assert) {
 });
 
 test('change title', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 1
   });
@@ -233,7 +233,7 @@ test('change title', function(assert) {
 });
 
 test('change type', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 2
   });
@@ -257,7 +257,7 @@ test('change type', function(assert) {
 });
 
 test('change suplimental', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 2
   });
@@ -273,7 +273,7 @@ test('change suplimental', function(assert) {
 });
 
 test('change special attire', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 2
   });
@@ -289,7 +289,7 @@ test('change special attire', function(assert) {
 });
 
 test('change special equipment', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 2
   });
@@ -305,7 +305,7 @@ test('change special equipment', function(assert) {
 });
 
 test('change description', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 1,
     sessionDescription: 1
@@ -329,7 +329,7 @@ test('change description', function(assert) {
 });
 
 test('add description', function(assert) {
-  var session = server.create('session', {
+  server.create('session', {
     course: 1,
     sessionType: 1
   });

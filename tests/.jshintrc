@@ -34,7 +34,7 @@
   "node": false,
   "browser": false,
   "boss": true,
-  "curly": false,
+  "curly": true,
   "debug": false,
   "devel": false,
   "eqeqeq": true,
@@ -55,5 +55,6 @@
   "strict": false,
   "white": false,
   "eqnull": true,
-  "esnext": true
+  "esnext": true,
+  "unused": true
 }

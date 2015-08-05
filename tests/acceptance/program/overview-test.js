@@ -1,14 +1,11 @@
-/* global moment */
 import Ember from 'ember';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
-var fixtures = {};
 var url = '/programs/1';
 module('Acceptance: Program - Overview', {
   beforeEach: function() {
@@ -37,7 +34,7 @@ test('check fields', function(assert) {
 });
 
 test('change title', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
   });
   visit(url);
@@ -103,7 +100,7 @@ test('change duration', function(assert) {
 });
 
 test('leave duration at 1', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     duration: null,
   });

@@ -1,4 +1,3 @@
-import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import {default as en} from 'ilios/locales/en/translations';
 import {default as es} from 'ilios/locales/es/translations';

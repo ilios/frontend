@@ -35,23 +35,22 @@ export default DS.Model.extend({
     });
   }.property('programYear.objectives.@each'),
   topLevelLearnerGroups: function(){
-    return this.get('learnerGroups').then(function(groups){
-      var parentHash = {};
-      var groupHash = {};
-      groups.forEach(function(group){
-        groupHash[group.get('id')] = group;
-        parentHash[group.get('id')] = group.get('parent');
+    let defer = Ember.RSVP.defer();
+    this.get('learnerGroups').then(groups => {
+      let topLevelGroups = Ember.A();
+      let promises = [];
+      
+      groups.forEach(group => {
+        promises.pushObject(group.get('topLevelGroup').then(topLevelGroup => {
+          topLevelGroups.pushObject(topLevelGroup);
+        }));
       });
-      return Ember.RSVP.hash(parentHash).then(function(hash){
-        var topLevelGroups = Ember.A();
-        for (var key in hash) {
-          var parent = hash[key];
-          if(parent == null){
-            topLevelGroups.pushObject(groupHash[key]);
-          }
-        }
-        return topLevelGroups;
+      Ember.RSVP.all(promises).then(() => {
+        defer.resolve(topLevelGroups.uniq());
       });
+    });
+    return DS.PromiseArray.create({
+      promise: defer.promise
     });
   }.property('learnerGroups.@each'),
   displayTitleObserver: function(){

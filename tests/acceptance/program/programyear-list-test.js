@@ -5,10 +5,8 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
-var fixtures = {};
 var url = '/programs/1';
 module('Acceptance: Program - ProgramYear List', {
   beforeEach: function() {
@@ -24,7 +22,7 @@ module('Acceptance: Program - ProgramYear List', {
 });
 
 test('check list', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1,2,3]
   });
@@ -33,17 +31,17 @@ test('check list', function(assert) {
       programYear: i
     });
   }
-  var last = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     startYear: 2012,
     cohort: 1,
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     startYear: 2010,
     cohort: 2,
   });
-  var secondProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     startYear: 2011,
     cohort: 3,
@@ -63,14 +61,14 @@ test('check list', function(assert) {
 });
 
 test('check competencies', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1]
   });
   server.createList('competency', 5, {
     programYear: 1
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     competencies: [1,2,3,4,5]
   });
@@ -81,14 +79,14 @@ test('check competencies', function(assert) {
 });
 
 test('check objectives', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1]
   });
   server.createList('objective', 5, {
     programYear: 1
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     objectives: [1,2,3,4,5]
   });
@@ -99,14 +97,14 @@ test('check objectives', function(assert) {
 });
 
 test('check directors', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1]
   });
   server.createList('user', 5, {
     programYear: 1
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     directors: [1,2,3,4,5]
   });
@@ -117,14 +115,14 @@ test('check directors', function(assert) {
 });
 
 test('check topics', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1]
   });
   server.createList('discipline', 5, {
     programYear: 1
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     disciplines: [1,2,3,4,5]
   });
@@ -135,11 +133,11 @@ test('check topics', function(assert) {
 });
 
 test('check warnings', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1]
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
   });
   visit(url);
@@ -154,11 +152,11 @@ test('check warnings', function(assert) {
 });
 
 test('check link', function(assert) {
-  var program = server.create('program', {
+  server.create('program', {
     owningSchool: 1,
     programYears: [1]
   });
-  var firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
   });
   visit(url);

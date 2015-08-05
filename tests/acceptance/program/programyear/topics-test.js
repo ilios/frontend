@@ -6,7 +6,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
-var fixtures = {};
 var url = '/programs/1/programyears/1';
 module('Acceptance: Program Year - Topics', {
   beforeEach: function() {
