@@ -149,7 +149,7 @@ test('create new file learning material', function(assert) {
   andThen(function(){
     //check that we got the right form
     let labels = find('.detail-learning-materials .newlearningmaterial label');
-    assert.equal(labels.length, 8);
+    assert.equal(labels.length, 9);
     let userName = fixtures.user.firstName + fixtures.user.lastName;
     assert.equal(getElementText(find('.detail-learning-materials .newlearningmaterial .owninguser')), getText(userName));
     let newLmContainer = find('.detail-learning-materials .newlearningmaterial');
