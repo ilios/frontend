@@ -130,7 +130,7 @@ export default Ember.Component.extend({
     addNewLearningMaterial: function(type){
       var self = this;
       if(type === 'file' || type === 'citation' || type === 'link'){
-        this.get('learningMaterialStatuses').then(function(statuses){
+        self.get('learningMaterialStatuses').then(function(statuses){
           self.get('learningMaterialUserRoles').then(function(roles){
             //default the status to Final if that status exists
             var defaultStatus = statuses.find(function(status){
@@ -157,14 +157,12 @@ export default Ember.Component.extend({
       self.get('newLearningMaterials').removeObject(lm);
       if(this.get('isCourse')){
         subjectLm = this.get('store').createRecord('course-learning-material', {
-          learningMaterial: lm,
           course: this.get('subject')
         });
         lmCollectionType = 'courseLearningMaterials';
       }
       if(this.get('isSession')){
         subjectLm = this.get('store').createRecord('session-learning-material', {
-          learningMaterial: lm,
           session: this.get('subject')
         });
         lmCollectionType = 'sessionLearningMaterials';
@@ -178,8 +176,6 @@ export default Ember.Component.extend({
 
           self.get('subject.learningMaterials').then(function(lms){
             lms.addObject(savedSubjectLm);
-            lms.save();
-            lm.save();
           });
         });
       });

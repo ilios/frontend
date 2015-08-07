@@ -53,6 +53,10 @@
       <div class="form-data">{{input type='text' value=learningMaterial.copyrightRationale}}</div>
     </div>
     {{/unless}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.file'}}:</label>
+      <div class="form-data">{{file-upload finishedUploading='setFile' url="/upload"}}</div>
+    </div>
   {{/if}}
   {{#if isLink}}
   <div class="form-col-12">

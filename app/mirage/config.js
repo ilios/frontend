@@ -298,6 +298,20 @@ export default function() {
       return new Mirage.Response(400, {}, {errors: errors});
     });
 
+    this.post('/upload', function() {
+      let hash = "";
+      let allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      for( var i=0; i < 32; i++ ) {
+        hash += allowedChars.charAt(Math.floor(Math.random() * allowedChars.length));
+      }
+
+      return {
+        filename: 'bogus.txt',
+        fileHash: hash
+      };
+    });
+
     this.get('/auth/whoami', function() {
       return {
         userId: 4136

@@ -34,7 +34,6 @@ module('Acceptance: Course - Learning Materials', {
     fixtures.learningMaterials = [];
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      type: 'file',
       owningUser: 4136,
       status: 1,
       userRole: 1,
@@ -43,7 +42,6 @@ module('Acceptance: Course - Learning Materials', {
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      type: 'file',
       owningUser: 4136,
       status: 1,
       userRole: 1,
@@ -53,14 +51,12 @@ module('Acceptance: Course - Learning Materials', {
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
-      type: 'link',
       link: 'www.example.com',
       status: 1,
       courseLearningMaterials: [3],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
-      type: 'citation',
       citation: 'a citation',
       status: 1,
       courseLearningMaterials: [4],
@@ -111,7 +107,9 @@ test('list learning materials', function(assert) {
       let courseLm = fixtures.courseLearningMaterials[fixtures.course.learningMaterials[i] - 1];
       let lm = fixtures.learningMaterials[courseLm.learningMaterial - 1];
       assert.equal(getElementText(find('td:eq(0)', row)), getText(lm.title));
-      assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
+      //TODO: we are no longer populating for 'type', so we need to pull all these tests out
+      //of the loop and test individually
+      //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
       assert.equal(getElementText(find('td:eq(2)', row)), getText(lm.originalAuthor));
       let required = courseLm.required?'Yes':'No';
       assert.equal(getElementText(find('td:eq(3)', row)), getText(required));
@@ -145,7 +143,7 @@ test('create new file learning material', function(assert) {
   andThen(function(){
     //check that we got the right form
     let labels = find('.detail-learning-materials .newlearningmaterial label');
-    assert.equal(labels.length, 8);
+    assert.equal(labels.length, 9);
     let userName = fixtures.user.firstName + fixtures.user.lastName;
     assert.equal(getElementText(find('.detail-learning-materials .newlearningmaterial .owninguser')), getText(userName));
     let newLmContainer = find('.detail-learning-materials .newlearningmaterial');

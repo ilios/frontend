@@ -24,6 +24,10 @@ export default Ember.Component.extend({
     remove: function(){
       this.sendAction('remove', this.get('learningMaterial'));
     },
+    setFile: function(e){
+      this.get('learningMaterial').set('filename', e.filename);
+      this.get('learningMaterial').set('fileHash', e.fileHash);
+    },
     changeSelectedStatus(){
       let selectedEl = this.$('select')[0];
       let selectedIndex = selectedEl.selectedIndex;
@@ -37,6 +41,6 @@ export default Ember.Component.extend({
       let learningMaterialUserRoles = this.get('learningMaterialUserRoles');
       let role = learningMaterialUserRoles.toArray()[selectedIndex];
       this.set('learningMaterial.userRole', role);
-    },
+    }
   }
 });
