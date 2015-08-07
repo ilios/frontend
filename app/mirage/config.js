@@ -298,7 +298,7 @@ export default function() {
       return new Mirage.Response(400, {}, {errors: errors});
     });
 
-    this.post('/upload', function(db, request) {
+    this.post('/upload', function() {
       let hash = "";
       let allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
