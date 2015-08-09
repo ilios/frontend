@@ -16,8 +16,8 @@ export default Ember.Component.extend(Publishable, {
     saveIndependentLearning: function(value){
       var session = this.get('session');
       if(!value){
-        session.get('ilmSessionFacet').then(function(ilmSession){
-          session.set('ilmSessionFacet', null);
+        session.get('ilmSession').then(function(ilmSession){
+          session.set('ilmSession', null);
           ilmSession.deleteRecord();
           session.save();
           ilmSession.save();
@@ -29,7 +29,7 @@ export default Ember.Component.extend(Publishable, {
           dueDate: moment().add(6, 'weeks').toDate()
         });
         ilmSession.save().then(function(savedIlmSession){
-          session.set('ilmSessionFacet', savedIlmSession);
+          session.set('ilmSession', savedIlmSession);
           session.save();
         });
       }
@@ -59,7 +59,7 @@ export default Ember.Component.extend(Publishable, {
       this.get('session').save();
     },
     changeIlmHours: function(value){
-      this.get('session.ilmSessionFacet').then(function(ilmSession){
+      this.get('session.ilmSession').then(function(ilmSession){
         if(ilmSession){
           ilmSession.set('hours', value);
           ilmSession.save();
@@ -67,7 +67,7 @@ export default Ember.Component.extend(Publishable, {
       });
     },
     changeIlmDueDate: function(value){
-      this.get('session.ilmSessionFacet').then(function(ilmSession){
+      this.get('session.ilmSession').then(function(ilmSession){
         if(ilmSession){
           ilmSession.set('dueDate', value);
           ilmSession.save();

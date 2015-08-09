@@ -7,12 +7,12 @@
     }}
     {{#liquid-if session.isIndependentLearning class='vertical'}}
       {{detail-learnergroups
-        subject=session.ilmSessionFacet
+        subject=session.ilmSession
         cohorts=session.course.cohorts
         isIlmSession=true
       }}
       {{detail-instructors
-        ilmSession=session.ilmSessionFacet
+        ilmSession=session.ilmSession
       }}
     {{/liquid-if}}
     {{detail-objectives subject=session isSession=true}}

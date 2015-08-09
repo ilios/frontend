@@ -112,7 +112,7 @@ test('check remove ilm', function(assert) {
   });
   server.create('session', {
     course: 1,
-    ilmSessionFacet: 1
+    ilmSession: 1
   });
   visit('/courses/1/sessions/1/publicationcheck');
 
@@ -159,7 +159,7 @@ test('change ilm hours', function(assert) {
   });
   server.create('session', {
     course: 1,
-    ilmSessionFacet: 1
+    ilmSession: 1
   });
   visit('/courses/1/sessions/1/publicationcheck');
 
@@ -187,7 +187,7 @@ test('change ilm due date', function(assert) {
   });
   server.create('session', {
     course: 1,
-    ilmSessionFacet: 1
+    ilmSession: 1
   });
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {

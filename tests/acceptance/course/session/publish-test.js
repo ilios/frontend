@@ -43,7 +43,7 @@ module('Acceptance: Session - Publish', {
     });
     fixtures.ilmSession = server.create('session', {
       course: 1,
-      ilmSessionFacet: 1
+      ilmSession: 1
     });
   },
 

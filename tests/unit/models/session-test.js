@@ -75,7 +75,7 @@ test('check required ILM publication items', function(assert) {
     model.set('title', 'nothing');
     assert.equal(model.get('requiredPublicationIssues').length, 1);
     let ilmSession = store.createRecord('ilmSession');
-    model.set('ilmSessionFacet', ilmSession);
+    model.set('ilmSession', ilmSession);
     assert.equal(model.get('requiredPublicationIssues').length, 1);
   });
 });
