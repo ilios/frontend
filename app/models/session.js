@@ -19,8 +19,8 @@ var Session = DS.Model.extend(PublishableModel, {
   learningMaterials: DS.hasMany('session-learning-material', {async: true}),
   instructionHours: DS.hasMany('instruction-hour', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),
-  ilmSessionFacet: DS.belongsTo('ilm-session', {async: true}),
-  isIndependentLearning: Ember.computed.notEmpty('ilmSessionFacet.content'),
+  ilmSession: DS.belongsTo('ilm-session', {async: true}),
+  isIndependentLearning: Ember.computed.notEmpty('ilmSession.content'),
   offeringLearnerGroupsLength: Ember.computed.mapBy('offerings', 'learnerGroups.length'),
   learnerGroupCount: Ember.computed.sum('offeringLearnerGroupsLength'),
   offeringsWithStartDate: Ember.computed.filterBy('offerings', 'startDate'),
@@ -35,7 +35,7 @@ var Session = DS.Model.extend(PublishableModel, {
   firstOfferingDate: function(){
     var self = this;
     var deferred = Ember.RSVP.defer();
-    this.get('ilmSessionFacet').then(function(ilmSession){
+    this.get('ilmSession').then(function(ilmSession){
       if(ilmSession){
         deferred.resolve(ilmSession.get('dueDate'));
       } else {
@@ -49,7 +49,7 @@ var Session = DS.Model.extend(PublishableModel, {
     return DS.PromiseObject.create({
       promise: deferred.promise
     });
-  }.property('sortedOfferingsByDate.@each', 'ilmSessionFacet.dueDate'),
+  }.property('sortedOfferingsByDate.@each', 'ilmSession.dueDate'),
   searchString: function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }.property('title', 'sessionType.title', 'status'),
@@ -60,13 +60,13 @@ var Session = DS.Model.extend(PublishableModel, {
       this.set('requiredPublicationSetFields', ['title']);
     } else {
       this.set('requiredPublicationLengthFields', []);
-      this.set('requiredPublicationSetFields', ['title', 'ilmSessionFacet.dueDate']);
+      this.set('requiredPublicationSetFields', ['title', 'ilmSession.dueDate']);
     }
     return this.getRequiredPublicationIssues();
   }.property(
     'title',
     'offerings.length',
-    'ilmSessionFacet.isPublishable',
+    'ilmSession.isPublishable',
     'isIndependentLearning'
   ),
   optionalPublicationIssues: function(){

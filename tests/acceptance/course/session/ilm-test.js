@@ -96,7 +96,7 @@ module('Acceptance: Session - Independent Learning', {
     });
     fixtures.session = server.create('session', {
       course: 1,
-      ilmSessionFacet: 1
+      ilmSession: 1
     });
   },
 
