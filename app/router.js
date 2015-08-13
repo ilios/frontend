@@ -32,6 +32,7 @@ Router.map(function() {
   });
   this.route('fourOhFour', { path: "*path"});
   this.route('login');
+  this.route('events', {path: 'events/:slug'});
 });
 
 export default Router;

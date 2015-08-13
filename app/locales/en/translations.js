@@ -6,6 +6,8 @@ export default {
     'remove': 'Remove',
     'yes': 'Yes',
     'no': 'No',
+    'on': 'On',
+    'off': 'Off',
     'cancel': 'Cancel',
     'undo': 'Undo',
     'results': 'Results',
@@ -301,5 +303,17 @@ export default {
       'es': 'Español (es_MX)',
       'fr': 'Français (fr)'
     }
-  }
+  },
+  'dashboard': {
+    'showFilters': 'Show Filters',
+    'hideFilters': 'Hide Filters',
+    'sessionTypes': 'Session Types',
+    'courseLevels': 'Course Levels',
+    'programAndCohort': 'Program/Cohort',
+    'mySchedule': 'My Schedule',
+    'allEvents': 'All Events',
+    'topicOrDetail': 'Topic/Detail',
+    'courseOrType': 'Course/Type',
+    'usersCalendar': "{{name}}'s Calendar"
+  },
 };

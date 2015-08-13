@@ -1,0 +1,21 @@
+import { isIn } from '../../../helpers/is-in';
+import { module, test } from 'qunit';
+
+module('Unit | Helper | is in');
+
+// Replace this with your real tests.
+test('it works', function(assert) {
+  var result = isIn([[42], 42]);
+  assert.ok(result);
+  result = isIn([[42], '42']);
+  assert.ok(!result);
+  result = isIn([['42'], '42']);
+  assert.ok(result);
+  let obj1 = {};
+  let obj2 = {};
+  let obj3 = {};
+  result = isIn([[obj1, obj2], obj1]);
+  assert.ok(result);
+  result = isIn([[obj1, obj2], obj3]);
+  assert.ok(!result);
+});

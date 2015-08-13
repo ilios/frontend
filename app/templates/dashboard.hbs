@@ -1,34 +1,26 @@
-<section class='fullwidth'>
-    <p> Hello {{currentUser.model.fullName}},</p>
-</section>
-<section class='fullwidth calendar-controls'>
-  <ul class='inline calendar-view-picker'>
-    <li>{{fa-icon 'calendar'}}</li>
-    <li class='clickable' {{action 'setView' 'day'}}>{{t 'calendar.day'}}</li>
-    <li class='clickable' {{action 'setView' 'week'}}>{{t 'calendar.week'}}</li>
-    <li class='clickable' {{action 'setView' 'month'}}>{{t 'calendar.month'}}</li>
-  </ul>
-
-  {{#if isEventView class='crossFade'}}
-    <span class='calendar-back clickable link' {{action 'clearEvent'}}>
-      {{t 'calendar.backToCalendar'}}
-    </span>
-  {{else}}
-    <ul class='inline calendar-time-picker'>
-      <li class='clickable' {{action 'goBack'}}>{{fa-icon 'angle-left'}}</li>
-      <li class='clickable' {{action 'gotoToday'}}>{{t 'calendar.today'}}</li>
-      <li class='clickable' {{action 'goForward'}}>{{fa-icon 'angle-right'}}</li>
-    </ul>
-  {{/if}}
-
-</section>
-
-<section class='fullwidth'>
-  {{user-events-calendar
-    events=userEvents
-    date=calendarDate
-    view=selectedView
-    selectedEvent=selectedEvent
-    selectEvent='selectEvent'
+<section class='dashboard fullwidth'>
+  <div class='calendar-profile'>
+  {{t 'dashboard.usersCalendar' name=currentUser.model.fullName}}
+  {{#unless showCalendar}}
+    {{moment selectedDate 'dddd MMMM Do, YYYY'}}
+  {{/unless}}
+  {{toggle-wide
+    value=showCalendar
+    onLabel='offerings.calendarOn'
+    offLabel='offerings.calendarOff'
+    action='toggleShowCalendar'
   }}
+  </div>
+  {{#liquid-if showCalendar class='vertical'}}
+    {{dashboard-calendar
+      selectedDate=selectedDate
+      selectedView=selectedView
+      goBack='goBack'
+      goForward='goForward'
+      gotoToday='gotoToday'
+      setView='setView'
+    }}
+  {{else}}
+    {{dashboard-agenda selectedDate=selectedDate}}
+  {{/liquid-if}}
 </section>

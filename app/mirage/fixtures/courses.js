@@ -1,27 +1,5 @@
 export default [
   {
-    'id' : 384,
-    'title' : "delete this course ",
-    'level' : 1,
-    'year' : 2013,
-    'startDate' : "2013-09-01T00:00:00+00:00",
-    'endDate' : "2013-12-14T00:00:00+00:00",
-    'deleted' : true,
-    'externalId' : "",
-    'locked' : true,
-    'archived' : true,
-    'publishedAsTbd' : false,
-    'school' : "1",
-    'directors' : [],
-    'cohorts' : [],
-    'disciplines' : [],
-    'objectives' : [],
-    'meshDescriptors' : [],
-    'learningMaterials' : [],
-    'sessions' : []
-  },
-
-  {
     'id' : 543,
     'title' : "HSPR Pathway Seminar I",
     'level' : 3,

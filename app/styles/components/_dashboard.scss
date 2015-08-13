@@ -1,0 +1,82 @@
+.dashboard {
+  .calendar-profile {
+    background-color: $grey;
+    border: 1px solid $ilios-blue;
+    color: $ilios-orange;
+    font-weight: bold;
+    padding: .5em;
+    
+    .switch {
+      float: right;
+    }
+  }
+  
+  .dashboard-agenda {
+    border: 1px solid $ilios-blue;
+    height: 15em;
+    overflow-y: scroll;
+    padding: 0 1em 1em;
+    
+    table {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .event-date {
+      color: $ilios-orange;
+    }
+  }
+  
+  .calendar-controls {
+    color: $ilios-blue;
+    margin-bottom: 1em;
+    
+    .calendar-options-control {
+      float: left;
+      margin: 1em 1em 1em 0;
+    }
+    
+    .calendar-filters {
+      @include span-columns(12 or 12);
+      clear: both;
+    }
+    
+    .calendar-school-picker {
+      float: right;
+      margin-right: 5em;
+    }
+
+    .calendar-view-picker {
+      clear: both;
+      float: right;
+    }
+
+    .calendar-time-picker {
+      float: left;
+    }
+
+    .calendar-back {
+      float: left;
+    }
+    
+    .calendar-filter-list {
+      @include span-columns(3 or 12);
+      border: 1px solid $ilios-blue;
+      float: left;
+      font-size: $base-font-size * .8;
+      height: 15em;
+      margin-bottom: 1em;
+      overflow-y: scroll;
+      padding-bottom: 1em;
+      
+      &.small-filter-list {
+        @include span-columns(2 or 12);
+      }
+      
+      &.large-filter-list {
+        @include span-columns(4 or 12);
+      }
+    }
+
+  }
+}

@@ -252,9 +252,35 @@ export default function() {
     this.delete('/api/users/:id', 'user');
     this.post('/api/users', 'user');
 
-    this.get('/api/userevents/4136', function(db) {
+    this.get('/api/userevents/:userid', function(db, requst) {
+      let from = moment.unix(requst.queryParams.from);
+      let to = moment.unix(requst.queryParams.to);
+      let userid = parseInt(requst.params.userid);
+      let userEvents = db.userevents.filter(event => {
+        return (
+          event.user === userid &&
+          (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
+          (to.isSame(event.endDate) || to.isAfter(event.endDate))
+        );
+      });
       return {
-        userEvents: db.userevents
+        userEvents: userEvents
+      };
+    });
+    
+    this.get('/api/schoolevents/:schoolid', function(db, requst) {
+      let from = moment.unix(requst.queryParams.from);
+      let to = moment.unix(requst.queryParams.to);
+      let schoolId = parseInt(requst.params.schoolid);
+      let schoolEvents = db.schoolevents.filter(event => {
+        return (
+          event.school === schoolId &&
+          (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
+          (to.isSame(event.endDate) || to.isAfter(event.endDate))
+        );
+      });
+      return {
+        events: schoolEvents
       };
     });
 
