@@ -120,12 +120,6 @@ export default function() {
     this.delete('/api/ilmsessions/:id', 'ilmSession');
     this.post('/api/ilmsessions', 'ilmSession');
 
-    this.get('/api/instructionhours', getAll);
-    this.get('/api/instructionhours/:id', 'instructionHour');
-    this.put('/api/instructionhours/:id', 'instructionHour');
-    this.delete('/api/instructionhours/:id', 'instructionHour');
-    this.post('/api/instructionhours', 'instructionHour');
-
     this.get('/api/instructorgroups', getAll);
     this.get('/api/instructorgroups/:id', 'instructorGroup');
     this.put('/api/instructorgroups/:id', 'instructorGroup');
@@ -209,12 +203,6 @@ export default function() {
     this.put('/api/publishevents/:id', 'publishEvent');
     this.delete('/api/publishevents/:id', 'publishEvent');
     this.post('/api/publishevents', 'publishEvent');
-
-    this.get('/api/recurringevents', getAll);
-    this.get('/api/recurringevents/:id', 'recurringEvent');
-    this.put('/api/recurringevents/:id', 'recurringEvent');
-    this.delete('/api/recurringevents/:id', 'recurringEvent');
-    this.post('/api/recurringevents', 'recurringEvent');
 
     this.get('/api/reports', getAll);
     this.get('/api/reports/:id', 'report');

@@ -20,7 +20,6 @@ var Offering = DS.Model.extend({
         inverse: 'instructedOfferings'
     }),
     publishEvent: DS.belongsTo('publish-event', {async: true}),
-    recurringEvents: DS.hasMany('recurring-event', {async: true}),
     //startFoo and key properties are used in creating offering blocks
     startDayOfYear: moment('startDate', 'DDDD'),
     startYear: moment('startDate', 'YYYY'),
