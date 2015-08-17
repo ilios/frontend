@@ -17,7 +17,6 @@ var Session = DS.Model.extend(PublishableModel, {
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('session-learning-material', {async: true}),
-  instructionHours: DS.hasMany('instruction-hour', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),
   ilmSession: DS.belongsTo('ilm-session', {async: true}),
   isIndependentLearning: Ember.computed.notEmpty('ilmSession.content'),

@@ -18,7 +18,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46119','46271' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3' ],
     'cohorts' : []
@@ -43,7 +42,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46272' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3' ],
     'cohorts' : []
@@ -68,7 +66,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46262' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3','9' ],
     'cohorts' : []
@@ -93,7 +90,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46266' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3' ],
     'cohorts' : []
@@ -118,7 +114,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46223' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -143,7 +138,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46273' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3' ],
     'cohorts' : []
@@ -168,7 +162,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46264' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','2','3' ],
     'cohorts' : []
@@ -193,7 +186,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -218,7 +210,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -243,7 +234,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -268,7 +258,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46227','46269' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -293,7 +282,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -318,7 +306,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -343,7 +330,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -368,7 +354,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46230' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -393,7 +378,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -418,7 +402,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -443,7 +426,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -468,7 +450,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -493,7 +474,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -518,7 +498,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46268' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','2','3' ],
     'cohorts' : []
@@ -543,7 +522,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46265' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3' ],
     'cohorts' : []
@@ -568,7 +546,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46282','46283','46284','46285','46286','46287','46288','46289','46290','46291','46292','46293','49803','49804','49805','49806','49807','49808','49809','49810' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3' ],
     'cohorts' : []
@@ -593,7 +570,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','9' ],
     'cohorts' : []
@@ -618,7 +594,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46117' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -643,7 +618,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46222' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -668,7 +642,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46123' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -693,7 +666,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -718,7 +690,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -743,7 +714,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46265' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','9' ],
     'cohorts' : []
@@ -768,7 +738,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','9' ],
     'cohorts' : []
@@ -793,7 +762,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -818,7 +786,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -843,7 +810,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '1','3','9' ],
     'cohorts' : []
@@ -868,7 +834,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46228' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -893,7 +858,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -918,7 +882,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46124' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -943,7 +906,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46231' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -968,7 +930,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '2','3' ],
     'cohorts' : []
@@ -993,7 +954,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46270' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '2','3' ],
     'cohorts' : []
@@ -1018,7 +978,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46263' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -1043,7 +1002,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46122' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -1068,7 +1026,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46126' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1093,7 +1050,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46225' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1118,7 +1074,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1143,7 +1098,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1168,7 +1122,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46128' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1193,7 +1146,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46127' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1218,7 +1170,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1243,7 +1194,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1268,7 +1218,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1293,7 +1242,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1318,7 +1266,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1343,7 +1290,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','9' ],
     'cohorts' : []
@@ -1368,7 +1314,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1393,7 +1338,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46221' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1418,7 +1362,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46231' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -1443,7 +1386,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1468,7 +1410,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '53090' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','9' ],
     'cohorts' : []
@@ -1493,7 +1434,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46230' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -1518,7 +1458,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46220' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -1543,7 +1482,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46220' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1568,7 +1506,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46269' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1593,7 +1530,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46226' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1618,7 +1554,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46224' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1643,7 +1578,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46282','46283','46284','46285','46286','46287','46288','46289','46290','46291','46292','46293','49803','49804','49805','49806','49807','49808','49809','49810' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -1668,7 +1602,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1693,7 +1626,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1718,7 +1650,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1743,7 +1674,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1768,7 +1698,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1793,7 +1722,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1818,7 +1746,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1843,7 +1770,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1868,7 +1794,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1893,7 +1818,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1918,7 +1842,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1943,7 +1866,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1968,7 +1890,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -1993,7 +1914,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -2018,7 +1938,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -2043,7 +1962,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '2','3' ],
     'cohorts' : []
@@ -2068,7 +1986,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '4' ],
     'cohorts' : [ '66' ]
@@ -2093,7 +2010,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2118,7 +2034,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2143,7 +2058,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2168,7 +2082,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2193,7 +2106,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2218,7 +2130,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','9' ],
     'cohorts' : []
@@ -2243,7 +2154,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2268,7 +2178,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46121' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2293,7 +2202,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46120' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2318,7 +2226,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46125' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2343,7 +2250,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46222' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3','4' ],
     'cohorts' : []
@@ -2368,7 +2274,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46224' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2393,7 +2298,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46225' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2418,7 +2322,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2443,7 +2346,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [ '46227' ],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
@@ -2468,7 +2370,6 @@ export default [
     'offerings' : [],
     'instructedOfferings' : [],
     'programYears' : [],
-    'instructionHours' : [],
     'alerts' : [],
     'roles' : [ '3' ],
     'cohorts' : []
