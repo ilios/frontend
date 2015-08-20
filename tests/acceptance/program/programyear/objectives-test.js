@@ -13,12 +13,12 @@ module('Acceptance: Program Year - Objectives', {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school', {
-      owningSchool: 1,
+      school: 1,
       programYears: [1],
       competencies: [1,2]
     });
     server.create('program', {
-      owningSchool: 1,
+      school: 1,
       programYears: [1]
     });
     server.create('programYear', {
@@ -27,18 +27,18 @@ module('Acceptance: Program Year - Objectives', {
       objectives: [1,2]
     });
     server.create('competency', {
-      owningSchool: 1,
+      school: 1,
       children: [2,3]
     });
     server.create('competency', {
       parent: 1,
-      owningSchool: 1,
+      school: 1,
       programYears: [1],
       objectives: [1]
     });
     server.create('competency', {
       parent: 1,
-      owningSchool: 1,
+      school: 1,
       programYears: [1],
     });
     server.createList('meshDescriptor', 2, {

@@ -23,7 +23,7 @@ module('Acceptance: Course - Objective Create', {
     });
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       objectives: [1]
     });
   },

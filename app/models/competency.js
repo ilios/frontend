@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default DS.Model.extend({
   title: DS.attr('string'),
-  owningSchool: DS.belongsTo('school'),
+  school: DS.belongsTo('school'),
   parent: DS.belongsTo('competency', {async: true, inverse: 'children'}),
   children: DS.hasMany('competency', {async: true, inverse: 'parent'}),
   objectives: DS.hasMany('objective',  {async: true}),

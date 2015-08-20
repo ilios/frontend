@@ -5,5 +5,5 @@ export default Mirage.Factory.extend({
   lastName: (i) => `Mc${i}son`,
   middelName: 'm,',
   enabled: true,
-  primarySchool: 1,
+  school: 1,
 });

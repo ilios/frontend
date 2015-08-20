@@ -21,7 +21,7 @@ module('Acceptance: Program Year - Publication Check', {
     });
     fixtures.fullProgramYear = server.create('programYear', {
       startYear: 2013,
-      owningSchool: 1,
+      school: 1,
       program: 1,
       directors: [4136],
       objectives: [1],
@@ -30,7 +30,7 @@ module('Acceptance: Program Year - Publication Check', {
     });
     fixtures.emptyProgramYear = server.create('programYear', {
       startYear: 2013,
-      owningSchool: 1,
+      school: 1,
       program: 1
     });
   },

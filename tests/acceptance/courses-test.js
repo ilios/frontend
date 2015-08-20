@@ -38,17 +38,17 @@ test('filters by title', function(assert) {
   var firstCourse = server.create('course', {
     title: 'specialfirstcourse',
     year: 2014,
-    owningSchool: 1,
+    school: 1,
   });
   var secondCourse = server.create('course', {
     title: 'specialsecondcourse',
     year: 2014,
-    owningSchool: 1
+    school: 1
   });
   var regularCourse = server.create('course', {
     title: 'regularcourse',
     year: 2014,
-    owningSchool: 1
+    school: 1
   });
   visit('/courses');
   andThen(function() {
@@ -95,11 +95,11 @@ test('filters by year', function(assert) {
   assert.expect(2);
   var firstCourse = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
   });
   var secondCourse = server.create('course', {
     year: 2014,
-    owningSchool: 1
+    school: 1
   });
   visit('/courses');
   andThen(function() {
@@ -126,11 +126,11 @@ test('filters by mycourses', function(assert) {
   assert.expect(5);
   var firstCourse = server.create('course', {
     year: 2014,
-    owningSchool: 1
+    school: 1
   });
   var secondCourse = server.create('course', {
     year: 2014,
-    owningSchool: 1,
+    school: 1,
     directors: [4136]
   });
   visit('/courses');

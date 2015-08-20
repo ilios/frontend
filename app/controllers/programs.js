@@ -47,7 +47,7 @@ export default Ember.ArrayController.extend({
     addProgram: function(){
       var program = this.store.createRecord('program', {
         title: null,
-        owningSchool: this.get('selectedSchool'),
+        school: this.get('selectedSchool'),
         duration: 4
       });
       this.get('newPrograms').addObject(program);

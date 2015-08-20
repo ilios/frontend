@@ -14,7 +14,7 @@ module('Acceptance: Session - Independent Learning', {
     authenticateSession();
     server.create('user', {
       id: 4136,
-      primarySchool: 1
+      school: 1
     });
     server.createList('user', 3, {
       instructorIlmSessions: [1]
@@ -75,7 +75,7 @@ module('Acceptance: Session - Independent Learning', {
     }));
     fixtures.course = server.create('course', {
       cohorts: [1,2],
-      owningSchool: 1
+      school: 1
     });
 
     fixtures.instructorGroups = [];

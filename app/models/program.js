@@ -7,7 +7,7 @@ export default DS.Model.extend(PublishableModel,{
   shortTitle: DS.attr('string'),
   duration: DS.attr('number'),
   deleted: DS.attr('boolean'),
-  owningSchool: DS.belongsTo('school', {async: true}),
+  school: DS.belongsTo('school', {async: true}),
   programYears: DS.hasMany('program-year', {
       async: true,
       inverse: 'program'

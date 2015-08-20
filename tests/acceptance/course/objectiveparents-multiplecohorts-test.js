@@ -39,12 +39,12 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', {
     }));
     fixtures.competencies = [];
     fixtures.competencies.pushObject(server.create('competency', {
-      owningSchool: 1,
+      school: 1,
       programYears: [1,2],
       objectives: [1,4],
     }));
     fixtures.competencies.pushObject(server.create('competency', {
-      owningSchool: 1,
+      school: 1,
       programYears: [1,2],
       objectives: [2,3,5,6],
     }));
@@ -85,7 +85,7 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', {
     }));
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       objectives: [7,8],
       cohorts: [1,2]
     });

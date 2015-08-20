@@ -18,16 +18,16 @@ module('Acceptance: Session - Topics', {
       disciplines: [1,2]
     });
     server.create('course', {
-      owningSchool: 1
+      school: 1
     });
 
     fixtures.topics = [];
     fixtures.topics.pushObject(server.create('discipline', {
       sessions: [1],
-      owningSchool: 1
+      school: 1
     }));
     fixtures.topics.pushObject(server.create('discipline', {
-      owningSchool: 1
+      school: 1
     }));
 
     fixtures.session =

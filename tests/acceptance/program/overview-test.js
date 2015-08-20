@@ -22,7 +22,7 @@ module('Acceptance: Program - Overview', {
 
 test('check fields', function(assert) {
   var program = server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit(url);
   andThen(function() {
@@ -35,7 +35,7 @@ test('check fields', function(assert) {
 
 test('change title', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit(url);
   andThen(function() {
@@ -56,7 +56,7 @@ test('change title', function(assert) {
 
 test('change short title', function(assert) {
   var program = server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit(url);
   andThen(function() {
@@ -77,7 +77,7 @@ test('change short title', function(assert) {
 
 test('change duration', function(assert) {
   var program = server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit(url);
   andThen(function() {
@@ -101,7 +101,7 @@ test('change duration', function(assert) {
 
 test('leave duration at 1', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     duration: null,
   });
   visit(url);

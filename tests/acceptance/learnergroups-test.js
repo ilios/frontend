@@ -34,7 +34,7 @@ test('single option filters', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -59,7 +59,7 @@ test('multiple programs filter', function(assert) {
     programs: [1,2]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -71,7 +71,7 @@ test('multiple programs filter', function(assert) {
     learnerGroups: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [2]
   });
   server.create('programYear', {
@@ -112,7 +112,7 @@ test('multiple program years filter', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1,2]
   });
   server.create('programYear', {
@@ -172,7 +172,7 @@ test('list groups', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -226,7 +226,7 @@ test('filters by title', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -314,7 +314,7 @@ test('cancel adding new learnergroup', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -351,7 +351,7 @@ test('remove learnergroup', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -387,7 +387,7 @@ test('cancel remove learnergroup', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -426,7 +426,7 @@ test('confirmation of remove message', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -468,7 +468,7 @@ test('click edit takes you to learnergroup route', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -502,7 +502,7 @@ test('click title takes you to learnergroup route', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {

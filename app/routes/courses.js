@@ -11,7 +11,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     Ember.run.later(defer.resolve, function() {
       var resolve = this;
       self.get('currentUser.model').then(function(currentUser){
-        var schoolId = params.schoolId == null ? currentUser.get('primarySchool.id') : params.schoolId;
+        var schoolId = params.schoolId == null ? currentUser.get('school.id') : params.schoolId;
         self.store.find('school', schoolId).then(function(school){
           self.store.find('educational-year').then(function(years){
             var year = null;
@@ -25,7 +25,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             }
             self.store.find('course', {
               filters: {
-                owningSchool: school.get('id'),
+                school: school.get('id'),
                 year: year.get('title'),
                 deleted: false
               },

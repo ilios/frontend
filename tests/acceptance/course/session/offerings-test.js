@@ -21,7 +21,7 @@ module('Acceptance: Session - Offerings', {
     server.create('course', {
       sessions: [1],
       cohorts: [1],
-      owningSchool: 1
+      school: 1
     });
     server.create('sessionType');
 
@@ -99,7 +99,7 @@ module('Acceptance: Session - Offerings', {
     fixtures.session = server.create('session', {
       course: 1,
       offerings: [1, 2, 3],
-      owningSchool: 1
+      school: 1
     });
   },
 

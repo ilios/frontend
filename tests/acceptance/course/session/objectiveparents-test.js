@@ -41,7 +41,7 @@ module('Acceptance: Session - Objective Parents', {
     }));
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       objectives: [1,2,3],
     });
     fixtures.session = server.create('session', {

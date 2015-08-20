@@ -11,7 +11,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     Ember.run.later(defer.resolve, function() {
       var resolve = this;
       self.get('currentUser.model').then(function(currentUser){
-        var schoolId = params.schoolId == null ? currentUser.get('primarySchool.id') : params.schoolId;
+        var schoolId = params.schoolId == null ? currentUser.get('school.id') : params.schoolId;
         self.store.find('school', schoolId).then(function(school){
           self.store.find('instructorGroup', {
             filters: {

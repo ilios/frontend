@@ -27,20 +27,20 @@ module('Acceptance: Course - Publish', {
     });
     fixtures.publishedCourse = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       publishEvent: 1,
       cohorts: [1],
     });
     fixtures.scheduledCourse = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       publishEvent: 2,
       publishedAsTbd: true,
       cohorts: [1],
     });
     fixtures.draftCourse = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       cohorts: [1],
     });
   },

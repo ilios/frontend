@@ -16,12 +16,12 @@ module('Acceptance: Program - Publication Check', {
     server.create('programYear');
     fixtures.fullProgram = server.create('program', {
       startYear: 2013,
-      owningSchool: 1,
+      school: 1,
       programYears: [1],
     });
     fixtures.emptyProgram = server.create('program', {
       startYear: 2013,
-      owningSchool: 1
+      school: 1
     });
   },
 

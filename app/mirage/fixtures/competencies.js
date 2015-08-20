@@ -2,7 +2,7 @@ export default [
   {
     'id' : 1,
     'title' : "Patient Care",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [],
     'children' : [ '7','8','9','10','11','12' ],
     'aamcPcrses' : [],
@@ -12,7 +12,7 @@ export default [
   {
     'id' : 2,
     'title' : "Medical Knowledge",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [],
     'children' : [ '13','14','51','52' ],
     'aamcPcrses' : [],
@@ -22,7 +22,7 @@ export default [
   {
     'id' : 3,
     'title' : "Practice-Based Learning & Improvement",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [],
     'children' : [ '15','16','17' ],
     'aamcPcrses' : [],
@@ -32,7 +32,7 @@ export default [
   {
     'id' : 4,
     'title' : "Interpersonal & Communication skills",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [],
     'children' : [ '18','19','20' ],
     'aamcPcrses' : [],
@@ -42,7 +42,7 @@ export default [
   {
     'id' : 5,
     'title' : "Professionalism",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [],
     'children' : [ '21','22','23','24','25' ],
     'aamcPcrses' : [],
@@ -52,7 +52,7 @@ export default [
   {
     'id' : 6,
     'title' : "Systems-Based Practice",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [],
     'children' : [ '26','50' ],
     'aamcPcrses' : [],
@@ -62,7 +62,7 @@ export default [
   {
     'id' : 7,
     'title' : "History Taking",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47719','77686' ],
     'parent' : "1",
     'children' : [],
@@ -73,7 +73,7 @@ export default [
   {
     'id' : 8,
     'title' : "Physical Exam",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47720','77687' ],
     'parent' : "1",
     'children' : [],
@@ -84,7 +84,7 @@ export default [
   {
     'id' : 9,
     'title' : "Oral Case Presentation",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47721','77688' ],
     'parent' : "1",
     'children' : [],
@@ -95,7 +95,7 @@ export default [
   {
     'id' : 10,
     'title' : "Medical Notes",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47722','77689' ],
     'parent' : "1",
     'children' : [],
@@ -106,7 +106,7 @@ export default [
   {
     'id' : 11,
     'title' : "Procedures and Skills",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47723','47724','77690','77691' ],
     'parent' : "1",
     'children' : [],
@@ -117,7 +117,7 @@ export default [
   {
     'id' : 12,
     'title' : "Patient Management",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47725','47726','47727','77692','77693','77694' ],
     'parent' : "1",
     'children' : [],
@@ -128,7 +128,7 @@ export default [
   {
     'id' : 13,
     'title' : "Problem-Solving and Diagnosis",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47730','63770','77697','77722' ],
     'parent' : "2",
     'children' : [],
@@ -139,7 +139,7 @@ export default [
   {
     'id' : 14,
     'title' : "Knowledge for Practice",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47728','47729','77695','77696' ],
     'parent' : "2",
     'children' : [],
@@ -150,7 +150,7 @@ export default [
   {
     'id' : 15,
     'title' : "Information Management",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47731','77698' ],
     'parent' : "3",
     'children' : [],
@@ -161,7 +161,7 @@ export default [
   {
     'id' : 16,
     'title' : "Evidence-Based Medicine",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47732','47733','47736','77699','77700','77703' ],
     'parent' : "3",
     'children' : [],
@@ -172,7 +172,7 @@ export default [
   {
     'id' : 17,
     'title' : "Reflection and Self-Improvement",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47734','47735','47737','77701','77702','77704' ],
     'parent' : "3",
     'children' : [],
@@ -183,7 +183,7 @@ export default [
   {
     'id' : 18,
     'title' : "Doctor-Patient Relationship",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47738','77705' ],
     'parent' : "4",
     'children' : [],
@@ -194,7 +194,7 @@ export default [
   {
     'id' : 19,
     'title' : "Communication and Information Sharing with Patients and Families",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47739','47740','47741','47742','47743','77706','77707','77708','77709','77710' ],
     'parent' : "4",
     'children' : [],
@@ -205,7 +205,7 @@ export default [
   {
     'id' : 20,
     'title' : "Communication with the Medical Team",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47744','47745','47746','77711','77712','77713' ],
     'parent' : "4",
     'children' : [],
@@ -216,7 +216,7 @@ export default [
   {
     'id' : 21,
     'title' : "Professional Relationships",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47747','47748','77714','77715' ],
     'parent' : "5",
     'children' : [],
@@ -227,7 +227,7 @@ export default [
   {
     'id' : 22,
     'title' : "Boundaries and Priorities",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47749','77716' ],
     'parent' : "5",
     'children' : [],
@@ -238,7 +238,7 @@ export default [
   {
     'id' : 23,
     'title' : "Work Habits, Appearance, and Etiquette",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47750','77717' ],
     'parent' : "5",
     'children' : [],
@@ -249,7 +249,7 @@ export default [
   {
     'id' : 24,
     'title' : "Ethical Principles",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47751','77718' ],
     'parent' : "5",
     'children' : [],
@@ -260,7 +260,7 @@ export default [
   {
     'id' : 25,
     'title' : "Institutional, Regulatory, and Professional Society Standards",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47752','77719' ],
     'parent' : "5",
     'children' : [],
@@ -271,7 +271,7 @@ export default [
   {
     'id' : 26,
     'title' : "Healthcare Delivery Systems",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '47753','47754','77720','77721' ],
     'parent' : "6",
     'children' : [],
@@ -282,7 +282,7 @@ export default [
   {
     'id' : 27,
     'title' : "Interpersonal and Communication Skills",
-    'owningSchool' : "3",
+    'school' : "3",
     'objectives' : [ '66210','66211','66212','66213','66214','66215','66216','83980','83981','83982','83983','83984','83985','83986' ],
     'children' : [],
     'aamcPcrses' : [],
@@ -292,7 +292,7 @@ export default [
   {
     'id' : 28,
     'title' : "Patient and Population-based Care",
-    'owningSchool' : "3",
+    'school' : "3",
     'objectives' : [ '66191','66192','66193','66194','66195','66196','66197','83961','83962','83963','83964','83965','83966','83967' ],
     'children' : [],
     'aamcPcrses' : [],
@@ -302,7 +302,7 @@ export default [
   {
     'id' : 29,
     'title' : "Practice-based Learning and Improvement",
-    'owningSchool' : "3",
+    'school' : "3",
     'objectives' : [ '66206','66207','66208','66209','83976','83977','83978','83979' ],
     'children' : [],
     'aamcPcrses' : [],
@@ -312,7 +312,7 @@ export default [
   {
     'id' : 30,
     'title' : "Professionalism",
-    'owningSchool' : "3",
+    'school' : "3",
     'objectives' : [ '66217','66218','66219','66220','66221','66222','66223','83987','83988','83989','83990','83991','83992','83993' ],
     'children' : [],
     'aamcPcrses' : [],
@@ -322,7 +322,7 @@ export default [
   {
     'id' : 31,
     'title' : "Scientific and Clinical Foundations",
-    'owningSchool' : "3",
+    'school' : "3",
     'objectives' : [ '66198','66199','66200','66201','66202','66203','66204','66205','83968','83969','83970','83971','83972','83973','83974','83975' ],
     'children' : [],
     'aamcPcrses' : [],
@@ -332,7 +332,7 @@ export default [
   {
     'id' : 32,
     'title' : "Systems-based Practice",
-    'owningSchool' : "3",
+    'school' : "3",
     'objectives' : [ '66224','66225','66226','66227','66228','66229','66230','83994','83995','83996','83997','83998','83999','84000' ],
     'children' : [],
     'aamcPcrses' : [],
@@ -342,7 +342,7 @@ export default [
   {
     'id' : 50,
     'title' : "Systems Improvement",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '63773','77725' ],
     'parent' : "6",
     'children' : [],
@@ -353,7 +353,7 @@ export default [
   {
     'id' : 51,
     'title' : "Treatment",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '63771','77723' ],
     'parent' : "2",
     'children' : [],
@@ -364,7 +364,7 @@ export default [
   {
     'id' : 52,
     'title' : "Inquiry and Discovery",
-    'owningSchool' : "1",
+    'school' : "1",
     'objectives' : [ '63772','77724' ],
     'parent' : "2",
     'children' : [],

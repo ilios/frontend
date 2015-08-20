@@ -20,7 +20,7 @@
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
         {{programyear-competency-manager
-          availableCompetencies=programYear.program.owningSchool.competencies
+          availableCompetencies=programYear.program.school.competencies
           selectedCompetencies=bufferCompetencies
           add='addCompetencyToBuffer'
           remove='removeCompetencyFromBuffer'

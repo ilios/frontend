@@ -34,15 +34,15 @@ test('filters by title', function(assert) {
   });
   var firstProgram = server.create('program', {
     title: 'specialfirstprogram',
-    owningSchool: 1,
+    school: 1,
   });
   var secondProgram = server.create('program', {
     title: 'specialsecondprogram',
-    owningSchool: 1
+    school: 1
   });
   var regularProgram = server.create('program', {
     title: 'regularprogram',
-    owningSchool: 1
+    school: 1
   });
   assert.expect(15);
   visit('/programs');
@@ -110,7 +110,7 @@ test('cancel adding new program', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit('/programs');
   andThen(function() {
@@ -135,7 +135,7 @@ test('remove program', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit('/programs');
   andThen(function() {
@@ -159,7 +159,7 @@ test('cancel remove program', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit('/programs');
   andThen(function() {
@@ -184,7 +184,7 @@ test('click edit takes you to program route', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit('/programs');
   andThen(function() {
@@ -206,7 +206,7 @@ test('click title takes you to program route', function(assert) {
     programs: [1]
   });
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
   });
   visit('/programs');
   andThen(function() {

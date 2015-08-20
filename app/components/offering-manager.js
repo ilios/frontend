@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   room: null,
   isMultiDay: false,
   cohorts: Ember.computed.alias('offering.session.course.cohorts'),
-  availableInstructorGroups: Ember.computed.alias('offering.session.course.owningSchool.instructorGroups'),
+  availableInstructorGroups: Ember.computed.alias('offering.session.course.school.instructorGroups'),
   showRemoveConfirmation: false,
   buffer: null,
   allInstructors: function(){

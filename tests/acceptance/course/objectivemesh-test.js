@@ -46,7 +46,7 @@ module('Acceptance: Course - Objective Mesh Descriptors', {
 
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       objectives: [1,2,3]
     });
   },

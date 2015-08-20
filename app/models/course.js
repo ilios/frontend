@@ -14,7 +14,7 @@ var Course = DS.Model.extend(PublishableModel, {
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
   sessions: DS.hasMany('session', {async: true}),
-  owningSchool: DS.belongsTo('school', {async: true}),
+  school: DS.belongsTo('school', {async: true}),
   clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
