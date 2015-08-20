@@ -20,18 +20,18 @@ module('Acceptance: Program - Publish', {
     });
     fixtures.published = server.create('program', {
       startYear: 2013,
-      owningSchool: 1,
+      school: 1,
       publishEvent: 1,
     });
     fixtures.scheduled = server.create('program', {
       startYear: 2013,
-      owningSchool: 1,
+      school: 1,
       publishEvent: 1,
       publishedAsTbd: true
     });
     fixtures.draft = server.create('program', {
       startYear: 2013,
-      owningSchool: 1,
+      school: 1,
     });
   },
 

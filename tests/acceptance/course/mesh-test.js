@@ -22,7 +22,7 @@ module('Acceptance: Course - Mesh Terms', {
 
     server.create('course', {
       year: 1,
-      owningSchool: 1,
+      school: 1,
       meshDescriptors: [1,2,3]
     });
   },

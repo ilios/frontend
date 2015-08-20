@@ -32,7 +32,7 @@ export default Ember.Service.extend({
     });
   }.property('currentUserId'),
   currentSchoolBuffer: null,
-  currentSchool: Ember.computed('model.primarySchool', {
+  currentSchool: Ember.computed('model.school', {
     set: function(key, value){
       this.set('currentSchoolBuffer', value);
     },
@@ -44,7 +44,7 @@ export default Ember.Service.extend({
           resolve(buffer);
         }
 
-        resolve(this.get('model.primarySchool'));
+        resolve(this.get('model.school'));
       });
     }
   }),

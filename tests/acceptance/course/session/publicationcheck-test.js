@@ -18,10 +18,10 @@ module('Acceptance: Session - Publication Check', {
     });
     server.create('sessionType', {
       sessions: [1],
-      owningSchool: 1
+      school: 1
     });
     server.create('sessionType', {
-      owningSchool: 1
+      school: 1
     });
     server.create('sessionDescription', {
       session: 1,

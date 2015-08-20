@@ -28,12 +28,12 @@ module('Acceptance: Course - Objective Parents', {
     });
     fixtures.competencies = [];
     fixtures.competencies.pushObject(server.create('competency', {
-      owningSchool: 1,
+      school: 1,
       programYears: [1],
       objectives: [1],
     }));
     fixtures.competencies.pushObject(server.create('competency', {
-      owningSchool: 1,
+      school: 1,
       programYears: [1],
       objectives: [2,3],
     }));
@@ -61,7 +61,7 @@ module('Acceptance: Course - Objective Parents', {
     }));
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       objectives: [4,5],
       cohorts: [1]
     });

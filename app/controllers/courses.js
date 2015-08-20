@@ -72,7 +72,7 @@ export default Ember.ArrayController.extend({
         isSaved: false,
         content: this.store.createRecord('course', {
           title: null,
-          owningSchool: this.get('selectedSchool'),
+          school: this.get('selectedSchool'),
           year: this.get('selectedYear.title'),
           level: 1,
         })

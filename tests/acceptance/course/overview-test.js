@@ -28,7 +28,7 @@ module('Acceptance: Course - Overview', {
 test('check fields', function(assert) {
   var course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     clerkshipType: 3,
     externalId: 123,
     level: 3
@@ -54,7 +54,7 @@ test('check fields', function(assert) {
 test('check detail fields', function(assert) {
   var course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     clerkshipType: 3,
     externalId: 123,
     level: 3
@@ -80,7 +80,7 @@ test('check detail fields', function(assert) {
 test('pick clerkship type', function(assert) {
   server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
   });
   visit(url);
   andThen(function() {
@@ -111,7 +111,7 @@ test('pick clerkship type', function(assert) {
 test('remove clerkship type', function(assert) {
   server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     clerkshipType: 3,
   });
   server.create('courseClerkshipType', {
@@ -135,7 +135,7 @@ test('remove clerkship type', function(assert) {
 test('open and close details', function(assert) {
   server.create('course', {
     year: 2013,
-    owningSchool: 1
+    school: 1
   });
   visit(url);
 
@@ -162,7 +162,7 @@ test('open and close details', function(assert) {
 test('change title', function(assert) {
   server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
   });
   visit(url);
   andThen(function() {
@@ -188,7 +188,7 @@ test('change title', function(assert) {
 test('change start date', function(assert) {
   var course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
   });
   var startDate = moment(course.startDate).format('MM/DD/YY');
   visit(url);
@@ -219,7 +219,7 @@ test('change start date', function(assert) {
 test('change end date', function(assert) {
   var course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
   });
   var endDate = moment(course.endDate).format('MM/DD/YY');
   visit(url);
@@ -250,7 +250,7 @@ test('change end date', function(assert) {
 test('change externalId', function(assert) {
   server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     externalId: 'abc123'
   });
   visit(url);
@@ -277,7 +277,7 @@ test('change externalId', function(assert) {
 test('change level', function(assert) {
   server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     level: 3
   });
   visit(url);

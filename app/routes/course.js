@@ -9,7 +9,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     var deferred = Ember.RSVP.defer();
     Ember.run.later(deferred.resolve, function() {
       var resolve = this;
-      course.get('owningSchool').then(function(school){
+      course.get('school').then(function(school){
         var promises = {
           'availableTopics': school.get('disciplines')
         };

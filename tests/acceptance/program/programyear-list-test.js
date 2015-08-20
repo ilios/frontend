@@ -23,7 +23,7 @@ module('Acceptance: Program - ProgramYear List', {
 
 test('check list', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1,2,3]
   });
   for(let i = 1; i <= 3; i++){
@@ -62,7 +62,7 @@ test('check list', function(assert) {
 
 test('check competencies', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.createList('competency', 5, {
@@ -80,7 +80,7 @@ test('check competencies', function(assert) {
 
 test('check objectives', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.createList('objective', 5, {
@@ -98,7 +98,7 @@ test('check objectives', function(assert) {
 
 test('check directors', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.createList('user', 5, {
@@ -116,7 +116,7 @@ test('check directors', function(assert) {
 
 test('check topics', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.createList('discipline', 5, {
@@ -134,7 +134,7 @@ test('check topics', function(assert) {
 
 test('check warnings', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -153,7 +153,7 @@ test('check warnings', function(assert) {
 
 test('check link', function(assert) {
   server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   server.create('programYear', {
@@ -185,7 +185,7 @@ test('new program year', function(assert) {
     programYear: 1
   });
   var program = server.create('program', {
-    owningSchool: 1,
+    school: 1,
     programYears: [1]
   });
   var currentYear = parseInt(moment().format('YYYY'));

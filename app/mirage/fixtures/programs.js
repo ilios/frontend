@@ -7,7 +7,7 @@ export default [
     'deleted' : false,
     'publishedAsTbd' : false,
     'publishEvent' : "15302",
-    'owningSchool' : "1",
+    'school' : "1",
     'programYears' : [ '42','67' ],
     'curriculumInventoryReports' : [ '9','10' ]
   },
@@ -20,7 +20,7 @@ export default [
     'deleted' : false,
     'publishedAsTbd' : false,
     'publishEvent' : "13",
-    'owningSchool' : "3",
+    'school' : "3",
     'programYears' : [ '58','69' ],
     'curriculumInventoryReports' : []
   },

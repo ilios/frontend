@@ -24,10 +24,10 @@ module('Acceptance: Program Year - Topics', {
     });
     server.create('discipline', {
       programYears: [1],
-      owningSchool: 1
+      school: 1
     });
     server.create('discipline', {
-      owningSchool: 1
+      school: 1
     });
   },
 

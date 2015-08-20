@@ -21,7 +21,7 @@ module('Acceptance: Session - Mesh Terms', {
     });
 
     server.create('course', {
-      owningSchool: 1
+      school: 1
     });
 
     server.create('session', {

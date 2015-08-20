@@ -27,7 +27,7 @@ module('Acceptance: Course - Publication Check', {
     });
     fixtures.fullCourse = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       cohorts: [1],
       objectives: [1],
       disciplines: [1],
@@ -35,7 +35,7 @@ module('Acceptance: Course - Publication Check', {
     });
     fixtures.emptyCourse = server.create('course', {
       year: 2013,
-      owningSchool: 1
+      school: 1
     });
   },
 

@@ -60,8 +60,8 @@ export default Ember.Component.extend({
   }.property('proxiedSessions.@each.searchString', 'debouncedFilter'),
   actions: {
     addNewSession(){
-      this.get('course.owningSchool').then(owningSchool => {
-        owningSchool.get('sessionTypes').then(sessionTypes => {
+      this.get('course.school').then(school => {
+        school.get('sessionTypes').then(sessionTypes => {
           //we attempt to load a type with the title of lecture as its the default
           let lectureType = sessionTypes.findBy('title', 'Lecture');
           let defaultType = lectureType?lectureType:sessionTypes.get('firstObject');

@@ -52,7 +52,7 @@ module('Acceptance: Course - Cohorts', {
 
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       cohorts: [1],
       objectives: [3]
     });

@@ -21,15 +21,15 @@ module('Acceptance: Course - Topics', {
     fixtures.topics = [];
     fixtures.topics.pushObject(server.create('discipline', {
       courses: [1],
-      owningSchool: 1
+      school: 1
     }));
     fixtures.topics.pushObject(server.create('discipline', {
-      owningSchool: 1
+      school: 1
     }));
 
     fixtures.course = server.create('course', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       disciplines: [1]
     });
   },

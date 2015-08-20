@@ -92,7 +92,7 @@ module('Acceptance: Session - Learning Materials', {
 
     fixtures.session = server.create('session', {
       year: 2013,
-      owningSchool: 1,
+      school: 1,
       learningMaterials: [1, 2, 3, 4],
     });
   },

@@ -22,10 +22,10 @@ module('Acceptance: Session - Overview', {
     server.create('course');
     fixtures.selectedSessionType = server.create('sessionType', {
       sessions: [1],
-      owningSchool: 1
+      school: 1
     });
     fixtures.otherSessionType = server.create('sessionType', {
-      owningSchool: 1
+      school: 1
     });
     fixtures.sessionDescription = server.create('sessionDescription');
   },

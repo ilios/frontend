@@ -65,7 +65,7 @@ test('list objectives', function(assert) {
   }));
   fixtures.course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     objectives: [3,4,5,6,7,8,9,10,11,12,13,14,15]
   });
   visit(url);
@@ -116,7 +116,7 @@ test('long objective', function(assert) {
 
   fixtures.course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     objectives: [1]
   });
   visit(url);
@@ -140,7 +140,7 @@ test('edit objective title', function(assert) {
 
   fixtures.course = server.create('course', {
     year: 2013,
-    owningSchool: 1,
+    school: 1,
     objectives: [1]
   });
   visit(url);
