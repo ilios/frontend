@@ -692,7 +692,7 @@ test('test course and session type filter together', function(assert) {
 });
 
 test('agenda show next seven days of events', function(assert) {
-  let today = moment().hour(0).minute(0);
+  let today = moment().hour(0).minute(2);
   server.create('userevent', {
     user: 4136,
     startDate: today.format(),

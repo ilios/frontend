@@ -13,7 +13,7 @@
   
   .dashboard-agenda {
     border: 1px solid $ilios-blue;
-    height: 15em;
+    max-height: 15em;
     overflow-y: scroll;
     padding: 0 1em 1em;
     

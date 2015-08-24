@@ -2,6 +2,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
+import tHelper from "ember-i18n/helper";
 
 let today = moment();
 let mockEvents = [
@@ -14,16 +15,23 @@ let userEventsMock = Ember.Service.extend({
     return new Ember.RSVP.resolve(mockEvents);
   }
 });
+let blankEventsMock = Ember.Service.extend({
+  getEvents(){
+    return new Ember.RSVP.resolve([]);
+  }
+});
 
 moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agenda', {
   integration: true,
   beforeEach: function() {
-    this.container.register('service:mockuserevents', userEventsMock);
-    this.container.injection('component', 'userEvents', 'service:mockuserevents');
+    this.container.lookup('service:i18n').set('locale', 'en');
+    this.registry.register('helper:t', tHelper);
   }
 });
 
-test('it renders', function(assert) {
+test('it renders with events', function(assert) {
+  this.container.register('service:mockuserevents', userEventsMock);
+  this.container.injection('component', 'userEvents', 'service:mockuserevents');
   assert.expect(6);
   
   this.render(hbs`{{dashboard-agenda}}`);
@@ -33,4 +41,14 @@ test('it renders', function(assert) {
     assert.equal(tds.eq(0).text().trim(), moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
     assert.equal(tds.eq(1).text().trim(), mockEvents[i].name);
   }
+});
+
+test('it renders blank', function(assert) {
+  this.container.register('service:mockuserevents', blankEventsMock);
+  this.container.injection('component', 'userEvents', 'service:mockuserevents');
+  assert.expect(1);
+  
+  this.render(hbs`{{dashboard-agenda}}`);
+
+  assert.equal(this.$().text().trim(), 'Your schedule is empty this week.');
 });
