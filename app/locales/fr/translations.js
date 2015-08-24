@@ -314,6 +314,6 @@ export default {
     'allEvents': 'Tous les événements',
     'topicOrDetail': 'Sujet/détail',
     'courseOrType': 'Cours/type',
-    'usersCalendar': 'Calendrier de {{nom}}',
+    'usersCalendar': 'Calendrier de {{name}}',
   }
 };
