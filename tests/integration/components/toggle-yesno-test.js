@@ -11,10 +11,12 @@ moduleForComponent('toggle-yesno', 'Integration | Component | toggle yesno', {
 });
 
 test('it renders', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   this.set('value', true);
-  this.render(hbs`{{toggle-wide value=value action='clicked'}}`);
+  this.render(hbs`{{toggle-yesno yes=value label='general.location' action='clicked'}}`);
+
+  assert.equal(this.$().text().trim(), 'Location:');
   assert.ok(this.$('input').prop('checked'));
   
   this.set('value', false);
