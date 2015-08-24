@@ -36,11 +36,13 @@ module('Acceptance: Dashboard Calendar', {
     });
     server.create('programYear', {
       cohort: 1,
-      program: 1
+      program: 1,
+      startYear: 2015,
     });
     server.create('programYear', {
       cohort: 2,
-      program: 1
+      program: 1,
+      startYear: 2015,
     });
     server.create('cohort', {
       courses: [1],
@@ -75,14 +77,20 @@ module('Acceptance: Dashboard Calendar', {
       offerings: [3],
       course: 2,
     });
+    server.create('educationalYear', {
+      id: 2015,
+      title: 2015
+    });
     server.create('course', {
       disciplines: [2],
       sessions: [1,2],
       level: 1,
       school: 1,
+      year: 2015
     });
     server.create('course', {
       sessions: [3],
+      year: 2015
     });
     server.create('offering', {
       session: 1
@@ -719,5 +727,64 @@ test('agenda show next seven days of events', function(assert) {
     assert.equal(events.length, 2);
     assert.equal(getElementText(events.eq(0)), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
     assert.equal(getElementText(events.eq(1)), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
+  });
+});
+
+test('academic year filters cohort', function(assert) {
+  server.create('educationalYear', {
+    id: 2014,
+    title: 2014
+  });
+  server.db.schools.update({programs: [1,2]});
+  server.create('program', {
+    programYears: [3],
+    school: 1,
+  });
+  server.create('programYear', {
+    startYear: 2014,
+    program: 2,
+    cohort: 3
+  });
+  server.create('cohort', {
+    programYear: 3
+  });
+  visit('/dashboard?showCalendar=true');
+  showFilters();
+  andThen(() => {
+    pickOption('.calendar-year-picker select', '2015 - 2016', assert);
+    andThen(()=> {
+      let cohortFilter = find('.cohortfilter li');
+      assert.equal(cohortFilter.length, 2);
+    });
+    pickOption('.calendar-year-picker select', '2014 - 2015', assert);
+    andThen(()=> {
+      let cohortFilter = find('.cohortfilter li');
+      assert.equal(cohortFilter.length, 1);
+    });
+  });
+});
+
+test('academic year filters courses', function(assert) {
+  server.create('educationalYear', {
+    id: 2014,
+    title: 2014
+  });
+  server.create('course', {
+    year: 2014
+  });
+  visit('/dashboard?showCalendar=true');
+  showFilters();
+  chooseCourseFilter();
+  andThen(() => {
+    pickOption('.calendar-year-picker select', '2015 - 2016', assert);
+    andThen(()=> {
+      let courseFilters = find('.coursefilter li');
+      assert.equal(courseFilters.length, 2);
+    });
+    pickOption('.calendar-year-picker select', '2014 - 2015', assert);
+    andThen(()=> {
+      let courseFilters = find('.coursefilter li');
+      assert.equal(courseFilters.length, 1);
+    });
   });
 });

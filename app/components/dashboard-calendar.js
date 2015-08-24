@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   userEvents: Ember.inject.service(),
   schoolEvents: Ember.inject.service(),
   currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
   date: null,
   showFilters: false,
   selectedDate: null,
@@ -263,35 +264,50 @@ export default Ember.Component.extend({
     return levels;
   }),
   selectedCohorts: [],
-  cohorts: Ember.computed('selectedSchool.cohorts.[].displayTitle', 'selectedCohorts.[]', function(){
-    return DS.PromiseArray.create({
-      promise: this.get('selectedSchool').then(school => {
-        return school.get('cohorts').then( cohorts => {
-          return cohorts.sortBy('displayTitle');
+  allCohorts: Ember.computed('selectedSchool', 'selectedAcademicYear', function(){
+    let defer = Ember.RSVP.defer();
+    this.get('selectedSchool').then(school => {
+      this.get('selectedAcademicYear').then(year => {
+        school.getCohortsForYear(year.get('title')).then(cohorts => {
+          defer.resolve(cohorts.sortBy('displayTitle'));
         });
-      })
+      });
     });
+    return DS.PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
+  cohorts: Ember.computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
+    return this.get('allCohorts');
   }),
   selectedCourses: [],
-  allCourses: Ember.computed(function(){
+  allCourses: Ember.computed('selectedSchool', 'selectedAcademicYear', function(){
+    let defer = Ember.RSVP.defer();
+    this.get('selectedSchool').then(school => {
+      this.get('selectedAcademicYear').then(year => {
+        this.get('store').find('course', {
+          filters: {
+            school: school.get('id'),
+            year: year.get('title')
+          }
+        }).then(courses => {
+          defer.resolve(courses.sortBy('title'));
+        });
+      });
+    });
     return DS.PromiseArray.create({
-      promise: this.get('selectedSchool').then(school => {
-        return school.get('courses');
-      })
+      promise: defer.promise
     });
   }),
-  courses: Ember.computed('selectedSchool.courses.[]', 'selectedCourses.[]', function(){
-    return DS.PromiseArray.create({
-      promise: this.get('selectedSchool').then(school => {
-        return school.get('courses').then( courses => {
-          return courses.sortBy('title');
-        });
-      })
-    });
+  courses: Ember.computed('allCourses.[]', 'selectedCourses.[]', function(){
+    return this.get('allCourses');
   }),
   selectedSchool: Ember.computed('schoolPickedByUser', 'currentUser.model.school', function(){
     if(this.get('schoolPickedByUser')){
-      return this.get('schoolPickedByUser');
+      //wrap it in a proxy so the is-equal comparison works the same as the promise
+      return Ember.ObjectProxy.create({
+        content: this.get('schoolPickedByUser')
+      });
     }
     
     return DS.PromiseObject.create({
@@ -315,6 +331,31 @@ export default Ember.Component.extend({
   }),
   schools: Ember.computed('allSchools.[]', 'selectedSchool', function(){
     return this.get('allSchools').sortBy('title');
+  }),
+  academicYearSelectedByUser: null,
+  selectedAcademicYear: Ember.computed('academicYearSelectedByUser', function(){
+    if(this.get('academicYearSelectedByUser')){
+      //wrap it in a proxy so the is-equal comparison works the same as the promise
+      return DS.PromiseObject.create({
+        promise: Ember.RSVP.resolve(this.get('academicYearSelectedByUser'))
+      });
+    }
+    
+    return DS.PromiseObject.create({
+      promise: this.get('allAcademicYears').then(years => {
+        return years.sortBy('title').get('lastObject');
+      })
+    });
+  }),
+  allAcademicYears: Ember.computed(function(){
+    return this.get('store').find('educational-year');
+  }),
+  academicYears: Ember.computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
+    return DS.PromiseArray.create({
+      promise: this.get('allAcademicYears').then(years => {
+        return years.sortBy('title');
+      })
+    });
   }),
   actions: {
     setView(view){
@@ -373,8 +414,21 @@ export default Ember.Component.extend({
         this.get('selectedCourses').pushObject(course);
       }
     },
-    pickSchool(school){
-      this.set('schoolPickedByUser', school);
+    pickSchool(){
+      let selectedEl = this.$('.calendar-school-picker select')[0];
+      let selectedIndex = selectedEl.selectedIndex;
+      this.get('schools').then(schools => {
+        let school = schools.toArray()[selectedIndex];
+        this.set('schoolPickedByUser', school);
+      });
+    },
+    changeSelectedYear(){
+      let selectedEl = this.$('.calendar-year-picker select')[0];
+      let selectedIndex = selectedEl.selectedIndex;
+      this.get('academicYears').then(years => {
+        let year = years.toArray()[selectedIndex];
+        this.set('academicYearSelectedByUser', year);
+      });
     },
   }
 });

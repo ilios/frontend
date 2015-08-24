@@ -30,7 +30,7 @@
     {{#if hasMoreThanOneSchool}}
       <select {{action 'pickSchool' on='change'}}>
         {{#each schools as |school|}}
-          <option value="{{school}}" selected={{is-equal school selectedSchool}}>
+          <option value="{{school}}" selected={{is-equal school selectedSchool.content}}>
             {{school.title}}
           </option>
         {{/each}}
@@ -39,11 +39,22 @@
       {{selectedSchool.title}}
     {{/if}}
   </div>
+  {{#if showFilters}}
+    <div class='calendar-options-control calendar-year-picker'>
+      <select {{action 'changeSelectedYear' on='change'}}>
+        {{#each academicYears as |year|}}
+          <option value="{{year}}" selected={{is-equal year selectedAcademicYear.content}}>
+            {{year.academicYearTitle}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+  {{/if}}
   <div class='calendar-filters'>
     {{#liquid-if showFilters class='vertical'}}
       {{#liquid-if courseFilters class='crossFade'}}
         <div class='calendar-filter-list large-filter-list coursefilter'>
-          {{t 'general.courses'}}
+          {{selectedAcademicYear.academicYearTitle}} {{t 'general.courses'}}
           {{#if courses.isFulfilled}}
             <ul>
               {{#each courses as |course|}}
@@ -117,7 +128,7 @@
           </ul>
         </div>
         <div class='calendar-filter-list large-filter-list cohortfilter'>
-          {{t 'dashboard.programAndCohort'}}
+          {{selectedAcademicYear.academicYearTitle}} {{t 'dashboard.programAndCohort'}}
           {{#if cohorts.isFulfilled}}
             <ul>
               {{#each cohorts as |cohort|}}
