@@ -156,7 +156,7 @@ test('list parent objectives by competency', function(assert) {
 });
 
 test('change course objective parent', function(assert) {
-  assert.expect(10);
+  assert.expect(9);
   visit(url);
   andThen(function() {
     let tds = find('.course-objective-list tbody tr:eq(0) td');
@@ -164,23 +164,24 @@ test('change course objective parent', function(assert) {
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      click('li:eq(1)', parentPicker);
+      select('.objective-manager .group-picker select', 'program 0 cohort 0').then(()=>{
+        click('li:eq(1)', parentPicker);        
+      });
       andThen(function(){
         assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
         assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
         assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
         assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
       });
-      
-      pickOption(find('.group-picker', objectiveManager), 'program 0 cohort 1', assert);
+      select('.objective-manager .group-picker select', 'program 0 cohort 1');
       andThen(() => {
         parentPicker = find('.parent-picker', objectiveManager).eq(0);
-        click('li:eq(0)', parentPicker);
+        click('li:eq(1)', parentPicker);
         andThen(function(){
-          assert.ok(find('h5:eq(0)', parentPicker).hasClass('selected'));
-          assert.ok(!find('h5:eq(1)', parentPicker).hasClass('selected'));
-          assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
-          assert.ok(!find('li:eq(1)', parentPicker).hasClass('selected'));
+          assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
+          assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
+          assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+          assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
           assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
         });
       });

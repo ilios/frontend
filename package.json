@@ -64,7 +64,7 @@
     "ember-pikaday": "0.7.2",
     "ember-rl-dropdown": "0.2.0",
     "ember-try": "0.0.5",
-    "emberx-select": "1.1.1",
+    "emberx-select": "1.1.4",
     "liquid-fire": "^0.21.0",
     "moment": "^2.10.0",
     "pluralize": "^1.1.2"
