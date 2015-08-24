@@ -312,7 +312,7 @@ export default {
     'programAndCohort': 'Program/Cohort',
     'mySchedule': 'My Schedule',
     'allEvents': 'All Events',
-    'noEvents': 'No upcomming events',
+    'noEvents': 'No upcoming events',
     'topicOrDetail': 'Topic/Detail',
     'courseOrType': 'Course/Type',
     'usersCalendar': "{{name}}'s Calendar"
