@@ -24,12 +24,13 @@ moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agen
 });
 
 test('it renders', function(assert) {
-  assert.expect(3);
+  assert.expect(6);
   
   this.render(hbs`{{dashboard-agenda}}`);
 
   for(let i = 0; i < 3; i++){
     let tds = this.$(`table tr:eq(${i}) td`);
+    assert.equal(tds.eq(0).text().trim(), moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
     assert.equal(tds.eq(1).text().trim(), mockEvents[i].name);
   }
 });

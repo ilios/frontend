@@ -690,3 +690,34 @@ test('test course and session type filter together', function(assert) {
     });
   });
 });
+
+test('agenda show next seven days of events', function(assert) {
+  let today = moment().hour(0).minute(0);
+  server.create('userevent', {
+    user: 4136,
+    startDate: today.format(),
+    endDate: today.clone().add(1, 'hour').format(),
+    offering: 1
+  });
+  let endOfTheWeek = moment().add(6, 'days');
+  server.create('userevent', {
+    user: 4136,
+    startDate: endOfTheWeek.format(),
+    endDate: endOfTheWeek.clone().add(1, 'hour').format(),
+    offering: 2
+  });
+  let yesterday = moment().subtract(25, 'hours');
+  server.create('userevent', {
+    user: 4136,
+    startDate: yesterday.format(),
+    endDate: yesterday.clone().add(1, 'hour').format(),
+    offering: 3
+  });
+  visit('/dashboard');
+  andThen(function() {
+    let events = find('tr');
+    assert.equal(events.length, 2);
+    assert.equal(getElementText(events.eq(0)), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
+    assert.equal(getElementText(events.eq(1)), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
+  });
+});

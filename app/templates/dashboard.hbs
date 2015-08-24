@@ -2,7 +2,7 @@
   <div class='calendar-profile'>
   {{t 'dashboard.usersCalendar' name=currentUser.model.fullName}}
   {{#unless showCalendar}}
-    {{moment selectedDate 'dddd MMMM Do, YYYY'}}
+    {{moment today 'dddd MMMM Do, YYYY'}}
   {{/unless}}
   {{toggle-wide
     value=showCalendar
@@ -21,6 +21,6 @@
       setView='setView'
     }}
   {{else}}
-    {{dashboard-agenda selectedDate=selectedDate}}
+    {{dashboard-agenda}}
   {{/liquid-if}}
 </section>

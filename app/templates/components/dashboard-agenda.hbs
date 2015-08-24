@@ -3,7 +3,7 @@
     {{#each weeksEvents as |event|}}
       {{#link-to 'events' event.slug}}
         <tr class='clickable'>
-          <td class='event-date'>{{fa-icon 'external-link-square'}} {{moment event.date}}</td>
+          <td class='event-date'>{{fa-icon 'external-link-square'}} {{moment event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
           <td>{{event.name}}</td>
           <td>{{event.location}}</td>
         </tr>
