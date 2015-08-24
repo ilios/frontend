@@ -44,50 +44,66 @@
       {{#liquid-if courseFilters class='crossFade'}}
         <div class='calendar-filter-list large-filter-list coursefilter'>
           {{t 'general.courses'}}
-          <ul>
-            {{#each courses as |course|}}
-              <li class='clickable' {{action 'toggleCourse' course}}>
-                {{boolean-check value=(is-in selectedCourses course)}}
-                {{course.title}}
-              </li>
-            {{/each}}
-          </ul>
+          {{#if courses.isFulfilled}}
+            <ul>
+              {{#each courses as |course|}}
+                <li class='clickable' {{action 'toggleCourse' course}}>
+                  {{boolean-check value=(is-in selectedCourses course)}}
+                  {{course.title}}
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{fa-icon "spinner" spin=true}}
+          {{/if}}
         </div>
 
         <div class='calendar-filter-list sessiontypefilter'>
           {{t 'dashboard.sessionTypes'}}
-          <ul>
-            {{#each sessionTypes as |type|}}
-              <li class='clickable' {{action 'toggleSessionType' type}}>
-                {{boolean-check value=(is-in selectedSessionTypes type)}}
-                {{type.title}}
-              </li>
-            {{/each}}
-          </ul>
+          {{#if sessionTypes.isFulfilled}}
+            <ul>
+              {{#each sessionTypes as |type|}}
+                <li class='clickable' {{action 'toggleSessionType' type}}>
+                  {{boolean-check value=(is-in selectedSessionTypes type)}}
+                  {{type.title}}
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{fa-icon "spinner" spin=true}}
+          {{/if}}
         </div>
       {{else}}        
         <div class='calendar-filter-list topicfilter'>
           {{t 'general.topics'}}
-          <ul>
-            {{#each topics as |topic|}}
-              <li class='clickable' {{action 'toggleTopic' topic}}>
-                {{boolean-check value=(is-in selectedTopics topic)}}
-                {{topic.title}}
-              </li>
-            {{/each}}
-          </ul>
+          {{#if topics.isFulfilled}}
+            <ul>
+              {{#each topics as |topic|}}
+                <li class='clickable' {{action 'toggleTopic' topic}}>
+                  {{boolean-check value=(is-in selectedTopics topic)}}
+                  {{topic.title}}
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{fa-icon "spinner" spin=true}}
+          {{/if}}
         </div>
         
         <div class='calendar-filter-list sessiontypefilter'>
           {{t 'dashboard.sessionTypes'}}
-          <ul>
-            {{#each sessionTypes as |type|}}
-              <li class='clickable' {{action 'toggleSessionType' type}}>
-                {{boolean-check value=(is-in selectedSessionTypes type)}}
-                {{type.title}}
-              </li>
-            {{/each}}
-          </ul>
+          {{#if sessionTypes.isFulfilled}}
+            <ul>
+              {{#each sessionTypes as |type|}}
+                <li class='clickable' {{action 'toggleSessionType' type}}>
+                  {{boolean-check value=(is-in selectedSessionTypes type)}}
+                  {{type.title}}
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{fa-icon "spinner" spin=true}}
+          {{/if}}
         </div>
         <div class='calendar-filter-list small-filter-list courselevelfilter'>
           {{t 'dashboard.courseLevels'}}
@@ -102,14 +118,18 @@
         </div>
         <div class='calendar-filter-list large-filter-list cohortfilter'>
           {{t 'dashboard.programAndCohort'}}
-          <ul>
-            {{#each cohorts as |cohort|}}
-              <li class='clickable' {{action 'toggleCohort' cohort}}>
-                {{boolean-check value=(is-in selectedCohorts cohort)}}
-                {{cohort.displayTitle}} {{cohort.programYear.program.title}}
-              </li>
-            {{/each}}
-          </ul>
+          {{#if cohorts.isFulfilled}}
+            <ul>
+              {{#each cohorts as |cohort|}}
+                <li class='clickable' {{action 'toggleCohort' cohort}}>
+                  {{boolean-check value=(is-in selectedCohorts cohort)}}
+                  {{cohort.displayTitle}} {{cohort.programYear.program.title}}
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{fa-icon "spinner" spin=true}}
+          {{/if}}
         </div>
       {{/liquid-if}}   
     {{/liquid-if}}
