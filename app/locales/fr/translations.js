@@ -312,6 +312,7 @@ export default {
     'programAndCohort': 'Diplôme et cohortes',
     'mySchedule': 'Mon calendrier (liste)',
     'allEvents': 'Tous les événements',
+    'noEvents': 'Aucun événement prévu',
     'topicOrDetail': 'Sujet/détail',
     'courseOrType': 'Cours/type',
     'usersCalendar': 'Calendrier de {{name}}',

@@ -50,5 +50,5 @@ test('it renders blank', function(assert) {
   
   this.render(hbs`{{dashboard-agenda}}`);
 
-  assert.equal(this.$().text().trim(), 'Your schedule is empty this week.');
+  assert.equal(this.$().text().trim(), 'No upcomming events');
 });

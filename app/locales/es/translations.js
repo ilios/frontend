@@ -312,6 +312,7 @@ export default {
     'programAndCohort': 'Programa/Clase de La Graduación',
     'mySchedule': 'Mi Horario',
     'allEvents': 'Todos los Eventos',
+    'noEvents': 'No eventos próximos',
     'topicOrDetail': 'Topico/Detalle',
     'courseOrType': 'Curso/Tipo',
     'usersCalendar': "Calendario de{{name}}"
