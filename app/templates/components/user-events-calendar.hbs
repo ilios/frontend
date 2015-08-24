@@ -1,5 +1,5 @@
 {{#liquid-if isDayView class='crossFade'}}
-  {{#el-daily-calendar date=date events=events as |hours|}}
+  {{#el-daily-calendar date=date events=calendarEvents as |hours|}}
     <div class="row week-titles">
       <div class="cell">
       </div>
@@ -35,7 +35,7 @@
 {{/liquid-if}}
 
 {{#liquid-if isWeekView class='crossFade' }}
-  {{#el-weekly-calendar date=date events=events as |days|}}
+  {{#el-weekly-calendar date=date events=calendarEvents as |days|}}
     <div class="row">
       <div class="cell">
       </div>
@@ -81,7 +81,7 @@
 {{/liquid-if}}
 
 {{#liquid-if isMonthView class='crossFade'}}
-  {{#el-monthly-calendar date=date events=events as |weeks|}}
+  {{#el-monthly-calendar date=date events=calendarEvents as |weeks|}}
     <div class="row month-titles">
       <div class="cell">
       </div>

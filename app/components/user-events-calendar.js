@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   view: null,
-  events: [],
+  calendarEvents: [],
   date: null,
   isMonthView: Ember.computed.equal('view', 'month'),
   isWeekView: Ember.computed.equal('view', 'week'),

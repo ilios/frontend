@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     return moment(this.get('selectedDate')).endOf(this.get('selectedView')).unix();
   }),
   calendarDate: momentHelper('selectedDate', 'YYYY-MM-DD'),
-  events: Ember.computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
+  ourEvents: Ember.computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
     if(this.get('mySchedule')) {
       return DS.PromiseArray.create({
         promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
@@ -70,7 +70,7 @@ export default Ember.Component.extend({
     }
   }),
   filteredEvents: Ember.computed(
-    'events.[]',
+    'ourEvents.[]',
     'eventsWithSelectedTopics.[]',
     'eventsWithSelectedSessionTypes.[]',
     'eventsWithSelectedCourseLevels.[]',
@@ -94,7 +94,7 @@ export default Ember.Component.extend({
       });
       
       Ember.RSVP.all(promises).then(()=> {
-        let events = this.get('events').filter(event => {
+        let events = this.get('ourEvents').filter(event => {
           return allFilteredEvents.every(arr => {
             let bool = arr.contains(event);
             
@@ -109,16 +109,16 @@ export default Ember.Component.extend({
       });
       
   }),
-  eventsWithSelectedTopics: Ember.computed('events.[]', 'selectedTopics.[]', function(){
+  eventsWithSelectedTopics: Ember.computed('ourEvents.[]', 'selectedTopics.[]', function(){
     let selectedTopics = this.get('selectedTopics');
     if(selectedTopics.length === 0) {
-      return this.get('events');
+      return this.get('ourEvents');
     }
     selectedTopics = selectedTopics.mapBy('id');
     let matchingEvents = [];
     let defer = Ember.RSVP.defer();
     let promises = [];
-    this.get('events').forEach(event => {
+    this.get('ourEvents').forEach(event => {
       promises.pushObject(this.get('userEvents').getTopicIdsForEvent(event).then( topics => {
         if (topics.any( topicId => {
           return selectedTopics.contains(topicId);
@@ -135,9 +135,9 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedSessionTypes: Ember.computed('events.[]', 'selectedSessionTypes.[]', function(){
+  eventsWithSelectedSessionTypes: Ember.computed('ourEvents.[]', 'selectedSessionTypes.[]', function(){
     let selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
-    let events = this.get('events');
+    let events = this.get('ourEvents');
     if(selectedSessionTypes.length === 0) {
       return events;
     }
@@ -159,9 +159,9 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedCourseLevels: Ember.computed('events.[]', 'selectedCourseLevels.[]', function(){
+  eventsWithSelectedCourseLevels: Ember.computed('ourEvents.[]', 'selectedCourseLevels.[]', function(){
     let selectedCourseLevels = this.get('selectedCourseLevels');
-    let events = this.get('events');
+    let events = this.get('ourEvents');
     if(selectedCourseLevels.length === 0) {
       return events;
     }
@@ -183,9 +183,9 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedCohorts: Ember.computed('events.[]', 'selectedCohorts.[]', function(){
+  eventsWithSelectedCohorts: Ember.computed('ourEvents.[]', 'selectedCohorts.[]', function(){
     let selectedCohorts = this.get('selectedCohorts').mapBy('id');
-    let events = this.get('events');
+    let events = this.get('ourEvents');
     if(selectedCohorts.length === 0) {
       return events;
     }
@@ -209,9 +209,9 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedCourses: Ember.computed('events.[]', 'selectedCourses.[]', function(){
+  eventsWithSelectedCourses: Ember.computed('ourEvents.[]', 'selectedCourses.[]', function(){
     let selectedCourses = this.get('selectedCourses').mapBy('id');
-    let events = this.get('events');
+    let events = this.get('ourEvents');
     if(selectedCourses.length === 0) {
       return events;
     }
