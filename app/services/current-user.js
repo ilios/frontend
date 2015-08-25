@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import config from 'ilios/config/environment';
 import ajax from 'ic-ajax';
 
 export default Ember.Service.extend({
@@ -31,26 +30,6 @@ export default Ember.Service.extend({
       promise: deferred.promise
     });
   }.property('currentUserId'),
-  currentSchoolBuffer: null,
-  currentSchool: Ember.computed('model.school', {
-    set: function(key, value){
-      this.set('currentSchoolBuffer', value);
-    },
-    get: function() {
-      //always return a promise even if the school has been set manaully (by the school-picker for instance)
-      return new Ember.RSVP.Promise((resolve) => {
-        var buffer = this.get('currentSchoolBuffer');
-        if(buffer != null){
-          resolve(buffer);
-        }
-
-        resolve(this.get('model.school'));
-      });
-    }
-  }),
-  canChangeSchool: function(){
-    return this.get('currentUser.schools.length') > 1;
-  }.property('model.schools.@each'),
   availableCohortsObserver: function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){
@@ -89,23 +68,4 @@ export default Ember.Service.extend({
   }.property('currentSchool'),
   //will be customizable
   preferredDashboard: 'dashboard.week',
-  events: function(from, to){
-    var deferred = Ember.RSVP.defer();
-    this.get('model').then(user => {
-      if( user ){
-        var url = '/' + config.adapterNamespace + '/userevents/' +
-        user.get('id') + '?from=' + from + '&to=' + to;
-        ajax(url).then(data => {
-          let events = data.userEvents;
-          deferred.resolve(events.sortBy('startDate'));
-        });
-      } else {
-        deferred.resolve([]);
-      }
-
-    });
-
-    return deferred.promise;
-  },
-
 });

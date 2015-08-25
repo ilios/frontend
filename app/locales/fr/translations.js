@@ -6,6 +6,8 @@ export default {
     'remove': "Supprîme",
     'yes': "Oui",
     'no': "Non",
+    'on': 'allumer',
+    'off': 'éteindre',
     'cancel': "Annul",
     'undo': "Defaît",
     'results': "Resultats",
@@ -301,5 +303,18 @@ export default {
       'es': 'Español (es_MX)',
       'fr': 'Français (fr)'
     }
+  },
+  'dashboard': {
+    'showFilters': 'Montrez les filtres',
+    'hideFilters': 'Cachez les filtres',
+    'sessionTypes': 'Types de séance',
+    'courseLevels':  'Niveaux de cours',
+    'programAndCohort': 'Diplôme et cohortes',
+    'mySchedule': 'Mon calendrier (liste)',
+    'allEvents': 'Tous les événements',
+    'noEvents': 'Aucun événement prévu',
+    'topicOrDetail': 'Sujet/détail',
+    'courseOrType': 'Cours/type',
+    'usersCalendar': 'Calendrier de {{name}}',
   }
 };

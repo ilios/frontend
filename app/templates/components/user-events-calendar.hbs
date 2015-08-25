@@ -1,117 +1,119 @@
-{{#liquid-if isEventView class='crossFade'}}
-  {{ilios-event event=selectedEvent}}
-{{else}}
-  {{#liquid-if isDayView class='crossFade'}}
-    {{#el-daily-calendar date=date events=events as |hours|}}
-      <div class="row week-titles">
-        <div class="cell">
-        </div>
-        <div class="cell title">
-          {{moment fullCalendarDate 'dddd, MMMM Do YYYY'}}
-        </div>
-      </div>
-      <div class="week">
-        <ul class="week-hours">
-          {{#each hours as |hour|}}
-            <li class="week-hour">{{hour.formattedHour}}</li>
-          {{/each}}
-        </ul>
-
-        <ul class="week-day-full">
-          <li class="event-column">
-            {{#each hours as |hour|}}
-              {{#each hour.events as |event|}}
-                {{ilios-calendar-event event=event viewType='day-event' action='selectEvent'}}
-              {{/each}}
-            {{/each}}
-          </li>
-          {{#each hours as |hour|}}
-            <li class="day-hour">
-              <div class="day-half-hour"></div>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/el-daily-calendar}}
-  {{/liquid-if}}
-
-  {{#liquid-if isWeekView class='crossFade' }}
-    {{#el-weekly-calendar date=date events=events as |days|}}
-      <div class="row">
-        <div class="cell">
-        </div>
-        <div class="cell title">
-          {{t 'calendar.weekOf' date=weekOf}}
-        </div>
-      </div>
-      <div class="row week-titles">
+{{#liquid-if isDayView class='crossFade'}}
+  {{#el-daily-calendar date=date events=calendarEvents as |hours|}}
+    <div class="row week-titles">
       <div class="cell">
       </div>
-      {{#each days as |day|}}
-        <div class="cell title">
-          {{#link-to 'dashboard' (query-params view="day" date=day.formattedDate)}}
-            {{formatted-date day.date type='weekly-header'}}
-          {{/link-to}}
-        </div>
-      {{/each}}
+      <div class="cell title">
+        {{moment fullCalendarDate 'dddd, MMMM Do YYYY'}}
       </div>
-      <div class="week">
+    </div>
+    <div class="week">
       <ul class="week-hours">
-        {{#each days.firstObject.hours as |hour|}}
+        {{#each hours as |hour|}}
           <li class="week-hour">{{hour.formattedHour}}</li>
         {{/each}}
       </ul>
-      {{#each days as |day|}}
-        <ul class="week-day">
-          <li class="event-column">
-            {{#each day.events as |event|}}
-              {{ilios-calendar-event event=event viewType='week-event' action='selectEvent'}}
-            {{/each}}
-          </li>
-          {{#each day.hours as |hour|}}
-            <li class="day-hour">
-              <div class="day-half-hour"></div>
-            </li>
-          {{/each}}
-        </ul>
-      {{/each}}
-      </div>
-    {{/el-weekly-calendar}}
-  {{/liquid-if}}
 
-  {{#liquid-if isMonthView class='crossFade'}}
-    {{#el-monthly-calendar date=date events=events as |weeks|}}
-      <div class="row month-titles">
-        <div class="cell">
-        </div>
-        <div class="cell title">
-          {{moment date 'MMMM YYYY'}}
-        </div>
+      <ul class="week-day-full">
+        <li class="event-column">
+          {{#each hours as |hour|}}
+            {{#each hour.events as |event|}}
+              {{#link-to 'events' event.slug}}
+                {{ilios-calendar-event event=event viewType='day-event'}}
+              {{/link-to}}
+            {{/each}}
+          {{/each}}
+        </li>
+        {{#each hours as |hour|}}
+          <li class="day-hour">
+            <div class="day-half-hour"></div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/el-daily-calendar}}
+{{/liquid-if}}
+
+{{#liquid-if isWeekView class='crossFade' }}
+  {{#el-weekly-calendar date=date events=calendarEvents as |days|}}
+    <div class="row">
+      <div class="cell">
       </div>
-      <div class="row">
-        {{#each weeks.firstObject.days as |day|}}
-          <div class="cell title">
-            {{day.dayName}}
+      <div class="cell title">
+        {{t 'calendar.weekOf' date=weekOf}}
+      </div>
+    </div>
+    <div class="row week-titles">
+    <div class="cell">
+    </div>
+    {{#each days as |day|}}
+      <div class="cell title">
+        {{#link-to 'dashboard' (query-params view="day" date=day.formattedDate)}}
+          {{formatted-date day.date type='weekly-header'}}
+        {{/link-to}}
+      </div>
+    {{/each}}
+    </div>
+    <div class="week">
+    <ul class="week-hours">
+      {{#each days.firstObject.hours as |hour|}}
+        <li class="week-hour">{{hour.formattedHour}}</li>
+      {{/each}}
+    </ul>
+    {{#each days as |day|}}
+      <ul class="week-day">
+        <li class="event-column">
+          {{#each day.events as |event|}}
+            {{#link-to 'events' event.slug}}
+              {{ilios-calendar-event event=event viewType='week-event'}}
+            {{/link-to}}
+          {{/each}}
+        </li>
+        {{#each day.hours as |hour|}}
+          <li class="day-hour">
+            <div class="day-half-hour"></div>
+          </li>
+        {{/each}}
+      </ul>
+    {{/each}}
+    </div>
+  {{/el-weekly-calendar}}
+{{/liquid-if}}
+
+{{#liquid-if isMonthView class='crossFade'}}
+  {{#el-monthly-calendar date=date events=calendarEvents as |weeks|}}
+    <div class="row month-titles">
+      <div class="cell">
+      </div>
+      <div class="cell title">
+        {{moment date 'MMMM YYYY'}}
+      </div>
+    </div>
+    <div class="row">
+      {{#each weeks.firstObject.days as |day|}}
+        <div class="cell title">
+          {{day.dayName}}
+        </div>
+      {{/each}}
+    </div>
+    {{#each weeks as |week|}}
+      <div class="week">
+        {{#each week.days as |day|}}
+          <div class="day">
+            {{#link-to 'dashboard' (query-params view="day" date=day.formattedDate)}}
+              {{formatted-date day.date type='monthly-day'}}
+            {{/link-to}}
+
+            <div class="events">
+              {{#each day.events as |event|}}
+                {{#link-to 'events' event.slug}}
+                  {{ilios-calendar-event event=event viewType='month-event'}}
+                {{/link-to}}
+              {{/each}}
+            </div>
           </div>
         {{/each}}
       </div>
-      {{#each weeks as |week|}}
-        <div class="week">
-          {{#each week.days as |day|}}
-            <div class="day">
-              {{#link-to 'dashboard' (query-params view="day" date=day.formattedDate)}}
-                {{formatted-date day.date type='monthly-day'}}
-              {{/link-to}}
-
-              <div class="events">
-                {{#each day.events as |event|}}
-                  {{ilios-calendar-event event=event viewType='month-event' action='selectEvent'}}
-                {{/each}}
-              </div>
-            </div>
-          {{/each}}
-        </div>
-      {{/each}}
-    {{/el-monthly-calendar}}
-  {{/liquid-if}}
+    {{/each}}
+  {{/el-monthly-calendar}}
 {{/liquid-if}}

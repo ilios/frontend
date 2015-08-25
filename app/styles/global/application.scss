@@ -1,6 +1,7 @@
 @import '../bourbon';
 @import '../components/variables';
 @import '../neat';
+@import 'bower_components/font-awesome/scss/font-awesome';
 @import '../components/reset';
 @import '../layout/layout';
 @import '../components/global';
@@ -27,3 +28,4 @@
 @import '../components/flashMessages';
 @import '../components/calendar';
 @import '../components/login-form';
+@import '../components/dashboard';

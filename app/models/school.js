@@ -42,5 +42,48 @@ export default DS.Model.extend({
         });
       });
     });
-  }.property('programs.@each')
+  }.property('programs.@each'),
+  getCohortsForYear(year){
+    let defer = Ember.RSVP.defer();
+    this.getProgramYearsForYear(year).then(programYears => {
+      let cohorts = [];
+      let promises = [];
+      programYears.forEach(programYear => {
+        promises.pushObject(programYear.get('cohort').then(cohort => {
+          cohorts.pushObject(cohort);
+        }));
+      });
+      Ember.RSVP.all(promises).then(()=> {
+        defer.resolve(cohorts);
+      });
+    });
+    
+    
+    return DS.PromiseArray.create({
+      promise: defer.promise
+    });
+  },
+  getProgramYearsForYear(year){
+    let defer = Ember.RSVP.defer();
+    this.get('programs').then(programs => {
+      let promises = [];
+      let filteredProgramYears = [];
+      programs.forEach(program => {
+        promises.pushObject(program.get('programYears').then(programYears => {
+          programYears.forEach(programYear => {
+            if(parseInt(programYear.get('startYear')) === year){
+              filteredProgramYears.pushObject(programYear);
+            }
+          });
+        }));
+        Ember.RSVP.all(promises).then(()=> {
+          defer.resolve(filteredProgramYears);
+        });
+      });
+    });
+
+    return DS.PromiseArray.create({
+      promise: defer.promise
+    });
+  }
 });

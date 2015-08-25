@@ -156,11 +156,11 @@ $offering-switch-blue: #009ccc;
   padding: 3px;
   position: relative;
   vertical-align: top;
-  width: 106px;
+  width: 120px;
 
   > .switch-input:checked ~ .switch-handle {
     box-shadow: -1px 1px 5px rgba(0, 0, 0, .2);
-    left: 84px;
+    left: 98px;
   }
 }
 

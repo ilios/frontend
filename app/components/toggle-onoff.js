@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'span',
-  value: false
+  lable: null,
+  on: false,
+  click(){
+    this.sendAction();
+  }
 });

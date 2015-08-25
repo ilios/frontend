@@ -6,6 +6,8 @@ export default {
     'remove': 'Remover',
     'yes': 'Sí',
     'no': 'No',
+    'on': 'Encendido',
+    'off': 'Apagado',
     'cancel': 'Cancelar',
     'undo': 'Undo',
     'results': 'Resultados',
@@ -301,5 +303,18 @@ export default {
       'es': 'Español (es_MX)',
       'fr': 'Français (fr)'
     }
-  }
+  },
+  'dashboard': {
+    'showFilters': 'Enseñe Filtros',
+    'hideFilters': 'Esconde Filtros',
+    'sessionTypes': 'Tipos de Sesiónes',
+    'courseLevels': 'Niveles de Curso',
+    'programAndCohort': 'Programa/Clase de La Graduación',
+    'mySchedule': 'Mi Horario',
+    'allEvents': 'Todos los Eventos',
+    'noEvents': 'No eventos próximos',
+    'topicOrDetail': 'Topico/Detalle',
+    'courseOrType': 'Curso/Tipo',
+    'usersCalendar': "Calendario de{{name}}"
+  },
 };

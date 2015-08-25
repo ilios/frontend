@@ -29,6 +29,9 @@ module.exports = function(defaults) {
 
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+    emberCliFontAwesome: {
+      useScss: true
+    },
   });
 
   return app.toTree();

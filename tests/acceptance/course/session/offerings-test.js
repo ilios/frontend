@@ -228,11 +228,11 @@ test('create new offering', function(assert) {
     let startBoxes = find('.offering-manager .starttime select', container);
     pickOption(startBoxes[0], '2', assert);
     pickOption(startBoxes[1], '15', assert);
-    pickOption(startBoxes[2], 'AM', assert);
+    pickOption(startBoxes[2], 'am', assert);
     let endBoxes = find('.offering-manager .endtime select', container);
     pickOption(endBoxes[0], '3', assert);
     pickOption(endBoxes[1], '23', assert);
-    pickOption(endBoxes[2], 'AM', assert);
+    pickOption(endBoxes[2], 'am', assert);
     fillIn(find('.offering-manager .room input', container), 'testing palace');
     click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
     let input = find('.search-box input', container);
@@ -283,11 +283,11 @@ test('create new multiday offering', function(assert) {
       let startBoxes = find('.offering-manager .starttime select', container);
       pickOption(startBoxes[0], '2', assert);
       pickOption(startBoxes[1], '15', assert);
-      pickOption(startBoxes[2], 'AM', assert);
+      pickOption(startBoxes[2], 'am', assert);
       let endBoxes = find('.offering-manager .endtime select', container);
       pickOption(endBoxes[0], '12', assert);
       pickOption(endBoxes[1], '23', assert);
-      pickOption(endBoxes[2], 'PM', assert);
+      pickOption(endBoxes[2], 'am', assert);
       fillIn(find('.offering-manager .room input', container), 'testing palace');
       click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
       let input = find('.search-box input', container);

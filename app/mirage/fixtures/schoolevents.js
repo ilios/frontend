@@ -1,6 +1,6 @@
 export default [
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-08T23:00:00+00:00",
     "endDate": "2014-09-09T01:00:00+00:00",
@@ -12,7 +12,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-10T01:00:00+00:00",
     "endDate": "2014-09-10T03:00:00+00:00",
@@ -24,7 +24,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-11T01:00:00+00:00",
     "endDate": "2014-09-11T03:00:00+00:00",
@@ -36,7 +36,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-12T01:00:00+00:00",
     "endDate": "2014-09-12T03:00:00+00:00",
@@ -48,79 +48,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46118,
-    "eventClass": "discussion-small",
-    "location": "Rm. 299",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46120,
-    "eventClass": "discussion-small",
-    "location": "Rm. 274",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46117,
-    "eventClass": "discussion-small",
-    "location": "Rm. 256",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46123,
-    "eventClass": "discussion-small",
-    "location": "Rm. 135",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46127,
-    "eventClass": "discussion-small",
-    "location": "Rm. 228",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46128,
-    "eventClass": "discussion-small",
-    "location": "Rm. 114",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Pharmacology and Biochemistry Small Group Discussion 1",
     "startDate": "2014-09-15T15:00:00+00:00",
     "endDate": "2014-09-15T17:00:00+00:00",
@@ -132,19 +60,31 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Pharmacology and Biochemistry Small Group Discussion 1",
     "startDate": "2014-09-15T15:00:00+00:00",
     "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46125,
+    "offering":46127,
     "eventClass": "discussion-small",
-    "location": "Rm. 204",
+    "location": "Rm. 228",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46123,
+    "eventClass": "discussion-small",
+    "location": "Rm. 135",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "Pharmacology and Biochemistry Small Group Discussion 1",
     "startDate": "2014-09-15T15:00:00+00:00",
     "endDate": "2014-09-15T17:00:00+00:00",
@@ -156,19 +96,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
-    "startDate": "2014-09-15T15:00:00+00:00",
-    "endDate": "2014-09-15T17:00:00+00:00",
-    "offering":46124,
-    "eventClass": "discussion-small",
-    "location": "Rm. 199",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Pharmacology and Biochemistry Small Group Discussion 1",
     "startDate": "2014-09-15T15:00:00+00:00",
     "endDate": "2014-09-15T17:00:00+00:00",
@@ -180,7 +108,19 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46124,
+    "eventClass": "discussion-small",
+    "location": "Rm. 199",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "Pharmacology and Biochemistry Small Group Discussion 1",
     "startDate": "2014-09-15T15:00:00+00:00",
     "endDate": "2014-09-15T17:00:00+00:00",
@@ -192,7 +132,67 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46125,
+    "eventClass": "discussion-small",
+    "location": "Rm. 204",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46117,
+    "eventClass": "discussion-small",
+    "location": "Rm. 256",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46118,
+    "eventClass": "discussion-small",
+    "location": "Rm. 299",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46120,
+    "eventClass": "discussion-small",
+    "location": "Rm. 274",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Pharmacology and Biochemistry Small Group Discussion 1",
+    "startDate": "2014-09-15T15:00:00+00:00",
+    "endDate": "2014-09-15T17:00:00+00:00",
+    "offering":46128,
+    "eventClass": "discussion-small",
+    "location": "Rm. 114",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-15T23:00:00+00:00",
     "endDate": "2014-09-16T01:00:00+00:00",
@@ -204,7 +204,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-17T01:00:00+00:00",
     "endDate": "2014-09-17T03:00:00+00:00",
@@ -216,7 +216,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-18T01:00:00+00:00",
     "endDate": "2014-09-18T03:00:00+00:00",
@@ -228,7 +228,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-19T01:00:00+00:00",
     "endDate": "2014-09-19T03:00:00+00:00",
@@ -240,7 +240,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-22T23:00:00+00:00",
     "endDate": "2014-09-23T01:00:00+00:00",
@@ -252,7 +252,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-24T01:00:00+00:00",
     "endDate": "2014-09-24T03:00:00+00:00",
@@ -264,7 +264,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-25T01:00:00+00:00",
     "endDate": "2014-09-25T03:00:00+00:00",
@@ -276,7 +276,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-26T01:00:00+00:00",
     "endDate": "2014-09-26T03:00:00+00:00",
@@ -288,7 +288,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-09-29T23:00:00+00:00",
     "endDate": "2014-09-30T01:00:00+00:00",
@@ -300,7 +300,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-01T01:00:00+00:00",
     "endDate": "2014-10-01T03:00:00+00:00",
@@ -312,7 +312,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-02T01:00:00+00:00",
     "endDate": "2014-10-02T03:00:00+00:00",
@@ -324,7 +324,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-03T01:00:00+00:00",
     "endDate": "2014-10-03T03:00:00+00:00",
@@ -336,7 +336,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-06T23:00:00+00:00",
     "endDate": "2014-10-07T01:00:00+00:00",
@@ -348,31 +348,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Biases in Medicine Small Group ",
-    "startDate": "2014-10-07T17:00:00+00:00",
-    "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46230,
-    "eventClass": "discussion-small",
-    "location": "Rm. 105",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Biases in Medicine Small Group ",
-    "startDate": "2014-10-07T17:00:00+00:00",
-    "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46223,
-    "eventClass": "discussion-small",
-    "location": "Rm. 217",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
@@ -384,19 +360,19 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46221,
+    "offering":46223,
     "eventClass": "discussion-small",
-    "location": "Rm. 158",
+    "location": "Rm. 217",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
@@ -408,43 +384,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Biases in Medicine Small Group ",
-    "startDate": "2014-10-07T17:00:00+00:00",
-    "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46224,
-    "eventClass": "discussion-small",
-    "location": "Rm. 205",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Biases in Medicine Small Group ",
-    "startDate": "2014-10-07T17:00:00+00:00",
-    "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46225,
-    "eventClass": "discussion-small",
-    "location": "Rm. 113",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Biases in Medicine Small Group ",
-    "startDate": "2014-10-07T17:00:00+00:00",
-    "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":53090,
-    "eventClass": "discussion-small",
-    "location": "Rm. 122",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
@@ -456,31 +396,43 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46228,
+    "offering":46224,
     "eventClass": "discussion-small",
-    "location": "Rm. 235",
+    "location": "Rm. 205",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
-    "offering":46226,
+    "offering":46225,
     "eventClass": "discussion-small",
-    "location": "Rm. 172",
+    "location": "Rm. 113",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Biases in Medicine Small Group ",
+    "startDate": "2014-10-07T17:00:00+00:00",
+    "endDate": "2014-10-07T19:00:00+00:00",
+    "offering":46221,
+    "eventClass": "discussion-small",
+    "location": "Rm. 158",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "Biases in Medicine Small Group ",
     "startDate": "2014-10-07T17:00:00+00:00",
     "endDate": "2014-10-07T19:00:00+00:00",
@@ -492,7 +444,55 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Biases in Medicine Small Group ",
+    "startDate": "2014-10-07T17:00:00+00:00",
+    "endDate": "2014-10-07T19:00:00+00:00",
+    "offering":46230,
+    "eventClass": "discussion-small",
+    "location": "Rm. 105",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Biases in Medicine Small Group ",
+    "startDate": "2014-10-07T17:00:00+00:00",
+    "endDate": "2014-10-07T19:00:00+00:00",
+    "offering":46228,
+    "eventClass": "discussion-small",
+    "location": "Rm. 235",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Biases in Medicine Small Group ",
+    "startDate": "2014-10-07T17:00:00+00:00",
+    "endDate": "2014-10-07T19:00:00+00:00",
+    "offering":46226,
+    "eventClass": "discussion-small",
+    "location": "Rm. 172",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Biases in Medicine Small Group ",
+    "startDate": "2014-10-07T17:00:00+00:00",
+    "endDate": "2014-10-07T19:00:00+00:00",
+    "offering":53090,
+    "eventClass": "discussion-small",
+    "location": "Rm. 122",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-08T01:00:00+00:00",
     "endDate": "2014-10-08T03:00:00+00:00",
@@ -504,79 +504,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46266,
-    "eventClass": "discussion-small",
-    "location": "Rm. 269",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46265,
-    "eventClass": "discussion-small",
-    "location": "Rm. 263",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46264,
-    "eventClass": "discussion-small",
-    "location": "Rm. 141",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46263,
-    "eventClass": "discussion-small",
-    "location": "Rm. 220",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46267,
-    "eventClass": "discussion-small",
-    "location": "Rm. 249",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46268,
-    "eventClass": "discussion-small",
-    "location": "Rm. 286",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Team Learning and Communication Skills (TLCS)",
     "startDate": "2014-10-08T16:00:00+00:00",
     "endDate": "2014-10-08T17:00:00+00:00",
@@ -588,7 +516,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Team Learning and Communication Skills (TLCS)",
     "startDate": "2014-10-08T16:00:00+00:00",
     "endDate": "2014-10-08T17:00:00+00:00",
@@ -600,43 +528,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46271,
-    "eventClass": "discussion-small",
-    "location": "Rm. 158",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46270,
-    "eventClass": "discussion-small",
-    "location": "Rm. 166",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Team Learning and Communication Skills (TLCS)",
-    "startDate": "2014-10-08T16:00:00+00:00",
-    "endDate": "2014-10-08T17:00:00+00:00",
-    "offering":46262,
-    "eventClass": "discussion-small",
-    "location": "Rm. 259",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Team Learning and Communication Skills (TLCS)",
     "startDate": "2014-10-08T16:00:00+00:00",
     "endDate": "2014-10-08T17:00:00+00:00",
@@ -648,7 +540,115 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46270,
+    "eventClass": "discussion-small",
+    "location": "Rm. 166",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46271,
+    "eventClass": "discussion-small",
+    "location": "Rm. 158",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46268,
+    "eventClass": "discussion-small",
+    "location": "Rm. 286",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46262,
+    "eventClass": "discussion-small",
+    "location": "Rm. 259",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46265,
+    "eventClass": "discussion-small",
+    "location": "Rm. 263",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46263,
+    "eventClass": "discussion-small",
+    "location": "Rm. 220",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46266,
+    "eventClass": "discussion-small",
+    "location": "Rm. 269",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46264,
+    "eventClass": "discussion-small",
+    "location": "Rm. 141",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Team Learning and Communication Skills (TLCS)",
+    "startDate": "2014-10-08T16:00:00+00:00",
+    "endDate": "2014-10-08T17:00:00+00:00",
+    "offering":46267,
+    "eventClass": "discussion-small",
+    "location": "Rm. 249",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-09T01:00:00+00:00",
     "endDate": "2014-10-09T03:00:00+00:00",
@@ -660,7 +660,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-10T01:00:00+00:00",
     "endDate": "2014-10-10T03:00:00+00:00",
@@ -672,67 +672,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T15:00:00+00:00",
-    "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":46289,
-    "eventClass": "discussion-small",
-    "location": "Rm. 182",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T15:00:00+00:00",
-    "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":49806,
-    "eventClass": "discussion-small",
-    "location": "Rm. 143",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T15:00:00+00:00",
-    "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":46290,
-    "eventClass": "discussion-small",
-    "location": "Rm. 204",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T15:00:00+00:00",
-    "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":46291,
-    "eventClass": "discussion-small",
-    "location": "Rm. 171",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T15:00:00+00:00",
-    "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":46293,
-    "eventClass": "discussion-small",
-    "location": "Rm. 248",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
     "startDate": "2014-10-10T15:00:00+00:00",
     "endDate": "2014-10-10T17:00:00+00:00",
@@ -744,23 +684,11 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
     "startDate": "2014-10-10T15:00:00+00:00",
     "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":49804,
-    "eventClass": "discussion-small",
-    "location": "Rm. 114",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T15:00:00+00:00",
-    "endDate": "2014-10-10T17:00:00+00:00",
-    "offering":49803,
+    "offering":46289,
     "eventClass": "discussion-small",
     "location": "Rm. 182",
     "lastModified": "2015-08-19T04:40:51+00:00",
@@ -768,7 +696,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
     "startDate": "2014-10-10T15:00:00+00:00",
     "endDate": "2014-10-10T17:00:00+00:00",
@@ -780,7 +708,43 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T15:00:00+00:00",
+    "endDate": "2014-10-10T17:00:00+00:00",
+    "offering":46291,
+    "eventClass": "discussion-small",
+    "location": "Rm. 171",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T15:00:00+00:00",
+    "endDate": "2014-10-10T17:00:00+00:00",
+    "offering":46293,
+    "eventClass": "discussion-small",
+    "location": "Rm. 248",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T15:00:00+00:00",
+    "endDate": "2014-10-10T17:00:00+00:00",
+    "offering":49803,
+    "eventClass": "discussion-small",
+    "location": "Rm. 182",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
     "startDate": "2014-10-10T15:00:00+00:00",
     "endDate": "2014-10-10T17:00:00+00:00",
@@ -792,115 +756,43 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":46283,
+    "startDate": "2014-10-10T15:00:00+00:00",
+    "endDate": "2014-10-10T17:00:00+00:00",
+    "offering":46290,
     "eventClass": "discussion-small",
-    "location": "Rm. 289",
+    "location": "Rm. 204",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":46282,
+    "startDate": "2014-10-10T15:00:00+00:00",
+    "endDate": "2014-10-10T17:00:00+00:00",
+    "offering":49806,
     "eventClass": "discussion-small",
-    "location": "Rm. 148",
+    "location": "Rm. 143",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":46284,
+    "startDate": "2014-10-10T15:00:00+00:00",
+    "endDate": "2014-10-10T17:00:00+00:00",
+    "offering":49804,
     "eventClass": "discussion-small",
-    "location": "Rm. 292",
+    "location": "Rm. 114",
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
   },
   {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":46287,
-    "eventClass": "discussion-small",
-    "location": "Rm. 199",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":46286,
-    "eventClass": "discussion-small",
-    "location": "Rm. 254",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":46285,
-    "eventClass": "discussion-small",
-    "location": "Rm. 266",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":49808,
-    "eventClass": "discussion-small",
-    "location": "Rm. 293",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":49807,
-    "eventClass": "discussion-small",
-    "location": "Rm. 242",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
-    "name": "Embryology Peer Facilitated Small Groups",
-    "startDate": "2014-10-10T20:00:00+00:00",
-    "endDate": "2014-10-10T22:00:00+00:00",
-    "offering":49809,
-    "eventClass": "discussion-small",
-    "location": "Rm. 281",
-    "lastModified": "2015-08-19T04:40:51+00:00",
-    "isPublished":true,
-    "isScheduled":false
-  },
-  {
-    "user": 4136,
+    "school": 1,
     "name": "Embryology Peer Facilitated Small Groups",
     "startDate": "2014-10-10T20:00:00+00:00",
     "endDate": "2014-10-10T22:00:00+00:00",
@@ -912,7 +804,115 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":49809,
+    "eventClass": "discussion-small",
+    "location": "Rm. 281",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":46287,
+    "eventClass": "discussion-small",
+    "location": "Rm. 199",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":46284,
+    "eventClass": "discussion-small",
+    "location": "Rm. 292",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":46282,
+    "eventClass": "discussion-small",
+    "location": "Rm. 148",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":49808,
+    "eventClass": "discussion-small",
+    "location": "Rm. 293",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":46285,
+    "eventClass": "discussion-small",
+    "location": "Rm. 266",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":46286,
+    "eventClass": "discussion-small",
+    "location": "Rm. 254",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":46283,
+    "eventClass": "discussion-small",
+    "location": "Rm. 289",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
+    "name": "Embryology Peer Facilitated Small Groups",
+    "startDate": "2014-10-10T20:00:00+00:00",
+    "endDate": "2014-10-10T22:00:00+00:00",
+    "offering":49807,
+    "eventClass": "discussion-small",
+    "location": "Rm. 242",
+    "lastModified": "2015-08-19T04:40:51+00:00",
+    "isPublished":true,
+    "isScheduled":false
+  },
+  {
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-13T23:00:00+00:00",
     "endDate": "2014-10-14T01:00:00+00:00",
@@ -924,7 +924,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-15T01:00:00+00:00",
     "endDate": "2014-10-15T03:00:00+00:00",
@@ -936,7 +936,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-16T01:00:00+00:00",
     "endDate": "2014-10-16T03:00:00+00:00",
@@ -948,7 +948,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-17T01:00:00+00:00",
     "endDate": "2014-10-17T03:00:00+00:00",
@@ -960,7 +960,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-20T23:00:00+00:00",
     "endDate": "2014-10-21T01:00:00+00:00",
@@ -972,7 +972,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-22T01:00:00+00:00",
     "endDate": "2014-10-22T03:00:00+00:00",
@@ -984,7 +984,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-23T01:00:00+00:00",
     "endDate": "2014-10-23T03:00:00+00:00",
@@ -996,7 +996,7 @@ export default [
     "isScheduled":false
   },
   {
-    "user": 4136,
+    "school": 1,
     "name": "MSP (Medical Scholars Program) Tutoring Sessions",
     "startDate": "2014-10-24T01:00:00+00:00",
     "endDate": "2014-10-24T03:00:00+00:00",
@@ -1006,5 +1006,5 @@ export default [
     "lastModified": "2015-08-19T04:40:51+00:00",
     "isPublished":true,
     "isScheduled":false
-}
+  }
 ];
