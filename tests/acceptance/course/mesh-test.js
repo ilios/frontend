@@ -13,7 +13,7 @@ module('Acceptance: Course - Mesh Terms', {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
-    server.create('educationalYear');
+    server.create('academicYear');
     server.createList('meshDescriptor', 3, {
       courses: [1]
     });

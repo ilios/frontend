@@ -5,6 +5,7 @@ export default Ember.Route.extend({
       var promises = {
         aamcpcrs: this.store.find('aamc-pcrs', {limit: 2}),
         aamcmethods: this.store.find('aamc-method', {limit: 2}),
+        academicYears: this.store.find('academic-year', {limit: 2}),
         alerts: this.store.find('alert', {limit: 2}),
         cohorts: this.store.find('cohort', {limit: 2}),
         competencies: this.store.find('competency', {limit: 2}),
@@ -19,7 +20,6 @@ export default Ember.Route.extend({
         curriculuminventoryacademiclevels: this.store.find('curriculum-inventory-academic-level', {limit: 2}),
         disciplines: this.store.find('discipline', {limit: 2}),
         departments: this.store.find('department', {limit: 2}),
-        educationalyears: this.store.find('educational-year', {limit: 2}),
         ilmsessions: this.store.find('ilm-session', {limit: 2}),
         instructorgroups: this.store.find('instructor-group', {limit: 2}),
         learnergroups: this.store.find('learner-group', {limit: 2}),

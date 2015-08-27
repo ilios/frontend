@@ -15,7 +15,7 @@ module('Acceptance: Course - Cohorts', {
 
     server.create('user', {id: 4136});
     server.create('school');
-    server.create('educationalYear', {id: 2013});
+    server.create('academicYear', {id: 2013});
     server.create('program', {
       programYears: [1,2]
     });

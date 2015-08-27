@@ -13,7 +13,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       self.get('currentUser.model').then(function(currentUser){
         var schoolId = params.schoolId == null ? currentUser.get('school.id') : params.schoolId;
         self.store.find('school', schoolId).then(function(school){
-          self.store.find('educational-year').then(function(years){
+          self.store.find('academic-year').then(function(years){
             var year = null;
             if(params.yearTitle != null){
               year = years.find(function(year){

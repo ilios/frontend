@@ -16,9 +16,9 @@ module('Acceptance: Courses', {
     fixtures.schools = [];
     fixtures.schools.pushObjects(server.createList('school', 2));
 
-    fixtures.educationalYears = [];
-    fixtures.educationalYears.pushObject(server.create('educationalYear', {id: 2013}));
-    fixtures.educationalYears.pushObject(server.create('educationalYear', {id: 2014}));
+    fixtures.academicYears = [];
+    fixtures.academicYears.pushObject(server.create('academicYear', {id: 2013}));
+    fixtures.academicYears.pushObject(server.create('academicYear', {id: 2014}));
   },
 
   afterEach: function() {
@@ -156,9 +156,9 @@ test('filters options', function(assert) {
     click('#yearsfilter button');
     andThen(function(){
       var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-      assert.equal(yearOptions.length, fixtures.educationalYears.length);
-      for(let i = 0; i < fixtures.educationalYears.length; i++){
-        assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), fixtures.educationalYears[i].title);
+      assert.equal(yearOptions.length, fixtures.academicYears.length);
+      for(let i = 0; i < fixtures.academicYears.length; i++){
+        assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), fixtures.academicYears[i].title);
       }
     });
   });

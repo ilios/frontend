@@ -16,7 +16,7 @@ module('Acceptance: Course - Topics', {
     server.create('school', {
       disciplines: [1,2]
     });
-    server.create('educationalYear', {id: 2013});
+    server.create('academicYear', {id: 2013});
 
     fixtures.topics = [];
     fixtures.topics.pushObject(server.create('discipline', {

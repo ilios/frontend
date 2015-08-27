@@ -77,7 +77,7 @@ module('Acceptance: Dashboard Calendar', {
       offerings: [3],
       course: 2,
     });
-    server.create('educationalYear', {
+    server.create('academicYear', {
       id: 2015,
       title: 2015
     });
@@ -731,7 +731,7 @@ test('agenda show next seven days of events', function(assert) {
 });
 
 test('academic year filters cohort', function(assert) {
-  server.create('educationalYear', {
+  server.create('academicYear', {
     id: 2014,
     title: 2014
   });
@@ -765,7 +765,7 @@ test('academic year filters cohort', function(assert) {
 });
 
 test('academic year filters courses', function(assert) {
-  server.create('educationalYear', {
+  server.create('academicYear', {
     id: 2014,
     title: 2014
   });

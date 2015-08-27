@@ -1,6 +1,7 @@
 var models = [
   'aamcMethods',
   'aamcPcrs',
+  'academicYears',
   'alertChangeTypes',
   'courseLearningMaterials',
   'courseClerkshipTypes',
@@ -10,7 +11,6 @@ var models = [
   'curriculumInventoryReports',
   'curriculumInventorySequenceBlocks',
   'curriculumInventorySequences',
-  'educationalYears',
   'ilmSessions',
   'instructionHours',
   'instructorGroups',

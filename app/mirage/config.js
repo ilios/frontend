@@ -18,6 +18,12 @@ export default function() {
     this.delete('/api/aamcpcrs/:id', 'aamcPcr');
     this.post('/api/aamcpcrs', 'aamcPcr');
 
+    this.get('/api/academicyears', getAll);
+    this.get('/api/academicyears/:id', 'academicYear');
+    this.put('/api/academicyears/:id', 'academicYear');
+    this.delete('/api/academicyears/:id', 'academicYear');
+    this.post('/api/academicyears', 'academicYear');
+
     this.get('/api/alertchangetypes', getAll);
     this.get('/api/alertchangetypes/:id', 'alertChangeType');
     this.put('/api/alertchangetypes/:id', 'alertChangeType');
@@ -107,12 +113,6 @@ export default function() {
     this.put('/api/disciplines/:id', 'discipline');
     this.delete('/api/disciplines/:id', 'discipline');
     this.post('/api/disciplines', 'discipline');
-
-    this.get('/api/educationalyears', getAll);
-    this.get('/api/educationalyears/:id', 'educationalYear');
-    this.put('/api/educationalyears/:id', 'educationalYear');
-    this.delete('/api/educationalyears/:id', 'educationalYear');
-    this.post('/api/educationalyears', 'educationalYear');
 
     this.get('/api/ilmsessions', getAll);
     this.get('/api/ilmsessions/:id', 'ilmSession');

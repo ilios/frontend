@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('educational-year', 'EducationalYear', {
+moduleForModel('academic-year', 'AcademicYear', {
   needs: [
     'model:aamc-method',
     'model:aamc-pcrs',
@@ -22,7 +22,7 @@ moduleForModel('educational-year', 'EducationalYear', {
     'model:curriculum-inventory-sequence',
     'model:department',
     'model:discipline',
-    'model:educational-year',
+    'model:academic-year',
     'model:ilm-session',
     'model:instructor-group',
     'model:learner-group',

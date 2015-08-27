@@ -15,7 +15,7 @@ module('Acceptance: Course - Learning Materials', {
 
     fixtures.user = server.create('user', {id: 4136});
     server.create('school');
-    server.create('educationalYear');
+    server.create('academicYear');
     fixtures.statuses = [];
     fixtures.statuses.pushObject(server.create('learningMaterialStatus', {
       learningMaterials: [1]
