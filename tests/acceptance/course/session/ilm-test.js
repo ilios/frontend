@@ -24,7 +24,7 @@ module('Acceptance: Session - Independent Learning', {
       instructorGroups: [1,2,3,4,5],
       courses: [1]
     });
-    server.create('educationalYear');
+    server.create('academicYear');
     server.create('program', {
       programYears: [1,2]
     });

@@ -18,7 +18,7 @@ module('Acceptance: Session - Overview', {
     server.create('school', {
       sessionTypes: [1,2]
     });
-    server.create('educationalYear');
+    server.create('academicYear');
     server.create('course');
     fixtures.selectedSessionType = server.create('sessionType', {
       sessions: [1],

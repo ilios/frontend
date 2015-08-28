@@ -22,7 +22,7 @@ moduleForModel('curriculum-inventory-sequence-block', 'CurriculumInventorySequen
     'model:curriculum-inventory-sequence',
     'model:department',
     'model:discipline',
-    'model:educational-year',
+    'model:academic-year',
     'model:ilm-session',
     'model:instructor-group',
     'model:learner-group',

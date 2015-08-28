@@ -14,7 +14,7 @@ module('Acceptance: Course - Objective Create', {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
-    server.create('educationalYear', {id: 2013});
+    server.create('academicYear', {id: 2013});
     server.createList('program', 2);
     server.createList('programYear', 2);
     server.createList('cohort', 2);

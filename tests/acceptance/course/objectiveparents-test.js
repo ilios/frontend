@@ -14,7 +14,7 @@ module('Acceptance: Course - Objective Parents', {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
-    // server.create('educationalYear', {id: 2013});
+    // server.create('academicYear', {id: 2013});
     fixtures.program = server.create('program');
     fixtures.programYear = server.create('programYear', {
       cohort: 1,

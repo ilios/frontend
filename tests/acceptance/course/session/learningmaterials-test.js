@@ -14,7 +14,7 @@ module('Acceptance: Session - Learning Materials', {
     authenticateSession();
     fixtures.user = server.create('user', {id: 4136});
     server.create('school');
-    server.create('educationalYear');
+    server.create('academicYear');
     server.create('course', {
       sessions: [1]
     });

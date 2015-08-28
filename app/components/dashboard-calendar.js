@@ -348,7 +348,7 @@ export default Ember.Component.extend({
     });
   }),
   allAcademicYears: Ember.computed(function(){
-    return this.get('store').find('educational-year');
+    return this.get('store').find('academic-year');
   }),
   academicYears: Ember.computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
     return DS.PromiseArray.create({
