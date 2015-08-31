@@ -88,7 +88,8 @@ export default {
     'selected': 'Selected',
     'available': 'Available',
     'savedSuccessfully': 'Saved Successfully',
-    'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again."
+    'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again.",
+    'myCourses': 'My Courses',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -172,7 +173,6 @@ export default {
     'startDate': 'Start Date',
     'endDate': 'End Date',
     'level': 'Level',
-    'myCourses': 'My Courses',
     'allCourses': 'All Courses',
     'newSession': 'New Session',
     'backToCourses': 'Back to Courses List',
@@ -315,6 +315,6 @@ export default {
     'noEvents': 'No upcoming events',
     'topicOrDetail': 'Topic/Detail',
     'courseOrType': 'Course/Type',
-    'usersCalendar': "{{name}}'s Calendar"
+    'usersCalendar': "{{name}}'s Calendar",
   },
 };

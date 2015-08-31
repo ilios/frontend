@@ -1,15 +1,15 @@
 <section class='dashboard fullwidth'>
   <div class='calendar-profile'>
-  {{t 'dashboard.usersCalendar' name=currentUser.model.fullName}}
-  {{#unless showCalendar}}
-    {{moment today 'dddd MMMM Do, YYYY'}}
-  {{/unless}}
-  {{toggle-wide
-    value=showCalendar
-    onLabel='offerings.calendarOn'
-    offLabel='offerings.calendarOff'
-    action='toggleShowCalendar'
-  }}
+    {{t 'dashboard.usersCalendar' name=currentUser.model.fullName}}
+    {{#unless showCalendar}}
+      {{moment today 'dddd MMMM Do, YYYY'}}
+    {{/unless}}
+    {{toggle-wide
+      value=showCalendar
+      onLabel='offerings.calendarOn'
+      offLabel='offerings.calendarOff'
+      action='toggleShowCalendar'
+    }}
   </div>
   {{#liquid-if showCalendar class='vertical'}}
     {{dashboard-calendar
@@ -23,4 +23,5 @@
   {{else}}
     {{dashboard-agenda}}
   {{/liquid-if}}
+  {{dashboard-mycourses}}
 </section>
