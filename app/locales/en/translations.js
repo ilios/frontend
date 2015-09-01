@@ -296,6 +296,10 @@ export default {
     'login': 'Login',
     'logout': 'Logout',
     'confirmLogout': 'You have successfully logged out of Ilios. To help protect your account and the security of others, please close all browser windows.',
+    'missingUsername': 'Username required',
+    'missingPassword': 'Password required',
+    'badCredentials': 'Incorrect username or password',
+    'noAccountExists': 'Your account {{accountName}} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.',
   },
   'language': {
     'select': {

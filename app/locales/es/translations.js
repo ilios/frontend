@@ -296,6 +296,10 @@ export default {
     'login': 'Inicio',
     'logout': 'Cerrar aplicación',
     'confirmLogout': 'Usted ha cerrado la aplicación Ilios con éxito. Para asistir con la protección de su cuenta y la seguridad de otros, favor de cerrar todas las ventanas del navegador.',
+    'missingUsername': 'Nombre de usaurio requirido',
+    'missingPassword': 'Contraseña requirida',
+    'badCredentials': 'Incorrecta contraseña o nombre de usuario',
+    'noAccountExists': 'Su cuenta no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios',
   },
   'language': {
     'select': {

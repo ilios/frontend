@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   currentUser: Ember.inject.service(),
   errors: [],
+  noAccountExistsError: false,
+  noAccountExistsAccount: null,
   actions: {
     authenticate: function() {
       let credentials = this.getProperties('identification', 'password');
@@ -14,7 +16,10 @@ export default Ember.Controller.extend({
         let obj = $.parseJSON(js);
         this.get('currentUser').set('currentUserId', obj.user_id);
       }, response => {
-        this.set('errors', response.errors);
+        let mappedErrors = response.errors.map(str => {
+          return 'auth.' + str;
+        });
+        this.set('errors', mappedErrors);
       });
     }
   }

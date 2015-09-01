@@ -288,10 +288,10 @@ export default function() {
       let errors = [];
       var attrs = JSON.parse(request.requestBody);
       if(!('username' in attrs) || !attrs.username){
-        errors.push('Username required');
+        errors.push('missingUsername');
       }
       if(!('password' in attrs) || !attrs.password){
-        errors.push('Password required');
+        errors.push('missingPassword');
       }
       let username = attrs.username.toLowerCase();
       if(errors.length === 0){
@@ -306,7 +306,7 @@ export default function() {
             jwt: encodedData
           };
         } else {
-          errors.push('Incorrect username or password');
+          errors.push('badCredentials');
         }
       }
       return new Mirage.Response(400, {}, {errors: errors});

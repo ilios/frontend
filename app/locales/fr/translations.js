@@ -296,6 +296,10 @@ export default {
     'login': "Login",
     'logout': "Déconnexion",
     'confirmLogout': "Vous avez réussi accomplir une fermeture de session en Ilios. Afin de nous aider à protéger votre compte et de la securité des autres, s'il vous plait fermer toutes les fenêtres du navigateur.",
+    'missingUsername': "Nécessite un nom d'utilisateur",
+    'missingPassword': "Nécessite un mot de passe",
+    'badCredentials': "Nom d'utilisateur ou mot de passe incorrect",
+    'noAccountExists': "Votre compte d'utilisateur {{accountName}} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios.",
   },
   'language': {
     'select': {
