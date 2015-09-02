@@ -1,3 +1,6 @@
+{{#liquid-if saving class='crossFade'}}
+  {{wait-saving}}
+{{/liquid-if}}
 {{#each proxiedMembers as |userProxy|}}
   <div class="form-col-12">
     <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>

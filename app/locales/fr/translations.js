@@ -90,6 +90,7 @@ export default {
     'savedSuccessfully': "Réussie sauvé",
     'notFoundMessage': "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau.",
     'myCourses': "Mes Cours",
+    'waitSaving': "Travaille dessus... un moment..."
   },
   'programs': {
     'programTitle': "Titre de Diplôme",

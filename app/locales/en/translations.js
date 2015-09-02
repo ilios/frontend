@@ -90,6 +90,7 @@ export default {
     'savedSuccessfully': 'Saved Successfully',
     'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again.",
     'myCourses': 'My Courses',
+    'waitSaving': 'saving... one moment...',
   },
   'programs': {
     'programTitle': 'Program Title',

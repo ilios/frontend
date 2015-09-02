@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   showMoveToCohortOption: false,
   showMoveToTopLevelGroupOption: false,
   overrideCurrentGroupDisplay: false,
+  saving: false,
   learnerGroupOptions: function(){
     var defer = Ember.RSVP.defer();
     this.get('cohort').then(
@@ -123,6 +124,7 @@ export default Ember.Component.extend({
   }.property('members.@each', 'topLevelGroup', 'topLevelGroup.allDescendants.@each'),
   actions: {
     changeLearnerGroup: function(groupIdString, userId){
+      this.set('saving', true);
       let groupId = parseInt(groupIdString);
       let groupsToSave = [];
       this.get('store').find('user', userId).then(
@@ -133,12 +135,16 @@ export default Ember.Component.extend({
               if(groupId === -1){
                 //we're moving this user out of the group into the cohort
                 //so just save
-                groupsToSave.uniq().invoke('save');
+                Ember.RSVP.all(groupsToSave.uniq().invoke('save')).then(()=>{
+                  this.set('saving', false);
+                });
               } else {
                 this.get('store').find('learnerGroup', groupId).then( learnerGroup => {
                   learnerGroup.addUserToGroupAndAllParents(user).then(groups =>{
                     groupsToSave.pushObject(groups);
-                    groupsToSave.uniq().invoke('save');
+                    Ember.RSVP.all(groupsToSave.uniq().invoke('save')).then(()=>{
+                      this.set('saving', false);
+                    });
                   });
                 });
               }
