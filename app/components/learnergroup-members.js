@@ -122,40 +122,29 @@ export default Ember.Component.extend({
     });
   }.property('members.@each', 'topLevelGroup', 'topLevelGroup.allDescendants.@each'),
   actions: {
-    changeLearnerGroup: function(groupId, userId){
+    changeLearnerGroup: function(groupIdString, userId){
+      let groupId = parseInt(groupIdString);
+      let groupsToSave = [];
       this.get('store').find('user', userId).then(
         user => {
-          let topLevelGroup = this.get('topLevelGroup');
-          let promises = [];
-          topLevelGroup.then(topLevelGroup => {
-            topLevelGroup.get('users').removeObject(user);
-            user.get('learnerGroups').removeObject(topLevelGroup);
-            promises.pushObject(topLevelGroup.save());
-            topLevelGroup.get('allDescendants').then(all => {
-              all.forEach(group=>{
-                group.get('users').removeObject(user);
-                user.get('learnerGroups').removeObject(group);
-                promises.pushObject(group.save());
-              });
-            });
-          });
-          if(groupId !== -1){
-            var promise = this.get('store').find('learnerGroup', groupId).then(
-              learnerGroup => {
-                learnerGroup.get('users').pushObject(user);
-                user.get('learnerGroups').pushObject(learnerGroup);
-                learnerGroup.get('allParents').then(all => {
-                  all.forEach(group=>{
-                    group.get('users').pushObject(user);
-                    user.get('learnerGroups').pushObject(group);
-                    promises.pushObject(group.save());
+          this.get('topLevelGroup').then(topLevelGroup => {
+            topLevelGroup.removeUserFromGroupAndAllDescendants(user).then(groups=>{
+              groupsToSave.pushObjects(groups);
+              if(groupId === -1){
+                //we're moving this user out of the group into the cohort
+                //so just save
+                groupsToSave.uniq().invoke('save');
+              } else {
+                this.get('store').find('learnerGroup', groupId).then( learnerGroup => {
+                  learnerGroup.addUserToGroupAndAllParents(user).then(groups =>{
+                    groupsToSave.pushObject(groups);
+                    groupsToSave.uniq().invoke('save');
                   });
                 });
-                learnerGroup.save();
               }
-            );
-            promises.pushObject(promise);
-          }
+              
+            });
+          });
         }
       );
     }
