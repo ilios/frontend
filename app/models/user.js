@@ -61,7 +61,140 @@ var User = DS.Model.extend({
       return first + ' ' + last;
   }.property('firstName', 'lastName'),
   events: [],
-  allRelatedCourses: Ember.computed.oneWay('directedCourses'),
+  allRelatedCourses: Ember.computed(
+    'directedCourses.[]',
+    'learnerGroups.[].courses.[]',
+    'instructorGroups.[].courses.[]',
+    'instructedOfferings.[].session.course',
+    function(){
+      let defer = Ember.RSVP.defer();
+      let promises = [];
+      let allCourses = [];
+      promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('directedCourses').then(courses => {
+           allCourses.pushObjects(courses.toArray());
+           resolve();
+         });
+       }));
+       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('learnerGroups').then(learnerGroups => {
+           if(!learnerGroups.length){
+             resolve();
+           }
+           let promises = [];
+           learnerGroups.forEach(learnerGroup => {
+             promises.pushObject(learnerGroup.get('courses').then(courses =>{
+               allCourses.pushObjects(courses.toArray());
+             }));
+             Ember.RSVP.all(promises).then(()=>{
+               resolve();
+             });
+           });
+         });
+       }));
+       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('instructorGroups').then(instructorGroups => {
+           if(!instructorGroups.length){
+             resolve();
+           }
+           let promises = [];
+           instructorGroups.forEach(instructorGroup => {
+             promises.pushObject(instructorGroup.get('courses').then(courses =>{
+               allCourses.pushObjects(courses.toArray());
+             }));
+             Ember.RSVP.all(promises).then(()=>{
+               resolve();
+             });
+           });
+         });
+       }));
+       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('instructedOfferings').then(offerings => {
+           if(!offerings.length){
+             resolve();
+           }
+           let promises = [];
+           offerings.forEach(offering => {
+             promises.pushObject(offering.get('session').then(session =>{
+               return session.get('course').then(course => {
+                 allCourses.pushObject(course);
+               });
+             }));
+           });
+           Ember.RSVP.all(promises).then(()=>{
+             resolve();
+           });
+         });
+       }));
+       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('offerings').then(offerings => {
+           if(!offerings.length){
+             resolve();
+           }
+           let promises = [];
+           offerings.forEach(offering => {
+             promises.pushObject(offering.get('session').then(session =>{
+               return session.get('course').then(course => {
+                 allCourses.pushObject(course);
+               });
+             }));
+           });
+           Ember.RSVP.all(promises).then(()=>{
+             resolve();
+           });
+         });
+       }));
+       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('learnerIlmSessions').then(ilmSessions => {
+           if(!ilmSessions.length){
+             resolve();
+           }
+           let promises = [];
+           ilmSessions.forEach(ilmSession => {
+             promises.pushObject(ilmSession.get('session').then(session =>{
+               if(!session){
+                 return;
+               }
+               return session.get('course').then(course => {
+                 allCourses.pushObject(course);
+               });
+             }));
+           });
+           Ember.RSVP.all(promises).then(()=>{
+             resolve();
+           });
+         });
+       }));
+       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+         this.get('instructorIlmSessions').then(ilmSessions => {
+           if(!ilmSessions.length){
+             resolve();
+           }
+           let promises = [];
+           ilmSessions.forEach(ilmSession => {
+             promises.pushObject(ilmSession.get('session').then(session =>{
+               if(!session){
+                 return;
+               }
+               return session.get('course').then(course => {
+                 allCourses.pushObject(course);
+               });
+             }));
+           });
+           Ember.RSVP.all(promises).then(()=>{
+             resolve();
+           });
+         });
+       }));
+      
+      Ember.RSVP.all(promises).then(()=>{
+        defer.resolve(allCourses.uniq());
+      });
+      return DS.PromiseArray.create({
+        promise: defer.promise
+      });
+    }
+  ),
 });
 
 export default User;

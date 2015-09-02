@@ -88,7 +88,8 @@ export default {
     'selected': "Sélectionné",
     'available': "Disponible",
     'savedSuccessfully': "Réussie sauvé",
-    'notFoundMessage': "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
+    'notFoundMessage': "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau.",
+    'myCourses': "Mes Cours",
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -172,7 +173,6 @@ export default {
     'startDate': "Date de début",
     'endDate': "Date de fin",
     'level': "Niveau",
-    'myCourses': "Mes Cours",
     'allCourses': "Touts Cours",
     'newSession': "Session neuf",
     'backToCourses': "Retour à liste",

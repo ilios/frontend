@@ -88,7 +88,8 @@ export default {
     'selected': 'Escogido',
     'available': 'Disponible',
     'savedSuccessfully': 'Ahorrado Con Éxito',
-    'notFoundMessage': "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez."
+    'notFoundMessage': "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez.",
+    'myCourses': 'Mis Cursos',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -172,7 +173,6 @@ export default {
     'startDate': 'Fecha de Inicio',
     'endDate': 'Fecha de Finalización',
     'level': 'Nivel',
-    'myCourses': 'Mis Cursos',
     'allCourses': 'Todos Los Cursos',
     'newSession': 'Sesión Nueva',
     'backToCourses': 'Atrás a la Lista de Cursos',
@@ -319,6 +319,6 @@ export default {
     'noEvents': 'No eventos próximos',
     'topicOrDetail': 'Topico/Detalle',
     'courseOrType': 'Curso/Tipo',
-    'usersCalendar': "Calendario de{{name}}"
+    'usersCalendar': "Calendario de{{name}}",
   },
 };
