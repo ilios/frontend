@@ -158,6 +158,7 @@ export default {
     'learnerAssignments': "{{groupTitle}} affectations d'étudiant",
     'cohortMembersNotInGroup': "Membres de la Cohorte sans affectation à {{groupTitle}} ",
     'notInThisGroup': "Pas dans ce groupe",
+    'selectGroup': "Choisi Groupe",
   },
   'courses': {
     'currentSchool': "Écôle actuelle",
