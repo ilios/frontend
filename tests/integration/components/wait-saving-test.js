@@ -1,5 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
-// import hbs from 'htmlbars-inline-precompile';
+import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
 moduleForComponent('wait-saving', 'Integration | Component | wait saving', {
@@ -12,10 +12,9 @@ moduleForComponent('wait-saving', 'Integration | Component | wait saving', {
 
 test('it renders', function(assert) {
   assert.expect(1);
-  assert.ok(true);
+  let modalDialogService = this.container.lookup('service:modal-dialog');
+  modalDialogService.destinationElementId = 'modal-testing-div';
+  this.render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
   
-  //waiting for resolution of https://github.com/yapplabs/ember-modal-dialog/issues/78
-  // this.render(hbs`{{wait-saving}}`);
-  // 
-  // assert.equal(this.$().text().trim(), 'saving... one moment...');
+  assert.equal(this.$().text().trim(), 'saving... one moment...');
 });
