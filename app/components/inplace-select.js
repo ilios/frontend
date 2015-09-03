@@ -55,6 +55,7 @@ export default Ember.Component.extend(InPlace, {
   }.property('options.@each', 'optionLabelPath', 'optionValuePath', 'selectPromptTranslation'),
   actions: {
     changeSelection: function(newValue){
+      newValue = newValue==='null'?null:newValue;
       this.set('workingValue', newValue);
       if(this.get('saveOnChange')){
         this.send('save');
