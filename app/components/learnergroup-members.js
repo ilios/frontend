@@ -94,7 +94,7 @@ export default Ember.Component.extend({
           return this.get('overrideCurrentGroupDisplay');
         }
         let group = this.get('lowestGroupInTree');
-        return group.get('allParentsTitle') + group.get('title');
+        return group.get('allParentsTitle') + '' + group.get('title');
       }.property('lowestGroupInTree.title', 'lowestGroupInTree.allParentsTitle', 'overrideCurrentGroupDisplay'),
     });
     let topLevelGroup = this.get('topLevelGroup');
