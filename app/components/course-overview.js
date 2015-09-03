@@ -49,23 +49,11 @@ export default Ember.Component.extend({
       if(newId){
         this.get('store').find('course-clerkship-type', newId).then(function(type){
           course.set('clerkshipType', type);
-          type.get('courses').then(function(courses){
-            courses.addObject(course);
-            course.save();
-            courses.save();
-          });
+          course.save();
         });
       } else {
-        course.get('clerkshipType').then(function(type){
-          if(type){
-            type.get('courses').then(function(courses){
-              courses.removeObject(course);
-              course.set('clerkshipType', null);
-              courses.save();
-              course.save();
-            });
-          }
-        });
+        course.set('clerkshipType', null);
+        course.save();
       }
     },
     changeStartDate: function(newDate){
