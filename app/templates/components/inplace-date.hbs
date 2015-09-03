@@ -1,7 +1,7 @@
 {{#unless isEditing}}
   <span {{action 'edit'}} class='editable'>
-    {{#if workingValue}}
-      {{moment workingValue dateFormat}}
+    {{#if value}}
+      {{moment value dateFormat}}
     {{else}}
       {{clickPrompt}}
     {{/if}}
@@ -9,7 +9,7 @@
 {{else}}
   <span class='editor'>
     <span class='control'>
-      {{pikaday-input value=workingValue format=dateFormat}}
+      {{pikaday-input value=dateBuffer format=dateFormat}}
     </span>
     <span class='actions'>
       <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>

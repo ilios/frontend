@@ -12,7 +12,13 @@ export default Ember.Component.extend(InPlace, {
   optionLabelPath: 'title',
   optionValuePath: 'id',
   displayValueOverride: null,
-  displayValue: function(){
+  displayValue: Ember.computed(
+    'value',
+    'displayValueOverride',
+    'displayValueOverride.content',
+    'proxiedOptions.[].{value,label}',
+    'clickPrompt',
+    function(){
     var self = this;
     var displayValue;
     if(this.get('displayValueOverride')){
@@ -31,7 +37,7 @@ export default Ember.Component.extend(InPlace, {
     }
 
     return displayValue;
-  }.property('value', 'proxiedOptions.@each.{value,label}', 'clickPrompt'),
+  }),
   proxiedOptions: function(){
     var self = this;
     var objectProxy = Ember.ObjectProxy.extend({
@@ -55,10 +61,8 @@ export default Ember.Component.extend(InPlace, {
   }.property('options.@each', 'optionLabelPath', 'optionValuePath', 'selectPromptTranslation'),
   actions: {
     changeSelection: function(newValue){
-      this.set('workingValue', newValue);
-      if(this.get('saveOnChange')){
-        this.send('save');
-      }
+      newValue = newValue==='null'?null:newValue;
+      this.send('changeValue', newValue);
     },
   }
 });

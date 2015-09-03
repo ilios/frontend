@@ -90,6 +90,7 @@ export default {
     'savedSuccessfully': "Réussie sauvé",
     'notFoundMessage': "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau.",
     'myCourses': "Mes Cours",
+    'waitSaving': "Travaille dessus... un moment..."
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -158,6 +159,7 @@ export default {
     'learnerAssignments': "{{groupTitle}} affectations d'étudiant",
     'cohortMembersNotInGroup': "Membres de la Cohorte sans affectation à {{groupTitle}} ",
     'notInThisGroup': "Pas dans ce groupe",
+    'selectGroup': "Choisi Groupe",
   },
   'courses': {
     'currentSchool': "Écôle actuelle",

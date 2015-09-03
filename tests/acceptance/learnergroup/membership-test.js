@@ -75,13 +75,14 @@ test('this group members', function(assert) {
 
     click('.learnergroup-group-membership:eq(0) .editable').then(function(){
       let options = find('.learnergroup-group-membership:eq(0) select option', container);
-      assert.equal(options.length, 6);
-      assert.equal(getElementText(options.eq(0)), getText('Remove Learner to cohort 0'));
-      assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0'));
-      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1'));
-      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
-      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
-      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 2'));
+      assert.equal(options.length, 7);
+      assert.equal(getElementText(options.eq(0)), getText('Select Group'));
+      assert.equal(getElementText(options.eq(1)), getText('Remove Learner to cohort 0'));
+      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0'));
+      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1'));
+      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
+      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
+      assert.equal(getElementText(options.eq(6)), getText('Switch Learner to learner group 0 > learner group 2'));
     });
   });
 });
@@ -101,16 +102,16 @@ test('top level group members', function(assert) {
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(3)', container)), getText('learner group 0'));
     click('.learnergroup-group-membership:eq(0) .editable', container).then(function(){
       let options = find('.learnergroup-group-membership:eq(0) select option', container);
-      assert.equal(options.length, 6);
-      assert.equal(getElementText(options.eq(0)), getText('Remove Learner to cohort 0'));
-      assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0'));
-      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1'));
-      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
-      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
-      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 2'));
-
+      assert.equal(options.length, 7);
+      assert.equal(getElementText(options.eq(0)), getText('Select Group'));
+      assert.equal(getElementText(options.eq(1)), getText('Remove Learner to cohort 0'));
+      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0'));
+      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1'));
+      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
+      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
+      assert.equal(getElementText(options.eq(6)), getText('Switch Learner to learner group 0 > learner group 2'));
       pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 > learner group 1', assert);
-      click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));
+      click(find('.learnergroup-group-membership:eq(0) .actions .done', container));
       andThen(function(){
         let container = find('.detail-overview');
         assert.equal(getElementText(find('.detail-header .info')),getText('Members: 3'));
@@ -134,12 +135,13 @@ test('cohort members', function(assert) {
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(1)', container)), getText('Not in this group'));
     click('.learnergroup-group-membership:eq(0) .editable', container).then(function(){
       let options = find('.learnergroup-group-membership:eq(0) select option', container);
-      assert.equal(options.length, 5);
-      assert.equal(getElementText(options.eq(0)), getText('Switch Learner to learner group 0'));
-      assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0 > learner group 1'));
-      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
-      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
-      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 2'));
+      assert.equal(options.length, 6);
+      assert.equal(getElementText(options.eq(0)), getText('Select Group'));
+      assert.equal(getElementText(options.eq(1)), getText('Switch Learner to learner group 0'));
+      assert.equal(getElementText(options.eq(2)), getText('Switch Learner to learner group 0 > learner group 1'));
+      assert.equal(getElementText(options.eq(3)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 3'));
+      assert.equal(getElementText(options.eq(4)), getText('Switch Learner to learner group 0 > learner group 1 > learner group 4'));
+      assert.equal(getElementText(options.eq(5)), getText('Switch Learner to learner group 0 > learner group 2'));
 
       pickOption(find('.learnergroup-group-membership:eq(0) select', container), 'Switch Learner to learner group 0 > learner group 1', assert);
       click(find('.learnergroup-group-membership:eq( 0) .actions .done', container));

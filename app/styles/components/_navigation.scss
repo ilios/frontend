@@ -92,3 +92,12 @@ $sliding-menu-color-hover: #fff;
     }
   }
 }
+
+// modals go above navigation menu
+.ember-modal-overlay {
+  z-index: 300;
+}
+
+.ember-modal-dialog {
+  z-index: 300;
+}

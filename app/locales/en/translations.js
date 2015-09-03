@@ -90,6 +90,7 @@ export default {
     'savedSuccessfully': 'Saved Successfully',
     'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again.",
     'myCourses': 'My Courses',
+    'waitSaving': 'saving... one moment...',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -158,6 +159,7 @@ export default {
     'learnerAssignments': '{{groupTitle}} Learner Assignments',
     'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
     'notInThisGroup': 'Not in this group',
+    'selectGroup': 'Select Group',
   },
   'courses': {
     'currentSchool': 'Current School',

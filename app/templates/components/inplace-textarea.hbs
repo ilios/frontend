@@ -1,12 +1,18 @@
 <span class='content'>
   {{#unless isEditing}}
     <span class='editable'>
-      {{big-text text=workingValue action='edit' promptText=clickPrompt}}
+      {{big-text text=value action='edit' promptText=clickPrompt}}
     </span>
   {{else}}
     <span class='editor'>
       <span class='control'>
-        {{textarea type='text' value=workingValue action='save'}}
+        <textarea
+          type='text'
+          value="target.value"
+          onKeyUp={{action "changeValue" value="target.value"}}
+          onChange={{action "changeValue" value="target.value"}}>
+          {{value}}
+        </textarea>
       </span>
       <span class='actions'>
         <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>

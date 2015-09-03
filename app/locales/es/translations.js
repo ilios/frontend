@@ -90,6 +90,7 @@ export default {
     'savedSuccessfully': 'Ahorrado Con Éxito',
     'notFoundMessage': "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez.",
     'myCourses': 'Mis Cursos',
+    'waitSaving': 'salvando... un momento...'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -158,6 +159,7 @@ export default {
     'learnerAssignments': '{{groupTitle}} Asignaciónes de Aprendedores',
     'cohortMembersNotInGroup': 'Miembros de la Clase NO Asignados a {{groupTitle}} ',
     'notInThisGroup': 'No en este grupo',
+    'selectGroup': 'Seleccione Grupo',
   },
   'courses': {
     'currentSchool': 'Escuela Actual',

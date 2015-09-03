@@ -6,10 +6,10 @@ export default Ember.Component.extend(InPlace, {
   saveOnChange: true,
   actions: {
     toggleValue: function(){
-      this.set('workingValue', !this.get('workingValue'));
-      if(this.get('saveOnChange')){
-        this.send('save');
+      if(this.get('buffer') == null){
+        this.set('buffer', this.get('value'));
       }
+      this.send('changeValue', !this.get('buffer'));
     }
   }
 });
