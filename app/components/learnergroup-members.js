@@ -121,28 +121,29 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('members.@each', 'topLevelGroup', 'topLevelGroup.allDescendants.@each'),
+  }.property('members.[]', 'topLevelGroup', 'topLevelGroup.allDescendants.@each'),
   actions: {
     changeLearnerGroup: function(groupIdString, userId){
       this.set('saving', true);
       let groupId = parseInt(groupIdString);
-      let groupsToSave = [];
+      let toSave = [];
       this.get('store').find('user', userId).then(
         user => {
+          toSave.pushObject(user);
           this.get('topLevelGroup').then(topLevelGroup => {
             topLevelGroup.removeUserFromGroupAndAllDescendants(user).then(groups=>{
-              groupsToSave.pushObjects(groups);
+              toSave.pushObjects(groups);
               if(groupId === -1){
                 //we're moving this user out of the group into the cohort
                 //so just save
-                Ember.RSVP.all(groupsToSave.uniq().invoke('save')).then(()=>{
+                Ember.RSVP.all(toSave.uniq().invoke('save')).then(()=>{
                   this.set('saving', false);
                 });
               } else {
                 this.get('store').find('learnerGroup', groupId).then( learnerGroup => {
                   learnerGroup.addUserToGroupAndAllParents(user).then(groups =>{
-                    groupsToSave.pushObject(groups);
-                    Ember.RSVP.all(groupsToSave.uniq().invoke('save')).then(()=>{
+                    toSave.pushObjects(groups);
+                    Ember.RSVP.all(toSave.uniq().invoke('save')).then(()=>{
                       this.set('saving', false);
                     });
                   });
