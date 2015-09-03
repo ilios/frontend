@@ -8,7 +8,7 @@
           <option value=null>{{selectPrompt}}</option>
         {{/if}}
         {{#each proxiedOptions as |option|}}
-          <option value={{option.value}} selected={{is-equal option.value workingValue}}>
+          <option value={{option.value}} selected={{is-equal option.value buffer}}>
             {{option.label}}
           </option>
         {{/each}}

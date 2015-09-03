@@ -2,12 +2,18 @@ import Ember from 'ember';
 
 var customHelpers = function() {
   Ember.Test.registerAsyncHelper('pickOption', function(app, selector, optionText, assert){
-    assert.equal(find(selector).length, 1, selector + ' is a valid selector');
-    let option = find(selector).find('option').filter(function() {
+    let el = find(selector);
+    assert.equal(el.length, 1, selector + ' is a valid selector');
+    let options = el.find('option').filter(function() {
       return this.text === optionText;
     });
-    option.prop('selected', true);
-    triggerEvent(option, 'change');
+    if(options.length){
+      let option = options[0];
+      let select = option.parentElement;
+      select.selectedIndex = option.index;
+      triggerEvent(options, 'change');
+    }
+    
     
     return app.testHelpers.wait();
   });
