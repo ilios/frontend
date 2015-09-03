@@ -159,7 +159,7 @@ export default {
     'learnerAssignments': '{{groupTitle}} Learner Assignments',
     'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
     'notInThisGroup': 'Not in this group',
-    'selectGroup': 'Select group',
+    'selectGroup': 'Select Group',
   },
   'courses': {
     'currentSchool': 'Current School',
