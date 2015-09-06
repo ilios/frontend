@@ -17,5 +17,8 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "You tried to look up 'store:main', but this has been deprecated in favor of 'service:store'." },
     { handler: "silence", matchMessage: "Ember.keys is deprecated in favor of Object.keys" },
     { handler: "silence", matchMessage: "Controller#needs is deprecated, please use Ember.inject.controller() instead" },
+    { handler: "silence", matchMessage: "Using Ember.HTMLBars._registerHelper is deprecated. Helpers (even dashless ones) are automatically resolved."},
+    { handler: "silence", matchMessage: "Using `Ember.HTMLBars.makeBoundHelper` is deprecated. Please refactor to using `Ember.Helper` or `Ember.Helper.helper`."},
+    { handler: "silence", matchMessage: /Depending on arrays using a dependent key/},
   ]
 };
