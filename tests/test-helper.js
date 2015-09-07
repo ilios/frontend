@@ -16,7 +16,4 @@ setResolver(resolver);
 //setup ember-moment
 initialize();
 
-var inflector = Ember.Inflector.inflector;
-// inflector.irregular('aamc-pcrs', 'aamc-pcrses');
-inflector.uncountable('aamcPcrs');
-inflector.uncountable('aamc-pcrs');
+Ember.Inflector.inflector.uncountable('aamc-pcrs');
