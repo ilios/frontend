@@ -224,7 +224,7 @@ test('create new offering', function(assert) {
   andThen(function(){
     var interactor = openDatepicker(find('.startdate input', container).eq(0));
     interactor.selectDate(new Date(2011, 8, 11));
-
+    
     let startBoxes = find('.offering-manager .starttime select', container);
     pickOption(startBoxes[0], '2', assert);
     pickOption(startBoxes[1], '15', assert);
@@ -232,7 +232,7 @@ test('create new offering', function(assert) {
     let endBoxes = find('.offering-manager .endtime select', container);
     pickOption(endBoxes[0], '3', assert);
     pickOption(endBoxes[1], '23', assert);
-    pickOption(endBoxes[2], 'am', assert);
+    pickOption(endBoxes[2], 'pm', assert);
     fillIn(find('.offering-manager .room input', container), 'testing palace');
     click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
     let input = find('.search-box input', container);
@@ -287,7 +287,7 @@ test('create new multiday offering', function(assert) {
       let endBoxes = find('.offering-manager .endtime select', container);
       pickOption(endBoxes[0], '12', assert);
       pickOption(endBoxes[1], '23', assert);
-      pickOption(endBoxes[2], 'am', assert);
+      pickOption(endBoxes[2], 'pm', assert);
       fillIn(find('.offering-manager .room input', container), 'testing palace');
       click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
       let input = find('.search-box input', container);
@@ -305,12 +305,10 @@ test('create new multiday offering', function(assert) {
     });
   });
   andThen(function(){
-    let today = moment().format('dddd MMMM Do');
-
     let block = find('.session-offerings .offering-block:eq(0)');
     let expectedText = 'Multiday' +
       'Starts Sunday September 11th @ 2:15AM' +
-      'Ends ' + today + ' @ 12:23PM';
+      'Ends Monday September 12th @ 12:23PM';
     assert.equal(getElementText(find('.multiday-offering-block-time-time', block)), getText(expectedText));
     assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
     assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
