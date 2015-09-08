@@ -44,16 +44,16 @@ install:
 
 before_script:
   # Create a sauce tunnel
-  - if [ "$START_SAUCE_CONNECT" = true ]; then travis_retry ember start-sauce-connect; fi
+  - if [ "$START_SAUCE_CONNECT" = true ]; then travis_retry ember sauce:connect; fi
 
 script:
   - if [ "$SCSS_LINT" = true ]; then scss-lint; fi
-  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = false ]; then node_modules/.bin/ember test --port=8080 --launch=${TESTEM_LAUNCHER}; fi
-  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = true ]; then node_modules/.bin/ember test --port=8080 --test-page='tests/index.html?hidepassed&coverage' --launch=${TESTEM_LAUNCHER}; fi
+  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = false ]; then travis_wait node_modules/.bin/ember test --launch=${TESTEM_LAUNCHER}; fi
+  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = true ]; then travis_wait node_modules/.bin/ember test --test-page='tests/index.html?hidepassed&coverage' --launch=${TESTEM_LAUNCHER}; fi
 
 after_script:
   # Destroy the sauce tunnel
-  - if [ "$START_SAUCE_CONNECT" = true ]; then ember stop-sauce-connect; fi
+  - if [ "$START_SAUCE_CONNECT" = true ]; then ember sauce:disconnect; fi
   - if [ "$SEND_COVERAGE" = true ]; then CODECLIMATE_REPO_TOKEN=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6 node_modules/.bin/codeclimate-test-reporter < lcov.dat; fi
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
