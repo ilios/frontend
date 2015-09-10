@@ -12,9 +12,6 @@ cache:
 env:
   global:
     #set these here becuase they get pulled out by testem saucie
-    - SAUCE_USERNAME="ilios"
-    - SAUCE_ACCESS_KEY="e7c24f1d-ec10-435d-9cec-d1c38bafa268"
-    - START_SAUCE_CONNECT=false
     - JS_TESTS=true
     - SCSS_LINT=false
     - TESTEM_LAUNCHER='PhantomJS'
@@ -24,7 +21,6 @@ matrix:
   fast_finish: true
   allow_failures:
   include:
-    - env: "TESTEM_LAUNCHER='SL_chrome' START_SAUCE_CONNECT=true JS_TESTS=true SEND_COVERAGE=false"
     - env: "JS_TESTS=false SCSS_LINT=true SEND_COVERAGE=false"
 
 
@@ -42,18 +38,13 @@ install:
   - if [ "$JS_TESTS" = true ]; then travis_retry bower install; fi
   - if [ "$SCSS_LINT" = true ]; then travis_retry gem install scss-lint; fi
 
-before_script:
-  # Create a sauce tunnel
-  - if [ "$START_SAUCE_CONNECT" = true ]; then travis_retry ember sauce:connect; fi
-
 script:
   - if [ "$SCSS_LINT" = true ]; then scss-lint; fi
-  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = false ]; then travis_wait node_modules/.bin/ember test --launch=${TESTEM_LAUNCHER}; fi
-  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = true ]; then travis_wait node_modules/.bin/ember test --test-page='tests/index.html?hidepassed&coverage' --launch=${TESTEM_LAUNCHER}; fi
+  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = false ]; then node_modules/.bin/ember test --launch=${TESTEM_LAUNCHER}; fi
+  - if [ "$JS_TESTS" = true ] && [ "$SEND_COVERAGE" = true ]; then node_modules/.bin/ember test --test-page='tests/index.html?hidepassed&coverage' --launch=${TESTEM_LAUNCHER}; fi
 
 after_script:
   # Destroy the sauce tunnel
-  - if [ "$START_SAUCE_CONNECT" = true ]; then ember sauce:disconnect; fi
   - if [ "$SEND_COVERAGE" = true ]; then CODECLIMATE_REPO_TOKEN=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6 node_modules/.bin/codeclimate-test-reporter < lcov.dat; fi
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
