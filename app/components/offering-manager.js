@@ -162,10 +162,10 @@ export default Ember.Component.extend({
       this.set('buffer.endDate', endDate.toDate());
     },
     changeStartTime(date){
-      let newEnd = moment(date);
+      let newStart = moment(date);
       let startDate = moment(this.get('buffer.startDate'));
-      startDate.hour(newEnd.format('HH'));
-      startDate.minute(newEnd.format('mm'));
+      startDate.hour(newStart.format('HH'));
+      startDate.minute(newStart.format('mm'));
       this.set('buffer.startDate', startDate.toDate());
     },
   }
