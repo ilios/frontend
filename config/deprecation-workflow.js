@@ -1,8 +1,8 @@
 window.deprecationWorkflow = window.deprecationWorkflow || {};
 window.deprecationWorkflow.config = {
   workflow: [
+    //this is thrown by ember simple auth which wont be fixed until 1.0
     { handler: "silence", matchMessage: "`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container." },
-    { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
     { handler: "silence", matchMessage: "`Ember.ArrayController` is deprecated." },
     { handler: "silence", matchMessage: "Using store.find(type) has been deprecated. Use store.findAll(type) to retrieve all records for a given type." },
     { handler: "silence", matchMessage: "You modified ShouldDisplay(newSessions.length) twice in a single render. This was unreliable in Ember 1.x and will be removed in Ember 2.0" },

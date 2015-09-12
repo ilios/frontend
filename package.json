@@ -56,6 +56,8 @@
     "ember-deploy-s3-index": "^0.4.0",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-i18n": "^4.1.2",
+    "ember-legacy-views": "0.2.0",
+    "ember-load": "0.0.2",
     "ember-modal-dialog": "0.7.7",
     "ember-moment": "1.1.1",
     "ember-normalize": "0.0.9",
