@@ -10,7 +10,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: /A property (.*) was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation./ },
     { handler: "silence", matchMessage: "this.append() is deprecated. Please use this.render() or this.$() instead." },
     { handler: "silence", matchMessage: "Using the same function as getter and setter is deprecated." },
-    { handler: "silence", matchMessage: "You tried to look up 'store:main', but this has been deprecated in favor of 'service:store'." },
     { handler: "silence", matchMessage: "Ember.keys is deprecated in favor of Object.keys" },
     { handler: "silence", matchMessage: "Controller#needs is deprecated, please use Ember.inject.controller() instead" },
     { handler: "silence", matchMessage: "Using Ember.HTMLBars._registerHelper is deprecated. Helpers (even dashless ones) are automatically resolved."},
