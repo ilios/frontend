@@ -8,7 +8,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "The default behavior of `shouldBackgroundReloadRecord` will change in Ember Data 2.0 to always return true. If you would like to preserve the current behavior please override `shouldBackgroundReloadRecord` in your adapter:application and return false." },
     { handler: "silence", matchMessage: /The default behavior of shouldReloadAll will change in Ember Data 2.0 to always return false when there is at least one ["a-z\-]+ record in the store. If you would like to preserve the current behavior please override shouldReloadAll in your adapter:application and return true./ },
     { handler: "silence", matchMessage: /A property (.*) was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation./ },
-    { handler: "silence", matchMessage: "Your custom serializer uses the old version of the Serializer API, with `extract` hooks. Please upgrade your serializers to the new Serializer API using `normalizeResponse` hooks instead." },
     { handler: "silence", matchMessage: "this.append() is deprecated. Please use this.render() or this.$() instead." },
     { handler: "silence", matchMessage: "Using the same function as getter and setter is deprecated." },
     { handler: "silence", matchMessage: "You tried to look up 'store:main', but this has been deprecated in favor of 'service:store'." },
