@@ -1,13 +1,14 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   currentUser: Ember.inject.service(),
   i18n: Ember.inject.service(),
   queryParams: {
     schoolId: 'school',
     titleFilter: 'filter',
   },
+  model: [],
   placeholderValue: t('programs.titleFilterPlaceholder'),
   schoolId: null,
   titleFilter: null,
@@ -26,7 +27,7 @@ export default Ember.ArrayController.extend({
   filteredPrograms: function(){
     var title = this.get('debouncedFilter');
     var exp = new RegExp(title, 'gi');
-    return this.get('content').filter(function(course) {
+    return this.get('model').filter(function(course) {
       let match = true;
       if(title != null && !course.get('title').match(exp)){
         match = false;
@@ -34,13 +35,13 @@ export default Ember.ArrayController.extend({
 
       return match;
     }).sortBy('title');
-  }.property('debouncedFilter', 'content.@each'),
+  }.property('debouncedFilter', 'model.[]'),
   actions: {
     editProgram: function(program){
       this.transitionToRoute('program', program);
     },
     removeProgram: function(program){
-      this.get('content').removeObject(program);
+      this.get('model').removeObject(program);
       program.deleteRecord();
       program.save();
     },

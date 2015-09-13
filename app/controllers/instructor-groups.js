@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   store: Ember.inject.service(),
   currentUser: Ember.inject.service(),
   i18n: Ember.inject.service(),
@@ -9,6 +9,7 @@ export default Ember.ArrayController.extend({
     schoolId: 'school',
     titleFilter: 'filter',
   },
+  model: [],
   placeholderValue: t('instructorGroups.titleFilterPlaceholder'),
   schoolId: null,
   titleFilter: null,
@@ -27,7 +28,7 @@ export default Ember.ArrayController.extend({
   filteredInstructorGroups: function(){
     var title = this.get('debouncedFilter');
     var exp = new RegExp(title, 'gi');
-    return this.get('content').filter(function(instructorGroup) {
+    return this.get('model').filter(function(instructorGroup) {
       let match = true;
       if(title != null && !instructorGroup.get('title').match(exp)){
         match = false;
@@ -35,13 +36,13 @@ export default Ember.ArrayController.extend({
 
       return match;
     }).sortBy('title');
-  }.property('debouncedFilter', 'content.@each'),
+  }.property('debouncedFilter', 'model.[]'),
   actions: {
     editInstructorGroup: function(instructorGroup){
       this.transitionToRoute('instructorGroup', instructorGroup);
     },
     removeInstructorGroup: function(instructorGroup){
-      this.get('content').removeObject(instructorGroup);
+      this.get('model').removeObject(instructorGroup);
       instructorGroup.deleteRecord();
       instructorGroup.save();
     },

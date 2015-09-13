@@ -3,9 +3,8 @@ window.deprecationWorkflow.config = {
   workflow: [
     //this is thrown by ember simple auth which wont be fixed until 1.0
     { handler: "silence", matchMessage: "`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container." },
-    { handler: "silence", matchMessage: "`Ember.ArrayController` is deprecated." },
     { handler: "silence", matchMessage: "Using store.find(type) has been deprecated. Use store.findAll(type) to retrieve all records for a given type." },
-    { handler: "silence", matchMessage: "You modified ShouldDisplay(newSessions.length) twice in a single render. This was unreliable in Ember 1.x and will be removed in Ember 2.0" },
+    { handler: "silence", matchMessage:  /You modified [a-z\(\)\.\s]+ twice in a single render/i},
     { handler: "silence", matchMessage: "The default behavior of `shouldBackgroundReloadRecord` will change in Ember Data 2.0 to always return true. If you would like to preserve the current behavior please override `shouldBackgroundReloadRecord` in your adapter:application and return false." },
     { handler: "silence", matchMessage: /The default behavior of shouldReloadAll will change in Ember Data 2.0 to always return false when there is at least one ["a-z\-]+ record in the store. If you would like to preserve the current behavior please override shouldReloadAll in your adapter:application and return true./ },
     { handler: "silence", matchMessage: /A property (.*) was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation./ },
