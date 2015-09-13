@@ -23,7 +23,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             if(year == null){
               year = years.sortBy('title').get('lastObject');
             }
-            self.store.find('course', {
+            self.store.query('course', {
               filters: {
                 school: school.get('id'),
                 year: year.get('title'),

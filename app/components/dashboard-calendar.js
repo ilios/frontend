@@ -285,7 +285,7 @@ export default Ember.Component.extend({
     let defer = Ember.RSVP.defer();
     this.get('selectedSchool').then(school => {
       this.get('selectedAcademicYear').then(year => {
-        this.get('store').find('course', {
+        this.get('store').query('course', {
           filters: {
             school: school.get('id'),
             year: year.get('title')

@@ -35,7 +35,7 @@ export default Ember.Component.extend({
       this.set('searchReturned', false);
       this.set('searching', true);
       var terms = this.get('terms');
-      this.get('store').find('mesh-descriptor', {q: query}).then(function(descriptors){
+      this.get('store').query('mesh-descriptor', {q: query}).then(function(descriptors){
         let results = descriptors.map(function(descriptor){
           return ProxiedDescriptors.create({
             content: descriptor,
