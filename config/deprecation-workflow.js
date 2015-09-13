@@ -12,7 +12,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "Your custom serializer uses the old version of the Serializer API, with `extract` hooks. Please upgrade your serializers to the new Serializer API using `normalizeResponse` hooks instead." },
     { handler: "silence", matchMessage: "this.append() is deprecated. Please use this.render() or this.$() instead." },
     { handler: "silence", matchMessage: "Using the same function as getter and setter is deprecated." },
-    { handler: "silence", matchMessage: "DS.FixtureAdapter has been deprecated and moved into an unsupported addon: https://github.com/emberjs/ember-data-fixture-adapter/tree/master" },
     { handler: "silence", matchMessage: "You tried to look up 'store:main', but this has been deprecated in favor of 'service:store'." },
     { handler: "silence", matchMessage: "Ember.keys is deprecated in favor of Object.keys" },
     { handler: "silence", matchMessage: "Controller#needs is deprecated, please use Ember.inject.controller() instead" },
