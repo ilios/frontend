@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   i18n: Ember.inject.service(),
   currentUser: Ember.inject.service(),
+  model: [],
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',

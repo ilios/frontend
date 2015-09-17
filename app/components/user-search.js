@@ -50,7 +50,7 @@ export default Ember.Component.extend({
         }.property('content', 'currentlyActiveInstructorGroups.@each'),
         sortTerm: Ember.computed.oneWay('content.title'),
       });
-      this.get('store').find('user', {q: searchTerms}).then(users => {
+      this.get('store').query('user', {q: searchTerms}).then(users => {
         let results = users.map(user => {
           return userProxy.create({
             content: user,

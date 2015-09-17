@@ -22,7 +22,7 @@ export default Ember.Component.extend({
   classNames: ['course-overview'],
   clerkshipTypeOptions: function(){
     var deferred = Ember.RSVP.defer();
-    this.get('store').find('course-clerkship-type').then(function(clerkshipTypes){
+    this.get('store').findAll('course-clerkship-type').then(function(clerkshipTypes){
       deferred.resolve(clerkshipTypes.sortBy('title'));
     });
     return DS.PromiseArray.create({

@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   selectedDepartments: Ember.computed.mapBy('stewardedDepartments', 'content'),
   schools: Ember.computed(function(){
     return DS.PromiseArray.create({
-      promise: this.get('store').find('school')
+      promise: this.get('store').findAll('school')
     });
   }),
   availableSchools: Ember.computed('stewardedSchools.@each', 'stewardedDepartments.@each', 'schools.@each', function(){

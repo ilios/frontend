@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   previousCohorts: [],
   classNames: ['detail-cohorts'],
   programs: function(){
-    return this.get('store').find('program');
+    return this.get('store').findAll('program');
   }.property(),
   filteredPrograms: function(){
     var self = this;

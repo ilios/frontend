@@ -23,13 +23,13 @@ export default Ember.Component.extend({
   learningMaterialStatuses: function(){
     var self = this;
     return DS.PromiseArray.create({
-      promise: self.get('store').find('learning-material-status')
+      promise: self.get('store').findAll('learning-material-status')
     });
   }.property(),
   learningMaterialUserRoles: function(){
     var self = this;
     return DS.PromiseArray.create({
-      promise: self.get('store').find('learning-material-user-role')
+      promise: self.get('store').findAll('learning-material-user-role')
     });
   }.property(),
   proxyMaterials: Ember.computed('materials.@each', function(){

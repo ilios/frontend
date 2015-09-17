@@ -13,7 +13,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       self.get('currentUser.model').then(function(currentUser){
         var schoolId = params.schoolId == null ? currentUser.get('school.id') : params.schoolId;
         self.store.find('school', schoolId).then(function(school){
-          self.store.find('academic-year').then(function(years){
+          self.store.findAll('academic-year').then(function(years){
             var year = null;
             if(params.yearTitle != null){
               year = years.find(function(year){
@@ -23,7 +23,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             if(year == null){
               year = years.sortBy('title').get('lastObject');
             }
-            self.store.find('course', {
+            self.store.query('course', {
               filters: {
                 school: school.get('id'),
                 year: year.get('title'),
