@@ -5,6 +5,8 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 
+const { isEmpty } = Ember;
+
 var application;
 var url = '/learnergroups/2';
 module('Acceptance: Learner Group - Overview', {
@@ -191,5 +193,27 @@ test('no associated courses', function(assert) {
   andThen(function() {
     assert.equal(getElementText(find('.detail-header .title h2')),getText('cohort 0 learnergroup 0 learnergroup 2'));
     assert.equal(getElementText(find('.detail-overview .learnergroupcourses')), getText('Associated Courses: None'));
+  });
+});
+
+test('toggleSwitch for multi-editing works', function(assert) {
+  const toggleSwitch = '.switch-label';
+  const checkBoxLabel = '.multi-edit-box label';
+  const checkAllBox = '.multi-edit-box .ember-checkbox';
+
+  visit('/learnergroups/3');
+  andThen(() => {
+    assert.ok(isEmpty(find(checkAllBox)), 'checkmark input is hidden');
+  });
+
+  click(toggleSwitch);
+  andThen(() => {
+    assert.equal(find(checkBoxLabel).text(), 'Include Entire Cohort', 'label is correct');
+    assert.ok(find(checkAllBox).is(':visible'), 'checkmark input is visible');
+  });
+
+  click(toggleSwitch);
+  andThen(() => {
+    assert.ok(isEmpty(find(checkAllBox)), 'checkmark input is hidden');
   });
 });

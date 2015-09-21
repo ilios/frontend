@@ -1,18 +1,56 @@
 {{#liquid-if saving class='crossFade'}}
   {{wait-saving}}
 {{/liquid-if}}
-{{#each proxiedMembers as |userProxy|}}
-  <div class="form-col-12">
-    <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
-    <div class="form-data learnergroup-group-membership">
-      {{inplace-select
-        value=userProxy.lowestGroupInTree.id
-        options=learnerGroupOptions
-        save='changeLearnerGroup'
-        condition=userProxy.id
-        displayValueOverride=userProxy.groupDisplayValueString
-        selectPromptTranslation='learnerGroups.selectGroup'
-      }}
+
+{{#if multiEditModeOn}}
+  <div class="multi-edit-container">
+    <div class="multi-edit-box">
+      <label class="check-all-label">{{t "learnerGroups.includeAll"}}</label>
+      {{input type="checkbox" checked=includeAll class="check-all-input"}}
     </div>
   </div>
-{{/each}}
+{{/if}}
+
+<div class="learnergroup-list">
+  {{#each proxiedMembers as |userProxy|}}
+    <div class="form-col-12">
+      <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+      <div class="form-data learnergroup-group-membership">
+        {{#if multiEditModeOn}}
+          {{multiedit-select
+            condition=userProxy.id
+            displayValueOverride=userProxy.groupDisplayValueString
+            includeAll=includeAll
+            addStudent='addStudent'
+            removeStudent='removeStudent'
+          }}
+        {{else}}
+          {{inplace-select
+            value=userProxy.lowestGroupInTree.id
+            options=learnerGroupOptions
+            save='changeLearnerGroup'
+            condition=userProxy.id
+            displayValueOverride=userProxy.groupDisplayValueString
+            selectPromptTranslation='learnerGroups.selectGroup'
+          }}
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+</div>
+
+{{#if multiEditModeOn}}
+  <div class="choose-option-container">
+    <div class="choose-option-select">
+      {{#ui-select field-component="learner-select-field" showPlaceholderAsOption=false placeholder='general.select' on-select="changeSelection" value=value inline=false items=proxiedOptions as |item|}}
+        {{#ui-option value=item}}
+          {{item.label}}
+        {{/ui-option}}
+      {{/ui-select}}
+    </div>
+
+    <span class='choose-option-action'>
+      <button class="save-all" title='{{t "general.save"}}' {{action 'saveAll'}}>{{fa-icon 'check'}}</button>
+    </span>
+  </div>
+{{/if}}

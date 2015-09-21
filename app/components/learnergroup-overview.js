@@ -12,6 +12,9 @@ export default Ember.Component.extend({
   associatedCoursesString: function(){
     return this.get('associatedCoursesTitles').join(', ');
   }.property('associatedCoursesTitles.@each'),
+
+  multiEditModeOn: false,
+
   actions: {
     addInstructorUser: function(user){
       var learnerGroup = this.get('learnerGroup');
@@ -20,6 +23,7 @@ export default Ember.Component.extend({
       learnerGroup.save();
       user.save();
     },
+
     removeInstructorUser: function(user){
       var learnerGroup = this.get('learnerGroup');
       learnerGroup.get('instructorUsers').removeObject(user);
@@ -27,9 +31,14 @@ export default Ember.Component.extend({
       learnerGroup.save();
       user.save();
     },
+
     changeLocation: function(value){
       this.get('learnerGroup').set('location', value);
       this.get('learnerGroup').save();
     },
+
+    toggleSwitch() {
+      this.set('multiEditModeOn', !this.get('multiEditModeOn'));
+    }
   }
 });

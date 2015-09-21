@@ -1,6 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { computed, ObjectProxy, observer, RSVP, run } = Ember;
+const { once } = run;
+const { empty, not } = computed;
+const { all } = RSVP;
+
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
@@ -122,38 +127,113 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }.property('members.[]', 'topLevelGroup', 'topLevelGroup.allDescendants.@each'),
-  actions: {
-    changeLearnerGroup: function(groupIdString, userId){
-      this.set('saving', true);
-      let groupId = parseInt(groupIdString);
-      let toSave = [];
-      this.get('store').find('user', userId).then(
-        user => {
-          toSave.pushObject(user);
-          this.get('topLevelGroup').then(topLevelGroup => {
-            topLevelGroup.removeUserFromGroupAndAllDescendants(user).then(groups=>{
-              toSave.pushObjects(groups);
-              if(groupId === -1){
-                //we're moving this user out of the group into the cohort
-                //so just save
-                Ember.RSVP.all(toSave.uniq().invoke('save')).then(()=>{
-                  this.set('saving', false);
-                });
-              } else {
-                this.get('store').find('learnerGroup', groupId).then( learnerGroup => {
-                  learnerGroup.addUserToGroupAndAllParents(user).then(groups =>{
-                    toSave.pushObjects(groups);
-                    Ember.RSVP.all(toSave.uniq().invoke('save')).then(()=>{
-                      this.set('saving', false);
-                    });
+
+  sendPutRequests(groupIdString, userId) {
+    this.set('saving', true);
+    let groupId = parseInt(groupIdString);
+    let toSave = [];
+    let component = this;
+
+    this.get('store').find('user', userId).then(
+      (user) => {
+        toSave.pushObject(user);
+        component.get('topLevelGroup').then((topLevelGroup) => {
+          topLevelGroup.removeUserFromGroupAndAllDescendants(user).then((groups) => {
+            toSave.pushObjects(groups);
+            if (groupId === -1) {
+              // we're moving this user out of the group into the cohort
+              // so just save
+              all(toSave.uniq().invoke('save')).finally(() => {
+                component.set('saving', false);
+              });
+            } else {
+              component.get('store').find('learnerGroup', groupId).then(learnerGroup => {
+                learnerGroup.addUserToGroupAndAllParents(user).then(groups =>{
+                  toSave.pushObjects(groups);
+                  all(toSave.uniq().invoke('save')).finally(() => {
+                    component.set('saving', false);
                   });
                 });
-              }
-              
-            });
+              });
+            }
           });
-        }
-      );
+        });
+      }
+    );
+  },
+
+  noneChecked: empty('toBulkSave'),
+  someChecked: not('noneChecked'),
+
+  resetProperties: observer('multiEditModeOn', function() {
+    if (!this.get('multiEditModeOn')) {
+      once(this, this.setProperties, { buffer: null, valueChanged: false });
+    }
+  }),
+
+  buffer: null,
+  valueChanged: false,
+  includeAll: false,
+  toBulkSave: [],
+  optionLabelPath: 'title',
+  optionValuePath: 'id',
+
+  proxiedOptions: computed('learnerGroupOptions.@each', 'optionLabelPath', 'optionValuePath', function() {
+    let options = this.get('learnerGroupOptions');
+
+    let objectProxy = ObjectProxy.extend({
+      optionValuePath: this.get('optionValuePath'),
+      optionLabelPath: this.get('optionLabelPath'),
+      value: computed('content', 'optionValuePath', function() {
+        return this.get('content').get(this.get('optionValuePath'));
+      }),
+      label: computed('content', 'optionLabelPath', function() {
+        return this.get('content').get(this.get('optionLabelPath'));
+      })
+    });
+
+    return options.map((option) => {
+      return objectProxy.create({
+        content: option
+      });
+    });
+  }),
+
+  actions: {
+    changeLearnerGroup(groupIdString, userId){
+      this.sendPutRequests(groupIdString, userId);
+    },
+
+    addStudent(studentId) {
+      this.get('toBulkSave').pushObject(studentId);
+    },
+
+    removeStudent(studentId) {
+      this.get('toBulkSave').removeObject(studentId);
+    },
+
+    changeSelection(newValue) {
+      newValue = newValue.get('value') === 'null' ? null : newValue.get('value');
+      this.send('changeValue', newValue);
+    },
+
+    changeValue(value){
+      this.setProperties({ buffer: value, valueChanged: true });
+    },
+
+    bulkSave(value) {
+      this.get('toBulkSave').forEach((studentId) => {
+        this.sendPutRequests(value, studentId);
+      });
+      this.set('toBulkSave', []);
+    },
+
+    saveAll() {
+      if (this.get('someChecked') && this.get('valueChanged')) {
+        let value = this.get('buffer');
+        this.setProperties({ buffer: null, valueChanged: false });
+        this.send('bulkSave', value);
+      }
     }
   }
 });

@@ -3,13 +3,19 @@
     {{learnerGroup.title}} {{t 'learnerGroups.members'}} ({{learnerGroup.usersOnlyAtThisLevel.length}})
   </div>
   <div class='detail-content'>
+    <div class="overview-toggle-container">
+      {{toggle-onoff label="learnerGroups.multiEdit" on=multiEditModeOn action="toggleSwitch"}}
+    </div>
+
     {{learnergroup-members
       topLevelGroup=learnerGroup.topLevelGroup
       cohort=learnerGroup.cohort
       members=learnerGroup.usersOnlyAtThisLevel
       showMoveToCohortOption=true
       showMoveToTopLevelGroupOption=true
+      multiEditModeOn=multiEditModeOn
     }}
+
     <br />
     <div class="inline-label-data-block learnergrouplocation">
       <label>{{t "learnerGroups.defaultLocation"}}:</label>

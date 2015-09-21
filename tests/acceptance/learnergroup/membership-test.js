@@ -5,6 +5,8 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 
+const { isEmpty } = Ember;
+
 var application;
 var url = '/learnergroups/2';
 module('Acceptance: Learner Group - Membership', {
@@ -194,5 +196,118 @@ test('remove group member back to cohort', function(assert) {
         assert.equal(getElementText(find('.cohortmembers .learnergroup-group-membership:eq(0)')), getText('Not in this group'));
       });
     });
+  });
+});
+
+test('`Include Entire Cohort` checkbox checks all or none', function(assert) {
+  const toggleSwitch = '.switch-label';
+  const checkAllBox = '.multi-edit-box .ember-checkbox';
+  const checkBoxes = '.learnergroup-list .ember-checkbox';
+
+  visit(url);
+  click(toggleSwitch);
+  andThen(function() {
+    assert.ok(!find(checkBoxes).eq(0).prop('checked'));
+    assert.ok(!find(checkBoxes).eq(1).prop('checked'));
+  });
+
+  click(checkAllBox);
+  andThen(function() {
+    assert.ok(find(checkBoxes).eq(0).prop('checked'));
+    assert.ok(find(checkBoxes).eq(1).prop('checked'));
+  });
+
+  click(checkAllBox);
+  andThen(function() {
+    assert.ok(!find(checkBoxes).eq(0).prop('checked'));
+    assert.ok(!find(checkBoxes).eq(1).prop('checked'));
+  });
+});
+
+test('multi-edit save (bulk-saving) works properly (moving to NOT ASSIGNED) - (1/2)', function(assert) {
+  const toggleSwitch = '.switch-label';
+  const checkAllBox = '.multi-edit-box .ember-checkbox';
+  const selectInputField = '.ff-select-field';
+  const selectOptionOne = '.ff-option:first';
+  const saveButton = '.save-all';
+  const learnerMembersOne = '.learnergroup-list:eq(0) .learnergroup-username:eq(0)';
+  const learnerMembersOneGroup = '.learnergroup-list:eq(0) .learnergroup-group-membership:eq(0) .non-editable';
+  const learnerMembersTwo = '.learnergroup-list:eq(0) .learnergroup-username:eq(1)';
+  const learnerMembersTwoGroup = '.learnergroup-list:eq(0) .learnergroup-group-membership:eq(1) .non-editable';
+  const learnerNotAssignedOne = '.learnergroup-list:eq(2) .learnergroup-username:eq(0)';
+  const learnerNotAssignedOneGroup = '.learnergroup-list:eq(2) .learnergroup-group-membership:eq(0) .editable';
+  const learnerNotAssignedTwo = '.learnergroup-list:eq(2) .learnergroup-username:eq(1)';
+  const learnerNotAssignedTwoGroup = '.learnergroup-list:eq(2) .learnergroup-group-membership:eq(1) .editable';
+
+  visit(url);
+  click(toggleSwitch);
+  andThen(function() {
+    assert.equal(find(learnerMembersOne).text(), '1 guy Mc1son', 'learner member one is assigned');
+    assert.equal(find(learnerMembersTwo).text(), '2 guy Mc2son', 'learner member two is assigned');
+    assert.equal(find(learnerMembersOneGroup).text(), 'learner group 0 > learner group 1', 'group assignment is correct');
+    assert.equal(find(learnerMembersTwoGroup).text(), 'learner group 0 > learner group 1', 'group assignment is correct');
+    assert.equal(find(learnerNotAssignedOne).text(), '7 guy Mc7son', 'leaner member is not assigned');
+    assert.equal(find(learnerNotAssignedTwo).text(), '8 guy Mc8son', 'learner member is not assigned');
+  });
+
+  click(checkAllBox);
+  click(saveButton);
+  andThen(function() {
+    assert.equal(find(learnerMembersOne).text(), '1 guy Mc1son', 'no action was performed b/c no option was chosen');
+    assert.equal(find(learnerMembersTwo).text(), '2 guy Mc2son', 'no action was performed b/c no option was chosen');
+  });
+
+  click(checkAllBox);
+  click(selectInputField);
+  click(selectOptionOne);
+  click(saveButton);
+  andThen(function() {
+    assert.equal(find(learnerMembersOne).text(), '1 guy Mc1son', 'no action was performed b/c nothing was checked');
+    assert.equal(find(learnerMembersTwo).text(), '2 guy Mc2son', 'no action was performed b/c nothing was checked');
+  });
+
+  click(checkAllBox);
+  click(saveButton);
+  andThen(function() {
+    assert.ok(isEmpty(find(learnerMembersOne)), '1 guy Mc1son was removed from cohort');
+    assert.ok(isEmpty(find(learnerMembersTwo)), '2 guy Mc2son was removed from cohort');
+    assert.equal(find(learnerNotAssignedOne).text(), '1 guy Mc1son', '1 guy Mc1son was moved to the unassigned group');
+    assert.equal(find(learnerNotAssignedOneGroup).text(), 'Not in this group', 'group is correct');
+    assert.equal(find(learnerNotAssignedTwo).text(), '2 guy Mc2son', '2 guy Mc2son was moved to the unassigned group');
+    assert.equal(find(learnerNotAssignedTwoGroup).text(), 'Not in this group', 'group is correct');
+  });
+});
+
+test('multi-edit save (bulk-saving) works properly (moving to ASSIGNED) - (2/2)', function(assert) {
+  const toggleSwitch = '.switch-label';
+  const checkAllBox = '.multi-edit-box .ember-checkbox';
+  const selectInputField = '.ff-select-field';
+  const selectOptionTwo = '.ff-option:eq(1)';
+  const saveButton = '.save-all';
+  const learnerMembersOne = '.learnergroup-list:eq(0) .learnergroup-username:eq(0)';
+  const learnerMembersTwo = '.learnergroup-list:eq(0) .learnergroup-username:eq(1)';
+  const learnerAssignedOne = '.learnergroup-list:eq(1) .learnergroup-username:eq(0)';
+  const learnerAssignedOneGroup = '.learnergroup-list:eq(1) .learnergroup-group-membership:eq(0) .editable';
+  const learnerAssignedTwo = '.learnergroup-list:eq(1) .learnergroup-username:eq(1)';
+  const learnerAssignedTwoGroup = '.learnergroup-list:eq(1) .learnergroup-group-membership:eq(1) .editable';
+
+  visit(url);
+  andThen(function() {
+    assert.equal(find(learnerAssignedOne).text(), '3 guy Mc3son', 'learner is assigned');
+    assert.equal(find(learnerAssignedTwo).text(), '4 guy Mc4son', 'learner is assigned');
+  });
+
+  click(toggleSwitch);
+  click(checkAllBox);
+  click(selectInputField);
+  click(selectOptionTwo);
+  click(saveButton);
+  andThen(function() {
+    assert.ok(isEmpty(find(learnerMembersOne)), 'learner was removed');
+    assert.ok(isEmpty(find(learnerMembersTwo)), 'learner was removed');
+    assert.equal(find(learnerAssignedOne).text(), '1 guy Mc1son', 'learner was assigned');
+    assert.equal(find(learnerAssignedOneGroup).text(), 'learner group 0', 'group is correct');
+    assert.equal(find(learnerAssignedTwo).text(), '2 guy Mc2son', 'learner was assigned');
+    assert.equal(find(learnerAssignedTwoGroup).text(), 'learner group 0', 'group is correct');
   });
 });

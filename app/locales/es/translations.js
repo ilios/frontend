@@ -90,7 +90,8 @@ export default {
     'savedSuccessfully': 'Ahorrado Con Éxito',
     'notFoundMessage': "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez.",
     'myCourses': 'Mis Cursos',
-    'waitSaving': 'salvando... un momento...'
+    'waitSaving': 'Salvando... un momento...',
+    'select': 'Selecciona'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -160,6 +161,8 @@ export default {
     'cohortMembersNotInGroup': 'Miembros de la Clase NO Asignados a {{groupTitle}} ',
     'notInThisGroup': 'No en este grupo',
     'selectGroup': 'Seleccione Grupo',
+    'multiEdit': 'Editar múltiples grupos',
+    'includeAll': 'Incluye Todos Los Miembros del Cohorte'
   },
   'courses': {
     'currentSchool': 'Escuela Actual',
