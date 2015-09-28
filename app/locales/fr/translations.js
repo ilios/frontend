@@ -162,7 +162,7 @@ export default {
     'notInThisGroup': "Pas dans ce groupe",
     'selectGroup': "Choisi Groupe",
     'multiEdit': 'Modifier de multiples groupes',
-    'includeAll': 'Incluez tous les membres de la Cohorte'
+    'includeAll': 'Cochez toutes'
   },
   'courses': {
     'currentSchool': "Écôle actuelle",

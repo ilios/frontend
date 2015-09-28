@@ -10,13 +10,13 @@ $learner-group-grey: #d3d3d3;
     box-sizing: content-box;
     float: right;
     margin: 0 auto;
-    width: 160px;
+    width: 140px;
 
     .check-all-label {
       display: inline-block;
       font-size: 12px;
       margin: 0;
-      width: 128px;
+      width: 90px;
     }
 
     .check-all-input {
@@ -40,6 +40,7 @@ $learner-group-grey: #d3d3d3;
       color: $black;
       height: 35px;
       outline: none;
+      overflow-x: hidden;
       position: relative;
       width: 400px;
 
@@ -92,7 +93,36 @@ $learner-group-grey: #d3d3d3;
 .learnergroup-list {
   border: 2px solid $learner-group-grey;
   margin-bottom: 20px;
-  max-height: 300px;
+  min-height: 70px;
+  max-height: 360px;
   overflow: auto;
   padding: 15px;
+
+  .learnergroup-list-top {
+    overflow: hidden;
+  }
+
+  .learnergroup-list-middle {
+    border-top: 1px dashed $learner-group-grey;
+    margin-top: 10px;
+    overflow: hidden;
+
+    .middle-header {
+      color: $dark-grey;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+  }
+
+  .learnergroup-list-bottom {
+    border-top: 1px dashed $learner-group-grey;
+    margin-top: 10px;
+    overflow: hidden;
+
+    .bottom-header {
+      color: $dark-grey;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+  }
 }

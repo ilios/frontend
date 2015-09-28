@@ -12,31 +12,71 @@
 {{/if}}
 
 <div class="learnergroup-list">
-  {{#each proxiedMembers as |userProxy|}}
-    <div class="form-col-12">
-      <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
-      <div class="form-data learnergroup-group-membership">
-        {{#if multiEditModeOn}}
-          {{multiedit-select
-            condition=userProxy.id
-            displayValueOverride=userProxy.groupDisplayValueString
-            includeAll=includeAll
-            addStudent='addStudent'
-            removeStudent='removeStudent'
-          }}
-        {{else}}
-          {{inplace-select
-            value=userProxy.lowestGroupInTree.id
-            options=learnerGroupOptions
-            save='changeLearnerGroup'
-            condition=userProxy.id
-            displayValueOverride=userProxy.groupDisplayValueString
-            selectPromptTranslation='learnerGroups.selectGroup'
-          }}
-        {{/if}}
+  <div class="learnergroup-list-top">
+    {{#each proxiedMembers as |userProxy|}}
+      <div class="form-col-12">
+        <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+        <div class="form-data learnergroup-group-membership">
+          {{#if multiEditModeOn}}
+            {{multiedit-select
+              condition=userProxy.id
+              displayValueOverride=userProxy.groupDisplayValueString
+              includeAll=includeAll
+              addStudent='addStudent'
+              removeStudent='removeStudent'
+            }}
+          {{else}}
+            {{inplace-select
+              value=userProxy.lowestGroupInTree.id
+              options=learnerGroupOptions
+              save='changeLearnerGroup'
+              condition=userProxy.id
+              displayValueOverride=userProxy.groupDisplayValueString
+              selectPromptTranslation='learnerGroups.selectGroup'
+            }}
+          {{/if}}
+        </div>
       </div>
+    {{/each}}
+  </div>
+
+  {{#if multiEditModeOn}}
+    <div class="learnergroup-list-middle">
+      <p class="middle-header">Learner Assignments</p>
+      {{#each membersNotInThisGroup as |userProxy|}}
+        <div class="form-col-12">
+          <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+          <div class="form-data learnergroup-group-membership">
+            {{multiedit-select
+              condition=userProxy.id
+              displayValueOverride=userProxy.groupDisplayValueString
+              includeAll=includeAll
+              addStudent='addStudent'
+              removeStudent='removeStudent'
+            }}
+          </div>
+        </div>
+      {{/each}}
     </div>
-  {{/each}}
+
+    <div class="learnergroup-list-bottom">
+      <p class="bottom-header">Cohort Members NOT assigned</p>
+      {{#each membersNotAssigned as |userProxy|}}
+        <div class="form-col-12">
+          <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+          <div class="form-data learnergroup-group-membership">
+            {{multiedit-select
+              condition=userProxy.id
+              displayValueOverride=notInThisGroup
+              includeAll=includeAll
+              addStudent='addStudent'
+              removeStudent='removeStudent'
+            }}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
 </div>
 
 {{#if multiEditModeOn}}

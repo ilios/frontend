@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import { translationMacro as t } from "ember-i18n";
 
 const { computed, ObjectProxy, observer, RSVP, run } = Ember;
 const { once } = run;
 const { empty, not } = computed;
-const { all } = RSVP;
+const { all, Promise } = RSVP;
+const { PromiseArray, PromiseObject } = DS;
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
@@ -235,5 +237,80 @@ export default Ember.Component.extend({
         this.send('bulkSave', value);
       }
     }
-  }
+  },
+
+  notInThisGroup: t('learnerGroups.notInThisGroup'),
+
+  membersNotInThisGroup: computed('membersNotInGroup.[]', 'topLevelGroup', function() {
+    let defer = RSVP.defer();
+
+    let userProxy = ObjectProxy.extend({
+      treeGroups: [],
+      overrideCurrentGroupDisplay: false,
+      lowestGroupInTree: computed('content.learnerGroups.[]', 'treeGroups.[]', function() {
+        let promise = new Promise((resolve) => {
+          this.get('content.learnerGroups').then((userGroups) => {
+            let treeGroups = userGroups.filter(group => this.get('treeGroups').contains(group));
+            let deepestGroup, promises = [];
+
+            treeGroups.forEach((group) => {
+              let promise = group.get('children').then((children) => {
+                let matchingChildren = children.filter(childGroup => treeGroups.contains(childGroup));
+
+                if (matchingChildren.length === 0) {
+                  deepestGroup = group;
+                }
+              });
+
+              promises.pushObject(promise);
+            });
+
+            all(promises).then(()=>{
+              resolve(deepestGroup);
+            });
+          });
+        });
+
+        return PromiseObject.create({ promise });
+      }),
+
+      groupDisplayValueString: computed('lowestGroupInTree.title', 'lowestGroupInTree.allParentsTitle', 'overrideCurrentGroupDisplay', function() {
+        if (this.get('overrideCurrentGroupDisplay')) {
+          return this.get('overrideCurrentGroupDisplay');
+        }
+
+        let group = this.get('lowestGroupInTree');
+        return `${group.get('allParentsTitle')}${group.get('title')}`;
+      })
+    });
+
+    let topLevelGroup = this.get('topLevelGroup');
+
+    if (topLevelGroup) {
+      topLevelGroup.then((topLevelGroup) => {
+        let treeGroups = [];
+        treeGroups.pushObject(topLevelGroup);
+
+        topLevelGroup.get('allDescendants').then((all) => {
+          treeGroups.pushObjects(all);
+
+          let proxiedUsers = this.get('membersNotInGroup').map((user) => {
+            return userProxy.create({
+              content: user,
+              treeGroups: treeGroups,
+              overrideCurrentGroupDisplay: this.get('overrideCurrentGroupDisplay')
+            });
+          });
+
+          defer.resolve(proxiedUsers);
+        });
+      });
+    } else {
+      defer.resolve([]);
+    }
+
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  })
 });

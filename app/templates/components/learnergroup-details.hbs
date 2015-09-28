@@ -3,7 +3,10 @@
       {{learnergroup-header learnerGroup=learnerGroup}}
   </div>
   <div class='detail-view-details'>
-    {{learnergroup-overview learnerGroup=learnerGroup}}
+    {{learnergroup-overview learnerGroup=learnerGroup
+      topLevelGroupMembersNotInThisGroup=topLevelGroupMembersNotInThisGroup
+      cohortMembersNotInAnyGroup=cohortMembersNotInAnyGroup
+    }}
     {{learnergroup-subgroup-list parentGroup=learnerGroup}}
 
     <section class='detail-block toplevelgroupmembers'>
