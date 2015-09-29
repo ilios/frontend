@@ -49,7 +49,6 @@ export default DS.Model.extend({
     for(let i = 0; i < properties.length; i++){
       key += this.get(properties[i]);
     }
-
     return key;
   }.property('startDayOfYear', 'startYear', 'startTime', 'endDayOfYear', 'endYear', 'endTime'),
   allInstructors: function(){

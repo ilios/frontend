@@ -1,0 +1,35 @@
+$light-blue: #add8e6;
+$blue-grey: #27496d;
+
+@mixin pressButton {
+  background: $light-blue;
+  box-shadow: inset 0 0 0 1px $blue-grey;
+  color: $white;
+  float: left;
+  font-weight: bold;
+  height: 30px;
+  outline: none;
+  width: 120px;
+}
+
+@mixin activeButton {
+  box-shadow: inset 0 0 0 1px $blue-grey, inset 1px 1px 11px #193047;
+}
+
+.first-button {
+  @include pressButton;
+  border-radius: 5px 0 0 5px;
+
+  &.active {
+    @include activeButton;
+  }
+}
+
+.second-button {
+  @include pressButton;
+  border-radius: 0 5px 5px 0;
+
+  &.active {
+    @include activeButton;
+  }
+}

@@ -1,0 +1,40 @@
+@mixin subgroup-style {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+@mixin selectable-removable {
+  max-height: 380px;
+  overflow: auto;
+}
+
+.offering-editor-learnergroups {
+  overflow: hidden;
+
+  .half-grouping {
+    float: left;
+    margin: 10px 3%;
+    width: 44%;
+
+    .title-selected-groups, .title-available-groups {
+      font-size: 20px;
+    }
+
+    .selectable {
+      @include selectable-removable;
+
+      .available-subgroup-style {
+        @include subgroup-style;
+        margin-left: 20px;
+      }
+    }
+
+    .removable {
+      @include selectable-removable;
+
+      .selected-subgroup-style {
+        @include subgroup-style;
+      }
+    }
+  }
+}

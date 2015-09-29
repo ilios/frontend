@@ -1,0 +1,99 @@
+<div class="offering-form">
+  <label class="offering-form-label">Create New:</label>
+  <div class="offering-form-data">
+    {{click-choice-buttons
+      buttonContent1="Offering"
+      buttonContent2="Small Groups"
+      firstChoicePicked=singleOffering
+      action="setOfferingType"
+    }}
+  </div>
+</div>
+
+<div class="offering-form">
+  <label class="offering-form-label">{{t 'general.startDate'}}:</label>
+  <div class="offering-form-data offering-startdate">
+    <div class="offering-startdate-picker">
+      {{pikaday-input value=startDate format='MM/DD/YYYY'}}
+    </div>
+
+    <div class="single-multi-day center">
+      <label class='switch switch-green switch-wide' {{action 'toggleMultiDay'}}>
+        <input class='switch-input' checked={{isMultiDay}} type='checkbox' />
+        <span class="switch-label" data-on='{{t 'general.multiDay'}}' data-off='{{t 'general.singleDay'}}'></span>
+        <span class="switch-handle"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="offering-form">
+  <label class="offering-form-label">{{t 'general.startTime'}}:</label>
+  <div class="offering-form-data">
+    <span class='starttime'>
+      {{time-picker date=startDate action='changeStartTime'}}
+    </span>
+  </div>
+</div>
+
+{{#if isMultiDay}}
+  <div class="offering-form">
+    <label class="offering-form-label">{{t 'general.endDate'}}:</label>
+    <div class="offering-form-data offering-enddate">
+      {{pikaday-input value=endDate format='MM/DD/YYYY'}}
+    </div>
+  </div>
+{{/if}}
+
+<div class="offering-form">
+  <label class="offering-form-label">{{t 'general.endTime'}}:</label>
+  <div class="offering-form-data">
+    <span class='endtime'>
+      {{time-picker date=endDate action='changeEndTime'}}
+    </span>
+  </div>
+</div>
+
+{{#if singleOffering}}
+  <div class="offering-form">
+    <label class="offering-form-label">{{t 'general.location'}}:</label>
+    <div class="offering-form-data"><span class='room'>{{input value=room placeholder="i.e. Rm. 111"}}</span></div>
+  </div>
+{{/if}}
+
+<div class="offering-learnergroups">
+  {{#each filteredCohorts as |cohort|}}
+    <div class="cohort-container">
+      <header class="cohort-title center">{{cohort.programYear.program.title}} {{cohort.displayTitle}}</header>
+
+      {{offering-editor-learnergroups
+        cohort=cohort
+        learnerGroups=learnerGroups
+        addLearnerGroup='addLearnerGroup'
+        removeLearnerGroup='removeLearnerGroup'
+      }}
+    </div>
+  {{/each}}
+</div>
+
+{{#if singleOffering}}
+  <div class="offering-form">
+    <label class="offering-form-label">{{t 'general.instructors'}}:</label>
+    <div class="offering-form-data">
+      {{instructor-selection-manager
+        addInstructor='addInstructorToBuffer'
+        addInstructorGroup='addInstructorGroupToBuffer'
+        removeInstructor='removeInstructorFromBuffer'
+        removeInstructorGroup='removeInstructorGroupFromBuffer'
+        availableInstructorGroups=currentUser.model.school.instructorGroups
+        instructorGroups=instructorGroups
+        instructors=instructors
+      }}
+    </div>
+  </div>
+{{/if}}
+
+<div class="offering-form center">
+  <button class='done text' {{action 'create'}}>{{t 'general.done'}}</button>
+  <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+</div>
