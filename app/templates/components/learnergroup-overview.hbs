@@ -7,16 +7,36 @@
       {{toggle-onoff label="learnerGroups.multiEdit" on=multiEditModeOn action="toggleSwitch"}}
     </div>
 
-    {{learnergroup-members
-      topLevelGroup=learnerGroup.topLevelGroup
-      cohort=learnerGroup.cohort
-      members=learnerGroup.usersOnlyAtThisLevel
-      membersNotInGroup=topLevelGroupMembersNotInThisGroup
-      membersNotAssigned=cohortMembersNotInAnyGroup
-      showMoveToCohortOption=true
-      showMoveToTopLevelGroupOption=true
-      multiEditModeOn=multiEditModeOn
-    }}
+    {{#if multiEditModeOn}}
+      <div class="multi-edit-container">
+        <div class="multi-edit-box">
+          <label class="check-all-label">{{t "learnerGroups.includeAll"}}</label>
+          {{input type="checkbox" checked=includeAll class="check-all-input"}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if multiEditModeOn}}
+      {{learnergroup-members-multiedit
+        topLevelGroup=learnerGroup.topLevelGroup
+        cohort=learnerGroup.cohort
+        members=learnerGroup.usersOnlyAtThisLevel
+        membersNotInGroup=topLevelGroupMembersNotInThisGroup
+        membersNotAssigned=cohortMembersNotInAnyGroup
+        showMoveToCohortOption=true
+        showMoveToTopLevelGroupOption=true
+        includeAll=includeAll
+        multiEditModeOn=multiEditModeOn
+      }}
+    {{else}}
+      {{learnergroup-members
+        topLevelGroup=learnerGroup.topLevelGroup
+        cohort=learnerGroup.cohort
+        members=learnerGroup.usersOnlyAtThisLevel
+        showMoveToCohortOption=true
+        showMoveToTopLevelGroupOption=true
+      }}
+    {{/if}}
 
     <br />
     <div class="inline-label-data-block learnergrouplocation">

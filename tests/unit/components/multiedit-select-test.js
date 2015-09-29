@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('multiedit-select', 'Unit | Component | multiedit select', {
+  needs: ['component:boolean-check'],
   unit: true
 });
 
@@ -28,9 +29,15 @@ test('`displayValue` computed property works properly', function(assert) {
 });
 
 test('`checkAll` observer works properly', function(assert) {
-  assert.expect(3);
+  assert.expect(7);
 
   const component = this.subject();
+
+  component.send = (action) => {
+    assert.ok(true, '`sendActionUp` was called');
+    assert.equal(action, 'sendActionUp');
+  };
+
   assert.equal(component.get('checked'), false);
 
   component.set('includeAll', true);
@@ -40,23 +47,17 @@ test('`checkAll` observer works properly', function(assert) {
   assert.equal(component.get('checked'), false);
 });
 
-test('`checkmarkActionUp` observer works properly and sends up actions', function(assert) {
-  assert.expect(4);
+test('`toggleCheckBox` action is called', function(assert) {
+  assert.expect(2);
 
-  const component = this.subject({
-    condition: '1234'
-  });
+  const component = this.subject();
 
-  component.addStudent = (studentId) => {
-    assert.equal(studentId, '1234');
-    assert.ok(true, 'bubbles up to `addStudent` action');
+  component.send = (action) => {
+    assert.ok(true, 'primary action get called');
+    assert.equal(action, 'toggleCheckBox');
   };
 
-  component.removeStudent = (studentId) => {
-    assert.equal(studentId, '1234');
-    assert.ok(true, 'bubbles up to `removeStudent` action');
-  };
+  this.render();
 
-  component.set('checked', true);
-  component.set('checked', false);
+  component.$('.checkbox').click();
 });

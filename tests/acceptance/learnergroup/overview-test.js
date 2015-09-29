@@ -198,22 +198,55 @@ test('no associated courses', function(assert) {
 
 test('toggleSwitch for multi-editing works', function(assert) {
   const toggleSwitch = '.switch-label';
-  const checkBoxLabel = '.multi-edit-box label';
-  const checkAllBox = '.multi-edit-box .ember-checkbox';
+  const checkBoxLabel = '.check-all-label';
+  const checkAllBox = '.check-all-input';
+  const membersCheckBoxes = '.learnergroup-list .ember-checkbox';
+  const selectInputField = '.ff-select-field';
 
   visit('/learnergroups/3');
   andThen(() => {
     assert.ok(isEmpty(find(checkAllBox)), 'checkmark input is hidden');
+    assert.ok(isEmpty(find(membersCheckBoxes)), 'member checkboxes are hidden');
+    assert.ok(isEmpty(find(selectInputField)), 'input field is hidden');
   });
 
   click(toggleSwitch);
   andThen(() => {
-    assert.equal(find(checkBoxLabel).text(), 'Include Entire Cohort', 'label is correct');
+    assert.equal(find(checkBoxLabel).text(), 'Check All', 'label is correct');
     assert.ok(find(checkAllBox).is(':visible'), 'checkmark input is visible');
+    assert.ok(!isEmpty(find(membersCheckBoxes)), 'member checkboxes are hidden');
+    assert.ok(!isEmpty(find(selectInputField)), 'input field is hidden');
   });
 
   click(toggleSwitch);
   andThen(() => {
     assert.ok(isEmpty(find(checkAllBox)), 'checkmark input is hidden');
+    assert.ok(isEmpty(find(membersCheckBoxes)), 'member checkboxes are hidden');
+    assert.ok(isEmpty(find(selectInputField)), 'input field is hidden');
+  });
+});
+
+test('`Check All` checkbox checks all or none', function(assert) {
+  const toggleSwitch = '.switch-label';
+  const checkAllBox = '.check-all-input';
+  const checkBoxes = '.learnergroup-list .ember-checkbox';
+
+  visit(url);
+  click(toggleSwitch);
+  andThen(function() {
+    assert.ok(!find(checkBoxes).eq(0).prop('checked'));
+    assert.ok(!find(checkBoxes).eq(1).prop('checked'));
+  });
+
+  click(checkAllBox);
+  andThen(function() {
+    assert.ok(find(checkBoxes).eq(0).prop('checked'));
+    assert.ok(find(checkBoxes).eq(1).prop('checked'));
+  });
+
+  click(checkAllBox);
+  andThen(function() {
+    assert.ok(!find(checkBoxes).eq(0).prop('checked'));
+    assert.ok(!find(checkBoxes).eq(1).prop('checked'));
   });
 });

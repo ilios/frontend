@@ -17,15 +17,25 @@ export default Component.extend({
 
   checkAll: observer('includeAll', function() {
     this.set('checked', this.get('includeAll'));
+
+    this.send('sendActionUp');
   }),
 
-  checkmarkActionUp: observer('checked', function() {
-    const studentId = this.get('condition');
+  actions: {
+    toggleCheckBox() {
+      this.set('checked', !this.get('checked'));
 
-    if (this.get('checked')) {
-      this.sendAction('addStudent', studentId);
-    } else {
-      this.sendAction('removeStudent', studentId);
+      this.send('sendActionUp');
+    },
+
+    sendActionUp() {
+      const studentId = this.get('condition');
+
+      if (this.get('checked')) {
+        this.sendAction('addStudent', studentId);
+      } else {
+        this.sendAction('removeStudent', studentId);
+      }
     }
-  })
+  }
 });

@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+const { observer, run } = Ember;
+const { once } = run;
+
 export default Ember.Component.extend({
   classNames: ['learnergroup-overview'],
   learnerGroup: null,
@@ -14,6 +17,13 @@ export default Ember.Component.extend({
   }.property('associatedCoursesTitles.@each'),
 
   multiEditModeOn: false,
+  includeAll: false,
+
+  resetCheckBox: observer('multiEditModeOn', function() {
+    if (!this.get('multiEditModeOn')) {
+      once(this, this.set, 'includeAll', false);
+    }
+  }),
 
   actions: {
     addInstructorUser: function(user){
