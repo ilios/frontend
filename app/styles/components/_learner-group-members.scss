@@ -1,0 +1,103 @@
+// Colors:
+$learner-group-grey: #d3d3d3;
+
+.choose-option-container {
+  margin: 0 auto;
+  width: 500px;
+
+  .choose-option-select {
+    display: inline-block;
+
+    .ff-select-field {
+      background: $white;
+      border: 2px solid $learner-group-grey;
+      border-radius: 0;
+      color: $black;
+      height: 35px;
+      outline: none;
+      overflow-x: hidden;
+      position: relative;
+      width: 400px;
+
+      i {
+        color: $learner-group-grey;
+        position: absolute;
+        right: 10px;
+        top: 9px;
+      }
+    }
+  }
+
+  .choose-option-action {
+    display: inline-block;
+    vertical-align: top;
+    width: 90px;
+
+    .save-all {
+      background: $ilios-green;
+      color: $white;
+      height: 35px;
+      outline: none;
+      width: 40px;
+
+      &:hover {
+        background: $learner-group-grey;
+        color: $ilios-green;
+      }
+    }
+  }
+}
+
+.ff-option-list {
+  width: 380px;
+
+  .ff-option {
+    background: $white;
+    border-bottom: 1px solid $learner-group-grey;
+    box-sizing: content-box;
+    outline: none;
+    padding: 0 10px;
+    width: 380px;
+  }
+
+  .ff-option:hover {
+    background: $learner-group-grey;
+  }
+}
+
+.learnergroup-list {
+  border: 2px solid $learner-group-grey;
+  margin-bottom: 20px;
+  max-height: 360px;
+  min-height: 70px;
+  overflow: auto;
+  padding: 15px;
+
+  .learnergroup-list-top {
+    overflow: hidden;
+  }
+
+  .learnergroup-list-middle {
+    border-top: 1px dashed $learner-group-grey;
+    margin-top: 10px;
+    overflow: hidden;
+
+    .middle-header {
+      color: $dark-grey;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+  }
+
+  .learnergroup-list-bottom {
+    border-top: 1px dashed $learner-group-grey;
+    margin-top: 10px;
+    overflow: hidden;
+
+    .bottom-header {
+      color: $dark-grey;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+  }
+}

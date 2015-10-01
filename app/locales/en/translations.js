@@ -91,6 +91,7 @@ export default {
     'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again.",
     'myCourses': 'My Courses',
     'waitSaving': 'saving... one moment...',
+    'select': 'Select'
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -160,6 +161,8 @@ export default {
     'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
     'notInThisGroup': 'Not in this group',
     'selectGroup': 'Select Group',
+    'multiEdit': 'Multi-Edit',
+    'includeAll': 'Check All'
   },
   'courses': {
     'currentSchool': 'Current School',

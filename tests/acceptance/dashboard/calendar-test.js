@@ -488,7 +488,7 @@ let pickCourseLevel = function(i) {
 };
 let clearCourseLevels = function() {
   let levels = find('.courselevelfilter');
-  return click(find('.fa-check-square-o', levels));
+  return click(find('.checkbox:first', levels));
 };
 
 test('test course level filter', function(assert) {
@@ -531,7 +531,7 @@ let pickCohort = function(i) {
 };
 let clearCohorts = function() {
   let cohorts = find('.cohortfilter');
-  return click(find('.fa-check-square-o', cohorts));
+  return click(find('.checkbox:first', cohorts));
 };
 
 test('test cohort filter', function(assert) {
@@ -580,7 +580,7 @@ let pickCourse = function(i) {
 };
 let clearCourses = function() {
   let courses = find('.coursefilter');
-  return click(find('.fa-check-square-o', courses));
+  return click(find('.checkbox:first', courses));
 };
 
 test('test course filter', function(assert) {

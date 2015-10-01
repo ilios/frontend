@@ -1,18 +1,23 @@
 {{#liquid-if saving class='crossFade'}}
   {{wait-saving}}
 {{/liquid-if}}
-{{#each proxiedMembers as |userProxy|}}
-  <div class="form-col-12">
-    <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
-    <div class="form-data learnergroup-group-membership">
-      {{inplace-select
-        value=userProxy.lowestGroupInTree.id
-        options=learnerGroupOptions
-        save='changeLearnerGroup'
-        condition=userProxy.id
-        displayValueOverride=userProxy.groupDisplayValueString
-        selectPromptTranslation='learnerGroups.selectGroup'
-      }}
-    </div>
+
+<div class="learnergroup-list">
+  <div class="learnergroup-list-top">
+    {{#each proxiedMembers as |userProxy|}}
+      <div class="form-col-12">
+        <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+        <div class="form-data learnergroup-group-membership">
+          {{inplace-select
+            value=userProxy.lowestGroupInTree.id
+            options=learnerGroupOptions
+            save='changeLearnerGroup'
+            condition=userProxy.id
+            displayValueOverride=userProxy.groupDisplayValueString
+            selectPromptTranslation='learnerGroups.selectGroup'
+          }}
+        </div>
+      </div>
+    {{/each}}
   </div>
-{{/each}}
+</div>

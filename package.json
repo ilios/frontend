@@ -68,7 +68,9 @@
     "emberx-select": "2.0.1",
     "liquid-fire": "^0.21.2",
     "moment": "^2.10.6",
-    "pluralize": "^1.1.6"
+    "pluralize": "^1.1.6",
+    "ui-select": "firefly-ui/ui-select#v0.0.9",
+    "liquid-tether": "pzuraq/liquid-tether#v0.1.4"
   },
   "ember-addon": {
     "paths": [
