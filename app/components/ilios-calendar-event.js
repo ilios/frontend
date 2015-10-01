@@ -1,4 +1,4 @@
-/* global moment */
+import moment from 'moment';
 import Ember from 'ember';
 import layout from '../templates/components/ilios-calendar-event';
 import { default as CalendarEvent } from 'el-calendar/components/calendar-event';

@@ -2,10 +2,10 @@
   {{#tool-tipster title=toolTipMessage contentAsHTML=true}}
     <span class='ilios-event-time'>
       <span class='ilios-event-start'>
-        {{moment event.startDate 'h:mma'}}
+        {{moment-format event.startDate 'h:mma'}}
       </span>
       <span class='ilios-event-end'>
-        - {{moment event.endDate 'h:mma'}}
+        - {{moment-format event.endDate 'h:mma'}}
       </span>
     </span>
     <span class='ilios-event-location'>

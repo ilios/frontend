@@ -8,12 +8,8 @@ import {
   setResolver
 } from 'ember-qunit';
 import Ember from 'ember';
-import { initialize } from 'ilios/initializers/ember-moment';
 import customHelpers from './helpers/custom-helpers';
 
 setResolver(resolver);
-
-//setup ember-moment
-initialize();
 
 Ember.Inflector.inflector.uncountable('aamc-pcrs');

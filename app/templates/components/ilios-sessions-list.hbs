@@ -57,7 +57,7 @@
               <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
               <td class='text-center'>
                 {{#if sessionProxy.firstOfferingDate.content}}
-                  {{moment sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
+                  {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
                 {{/if}}
               </td>
               <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>

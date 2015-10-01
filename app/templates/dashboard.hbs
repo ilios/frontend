@@ -2,7 +2,7 @@
   <div class='calendar-profile'>
     {{t 'dashboard.usersCalendar' name=currentUser.model.fullName}}
     {{#unless showCalendar}}
-      {{moment today 'dddd MMMM Do, YYYY'}}
+      {{moment-format today 'dddd MMMM Do, YYYY'}}
     {{/unless}}
     {{toggle-wide
       value=showCalendar

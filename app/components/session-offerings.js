@@ -1,4 +1,4 @@
-/* global moment */
+import moment from 'moment';
 import Ember from 'ember';
 import layout from '../templates/components/session-offerings';
 import { translationMacro as t } from "ember-i18n";

@@ -1,7 +1,7 @@
-/* global moment */
+import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
-import { moment as momentHelper } from 'ember-moment/computed';
+import momentFormat from 'ember-moment/computeds/format';
 
 export default Ember.Component.extend({
   userEvents: Ember.inject.service(),
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
   toTimeStamp: Ember.computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).endOf(this.get('selectedView')).unix();
   }),
-  calendarDate: momentHelper('selectedDate', 'YYYY-MM-DD'),
+  calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
   ourEvents: Ember.computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
     if(this.get('mySchedule')) {
       return DS.PromiseArray.create({
@@ -358,17 +358,14 @@ export default Ember.Component.extend({
     });
   }),
   actions: {
-    setView(view){
-      this.sendAction('setView', view);
+    changeDate(newDate){
+      this.set('selectedDate', newDate);
     },
-    goForward(){
-      this.sendAction('goForward');
+    changeView(newView){
+      this.set('selectedView', newView);
     },
-    goBack(){
-      this.sendAction('goBack');
-    },
-    gotoToday(){
-      this.sendAction('gotoToday');
+    selectEvent(event){
+      alert('Event "' + event.name + '" selected.  App needs to catch the "selectEvent" action when it is fired.');
     },
     toggleShowFilters(){
       this.set('showFilters', !this.get('showFilters'));
