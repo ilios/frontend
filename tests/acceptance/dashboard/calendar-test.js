@@ -211,7 +211,7 @@ test('click month day number and go to day', function(assert) {
   visit('/dashboard?showCalendar=true&view=month');
   andThen(function() {
     let dayOfMonth = aDayInTheMonth.date();
-    let link = find('.day a').filter(function(){
+    let link = find('.day .clickable').filter(function(){
       return parseInt($(this).text()) === dayOfMonth;
     }).eq(0);
     click(link).then(()=>{
@@ -231,7 +231,7 @@ test('click week day title and go to day', function(assert) {
   visit('/dashboard?showCalendar=true&view=week');
   andThen(function() {
     let dayOfWeek = today.day();
-    click(find('.week-titles a').eq(dayOfWeek)).then(()=>{
+    click(find('.week-titles .clickable').eq(dayOfWeek)).then(()=>{
       assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&showCalendar=true&view=day');
     });
   });

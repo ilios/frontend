@@ -145,30 +145,19 @@
       {{/liquid-if}}   
     {{/liquid-if}}
   </div>
-  <ul class='inline calendar-view-picker'>
-    <li class='clickable' {{action 'setView' 'day'}}>{{t 'calendar.day'}}</li>
-    <li class='clickable' {{action 'setView' 'week'}}>{{t 'calendar.week'}}</li>
-    <li class='clickable' {{action 'setView' 'month'}}>{{t 'calendar.month'}}</li>
-  </ul>
-
-  {{#if isEventView class='crossFade'}}
-    <span class='calendar-back clickable link' {{action 'clearEvent'}}>
-      {{t 'calendar.backToCalendar'}}
-    </span>
-  {{else}}
-    <ul class='inline calendar-time-picker'>
-      <li class='clickable' {{action 'goBack'}}>{{fa-icon 'angle-left'}}</li>
-      <li class='clickable' {{action 'gotoToday'}}>{{t 'calendar.today'}}</li>
-      <li class='clickable' {{action 'goForward'}}>{{fa-icon 'angle-right'}}</li>
-    </ul>
-  {{/if}}
-
 </section>
 
-<section class='fullwidth'>
-  {{user-events-calendar
-    calendarEvents=filteredEvents
-    date=calendarDate
-    view=selectedView
-  }}
+<section class='fullwidth ilios-calendar-container'>
+    {{ilios-calendar
+      calendarEventsPromise=filteredEvents
+      selectedDate=calendarDate
+      selectedView=selectedView
+      changeDate='changeDate'
+      changeView='changeView'
+      selectEvent='selectEvent'
+      day=dayTranslation
+      week=weekTranslation
+      month=monthTranslation
+      loadingMessage=loadingEventsTranslation
+    }}
 </section>

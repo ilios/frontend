@@ -24,20 +24,14 @@ export default Ember.Controller.extend({
     return view;
   }),
   actions: {
-    setView(view){
-      this.set('view', view);
+    changeDate(newDate){
+      this.set('date', moment(newDate).format('YYYY-MM-DD'));
     },
-    goForward(){
-      let newDate = moment(this.get('selectedDate')).add(1, this.get('selectedView')).format('YYYY-MM-DD');
-      this.set('date', newDate);
+    changeView(newView){
+      this.set('view', newView);
     },
-    goBack(){
-      let newDate = moment(this.get('selectedDate')).subtract(1, this.get('selectedView')).format('YYYY-MM-DD');
-      this.set('date', newDate);
-    },
-    gotoToday(){
-      let newDate = moment().format('YYYY-MM-DD');
-      this.set('date', newDate);
+    selectEvent(event){
+      this.transitionToRoute('events', event.slug);
     },
     toggleShowCalendar(){
       this.set('showCalendar', !this.get('showCalendar'));

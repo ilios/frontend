@@ -8,12 +8,25 @@ export default Ember.Component.extend({
   schoolEvents: Ember.inject.service(),
   currentUser: Ember.inject.service(),
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   date: null,
   showFilters: false,
   selectedDate: null,
   selectedView: null,
   mySchedule: true,
   courseFilters: false,
+  dayTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.day');
+  }),
+  weekTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.week');
+  }),
+  monthTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.month');
+  }),
+  loadingEventsTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.loadingEvents');
+  }),
   setup: Ember.on('init', function() {
     //do these on setup otherwise tests were failing because
     //the old filter value hung around
@@ -359,13 +372,13 @@ export default Ember.Component.extend({
   }),
   actions: {
     changeDate(newDate){
-      this.set('selectedDate', newDate);
+      this.sendAction('changeDate', newDate);
     },
     changeView(newView){
-      this.set('selectedView', newView);
+      this.sendAction('changeView', newView);
     },
     selectEvent(event){
-      alert('Event "' + event.name + '" selected.  App needs to catch the "selectEvent" action when it is fired.');
+      this.sendAction('selectEvent', event);
     },
     toggleShowFilters(){
       this.set('showFilters', !this.get('showFilters'));
