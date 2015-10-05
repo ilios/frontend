@@ -3,19 +3,20 @@ import Ember from 'ember';
 
 export default DS.Model.extend({
   title: DS.attr('string'),
+  templatePrefix: DS.attr('string'),
   iliosAdministratorEmail: DS.attr('string'),
   deleted: DS.attr('boolean'),
   changeAlertRecipients: DS.attr('string'),
-  programs: DS.hasMany('program', {async: true}),
   alerts: DS.hasMany('alert', {async: true}),
   competencies: DS.hasMany('competencies', {async: true}),
+  courses: DS.hasMany('course', {async: true}),
+  programs: DS.hasMany('program', {async: true}),
   departments: DS.hasMany('department', {async: true}),
-  disciplines: DS.hasMany('discipline', {async: true}),
+  topics: DS.hasMany('topic', {async: true}),
+  instructorGroups: DS.hasMany('instructor-group', {async: true}),
   curriculumInventoryInsitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
-  programYearStewards: DS.hasMany('program-year-steward', {async: true}),
-  instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  courses: DS.hasMany('course', {async: true}),
+  stewards: DS.hasMany('program-year-steward', {async: true}),
   cohorts: function(){
     var school = this;
     return new Ember.RSVP.Promise(function(resolve) {

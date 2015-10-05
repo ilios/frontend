@@ -9,7 +9,6 @@ export default DS.Model.extend({
   objectives: DS.hasMany('objective',  {async: true}),
   aamcPcrses: DS.hasMany('aamc-pcrs',  {async: true}),
   programYears: DS.hasMany('program-year',  {async: true}),
-  courses: DS.hasMany('course',  {async: true}),
   isDomain: Ember.computed.empty('parent.content'),
   domain: function(){
     let promise = new Ember.RSVP.Promise(

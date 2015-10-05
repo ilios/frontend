@@ -8,12 +8,12 @@ export default DS.Model.extend(PublishableModel,{
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
   program: DS.belongsTo('program', {async: true}),
+  cohort: DS.belongsTo('cohort', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   competencies: DS.hasMany('competency', {async: true}),
-  disciplines: DS.hasMany('discipline', {async: true}),
+  topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
-  cohort: DS.belongsTo('cohort', {async: true}),
   academicYear: function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
   }.property('startYear'),

@@ -18,7 +18,7 @@ var Course = DS.Model.extend(PublishableModel, {
   clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
-  disciplines: DS.hasMany('discipline', {async: true}),
+  topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
