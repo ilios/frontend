@@ -21,6 +21,7 @@ var models = [
   'meshConcepts',
   'meshDescriptors',
   'meshQualifiers',
+  'meshPreviousIndexings',
   'programYears',
   'programYearStewards',
   'publishEvents',

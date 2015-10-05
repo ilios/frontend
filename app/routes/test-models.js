@@ -28,6 +28,7 @@ export default Ember.Route.extend({
         meshconcepts: this.store.query('mesh-concept', {limit: 2}),
         meshdescriptors: this.store.query('mesh-descriptor', {limit: 2}),
         meshqualifiers: this.store.query('mesh-qualifier', {limit: 2}),
+        meshpreviousindexing: this.store.query('mesh-previous-indexing', {limit: 2}),
         objectives: this.store.query('objective', {limit: 2}),
         offerings: this.store.query('offering', {limit: 2}),
         programyears: this.store.query('program-year', {limit: 2}),

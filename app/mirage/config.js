@@ -168,6 +168,12 @@ export default function() {
     this.delete('/api/meshqualifiers/:id', 'meshQualifier');
     this.post('/api/meshqualifiers', 'meshQualifier');
 
+    this.get('/api/meshpreviousindexings', getAll);
+    this.get('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+    this.put('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+    this.delete('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+    this.post('/api/meshpreviousindexings', 'meshPreviousIndexing');
+
     this.get('/api/objectives', getAll);
     this.get('/api/objectives/:id', 'objective');
     this.put('/api/objectives/:id', 'objective');
