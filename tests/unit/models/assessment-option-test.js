@@ -1,10 +1,7 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('objective', 'Objective', {
+moduleForModel('assessment-option', 'Unit | Model | assessment option', {
   needs: modelList
 });
 

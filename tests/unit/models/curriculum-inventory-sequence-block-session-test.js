@@ -1,10 +1,7 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('objective', 'Objective', {
+moduleForModel('curriculum-inventory-sequence-block-session', 'Unit | Model | curriculum inventory sequence block session', {
   needs: modelList
 });
 

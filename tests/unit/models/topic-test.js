@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('objective', 'Objective', {
+moduleForModel('topic', 'Topic', {
   needs: modelList
 });
 

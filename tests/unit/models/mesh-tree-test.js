@@ -1,10 +1,7 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('objective', 'Objective', {
+moduleForModel('mesh-tree', 'Unit | Model | mesh tree', {
   needs: modelList
 });
 
