@@ -39,7 +39,7 @@ var User = DS.Model.extend({
   learnerIlmSessions: DS.hasMany('ilm-session', {async: true}),
   offerings: DS.hasMany('offering', {
       async: true,
-      inverse: 'users'
+      inverse: 'learners'
   }),
   instructedOfferings: DS.hasMany('offering', {
       async: true,
@@ -49,7 +49,10 @@ var User = DS.Model.extend({
   programYears: DS.hasMany('program-year', {async: true}),
   alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
-  cohorts: DS.hasMany('cohort', {async: true}),
+  cohorts: DS.hasMany('cohort', {
+      async: true,
+      inverse: 'users'
+  }),
   primaryCohort: DS.belongsTo('cohort', {async: true}),
   pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
   schools: function(){
