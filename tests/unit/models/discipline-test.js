@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('discipline', 'Discipline', {
+moduleForModel('topic', 'Topic', {
   needs: [
     'model:aamc-method',
     'model:aamc-pcrs',
@@ -21,7 +21,7 @@ moduleForModel('discipline', 'Discipline', {
     'model:curriculum-inventory-sequence-block',
     'model:curriculum-inventory-sequence',
     'model:department',
-    'model:discipline',
+    'model:topic',
     'model:academic-year',
     'model:ilm-session',
     'model:instructor-group',

@@ -972,7 +972,7 @@ export default [
 
   {
     'id' : 76351,
-    'title' : "<p class='MsoNormal'><span class='msoins'><span style='font-family: Cambria;'>On the basis of the Danovic case, appreciate which disciplines are needed to provide comprehensive and coordinated healthcare to a trauma patient.</span></span></p>",
+    'title' : "<p class='MsoNormal'><span class='msoins'><span style='font-family: Cambria;'>On the basis of the Danovic case, appreciate which topics are needed to provide comprehensive and coordinated healthcare to a trauma patient.</span></span></p>",
     'courses' : [ '595' ],
     'programYears' : [],
     'sessions' : [],

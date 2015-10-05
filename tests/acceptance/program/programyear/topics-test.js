@@ -13,20 +13,20 @@ module('Acceptance: Program Year - Topics', {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school', {
-      disciplines: [1,2]
+      topics: [1,2]
     });
     server.create('program', {
       programYears: [1]
     });
     server.create('programYear', {
       program: 1,
-      disciplines: [1]
+      topics: [1]
     });
-    server.create('discipline', {
+    server.create('topic', {
       programYears: [1],
       school: 1
     });
-    server.create('discipline', {
+    server.create('topic', {
       school: 1
     });
   },

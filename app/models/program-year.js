@@ -32,11 +32,11 @@ export default DS.Model.extend(PublishableModel,{
   }.property(
     'directors.length',
     'competencies.length',
-    'disciplines.length',
+    'topics.length',
     'objectives.length'
   ),
   requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
-  optionalPublicationLengthFields: ['directors', 'competencies', 'disciplines', 'objectives'],
+  optionalPublicationLengthFields: ['directors', 'competencies', 'topics', 'objectives'],
   domains: function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};

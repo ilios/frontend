@@ -22,7 +22,7 @@ moduleForModel('session', 'Session', {
     'model:curriculum-inventory-sequence-block',
     'model:curriculum-inventory-sequence',
     'model:department',
-    'model:discipline',
+    'model:topic',
     'model:academic-year',
     'model:ilm-session',
     'model:instructor-group',
@@ -82,7 +82,7 @@ test('check optional publication items', function(assert) {
   var model = this.subject();
   var store = this.store();
   assert.equal(model.get('optionalPublicationIssues').length, 3);
-  model.get('disciplines').addObject(store.createRecord('discipline'));
+  model.get('topics').addObject(store.createRecord('topic'));
   assert.equal(model.get('optionalPublicationIssues').length, 2);
   model.get('objectives').addObject(store.createRecord('objective'));
   assert.equal(model.get('optionalPublicationIssues').length, 1);

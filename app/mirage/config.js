@@ -108,11 +108,11 @@ export default function() {
     this.delete('/api/departments/:id', 'department');
     this.post('/api/departments', 'department');
 
-    this.get('/api/disciplines', getAll);
-    this.get('/api/disciplines/:id', 'discipline');
-    this.put('/api/disciplines/:id', 'discipline');
-    this.delete('/api/disciplines/:id', 'discipline');
-    this.post('/api/disciplines', 'discipline');
+    this.get('/api/topics', getAll);
+    this.get('/api/topics/:id', 'topic');
+    this.put('/api/topics/:id', 'topic');
+    this.delete('/api/topics/:id', 'topic');
+    this.post('/api/topics', 'topic');
 
     this.get('/api/ilmsessions', getAll);
     this.get('/api/ilmsessions/:id', 'ilmSession');

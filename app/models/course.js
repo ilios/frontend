@@ -93,7 +93,7 @@ var Course = DS.Model.extend(PublishableModel, {
   requiredPublicationSetFields: ['startDate', 'endDate'],
   requiredPublicationLengthFields: ['cohorts'],
   optionalPublicationSetFields: [],
-  optionalPublicationLengthFields: ['disciplines', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: function(){
     return this.getRequiredPublicationIssues();
   }.property(
@@ -104,7 +104,7 @@ var Course = DS.Model.extend(PublishableModel, {
   optionalPublicationIssues: function(){
     return this.getOptionalPublicationIssues();
   }.property(
-    'disciplines.length',
+    'topics.length',
     'objectives.length',
     'meshDescriptors.length'
   ),

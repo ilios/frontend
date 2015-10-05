@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   filter: '',
   sortBy: ['title'],
   subject: null,
-  topics: Ember.computed.alias('subject.disciplines'),
+  topics: Ember.computed.alias('subject.topics'),
   sortedTopics: Ember.computed.sort('topics', 'sortBy'),
   availableTopics: [],
   tagName: 'section',
@@ -31,11 +31,11 @@ export default Ember.Component.extend({
   actions: {
     add: function(topic){
       var subject = this.get('subject');
-      subject.get('disciplines').addObject(topic);
+      subject.get('topics').addObject(topic);
     },
     remove: function(topic){
       var subject = this.get('subject');
-      subject.get('disciplines').removeObject(topic);
+      subject.get('topics').removeObject(topic);
     }
   }
 });

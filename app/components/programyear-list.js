@@ -41,8 +41,8 @@ export default Ember.Component.extend({
         promises.pushObject(latestProgramYear.get('competencies').then(competencies => {
           newProgramYear.get('competencies').pushObjects(competencies.toArray());
         }));
-        promises.pushObject(latestProgramYear.get('disciplines').then(disciplines => {
-          newProgramYear.get('disciplines').pushObjects(disciplines.toArray());
+        promises.pushObject(latestProgramYear.get('topics').then(topics => {
+          newProgramYear.get('topics').pushObjects(topics.toArray());
         }));
         promises.pushObject(latestProgramYear.get('objectives').then(objectives => {
           newProgramYear.get('objectives').pushObjects(objectives.toArray());

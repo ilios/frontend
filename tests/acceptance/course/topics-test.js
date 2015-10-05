@@ -14,23 +14,23 @@ module('Acceptance: Course - Topics', {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school', {
-      disciplines: [1,2]
+      topics: [1,2]
     });
     server.create('academicYear', {id: 2013});
 
     fixtures.topics = [];
-    fixtures.topics.pushObject(server.create('discipline', {
+    fixtures.topics.pushObject(server.create('topic', {
       courses: [1],
       school: 1
     }));
-    fixtures.topics.pushObject(server.create('discipline', {
+    fixtures.topics.pushObject(server.create('topic', {
       school: 1
     }));
 
     fixtures.course = server.create('course', {
       year: 2013,
       school: 1,
-      disciplines: [1]
+      topics: [1]
     });
   },
 
@@ -45,7 +45,7 @@ test('list topics', function(assert) {
   andThen(function() {
     var container = find('.detail-topics');
     var items = find('ul.columnar-list li', container);
-    assert.equal(items.length, fixtures.course.disciplines.length);
+    assert.equal(items.length, fixtures.course.topics.length);
     assert.equal(getElementText(items.eq(0)), getText('topic 0'));
   });
 });

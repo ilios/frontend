@@ -22,13 +22,13 @@ export default Ember.Mixin.create({
     this.getSessionForEvent(event).then( session => {
       let promises = [];
       let topics = [];
-      promises.pushObject(session.get('disciplines').then( disciplines => {
-        let disIds = disciplines.mapBy('id');
+      promises.pushObject(session.get('topics').then( topics => {
+        let disIds = topics.mapBy('id');
         topics.pushObjects(disIds);
       }));
       promises.pushObject(session.get('course').then( course => {
-        promises.pushObject(course.get('disciplines').then( disciplines => {
-          let disIds = disciplines.mapBy('id');
+        promises.pushObject(course.get('topics').then( topics => {
+          let disIds = topics.mapBy('id');
           topics.pushObjects(disIds);
         }));
       }));

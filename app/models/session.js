@@ -52,7 +52,7 @@ var Session = DS.Model.extend(PublishableModel, {
   searchString: function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }.property('title', 'sessionType.title', 'status'),
-  optionalPublicationLengthFields: ['disciplines', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: function(){
     if(!this.get('isIndependentLearning')){
       this.set('requiredPublicationLengthFields', ['offerings']);
@@ -71,7 +71,7 @@ var Session = DS.Model.extend(PublishableModel, {
   optionalPublicationIssues: function(){
     return this.getOptionalPublicationIssues();
   }.property(
-    'disciplines.length',
+    'topics.length',
     'objectives.length',
     'meshDescriptors.length'
   ),

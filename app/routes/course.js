@@ -11,7 +11,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       var resolve = this;
       course.get('school').then(function(school){
         var promises = {
-          'availableTopics': school.get('disciplines')
+          'availableTopics': school.get('topics')
         };
         Ember.RSVP.hash(promises).then(function(hash){
           if(!self.get('isDestroyed')){

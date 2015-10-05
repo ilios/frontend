@@ -18,7 +18,6 @@ export default Ember.Route.extend({
         curriculuminventorysequences: this.store.query('curriculum-inventory-sequence', {limit: 2}),
         curriculuminventorysequenceblocks: this.store.query('curriculum-inventory-sequence-block', {limit: 2}),
         curriculuminventoryacademiclevels: this.store.query('curriculum-inventory-academic-level', {limit: 2}),
-        disciplines: this.store.query('discipline', {limit: 2}),
         departments: this.store.query('department', {limit: 2}),
         ilmsessions: this.store.query('ilm-session', {limit: 2}),
         instructorgroups: this.store.query('instructor-group', {limit: 2}),
@@ -40,6 +39,7 @@ export default Ember.Route.extend({
         sessionlearningmaterials: this.store.query('session-learning-material', {limit: 2}),
         sessiontypes: this.store.query('session-type', {limit: 2}),
         sessions: this.store.query('session', {limit: 2}),
+        topics: this.store.query('topic', {limit: 2}),
         users: this.store.query('user', {limit: 2}),
         userroles: this.store.query('user-role', {limit: 2}),
       };

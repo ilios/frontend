@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   actions: {
     manage: function(){
       var self = this;
-      this.get('subject.disciplines').then(function(topics){
+      this.get('subject.topics').then(function(topics){
         self.set('initialTopics', topics.toArray());
         self.set('isManaging', true);
       });
@@ -19,7 +19,7 @@ export default Ember.Component.extend({
       this.get('subject').save();
     },
     cancel: function(){
-      var topics = this.get('subject').get('disciplines');
+      var topics = this.get('subject').get('topics');
       topics.clear();
       topics.addObjects(this.get('initialTopics'));
       this.set('isManaging', false);

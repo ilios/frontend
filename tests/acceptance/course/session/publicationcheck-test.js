@@ -35,7 +35,7 @@ module('Acceptance: Session - Publication Check', {
     server.create('objective', {
       sessions: [1],
     });
-    server.create('discipline', {
+    server.create('topic', {
       sessions: [1],
     });
     server.create('meshDescriptor', {
@@ -53,7 +53,7 @@ test('full session count', function(assert) {
     course: 1,
     offerings: [1],
     objectives: [1],
-    disciplines: [1],
+    topics: [1],
     meshDescriptors: [1],
     sessionType: 1,
     sessionDescription: 1
