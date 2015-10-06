@@ -1,4 +1,4 @@
-/* global moment */
+import moment from 'moment';
 import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';

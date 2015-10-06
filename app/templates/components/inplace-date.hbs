@@ -1,7 +1,7 @@
 {{#unless isEditing}}
   <span {{action 'edit'}} class='editable'>
     {{#if value}}
-      {{moment value dateFormat}}
+      {{moment-format value dateFormat}}
     {{else}}
       {{clickPrompt}}
     {{/if}}

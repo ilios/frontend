@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import { moment } from 'ember-moment/computed';
+import momentFormat from 'ember-moment/computeds/format';
 
 export default DS.Model.extend({
   room: DS.attr('string'),
@@ -21,14 +21,14 @@ export default DS.Model.extend({
       inverse: 'instructedOfferings'
   }),
   //startFoo and key properties are used in creating offering blocks
-  startDayOfYear: moment('startDate', 'DDDD'),
-  startYear: moment('startDate', 'YYYY'),
-  startTime: moment('startDate', 'HHmm'),
-  endDayOfYear: moment('endDate', 'DDDD'),
-  endYear: moment('endDate', 'YYYY'),
-  endTime: moment('endDate', 'HHmm'),
-  startYearAndDayOfYear: moment('startDate', 'DDDDYYYY'),
-  endYearAndDayOfYear: moment('endDate', 'DDDDYYYY'),
+  startDayOfYear: momentFormat('startDate', 'DDDD'),
+  startYear: momentFormat('startDate', 'YYYY'),
+  startTime: momentFormat('startDate', 'HHmm'),
+  endDayOfYear: momentFormat('endDate', 'DDDD'),
+  endYear: momentFormat('endDate', 'YYYY'),
+  endTime: momentFormat('endDate', 'HHmm'),
+  startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
+  endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
   isSingleDay: function(){
     return this.get('startYearAndDayOfYear') === this.get('endYearAndDayOfYear');
   }.property('startYearAndDayOfYear', 'endYearAndDayOfYear'),

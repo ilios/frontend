@@ -1,4 +1,4 @@
-/* global moment */
+import moment from 'moment';
 import getAll from './helpers/get-all';
 import Mirage from 'ember-cli-mirage';
 

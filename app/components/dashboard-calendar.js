@@ -1,19 +1,32 @@
-/* global moment */
+import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
-import { moment as momentHelper } from 'ember-moment/computed';
+import momentFormat from 'ember-moment/computeds/format';
 
 export default Ember.Component.extend({
   userEvents: Ember.inject.service(),
   schoolEvents: Ember.inject.service(),
   currentUser: Ember.inject.service(),
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   date: null,
   showFilters: false,
   selectedDate: null,
   selectedView: null,
   mySchedule: true,
   courseFilters: false,
+  dayTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.day');
+  }),
+  weekTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.week');
+  }),
+  monthTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.month');
+  }),
+  loadingEventsTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.loadingEvents');
+  }),
   setup: Ember.on('init', function() {
     //do these on setup otherwise tests were failing because
     //the old filter value hung around
@@ -29,7 +42,7 @@ export default Ember.Component.extend({
   toTimeStamp: Ember.computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).endOf(this.get('selectedView')).unix();
   }),
-  calendarDate: momentHelper('selectedDate', 'YYYY-MM-DD'),
+  calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
   ourEvents: Ember.computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
     if(this.get('mySchedule')) {
       return DS.PromiseArray.create({
@@ -358,17 +371,14 @@ export default Ember.Component.extend({
     });
   }),
   actions: {
-    setView(view){
-      this.sendAction('setView', view);
+    changeDate(newDate){
+      this.sendAction('changeDate', newDate);
     },
-    goForward(){
-      this.sendAction('goForward');
+    changeView(newView){
+      this.sendAction('changeView', newView);
     },
-    goBack(){
-      this.sendAction('goBack');
-    },
-    gotoToday(){
-      this.sendAction('gotoToday');
+    selectEvent(event){
+      this.sendAction('selectEvent', event);
     },
     toggleShowFilters(){
       this.set('showFilters', !this.get('showFilters'));

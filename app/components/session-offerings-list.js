@@ -1,7 +1,7 @@
-/* global moment */
+import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
-import { moment as momentHelper } from 'ember-moment/computed';
+import momentFormat from 'ember-moment/computeds/format';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
@@ -72,9 +72,9 @@ var OfferingDateBlock = OfferingBlock.extend({
     var date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
   }.property('dateKey'),
-  dateStamp: momentHelper('date', 'X'),
-  dayOfWeek: momentHelper('date', 'dddd'),
-  dayOfMonth: momentHelper('date', 'MMMM Do'),
+  dateStamp: momentFormat('date', 'X'),
+  dayOfWeek: momentFormat('date', 'dddd'),
+  dayOfMonth: momentFormat('date', 'MMMM Do'),
   offeringTimeBlocks: function(){
     let offeringGroups = {};
     this.get('offerings').forEach(function(offering){
@@ -110,10 +110,10 @@ var OfferingTimeBlock = OfferingBlock.extend({
     let key = this.get('timeKey').substring(11);
     return moment(key, 'YYYYDDDHHmm');
   }.property('timeKey'),
-  startTime: momentHelper('startDate', 'LT'),
-  endTime: momentHelper('endDate', 'LT'),
-  longStartText: momentHelper('startDate', 'dddd MMMM Do [@] LT'),
-  longEndText: momentHelper('endDate', 'dddd MMMM Do [@] LT'),
+  startTime: momentFormat('startDate', 'LT'),
+  endTime: momentFormat('endDate', 'LT'),
+  longStartText: momentFormat('startDate', 'dddd MMMM Do [@] LT'),
+  longEndText: momentFormat('endDate', 'dddd MMMM Do [@] LT'),
   sortOfferingsBy: ['learnerGroups.firstObject.title'],
   sortedOfferings: Ember.computed.sort('offerings', 'sortOfferingsBy'),
 });

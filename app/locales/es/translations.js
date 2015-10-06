@@ -294,6 +294,7 @@ export default {
     'month': 'Mes',
     'today': 'Hoy',
     'backToCalendar': 'Atrás a Calendario',
+    'loadingEvents': 'Cargando eventos...',
   },
   'auth': {
     'username': 'Nombre de Usuario',

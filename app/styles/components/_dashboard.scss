@@ -46,19 +46,6 @@
       float: right;
       margin-right: 5em;
     }
-
-    .calendar-view-picker {
-      clear: both;
-      float: right;
-    }
-
-    .calendar-time-picker {
-      float: left;
-    }
-
-    .calendar-back {
-      float: left;
-    }
     
     .calendar-filter-list {
       @include span-columns(3 of 12);
@@ -96,5 +83,9 @@
     .dashboard-block-body {
       height: 200px;
     }
+  }
+  
+  .ilios-calendar-container {
+    min-height: 25em;
   }
 }
