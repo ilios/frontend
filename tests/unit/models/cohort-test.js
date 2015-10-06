@@ -5,11 +5,12 @@ import {
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
+let needs = modelList;
+needs.pushObject('service:i18n');
+needs.pushObject('locale:en/translations');
 
 moduleForModel('cohort', 'Cohort', {
-  setup: function(){
-  },
-  needs: modelList
+  needs
 });
 
 test('it exists', function(assert) {
