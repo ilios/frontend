@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import momentFormat from 'ember-momentFormat/computeds/format';
+import momentFormat from 'ember-moment/computeds/format';
 
 export default DS.Model.extend({
   room: DS.attr('string'),
