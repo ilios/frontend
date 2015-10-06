@@ -164,11 +164,11 @@ test('gets all learner offering courses', function(assert) {
     });
     store.createRecord('offering', {
       session: session1,
-      users: [model]
+      learners: [model]
     });
     store.createRecord('offering', {
       session: session1,
-      users: [model]
+      learners: [model]
     });
     let course2 = store.createRecord('course');
     let session2 = store.createRecord('session', {
@@ -176,7 +176,7 @@ test('gets all learner offering courses', function(assert) {
     });
     store.createRecord('offering', {
       session: session2,
-      users: [model]
+      learners: [model]
     });
     
     let courses = [course1, course2];
