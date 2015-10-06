@@ -47,14 +47,14 @@
     <label>{{t "learnerGroups.defaultInstructors"}}:</label>
      <span>
        <ul class='removable-list'>
-         {{#each sortedInstructorUsers as |user|}}
-          <li {{action 'removeInstructorUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+         {{#each sortedInstructors as |user|}}
+          <li {{action 'removeInstructor' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
          {{/each}}
        </ul>
      </span>
      {{user-search
-       addUser='addInstructorUser'
-       currentlyActiveUsers=learnerGroup.instructorUsers
+       addUser='addInstructor'
+       currentlyActiveUsers=learnerGroup.instructors
     }}
   </div>
 

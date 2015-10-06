@@ -9,7 +9,7 @@ export default [
     'offerings' : [ '46357','46358','46359','46360','46361','46362','46363','46364','46365','46366','46367','46368','46369','46370','46371','46372','46373','46374','46375','46376','46377','46378','46379','46380','46381','46382','46383','54599' ],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -22,7 +22,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -35,7 +35,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -49,7 +49,7 @@ export default [
     'offerings' : [ '46117','46220','46262' ],
     'instructorGroups' : [],
     'users' : [ '11259','11264' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -63,7 +63,7 @@ export default [
     'offerings' : [ '46118','46221','46263' ],
     'instructorGroups' : [],
     'users' : [ '11262' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -77,7 +77,7 @@ export default [
     'offerings' : [ '46119','46222','46264' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -91,7 +91,7 @@ export default [
     'offerings' : [ '46120','46223','46265' ],
     'instructorGroups' : [],
     'users' : [ '11266' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -105,7 +105,7 @@ export default [
     'offerings' : [ '46121','46224','46266' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -119,7 +119,7 @@ export default [
     'offerings' : [ '46122','46225','46267' ],
     'instructorGroups' : [],
     'users' : [ '11256','11267' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -133,7 +133,7 @@ export default [
     'offerings' : [ '46123','46226','46268' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -147,7 +147,7 @@ export default [
     'offerings' : [ '46124','46227','46269' ],
     'instructorGroups' : [],
     'users' : [ '11261','11263' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -161,7 +161,7 @@ export default [
     'offerings' : [ '46125','46228','46270' ],
     'instructorGroups' : [],
     'users' : [ '11269' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -175,7 +175,7 @@ export default [
     'offerings' : [ '46126','46271','53090' ],
     'instructorGroups' : [],
     'users' : [ '11257' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -189,7 +189,7 @@ export default [
     'offerings' : [ '46127','46230','46272' ],
     'instructorGroups' : [],
     'users' : [ '11258','11265','11268','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -203,7 +203,7 @@ export default [
     'offerings' : [ '46128','46231','46273' ],
     'instructorGroups' : [],
     'users' : [ '11260' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -216,7 +216,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -230,7 +230,7 @@ export default [
     'offerings' : [ '46288' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : [ '4214','11286' ]
+    'instructors' : [ '4214','11286' ]
   },
 
   {
@@ -244,7 +244,7 @@ export default [
     'offerings' : [ '46289' ],
     'instructorGroups' : [],
     'users' : [ '11267' ],
-    'instructorUsers' : [ '484','485' ]
+    'instructors' : [ '484','485' ]
   },
 
   {
@@ -258,7 +258,7 @@ export default [
     'offerings' : [ '46290' ],
     'instructorGroups' : [],
     'users' : [ '11266' ],
-    'instructorUsers' : [ '8349','11271' ]
+    'instructors' : [ '8349','11271' ]
   },
 
   {
@@ -272,7 +272,7 @@ export default [
     'offerings' : [ '46291' ],
     'instructorGroups' : [],
     'users' : [ '11262' ],
-    'instructorUsers' : [ '486','7840' ]
+    'instructors' : [ '486','7840' ]
   },
 
   {
@@ -286,7 +286,7 @@ export default [
     'offerings' : [ '46292' ],
     'instructorGroups' : [],
     'users' : [ '11261' ],
-    'instructorUsers' : [ '4380','7739' ]
+    'instructors' : [ '4380','7739' ]
   },
 
   {
@@ -300,7 +300,7 @@ export default [
     'offerings' : [ '46293' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : [ '499','8462' ]
+    'instructors' : [ '499','8462' ]
   },
 
   {
@@ -314,7 +314,7 @@ export default [
     'offerings' : [ '49803' ],
     'instructorGroups' : [],
     'users' : [ '11260' ],
-    'instructorUsers' : [ '495','11287' ]
+    'instructors' : [ '495','11287' ]
   },
 
   {
@@ -328,7 +328,7 @@ export default [
     'offerings' : [ '49804' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : [ '7846','7847' ]
+    'instructors' : [ '7846','7847' ]
   },
 
   {
@@ -342,7 +342,7 @@ export default [
     'offerings' : [ '49805' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : [ '11288','11289' ]
+    'instructors' : [ '11288','11289' ]
   },
 
   {
@@ -356,7 +356,7 @@ export default [
     'offerings' : [ '49806' ],
     'instructorGroups' : [],
     'users' : [ '11258' ],
-    'instructorUsers' : [ '3827','8523' ]
+    'instructors' : [ '3827','8523' ]
   },
 
   {
@@ -370,7 +370,7 @@ export default [
     'offerings' : [ '46282' ],
     'instructorGroups' : [],
     'users' : [ '11257' ],
-    'instructorUsers' : [ '493','494' ]
+    'instructors' : [ '493','494' ]
   },
 
   {
@@ -384,7 +384,7 @@ export default [
     'offerings' : [ '46283' ],
     'instructorGroups' : [],
     'users' : [ '11264' ],
-    'instructorUsers' : [ '515','516' ]
+    'instructors' : [ '515','516' ]
   },
 
   {
@@ -398,7 +398,7 @@ export default [
     'offerings' : [ '46284' ],
     'instructorGroups' : [],
     'users' : [ '11270' ],
-    'instructorUsers' : [ '498','11348' ]
+    'instructors' : [ '498','11348' ]
   },
 
   {
@@ -412,7 +412,7 @@ export default [
     'offerings' : [ '46285' ],
     'instructorGroups' : [],
     'users' : [ '11265' ],
-    'instructorUsers' : [ '509','510' ]
+    'instructors' : [ '509','510' ]
   },
 
   {
@@ -426,7 +426,7 @@ export default [
     'offerings' : [ '46286' ],
     'instructorGroups' : [],
     'users' : [ '11268','11269' ],
-    'instructorUsers' : [ '4069','11290' ]
+    'instructors' : [ '4069','11290' ]
   },
 
   {
@@ -440,7 +440,7 @@ export default [
     'offerings' : [ '46287' ],
     'instructorGroups' : [],
     'users' : [ '11256' ],
-    'instructorUsers' : [ '3620','7737' ]
+    'instructors' : [ '3620','7737' ]
   },
 
   {
@@ -454,7 +454,7 @@ export default [
     'offerings' : [ '49807' ],
     'instructorGroups' : [],
     'users' : [ '11263' ],
-    'instructorUsers' : [ '4049','11291' ]
+    'instructors' : [ '4049','11291' ]
   },
 
   {
@@ -468,7 +468,7 @@ export default [
     'offerings' : [ '49808' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : [ '3880','9648' ]
+    'instructors' : [ '3880','9648' ]
   },
 
   {
@@ -482,7 +482,7 @@ export default [
     'offerings' : [ '49809' ],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : [ '11292','11453' ]
+    'instructors' : [ '11292','11453' ]
   },
 
   {
@@ -496,7 +496,7 @@ export default [
     'offerings' : [ '49810' ],
     'instructorGroups' : [],
     'users' : [ '11259' ],
-    'instructorUsers' : [ '3836','7830' ]
+    'instructors' : [ '3836','7830' ]
   },
 
   {
@@ -509,7 +509,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -522,7 +522,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -535,7 +535,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -548,7 +548,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -561,7 +561,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -574,7 +574,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -587,7 +587,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -601,7 +601,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11266' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -615,7 +615,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -629,7 +629,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -643,7 +643,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11262','11267' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -657,7 +657,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -671,7 +671,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -685,7 +685,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -699,7 +699,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11260','11261' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -713,7 +713,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -727,7 +727,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -741,7 +741,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -755,7 +755,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -769,7 +769,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11258' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -783,7 +783,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11263' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -797,7 +797,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11257','11264' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -811,7 +811,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -825,7 +825,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11265' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -839,7 +839,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -853,7 +853,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -867,7 +867,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11269' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -881,7 +881,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -895,7 +895,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -909,7 +909,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11259','11268' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -923,7 +923,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -937,7 +937,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -951,7 +951,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -964,7 +964,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -978,7 +978,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11258','11260','11261','11262','11266','11267' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -992,7 +992,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11259','11263','11264','11265','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1005,7 +1005,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1019,7 +1019,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11260','11261','11262','11266','11267' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1033,7 +1033,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11258' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1047,7 +1047,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11257','11263','11264','11265','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1061,7 +1061,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11259','11268' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1074,7 +1074,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1088,7 +1088,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1102,7 +1102,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1116,7 +1116,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11266' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1130,7 +1130,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1144,7 +1144,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1158,7 +1158,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11261' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1172,7 +1172,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11262' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1186,7 +1186,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11260' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1200,7 +1200,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11258','11267' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1214,7 +1214,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1228,7 +1228,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1242,7 +1242,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11259','11269' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1256,7 +1256,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11265' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1270,7 +1270,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1284,7 +1284,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11264' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1298,7 +1298,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1312,7 +1312,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11263','11268' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1326,7 +1326,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1340,7 +1340,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1354,7 +1354,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1367,7 +1367,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1380,7 +1380,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1394,7 +1394,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11258','11260','11262','11266','11267' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1408,7 +1408,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11257','11264','11265','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1422,7 +1422,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11259','11263' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1435,7 +1435,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1449,7 +1449,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1463,7 +1463,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1477,7 +1477,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1491,7 +1491,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1505,7 +1505,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1519,7 +1519,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1533,7 +1533,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1547,7 +1547,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1561,7 +1561,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1575,7 +1575,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1589,7 +1589,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1603,7 +1603,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1617,7 +1617,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1631,7 +1631,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1645,7 +1645,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1659,7 +1659,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1673,7 +1673,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1687,7 +1687,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1701,7 +1701,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1715,7 +1715,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1729,7 +1729,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1743,7 +1743,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1757,7 +1757,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1771,7 +1771,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1785,7 +1785,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1799,7 +1799,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1813,7 +1813,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1827,7 +1827,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1841,7 +1841,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1855,7 +1855,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1869,7 +1869,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1883,7 +1883,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1897,7 +1897,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1910,7 +1910,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1924,7 +1924,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1938,7 +1938,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1952,7 +1952,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1966,7 +1966,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1980,7 +1980,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -1994,7 +1994,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2008,7 +2008,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2022,7 +2022,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2036,7 +2036,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2050,7 +2050,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2064,7 +2064,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2078,7 +2078,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2092,7 +2092,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2106,7 +2106,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2120,7 +2120,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2134,7 +2134,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2148,7 +2148,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2162,7 +2162,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2176,7 +2176,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2190,7 +2190,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2204,7 +2204,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2218,7 +2218,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2232,7 +2232,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2246,7 +2246,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2260,7 +2260,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2274,7 +2274,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2288,7 +2288,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2301,7 +2301,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2315,7 +2315,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2329,7 +2329,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2343,7 +2343,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2357,7 +2357,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2371,7 +2371,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2385,7 +2385,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2399,7 +2399,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2413,7 +2413,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2427,7 +2427,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2441,7 +2441,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2455,7 +2455,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2469,7 +2469,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2483,7 +2483,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2497,7 +2497,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2511,7 +2511,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2525,7 +2525,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2539,7 +2539,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2553,7 +2553,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2567,7 +2567,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2581,7 +2581,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2594,7 +2594,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2608,7 +2608,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11261' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2621,7 +2621,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2634,7 +2634,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2648,7 +2648,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11257','11259','11260','11261','11263','11264','11265','11269' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2662,7 +2662,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11258','11267','11268','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2676,7 +2676,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11262','11266' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2689,7 +2689,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270','11272' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2703,7 +2703,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11258','11259','11260','11263','11268','11269','11270' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2717,7 +2717,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11261','11262','11265','11266' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2731,7 +2731,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11264','11267','11272' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2744,7 +2744,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270','11272' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2757,7 +2757,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11258','11259','11260','11261','11262','11263','11264','11265','11266','11267','11268','11269','11270','11272' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2770,7 +2770,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [ '11256','11257','11263','11265','11268','11269' ],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2783,7 +2783,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2796,7 +2796,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2809,7 +2809,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2822,7 +2822,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2835,7 +2835,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2848,7 +2848,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2861,7 +2861,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2874,7 +2874,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2887,7 +2887,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2900,7 +2900,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2913,7 +2913,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2926,7 +2926,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2939,7 +2939,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2952,7 +2952,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2965,7 +2965,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2978,7 +2978,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -2991,7 +2991,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -3004,7 +3004,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -3017,7 +3017,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -3030,7 +3030,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -3043,7 +3043,7 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 
   {
@@ -3056,6 +3056,6 @@ export default [
     'offerings' : [],
     'instructorGroups' : [],
     'users' : [],
-    'instructorUsers' : []
+    'instructors' : []
   },
 ];

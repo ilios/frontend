@@ -6,9 +6,9 @@ const { once } = run;
 export default Ember.Component.extend({
   classNames: ['learnergroup-overview'],
   learnerGroup: null,
-  instructorUsersSort: ['lastName', 'firstName'],
-  instructorUsersWithFullName: Ember.computed.filterBy('learnerGroup.instructorUsers', 'fullName'),
-  sortedInstructorUsers: Ember.computed.sort('instructorUsersWithFullName', 'instructorUsersSort'),
+  instructorsSort: ['lastName', 'firstName'],
+  instructorsWithFullName: Ember.computed.filterBy('learnerGroup.instructors', 'fullName'),
+  sortedInstructors: Ember.computed.sort('instructorsWithFullName', 'instructorsSort'),
   courseSort: ['title'],
   sortedCourses: Ember.computed.sort('learnerGroup.courses', 'courseSort'),
   associatedCoursesTitles: Ember.computed.mapBy('sortedCourses', 'title'),
@@ -26,19 +26,17 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    addInstructorUser: function(user){
+    addInstructor: function(user){
       var learnerGroup = this.get('learnerGroup');
-      learnerGroup.get('instructorUsers').addObject(user);
-      user.get('instructorUserGroups').addObject(learnerGroup);
-      learnerGroup.save();
+      learnerGroup.get('instructors').addObject(user);
+      user.get('instructedLearnerGroups').addObject(learnerGroup);
       user.save();
     },
 
-    removeInstructorUser: function(user){
+    removeInstructor: function(user){
       var learnerGroup = this.get('learnerGroup');
-      learnerGroup.get('instructorUsers').removeObject(user);
-      user.get('instructorUserGroups').removeObject(learnerGroup);
-      learnerGroup.save();
+      learnerGroup.get('instructors').removeObject(user);
+      user.get('instructedLearnerGroups').removeObject(learnerGroup);
       user.save();
     },
 

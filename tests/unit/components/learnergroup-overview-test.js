@@ -15,14 +15,14 @@ test('default properties are correct', function(assert) {
 
   const className = component.get('classNames')[1];
   const learnerGroup = component.get('learnerGroup');
-  const instructorUsersSort = component.get('instructorUsersSort');
+  const instructorsSort = component.get('instructorsSort');
   const courseSort = component.get('courseSort');
   const multiEditModeOn = component.get('multiEditModeOn');
   const includeAll = component.get('includeAll');
 
   assert.equal(className, 'learnergroup-overview', 'class name is correct');
   assert.equal(learnerGroup, null, 'learnerGroup is null');
-  assert.deepEqual(instructorUsersSort, ['lastName', 'firstName']);
+  assert.deepEqual(instructorsSort, ['lastName', 'firstName']);
   assert.deepEqual(courseSort, ['title']);
   assert.equal(multiEditModeOn, false, 'multi-edit mode is off');
   assert.equal(includeAll, false, 'check-all box is unchecked');
