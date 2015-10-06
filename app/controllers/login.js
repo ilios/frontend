@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
       this.get('session').authenticate(authenticator, credentials).then(() => {
         let jwt = this.get('session').get('secure.jwt');
         let js = atob(jwt.split('.')[1]);
-        let obj = $.parseJSON(js);
+        let obj = Ember.$.parseJSON(js);
         this.get('currentUser').set('currentUserId', obj.user_id);
       }, response => {
         let mappedErrors = response.errors.map(str => {
