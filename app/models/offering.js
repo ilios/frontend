@@ -9,9 +9,9 @@ export default DS.Model.extend({
   deleted: DS.attr('boolean'),
   updatedAt: DS.attr('date'),
   session: DS.belongsTo('session', {async: true}),
+  learnerGroups: DS.hasMany('learner-group', {async: true}),
   publishEvent: DS.belongsTo('publish-event', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  learnerGroups: DS.hasMany('learner-group', {async: true}),
   learners: DS.hasMany('user', {
       async: true,
       inverse: 'offerings'

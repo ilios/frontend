@@ -4,9 +4,9 @@ import Ember from 'ember';
 export default DS.Model.extend({
   title: DS.attr('string'),
   school: DS.belongsTo('school'),
+  objectives: DS.hasMany('objective',  {async: true}),
   parent: DS.belongsTo('competency', {async: true, inverse: 'children'}),
   children: DS.hasMany('competency', {async: true, inverse: 'parent'}),
-  objectives: DS.hasMany('objective',  {async: true}),
   aamcPcrses: DS.hasMany('aamc-pcrs',  {async: true}),
   programYears: DS.hasMany('program-year',  {async: true}),
   isDomain: Ember.computed.empty('parent.content'),

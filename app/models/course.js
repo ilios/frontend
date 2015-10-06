@@ -5,23 +5,23 @@ import PublishableModel from 'ilios/mixins/publishable-model';
 
 var Course = DS.Model.extend(PublishableModel, {
   title: DS.attr('string'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
   level: DS.attr('number'),
   year: DS.attr('number'),
-  externalId: DS.attr('string'),
+  startDate: DS.attr('date'),
+  endDate: DS.attr('date'),
   deleted: DS.attr('boolean'),
+  externalId: DS.attr('string'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
-  sessions: DS.hasMany('session', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
   clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
+  school: DS.belongsTo('school', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
+  sessions: DS.hasMany('session', {async: true}),
   academicYear: function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }.property('year'),
