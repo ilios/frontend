@@ -18,7 +18,7 @@ export default [
   {
     'id' : "D000715",
     'name' : "Anatomy",
-    'annotation' : "the discipline only (education, history, etc); for anatomical structures, use  the qualifier / anat with specific anatomical terms or organisms",
+    'annotation' : "the topic only (education, history, etc); for anatomical structures, use  the qualifier / anat with specific anatomical terms or organisms",
     'createdAt' : "2010-01-01T00:00:00+00:00",
     'updatedAt' : "2014-08-18T20:44:59+00:00",
     'courses' : [],

@@ -15,19 +15,19 @@ module('Acceptance: Dashboard Calendar', {
     server.create('user', {id: 4136});
     server.create('school', {
       sessionTypes: [1,2,3],
-      disciplines: [1,2,3],
+      topics: [1,2,3],
       programs: [1],
       courses: [1]
     });
-    server.create('discipline', {
+    server.create('topic', {
       sessions: [1],
       school: 1,
     });
-    server.create('discipline', {
+    server.create('topic', {
       courses: [1],
       school: 1,
     });
-    server.create('discipline', {
+    server.create('topic', {
       school: 1,
     });
     server.create('program', {
@@ -63,7 +63,7 @@ module('Acceptance: Dashboard Calendar', {
       school: 1,
     });
     server.create('session', {
-      disciplines: [1],
+      topics: [1],
       offerings: [1],
       course: 1,
       sessionType: 1,
@@ -82,7 +82,7 @@ module('Acceptance: Dashboard Calendar', {
       title: 2015
     });
     server.create('course', {
-      disciplines: [2],
+      topics: [2],
       sessions: [1,2],
       level: 1,
       school: 1,

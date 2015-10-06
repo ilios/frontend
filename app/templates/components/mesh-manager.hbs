@@ -3,7 +3,7 @@
 {{/if}}
 <ul class='removable-list'>
   {{#each sortedTerms as |term|}}
-    <li {{action 'remove' term}}>{{term.title}} {{fa-icon 'remove'}}</li>
+    <li {{action 'remove' term}}>{{term.name}} {{fa-icon 'remove'}}</li>
   {{/each}}
 </ul>
 {{search-box placeholder=placeholder liveSearch=false search='search' clear='clear'}}
@@ -17,7 +17,7 @@
     <div class='selectable-list'>
       <ul class='mesh-search-results'>
         {{#each sortedSearchResults as |term|}}
-          <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>{{term.title}}</li>
+          <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>{{term.name}}</li>
         {{/each}}
       </ul>
     </div>

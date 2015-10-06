@@ -2,30 +2,32 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 var User = DS.Model.extend({
-  firstName: DS.attr('string'),
   lastName: DS.attr('string'),
+  firstName: DS.attr('string'),
   middleName: DS.attr('string'),
   phone: DS.attr('string'),
   email:  DS.attr('string'),
+  addedViaIlios:  DS.attr('boolean'),
   enabled:  DS.attr('boolean'),
-  ucUid:  DS.attr('string'),
+  campusId:  DS.attr('string'),
   otherId:  DS.attr('string'),
-  offerings: DS.hasMany('offering', {
-      async: true,
-      inverse: 'users'
-  }),
+  examined:  DS.attr('boolean'),
+  userSyncIgnore:  DS.attr('boolean'),
+  icsFeedKey:  DS.attr('string'),
+  reminders: DS.hasMany('user-made-reminder', {async: true}),
   learningMaterials: DS.hasMany('learning-material', {async: true}),
   publishEvents: DS.hasMany('publish-event', {async: true}),
   reports: DS.hasMany('report', {async: true}),
+  school: DS.belongsTo('school', {async: true}),
   directedCourses: DS.hasMany('course', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {
       async: true,
       inverse: 'users'
     }
   ),
-  instructorUserGroups: DS.hasMany('learner-group', {
+  instructedLearnerGroups: DS.hasMany('learner-group', {
       async: true,
-      inverse: 'instructorUsers'
+      inverse: 'instructors'
     }
   ),
   instructorGroups: DS.hasMany('instructor-group', {
@@ -33,18 +35,26 @@ var User = DS.Model.extend({
       inverse: 'users'
     }
   ),
+  instructorIlmSessions: DS.hasMany('ilm-session', {async: true}),
+  learnerIlmSessions: DS.hasMany('ilm-session', {async: true}),
+  offerings: DS.hasMany('offering', {
+      async: true,
+      inverse: 'learners'
+  }),
   instructedOfferings: DS.hasMany('offering', {
       async: true,
       inverse: 'instructors'
     }
   ),
-  instructorIlmSessions: DS.hasMany('ilm-session', {async: true}),
-  learnerIlmSessions: DS.hasMany('ilm-session', {async: true}),
-  directedProgramYears: DS.hasMany('program-year', {async: true}),
+  programYears: DS.hasMany('program-year', {async: true}),
   alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
-  cohorts: DS.hasMany('cohort', {async: true}),
+  cohorts: DS.hasMany('cohort', {
+      async: true,
+      inverse: 'users'
+  }),
+  primaryCohort: DS.belongsTo('cohort', {async: true}),
+  pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
   schools: function(){
     var defer = Ember.RSVP.defer();
     this.get('school').then(function(school){

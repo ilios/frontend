@@ -108,11 +108,11 @@ export default function() {
     this.delete('/api/departments/:id', 'department');
     this.post('/api/departments', 'department');
 
-    this.get('/api/disciplines', getAll);
-    this.get('/api/disciplines/:id', 'discipline');
-    this.put('/api/disciplines/:id', 'discipline');
-    this.delete('/api/disciplines/:id', 'discipline');
-    this.post('/api/disciplines', 'discipline');
+    this.get('/api/topics', getAll);
+    this.get('/api/topics/:id', 'topic');
+    this.put('/api/topics/:id', 'topic');
+    this.delete('/api/topics/:id', 'topic');
+    this.post('/api/topics', 'topic');
 
     this.get('/api/ilmsessions', getAll);
     this.get('/api/ilmsessions/:id', 'ilmSession');
@@ -167,6 +167,12 @@ export default function() {
     this.put('/api/meshqualifiers/:id', 'meshQualifier');
     this.delete('/api/meshqualifiers/:id', 'meshQualifier');
     this.post('/api/meshqualifiers', 'meshQualifier');
+
+    this.get('/api/meshpreviousindexings', getAll);
+    this.get('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+    this.put('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+    this.delete('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+    this.post('/api/meshpreviousindexings', 'meshPreviousIndexing');
 
     this.get('/api/objectives', getAll);
     this.get('/api/objectives/:id', 'objective');

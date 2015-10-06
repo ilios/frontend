@@ -5,21 +5,21 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   location: DS.attr('string'),
   cohort: DS.belongsTo('cohort', {async: true}),
-  ilmSessions: DS.hasMany('ilm-session', {async: true}),
-  instructorUsers: DS.hasMany('user', {
-      async: true,
-      inverse: 'instructorUserGroups'
-    }
-  ),
   parent: DS.belongsTo('learner-group', {async: true, inverse: 'children'}),
   children: DS.hasMany('learner-group', {async: true, inverse: 'parent'}),
+  ilmSessions: DS.hasMany('ilm-session', {async: true}),
+  offerings: DS.hasMany('offering', {async: true}),
+  instructorGroups: DS.hasMany('instructor-group', {async: true}),
   users: DS.hasMany('user', {
       async: true,
       inverse: 'learnerGroups'
     }
   ),
-  instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
+  instructors: DS.hasMany('user', {
+      async: true,
+      inverse: 'instructedLearnerGroups'
+    }
+  ),
   courses: Ember.computed('offerings.[]', 'ilmSessions.[]', function(){
     var defer = Ember.RSVP.defer();
     let promises = [];

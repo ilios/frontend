@@ -10,15 +10,15 @@ var Session = DS.Model.extend(PublishableModel, {
   supplemental: DS.attr('boolean'),
   deleted: DS.attr('boolean'),
   updatedAt: DS.attr('date'),
-  course: DS.belongsTo('course', {async: true}),
   sessionType: DS.belongsTo('session-type', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
-  disciplines: DS.hasMany('discipline', {async: true}),
+  course: DS.belongsTo('course', {async: true}),
+  ilmSession: DS.belongsTo('ilm-session', {async: true}),
+  topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
-  learningMaterials: DS.hasMany('session-learning-material', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),
-  ilmSession: DS.belongsTo('ilm-session', {async: true}),
+  learningMaterials: DS.hasMany('session-learning-material', {async: true}),
+  offerings: DS.hasMany('offering', {async: true}),
   isIndependentLearning: Ember.computed.notEmpty('ilmSession.content'),
   offeringLearnerGroupsLength: Ember.computed.mapBy('offerings', 'learnerGroups.length'),
   learnerGroupCount: Ember.computed.sum('offeringLearnerGroupsLength'),
@@ -52,7 +52,7 @@ var Session = DS.Model.extend(PublishableModel, {
   searchString: function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }.property('title', 'sessionType.title', 'status'),
-  optionalPublicationLengthFields: ['disciplines', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: function(){
     if(!this.get('isIndependentLearning')){
       this.set('requiredPublicationLengthFields', ['offerings']);
@@ -71,7 +71,7 @@ var Session = DS.Model.extend(PublishableModel, {
   optionalPublicationIssues: function(){
     return this.getOptionalPublicationIssues();
   }.property(
-    'disciplines.length',
+    'topics.length',
     'objectives.length',
     'meshDescriptors.length'
   ),

@@ -15,25 +15,25 @@ module('Acceptance: Session - Topics', {
     server.create('user', {id: 4136});
     server.create('sessionType');
     server.create('school', {
-      disciplines: [1,2]
+      topics: [1,2]
     });
     server.create('course', {
       school: 1
     });
 
     fixtures.topics = [];
-    fixtures.topics.pushObject(server.create('discipline', {
+    fixtures.topics.pushObject(server.create('topic', {
       sessions: [1],
       school: 1
     }));
-    fixtures.topics.pushObject(server.create('discipline', {
+    fixtures.topics.pushObject(server.create('topic', {
       school: 1
     }));
 
     fixtures.session =
     server.create('session', {
       course: 1,
-      disciplines: [1]
+      topics: [1]
     });
   },
 
@@ -48,7 +48,7 @@ test('list topics', function(assert) {
   andThen(function() {
     var container = find('.detail-topics');
     var items = find('ul.columnar-list li', container);
-    assert.equal(items.length, fixtures.session.disciplines.length);
+    assert.equal(items.length, fixtures.session.topics.length);
     assert.equal(getElementText(items.eq(0)), getText('topic 0'));
   });
 });

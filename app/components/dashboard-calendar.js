@@ -235,10 +235,10 @@ export default Ember.Component.extend({
     });
   }),
   selectedTopics: [],
-  topics: Ember.computed('selectedSchool.disciplines.[]', 'selectedTopics.[]', function(){
+  topics: Ember.computed('selectedSchool.topics.[]', 'selectedTopics.[]', function(){
     return DS.PromiseArray.create({
       promise: this.get('selectedSchool').then(school => {
-        return school.get('disciplines').then( topics => {
+        return school.get('topics').then( topics => {
           return topics.sortBy('title');
         });
       })

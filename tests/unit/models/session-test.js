@@ -3,51 +3,10 @@ import {
   test
 } from 'ember-qunit';
 import Ember from 'ember';
+import modelList from '../../helpers/model-list';
 
 moduleForModel('session', 'Session', {
-  needs: [
-    'model:aamc-method',
-    'model:aamc-pcrs',
-    'model:alert-change-type',
-    'model:alert',
-    'model:cohort',
-    'model:competency',
-    'model:course-learning-material',
-    'model:course',
-    'model:course-clerkship-type',
-    'model:curriculum-inventory-academic-level',
-    'model:curriculum-inventory-export',
-    'model:curriculum-inventory-institution',
-    'model:curriculum-inventory-report',
-    'model:curriculum-inventory-sequence-block',
-    'model:curriculum-inventory-sequence',
-    'model:department',
-    'model:discipline',
-    'model:academic-year',
-    'model:ilm-session',
-    'model:instructor-group',
-    'model:learner-group',
-    'model:learning-material-status',
-    'model:learning-material-user-role',
-    'model:learning-material',
-    'model:mesh-concept',
-    'model:mesh-descriptor',
-    'model:mesh-qualifier',
-    'model:objective',
-    'model:offering',
-    'model:program-year',
-    'model:program-year-steward',
-    'model:program',
-    'model:publish-event',
-    'model:report',
-    'model:school',
-    'model:session-description',
-    'model:session-learning-material',
-    'model:session-type',
-    'model:session',
-    'model:user-role',
-    'model:user',
-  ]
+  needs: modelList
 });
 
 test('it exists', function(assert) {
@@ -82,7 +41,7 @@ test('check optional publication items', function(assert) {
   var model = this.subject();
   var store = this.store();
   assert.equal(model.get('optionalPublicationIssues').length, 3);
-  model.get('disciplines').addObject(store.createRecord('discipline'));
+  model.get('topics').addObject(store.createRecord('topic'));
   assert.equal(model.get('optionalPublicationIssues').length, 2);
   model.get('objectives').addObject(store.createRecord('objective'));
   assert.equal(model.get('optionalPublicationIssues').length, 1);

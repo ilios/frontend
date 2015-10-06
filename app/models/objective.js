@@ -8,25 +8,25 @@ export default DS.Model.extend({
   //While it is possible at some point that objectives will be allowed to
   //link to multiple courses, for now we just reflect a many to one relationship
   course: Ember.computed.alias('courses.firstObject'),
-  sessions: DS.hasMany('session', {async: true}),
-  //While it is possible at some point that objectives will be allowed to
-  //link to multiple sessions, for now we just reflect a many to one relationship
-  session: Ember.computed.alias('sessions.firstObject'),
-  children: DS.hasMany('objective', {
-    inverse: 'parents',
-    async: true
-  }),
-  parents: DS.hasMany('objective', {
-    inverse: 'children',
-    async: true
-  }),
-  hasMultipleParents: Ember.computed.gt('parents.length', 1),
-  hasParents: Ember.computed.gte('parents.length', 1),
   programYears: DS.hasMany('program-year',  {async: true}),
   //While it is possible at some point that objectives will be allowed to
   //link to multiple program years, for now we just reflect a many to one relationship
   programYear: Ember.computed.alias('programYears.firstObject'),
+  sessions: DS.hasMany('session', {async: true}),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple sessions, for now we just reflect a many to one relationship
+  session: Ember.computed.alias('sessions.firstObject'),
+  parents: DS.hasMany('objective', {
+    inverse: 'children',
+    async: true
+  }),
+  children: DS.hasMany('objective', {
+    inverse: 'parents',
+    async: true
+  }),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
+  hasMultipleParents: Ember.computed.gt('parents.length', 1),
+  hasParents: Ember.computed.gte('parents.length', 1),
   treeCompetencies: function(){
     var defer = Ember.RSVP.defer();
     var self = this;

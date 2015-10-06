@@ -14,7 +14,7 @@ module('Acceptance: Program Year - Publication Check', {
     server.create('user', {id: 4136});
     server.create('school');
     server.create('objective');
-    server.create('discipline');
+    server.create('topic');
     server.create('competency');
     server.create('program', {
       programYears: [1]
@@ -25,7 +25,7 @@ module('Acceptance: Program Year - Publication Check', {
       program: 1,
       directors: [4136],
       objectives: [1],
-      disciplines: [1],
+      topics: [1],
       competencies: [1],
     });
     fixtures.emptyProgramYear = server.create('programYear', {

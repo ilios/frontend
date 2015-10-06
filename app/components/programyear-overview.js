@@ -10,14 +10,14 @@ export default Ember.Component.extend({
     addDirector: function(user){
       var programYear = this.get('programYear');
       programYear.get('directors').addObject(user);
-      user.get('directedProgramYears').addObject(programYear);
+      user.get('programYears').addObject(programYear);
       programYear.save();
       user.save();
     },
     removeDirector: function(user){
       var programYear = this.get('programYear');
       programYear.get('directors').removeObject(user);
-      user.get('directedProgramYears').removeObject(programYear);
+      user.get('programYears').removeObject(programYear);
       programYear.save();
       user.save();
     },

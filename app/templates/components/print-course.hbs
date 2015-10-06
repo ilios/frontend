@@ -73,7 +73,7 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.topics'}} ({{course.disciplines.length}})
+          {{t 'general.topics'}} ({{course.topics.length}})
         </div>
 
         <div class='detail-content'>
@@ -146,7 +146,7 @@
         <div class='detail-content'>
           <ul class='inline-list'>
             {{#each sortedMeshDescriptors as |descriptor|}}
-              <li>{{descriptor.title}}</li>
+              <li>{{descriptor.name}}</li>
             {{/each}}
           </ul>
         </div>
@@ -251,7 +251,7 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.topics'}} ({{session.disciplines.length}})
+          {{t 'general.topics'}} ({{session.topics.length}})
         </div>
 
         <div class='detail-content'>
@@ -270,7 +270,7 @@
         <div class='detail-content'>
           <ul class='inline-list'>
             {{#each session.sortedMeshDescriptors as |descriptor|}}
-              <li>{{descriptor.title}}</li>
+              <li>{{descriptor.name}}</li>
             {{/each}}
           </ul>
         </div>

@@ -19,7 +19,7 @@ module('Acceptance: Course - Publication Check', {
     server.create('objective', {
       courses: [1],
     });
-    server.create('discipline', {
+    server.create('topic', {
       courses: [1],
     });
     server.create('meshDescriptor', {
@@ -30,7 +30,7 @@ module('Acceptance: Course - Publication Check', {
       school: 1,
       cohorts: [1],
       objectives: [1],
-      disciplines: [1],
+      topics: [1],
       meshDescriptors: [1],
     });
     fixtures.emptyCourse = server.create('course', {

@@ -21,19 +21,19 @@ export default Ember.Mixin.create({
     var defer = Ember.RSVP.defer();
     this.getSessionForEvent(event).then( session => {
       let promises = [];
-      let topics = [];
-      promises.pushObject(session.get('disciplines').then( disciplines => {
-        let disIds = disciplines.mapBy('id');
-        topics.pushObjects(disIds);
+      let seleectedTopics = [];
+      promises.pushObject(session.get('topics').then( topics => {
+        let topicIds = topics.mapBy('id');
+        seleectedTopics.pushObjects(topicIds);
       }));
       promises.pushObject(session.get('course').then( course => {
-        promises.pushObject(course.get('disciplines').then( disciplines => {
-          let disIds = disciplines.mapBy('id');
-          topics.pushObjects(disIds);
+        promises.pushObject(course.get('topics').then( topics => {
+          let topicIds = topics.mapBy('id');
+          seleectedTopics.pushObjects(topicIds);
         }));
       }));
       Ember.RSVP.all(promises).then(() => {
-        defer.resolve(topics.uniq());
+        defer.resolve(seleectedTopics.uniq());
       });
     });
 

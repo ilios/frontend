@@ -5,7 +5,7 @@
         {{t 'courses.topicsManageTitle'}}
       </span>
     {{else}}
-      {{t 'general.topics'}} ({{subject.disciplines.length}})
+      {{t 'general.topics'}} ({{subject.topics.length}})
     {{/if}}
   </div>
 
@@ -25,7 +25,7 @@
         }}
     {{else}}
       {{detail-topic-list
-        topics=subject.disciplines
+        topics=subject.topics
       }}
     {{/liquid-if}}
   </div>

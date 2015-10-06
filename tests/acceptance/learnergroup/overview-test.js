@@ -58,7 +58,7 @@ module('Acceptance: Learner Group - Overview', {
       parent: 1,
       children: [4,5],
       users: [2,3],
-      instructorUsers: [4,5],
+      instructors: [4,5],
       location: 'room 101',
       offerings: [1,2]
     });

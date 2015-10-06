@@ -119,12 +119,12 @@ test('check topics', function(assert) {
     school: 1,
     programYears: [1]
   });
-  server.createList('discipline', 5, {
+  server.createList('topic', 5, {
     programYear: 1
   });
   server.create('programYear', {
     program: 1,
-    disciplines: [1,2,3,4,5]
+    topics: [1,2,3,4,5]
   });
   visit(url);
   andThen(function() {
@@ -174,7 +174,7 @@ test('new program year', function(assert) {
   server.createList('competency', 3, {
     programYears: [1]
   });
-  server.createList('discipline', 3, {
+  server.createList('topic', 3, {
     programYears: [1]
   });
   server.createList('objective', 3, {
@@ -195,7 +195,7 @@ test('new program year', function(assert) {
     cohort: 1,
     directors: [2,3,4],
     competencies: [1,2,3],
-    disciplines: [1,2,3],
+    topics: [1,2,3],
     objectives: [1,2,3],
     stewards: [1],
   });

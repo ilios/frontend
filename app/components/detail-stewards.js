@@ -62,11 +62,11 @@ export default Ember.Component.extend({
         var promises = [];
         removableStewards.forEach(steward => {
           promises.pushObject(steward.get('school').then(school => {
-            school.get('programYearStewards').removeObject(steward);
+            school.get('stewards').removeObject(steward);
           }));
           promises.pushObject(steward.get('department').then(department => {
             if(department){
-              department.get('programYearStewards').removeObject(steward);
+              department.get('stewards').removeObject(steward);
             }
           }));
           steward.deleteRecord();
@@ -76,11 +76,11 @@ export default Ember.Component.extend({
           steward.set('programYear', programYear);
           stewards.pushObject(steward);
           promises.pushObject(steward.get('school').then(school => {
-            school.get('programYearStewards').addObject(steward);
+            school.get('stewards').addObject(steward);
           }));
           promises.pushObject(steward.get('department').then(department => {
             if(department){
-              department.get('programYearStewards').addObject(steward);
+              department.get('stewards').addObject(steward);
             }
           }));
           promises.pushObject(steward.save());

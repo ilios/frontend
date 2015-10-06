@@ -20,15 +20,15 @@ export default Ember.Component.extend({
   targetItemTitle: '',
   searching: false,
   searchReturned: false,
-  sortTerms: ['title'],
+  sortTerms: ['name'],
   sortedSearchResults: Ember.computed.sort('searchResults', 'sortTerms'),
   sortedTerms: function(){
     var terms = this.get('terms');
     if(!terms || terms.length === 0){
       return [];
     }
-    return terms.sortBy('title');
-  }.property('terms.@each.title'),
+    return terms.sortBy('name');
+  }.property('terms.@each.name'),
   actions: {
     search: function(query){
       var self = this;

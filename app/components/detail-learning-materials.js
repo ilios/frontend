@@ -34,7 +34,7 @@ export default Ember.Component.extend({
   }.property(),
   proxyMaterials: Ember.computed('materials.@each', function(){
     let materialProxy = Ember.ObjectProxy.extend({
-      sortTerms: ['title'],
+      sortTerms: ['name'],
       sortedDescriptors: Ember.computed.sort('content.meshDescriptors', 'sortTerms')
     });
     return this.get('materials').map(material => {
