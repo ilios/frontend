@@ -5,8 +5,8 @@ export default function scrollTo(elementQuery, time) {
 
   var promise = new Ember.RSVP.Promise(function(resolve) {
     Ember.run.next(()=>{
-      $('html, body').animate({
-        scrollTop: $(elementQuery).offset().top
+      Ember.$('html, body').animate({
+        scrollTop: Ember.$(elementQuery).offset().top
       }, time, function(){
         resolve();
       });

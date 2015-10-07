@@ -45,7 +45,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
             this.get('session').authenticate(authenticator, {jwt: response.jwt}).then(() => {
               let jwt = this.get('session').get('secure.jwt');
               let js = atob(jwt.split('.')[1]);
-              let obj = $.parseJSON(js);
+              let obj = Ember.$.parseJSON(js);
               this.get('currentUser').set('currentUserId', obj.user_id);
             });
           }

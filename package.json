@@ -55,7 +55,7 @@
     "ember-deploy-s3": "0.0.5",
     "ember-deploy-s3-index": "^0.4.0",
     "ember-disable-proxy-controllers": "^1.0.0",
-    "ember-i18n": "^4.1.2",
+    "ember-i18n": "4.1.3",
     "ember-legacy-views": "0.2.0",
     "ember-load": "0.0.2",
     "ember-modal-dialog": "0.7.7",
@@ -68,7 +68,7 @@
     "ember-try": "0.0.8",
     "emberx-select": "2.0.1",
     "ilios-calendar": "ilios/calendar#v1.1.0",
-    "liquid-fire": "0.21.2",
+    "liquid-fire": "0.21.3",
     "liquid-tether": "pzuraq/liquid-tether#v0.1.4",
     "pluralize": "^1.1.6",
     "ui-select": "firefly-ui/ui-select#v0.0.9"
