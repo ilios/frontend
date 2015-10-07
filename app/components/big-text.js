@@ -16,12 +16,20 @@ export default Ember.Component.extend({
   }.property('displayText', 'text'),
   cleanText: function(){
     var text = this.get('text');
+    //give us a string to work with no matter what
     if(text === undefined || text == null){
+      text = '';
+    }
+    
+    //strip any possible HTML out of the text
+    let cleanText = text.replace(/(<([^>]+)>)/ig,"");
+
+    if(cleanText.length < 1){
       return this.get('promptText')?this.get('promptText').toString():'';
     }
-    //strip any possible HTML out of the text
-    return text.replace(/(<([^>]+)>)/ig,"");
-  }.property('text'),
+    
+    return cleanText;
+  }.property('text', 'promptText'),
   displayText: function(){
     var text = this.get('cleanText');
     if(this.get('expanded') || text.length < this.get('totalLength')){
