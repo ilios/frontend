@@ -9,7 +9,7 @@ test('it works properly', function(assert) {
 
   const firstButton = '.first-button';
   const secondButton = '.second-button';
-  const activeClass = 'active'
+  const activeClass = 'active';
   const component = this.subject();
 
   assert.ok(component.get('firstChoicePicked'), 'first button is picked by default');

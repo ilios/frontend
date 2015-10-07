@@ -3,27 +3,35 @@
   margin-top: 40px;
   overflow: hidden;
 
-  .offering-form {
-    margin: 15px 0;
-    overflow: hidden;
+  // .offering-form {
+  //   margin: 15px 0;
+  //   overflow: hidden;
+  //
+  //   .offering-form-label {
+  //     float: left;
+  //     font-weight: bold;
+  //     padding-right: 10px;
+  //     text-align: right;
+  //     width: 43%;
+  //   }
+  //
+  //   .offering-form-data {
+  //     float: left;
+  //     padding-left: 10px;
+  //     width: 57%;
+  //
+  //     .offering-startdate-picker, .single-multi-day {
+  //       display: inline-block;
+  //     }
+  //   }
+  // }
 
-    .offering-form-label {
-      float: left;
-      font-weight: bold;
-      padding-right: 10px;
-      text-align: right;
-      width: 43%;
-    }
+  .offering-startdate-picker {
+    display: inline-block;
+  }
 
-    .offering-form-data {
-      float: left;
-      padding-left: 10px;
-      width: 57%;
-
-      .offering-startdate-picker, .single-multi-day {
-        display: inline-block;
-      }
-    }
+  .single-multi-day {
+    display: inline-block;
   }
 
   .offering-learnergroups {

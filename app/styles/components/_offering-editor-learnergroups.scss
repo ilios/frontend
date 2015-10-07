@@ -3,11 +3,6 @@
   font-weight: 300;
 }
 
-@mixin selectable-removable {
-  max-height: 380px;
-  overflow: auto;
-}
-
 .offering-editor-learnergroups {
   overflow: hidden;
 
@@ -16,25 +11,21 @@
     margin: 10px 3%;
     width: 44%;
 
-    .title-selected-groups, .title-available-groups {
+    .title-selected-groups {
       font-size: 20px;
     }
 
-    .selectable {
-      @include selectable-removable;
-
-      .available-subgroup-style {
-        @include subgroup-style;
-        margin-left: 20px;
-      }
+    .title-available-groups {
+      font-size: 20px;
     }
 
-    .removable {
-      @include selectable-removable;
+    .available-subgroup-style {
+      @include subgroup-style;
+      margin-left: 20px;
+    }
 
-      .selected-subgroup-style {
-        @include subgroup-style;
-      }
+    .selected-subgroup-style {
+      @include subgroup-style;
     }
   }
 }

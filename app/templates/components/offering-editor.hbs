@@ -1,6 +1,6 @@
-<div class="offering-form">
-  <label class="offering-form-label">Create New:</label>
-  <div class="offering-form-data">
+<div class="form-col-12">
+  <label class="form-label">Create New:</label>
+  <div class="form-data">
     {{click-choice-buttons
       buttonContent1="Offering"
       buttonContent2="Small Groups"
@@ -10,9 +10,9 @@
   </div>
 </div>
 
-<div class="offering-form">
-  <label class="offering-form-label">{{t 'general.startDate'}}:</label>
-  <div class="offering-form-data offering-startdate">
+<div class="form-col-12">
+  <label class="form-label">{{t 'general.startDate'}}:</label>
+  <div class="form-data offering-startdate">
     <div class="offering-startdate-picker">
       {{pikaday-input value=startDate format='MM/DD/YYYY'}}
     </div>
@@ -27,37 +27,37 @@
   </div>
 </div>
 
-<div class="offering-form">
-  <label class="offering-form-label">{{t 'general.startTime'}}:</label>
-  <div class="offering-form-data">
+<div class="form-col-12">
+  <label class="form-label">{{t 'general.startTime'}}:</label>
+  <div class="form-data">
     <span class='starttime'>
-      {{time-picker date=startDate action='changeStartTime'}}
+      {{time-picker date=startDate action='changeStartTime' defaultHour='8'}}
     </span>
   </div>
 </div>
 
 {{#if isMultiDay}}
-  <div class="offering-form">
-    <label class="offering-form-label">{{t 'general.endDate'}}:</label>
-    <div class="offering-form-data offering-enddate">
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.endDate'}}:</label>
+    <div class="form-data offering-enddate">
       {{pikaday-input value=endDate format='MM/DD/YYYY'}}
     </div>
   </div>
 {{/if}}
 
-<div class="offering-form">
-  <label class="offering-form-label">{{t 'general.endTime'}}:</label>
-  <div class="offering-form-data">
+<div class="form-col-12">
+  <label class="form-label">{{t 'general.endTime'}}:</label>
+  <div class="form-data">
     <span class='endtime'>
-      {{time-picker date=endDate action='changeEndTime'}}
+      {{time-picker date=endDate action='changeEndTime' defaultHour='9'}}
     </span>
   </div>
 </div>
 
 {{#if singleOffering}}
-  <div class="offering-form">
-    <label class="offering-form-label">{{t 'general.location'}}:</label>
-    <div class="offering-form-data"><span class='room'>{{input value=room placeholder="i.e. Rm. 111"}}</span></div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.location'}}:</label>
+    <div class="form-data"><span class='room'>{{input value=room placeholder="i.e. Rm. 111"}}</span></div>
   </div>
 {{/if}}
 
@@ -77,14 +77,14 @@
 </div>
 
 {{#if singleOffering}}
-  <div class="offering-form">
-    <label class="offering-form-label">{{t 'general.instructors'}}:</label>
-    <div class="offering-form-data">
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.instructors'}}:</label>
+    <div class="form-data">
       {{instructor-selection-manager
-        addInstructor='addInstructorToBuffer'
-        addInstructorGroup='addInstructorGroupToBuffer'
-        removeInstructor='removeInstructorFromBuffer'
-        removeInstructorGroup='removeInstructorGroupFromBuffer'
+        addInstructor='addInstructor'
+        addInstructorGroup='addInstructorGroup'
+        removeInstructor='removeInstructor'
+        removeInstructorGroup='removeInstructorGroup'
         availableInstructorGroups=currentUser.model.school.instructorGroups
         instructorGroups=instructorGroups
         instructors=instructors
@@ -93,7 +93,7 @@
   </div>
 {{/if}}
 
-<div class="offering-form center">
+<div class="form-col-12 center">
   <button class='done text' {{action 'create'}}>{{t 'general.done'}}</button>
   <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
 </div>

@@ -21,14 +21,15 @@
     </div>
   </div>
 
-  {{#if offeringEditorOn}}
+  {{#liquid-if offeringEditorOn class='vertical'}}
     {{offering-editor
       cohorts=cohorts
       addSingleOffering='addSingleOffering'
       addMultipleOfferings='addMultipleOfferings'
       closeEditor='closeEditor'
+      class="form-container"
     }}
-  {{/if}}
+  {{/liquid-if}}
 
   <div class='detail-content'>
     {{#if offerings.length}}

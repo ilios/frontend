@@ -2,11 +2,24 @@ import moment from 'moment';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
+const { computed } = Ember;
+const { oneWay } = computed;
+
 export default Ember.Component.extend({
   classNames: ['time-picker'],
   date: null,
-  dateBuffer: Ember.computed.oneWay('date'),
-  hour: momentFormat('dateBuffer', 'h'),
+  dateBuffer: oneWay('date'),
+
+  hour: computed('dateBuffer', function() {
+    const defaultHour = this.get('defaultHour');
+
+    if (defaultHour) {
+      return defaultHour;
+    } else {
+      return momentFormat('dateBuffer', 'h');
+    }
+  }),
+
   minute: momentFormat('dateBuffer', 'mm'),
   ampm: momentFormat('dateBuffer', 'a'),
   hours: ['1','2','3','4','5','6','7','8','9','10','11','12'],
@@ -14,6 +27,8 @@ export default Ember.Component.extend({
   ampms: ['am', 'pm'],
   actions: {
     changeHour(){
+      this.set('defaultHour', null);
+
       let select = this.$('select')[0];
       let selectedIndex = select.selectedIndex;
       let hours = this.get('hours');
@@ -42,15 +57,15 @@ export default Ember.Component.extend({
       let ampms = this.get('ampms');
       let value = ampms[selectedIndex];
       let newDate;
-      if(value === 'AM' && this.get('ampm') !== 'am'){
+      if(value === 'am' && this.get('ampm') !== 'am'){
         newDate = moment(this.get('date')).subtract(12, 'hours').toDate();
       }
-      if(value === 'PM' && this.get('ampm') !== 'pm'){
+      if(value === 'pm' && this.get('ampm') !== 'pm'){
         newDate = moment(this.get('date')).add(12, 'hours').toDate();
       }
       if(newDate){
         this.set('dateBuffer', newDate);
-        this.sendAction('action', newDate);  
+        this.sendAction('action', newDate);
       }
     },
   }

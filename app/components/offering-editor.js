@@ -10,7 +10,14 @@ const { PromiseArray } = DS;
 export default Component.extend({
   init() {
     this._super(...arguments);
-    this.setProperties({ instructors: [], instructorGroups: [], learnerGroups: [] });
+
+    this.setProperties({
+      instructors: [],
+      instructorGroups: [],
+      learnerGroups: [],
+      startDate: moment().format('MM/DD/YYYY'),
+      endDate: moment().add(1, 'days').format('MM/DD/YYYY')
+    });
   },
 
   classNames: ['offering-editor'],
@@ -19,15 +26,15 @@ export default Component.extend({
   isMultiDay: false,
   filter: '',
 
-  startDate: new Date().setHours(8, 0, 0),
-  endDate: new Date().setHours(9, 0, 0),
+  startDate: null,
+  endDate: null,
   room: null,
 
   instructors: null,
   instructorGroups: null,
   learnerGroups: null,
 
-  filteredCohorts: computed('cohorts.[]', 'learnerGroups.[]', 'filter', function(){
+  filteredCohorts: computed('cohorts.[]', 'learnerGroups.[]', 'filter', function() {
     let cohortProxy = ObjectProxy.extend({
       selectedLearnerGroups: [],
 
@@ -35,7 +42,7 @@ export default Component.extend({
 
       filter: '',
 
-      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', 'filter', function(){
+      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', 'filter', function() {
         let defer = RSVP.defer();
         let proxy = this;
         let filter = proxy.get('filter');
@@ -119,22 +126,24 @@ export default Component.extend({
       this.set('endDate', endDate.toDate());
     },
 
-    addInstructorToBuffer(instructor){
+    addInstructor(instructor){
       this.get('instructors').pushObject(instructor);
     },
 
-    addInstructorGroupToBuffer(instructorGroup) {
+    addInstructorGroup(instructorGroup) {
       this.get('instructorGroups').pushObject(instructorGroup);
     },
 
-    removeInstructorFromBuffer(instructor){
+    removeInstructor(instructor){
       this.get('instructors').removeObject(instructor);
     },
 
-    removeInstructorGroupFromBuffer(instructorGroup){
+    removeInstructorGroup(instructorGroup){
       this.get('instructorGroups').removeObject(instructorGroup);
     },
 
+    // If the group has no descendants then we add it, otherwise we add
+    // the descendants, but not the parent (add lowest node at all times).
     addLearnerGroup(group) {
       let learnerGroups = this.get('learnerGroups');
 

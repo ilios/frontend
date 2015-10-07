@@ -28,7 +28,7 @@ test('actions get trigger appropriately', function(assert) {
   const learnerGroups = [ group2, group1 ];
   const cohort = { filteredAvailableLearnerGroups: [{ title: 'BMB 1' }, { title: 'BMB 2' }] };
 
-  this.setProperties({ learnerGroups, cohort});
+  this.setProperties({ learnerGroups, cohort });
 
   const addLearnerGroup = (params) => {
     assert.equal(params.title, 'BMB 1', 'action is triggered with proper argument');
@@ -38,7 +38,7 @@ test('actions get trigger appropriately', function(assert) {
     assert.equal(params.title, 'Anatomy 1', 'action is triggered with proper argument');
   };
 
-  this.setProperties({externalActionAdd: addLearnerGroup, externalActionRemove: removeLearnerGroup});
+  this.setProperties({ externalActionAdd: addLearnerGroup, externalActionRemove: removeLearnerGroup });
 
   this.render(hbs`{{offering-editor-learnergroups
     cohort=cohort

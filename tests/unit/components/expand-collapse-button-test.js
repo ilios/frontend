@@ -19,7 +19,7 @@ test('it works properly', function(assert) {
 
     this.render();
 
-    assert.ok(this.$('.plus-button i').hasClass('fa-plus'));
+    assert.ok(this.$('.expand-button i').hasClass('fa-plus'));
 
     component.click = () => {
       assert.ok(true, 'button was clicked');
@@ -30,7 +30,7 @@ test('it works properly', function(assert) {
 
     next(component, () => {
       assert.equal(component.get('value'), true);
-      assert.ok(this.$('.minus-button i').hasClass('fa-minus'));
+      assert.ok(this.$('.collapse-button i').hasClass('fa-minus'));
     });
   });
 });

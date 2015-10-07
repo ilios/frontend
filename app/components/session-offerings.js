@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Ember from 'ember';
 import layout from '../templates/components/session-offerings';
 import { translationMacro as t } from "ember-i18n";
@@ -35,7 +34,7 @@ export default Component.extend({
     addSingleOffering({ startDate, endDate, room, learnerGroups, instructors, instructorGroups }) {
       const store = this.get('store');
       const session = this.get('session');
-      const offering = store.createRecord('offering', { session, startDate, endDate, room });
+      let offering = store.createRecord('offering', { session, startDate, endDate, room });
 
       offering.save().then((offering) => {
         offering.get('learnerGroups').then((offeringlearnerGroups) => {
@@ -66,11 +65,11 @@ export default Component.extend({
 
       const store = this.get('store');
       const session = this.get('session');
-      const offeringPromises = [];
+      let offeringPromises = [];
 
       learnerGroups.forEach((learnerGroup) => {
         const room = learnerGroup.get('location');
-        const offering = store.createRecord('offering', { session, startDate, endDate, room });
+        let offering = store.createRecord('offering', { session, startDate, endDate, room });
 
         offeringPromises.pushObject(offering.save());
       });
@@ -84,7 +83,7 @@ export default Component.extend({
             promises.pushObject(learnerGroup.save());
           });
 
-          learnerGroup.get('instructorUsers').then((defaultInstructors) => {
+          learnerGroup.get('instructors').then((defaultInstructors) => {
             if (isPresent(defaultInstructors)) {
               offerings[index].get('instructors').then((offeringInstructors) => {
                 offeringInstructors.pushObjects(defaultInstructors);

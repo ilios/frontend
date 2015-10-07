@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const { Component, computed, isEmpty, isPresent } = Ember;
-const { sort, filter } = computed;
+const { sort } = computed;
 
 export default Component.extend({
   classNames: ['offering-editor-learnergroups'],

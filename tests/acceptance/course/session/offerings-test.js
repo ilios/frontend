@@ -10,20 +10,36 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 var application;
 var fixtures = {};
 var url = '/courses/1/sessions/1';
+
 module('Acceptance: Session - Offerings', {
   beforeEach: function() {
     application = startApp();
     authenticateSession();
     server.create('school', {
-      instructorGroups: [1,2]
+      courses: [1],
+      instructorGroups: [1,2],
+      sessionTypes: [1],
+
     });
-    server.create('cohort');
+    server.create('program', {
+      programYears: [1],
+    });
+    server.create('programYear', {
+      cohort: 1
+    });
+    server.create('cohort', {
+      courses: [1],
+      learnerGroups: [1,2],
+      programYear: 1
+    });
     server.create('course', {
       sessions: [1],
       cohorts: [1],
       school: 1
     });
-    server.create('sessionType');
+    server.create('sessionType', {
+      school: 1
+    });
 
     fixtures.users =  [];
     fixtures.users.pushObject(server.create('user', {id: 4136}));
@@ -99,7 +115,6 @@ module('Acceptance: Session - Offerings', {
     fixtures.session = server.create('session', {
       course: 1,
       offerings: [1, 2, 3],
-      school: 1
     });
   },
 
@@ -209,113 +224,6 @@ test('instructors', function(assert) {
   });
 });
 
-test('create new offering', function(assert) {
-  assert.expect(13);
-  visit(url);
-  var container;
-  andThen(function() {
-    container = find('.session-offerings');
-    click('.detail-actions button', container).then(function(){
-      return click('.detail-actions li:eq(0)', container).then(function(){
-        return click(find('.offering-detail-box span', container).eq(0));
-      });
-    });
-  });
-  andThen(function(){
-    var interactor = openDatepicker(find('.startdate input', container).eq(0));
-    interactor.selectDate(new Date(2011, 8, 11));
-    
-    let startBoxes = find('.offering-manager .starttime select', container);
-    pickOption(startBoxes[0], '2', assert);
-    pickOption(startBoxes[1], '15', assert);
-    pickOption(startBoxes[2], 'am', assert);
-    let endBoxes = find('.offering-manager .endtime select', container);
-    pickOption(endBoxes[0], '3', assert);
-    pickOption(endBoxes[1], '23', assert);
-    pickOption(endBoxes[2], 'pm', assert);
-    fillIn(find('.offering-manager .room input', container), 'testing palace');
-    click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
-    let input = find('.search-box input', container);
-    fillIn(input, 'guy');
-    click('span.search-icon', container).then(()=>{
-      click('.live-search .results li:eq(0)').then(() => {
-        fillIn(input, 'group');
-        click('span.search-icon', container).then(()=>{
-          click('.live-search .results li:eq(0)').then(()=> {
-            click(find('.done', container));
-          });
-        });
-      });
-    });
-  });
-  andThen(function(){
-    let block = find('.session-offerings .offering-block:eq(0)');
-    assert.equal(getElementText(find('.offering-block-date-dayofweek', block)), getText('Sunday'));
-    assert.equal(getElementText(find('.offering-block-date-dayofmonth', block)), getText('September 11th'));
-    assert.equal(getElementText(find('.offering-block-time-time-starttime', block)), getText('Starts: 2:15AM'));
-    assert.equal(getElementText(find('.offering-block-time-time-endtime', block)), getText('Ends: 3:23AM'));
-    assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
-    assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
-    assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
-  });
-});
-
-test('create new multiday offering', function(assert) {
-  assert.expect(10);
-  visit(url);
-  var container;
-  andThen(function() {
-    container = find('.session-offerings');
-    click('.detail-actions button', container).then(function(){
-      return click('.detail-actions li:eq(0)', container).then(function(){
-        return click(find('.offering-detail-box span', container).eq(0));
-      });
-    });
-  });
-  andThen(function(){
-    click('.offering-manager .ismultiday label', container).then(function(){
-      var startDateInteractor = openDatepicker(find('.startdate input', container));
-      startDateInteractor.selectDate(new Date(2011, 8, 11));
-
-      var endDateInteractor = openDatepicker(find('.enddate input', container));
-      endDateInteractor.selectDate(new Date(2011, 8, 12));
-
-      let startBoxes = find('.offering-manager .starttime select', container);
-      pickOption(startBoxes[0], '2', assert);
-      pickOption(startBoxes[1], '15', assert);
-      pickOption(startBoxes[2], 'am', assert);
-      let endBoxes = find('.offering-manager .endtime select', container);
-      pickOption(endBoxes[0], '12', assert);
-      pickOption(endBoxes[1], '23', assert);
-      pickOption(endBoxes[2], 'pm', assert);
-      fillIn(find('.offering-manager .room input', container), 'testing palace');
-      click('.offering-manager .learner-groups li:eq(0) ul li:eq(0)', container);
-      let input = find('.search-box input', container);
-      fillIn(input, 'guy');
-      click('span.search-icon', container).then(()=>{
-        click('.live-search .results li:eq(0)').then(() => {
-          fillIn(input, 'group');
-          click('span.search-icon', container).then(()=>{
-            click('.live-search .results li:eq(0)').then(()=> {
-              click(find('.done', container));
-            });
-          });
-        });
-      });
-    });
-  });
-  andThen(function(){
-    let block = find('.session-offerings .offering-block:eq(0)');
-    let expectedText = 'Multiday' +
-      'Starts Sunday September 11th @ 2:15AM' +
-      'Ends Monday September 12th @ 12:23PM';
-    assert.equal(getElementText(find('.multiday-offering-block-time-time', block)), getText(expectedText));
-    assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
-    assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
-    assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
-  });
-});
-
 test('confirm removal message', function(assert) {
   assert.expect(2);
   visit(url);
@@ -355,5 +263,219 @@ test('cancel remove offering', function(assert) {
         assert.equal(find('.offering-block-time-offering').length, 3);
       });
     });
+  });
+});
+
+test('users can create a new offering or small groups (single and multi-day)', function(assert) {
+  assert.expect(25);
+
+  const expandButton = '.expand-button';
+  const multiDayButton = '.single-multi-day .switch-label';
+  const smallGroupButton = '.second-button';
+
+  const startDateInput = '.offering-startdate-picker input';
+  const endDateInput = '.offering-enddate input';
+  const startTimes = '.starttime select';
+  const endTimes = '.endtime select';
+  const location = '.room input';
+  const learnerGroupOne = '.selectable li:first';
+  const learnerGroupTwo = '.selectable li:last';
+  const searchBox = '.search-box:last input';
+  const searchBoxOption = '.livesearch-user-name:first';
+  const createButton = '.done';
+
+  const dayOfWeek = '.offering-block-date-dayofweek:first';
+  const dayOfMonth = '.offering-block-date-dayofmonth:first';
+  const startTime = '.offering-block-time-time-starttime:first';
+  const endTime = '.offering-block-time-time-endtime:first';
+  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
+  const learnerGroup3 = '.offering-block-time-offering-learner_groups ul li:eq(2)';
+  const learnerGroup4 = '.offering-block-time-offering-learner_groups ul li:eq(3)';
+  const room = '.offering-block-time-offering-location:first';
+  const instructor = '.offering-block-time-offering-instructors ul li:eq(0)';
+
+  const multiDayDesc = '.multiday-offering-block-time-time-description:first';
+  const multiDayStarts = '.multiday-offering-block-time-time-starts:first';
+  const multiDayEnds = '.multiday-offering-block-time-time-ends:first';
+
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    startDateInteractor.selectDate(new Date(2011, 8, 11));
+
+    let startBoxes = find(startTimes, container);
+    pickOption(startBoxes[0], '2', assert);
+    pickOption(startBoxes[1], '15', assert);
+    pickOption(startBoxes[2], 'am', assert);
+
+    let endBoxes = find(endTimes, container);
+    pickOption(endBoxes[0], '3', assert);
+    pickOption(endBoxes[1], '23', assert);
+    pickOption(endBoxes[2], 'pm', assert);
+  });
+
+  fillIn(location, 'Rm. 111');
+  click(learnerGroupOne);
+  click(learnerGroupTwo);
+  fillIn(searchBox, 'guy');
+  click(searchBoxOption);
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(dayOfWeek).text(), 'Sunday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
+    assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
+    assert.equal(find(endTime).text().trim(), 'Ends: 3:23 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
+    assert.equal(find(instructor).text(), '0 guy Mc0son', 'instructor is correct');
+  });
+
+  click(expandButton);
+  click(smallGroupButton);
+  click(multiDayButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    startDateInteractor.selectDate(new Date(2011, 8, 11));
+
+    let endDateInteractor = openDatepicker(find(endDateInput, container));
+    endDateInteractor.selectDate(new Date(2011, 10, 11));
+
+    let startBoxes = find(startTimes, container);
+    pickOption(startBoxes[0], '2', assert);
+    pickOption(startBoxes[1], '15', assert);
+    pickOption(startBoxes[2], 'am', assert);
+
+    let endBoxes = find(endTimes, container);
+    pickOption(endBoxes[0], '3', assert);
+    pickOption(endBoxes[1], '23', assert);
+    pickOption(endBoxes[2], 'pm', assert);
+  });
+
+  click(learnerGroupOne);
+  click(learnerGroupTwo);
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
+    assert.equal(find(multiDayStarts).text().trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
+    assert.equal(find(multiDayEnds).text().trim(), 'Ends Friday November 11th @ 3:23 PM', 'multi-day statement is correct');
+    assert.equal(find(learnerGroup3).text(), 'learner group 0', 'learner group is correct');
+    assert.equal(find(learnerGroup4).text(), 'learner group 1', 'learner group is correct');
+  });
+});
+
+test('users can edit existing offerings (single & multi-day)', function(assert) {
+  assert.expect(29);
+
+  const editButton = '.offering-detail-box i:first';
+  const multiDayButton = '.ismultiday .switch-label';
+  const startDateInput = '.startdate input';
+  const endDateInput = '.enddate input';
+  const startTimes = '.starttime select';
+  const endTimes = '.endtime select';
+  const location = '.room input';
+
+  const selectedLearnerGroup = '.selected-subgroup-style:first';
+  const removeInstructorFirst = '.inline-list .removable:first i';
+  const removeInstructorLast = '.inline-list .removable:last i';
+
+  const learnerGroupOne = '.selectable li:first';
+  const searchBox = '.search-box:last input';
+  const searchBoxOption = '.live-search li:first';
+  const createButton = '.done';
+
+  const dayOfWeek = '.offering-block-date-dayofweek:first';
+  const dayOfMonth = '.offering-block-date-dayofmonth:first';
+  const startTime = '.offering-block-time-time-starttime:first';
+  const endTime = '.offering-block-time-time-endtime:first';
+  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
+  const room = '.offering-block-time-offering-location:first';
+  const instructor1 = '.offering-block-time-offering-instructors ul li:eq(0)';
+  const instructor2 = '.offering-block-time-offering-instructors ul li:eq(1)';
+  const instructor3 = '.offering-block-time-offering-instructors ul li:eq(2)';
+  const instructor4 = '.offering-block-time-offering-instructors ul li:eq(3)';
+  const instructor5 = '.offering-block-time-offering-instructors ul li:eq(4)';
+
+  const multiDayDesc = '.multiday-offering-block-time-time-description:first';
+  const multiDayStarts = '.multiday-offering-block-time-time-starts:first';
+  const multiDayEnds = '.multiday-offering-block-time-time-ends:first';
+
+  visit(url);
+  click(editButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let interactor = openDatepicker(find(startDateInput, container));
+    interactor.selectDate(new Date(2011, 9, 5));
+
+    let startBoxes = find(startTimes, container);
+    pickOption(startBoxes[0], '11', assert);
+    pickOption(startBoxes[1], '45', assert);
+    pickOption(startBoxes[2], 'am', assert);
+
+    let endBoxes = find(endTimes, container);
+    pickOption(endBoxes[0], '5', assert);
+    pickOption(endBoxes[1], '55', assert);
+    pickOption(endBoxes[2], 'pm', assert);
+  });
+
+  fillIn(location, 'Rm. 111');
+  click(selectedLearnerGroup);
+  click(removeInstructorFirst);
+  click(removeInstructorLast);
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(dayOfWeek).text(), 'Wednesday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).text(), 'October 5th', 'day of month is correct');
+    assert.equal(find(startTime).text().trim(), 'Starts: 11:45 AM', 'start time is correct');
+    assert.equal(find(endTime).text().trim(), 'Ends: 5:55 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
+    assert.equal(find(instructor1).text(), '3 guy Mc3son', 'instructor is correct');
+    assert.equal(find(instructor2).text(), '4 guy Mc4son', 'instructor is correct');
+    assert.equal(find(instructor3).text(), '5 guy Mc5son', 'instructor is correct');
+    assert.equal(find(instructor4).text(), '6 guy Mc6son', 'instructor is correct');
+    assert.equal(find(instructor5).text(), '7 guy Mc7son', 'instructor is correct');
+  });
+
+  click(editButton);
+  click(multiDayButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let interactor = openDatepicker(find(endDateInput, container).eq(0));
+    interactor.selectDate(new Date(2011, 11, 25));
+
+    let endBoxes = find(endTimes, container);
+    pickOption(endBoxes[0], '7', assert);
+    pickOption(endBoxes[1], '30', assert);
+    pickOption(endBoxes[2], 'pm', assert);
+  });
+
+  click(learnerGroupOne);
+  click(removeInstructorFirst);
+  click(removeInstructorFirst);
+  click(removeInstructorFirst);
+  click(removeInstructorFirst);
+  fillIn(searchBox, 'group');
+  click(searchBoxOption);
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
+    assert.equal(find(multiDayStarts).text().trim(), 'Starts Wednesday October 5th @ 11:45 AM', 'multi-day statement is correct');
+    assert.equal(find(multiDayEnds).text().trim(), 'Ends Sunday December 25th @ 7:30 PM', 'multi-day statement is correct');
+    assert.equal(find(learnerGroup1).text(), 'learner group 1', 'learner group is correct');
+    assert.equal(find(learnerGroup2).text(), 'learner group 0', 'learner group is correct');
+    assert.equal(find(instructor1).text(), '1 guy Mc1son', 'instructor is correct');
+    assert.equal(find(instructor2).text(), '2 guy Mc2son', 'instructor is correct');
+    assert.equal(find(instructor3).text(), '5 guy Mc5son', 'instructor is correct');
+    assert.equal(find(instructor4).text(), '6 guy Mc6son', 'instructor is correct');
   });
 });

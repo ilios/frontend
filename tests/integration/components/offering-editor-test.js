@@ -1,26 +1,64 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+
+const { isEmpty, isPresent } = Ember;
 
 moduleForComponent('offering-editor', 'Integration | Component | offering editor', {
-  integration: true
+  integration: true,
+
+  beforeEach() {
+    this.container.lookup('service:i18n').set('locale', 'en');
+    this.container.lookup('component:click-choice-buttons');
+  }
 });
 
-test('it renders', function(assert) {
-  assert.expect(2);
+test('`toggleMultiDay` action triggers properly', function(assert) {
+  assert.expect(3);
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  const endDateInput = '.offering-enddate';
+  const toggleSlider = '.switch-input';
 
   this.render(hbs`{{offering-editor}}`);
+  assert.ok(isEmpty(this.$(endDateInput)), 'end date input is not visible');
 
-  assert.equal(this.$().text().trim(), '');
+  this.$(toggleSlider).click();
+  assert.ok(isPresent(this.$(endDateInput)), 'end date input is visible');
 
-  // Template block usage:
-  this.render(hbs`
-    {{#offering-editor}}
-      template block text
-    {{/offering-editor}}
-  `);
+  this.$(toggleSlider).click();
+  assert.ok(isEmpty(this.$(endDateInput)), 'end date input is not visible');
+});
 
-  assert.equal(this.$().text().trim(), 'template block text');
+test('`create` actions bubble up (to create learnergroup and close editor)', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{offering-editor addSingleOffering='addSingleOffering' closeEditor='closeEditor'}}`);
+
+  const assertCreate = () => {
+    assert.ok(true, 'action bubbles up to create learnergroup');
+  };
+
+  const assertCloseEditor = () => {
+    assert.ok(true, 'action bubbles up to close editor');
+  };
+
+  this.on('addSingleOffering', assertCreate);
+  this.on('closeEditor', assertCloseEditor);
+
+  this.$('.done').click();
+});
+
+
+test('`cancel` action bubbles up', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`{{offering-editor closeEditor='closeEditor'}}`);
+
+  const assertCloseEditor = () => {
+    assert.ok(true, 'action bubbles up to close editor');
+  };
+
+  this.on('closeEditor', assertCloseEditor);
+
+  this.$('.cancel').click();
 });
