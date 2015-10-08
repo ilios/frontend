@@ -36,7 +36,11 @@ export default Ember.Component.extend({
         isUser: true,
         currentlyActiveUsers: [],
         isActive: function(){
-          return !this.get('currentlyActiveUsers').contains(this.get('content'));
+          let user = this.get('content');
+          if(!user.get('enabled')){
+            return false;
+          }
+          return !this.get('currentlyActiveUsers').contains(user);
         }.property('content', 'currentlyActiveUsers.@each'),
         sortTerm: Ember.computed('content.firstName', 'content.lastName', function(){
           return this.get('content.lastName')+this.get('content.firstName');
@@ -51,7 +55,7 @@ export default Ember.Component.extend({
         sortTerm: Ember.computed.oneWay('content.title'),
       });
       this.get('store').query('user', {q: searchTerms}).then(users => {
-        let results = users.map(user => {
+        let results = users.uniq().map(user => {
           return userProxy.create({
             content: user,
             currentlyActiveUsers: this.get('currentlyActiveUsers'),

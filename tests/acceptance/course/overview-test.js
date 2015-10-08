@@ -26,12 +26,18 @@ module('Acceptance: Course - Overview', {
 });
 
 test('check fields', function(assert) {
+  server.create('user', {
+    directedCourses: [1],
+    firstName: 'A',
+    lastName: 'Director'
+  });
   var course = server.create('course', {
     year: 2013,
     school: 1,
     clerkshipType: 3,
     externalId: 123,
-    level: 3
+    level: 3,
+    directors: [2]
   });
   var clerkshipType = server.create('courseClerkshipType', {
     courses: [1]
@@ -48,6 +54,7 @@ test('check fields', function(assert) {
     var endDate = moment(course.endDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.courseenddate', container)), endDate);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText(clerkshipType.title));
+    assert.equal(getElementText(find('.coursedirectors li', container)), getText('A Director'));
   });
 });
 
@@ -299,6 +306,119 @@ test('change level', function(assert) {
       andThen(function(){
         assert.equal(getElementText(find('.courselevel .editable', container)), 1);
       });
+    });
+  });
+});
+
+test('remove director', function(assert) {
+  server.create('user', {
+    directedCourses: [1],
+    firstName: 'A',
+    lastName: 'Director'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    externalId: 123,
+    level: 3,
+    directors: [2]
+  });
+  visit(url);
+  andThen(function() {
+    click('.coursedirectors li:eq(0)').then(function(){
+      assert.equal(getElementText(find('.coursedirectors li')), '');
+    });
+  });
+});
+
+
+test('manage directors', function(assert) {
+  server.create('user', {
+    directedCourses: [1],
+    firstName: 'Added',
+    lastName: 'Guy'
+  });
+  server.create('user', {
+    firstName: 'Disabled',
+    lastName: 'Guy',
+    enabled: false
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    externalId: 123,
+    level: 3,
+    directors: [2]
+  });
+  visit(url);
+  andThen(function() {
+      let directors = find('.coursedirectors');
+      let searchBox = find('.search-box', directors);
+      assert.equal(searchBox.length, 1);
+      searchBox = searchBox.eq(0);
+      let searchBoxInput = find('input', searchBox);
+      fillIn(searchBoxInput, 'guy');
+      click('span.search-icon', searchBox);
+      andThen(function(){
+        let searchResults = find('.live-search li', directors);
+        assert.equal(searchResults.length, 3);
+        assert.equal(getElementText($(searchResults[0])), getText('0 guy Mc0son'));
+        assert.ok(!$(searchResults[0]).hasClass('inactive'));
+        assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
+        assert.ok($(searchResults[1]).hasClass('inactive'));
+        assert.equal(getElementText($(searchResults[2])), getText('Disabled Guy'));
+        assert.ok($(searchResults[2]).hasClass('inactive'));
+        
+        click('.removable-list li:eq(0)', directors).then(function(){
+          assert.ok(!$(find('.live-search li:eq(1)', directors)).hasClass('inactive'));
+          click(searchResults[0]);
+        });
+        andThen(function(){
+          assert.equal(getElementText(find('.coursedirectors .removable-list')), getText('0 guy Mc0son'));
+        });
+    });
+  });
+});
+
+//test for a bug where the search results were not cleared between searches
+test('search twice and list should be correct', function(assert) {
+  server.create('user', {
+    directedCourses: [1],
+    firstName: 'Added',
+    lastName: 'Guy'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    externalId: 123,
+    level: 3,
+    directors: [2]
+  });
+  visit(url);
+  andThen(function() {
+      let directors = find('.coursedirectors');
+      let searchBox = find('.search-box', directors);
+      assert.equal(searchBox.length, 1);
+      searchBox = searchBox.eq(0);
+      let searchBoxInput = find('input', searchBox);
+      fillIn(searchBoxInput, 'guy');
+      click('span.search-icon', searchBox);
+      andThen(function(){
+        let searchResults = find('.live-search li', directors);
+        assert.equal(searchResults.length, 2);
+        assert.equal(getElementText($(searchResults[0])), getText('0 guy Mc0son'));
+        assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
+        click(searchResults[0]).then(function(){
+          let searchBoxInput = find('input', searchBox);
+          fillIn(searchBoxInput, 'guy');
+          click('span.search-icon', searchBox);
+          andThen(function(){
+            let searchResults = find('.live-search li', directors);
+            assert.equal(searchResults.length, 2);
+            assert.equal(getElementText($(searchResults[0])), getText('0 guy Mc0son'));
+            assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
+          });
+        });
     });
   });
 });

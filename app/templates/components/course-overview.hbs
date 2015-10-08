@@ -31,19 +31,19 @@
         <label class="form-label">{{t "general.end"}}:</label>
         <div class="form-data courseenddate">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
       </div>
-      <div class="form-col-12">
-      <label>{{t "general.directors"}}:</label>
-        <span>
-          <ul class='removable-list'>
-            {{#each sortedDirectors as |user|}}
-            <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-            {{/each}}
-          </ul>
-        </span>
-        {{user-search
-          addUser='addDirector'
-          currentlyActiveUsers=course.directors
-        }}
+      <div class="form-col-12 coursedirectors">
+        <label>{{t "general.directors"}}:</label>
+          <span>
+            <ul class='removable-list'>
+              {{#each sortedDirectors as |user|}}
+              <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+              {{/each}}
+            </ul>
+          </span>
+          {{user-search
+            addUser='addDirector'
+            currentlyActiveUsers=course.directors
+          }}
       </div>
   </div>
 </section>
