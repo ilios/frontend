@@ -340,7 +340,8 @@ test('manage directors', function(assert) {
   });
   server.create('user', {
     firstName: 'Disabled',
-    lastName: 'Guy'
+    lastName: 'Guy',
+    enabled: false
   });
   server.create('course', {
     year: 2013,
@@ -366,7 +367,7 @@ test('manage directors', function(assert) {
         assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
         assert.ok($(searchResults[1]).hasClass('inactive'));
         assert.equal(getElementText($(searchResults[2])), getText('Disabled Guy'));
-        assert.ok(!$(searchResults[2]).hasClass('inactive'));
+        assert.ok($(searchResults[2]).hasClass('inactive'));
         
         click('.removable-list li:eq(0)', directors).then(function(){
           assert.ok(!$(find('.live-search li:eq(1)', directors)).hasClass('inactive'));
