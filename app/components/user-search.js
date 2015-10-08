@@ -55,7 +55,7 @@ export default Ember.Component.extend({
         sortTerm: Ember.computed.oneWay('content.title'),
       });
       this.get('store').query('user', {q: searchTerms}).then(users => {
-        let results = users.map(user => {
+        let results = users.uniq().map(user => {
           return userProxy.create({
             content: user,
             currentlyActiveUsers: this.get('currentlyActiveUsers'),
