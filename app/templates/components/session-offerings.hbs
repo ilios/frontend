@@ -1,21 +1,35 @@
+{{#liquid-if saving class='crossFade'}}
+  {{wait-saving}}
+{{/liquid-if}}
+
 <section class='detail-block'>
-  <div class='detail-title'>
-    {{t 'general.offerings'}} ({{offerings.length}})
-  </div>
-  <div class='calendar-toggle'>
-    <label class='switch switch-blue switch-wide calendar'>
-      <input class='switch-input' type='checkbox' checked="checked"/>
-      <span class="switch-label" data-on='{{t 'offerings.calendarOn'}}' data-off='{{t 'offerings.calendarOff'}}'></span>
-      <span class="switch-handle"></span>
-    </label>
+  <div class="offering-section-top">
+    <div class='detail-title'>
+      {{t 'general.offerings'}} ({{offerings.length}})
+    </div>
+
+    <div class='calendar-toggle'>
+      <label class='switch switch-blue switch-wide calendar'>
+        <input class='switch-input' type='checkbox' checked="checked"/>
+        <span class="switch-label" data-on='{{t 'offerings.calendarOn'}}' data-off='{{t 'offerings.calendarOff'}}'></span>
+        <span class="switch-handle"></span>
+      </label>
+    </div>
+
+    <div class='detail-actions'>
+      {{expand-collapse-button value=offeringEditorOn action="toggleEditor"}}
+    </div>
   </div>
 
-  <div class='detail-actions'>
-    {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
-      <li {{action 'add'}}>{{t 'general.addNew'}}</li>
-      <li>{{t 'sessions.openSmallGroupGenerator'}}</li>
-    {{/action-menu}}
-  </div>
+  {{#liquid-if offeringEditorOn class='vertical'}}
+    {{offering-editor
+      cohorts=cohorts
+      addSingleOffering='addSingleOffering'
+      addMultipleOfferings='addMultipleOfferings'
+      closeEditor='closeEditor'
+      class="form-container"
+    }}
+  {{/liquid-if}}
 
   <div class='detail-content'>
     {{#if offerings.length}}

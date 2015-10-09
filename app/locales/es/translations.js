@@ -209,6 +209,7 @@ export default {
     'learnerGroupsManageTitle': 'Administrar Grupos de Aprendedores',
     'availalbeLearnerGroups': 'Grupos de Aprendedores Disponibles',
     'noAvailalbeLearnerGroups': 'No hay grupos de aprendedores no seleccionados en este Clase de La Graduación',
+    'noSelectedLearnerGroups': 'No hay grupos de aprendedores seleccionados',
     'instructors': 'Instructores',
     'instructorsManageTitle': 'Administrar Instructores',
   },

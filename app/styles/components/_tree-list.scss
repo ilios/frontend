@@ -11,16 +11,20 @@
       margin-left: 2em;
 
       li {
-        font-weight: normal;
+        font-weight: 300;
       }
     }
   }
 
   &.removable {
     background-color: $header-grey;
+    max-height: 380px;
+    overflow: auto;
   }
 
   &.selectable {
     background-color: $white;
+    max-height: 380px;
+    overflow: auto;
   }
 }

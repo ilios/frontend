@@ -1,0 +1,56 @@
+.offering-editor {
+  border: 2px solid $ilios-blue;
+  margin-top: 40px;
+  overflow: hidden;
+
+  // .offering-form {
+  //   margin: 15px 0;
+  //   overflow: hidden;
+  //
+  //   .offering-form-label {
+  //     float: left;
+  //     font-weight: bold;
+  //     padding-right: 10px;
+  //     text-align: right;
+  //     width: 43%;
+  //   }
+  //
+  //   .offering-form-data {
+  //     float: left;
+  //     padding-left: 10px;
+  //     width: 57%;
+  //
+  //     .offering-startdate-picker, .single-multi-day {
+  //       display: inline-block;
+  //     }
+  //   }
+  // }
+
+  .offering-startdate-picker {
+    display: inline-block;
+  }
+
+  .single-multi-day {
+    display: inline-block;
+  }
+
+  .offering-learnergroups {
+    border: 2px solid $ilios-blue;
+    margin: 25px auto;
+    overflow: hidden;
+    width: 90%;
+
+    .cohort-container {
+      padding: 20px 0;
+
+      .cohort-title {
+        font-size: 28px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.center {
+  text-align: center;
+}

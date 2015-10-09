@@ -94,8 +94,8 @@
     }
 
     .multiday-offering-block-time-offerings {
-      @include span-columns(8 of 12);
-      @include shift(4);
+      @include span-columns(10 of 12);
+      @include shift(2);
     }
   }
 }

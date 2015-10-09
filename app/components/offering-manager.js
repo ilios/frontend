@@ -1,7 +1,11 @@
-import moment from 'moment';
-
 import Ember from 'ember';
 import DS from 'ember-data';
+import moment from 'moment';
+
+const { computed, isEmpty, ObjectProxy, RSVP } = Ember;
+const { alias, notEmpty } = computed;
+const { all, Promise } = RSVP;
+const { PromiseArray } = DS;
 
 export default Ember.Component.extend({
   currentUser: Ember.inject.service(),
@@ -11,8 +15,6 @@ export default Ember.Component.extend({
   sortBy: ['lastName', 'firstName'],
   classNames: ['offering-manager'],
   sortedInstructors: Ember.computed.sort('instructors', 'sortBy'),
-  startDay: null,
-  endDay: null,
   startTime: null,
   endTime: null,
   room: null,
@@ -38,6 +40,74 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }.property('instructors.@each', 'instructorGroups.@each.users.@each'),
+
+  learnerGroups: alias('buffer.learnerGroups'),
+
+  filteredCohorts: computed('cohorts.[]', 'learnerGroups.[]', 'filter', function(){
+    let cohortProxy = ObjectProxy.extend({
+      selectedLearnerGroups: [],
+
+      hasAvailableLearnerGroups: notEmpty('filteredAvailableLearnerGroups'),
+
+      filter: '',
+
+      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', 'filter', function(){
+        let defer = RSVP.defer();
+        let proxy = this;
+        let filter = proxy.get('filter');
+        let exp = new RegExp(filter, 'gi');
+
+        let activeGroupFilter = function(learnerGroup) {
+          let searchTerm = `${learnerGroup.get('title')}${learnerGroup.get('allParentsTitle')}`;
+
+          return (
+            learnerGroup.get('title') !== undefined &&
+            proxy.get('selectedLearnerGroups') &&
+            exp.test(searchTerm) &&
+            !proxy.get('selectedLearnerGroups').contains(learnerGroup)
+          );
+        };
+
+        this.get('content.topLevelLearnerGroups').then((cohortGroups) => {
+          let learnerGroups = [];
+          let promises = [];
+
+          cohortGroups.forEach((learnerGroup) => {
+            learnerGroups.pushObject(learnerGroup);
+
+            let promise = new Promise((resolve) => {
+              learnerGroup.get('allDescendants').then((descendants) => {
+                learnerGroups.pushObjects(descendants);
+                resolve();
+              });
+            });
+
+            promises.pushObject(promise);
+          });
+
+          all(promises).then(() => {
+            defer.resolve(learnerGroups.filter(activeGroupFilter).sortBy('sortTitle'));
+          });
+        });
+
+        return PromiseArray.create({
+          promise: defer.promise
+        });
+      }),
+    });
+
+    let cohorts = this.get('cohorts') ? this.get('cohorts') : [];
+
+    return cohorts.map((cohort) => {
+      let proxy = cohortProxy.create({
+        content: cohort,
+        selectedLearnerGroups: this.get('learnerGroups')
+      });
+
+      return proxy;
+    }).sortBy('title');
+  }),
+
   actions: {
     save() {
       var offering = this.get('offering');
@@ -167,6 +237,22 @@ export default Ember.Component.extend({
       startDate.hour(newStart.format('HH'));
       startDate.minute(newStart.format('mm'));
       this.set('buffer.startDate', startDate.toDate());
+    },
+
+    addLearnerGroup(group) {
+      let learnerGroups = this.get('learnerGroups');
+
+      group.get('allDescendants').then((descendants) => {
+        if (isEmpty(descendants)) {
+          learnerGroups.addObject(group);
+        } else {
+          learnerGroups.addObjects(descendants);
+        }
+      });
+    },
+
+    removeLearnerGroup(group) {
+      this.get('learnerGroups').removeObject(group);
     },
   }
 });

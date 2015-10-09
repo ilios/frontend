@@ -63,11 +63,11 @@ export default DS.Model.extend({
         });
       });
     }));
-    
+
     Ember.RSVP.all(promises).then(()=>{
       defer.resolve(allCourses.uniq());
     });
-    
+
     return DS.PromiseArray.create({
       promise: defer.promise
     });

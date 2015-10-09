@@ -1,0 +1,31 @@
+@mixin subgroup-style {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.offering-editor-learnergroups {
+  overflow: hidden;
+
+  .half-grouping {
+    float: left;
+    margin: 10px 3%;
+    width: 44%;
+
+    .title-selected-groups {
+      font-size: 20px;
+    }
+
+    .title-available-groups {
+      font-size: 20px;
+    }
+
+    .available-subgroup-style {
+      @include subgroup-style;
+      margin-left: 20px;
+    }
+
+    .selected-subgroup-style {
+      @include subgroup-style;
+    }
+  }
+}

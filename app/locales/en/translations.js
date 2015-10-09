@@ -209,6 +209,7 @@ export default {
     'learnerGroupsManageTitle': 'Manage Learner Groups',
     'availalbeLearnerGroups': 'Available Learner Groups',
     'noAvailalbeLearnerGroups': 'There are no unselected learner groups in this cohort',
+    'noSelectedLearnerGroups': 'There are no selected learner groups',
     'instructors': 'Instructors',
     'instructorsManageTitle': 'Manage Instructors',
   },

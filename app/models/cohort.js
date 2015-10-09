@@ -39,14 +39,14 @@ export default DS.Model.extend({
     this.get('learnerGroups').then(groups => {
       let topLevelGroups = Ember.A();
       let promises = [];
-      
+
       groups.forEach(group => {
         promises.pushObject(group.get('topLevelGroup').then(topLevelGroup => {
           topLevelGroups.pushObject(topLevelGroup);
         }));
       });
       Ember.RSVP.all(promises).then(() => {
-        defer.resolve(topLevelGroups.uniq());
+        defer.resolve(topLevelGroups.uniq().sortBy('title'));
       });
     });
     return DS.PromiseArray.create({
