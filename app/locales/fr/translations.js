@@ -91,7 +91,8 @@ export default {
     'notFoundMessage': "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau.",
     'myCourses': "Mes Cours",
     'waitSaving': "Travaille dessus... un moment...",
-    'select': 'Sélectionnez'
+    'select': 'Sélectionnez',
+    'invalidDatetimes': 'Dates/Heures invalides',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -240,6 +241,8 @@ export default {
     'calendarOn': "Calendrier allumé",
     'calendarOff': "Calendrier éteindé",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer cette offre avec {{learnerGroupCount}} groupes d'apprenants?  Ça action ne peut pas être défait.",
+    'offering': 'Offre',
+    'smallGroups': 'Groupes particulaires'
   },
   'learningMaterials': {
     'displayName': "Nom d'affichage",

@@ -2,22 +2,20 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
 
-const { computed, isEmpty, ObjectProxy, RSVP } = Ember;
+const { computed, copy, inject, isEmpty, ObjectProxy, RSVP } = Ember;
 const { alias, notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
+const { service } = inject;
 
 export default Ember.Component.extend({
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
   offering: null,
   isEditing: false,
   editable: true,
   sortBy: ['lastName', 'firstName'],
   classNames: ['offering-manager'],
   sortedInstructors: Ember.computed.sort('instructors', 'sortBy'),
-  startTime: null,
-  endTime: null,
-  room: null,
   isMultiDay: false,
   cohorts: Ember.computed.alias('offering.session.course.cohorts'),
   availableInstructorGroups: Ember.computed.alias('offering.session.course.school.instructorGroups'),
@@ -108,75 +106,120 @@ export default Ember.Component.extend({
     }).sortBy('title');
   }),
 
+  datesValidated() {
+    const resetStartDate = this.get('buffer.startDate').setHours(0, 0, 0, 0);
+    const resetEndDate = this.get('buffer.endDate').setHours(0, 0, 0, 0);
+
+    let isEndDateOnOrBeforeStartDate = this.get('buffer.isMultiDay') && resetStartDate >= resetEndDate;
+
+    return isEndDateOnOrBeforeStartDate ? false : true;
+  },
+
+  timesValidated() {
+    const isSingleDay = !this.get('buffer.isMultiDay');
+    const startTime = this.get('buffer.startTime');
+    const endTime = this.get('buffer.endTime');
+
+    // Covers edge case where user switches from multi-day to single-day in edit mode
+    let revisedEndTime = copy(startTime);
+    revisedEndTime.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0);
+
+    let isEndTimeOnOrBeforeStartTime = isSingleDay && startTime >= revisedEndTime;
+
+    return isEndTimeOnOrBeforeStartTime ? false : true;
+  },
+
+  calculateDateTimes() {
+    let startDate = moment(this.get('buffer.startDate'));
+    let endDate;
+
+    let starTime = moment(this.get('buffer.startTime'));
+    startDate.hour(starTime.format('HH'));
+    startDate.minute(starTime.format('mm'));
+
+    if (this.get('buffer.isMultiDay')){
+      endDate = moment(this.get('buffer.endDate'));
+    } else {
+      endDate = startDate.clone();
+    }
+
+    let endTime = moment(this.get('buffer.endTime'));
+    endDate.hour(endTime.format('HH'));
+    endDate.minute(endTime.format('mm'));
+
+    return { startDate, endDate };
+  },
+
   actions: {
     save() {
-      var offering = this.get('offering');
-      let promises = [];
-      promises.push(offering.get('instructorGroups').then(instructorGroups => {
-        let removableInstructorGroups = instructorGroups.filter(group => !this.get('buffer.instructorGroups').contains(group));
-        instructorGroups.clear();
-        removableInstructorGroups.forEach(group => {
-          group.get('offerings').removeObject(offering);
-        });
-        this.get('buffer.instructorGroups').forEach(group => {
-          group.get('offerings').pushObject(offering);
-          instructorGroups.pushObject(group);
-        });
-      }));
-      promises.push(offering.get('instructors').then(instructors => {
-        let removableInstructors = instructors.filter(user => !this.get('buffer.instructors').contains(user));
-        instructors.clear();
-        removableInstructors.forEach(user => {
-          user.get('offerings').removeObject(offering);
-        });
-        this.get('buffer.instructors').forEach(user => {
-          user.get('offerings').pushObject(offering);
-          instructors.pushObject(user);
-        });
-      }));
-      promises.push(offering.get('learnerGroups').then(learnerGroups => {
-        let removeableLearnerGroups = learnerGroups.filter(group => !this.get('buffer.learnerGroups').contains(group));
-        learnerGroups.clear();
-        removeableLearnerGroups.forEach(group => {
-          group.get('offerings').removeObject(offering);
-        });
-        this.get('buffer.learnerGroups').forEach(group => {
-          group.get('offerings').pushObject(offering);
-          learnerGroups.pushObject(group);
-        });
-      }));
-      let startDate = moment(this.get('buffer.startDate'));
-      let endDate;
-      if(this.get('buffer.isMultiDay')){
-        endDate = moment(this.get('buffer.endDate'));
-      } else {
-        endDate = startDate.clone();
-        let endTime = moment(this.get('buffer.endDate'));
-        endDate.hour(endTime.format('HH'));
-        endDate.minute(endTime.format('mm'));
-      }
+      if (this.datesValidated() && this.timesValidated()) {
+        var offering = this.get('offering');
+        let promises = [];
+        promises.push(offering.get('instructorGroups').then(instructorGroups => {
+          let removableInstructorGroups = instructorGroups.filter(group => !this.get('buffer.instructorGroups').contains(group));
+          instructorGroups.clear();
+          removableInstructorGroups.forEach(group => {
+            group.get('offerings').removeObject(offering);
+          });
+          this.get('buffer.instructorGroups').forEach(group => {
+            group.get('offerings').pushObject(offering);
+            instructorGroups.pushObject(group);
+          });
+        }));
+        promises.push(offering.get('instructors').then(instructors => {
+          let removableInstructors = instructors.filter(user => !this.get('buffer.instructors').contains(user));
+          instructors.clear();
+          removableInstructors.forEach(user => {
+            user.get('offerings').removeObject(offering);
+          });
+          this.get('buffer.instructors').forEach(user => {
+            user.get('offerings').pushObject(offering);
+            instructors.pushObject(user);
+          });
+        }));
+        promises.push(offering.get('learnerGroups').then(learnerGroups => {
+          let removeableLearnerGroups = learnerGroups.filter(group => !this.get('buffer.learnerGroups').contains(group));
+          learnerGroups.clear();
+          removeableLearnerGroups.forEach(group => {
+            group.get('offerings').removeObject(offering);
+          });
+          this.get('buffer.learnerGroups').forEach(group => {
+            group.get('offerings').pushObject(offering);
+            learnerGroups.pushObject(group);
+          });
+        }));
 
-      offering.set('room', this.get('buffer.room'));
-      offering.set('startDate', startDate.toDate());
-      offering.set('endDate', endDate.toDate());
-      promises.pushObject(offering.save());
-      Ember.RSVP.all(promises).then(() => {
-        if(!this.get('isDestroyed')){
-          this.set('isEditing', false);
-          this.set('buffer', null);
-          this.sendAction('save', offering);
-        }
-      });
-    },
-    edit: function(){
-      let offering = this.get('offering');
-      if(offering){
-        let buffer = Ember.Object.create({
-          startDate: moment(offering.get('startDate')).toDate(),
-          endDate: moment(offering.get('endDate')).toDate(),
-          room: offering.get('room'),
-          isMultiDay: offering.get('isMultiDay')
+        let datesHash = this.calculateDateTimes();
+
+        const room = this.get('buffer.room');
+        const startDate = datesHash.startDate.toDate();
+        const endDate = datesHash.endDate.toDate();
+
+        offering.setProperties({ room, startDate, endDate });
+
+        promises.pushObject(offering.save());
+        Ember.RSVP.all(promises).then(() => {
+          if(!this.get('isDestroyed')){
+            this.sendAction('save', offering);
+            this.send('cancel');
+          }
         });
+      } else {
+        this.get('flashMessages').alert('general.invalidDatetimes');
+      }
+    },
+    edit() {
+      let offering = this.get('offering');
+
+      if (offering) {
+        const startDate = offering.get('startDate');
+        const endDate = offering.get('endDate');
+        const startTime = copy(startDate);
+        const endTime = copy(endDate);
+        const room = offering.get('room');
+        const isMultiDay = offering.get('isMultiDay');
+
+        let buffer = Ember.Object.create({ startDate, endDate, startTime, endTime, room, isMultiDay });
 
         let collections = [
           'instructors',
@@ -199,6 +242,7 @@ export default Ember.Component.extend({
     cancel: function(){
       this.set('buffer', null);
       this.set('isEditing', false);
+      this.get('flashMessages').clearMessages();
     },
     addInstructorGroupToBuffer(instructorGroup){
       this.get('buffer.instructorGroups').pushObject(instructorGroup);
@@ -224,19 +268,23 @@ export default Ember.Component.extend({
     confirmRemove: function(){
       this.set('showRemoveConfirmation', true);
     },
-    changeEndTime(date){
-      let newEnd = moment(date);
-      let endDate = moment(this.get('buffer.endDate'));
-      endDate.hour(newEnd.format('HH'));
-      endDate.minute(newEnd.format('mm'));
-      this.set('buffer.endDate', endDate.toDate());
-    },
-    changeStartTime(date){
+
+    changeStartTime(date) {
       let newStart = moment(date);
-      let startDate = moment(this.get('buffer.startDate'));
-      startDate.hour(newStart.format('HH'));
-      startDate.minute(newStart.format('mm'));
-      this.set('buffer.startDate', startDate.toDate());
+      let startTime = moment(this.get('buffer.startTime'));
+
+      startTime.hour(newStart.format('HH'));
+      startTime.minute(newStart.format('mm'));
+      this.set('buffer.startTime', startTime.toDate());
+    },
+
+    changeEndTime(date) {
+      let newEnd = moment(date);
+      let endTime = moment(this.get('buffer.endTime'));
+
+      endTime.hour(newEnd.format('HH'));
+      endTime.minute(newEnd.format('mm'));
+      this.set('buffer.endTime', endTime.toDate());
     },
 
     addLearnerGroup(group) {

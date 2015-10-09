@@ -91,7 +91,8 @@ export default {
     'notFoundMessage': "Rats! I couldn't find that. Please check your page address, and try again.",
     'myCourses': 'My Courses',
     'waitSaving': 'saving... one moment...',
-    'select': 'Select'
+    'select': 'Select',
+    'invalidDatetimes': 'Invalid dates/times',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -240,6 +241,8 @@ export default {
     'calendarOn': 'Calendar On',
     'calendarOff': 'Calendar Off',
     'confirmRemove': 'Are you sure you want to delete this offering with {{learnerGroupCount}} learner groups? This action cannot be undone.',
+    'offering': 'Offering',
+    'smallGroups': 'Small Groups'
   },
   'learningMaterials': {
     'displayName': 'Display Name',

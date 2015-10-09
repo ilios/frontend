@@ -9,17 +9,7 @@ export default Ember.Component.extend({
   classNames: ['time-picker'],
   date: null,
   dateBuffer: oneWay('date'),
-
-  hour: computed('dateBuffer', function() {
-    const defaultHour = this.get('defaultHour');
-
-    if (defaultHour) {
-      return defaultHour;
-    } else {
-      return momentFormat('dateBuffer', 'h');
-    }
-  }),
-
+  hour: momentFormat('dateBuffer', 'h'),
   minute: momentFormat('dateBuffer', 'mm'),
   ampm: momentFormat('dateBuffer', 'a'),
   hours: ['1','2','3','4','5','6','7','8','9','10','11','12'],
@@ -27,8 +17,6 @@ export default Ember.Component.extend({
   ampms: ['am', 'pm'],
   actions: {
     changeHour(){
-      this.set('defaultHour', null);
-
       let select = this.$('select')[0];
       let selectedIndex = select.selectedIndex;
       let hours = this.get('hours');

@@ -91,7 +91,8 @@ export default {
     'notFoundMessage': "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez.",
     'myCourses': 'Mis Cursos',
     'waitSaving': 'Salvando... un momento...',
-    'select': 'Selecciona'
+    'select': 'Selecciona',
+    'invalidDatetimes': 'Fecha/Hora Inválida'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -240,6 +241,8 @@ export default {
     'calendarOn': 'Calendario en Uso',
     'calendarOff': 'Calendario Apagado',
     'confirmRemove': '¿Estás seguro que quieres borrar este ofrecimiento con {{learnerGroupCount}} grupos de aprendedores? Esta acción no se puede deshacer.',
+    'offering': 'Ofrecimiento',
+    'smallGroups': 'Grupos Pequeños'
   },
   'learningMaterials': {
     'displayName': 'Nombre de Mostrar',
