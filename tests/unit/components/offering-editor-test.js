@@ -16,7 +16,6 @@ test('properties have default values', function(assert) {
   const expected = {
     singleOffering:   true,
     isMultiDay:       false,
-    filter:           '',
     room:             null,
     instructors:      [],
     instructorGroups: [],
@@ -28,7 +27,6 @@ test('properties have default values', function(assert) {
   const actual = {
     singleOffering:   component.get('singleOffering'),
     isMultiDay:       component.get('isMultiDay'),
-    filter:           component.get('filter'),
     room:             component.get('room'),
     instructors:      component.get('instructors'),
     instructorGroups: component.get('instructorGroups'),

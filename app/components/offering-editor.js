@@ -1,6 +1,6 @@
-/* global moment */
 import Ember from 'ember';
 import DS from 'ember-data';
+import moment from 'moment';
 
 const { Component, computed, isEmpty, ObjectProxy, RSVP } = Ember;
 const { notEmpty } = computed;
@@ -24,7 +24,6 @@ export default Component.extend({
 
   singleOffering: true,
   isMultiDay: false,
-  filter: '',
 
   startDate: null,
   endDate: null,
@@ -34,27 +33,20 @@ export default Component.extend({
   instructorGroups: null,
   learnerGroups: null,
 
-  filteredCohorts: computed('cohorts.[]', 'learnerGroups.[]', 'filter', function() {
+  availableLearnerGroups: computed('cohorts.[]', 'learnerGroups.[]', function() {
     let cohortProxy = ObjectProxy.extend({
       selectedLearnerGroups: [],
 
       hasAvailableLearnerGroups: notEmpty('filteredAvailableLearnerGroups'),
 
-      filter: '',
-
-      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', 'filter', function() {
+      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', function() {
         let defer = RSVP.defer();
         let proxy = this;
-        let filter = proxy.get('filter');
-        let exp = new RegExp(filter, 'gi');
 
-        let activeGroupFilter = function(learnerGroup) {
-          let searchTerm = `${learnerGroup.get('title')}${learnerGroup.get('allParentsTitle')}`;
-
+        let activeGroupFilter = (learnerGroup) => {
           return (
             learnerGroup.get('title') !== undefined &&
             proxy.get('selectedLearnerGroups') &&
-            exp.test(searchTerm) &&
             !proxy.get('selectedLearnerGroups').contains(learnerGroup)
           );
         };
