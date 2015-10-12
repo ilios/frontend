@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
   layout: layout,
-  classNames: ['mesh-manager'],
+  classNames: ['detail-block'],
   placeholder: t('courses.meshSearchPlaceholder'),
   terms: [],
   searchResults: [],
@@ -29,6 +29,7 @@ export default Ember.Component.extend({
     }
     return terms.sortBy('name');
   }.property('terms.@each.name'),
+  tagName: 'section',
   actions: {
     search: function(query){
       var self = this;
