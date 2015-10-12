@@ -31,11 +31,9 @@ export default Ember.Component.extend({
       this.get('bufferTerms').forEach((term)=>{
         if(this.get('isCourse')){
           term.get('courses').addObject(subject);
-          promises.pushObject(term.save());
         }
         if(this.get('isSession')){
           term.get('sessions').addObject(subject);
-          promises.pushObject(term.save());
         }
       });
       promises.pushObject(subject.save());
