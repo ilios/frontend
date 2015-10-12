@@ -21,6 +21,9 @@
         {{/each}}
       </ul>
     </div>
+    {{#if hasMoreSearchResults }}
+        <button {{action 'searchMore' query}}>Search More</button>
+    {{/if}}
   {{else}}
     {{#if searchReturned}}
       <ul class='results'>
