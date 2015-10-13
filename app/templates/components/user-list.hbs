@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th class='text-left' colspan=1>{{t 'user.firstName'}}</th>
+      <th class='text-left' colspan=1>{{t 'user.lastName'}}</th>
+      <th class='text-left' colspan=1>{{t 'general.school'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users as |user|}}
+      <tr class="{{if course.showRemoveConfirmation 'confirm-removal'}}">
+        <td class='text-left' colspan=1>{{user.firstName}}</td>
+        <td class='text-left' colspan=1>{{user.lastName}}</td>
+        <td class='text-left' colspan=1>{{user.school.title}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

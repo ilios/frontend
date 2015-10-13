@@ -321,6 +321,10 @@ export default {
     'badCredentials': 'Incorrect username or password',
     'noAccountExists': 'Your account {{accountName}} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.',
   },
+  'user': {
+    'firstName': 'First Name',
+    'lastName': 'Last Name',
+  },
   'language': {
     'select': {
       'en': 'English (en_US)',

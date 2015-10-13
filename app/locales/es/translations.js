@@ -320,6 +320,10 @@ export default {
     'badCredentials': 'Incorrecta contraseña o nombre de usuario',
     'noAccountExists': 'Su cuenta no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios',
   },
+  'user': {
+    'firstName': 'Nombre',
+    'lastName': 'Apellido',
+  },
   'language': {
     'select': {
       'en': 'English (en_US)',

@@ -33,6 +33,7 @@ Router.map(function() {
   this.route('admin-dashboard', { path: '/admin'});
   this.route('login');
   this.route('events', {path: 'events/:slug'});
+  this.route('users', {});
   this.route('fourOhFour', { path: "*path"});
 });
 
