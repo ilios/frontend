@@ -25,7 +25,6 @@ export default Ember.Component.extend({
   searching: false,
   searchReturned: false,
   sortTerms: ['name'],
-  sortedSearchResults: Ember.computed.sort('searchResults', 'sortTerms'),
   sortedTerms: function(){
     var terms = this.get('terms');
     if(!terms || terms.length === 0){
@@ -58,14 +57,12 @@ export default Ember.Component.extend({
         if (self.get('hasMoreSearchResults')) {
           results.pop();
         }
-        self.set('searchResults', $.merge(self.get('searchResults'), results));
+        self.set('searchResults', results);
       });
     },
 
     searchMore: function(query) {
       var self = this;
-      this.set('searchReturned', false);
-      this.set('searching', true);
       var terms = this.get('terms');
       this.get('store').query('mesh-descriptor', {
         q: query,
@@ -78,14 +75,12 @@ export default Ember.Component.extend({
             terms: terms
           });
         });
-        self.set('searchReturned', true);
-        self.set('searching', false);
         self.set('searchPage', self.get('searchPage') + 1);
         self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
         if (self.get('hasMoreSearchResults')) {
           results.pop();
         }
-        self.set('searchResults', $.merge(self.get('searchResults'), results));
+        self.get('searchResults').pushObjects(results);
       });
     },
     clear: function(){
