@@ -4,7 +4,7 @@
 
   @mixin flash($color) {
     background-color: $color;
-    color: darken($color, 25%);
+    color: $white;
     display: block;
     opacity: .75;
     padding: $base-font-size / 2;

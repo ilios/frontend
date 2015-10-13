@@ -9,7 +9,6 @@ moduleForComponent('offering-editor', 'Integration | Component | offering editor
 
   beforeEach() {
     this.container.lookup('service:i18n').set('locale', 'en');
-    this.container.lookup('component:click-choice-buttons');
   }
 });
 
@@ -32,18 +31,21 @@ test('`toggleMultiDay` action triggers properly', function(assert) {
 test('`create` actions bubble up (to create learnergroup and close editor)', function(assert) {
   assert.expect(2);
 
-  this.render(hbs`{{offering-editor addSingleOffering='addSingleOffering' closeEditor='closeEditor'}}`);
+  const flashMessages = {
+    clearMessages() {}
+  };
 
-  const assertCreate = () => {
+  this.set('flashMessages', flashMessages);
+
+  this.render(hbs`{{offering-editor addSingleOffering='addSingleOffering' closeEditor='closeEditor' flashMessages=flashMessages}}`);
+
+  this.on('addSingleOffering', () => {
     assert.ok(true, 'action bubbles up to create learnergroup');
-  };
+  });
 
-  const assertCloseEditor = () => {
+  this.on('closeEditor', () => {
     assert.ok(true, 'action bubbles up to close editor');
-  };
-
-  this.on('addSingleOffering', assertCreate);
-  this.on('closeEditor', assertCloseEditor);
+  });
 
   this.$('.done').click();
 });
@@ -52,13 +54,17 @@ test('`create` actions bubble up (to create learnergroup and close editor)', fun
 test('`cancel` action bubbles up', function(assert) {
   assert.expect(1);
 
-  this.render(hbs`{{offering-editor closeEditor='closeEditor'}}`);
-
-  const assertCloseEditor = () => {
-    assert.ok(true, 'action bubbles up to close editor');
+  const flashMessages = {
+    clearMessages() {}
   };
 
-  this.on('closeEditor', assertCloseEditor);
+  this.set('flashMessages', flashMessages);
+
+  this.render(hbs`{{offering-editor closeEditor='closeEditor' flashMessages=flashMessages}}`);
+
+  this.on('closeEditor', () => {
+    assert.ok(true, 'action bubbles up to close editor');
+  });
 
   this.$('.cancel').click();
 });

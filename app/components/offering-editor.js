@@ -11,13 +11,16 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    this.setProperties({
-      instructors: [],
-      instructorGroups: [],
-      learnerGroups: [],
-      startDate: moment().format('MM/DD/YYYY'),
-      endDate: moment().add(1, 'days').format('MM/DD/YYYY')
-    });
+    const instructors = [];
+    const instructorGroups = [];
+    const learnerGroups = [];
+    const startDate = new Date();
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 1);
+    const startTime = new Date().setHours(8, 0, 0, 0);
+    const endTime = new Date().setHours(9, 0, 0, 0);
+
+    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime });
   },
 
   classNames: ['offering-editor'],
@@ -27,6 +30,8 @@ export default Component.extend({
 
   startDate: null,
   endDate: null,
+  startTime: null,
+  endTime: null,
   room: null,
 
   instructors: null,
@@ -91,6 +96,45 @@ export default Component.extend({
     }).sortBy('title');
   }),
 
+  datesValidated() {
+    const resetStartDate = this.get('startDate').setHours(0, 0, 0, 0);
+    const resetEndDate = this.get('endDate').setHours(0, 0, 0, 0);
+
+    let isEndDateOnOrBeforeStartDate = this.get('isMultiDay') && resetStartDate >= resetEndDate;
+
+    return isEndDateOnOrBeforeStartDate ? false : true;
+  },
+
+  timesValidated() {
+    const startTime = this.get('startTime');
+    const endTime = this.get('endTime');
+
+    let isEndTimeOnOrBeforeStartTime = !this.get('isMultiDay') && startTime >= endTime;
+
+    return isEndTimeOnOrBeforeStartTime ? false : true;
+  },
+
+  calculateDateTimes() {
+    let startDate = moment(this.get('startDate'));
+    let endDate;
+
+    let starTime = moment(this.get('startTime'));
+    startDate.hour(starTime.format('HH'));
+    startDate.minute(starTime.format('mm'));
+
+    if (this.get('isMultiDay')){
+      endDate = moment(this.get('endDate'));
+    } else {
+      endDate = startDate.clone();
+    }
+
+    let endTime = moment(this.get('endTime'));
+    endDate.hour(endTime.format('HH'));
+    endDate.minute(endTime.format('mm'));
+
+    return { startDate, endDate };
+  },
+
   actions: {
     setOfferingType(value) {
       this.set('singleOffering', value);
@@ -102,20 +146,20 @@ export default Component.extend({
 
     changeStartTime(date) {
       let newStart = moment(date);
-      let startDate = moment(this.get('startDate'));
+      let startTime = moment(this.get('startTime'));
 
-      startDate.hour(newStart.format('HH'));
-      startDate.minute(newStart.format('mm'));
-      this.set('startDate', startDate.toDate());
+      startTime.hour(newStart.format('HH'));
+      startTime.minute(newStart.format('mm'));
+      this.set('startTime', startTime.toDate());
     },
 
     changeEndTime(date) {
       let newEnd = moment(date);
-      let endDate = moment(this.get('endDate'));
+      let endTime = moment(this.get('endTime'));
 
-      endDate.hour(newEnd.format('HH'));
-      endDate.minute(newEnd.format('mm'));
-      this.set('endDate', endDate.toDate());
+      endTime.hour(newEnd.format('HH'));
+      endTime.minute(newEnd.format('mm'));
+      this.set('endTime', endTime.toDate());
     },
 
     addInstructor(instructor){
@@ -153,38 +197,33 @@ export default Component.extend({
     },
 
     create() {
-      let startDate = moment(this.get('startDate'));
-      let endDate;
+      if (this.datesValidated() && this.timesValidated()) {
+        let datesHash = this.calculateDateTimes();
 
-      if (this.get('isMultiDay')){
-        endDate = moment(this.get('endDate'));
+        let params = {
+          startDate: datesHash.startDate.toDate(),
+          endDate: datesHash.endDate.toDate(),
+          learnerGroups: this.get('learnerGroups')
+        };
+
+        if (this.get('singleOffering')) {
+          params.room = this.get('room');
+          params.instructors = this.get('instructors');
+          params.instructorGroups = this.get('instructorGroups');
+
+          this.sendAction('addSingleOffering', params);
+        } else {
+          this.sendAction('addMultipleOfferings', params);
+        }
+
+        this.send('cancel');
       } else {
-        endDate = startDate.clone();
-        let endTime = moment(this.get('endDate'));
-        endDate.hour(endTime.format('HH'));
-        endDate.minute(endTime.format('mm'));
+        this.get('flashMessages').alert('general.invalidDatetimes');
       }
-
-      let params = {
-        startDate: startDate.toDate(),
-        endDate: endDate.toDate(),
-        learnerGroups: this.get('learnerGroups')
-      };
-
-      if (this.get('singleOffering')) {
-        params.room = this.get('room');
-        params.instructors = this.get('instructors');
-        params.instructorGroups = this.get('instructorGroups');
-
-        this.sendAction('addSingleOffering', params);
-      } else {
-        this.sendAction('addMultipleOfferings', params);
-      }
-
-      this.send('cancel');
     },
 
     cancel() {
+      this.get('flashMessages').clearMessages();
       this.sendAction('closeEditor');
     }
   }
