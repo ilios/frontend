@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
+const {computed} = Ember;
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
@@ -19,7 +21,7 @@ export default DS.Model.extend({
   filesize: DS.attr('number'),
   link: DS.attr('string'),
   absoluteFileUri: DS.attr('string'),
-  type: Ember.computed('filename', 'citation', 'link', function(){
+  type: computed('filename', 'citation', 'link', function(){
     if (this.get('filename')) {
       return 'file';
     }
@@ -30,5 +32,17 @@ export default DS.Model.extend({
       return 'link';
     }
   }),
-  fileHash: null
+  fileHash: null,
+  url: computed('link', 'citation', 'absoluteFileUri', function(){
+    if(this.get('type') === 'file'){
+      return this.get('absoluteFileUri');
+    }
+    if(this.get('type') === 'link'){
+      return this.get('link');
+    }
+    if(this.get('type') === 'citation'){
+      return null;
+    }
+    
+  }),
 });

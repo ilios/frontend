@@ -1,22 +1,24 @@
 {{#if event}}
-  <h2>{{event.name}}</h2>
-  <span class='ilios-event-time'>
-    <span class='ilios-event-start'>
-      {{moment-format event.startDate 'h:mma'}}
-    </span>
-    <span class='ilios-event-end'>
-      - {{moment-format event.endDate 'h:mma'}}
-    </span>
-  </span>
-  <span class='ilios-event-location'>
-    {{event.location}}:
-  </span>
-
-  This is where details will go for:
-  <ol>
-    <li>Course info</li>
-    <li>Session info</li>
-    <li>Leaning Materials</li>
-    <li>etc...</li>
-  </ol>
+  <div class='ilios-event-print-course'>
+    {{#link-to 'printCourse' course}}
+      <button>{{t 'general.printSummary'}}</button>
+    {{/link-to}}
+  </div>
+  {{ilios-calendar-single-event
+    courseTitle=course.title
+    sessionTitle=thesession.title
+    description=description.content
+    offeredAtPhrase=offeredAt
+    taughtByPhrase=taughtBy.content
+    sessionIsPhrase=sessionIs.content
+    courseObjectivesPhrase=courseObjectivesPhrase
+    courseLearningMaterialsPhrase=courseLearningMaterialsPhrase
+    courseObjectives=courseObjectives
+    courseLearningMaterials=courseLearningMaterials
+    sessionObjectivesPhrase=sessionObjectivesPhrase
+    sessionLearningMaterialsPhrase=sessionLearningMaterialsPhrase
+    sessionObjectives=sessionObjectives
+    sessionLearningMaterials=sessionLearningMaterials
+    requiredPhrase=requiredPhrase
+  }}
 {{/if}}
