@@ -30,9 +30,10 @@ Router.map(function() {
       this.route('publicationCheck', {path: '/publicationcheck'});
     });
   });
-  this.route('fourOhFour', { path: "*path"});
+  this.route('admin-dashboard', { path: '/admin'});
   this.route('login');
   this.route('events', {path: 'events/:slug'});
+  this.route('fourOhFour', { path: "*path"});
 });
 
 export default Router;
