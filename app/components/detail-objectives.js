@@ -69,16 +69,13 @@ export default Ember.Component.extend({
           });
           oldDescriptors.forEach(function(descriptor){
             descriptor.get('objectives').removeObject(objective);
-            descriptor.save();
           });
           newDescriptors.forEach(function(descriptor){
             descriptor.get('objectives').addObject(objective);
           });
           objective.save().then(function(){
-            newDescriptors.save().then(function(){
               self.set('manageDescriptorsObjective', null);
               scrollTo("#objective-" + objective.get('id'));
-            });
           });
         });
       }
