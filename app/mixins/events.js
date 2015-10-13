@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
@@ -80,40 +79,5 @@ export default Ember.Mixin.create({
     });
 
     return defer.promise;
-  },
-  getEventForSlug(slug){
-    let from = moment(slug.substring(1, 9), 'YYYYMMDD').hour(0);
-    let to = from.clone().hour(24);
-    let type = slug.substring(9, 10);
-    let id = parseInt(slug.substring(10));
-    
-    return new Ember.RSVP.Promise(resolved => {
-      this.getEvents(from.unix(), to.unix()).then(events => {
-        let event = events.find( event => {
-          if(type === 'O'){
-            return event.offering === id;
-          }
-          if(type === 'I'){
-            return event.ilmSession === id;
-          }
-        });
-        
-        resolved(event);
-      });
-    });
-    
-   
-  },
-  getSlugForEvent(event){
-    let slug =  this.get('slugType');
-    slug += moment(event.startDate).format('YYYYMMDD');
-    if(event.offering){
-      slug += 'O' + event.offering;
-    }
-    if(event.ilmSession){
-      slug += 'I' + event.ilmSession;
-    }
-
-    return slug;
-  },
+  }
 });
