@@ -34,6 +34,7 @@ Router.map(function() {
   this.route('login');
   this.route('events', {path: 'events/:slug'});
   this.route('users', {});
+  this.route('user', {path: '/users/:user_id'});
   this.route('fourOhFour', { path: "*path"});
 });
 
