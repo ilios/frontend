@@ -13,17 +13,14 @@
     <li>{{t 'general.currentlySearchingPrompt'}}</li>
   </ul>
 {{else}}
-  {{#if searchResults.length}}
+  {{#if sortedSearchResults.length}}
     <div class='selectable-list'>
       <ul class='mesh-search-results'>
-        {{#each searchResults as |term|}}
+        {{#each sortedSearchResults as |term|}}
           <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>{{term.name}}</li>
         {{/each}}
       </ul>
     </div>
-    {{#if hasMoreSearchResults }}
-        <button {{action 'searchMore' query}}>{{ t 'general.showMore' }}</button>
-    {{/if}}
   {{else}}
     {{#if searchReturned}}
       <ul class='results'>
