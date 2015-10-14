@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
   layout: layout,
-  classNames: ['detail-block'],
+  classNames: ['detail-block', 'mesh-manager'],
   placeholder: t('courses.meshSearchPlaceholder'),
   terms: [],
   query: '',
