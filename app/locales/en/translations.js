@@ -94,6 +94,7 @@ export default {
     'waitSaving': 'saving... one moment...',
     'select': 'Select',
     'invalidDatetimes': 'Invalid dates/times',
+    'globalSearchPlaceholder': 'Find Users...',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -324,6 +325,7 @@ export default {
   'user': {
     'firstName': 'First Name',
     'lastName': 'Last Name',
+    'manageUsers': 'Manage Users',
   },
   'language': {
     'select': {

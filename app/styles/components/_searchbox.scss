@@ -5,8 +5,7 @@
   height: 1.6em;
   margin-bottom: 10px;
 
-  // scss-lint:disable QualifyingElement
-  input[type=search] {
+  input {
     @include appearance(none);
     @include margin(0);
     @include padding(0 0 0 28px);
@@ -32,7 +31,7 @@
     width: 20px;
   }
 
-  button.close {
+  .close {
     @include position(absolute, 0 0 0 'auto');
     background-color: transparent;
     border-bottom-left-radius: 0;
