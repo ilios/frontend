@@ -144,7 +144,6 @@ export default Mixin.create({
     let component = this;
 
     this.get('store').find('user', userId).then((user) => {
-      toSave.pushObject(user);
       component.get('topLevelGroup').then((topLevelGroup) => {
         topLevelGroup.removeUserFromGroupAndAllDescendants(user).then((groups) => {
           toSave.pushObjects(groups);
