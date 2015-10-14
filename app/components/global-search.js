@@ -1,18 +1,21 @@
 import Ember from 'ember';
 
-const {inject, run} = Ember;
+const {inject, run, computed} = Ember;
 const {service} = inject;
 const {debounce} = run;
+const {or, notEmpty} = computed;
 
 export default Ember.Component.extend({
   store: service(),
   i18n: service(),
-  classNames: ['global-search', 'live-search'],
+  classNames: ['global-search'],
   results: [],
   searching: false,
   showMoreInputPrompt: false,
   showNoResultsMessage: false,
   currentlySearchingForTerm: false,
+  hasResults: notEmpty('results'),
+  showList: or('searching', 'showMoreInputPrompt', 'showNoResultsMessage', 'hasResults'),
   actions: {
     clear() {
       let input = this.$('input')[0];
