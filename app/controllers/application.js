@@ -1,16 +1,42 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+const { computed, Controller, inject } = Ember;
+const { service } = inject;
+
+export default Controller.extend({
+  currentUser: service(),
+
+  i18n: service(),
+
   pageTitleTranslation: null,
-  pageTitle: Ember.computed('pageTitleTranslation', 'i18n.locale', function(){
-    if(this.get('pageTitleTranslation')){
-      return this.get('i18n').t(this.get('pageTitleTranslation'));
+
+  pageTitle: computed('pageTitleTranslation', 'i18n.locale', {
+    get() {
+      if(this.get('pageTitleTranslation')){
+        return this.get('i18n').t(this.get('pageTitleTranslation'));
+      }
+
+      return '';
     }
-    
-    return '';
-  }),
+  }).readOnly(),
+
   showHeader: true,
   showNavigation: true,
+
+  init() {
+    this._super(...arguments);
+
+    const showErrorDisplay = false;
+    const error = [];
+
+    this.setProperties({ showErrorDisplay, error });
+  },
+
+  showErrorDisplay: null,
+  error: null,
+
+  setError(error) {
+    this.get('error').pushObject(error);
+    this.set('showErrorDisplay', true);
+  }
 });

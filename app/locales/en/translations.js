@@ -95,6 +95,8 @@ export default {
     'select': 'Select',
     'invalidDatetimes': 'Invalid dates/times',
     'globalSearchPlaceholder': 'Find Users...',
+    'transitionErrorMessage': 'Sorry, we can’t get you where you asked to go: something seems to be broken...',
+    'errorDisplayMessage': 'Sorry! Something went wrong with your request. Please try refreshing or check back later.'
   },
   'programs': {
     'programTitle': 'Program Title',

@@ -95,6 +95,8 @@ export default {
     'select': 'Selecciona',
     'invalidDatetimes': 'Fecha/Hora Inválida',
     'globalSearchPlaceholder': 'Encontrar Usuarios...',
+    'transitionErrorMessage': 'Lo sentimos! No le podemos conseguir donde pidió ir...',
+    'errorDisplayMessage': 'Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde.'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
