@@ -3,8 +3,7 @@ import { module, test } from 'qunit';
 
 module('Unit | Helper | is equal');
 
-// Replace this with your real tests.
-test('it works', function(assert) {
+test('correctly compares values', function(assert) {
   var result = isEqual([42, 42]);
   assert.ok(result);
   result = isEqual([42, '42']);

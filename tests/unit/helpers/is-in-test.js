@@ -3,8 +3,7 @@ import { module, test } from 'qunit';
 
 module('Unit | Helper | is in');
 
-// Replace this with your real tests.
-test('it works', function(assert) {
+test('correctly calculates if a value is in an array', function(assert) {
   var result = isIn([[42], 42]);
   assert.ok(result);
   result = isIn([[42], '42']);
