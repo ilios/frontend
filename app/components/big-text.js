@@ -14,35 +14,24 @@ export default Ember.Component.extend({
   ellipsis: 'ellipsis-h',
   lengths: collect('length', 'slippage'),
   totalLength: sum('lengths'),
-  promptText: '',
   renderHtml: true,
-  showIcons: computed('displayText', 'text', function(){
-    return false;
-    return this.get('displayText') !== this.get('cleanText');
-  }),
-  textOrPrompt: computed('text', 'promptText', function(){
-    let text = this.get('text');
-    //give us a string to work with no matter what
-    if(text === undefined || text == null){
-      text = '';
+  showIcons: computed('displayText', 'text', 'renderHtml', function(){
+    if(this.get('renderHtml')){
+      return this.get('displayText') !== this.get('text');
+    } else {
+      return this.get('displayText') !== this.get('cleanText');
     }
-    
-    if(text.length < 1 && this.get('promptText')){
-      text = this.get('promptText').toString();
-    }
-    
-    return text;
   }),
-  cleanText: computed('textOrPrompt', function(){
+  cleanText: computed('text', function(){
     //strip any possible HTML out of the text
-    return this.get('textOrPrompt').replace(/(<([^>]+)>)/ig,"");
+    return this.get('text').replace(/(<([^>]+)>)/ig,"");
   }),
   displayText: computed('cleanText', 'totalLength', 'length', 'expanded', function(){
     let cleanText = this.get('cleanText');
     let text;
     if(this.get('expanded') || cleanText.length < this.get('totalLength')){
       if(this.get('renderHtml')){
-        text = this.get('textOrPrompt');
+        text = this.get('text');
       } else {
         text = cleanText;
       }

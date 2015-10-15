@@ -1,7 +1,11 @@
 <span class='content'>
   {{#unless isEditing}}
     <span class='editable'>
-      {{big-text text=value action='edit' promptText=clickPrompt}}
+      {{#if value.length}}
+        {{big-text text=value action='edit' renderHtml=true}}
+      {{else}}
+        {{clickPrompt}}
+      {{/if}}
     </span>
   {{else}}
     <span class='editor'>

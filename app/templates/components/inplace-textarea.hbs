@@ -1,14 +1,18 @@
 <span class='content'>
   {{#unless isEditing}}
     <span class='editable'>
-      {{big-text text=value action='edit' promptText=clickPrompt}}
+      {{#if value.length}}
+        {{big-text text=value action='edit'}}
+      {{else}}
+        {{clickPrompt}}
+      {{/if}}
     </span>
   {{else}}
     <span class='editor'>
       <span class='control'>
         <textarea
           type='text'
-          value="target.value"
+          value={{buffer}}
           onKeyUp={{action "changeValue" value="target.value"}}
           onChange={{action "changeValue" value="target.value"}}>
           {{value}}
