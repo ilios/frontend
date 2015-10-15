@@ -213,11 +213,11 @@ $collapse-control-shadow-grey: #e2e2e2;
     }
 
     li:after {
-      content: ", ";
+      content: ', ';
    }
 
     li:last-child:after {
-      content: "";
+      content: '';
     }
   }
 
