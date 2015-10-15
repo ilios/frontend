@@ -17,9 +17,9 @@ export default Ember.Component.extend({
   renderHtml: true,
   showIcons: computed('displayText', 'text', 'renderHtml', function(){
     if(this.get('renderHtml')){
-      return this.get('displayText') !== this.get('text');
+      return this.get('displayText').toString() !== this.get('text');
     } else {
-      return this.get('displayText') !== this.get('cleanText');
+      return this.get('displayText').toString() !== this.get('cleanText');
     }
   }),
   cleanText: computed('text', function(){
