@@ -6,11 +6,13 @@
   {{else}}
     <span class='editor'>
       <span class='control'>
-        {{froala-editor
-          params=editorParams
-          value=buffer 
-          contentChanged=(action "grabChangedValue")
-        }}
+        <textarea
+          type='text'
+          value="target.value"
+          onKeyUp={{action "changeValue" value="target.value"}}
+          onChange={{action "changeValue" value="target.value"}}>
+          {{value}}
+        </textarea>
       </span>
       <span class='actions'>
         <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
