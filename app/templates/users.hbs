@@ -1,0 +1,30 @@
+<section id='users' class='fullwidth main-border'>
+  <div class="filter-tools">
+    <div id='schoolsfilter' class="filter">
+      <label class="inline-label">
+        {{t 'general.school'}}:
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{currentUser.model.school.title}}
+      </div>
+    </div>
+    <div id='textfilter' class="filter">
+      {{input type='text' value=textFilter placeholder=placeholderValue}}
+    </div>
+  </div>
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{t 'general.users'}}</h2>
+      </div>
+      <!-- <div class='resultslist-actions'>
+        <button {{action 'addUser'}}>{{t 'general.addNew'}}</button>
+      </div> -->
+    </div>
+    <div class='resultslist-list'>
+      {{user-list
+        users=sortedUsers
+      }}
+    </div>
+  </section>
+</section>

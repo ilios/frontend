@@ -30,6 +30,11 @@ export default Ember.Component.extend({
         'route': 'programs',
         'name': this.get('i18n').t('navigation.programs')
       },
+      {
+        'icon': 'cogs',
+        'route': 'admin-dashboard',
+        'name': this.get('i18n').t('navigation.admin')
+      },
     ];
   }),
   actions: {

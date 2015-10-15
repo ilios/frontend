@@ -93,7 +93,8 @@ export default {
     'myCourses': 'Mis Cursos',
     'waitSaving': 'Salvando... un momento...',
     'select': 'Selecciona',
-    'invalidDatetimes': 'Fecha/Hora Inválida'
+    'invalidDatetimes': 'Fecha/Hora Inválida',
+    'globalSearchPlaceholder': 'Encontrar Usuarios...',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -124,7 +125,8 @@ export default {
     'learnerGroups': 'Grupos de Aprendedores',
     'courses': 'Cursos y Sessiones',
     'logo': 'Logo de Ilios',
-    'menu': 'El Menú de Ilios'
+    'menu': 'El Menú de Ilios',
+    'admin': 'Administración',
   },
   'mesh': {
     'buttonTitle': 'Seleccione MeSH ({{count}})',
@@ -319,6 +321,11 @@ export default {
     'missingPassword': 'Contraseña requirida',
     'badCredentials': 'Incorrecta contraseña o nombre de usuario',
     'noAccountExists': 'Su cuenta no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios',
+  },
+  'user': {
+    'firstName': 'Nombre',
+    'lastName': 'Apellido',
+    'manageUsers': 'Administrar Usuarios',
   },
   'language': {
     'select': {

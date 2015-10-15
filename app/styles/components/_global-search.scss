@@ -1,6 +1,12 @@
-.live-search {
+.global-search {
   display: inline-block;
+  float: right;
   position: relative;
+  
+  input {
+    height: 2em;
+    width: 300px;
+  }
 
   .results {
     @include transition (all .2s ease-in-out);
@@ -11,9 +17,14 @@
     color: $base-font-color;
     cursor: pointer;
     left: 0;
-    min-width: 191px;
-    overflow: visible;
-    top: 2em;
+    max-height: 400px;
+    overflow-x: visible;
+    overflow-y: auto;
+    //this should be absolute, but first we have to move the .global-search
+    //out of the grid.
+    position: relative;
+    top: 0;
+    width: 300px;
     z-index: 100;
 
     li {
@@ -32,10 +43,10 @@
       }
     }
   }
-}
-
-.livesearch-user-email {
-  color: $medium-grey;
-  font-style: italic;
-  padding-right: .2em;
+  
+  .livesearch-user-email {
+    color: $medium-grey;
+    font-style: italic;
+    padding-right: .2em;
+  }
 }

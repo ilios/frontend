@@ -94,6 +94,7 @@ export default {
     'waitSaving': 'saving... one moment...',
     'select': 'Select',
     'invalidDatetimes': 'Invalid dates/times',
+    'globalSearchPlaceholder': 'Find Users...',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -124,7 +125,8 @@ export default {
     'learnerGroups': 'Learner Groups',
     'courses': 'Courses and Sessions',
     'logo': 'Ilios Logo',
-    'menu': 'Ilios Menu'
+    'menu': 'Ilios Menu',
+    'admin': 'Admin',
   },
   'mesh': {
     'buttonTitle': 'Select MeSH ({{count}})',
@@ -319,6 +321,11 @@ export default {
     'missingPassword': 'Password required',
     'badCredentials': 'Incorrect username or password',
     'noAccountExists': 'Your account {{accountName}} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.',
+  },
+  'user': {
+    'firstName': 'First Name',
+    'lastName': 'Last Name',
+    'manageUsers': 'Manage Users',
   },
   'language': {
     'select': {

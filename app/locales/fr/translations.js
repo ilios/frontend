@@ -94,6 +94,7 @@ export default {
     'waitSaving': "Travaille dessus... un moment...",
     'select': 'Sélectionnez',
     'invalidDatetimes': 'Dates/Heures invalides',
+    'globalSearchPlaceholder': 'Trouver des utilisateurs...',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -125,6 +126,7 @@ export default {
     'courses': "Des Cours et Séances",
     'logo': "Ilios Logo",
     'menu': "Ilios Menu",
+    'admin': 'Admin',
   },
   'mesh': {
     'buttonTitle': "Sélectionner MeSH ({{count}})",
@@ -319,6 +321,11 @@ export default {
     'missingPassword': "Nécessite un mot de passe",
     'badCredentials': "Nom d'utilisateur ou mot de passe incorrect",
     'noAccountExists': "Votre compte d'utilisateur {{accountName}} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios.",
+  },
+  'user': {
+    'firstName': 'Prénom',
+    'lastName': 'Nom de famille',
+    'manageUsers': 'Gérer les utilisateurs',
   },
   'language': {
     'select': {
