@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+const {computed, Handlebars} = Ember;
+const {SafeString} = Handlebars;
+const {collect, sum} = computed;
+
 export default Ember.Component.extend({
   expanded: false,
   classNames: ['big-text'],
@@ -8,36 +12,47 @@ export default Ember.Component.extend({
   expandIcon: 'info-circle',
   text: '',
   ellipsis: 'ellipsis-h',
-  lengths: Ember.computed.collect('length', 'slippage'),
-  totalLength: Ember.computed.sum('lengths'),
+  lengths: collect('length', 'slippage'),
+  totalLength: sum('lengths'),
   promptText: '',
-  showIcons: function(){
+  renderHtml: true,
+  showIcons: computed('displayText', 'text', function(){
+    return false;
     return this.get('displayText') !== this.get('cleanText');
-  }.property('displayText', 'text'),
-  cleanText: function(){
-    var text = this.get('text');
+  }),
+  textOrPrompt: computed('text', 'promptText', function(){
+    let text = this.get('text');
     //give us a string to work with no matter what
     if(text === undefined || text == null){
       text = '';
     }
     
-    //strip any possible HTML out of the text
-    let cleanText = text.replace(/(<([^>]+)>)/ig,"");
-
-    if(cleanText.length < 1){
-      return this.get('promptText')?this.get('promptText').toString():'';
+    if(text.length < 1 && this.get('promptText')){
+      text = this.get('promptText').toString();
     }
     
-    return cleanText;
-  }.property('text', 'promptText'),
-  displayText: function(){
-    var text = this.get('cleanText');
-    if(this.get('expanded') || text.length < this.get('totalLength')){
-      return text;
+    return text;
+  }),
+  cleanText: computed('textOrPrompt', function(){
+    //strip any possible HTML out of the text
+    return this.get('textOrPrompt').replace(/(<([^>]+)>)/ig,"");
+  }),
+  displayText: computed('cleanText', 'totalLength', 'length', 'expanded', function(){
+    let cleanText = this.get('cleanText');
+    let text;
+    if(this.get('expanded') || cleanText.length < this.get('totalLength')){
+      if(this.get('renderHtml')){
+        text = this.get('textOrPrompt');
+      } else {
+        text = cleanText;
+      }
+    } else {
+      text = cleanText.substring(0, this.get('length'));
     }
-
-    return text.substring(0, this.get('length'));
-  }.property('cleanText', 'totalLength', 'length', 'expanded'),
+    
+    return new SafeString(text);
+    
+  }),
   actions: {
     click: function(){
       this.sendAction();

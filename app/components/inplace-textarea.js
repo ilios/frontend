@@ -3,7 +3,7 @@ import InPlace from 'ilios/mixins/inplace';
 
 export default Ember.Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-textarea'],
-  editorParams: Ember.computed('buffer', function(){
+  editorParams: Ember.computed('buffer', 'clickPrompt', function(){
     let params = {
       inlineMode: false,
       placeholder: '',
@@ -15,31 +15,25 @@ export default Ember.Component.extend(InPlace, {
         'bold',
         'italic',
         'underline',
-        'fontSize',
-        'color',
+        'subscript',
+        'superscript',
         'insertOrderedList',
         'insertUnorderedList',
         'createLink',
-        'undo',
-        'redo',
-        'html',
-        'removeFormat',
-        'fullscreen'
+        'html'
       ]
     };
     
     return params;
   }),
   willDestroyElement(){
-    if (this.$('.control .froala-box').data('fa.editable')) {
-      this.$('.control .froala-box').editable('destroy');
-    }
+    this.$('.control .froala-box').editable('destroy');
   },
   actions: {
-    pullDataAndSave(){
-      let value = this.$('.control .froala-box').editable('getHTML');
-      this.send('changeValue', value);
-      this.send('save');
+    grabChangedValue: function(event, editor){
+      if(editor){
+        this.send('changeValue', editor.getHTML());
+      }
     }
   }
 });

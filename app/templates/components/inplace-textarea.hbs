@@ -6,10 +6,14 @@
   {{else}}
     <span class='editor'>
       <span class='control'>
-        {{froala-editor params=editorParams value=buffer}}
+        {{froala-editor
+          params=editorParams
+          value=buffer 
+          contentChanged=(action "grabChangedValue")
+        }}
       </span>
       <span class='actions'>
-        <button class='done icon' title='{{t "general.save"}}' {{action 'pullDataAndSave'}}>{{fa-icon 'check'}}</button>
+        <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
         <button class='cancel icon' title='{{t "general.cancel"}}' {{action 'cancel'}}>{{fa-icon 'times'}}</button>
       </span>
     </span>
