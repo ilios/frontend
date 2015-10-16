@@ -18,10 +18,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
       this.get('flashMessages').alert('general.transitionErrorMessage');
 
-      // Manage route-related errors
-      // Ember.onerror(error);
-
-      // Substate implementation when returning `true` (i.e. error.hbs)
+      // Future Reference:
+      // Uncommented code below would render substate (error.hbs)
       // return true;
     }
   }

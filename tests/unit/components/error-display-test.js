@@ -22,23 +22,6 @@ test('properties have default values', function(assert) {
   assert.deepEqual(actual, expected, 'default values are correct');
 });
 
-// test('`toggleDetails` gets triggered on click', function(assert) {
-//   assert.expect(1);
-//
-//   const link = '.error-detail-action';
-//   const component = this.subject({
-//     content: []
-//   });
-//
-//   component.send = (action) => {
-//     assert.equal(action, 'toggleDetails', 'action was called');
-//   };
-//
-//   this.render();
-//
-//   this.$(link).click();
-// });
-
 test('`toggleDetails` action changes `showDetails` property', function(assert) {
   assert.expect(1);
 
@@ -47,18 +30,6 @@ test('`toggleDetails` action changes `showDetails` property', function(assert) {
   component.send('toggleDetails');
 
   assert.equal(component.get('showDetails'), true);
-});
-
-test('`showOrHideDetails` computed property works', function(assert) {
-  assert.expect(2);
-
-  const component = this.subject();
-
-  assert.equal(component.get('showOrHideDetails'), 'Show Details');
-
-  component.set('showDetails', true);
-
-  assert.equal(component.get('showOrHideDetails'), 'Hide Details');
 });
 
 test('`totalErrors` computed property works', function(assert) {

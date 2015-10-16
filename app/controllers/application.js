@@ -27,16 +27,16 @@ export default Controller.extend({
     this._super(...arguments);
 
     const showErrorDisplay = false;
-    const error = [];
+    const errors = [];
 
-    this.setProperties({ showErrorDisplay, error });
+    this.setProperties({ showErrorDisplay, errors });
   },
 
   showErrorDisplay: null,
-  error: null,
+  errors: null,
 
-  setError(error) {
-    this.get('error').pushObject(error);
+  addError(error) {
+    this.get('errors').pushObject(error);
     this.set('showErrorDisplay', true);
   }
 });

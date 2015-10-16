@@ -1,7 +1,11 @@
 <div class="error-main">
   <h2>{{t 'general.errorDisplayMessage'}}</h2>
 
-  <span class="error-detail-action" {{action 'toggleDetails'}}>{{showOrHideDetails}}</span>
+  {{#if showDetails}}
+    <span class="error-detail-action" {{action 'toggleDetails'}}>{{t 'courses.collapseDetail'}}</span>
+  {{else}}
+    <span class="error-detail-action" {{action 'toggleDetails'}}>{{t 'courses.expandDetail'}}</span>
+  {{/if}}
 </div>
 
 {{#if showDetails}}

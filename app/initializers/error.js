@@ -22,7 +22,7 @@ export default {
         console.log(error);
 
         if (error) {
-          controller.setError(error);
+          controller.addError(error);
           this.logError(error);
         }
       };
@@ -32,7 +32,7 @@ export default {
         console.log(error);
 
         if (error) {
-          controller.setError(error);
+          controller.addError(error);
           this.logError(error);
         }
       });

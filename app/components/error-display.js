@@ -29,12 +29,6 @@ export default Component.extend({
 
   showDetails: false,
 
-  showOrHideDetails: computed('showDetails', {
-    get() {
-      return this.get('showDetails') ? 'Hide Details' : 'Show Details';
-    }
-  }).readOnly(),
-
   totalErrors: computed('content.[]', {
     get() {
       const contentLength = this.get('content').length;
