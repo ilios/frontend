@@ -20,7 +20,7 @@ export default Ember.Component.extend(InPlace, {
         'insertOrderedList',
         'insertUnorderedList',
         'createLink',
-        // 'html' temporarily disabled due to bug
+        // 'html' //temporarily disabled due to bug
       ]
     };
     
