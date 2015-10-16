@@ -6,11 +6,9 @@
     <div class='dashboard-block-body'>
         <table>
             <tbody>
-            {{!-- {{sortedReports}} --}}
             {{#each sortedReports as |report|}}
                 <tr class='clickable'>
-                  <td>{{fa-icon 'external-link-square'}}</td>
-                  <td>{{report.title}}</td>
+                  <td>{{fa-icon 'external-link-square'}} {{report.title}}</td>
                 </tr>
             {{/each}}
             </tbody>
