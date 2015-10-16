@@ -1,31 +1,10 @@
 import Ember from 'ember';
+import config from 'ilios/config/environment';
 import InPlace from 'ilios/mixins/inplace';
 
 export default Ember.Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-html'],
-  editorParams: Ember.computed('buffer', 'clickPrompt', function(){
-    let params = {
-      inlineMode: false,
-      placeholder: '',
-      allowHTML: true,
-      autosave: false,
-      plainPaste: true,
-      spellcheck: true,
-      buttons: [
-        'bold',
-        'italic',
-        'underline',
-        'subscript',
-        'superscript',
-        'insertOrderedList',
-        'insertUnorderedList',
-        'createLink',
-        // 'html' //temporarily disabled due to bug
-      ]
-    };
-    
-    return params;
-  }),
+  editorParams: config.froalaEditorDefaults,
   willDestroyElement(){
     this.$('.control .froala-box').editable('destroy');
   },

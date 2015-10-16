@@ -38,6 +38,25 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'en'
     },
+    froalaEditorDefaults: {
+      inlineMode: false,
+      placeholder: '',
+      allowHTML: true,
+      autosave: false,
+      plainPaste: true,
+      spellcheck: true,
+      buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'subscript',
+        'superscript',
+        'insertOrderedList',
+        'insertUnorderedList',
+        'createLink',
+        // 'html' //temporarily disabled due to bug
+      ]
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
