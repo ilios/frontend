@@ -1,26 +1,20 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import tHelper from "ember-i18n/helper";
 
 moduleForComponent('inplace-html', 'Integration | Component | inplace html', {
-  integration: true
+  integration: true,
+
+  beforeEach() {
+    this.container.lookup('service:i18n').set('locale', 'en');
+    this.registry.register('helper:t', tHelper);
+  }
 });
 
 test('it renders', function(assert) {
-  assert.expect(2);
-
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  assert.expect(1);
 
   this.render(hbs`{{inplace-html}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#inplace-html}}
-      template block text
-    {{/inplace-html}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'Click to edit');
 });

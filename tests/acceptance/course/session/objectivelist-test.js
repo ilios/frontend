@@ -138,14 +138,20 @@ test('edit objective title', function(assert) {
     let td = find('tbody tr:eq(0) td:eq(0)', container);
     assert.equal(getElementText(td), getText(objective.title));
     click('.editable span', td);
+    
     andThen(function(){
-      var textArea = find('textarea', td);
-      assert.equal(getText(textArea.val()), getText(objective.title));
-      fillIn(textArea, 'new title');
-      click(find('.actions .done', td));
-    });
-    andThen(function(){
-      assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('new title'));
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find('.froala-box', td);
+        let editorContents = editor.editable('getText');
+        assert.equal(getText(editorContents), getText(objective.title));
+        
+        editor.editable('setHTML', 'new title');
+        click(find('.actions .done', td));
+        andThen(function(){
+          assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('new title'));
+        });
+      }, 100);
     });
   });
 });

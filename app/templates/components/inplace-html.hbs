@@ -4,7 +4,7 @@
       {{#if value.length}}
         {{big-text text=value action='edit' renderHtml=true}}
       {{else}}
-        {{clickPrompt}}
+        <span {{action 'edit'}}>{{clickPrompt}}</span>
       {{/if}}
     </span>
   {{else}}
