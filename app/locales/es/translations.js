@@ -197,6 +197,7 @@ export default {
     'title': 'Titulo de Curso',
     'objectiveParentTitle': 'Seleccione Objetivos Principales',
     'objectiveDescriptorTitle': 'Seleccione Descriptores de MeSH',
+    'newObjectiveSaved': 'Nuevo Objetivo Guardado',
     'chooseCohortTitle': 'Seleccione Matriz Para',
     'missingCohortMessage': 'Favor de agregar por lo menos un Clase de La Graduación a este curso.',
     'confirmRemove': ' ¿Estás seguro que quieres borrar este curso, con {{publishedOfferingCount}} ofrecimientos publicados? Esta acción borrará todas las sessiones y ofrecimientos para este curso y no se puede deshacer.',
