@@ -1,0 +1,19 @@
+{{#if sortedReports.length}}
+    <div class='dashboard-block-header'>
+        {{t 'dashboard.myReports'}}
+    </div>
+
+    <div class='dashboard-block-body'>
+        <table>
+            <tbody>
+            {{!-- {{sortedReports}} --}}
+            {{#each sortedReports as |report|}}
+                <tr class='clickable'>
+                  <td>{{fa-icon 'external-link-square'}}</td>
+                  <td>{{report.title}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/if}}

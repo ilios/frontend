@@ -363,6 +363,7 @@ export default {
     'courseLevels': 'Course Levels',
     'programAndCohort': 'Program/Cohort',
     'mySchedule': 'My Schedule',
+    'myReports': 'My Reports',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',
     'topicOrDetail': 'Topic/Detail',
