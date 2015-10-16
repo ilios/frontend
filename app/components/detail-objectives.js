@@ -1,24 +1,32 @@
 import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
+import config from 'ilios/config/environment';
+
+const {computed, inject} = Ember;
+const {service} = inject;
+const {or, notEmpty} = computed;
 
 export default Ember.Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
+  flashMessages: service(),
   subject: null,
   classNames: ['detail-objectives'],
   isCourse: false,
   isSession: false,
   isProgramYear: false,
-  isManaging: Ember.computed.or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
-  isManagingParents: Ember.computed.notEmpty('mangeParentsObjective'),
+  isManaging: or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
+  isManagingParents: notEmpty('mangeParentsObjective'),
   mangeParentsObjective: null,
   initialStateForManageParentsObjective: [],
-  isManagingDescriptors: Ember.computed.notEmpty('manageDescriptorsObjective'),
+  isManagingDescriptors: notEmpty('manageDescriptorsObjective'),
   mangeMeshObjective: null,
   initialStateForManageMeshObjective: [],
-  isManagingCompetency: Ember.computed.notEmpty('manageCompetencyObjective'),
+  isManagingCompetency: notEmpty('manageCompetencyObjective'),
   manageCompetencyObjective: null,
   initialStateForManageCompetencyObjective: null,
-  newObjectives: [],
+  newObjectiveEditorOn: false,
+  newObjectiveTitle: null,
+  editorParams: config.froalaEditorDefaults,
   actions: {
     manageParents: function(objective){
       objective.get('parents').then((parents) => {
@@ -128,13 +136,9 @@ export default Ember.Component.extend({
         scrollTo("#objective-" + objective.get('id'));
       }
     },
-    addObjective: function(){
-      var objective = this.get('store').createRecord('objective');
-      this.get('newObjectives').addObject(objective);
-    },
-    saveNewObjective: function(newObjective){
-      var self = this;
-      self.get('newObjectives').removeObject(newObjective);
+    saveNewObjective: function(){
+      let newObjective = this.get('store').createRecord('objective');
+      newObjective.set('title', this.get('newObjectiveTitle'));
       if(this.get('isCourse')){
         newObjective.get('courses').addObject(this.get('subject'));
       }
@@ -144,15 +148,26 @@ export default Ember.Component.extend({
       if(this.get('isProgramYear')){
         newObjective.get('programYears').addObject(this.get('subject'));
       }
-      newObjective.save().then(function(savedObjective){
-        self.get('subject.objectives').then(function(objectives){
+      newObjective.save().then(savedObjective => {
+        this.get('subject.objectives').then(objectives => {
           objectives.addObject(savedObjective);
-          objectives.save();
         });
+        this.send('closeNewObjectiveEditor');
+        this.get('flashMessages').success('courses.newObjectiveSaved');
       });
     },
-    removeNewObjective: function(newObjective){
-      this.get('newObjectives').removeObject(newObjective);
+    toggleNewObjectiveEditor() {
+      this.set('newObjectiveTitle', null);
+      this.set('newObjectiveEditorOn', !this.get('newObjectiveEditorOn'));
+    },
+    closeNewObjectiveEditor() {
+      this.set('newObjectiveTitle', null);
+      this.set('newObjectiveEditorOn', false);
+    },
+    changeNewObjectiveTitle(event, editor){
+      if(editor){
+        this.set('newObjectiveTitle', editor.getHTML());
+      }
     },
   }
 });

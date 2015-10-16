@@ -25,23 +25,25 @@
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      <button {{action 'addObjective'}}>{{t 'general.addNew'}}</button>
+      {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
     {{/liquid-if}}
   </div>
   <div class='detail-content'>
-    {{#liquid-if newObjectives.length class='vertical'}}
+    {{#liquid-if newObjectiveEditorOn class='vertical'}}
       <section class='resultslist-new'>
-        {{#each newObjectives as |objective|}}
-          <section class='newobjective'>
-            <label>
-              {{t 'general.title'}}:
-              {{textarea value=objective.title}}
-            </label>
-            <br />
-            <button class='done text' {{action 'saveNewObjective' objective}}>{{t 'general.done'}}</button>
-            <button class='cancel text' {{action 'removeNewObjective' objective}}>{{t 'general.cancel'}}</button>
-          </section>
-        {{/each}}
+        <section class='newobjective'>
+          <label>
+            {{t 'general.title'}}:
+            {{froala-editor
+              params=editorParams
+              value=newObjectiveTitle
+              contentChanged=(action "changeNewObjectiveTitle")
+            }}
+          </label>
+          <br />
+          <button class='done text' {{action 'saveNewObjective'}}>{{t 'general.done'}}</button>
+          <button class='cancel text' {{action 'closeNewObjectiveEditor'}}>{{t 'general.cancel'}}</button>
+        </section>
       </section>
     {{/liquid-if}}
     {{#liquid-unless isManaging class="horizontal"}}
