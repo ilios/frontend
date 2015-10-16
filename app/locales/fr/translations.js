@@ -197,6 +197,7 @@ export default {
     'title': "Titre de Cours",
     'objectiveParentTitle': "Choisi Objectifs mères",
     'objectiveDescriptorTitle': "Choisi MeSH",
+    'newObjectiveSaved': 'Nouvel objective sauvé',
     'chooseCohortTitle': "Choisi objectif mère pour",
     'missingCohortMessage': "S'il vous plait ajouter au moins un cohort à ce cours.",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer ce cours, avec {{publishedOfferingCount}} offres publié? Cela supprimera toutes sessions et offres pour ce cours, et ne peut pas être défait.",
