@@ -10,17 +10,18 @@
   {{else}}
     <span class='editor'>
       <span class='control'>
-        <input 
-          type='text'
-          value={{value}}
+        <input type="text" value={{value}}
           onKeyUp={{action "changeValue" value="target.value"}}
-          onChange={{action "changeValue" value="target.value"}} 
-        />
+          onChange={{action "changeValue" value="target.value"}}
+          class="{{if topErrorMessage 'has-error'}}" />
       </span>
       <span class='actions'>
         <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
         <button class='cancel icon' title='{{t "general.cancel"}}' {{action 'cancel'}}>{{fa-icon 'times'}}</button>
       </span>
+      {{#if topErrorMessage}}
+        <span class="error">{{topErrorMessage}}</span>
+      {{/if}}
     </span>
   {{/unless}}
 </span>

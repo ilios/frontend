@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
-const {computed, Handlebars} = Ember;
-const {SafeString} = Handlebars;
-const {collect, sum} = computed;
+const { computed, Handlebars } = Ember;
+const { SafeString } = Handlebars;
+const { collect, sum } = computed;
 
 export default Ember.Component.extend({
   expanded: false,
@@ -38,9 +38,9 @@ export default Ember.Component.extend({
     } else {
       text = cleanText.substring(0, this.get('length'));
     }
-    
+
     return new SafeString(text);
-    
+
   }),
   actions: {
     click: function(){
