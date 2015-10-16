@@ -316,3 +316,30 @@ select:hover {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(0, 0, 0, .05);
 }
+
+.list-reset {
+  ul { 
+    list-style-position: inside; 
+    list-style-type: disc; 
+  }
+  
+  ol { 
+    list-style-position: inside; 
+    list-style-type: decimal; 
+  }
+  
+  ul ul,
+  ol ul { 
+    list-style-position: inside; 
+    list-style-type: circle; 
+    margin-left: 15px; 
+  }
+  
+  ol ol,
+  ul ol { 
+    list-style-position: inside; 
+    list-style-type: lower-latin; 
+    margin-left: 15px; 
+  }
+  
+}
