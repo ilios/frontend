@@ -14,7 +14,12 @@
       {{/flash-message}}
     {{/each}}
   </div>
-  {{liquid-outlet}}
+
+  {{#if showErrorDisplay}}
+    {{error-display content=errors}}
+  {{else}}
+    {{liquid-outlet}}
+  {{/if}}
 </div>
 
 {{outlet 'fullscreen'}}

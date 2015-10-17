@@ -1,0 +1,28 @@
+<div class="error-main">
+  <h2>{{t 'general.errorDisplayMessage'}}</h2>
+
+  {{#if showDetails}}
+    <span class="error-detail-action" {{action 'toggleDetails'}}>{{t 'courses.collapseDetail'}}</span>
+  {{else}}
+    <span class="error-detail-action" {{action 'toggleDetails'}}>{{t 'courses.expandDetail'}}</span>
+  {{/if}}
+</div>
+
+{{#if showDetails}}
+  <div class="error-detail">
+    <h3 class="error-total">{{totalErrors}}</h3>
+
+    {{#each revisedContent as |error|}}
+      <div class="error-details">
+        <h5 class="error-main-message">{{error.mainMessage}}</h5>
+        {{#if error.statusCode}}
+          <span class="error-status-code">Status Code: {{error.statusCode}}</span>
+        {{/if}}
+        {{#if error.message}}
+          <span class="error-message">Message: {{error.message}}</span>
+        {{/if}}
+        <pre class="error-stack">{{error.stack}}</pre>
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
