@@ -1,11 +1,7 @@
 <ul class='removable-list'>
-  {{#if sortedTopics.isFulfilled}}
-    {{#each sortedTopics as |topic|}}
-      <li {{action 'remove' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
-    {{/each}}
-  {{else}}
-    <li>{{fa-icon 'spinner' spin=true}}</li>
-  {{/if}}
+  {{#each sortedTopics as |topic|}}
+    <li {{action 'remove' topic}}>{{topic.title}} {{fa-icon 'remove'}}</li>
+  {{/each}}
 </ul>
 {{search-box value=filter placeholder=placeholder}}
 <div class='selectable-list'>

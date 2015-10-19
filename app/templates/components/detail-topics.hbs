@@ -11,7 +11,9 @@
 
   <div class='detail-actions'>
     {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigadd' {{action 'save'}}>
+          {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+        </button>
         <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       <button {{action 'manage'}}>{{t 'courses.topicsManageTitle'}}</button>
@@ -21,7 +23,9 @@
     {{#liquid-if isManaging class="horizontal"}}
         {{detail-topic-manager
           availableTopics=availableTopics
-          subject=subject
+          selectedTopics=bufferedTopics
+          add='addTopicToBuffer'
+          remove='removeTopicFromBuffer'
         }}
     {{else}}
       {{detail-topic-list
