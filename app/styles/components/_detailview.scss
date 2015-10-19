@@ -211,14 +211,6 @@ $collapse-control-shadow-grey: #e2e2e2;
       margin-right: .3em;
       vertical-align: middle;
     }
-
-    li:after {
-      content: ', ';
-   }
-
-    li:last-child:after {
-      content: '';
-    }
   }
 
   .columnar-list {
