@@ -1,33 +1,55 @@
 import Ember from 'ember';
+import DS from 'ember-data';
+
 import { translationMacro as t } from "ember-i18n";
 
+const {computed, inject, RSVP} = Ember;
+const {alias} = computed;
+const {service} = inject;
+const {PromiseArray} = DS;
+
 export default Ember.Component.extend({
-  i18n: Ember.inject.service(),
+  i18n: service(),
   placeholder: t('general.filterPlaceholder'),
   filter: '',
-  sortBy: ['title'],
   subject: null,
-  topics: Ember.computed.alias('subject.topics'),
-  sortedTopics: Ember.computed.sort('topics', 'sortBy'),
+  topics: alias('subject.topics'),
+  sortedTopics: computed('topics.[]', function(){
+    let defer = RSVP.defer();
+
+    this.get('topics').then(topics => {
+      defer.resolve(topics.sortBy('title'));
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   availableTopics: [],
   tagName: 'section',
   classNames: ['detail-block'],
-  filteredAvailableTopics: function(){
-    var self = this;
-    var filter = this.get('filter');
-    var exp = new RegExp(filter, 'gi');
-
-    var topics = this.get('availableTopics').filter(function(topic) {
-      return (
-        topic.get('title') !== undefined &&
-        self.get('topics') &&
-        topic.get('title').match(exp) &&
-        !self.get('topics').contains(topic)
-      );
+  filteredAvailableTopics: computed('availableTopics.[]', 'topics.[]', 'filter', function(){
+    let defer = RSVP.defer();
+    let exp = new RegExp(this.get('filter'), 'gi');
+    
+    this.get('availableTopics').then(availableTopics => {
+      let filteredTopics = availableTopics.filter(topic => {
+        return (
+          topic.get('title') !== undefined &&
+          this.get('topics') &&
+          topic.get('title').match(exp) &&
+          !this.get('topics').contains(topic)
+        );
+      });
+      
+      defer.resolve(filteredTopics.sortBy('title'));
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
     });
 
-    return topics.sortBy('title');
-  }.property('topics.@each', 'filter', 'availableTopics.@each'),
+  }),
   actions: {
     add: function(topic){
       var subject = this.get('subject');

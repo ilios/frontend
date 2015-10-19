@@ -7,7 +7,7 @@
       {{#if collapsed}}
         <div {{action 'expand'}} class='detail-collapsed-control'><span>{{t 'courses.expandDetail'}}{{fa-icon "fa-plus-square"}}</span></div>
       {{else}}
-        {{course-editing course=course availableTopics=availableTopics programs=programs}}
+        {{course-editing course=course}}
         <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'courses.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
       {{/if}}
     </div>
