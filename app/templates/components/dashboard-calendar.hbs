@@ -1,18 +1,18 @@
 <section class='calendar-controls'>
-  <div class='calendar-options-control showfilters'>
-    {{toggle-wide
-      value=showFilters
-      onLabel='dashboard.showFilters'
-      offLabel='dashboard.hideFilters'
-      action='toggleShowFilters'
-    }}
-  </div>
   <div class='calendar-options-control togglemyschedule'>
     {{toggle-wide
       value=mySchedule
       onLabel='dashboard.mySchedule'
       offLabel='dashboard.allEvents'
       action='toggleMySchedule'
+    }}
+  </div>
+  <div class='calendar-options-control showfilters'>
+    {{toggle-wide
+      value=showFilters
+      onLabel='dashboard.showFilters'
+      offLabel='dashboard.hideFilters'
+      action='toggleShowFilters'
     }}
   </div>
   {{#if showFilters}}
@@ -26,7 +26,7 @@
     </div>
   {{/if}}
   <div class='calendar-options-control calendar-school-picker'>
-    {{fa-icon 'university'}} 
+    {{fa-icon 'university'}}
     {{#if hasMoreThanOneSchool}}
       <select {{action 'pickSchool' on='change'}}>
         {{#each schools as |school|}}
@@ -84,7 +84,7 @@
             {{fa-icon "spinner" spin=true}}
           {{/if}}
         </div>
-      {{else}}        
+      {{else}}
         <div class='calendar-filter-list topicfilter'>
           {{t 'general.topics'}}
           {{#if topics.isFulfilled}}
@@ -100,7 +100,7 @@
             {{fa-icon "spinner" spin=true}}
           {{/if}}
         </div>
-        
+
         <div class='calendar-filter-list sessiontypefilter'>
           {{t 'dashboard.sessionTypes'}}
           {{#if sessionTypes.isFulfilled}}
@@ -142,7 +142,7 @@
             {{fa-icon "spinner" spin=true}}
           {{/if}}
         </div>
-      {{/liquid-if}}   
+      {{/liquid-if}}
     {{/liquid-if}}
   </div>
 </section>
