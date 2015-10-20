@@ -22,9 +22,7 @@ export default Ember.Component.extend({
           defer.resolve(topics);
         });
       });
-    }
-    
-    if(this.get('isSession')){
+    } else if(this.get('isSession')){
       this.get('subject').get('course').then(course => {
         course.get('school').then(school => {
           school.get('topics').then(topics => {
@@ -32,9 +30,7 @@ export default Ember.Component.extend({
           });
         });
       });
-    }
-    
-    if(this.get('isProgramYear')){
+    } else if(this.get('isProgramYear')){
       this.get('subject').get('program').then(program => {
         program.get('school').then(school => {
           school.get('topics').then(topics => {
@@ -42,6 +38,8 @@ export default Ember.Component.extend({
           });
         });
       });
+    } else {
+      throw new Error("detail-topic component called without isCourse, isSession, or isProgramYear context");
     }
     
     return PromiseArray.create({
