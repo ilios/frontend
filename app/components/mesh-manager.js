@@ -42,7 +42,7 @@ export default Ember.Component.extend({
       var terms = this.get('terms');
       this.get('store').query('mesh-descriptor', {
         q: query,
-        limit: this.get('searchResultsPerPage') + 1,
+        limit: this.get('searchResultsPerPage') + 1
       }).then(function(descriptors){
         let results = descriptors.map(function(descriptor){
           return ProxiedDescriptors.create({
@@ -60,10 +60,10 @@ export default Ember.Component.extend({
         self.set('searchResults', results);
       });
     },
-
-    searchMore: function(query) {
+    searchMore: function() {
       var self = this;
       var terms = this.get('terms');
+      var query = this.get('query');
       this.get('store').query('mesh-descriptor', {
         q: query,
         limit: this.get('searchResultsPerPage') + 1,
