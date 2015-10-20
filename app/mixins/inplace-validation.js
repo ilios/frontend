@@ -22,9 +22,23 @@ export default Mixin.create({
     }
   }).readOnly(),
 
+  saveOnChange: false,
+
+  buffer: null,
+
+  validationNeeded: false,
+
+  // Allows the calling object to send some context like an id
+  // Can be used during the save process
+  condition: null,
+
   actions: {
     changeValue(value) {
       this.set('buffer', value);
+
+      if (this.get('saveOnChange')) {
+        this.send('save');
+      }
     },
 
     edit() {
@@ -40,14 +54,23 @@ export default Mixin.create({
     save() {
       const value = this.get('value');
       const buffer = this.get('buffer');
+      const condition = this.get('condition');
 
-      this.validate().then(() => {
+      if (this.get('validationNeeded')) {
+        this.validate().then(() => {
+          if (!isEqual(value, buffer)) {
+            this.sendAction('save', buffer);
+          }
+
+          this.set('isEditing', false);
+        });
+      } else {
         if (!isEqual(value, buffer)) {
-          this.sendAction('save', this.get('buffer'));
+          this.sendAction('save', buffer, condition);
         }
 
-        this.send('cancel');
-      });
+        this.set('isEditing', false);
+      }
     },
 
     cancel() {

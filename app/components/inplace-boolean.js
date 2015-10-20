@@ -1,14 +1,19 @@
 import Ember from 'ember';
-import InPlace from 'ilios/mixins/inplace';
+import InPlaceValidation from 'ilios/mixins/inplace-validation';
 
-export default Ember.Component.extend(InPlace, {
+const { Component } = Ember;
+
+export default Component.extend(InPlaceValidation, {
   classNames: ['editinplace', 'inplace-boolean'],
+
   saveOnChange: true,
+
   actions: {
-    toggleValue: function(){
-      if(this.get('buffer') == null){
+    toggleValue() {
+      if (this.get('buffer') === null) {
         this.set('buffer', this.get('value'));
       }
+
       this.send('changeValue', !this.get('buffer'));
     }
   }

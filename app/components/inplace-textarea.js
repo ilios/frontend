@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import InPlace2 from 'ilios/mixins/inplace2';
+import InPlaceValidation from 'ilios/mixins/inplace-validation';
 import ValidationSessionDescription from 'ilios/mixins/validation-session-description';
 import EmberValidations from 'ember-validations';
 
 const { Component, isBlank } = Ember;
 
-export default Component.extend(InPlace2, EmberValidations, ValidationSessionDescription, {
+export default Component.extend(InPlaceValidation, EmberValidations, ValidationSessionDescription, {
   classNames: ['editinplace', 'inplace-textarea'],
 
   init() {
@@ -14,5 +14,7 @@ export default Component.extend(InPlace2, EmberValidations, ValidationSessionDes
     if (isBlank(this.get('value'))) {
       this.set('value', '');
     }
-  }
+  },
+
+  validationNeeded: true
 });

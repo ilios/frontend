@@ -29,6 +29,7 @@ export default Mixin.create({
         if (this.get('buffer') == null && !this.get('valueChanged')) {
           this.set('buffer', this.get('value'));
         }
+
         this.set('isEditing', true);
       },
 
