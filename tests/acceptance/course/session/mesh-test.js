@@ -40,7 +40,7 @@ test('list mesh', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
-    var items = find('ul.inline-list li', container);
+    var items = find('ul.columnar-list li', container);
     assert.equal(items.length, 3);
     assert.equal(getElementText(items.eq(0)), getText('descriptor 0'));
     assert.equal(getElementText(items.eq(1)), getText('descriptor 1'));
@@ -118,7 +118,7 @@ test('save mesh changes', function(assert) {
           });
         });
         andThen(function(){
-          var items = find('ul.inline-list li', container);
+          var items = find('ul.columnar-list li', container);
           assert.equal(items.length, 3);
           assert.equal(getElementText(items.eq(0)), getText('descriptor 0'));
           assert.equal(getElementText(items.eq(1)), getText('descriptor 2'));
@@ -149,7 +149,7 @@ test('cancel mesh changes', function(assert) {
         });
 
         andThen(function(){
-          var items = find('ul.inline-list li', container);
+          var items = find('ul.columnar-list li', container);
           assert.equal(items.length, 3);
           assert.equal(getElementText(items.eq(0)), getText('descriptor 0'));
           assert.equal(getElementText(items.eq(1)), getText('descriptor 1'));
