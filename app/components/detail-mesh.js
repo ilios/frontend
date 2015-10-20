@@ -31,11 +31,9 @@ export default Ember.Component.extend({
       this.get('bufferTerms').forEach((term)=>{
         if(this.get('isCourse')){
           term.get('courses').addObject(subject);
-          promises.pushObject(term.save());
         }
         if(this.get('isSession')){
           term.get('sessions').addObject(subject);
-          promises.pushObject(term.save());
         }
       });
       promises.pushObject(subject.save());
@@ -54,31 +52,4 @@ export default Ember.Component.extend({
       this.get('bufferTerms').removeObject(term);
     }
   }
-  //
-  // actions: {
-  //   add: function(descriptor){
-  //     var subject = this.get('subject');
-  //     subject.get('meshDescriptors').addObject(descriptor);
-  //     if(this.get('isCourse')){
-  //       descriptor.get('courses').addObject(this.get('subject'));
-  //     }
-  //     if(this.get('isSession')){
-  //       descriptor.get('sessions').addObject(this.get('subject'));
-  //     }
-  //     subject.save();
-  //     descriptor.save();
-  //   },
-  //   remove: function(descriptor){
-  //     var subject = this.get('subject');
-  //     subject.get('meshDescriptors').removeObject(descriptor);
-  //     if(this.get('isCourse')){
-  //       descriptor.get('courses').removeObject(this.get('subject'));
-  //     }
-  //     if(this.get('isSession')){
-  //       descriptor.get('sessions').removeObject(this.get('subject'));
-  //     }
-  //     subject.save();
-  //     descriptor.save();
-  //   }
-  // }
 });

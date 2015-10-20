@@ -97,7 +97,8 @@ export default {
     'globalSearchPlaceholder': 'Encontrar Usuarios...',
     'transitionErrorMessage': 'Lo sentimos! No le podemos conseguir donde pidió ir...',
     'errorDisplayMessage': 'Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde.',
-    'backToDashboard': 'Detrás a Tablero'
+    'backToDashboard': 'Detrás a Tablero',
+    'showMore': 'Mostrar más'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',

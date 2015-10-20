@@ -96,21 +96,17 @@ export default Ember.Component.extend({
         this.get('bufferTerms').forEach((term)=>{
           if(this.get('isCourse')){
             term.get('courseLearningMaterials').pushObject(lm);
-            promises.pushObject(term.save());
           }
           if(this.get('isSession')){
             term.get('sessionLearningMaterials').pushObject(lm);
-            promises.pushObject(term.save());
           }
         });
         oldTerms.forEach(term => {
           if(this.get('isCourse')){
             term.get('courseLearningMaterials').removeObject(lm);
-            promises.pushObject(term.save());
           }
           if(this.get('isSession')){
             term.get('sessionLearningMaterials').removeObject(lm);
-            promises.pushObject(term.save());
           }
         });
         promises.pushObject(lm.save());
