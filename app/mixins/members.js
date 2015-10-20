@@ -19,7 +19,7 @@ export default Mixin.create({
   overrideCurrentGroupDisplay: false,
   saving: false,
 
-  learnerGroupOptions: computed('cohort', 'topLevelGroup', 'topLevelGroup.allTreeGroups.[]', 'showMoveToCohortOption', 'showMoveToTopLevelGroupOption', function() {
+  learnerGroupOptions: computed('cohort', 'topLevelGroup', 'topLevelGroup.allTreeGroups.[]', 'showMoveToCohortOption', 'showMoveToTopLevelGroupOption', 'cohort.learnerGroups.[]', function() {
     let defer = RSVP.defer();
 
     this.get('cohort').then((cohort) => {

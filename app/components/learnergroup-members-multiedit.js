@@ -21,7 +21,7 @@ export default Component.extend(MembersMixin, {
   optionLabelPath: 'title',
   optionValuePath: 'id',
 
-  proxiedOptions: computed('learnerGroupOptions.@each', 'optionLabelPath', 'optionValuePath', function() {
+  proxiedOptions: computed('learnerGroupOptions.[]', 'optionLabelPath', 'optionValuePath', function() {
     let options = this.get('learnerGroupOptions');
 
     let objectProxy = ObjectProxy.extend({
