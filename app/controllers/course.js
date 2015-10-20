@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   queryParams: ['details'],
-  availableTopics: [],
   details: false,
   showBackToCourseListLink: true,
   //pass the state var that ilios-course-details expects

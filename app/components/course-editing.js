@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  availableTopics: [],
   actions: {
     save: function(){
       var self = this;

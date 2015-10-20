@@ -1,41 +1,51 @@
 import Ember from 'ember';
+import DS from 'ember-data';
+
 import { translationMacro as t } from "ember-i18n";
 
+const {computed, inject, RSVP} = Ember;
+const {service} = inject;
+const {PromiseArray} = DS;
+const {sort} = computed;
+
 export default Ember.Component.extend({
-  i18n: Ember.inject.service(),
-  placeholder: t('general.filterPlaceholder'),
-  filter: '',
-  sortBy: ['title'],
-  subject: null,
-  topics: Ember.computed.alias('subject.topics'),
-  sortedTopics: Ember.computed.sort('topics', 'sortBy'),
-  availableTopics: [],
+  i18n: service(),
   tagName: 'section',
   classNames: ['detail-block'],
-  filteredAvailableTopics: function(){
-    var self = this;
-    var filter = this.get('filter');
-    var exp = new RegExp(filter, 'gi');
-
-    var topics = this.get('availableTopics').filter(function(topic) {
-      return (
-        topic.get('title') !== undefined &&
-        self.get('topics') &&
-        topic.get('title').match(exp) &&
-        !self.get('topics').contains(topic)
-      );
+  placeholder: t('general.filterPlaceholder'),
+  filter: '',
+  selectedTopics: [],
+  sortBy: ['title'],
+  sortedTopics: sort('selectedTopics', 'sortBy'),
+  availableTopics: [],
+  filteredAvailableTopics: computed('availableTopics.[]', 'selectedTopics.[]', 'filter', function(){
+    let defer = RSVP.defer();
+    let exp = new RegExp(this.get('filter'), 'gi');
+    
+    this.get('availableTopics').then(availableTopics => {
+      let filteredTopics = availableTopics.filter(topic => {
+        return (
+          topic.get('title') !== undefined &&
+          this.get('selectedTopics') &&
+          topic.get('title').match(exp) &&
+          !this.get('selectedTopics').contains(topic)
+        );
+      });
+      
+      defer.resolve(filteredTopics.sortBy('title'));
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
     });
 
-    return topics.sortBy('title');
-  }.property('topics.@each', 'filter', 'availableTopics.@each'),
+  }),
   actions: {
     add: function(topic){
-      var subject = this.get('subject');
-      subject.get('topics').addObject(topic);
+      this.sendAction('add', topic);
     },
     remove: function(topic){
-      var subject = this.get('subject');
-      subject.get('topics').removeObject(topic);
+      this.sendAction('remove', topic);
     }
   }
 });

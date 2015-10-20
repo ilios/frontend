@@ -1,28 +1,83 @@
 import Ember from 'ember';
+import DS from 'ember-data';
+
+const {computed, RSVP} = Ember;
+const {PromiseArray} = DS;
 
 export default Ember.Component.extend({
   classNames: ['detail-topics'],
   subject: null,
   isManaging: false,
-  //keep track of our initial state so we can roll back
-  initialTopics: [],
+  isSaving: false,
+  isCourse: false,
+  isSession: false,
+  isProgramYear: false,
+  bufferedTopics: [],
+  availableTopics: computed('isCourse', 'isSession', 'isProgramYear', 'subject', function(){
+    let defer = RSVP.defer();
+    
+    if(this.get('isCourse')){
+      this.get('subject').get('school').then(school => {
+        school.get('topics').then(topics => {
+          defer.resolve(topics);
+        });
+      });
+    } else if(this.get('isSession')){
+      this.get('subject').get('course').then(course => {
+        course.get('school').then(school => {
+          school.get('topics').then(topics => {
+            defer.resolve(topics);
+          });
+        });
+      });
+    } else if(this.get('isProgramYear')){
+      this.get('subject').get('program').then(program => {
+        program.get('school').then(school => {
+          school.get('topics').then(topics => {
+            defer.resolve(topics);
+          });
+        });
+      });
+    } else {
+      throw new Error("detail-topic component called without isCourse, isSession, or isProgramYear context");
+    }
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   actions: {
-    manage: function(){
-      var self = this;
-      this.get('subject.topics').then(function(topics){
-        self.set('initialTopics', topics.toArray());
-        self.set('isManaging', true);
+    manage(){
+      this.get('subject.topics').then(topics => {
+        this.set('bufferedTopics', topics.toArray());
+        this.set('isManaging', true);
       });
     },
-    save: function(){
-      this.set('isManaging', false);
-      this.get('subject').save();
+    save(){
+      this.set('isSaving', true);
+      let subject = this.get('subject');
+      subject.get('topics').then(topicList => {
+        topicList.clear();
+        this.get('bufferedTopics').forEach(topic=>{
+          topicList.pushObject(topic);
+        });
+        subject.save().then(()=>{
+          this.set('isManaging', false);
+          this.set('bufferedTopics', []);
+          this.set('isSaving', false);
+        });
+      });
+      
     },
-    cancel: function(){
-      var topics = this.get('subject').get('topics');
-      topics.clear();
-      topics.addObjects(this.get('initialTopics'));
+    cancel(){
+      this.set('bufferedTopics', []);
       this.set('isManaging', false);
-    }
+    },
+    addTopicToBuffer(topic){
+      this.get('bufferedTopics').pushObject(topic);
+    },
+    removeTopicFromBuffer(topic){
+      this.get('bufferedTopics').removeObject(topic);
+    },
   }
 });

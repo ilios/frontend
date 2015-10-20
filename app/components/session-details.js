@@ -2,7 +2,6 @@ import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
 
 export default Ember.Component.extend({
-  availableTopics: [],
   sessionTypes: [],
   session: null,
   didInsertElement: function(){
