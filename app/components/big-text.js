@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+const {computed, Handlebars} = Ember;
+const {SafeString} = Handlebars;
+const {collect, sum} = computed;
+
 export default Ember.Component.extend({
   expanded: false,
   classNames: ['big-text'],
@@ -8,28 +12,36 @@ export default Ember.Component.extend({
   expandIcon: 'info-circle',
   text: '',
   ellipsis: 'ellipsis-h',
-  lengths: Ember.computed.collect('length', 'slippage'),
-  totalLength: Ember.computed.sum('lengths'),
-  promptText: '',
-  showIcons: function(){
-    return this.get('displayText') !== this.get('cleanText');
-  }.property('displayText', 'text'),
-  cleanText: function(){
-    var text = this.get('text');
-    if(text === undefined || text == null){
-      return this.get('promptText')?this.get('promptText').toString():'';
+  lengths: collect('length', 'slippage'),
+  totalLength: sum('lengths'),
+  renderHtml: true,
+  showIcons: computed('displayText', 'text', 'renderHtml', function(){
+    if(this.get('renderHtml')){
+      return this.get('displayText').toString() !== this.get('text');
+    } else {
+      return this.get('displayText').toString() !== this.get('cleanText');
     }
+  }),
+  cleanText: computed('text', function(){
     //strip any possible HTML out of the text
-    return text.replace(/(<([^>]+)>)/ig,"");
-  }.property('text'),
-  displayText: function(){
-    var text = this.get('cleanText');
-    if(this.get('expanded') || text.length < this.get('totalLength')){
-      return text;
+    return this.get('text').replace(/(<([^>]+)>)/ig,"");
+  }),
+  displayText: computed('cleanText', 'totalLength', 'length', 'expanded', function(){
+    let cleanText = this.get('cleanText');
+    let text;
+    if(this.get('expanded') || cleanText.length < this.get('totalLength')){
+      if(this.get('renderHtml')){
+        text = this.get('text');
+      } else {
+        text = cleanText;
+      }
+    } else {
+      text = cleanText.substring(0, this.get('length'));
     }
-
-    return text.substring(0, this.get('length'));
-  }.property('cleanText', 'totalLength', 'length', 'expanded'),
+    
+    return new SafeString(text);
+    
+  }),
   actions: {
     click: function(){
       this.sendAction();

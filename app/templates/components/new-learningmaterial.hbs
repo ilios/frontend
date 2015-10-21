@@ -37,7 +37,13 @@
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'general.description'}}:</label>
-    <div class="form-data">{{textarea value=learningMaterial.description}}</div>
+    <div class="form-data">
+      {{froala-editor
+        params=editorParams
+        value=learningMaterial.description 
+        contentChanged=(action "changeDescription")
+      }}
+    </div>
   </div>
   {{#if isFile}}
   <div class="form-col-12">

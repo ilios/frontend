@@ -71,7 +71,7 @@
     {{/if}}
     <div class="form-col-12 sessiondescription">
       <label class="form-label">{{t "general.description"}}:</label>
-      <div class="form-data">{{inplace-textarea value=session.sessionDescription.description save='changeDescription'}}</div>
+      <div class="form-data">{{inplace-html value=session.sessionDescription.description save='changeDescription'}}</div>
     </div>
     {{#unless session.isIndependentLearning}}
       <div class="form-col-12 sessionassociatedgroups">

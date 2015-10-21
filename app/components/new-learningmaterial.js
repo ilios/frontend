@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'ilios/config/environment';
 import layout from '../templates/components/new-learningmaterial';
 
 export default Ember.Component.extend({
@@ -17,6 +18,7 @@ export default Ember.Component.extend({
   isCitation: function(){
     return this.get('learningMaterial.type') === 'citation';
   }.property('learningMaterial.type'),
+  editorParams: config.froalaEditorDefaults,
   actions: {
     save: function(){
       this.sendAction('save', this.get('learningMaterial'));
@@ -41,6 +43,11 @@ export default Ember.Component.extend({
       let learningMaterialUserRoles = this.get('learningMaterialUserRoles');
       let role = learningMaterialUserRoles.toArray()[selectedIndex];
       this.set('learningMaterial.userRole', role);
-    }
+    },
+    changeDescription(event, editor){
+      if(editor){
+        this.get('learningMaterial').set('description', editor.getHTML());
+      }
+    },
   }
 });

@@ -312,18 +312,22 @@ test('change description', function(assert) {
   });
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
-    var description = getText('session description 0');
-    var container = find('.session-overview .sessiondescription');
+    let description = getText('session description 0');
+    let container = find('.session-overview .sessiondescription');
     assert.equal(getElementText(find('.content', container)), description);
     click(find('.editable span', container));
     andThen(function(){
-      var input = find('.editinplace textarea', container);
-      assert.equal(getText(input.val()), description);
-      fillIn(input, 'test new description');
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.content', container)), getText('test new description'));
-      });
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find('.sessiondescription .froala-box');
+        let editorContents = editor.editable('getText');
+        assert.equal(getText(editorContents), description);
+        editor.editable('setHTML', 'test new description');
+        click(find('.editinplace .actions .done', container));
+        andThen(function(){
+          assert.equal(getElementText(find('.content', container)), getText('test new description'));
+        });
+      }, 100);
     });
   });
 });
@@ -335,17 +339,21 @@ test('add description', function(assert) {
   });
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
-    var container = find('.session-overview .sessiondescription');
+    let container = find('.session-overview .sessiondescription');
     assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
     click(find('.editable span', container));
     andThen(function(){
-      var input = find('.editinplace textarea', container);
-      assert.equal(getText(input.val()), '');
-      fillIn(input, 'test new description');
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.content', container)), getText('test new description'));
-      });
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find('.sessiondescription .froala-box');
+        let editorContents = editor.editable('getText');
+        assert.equal(getText(editorContents), '');
+        editor.editable('setHTML', 'test new description');
+        click(find('.editinplace .actions .done', container));
+        andThen(function(){
+          assert.equal(getElementText(find('.content', container)), getText('test new description'));
+        });
+      }, 100);
     });
   });
 });

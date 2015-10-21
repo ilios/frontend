@@ -22,7 +22,7 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.instructionalNotes'}}:</label>
     <div class="form-data notes">
-      {{inplace-textarea value=valueBuffer.notes save='changeNotes'}}
+      {{inplace-html value=valueBuffer.notes save='changeNotes'}}
     </div>
   </div>
   <div class="form-col-12">
@@ -52,7 +52,7 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'general.description'}}:</label>
     <div class="form-data">
-      <span class='description'>{{ learningMaterial.learningMaterial.description }}</span>
+      <span class='description list-reset'>{{{ learningMaterial.learningMaterial.description }}}</span>
     </div>
   </div>
   {{!-- {{#if learningMaterial.learningMaterial.filename}} --}}

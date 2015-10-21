@@ -66,7 +66,7 @@ test('list session objectives', function(assert) {
       assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
       let objectiveManager = find('.objective-manager').eq(0);
       let objective = fixtures.sessionObjectives[0];
-      assert.equal(getElementText(find('h2', objectiveManager)), getText(objective.title));
+      assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
       let expectedCourseTitle = fixtures.course.title;
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
       assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));

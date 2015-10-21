@@ -10,7 +10,7 @@
     {{#each sortedObjectives as |objective|}}
     <tr id="objective-{{objective.id}}">
       <td class='text-left text-top' colspan=2>
-        {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
+        {{inplace-html value=objective.title save='changeObjectiveTitle' condition=objective.id}}
       </td>
       <td class='text-left text-top'>
         {{#if objective.hasParents}}

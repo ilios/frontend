@@ -265,13 +265,17 @@ test('change description', function(assert) {
     assert.equal(getElementText(find('.content', container)), description);
     click(find('.editable span', container));
     andThen(function(){
-      var input = find('.editinplace textarea', container);
-      assert.equal(getText(input.val()), description);
-      fillIn(input, 'test new description');
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.content', container)), getText('test new description'));
-      });
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find('.sessiondescription .froala-box');
+        let editorContents = editor.editable('getText');
+        assert.equal(getText(editorContents), description);
+        editor.editable('setHTML', 'test new description');
+        click(find('.editinplace .actions .done', container));
+        andThen(function(){
+          assert.equal(getElementText(find('.content', container)), getText('test new description'));
+        });
+      }, 100);
     });
   });
 });
@@ -287,13 +291,17 @@ test('add description', function(assert) {
     assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
     click(find('.editable span', container));
     andThen(function(){
-      var input = find('.editinplace textarea', container);
-      assert.equal(getText(input.val()), '');
-      fillIn(input, 'test new description');
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.content', container)), getText('test new description'));
-      });
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find('.sessiondescription .froala-box');
+        let editorContents = editor.editable('getText');
+        assert.equal(getText(editorContents), '');
+        editor.editable('setHTML', 'test new description');
+        click(find('.editinplace .actions .done', container));
+        andThen(function(){
+          assert.equal(getElementText(find('.content', container)), getText('test new description'));
+        });
+      }, 100);
     });
   });
 });
