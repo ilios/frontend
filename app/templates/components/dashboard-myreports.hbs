@@ -15,4 +15,10 @@
             </tbody>
         </table>
     </div>
+    {{#liquid-if myReportEditorOn class='vertical'}}
+        {{new-myreport
+        closeEditor='closeEditor'
+        class="form-container"
+        }}
+    {{/liquid-if}}
 {{/if}}
