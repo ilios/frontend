@@ -1,7 +1,7 @@
-<section class='detail-block'>
+<section class='detail-block filter-detail-block'>
   <div class='detail-title'>
     {{#unless isManaging}}
-      {{t 'general.learningMaterials'}} ({{materials.length}})
+      {{t 'general.learningMaterials'}} ({{proxyMaterials.length}})
     {{/unless}}
     {{#if isManagingMaterial}}
       <span class='detail-specific-title'>
@@ -13,6 +13,9 @@
         {{t 'courses.objectiveDescriptorTitle'}}
       </span>
     {{/if}}
+  </div>
+  <div class="filter-tools">
+    {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
   </div>
   <div class='detail-actions'>
     {{#if isManaging}}
@@ -59,7 +62,7 @@
             remove='removeNewLearningMaterial'}}
         {{/each}}
       {{/if}}
-      {{#if materials.length}}
+      {{#if proxyMaterials.length}}
         <table>
           <thead>
             <tr>

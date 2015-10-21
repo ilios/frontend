@@ -4,6 +4,8 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+const {run} = Ember;
+const {later} = run;
 
 var application;
 var fixtures = {};
@@ -60,6 +62,15 @@ module('Acceptance: Course - Learning Materials', {
       citation: 'a citation',
       status: 1,
       courseLearningMaterials: [4],
+    }));
+    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      title: 'Letter to Doc Brown',
+      originalAuthor: 'Marty McFly',
+      owningUser: 4136,
+      status: 1,
+      userRole: 1,
+      copyrightPermission: true,
+      courseLearningMaterials: [],
     }));
     fixtures.courseLearningMaterials = [];
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
@@ -543,6 +554,33 @@ test('cancel term changes', function(assert) {
           assert.equal(getElementText(tds.eq(5)), getText(expectedMesh));
         });
       });
+    });
+  });
+});
+
+test('find and add learning material', function(assert) {
+  visit(url);
+  andThen(function() {
+    assert.equal(currentPath(), 'course.index');
+    let container = find('.detail-learning-materials');
+    let rows = find('.detail-content tbody tr', container);
+    assert.equal(rows.length, fixtures.course.learningMaterials.length);
+    
+    let searchBoxInput = find('input', container);
+    fillIn(searchBoxInput, 'doc');
+    triggerEvent(searchBoxInput, 'search');
+    andThen(function(){
+      later(function(){
+        let searchResults = find('.results li', container);
+        assert.equal(searchResults.length, 1);
+        assert.equal(getElementText($(searchResults[0])), getText('Letter to Doc Brown'));
+        click(searchResults[0]);
+        
+        andThen(function(){
+          let rows = find('.detail-content tbody tr', container);
+          assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
+        });
+      }, 1000);
     });
   });
 });

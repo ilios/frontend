@@ -2,19 +2,23 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
+const {computed, inject, RSVP} = Ember;
+const {notEmpty, or, not} = computed;
+const {service} = inject;
+const {PromiseArray} = DS;
+
 export default Ember.Component.extend({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  currentUser: service(),
+  store: service(),
+  i18n: service(),
   subject: null,
   isCourse: false,
-  isManaging: Ember.computed.or('isManagingMaterial', 'isManagingMesh'),
-  isManagingMaterial: Ember.computed.notEmpty('managingMaterial'),
-  isManagingMesh: Ember.computed.notEmpty('meshMaterial'),
+  isManaging: or('isManagingMaterial', 'isManagingMesh'),
+  isManagingMaterial: notEmpty('managingMaterial'),
+  isManagingMesh: notEmpty('meshMaterial'),
   managingMaterial: null,
   meshMaterial: null,
-  isSession: Ember.computed.not('isCourse'),
-  materials: Ember.computed.alias('subject.learningMaterials'),
+  isSession: not('isCourse'),
   newLearningMaterials: [],
   classNames: ['detail-learning-materials'],
   newButtonTitle: t('general.add'),
@@ -22,29 +26,47 @@ export default Ember.Component.extend({
   bufferTerms: [],
   learningMaterialStatuses: function(){
     var self = this;
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: self.get('store').findAll('learning-material-status')
     });
   }.property(),
-  learningMaterialUserRoles: function(){
+  learningMaterialUserRoles: computed(function(){
     var self = this;
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: self.get('store').findAll('learning-material-user-role')
     });
-  }.property(),
-  proxyMaterials: Ember.computed('materials.@each', function(){
+  }),
+  proxyMaterials: computed('subject.learningMaterials.[]', function(){
     let materialProxy = Ember.ObjectProxy.extend({
       sortTerms: ['name'],
       sortedDescriptors: Ember.computed.sort('content.meshDescriptors', 'sortTerms')
     });
-    return this.get('materials').map(material => {
+    return this.get('subject.learningMaterials').map(material => {
       return materialProxy.create({
         content: material
       });
     });
   }),
+  parentMaterials: computed('subject.learningMaterials.[]', function(){
+    let defer = RSVP.defer();
+    this.get('subject.learningMaterials').then(subLms => {
+      let promises = [];
+      let learningMaterials = [];
+      subLms.forEach(lm => {
+        promises.pushObject(lm.get('learningMaterial').then(learningMaterial => {
+          learningMaterials.pushObject(learningMaterial);
+        }));
+      });
+      RSVP.all(promises).then(()=>{
+        defer.resolve(learningMaterials);
+      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   actions: {
-    manageMaterial: function(learningMaterial){
+    manageMaterial(learningMaterial){
       var buffer = Ember.Object.create();
       buffer.set('publicNotes', learningMaterial.get('publicNotes'));
       buffer.set('required', learningMaterial.get('required'));
@@ -57,13 +79,13 @@ export default Ember.Component.extend({
         });
       });
     },
-    manageDescriptors: function(learningMaterial){
+    manageDescriptors(learningMaterial){
       learningMaterial.get('meshDescriptors').then(descriptors => {
         this.set('bufferTerms', descriptors.toArray());
         this.set('meshMaterial', learningMaterial);
       });
     },
-    save: function(){
+    save(){
       if(this.get('isManagingMaterial')){
         let buffer = this.get('bufferMaterial');
         let learningMaterial = this.get('managingMaterial');
@@ -116,14 +138,14 @@ export default Ember.Component.extend({
         });
       }
     },
-    cancel: function(){
+    cancel(){
       this.set('bufferMaterial', null);
       this.set('managingMaterial', null);
       this.set('bufferTerms', []);
       this.set('meshMaterial', null);
 
     },
-    addNewLearningMaterial: function(type){
+    addNewLearningMaterial(type){
       var self = this;
       if(type === 'file' || type === 'citation' || type === 'link'){
         self.get('learningMaterialStatuses').then(function(statuses){
@@ -146,7 +168,7 @@ export default Ember.Component.extend({
         });
       }
     },
-    saveNewLearningMaterial: function(lm){
+    saveNewLearningMaterial(lm){
       var self = this;
       var subjectLm;
       var lmCollectionType;
@@ -176,26 +198,49 @@ export default Ember.Component.extend({
         });
       });
     },
-    removeNewLearningMaterial: function(lm){
+    removeNewLearningMaterial(lm){
       this.get('newLearningMaterials').removeObject(lm);
     },
-    addTermToBuffer: function(term){
+    addTermToBuffer(term){
       this.get('bufferTerms').addObject(term);
     },
-    removeTermFromBuffer: function(term){
+    removeTermFromBuffer(term){
       this.get('bufferTerms').removeObject(term);
     },
-    changeStatus: function(newStatus){
+    changeStatus(newStatus){
       this.get('bufferMaterial').set('status', newStatus);
     },
-    changeRequired: function(value){
+    changeRequired(value){
       this.get('bufferMaterial').set('required', value);
     },
-    changePublicNotes: function(value){
+    changePublicNotes(value){
       this.get('bufferMaterial').set('publicNotes', value);
     },
-    changeNotes: function(value){
+    changeNotes(value){
       this.get('bufferMaterial').set('notes', value);
+    },
+    addLearningMaterial(parentLearningMaterial){
+      let newLearningMaterial;
+      let lmCollectionType;
+      if(this.get('isCourse')){
+        newLearningMaterial = this.get('store').createRecord('course-learning-material', {
+          course: this.get('subject'),
+          learningMaterial: parentLearningMaterial
+        });
+        lmCollectionType = 'courseLearningMaterials';
+      }
+      if(this.get('isSession')){
+        newLearningMaterial = this.get('store').createRecord('session-learning-material', {
+          session: this.get('subject'),
+          learningMaterial: parentLearningMaterial
+        });
+        lmCollectionType = 'sessionLearningMaterials';
+      }
+      newLearningMaterial.save().then(savedLearningMaterial => {
+        parentLearningMaterial.get(lmCollectionType).then(children => {
+          children.pushObject(savedLearningMaterial);
+        });
+      });
     }
   },
 });

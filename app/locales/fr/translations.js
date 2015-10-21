@@ -267,7 +267,7 @@ export default {
     'copyrightPermission': "Droit d'auteur",
     'copyrightAgreement': "Le fichier que je tente de télécharger est ma propre ou je avoir la permission expresse à reproduire et / ou distribuer cet article et ne contient pas d'informations de santé protégées . Mon utilisation de ce fichier est en conformité avec les politiques gouvernementales et universitaires sur le droit d'auteur et de la sécurité de l'information et les directives de mon programme d'enseignement de conduite professionnelle . Ce fichier respecte également les Termes et Conditions pour cette application .",
     'copyrightRationale': "Raison du droit d'auteur",
-
+    'searchPlaceholder': "Trouver matières d'étude",
   },
   'groupMembers': {
     'filterPlaceholder': "Filtre par nom ou email",

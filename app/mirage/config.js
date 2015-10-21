@@ -58,7 +58,17 @@ export default function() {
     this.get('/api/courselearningmaterials/:id', 'courseLearningMaterial');
     this.put('/api/courselearningmaterials/:id', 'courseLearningMaterial');
     this.delete('/api/courselearningmaterials/:id', 'courseLearningMaterial');
-    this.post('/api/courselearningmaterials', 'courseLearningMaterial');
+    this.post('/api/courselearningmaterials', function(db, request) {
+      let attrs = JSON.parse(request.requestBody);
+      let record = db.courseLearningMaterials.insert(attrs);
+      let lm = db.learningMaterials.find(record.learningMaterial);
+      if(lm){
+        lm.courseLearningMaterials.pushObject(record);
+      }
+      return {
+        courseLearningMaterial: record
+      };
+    });
 
     this.get('/api/courses', getAll);
     this.get('/api/courses/:id', 'course');
@@ -232,7 +242,19 @@ export default function() {
     this.get('/api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
     this.put('/api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
     this.delete('/api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
-    this.post('/api/sessionlearningmaterials', 'sessionLearningMaterial');
+    
+    this.post('/api/sessionlearningmaterials', function(db, request) {
+      let attrs = JSON.parse(request.requestBody);
+      let record = db.sessionLearningMaterial.insert(attrs);
+      let lm = db.learningMaterials.find(record.learningMaterial);
+      
+      if(lm){
+        lm.sessionLearningMaterials.pushObject(record);
+      }
+      return {
+        sessionLearningMaterial: record
+      };
+    });
 
     this.get('/api/sessiontypes', getAll);
     this.get('/api/sessiontypes/:id', 'sessionType');
