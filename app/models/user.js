@@ -73,9 +73,9 @@ var User = DS.Model.extend({
   events: [],
   allRelatedCourses: Ember.computed(
     'directedCourses.[]',
-    'learnerGroups.[].courses.[]',
-    'instructorGroups.[].courses.[]',
-    'instructedOfferings.[].session.course',
+    'learnerGroups.[]',
+    'instructorGroups.[]',
+    'instructedOfferings.[]',
     function(){
       let defer = Ember.RSVP.defer();
       let promises = [];

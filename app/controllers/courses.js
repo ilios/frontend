@@ -1,10 +1,14 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
+
+const {computed, RSVP, isEmpty, isPresent} = Ember;
+const {gt} = computed;
+const {PromiseArray} = DS;
 
 export default Ember.Controller.extend({
   i18n: Ember.inject.service(),
   currentUser: Ember.inject.service(),
-  model: [],
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',
@@ -16,10 +20,32 @@ export default Ember.Controller.extend({
   yearTitle: null,
   titleFilter: null,
   userCoursesOnly: false,
-  years: [],
-  schools: [],
   newCourses: [],
-
+  courses: computed('schoolId', 'yearTitle', function(){
+    let defer = RSVP.defer();
+    this.get('currentUser.model').then(currentUser => {
+      let schoolId = this.get('schoolId') || currentUser.get('school.id');
+      let yearTitle = this.get('yearTitle');
+      if(isEmpty(schoolId) || isEmpty(yearTitle)){
+        defer.resolve([]);
+      } else {
+        this.get('store').query('course', {
+          filters: {
+            school: schoolId,
+            year: yearTitle,
+            deleted: false
+          },
+          limit: 500
+        }).then(courses => {
+          defer.resolve(courses);
+        });
+      }
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
   watchFilter: function(){
@@ -28,37 +54,88 @@ export default Ember.Controller.extend({
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },
-  hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
-  filteredCourses: function(){
-    var title = this.get('debouncedFilter');
-    var filterMyCourses = this.get('userCoursesOnly');
-    var exp = new RegExp(title, 'gi');
-    var currentUser = this.get('currentUser.model');
-    let courses = [];
-    courses.pushObjects(this.get('model').toArray());
-    let savedNewCoursesInThisYear = this.get('newCourses')
-      .filter(proxy => proxy.get('isSaved'))
-      .filter(proxy => proxy.get('year') === this.get('selectedYear.title'));
-
-    courses.pushObjects(savedNewCoursesInThisYear);
-    return courses.filter(function(course) {
-      let match = true;
-      if(title != null && !course.get('title').match(exp)){
-        match = false;
-      }
-      if(filterMyCourses && !currentUser.get('allRelatedCourses').contains(course)){
-        match = false;
-      }
-
-      return match;
-    }).sortBy('title');
-  }.property(
+  hasMoreThanOneSchool: gt('model.schools.length', 1),
+  allRelatedCourses: computed('currentUser.model', function(){
+    let defer = RSVP.defer();
+    this.get('currentUser.model').then(user => {
+      defer.resolve(user.get('allRelatedCourses'));
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
+  filteredCourses: computed(
     'debouncedFilter',
-    'model.@each',
+    'courses.[]',
     'userCoursesOnly',
-    'currentUser.model.allRelatedCourses.@each',
-    'newCourses.@each.isSaved'
-  ),
+    'allRelatedCourses.[]',
+    function(){
+      let defer = RSVP.defer();
+      let title = this.get('debouncedFilter');
+      let filterMyCourses = this.get('userCoursesOnly');
+      let exp = new RegExp(title, 'gi');
+      this.get('courses').then(courses => {
+        let filteredCourses;
+        if(isEmpty(title)){
+          filteredCourses = courses.sortBy('title');
+        } else {
+          filteredCourses = courses.filter(course => {
+            return (isPresent(course.get('title')) &&course.get('title').match(exp)) ||
+                   (isPresent(course.get('externalId')) &&course.get('externalId').match(exp));
+          });
+        }
+        
+        if(filterMyCourses){
+          this.get('allRelatedCourses').then(allRelatedCourses => {
+            let myFilteredCourses = filteredCourses.filter(course => {
+              return allRelatedCourses.contains(course);
+            });
+            
+            defer.resolve(myFilteredCourses);
+          });
+        } else {
+          defer.resolve(filteredCourses);
+        }
+        
+      });
+      
+      
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+  
+      
+  }),
+  selectedSchool: Ember.computed('model.schools.[]', 'schoolId', {
+    get() {
+      let schools = this.get('model.schools');
+      if(isPresent(this.get('schoolId'))){
+        return schools.find(school => {
+          return school.get('id') === this.get('schoolId');
+        });
+      }
+      
+      return schools.get('firstObject');
+    },
+    set(key, school) {
+      this.set('schoolId',  school.get('id'));
+    }
+  }),
+  selectedYear: Ember.computed('model.years.[]', 'yearTitle', {
+    get() {
+      let years = this.get('model.years');
+      if(isPresent(this.get('yearTitle'))){
+        return years.find(year => {
+          return year.get('title') === parseInt(this.get('yearTitle'));
+        });
+      }
+      
+      return years.get('firstObject');
+    },
+    set(key, year) {
+      this.set('yearTitle',  year.get('title'));
+    }
+  }),
   actions: {
     editCourse: function(course){
       this.transitionToRoute('course', course);
@@ -97,11 +174,9 @@ export default Ember.Controller.extend({
       this.get('newCourses').removeObject(courseProxy);
     },
     changeSelectedYear: function(year){
-      this.set('yearTitle', year.get('title'));
       this.set('selectedYear', year);
     },
     changeSelectedSchool: function(school){
-      this.set('schoolId', school.get('id'));
       this.set('selectedSchool', school);
     },
     //called by the 'toggle-mycourses' component
