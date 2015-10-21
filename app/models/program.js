@@ -5,7 +5,7 @@ import PublishableModel from 'ilios/mixins/publishable-model';
 export default DS.Model.extend(PublishableModel,{
   title: DS.attr('string'),
   shortTitle: DS.attr('string'),
-  duration: DS.attr('number'),
+  duration: DS.attr('number', { defaultValue: 1 }),
   deleted: DS.attr('boolean'),
   school: DS.belongsTo('school', {async: true}),
   programYears: DS.hasMany('program-year', {

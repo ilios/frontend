@@ -1,4 +1,5 @@
 import Base from 'ember-validations/validators/base';
+import Messages from 'ember-validations/messages';
 
 export default Base.extend({
   call() {
@@ -6,7 +7,7 @@ export default Base.extend({
     const property = this.model.get(this.property);
 
     if (property !== '' && !regex.test(property)) {
-      this.errors.pushObject("must be alphanumeric");
+      this.errors.pushObject(Messages.render('alphanumeric'));
     }
   }
 });

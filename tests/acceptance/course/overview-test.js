@@ -8,6 +8,8 @@ import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
+const { isEmpty } = Ember;
+
 var application;
 var fixtures = {};
 var url = '/courses/1';
@@ -369,7 +371,7 @@ test('manage directors', function(assert) {
         assert.ok($(searchResults[1]).hasClass('inactive'));
         assert.equal(getElementText($(searchResults[2])), getText('Disabled Guy'));
         assert.ok($(searchResults[2]).hasClass('inactive'));
-        
+
         click('.removable-list li:eq(0)', directors).then(function(){
           assert.ok(!$(find('.live-search li:eq(1)', directors)).hasClass('inactive'));
           click(searchResults[0]);
@@ -421,5 +423,48 @@ test('search twice and list should be correct', function(assert) {
           });
         });
     });
+  });
+});
+
+test('validations work properly', function(assert) {
+  assert.expect(5);
+
+  server.create('course', {
+    externalId: 123,
+  });
+
+  const externalId = '.courseexternalid .editable';
+  const externalIdInput = '.courseexternalid input';
+  const errorMessage = '.courseexternalid .error';
+  const saveButton = '.courseexternalid .done';
+  const cancelButton = '.courseexternalid .cancel';
+
+  visit(url);
+  click(externalId);
+  fillIn(externalIdInput, '11');
+  andThen(() => {
+    assert.equal(find(errorMessage).text(), 'is too short (minimum is 3 characters)', 'error message is shown');
+  });
+
+  click(saveButton);
+  andThen(() => {
+    assert.ok(isEmpty(find(externalId)), 'saving does not occur, given validation error');
+  });
+
+  click(cancelButton);
+  andThen(() => {
+    assert.equal(find(externalId).text(), 123, 'canceling reverts external-id back');
+  });
+
+  click(externalId);
+  fillIn(externalIdInput, '1324~');
+  andThen(() => {
+    assert.equal(find(errorMessage).text(), 'must be alphanumeric', 'error message is shown');
+  });
+
+  fillIn(externalIdInput, '12345');
+  click(saveButton);
+  andThen(() => {
+    assert.equal(find(externalId).text().trim(), '12345', 'new id was saved');
   });
 });
