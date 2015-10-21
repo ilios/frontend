@@ -17,7 +17,20 @@
     <div class='selectable-list'>
       <ul class='mesh-search-results'>
         {{#each searchResults as |term|}}
-          <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>{{term.name}}</li>
+          <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>
+              <span class="mesh-descriptor-name">{{term.name}}</span>
+          <span class="mesh-descriptor-id">
+              {{term.id}}
+              {{#if term.trees }}
+                  - {{term.trees.lastObject.treeNumber}}
+              {{/if}}
+          </span>
+              <ul class="mesh-concepts">
+              {{#each term.concepts as |concept| }}
+                  <li class="truncate">{{concept.scopeNote}}</li>
+              {{/each}}
+              </ul>
+          </li>
         {{/each}}
       </ul>
       {{#if hasMoreSearchResults }}
