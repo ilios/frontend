@@ -35,25 +35,28 @@
         <h2>{{t 'general.courses'}}</h2>
       </div>
       <div class='resultslist-actions'>
-        <button {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
+        {{expand-collapse-button value=showNewCourseForm action="toggleNewCourseForm"}}
       </div>
     </div>
-    {{#if newCourses.length}}
-      <section class='resultslist-new'>
-        {{#each newCourses as |courseProxy|}}
-          {{#liquid-unless courseProxy.isSaved class='horizontal'}}
-            {{new-course course=courseProxy.content years=model.years save='saveNewCourse' cancel='removeNewCourse'}}
-          {{else}}
-            <div class='savedcourse saved-result'>
-              {{#link-to 'course' courseProxy.content}}
-                {{fa-icon 'external-link-square'}} {{courseProxy.title}}
-              {{/link-to}}
-              {{t 'general.savedSuccessfully'}}
-            </div>
-          {{/liquid-unless}}
-        {{/each}}
-      </section>
-    {{/if}}
+    <section class='resultslist-new'>
+      {{#liquid-if showNewCourseForm class='vertical'}}
+        {{new-course 
+          currentSchool=selectedSchool
+          currentYear=selectedYear
+          years=model.years
+          save='saveNewCourse'
+          cancel='toggleNewCourseForm'
+        }}
+      {{/liquid-if}}
+      {{#each newCourses as |course|}}
+        <div class='savedcourse saved-result'>
+          {{#link-to 'course' course}}
+            {{fa-icon 'external-link-square'}} {{course.title}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/each}}
+    </section>
     <div class='resultslist-list'>
       {{#if filteredCourses.isFulfilled}}
         {{ilios-course-list

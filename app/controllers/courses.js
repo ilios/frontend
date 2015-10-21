@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
   yearTitle: null,
   titleFilter: null,
   userCoursesOnly: false,
+  showNewCourseForm: false,
   newCourses: [],
   courses: computed('selectedSchool', 'selectedYear', function(){
     let defer = RSVP.defer();
@@ -39,6 +40,23 @@ export default Ember.Controller.extend({
         defer.resolve(courses);
       });
     }
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
+  coursesAndNewCourses: computed('courses.[]', 'newCourses.[]', function(){
+    let defer = RSVP.defer();
+    this.get('courses').then(courses => {
+      let all = [];
+      all.pushObjects(courses.toArray());
+      let selectedYearTitle = this.get('selectedYear').get('title');
+      let newCourses = this.get('newCourses').filter(course => {
+        return course.get('year') === selectedYearTitle;
+      });
+      all.pushObjects(newCourses.toArray());
+      defer.resolve(all);
+    });
     
     return PromiseArray.create({
       promise: defer.promise
@@ -64,7 +82,7 @@ export default Ember.Controller.extend({
   }),
   filteredCourses: computed(
     'debouncedFilter',
-    'courses.[]',
+    'coursesAndNewCourses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
     function(){
@@ -72,7 +90,7 @@ export default Ember.Controller.extend({
       let title = this.get('debouncedFilter');
       let filterMyCourses = this.get('userCoursesOnly');
       let exp = new RegExp(title, 'gi');
-      this.get('courses').then(courses => {
+      this.get('coursesAndNewCourses').then(courses => {
         let filteredCourses;
         if(isEmpty(title)){
           filteredCourses = courses.sortBy('title');
@@ -143,26 +161,11 @@ export default Ember.Controller.extend({
       course.deleteRecord();
       course.save();
     },
-    addCourse: function(){
-      var courseProxy = Ember.ObjectProxy.create({
-        isSaved: false,
-        content: this.store.createRecord('course', {
-          title: null,
-          school: this.get('selectedSchool'),
-          year: this.get('selectedYear.title'),
-          level: 1,
-        })
-      });
-      this.get('newCourses').addObject(courseProxy);
-    },
     saveNewCourse: function(newCourse){
-      let courseProxy = this.get('newCourses').find(proxy => {
-        return proxy.get('content') === newCourse;
-      });
       newCourse.setDatesBasedOnYear();
       newCourse.save().then(savedCourse => {
-        courseProxy.set('content', savedCourse);
-        courseProxy.set('isSaved', true);
+        this.set('showNewCourseForm', false);
+        this.get('newCourses').pushObject(savedCourse);
       });
     },
     removeNewCourse: function(newCourse){
@@ -183,6 +186,9 @@ export default Ember.Controller.extend({
       var newStatus = (! this.get('userCoursesOnly'));
       //then set it to the new status
       this.set('userCoursesOnly', newStatus);
+    },
+    toggleNewCourseForm: function(){
+      this.set('showNewCourseForm', !this.get('showNewCourseForm'));
     }
   },
 });

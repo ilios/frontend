@@ -122,6 +122,29 @@ test('filters by year', function(assert) {
   });
 });
 
+test('initial filter by year', function(assert) {
+  assert.expect(4);
+  var firstCourse = server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+  var secondCourse = server.create('course', {
+    year: 2014,
+    school: 1
+  });
+  visit('/courses?year=2014');
+  andThen(function() {
+    assert.equal(find('.resultslist-list tbody tr').length, 1);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
+  });
+  
+  visit('/courses?year=2013');
+  andThen(function() {
+    assert.equal(find('.resultslist-list tbody tr').length, 1);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
+  });
+});
+
 test('filters by mycourses', function(assert) {
   assert.expect(5);
   var firstCourse = server.create('course', {
@@ -165,18 +188,18 @@ test('filters options', function(assert) {
 });
 
 test('new course', function(assert) {
-  assert.expect(3);
-  visit('/courses');
+  assert.expect(4);
+  visit('/courses?year=2014');
   let newTitle = 'new course title, woohoo';
   andThen(function() {
     let container = find('.resultslist');
     click('.resultslist-actions button', container);
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
+      pickOption('.new-course select', '2014 - 2015', assert);
       click('.new-course .done', container);
       andThen(function(){
         assert.equal(getElementText(find('.savedcourse', container)), getText(newTitle + 'Saved Successfully'));
-
         var rows = find('tbody tr', container);
         assert.equal(rows.length, 1);
         assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(newTitle));
@@ -186,7 +209,7 @@ test('new course', function(assert) {
 });
 
 test('new course in another year does not display in list', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   visit('/courses');
   let newTitle = 'new course title, woohoo';
   andThen(function() {
@@ -194,9 +217,8 @@ test('new course in another year does not display in list', function(assert) {
     click('.resultslist-actions button', container);
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
-      click('.new-course-year button').then(function(){
-        click(find('.new-course-year ul.dropdown-menu li:eq(0)'));
-      });
+      pickOption('.new-course select', '2013 - 2014', assert);
+      
       click('.new-course .done', container).then(function(){
         var rows = find('tbody tr', container);
         assert.equal(rows.length, 0);
