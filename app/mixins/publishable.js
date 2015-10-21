@@ -52,10 +52,6 @@ export default Ember.Mixin.create({
         publishTarget.set('publishEvent', null);
         if(publishEvent){
           publishEvent.get(this.get('publishEventCollectionName')).removeObject(publishTarget);
-          if(publishEvent.get('totalRelated') === 0){
-            publishEvent.deleteRecord();
-            publishEvent.save();
-          }
         }
         publishTarget.save().then(()=>{
           this.get('flashMessages').success('publish.message.unPublish');
