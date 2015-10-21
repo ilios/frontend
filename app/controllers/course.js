@@ -1,14 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { computed, Controller } = Ember;
+const { not } = computed;
+
+export default Controller.extend({
   queryParams: ['details'],
+
   details: false,
-  showBackToCourseListLink: true,
-  //pass the state var that ilios-course-details expects
-  collapsed: Ember.computed.not('details'),
+
+  // Pass the state var that ilios-course-details expects
+  collapsed: not('details'),
+
   actions: {
-    collapsedState: function(state){
-      //we have reveresed verb collapsed/details so reverse the passed state
+    collapsedState(state) {
+      // We have reveresed verb collapsed/details so reverse the passed state
       this.set('details', !state);
     }
   }
