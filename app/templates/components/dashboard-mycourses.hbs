@@ -10,7 +10,8 @@
           {{#each sortedListOfCourses as |course|}}
             {{#link-to 'course' course}}
               <tr class='clickable'>
-                <td>{{fa-icon 'external-link-square'}} {{course.academicYear}}</td>
+                <td>{{fa-icon 'external-link-square'}}</td>
+                <td>{{course.academicYear}}</td>
                 <td>{{course.title}}</td>
               </tr>
             {{/link-to}}

@@ -364,6 +364,7 @@ export default {
     'programAndCohort': 'Diplôme et cohortes',
     'mySchedule': 'Mon calendrier (liste)',
     'myReports': 'Mes Rapports',
+    'newReport': 'Nouveau Rapport',
     'allEvents': 'Tous les événements',
     'noEvents': 'Aucun événement prévu',
     'topicOrDetail': 'Sujet/détail',

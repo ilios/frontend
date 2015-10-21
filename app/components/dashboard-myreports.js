@@ -15,5 +15,14 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  })
+  }),
+  actions: {
+    toggleEditor() {
+      this.set('myReportEditorOn', !this.get('myReportEditorOn'));
+    },
+
+    closeEditor() {
+      this.set('myReportEditorOn', false);
+    }
+  }
 });

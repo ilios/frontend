@@ -364,6 +364,7 @@ export default {
     'programAndCohort': 'Program/Cohort',
     'mySchedule': 'My Schedule',
     'myReports': 'My Reports',
+    'newReport': 'New Report',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',
     'topicOrDetail': 'Topic/Detail',

@@ -364,6 +364,7 @@ export default {
     'programAndCohort': 'Programa/Clase de La Graduación',
     'mySchedule': 'Mi Horario',
     'myReports': 'Mis Informes',
+    'newReport': 'Nuevo Informe',
     'allEvents': 'Todos los Eventos',
     'noEvents': 'No eventos próximos',
     'topicOrDetail': 'Topico/Detalle',
