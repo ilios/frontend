@@ -29,8 +29,8 @@ test('check fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
     var container = find('.program-overview');
-    assert.equal(getElementText(find('.programtitleshort div', container)), getText(program.shortTitle));
-    assert.equal(getElementText(find('.programduration div', container)), program.duration);
+    assert.equal(getElementText(find('.programtitleshort .editable', container)), getText(program.shortTitle));
+    assert.equal(getElementText(find('.programduration .editable', container)), program.duration);
   });
 });
 
@@ -62,7 +62,7 @@ test('change short title', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-overview');
-    assert.equal(getElementText(find('.programtitleshort div', container)), getText(program.shortTitle));
+    assert.equal(getElementText(find('.programtitleshort .editable', container)), getText(program.shortTitle));
     click(find('.programtitleshort .editable', container));
     andThen(function(){
       var input = find('.programtitleshort .editinplace input', container);
@@ -70,7 +70,7 @@ test('change short title', function(assert) {
       fillIn(input, 'test new short title');
       click(find('.programtitleshort .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.programtitleshort div', container)), getText('test new short title'));
+        assert.equal(getElementText(find('.programtitleshort .editable', container)), getText('test new short title'));
       });
     });
   });
@@ -83,7 +83,7 @@ test('change duration', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-overview');
-    assert.equal(getElementText(find('.programduration div', container)), program.duration);
+    assert.equal(getElementText(find('.programduration .editable', container)), program.duration);
     click(find('.programduration .editable', container));
     andThen(function(){
       let options = find('.programduration select option', container);
@@ -94,7 +94,7 @@ test('change duration', function(assert) {
       pickOption(find('.programduration select', container), '9', assert);
       click(find('.programduration .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.programduration div', container)), 9);
+        assert.equal(getElementText(find('.programduration .editable', container)), 9);
       });
     });
   });
@@ -103,7 +103,7 @@ test('change duration', function(assert) {
 test('leave duration at 1', function(assert) {
   server.create('program', {
     school: 1,
-    duration: null,
+    duration: 1
   });
   visit(url);
   andThen(function() {
@@ -112,7 +112,7 @@ test('leave duration at 1', function(assert) {
     andThen(function(){
       click(find('.programduration .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.programduration div', container)), 1);
+        assert.equal(getElementText(find('.programduration .editable', container)), 1);
       });
     });
   });

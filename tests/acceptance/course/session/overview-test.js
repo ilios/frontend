@@ -48,7 +48,7 @@ test('check fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype div', container)), getText(fixtures.selectedSessionType.title));
+    assert.equal(getElementText(find('.sessiontype .editable', container)), getText(fixtures.selectedSessionType.title));
     assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
     assert.equal(find('.sessionilmhours', container).length, 0);
   });
@@ -71,7 +71,7 @@ test('check remove ilm', function(assert) {
     assert.equal(find('.sessionilmduedate', container).length, 1);
     var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
-    assert.equal(getElementText(find('.sessionilmduedate div', container)), dueDate);
+    assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
     click(find('.independentlearningcontrol input', container));
     andThen(function(){
       assert.equal(find('.sessionilmhours', container).length, 0);
@@ -142,7 +142,7 @@ test('change ilm due date', function(assert) {
   andThen(function() {
     var container = find('#session-details .sessionilmduedate');
     var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
-    assert.equal(getElementText(find('div', container)), dueDate);
+    assert.equal(getElementText(find('.editable', container)), dueDate);
     click(find('.editable', container));
     andThen(function(){
       var input = find('.editinplace input', container);
@@ -153,7 +153,7 @@ test('change ilm due date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('div', container)), newDate.format('MM/DD/YY'));
+        assert.equal(getElementText(find('.editable', container)), newDate.format('MM/DD/YY'));
       });
     });
   });
