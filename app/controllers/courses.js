@@ -21,26 +21,24 @@ export default Ember.Controller.extend({
   titleFilter: null,
   userCoursesOnly: false,
   newCourses: [],
-  courses: computed('schoolId', 'yearTitle', function(){
+  courses: computed('selectedSchool', 'selectedYear', function(){
     let defer = RSVP.defer();
-    this.get('currentUser.model').then(currentUser => {
-      let schoolId = this.get('schoolId') || currentUser.get('school.id');
-      let yearTitle = this.get('yearTitle');
-      if(isEmpty(schoolId) || isEmpty(yearTitle)){
-        defer.resolve([]);
-      } else {
-        this.get('store').query('course', {
-          filters: {
-            school: schoolId,
-            year: yearTitle,
-            deleted: false
-          },
-          limit: 500
-        }).then(courses => {
-          defer.resolve(courses);
-        });
-      }
-    });
+    let schoolId = this.get('selectedSchool').get('id');
+    let yearTitle = this.get('selectedYear').get('title');
+    if(isEmpty(schoolId) || isEmpty(yearTitle)){
+      defer.resolve([]);
+    } else {
+      this.get('store').query('course', {
+        filters: {
+          school: schoolId,
+          year: yearTitle,
+          deleted: false
+        },
+        limit: 500
+      }).then(courses => {
+        defer.resolve(courses);
+      });
+    }
     
     return PromiseArray.create({
       promise: defer.promise
@@ -130,7 +128,7 @@ export default Ember.Controller.extend({
         });
       }
       
-      return years.get('firstObject');
+      return years.get('lastObject');
     },
     set(key, year) {
       this.set('yearTitle',  year.get('title'));
