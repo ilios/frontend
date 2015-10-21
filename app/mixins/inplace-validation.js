@@ -26,8 +26,6 @@ export default Mixin.create({
 
   buffer: null,
 
-  validationNeeded: false,
-
   // Allows the calling object to send some context like an id
   // Can be used during the save process
   condition: null,
@@ -56,7 +54,7 @@ export default Mixin.create({
       const buffer = this.get('buffer');
       const condition = this.get('condition');
 
-      if (this.get('validationNeeded')) {
+      if (this.get('validations')) {
         this.validate().then(() => {
           if (!isEqual(value, buffer)) {
             this.sendAction('save', buffer);
