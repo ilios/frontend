@@ -112,7 +112,27 @@ $course: #ddd1e7;
     }
 
     .form-title {
-      margin-bottom: 10px;
+      margin-bottom: .5em;
+    }
+
+    .form-label {
+      text-align: left;
+      font-size: .9em;
+      font-weight: bold;
+
+      &.sub-label {
+        font-size: .8em;
+        font-style: italic;
+        font-weight: normal;
+      }
+    }
+
+    .input-buttons {
+      float: right;
+    }
+
+    .form-data input {
+      width: 100%;
     }
 
     .dashboard-block-header,

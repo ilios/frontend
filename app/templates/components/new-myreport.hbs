@@ -1,9 +1,28 @@
 <section class='new-myreport'>
     <div class="form-title">{{t 'dashboard.newReport'}}</div>
     <div class="detail-content">
-        <label>{{t 'general.title'}}</label>
-        {{input value=myreport.title placeholder=placeholder}}
-        <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-        <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+        <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
+        <div class="form-data">{{input value=myreport.title placeholder=placeholder}}</div>
+        <label class="form-label">{{t 'general.all'}}:</label>
+        <div class='selectable-list'>
+            <ul>
+                {{#each subjects as |subject|}}
+                    <li {{action 'add' subject}}>{{subject}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        {{input type='checkbox' checked=false}}
+        <label class="form-label">{{t 'dashboard.associatedToThe'}}:</label>
+        <div class='selectable-list'>
+            <ul>
+                {{#each prepositionalObjects as |po|}}
+                    <li {{action 'add' po}}>{{po}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="input-buttons">
+            <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+            <button class='cancel text' {{action 'closeEditor'}}>{{t 'general.cancel'}}</button>
+        </div>
     </div>
 </section>
