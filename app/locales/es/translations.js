@@ -315,6 +315,7 @@ export default {
     'sessionObjectives': 'Objetivos de la Sesión',
     'sessionLearningMaterials': 'Materiales de Aprendizaje de la Sesión',
     'noAssociatedCompetencies': 'No Competencias Asociadas',
+    'dueThisDay': 'Debido por esta fecha'
   },
   'auth': {
     'username': 'Nombre de Usuario',

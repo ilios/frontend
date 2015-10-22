@@ -15,6 +15,9 @@ export default Ember.Component.extend({
   selectedView: null,
   mySchedule: true,
   courseFilters: false,
+  dueTranslation: Ember.computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.dueThisDay');
+  }),
   dayTranslation: Ember.computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.day');
   }),

@@ -315,6 +315,7 @@ export default {
     'sessionObjectives': 'Session Objectives',
     'sessionLearningMaterials': 'Session Learning Materials',
     'noAssociatedCompetencies': 'No Associated Competencies',
+    'dueThisDay': 'Due this day'
   },
   'auth': {
     'username': 'Username',
