@@ -1,7 +1,7 @@
 {{#if sortedReports.length}}
     <div class='dashboard-block-header'>
         {{t 'dashboard.myReports'}}
-        {{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}
+        <div class="dashboard-block-actions">{{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}</div>
     </div>
 
     <div class='dashboard-block-body'>

@@ -102,16 +102,34 @@ $course: #ddd1e7;
     border: 1px solid $ilios-blue;
     margin-top: 1em;
 
+    .dashboard-block-actions {
+      float: right;
+    }
+
     .dashboard-block-header {
       background-color: $grey;
+      padding: .5em;
+    }
+
+    .form-title {
+      margin-bottom: 10px;
+    }
+
+    .dashboard-block-header,
+    .form-title {
       color: $ilios-orange;
       font-weight: bold;
-      padding: .5em;
     }
 
     .dashboard-block-body {
       height: 200px;
       overflow-y: scroll;
+    }
+
+    .form-container {
+      margin: 10px;
+      padding: 10px;
+      border: $header-grey 2px solid;
     }
   }
 
