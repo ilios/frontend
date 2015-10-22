@@ -1,9 +1,20 @@
 {{#if targetItemTitle}}
   <h2>{{t 'mesh.targetItemTitle' title=targetItemTitle}}</h2>
 {{/if}}
-<ul class='removable-list'>
+<ul class='removable-list selected-mesh-terms'>
   {{#each sortedTerms as |term|}}
-    <li {{action 'remove' term}}>{{term.name}} {{fa-icon 'remove'}}</li>
+    <li {{action 'remove' term}}>
+      <div class="content">
+        <span class="descriptor-name">{{term.name}}</span>
+        <span class="descriptor-id">
+          {{term.id}}
+          {{#if term.trees}}
+            - {{term.trees.lastObject.treeNumber}}
+          {{/if}}
+        </span>
+      </div>
+      {{fa-icon 'remove'}}
+      </li>
   {{/each}}
 </ul>
 {{search-box placeholder=placeholder liveSearch=false search='search' clear='clear'}}
@@ -18,18 +29,20 @@
       <ul class='mesh-search-results'>
         {{#each searchResults as |term|}}
           <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>
-              <span class="mesh-descriptor-name">{{term.name}}</span>
-          <span class="mesh-descriptor-id">
+            <span class="descriptor-name">{{term.name}}</span>
+            <span class="descriptor-id">
               {{term.id}}
               {{#if term.trees }}
-                  - {{term.trees.lastObject.treeNumber}}
+                - {{term.trees.lastObject.treeNumber}}
               {{/if}}
-          </span>
-              <ul class="mesh-concepts">
+            </span>
+            <ul class="mesh-concepts">
               {{#each term.concepts as |concept| }}
-                  <li class="truncate">{{concept.scopeNote}}</li>
+                {{#if concept.scopeNote }}
+                  <li class="{{unless term.isActive 'disabled'}}">{{concept.scopeNote}}</li>
+                {{/if}}
               {{/each}}
-              </ul>
+            </ul>
           </li>
         {{/each}}
       </ul>
