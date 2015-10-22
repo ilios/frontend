@@ -367,6 +367,7 @@ export default {
     'mySchedule': 'Mi Horario',
     'myReports': 'Mis Reportes',
     'newReport': 'Nuevo Reporte',
+    'reportTitle': 'El título del reporte',
     'associatedToThe': 'Associado con',
     'allEvents': 'Todos los Eventos',
     'noEvents': 'No eventos próximos',

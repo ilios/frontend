@@ -367,6 +367,7 @@ export default {
     'mySchedule': 'Mon calendrier (liste)',
     'myReports': 'Mes Rapports',
     'newReport': 'Nouveau Rapport',
+    'reportTitle': 'Le Titre du Rapport',
     'associatedToThe': 'Associés à des',
     'allEvents': 'Tous les événements',
     'noEvents': 'Aucun événement prévu',
