@@ -1,9 +1,14 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
+const {computed, inject, RSVP, isEmpty} = Ember;
+const {PromiseArray} = DS;
+const {service} = inject;
+
 export default Ember.Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
   filter: '',
   classNames: ['detail-view', 'sessions-list'],
   tagName: 'div',
@@ -21,43 +26,57 @@ export default Ember.Component.extend({
   setFilter: function(){
     this.set('debouncedFilter', this.get('filter'));
   },
-  proxiedSessions: Ember.computed('sessions.@each', function() {
-    var sessions = this.get('sessions');
-    if(sessions == null){
-      return Ember.A();
+  proxiedSessions: computed('course', 'course.sessions.[]', function() {
+    let course = this.get('course');
+    if(isEmpty(course)){
+      return [];
     }
-    return sessions.map(session => {
-      return Ember.ObjectProxy.create({
-        content: session,
-        expandOfferings: false
+    let defer = RSVP.defer();
+    course.get('sessions').then(sessions => {
+      let proxiedSessions = sessions.map(session => {
+        return Ember.ObjectProxy.create({
+          content: session,
+          expandOfferings: false
+        });
       });
+      
+      defer.resolve(proxiedSessions);
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+    
+  }),
+  filteredContent: computed('proxiedSessions.@each.searchString', 'debouncedFilter', function(){
+    let defer = RSVP.defer();
+    this.get('proxiedSessions').then(sessions => {
+      let filter = this.get('debouncedFilter');
+      let filterExpressions = filter.split(' ').map(function(string){
+        return new RegExp(string, 'gi');
+      });
+      let filtered = sessions.filter(session => {
+        let searchString = session.get('searchString');
+        if(searchString === null || searchString === undefined){
+          return false;
+        }
+        let matchedSearchTerms = 0;
+        for (let i = 0; i < filterExpressions.length; i++) {
+          if(searchString.match(filterExpressions[i])){
+            matchedSearchTerms++;
+          }
+        }
+        //if the number of matching search terms is equal to the number searched, return true
+        return (matchedSearchTerms === filterExpressions.length);
+      });
+      
+      defer.resolve(filtered.sortBy('title'));
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
     });
   }),
-  filteredContent: function(){
-    var sessions = this.get('proxiedSessions');
-    if(sessions == null){
-      return Ember.A();
-    }
-    var filter = this.get('debouncedFilter');
-    var filterExpressions = filter.split(' ').map(function(string){
-      return new RegExp(string, 'gi');
-    });
-    var filtered = sessions.filter(function(session) {
-      var searchString = session.get('searchString');
-      if(searchString === null || searchString === undefined){
-        return false;
-      }
-      var matchedSearchTerms = 0;
-      for (var i = 0; i < filterExpressions.length; i++) {
-        if(searchString.match(filterExpressions[i])){
-          matchedSearchTerms++;
-        }
-      }
-      //if the number of matching search terms is equal to the number searched, return true
-      return (matchedSearchTerms === filterExpressions.length);
-    });
-    return filtered.sortBy('title');
-  }.property('proxiedSessions.@each.searchString', 'debouncedFilter'),
   actions: {
     addNewSession(){
       this.get('course.school').then(school => {
