@@ -154,7 +154,7 @@ test('new session', function(assert) {
   let newTitle = 'new session title, woohoo';
   andThen(function() {
     let container = find('.sessions-list');
-    click('.detail-actions button', container);
+    click('.detail-actions button:eq(0)', container);
     andThen(function(){
       fillIn('.sessions-list .new-session input:eq(0)', newTitle);
       click('.new-session .done', container);
@@ -175,7 +175,7 @@ test('new session goes away when we navigate #643', function(assert) {
   let newTitle = 'new session title, woohoo';
   andThen(function() {
     let container = find('.sessions-list');
-    click('.detail-actions button', container).then(()=> {
+    click('.detail-actions button:eq(0)', container).then(()=> {
       fillIn('.sessions-list .new-session input:eq(0)', newTitle);
       click('.new-session .done', container).then(()=>{
         click('.savedsession a', container).then(()=> {

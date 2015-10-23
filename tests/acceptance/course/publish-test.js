@@ -6,7 +6,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
-var fixtures = {};
 
 module('Acceptance: Course - Publish', {
   beforeEach: function() {
@@ -15,33 +14,7 @@ module('Acceptance: Course - Publish', {
     server.create('user', {id: 4136});
     server.create('school');
     server.create('cohort', {
-      courses: [1, 2, 3],
-    });
-    server.create('publishEvent', {
-      administrator: 4136,
       courses: [1],
-    });
-    server.create('publishEvent', {
-      administrator: 4136,
-      courses: [2],
-    });
-    fixtures.publishedCourse = server.create('course', {
-      year: 2013,
-      school: 1,
-      publishEvent: 1,
-      cohorts: [1],
-    });
-    fixtures.scheduledCourse = server.create('course', {
-      year: 2013,
-      school: 1,
-      publishEvent: 2,
-      publishedAsTbd: true,
-      cohorts: [1],
-    });
-    fixtures.draftCourse = server.create('course', {
-      year: 2013,
-      school: 1,
-      cohorts: [1],
     });
   },
 
@@ -51,7 +24,29 @@ module('Acceptance: Course - Publish', {
 });
 
 test('check published course', function(assert) {
-  visit('/courses/' + fixtures.publishedCourse.id);
+  server.create('publishEvent', {
+    administrator: 4136,
+    courses: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 1,
+    cohorts: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 2,
+    publishedAsTbd: true,
+    cohorts: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    cohorts: [1],
+  });
+  visit('/courses/1');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
@@ -71,7 +66,18 @@ test('check published course', function(assert) {
 });
 
 test('check scheduled course', function(assert) {
-  visit('/courses/' + fixtures.scheduledCourse.id);
+  server.create('publishEvent', {
+    administrator: 4136,
+    courses: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 1,
+    publishedAsTbd: true,
+    cohorts: [1],
+  });
+  visit('/courses/1');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
@@ -91,7 +97,12 @@ test('check scheduled course', function(assert) {
 });
 
 test('check draft course', function(assert) {
-  visit('/courses/' + fixtures.draftCourse.id);
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    cohorts: [1],
+  });
+  visit('/courses/1');
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
@@ -111,7 +122,12 @@ test('check draft course', function(assert) {
 });
 
 test('check publish draft course', function(assert) {
-  visit('/courses/' + fixtures.draftCourse.id);
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    cohorts: [1],
+  });
+  visit('/courses/1');
 
 
   andThen(function() {
@@ -127,7 +143,12 @@ test('check publish draft course', function(assert) {
 });
 
 test('check schedule draft course', function(assert) {
-  visit('/courses/' + fixtures.draftCourse.id);
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    cohorts: [1],
+  });
+  visit('/courses/1');
   andThen(function() {
     let menu = find('.course-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -141,7 +162,18 @@ test('check schedule draft course', function(assert) {
 });
 
 test('check publish scheduled course', function(assert) {
-  visit('/courses/' + fixtures.scheduledCourse.id);
+  server.create('publishEvent', {
+    administrator: 4136,
+    courses: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 1,
+    publishedAsTbd: true,
+    cohorts: [1],
+  });
+  visit('/courses/1');
   andThen(function() {
     let menu = find('.course-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -155,7 +187,18 @@ test('check publish scheduled course', function(assert) {
 });
 
 test('check unpublish scheduled course', function(assert) {
-  visit('/courses/' + fixtures.scheduledCourse.id);
+  server.create('publishEvent', {
+    administrator: 4136,
+    courses: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 1,
+    publishedAsTbd: true,
+    cohorts: [1],
+  });
+  visit('/courses/1');
   andThen(function() {
     let menu = find('.course-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -169,7 +212,17 @@ test('check unpublish scheduled course', function(assert) {
 });
 
 test('check schedule published course', function(assert) {
-  visit('/courses/' + fixtures.publishedCourse.id);
+  server.create('publishEvent', {
+    administrator: 4136,
+    courses: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 1,
+    cohorts: [1],
+  });
+  visit('/courses/1');
   andThen(function() {
     let menu = find('.course-publication-menu').eq(0);
     click('.button', menu).then(function(){
@@ -183,7 +236,17 @@ test('check schedule published course', function(assert) {
 });
 
 test('check unpublish published course', function(assert) {
-  visit('/courses/' + fixtures.publishedCourse.id);
+  server.create('publishEvent', {
+    administrator: 4136,
+    courses: [1],
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    publishEvent: 1,
+    cohorts: [1],
+  });
+  visit('/courses/1');
   andThen(function() {
     let menu = find('.course-publication-menu').eq(0);
     click('.button', menu).then(function(){

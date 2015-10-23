@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('courses');
   this.resource('course', { path: 'courses/:course_id'}, function(){
     this.route('publicationCheck', { path: '/publicationcheck'});
+    this.route('publishall', { path: '/publishall'});
     this.resource("session", {path: '/sessions/:session_id'}, function(){
       this.route('publicationCheck', {path: '/publicationcheck'});
     });

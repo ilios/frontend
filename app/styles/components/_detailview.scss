@@ -112,6 +112,14 @@ $collapse-control-shadow-grey: #e2e2e2;
       margin-right: .8em;
       padding-left: .8em;
       padding-right: .8em;
+      
+      &.collapsed .detail-title::after {
+        content: '\25BA';
+      }
+      
+      &.collapsible .detail-title::after {
+        content: '\25BC';
+      }
 
       // special handling for the detail-blocks that contain a filter element
       &.filter-detail-block {
@@ -339,6 +347,27 @@ $collapse-control-shadow-grey: #e2e2e2;
   .active-background,
   .active-background:hover {
     background-color: $active-background-color;
+  }
+  
+  .publish-all-sessions-review {
+    border: 1px solid $published-green;
+    font-size: 1.5 * $base-font-size;
+    margin: 2.5em;
+    padding: 1em;
+    text-align: center;
+    
+    p {
+      color: $published-green;
+      font-weight: bold;
+      margin: 0;
+      margin-bottom: 1em;
+    }
+    
+    button {
+      background: $publish-button-color;
+      color: $white;
+    }
+    
   }
 }
 

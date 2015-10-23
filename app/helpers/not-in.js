@@ -1,14 +1,13 @@
 import Ember from 'ember';
 
-export function isIn([values, item]) {
+export function notIn([values, item]) {
   if(!values){
     return false;
   }
   if(!item){
     return false;
   }
-  
-  return values.contains(item);
+  return !values.contains(item);
 }
 
 export default Ember.Helper.extend({
@@ -16,7 +15,7 @@ export default Ember.Helper.extend({
   compute: function([values, item]) {
     this.set('values', values);
 
-    return isIn([values, item]);
+    return notIn([values, item]);
   },
 
   recomputeOnArrayChange: Ember.observer('values.[]', function() {
