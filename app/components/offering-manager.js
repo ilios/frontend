@@ -191,7 +191,7 @@ export default Ember.Component.extend({
 
         let datesHash = this.calculateDateTimes();
 
-        const room = this.get('buffer.room');
+        const room = this.get('buffer.room') || 'TBD';
         const startDate = datesHash.startDate.toDate();
         const endDate = datesHash.endDate.toDate();
 

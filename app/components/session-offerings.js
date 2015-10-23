@@ -68,7 +68,7 @@ export default Component.extend({
       let offeringPromises = [];
 
       learnerGroups.forEach((learnerGroup) => {
-        const room = learnerGroup.get('location');
+        const room = learnerGroup.get('location') || 'TBD';
         let offering = store.createRecord('offering', { session, startDate, endDate, room });
 
         offeringPromises.pushObject(offering.save());
