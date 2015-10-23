@@ -18,9 +18,10 @@ test('`revisedLearnerGroups` & `sortedLearnerGroups` computed property works pro
     allParentTitles: ['Parent Title']
   });
 
-  const learnerGroups = [ group2, group1 ];
+  const cohort = { id: 12 };
+  const learnerGroups = { '12': [ group2, group1 ] };
 
-  const component = this.subject({ learnerGroups });
+  const component = this.subject({ cohort, learnerGroups });
 
   let revisedLearnerGroups = component.get('revisedLearnerGroups');
 

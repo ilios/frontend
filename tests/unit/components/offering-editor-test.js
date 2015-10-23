@@ -19,7 +19,7 @@ test('properties have default values', function(assert) {
     room:             null,
     instructors:      [],
     instructorGroups: [],
-    learnerGroups:    []
+    learnerGroups:    {}
   };
 
   const component = this.subject();
@@ -80,7 +80,8 @@ test('actions adding/removing instructors/instructorGroups/learnerGroups work pr
     })
   });
 
-  const component = this.subject();
+  const cohorts = [{ id: 12 }];
+  const component = this.subject({ cohorts });
 
   component.send('addInstructor', argument);
   assert.equal(component.get('instructors').length, 1);
@@ -96,13 +97,15 @@ test('actions adding/removing instructors/instructorGroups/learnerGroups work pr
   component.send('removeInstructorGroup', argument);
   assert.ok(isEmpty(component.get('instructorGroups')));
 
-  component.send('addLearnerGroup', argument);
+  component.send('addLearnerGroup', argument, 12);
 
   next(component, () => {
-    assert.equal(component.get('learnerGroups').length, 1);
-    assert.equal(component.get('learnerGroups')[0].get('name'), 'John Doe');
+    const cohortGroups = component.get('learnerGroups')[12];
 
-    component.send('removeLearnerGroup', argument);
-    assert.ok(isEmpty(component.get('learnerGroups')));
+    assert.equal(cohortGroups.length, 1);
+    assert.equal(cohortGroups[0].get('name'), 'John Doe');
+
+    component.send('removeLearnerGroup', argument, 12);
+    assert.ok(isEmpty(cohortGroups));
   });
 });

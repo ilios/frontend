@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
 
-const { Component, computed, isEmpty, ObjectProxy, RSVP } = Ember;
+const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP } = Ember;
 const { notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
@@ -13,12 +13,20 @@ export default Component.extend({
 
     const instructors = [];
     const instructorGroups = [];
-    const learnerGroups = [];
     const startDate = new Date();
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 1);
     const startTime = new Date().setHours(8, 0, 0, 0);
     const endTime = new Date().setHours(9, 0, 0, 0);
+
+    const cohorts = this.get('cohorts');
+    const learnerGroups = {};
+
+    if (cohorts && isPresent(cohorts)) {
+      cohorts.forEach((cohort) => {
+        learnerGroups[cohort.id] = [];
+      });
+    }
 
     this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime });
   },
@@ -38,7 +46,7 @@ export default Component.extend({
   instructorGroups: null,
   learnerGroups: null,
 
-  availableLearnerGroups: computed('cohorts.[]', 'learnerGroups.[]', function() {
+  availableLearnerGroups: computed('cohorts.[]', function() {
     let cohortProxy = ObjectProxy.extend({
       selectedLearnerGroups: [],
 
@@ -89,7 +97,7 @@ export default Component.extend({
     return cohorts.map((cohort) => {
       let proxy = cohortProxy.create({
         content: cohort,
-        selectedLearnerGroups: this.get('learnerGroups')
+        selectedLearnerGroups: this.get('learnerGroups')[cohort.id]
       });
 
       return proxy;
@@ -133,6 +141,19 @@ export default Component.extend({
     endDate.minute(endTime.format('mm'));
 
     return { startDate, endDate };
+  },
+
+  getAllLearnerGroups() {
+    const groupHash = this.get('learnerGroups');
+    const output = [];
+
+    for (let key in groupHash) {
+      groupHash[key].forEach((group) => {
+        output.push(group);
+      });
+    }
+
+    return output;
   },
 
   actions: {
@@ -180,30 +201,31 @@ export default Component.extend({
 
     // If the group has no descendants then we add it, otherwise we add
     // the descendants, but not the parent (add lowest node at all times).
-    addLearnerGroup(group) {
+    addLearnerGroup(group, cohortId) {
       let learnerGroups = this.get('learnerGroups');
 
       group.get('allDescendants').then((descendants) => {
         if (isEmpty(descendants)) {
-          learnerGroups.addObject(group);
+          learnerGroups[cohortId].addObject(group);
         } else {
-          learnerGroups.addObjects(descendants);
+          learnerGroups[cohortId].addObjects(descendants);
         }
       });
     },
 
-    removeLearnerGroup(group) {
-      this.get('learnerGroups').removeObject(group);
+    removeLearnerGroup(group, cohortId) {
+      this.get('learnerGroups')[cohortId].removeObject(group);
     },
 
     create() {
       if (this.datesValidated() && this.timesValidated()) {
         let datesHash = this.calculateDateTimes();
+        let learnerGroups = this.getAllLearnerGroups();
 
         let params = {
           startDate: datesHash.startDate.toDate(),
           endDate: datesHash.endDate.toDate(),
-          learnerGroups: this.get('learnerGroups')
+          learnerGroups
         };
 
         if (this.get('singleOffering')) {

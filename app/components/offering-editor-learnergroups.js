@@ -6,9 +6,10 @@ const { sort } = computed;
 export default Component.extend({
   classNames: ['offering-editor-learnergroups'],
 
-  revisedLearnerGroups: computed('learnerGroups', {
+  revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', {
     get() {
-      let learnerGroups = this.get('learnerGroups');
+      const cohortId = this.get('cohort.id');
+      let learnerGroups = this.get('learnerGroups')[cohortId];
       let revisedGroups = [];
 
       if (isPresent(learnerGroups)) {
@@ -37,11 +38,13 @@ export default Component.extend({
 
   actions: {
     addLearnerGroup(group) {
-      this.sendAction('addLearnerGroup', group);
+      const cohortId = this.get('cohort.id');
+      this.sendAction('addLearnerGroup', group, cohortId);
     },
 
     removeLearnerGroup(group) {
-      this.sendAction('removeLearnerGroup', group);
+      const cohortId = this.get('cohort.id');
+      this.sendAction('removeLearnerGroup', group, cohortId);
     }
   }
 });
