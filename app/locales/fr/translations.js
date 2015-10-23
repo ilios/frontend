@@ -321,6 +321,7 @@ export default {
     'sessionObjectives': 'Session Objectives',
     'sessionLearningMaterials': 'Session Learning Materials',
     'noAssociatedCompetencies': 'No Associated Competencies',
+    'dueThisDay': 'Dû ce jour-là'
   },
   'auth': {
     'username': "Nom d'utilisateur",
