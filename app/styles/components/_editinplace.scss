@@ -18,9 +18,19 @@
       color: $base-font-color;
       cursor: pointer;
       display: inline;
+      outline: none;
       overflow: show;
       padding: 4px;
       z-index: 100;
+
+      &.has-error {
+        border-color: $ilios-red;
+      }
+    }
+
+    .error {
+      display: block;
+      font-size: 10px;
     }
 
     .actions {

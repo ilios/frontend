@@ -459,7 +459,7 @@ test('validations work properly', function(assert) {
   click(externalId);
   fillIn(externalIdInput, '1324~');
   andThen(() => {
-    assert.equal(find(errorMessage).text(), 'must be alphanumeric', 'error message is shown');
+    assert.equal(find(errorMessage).text(), "must be alphanumeric ('-' and ':' allowed)", 'error message is shown');
   });
 
   fillIn(externalIdInput, '12345');

@@ -381,6 +381,7 @@ export default {
     'otherThan': "doit être une valeur autre de {{count}}",
     'odd': "doit étre une chiffre impair",
     'even': "doit être une chiffre pair",
-    'alphanumeric': "doit être une valeur alphanumérique"
+    'alphanumeric': "doit être une valeur alphanumérique",
+    'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)"
   }
 };

@@ -381,6 +381,7 @@ export default {
     'otherThan': "Debe ser otra cosa que {{count}}",
     'odd': "debe ser número impar",
     'even': "debe ser número par",
-    'alphanumeric': "debe ser alfanumérico"
+    'alphanumeric': "debe ser alfanumérico",
+    'alphanumeric2': "debe ser alfanumérico ('-' y ':' permitido)"
   }
 };

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const { computed, inject, isBlank, isEqual, Mixin } = Ember;
 const { service } = inject;
+const { alias } = computed;
 
 export default Mixin.create({
   i18n: service(),
@@ -25,6 +26,8 @@ export default Mixin.create({
   saveOnChange: false,
 
   buffer: null,
+
+  validationBuffer: alias('buffer'),
 
   // Allows the calling object to send some context like an id
   // Can be used during the save process

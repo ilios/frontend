@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ValidationMessages from 'ember-validations/messages';
 
+// Dockyard's ember-validations does not yet support ember-cli-i18n.
+// This is a hack to work around the issue until it is fixed.
 export function initialize(instance) {
   Ember.I18n = instance.container.lookup('service:i18n');
 
