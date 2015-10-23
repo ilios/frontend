@@ -102,7 +102,8 @@ test('manage terms', function(assert) {
       let removableItems = find('.removable-list li', meshManager);
       assert.equal(removableItems.length, objective.meshDescriptors.length);
       for (let i = 0; i < objective.meshDescriptors.length; i++){
-        assert.equal(getElementText(removableItems.eq(i)),getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
+        let meshDescriptorName = find('.content .descriptor-name', removableItems[i]).eq(0);
+        assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
       }
 
       let searchBox = find('.search-box', meshManager);
@@ -117,7 +118,8 @@ test('manage terms', function(assert) {
         assert.equal(searchResults.length, fixtures.meshDescriptors.length);
 
         for(let i = 0; i < fixtures.meshDescriptors.length; i++){
-          assert.equal(getElementText($(searchResults[i])), getText(fixtures.meshDescriptors[i].name));
+          let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
+          assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
         }
 
         for (let i = 0; i < fixtures.meshDescriptors.length; i++){
@@ -135,13 +137,14 @@ test('manage terms', function(assert) {
           assert.ok($(find('.mesh-search-results li:eq(3)', meshManager)).hasClass('disabled'));
 
           let newExpectedMesh = [
-            fixtures.meshDescriptors[1].name,
-            fixtures.meshDescriptors[3].name,
+            fixtures.meshDescriptors[1],
+            fixtures.meshDescriptors[3]
           ];
           removableItems = find('.removable-list li', meshManager);
           assert.equal(removableItems.length, 2);
           for (let i = 0; i < 2; i++){
-            assert.equal(getElementText(removableItems.eq(i)), getText(newExpectedMesh[i]));
+            let meshDescriptorName = find('.descriptor-name', removableItems[i]).eq(0);
+            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
           }
         });
       });

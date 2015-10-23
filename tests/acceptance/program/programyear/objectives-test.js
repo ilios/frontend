@@ -90,8 +90,8 @@ test('manage terms', function(assert) {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let removableItems = find('.removable-list li', meshManager);
       assert.equal(removableItems.length, 2);
-      assert.equal(getElementText(removableItems.eq(0)), getText('descriptor 0'));
-      assert.equal(getElementText(removableItems.eq(1)), getText('descriptor 1'));
+      assert.equal(getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)), getText('descriptor 0'));
+      assert.equal(getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)), getText('descriptor 1'));
 
       let searchBox = find('.search-box', meshManager);
       assert.equal(searchBox.length, 1);
@@ -104,10 +104,10 @@ test('manage terms', function(assert) {
         let searchResults = find('.mesh-search-results li', meshManager);
         assert.equal(searchResults.length, 4);
 
-        assert.equal(getElementText($(searchResults[0])), getText('descriptor 0'));
-        assert.equal(getElementText($(searchResults[1])), getText('descriptor 1'));
-        assert.equal(getElementText($(searchResults[2])), getText('descriptor 2'));
-        assert.equal(getElementText($(searchResults[3])), getText('descriptor 3'));
+        assert.equal(getElementText(find('.descriptor-name', searchResults[0]).eq(0)), getText('descriptor 0'));
+        assert.equal(getElementText(find('.descriptor-name', searchResults[1]).eq(0)), getText('descriptor 1'));
+        assert.equal(getElementText(find('.descriptor-name', searchResults[2]).eq(0)), getText('descriptor 2'));
+        assert.equal(getElementText(find('.descriptor-name', searchResults[3]).eq(0)), getText('descriptor 3'));
         assert.ok($(searchResults[0]).hasClass('disabled'));
         assert.ok($(searchResults[1]).hasClass('disabled'));
         assert.ok(!$(searchResults[2]).hasClass('disabled'));
@@ -122,8 +122,14 @@ test('manage terms', function(assert) {
 
           removableItems = find('.removable-list li', meshManager);
           assert.equal(removableItems.length, 2);
-          assert.equal(getElementText(removableItems.eq(0)), getText('descriptor 1'));
-          assert.equal(getElementText(removableItems.eq(1)), getText('descriptor 2'));
+          assert.equal(
+            getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)),
+            getText('descriptor 1')
+          );
+          assert.equal(
+            getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)),
+            getText('descriptor 2')
+          );
         });
       });
     });
