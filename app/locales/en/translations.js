@@ -268,7 +268,7 @@ export default {
     'copyrightPermission': 'Copyright Permission',
     'copyrightAgreement': "The file I am attempting to upload is my own or I have express permission to reproduce and/or distribute this item and does not contain any protected health information. My use of this file is in compliance with Government and University policies on copyright and information security and my educational program's guidelines for professional conduct. This file also adheres to the Terms and Conditions for this application.",
     'copyrightRationale':'Copyright Rationale',
-
+    'searchPlaceholder': 'Find Learning Material',
   },
   'groupMembers': {
     'filterPlaceholder': 'Filter by name or email',

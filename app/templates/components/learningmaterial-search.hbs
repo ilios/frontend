@@ -1,0 +1,24 @@
+<input
+  type="search"
+  placeholder={{t 'learningMaterials.searchPlaceholder'}}
+  incremental=true
+  onsearch={{action "inputValueChanged"}}
+  onkeyup={{action "inputValueChanged"}}
+  results=5
+  autosave='ilios-global-search'
+/>
+<ul class="results {{unless showList 'hidden'}}" {{action 'clear'}}>
+  {{#if searching}}
+    <li>{{t 'general.currentlySearchingPrompt'}}</li>
+  {{else if showMoreInputPrompt}}
+    <li>{{t 'general.moreInputRequiredPrompt'}}</li>
+  {{else if showNoResultsMessage}}
+    <li>{{t 'general.noSearchResultsPrompt'}}</li>
+  {{else}}
+    {{#each results as |learningMaterial|}}
+      <li {{action 'add' learningMaterial}}>
+        {{learningMaterial.title}}
+      </li>
+    {{/each}}
+  {{/if}}
+</ul>

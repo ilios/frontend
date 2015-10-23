@@ -268,7 +268,7 @@ export default {
     'copyrightPermission': 'Permisos de Derechos de Autor',
     'copyrightAgreement': "El archivo yo estoy tratando a subir es mi pripio o yo la tengo la autorización expresa a reproducir y/o distribuir esta información y que no contiene ninguna información de la salud protegida. Mi uso de este archivo conforme a Políticas del gobierno y a la Universidad según a la seguridad de copyright e información y las reglas de mi program de estudio a cerca de conducto profesional. Este archivo también adhiere a los Terminos y Condiciones para esta aplicación.",
     'copyrightRationale':'Justificación para Derechos de Autor',
-
+    'searchPlaceholder': 'encontrar material de aprendizaje',
   },
   'groupMembers': {
     'filterPlaceholder': 'Aplicar un Filtro por nombre o email',

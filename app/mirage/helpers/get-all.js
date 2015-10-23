@@ -77,6 +77,9 @@ export default function getAll(db, request){
           case 'meshDescriptors':
             comparisonString = (obj.name + obj.annotation).toLowerCase();
             break;
+          case 'learningMaterials':
+            comparisonString = (obj.title).toLowerCase();
+            break;
           default:
             console.log('No Q comparison defined for ' + modelName);
             return false;
