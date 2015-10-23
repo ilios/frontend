@@ -8,7 +8,7 @@
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
           {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each schools as |school|}}
+            {{#each model.schools as |school|}}
               <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -19,7 +19,7 @@
     </div>
     <div id='yearsfilter' class="filter">
       {{#action-menu title=selectedYear.academicYearTitle icon=false}}
-        {{#each years as |year|}}
+        {{#each model.years as |year|}}
           <li {{action 'changeSelectedYear' year}}>{{year.academicYearTitle}}</li>
         {{/each}}
       {{/action-menu}}
@@ -35,31 +35,38 @@
         <h2>{{t 'general.courses'}}</h2>
       </div>
       <div class='resultslist-actions'>
-        <button {{action 'addCourse'}}>{{t 'general.addNew'}}</button>
+        {{expand-collapse-button value=showNewCourseForm action="toggleNewCourseForm"}}
       </div>
     </div>
-    {{#if newCourses.length}}
-      <section class='resultslist-new'>
-        {{#each newCourses as |courseProxy|}}
-          {{#liquid-unless courseProxy.isSaved class='horizontal'}}
-            {{new-course course=courseProxy.content years=years save='saveNewCourse' cancel='removeNewCourse'}}
-          {{else}}
-            <div class='savedcourse saved-result'>
-              {{#link-to 'course' courseProxy.content}}
-                {{fa-icon 'external-link-square'}} {{courseProxy.title}}
-              {{/link-to}}
-              {{t 'general.savedSuccessfully'}}
-            </div>
-          {{/liquid-unless}}
-        {{/each}}
-      </section>
-    {{/if}}
+    <section class='resultslist-new'>
+      {{#liquid-if showNewCourseForm class='vertical'}}
+        {{new-course 
+          currentSchool=selectedSchool
+          currentYear=selectedYear
+          years=model.years
+          save='saveNewCourse'
+          cancel='toggleNewCourseForm'
+        }}
+      {{/liquid-if}}
+      {{#each newCourses as |course|}}
+        <div class='savedcourse saved-result'>
+          {{#link-to 'course' course}}
+            {{fa-icon 'external-link-square'}} {{course.title}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/each}}
+    </section>
     <div class='resultslist-list'>
-      {{ilios-course-list
-        courses=filteredCourses
-        edit='editCourse'
-        remove='removeCourse'
-      }}
+      {{#if filteredCourses.isFulfilled}}
+        {{ilios-course-list
+          courses=filteredCourses
+          edit='editCourse'
+          remove='removeCourse'
+        }}
+      {{else}}
+        {{pulse-loader}}
+      {{/if}}
     </div>
   </section>
 </section>
