@@ -9,6 +9,7 @@
 
 .error-detail {
   border: 1px solid $ilios-orange;
+  overflow: auto;
   padding: 25px;
 
   .error-total {
