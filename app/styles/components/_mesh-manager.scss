@@ -1,23 +1,23 @@
 .mesh-manager {
   .mesh-search-results {
     .descriptor-name {
-      font-weight: bold;
       display: block;
+      font-weight: bold;
     }
 
     .descriptor-id {
-      font-size: smaller;
       display: block;
+      font-size: smaller;
     }
 
     .mesh-concepts {
-      list-style: disc inside;
       color: inherit;
+      list-style: disc inside;
 
       li {
-        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
@@ -27,12 +27,12 @@
       display: inline-block;
 
       .descriptor-name {
-        display:block;
+        display: block;
       }
 
       .descriptor-id {
-        font-size: smaller;
         display: block;
+        font-size: smaller;
       }
     }
 
