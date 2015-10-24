@@ -5,6 +5,8 @@ export default Ember.Component.extend({
   currentUser: Ember.inject.service(),
   tagName: 'div',
   classNames: ['dashboard-block'],
+  courseSorting: ['startDate:desc'],
+  sortedListOfCourses: Ember.computed.sort('listOfCourses', 'courseSorting'),
   listOfCourses: Ember.computed('currentUser.model.allRelatedCourses.[]', function(){
     let defer = Ember.RSVP.defer();
     this.get('currentUser').get('model').then( user => {
@@ -12,7 +14,7 @@ export default Ember.Component.extend({
         let filteredCourses = courses.filter(course => {
           return (!course.get('locked') && !course.get('archived'));
         });
-        defer.resolve(filteredCourses.sortBy('startDate'));
+        defer.resolve(filteredCourses);
       });
     });
     return DS.PromiseArray.create({
