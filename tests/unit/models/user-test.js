@@ -284,10 +284,6 @@ test('gets all learner ilm courses', function(assert) {
       session: session1,
       learners: [model]
     });
-    store.createRecord('ilmSession', {
-      session: session1,
-      learners: [model]
-    });
     let course2 = store.createRecord('course');
     let session2 = store.createRecord('session', {
       course: course2
@@ -315,10 +311,6 @@ test('gets all instructor ilm courses', function(assert) {
     let course1 = store.createRecord('course');
     let session1 = store.createRecord('session', {
       course: course1
-    });
-    store.createRecord('ilmSession', {
-      session: session1,
-      instructors: [model]
     });
     store.createRecord('ilmSession', {
       session: session1,
