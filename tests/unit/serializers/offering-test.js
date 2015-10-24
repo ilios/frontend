@@ -1,12 +1,14 @@
 import { moduleForModel, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForModel('offering', 'Unit | Serializer | offering', {
+moduleForModel('offering', 'Unit | Serializer | offering' + testgroup, {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:offering',
     'model:session',
     'model:learner-group',
     'model:instructor-group',
+    'model:publish-event',
     'model:user',
   ]
 });
