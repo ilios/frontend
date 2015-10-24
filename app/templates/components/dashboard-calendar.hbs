@@ -7,6 +7,7 @@
       action='toggleMySchedule'
     }}
   </div>
+
   <div class='calendar-options-control showfilters'>
     {{toggle-wide
       value=showFilters
@@ -15,6 +16,7 @@
       action='toggleShowFilters'
     }}
   </div>
+
   {{#if showFilters}}
     <div class='calendar-options-control togglecoursefilters'>
       {{toggle-wide
@@ -24,7 +26,12 @@
         action='toggleCourseFilters'
       }}
     </div>
+
+    {{#if showClearFilters}}
+      <span class="calendar-clear-filters" {{action 'clearFilters'}}>Clear Filters</span>
+    {{/if}}
   {{/if}}
+
   <div class='calendar-options-control calendar-school-picker'>
     {{fa-icon 'university'}}
     {{#if hasMoreThanOneSchool}}
@@ -39,6 +46,7 @@
       {{selectedSchool.title}}
     {{/if}}
   </div>
+
   {{#if showFilters}}
     <div class='calendar-options-control calendar-year-picker'>
       <select {{action 'changeSelectedYear' on='change'}}>
@@ -50,6 +58,7 @@
       </select>
     </div>
   {{/if}}
+
   <div class='calendar-filters'>
     {{#liquid-if showFilters class='vertical'}}
       {{#liquid-if courseFilters class='crossFade'}}
