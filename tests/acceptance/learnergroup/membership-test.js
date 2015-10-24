@@ -134,7 +134,7 @@ test('cohort members', function(assert) {
   visit(url);
   andThen(function() {
     let container = find('.cohortmembers');
-    assert.equal(getElementText(find('.detail-title', container)), getText('Cohort Members NOT assigned to learner group 0'));
+    assert.equal(getElementText(find('.detail-title', container)), getText('Cohort Members NOT assigned to learner group 0 (2)'));
     assert.equal(getElementText(find('.learnergroup-username:eq(0)', container)), getText('7 guy Mc7son'));
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(0)', container)), getText('Not in this group'));
     assert.equal(getElementText(find('.learnergroup-username:eq(1)', container)), getText('8 guy Mc8son'));

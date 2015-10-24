@@ -11,8 +11,7 @@
 
     <section class='detail-block toplevelgroupmembers'>
       <div class='detail-title'>
-        {{t 'learnerGroups.learnerAssignments' groupTitle=learnerGroup.topLevelGroup.title}}
-
+        {{t 'learnerGroups.learnerAssignments' groupTitle=learnerGroup.topLevelGroup.title}} ({{topLevelGroupMembersNotInThisGroup.length}})
       </div>
       <div class='detail-content'>
         {{learnergroup-members
@@ -27,7 +26,7 @@
 
     <section class='detail-block cohortmembers'>
       <div class='detail-title'>
-        {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}}
+        {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}} ({{cohortMembersNotInAnyGroup.length}})
       </div>
       <div class='detail-content'>
         {{learnergroup-members
