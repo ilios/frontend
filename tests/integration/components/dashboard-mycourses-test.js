@@ -61,11 +61,13 @@ test('list courses', function(assert) {
   assert.equal(this.$(`table tr`).length, 3);
 });
 
-test('dont display when no courses', function(assert) {
-  assert.expect(1);
+test('display none when no courses', function(assert) {
+  assert.expect(2);
   this.container.register('service:mockcurrentuser', currentUserMockNoCourses);
   this.container.injection('component', 'currentUser', 'service:mockcurrentuser');
   this.render(hbs`{{dashboard-mycourses}}`);
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
+  
+  assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
   
 });
