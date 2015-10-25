@@ -40,5 +40,5 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('learnerGroup.topLevelGroup.allDescendantUsers.@each', 'learnerGroup.user.@each', 'learnerGroup.cohort.users.@each'),
+  }.property('learnerGroup.topLevelGroup.allDescendantUsers.@each', 'learnerGroup.user.@each', 'learnerGroup.cohort.users.@each')
 });
