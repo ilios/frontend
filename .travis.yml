@@ -39,6 +39,8 @@ install:
 
 script:
   - if [ "$SCSS_LINT" = true ]; then scss-lint; fi
+  #ensure that all tests contain a reference to 'helpers/test-groups' hopefully means they are in at least one group
+  - if [ $(grep -rL  'helpers/test-groups' tests/acceptance tests/integration tests/unit) ]; then echo 'One of the test files is not in a group so will not be run'; return 1; else return 0; fi
   - node_modules/.bin/ember test --filter=${TEST_GROUP} --launch=${TESTEM_LAUNCHER};
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
