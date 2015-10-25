@@ -5,10 +5,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 
-module('Acceptance: Dashboard Calendar', {
+module('Acceptance: Dashboard Calendar' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

@@ -4,10 +4,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var url = '/courses/1?details=true';
-module('Acceptance: Course - Mesh Terms', {
+module('Acceptance: Course - Mesh Terms' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

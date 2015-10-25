@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('toggle-onoff', 'Unit | Component | toggle onoff', {
+moduleForComponent('toggle-onoff' + testgroup, 'Unit | Component | toggle onoff', {
   unit: true
 });
 

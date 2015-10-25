@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
 let mockCourses = [
   Ember.Object.create({title: 'first', level: 4, academicYear: '2012-2013', locked: false, archived: false}),
@@ -36,7 +36,7 @@ let currentUserMockNoCourses = Ember.Service.extend({
 
 
 
-moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses', {
+moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses' + testgroup, {
   integration: true,
   beforeEach: function() {
     this.container.lookup('service:i18n').set('locale', 'en');

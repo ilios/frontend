@@ -1,7 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('curriculum-inventory-sequence-block-session', 'Unit | Model | curriculum inventory sequence block session', {
+moduleForModel('curriculum-inventory-sequence-block-session' + testgroup, 'Unit | Model | curriculum inventory sequence block session', {
   needs: modelList
 });
 

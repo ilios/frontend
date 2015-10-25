@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import PublishableModelMixin from '../../../mixins/publishable-model';
 import { module, test } from 'qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-module('Unit | Mixin | publishable model');
+module('Unit | Mixin | publishable model' + testgroup);
 
 // Replace this with your real tests.
 test('it works', function(assert) {

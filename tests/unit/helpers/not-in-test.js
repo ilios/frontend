@@ -1,7 +1,8 @@
 import { notIn } from '../../../helpers/not-in';
 import { module, test } from 'qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-module('Unit | Helper | not in');
+module('Unit | Helper | not in' + testgroup);
 
 
 test('correctly calculates if a value is not in an array', function(assert) {

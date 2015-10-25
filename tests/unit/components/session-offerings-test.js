@@ -1,10 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 const { run } = Ember;
 const { next } = run;
 
-moduleForComponent('session-offerings', 'Unit | Component | session offerings', {
+moduleForComponent('session-offerings' + testgroup, 'Unit | Component | session offerings', {
   unit: true
 });
 

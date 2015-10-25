@@ -5,10 +5,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
-module('Acceptance: Session - Publication Check', {
+module('Acceptance: Session - Publication Check' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

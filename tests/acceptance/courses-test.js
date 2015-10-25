@@ -4,11 +4,12 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var fixtures = {};
 
-module('Acceptance: Courses', {
+module('Acceptance: Courses' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

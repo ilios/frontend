@@ -4,11 +4,12 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var url = '/courses/1?details=true';
 var fixtures = {};
-module('Acceptance: Course - Objective Mesh Descriptors', {
+module('Acceptance: Course - Objective Mesh Descriptors' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

@@ -1,10 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 const { run } = Ember;
 const { next } = run;
 
-moduleForComponent('expand-collapse-button', 'Unit | Component | expand collapse button', {
+moduleForComponent('expand-collapse-button' + testgroup, 'Unit | Component | expand collapse button', {
   needs: ['helper:fa-icon'],
   unit: true
 });

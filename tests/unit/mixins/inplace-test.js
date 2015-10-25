@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import InplaceMixin from '../../../mixins/inplace';
 import { module, test } from 'qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-module('InplaceMixin');
+module('InplaceMixin' + testgroup);
 
 // Replace this with your real tests.
 test('it works', function(assert) {

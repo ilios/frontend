@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('error-display', 'Unit | Component | error display', {
+moduleForComponent('error-display' + testgroup, 'Unit | Component | error display', {
   unit: true
 });
 

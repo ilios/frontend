@@ -1,8 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('error-display', 'Integration | Component | error display', {
+moduleForComponent('error-display', 'Integration | Component | error display' + testgroup, {
   integration: true,
 
   beforeEach() {

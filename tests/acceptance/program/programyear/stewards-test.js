@@ -4,10 +4,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var url = '/programs/1/programyears/1';
-module('Acceptance: Program Year - Stewards', {
+module('Acceptance: Program Year - Stewards' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

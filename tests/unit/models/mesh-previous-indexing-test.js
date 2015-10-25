@@ -1,7 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('mesh-previous-indexing', 'Unit | Model | mesh previous indexing', {
+moduleForModel('mesh-previous-indexing' + testgroup, 'Unit | Model | mesh previous indexing', {
   needs: modelList
 });
 

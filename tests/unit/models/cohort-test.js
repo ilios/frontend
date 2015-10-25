@@ -2,6 +2,7 @@ import {
   moduleForModel,
   test
 } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
@@ -9,7 +10,7 @@ let needs = modelList;
 needs.pushObject('service:i18n');
 needs.pushObject('locale:en/translations');
 
-moduleForModel('cohort', 'Cohort', {
+moduleForModel('cohort', 'Unit | Model | Cohort' + testgroup, {
   needs
 });
 

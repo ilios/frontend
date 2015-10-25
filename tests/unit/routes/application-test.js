@@ -1,6 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleFor('route:application', 'Unit | Route | application', {
+moduleFor('route:application' + testgroup, 'Unit | Route | application', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
