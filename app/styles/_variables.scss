@@ -74,6 +74,7 @@ $hover-link-color: darken($base-accent-color, 15);
 // Neat Breakpoints
 $medium-screen: em(640);
 $large-screen: em(860);
+$giant-screen: em(1480);
 
 $medium-screen-up: new-breakpoint(min-width $medium-screen 4);
 $large-screen-up: new-breakpoint(min-width $large-screen 8);
