@@ -378,17 +378,59 @@ export default Ember.Component.extend({
 
   showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedTopics.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
     get() {
-      const a = this.get('selectedCourses');
+      const a = this.get('selectedTopics');
       const b = this.get('selectedSessionTypes');
-      const c = this.get('selectedTopics');
-      const d = this.get('selectedCourseLevels');
-      const e = this.get('selectedCohorts');
+      const c = this.get('selectedCourseLevels');
+      const d = this.get('selectedCohorts');
+      const e = this.get('selectedCourses');
 
       let results = a.concat(b, c, d, e);
+      this.set('activeFilters', results);
 
       return isPresent(results) ? true : false;
     }
   }).readOnly(),
+
+  activeFilters: null,
+
+  filterTags: computed('activeFilters', {
+    get() {
+      const activeFilters = this.get('activeFilters');
+
+      return activeFilters.map((filter) => {
+        let hash = {};
+        hash.filter = filter;
+
+        if (typeof filter === 'number') {
+          hash.class = 'tag-course-level';
+          hash.name = `Course Level ${filter}`;
+        } else {
+          let model = filter.get('constructor.modelName');
+
+          switch (model) {
+            case 'topic':
+              hash.class = 'tag-topic';
+              hash.name = filter.get('title');
+              break;
+            case 'session-type':
+              hash.class = 'tag-session-type';
+              hash.name = filter.get('title');
+              break;
+            case 'cohort':
+              hash.class = 'tag-cohort';
+              hash.name = `${filter.get('displayTitle')} ${filter.get('programYear.program.title')}`;
+              break;
+            case 'course':
+              hash.class = 'tag-course';
+              hash.name = filter.get('title');
+              break;
+          }
+        }
+
+        return hash;
+      });
+    }
+  }),
 
   actions: {
     changeDate(newDate){
@@ -469,6 +511,29 @@ export default Ember.Component.extend({
       const selectedCohorts = [];
 
       this.setProperties({ selectedCourses, selectedSessionTypes, selectedTopics, selectedCourseLevels, selectedCohorts });
+    },
+
+    removeFilter(filter) {
+      if (typeof filter === 'number') {
+        this.send('toggleCourseLevel', filter);
+      } else {
+        let model = filter.get('constructor.modelName');
+
+        switch (model) {
+          case 'topic':
+            this.send('toggleTopic', filter);
+            break;
+          case 'session-type':
+            this.send('toggleSessionType', filter);
+            break;
+          case 'cohort':
+            this.send('toggleCohort', filter);
+            break;
+          case 'course':
+            this.send('toggleCourse', filter);
+            break;
+        }
+      }
     }
   }
 });
