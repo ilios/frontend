@@ -24,9 +24,14 @@ module('Acceptance: Course - Mesh Terms' + testgroup, {
       descriptors: [1]
     });
 
+    server.create('meshConcept', {
+      descriptors: [1],
+      scopeNote: '1234567890'.repeat(30)
+    });
+
     server.create('meshDescriptor', {
       courses: [1],
-      concepts: [1, 2, 3],
+      concepts: [1, 2, 3, 4],
       trees: [1, 2, 3]
     });
     server.createList('meshDescriptor', 2, {
@@ -62,7 +67,7 @@ test('list mesh', function(assert) {
 });
 
 test('manage mesh', function(assert) {
-  assert.expect(31);
+  assert.expect(34);
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
@@ -99,9 +104,12 @@ test('manage mesh', function(assert) {
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(0)).eq(0)), getText('descriptor 0'));
         assert.equal(getElementText(find('.descriptor-id', searchResults.eq(0)).eq(0)), getText('1 - tree number 2'));
         let scopeNotes = find('.mesh-concepts li', searchResults.eq(0));
-        for(let i = 0, n = scopeNotes.length; i < n; i++) {
+        assert.equal(scopeNotes.length, 4);
+        for(let i = 0; i < 3; i++) {
           assert.equal(getElementText(scopeNotes.eq(i)), getText(`scope note ${i}`));
         }
+        assert.equal(getElementText(scopeNotes.eq(3)), '1234567890'.repeat(25));
+        assert.ok($(scopeNotes.eq(3)).hasClass('truncated'));
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(1)).eq(0)), getText('descriptor 1'));
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(2)).eq(0)), getText('descriptor 2'));
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(3)).eq(0)), getText('descriptor 3'));
