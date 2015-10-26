@@ -1,0 +1,43 @@
+.mesh-manager {
+  .mesh-search-results {
+    .descriptor-name {
+      display: block;
+      font-weight: bold;
+    }
+
+    .descriptor-id {
+      display: block;
+      font-size: smaller;
+    }
+
+    .mesh-concepts {
+      color: inherit;
+      list-style: disc inside;
+
+      li {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .selected-mesh-terms {
+    .content {
+      display: inline-block;
+
+      .descriptor-name {
+        display: block;
+      }
+
+      .descriptor-id {
+        display: block;
+        font-size: smaller;
+      }
+    }
+
+    .fa {
+      vertical-align: top;
+    }
+  }
+}

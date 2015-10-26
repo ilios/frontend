@@ -4,7 +4,7 @@ export default DS.Model.extend({
   name: DS.attr('string'),
   umlsUid: DS.attr('string'),
   preferred: DS.attr('boolean'),
-  scope: DS.attr('string'),
+  scopeNote: DS.attr('string'),
   cash1Name: DS.attr('string'),
   registryNumber: DS.attr('string'),
   symanticTypes: DS.hasMany('mesh-semantic-type',  {async: true}),
