@@ -826,3 +826,60 @@ test('clear all filters', function(assert) {
     assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
   });
 });
+
+test('filter tags work properly', function(assert) {
+  const topic = '.topicfilter li:first input';
+  const sessiontype = '.sessiontypefilter li:first input';
+  const courselevel = '.courselevelfilter li:first input';
+  const cohort = '.cohortfilter li:first input';
+
+  const filtersList = '.filters-list';
+  const clearFilter = '.filters-clear-filters';
+
+  function getTagText(n) {
+    return find(`.filter-tag:eq(${n})`).text().trim();
+  }
+
+  function clickTag(n) {
+    click(`.filter-tag:eq(${n})`);
+  }
+
+  visit('/dashboard?showCalendar=true');
+  showFilters();
+  andThen(() => {
+    assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
+  });
+
+  click(topic);
+  click(sessiontype);
+  click(courselevel);
+  click(cohort);
+  andThen(() => {
+    assert.equal(getTagText(0), 'topic 0', 'filter tag is active');
+    assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
+    assert.equal(getTagText(2), 'Course Level 1', 'filter tag is active');
+    assert.equal(getTagText(3), 'cohort 0 program 0', 'filter tag is active');
+  });
+
+  clickTag(2);
+  andThen(() => {
+    assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
+    assert.equal(getTagText(0), 'topic 0', 'filter tag is active');
+    assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
+    assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
+  });
+
+  clickTag(0);
+  andThen(() => {
+    assert.ok(!find(topic).prop('checked'), 'filter is unchecked');
+    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+    assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
+  });
+
+  click(clearFilter);
+  andThen(() => {
+    assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
+    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
+  });
+});

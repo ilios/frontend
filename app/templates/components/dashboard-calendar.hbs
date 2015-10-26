@@ -156,6 +156,19 @@
   </div>
 </section>
 
+{{#if showClearFilters}}
+  <section class="filters-list">
+    <header class="filters-header">Active Filters:</header>
+
+    <div class="filter-tags">
+      {{#each filterTags as |tag|}}
+        <span class="filter-tag {{tag.class}}" {{action 'removeFilter' tag.filter}}>{{tag.name}} {{fa-icon 'close'}}</span>
+      {{/each}}
+      <span class="filters-clear-filters" {{action 'clearFilters'}}>Clear Filters</span>
+    </div>
+  </section>
+{{/if}}
+
 <section class='fullwidth ilios-calendar-container'>
     {{ilios-calendar
       calendarEventsPromise=filteredEvents
