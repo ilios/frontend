@@ -80,6 +80,20 @@ $course: #ddd1e7;
       &.large-filter-list {
         @include span-columns(4 of 12);
       }
+
+      .clickable {
+        position: relative;
+      }
+
+      .checkbox {
+        position: absolute;
+      }
+
+      .list-indentation {
+        display: inline-block;
+        padding-left: 20px;
+        width: 100%;
+      }
     }
   }
 
