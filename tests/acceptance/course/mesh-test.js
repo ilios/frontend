@@ -15,16 +15,31 @@ module('Acceptance: Course - Mesh Terms' + testgroup, {
     server.create('user', {id: 4136});
     server.create('school');
     server.create('academicYear');
-    server.createList('meshDescriptor', 3, {
+
+    server.createList('meshTree', 3, {
+      descriptor: 1
+    });
+
+    server.createList('meshConcept', 3, {
+      descriptors: [1]
+    });
+
+    server.create('meshDescriptor', {
+      courses: [1],
+      // concepts: [1, 2, 3],
+      trees: [1, 2, 3]
+    });
+    server.createList('meshDescriptor', 2, {
       courses: [1]
     });
+
     server.createList('meshDescriptor', 3, {
     });
 
     server.create('course', {
       year: 1,
       school: 1,
-      meshDescriptors: [1,2,3]
+      meshDescriptors: [1, 2, 3]
     });
   },
 
@@ -47,7 +62,7 @@ test('list mesh', function(assert) {
 });
 
 test('manage mesh', function(assert) {
-  assert.expect(24);
+  assert.expect(27);
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
@@ -60,14 +75,17 @@ test('manage mesh', function(assert) {
         getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)),
         getText('descriptor 0')
       );
+      assert.equal(getElementText(find('.content .descriptor-id', removableItems.eq(0)).eq(0)), getText('1 - tree number 2'));
       assert.equal(
         getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)),
         getText('descriptor 1')
       );
+      assert.equal(getElementText(find('.content .descriptor-id', removableItems.eq(1)).eq(0)), '2');
       assert.equal(
         getElementText(find('.content .descriptor-name', removableItems.eq(2)).eq(0)),
         getText('descriptor 2')
       );
+      assert.equal(getElementText(find('.content .descriptor-id', removableItems.eq(2)).eq(0)), '3');
       let searchBox = find('.search-box', meshManager);
       assert.equal(searchBox.length, 1);
       searchBox = searchBox.eq(0);
