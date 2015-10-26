@@ -12,4 +12,14 @@ export default DS.Model.extend({
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   descriptors: DS.hasMany('mesh-descriptor',  {async: true}),
+  truncatedScopeNote: function() {
+    let scopeNote = this.get('scopeNote');
+    if (250 < scopeNote.length) {
+        scopeNote = scopeNote.substring(0, 250);
+    }
+    return scopeNote;
+  }.property('scopeNote'),
+  hasTruncatedScopeNote: function() {
+    return this.get('scopeNote').length !== this.get('truncatedScopeNote').length;
+  }.property('scopeNote', 'truncatedScopeNote')
 });

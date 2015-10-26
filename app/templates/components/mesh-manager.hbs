@@ -39,7 +39,7 @@
             <ul class="mesh-concepts">
               {{#each term.concepts as |concept| }}
                 {{#if concept.scopeNote }}
-                  <li class="{{unless term.isActive 'disabled'}}">{{concept.scopeNote}}</li>
+                  <li class="{{unless term.isActive 'disabled'}} {{if concept.hasTruncatedScopeNote 'truncated'}}">{{concept.truncatedScopeNote}}</li>
                 {{/if}}
               {{/each}}
             </ul>
