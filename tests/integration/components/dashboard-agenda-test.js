@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
 let today = moment();
 let mockEvents = [
@@ -21,7 +22,7 @@ let blankEventsMock = Ember.Service.extend({
   }
 });
 
-moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agenda', {
+moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agenda' + testgroup, {
   integration: true,
   beforeEach: function() {
     this.container.lookup('service:i18n').set('locale', 'en');

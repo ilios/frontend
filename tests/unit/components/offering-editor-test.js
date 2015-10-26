@@ -1,12 +1,13 @@
 /* global moment */
 import { moduleForComponent, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 const { isEmpty, RSVP, run } = Ember;
 const { Promise } = RSVP;
 const { next } = run;
 
-moduleForComponent('offering-editor', 'Unit | Component | offering editor', {
+moduleForComponent('offering-editor' + testgroup, 'Unit | Component | offering editor', {
   unit: true
 });
 

@@ -2,9 +2,10 @@ import {
   moduleForModel,
   test
 } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('academic-year', 'AcademicYear', {
+moduleForModel('academic-year', 'Unit | Model | AcademicYear' + testgroup, {
   needs: modelList
 });
 

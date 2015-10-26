@@ -4,10 +4,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var url = '/learnergroups/1';
-module('Acceptance: Learner Group - Subgroups', {
+module('Acceptance: Learner Group - Subgroups' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();

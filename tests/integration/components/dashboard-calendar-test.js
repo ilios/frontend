@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 // import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import tHelper from "ember-i18n/helper";
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
 let today = moment();
 let mockEvents = [
@@ -16,7 +17,7 @@ let userEventsMock = Ember.Service.extend({
   }
 });
 
-moduleForComponent('dashboard-calendar', 'Integration | Component | dashboard calendar', {
+moduleForComponent('dashboard-calendar', 'Integration | Component | dashboard calendar' + testgroup, {
   integration: true,
   beforeEach: function() {
     this.container.register('service:mockuserevents', userEventsMock);

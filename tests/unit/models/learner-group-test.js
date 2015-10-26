@@ -2,10 +2,11 @@ import {
   moduleForModel,
   test
 } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
-moduleForModel('learner-group', 'LearnerGroup', {
+moduleForModel('learner-group', 'Unit | Model | LearnerGroup' + testgroup, {
   needs: modelList
 });
 

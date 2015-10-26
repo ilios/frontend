@@ -1,10 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 const { run } = Ember;
 const { next } = run;
 
-moduleForComponent('learnergroup-overview', 'Unit | Component | learnergroup overview', {
+moduleForComponent('learnergroup-overview' + testgroup, 'Unit | Component | learnergroup overview', {
   unit: true
 });
 
