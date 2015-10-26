@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { computed, RSVP } = Ember;
+const { PromiseArray } = DS;
+
 var User = DS.Model.extend({
   lastName: DS.attr('string'),
   firstName: DS.attr('string'),
@@ -35,8 +38,14 @@ var User = DS.Model.extend({
       inverse: 'users'
     }
   ),
-  instructorIlmSessions: DS.hasMany('ilm-session', {async: true}),
-  learnerIlmSessions: DS.hasMany('ilm-session', {async: true}),
+  instructorIlmSessions: DS.hasMany('ilm-session', {
+      async: true,
+      inverse: 'instructors'
+  }),
+  learnerIlmSessions: DS.hasMany('ilm-session', {
+      async: true,
+      inverse: 'learners'
+  }),
   offerings: DS.hasMany('offering', {
       async: true,
       inverse: 'learners'
@@ -55,154 +64,106 @@ var User = DS.Model.extend({
   }),
   primaryCohort: DS.belongsTo('cohort', {async: true}),
   pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
-  schools: function(){
-    var defer = Ember.RSVP.defer();
+  schools: computed('school', function(){
+    var defer = RSVP.defer();
     this.get('school').then(function(school){
       defer.resolve([school]);
     });
     return defer.promise;
-  }.property('school'),
-  fullName: function() {
+  }),
+  fullName: computed('firstName', 'lastName', function() {
       var first = this.get('firstName');
       var last = this.get('lastName');
       if(!first || !last){
         return '';
       }
       return first + ' ' + last;
-  }.property('firstName', 'lastName'),
-  events: [],
-  allRelatedCourses: Ember.computed(
+  }),
+  allRelatedCourses: computed(
     'directedCourses.[]',
     'learnerGroups.[]',
     'instructorGroups.[]',
     'instructedOfferings.[]',
+    'offerings.[]',
+    'instructorGroupCourses.[]',
+    'learnerIlmSessions.[]',
+    'instructorIlmSessions.[]',
     function(){
-      let defer = Ember.RSVP.defer();
+      let defer = RSVP.defer();
       let promises = [];
       let allCourses = [];
-      promises.pushObject(new Ember.RSVP.Promise(resolve => {
+      promises.pushObject(new RSVP.Promise(resolve => {
          this.get('directedCourses').then(courses => {
            allCourses.pushObjects(courses.toArray());
            resolve();
          });
        }));
-       promises.pushObject(new Ember.RSVP.Promise(resolve => {
-         this.get('learnerGroups').then(learnerGroups => {
-           if(!learnerGroups.length){
-             resolve();
-           }
-           let promises = [];
-           learnerGroups.forEach(learnerGroup => {
-             promises.pushObject(learnerGroup.get('courses').then(courses =>{
-               allCourses.pushObjects(courses.toArray());
-             }));
-             Ember.RSVP.all(promises).then(()=>{
-               resolve();
+       promises.pushObject(new RSVP.Promise(resolve => {
+         this.get('learnerGroups').then(groups => {
+           RSVP.all(groups.mapBy('courses')).then(all => {
+             all.forEach(arr => {
+               allCourses.pushObjects(arr);
              });
+             resolve();
            });
          });
        }));
-       promises.pushObject(new Ember.RSVP.Promise(resolve => {
-         this.get('instructorGroups').then(instructorGroups => {
-           if(!instructorGroups.length){
-             resolve();
-           }
-           let promises = [];
-           instructorGroups.forEach(instructorGroup => {
-             promises.pushObject(instructorGroup.get('courses').then(courses =>{
-               allCourses.pushObjects(courses.toArray());
-             }));
-             Ember.RSVP.all(promises).then(()=>{
-               resolve();
+       promises.pushObject(new RSVP.Promise(resolve => {
+         this.get('instructorGroups').then(groups => {
+           RSVP.all(groups.mapBy('courses')).then(all => {
+             all.forEach(arr => {
+               allCourses.pushObjects(arr);
              });
+             resolve();
            });
          });
        }));
-       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+       promises.pushObject(new RSVP.Promise(resolve => {
          this.get('instructedOfferings').then(offerings => {
-           if(!offerings.length){
-             resolve();
-           }
-           let promises = [];
-           offerings.forEach(offering => {
-             promises.pushObject(offering.get('session').then(session =>{
-               return session.get('course').then(course => {
-                 allCourses.pushObject(course);
-               });
-             }));
-           });
-           Ember.RSVP.all(promises).then(()=>{
-             resolve();
+           RSVP.all(offerings.mapBy('session')).then(sessions => {
+             RSVP.all(sessions.mapBy('course')).then(courses => {
+               allCourses.pushObjects(courses);
+               resolve();
+             });
            });
          });
        }));
-       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+       promises.pushObject(new RSVP.Promise(resolve => {
          this.get('offerings').then(offerings => {
-           if(!offerings.length){
-             resolve();
-           }
-           let promises = [];
-           offerings.forEach(offering => {
-             promises.pushObject(offering.get('session').then(session =>{
-               return session.get('course').then(course => {
-                 allCourses.pushObject(course);
-               });
-             }));
-           });
-           Ember.RSVP.all(promises).then(()=>{
-             resolve();
+           RSVP.all(offerings.mapBy('session')).then(sessions => {
+             RSVP.all(sessions.mapBy('course')).then(courses => {
+               allCourses.pushObjects(courses);
+               resolve();
+             });
            });
          });
        }));
-       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+       promises.pushObject(new RSVP.Promise(resolve => {
          this.get('learnerIlmSessions').then(ilmSessions => {
-           if(!ilmSessions.length){
-             resolve();
-           }
-           let promises = [];
-           ilmSessions.forEach(ilmSession => {
-             promises.pushObject(ilmSession.get('session').then(session =>{
-               if(!session){
-                 return;
-               }
-               return session.get('course').then(course => {
-                 allCourses.pushObject(course);
-               });
-             }));
-           });
-           Ember.RSVP.all(promises).then(()=>{
-             resolve();
+           RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
+             RSVP.all(sessions.mapBy('course')).then(courses => {
+               allCourses.pushObjects(courses);
+               resolve();
+             });
            });
          });
        }));
-       promises.pushObject(new Ember.RSVP.Promise(resolve => {
+       promises.pushObject(new RSVP.Promise(resolve => {
          this.get('instructorIlmSessions').then(ilmSessions => {
-           if(!ilmSessions.length){
-             resolve();
-           }
-           let promises = [];
-           ilmSessions.forEach(ilmSession => {
-             promises.pushObject(ilmSession.get('session').then(session =>{
-               if(!session){
-                 return;
-               }
-               return session.get('course').then(course => {
-                 allCourses.pushObject(course);
-               });
-             }));
-           });
-           Ember.RSVP.all(promises).then(()=>{
-             resolve();
+           RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
+             RSVP.all(sessions.mapBy('course')).then(courses => {
+               allCourses.pushObjects(courses);
+               resolve();
+             });
            });
          });
        }));
-      
-      Ember.RSVP.all(promises).then(()=>{
-        defer.resolve(allCourses.uniq());
-      });
-      return DS.PromiseArray.create({
-        promise: defer.promise
-      });
+       RSVP.all(promises).then(()=>{
+         defer.resolve(allCourses.uniq());
+       });
+       return PromiseArray.create({
+         promise: defer.promise
+       });
     }
   ),
 });

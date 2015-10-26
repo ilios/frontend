@@ -61,6 +61,7 @@
       font-size: $base-font-size * .8;
       height: 15em;
       margin-bottom: 1em;
+      overflow-x: hidden;
       overflow-y: scroll;
       padding-bottom: 1em;
 
@@ -89,6 +90,7 @@
 
     .dashboard-block-body {
       height: 200px;
+      overflow-y: scroll;
     }
   }
 
