@@ -6,6 +6,8 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 
+const { isEmpty } = Ember;
+
 var application;
 
 module('Acceptance: Dashboard Calendar', {
@@ -356,7 +358,7 @@ test('show user events', function(assert) {
 
 let chooseSchoolEvents = function(){
   andThen(function(){
-    return click(find('.togglemyschedule span'));    
+    return click(find('.togglemyschedule span'));
   });
 };
 test('show school events', function(assert) {
@@ -383,7 +385,7 @@ test('show school events', function(assert) {
 
 let showFilters = function(){
   andThen(function(){
-    return click(find('.showfilters span'));    
+    return click(find('.showfilters span'));
   });
 };
 let pickTopic = function(i) {
@@ -414,7 +416,7 @@ test('test topic filter', function(assert) {
       let events = find('div.event');
       assert.equal(events.length, 1);
     });
-    
+
   });
   andThen(function() {
     pickTopic(1).then(() => {
@@ -462,7 +464,7 @@ test('test session type filter', function(assert) {
       let events = find('div.event');
       assert.equal(events.length, 1);
     });
-    
+
   });
   andThen(function() {
     pickSessionType(1).then(() => {
@@ -570,7 +572,7 @@ test('test cohort filter', function(assert) {
 
 let chooseCourseFilter = function(){
   andThen(function(){
-    return click(find('.togglecoursefilters span'));    
+    return click(find('.togglecoursefilters span'));
   });
 };
 
@@ -786,5 +788,40 @@ test('academic year filters courses', function(assert) {
       let courseFilters = find('.coursefilter li');
       assert.equal(courseFilters.length, 1);
     });
+  });
+});
+
+test('clear all filters', function(assert) {
+  const clearFilter = '.calendar-clear-filters';
+  const topic = '.topicfilter li:first input';
+  const sessiontype = '.sessiontypefilter li:first input';
+  const courselevel = '.courselevelfilter li:first input';
+  const cohort = '.cohortfilter li:first input';
+
+  visit('/dashboard?showCalendar=true');
+  showFilters();
+  andThen(() => {
+    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+  });
+
+  click(topic);
+  click(sessiontype);
+  click(courselevel);
+  click(cohort);
+  andThen(() => {
+    assert.ok(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
+    assert.ok(find(topic).prop('checked'), 'filter is checked');
+    assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
+    assert.ok(find(courselevel).prop('checked'), 'filter is checked');
+    assert.ok(find(cohort).prop('checked'), 'filter is checked');
+  });
+
+  click(clearFilter);
+  andThen(() => {
+    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+    assert.ok(!find(topic).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
   });
 });

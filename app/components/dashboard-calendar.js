@@ -3,6 +3,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
+const { computed, isPresent } = Ember;
+
 export default Ember.Component.extend({
   userEvents: Ember.inject.service(),
   schoolEvents: Ember.inject.service(),
@@ -77,7 +79,7 @@ export default Ember.Component.extend({
               }
               deferred.resolve(singleEventPerSession);
             });
-            
+
           }
         });
       });
@@ -109,22 +111,22 @@ export default Ember.Component.extend({
           allFilteredEvents.pushObject(events);
         }));
       });
-      
+
       Ember.RSVP.all(promises).then(()=> {
         let events = this.get('ourEvents').filter(event => {
           return allFilteredEvents.every(arr => {
             let bool = arr.contains(event);
-            
+
             return bool;
           });
         });
-        
+
         defer.resolve(events);
       });
       return DS.PromiseArray.create({
         promise: defer.promise
       });
-      
+
   }),
   eventsWithSelectedTopics: Ember.computed('ourEvents.[]', 'selectedTopics.[]', function(){
     let selectedTopics = this.get('selectedTopics');
@@ -144,7 +146,7 @@ export default Ember.Component.extend({
         }
       }));
     });
-    
+
     Ember.RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
@@ -168,7 +170,7 @@ export default Ember.Component.extend({
         }
       }));
     });
-    
+
     Ember.RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
@@ -192,7 +194,7 @@ export default Ember.Component.extend({
         }
       }));
     });
-    
+
     Ember.RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
@@ -218,7 +220,7 @@ export default Ember.Component.extend({
         }
       }));
     });
-    
+
     Ember.RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
@@ -242,7 +244,7 @@ export default Ember.Component.extend({
         }
       }));
     });
-    
+
     Ember.RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
@@ -276,7 +278,7 @@ export default Ember.Component.extend({
     for(let i =1; i <=5; i++){
       levels.pushObject(i);
     }
-    
+
     return levels;
   }),
   selectedCohorts: [],
@@ -325,7 +327,7 @@ export default Ember.Component.extend({
         content: this.get('schoolPickedByUser')
       });
     }
-    
+
     return DS.PromiseObject.create({
       promise: this.get('currentUser').get('model').then(user => {
         return user.get('school').then(school => {
@@ -356,7 +358,7 @@ export default Ember.Component.extend({
         promise: Ember.RSVP.resolve(this.get('academicYearSelectedByUser'))
       });
     }
-    
+
     return DS.PromiseObject.create({
       promise: this.get('allAcademicYears').then(years => {
         return years.sortBy('title').get('lastObject');
@@ -373,6 +375,21 @@ export default Ember.Component.extend({
       })
     });
   }),
+
+  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedTopics.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
+    get() {
+      const a = this.get('selectedCourses');
+      const b = this.get('selectedSessionTypes');
+      const c = this.get('selectedTopics');
+      const d = this.get('selectedCourseLevels');
+      const e = this.get('selectedCohorts');
+
+      let results = a.concat(b, c, d, e);
+
+      return isPresent(results) ? true : false;
+    }
+  }).readOnly(),
+
   actions: {
     changeDate(newDate){
       this.sendAction('changeDate', newDate);
@@ -443,5 +460,15 @@ export default Ember.Component.extend({
         this.set('academicYearSelectedByUser', year);
       });
     },
+
+    clearFilters() {
+      const selectedCourses = [];
+      const selectedSessionTypes = [];
+      const selectedTopics = [];
+      const selectedCourseLevels = [];
+      const selectedCohorts = [];
+
+      this.setProperties({ selectedCourses, selectedSessionTypes, selectedTopics, selectedCourseLevels, selectedCohorts });
+    }
   }
 });
