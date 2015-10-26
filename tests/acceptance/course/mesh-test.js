@@ -26,7 +26,7 @@ module('Acceptance: Course - Mesh Terms' + testgroup, {
 
     server.create('meshDescriptor', {
       courses: [1],
-      // concepts: [1, 2, 3],
+      concepts: [1, 2, 3],
       trees: [1, 2, 3]
     });
     server.createList('meshDescriptor', 2, {
@@ -62,7 +62,7 @@ test('list mesh', function(assert) {
 });
 
 test('manage mesh', function(assert) {
-  assert.expect(27);
+  assert.expect(31);
   visit(url);
   andThen(function() {
     var container = find('.detail-mesh');
@@ -94,9 +94,14 @@ test('manage mesh', function(assert) {
       fillIn(searchBoxInput, 'descriptor');
       click('span.search-icon', searchBox);
       andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
+        let searchResults = find('.mesh-search-results > li', meshManager);
         assert.equal(searchResults.length, 6);
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(0)).eq(0)), getText('descriptor 0'));
+        assert.equal(getElementText(find('.descriptor-id', searchResults.eq(0)).eq(0)), getText('1 - tree number 2'));
+        let scopeNotes = find('.mesh-concepts li', searchResults.eq(0));
+        for(let i = 0, n = scopeNotes.length; i < n; i++) {
+          assert.equal(getElementText(scopeNotes.eq(i)), getText(`scope note ${i}`));
+        }
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(1)).eq(0)), getText('descriptor 1'));
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(2)).eq(0)), getText('descriptor 2'));
         assert.equal(getElementText(find('.descriptor-name', searchResults.eq(3)).eq(0)), getText('descriptor 3'));
@@ -110,11 +115,11 @@ test('manage mesh', function(assert) {
         assert.ok(!$(searchResults[5]).hasClass('disabled'));
 
         click('.removable-list li:eq(1)', meshManager).then(function(){
-          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+          assert.ok(!$(find('.mesh-search-results > li:eq(1)', meshManager)).hasClass('disabled'));
         });
         click(searchResults[3]);
         andThen(function(){
-          assert.ok($(find('.mesh-search-results li:eq(3)', meshManager)).hasClass('disabled'));
+          assert.ok($(find('.mesh-search-results > li:eq(3)', meshManager)).hasClass('disabled'));
           let removableItems = find('.removable-list li', meshManager);
           assert.equal(
             getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)),
@@ -146,7 +151,7 @@ test('save mesh changes', function(assert) {
       click('.search-box span.search-icon', meshManager);
       andThen(function(){
         click('.removable-list li:eq(1)', meshManager).then(()=> {
-          click('.mesh-search-results li:eq(3)', meshManager).then(()=>{
+          click('.mesh-search-results > li:eq(3)', meshManager).then(()=>{
             click('button.bigadd', container);
           });
         });
