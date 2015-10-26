@@ -223,6 +223,7 @@ export default {
     'noSelectedLearnerGroups': 'There are no selected learner groups',
     'instructors': 'Instructors',
     'instructorsManageTitle': 'Manage Instructors',
+    'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',
