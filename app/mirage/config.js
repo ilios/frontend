@@ -178,6 +178,13 @@ export default function() {
     this.delete('/api/meshqualifiers/:id', 'meshQualifier');
     this.post('/api/meshqualifiers', 'meshQualifier');
 
+    this.get('/api/meshtrees', getAll);
+    this.get('/api/meshtrees/:id', 'meshTree');
+    this.put('/api/meshtrees/:id', 'meshTree');
+    this.delete('/api/meshtrees/:id', 'meshTree');
+    this.post('/api/meshtrees', 'meshTree');
+
+
     this.get('/api/meshpreviousindexings', getAll);
     this.get('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
     this.put('/api/meshpreviousindexings/:id', 'meshPreviousIndexing');
