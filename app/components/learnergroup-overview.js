@@ -30,14 +30,14 @@ export default Ember.Component.extend({
       var learnerGroup = this.get('learnerGroup');
       learnerGroup.get('instructors').addObject(user);
       user.get('instructedLearnerGroups').addObject(learnerGroup);
-      user.save();
+      learnerGroup.save();
     },
 
     removeInstructor: function(user){
       var learnerGroup = this.get('learnerGroup');
       learnerGroup.get('instructors').removeObject(user);
       user.get('instructedLearnerGroups').removeObject(learnerGroup);
-      user.save();
+      learnerGroup.save();
     },
 
     changeLocation: function(value){
