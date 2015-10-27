@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   searchReturned: false,
   currentlyActiveUsers: [],
   placeholder: null,
+  roles: '',
   availableInstructorGroups: [],
   currentlyActiveInstructorGroups: [],
   currentlySearchingForTerm: false,
@@ -54,7 +55,15 @@ export default Ember.Component.extend({
         }.property('content', 'currentlyActiveInstructorGroups.@each'),
         sortTerm: Ember.computed.oneWay('content.title'),
       });
-      this.get('store').query('user', {q: searchTerms}).then(users => {
+      let query = {
+        q: searchTerms
+      };
+      if (this.get('roles')) {
+        query.filters = {
+          roles: this.get('roles').split(',')
+        }
+      }
+      this.get('store').query('user', query).then(users => {
         let results = users.uniq().map(user => {
           return userProxy.create({
             content: user,
