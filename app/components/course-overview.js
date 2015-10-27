@@ -35,14 +35,13 @@ export default Ember.Component.extend({
       course.get('directors').addObject(user);
       user.get('directedCourses').addObject(course);
       course.save();
-      user.save();
     },
     removeDirector: function(user){
       var course = this.get('course');
       course.get('directors').removeObject(user);
       user.get('directedCourses').removeObject(course);
       course.save();
-      user.save();
+
     },
     changeClerkshipType: function(newId){
       var course = this.get('course');
