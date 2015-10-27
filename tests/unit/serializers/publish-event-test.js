@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForModel('publish-event' + testgroup, 'Unit | Serializer | publish event', {
+moduleForModel('publish-event', 'Unit | Serializer | publish event' + testgroup, {
   needs: [
     'serializer:publish-event',
     'model:course',

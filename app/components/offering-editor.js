@@ -207,7 +207,7 @@ export default Component.extend({
         };
 
         if (this.get('singleOffering')) {
-          params.room = this.get('room');
+          params.room = this.get('room') || 'TBD';
           params.instructors = this.get('instructors');
           params.instructorGroups = this.get('instructorGroups');
 

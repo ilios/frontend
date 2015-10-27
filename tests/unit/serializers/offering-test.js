@@ -1,20 +1,15 @@
 import { moduleForModel, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForModel('session', 'Unit | Serializer | Session ' + testgroup, {
+moduleForModel('offering', 'Unit | Serializer | offering' + testgroup, {
   // Specify the other units that are required for this test.
   needs: [
-    'serializer:session',
+    'serializer:offering',
+    'model:session',
+    'model:learner-group',
+    'model:instructor-group',
     'model:publish-event',
-    'model:session-type',
-    'model:course',
-    'model:ilm-session',
-    'model:topic',
-    'model:objective',
-    'model:mesh-descriptor',
-    'model:session-description',
-    'model:session-learning-material',
-    'model:offering',
+    'model:user',
   ]
 });
 
