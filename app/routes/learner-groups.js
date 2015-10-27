@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
+const { run } = Ember;
+const { once } = run;
+
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   i18n: Ember.inject.service(),
   currentUser: Ember.inject.service(),
@@ -110,6 +113,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     },
     programYear: {
       refreshModel: true
+    }
+  },
+
+  actions: {
+    // Workaround for Ember bug #5566
+    queryParamsDidChange() {
+      once(this, this.refresh);
     }
   }
 });
