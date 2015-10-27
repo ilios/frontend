@@ -17,14 +17,12 @@ export default Ember.Component.extend({
       instructorGroup.get('users').addObject(user);
       user.get('instructorGroups').addObject(instructorGroup);
       instructorGroup.save();
-      user.save();
     },
     removeUser: function(user){
       var instructorGroup = this.get('instructorGroup');
       instructorGroup.get('users').removeObject(user);
       user.get('instructorGroups').removeObject(instructorGroup);
       instructorGroup.save();
-      user.save();
     },
   }
 });
