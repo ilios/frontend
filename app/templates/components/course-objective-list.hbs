@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     {{#each sortedObjectives as |objectiveProxy|}}
-  <tr id="objective-{{objective.id}}"  class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
+  <tr id="objective-{{objective.id}}" class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
       <td class='text-left text-top' colspan=3>
         {{inplace-html value=objectiveProxy.content.title save='changeObjectiveTitle' condition=objectiveProxy.content.id}}
       </td>

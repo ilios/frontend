@@ -247,6 +247,7 @@ export default {
     'independentLearning': 'Independent Learning',
     'hours': 'Hours',
     'dueBy': 'Due By',
+    'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
   },
   'offerings': {
     'calendarOn': 'Calendar On',
