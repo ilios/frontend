@@ -19,23 +19,27 @@ export default {
 
       // Global error handler in Ember run loop
       Ember.onerror = (error) => {
-        console.log(error);
-        console.error(error.stack);
-
         if (error) {
+          console.log(error);
           controller.addError(error);
           this.logError(error);
+
+          if (error.stack) {
+            console.error(error.stack);
+          }
         }
       };
 
       // Global error handler for promises
       Ember.RSVP.on('error', (error) => {
-        console.log(error);
-        console.error(error.stack);
-
         if (error) {
+          console.log(error);
           controller.addError(error);
           this.logError(error);
+
+          if (error.stack) {
+            console.error(error.stack);
+          }
         }
       });
     }
