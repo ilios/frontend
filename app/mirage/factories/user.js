@@ -6,4 +6,5 @@ export default Mirage.Factory.extend({
   middelName: 'm,',
   enabled: true,
   school: 1,
+  roles: []
 });
