@@ -26,8 +26,8 @@ test('actions get trigger appropriately', function(assert) {
     allParentTitles: ['Parent Title']
   });
 
-  const learnerGroups = [ group2, group1 ];
-  const cohort = { filteredAvailableLearnerGroups: [{ title: 'BMB 1' }, { title: 'BMB 2' }] };
+  const learnerGroups = { '12': [ group2, group1 ] };
+  const cohort = { id: 12, filteredAvailableLearnerGroups: [{ title: 'BMB 1' }, { title: 'BMB 2' }] };
 
   this.setProperties({ learnerGroups, cohort });
 

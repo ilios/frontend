@@ -3,12 +3,18 @@ import DS from 'ember-data';
 import moment from 'moment';
 
 const { computed, copy, inject, isEmpty, ObjectProxy, RSVP } = Ember;
-const { alias, notEmpty } = computed;
+const { notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
 const { service } = inject;
 
 export default Ember.Component.extend({
+  init() {
+    this._super(...arguments);
+
+    this.set('learnerGroups', {});
+  },
+
   currentUser: service(),
   offering: null,
   isEditing: false,
@@ -39,9 +45,9 @@ export default Ember.Component.extend({
     });
   }.property('instructors.@each', 'instructorGroups.@each.users.@each'),
 
-  learnerGroups: alias('buffer.learnerGroups'),
+  learnerGroups: null,
 
-  filteredCohorts: computed('cohorts.[]', 'learnerGroups.[]', 'filter', function(){
+  filteredCohorts: computed('cohorts.[]', 'filter', function(){
     let cohortProxy = ObjectProxy.extend({
       selectedLearnerGroups: [],
 
@@ -99,7 +105,7 @@ export default Ember.Component.extend({
     return cohorts.map((cohort) => {
       let proxy = cohortProxy.create({
         content: cohort,
-        selectedLearnerGroups: this.get('learnerGroups')
+        selectedLearnerGroups: this.get('learnerGroups')[cohort.id]
       });
 
       return proxy;
@@ -150,9 +156,24 @@ export default Ember.Component.extend({
     return { startDate, endDate };
   },
 
+  getAllLearnerGroups() {
+    const groupHash = this.get('learnerGroups');
+    const output = [];
+
+    for (let key in groupHash) {
+      groupHash[key].forEach((group) => {
+        output.push(group);
+      });
+    }
+
+    return output;
+  },
+
   actions: {
     save() {
       if (this.datesValidated() && this.timesValidated()) {
+        let combinedGroups = this.getAllLearnerGroups();
+
         var offering = this.get('offering');
         let promises = [];
         promises.push(offering.get('instructorGroups').then(instructorGroups => {
@@ -178,12 +199,12 @@ export default Ember.Component.extend({
           });
         }));
         promises.push(offering.get('learnerGroups').then(learnerGroups => {
-          let removeableLearnerGroups = learnerGroups.filter(group => !this.get('buffer.learnerGroups').contains(group));
+          let removeableLearnerGroups = learnerGroups.filter(group => !combinedGroups.contains(group));
           learnerGroups.clear();
           removeableLearnerGroups.forEach(group => {
             group.get('offerings').removeObject(offering);
           });
-          this.get('buffer.learnerGroups').forEach(group => {
+          combinedGroups.forEach(group => {
             group.get('offerings').pushObject(offering);
             learnerGroups.pushObject(group);
           });
@@ -221,11 +242,24 @@ export default Ember.Component.extend({
 
         let buffer = Ember.Object.create({ startDate, endDate, startTime, endTime, room, isMultiDay });
 
-        let collections = [
-          'instructors',
-          'instructorGroups',
-          'learnerGroups'
-        ];
+        let collections = ['instructors', 'instructorGroups'];
+
+        offering.get('learnerGroups').then((groups) => {
+          groups.forEach((group) => {
+            group.get('topLevelGroup').then((topLevelGroup) => {
+              topLevelGroup.get('cohort').then((cohort) => {
+                const groupHash = this.get('learnerGroups');
+
+                if (groupHash[cohort.id] === undefined) {
+                  groupHash[cohort.id] = [ group ];
+                } else {
+                  groupHash[cohort.id].pushObject(group);
+                }
+              });
+            });
+          });
+        });
+
         let promises = collections.map(collection => {
           return offering.get(collection).then(values => {
             let arr = [];
@@ -233,7 +267,8 @@ export default Ember.Component.extend({
             buffer.set(collection, arr);
           });
         });
-        Ember.RSVP.all(promises).then(() => {
+
+        all(promises).then(() => {
           this.set('buffer', buffer);
           this.set('isEditing', true);
         });
@@ -287,20 +322,20 @@ export default Ember.Component.extend({
       this.set('buffer.endTime', endTime.toDate());
     },
 
-    addLearnerGroup(group) {
+    addLearnerGroup(group, cohortId) {
       let learnerGroups = this.get('learnerGroups');
 
       group.get('allDescendants').then((descendants) => {
         if (isEmpty(descendants)) {
-          learnerGroups.addObject(group);
+          learnerGroups[cohortId].addObject(group);
         } else {
-          learnerGroups.addObjects(descendants);
+          learnerGroups[cohortId].addObjects(descendants);
         }
       });
     },
 
-    removeLearnerGroup(group) {
-      this.get('learnerGroups').removeObject(group);
+    removeLearnerGroup(group, cohortId) {
+      this.get('learnerGroups')[cohortId].removeObject(group);
     },
   }
 });
