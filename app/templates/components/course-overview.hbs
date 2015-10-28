@@ -10,7 +10,9 @@
   <div class='detail-content form-container'>
       <div class="form-col-6 multi-row">
         <label class="form-label">{{t "courses.externalId"}}:</label>
-        <div class="form-data courseexternalid">{{inplace-text value=course.externalId save='changeExternalId'}}</div>
+        <div class="form-data courseexternalid">
+          {{inplace-text value=course.externalId save='changeExternalId' validations=externalIdValidations}}
+        </div>
         <label class="form-label">{{t "courses.clerkshipType"}}:</label>
         <div class="form-data clerkshiptype">
           {{inplace-select

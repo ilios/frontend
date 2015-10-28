@@ -1,6 +1,16 @@
 import Ember from 'ember';
-import InPlace from 'ilios/mixins/inplace';
+import InPlaceValidation from 'ilios/mixins/inplace-validation';
 
-export default Ember.Component.extend(InPlace, {
+const { Component, isBlank } = Ember;
+
+export default Component.extend(InPlaceValidation, {
   classNames: ['editinplace', 'inplace-textarea'],
+
+  init() {
+    this._super(...arguments);
+
+    if (isBlank(this.get('value'))) {
+      this.set('value', '');
+    }
+  }
 });

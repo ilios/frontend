@@ -175,7 +175,7 @@ test('change location', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.learnergroup-overview');
-    assert.equal(getElementText(find('.learnergrouplocation div', container)), getText('room 101'));
+    assert.equal(getElementText(find('.learnergrouplocation .editable', container)), getText('room 101'));
     click(find('.learnergrouplocation .editable', container));
     andThen(function(){
       var input = find('.learnergrouplocation .editinplace input', container);
@@ -183,7 +183,7 @@ test('change location', function(assert) {
       fillIn(input, 'test new location');
       click(find('.learnergrouplocation .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.learnergrouplocation div', container)), getText('test new location'));
+        assert.equal(getElementText(find('.learnergrouplocation .editable', container)), getText('test new location'));
       });
     });
   });

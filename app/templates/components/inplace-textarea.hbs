@@ -4,7 +4,7 @@
       {{#if value.length}}
         {{big-text text=value action='edit'}}
       {{else}}
-        <span {{action 'edit'}}>{{clickPrompt}}</span>      
+        <span {{action 'edit'}}>{{clickPrompt}}</span>
       {{/if}}
     </span>
   {{else}}
@@ -12,16 +12,17 @@
       <span class='control'>
         <textarea
           type='text'
-          value={{buffer}}
           onKeyUp={{action "changeValue" value="target.value"}}
-          onChange={{action "changeValue" value="target.value"}}>
-          {{value}}
-        </textarea>
+          onChange={{action "changeValue" value="target.value"}}
+          class="{{if topErrorMessage 'has-error'}}">{{value}}</textarea>
       </span>
       <span class='actions'>
         <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
         <button class='cancel icon' title='{{t "general.cancel"}}' {{action 'cancel'}}>{{fa-icon 'times'}}</button>
       </span>
+      {{#if topErrorMessage}}
+        <span class="error">{{topErrorMessage}}</span>
+      {{/if}}
     </span>
   {{/unless}}
 </span>

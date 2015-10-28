@@ -29,6 +29,14 @@ export default Ember.Component.extend({
       promise: deferred.promise
     });
   }.property(),
+
+  externalIdValidations: {
+    'validationBuffer': {
+      alphanumeric2: true,
+      length: { minimum: 3, maximum: 18 }
+    }
+  },
+
   actions: {
     addDirector: function(user){
       var course = this.get('course');

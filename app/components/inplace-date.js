@@ -1,14 +1,23 @@
 import Ember from 'ember';
-import InPlace from 'ilios/mixins/inplace';
+import InPlaceValidation from 'ilios/mixins/inplace-validation';
 
-export default Ember.Component.extend(InPlace, {
+const { Component, computed, isEqual, observer } = Ember;
+const { oneWay } = computed;
+
+export default Component.extend(InPlaceValidation, {
   classNames: ['editinplace', 'inplace-select'],
+
   dateFormat: 'MM/DD/YY',
-  //a little hacky cuz pikaday doesn't send actions
-  dateBuffer: Ember.computed.oneWay('buffer'),
-  dateBufferChanged: Ember.observer('dateBuffer', function(){
-    if(this.get('dateBuffer') !== this.get('buffer')){      
-      this.send('changeValue', this.get('dateBuffer'));
+
+  // Little hacky cuz pikaday doesn't send actions
+  dateBuffer: oneWay('buffer'),
+
+  dateBufferChanged: observer('dateBuffer', function() {
+    const dateBuffer = this.get('dateBuffer');
+    const buffer = this.get('buffer');
+
+    if (!isEqual(dateBuffer, buffer)) {
+      this.send('changeValue', dateBuffer);
     }
   })
 });

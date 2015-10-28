@@ -1,68 +1,80 @@
 import Ember from 'ember';
-import InPlace from 'ilios/mixins/inplace';
+import InPlaceValidation from 'ilios/mixins/inplace-validation';
 
-export default Ember.Component.extend(InPlace, {
+const { Component, computed, ObjectProxy } = Ember;
+const { notEmpty } = computed;
+
+export default Component.extend(InPlaceValidation, {
   classNames: ['editinplace', 'inplace-select'],
+
   selectPromptTranslation: null,
-  showSelectPrompt: Ember.computed.notEmpty('selectPromptTranslation'),
-  selectPrompt: Ember.computed('i18n.locale', 'selectPromptTranslation', function() {
-    return this.get('i18n').t(this.get('selectPromptTranslation'));
-  }),
+
+  showSelectPrompt: notEmpty('selectPromptTranslation'),
+
+  selectPrompt: computed('i18n.locale', 'selectPromptTranslation', {
+    get() {
+      return this.get('i18n').t(this.get('selectPromptTranslation'));
+    }
+  }).readOnly(),
+
   options: [],
   optionLabelPath: 'title',
   optionValuePath: 'id',
+
   displayValueOverride: null,
-  displayValue: Ember.computed(
-    'value',
-    'displayValueOverride',
-    'displayValueOverride.content',
-    'proxiedOptions.[].{value,label}',
-    'clickPrompt',
-    function(){
-    var self = this;
-    var displayValue;
-    if(this.get('displayValueOverride')){
-      return this.get('displayValueOverride');
+
+  displayValue: computed('value', 'displayValueOverride', 'displayValueOverride.content', 'proxiedOptions.[].{value,label}', 'clickPrompt', function() {
+    const component = this;
+    const displayValueOverride = this.get('displayValueOverride');
+    let displayValue;
+
+    if (displayValueOverride) {
+      return displayValueOverride;
     }
-    if(this.get('value') && this.get('proxiedOptions')){
-      let option = this.get('proxiedOptions').find(function(option){
-        return option.get('value') === self.get('value');
+
+    const value = this.get('value');
+    const proxiedOptions = this.get('proxiedOptions');
+
+    if (value && proxiedOptions) {
+      let option = proxiedOptions.find((option) => {
+        return option.get('value') === component.get('value');
       });
-      if(option){
+
+      if (option) {
         displayValue = option.get('label');
       }
     }
-    if(!displayValue){
+    if (!displayValue) {
       displayValue = this.get('clickPrompt');
     }
 
     return displayValue;
   }),
-  proxiedOptions: function(){
-    var self = this;
-    var objectProxy = Ember.ObjectProxy.extend({
-      optionValuePath: self.get('optionValuePath'),
-      optionLabelPath: self.get('optionLabelPath'),
-      value: function(){
+
+  proxiedOptions: computed('options.[]', 'optionLabelPath', 'optionValuePath', 'selectPromptTranslation', function() {
+    let options = this.get('options');
+
+    let objectProxy = ObjectProxy.extend({
+      optionValuePath: this.get('optionValuePath'),
+      optionLabelPath: this.get('optionLabelPath'),
+      value: computed('content', 'optionValuePath', function() {
         return this.get('content').get(this.get('optionValuePath'));
-      }.property('content', 'optionValuePath'),
-      label: function(){
+      }),
+      label: computed('content', 'optionLabelPath', function() {
         return this.get('content').get(this.get('optionLabelPath'));
-      }.property('content', 'optionLabelPath')
+      })
     });
 
-    var proxies = this.get('options').map(function(option){
+    return options.map((option) => {
       return objectProxy.create({
         content: option
       });
     });
-
-    return proxies;
-  }.property('options.@each', 'optionLabelPath', 'optionValuePath', 'selectPromptTranslation'),
+  }),
 
   actions: {
-    changeSelection: function(newValue){
-      newValue = newValue==='null'?null:newValue;
+    changeSelection(newValue) {
+      newValue = newValue === 'null' ? null : newValue;
       this.send('changeValue', newValue);
     }
   }

@@ -100,7 +100,7 @@ test('add new program', function(assert) {
   andThen(function(){
     assert.equal(currentPath(), 'program.index');
     assert.equal(getElementText(find('.title .content')), getText('new test title'));
-    assert.equal(getElementText(find('.programduration div')), 4);
+    assert.equal(getElementText(find('.programduration .editable')), 4);
   });
 });
 
