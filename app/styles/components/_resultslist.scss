@@ -25,7 +25,7 @@
   .resultslist-list {
     @include span-columns(12 of 12);
     @include pad();
-    
+
     //fix for the action menus breakign at the bottom of a list
     table {
       margin-bottom: 76px;
@@ -44,6 +44,10 @@
       &.donthover {
         border-bottom: 0;
         border-top: 0;
+      }
+
+      .program-year-link {
+        color: $black;
       }
     }
 

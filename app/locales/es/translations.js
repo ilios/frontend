@@ -122,6 +122,7 @@ export default {
     'stewardsManageTitle': 'Maneje Administradores',
     'noUnselectedCompetencies': 'No hay competencias disponibles para selección',
     'noSelectedCompetencies': 'No hay competencias seleccionadas',
+    'selectAcademicYear': 'Selecciona Año Academico'
   },
   'navigation': {
     'dashboard': 'Tablero',

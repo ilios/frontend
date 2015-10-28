@@ -2,22 +2,29 @@
   <div class='detail-title'>
     {{t 'general.programYears'}} ({{programYears.length}})
   </div>
+
   <div class='detail-actions'>
-        <button {{action 'addNewProgramYear'}}>{{t 'general.addNew'}}</button>
+    {{expand-collapse-button value=editorOn action="toggleEditor"}}
   </div>
+
   <section class='resultslist'>
-    {{#if newProgramYears.length}}
-      <section class='resultslist-new'>
-        {{#each newProgramYears as |programYear|}}
-          {{new-programyear
-            programYear=programYear
-            availableProgramStartYears=availableProgramStartYears
-            save='saveNewProgramYear'
-            cancel='removeNewProgramYear'
-          }}
-        {{/each}}
-      </section>
+    {{#if editorOn}}
+      <div class="programyear-select-container">
+        <div class="programyear-select">
+          {{#ui-select showPlaceholderAsOption=false placeholder=placeholder on-select="changeSelection" value=value items=availableAcademicYears as |item|}}
+            {{#ui-option value=item}}
+              {{item.label}}
+            {{/ui-option}}
+          {{/ui-select}}
+        </div>
+
+        <span class='programyear-action'>
+          <button class="programyear-save" title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
+          <button class="programyear-cancel" title='{{t "general.cancel"}}' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+        </span>
+      </div>
     {{/if}}
+
     {{#if sortedContent.length}}
       <div class='resultslist-list'>
         <table>
@@ -74,9 +81,8 @@
 
                 <td class='text-center'>{{publication-status item=programYear showIcon=false}}</td>
                 <td class='text-center'>
-                  {{#action-menu}}
-                    <li {{action 'edit'}}>Edit</li>
-                  {{/action-menu}}
+                  {{#link-to 'programYear.index' program programYear class="program-year-link"}}{{fa-icon 'edit'}}{{/link-to}}
+                  <span class='clickable remove' {{action 'remove' programYear}}>{{fa-icon 'trash'}}</span>
                 </td>
               </tr>
             {{/each}}

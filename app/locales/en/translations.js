@@ -122,6 +122,7 @@ export default {
     'stewardsManageTitle': 'Manage Stewards',
     'noUnselectedCompetencies': 'There are no unselected competencies',
     'noSelectedCompetencies': 'There are no selected competencies',
+    'selectAcademicYear': 'Select Academic Year'
   },
   'navigation': {
     'dashboard': 'Dashboard',

@@ -122,6 +122,7 @@ export default {
     'stewardsManageTitle': "Manager des intendants",
     'noUnselectedCompetencies': "Il n'y a pas des compétences non sélectionné ",
     'noSelectedCompetencies': "Il n'y a pas des compétences sélectionné",
+    'selectAcademicYear': 'Choisissez l’année scolaire'
   },
   'navigation': {
     'dashboard': "Tableau de Bord",
