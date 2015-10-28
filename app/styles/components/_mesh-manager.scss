@@ -14,7 +14,7 @@
       color: inherit;
       list-style: disc inside;
 
-      li.truncated::after {
+      .truncated::after {
         content: ' \2026';
       }
     }
