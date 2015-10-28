@@ -203,7 +203,7 @@ export default {
     'filterPlaceholder': '',
     'title': 'Course Title',
     'objectiveParentTitle': 'Select Parent Objectives',
-    'objectiveDescriptorTitle': 'Select MeSH Descriptors',
+    'objectiveDescriptorTitle': 'Select MeSH Descriptors for Objective',
     'newObjectiveSaved': 'New Objective Saved',
     'chooseCohortTitle': 'Select Parent For',
     'missingCohortMessage': 'Please add at least one cohort to this course.',
