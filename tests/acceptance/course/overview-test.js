@@ -15,7 +15,10 @@ module('Acceptance: Course - Overview' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();
-    server.create('user', {id: 4136});
+    server.create('user', {
+      id: 4136,
+      roles: [1]
+    });
     server.create('school');
     fixtures.clerkshipTypes = [];
     fixtures.clerkshipTypes.pushObjects(server.createList('courseClerkshipType', 2));
@@ -334,16 +337,25 @@ test('remove director', function(assert) {
 
 
 test('manage directors', function(assert) {
+
   server.create('user', {
     directedCourses: [1],
     firstName: 'Added',
-    lastName: 'Guy'
+    lastName: 'Guy',
+    roles: [1]
   });
   server.create('user', {
     firstName: 'Disabled',
     lastName: 'Guy',
-    enabled: false
+    enabled: false,
+    roles: [1]
   });
+  server.create('user', {
+    firstName: 'Not a director',
+    lastName: 'Guy',
+    roles: [3]
+  });
+
   server.create('course', {
     year: 2013,
     school: 1,
@@ -386,7 +398,8 @@ test('search twice and list should be correct', function(assert) {
   server.create('user', {
     directedCourses: [1],
     firstName: 'Added',
-    lastName: 'Guy'
+    lastName: 'Guy',
+    roles: [1]
   });
   server.create('course', {
     year: 2013,

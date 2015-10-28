@@ -46,8 +46,14 @@ export default function getAll(db, request){
             if(obj[param] === undefined){
               match = false;
             }
-            if(arr.indexOf(obj[param].toString()) === -1){
-              match = false;
+            if (obj[param] instanceof Array) {
+              match = obj[param].some(function(p) {
+                return (arr.indexOf(p.toString()) !== -1);
+              });
+            } else {
+              if(arr.indexOf(obj[param].toString()) === -1) {
+                match = false;
+              }
             }
           } else {
             //sometimes we are looking for empty values like courses with no sessions
