@@ -60,7 +60,7 @@ export default Ember.Component.extend({
       };
       if (this.get('roles')) {
         query.filters = {
-          roles: this.get('roles').split(',')
+          roles: this.get('roles').split(',');
         }
       }
       this.get('store').query('user', query).then(users => {
