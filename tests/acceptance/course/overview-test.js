@@ -350,6 +350,12 @@ test('manage directors', function(assert) {
     enabled: false,
     roles: [1]
   });
+  server.create('user', {
+    firstName: 'Not a director',
+    lastName: 'Guy',
+    roles: [3]
+  });
+
   server.create('course', {
     year: 2013,
     school: 1,
