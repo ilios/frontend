@@ -27,51 +27,44 @@ export default Ember.Component.extend({
       });
     },
     save: function(){
-      var promises = [];
       var ilmSession = this.get('ilmSession.content');
+
       let instructorGroups = ilmSession.get('instructorGroups');
       let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').contains(group));
-
       instructorGroups.clear();
       removableInstructorGroups.forEach(group => {
-        promises.pushObject(group.get('ilmSessions').then(ilmSessions => {
+        group.get('ilmSessions').then(ilmSessions => {
           ilmSessions.removeObject(ilmSession);
-          return group.save();
-        }));
-
+        });
       });
       this.get('instructorGroupBuffer').forEach(function(group){
-        promises.pushObject(group.get('ilmSessions').then(ilmSessions => {
+        instructorGroups.pushObject(group);
+        group.get('ilmSessions').then(ilmSessions => {
           ilmSessions.pushObject(ilmSession);
-          return group.save().then(newGroup => {
-            instructorGroups.pushObject(newGroup);
-          });
-        }));
+
+        });
       });
 
       let instructors = ilmSession.get('instructors');
       let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').contains(user));
-
       instructors.clear();
       removableInstructors.forEach(user => {
-        promises.pushObject(user.get('instructorIlmSessions').then(ilmSessions => {
+        user.get('instructorIlmSessions').then(ilmSessions => {
           ilmSessions.removeObject(ilmSession);
-          return user.save();
-        }));
+        });
       });
       this.get('instructorBuffer').forEach(function(user){
-        promises.pushObject(user.get('instructorIlmSessions').then(ilmSessions => {
+        instructors.pushObject(user);
+        user.get('instructorIlmSessions').then(ilmSessions => {
           ilmSessions.pushObject(ilmSession);
-          return user.save().then(newUser => {
-            instructors.pushObject(newUser);
-          });
-        }));
+
+        });
       });
 
-      promises.pushObject(ilmSession.save());
-      Ember.RSVP.all(promises).then( () => {
-        this.set('isManaging', false);
+      ilmSession.save().then(() => {
+            this.set('isManaging', false);
       });
+
     },
     cancel(){
       this.set('instructorGroupBuffer', []);
