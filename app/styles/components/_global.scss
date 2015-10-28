@@ -318,28 +318,31 @@ select:hover {
 }
 
 .list-reset {
-  ul { 
-    list-style-position: inside; 
-    list-style-type: disc; 
+  ul {
+    list-style-position: inside;
+    list-style-type: disc;
   }
-  
-  ol { 
-    list-style-position: inside; 
-    list-style-type: decimal; 
+
+  ol {
+    list-style-position: inside;
+    list-style-type: decimal;
   }
-  
+
   ul ul,
-  ol ul { 
-    list-style-position: inside; 
-    list-style-type: circle; 
-    margin-left: 15px; 
+  ol ul {
+    list-style-position: inside;
+    list-style-type: circle;
+    margin-left: 15px;
   }
-  
+
   ol ol,
-  ul ol { 
-    list-style-position: inside; 
-    list-style-type: lower-latin; 
-    margin-left: 15px; 
+  ul ol {
+    list-style-position: inside;
+    list-style-type: lower-latin;
+    margin-left: 15px;
   }
-  
+
+  p {
+    margin: 0;
+  }
 }
