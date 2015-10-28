@@ -14,10 +14,8 @@
       color: inherit;
       list-style: disc inside;
 
-      li {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      .truncated::after {
+        content: ' \2026';
       }
     }
   }
