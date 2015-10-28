@@ -203,7 +203,7 @@ export default {
     'filterPlaceholder': "",
     'title': "Titre de Cours",
     'objectiveParentTitle': "Choisi Objectifs mères",
-    'objectiveDescriptorTitle': "Choisi MeSH pour objectif",
+    'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
     'newObjectiveSaved': 'Nouvel objective sauvé',
     'chooseCohortTitle': "Choisi objectif mère pour",
     'missingCohortMessage': "S'il vous plait ajouter au moins un cohort à ce cours.",
