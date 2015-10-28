@@ -1,9 +1,9 @@
 {{#if sortedInstructorGroups.length}}
   <h3>{{t 'general.instructorGroups'}}</h3>
-  <ul class='inline-list'>
+  <ul class='removable-list'>
     {{#each sortedInstructorGroups as |instructorGroup|}}
-      <li class='clickable removable' {{action 'removeInstructorGroup' instructorGroup}}>
-        {{fa-icon 'times'}} {{instructorGroup.title}}
+      <li {{action 'removeInstructorGroup' instructorGroup}}>
+        {{instructorGroup.title}} {{fa-icon 'times'}}
       </li>
     {{/each}}
   </ul>
@@ -11,10 +11,10 @@
 
 {{#if sortedInstructors.length}}
   <h3>{{t 'general.instructors'}}</h3>
-  <ul class='inline-list'>
+  <ul class='removable-list'>
     {{#each sortedInstructors as |user|}}
-      <li class='clickable removable' {{action 'removeInstructor' user}}>
-        {{fa-icon 'times'}} {{user.fullName}}
+      <li {{action 'removeInstructor' user}}>
+         {{user.fullName}} {{fa-icon 'times'}}
       </li>
     {{/each}}
   </ul>
