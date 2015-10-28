@@ -32,6 +32,9 @@ module.exports = function(defaults) {
     emberCliFontAwesome: {
       useScss: true
     },
+    babel: {
+      includePolyfill: true
+    }
   });
   app.import('bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js');
   
