@@ -1,6 +1,6 @@
 {{#if sortedInstructorGroups.length}}
   <h3>{{t 'general.instructorGroups'}}</h3>
-  <ul class='inline-list'>
+  <ul class='columnar-list'>
     {{#each sortedInstructorGroups as |instructorGroup|}}
       <li>
         {{instructorGroup.title}}
@@ -11,7 +11,7 @@
 
 {{#if sortedInstructors.length}}
   <h3>{{t 'general.instructors'}}</h3>
-  <ul class='inline-list'>
+  <ul class='columnar-list'>
     {{#each sortedInstructors as |user|}}
       <li>
         {{user.fullName}}
