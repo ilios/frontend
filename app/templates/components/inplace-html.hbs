@@ -12,13 +12,13 @@
       <span class='control list-reset'>
         {{froala-editor
           params=editorParams
-          value=buffer 
+          value=buffer
           contentChanged=(action "grabChangedValue")
         }}
       </span>
       <span class='actions'>
-        <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
-        <button class='cancel icon' title='{{t "general.cancel"}}' {{action 'cancel'}}>{{fa-icon 'times'}}</button>
+        <button class='done text' title='{{t "general.save"}}' {{action 'save'}}>{{t 'general.done'}}</button>
+        <button class='cancel text' title='{{t "general.cancel"}}' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
       </span>
     </span>
   {{/unless}}
