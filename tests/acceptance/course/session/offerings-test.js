@@ -383,8 +383,8 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
   const location = '.room input';
 
   const selectedLearnerGroup = '.selected-subgroup-style:first';
-  const removeInstructorFirst = '.inline-list .removable:first i';
-  const removeInstructorLast = '.inline-list .removable:last i';
+  const removeInstructorFirst = '.removable-list li:first i';
+  const removeInstructorLast = '.removable-list li:last i';
 
   const learnerGroupOne = '.selectable li:first';
   const searchBox = '.search-box:last input';
