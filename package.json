@@ -72,7 +72,7 @@
     "liquid-fire": "0.21.3",
     "liquid-tether": "pzuraq/liquid-tether#v0.1.4",
     "pluralize": "^1.1.6",
-    "ui-select": "firefly-ui/ui-select#v0.0.9"
+    "ui-select": "firefly-ui/ui-select#v0.0.10"
   },
   "ember-addon": {
     "paths": [

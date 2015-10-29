@@ -3,14 +3,20 @@ import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 import MembersMixin from 'ilios/mixins/members';
 
-const { Component, computed, ObjectProxy, RSVP } = Ember;
+const { Component, computed, inject, ObjectProxy, RSVP } = Ember;
 const { empty, not } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray, PromiseObject } = DS;
+const { service } = inject;
 
 export default Component.extend(MembersMixin, {
   classNames: ['learnergroup-members-multiedit', 'form-container'],
   tagName: 'section',
+
+  i18n: service(),
+  placeholder: computed('i18n.locale', function() {
+    return this.get('i18n').t('general.select');
+  }),
 
   noneChecked: empty('toBulkSave'),
   someChecked: not('noneChecked'),

@@ -1,11 +1,11 @@
 // Colors:
 $learner-group-grey: #d3d3d3;
 
-.choose-option-container {
+.learnergroup-select-container {
   margin: 0 auto;
   width: 500px;
 
-  .choose-option-select {
+  .learnergroup-select {
     display: inline-block;
 
     .ff-select-field {
@@ -19,16 +19,37 @@ $learner-group-grey: #d3d3d3;
       position: relative;
       width: 400px;
 
-      i {
+      &::after {
         color: $learner-group-grey;
+        content: '\f0d7';
+        font-family: FontAwesome;
+        font-size: 18px;
         position: absolute;
         right: 10px;
-        top: 9px;
+        top: 7px;
+      }
+    }
+
+    .ff-option-list {
+      position: absolute;
+      width: 380px;
+
+      .ff-option {
+        background: $white;
+        border-bottom: 1px solid $learner-group-grey;
+        box-sizing: content-box;
+        outline: none;
+        padding: 0 10px;
+        width: 380px;
+      }
+
+      .ff-option:hover {
+        background: $learner-group-grey;
       }
     }
   }
 
-  .choose-option-action {
+  .learnergroup-action {
     display: inline-block;
     vertical-align: top;
     width: 90px;
@@ -45,23 +66,6 @@ $learner-group-grey: #d3d3d3;
         color: $ilios-green;
       }
     }
-  }
-}
-
-.ff-option-list {
-  width: 380px;
-
-  .ff-option {
-    background: $white;
-    border-bottom: 1px solid $learner-group-grey;
-    box-sizing: content-box;
-    outline: none;
-    padding: 0 10px;
-    width: 380px;
-  }
-
-  .ff-option:hover {
-    background: $learner-group-grey;
   }
 }
 
