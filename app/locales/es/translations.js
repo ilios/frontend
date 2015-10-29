@@ -204,6 +204,7 @@ export default {
     'title': 'Titulo de Curso',
     'objectiveParentTitle': 'Seleccione Objetivos Principales',
     'objectiveDescriptorTitle': 'Seleccione Descriptores de MeSH para Objetivo',
+    'lmDescriptorTitle': 'Seleccione Descriptores de MeSH para Materiales de Aprendizaje',
     'newObjectiveSaved': 'Nuevo Objetivo Guardado',
     'chooseCohortTitle': 'Seleccione Matriz Para',
     'missingCohortMessage': 'Favor de agregar por lo menos un Clase de La Graduación a este curso.',

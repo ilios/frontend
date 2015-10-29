@@ -204,6 +204,7 @@ export default {
     'title': "Titre de Cours",
     'objectiveParentTitle': "Choisi Objectifs mères",
     'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
+    'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
     'newObjectiveSaved': 'Nouvel objective sauvé',
     'chooseCohortTitle': "Choisi objectif mère pour",
     'missingCohortMessage': "S'il vous plait ajouter au moins un cohort à ce cours.",

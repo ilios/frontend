@@ -204,6 +204,7 @@ export default {
     'title': 'Course Title',
     'objectiveParentTitle': 'Select Parent Objectives',
     'objectiveDescriptorTitle': 'Select MeSH Descriptors for Objective',
+    'lmDescriptorTitle': 'Select MeSH Descriptors for Learning Materials',
     'newObjectiveSaved': 'New Objective Saved',
     'chooseCohortTitle': 'Select Parent For',
     'missingCohortMessage': 'Please add at least one cohort to this course.',

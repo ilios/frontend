@@ -460,7 +460,7 @@ test('manage terms', function(assert) {
   andThen(function() {
     let container = find('.detail-learning-materials').eq(0);
     click('.detail-content tbody tr:eq(0) td:eq(5) a', container).then(function(){
-      assert.equal(getElementText(find('.detail-specific-title', container)), 'SelectMeSHDescriptors');
+      assert.equal(getElementText(find('.detail-specific-title', container)), 'SelectMeSHDescriptorsforLearningMaterials');
     });
 
     andThen(function() {
