@@ -5,6 +5,7 @@
       onLabel='dashboard.mySchedule'
       offLabel='dashboard.allEvents'
       action='toggleMySchedule'
+      cssId='togglemyschedule'
     }}
   </div>
 
@@ -14,6 +15,7 @@
       onLabel='dashboard.showFilters'
       offLabel='dashboard.hideFilters'
       action='toggleShowFilters'
+      cssId='showfilters'
     }}
   </div>
 
@@ -24,11 +26,12 @@
         onLabel='dashboard.courseOrType'
         offLabel='dashboard.topicOrDetail'
         action='toggleCourseFilters'
+        cssId='togglecoursefilters'
       }}
     </div>
 
     {{#if showClearFilters}}
-      <span class="calendar-clear-filters" {{action 'clearFilters'}}>Clear Filters</span>
+      <span id='calendar-clear-filters' class="calendar-clear-filters" {{action 'clearFilters'}}>Clear Filters</span>
     {{/if}}
   {{/if}}
 
@@ -48,7 +51,7 @@
   </div>
 
   {{#if showFilters}}
-    <div class='calendar-options-control calendar-year-picker'>
+    <div id='calendar-year-picker' class='calendar-options-control calendar-year-picker'>
       <select {{action 'changeSelectedYear' on='change'}}>
         {{#each academicYears as |year|}}
           <option value="{{year}}" selected={{is-equal year selectedAcademicYear.content}}>
@@ -62,7 +65,7 @@
   <div class='calendar-filters'>
     {{#liquid-if showFilters class='vertical'}}
       {{#liquid-if courseFilters class='crossFade'}}
-        <div class='calendar-filter-list large-filter-list coursefilter'>
+        <div id='calendar-coursefilter' class='calendar-filter-list large-filter-list coursefilter'>
           {{selectedAcademicYear.academicYearTitle}} {{t 'general.courses'}}
           {{#if courses.isFulfilled}}
             <ul>
@@ -78,7 +81,7 @@
           {{/if}}
         </div>
 
-        <div class='calendar-filter-list sessiontypefilter'>
+        <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
           {{t 'dashboard.sessionTypes'}}
           {{#if sessionTypes.isFulfilled}}
             <ul>
@@ -94,7 +97,7 @@
           {{/if}}
         </div>
       {{else}}
-        <div class='calendar-filter-list topicfilter'>
+        <div id='calendar-topicfilter' class='calendar-filter-list topicfilter'>
           {{t 'general.topics'}}
           {{#if topics.isFulfilled}}
             <ul>
@@ -110,7 +113,7 @@
           {{/if}}
         </div>
 
-        <div class='calendar-filter-list sessiontypefilter'>
+        <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
           {{t 'dashboard.sessionTypes'}}
           {{#if sessionTypes.isFulfilled}}
             <ul>
@@ -125,7 +128,7 @@
             {{fa-icon "spinner" spin=true}}
           {{/if}}
         </div>
-        <div class='calendar-filter-list small-filter-list courselevelfilter'>
+        <div id='calendar-courselevelfilter' class='calendar-filter-list small-filter-list courselevelfilter'>
           {{t 'dashboard.courseLevels'}}
           <ul>
             {{#each courseLevels as |level|}}
@@ -136,7 +139,7 @@
             {{/each}}
           </ul>
         </div>
-        <div class='calendar-filter-list large-filter-list cohortfilter'>
+        <div id='calendar-cohortfilter' class='calendar-filter-list large-filter-list cohortfilter'>
           {{selectedAcademicYear.academicYearTitle}} {{t 'dashboard.programAndCohort'}}
           {{#if cohorts.isFulfilled}}
             <ul>
@@ -164,7 +167,7 @@
       {{#each filterTags as |tag|}}
         <span class="filter-tag {{tag.class}}" {{action 'removeFilter' tag.filter}}>{{tag.name}} {{fa-icon 'close'}}</span>
       {{/each}}
-      <span class="filters-clear-filters" {{action 'clearFilters'}}>Clear Filters</span>
+      <span id='calendar-clear-filters' class="filters-clear-filters" {{action 'clearFilters'}}>Clear Filters</span>
     </div>
   </section>
 {{/if}}
