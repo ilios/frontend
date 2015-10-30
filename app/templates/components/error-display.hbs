@@ -12,7 +12,7 @@
   <div class="error-detail">
     <h3 class="error-total">{{totalErrors}}</h3>
 
-    {{#each revisedContent as |error|}}
+    {{#each content as |error|}}
       <div class="error-details">
         <h5 class="error-main-message">{{error.mainMessage}}</h5>
         {{#if error.statusCode}}

@@ -46,27 +46,3 @@ test('`totalErrors` computed property works', function(assert) {
 
   assert.equal(component.get('totalErrors'), 'There are 2 errors');
 });
-
-test('`revisedContent` computed property works', function(assert) {
-  assert.expect(1);
-
-  const component = this.subject({
-    content: [{
-      message: 'Adapter operation failed',
-      stack: 'Error: Adapter operation failed...',
-      errors: [{
-        status: '403',
-        title: 'The backend responded with an error'
-      }]
-    }]
-  });
-
-  const expected = [{
-    mainMessage: 'Adapter operation failed',
-    message: 'The backend responded with an error',
-    stack: 'Error: Adapter operation failed...',
-    statusCode: '403'
-  }];
-
-  assert.deepEqual(component.get('revisedContent'), expected, 'revisedContent works');
-});

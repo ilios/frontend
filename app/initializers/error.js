@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
-const { isPresent } = Ember;
-
 export default {
   name: 'error-service',
   after: ['flash-messages', 'simple-auth'],
@@ -20,9 +18,11 @@ export default {
       // Global error handler in Ember run loop
       Ember.onerror = (error) => {
         if (error) {
+          const filteredError = this.filterError(error);
+
           console.log(error);
-          controller.addError(error);
-          this.logError(error);
+          controller.addError(filteredError);
+          this.logError(filteredError);
 
           if (error.stack) {
             console.error(error.stack);
@@ -33,9 +33,11 @@ export default {
       // Global error handler for promises
       Ember.RSVP.on('error', (error) => {
         if (error) {
+          const filteredError = this.filterError(error);
+
           console.log(error);
-          controller.addError(error);
-          this.logError(error);
+          controller.addError(filteredError);
+          this.logError(filteredError);
 
           if (error.stack) {
             console.error(error.stack);
@@ -45,20 +47,33 @@ export default {
     }
   },
 
-  logError(error) {
+  filterError(error) {
     let errorData = {};
 
-    errorData.mainMessage = error.message || '';
-    errorData.stack = error.stack || '';
+    if (error.message) {
+      errorData.mainMessage = error.message;
+    }
+    if (error.stack) {
+      errorData.stack = error.stack;
+    }
+    if (error.errors && error.errors[0]) {
+      const errorHash = error.errors[0];
 
-    if (error.errors && isPresent(error.errors)) {
-      errorData.statusCode = error.errors[0].status || '';
-      errorData.message = error.errors[0].title || '';
+      if (errorHash.status) {
+        errorData.statusCode = errorHash.status;
+      }
+      if (errorHash.title) {
+        errorData.message = errorHash.title;
+      }
     }
 
+    return errorData;
+  },
+
+  logError(error) {
     Ember.$.ajax('/errors', {
       type: 'POST',
-      data: JSON.stringify(errorData)
+      data: JSON.stringify(error)
     });
   }
 };
