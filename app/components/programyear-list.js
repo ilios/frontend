@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Ember from 'ember';
 
-const { Component, computed, inject, RSVP } = Ember;
+const { Component, computed, inject, ObjectProxy, RSVP } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
 const { all } = RSVP;
@@ -11,16 +11,23 @@ export default Component.extend({
 
   store: service(),
 
-  i18n: service(),
-  placeholder: computed('i18n.locale', function() {
-    return this.get('i18n').t('programs.selectAcademicYear');
-  }),
-
   program: null,
   programYears: [],
 
   sortBy: ['academicYear'],
   sortedContent: sort('programYears', 'sortBy'),
+  proxiedProgramYears: computed('sortedContent.[]', {
+    get() {
+      const content = this.get('sortedContent');
+
+      return content.map((programYear) => {
+        return ObjectProxy.create({
+          content: programYear,
+          showRemoveConfirmation: false
+        });
+      });
+    }
+  }),
 
   existingStartYears: mapBy('programYears', 'startYear'),
 
@@ -43,29 +50,25 @@ export default Component.extend({
 
   editorOn: false,
 
-  selection: null,
+  saved: false,
+  savedProgramYear: null,
 
   actions: {
     toggleEditor() {
       if (this.get('editorOn')) {
         this.send('cancel');
       } else {
-        this.set('editorOn', true);
+        this.setProperties({ editorOn: true, saved: false });
       }
     },
 
-    changeSelection(value) {
-      this.set('selection', value);
-    },
-
     cancel() {
-      this.setProperties({ editorOn: false, selection: null });
+      this.set('editorOn', false);
     },
 
-    save() {
+    save(startYear) {
       const component = this;
       const latestProgramYear = this.get('sortedContent').get('lastObject');
-      const startYear = this.get('selection.value');
       const program = this.get('program');
       const store = this.get('store');
 
@@ -106,16 +109,23 @@ export default Component.extend({
           promises.pushObject(cohort.save());
 
           all(promises).then(() => {
-            program.save().then(() => {
-              component.send('cancel');
-            });
+            component.setProperties({ saved: true, savedProgramYear: newProgramYear });
+            component.send('cancel');
           });
         });
       });
     },
 
-    remove(programYear) {
-      programYear.destroyRecord();
+    remove(programYearProxy) {
+      programYearProxy.set('showRemoveConfirmation', true);
+    },
+
+    confirmRemove(programYearProxy) {
+      programYearProxy.get('content').destroyRecord();
+    },
+
+    cancelRemove(programYearProxy) {
+      programYearProxy.set('showRemoveConfirmation', false);
     }
   }
 });

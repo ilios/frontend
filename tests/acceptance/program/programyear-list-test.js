@@ -259,7 +259,6 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
   andThen(() => {
     const thisYear = new Date().getFullYear();
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
-    const cohortClassYear = `Class of ${(thisYear + 4).toString()}`;
 
     assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
     assert.equal(getTableDataText(0, 1).text(), 'Class of 2019', 'cohort class year shown');
@@ -288,12 +287,12 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     department: 1,
     programYear: 1
   });
-  const program = server.create('program', {
+  server.create('program', {
     school: 1,
     programYears: [1]
   });
   const currentYear = parseInt(moment().format('YYYY'));
-  const firstProgramYear = server.create('programYear', {
+  server.create('programYear', {
     program: 1,
     startYear: currentYear,
     cohort: 1,

@@ -121,8 +121,12 @@ export default {
     'stewardingSchoolsAndDepartments': 'Escuelas y Departamentos Administrativos',
     'stewardsManageTitle': 'Maneje Administradores',
     'noUnselectedCompetencies': 'No hay competencias disponibles para selección',
-    'noSelectedCompetencies': 'No hay competencias seleccionadas',
-    'selectAcademicYear': 'Selecciona Año Academico'
+    'noSelectedCompetencies': 'No hay competencias seleccionadas'
+  },
+  'programYears': {
+    'selectAcademicYear': 'Selecciona Año Academico',
+    'confirmRemove': '¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {{courseCount}} curso(s), y no se puede deshacer.',
+    'new': 'Nuevo Año Del Programa'
   },
   'navigation': {
     'dashboard': 'Tablero',

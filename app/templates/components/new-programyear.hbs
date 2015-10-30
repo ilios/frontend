@@ -1,0 +1,16 @@
+<div class="new-result-title">{{t 'programYears.new'}}</div>
+
+<div class="programyear-select-container">
+  <div class="programyear-select">
+    {{#ui-select showPlaceholderAsOption=false placeholder=placeholder on-select="changeSelection" value=value items=availableAcademicYears as |item|}}
+      {{#ui-option value=item}}
+        {{item.label}}
+      {{/ui-option}}
+    {{/ui-select}}
+  </div>
+
+  <span class='programyear-action'>
+    <button class="programyear-save" title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>
+    <button class="programyear-cancel" title='{{t "general.cancel"}}' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  </span>
+</div>

@@ -45,10 +45,6 @@
         border-bottom: 0;
         border-top: 0;
       }
-
-      .program-year-link {
-        color: $black;
-      }
     }
 
     thead tr {
@@ -86,7 +82,9 @@
   }
 
   .resultslist-new {
+    border: 1px dotted $ilios-orange;
     clear: both;
+    padding: 0 1em 2em;
 
     .new-result {
       border: 1px solid $header-grey;
@@ -99,17 +97,17 @@
       }
     }
 
-    .saved-result {
-      border: 1px solid $ilios-green;
-      margin: 1em 0;
-      padding: 1em;
-    }
-
     .new-result-title {
       color: $ilios-orange;
       font-size: $base-font-size;
       font-weight: bold;
       margin-bottom: 1em;
     }
+  }
+
+  .saved-result {
+    border: 1px solid $ilios-green;
+    margin: 1em 0;
+    padding: 1em;
   }
 }

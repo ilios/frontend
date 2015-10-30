@@ -1,6 +1,6 @@
 .programyear-select-container {
   margin: 1em auto 0;
-  width: 360px;
+  width: 320px;
 
   .programyear-select {
     display: inline-block;
@@ -28,7 +28,7 @@
     }
 
     .ff-option-list {
-      position: absolute;
+      position: relative;
       width: 230px;
 
       .ff-option {
@@ -73,6 +73,33 @@
         background: $learner-group-grey;
         color: $ilios-red;
       }
+    }
+  }
+}
+
+.programyear-list {
+  .remove {
+    margin-left: 5px;
+  }
+
+  .program-year-link {
+    color: $black;
+  }
+
+  .confirm-removal {
+    background: $remove-background-color;
+  }
+
+  .trash {
+    color: $ilios-remove-color;
+  }
+
+  .resultslist {
+    min-height: 340px;
+
+    .default-message {
+      display: block;
+      margin-top: 35px;
     }
   }
 }
