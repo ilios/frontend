@@ -1,7 +1,7 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if program}}
-      {{inplace-text tagName='h2' value=program.title save='changeTitle'}}
+      {{inplace-text tagName='h2' value=program.title save='changeTitle' validations=titleValidations}}
     {{/if}}
   </span>
   <span class ='actions'>

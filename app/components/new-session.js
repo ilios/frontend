@@ -1,28 +1,80 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
+import ValidationError from 'ilios/mixins/validation-error';
+import EmberValidations from 'ember-validations';
 
-export default Ember.Component.extend({
-  i18n: Ember.inject.service(),
-  tagName: 'section',
-  classNames: ['new-session', 'new-result', 'form-container'],
+const { computed, Component, inject, isBlank } = Ember;
+const { alias, sort } = computed;
+const { service } = inject;
+
+export default Component.extend(EmberValidations, ValidationError, {
+  init() {
+    this._super(...arguments);
+
+    const defaultSessionType = this.get('sortedSessionTypes')[0];
+    this.set('sessionType', defaultSessionType);
+  },
+
+  classNames: ['new-session', 'resultslist-new', 'form-container'],
+
+  i18n: service(),
+
   placeholder: t('sessions.sessionTitlePlaceholder'),
-  session: null,
+
   sessionTypes: [],
   sortSessionsBy: ['title'],
-  sortedSessionTypes: Ember.computed.sort('sessionTypes', 'sortSessionsBy'),
+  sortedSessionTypes: sort('sessionTypes', 'sortSessionsBy'),
+
+  validationBuffer: alias('title'),
+  validations: {
+    'validationBuffer': {
+      presence: true,
+      length: { minimum: 3, maximum: 200 }
+    }
+  },
+
+  title: null,
+  sessionType: null,
+
+  titleCheck() {
+    const title = this.get('title');
+
+    return isBlank(title) ? true : false;
+  },
+
   actions: {
-    save: function(){
-      this.sendAction('save', this.get('session'));
+    save() {
+      if (this.titleCheck()) {
+        return;
+      }
+
+      this.validate()
+        .then(() => {
+          const title = this.get('title');
+          const sessionType = this.get('sessionType');
+
+          this.sendAction('save', title, sessionType);
+        })
+        .catch(() => {
+          return;
+        });
     },
-    cancel: function(){
-      this.sendAction('cancel', this.get('session'));
+
+    cancel() {
+      this.sendAction('cancel');
     },
-    changeSessionType(){
-      let selectedEl = this.$('select')[0];
-      let selectedIndex = selectedEl.selectedIndex;
-      let sortedSessionTypes = this.get('sortedSessionTypes');
-      let sessionType = sortedSessionTypes.toArray()[selectedIndex];
-      this.set('session.sessionType', sessionType);
+
+    changeSessionType() {
+      const selectedEl = this.$('select')[0];
+      const selectedIndex = selectedEl.selectedIndex;
+      const sortedSessionTypes = this.get('sortedSessionTypes');
+      const sessionType = sortedSessionTypes.toArray()[selectedIndex];
+
+      this.set('sessionType', sessionType);
+    },
+
+    changeValue(value) {
+      this.set('title', value);
     }
   }
 });

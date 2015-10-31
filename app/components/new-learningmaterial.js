@@ -1,8 +1,12 @@
 import Ember from 'ember';
 import config from 'ilios/config/environment';
 import layout from '../templates/components/new-learningmaterial';
+import EmberValidations from 'ember-validations';
 
-export default Ember.Component.extend({
+const { computed } = Ember;
+const { alias } = computed;
+
+export default Ember.Component.extend(EmberValidations, {
   layout: layout,
   classNames: ['newlearningmaterial'],
   learningMaterial: null,
@@ -19,10 +23,47 @@ export default Ember.Component.extend({
     return this.get('learningMaterial.type') === 'citation';
   }.property('learningMaterial.type'),
   editorParams: config.froalaEditorDefaults,
-  actions: {
-    save: function(){
-      this.sendAction('save', this.get('learningMaterial'));
+
+  titleBuffer: alias('learningMaterial.title'),
+  authorBuffer: alias('learningMaterial.originalAuthor'),
+  validations: {
+    'titleBuffer': {
+      presence: true,
+      length: { minimum: 4, maximum: 60 }
     },
+
+    'authorBuffer': {
+      presence: true,
+      length: { minimum: 2, maximum: 80 }
+    }
+  },
+
+  topErrorMessageTitle: computed('errors.titleBuffer.[]', 'displayNameError', function() {
+    if (this.get('displayNameError')) {
+      return this.get('errors.titleBuffer')[0];
+    }
+  }),
+
+  topErrorMessageAuthor: computed('errors.authorBuffer.[]', 'displayAuthorError', function() {
+    if (this.get('displayAuthorError')) {
+      return this.get('errors.authorBuffer')[0];
+    }
+  }),
+
+  displayNameError: false,
+  displayAuthorError: false,
+
+  actions: {
+    save() {
+      this.validate()
+        .then(() => {
+          this.sendAction('save', this.get('learningMaterial'));
+        })
+        .catch(() => {
+          return;
+        });
+    },
+
     remove: function(){
       this.sendAction('remove', this.get('learningMaterial'));
     },
@@ -49,5 +90,21 @@ export default Ember.Component.extend({
         this.get('learningMaterial').set('description', editor.getHTML());
       }
     },
+
+    changeAuthor(author) {
+      this.set('learningMaterial.originalAuthor', author);
+    },
+
+    changeDisplayName(name) {
+      this.set('learningMaterial.title', name);
+    },
+
+    displayNameError() {
+      this.set('displayNameError', true);
+    },
+
+    displayAuthorError() {
+      this.set('displayAuthorError', true);
+    }
   }
 });

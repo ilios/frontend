@@ -12,6 +12,21 @@ export default Ember.Component.extend(Publishable, {
   sessionTypes: [],
   sortedSessionTypes: Ember.computed.sort('sessionTypes', 'sortTypes'),
   showCheckLink: true,
+
+  titleValidations: {
+    'validationBuffer': {
+      presence: true,
+      length: { minimum: 3, maximum: 200 }
+    }
+  },
+
+  hoursValidations: {
+    'validationBuffer': {
+      presence: true,
+      numericality: { greaterThan: 0 }
+    }
+  },
+
   actions: {
     saveIndependentLearning: function(value){
       var session = this.get('session');

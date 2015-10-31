@@ -67,10 +67,10 @@ test('change short title', function(assert) {
     andThen(function(){
       var input = find('.programtitleshort .editinplace input', container);
       assert.equal(getText(input.val()), getText(program.shortTitle));
-      fillIn(input, 'test new short title');
+      fillIn(input, 'test title');
       click(find('.programtitleshort .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.programtitleshort .editable', container)), getText('test new short title'));
+        assert.equal(getElementText(find('.programtitleshort .editable', container)), getText('test title'));
       });
     });
   });

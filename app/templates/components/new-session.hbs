@@ -1,11 +1,23 @@
 <div class="new-result-title">{{t 'sessions.new'}}</div>
+
 <div class="detail-content">
   <label class="form-col form-col-12">
     <div class="form-label">{{t 'general.title'}}:</div>
-    <div class="form-data form-data-text form-input-row">{{input value=session.title placeholder=placeholder}}</div>
+
+    <div class="form-data form-data-text form-input-row">
+      <input type="text" placeholder={{placeholder}} class="{{if topErrorMessage 'has-error'}}"
+        onChange={{action "changeValue" value="target.value"}}
+        oninput={{action "changeValue" value="target.value"}}
+        onfocus={{action "displayError"}} />
+      {{#if topErrorMessage}}
+        <span class="validation-error-message">{{topErrorMessage}}</span>
+      {{/if}}
+    </div>
   </label>
+
   <label class="form-col form-col-12">
     <div class="form-label">{{t "sessions.type"}}:</div>
+
     <div class="form-data form-data-select form-input-row">
     {{#if sortedSessionTypes}}
       <select {{action 'changeSessionType' on='change'}}>
@@ -22,6 +34,7 @@
     {{/if}}
     </div>
   </label>
+
   <div class="form-col-6 form-data-submit">
     <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
     <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>

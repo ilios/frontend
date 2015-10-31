@@ -497,7 +497,7 @@ test('validations work properly', function(assert) {
 
   const externalId = '.courseexternalid .editable';
   const externalIdInput = '.courseexternalid input';
-  const errorMessage = '.courseexternalid .error';
+  const errorMessage = '.courseexternalid .validation-error-message';
   const saveButton = '.courseexternalid .done';
   const cancelButton = '.courseexternalid .cancel';
 

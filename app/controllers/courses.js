@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
         defer.resolve(courses);
       });
     }
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -56,7 +56,7 @@ export default Ember.Controller.extend({
       all.pushObjects(newCourses.toArray());
       defer.resolve(all);
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -99,22 +99,22 @@ export default Ember.Controller.extend({
                    (isPresent(course.get('externalId')) &&course.get('externalId').match(exp));
           }).sortBy('title');
         }
-        
+
         if(filterMyCourses){
           this.get('allRelatedCourses').then(allRelatedCourses => {
             let myFilteredCourses = filteredCourses.filter(course => {
               return allRelatedCourses.contains(course);
             });
-            
+
             defer.resolve(myFilteredCourses);
           });
         } else {
           defer.resolve(filteredCourses);
         }
-        
+
       });
-      
-      
+
+
       return PromiseArray.create({
         promise: defer.promise
       });
@@ -128,17 +128,30 @@ export default Ember.Controller.extend({
       if(school){
         return school;
       }
+
+      return schools.get('firstObject');
+    },
+    set(key, school) {
+      this.set('schoolId',  school.get('id'));
     }
     return schools.get('firstObject');
   }),
-  selectedYear: computed('model.years.[]', 'yearTitle', function(){
-    let years = this.get('model.years');
-    if(isPresent(this.get('yearTitle'))){
-      return years.find(year => {
-        return year.get('title') === parseInt(this.get('yearTitle'));
-      });
+
+  selectedYear: Ember.computed('model.years.[]', 'yearTitle', {
+    get() {
+      let years = this.get('model.years');
+      if(isPresent(this.get('yearTitle'))){
+        return years.find(year => {
+          return year.get('title') === parseInt(this.get('yearTitle'));
+        });
+      }
+
+      return years.get('lastObject');
+    },
+    set(key, year) {
+      this.set('yearTitle',  year.get('title'));
     }
-    
+
     return years.get('lastObject');
   }),
   actions: {

@@ -393,6 +393,6 @@ export default {
     'odd': "debe ser número impar",
     'even': "debe ser número par",
     'alphanumeric': "debe ser alfanumérico",
-    'alphanumeric2': "debe ser alfanumérico ('-' y ':' permitido)"
+    'alphanumeric2': "debe ser alfanumérico ('-' y ':' permitido)",
   }
 };

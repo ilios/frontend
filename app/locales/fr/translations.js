@@ -393,6 +393,6 @@ export default {
     'odd': "doit étre une chiffre impair",
     'even': "doit être une chiffre pair",
     'alphanumeric': "doit être une valeur alphanumérique",
-    'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)"
+    'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)",
   }
 };

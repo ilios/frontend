@@ -1,7 +1,7 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if editable}}
-      {{inplace-text value=session.title save='changeTitle'}}
+      {{inplace-text value=session.title save='changeTitle' validations=titleValidations}}
     {{else}}
       <h2>{{session.title}}</h2>
     {{/if}}
@@ -62,7 +62,7 @@
     {{#if session.isIndependentLearning}}
     <div class="form-col-4 form-col-4-middle sessionilmhours">
       <label class="form-label">{{t "sessions.hours"}}:</label>
-      <div class="form-data">{{inplace-text value=session.ilmSession.hours save='changeIlmHours'}}</div>
+      <div class="form-data">{{inplace-text value=session.ilmSession.hours save='changeIlmHours' validations=hoursValidations}}</div>
     </div>
     <div class="form-col-4 form-col-4-right sessionilmduedate">
       <label class="form-label">{{t "sessions.dueBy"}}:</label>

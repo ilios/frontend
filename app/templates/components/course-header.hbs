@@ -2,7 +2,7 @@
   <span class='title'>
     {{#if editable}}
       {{#if course}}
-        {{inplace-text tagName='h2' value=course.title save='changeTitle'}}
+        {{inplace-text tagName='h2' value=course.title save='changeTitle' validations=titleValidations}}
       {{/if}}
     {{else}}
       {{#if course}}

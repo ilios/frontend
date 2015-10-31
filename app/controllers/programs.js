@@ -2,104 +2,104 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const { computed, RSVP, isEmpty, isPresent, inject } = Ember;
-const { gt } = computed;
+const { Controller, computed, inject, observer, run } = Ember;
 const { service } = inject;
-const { PromiseArray } = DS;
+const { gt } = computed;
+const { debounce } = run;
 
-export default Ember.Controller.extend({
-  i18n: service(),
+export default Controller.extend({
   currentUser: service(),
+  i18n: service(),
+
   queryParams: {
     schoolId: 'school',
     titleFilter: 'filter'
   },
+
+  model: [],
+
   placeholderValue: t('programs.titleFilterPlaceholder'),
+
   schoolId: null,
   titleFilter: null,
-  showNewProgramForm: false,
-  newPrograms: [],
-  programs: computed('selectedSchool', function(){
-    let defer = RSVP.defer();
-    let schoolId = this.get('selectedSchool').get('id');
-    if(isEmpty(schoolId)){
-      defer.resolve([]);
-    } else {
-      this.get('store').query('program', {
-        filters: {
-          school: schoolId
-        },
-        limit: 500
-      }).then(programs => {
-        defer.resolve(programs);
-      });
-    }
-    
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
+  schools: [],
+
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
-  watchFilter: function(){
-    Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('titleFilter'),
-  setFilter: function(){
+
+  watchFilter: observer('titleFilter', function() {
+    debounce(this, this.setFilter, 500);
+  }),
+
+  setFilter() {
     this.set('debouncedFilter', this.get('titleFilter'));
   },
-  hasMoreThanOneSchool: gt('model.length', 1),
-  filteredPrograms: computed(
-    'debouncedFilter',
-    'programs.[]',
-    function(){
-      let defer = RSVP.defer();
-      let title = this.get('debouncedFilter');
-      let exp = new RegExp(title, 'gi');
-      this.get('programs').then(programs => {
-        let filteredPrograms;
-        if(isEmpty(title)){
-          filteredPrograms = programs;
-        } else {
-          filteredPrograms = programs.filter(program => {
-            return isPresent(program.get('title')) && program.get('title').match(exp);
-          });
+
+  hasMoreThanOneSchool: gt('schools.length', 1),
+
+  filteredPrograms: computed('debouncedFilter', 'model.[]', {
+    get() {
+      const title = this.get('debouncedFilter');
+      const exp = new RegExp(title, 'gi');
+
+      return this.get('model').filter((course) => {
+        let match = true;
+
+        if (title != null && !course.get('title').match(exp)) {
+          match = false;
         }
-        defer.resolve(filteredPrograms.sortBy('title'));
-      });
-      
-      
-      return PromiseArray.create({
-        promise: defer.promise
-      });
-  }),
-  selectedSchool: computed('model.[]', 'schoolId', function(){
-    let schools = this.get('model');
-    if(isPresent(this.get('schoolId'))){
-      let school =  schools.find(school => {
-        return school.get('id') === this.get('schoolId');
-      });
-      if(school){
-        return school;
-      }
+
+        return match;
+      }).sortBy('title');
     }
-    return schools.get('firstObject');
   }),
+
+  editorOn: false,
+
+  saved: false,
+  savedProgram: null,
+
   actions: {
-    removeProgram: function(program){
+    toggleEditor() {
+      if (this.get('editorOn')) {
+        this.set('editorOn', false);
+      } else {
+        this.setProperties({ editorOn: true, saved: false });
+      }
+    },
+
+    editProgram(program) {
+      this.transitionToRoute('program', program);
+    },
+
+    removeProgram(program) {
+      this.get('model').removeObject(program);
       program.deleteRecord();
       program.save();
     },
-    saveNewProgram: function(newProgram){
-      newProgram.save().then(savedProgram => {
-        this.get('newPrograms').pushObject(savedProgram);
-        this.set('showNewProgramForm', false);
+
+    save(title) {
+      const store = this.store;
+      const school = this.get('selectedSchool');
+      const duration = 4;
+
+      let newProgram = store.createRecord('program', { title, school, duration });
+
+      newProgram.save().then((savedProgram) => {
+        this.send('cancel');
+        this.setProperties({ saved: true, savedProgram });
+        this.send('reloadModel');
       });
     },
-    changeSelectedSchool: function(school){
-      this.set('schoolId', school.get('id'));
+
+    cancel() {
+      this.set('editorOn', false);
     },
-    toggleNewProgramForm: function(){
-      this.set('showNewProgramForm', !this.get('showNewProgramForm'));
+
+    changeSelectedSchool(school) {
+      const schoolId = school.get('id');
+
+      this.setProperties({ schoolId, selectedSchool: school });
     }
-  },
+  }
 });

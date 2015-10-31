@@ -5,8 +5,9 @@
   <div class='detail-content'>
     <div class="inline-label-data-block programtitleshort">
       <label>{{t "programs.programTitleShort"}}:</label>
-      <div>{{inplace-text value=program.shortTitle save='changeShortTitle'}}</div>
+      <div>{{inplace-text value=program.shortTitle save='changeShortTitle' validations=shortTitleValidations}}</div>
     </div>
+
     <div class="inline-label-data-block programduration">
       <label>{{t "programs.durationInYears"}}:</label>
       <div>{{inplace-select value=program.duration options=durationOptions save='changeDuration'}}</div>

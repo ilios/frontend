@@ -12,9 +12,10 @@
       <span class='control'>
         <textarea
           type='text'
-          onKeyUp={{action "changeValue" value="target.value"}}
           onChange={{action "changeValue" value="target.value"}}
-          class="{{if topErrorMessage 'has-error'}}">{{value}}</textarea>
+          oninput={{action "changeValue" value="target.value"}}
+          class="{{if topErrorMessage 'has-error'}}"
+          onfocus={{action "displayError"}}>{{value}}</textarea>
       </span>
       <span class='actions'>
         <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>{{fa-icon 'check'}}</button>

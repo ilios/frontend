@@ -167,20 +167,16 @@ test('create new file learning material', function(assert) {
     fillIn(inputs.eq(1), testAuthor);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    
-    //wait for the editor to load
-    Ember.run.later(()=>{
-      find('.froala-box', newLmContainer).editable('setHTML', testDescription);
-      click('.detail-learning-materials .newlearningmaterial .done');
-      andThen(function(){
-        let container = find('.detail-learning-materials');
-        let rows = find('.detail-content tbody tr', container);
-        assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
-        let row = rows.eq(fixtures.course.learningMaterials.length);
-        assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
-        assert.equal(getElementText(find('td:eq(1)', row)), getText('file'));
-      });
-    }, 100);
+    find('.froala-box', newLmContainer).editable('setHTML', testDescription);
+    click('.detail-learning-materials .newlearningmaterial .done');
+    andThen(function(){
+      let container = find('.detail-learning-materials');
+      let rows = find('.detail-content tbody tr', container);
+      assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
+      let row = rows.eq(fixtures.course.learningMaterials.length);
+      assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
+      assert.equal(getElementText(find('td:eq(1)', row)), getText('file'));
+    });
   });
 });
 
@@ -211,20 +207,16 @@ test('create new link learning material', function(assert) {
     fillIn(inputs.eq(1), testAuthor);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    
-    //wait for the editor to load
-    Ember.run.later(()=>{
-      find('.froala-box', newLmContainer).editable('setHTML', testDescription);
-      click('.detail-learning-materials .newlearningmaterial .done');
-      andThen(function(){
-        let container = find('.detail-learning-materials');
-        let rows = find('.detail-content tbody tr', container);
-        assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
-        let row = rows.eq(fixtures.course.learningMaterials.length);
-        assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
-        assert.equal(getElementText(find('td:eq(1)', row)), getText('link'));
-      });
-    }, 100);
+    find('.froala-box', newLmContainer).editable('setHTML', testDescription);
+    click('.detail-learning-materials .newlearningmaterial .done');
+    andThen(function(){
+      let container = find('.detail-learning-materials');
+      let rows = find('.detail-content tbody tr', container);
+      assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
+      let row = rows.eq(fixtures.course.learningMaterials.length);
+      assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
+      assert.equal(getElementText(find('td:eq(1)', row)), getText('link'));
+    });
   });
 
 });
@@ -256,20 +248,16 @@ test('create new citation learning material', function(assert) {
     fillIn(inputs.eq(1), testAuthor);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    
-    //wait for the editor to load
-    Ember.run.later(()=>{
-      find('.froala-box', newLmContainer).editable('setHTML', testDescription);
-      click('.detail-learning-materials .newlearningmaterial .done');
-      andThen(function(){
-        let container = find('.detail-learning-materials');
-        let rows = find('.detail-content tbody tr', container);
-        assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
-        let row = rows.eq(fixtures.course.learningMaterials.length);
-        assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
-        assert.equal(getElementText(find('td:eq(1)', row)), getText('citation'));
-      });
-    }, 100);
+    find('.froala-box', newLmContainer).editable('setHTML', testDescription);
+    click('.detail-learning-materials .newlearningmaterial .done');
+    andThen(function(){
+      let container = find('.detail-learning-materials');
+      let rows = find('.detail-content tbody tr', container);
+      assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
+      let row = rows.eq(fixtures.course.learningMaterials.length);
+      assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
+      assert.equal(getElementText(find('td:eq(1)', row)), getText('citation'));
+    });
   });
 });
 
@@ -593,7 +581,7 @@ test('find and add learning material', function(assert) {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    
+
     let searchBoxInput = find('input', container);
     fillIn(searchBoxInput, 'doc');
     triggerEvent(searchBoxInput, 'search');
@@ -603,7 +591,7 @@ test('find and add learning material', function(assert) {
         assert.equal(searchResults.length, 1);
         assert.equal(getElementText($(searchResults[0])), getText('Letter to Doc Brown'));
         click(searchResults[0]);
-        
+
         andThen(function(){
           let rows = find('.detail-content tbody tr', container);
           assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
