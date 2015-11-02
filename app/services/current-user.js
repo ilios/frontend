@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import ajax from 'ic-ajax';
 
-const { computed } = Ember;
+const { computed, observer, on } = Ember;
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
@@ -68,38 +68,135 @@ export default Ember.Service.extend({
       });
     });
   }.property('currentSchool'),
+  userRoleTitles: computed('model.roles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('model').then(user => {
+        user.get('roles').then(roles => {
+          let roleTitles = roles.map(role => role.get('title').toLowerCase());
+          resolve(roleTitles);
+        });
+      });
+    });
+  }),
+  userIsCourseDirector: computed('useRoleTitles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('userRoleTitles').then(roleTitles => {
+        resolve(roleTitles.contains('course director'));
+      });
+    });
+  }),
+  userIsFaculty: computed('useRoleTitles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('userRoleTitles').then(roleTitles => {
+        resolve(roleTitles.contains('faculty'));
+      });
+    });
+  }),
+  userIsDeveloper: computed('useRoleTitles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('userRoleTitles').then(roleTitles => {
+        resolve(roleTitles.contains('developer'));
+      });
+    });
+  }),
+  userIsStudent: computed('useRoleTitles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('userRoleTitles').then(roleTitles => {
+        resolve(roleTitles.contains('student'));
+      });
+    });
+  }),
+  userIsPublic: computed('useRoleTitles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('userRoleTitles').then(roleTitles => {
+        resolve(roleTitles.contains('public'));
+      });
+    });
+  }),
+  userIsFormerStudent: computed('useRoleTitles.[]', function(){
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('userRoleTitles').then(roleTitles => {
+        resolve(roleTitles.contains('former student'));
+      });
+    });
+  }),
+  //not really used other than to trigger other properties
+  privileges: computed(
+    'userIsCourseDirector',
+    'userIsFaculty',
+    'userIsDeveloper',
+    'userIsFormerStudent',
+    'userIsPublic',
+    'userIsStudent',
+  function(){
+    Ember.RSVP.all([
+      this.get('userIsCourseDirector'),
+      this.get('userIsFaculty'),
+      this.get('userIsDeveloper'),
+      this.get('userIsFormerStudent'),
+      this.get('userIsPublic'),
+      this.get('userIsStudent'),
+    ]).then(arr => {
+      return arr;
+    });
+  }),
   //will be customizable
   preferredDashboard: 'dashboard.week',
   //Program
   canViewProgram: computed('model', function(){
     return false;
   }),
-  //Programs
-  canViewPrograms: computed('model', function(){
-    return false;
-  }),
+  canViewPrograms: false,
+  canViewProgramsObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsCourseDirector'),
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewPrograms', hasRole.contains(true));
+      });
+  })),
   //Course
   canViewCourse: computed('model', function(){
     return false;
   }),
-  //Courses
-  canViewCourses: computed('model', function(){
-    return false;
-  }),
+  canViewCourses: false,
+  canViewCoursesObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsCourseDirector'),
+        this.get('userIsFaculty'),
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewCourses', hasRole.contains(true));
+      });
+  })),
+  canViewInstructorGroups: false,
+  canViewInstructorGroupsObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsCourseDirector'),
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewInstructorGroups', hasRole.contains(true));
+      });
+  })),
   //Instructor Group
   canViewInstructorGroup: computed('model', function(){
     return false;
   }),
-  //Instructor Groups
-  canViewInstructorGroups: computed('model', function(){
-    return false;
-  }),
+  canViewLearnerGroups: false,
+  canViewLearnerGroupObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsCourseDirector'),
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewLearnerGroups', hasRole.contains(true));
+      });
+  })),
   //Learner Group
   canViewLearnerGroup: computed('model', function(){
-    return false;
-  }),
-  //Learner Groups
-  canViewLearnerGroups: computed('model', function(){
     return false;
   }),
   //Curriculum Inventory
@@ -114,8 +211,13 @@ export default Ember.Service.extend({
   canViewReports: computed('model', function(){
     return false;
   }),
-  //Admin Dashboard
-  canViewAdminDashboard: computed('model', function(){
-    return false;
-  }),
+  canViewAdminDashboard: false,
+  canViewAdminDashboardObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewAdminDashboard', hasRole.contains(true));
+      });
+  })),
 });
