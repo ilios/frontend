@@ -57,16 +57,16 @@
   </div>
 </div>
 
-<div class="choose-option-container">
-  <div class="choose-option-select">
-    {{#ui-select field-component="learner-select-field" showPlaceholderAsOption=false placeholder='general.select' on-select="changeSelection" value=value inline=false items=proxiedOptions as |item|}}
+<div class="learnergroup-select-container">
+  <div class="learnergroup-select">
+    {{#ui-select showPlaceholderAsOption=false placeholder=placeholder on-select="changeSelection" value=value items=proxiedOptions as |item|}}
       {{#ui-option value=item}}
         {{item.label}}
       {{/ui-option}}
     {{/ui-select}}
   </div>
 
-  <span class='choose-option-action'>
+  <span class='learnergroup-action'>
     <button class="save-all" title='{{t "general.save"}}' {{action 'saveAll'}}>{{fa-icon 'check'}}</button>
   </span>
 </div>
