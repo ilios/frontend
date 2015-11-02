@@ -4,8 +4,8 @@
 	</a>
 	<nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible 'is-menu-visible'}}">
 		<ul>
-      {{#each menuItems as |item|}}
-        <li>{{#link-to item.route}}{{fa-icon item.icon}} {{item.name}}{{/link-to}}</li>
+      {{#each menuItems as |item index|}}
+        <li id='menu-{{index}}'>{{#link-to item.route}}{{fa-icon item.icon}} {{item.name}}{{/link-to}}</li>
       {{/each}}
 		</ul>
 	</nav>
