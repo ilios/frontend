@@ -75,17 +75,21 @@ export default Ember.Component.extend(Publishable, {
       });
     },
     changeDescription: function(value){
-      var self = this;
       this.get('session.sessionDescription').then(sessionDescription => {
-        if(!sessionDescription){
-          sessionDescription = self.get('store').createRecord('session-description');
-          sessionDescription.set('session', this.get('session'));
+        if(!value && sessionDescription){
+          sessionDescription.deleteRecord();
+          sessionDescription.save();
+        } else {
+          if(!sessionDescription){
+            sessionDescription = this.get('store').createRecord('session-description');
+            sessionDescription.set('session', this.get('session'));
+          }
+          sessionDescription.set('description', value);
+          sessionDescription.save().then(returnedDescription => {
+            this.get('session').set('sessionDescription', returnedDescription);
+            this.get('session').save();
+          });
         }
-        sessionDescription.set('description', value);
-        sessionDescription.save().then(function(returnedDescription){
-          self.get('session').set('sessionDescription', returnedDescription);
-          self.get('session').save();
-        });
       });
     },
   }
