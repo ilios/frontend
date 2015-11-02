@@ -1,11 +1,14 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'courses.instructors'}} ({{titleCount}})
+
     {{#if isManaging}}
       <span class='detail-specific-title'>
         {{t 'courses.instructorsManageTitle'}}
       </span>
+    {{else}}
+      {{t 'courses.instructors'}} ({{titleCount}})
     {{/if}}
+
   </div>
 
   <div class='detail-actions'>

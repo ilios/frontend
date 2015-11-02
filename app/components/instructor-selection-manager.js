@@ -6,6 +6,8 @@ export default Ember.Component.extend({
   instructors: [],
   availableInstructorGroups: [],
   sortInstructorsBy: ['title'],
+  classNames: ['detail-block'],
+  tagName: 'section',
   sortedInstructors: Ember.computed.sort('instructors', 'sortInstructorsBy'),
   instructorGroups: [],
   sortGroupsBy: ['title'],
