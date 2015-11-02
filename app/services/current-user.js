@@ -70,7 +70,40 @@ export default Ember.Service.extend({
   }.property('currentSchool'),
   //will be customizable
   preferredDashboard: 'dashboard.week',
+  canViewProgram: computed('model', function(){
+    return false;
+  }),
+  canViewPrograms: computed('model', function(){
+    return false;
+  }),
+  canViewCourse: computed('model', function(){
+    return false;
+  }),
   canViewCourses: computed('model', function(){
     return false;
-  })
+  }),
+  canViewInstructorGroup: computed('model', function(){
+    return false;
+  }),
+  canViewInstructorGroups: computed('model', function(){
+    return false;
+  }),
+  canViewLearnerGroup: computed('model', function(){
+    return false;
+  }),
+  canViewLearnerGroups: computed('model', function(){
+    return false;
+  }),
+  canViewCurriculumInventory: computed('model', function(){
+    return false;
+  }),
+  canViewReport: computed('model', function(){
+    return false;
+  }),
+  canViewReports: computed('model', function(){
+    return false;
+  }),
+  canViewAdminDashboard: computed('model', function(){
+    return false;
+  }),
 });
