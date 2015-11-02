@@ -9,10 +9,20 @@ export default Ember.Component.extend(InPlace, {
     this.$('.control .froala-box').editable('destroy');
   },
   actions: {
-    grabChangedValue: function(event, editor){
+    save() {
+      const editor = this.$('.control .froala-box');
+      let value;
       if(editor){
-        this.send('changeValue', editor.getHTML());
+        let html = editor.editable('getHTML');
+        let plainText = html.replace(/(<([^>]+)>)/ig,"");
+        //if all we have is empty html then save null
+        if(plainText.length === 0){
+          html = null;
+        } 
+        value = html;
       }
+      this.setProperties({ buffer: null, valueChanged: false, isEditing: false });
+      this.sendAction('save', value, this.get('condition'));
     }
   }
 });
