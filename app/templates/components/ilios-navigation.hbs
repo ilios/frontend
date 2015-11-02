@@ -8,10 +8,18 @@
 			{{#if (can 'view courses')}}
 				<li>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
 			{{/if}}
-			<li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
-			<li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
-			<li>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
-			<li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'navigation.admin'}}{{/link-to}}</li>
+			{{#if (can 'view learnerGroups')}}
+				<li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'view instructorGroups')}}
+				<li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'view programs')}}
+				<li>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'view adminDashboard')}}
+				<li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'navigation.admin'}}{{/link-to}}</li>
+			{{/if}}
 		</ul>
 	</nav>
 	<div {{action 'toggleMenuVisibility'}} class="menu-screen {{if isMenuVisible 'is-menu-visible'}}"></div>
