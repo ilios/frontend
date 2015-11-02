@@ -8,4 +8,5 @@ const { alias } = computed;
 export default Ability.extend({
   currentUser: service(),
   canView: alias('currentUser.canViewInstructorGroups'),
+  canEdit: alias('currentUser.canEditInstructorGroups'),
 });

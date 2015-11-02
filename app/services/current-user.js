@@ -147,13 +147,15 @@ export default Ember.Service.extend({
     return false;
   }),
   canViewPrograms: false,
-  canViewProgramsObserver: on('init', observer('privileges',
+  canEditPrograms: false,
+  programsPrivilegesObserver: on('init', observer('privileges',
     function(){
       Ember.RSVP.all([
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         this.set('canViewPrograms', hasRole.contains(true));
+        this.set('canEditPrograms', hasRole.contains(true));
       });
   })),
   //Course
@@ -161,7 +163,8 @@ export default Ember.Service.extend({
     return false;
   }),
   canViewCourses: false,
-  canViewCoursesObserver: on('init', observer('privileges',
+  canEditCourses: false,
+  coursesPrivilegesObserver: on('init', observer('privileges',
     function(){
       Ember.RSVP.all([
         this.get('userIsCourseDirector'),
@@ -169,16 +172,19 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         this.set('canViewCourses', hasRole.contains(true));
+        this.set('canEditCourses', hasRole.contains(true));
       });
   })),
   canViewInstructorGroups: false,
-  canViewInstructorGroupsObserver: on('init', observer('privileges',
+  canEditInstructorGroups: false,
+  instructorGroupsPrivilegesObserver: on('init', observer('privileges',
     function(){
       Ember.RSVP.all([
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         this.set('canViewInstructorGroups', hasRole.contains(true));
+        this.set('canEditInstructorGroups', hasRole.contains(true));
       });
   })),
   //Instructor Group
@@ -186,13 +192,15 @@ export default Ember.Service.extend({
     return false;
   }),
   canViewLearnerGroups: false,
-  canViewLearnerGroupObserver: on('init', observer('privileges',
+  canEditLearnerGroups: false,
+  learnerGroupsPrivilegesObserver: on('init', observer('privileges',
     function(){
       Ember.RSVP.all([
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         this.set('canViewLearnerGroups', hasRole.contains(true));
+        this.set('canEditLearnerGroups', hasRole.contains(true));
       });
   })),
   //Learner Group
