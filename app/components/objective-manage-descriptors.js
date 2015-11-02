@@ -10,7 +10,7 @@ export default Ember.Component.extend({
       return [];
     }
     return objective.get('meshDescriptors');
-  }.property('objective', 'objective.meshDescriptors.@each'),
+  }.property('objective', 'objective.meshDescriptors.[]'),
   actions: {
     add: function(descriptor){
       var objective = this.get('objective');

@@ -223,6 +223,7 @@ export default {
     'noSelectedLearnerGroups': 'No hay grupos de aprendedores seleccionados',
     'instructors': 'Instructores',
     'instructorsManageTitle': 'Administrar Instructores',
+    'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
   },
   'sessions': {
     'specialAttireRequired': 'Vestimenta Especial Requerido',
@@ -246,6 +247,7 @@ export default {
     'independentLearning': 'Aprendizaje Independiente',
     'hours': 'Horas',
     'dueBy': 'Debido Por',
+    'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
   },
   'offerings': {
     'calendarOn': 'Calendario en Uso',

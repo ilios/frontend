@@ -2,21 +2,21 @@
   <thead>
     <tr>
       <th class='text-left' colspan="3">{{t 'general.description'}}</th>
-      <th class='text-left' colspan="2">{{t 'general.parentObjective'}}</th>
+      <th class='text-left' colspan="2">{{t 'general.parentObjectives'}}</th>
       <th class='text-left' colspan="2">{{t 'general.meshTerms'}}</th>
       <th class='text-left' colspan="1">{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
-    {{#each proxiedObjectives as |objectiveProxy|}}
-    <tr id="objectiveProxy-{{objectiveProxy.id}}" class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
+    {{#each sortedObjectives as |objectiveProxy|}}
+    <tr id="objective-{{objectiveProxy.id}}" class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
       <td class='text-left text-top' colspan=3>
-        {{inplace-html value=objectiveProxy.title save='changeobjectiveTitle' condition=objectiveProxy.id}}
+        {{inplace-html value=objectiveProxy.title save='changeObjectiveTitle' condition=objectiveProxy.id}}
       </td>
       <td class='text-left text-top' colspan="2">
         {{#if objectiveProxy.hasParents}}
           {{#each objectiveProxy.parents as |parent|}}
-            <a href='#' {{action 'manageParents' objectiveProxy}}>
+            <a href='#' {{action 'manageParents' objectiveProxy.content}}>
               {{parent.textTitle}}
             </a>
             {{#if objectiveProxy.hasMultipleParents}}
@@ -30,7 +30,7 @@
       <td class='text-left text-top' colspan="2">
         {{#if objectiveProxy.meshDescriptors.length}}
           <ul>
-            <a href='#' {{action 'manageDescriptors' objectiveProxy}}>
+            <a href='#' {{action 'manageDescriptors' objectiveProxy.content}}>
               {{#each objectiveProxy.meshDescriptors as |descriptor|}}
                 <li>{{descriptor.name}}</li>
               {{/each}}

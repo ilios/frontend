@@ -61,7 +61,7 @@ test('list session objectives', function(assert) {
   visit(url);
   andThen(function() {
     let tds = find('.session-objective-list tbody tr:eq(0) td');
-    assert.equal(tds.length, 3);
+    assert.equal(tds.length, 4);
     click('a', tds.eq(1));
     andThen(function() {
       assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
