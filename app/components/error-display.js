@@ -7,26 +7,6 @@ export default Component.extend({
 
   content: null,
 
-  revisedContent: computed('content.[]', {
-    get() {
-      const content = this.get('content');
-
-      return content.map((error) => {
-        let errorObject = {};
-
-        errorObject.mainMessage = error.message;
-        errorObject.stack = error.stack;
-
-        if (isPresent(error.errors)) {
-          errorObject.statusCode = error.errors[0].status;
-          errorObject.message = error.errors[0].title;
-        }
-
-        return errorObject;
-      });
-    }
-  }).readOnly(),
-
   showDetails: false,
 
   totalErrors: computed('content.[]', {
