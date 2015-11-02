@@ -5,7 +5,9 @@
 	<nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible 'is-menu-visible'}}">
 		<ul>
 			<li>{{#link-to 'dashboard'}}{{fa-icon 'home'}} {{t 'navigation.dashboard'}}{{/link-to}}</li>
-			<li>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
+			{{#if (can 'view courses')}}
+				<li>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
+			{{/if}}
 			<li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
 			<li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
 			<li>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>

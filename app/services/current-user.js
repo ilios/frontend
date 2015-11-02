@@ -2,6 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import ajax from 'ic-ajax';
 
+const { computed } = Ember;
+
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   currentUserId: null,
@@ -68,4 +70,7 @@ export default Ember.Service.extend({
   }.property('currentSchool'),
   //will be customizable
   preferredDashboard: 'dashboard.week',
+  canViewCourses: computed('model', function(){
+    return false;
+  })
 });
