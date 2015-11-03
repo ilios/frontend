@@ -21,6 +21,8 @@ export default Ember.Service.extend({
         } else {
           deferred.resolve(null);
         }
+      }, () => {
+        deferred.resolve(null);
       });
     } else {
       this.get('store').find('user', currentUserId).then(function(user){
