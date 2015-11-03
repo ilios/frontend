@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import randomString from '../utils/random-string.js';
+import randomString from '../utils/random-string';
 
 export default Ember.Component.extend({
   tagName: 'label',
