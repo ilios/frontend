@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, isPresent } = Ember;
+const { Component, computed } = Ember;
 
 export default Component.extend({
   classNames: ['error-display'],
