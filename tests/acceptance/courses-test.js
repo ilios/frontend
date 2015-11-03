@@ -35,7 +35,7 @@ test('visiting /courses', function(assert) {
 });
 
 test('filters by title', function(assert) {
-  assert.expect(15);
+  assert.expect(22);
   var firstCourse = server.create('course', {
     title: 'specialfirstcourse',
     year: 2014,
@@ -51,12 +51,18 @@ test('filters by title', function(assert) {
     year: 2014,
     school: 1
   });
+  var lastCourse = server.create('course', {
+    title: 'aaLastcourse',
+    year: 2014,
+    school: 1
+  });
   visit('/courses');
   andThen(function() {
-    assert.equal(3, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondCourse.title));
+    assert.equal(4, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(lastCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(regularCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(firstCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')),getText(secondCourse.title));
     
     //put these in nested later blocks because there is a 500ms debounce on the title filter
     fillIn('#titlefilter input', 'first');
@@ -75,13 +81,25 @@ test('filters by title', function(assert) {
               assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
               assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondCourse.title));
     
-              fillIn('#titlefilter input', '');
+              fillIn('#titlefilter input', 'course');
               andThen(function(){
                 Ember.run.later(function(){
-                  assert.equal(3, find('.resultslist-list tbody tr').length);
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularCourse.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstCourse.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondCourse.title));
+                  assert.equal(4, find('.resultslist-list tbody tr').length);
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(lastCourse.title));
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(regularCourse.title));
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(firstCourse.title));
+                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')),getText(secondCourse.title));
+                  
+                  fillIn('#titlefilter input', '');
+                  andThen(function(){
+                    Ember.run.later(function(){
+                      assert.equal(4, find('.resultslist-list tbody tr').length);
+                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(lastCourse.title));
+                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(regularCourse.title));
+                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(firstCourse.title));
+                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')),getText(secondCourse.title));
+                    }, 750);
+                  });
                 }, 750);
               });
             }, 750);

@@ -98,7 +98,7 @@ export default Ember.Controller.extend({
           filteredCourses = courses.filter(course => {
             return (isPresent(course.get('title')) &&course.get('title').match(exp)) ||
                    (isPresent(course.get('externalId')) &&course.get('externalId').match(exp));
-          });
+          }).sortBy('title');
         }
         
         if(filterMyCourses){
