@@ -17,10 +17,6 @@ module('Acceptance: Course - Overview' + testgroup, {
   beforeEach: function() {
     application = startApp();
     authenticateSession();
-    server.create('user', {
-      id: 4136,
-      roles: [1]
-    });
     server.create('school');
     fixtures.clerkshipTypes = [];
     fixtures.clerkshipTypes.pushObjects(server.createList('courseClerkshipType', 2));
@@ -32,6 +28,9 @@ module('Acceptance: Course - Overview' + testgroup, {
 });
 
 test('check fields', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('user', {
     directedCourses: [1],
     firstName: 'A',
@@ -65,6 +64,9 @@ test('check fields', function(assert) {
 });
 
 test('check detail fields', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   var course = server.create('course', {
     year: 2013,
     school: 1,
@@ -91,6 +93,9 @@ test('check detail fields', function(assert) {
 });
 
 test('pick clerkship type', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('course', {
     year: 2013,
     school: 1,
@@ -122,6 +127,9 @@ test('pick clerkship type', function(assert) {
 });
 
 test('remove clerkship type', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('course', {
     year: 2013,
     school: 1,
@@ -146,6 +154,9 @@ test('remove clerkship type', function(assert) {
 });
 
 test('open and close details', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('course', {
     year: 2013,
     school: 1
@@ -173,6 +184,9 @@ test('open and close details', function(assert) {
 });
 
 test('change title', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('course', {
     year: 2013,
     school: 1,
@@ -199,6 +213,9 @@ test('change title', function(assert) {
 });
 
 test('change start date', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   var course = server.create('course', {
     year: 2013,
     school: 1,
@@ -230,6 +247,9 @@ test('change start date', function(assert) {
 });
 
 test('change end date', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   var course = server.create('course', {
     year: 2013,
     school: 1,
@@ -261,6 +281,9 @@ test('change end date', function(assert) {
 });
 
 test('change externalId', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('course', {
     year: 2013,
     school: 1,
@@ -288,6 +311,9 @@ test('change externalId', function(assert) {
 });
 
 test('change level', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('course', {
     year: 2013,
     school: 1,
@@ -318,6 +344,9 @@ test('change level', function(assert) {
 
 test('remove director', function(assert) {
   server.create('user', {
+    id: 4136
+  });
+  server.create('user', {
     directedCourses: [1],
     firstName: 'A',
     lastName: 'Director'
@@ -339,7 +368,13 @@ test('remove director', function(assert) {
 
 
 test('manage directors', function(assert) {
-
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [1, 2, 4136]
+  });
   server.create('user', {
     directedCourses: [1],
     firstName: 'Added',
@@ -351,6 +386,10 @@ test('manage directors', function(assert) {
     lastName: 'Guy',
     enabled: false,
     roles: [1]
+  });
+  
+  server.create('userRole', {
+    users: [3]
   });
   server.create('user', {
     firstName: 'Not a director',
@@ -398,6 +437,13 @@ test('manage directors', function(assert) {
 //test for a bug where the search results were not cleared between searches
 test('search twice and list should be correct', function(assert) {
   server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [1, 4136]
+  });
+  server.create('user', {
     directedCourses: [1],
     firstName: 'Added',
     lastName: 'Guy',
@@ -440,6 +486,9 @@ test('search twice and list should be correct', function(assert) {
 });
 
 test('validations work properly', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   assert.expect(5);
 
   server.create('course', {
