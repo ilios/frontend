@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('boolean-check' + testgroup, 'Unit | Component | boolean check', {
+moduleForComponent('boolean-check', 'Unit | Component | boolean check ' + testgroup, {
   unit: true
 });
 

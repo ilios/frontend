@@ -5,7 +5,7 @@ import Ember from 'ember';
 const { run } = Ember;
 const { next } = run;
 
-moduleForComponent('session-offerings' + testgroup, 'Unit | Component | session offerings', {
+moduleForComponent('session-offerings', 'Unit | Component | session offerings ' + testgroup, {
   unit: true
 });
 

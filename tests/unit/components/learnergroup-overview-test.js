@@ -5,7 +5,7 @@ import Ember from 'ember';
 const { run } = Ember;
 const { next } = run;
 
-moduleForComponent('learnergroup-overview' + testgroup, 'Unit | Component | learnergroup overview', {
+moduleForComponent('learnergroup-overview', 'Unit | Component | learnergroup overview ' + testgroup, {
   unit: true
 });
 

@@ -71,10 +71,14 @@ export default Ember.Service.extend({
   userRoleTitles: computed('model.roles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('model').then(user => {
-        user.get('roles').then(roles => {
-          let roleTitles = roles.map(role => role.get('title').toLowerCase());
-          resolve(roleTitles);
-        });
+        if(!user){
+          resolve([]);
+        } else {
+          user.get('roles').then(roles => {
+            let roleTitles = roles.map(role => role.get('title').toLowerCase());
+            resolve(roleTitles);
+          });
+        }
       });
     });
   }),
