@@ -1,11 +1,13 @@
-<section class='newprogram'>
-  <div class="newprogram-title">{{t 'programs.new'}}</div>
-  <div class="detail-content">
-    <label class="inline-label-data-block">
-      {{t 'general.title'}}
-      {{input value=program.title placeholder=placeholder}}
-    </label>
-    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-</div>
+<section class='newprogram new-instructor-group new-result form-container'>
+    <div class="new-result-title">{{t 'programs.new'}}</div>
+    <div class="detail-content">
+	  <div class="form-col-12">
+	    <label class="form-label">{{t 'general.title'}}</label>
+	    <div class="form-data newprogram-title">{{input value=title placeholder=placeholder}}</div>
+	  </div>
+	  <div class="form-col-6 form-data-submit">
+	    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+	    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+	  </div>
+    </div>
 </section>

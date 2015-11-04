@@ -90,7 +90,7 @@ test('filters by title', function(assert) {
 test('add new program', function(assert) {
   server.create('user', {id: 4136});
   server.create('school');
-  assert.expect(3);
+  assert.expect(1);
   visit('/programs');
   andThen(function() {
     click('.resultslist-actions button');
@@ -98,9 +98,7 @@ test('add new program', function(assert) {
     click('.newprogram .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'program.index');
-    assert.equal(getElementText(find('.title .content')), getText('new test title'));
-    assert.equal(getElementText(find('.programduration .editable')), 4);
+    assert.equal(getElementText(find('.savedprogram')), getText('new test title Saved Successfully'));
   });
 });
 
@@ -190,7 +188,7 @@ test('click edit takes you to program route', function(assert) {
   visit('/programs');
   andThen(function() {
     click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0)');
+      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0) a');
       assert.equal(getElementText(edit), 'Edit');
       click(edit);
     });
