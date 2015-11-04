@@ -147,7 +147,6 @@ export default Ember.Controller.extend({
       this.transitionToRoute('course', course);
     },
     removeCourse: function(course){
-      this.get('model').removeObject(course);
       course.deleteRecord();
       course.save();
     },

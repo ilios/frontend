@@ -19,7 +19,11 @@
         <td class='text-center'>{{instructorGroup.courses.length}}</td>
         <td class='text-right'>
           {{#action-menu}}
-            <li {{action 'edit' instructorGroup}}>{{t 'general.edit'}}</li>
+            <li>
+              {{#link-to 'instructorGroup' instructorGroup}}
+                {{t 'general.edit'}}
+              {{/link-to}}
+            </li>
             <li {{action 'confirmRemove' instructorGroup}}>{{t 'general.remove'}}</li>
           {{/action-menu}}
         </td>

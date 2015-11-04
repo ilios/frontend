@@ -145,13 +145,14 @@ test('add new instructorgroup', function(assert) {
   server.create('school');
   assert.expect(1);
   visit('/instructorgroups');
+  let newTitle = 'new test tile';
   andThen(function() {
     click('.resultslist-actions button');
-    fillIn('.newinstructorgroup-title', 'new test tile');
+    fillIn('.newinstructorgroup-title input', newTitle);
     click('.newinstructorgroup .done');
   });
   andThen(function(){
-    assert.equal(currentPath(), 'instructorGroup');
+    assert.equal(getElementText(find('.savedinstructorgroup')), getText(newTitle + 'Saved Successfully'));
   });
 });
 
@@ -291,7 +292,7 @@ test('click edit takes you to instructorgroup route', function(assert) {
   visit('/instructorgroups');
   andThen(function() {
     click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0)');
+      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0) a');
       assert.equal(getElementText(edit), 'Edit');
       click(edit);
     });
