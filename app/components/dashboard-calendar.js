@@ -3,7 +3,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { computed, isPresent, RSVP, ObjectProxy } = Ember;
+const { computed, isPresent, RSVP } = Ember;
 const { PromiseObject } = DS;
 
 export default Ember.Component.extend({
@@ -54,8 +54,7 @@ export default Ember.Component.extend({
       return DS.PromiseArray.create({
         promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
       });
-    }
-    if(!this.get('mySchedule')) {
+    } else {
       let deferred = Ember.RSVP.defer();
       this.get('selectedSchool').then(school => {
         this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')).then(events => {
@@ -80,7 +79,6 @@ export default Ember.Component.extend({
               }
               deferred.resolve(singleEventPerSession);
             });
-
           }
         });
       });
@@ -114,15 +112,16 @@ export default Ember.Component.extend({
       });
 
       Ember.RSVP.all(promises).then(()=> {
-        let events = this.get('ourEvents').filter(event => {
-          return allFilteredEvents.every(arr => {
-            let bool = arr.contains(event);
+        this.get('ourEvents').then(events => {
+          let filteredEvents = events.filter(event => {
+            return allFilteredEvents.every(arr => {
+              let bool = arr.contains(event);
 
-            return bool;
+              return bool;
+            });
           });
+          defer.resolve(filteredEvents);
         });
-
-        defer.resolve(events);
       });
       return DS.PromiseArray.create({
         promise: defer.promise
@@ -324,11 +323,7 @@ export default Ember.Component.extend({
   selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
     let defer = RSVP.defer();
     if(this.get('schoolPickedByUser')){
-      //wrap it in a proxy so the is-equal comparison works the same as the promise
-      let obj = ObjectProxy.create({
-        content: this.get('schoolPickedByUser')
-      });
-      defer.resolve(obj);
+      defer.resolve(this.get('schoolPickedByUser'));
     } else {
       this.get('currentUser').get('model').then(user => {
         user.get('school').then(school => {
