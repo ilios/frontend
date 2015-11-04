@@ -48,17 +48,10 @@ $collapse-control-shadow-grey: #e2e2e2;
 
         .detail-title {
           @include span-columns(2 of 12);
-          @include omega();
-        }
-
-        .calendar-toggle {
-          @include span-columns(2 of 12);
-          @include omega();
-          margin-top: 1em;
         }
 
         .detail-actions {
-          @include shift(6.5 of 12);
+          @include shift(8 of 12);
           @include span-columns(2 of 12);
           @include omega();
         }
