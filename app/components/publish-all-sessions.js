@@ -18,7 +18,7 @@ export default Component.extend({
   allSessionsAsIs: computed('sessionsToOverride.[]', 'overridableSessions.[]', function(){
     return this.get('sessionsToOverride').get('length') === this.get('overridableSessions').get('length');
   }),
-  publishableSessions: computed('sessions.[]', function(){
+  publishableSessions: computed('sessions.@each.allPublicationIssuesLength', function(){
     let defer = RSVP.defer();
     
     this.get('sessions').then(sessions=>{
@@ -33,7 +33,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  unPublishableSessions: computed('sessions.[]', function(){
+  unPublishableSessions: computed('sessions.@each.requiredPublicationIssues', function(){
     let defer = RSVP.defer();
     
     this.get('sessions').then(sessions=>{
@@ -48,7 +48,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  overridableSessions: computed('sessions.[]', function(){
+  overridableSessions: computed('sessions.@each.{requiredPublicationIssues,optionalPublicationIssues}', function(){
     let defer = RSVP.defer();
     
     this.get('sessions').then(sessions=>{
@@ -74,21 +74,17 @@ export default Component.extend({
     }
   ),
   scheduleCount: computed(
-    'publishableSessions.length',
-    'sessionsToOverride.length',
-    'overridableSessions.length',
-    function(){
-      return parseInt(this.get('publishableSessions.length')) + 
-             parseInt(this.get('overridableSessions.length')) -
-             parseInt(this.get('sessionsToOverride.length'));
-    }
-  ),
-  ignoreCount: computed(
     'sessionsToOverride.length',
     'overridableSessions.length',
     function(){
       return parseInt(this.get('overridableSessions.length')) -
              parseInt(this.get('sessionsToOverride.length'));
+    }
+  ),
+  ignoreCount: computed(
+    'unPublishableSessions.length',
+    function(){
+      return parseInt(this.get('unPublishableSessions.length'));
     }
   ),
   actions: {
@@ -130,6 +126,8 @@ export default Component.extend({
         });
         RSVP.all(promises).then(()=>{
           this.set('isSaving', false);
+          this.sendAction('saved');
+          this.get('flashMessages').success('general.savedSuccessfully');
         });
       });
       
