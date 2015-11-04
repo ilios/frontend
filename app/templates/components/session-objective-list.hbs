@@ -1,45 +1,60 @@
 <table>
   <thead>
     <tr>
-      <th class='text-left' colspan=2>{{t 'general.description'}}</th>
-      <th class='text-left'>{{t 'general.parentObjectives'}}</th>
-      <th class='text-left'>{{t 'general.meshTerms'}}</th>
+      <th class='text-left' colspan="3">{{t 'general.description'}}</th>
+      <th class='text-left' colspan="2">{{t 'general.parentObjectives'}}</th>
+      <th class='text-left' colspan="2">{{t 'general.meshTerms'}}</th>
+      <th class='text-left' colspan="1">{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
-    {{#each sortedObjectives as |objective|}}
-    <tr id="objective-{{objective.id}}">
-      <td class='text-left text-top' colspan=2>
-        {{inplace-html value=objective.title save='changeObjectiveTitle' condition=objective.id}}
+    {{#each sortedObjectives as |objectiveProxy|}}
+    <tr id="objective-{{objectiveProxy.id}}" class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
+      <td class='text-left text-top' colspan=3>
+        {{inplace-html value=objectiveProxy.title save='changeObjectiveTitle' condition=objectiveProxy.id}}
       </td>
-      <td class='text-left text-top'>
-        {{#if objective.hasParents}}
-          {{#each objective.parents as |parent|}}
-            <a href='#' {{action 'manageParents' objective}}>
+      <td class='text-left text-top' colspan="2">
+        {{#if objectiveProxy.hasParents}}
+          {{#each objectiveProxy.parents as |parent|}}
+            <a href='#' {{action 'manageParents' objectiveProxy.content}}>
               {{parent.textTitle}}
             </a>
-            {{#if objective.hasMultipleParents}}
+            {{#if objectiveProxy.hasMultipleParents}}
               <br /><br />
             {{/if}}
           {{/each}}
         {{else}}
-          <button {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
+          <button {{action 'manageParents' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
-      <td class='text-left text-top'>
-        {{#if objective.meshDescriptors.length}}
+      <td class='text-left text-top' colspan="2">
+        {{#if objectiveProxy.meshDescriptors.length}}
           <ul>
-            <a href='#' {{action 'manageDescriptors' objective}}>
-              {{#each objective.meshDescriptors as |descriptor|}}
+            <a href='#' {{action 'manageDescriptors' objectiveProxy.content}}>
+              {{#each objectiveProxy.meshDescriptors as |descriptor|}}
                 <li>{{descriptor.name}}</li>
               {{/each}}
             </a>
           </ul>
         {{else}}
-          <button {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
+          <button {{action 'manageDescriptors' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
+      <td class='text-left text-top' colspan=1>
+        <span class='clickable remove' {{action 'confirmRemoval' objectiveProxy}}>{{fa-icon 'trash'}}</span>
+      </td>
     </tr>
+    {{#if objectiveProxy.showRemoveConfirmation}}
+      <tr class='confirm-removal'><td colspan=8>
+        <div class='confirm-message'>
+          {{t 'sessions.confirmObjectiveRemoval'}}<br />
+          <div class="confirm-buttons">
+            <button {{action 'remove' objectiveProxy}} class='remove text'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' objectiveProxy}} class='done text'>{{t 'general.cancel'}}</button>
+          </div>
+        </div>
+      </td></tr>
+    {{/if}}
     {{/each}}
   </tbody>
 </table>

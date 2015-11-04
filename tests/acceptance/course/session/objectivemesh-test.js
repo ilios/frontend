@@ -75,7 +75,7 @@ test('list terms', function(assert) {
     for(let i = 0; i < fixtures.sessionObjectives.length; i++){
       let tds = find('td', objectiveRows.eq(i));
       let objective = fixtures.sessionObjectives[i];
-      assert.equal(tds.length, 3);
+      assert.equal(tds.length, 4);
       let descriptors;
       if('meshDescriptors' in objective){
         descriptors = objective.meshDescriptors.map(extractObjectives).join('');

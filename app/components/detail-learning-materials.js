@@ -39,6 +39,7 @@ export default Ember.Component.extend({
   proxyMaterials: computed('subject.learningMaterials.[]', function(){
     let materialProxy = Ember.ObjectProxy.extend({
       sortTerms: ['name'],
+      confirmRemoval: false,
       sortedDescriptors: Ember.computed.sort('content.meshDescriptors', 'sortTerms')
     });
     return this.get('subject.learningMaterials').map(material => {
@@ -243,6 +244,32 @@ export default Ember.Component.extend({
           children.pushObject(savedLearningMaterial);
         });
       });
-    }
-  },
+    },
+    confirmRemoval(lmProxy){
+      lmProxy.set('showRemoveConfirmation', true);
+    },
+    cancelRemove(lmProxy){
+      lmProxy.set('showRemoveConfirmation', false);
+    },
+    remove(lmProxy){
+      let subjectLearningMaterial = lmProxy.get('content');
+      let lmCollectionType;
+      if(this.get('isCourse')){
+        lmCollectionType = 'courseLearningMaterials';
+      }
+      if(this.get('isSession')){
+        lmCollectionType = 'sessionLearningMaterials';
+      }
+      this.get('subject').get('learningMaterials').then(lms => {
+        subjectLearningMaterial.get('learningMaterial').then(parentLearningMaterial => {
+          parentLearningMaterial.get(lmCollectionType).then(children => {
+            children.removeObject(subjectLearningMaterial);
+            lms.removeObject(subjectLearningMaterial);
+            subjectLearningMaterial.deleteRecord();
+            subjectLearningMaterial.save();
+          });
+        });
+      });
+    },
+  }
 });

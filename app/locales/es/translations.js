@@ -223,6 +223,7 @@ export default {
     'noSelectedLearnerGroups': 'No hay grupos de aprendedores seleccionados',
     'instructors': 'Instructores',
     'instructorsManageTitle': 'Administrar Instructores',
+    'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
   },
   'sessions': {
     'specialAttireRequired': 'Vestimenta Especial Requerido',
@@ -246,6 +247,7 @@ export default {
     'independentLearning': 'Aprendizaje Independiente',
     'hours': 'Horas',
     'dueBy': 'Debido Por',
+    'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
   },
   'offerings': {
     'calendarOn': 'Calendario en Uso',
@@ -271,6 +273,7 @@ export default {
     'copyrightAgreement': "El archivo yo estoy tratando a subir es mi pripio o yo la tengo la autorización expresa a reproducir y/o distribuir esta información y que no contiene ninguna información de la salud protegida. Mi uso de este archivo conforme a Políticas del gobierno y a la Universidad según a la seguridad de copyright e información y las reglas de mi program de estudio a cerca de conducto profesional. Este archivo también adhiere a los Terminos y Condiciones para esta aplicación.",
     'copyrightRationale':'Justificación para Derechos de Autor',
     'searchPlaceholder': 'encontrar material de aprendizaje',
+    'confirmRemoval': '¿Está seguro que desea eliminar este material de aprendizaje?',
   },
   'groupMembers': {
     'filterPlaceholder': 'Aplicar un Filtro por nombre o email',

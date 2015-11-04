@@ -364,6 +364,39 @@ $collapse-control-shadow-grey: #e2e2e2;
   }
 }
 
+tbody .confirm-removal {
+  background-color: $remove-background-color;
+
+  .confirm-message {
+    color: $ilios-remove-color;
+    font-weight: bold;
+    padding-left: 8em;
+    padding-right: 8em;
+    text-align: center;
+    width: 100%;
+  }
+
+  .confirm-buttons {
+    padding-bottom: 1.5em;
+    padding-top: 1.1em;
+  }
+
+
+  &:hover {
+    background-color: $remove-background-color;
+  }
+
+  .remove {
+    background-color: $white;
+    color: $ilios-remove-color;
+
+    &:hover {
+      background-color: $ilios-remove-color;
+      color: $white;
+    }
+  }
+}
+
 .print-detail-view {
   ul {
     list-style-type: disc;
