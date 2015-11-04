@@ -5,7 +5,6 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   templatePrefix: DS.attr('string'),
   iliosAdministratorEmail: DS.attr('string'),
-  deleted: DS.attr('boolean'),
   changeAlertRecipients: DS.attr('string'),
   alerts: DS.hasMany('alert', {async: true}),
   competencies: DS.hasMany('competencies', {async: true}),

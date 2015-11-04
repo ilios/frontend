@@ -4,7 +4,6 @@ import PublishableModel from 'ilios/mixins/publishable-model';
 
 export default DS.Model.extend(PublishableModel,{
   startYear: DS.attr('string'),
-  deleted: DS.attr('boolean'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
   program: DS.belongsTo('program', {async: true}),
