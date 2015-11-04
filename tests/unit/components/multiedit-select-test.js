@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('multiedit-select' + testgroup, 'Unit | Component | multiedit select', {
+moduleForComponent('multiedit-select', 'Unit | Component | multiedit select ' + testgroup, {
   needs: ['component:boolean-check'],
   unit: true
 });

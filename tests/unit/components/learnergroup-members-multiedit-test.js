@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('learnergroup-members-multiedit' + testgroup, 'Unit | Component | learnergroup members multiedit', {
+moduleForComponent('learnergroup-members-multiedit', 'Unit | Component | learnergroup members multiedit ' + testgroup, {
   unit: true
 });
 

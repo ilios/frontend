@@ -157,13 +157,15 @@ export default Ember.Component.extend({
             if(!defaultStatus){
               defaultStatus = statuses.get('firstObject');
             }
-            var lm = self.get('store').createRecord('learning-material', {
-              type: type,
-              owningUser: self.get('currentUser.model'),
-              status: defaultStatus,
-              userRole: roles.get('firstObject'),
+            self.get('currentUser').get('model').then(user => {
+              var lm = self.get('store').createRecord('learning-material', {
+                type: type,
+                owningUser: user,
+                status: defaultStatus,
+                userRole: roles.get('firstObject'),
+              });
+              self.get('newLearningMaterials').addObject(lm);
             });
-            self.get('newLearningMaterials').addObject(lm);
           });
         });
       }

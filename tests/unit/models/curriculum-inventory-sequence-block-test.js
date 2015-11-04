@@ -5,9 +5,10 @@ import {
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('curriculum-inventory-sequence-block', 'Unit | Model | CurriculumInventorySequenceBlock' + testgroup, {
+moduleForModel('curriculum-inventory-sequence-block', 'Unit | Model | CurriculumInventorySequenceBlock ' + testgroup, {
   needs: modelList
 });
+
 
 test('it exists', function(assert) {
   var model = this.subject();

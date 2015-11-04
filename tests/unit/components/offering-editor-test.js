@@ -7,7 +7,7 @@ const { isEmpty, RSVP, run } = Ember;
 const { Promise } = RSVP;
 const { next } = run;
 
-moduleForComponent('offering-editor' + testgroup, 'Unit | Component | offering editor', {
+moduleForComponent('offering-editor', 'Unit | Component | offering editor ' + testgroup, {
   unit: true
 });
 

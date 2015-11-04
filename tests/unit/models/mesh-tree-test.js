@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('mesh-tree' + testgroup, 'Unit | Model | mesh tree', {
+moduleForModel('mesh-tree', 'Unit | Model | mesh tree ' + testgroup, {
   needs: modelList
 });
 

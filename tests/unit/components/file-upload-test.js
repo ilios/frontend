@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('file-upload' + testgroup, 'Unit | Component | file upload', {
+moduleForComponent('file-upload', 'Unit | Component | file upload ' + testgroup, {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar'],
   unit: true

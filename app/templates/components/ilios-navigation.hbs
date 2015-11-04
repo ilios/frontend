@@ -4,9 +4,22 @@
 	</a>
 	<nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible 'is-menu-visible'}}">
 		<ul>
-      {{#each menuItems as |item|}}
-        <li>{{#link-to item.route}}{{fa-icon item.icon}} {{item.name}}{{/link-to}}</li>
-      {{/each}}
+			<li>{{#link-to 'dashboard'}}{{fa-icon 'home'}} {{t 'navigation.dashboard'}}{{/link-to}}</li>
+			{{#if (can 'edit courses')}}
+				<li>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'edit learnerGroups')}}
+				<li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'edit instructorGroups')}}
+				<li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'edit programs')}}
+				<li>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
+			{{/if}}
+			{{#if (can 'view adminDashboard')}}
+				<li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'navigation.admin'}}{{/link-to}}</li>
+			{{/if}}
 		</ul>
 	</nav>
 	<div {{action 'toggleMenuVisibility'}} class="menu-screen {{if isMenuVisible 'is-menu-visible'}}"></div>

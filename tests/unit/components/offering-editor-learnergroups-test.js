@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
-moduleForComponent('offering-editor-learnergroups' + testgroup, 'Unit | Component | offering editor learnergroups', {
+moduleForComponent('offering-editor-learnergroups', 'Unit | Component | offering editor learnergroups ' + testgroup, {
   unit: true
 });
 
