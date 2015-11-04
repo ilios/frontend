@@ -1,5 +1,5 @@
 import randomString from '../../../utils/random-string';
-import { module, test } from 'qunit';
+import { moduleFor, test } from 'qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
 moduleFor('util:random-string', 'Unit | Utility | random string' + testgroup);
