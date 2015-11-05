@@ -10,6 +10,7 @@ export default Component.extend({
   classNames: ['detail-view', 'programyear-list'],
 
   store: service(),
+  i18n: service(),
 
   program: null,
   programYears: [],
@@ -102,9 +103,10 @@ export default Component.extend({
             programYears.addObject(savedProgramYear);
           }));
 
-          let cohort = store.createRecord('cohort', {
-            programYear: savedProgramYear
-          });
+          const classOfYear = savedProgramYear.get('classOfYear');
+          const title = component.get('i18n').t('general.classOf', { year: classOfYear });
+
+          let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
 
           promises.pushObject(cohort.save());
 
