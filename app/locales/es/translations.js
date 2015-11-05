@@ -362,6 +362,7 @@ export default {
     'topicOrDetail': 'Topico/Detalle',
     'courseOrType': 'Curso/Tipo',
     'usersCalendar': "Calendario de{{name}}",
+    'myCalendar': 'Mi Calendario'
   },
   'errors': {
     'inclusion': "no está incluido en la lista",

@@ -362,6 +362,7 @@ export default {
     'topicOrDetail': 'Topic/Detail',
     'courseOrType': 'Course/Type',
     'usersCalendar': "{{name}}'s Calendar",
+    'myCalendar': 'My Calendar'
   },
   'errors': {
     'inclusion': "is not included in the list",
