@@ -48,7 +48,6 @@ module.exports = function(environment) {
       buttons: [
         'bold',
         'italic',
-        'underline',
         'subscript',
         'superscript',
         'insertOrderedList',
