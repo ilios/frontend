@@ -3,7 +3,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { computed, isPresent } = Ember;
+const { computed, isPresent, RSVP } = Ember;
+const { PromiseObject } = DS;
 
 export default Ember.Component.extend({
   userEvents: Ember.inject.service(),
@@ -53,8 +54,7 @@ export default Ember.Component.extend({
       return DS.PromiseArray.create({
         promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
       });
-    }
-    if(!this.get('mySchedule')) {
+    } else {
       let deferred = Ember.RSVP.defer();
       this.get('selectedSchool').then(school => {
         this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')).then(events => {
@@ -79,7 +79,6 @@ export default Ember.Component.extend({
               }
               deferred.resolve(singleEventPerSession);
             });
-
           }
         });
       });
@@ -113,15 +112,16 @@ export default Ember.Component.extend({
       });
 
       Ember.RSVP.all(promises).then(()=> {
-        let events = this.get('ourEvents').filter(event => {
-          return allFilteredEvents.every(arr => {
-            let bool = arr.contains(event);
+        this.get('ourEvents').then(events => {
+          let filteredEvents = events.filter(event => {
+            return allFilteredEvents.every(arr => {
+              let bool = arr.contains(event);
 
-            return bool;
+              return bool;
+            });
           });
+          defer.resolve(filteredEvents);
         });
-
-        defer.resolve(events);
       });
       return DS.PromiseArray.create({
         promise: defer.promise
@@ -320,20 +320,20 @@ export default Ember.Component.extend({
   courses: Ember.computed('allCourses.[]', 'selectedCourses.[]', function(){
     return this.get('allCourses');
   }),
-  selectedSchool: Ember.computed('schoolPickedByUser', 'currentUser.model.school', function(){
+  selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
+    let defer = RSVP.defer();
     if(this.get('schoolPickedByUser')){
-      //wrap it in a proxy so the is-equal comparison works the same as the promise
-      return Ember.ObjectProxy.create({
-        content: this.get('schoolPickedByUser')
+      defer.resolve(this.get('schoolPickedByUser'));
+    } else {
+      this.get('currentUser').get('model').then(user => {
+        user.get('school').then(school => {
+          defer.resolve(school);
+        });
       });
     }
 
-    return DS.PromiseObject.create({
-      promise: this.get('currentUser').get('model').then(user => {
-        return user.get('school').then(school => {
-          return school;
-        });
-      })
+    return PromiseObject.create({
+      promise: defer.promise
     });
   }),
   schoolPickedByUser: null,
@@ -341,8 +341,8 @@ export default Ember.Component.extend({
   allSchools: Ember.computed(function(){
     return DS.PromiseArray.create({
       promise: this.get('currentUser.model').then(user => {
-        return user.get('school').then(school => {
-          return [school];
+        return user.get('schools').then(schools => {
+          return schools;
         });
       })
     });
@@ -489,10 +489,9 @@ export default Ember.Component.extend({
     pickSchool(){
       let selectedEl = this.$('.calendar-school-picker select')[0];
       let selectedIndex = selectedEl.selectedIndex;
-      this.get('schools').then(schools => {
-        let school = schools.toArray()[selectedIndex];
-        this.set('schoolPickedByUser', school);
-      });
+      const schools = this.get('schools');
+      let school = schools.toArray()[selectedIndex];
+      this.set('schoolPickedByUser', school);
     },
     changeSelectedYear(){
       let selectedEl = this.$('.calendar-year-picker select')[0];

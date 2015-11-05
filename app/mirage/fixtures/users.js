@@ -809,6 +809,7 @@ export default [
     'learnerIlmSessions' : [],
     'offerings' : [],
     'instructedOfferings' : [],
+    'permissions': ['1', '2'],
     'programYears' : [],
     'alerts' : [],
     'roles' : [ '1','3','9' ],

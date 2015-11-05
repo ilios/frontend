@@ -35,6 +35,7 @@ export default [
   'model:objective',
   'model:offering',
   'model:pending-user-update',
+  'model:permission',
   'model:program-year',
   'model:program',
   'model:program-year-steward',

@@ -19,7 +19,11 @@
         <td class='text-center' colspan=2 {{action 'edit' program}}>{{publication-status item=program showIcon=false}}</td>
         <td class='text-center' colspan=2>
           {{#action-menu}}
-            <li {{action 'edit' program}}>{{t 'general.edit'}}</li>
+            <li>
+              {{#link-to 'program' program.content}}
+                {{t 'general.edit'}}
+              {{/link-to}}
+            </li>
             <li {{action 'confirmRemove' program}}>{{t 'general.remove'}}</li>
           {{/action-menu}}
         </td>

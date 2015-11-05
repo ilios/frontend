@@ -35,21 +35,22 @@
     {{/if}}
   {{/if}}
 
-  <div class='calendar-options-control calendar-school-picker'>
-    {{fa-icon 'university'}}
-    {{#if hasMoreThanOneSchool}}
-      <select {{action 'pickSchool' on='change'}}>
-        {{#each schools as |school|}}
-          <option value="{{school}}" selected={{is-equal school selectedSchool.content}}>
-            {{school.title}}
-          </option>
-        {{/each}}
-      </select>
-    {{else}}
-      {{selectedSchool.title}}
-    {{/if}}
-  </div>
-
+  {{#unless mySchedule}}
+    <div class='calendar-options-control calendar-school-picker'>
+      {{fa-icon 'university'}}
+      {{#if hasMoreThanOneSchool}}
+        <select {{action 'pickSchool' on='change'}}>
+          {{#each schools as |school|}}
+            <option value="{{school}}" selected={{is-equal school selectedSchool.content}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
+    </div>
+  {{/unless}}
   {{#if showFilters}}
     <div id='calendar-year-picker' class='calendar-options-control calendar-year-picker'>
       <select {{action 'changeSelectedYear' on='change'}}>

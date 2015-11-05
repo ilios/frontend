@@ -2,12 +2,12 @@
   <div class="filter-tools">
     <div id='schoolsfilter' class="filter">
       <label class="inline-label">
-        {{t 'general.instructorGroups'}}:
+        {{t 'general.school'}}:
       </label>
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
           {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each schools as |school|}}
+            {{#each model as |school|}}
               <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -29,25 +29,36 @@
         <h2>{{t 'general.instructorGroups'}}</h2>
       </div>
       <div class='resultslist-actions'>
-        <button {{action 'addInstructorGroup'}}>{{t 'general.addNew'}}</button>
+        {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
       </div>
     </div>
-
-
-    {{#if newInstructorGroups.length}}
-      <section class='resultslist-new'>
-        {{#each newInstructorGroups as |instructorGroup|}}
-          {{new-instructorgroup instructorGroup=instructorGroup save='saveNewInstructorGroup' cancel='removeNewInstructorGroup'}}
-        {{/each}}
-      </section>
-    {{/if}}
+    <section class='resultslist-new'>
+      {{#liquid-if showNewInstructorGroupForm class='vertical'}}
+        {{new-instructorgroup
+          currentSchool=selectedSchool
+          save='saveNewInstructorGroup'
+          cancel='toggleNewInstructorGroupForm'
+        }}
+      {{/liquid-if}}
+      {{#each newInstructorGroups as |instructorGroup|}}
+        <div class='savedinstructorgroup saved-result'>
+          {{#link-to 'instructorGroup' instructorGroup}}
+            {{fa-icon 'external-link-square'}} {{instructorGroup.title}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/each}}
+    </section>
     <div class='resultslist-list'>
-      {{instructorgroup-list
-        instructorGroups=filteredInstructorGroups
-        edit='editInstructorGroup'
-        remove='removeInstructorGroup'
-      }}
+      {{#if filteredInstructorGroups.isFulfilled}}
+        {{instructorgroup-list
+          instructorGroups=filteredInstructorGroups
+          edit='editInstructorGroup'
+          remove='removeInstructorGroup'
+        }}
+      {{else}}
+        {{pulse-loader}}
+      {{/if}}
     </div>
   </section>
 </section>
-

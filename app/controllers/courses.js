@@ -2,9 +2,9 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, RSVP, isEmpty, isPresent} = Ember;
-const {gt} = computed;
-const {PromiseArray} = DS;
+const { computed, RSVP, isEmpty, isPresent } = Ember;
+const { gt } = computed;
+const { PromiseArray } = DS;
 
 export default Ember.Controller.extend({
   i18n: Ember.inject.service(),
@@ -119,45 +119,34 @@ export default Ember.Controller.extend({
       return PromiseArray.create({
         promise: defer.promise
       });
-  
-      
   }),
-  selectedSchool: Ember.computed('model.schools.[]', 'schoolId', {
-    get() {
-      let schools = this.get('model.schools');
-      if(isPresent(this.get('schoolId'))){
-        return schools.find(school => {
-          return school.get('id') === this.get('schoolId');
-        });
+  selectedSchool: computed('model.schools.[]', 'schoolId', function(){
+    let schools = this.get('model.schools');
+    if(isPresent(this.get('schoolId'))){
+      let school =  schools.find(school => {
+        return school.get('id') === this.get('schoolId');
+      });
+      if(school){
+        return school;
       }
-      
-      return schools.get('firstObject');
-    },
-    set(key, school) {
-      this.set('schoolId',  school.get('id'));
     }
+    return schools.get('firstObject');
   }),
-  selectedYear: Ember.computed('model.years.[]', 'yearTitle', {
-    get() {
-      let years = this.get('model.years');
-      if(isPresent(this.get('yearTitle'))){
-        return years.find(year => {
-          return year.get('title') === parseInt(this.get('yearTitle'));
-        });
-      }
-      
-      return years.get('lastObject');
-    },
-    set(key, year) {
-      this.set('yearTitle',  year.get('title'));
+  selectedYear: computed('model.years.[]', 'yearTitle', function(){
+    let years = this.get('model.years');
+    if(isPresent(this.get('yearTitle'))){
+      return years.find(year => {
+        return year.get('title') === parseInt(this.get('yearTitle'));
+      });
     }
+    
+    return years.get('lastObject');
   }),
   actions: {
     editCourse: function(course){
       this.transitionToRoute('course', course);
     },
     removeCourse: function(course){
-      this.get('model').removeObject(course);
       course.deleteRecord();
       course.save();
     },
@@ -175,10 +164,10 @@ export default Ember.Controller.extend({
       this.get('newCourses').removeObject(courseProxy);
     },
     changeSelectedYear: function(year){
-      this.set('selectedYear', year);
+      this.set('yearTitle', year.get('title'));
     },
     changeSelectedSchool: function(school){
-      this.set('selectedSchool', school);
+      this.set('schoolId', school.get('id'));
     },
     //called by the 'toggle-mycourses' component
     toggleMyCourses: function(){

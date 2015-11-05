@@ -1,20 +1,44 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
+const { computed, RSVP, isEmpty, isPresent, inject } = Ember;
+const { gt } = computed;
+const { service } = inject;
+const { PromiseArray } = DS;
+
 export default Ember.Controller.extend({
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  i18n: service(),
+  currentUser: service(),
   queryParams: {
     schoolId: 'school',
-    titleFilter: 'filter',
+    titleFilter: 'filter'
   },
-  model: [],
   placeholderValue: t('programs.titleFilterPlaceholder'),
   schoolId: null,
   titleFilter: null,
-  schools: [],
+  showNewProgramForm: false,
   newPrograms: [],
-
+  programs: computed('selectedSchool', function(){
+    let defer = RSVP.defer();
+    let schoolId = this.get('selectedSchool').get('id');
+    if(isEmpty(schoolId)){
+      defer.resolve([]);
+    } else {
+      this.get('store').query('program', {
+        filters: {
+          school: schoolId
+        },
+        limit: 500
+      }).then(programs => {
+        defer.resolve(programs);
+      });
+    }
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
   watchFilter: function(){
@@ -23,49 +47,59 @@ export default Ember.Controller.extend({
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },
-  hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
-  filteredPrograms: function(){
-    var title = this.get('debouncedFilter');
-    var exp = new RegExp(title, 'gi');
-    return this.get('model').filter(function(course) {
-      let match = true;
-      if(title != null && !course.get('title').match(exp)){
-        match = false;
+  hasMoreThanOneSchool: gt('model.length', 1),
+  filteredPrograms: computed(
+    'debouncedFilter',
+    'programs.[]',
+    function(){
+      let defer = RSVP.defer();
+      let title = this.get('debouncedFilter');
+      let exp = new RegExp(title, 'gi');
+      this.get('programs').then(programs => {
+        let filteredPrograms;
+        if(isEmpty(title)){
+          filteredPrograms = programs;
+        } else {
+          filteredPrograms = programs.filter(program => {
+            return isPresent(program.get('title')) && program.get('title').match(exp);
+          });
+        }
+        defer.resolve(filteredPrograms.sortBy('title'));
+      });
+      
+      
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+  }),
+  selectedSchool: computed('model.[]', 'schoolId', function(){
+    let schools = this.get('model');
+    if(isPresent(this.get('schoolId'))){
+      let school =  schools.find(school => {
+        return school.get('id') === this.get('schoolId');
+      });
+      if(school){
+        return school;
       }
-
-      return match;
-    }).sortBy('title');
-  }.property('debouncedFilter', 'model.[]'),
+    }
+    return schools.get('firstObject');
+  }),
   actions: {
-    editProgram: function(program){
-      this.transitionToRoute('program', program);
-    },
     removeProgram: function(program){
-      this.get('model').removeObject(program);
       program.deleteRecord();
       program.save();
     },
-    addProgram: function(){
-      var program = this.store.createRecord('program', {
-        title: null,
-        school: this.get('selectedSchool'),
-        duration: 4
-      });
-      this.get('newPrograms').addObject(program);
-    },
     saveNewProgram: function(newProgram){
-      var self = this;
-      self.get('newPrograms').removeObject(newProgram);
-      newProgram.save().then(function(savedProgram){
-        self.transitionToRoute('program', savedProgram);
+      newProgram.save().then(savedProgram => {
+        this.get('newPrograms').pushObject(savedProgram);
+        this.set('showNewProgramForm', false);
       });
-    },
-    removeNewProgram: function(newProgram){
-      this.get('newPrograms').removeObject(newProgram);
     },
     changeSelectedSchool: function(school){
       this.set('schoolId', school.get('id'));
-      this.set('selectedSchool', school);
     },
+    toggleNewProgramForm: function(){
+      this.set('showNewProgramForm', !this.get('showNewProgramForm'));
+    }
   },
 });

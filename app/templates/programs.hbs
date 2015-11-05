@@ -7,7 +7,7 @@
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
           {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each schools as |school|}}
+            {{#each model as |school|}}
               <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
             {{/each}}
           {{/action-menu}}
@@ -29,24 +29,36 @@
         <h2>{{t 'general.programs'}}</h2>
       </div>
       <div class='resultslist-actions'>
-        <button {{action 'addProgram'}}>{{t 'general.addNew'}}</button>
+        {{expand-collapse-button value=showNewProgramForm action="toggleNewProgramForm"}}
       </div>
     </div>
-
-
-    {{#if newPrograms.length}}
-      <section class='resultslist-new'>
-        {{#each newPrograms as |program|}}
-          {{new-program program=program save='saveNewProgram' cancel='removeNewProgram'}}
-        {{/each}}
-      </section>
-    {{/if}}
+    <section class='resultslist-new'>
+      {{#liquid-if showNewProgramForm class='vertical'}}
+        {{new-program
+          currentSchool=selectedSchool
+          save='saveNewProgram'
+          cancel='toggleNewProgramForm'
+        }}
+      {{/liquid-if}}
+      {{#each newPrograms as |program|}}
+        <div class='savedprogram saved-result'>
+          {{#link-to 'program' program}}
+            {{fa-icon 'external-link-square'}} {{program.title}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/each}}
+    </section>
     <div class='resultslist-list'>
-      {{program-list
-        programs=filteredPrograms
-        edit='editProgram'
-        remove='removeProgram'
-      }}
+      {{#if filteredPrograms.isFulfilled}}
+        {{program-list
+          programs=filteredPrograms
+          edit='editProgram'
+          remove='removeProgram'
+        }}
+      {{else}}
+        {{pulse-loader}}
+      {{/if}}
     </div>
   </section>
 </section>

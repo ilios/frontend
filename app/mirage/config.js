@@ -203,6 +203,12 @@ export default function() {
     this.delete('/api/offerings/:id', 'offering');
     this.post('/api/offerings', 'offering');
 
+    this.get('/api/permissions', getAll);
+    this.get('/api/permissions/:id', 'permission');
+    this.put('/api/permissions/:id', 'permission');
+    this.delete('/api/permissions/:id', 'permission');
+    this.post('/api/permissions', 'permission');
+
     this.get('/api/programyears', getAll);
     this.get('/api/programyears/:id', 'programYear');
     this.put('/api/programyears/:id', 'programYear');

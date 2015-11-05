@@ -64,12 +64,27 @@ var User = DS.Model.extend({
   }),
   primaryCohort: DS.belongsTo('cohort', {async: true}),
   pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
+  permissions: DS.hasMany('permission', {async: true}),
   schools: computed('school', function(){
+    const store = this.get('store');
     var defer = RSVP.defer();
-    this.get('school').then(function(school){
-      defer.resolve([school]);
+    this.get('school').then(primarySchool => {
+      this.get('permissions').then(permissions => {
+        let schoolIds = permissions.filter(permission => {
+          return permission.get('tableName') === 'school';
+        }).mapBy('tableRowId');
+        let promises = schoolIds.map(id => {
+          return store.findRecord('school', id);
+        });
+        RSVP.all(promises).then(schools => {
+          schools.pushObject(primarySchool);
+          defer.resolve(schools.uniq());
+        });
+      });
     });
-    return defer.promise;
+    return PromiseArray.create({
+      promise: defer.promise
+    });
   }),
   fullName: computed('firstName', 'lastName', function() {
       var first = this.get('firstName');
