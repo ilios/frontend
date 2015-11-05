@@ -12,6 +12,10 @@ a,
     color: $hover-link-color;
     outline: none;
   }
+
+  &.edit {
+    margin-right: 7px;
+  }
 }
 
 button {
@@ -344,5 +348,11 @@ select:hover {
 
   p {
     margin: 0;
+  }
+}
+
+span {
+  &.edit {
+    margin-right: 7px;
   }
 }
