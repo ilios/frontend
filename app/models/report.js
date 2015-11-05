@@ -6,6 +6,5 @@ export default DS.Model.extend({
   subject: DS.attr('string'),
   prepositionalObject: DS.attr('string'),
   prepositionalObjectTableRowId: DS.attr('string'),
-  deleted: DS.attr('boolean'),
-  user: DS.belongsTo('user', {async: true}),
+  user: DS.belongsTo('user', {async: true})
 });

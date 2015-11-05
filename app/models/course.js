@@ -9,7 +9,6 @@ var Course = DS.Model.extend(PublishableModel, {
   year: DS.attr('number'),
   startDate: DS.attr('date'),
   endDate: DS.attr('date'),
-  deleted: DS.attr('boolean'),
   externalId: DS.attr('string'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),

@@ -32,8 +32,7 @@ export default Ember.Controller.extend({
       this.get('store').query('course', {
         filters: {
           school: schoolId,
-          year: yearTitle,
-          deleted: false
+          year: yearTitle
         },
         limit: 500
       }).then(courses => {

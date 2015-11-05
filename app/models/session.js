@@ -8,7 +8,6 @@ var Session = DS.Model.extend(PublishableModel, {
   attireRequired: DS.attr('boolean'),
   equipmentRequired: DS.attr('boolean'),
   supplemental: DS.attr('boolean'),
-  deleted: DS.attr('boolean'),
   updatedAt: DS.attr('date'),
   sessionType: DS.belongsTo('session-type', {async: true}),
   course: DS.belongsTo('course', {async: true}),

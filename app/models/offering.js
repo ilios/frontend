@@ -6,7 +6,6 @@ export default DS.Model.extend({
   room: DS.attr('string'),
   startDate: DS.attr('date'),
   endDate: DS.attr('date'),
-  deleted: DS.attr('boolean'),
   updatedAt: DS.attr('date'),
   session: DS.belongsTo('session', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {async: true}),

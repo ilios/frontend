@@ -3,7 +3,6 @@ export default [
   {
     'id' : 42,
     'startYear' : "2013",
-    'deleted' : false,
     'locked' : false,
     'archived' : false,
     'publishedAsTbd' : false,
@@ -20,7 +19,6 @@ export default [
   {
     'id' : 58,
     'startYear' : "2013",
-    'deleted' : false,
     'locked' : false,
     'archived' : false,
     'publishedAsTbd' : false,
@@ -36,7 +34,6 @@ export default [
   {
     'id' : 67,
     'startYear' : "2014",
-    'deleted' : false,
     'locked' : false,
     'archived' : false,
     'publishedAsTbd' : false,
@@ -52,7 +49,6 @@ export default [
   {
     'id' : 69,
     'startYear' : "2014",
-    'deleted' : false,
     'locked' : false,
     'archived' : false,
     'publishedAsTbd' : false,
