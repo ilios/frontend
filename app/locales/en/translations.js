@@ -224,6 +224,7 @@ export default {
     'instructors': 'Instructors',
     'instructorsManageTitle': 'Manage Instructors',
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
+    'confirmSessionRemoval': 'Are you sure you want to delete this session?',
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',

@@ -340,6 +340,10 @@ $collapse-control-shadow-grey: #e2e2e2;
   .active-background,
   .active-background:hover {
     background-color: $active-background-color;
+    
+    tbody .confirm-removal {
+      background-color: $remove-background-color;
+    }
   }
   
   .publish-all-sessions-review {
