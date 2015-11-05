@@ -4,8 +4,10 @@ import randomString from '../utils/random-string';
 export default Ember.Component.extend({
   tagName: 'label',
   classNames: ['switch', 'switch-wide', 'switch-green'],
+  cssId: Ember.computed(function() {
+    return randomString();
+  }),
   onLabel: null,
-  cssId: randomString(),
   offLabel: null,
   value: false,
   switchValue: Ember.computed.oneWay('value'),
@@ -13,5 +15,5 @@ export default Ember.Component.extend({
     click(){
       this.sendAction();
     }
-  }
+  },
 });
