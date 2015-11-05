@@ -2,10 +2,11 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const { Controller, computed, inject, observer, run } = Ember;
+const { Controller, computed, inject, isEmpty, isPresent, observer, RSVP, run } = Ember;
 const { service } = inject;
 const { gt } = computed;
 const { debounce } = run;
+const { PromiseArray } = DS;
 
 export default Controller.extend({
   currentUser: service(),
@@ -16,13 +17,10 @@ export default Controller.extend({
     titleFilter: 'filter'
   },
 
-  model: [],
-
   placeholderValue: t('programs.titleFilterPlaceholder'),
 
   schoolId: null,
   titleFilter: null,
-  schools: [],
 
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
@@ -37,20 +35,71 @@ export default Controller.extend({
 
   hasMoreThanOneSchool: gt('schools.length', 1),
 
-  filteredPrograms: computed('debouncedFilter', 'model.[]', {
+  filteredPrograms: computed('debouncedFilter', 'programs.[]', {
     get() {
-      const title = this.get('debouncedFilter');
-      const exp = new RegExp(title, 'gi');
+      let defer = RSVP.defer();
+      let title = this.get('debouncedFilter');
+      let exp = new RegExp(title, 'gi');
 
-      return this.get('model').filter((course) => {
-        let match = true;
+      this.get('programs').then(programs => {
+        let filteredPrograms;
 
-        if (title != null && !course.get('title').match(exp)) {
-          match = false;
+        if(isEmpty(title)){
+          filteredPrograms = programs;
+        } else {
+          filteredPrograms = programs.filter(program => {
+            return isPresent(program.get('title')) && program.get('title').match(exp);
+          });
         }
 
-        return match;
-      }).sortBy('title');
+        defer.resolve(filteredPrograms.sortBy('title'));
+      });
+
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+    }
+  }),
+
+  selectedSchool: computed('model.[]', 'schoolId', {
+    get() {
+      let schools = this.get('model');
+
+      if(isPresent(this.get('schoolId'))) {
+        let school =  schools.find(school => {
+          return school.get('id') === this.get('schoolId');
+        });
+
+        if(school) {
+          return school;
+        }
+      }
+
+      return schools.get('firstObject');
+    }
+  }),
+
+  programs: computed('selectedSchool', 'saved', {
+    get() {
+      let defer = RSVP.defer();
+      let schoolId = this.get('selectedSchool').get('id');
+
+      if(isEmpty(schoolId)) {
+        defer.resolve([]);
+      } else {
+        this.get('store').query('program', {
+          filters: {
+            school: schoolId
+          },
+          limit: 500
+        }).then(programs => {
+          defer.resolve(programs);
+        });
+      }
+
+      return PromiseArray.create({
+        promise: defer.promise
+      });
     }
   }),
 
@@ -88,7 +137,6 @@ export default Controller.extend({
       newProgram.save().then((savedProgram) => {
         this.send('cancel');
         this.setProperties({ saved: true, savedProgram });
-        this.send('reloadModel');
       });
     },
 

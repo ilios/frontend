@@ -128,28 +128,15 @@ export default Ember.Controller.extend({
       if(school){
         return school;
       }
-
-      return schools.get('firstObject');
-    },
-    set(key, school) {
-      this.set('schoolId',  school.get('id'));
     }
     return schools.get('firstObject');
   }),
-
-  selectedYear: Ember.computed('model.years.[]', 'yearTitle', {
-    get() {
-      let years = this.get('model.years');
-      if(isPresent(this.get('yearTitle'))){
-        return years.find(year => {
-          return year.get('title') === parseInt(this.get('yearTitle'));
-        });
-      }
-
-      return years.get('lastObject');
-    },
-    set(key, year) {
-      this.set('yearTitle',  year.get('title'));
+  selectedYear: computed('model.years.[]', 'yearTitle', function(){
+    let years = this.get('model.years');
+    if(isPresent(this.get('yearTitle'))){
+      return years.find(year => {
+        return year.get('title') === parseInt(this.get('yearTitle'));
+      });
     }
 
     return years.get('lastObject');

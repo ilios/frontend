@@ -58,10 +58,11 @@ test('filters by title', function(assert) {
   });
   visit('/courses');
   andThen(function() {
-    assert.equal(3, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondCourse.title));
+    assert.equal(4, find('.resultslist-list tbody tr').length);
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(lastCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(regularCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(firstCourse.title));
+    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')),getText(secondCourse.title));
 
     //put these in nested later blocks because there is a 500ms debounce on the title filter
     fillIn('#titlefilter input', 'first');
@@ -79,7 +80,8 @@ test('filters by title', function(assert) {
               assert.equal(2, find('.resultslist-list tbody tr').length);
               assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
               assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondCourse.title));
-              fillIn('#titlefilter input', '');
+
+              fillIn('#titlefilter input', 'course');
               andThen(function(){
                 Ember.run.later(function(){
                   assert.equal(4, find('.resultslist-list tbody tr').length);

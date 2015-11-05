@@ -24,11 +24,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
     filter: {
       replace: true
     }
-  },
-
-  actions: {
-    reloadModel() {
-      this.refresh();
-    }
   }
 });

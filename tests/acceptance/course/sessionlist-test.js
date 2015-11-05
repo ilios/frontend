@@ -158,15 +158,15 @@ test('new session', function(assert) {
 
   visit(url);
   click(expandButton);
-  fillIn(input, 'Test Session');
+  fillIn(input, 'session 3');
   click(saveButton);
   andThen(() => {
     function getContent(i) {
       return find(`tbody tr:last td:eq(${i})`).text().trim();
     }
 
-    assert.equal(find(savedLink).text().trim(), 'Test Session', 'link is visisble');
-    assert.equal(getContent(0), 'Test Session', 'session is correct');
+    assert.equal(find(savedLink).text().trim(), 'session 3', 'link is visisble');
+    assert.equal(getContent(0), 'session 3', 'session is correct');
     assert.equal(getContent(2), '0', 'number of groups is correct');
   });
 });
