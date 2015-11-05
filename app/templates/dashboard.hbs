@@ -1,9 +1,7 @@
 <section class='dashboard fullwidth'>
   <div class='calendar-profile'>
-    {{t 'dashboard.usersCalendar' name=currentUser.model.fullName}}
-    {{#unless showCalendar}}
-      {{moment-format today 'dddd MMMM Do, YYYY'}}
-    {{/unless}}
+    {{t 'dashboard.myCalendar'}}
+
     {{toggle-wide
       value=showCalendar
       onLabel='offerings.calendarOn'
