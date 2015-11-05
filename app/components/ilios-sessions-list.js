@@ -36,7 +36,8 @@ export default Ember.Component.extend({
       let proxiedSessions = sessions.map(session => {
         return Ember.ObjectProxy.create({
           content: session,
-          expandOfferings: false
+          expandOfferings: false,
+          showRemoveConfirmation: false
         });
       });
       
@@ -117,6 +118,17 @@ export default Ember.Component.extend({
     },
     toggleExpandedOffering(sessionProxy){
       sessionProxy.set('expandOfferings', !sessionProxy.get('expandOfferings'));
+    },
+    confirmRemoval(sessionProxy){
+      sessionProxy.set('showRemoveConfirmation', true);
+    },
+    remove(sessionProxy){
+      let session = sessionProxy.get('content');
+      session.deleteRecord();
+      session.save();
+    },
+    cancelRemove(sessionProxy){
+      sessionProxy.set('showRemoveConfirmation', false);
     }
   }
 });
