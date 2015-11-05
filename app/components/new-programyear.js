@@ -1,29 +1,40 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  programYear: null,
-  availableProgramStartYears: [],
-  classNames: ['newprogramyear'],
-  academicYears: function(){
-    return this.get('availableProgramStartYears').map(
-      startYear => {
-        return startYear + ' - ' + (startYear+1);
-      }
-    );
-  }.property('availableProgramStartYears.@each'),
+const { Component, computed, inject, isBlank } = Ember;
+const { service } = inject;
+
+export default Component.extend({
+  classNames: ['resultslist-new'],
+
+  i18n: service(),
+  placeholder: computed('i18n.locale', function() {
+    return this.get('i18n').t('programYears.selectAcademicYear');
+  }),
+
+  selection: null,
+
+  selectionCheck() {
+    const selection = this.get('selection');
+
+    return isBlank(selection) ? true : false;
+  },
+
   actions: {
-    save: function(){
-      this.sendAction('save', this.get('programYear'));
+    changeSelection(value) {
+      this.set('selection', value);
     },
-    cancel: function(){
-      this.sendAction('cancel', this.get('programYear'));
+
+    save() {
+      if (this.selectionCheck()) {
+        return;
+      }
+
+      const startYear = this.get('selection.value');
+      this.sendAction('save', startYear);
     },
-    changeSelectedYear(){
-      let selectedEl = this.$('select')[0];
-      let selectedIndex = selectedEl.selectedIndex;
-      let availableProgramStartYears = this.get('availableProgramStartYears');
-      let year = availableProgramStartYears.toArray()[selectedIndex];
-      this.set('programYear.startYear', year);
-    },
+
+    cancel() {
+      this.sendAction('cancel');
+    }
   }
 });

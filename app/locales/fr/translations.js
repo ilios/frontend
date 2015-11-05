@@ -123,6 +123,11 @@ export default {
     'noUnselectedCompetencies': "Il n'y a pas des compétences non sélectionné ",
     'noSelectedCompetencies': "Il n'y a pas des compétences sélectionné",
   },
+  'programYears': {
+    'selectAcademicYear': 'Choisissez l’année scolaire',
+    'confirmRemove': 'Êtes-vous certain que vous voulez supprimer cette année de diplôme? Cette action va supprimer tous les cohortes et groupes des étudiants associées, et liaisons avec {{courseCount}} des cours, et ne peut être annulée.',
+    'new': 'Année de diplôme neuf'
+  },
   'navigation': {
     'dashboard': "Tableau de Bord",
     'programs': "Diplômes",

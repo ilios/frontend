@@ -25,7 +25,7 @@
   .resultslist-list {
     @include span-columns(12 of 12);
     @include pad();
-    
+
     //fix for the action menus breakign at the bottom of a list
     table {
       margin-bottom: 76px;
@@ -82,7 +82,9 @@
   }
 
   .resultslist-new {
+    border: 1px dotted $ilios-orange;
     clear: both;
+    padding: 0 1em 2em;
 
     .new-result {
       border: 1px solid $header-grey;
@@ -95,17 +97,17 @@
       }
     }
 
-    .saved-result {
-      border: 1px solid $ilios-green;
-      margin: 1em 0;
-      padding: 1em;
-    }
-
     .new-result-title {
       color: $ilios-orange;
       font-size: $base-font-size;
       font-weight: bold;
       margin-bottom: 1em;
     }
+  }
+
+  .saved-result {
+    border: 1px solid $ilios-green;
+    margin: 1em 0;
+    padding: 1em;
   }
 }

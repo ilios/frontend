@@ -7,6 +7,8 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
+const { isEmpty, isPresent } = Ember;
+
 var application;
 var url = '/programs/1';
 module('Acceptance: Program - ProgramYear List' + testgroup, {
@@ -168,7 +170,107 @@ test('check link', function(assert) {
   });
 });
 
-test('new program year', function(assert) {
+test('can edit a program-year', function(assert) {
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+  });
+
+  const editButton = '.program-year-link';
+
+  visit(url);
+  click(editButton);
+  andThen(() => {
+    assert.equal(currentPath(), 'program.programYear.index');
+  });
+});
+
+test('can delete a program-year', function(assert) {
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+  });
+
+  const deleteButton = '.program-year-link';
+  const listRows = '.resultslist-list tbody tr';
+
+  visit(url);
+  andThen(() => {
+    assert.ok(isPresent(find(listRows)), 'one program-year exists');
+  });
+
+  click(deleteButton);
+  andThen(() => {
+    assert.ok(isEmpty(find(listRows)), 'program was removed');
+  });
+});
+
+test('canceling adding new program-year collapses select menu', function(assert) {
+  server.create('program', {
+    school: 1,
+  });
+
+  const expandButton = '.expand-collapse-button';
+  const cancelButton = '.programyear-cancel';
+  const selectField = '.ff-select-field';
+
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    assert.ok(isPresent(find(selectField)), 'select menu is shown');
+  });
+
+  click(cancelButton);
+  andThen(() => {
+    assert.ok(isEmpty(find(selectField)), 'select menu is hidden');
+  });
+});
+
+function getTableDataText(n, i, element = '') {
+  return find(`.resultslist-list tbody tr:eq(${n}) td:eq(${i}) ${element}`);
+}
+
+test('can add a program-year (with no pre-existing program-years)', function(assert) {
+  server.create('program', {
+    school: 1,
+  });
+
+  const listRows = '.resultslist-list tbody tr';
+  const expandButton = '.expand-collapse-button';
+  const selectField = '.ff-select-field';
+  const option = '.ff-option:eq(5)';
+  const saveButton = '.programyear-save';
+
+  visit(url);
+  andThen(() => {
+    assert.ok(isEmpty(find(listRows)), 'there are no pre-existing program-years');
+  });
+
+  click(expandButton);
+  click(selectField);
+  click(option);
+  click(saveButton);
+  andThen(() => {
+    const thisYear = new Date().getFullYear();
+    const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
+
+    assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
+    assert.equal(getTableDataText(0, 1).text(), 'Class of 2019', 'cohort class year shown');
+    assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
+    assert.ok(getTableDataText(0, 3, 'i').hasClass('fa-warning'), 'warning label shown');
+    assert.ok(getTableDataText(0, 4, 'i').hasClass('fa-warning'), 'warning label shown');
+    assert.ok(getTableDataText(0, 5, 'i').hasClass('fa-warning'), 'warning label shown');
+    assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
+  });
+});
+
+test('can add a program-year (with pre-existing program-year)', function(assert) {
   server.createList('user', 3, {
     directedProgramYears: [1]
   });
@@ -185,12 +287,12 @@ test('new program year', function(assert) {
     department: 1,
     programYear: 1
   });
-  var program = server.create('program', {
+  server.create('program', {
     school: 1,
     programYears: [1]
   });
-  var currentYear = parseInt(moment().format('YYYY'));
-  var firstProgramYear = server.create('programYear', {
+  const currentYear = parseInt(moment().format('YYYY'));
+  server.create('programYear', {
     program: 1,
     startYear: currentYear,
     cohort: 1,
@@ -203,48 +305,40 @@ test('new program year', function(assert) {
   server.create('cohort', {
     programYear: 1
   });
-  visit(url);
-  var newAcademicYear = currentYear+1 + ' - ' + (currentYear+2);
-  andThen(function() {
-    var container = find('.programyear-list');
-    click('.detail-actions button', container);
-    andThen(function(){
-      let items = find('.newprogramyear option');
-      assert.equal(items.length, 9);
-      let expectedItems = [];
-      var firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'));
-      for(let i = 0; i < 10; i++){
-        var startYear = firstYear+i;
-        if(startYear !== firstProgramYear.startYear){
-          expectedItems.pushObject(
-            (startYear) + ' - ' + (startYear+1)
-          );
-        }
-      }
-      for(let i = 0; i < items.length; i++){
-        assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-      }
-      pickOption('.newprogramyear select', newAcademicYear, assert);
-      click('.newprogramyear .done', container);
-    });
-  });
-  andThen(function(){
-    assert.equal(currentPath(), 'program.index');
-    var container = find('.programyear-list');
-    var rows = find('tbody tr', container);
-    assert.equal(rows.length, 2);
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(currentYear + ' - ' + (currentYear+1)));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), getText('cohort0'));
-    let firstRowTds = find('td', rows.eq(0));
-    for(let i =2; i<5; i++){
-      assert.equal(getElementText(firstRowTds.eq(i)), 3);
-    }
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))), getText(newAcademicYear));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), getText('Class of ' + (currentYear+1+program.duration)));
 
-    let secondRowTds = find('td', rows.eq(1));
-    for(let i =2; i<5; i++){
-      assert.equal(getElementText(secondRowTds.eq(i)), 3);
-    }
+  const expandButton = '.expand-collapse-button';
+  const selectField = '.ff-select-field';
+  const option = '.ff-option:eq(5)';
+  const saveButton = '.programyear-save';
+  const thisYear = new Date().getFullYear();
+
+  visit(url);
+  andThen(() => {
+    const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
+
+    assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
+    assert.equal(getTableDataText(0, 1).text(), 'cohort 0', 'cohort class year shown');
+    assert.equal(getTableDataText(0, 2).text().trim(), '3');
+    assert.equal(getTableDataText(0, 3).text().trim(), '3');
+    assert.equal(getTableDataText(0, 4).text().trim(), '3');
+    assert.equal(getTableDataText(0, 5).text().trim(), '3');
+    assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
+  });
+
+  click(expandButton);
+  click(selectField);
+  click(option);
+  click(saveButton);
+  andThen(() => {
+    const academicYear = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
+    const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
+
+    assert.equal(getTableDataText(1, 0).text().trim(), academicYear, 'academic year shown');
+    assert.equal(getTableDataText(1, 1).text(), cohortClassYear, 'cohort class year shown');
+    assert.equal(getTableDataText(1, 2).text().trim(), '3', 'copied correctly from latest program-year');
+    assert.equal(getTableDataText(1, 3).text().trim(), '3', 'copied correctly from latest program-year');
+    assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
+    assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
+    assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
   });
 });

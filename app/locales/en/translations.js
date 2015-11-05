@@ -121,7 +121,12 @@ export default {
     'stewardingSchoolsAndDepartments': 'Stewarding Schools and Departments',
     'stewardsManageTitle': 'Manage Stewards',
     'noUnselectedCompetencies': 'There are no unselected competencies',
-    'noSelectedCompetencies': 'There are no selected competencies',
+    'noSelectedCompetencies': 'There are no selected competencies'
+  },
+  'programYears': {
+    'selectAcademicYear': 'Select Academic Year',
+    'confirmRemove': 'Are you sure you want to delete this program year? Doing so will also remove its associated student cohort and groups, and associations with {{courseCount}} course(s), and cannot be undone.',
+    'new': 'New Program Year'
   },
   'navigation': {
     'dashboard': 'Dashboard',

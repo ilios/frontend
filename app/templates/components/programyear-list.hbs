@@ -2,22 +2,25 @@
   <div class='detail-title'>
     {{t 'general.programYears'}} ({{programYears.length}})
   </div>
+
   <div class='detail-actions'>
-        <button {{action 'addNewProgramYear'}}>{{t 'general.addNew'}}</button>
+    {{expand-collapse-button value=editorOn action="toggleEditor"}}
   </div>
+
   <section class='resultslist'>
-    {{#if newProgramYears.length}}
-      <section class='resultslist-new'>
-        {{#each newProgramYears as |programYear|}}
-          {{new-programyear
-            programYear=programYear
-            availableProgramStartYears=availableProgramStartYears
-            save='saveNewProgramYear'
-            cancel='removeNewProgramYear'
-          }}
-        {{/each}}
-      </section>
+    {{#liquid-if editorOn class='vertical'}}
+      {{new-programyear availableAcademicYears=availableAcademicYears save='save' cancel='cancel'}}
+    {{/liquid-if}}
+
+    {{#if saved}}
+      <div class='saved-result'>
+        {{#link-to 'programYear.index' program savedProgramYear}}
+          {{fa-icon 'external-link-square'}} {{savedProgramYear.academicYear}}
+        {{/link-to}}
+        {{t 'general.savedSuccessfully'}}
+      </div>
     {{/if}}
+
     {{#if sortedContent.length}}
       <div class='resultslist-list'>
         <table>
@@ -34,8 +37,8 @@
             </tr>
           </thead>
           <tbody>
-            {{#each sortedContent as |programYear|}}
-              <tr>
+            {{#each proxiedProgramYears as |programYear|}}
+              <tr class="{{if programYear.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left'>
                   {{#link-to 'programYear.index' program programYear}}
                     {{fa-icon 'external-link-square'}} {{programYear.academicYear}}
@@ -74,17 +77,30 @@
 
                 <td class='text-center'>{{publication-status item=programYear showIcon=false}}</td>
                 <td class='text-center'>
-                  {{#action-menu}}
-                    <li {{action 'edit'}}>Edit</li>
-                  {{/action-menu}}
+                  {{#link-to 'programYear.index' program programYear class="program-year-link edit"}}{{fa-icon 'edit'}}{{/link-to}}
+                  <span class="clickable trash {{if programYear.showRemoveConfirmation 'confirm-removal'}}" {{action 'remove' programYear}}>{{fa-icon 'trash'}}</span>
                 </td>
               </tr>
+
+              {{#if programYear.showRemoveConfirmation}}
+                <tr class='confirm-removal'>
+                  <td colspan=8>
+                    <div class='confirm-message'>
+                      {{t 'programYears.confirmRemove' courseCount=program.courseCount}} <br />
+                      <div class="confirm-buttons">
+                        <button {{action 'confirmRemove' programYear}} class='remove text'>{{t 'general.yes'}}</button>
+                        <button {{action 'cancelRemove' programYear}} class='done text'>{{t 'general.cancel'}}</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              {{/if}}
             {{/each}}
           </tbody>
         </table>
       </div>
     {{else}}
-      {{t 'programs.noProgramYears'}}
+      <span class="default-message">{{t 'programs.noProgramYears'}}</span>
     {{/if}}
   </section>
 </section>

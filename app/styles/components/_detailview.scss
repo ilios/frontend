@@ -10,21 +10,21 @@ $collapse-control-shadow-grey: #e2e2e2;
   font-size: $base-font-size;
   margin-top: -4px;
 
-  
+
   // Because certain sections are styled differently from others (ie, some headers have toggles and others do not,
   // put the non-default, detail-view type-specific styling here, put the defaults below
-  
+
   //sessions
   &.session-detail-view {
     background-color: $active-background-color;
-    
+
     .detail-block {
       border-bottom: 1px dotted $text-blue;
-      
+
       .detail-title {
         color: $text-blue;
       }
-      
+
       table thead {
         background-color: $text-blue;
         color: $white;
@@ -32,7 +32,7 @@ $collapse-control-shadow-grey: #e2e2e2;
     }
   }
 
-  
+
 
   //for the entire sessions section, we want to distinguish it with a different bg-color
   &.sessions-list {
@@ -105,11 +105,11 @@ $collapse-control-shadow-grey: #e2e2e2;
       margin-right: .8em;
       padding-left: .8em;
       padding-right: .8em;
-      
+
       &.collapsed .detail-title::after {
         content: '\25BA';
       }
-      
+
       &.collapsible .detail-title::after {
         content: '\25BC';
       }
@@ -345,26 +345,26 @@ $collapse-control-shadow-grey: #e2e2e2;
       background-color: $remove-background-color;
     }
   }
-  
+
   .publish-all-sessions-review {
     border: 1px solid $published-green;
     font-size: 1.5 * $base-font-size;
     margin: 2.5em;
     padding: 1em;
     text-align: center;
-    
+
     p {
       color: $published-green;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1em;
     }
-    
+
     button {
       background: $publish-button-color;
       color: $white;
     }
-    
+
   }
 }
 
@@ -412,7 +412,7 @@ tbody .confirm-removal {
   float: right;
   margin-top: 1em;
   position: relative;
-  
+
   input {
     height: 2em;
     width: 200px;
@@ -453,7 +453,7 @@ tbody .confirm-removal {
       }
     }
   }
-  
+
   .livesearch-user-email {
     color: $medium-grey;
     font-style: italic;
