@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   course: null,
   cohorts: Ember.computed.oneWay('course.cohorts'),
   isManaging: false,
+  isSaving: false,
   previousCohorts: [],
   classNames: ['detail-cohorts'],
   programs: function(){
@@ -49,6 +50,7 @@ export default Ember.Component.extend({
       });
     },
     save: function(){
+      this.set('isSaving', true);
       var self = this;
       let course = this.get('course');
       course.get('cohorts').then(function(newCohorts){
@@ -79,6 +81,7 @@ export default Ember.Component.extend({
         });
         course.save().then(function(){
           newCohorts.save().then(function(){
+            self.set('isSaving', false);
             self.set('isManaging', false);
             self.set('previousCohorts', []);
           });
