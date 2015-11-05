@@ -65,7 +65,7 @@ module('Acceptance: Course - Cohorts' + testgroup, {
 });
 
 test('list cohorts', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
   visit(url);
   andThen(function() {
     var container = find('.detail-cohorts');
@@ -73,8 +73,9 @@ test('list cohorts', function(assert) {
     assert.equal(rows.length, fixtures.course.cohorts.length);
     for(let i = 0; i < fixtures.course.cohorts.length; i++){
       let cohort = fixtures.cohorts[fixtures.course.cohorts[i] - 1];
-      assert.equal(getElementText(find('td:eq(0)', rows[i])), getText('program 0'));
-      assert.equal(getElementText(find('td:eq(1)', rows[i])), getText(cohort.title));
+      assert.equal(getElementText(find('td:eq(0)', rows[i])), getText('school 0'));
+      assert.equal(getElementText(find('td:eq(1)', rows[i])), getText('program 0'));
+      assert.equal(getElementText(find('td:eq(2)', rows[i])), getText(cohort.title));
     }
   });
 });
@@ -93,7 +94,7 @@ test('manage cohorts', function(assert) {
 });
 
 test('save cohort chages', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   visit(url);
   andThen(function() {
     var container = find('.detail-cohorts');
@@ -105,15 +106,16 @@ test('save cohort chages', function(assert) {
         });
       });
       andThen(function(){
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('program 0'));
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText(fixtures.cohorts[1].title));
+        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
+        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
+        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(2)', container)), getText(fixtures.cohorts[1].title));
       });
     });
   });
 });
 
-test('cancel cohort chages', function(assert) {
-  assert.expect(2);
+test('cancel cohort changes', function(assert) {
+  assert.expect(3);
   visit(url);
   andThen(function() {
     var container = find('.detail-cohorts');
@@ -125,8 +127,9 @@ test('cancel cohort chages', function(assert) {
         });
       });
       andThen(function(){
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('program 0'));
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText(fixtures.cohorts[0].title));
+        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
+        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
+        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(2)', container)), getText(fixtures.cohorts[0].title));
       });
     });
   });
