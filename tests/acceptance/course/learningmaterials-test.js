@@ -50,6 +50,8 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       userRole: 1,
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
+      filename: 'filename',
+      absoluteFileUri: 'http://example.com/file',
       courseLearningMaterials: [2],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
@@ -344,6 +346,23 @@ test('view rationale file learning material details', function(assert) {
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
       assert.equal(getElementText(find('.copyrightrationale', container)), getText(fixtures.learningMaterials[1].copyrightRationale));
+      assert.equal(find('.citation', container).length, 0);
+      assert.equal(find('.link', container).length, 0);
+    });
+  });
+});
+
+test('view url file learning material details', function(assert) {
+  visit(url);
+  andThen(function() {
+    click('.detail-learning-materials .detail-content tbody tr:eq(1) td:eq(0)');
+    andThen(function(){
+      var container = $('.learningmaterial-manager');
+      assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
+      assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
+      assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
+      assert.equal(getElementText(find('.downloadurl', container)), getText(fixtures.learningMaterials[1].filename));
+      assert.equal(find('.downloadurl a', container).attr('href'), fixtures.learningMaterials[1].absoluteFileUri);
       assert.equal(find('.citation', container).length, 0);
       assert.equal(find('.link', container).length, 0);
     });

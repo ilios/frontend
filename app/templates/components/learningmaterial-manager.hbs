@@ -55,7 +55,6 @@
       <span class='description list-reset'>{{{ learningMaterial.learningMaterial.description }}}</span>
     </div>
   </div>
-  {{!-- {{#if learningMaterial.learningMaterial.filename}} --}}
   {{#if learningMaterial.learningMaterial.copyrightPermission}}
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
@@ -76,7 +75,6 @@
       </div>
     </div>
   {{/if}}
-  {{!-- {{/if}} --}}
   {{#if learningMaterial.learningMaterial.citation}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
@@ -90,6 +88,14 @@
     <label class="form-label">{{t 'learningMaterials.link'}}:</label>
     <div class="form-data weblink">
       <span class='link'><a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a></span>
+    </div>
+  </div>
+  {{/if}}
+  {{#if learningMaterial.learningMaterial.filename}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.file'}}:</label>
+    <div class="form-data filename">
+      <span class='downloadurl'><a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank">{{learningMaterial.learningMaterial.filename}}</a></span>
     </div>
   </div>
   {{/if}}
