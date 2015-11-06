@@ -32,8 +32,7 @@ export default Ember.Component.extend({
 
   externalIdValidations: {
     'validationBuffer': {
-      alphanumeric2: true,
-      length: { minimum: 3, maximum: 18 }
+      length: { minimum: 2, maximum: 50 }
     }
   },
 
