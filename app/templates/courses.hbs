@@ -40,7 +40,7 @@
     </div>
     <section class='resultslist-new'>
       {{#liquid-if showNewCourseForm class='vertical'}}
-        {{new-course 
+        {{new-course
           currentSchool=selectedSchool
           currentYear=selectedYear
           years=model.years
@@ -48,6 +48,7 @@
           cancel='toggleNewCourseForm'
         }}
       {{/liquid-if}}
+
       {{#each newCourses as |course|}}
         <div class='savedcourse saved-result'>
           {{#link-to 'course' course}}

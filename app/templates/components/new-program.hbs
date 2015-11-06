@@ -1,13 +1,22 @@
-<section class='newprogram new-instructor-group new-result form-container'>
-    <div class="new-result-title">{{t 'programs.new'}}</div>
-    <div class="detail-content">
-	  <div class="form-col-12">
-	    <label class="form-label">{{t 'general.title'}}</label>
-	    <div class="form-data newprogram-title">{{input value=title placeholder=placeholder}}</div>
-	  </div>
-	  <div class="form-col-6 form-data-submit">
-	    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-	    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-	  </div>
+<div class="new-result-title">{{t 'programs.new'}}</div>
+
+<div class="detail-content">
+  <label class="form-col form-col-12">
+    <div class="form-label">{{t 'general.title'}}</div>
+
+    <div class="form-data form-data-text form-input-row">
+      <input type="text" placeholder={{placeholder}} class="{{if topErrorMessage 'has-error'}}"
+        onChange={{action "changeValue" value="target.value"}}
+        oninput={{action "changeValue" value="target.value"}}
+        onfocus={{action "displayError"}} />
+      {{#if topErrorMessage}}
+        <span class="validation-error-message">{{topErrorMessage}}</span>
+      {{/if}}
     </div>
-</section>
+  </label>
+
+  <div class="form-col-6 form-data-submit">
+    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  </div>
+</div>

@@ -63,7 +63,7 @@ test('filters by title', function(assert) {
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(regularCourse.title));
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(firstCourse.title));
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')),getText(secondCourse.title));
-    
+
     //put these in nested later blocks because there is a 500ms debounce on the title filter
     fillIn('#titlefilter input', 'first');
     Ember.run.later(function(){
@@ -80,7 +80,7 @@ test('filters by title', function(assert) {
               assert.equal(2, find('.resultslist-list tbody tr').length);
               assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
               assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondCourse.title));
-    
+
               fillIn('#titlefilter input', 'course');
               andThen(function(){
                 Ember.run.later(function(){
@@ -89,7 +89,7 @@ test('filters by title', function(assert) {
                   assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(regularCourse.title));
                   assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(firstCourse.title));
                   assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')),getText(secondCourse.title));
-                  
+
                   fillIn('#titlefilter input', '');
                   andThen(function(){
                     Ember.run.later(function(){
@@ -156,7 +156,7 @@ test('initial filter by year', function(assert) {
     assert.equal(find('.resultslist-list tbody tr').length, 1);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
   });
-  
+
   visit('/courses?year=2013');
   andThen(function() {
     assert.equal(find('.resultslist-list tbody tr').length, 1);
@@ -207,23 +207,29 @@ test('filters options', function(assert) {
 });
 
 test('new course', function(assert) {
-  assert.expect(4);
-  visit('/courses?year=2014');
-  let newTitle = 'new course title, woohoo';
-  andThen(function() {
-    let container = find('.resultslist');
-    click('.resultslist-actions button', container);
-    andThen(function(){
-      fillIn('.new-course input:eq(0)', newTitle);
-      pickOption('.new-course select', '2014 - 2015', assert);
-      click('.new-course .done', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.savedcourse', container)), getText(newTitle + 'Saved Successfully'));
-        var rows = find('tbody tr', container);
-        assert.equal(rows.length, 1);
-        assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(newTitle));
-      });
-    });
+  assert.expect(5);
+
+  const url = '/courses?year=2014';
+  const expandButton = '.expand-button';
+  const input = '.new-course input';
+  const selectField = '.new-course select';
+  const saveButton = '.done';
+  const savedLink = '.saved-result a';
+
+  visit(url);
+  click(expandButton);
+  fillIn(input, 'Course 1');
+  pickOption(selectField, '2014 - 2015', assert);
+  click(saveButton);
+  andThen(() => {
+    function getContent(i) {
+      return find(`tbody tr td:eq(${i})`).text().trim();
+    }
+
+    assert.equal(find(savedLink).text().trim(), 'Course 1', 'link is visisble');
+    assert.equal(getContent(0), 'Course 1', 'course is correct');
+    assert.equal(getContent(1), 'school 0', 'school is correct');
+    assert.equal(getContent(2), '2014 - 2015', 'year is correct');
   });
 });
 
@@ -237,7 +243,7 @@ test('new course in another year does not display in list', function(assert) {
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
       pickOption('.new-course select', '2013 - 2014', assert);
-      
+
       click('.new-course .done', container).then(function(){
         var rows = find('tbody tr', container);
         assert.equal(rows.length, 0);

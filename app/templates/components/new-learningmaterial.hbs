@@ -1,7 +1,15 @@
 <div class="form-container">
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
-    <div class="form-data">{{input type='text' value=learningMaterial.title}}</div>
+    <div class="form-data">
+      <input type="text" value={{learningMaterial.title}} class="{{if topErrorMessageTitle 'has-error'}}"
+        onChange={{action "changeDisplayName" value="target.value"}}
+        oninput={{action "changeDisplayName" value="target.value"}}
+        onfocus={{action "displayNameError"}} />
+      {{#if topErrorMessageTitle}}
+        <span class="validation-error-message">{{topErrorMessageTitle}}</span>
+      {{/if}}
+    </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.status'}}:</label>
@@ -21,7 +29,15 @@
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
-    <div class="form-data">{{input type='text' value=learningMaterial.originalAuthor}}</div>
+    <div class="form-data">
+      <input type="text" value={{learningMaterial.originalAuthor}} class="{{if topErrorMessageAuthor 'has-error'}}"
+        onChange={{action "changeAuthor" value="target.value"}}
+        oninput={{action "changeAuthor" value="target.value"}}
+        onfocus={{action "displayAuthorError"}} />
+      {{#if topErrorMessageAuthor}}
+        <span class="validation-error-message">{{topErrorMessageAuthor}}</span>
+      {{/if}}
+    </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
@@ -40,7 +56,7 @@
     <div class="form-data">
       {{froala-editor
         params=editorParams
-        value=learningMaterial.description 
+        value=learningMaterial.description
         contentChanged=(action "changeDescription")
       }}
     </div>

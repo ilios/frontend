@@ -393,6 +393,6 @@ export default {
     'odd': "must be odd",
     'even': "must be even",
     'alphanumeric': "must be alphanumeric",
-    'alphanumeric2': "must be alphanumeric ('-' and ':' allowed)"
+    'alphanumeric2': "must be alphanumeric ('-' and ':' allowed)",
   }
 };

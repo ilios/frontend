@@ -1,15 +1,31 @@
 import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 
-export default Ember.Component.extend(Publishable, {
+const { Component, computed } = Ember;
+const { alias } = computed;
+
+export default Component.extend(Publishable, {
   course: null,
-  publishTarget: Ember.computed.alias('course'),
+
+  publishTarget: alias('course'),
+
   publishEventCollectionName: 'courses',
+
   editable: true,
+
+  titleValidations: {
+    'validationBuffer': {
+      presence: true,
+      length: { minimum: 3, maximum: 200 }
+    }
+  },
+
   actions: {
-    changeTitle: function(newTitle){
-      this.get('course').set('title', newTitle);
-      this.get('course').save();
-    },
+    changeTitle(newTitle) {
+      const course = this.get('course');
+
+      course.set('title', newTitle);
+      course.save();
+    }
   }
 });

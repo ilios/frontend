@@ -151,24 +151,24 @@ test('close offering details with close button', function(assert) {
 });
 
 test('new session', function(assert) {
+  const expandButton = '.expand-button';
+  const input = '.new-session input';
+  const saveButton = '.new-session .done';
+  const savedLink = '.saved-result a';
+
   visit(url);
-  let newTitle = 'new session title, woohoo';
-  andThen(function() {
-    let container = find('.sessions-list');
-    click('.detail-actions button:eq(0)', container);
-    andThen(function(){
-      fillIn('.sessions-list .new-session input:eq(0)', newTitle);
-      click('.new-session .done', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.savedsession', container)), getText(newTitle + 'Saved Successfully'));
+  click(expandButton);
+  fillIn(input, 'session 3');
+  click(saveButton);
+  andThen(() => {
+    function getContent(i) {
+      return find(`tbody tr:last td:eq(${i})`).text().trim();
+    }
 
-        var rows = find('tbody tr', container);
-        assert.equal(rows.length, fixtures.sessions.length + 1);
-        assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText(newTitle));
-      });
-    });
+    assert.equal(find(savedLink).text().trim(), 'session 3', 'link is visisble');
+    assert.equal(getContent(0), 'session 3', 'session is correct');
+    assert.equal(getContent(2), '0', 'number of groups is correct');
   });
-
 });
 
 test('new session goes away when we navigate #643', function(assert) {
@@ -179,7 +179,7 @@ test('new session goes away when we navigate #643', function(assert) {
     click('.detail-actions button:eq(0)', container).then(()=> {
       fillIn('.sessions-list .new-session input:eq(0)', newTitle);
       click('.new-session .done', container).then(()=>{
-        click('.savedsession a', container).then(()=> {
+        click('.saved-result a', container).then(()=> {
           assert.equal(currentPath(), 'course.session.index');
           click('#session-details .backtolink a');
         });
@@ -187,7 +187,7 @@ test('new session goes away when we navigate #643', function(assert) {
     });
     andThen(function(){
       assert.equal(currentPath(), 'course.index');
-      assert.equal(find('.savedsession').length, 0);
+      assert.equal(find('.saved-result').length, 0);
     });
   });
 

@@ -8,35 +8,35 @@
     </div>
   </div>
   <div class='detail-actions'>
-    <button {{action 'addNewSession'}}>{{t 'general.addNew'}}</button>
+    <div class='resultslist-actions'>
+      {{expand-collapse-button value=editorOn action="toggleEditor"}}
+    </div>
+
     {{#if proxiedSessions.length}}
       {{#link-to 'course.publishall' course}}
         <button>{{t 'publish.all' sessionCount=course.sessions.length}}</button>
       {{/link-to}}
     {{/if}}
   </div>
+
   <section class='resultslist'>
-    {{#if newSessions.length}}
-      <section class='resultslist-new'>
-        {{#each newSessions as |sessionProxy|}}
-          {{#liquid-unless sessionProxy.isSaved class='horizontal'}}
-            {{new-session
-              session=sessionProxy.content
-              sessionTypes=course.school.sessionTypes
-              save='saveNewSession'
-              cancel='removeNewSession'
-            }}
-          {{else}}
-            <div class='savedsession saved-result'>
-              {{#link-to 'session.index' course sessionProxy.content}}
-                {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
-              {{/link-to}}
-              {{t 'general.savedSuccessfully'}}
-            </div>
-          {{/liquid-unless}}
-        {{/each}}
-      </section>
+    {{#liquid-if editorOn class='vertical'}}
+      {{new-session
+        sessionTypes=course.school.sessionTypes
+        save='save'
+        cancel='cancel'
+      }}
+    {{/liquid-if}}
+
+    {{#if saved}}
+      <div class='saved-result'>
+        {{#link-to 'session.index' course savedSession}}
+          {{fa-icon 'external-link-square'}} {{savedSession.title}}
+        {{/link-to}}
+        {{t 'general.savedSuccessfully'}}
+      </div>
     {{/if}}
+
     <div class='resultslist-list'>
       <table class='active-background'>
         <thead>

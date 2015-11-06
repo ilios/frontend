@@ -88,42 +88,29 @@ test('filters by title', function(assert) {
 });
 
 test('add new program', function(assert) {
+  assert.expect(3);
+
   server.create('user', {id: 4136});
   server.create('school');
-  assert.expect(1);
-  visit('/programs');
-  andThen(function() {
-    click('.resultslist-actions button');
-    fillIn('.newprogram input', 'new test title');
-    click('.newprogram .done');
-  });
-  andThen(function(){
-    assert.equal(getElementText(find('.savedprogram')), getText('new test title Saved Successfully'));
-  });
-});
 
-test('cancel adding new program', function(assert) {
-  assert.expect(6);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
-  server.create('program', {
-    school: 1,
-  });
-  visit('/programs');
-  andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
-    click('.resultslist-actions button').then(function(){
-      assert.equal(find('.newprogram').length, 1);
-      click('.newprogram .cancel');
-    });
-  });
-  andThen(function(){
-    assert.equal(find('.newprogram').length, 0);
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+  const url = '/programs';
+  const expandButton = '.expand-button';
+  const input = '.new-program input';
+  const saveButton = '.new-program .done';
+  const savedLink = '.saved-result a';
+
+  visit(url);
+  click(expandButton);
+  fillIn(input, 'Test Title');
+  click(saveButton);
+  andThen(() => {
+    function getContent(i) {
+      return find(`tbody tr td:eq(${i})`).text().trim();
+    }
+
+    assert.equal(find(savedLink).text().trim(), 'Test Title', 'link is visisble');
+    assert.equal(getContent(0), 'Test Title', 'program is correct');
+    assert.equal(getContent(1), 'school 0', 'school is correct');
   });
 });
 

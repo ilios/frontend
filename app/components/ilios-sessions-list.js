@@ -2,30 +2,33 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, inject, RSVP, isEmpty} = Ember;
-const {PromiseArray} = DS;
-const {service} = inject;
+const { Component, computed, inject, isEmpty, observer, RSVP, run } = Ember;
+const { PromiseArray } = DS;
+const { service } = inject;
+const { debounce } = run;
 
-export default Ember.Component.extend({
+export default Component.extend({
+  classNames: ['detail-view', 'sessions-list'],
+
   store: service(),
   i18n: service(),
+
   filter: '',
-  classNames: ['detail-view', 'sessions-list'],
-  tagName: 'div',
   course: null,
-  newSessions: [],
+
   placeholderValue: t('sessions.titleFilterPlaceholder'),
+
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
-  willInsertElement: function(){
-    Ember.set(this, 'newSessions', []);
-  },
-  watchFilter: function(){
-    Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('filter'),
-  setFilter: function(){
+
+  watchFilter: observer('filter', function() {
+    debounce(this, this.setFilter, 500);
+  }),
+
+  setFilter() {
     this.set('debouncedFilter', this.get('filter'));
   },
+
   proxiedSessions: computed('course', 'course.sessions.[]', function() {
     let course = this.get('course');
     if(isEmpty(course)){
@@ -40,15 +43,15 @@ export default Ember.Component.extend({
           showRemoveConfirmation: false
         });
       });
-      
+
       defer.resolve(proxiedSessions);
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
-    
   }),
+
   filteredContent: computed('proxiedSessions.@each.searchString', 'debouncedFilter', function(){
     let defer = RSVP.defer();
     this.get('proxiedSessions').then(sessions => {
@@ -70,52 +73,52 @@ export default Ember.Component.extend({
         //if the number of matching search terms is equal to the number searched, return true
         return (matchedSearchTerms === filterExpressions.length);
       });
-      
+
       defer.resolve(filtered.sortBy('title'));
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
   }),
-  actions: {
-    addNewSession(){
-      this.get('course.school').then(school => {
-        school.get('sessionTypes').then(sessionTypes => {
-          //we attempt to load a type with the title of lecture as its the default
-          let lectureType = sessionTypes.findBy('title', 'Lecture');
-          let defaultType = lectureType?lectureType:sessionTypes.get('firstObject');
-          let session = this.get('store').createRecord('session', {
-            sessionType: defaultType
-          });
-          let sessionProxy = Ember.ObjectProxy.create({
-            isSaved: false,
-            content: session
-          });
 
-          this.get('newSessions').addObject(sessionProxy);
+  editorOn: false,
+
+  saved: false,
+  savedSession: null,
+
+  actions: {
+    toggleEditor() {
+      if (this.get('editorOn')) {
+        this.set('editorOn', false);
+      } else {
+        this.setProperties({ editorOn: true, saved: false });
+      }
+    },
+
+    cancel() {
+      this.set('editorOn', false);
+    },
+
+    save(title, sessionType) {
+      const component = this;
+      const store = this.get('store');
+      const course = this.get('course');
+
+      let newSession = store.createRecord('session', { title, sessionType });
+
+      newSession.set('course', course);
+      newSession.save().then((savedSession) => {
+        course.get('sessions').then((sessions) => {
+          sessions.addObject(savedSession);
+          course.save().then(() => {
+            component.send('cancel');
+            component.setProperties({ saved: true, savedSession: newSession });
+          });
         });
       });
-      
     },
-    saveNewSession: function(newSession){
-      let sessionProxy = this.get('newSessions').find(proxy => {
-        return proxy.get('content') === newSession;
-      });
-      var course = this.get('course');
-      newSession.set('course', course);
-      newSession.save().then(savedSession => {
-        course.get('sessions').addObject(savedSession);
-        sessionProxy.set('content', savedSession);
-        sessionProxy.set('isSaved', true);
-      });
-    },
-    removeNewSession: function(newSession){
-      let sessionProxy = this.get('newSessions').find(proxy => {
-        return proxy.get('content') === newSession;
-      });
-      this.get('newSessions').removeObject(sessionProxy);
-    },
+
     toggleExpandedOffering(sessionProxy){
       sessionProxy.set('expandOfferings', !sessionProxy.get('expandOfferings'));
     },
