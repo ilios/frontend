@@ -181,6 +181,9 @@ var User = DS.Model.extend({
        });
     }
   ),
+  absoluteIcsUri: computed('icsFeedKey', function(){
+    return window.location.protocol + '//' + window.location.hostname + '/ics/' + this.get('icsFeedKey');
+  }),
 });
 
 export default User;
