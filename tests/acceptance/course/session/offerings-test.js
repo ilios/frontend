@@ -272,7 +272,7 @@ test('users can create a new offering or small groups (single and multi-day)', f
 
   const expandButton = '.expand-button';
   const multiDayButton = '.single-multi-day .switch-label';
-  const smallGroupButton = '.second-button';
+  const offeringButton = '.second-button';
 
   const startDateInput = '.offering-startdate-picker input';
   const endDateInput = '.offering-enddate input';
@@ -302,6 +302,7 @@ test('users can create a new offering or small groups (single and multi-day)', f
 
   visit(url);
   click(expandButton);
+  click(offeringButton);
   andThen(() => {
     let container = find('.session-offerings');
 
@@ -337,7 +338,6 @@ test('users can create a new offering or small groups (single and multi-day)', f
   });
 
   click(expandButton);
-  click(smallGroupButton);
   click(multiDayButton);
   andThen(() => {
     let container = find('.session-offerings');

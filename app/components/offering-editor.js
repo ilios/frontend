@@ -33,7 +33,7 @@ export default Component.extend({
 
   classNames: ['offering-editor'],
 
-  singleOffering: true,
+  smallGroupMode: true,
   isMultiDay: false,
 
   startDate: null,
@@ -158,7 +158,7 @@ export default Component.extend({
 
   actions: {
     setOfferingType(value) {
-      this.set('singleOffering', value);
+      this.set('smallGroupMode', value);
     },
 
     toggleMultiDay() {
@@ -228,14 +228,14 @@ export default Component.extend({
           learnerGroups
         };
 
-        if (this.get('singleOffering')) {
+        if (this.get('smallGroupMode')) {
+          this.sendAction('addMultipleOfferings', params);  
+        } else {
           params.room = this.get('room') || 'TBD';
           params.instructors = this.get('instructors');
           params.instructorGroups = this.get('instructorGroups');
 
           this.sendAction('addSingleOffering', params);
-        } else {
-          this.sendAction('addMultipleOfferings', params);
         }
 
         this.send('cancel');

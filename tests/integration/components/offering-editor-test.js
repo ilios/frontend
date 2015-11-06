@@ -38,9 +38,9 @@ test('`create` actions bubble up (to create learnergroup and close editor)', fun
 
   this.set('flashMessages', flashMessages);
 
-  this.render(hbs`{{offering-editor addSingleOffering='addSingleOffering' closeEditor='closeEditor' flashMessages=flashMessages}}`);
+  this.render(hbs`{{offering-editor addMultipleOfferings='addMultipleOfferings' closeEditor='closeEditor' flashMessages=flashMessages}}`);
 
-  this.on('addSingleOffering', () => {
+  this.on('addMultipleOfferings', () => {
     assert.ok(true, 'action bubbles up to create learnergroup');
   });
 
