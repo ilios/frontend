@@ -178,13 +178,17 @@ export default Ember.Component.extend({
       self.get('newLearningMaterials').removeObject(lm);
       if(this.get('isCourse')){
         subjectLm = this.get('store').createRecord('course-learning-material', {
-          course: this.get('subject')
+          course: this.get('subject'),
+          required: true,
+          publicNotes: true
         });
         lmCollectionType = 'courseLearningMaterials';
       }
       if(this.get('isSession')){
         subjectLm = this.get('store').createRecord('session-learning-material', {
-          session: this.get('subject')
+          session: this.get('subject'),
+          required: true,
+          publicNotes: true
         });
         lmCollectionType = 'sessionLearningMaterials';
       }
