@@ -2,9 +2,9 @@
   <label class="form-label">Create New:</label>
   <div class="form-data">
     {{click-choice-buttons
-      buttonContent1=(t 'offerings.offering')
-      buttonContent2=(t 'offerings.smallGroups')
-      firstChoicePicked=singleOffering
+      buttonContent1=(t 'offerings.smallGroups')
+      buttonContent2=(t 'offerings.offering')
+      firstChoicePicked=smallGroupMode
       action="setOfferingType"
     }}
   </div>
@@ -54,12 +54,12 @@
   </div>
 </div>
 
-{{#if singleOffering}}
+{{#unless smallGroupMode}}
   <div class="form-col-12">
     <label class="form-label">{{t 'general.location'}}:</label>
     <div class="form-data"><span class='room'>{{input value=room placeholder="i.e. Rm. 111"}}</span></div>
   </div>
-{{/if}}
+{{/unless}}
 
 <div class="offering-learnergroups">
   {{#each availableLearnerGroups as |cohort|}}
@@ -76,7 +76,7 @@
   {{/each}}
 </div>
 
-{{#if singleOffering}}
+{{#unless smallGroupMode}}
   <div class="form-col-12">
     <label class="form-label">{{t 'general.instructors'}}:</label>
     <div class="form-data">
@@ -91,7 +91,7 @@
       }}
     </div>
   </div>
-{{/if}}
+{{/unless}}
 
 <div class="form-col-12 center">
   <button class='done text' {{action 'create'}}>{{t 'general.done'}}</button>

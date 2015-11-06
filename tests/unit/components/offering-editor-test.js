@@ -15,7 +15,7 @@ test('properties have default values', function(assert) {
   assert.expect(1);
 
   const expected = {
-    singleOffering:   true,
+    smallGroupMode:   true,
     isMultiDay:       false,
     room:             null,
     instructors:      [],
@@ -26,7 +26,7 @@ test('properties have default values', function(assert) {
   const component = this.subject();
 
   const actual = {
-    singleOffering:   component.get('singleOffering'),
+    smallGroupMode:   component.get('smallGroupMode'),
     isMultiDay:       component.get('isMultiDay'),
     room:             component.get('room'),
     instructors:      component.get('instructors'),
@@ -37,14 +37,14 @@ test('properties have default values', function(assert) {
   assert.deepEqual(actual, expected, 'default values are correct');
 });
 
-test('`setOfferingType` action changes `singleOffering` property', function(assert) {
+test('`setOfferingType` action changes `smallGroupMode` property', function(assert) {
   assert.expect(1);
 
   const component = this.subject();
 
   component.send('setOfferingType', false);
 
-  assert.equal(component.get('singleOffering'), false);
+  assert.equal(component.get('smallGroupMode'), false);
 });
 
 test('`toggleMultiDay` action changes `isMultiDay` property', function(assert) {
