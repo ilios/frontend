@@ -2,11 +2,12 @@ import moment from 'moment';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  queryParams: ['date', 'view', 'showCalendar'],
+  queryParams: ['date', 'view', 'showCalendar', 'mySchedule'],
   currentUser: Ember.inject.service(),
   date: null,
   view: 'week',
   showCalendar: false,
+  mySchedule: true,
   selectedDate: Ember.computed('date', function(){
     if(this.get('date')){
       return moment(this.get('date'), 'YYYY-MM-DD').format();
@@ -35,6 +36,9 @@ export default Ember.Controller.extend({
     },
     toggleShowCalendar(){
       this.set('showCalendar', !this.get('showCalendar'));
+    },
+    toggleMySchedule(){
+      this.set('mySchedule', !this.get('mySchedule'));
     }
   }
 });
