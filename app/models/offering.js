@@ -2,6 +2,9 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
+const { computed, RSVP } = Ember;
+const { PromiseArray } = DS;
+
 export default DS.Model.extend({
   room: DS.attr('string'),
   startDate: DS.attr('date'),
@@ -50,22 +53,21 @@ export default DS.Model.extend({
     }
     return key;
   }.property('startDayOfYear', 'startYear', 'startTime', 'endDayOfYear', 'endYear', 'endTime'),
-  allInstructors: function(){
-    var self = this;
+  allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users.[]', function(){
     var defer = Ember.RSVP.defer();
-    this.get('instructorGroups').then(function(instructorGroups){
+    this.get('instructorGroups').then(instructorGroups => {
       var promises = instructorGroups.getEach('users');
-      promises.pushObject(self.get('instructors'));
-      Ember.RSVP.all(promises).then(function(trees){
-        var instructors = trees.reduce(function(array, set){
+      promises.pushObject(this.get('instructors'));
+      RSVP.all(promises).then(trees => {
+        var instructors = trees.reduce((array, set) => {
             return array.pushObjects(set.toArray());
         }, []);
         instructors = instructors.uniq().sortBy('lastName', 'firstName');
         defer.resolve(instructors);
       });
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
-  }.property('instructors.@each', 'instructorsGroups.@each.users.@each')
+  }),
 });

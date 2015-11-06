@@ -3,15 +3,16 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { computed, isPresent, RSVP } = Ember;
+const { computed, isPresent, RSVP, inject } = Ember;
 const { PromiseObject } = DS;
+const { service } = inject;
 
 export default Ember.Component.extend({
-  userEvents: Ember.inject.service(),
-  schoolEvents: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  userEvents: service(),
+  schoolEvents: service(),
+  currentUser: service(),
+  store: service(),
+  i18n: service(),
   date: null,
   showFilters: false,
   selectedDate: null,
@@ -446,7 +447,7 @@ export default Ember.Component.extend({
       this.set('showFilters', !this.get('showFilters'));
     },
     toggleMySchedule(){
-      this.set('mySchedule', !this.get('mySchedule'));
+      this.sendAction('toggleMySchedule');
     },
     toggleCourseFilters(){
       this.set('courseFilters', !this.get('courseFilters'));
