@@ -14,15 +14,13 @@ export default Ember.Component.extend({
   classNames: ['ilios-event'],
   description: computed('offering.session.description.description', function(){
     let defer = RSVP.defer();
-    this.get('offering').then(offering=>{
-      offering.get('session').then(session=>{
-        session.get('sessionDescription').then(description=>{
-          if(isEmpty(description)){
-            defer.resolve(null);
-          } else {
-            defer.resolve(description.get('description'));
-          }
-        });
+    this.get('thesession').then(session=>{
+      session.get('sessionDescription').then(description=>{
+        if(isEmpty(description)){
+          defer.resolve(null);
+        } else {
+          defer.resolve(description.get('description'));
+        }
       });
     });
     return PromiseObject.create({
@@ -36,15 +34,13 @@ export default Ember.Component.extend({
   }),
   instructorList: computed('isOffering', 'offering.allInstructors.[]', function(){
     let defer = RSVP.defer();
-    
-    if(this.get('isOffering')){
-      this.get('offering').then(offering => {
-        offering.get('allInstructors').then(instructors => {
-          let instructorNames = instructors.sortBy('lastName').mapBy('fullName');
-          defer.resolve(instructorNames.join(', '));
-        });
+    let relationship = this.get('isOffering')?'offering':'ilmSession';
+    this.get(relationship).then(related => {
+      related.get('allInstructors').then(instructors => {
+        let instructorNames = instructors.sortBy('lastName').mapBy('fullName');
+        defer.resolve(instructorNames.join(', '));
       });
-    }
+    });
     
     return PromiseObject.create({
       promise: defer.promise
@@ -64,11 +60,9 @@ export default Ember.Component.extend({
   sessionIs: computed('offering.session.sessionType', function(){
     let defer = RSVP.defer();
     
-    this.get('offering').then(offering => {
-      offering.get('session').then(session => {
-        session.get('sessionType').then(sessionType => {
-          defer.resolve(this.get('i18n').t('calendar.sessionIs', {type: sessionType.get('title')}));
-        });
+    this.get('thesession').then(session => {
+      session.get('sessionType').then(sessionType => {
+        defer.resolve(this.get('i18n').t('calendar.sessionIs', {type: sessionType.get('title')}));
       });
     });
     
@@ -82,7 +76,16 @@ export default Ember.Component.extend({
       return null;
     }
     return PromiseObject.create({
-      promise: this.get('store').find('offering', offeringId)
+      promise: this.get('store').findRecord('offering', offeringId)
+    });
+  }),
+  ilmSession: computed('event.ilmSession', function(){
+    let ilmSessionId = this.get('event.ilmSession');
+    if(!ilmSessionId){
+      return null;
+    }
+    return PromiseObject.create({
+      promise: this.get('store').findRecord('ilm-session', ilmSessionId)
     });
   }),
   coursePhrase: computed('i18n.locale', function(){
@@ -97,102 +100,9 @@ export default Ember.Component.extend({
   courseObjectives: computed('i18n.locale', 'offering.session.course.objectives.@each.topParents.[]', function(){
     let defer = RSVP.defer();
     
-    this.get('offering').then(offering => {
-      offering.get('session').then(session => {
-        session.get('course').then(course => {
-          course.get('objectives').then(objectives => {
-            let promises = [];
-            let mappedObjectives = [];
-            objectives.forEach(objective => {
-              promises.pushObject(objective.get('topParents').then(parents => {
-                let parent = parents.get('firstObject');
-                promises.pushObject(parent.get('competency').then(competency => {
-                  //strip all HTML
-                  let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
-                  if(isEmpty(competency)){
-                    mappedObjectives.pushObject({
-                      title,
-                      domain: this.get('i18n').t('calendar.noAssociatedCompetencies')
-                    });
-                  } else {
-                    promises.pushObject(competency.get('domain').then(domain => {
-                      mappedObjectives.pushObject({
-                        title,
-                        domain: competency.get('title') + ' (' + domain.get('title') + ')'
-                      });
-                    }));
-                  }
-                  
-                }));
-              }));
-            });
-            RSVP.all(promises).then(()=>{
-              defer.resolve(mappedObjectives);
-            });
-          });
-        });
-      });
-    });
-    
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
-  courseLearningMaterials: computed(
-    'i18n.locale',
-    'offering.session.course.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
-    function(){
-      let defer = RSVP.defer();
-      
-      this.get('offering').then(offering => {
-        offering.get('session').then(session => {
-          session.get('course').then(course => {
-            course.get('learningMaterials').then(courseLearningMaterials => {
-              let promises = [];
-              let mappedLearningMaterials = [];
-              courseLearningMaterials.forEach(courseLearningMaterial => {
-                
-                promises.pushObject(courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
-                  mappedLearningMaterials.pushObject({
-                    title: learningMaterial.get('title'),
-                    description: learningMaterial.get('description'),
-                    required: courseLearningMaterial.get('required'),
-                    notes: courseLearningMaterial.get('publicNotes'),
-                    url: learningMaterial.get('url'),
-                    type: learningMaterial.get('type'),
-                    mimetype: learningMaterial.get('mimetype'),
-                    filesize: learningMaterial.get('filesize'),
-                    citation: learningMaterial.get('citation'),
-                  });
-                }));
-              });
-              RSVP.all(promises).then(()=>{
-                defer.resolve(mappedLearningMaterials);
-              });
-            });
-          });
-        });
-      });
-      
-      return PromiseArray.create({
-        promise: defer.promise
-      });
-  }),
-  sessionPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.session');
-  }),
-  sessionObjectivesPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.sessionObjectives');
-  }),
-  sessionLearningMaterialsPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.sessionLearningMaterials');
-  }),
-  sessionObjectives: computed('i18n.locale', 'offering.session.objectives.@each.topParents.[]', function(){
-    let defer = RSVP.defer();
-    
-    this.get('offering').then(offering => {
-      offering.get('session').then(session => {
-        session.get('objectives').then(objectives => {
+    this.get('thesession').then(session => {
+      session.get('course').then(course => {
+        course.get('objectives').then(objectives => {
           let promises = [];
           let mappedObjectives = [];
           objectives.forEach(objective => {
@@ -229,25 +139,25 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  sessionLearningMaterials: computed(
+  courseLearningMaterials: computed(
     'i18n.locale',
-    'offering.session.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
+    'offering.session.course.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
     function(){
       let defer = RSVP.defer();
       
-      this.get('offering').then(offering => {
-        offering.get('session').then(session => {
-          session.get('learningMaterials').then(sessionLearningMaterials => {
+      this.get('thesession').then(session => {
+        session.get('course').then(course => {
+          course.get('learningMaterials').then(courseLearningMaterials => {
             let promises = [];
             let mappedLearningMaterials = [];
-            sessionLearningMaterials.forEach(sessionLearningMaterial => {
+            courseLearningMaterials.forEach(courseLearningMaterial => {
               
-              promises.pushObject(sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
+              promises.pushObject(courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
                 mappedLearningMaterials.pushObject({
                   title: learningMaterial.get('title'),
                   description: learningMaterial.get('description'),
-                  required: sessionLearningMaterial.get('required'),
-                  notes: sessionLearningMaterial.get('publicNotes'),
+                  required: courseLearningMaterial.get('required'),
+                  notes: courseLearningMaterial.get('publicNotes'),
                   url: learningMaterial.get('url'),
                   type: learningMaterial.get('type'),
                   mimetype: learningMaterial.get('mimetype'),
@@ -267,27 +177,121 @@ export default Ember.Component.extend({
         promise: defer.promise
       });
   }),
+  sessionPhrase: computed('i18n.locale', function(){
+    return this.get('i18n').t('general.session');
+  }),
+  sessionObjectivesPhrase: computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.sessionObjectives');
+  }),
+  sessionLearningMaterialsPhrase: computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.sessionLearningMaterials');
+  }),
+  sessionObjectives: computed('i18n.locale', 'offering.session.objectives.@each.topParents.[]', function(){
+    let defer = RSVP.defer();
+    
+    this.get('thesession').then(session => {
+      session.get('objectives').then(objectives => {
+        let promises = [];
+        let mappedObjectives = [];
+        objectives.forEach(objective => {
+          promises.pushObject(objective.get('topParents').then(parents => {
+            let parent = parents.get('firstObject');
+            promises.pushObject(parent.get('competency').then(competency => {
+              //strip all HTML
+              let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
+              if(isEmpty(competency)){
+                mappedObjectives.pushObject({
+                  title,
+                  domain: this.get('i18n').t('calendar.noAssociatedCompetencies')
+                });
+              } else {
+                promises.pushObject(competency.get('domain').then(domain => {
+                  mappedObjectives.pushObject({
+                    title,
+                    domain: competency.get('title') + ' (' + domain.get('title') + ')'
+                  });
+                }));
+              }
+              
+            }));
+          }));
+        });
+        RSVP.all(promises).then(()=>{
+          defer.resolve(mappedObjectives);
+        });
+      });
+    });
+    
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
+  sessionLearningMaterials: computed(
+    'i18n.locale',
+    'offering.session.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
+    function(){
+      let defer = RSVP.defer();
+      
+      this.get('thesession').then(session => {
+        session.get('learningMaterials').then(sessionLearningMaterials => {
+          let promises = [];
+          let mappedLearningMaterials = [];
+          sessionLearningMaterials.forEach(sessionLearningMaterial => {
+            
+            promises.pushObject(sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
+              mappedLearningMaterials.pushObject({
+                title: learningMaterial.get('title'),
+                description: learningMaterial.get('description'),
+                required: sessionLearningMaterial.get('required'),
+                notes: sessionLearningMaterial.get('publicNotes'),
+                url: learningMaterial.get('url'),
+                type: learningMaterial.get('type'),
+                mimetype: learningMaterial.get('mimetype'),
+                filesize: learningMaterial.get('filesize'),
+                citation: learningMaterial.get('citation'),
+              });
+            }));
+          });
+          RSVP.all(promises).then(()=>{
+            defer.resolve(mappedLearningMaterials);
+          });
+        });
+      });
+      
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+  }),
   requiredPhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('general.required');
   }),
-  course: computed('offering.session.course', function(){
+  course: computed('session.course', function(){
     let defer = RSVP.defer();
-    this.get('offering').then(offering=>{
-      offering.get('session').then(session=>{
-        session.get('course').then(course=>{
-          defer.resolve(course);
-        });
+    this.get('thesession').then(session=>{
+      session.get('course').then(course=>{
+        defer.resolve(course);
       });
     });
     return PromiseObject.create({
       promise: defer.promise
     });
   }),
-  //session name is already taken by ember-simple-auth
-  thesession: computed('offering.session', function(){
+  sessionTitle: computed('thesession.title', 'event.isOffering', function(){
     let defer = RSVP.defer();
-    this.get('offering').then(offering=>{
-      offering.get('session').then(session=>{
+    let prefix = this.get('isOffering')?'':'ILM: ';
+    this.get('thesession').then(session => {
+      defer.resolve(prefix + session.get('title'));
+    });
+    return PromiseObject.create({
+      promise: defer.promise
+    });
+  }),
+  //session name is already taken by ember-simple-auth
+  thesession: computed('offering.session', 'ilmSession.session', function(){
+    let defer = RSVP.defer();
+    let relationship = this.get('isOffering')?'offering':'ilmSession';
+    this.get(relationship).then(related => {
+      related.get('session').then(session=>{
         defer.resolve(session);
       });
     });
