@@ -331,7 +331,8 @@ export default {
     'sessionObjectives': 'Session Objectives',
     'sessionLearningMaterials': 'Session Learning Materials',
     'noAssociatedCompetencies': 'No Associated Competencies',
-    'dueThisDay': 'Dû ce jour-là'
+    'dueThisDay': 'Dû ce jour-là',
+    'icsInstructions': 'Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!',
   },
   'auth': {
     'username': "Nom d'utilisateur",

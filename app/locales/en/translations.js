@@ -331,7 +331,8 @@ export default {
     'sessionObjectives': 'Session Objectives',
     'sessionLearningMaterials': 'Session Learning Materials',
     'noAssociatedCompetencies': 'No Associated Competencies',
-    'dueThisDay': 'Due this day'
+    'dueThisDay': 'Due this day',
+    'icsInstructions': 'To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!'
   },
   'auth': {
     'username': 'Username',
