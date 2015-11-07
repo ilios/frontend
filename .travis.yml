@@ -21,6 +21,7 @@ matrix:
   include:
     - env: "TEST_GROUP='(itgb)' SCSS_LINT=false"
     - env: "TEST_GROUP='(itgc)' SCSS_LINT=false"
+    - env: "TEST_GROUP='(itgd)' SCSS_LINT=false"
 
 
 before_install:
