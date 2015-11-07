@@ -165,21 +165,27 @@ export default Component.extend({
       this.set('isMultiDay', !this.get('isMultiDay'));
     },
 
-    changeStartTime(date) {
-      let newStart = moment(date);
+    changeStartTime(value, type) {
       let startTime = moment(this.get('startTime'));
 
-      startTime.hour(newStart.format('HH'));
-      startTime.minute(newStart.format('mm'));
+      if (type === 'hour') {
+        startTime.hour(value);
+      } else {
+        startTime.minute(value);
+      }
+
       this.set('startTime', startTime.toDate());
     },
 
-    changeEndTime(date) {
-      let newEnd = moment(date);
+    changeEndTime(value, type) {
       let endTime = moment(this.get('endTime'));
 
-      endTime.hour(newEnd.format('HH'));
-      endTime.minute(newEnd.format('mm'));
+      if (type === 'hour') {
+        endTime.hour(value);
+      } else {
+        endTime.minute(value);
+      }
+
       this.set('endTime', endTime.toDate());
     },
 
@@ -229,7 +235,7 @@ export default Component.extend({
         };
 
         if (this.get('smallGroupMode')) {
-          this.sendAction('addMultipleOfferings', params);  
+          this.sendAction('addMultipleOfferings', params);
         } else {
           params.room = this.get('room') || 'TBD';
           params.instructors = this.get('instructors');

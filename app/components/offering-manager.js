@@ -304,21 +304,27 @@ export default Ember.Component.extend({
       this.set('showRemoveConfirmation', true);
     },
 
-    changeStartTime(date) {
-      let newStart = moment(date);
+    changeStartTime(value, type) {
       let startTime = moment(this.get('buffer.startTime'));
 
-      startTime.hour(newStart.format('HH'));
-      startTime.minute(newStart.format('mm'));
+      if (type === 'hour') {
+        startTime.hour(value);
+      } else {
+        startTime.minute(value);
+      }
+
       this.set('buffer.startTime', startTime.toDate());
     },
 
-    changeEndTime(date) {
-      let newEnd = moment(date);
+    changeEndTime(value, type) {
       let endTime = moment(this.get('buffer.endTime'));
 
-      endTime.hour(newEnd.format('HH'));
-      endTime.minute(newEnd.format('mm'));
+      if (type === 'hour') {
+        endTime.hour(value);
+      } else {
+        endTime.minute(value);
+      }
+
       this.set('buffer.endTime', endTime.toDate());
     },
 
