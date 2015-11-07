@@ -380,7 +380,7 @@ export default {
     'blank': "ne doit pas être blanc",
     'present': "doit rester vide",
     'tooLong': "est trop long (maximum de {{count}} caractères)",
-    'tooShort': "est trop court (maximum de {{count}} caractères)",
+    'tooShort': "est trop court (minimum de {{count}} caractères)",
     'wrongLength': "n’est pas à la bonne longueur (soit ainsi {{count}} caractères)",
     'notANumber': "doit contenir une valeur numérique",
     'notAnInteger': "doit être un entier",
