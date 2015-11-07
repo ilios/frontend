@@ -5,7 +5,7 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import {d as testgroup} from 'ilios/tests/helpers/test-groups';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
