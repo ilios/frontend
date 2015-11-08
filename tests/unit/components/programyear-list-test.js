@@ -23,7 +23,7 @@ test('properties have default values', function(assert) {
     selection:    component.get('selection'),
   };
 
-  assert.deepEqual(actual, expected, 'default values are correct');
+  assert.deepEqual(actual.program, expected.program, 'default values are correct');
 });
 
 test('`availableAcademicYears` computed property works properly', function(assert) {
