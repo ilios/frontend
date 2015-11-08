@@ -1,47 +1,35 @@
 ---
-language: node_js
-node_js:
-  - "0.12"
-
+#really we're using node_js but this works with the osx OS
+language: objective-c
+#we use OSX here because phantomJS2 isn't super stable on Linux
+os: osx
 sudo: false
 
 cache:
   directories:
     - node_modules
 
-env:
-  global:
-    - TEST_GROUP='(itga)'
-    - SCSS_LINT=true
-    - TESTEM_LAUNCHER='PhantomJS'
-
 matrix:
   fast_finish: true
-  allow_failures:
-  include:
-    - env: "TEST_GROUP='(itgb)' SCSS_LINT=false"
-    - env: "TEST_GROUP='(itgc)' SCSS_LINT=false"
-
 
 before_install:
-  - mkdir travis-phantomjs
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
+  - rm -rf ~/.nvm
+  - git clone https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install 0.12.7
+  - npm config set spin false
+  - npm install -g npm@^2
+  - npm install -g phantomjs2
+  - npm install -g bower
+  - travis_retry gem install scss-lint --no-ri --no-rdoc
 
 install:
-  - npm install -g bower;
-  - travis_retry npm install --no-optional;
-  - travis_retry bower install;
-  - if [ "$SCSS_LINT" = true ]; then travis_retry gem install scss-lint; fi
+  - travis_retry npm install --no-optional
+  - travis_retry bower install
 
 script:
-  - if [ "$SCSS_LINT" = true ]; then scss-lint; fi
-  #ensure that all tests contain a reference to 'helpers/test-groups' hopefully means they are in at least one group
-  - if [ $(grep -rL  'helpers/test-groups' tests/acceptance tests/integration tests/unit) ]; then echo 'One of the test files is not in a group so will not be run'; return 1; else return 0; fi
-  - node_modules/.bin/ember test --filter=${TEST_GROUP} --launch=${TESTEM_LAUNCHER};
+  - scss-lint
+  - node_modules/.bin/ember test --launch=PhantomJS
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
