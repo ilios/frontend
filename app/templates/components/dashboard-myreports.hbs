@@ -1,25 +1,31 @@
-{{#if sortedReports.length}}
-    <div class='dashboard-block-header'>
-        {{t 'dashboard.myReports'}}
-        <div class="dashboard-block-actions">{{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}</div>
-    </div>
+<div class='dashboard-block-header'>
+  {{t 'dashboard.myReports'}}
+  <div class="dashboard-block-actions">{{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}</div>
+</div>
 
-    <div class='dashboard-block-body'>
-        <table>
-            <tbody>
-            {{#each sortedReports as |report|}}
-                <tr class='clickable'>
-                  <td>{{fa-icon 'external-link-square'}} {{report.title}}</td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    </div>
-    {{#liquid-if myReportEditorOn class='vertical'}}
-        {{new-myreport
+<div class='dashboard-block-body'>
+  {{#if listOfReports.isFulfilled}}
+    {{#if sortedReports.length}}
+      <table>
+        <tbody>
+          {{#each sortedReports as |report|}}
+          <tr {{action 'selectReport' report}} class='clickable'>
+            <td>{{fa-icon 'external-link-square'}} {{report.title}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      {{t 'general.none'}}
+    {{/if}}
+  {{else}}
+    <h1>{{fa-icon 'spinner' spin=true}}</h1>
+  {{/if}}
+  {{#liquid-if myReportEditorOn class='vertical'}}
+      {{new-myreport
         toggleFn=myReportEditorOn
         closeEditor='closeEditor'
         class="form-container"
-        }}
-    {{/liquid-if}}
-{{/if}}
+      }}
+  {{/liquid-if}}
+</div>

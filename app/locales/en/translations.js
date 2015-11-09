@@ -367,6 +367,7 @@ export default {
     'mySchedule': 'My Schedule',
     'myReports': 'My Reports',
     'newReport': 'New Report',
+    'reportTitle': 'Report Title',
     'associatedToThe': 'Associated to',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',
