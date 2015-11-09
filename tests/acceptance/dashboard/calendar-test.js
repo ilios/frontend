@@ -162,8 +162,8 @@ test('load week calendar', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 2);
     let eventInfo = '';
-    eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ': start of week';
-    eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ': end of week';
+    eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
+    eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
     assert.equal(getElementText(events), getText(eventInfo));
 
   });
@@ -197,7 +197,7 @@ test('load day calendar', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 1);
     let eventInfo = '';
-    eventInfo += today.format('h:mma') + '-' + today.clone().add(1, 'hour').format('h:mma') + ': today';
+    eventInfo += today.format('h:mma') + '-' + today.clone().add(1, 'hour').format('h:mma') + ' today';
     assert.equal(getElementText(events), getText(eventInfo));
 
   });

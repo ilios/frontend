@@ -34,6 +34,9 @@ export default Ember.Component.extend({
   loadingEventsTranslation: Ember.computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.loadingEvents');
   }),
+  icsInstructionsTranslation: computed('i18n.locale', function(){
+    return this.get('i18n').t('calendar.icsInstructions');
+  }),
   setup: Ember.on('init', function() {
     //do these on setup otherwise tests were failing because
     //the old filter value hung around
