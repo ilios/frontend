@@ -41,31 +41,31 @@ export default Ember.Component.extend({
         defer.resolve(instructorNames.join(', '));
       });
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
   }),
   taughtBy: computed('i18n.locale', 'instructorList', function(){
     let defer = RSVP.defer();
-    
+
     this.get('instructorList').then(instructors => {
       defer.resolve(this.get('i18n').t('calendar.taughtBy', {instructors}));
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
   }),
   sessionIs: computed('offering.session.sessionType', function(){
     let defer = RSVP.defer();
-    
+
     this.get('thesession').then(session => {
       session.get('sessionType').then(sessionType => {
         defer.resolve(this.get('i18n').t('calendar.sessionIs', {type: sessionType.get('title')}));
       });
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
@@ -99,7 +99,7 @@ export default Ember.Component.extend({
   }),
   courseObjectives: computed('i18n.locale', 'offering.session.course.objectives.@each.topParents.[]', function(){
     let defer = RSVP.defer();
-    
+
     this.get('thesession').then(session => {
       session.get('course').then(course => {
         course.get('objectives').then(objectives => {
@@ -124,7 +124,6 @@ export default Ember.Component.extend({
                     });
                   }));
                 }
-                
               }));
             }));
           });
@@ -134,7 +133,7 @@ export default Ember.Component.extend({
         });
       });
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -144,20 +143,26 @@ export default Ember.Component.extend({
     'offering.session.course.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
     function(){
       let defer = RSVP.defer();
-      
+
       this.get('thesession').then(session => {
         session.get('course').then(course => {
           course.get('learningMaterials').then(courseLearningMaterials => {
             let promises = [];
             let mappedLearningMaterials = [];
             courseLearningMaterials.forEach(courseLearningMaterial => {
-              
-              promises.pushObject(courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
+
+              promises.pushObject(courseLearningMaterial.get('learningMaterial').then((learningMaterial) => {
+                let notes = '';
+
+                if (courseLearningMaterial.get('publicNotes')) {
+                  notes = courseLearningMaterial.get('notes');
+                }
+
                 mappedLearningMaterials.pushObject({
                   title: learningMaterial.get('title'),
                   description: learningMaterial.get('description'),
                   required: courseLearningMaterial.get('required'),
-                  notes: courseLearningMaterial.get('publicNotes'),
+                  notes,
                   url: learningMaterial.get('url'),
                   type: learningMaterial.get('type'),
                   mimetype: learningMaterial.get('mimetype'),
@@ -172,7 +177,7 @@ export default Ember.Component.extend({
           });
         });
       });
-      
+
       return PromiseArray.create({
         promise: defer.promise
       });
@@ -188,7 +193,7 @@ export default Ember.Component.extend({
   }),
   sessionObjectives: computed('i18n.locale', 'offering.session.objectives.@each.topParents.[]', function(){
     let defer = RSVP.defer();
-    
+
     this.get('thesession').then(session => {
       session.get('objectives').then(objectives => {
         let promises = [];
@@ -212,7 +217,6 @@ export default Ember.Component.extend({
                   });
                 }));
               }
-              
             }));
           }));
         });
@@ -221,7 +225,7 @@ export default Ember.Component.extend({
         });
       });
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -231,19 +235,25 @@ export default Ember.Component.extend({
     'offering.session.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
     function(){
       let defer = RSVP.defer();
-      
+
       this.get('thesession').then(session => {
         session.get('learningMaterials').then(sessionLearningMaterials => {
           let promises = [];
           let mappedLearningMaterials = [];
           sessionLearningMaterials.forEach(sessionLearningMaterial => {
-            
-            promises.pushObject(sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
+
+            promises.pushObject(sessionLearningMaterial.get('learningMaterial').then((learningMaterial) => {
+              let notes = '';
+
+              if (sessionLearningMaterial.get('publicNotes')) {
+                notes = sessionLearningMaterial.get('notes');
+              }
+
               mappedLearningMaterials.pushObject({
                 title: learningMaterial.get('title'),
                 description: learningMaterial.get('description'),
                 required: sessionLearningMaterial.get('required'),
-                notes: sessionLearningMaterial.get('publicNotes'),
+                notes,
                 url: learningMaterial.get('url'),
                 type: learningMaterial.get('type'),
                 mimetype: learningMaterial.get('mimetype'),
@@ -257,7 +267,7 @@ export default Ember.Component.extend({
           });
         });
       });
-      
+
       return PromiseArray.create({
         promise: defer.promise
       });

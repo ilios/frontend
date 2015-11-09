@@ -1,10 +1,12 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  notes: DS.attr('string'),
-  required: DS.attr('boolean'),
-  publicNotes: DS.attr('boolean'),
-  session: DS.belongsTo('session', {async: true}),
-  learningMaterial: DS.belongsTo('learning-material', {async: true}),
-  meshDescriptors: DS.hasMany('mesh-descriptors', {async: true}),
+const { attr, belongsTo, hasMany, Model } = DS;
+
+export default Model.extend({
+  notes: attr('string'),
+  required: attr('boolean', { defaultValue: true }),
+  publicNotes: attr('boolean', { defaultValue: true }),
+  session: belongsTo('session', { async: true }),
+  learningMaterial: belongsTo('learning-material', { async: true }),
+  meshDescriptors: hasMany('mesh-descriptors', { async: true })
 });
