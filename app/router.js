@@ -37,6 +37,7 @@ Router.map(function() {
   this.route('users', {});
   this.route('user', {path: '/users/:user_id'});
   this.route('fourOhFour', { path: "*path"});
+  this.route('logout');
 });
 
 export default Router;
