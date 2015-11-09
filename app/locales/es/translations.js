@@ -136,7 +136,7 @@ export default {
     'courses': 'Cursos y Sessiones',
     'logo': 'Logo de Ilios',
     'menu': 'El Menú de Ilios',
-    'admin': 'Administración',
+    'admin': 'Admin'
   },
   'mesh': {
     'buttonTitle': 'Seleccione MeSH ({{count}})',

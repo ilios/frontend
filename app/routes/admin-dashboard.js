@@ -1,4 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const { Route } = Ember;
+
+export default Route.extend({
+  setupController() {
+    this._super(...arguments);
+
+    this.controllerFor('application').set('pageTitleTranslation', 'navigation.admin');
+  }
 });
