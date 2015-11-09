@@ -8,13 +8,20 @@
       <table>
         <tbody>
           {{#each sortedListOfCourses as |course|}}
-            {{#link-to 'course' course}}
-              <tr class='clickable'>
-                <td>{{fa-icon 'external-link-square'}}</td>
-                <td>{{course.academicYear}}</td>
-                <td>{{course.title}}</td>
+            {{#if (can 'edit courses')}}
+              {{#link-to 'course' course}}
+                <tr class='clickable'>
+                  <td>{{fa-icon 'external-link-square'}}</td>
+                  <td>{{course.academicYear}}</td>
+                  <td colspan=2>{{course.title}}</td>
+                </tr>
+              {{/link-to}}
+            {{else}}
+              <tr>                
+                <td colspan=1>{{course.academicYear}}</td>
+                <td colspan=3>{{course.title}}</td>
               </tr>
-            {{/link-to}}
+            {{/if}}
           {{/each}}
         </tbody>
       </table>
