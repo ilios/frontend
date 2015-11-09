@@ -268,7 +268,7 @@ test('cancel remove offering', function(assert) {
 });
 
 test('users can create a new offering or small groups (single and multi-day)', function(assert) {
-  assert.expect(25);
+  assert.expect(23);
 
   const expandButton = '.expand-button';
   const multiDayButton = '.single-multi-day .switch-label';
@@ -312,7 +312,6 @@ test('users can create a new offering or small groups (single and multi-day)', f
     let startBoxes = find(startTimes, container);
     pickOption(startBoxes[0], '2', assert);
     pickOption(startBoxes[1], '15', assert);
-    pickOption(startBoxes[2], 'am', assert);
 
     let endBoxes = find(endTimes, container);
     pickOption(endBoxes[0], '3', assert);
@@ -351,7 +350,6 @@ test('users can create a new offering or small groups (single and multi-day)', f
     let startBoxes = find(startTimes, container);
     pickOption(startBoxes[0], '2', assert);
     pickOption(startBoxes[1], '15', assert);
-    pickOption(startBoxes[2], 'am', assert);
 
     let endBoxes = find(endTimes, container);
     pickOption(endBoxes[0], '3', assert);
@@ -372,7 +370,7 @@ test('users can create a new offering or small groups (single and multi-day)', f
 });
 
 test('users can edit existing offerings (single & multi-day)', function(assert) {
-  assert.expect(29);
+  assert.expect(27);
 
   const editButton = '.offering-detail-box i:first';
   const multiDayButton = '.ismultiday .switch-label';
@@ -419,7 +417,6 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
     let startBoxes = find(startTimes, container);
     pickOption(startBoxes[0], '11', assert);
     pickOption(startBoxes[1], '45', assert);
-    pickOption(startBoxes[2], 'am', assert);
 
     let endBoxes = find(endTimes, container);
     pickOption(endBoxes[0], '5', assert);
@@ -457,7 +454,6 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
     let endBoxes = find(endTimes, container);
     pickOption(endBoxes[0], '7', assert);
     pickOption(endBoxes[1], '30', assert);
-    pickOption(endBoxes[2], 'pm', assert);
   });
 
   click(learnerGroupOne);
