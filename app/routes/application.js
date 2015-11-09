@@ -8,11 +8,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   flashMessages: service(),
 
   actions: {
-    sessionInvalidationSucceeded(){
-      this.get('flashMessages').success('auth.confirmLogout');
-      this.transitionTo('login');
-    },
-
     error(error, transition) {
       transition.abort();
 

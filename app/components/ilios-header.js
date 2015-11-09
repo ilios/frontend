@@ -14,9 +14,6 @@ export default Ember.Component.extend({
     }).filter(locale => locale.id !== this.get('i18n.locale'));
   }),
   actions: {
-    logout(){
-      this.get('session').invalidate();
-    },
     changeLocale(newLocale){
       this.get('i18n').set('locale', newLocale);
     }

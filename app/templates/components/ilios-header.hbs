@@ -9,7 +9,9 @@
     {{#if session.isAuthenticated}}
       <div class='user'>
         {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
-          <li {{action 'logout'}}>{{t "auth.logout"}}</li>
+          {{#link-to 'logout'}}
+            <li>{{t "auth.logout"}}</li>
+          {{/link-to}}
           {{#each locales as |loc|}}
             <li {{action 'changeLocale' loc.id}}>{{loc.text}}</li>
           {{/each}}
