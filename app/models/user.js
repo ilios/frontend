@@ -56,7 +56,6 @@ var User = DS.Model.extend({
     }
   ),
   programYears: DS.hasMany('program-year', {async: true}),
-  alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
   cohorts: DS.hasMany('cohort', {
       async: true,
