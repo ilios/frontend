@@ -73,7 +73,7 @@ export default {
   logError(error) {
     Ember.$.ajax('/errors', {
       type: 'POST',
-      data: JSON.stringify(error)
+      data: {data: JSON.stringify(error)}
     });
   }
 };
