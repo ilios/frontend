@@ -25,11 +25,14 @@ export default DS.Model.extend({
       if(model === 'instructor'){
         model = 'user';
       }
+      if(model === 'mesh-term'){
+        model = 'mesh-descriptor';
+      }
       this.store.findRecord(model, this.get('prepositionalObjectTableRowId')).then(record => {
         let object;
         if(model === 'user'){
           object = record.get('fullName');
-        } else if(model === 'mesh-term'){
+        } else if(model === 'mesh-descriptor'){
           object = record.get('name');
         } else {
           object = record.get('title');

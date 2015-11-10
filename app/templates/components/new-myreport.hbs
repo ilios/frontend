@@ -41,8 +41,17 @@
           {{/if}}
         {{else if (is-equal currentPrepositionalObject 'mesh term')}}
           {{#if selectedMeshTerm}}
-            <ul class='removable-list'>
-              <li {{action 'changePrepositionalObjectId' null}}>{{selectedMeshTerm.name}} {{fa-icon 'remove'}}</li>
+            <ul class='removable-list selected-mesh-terms'>
+              <div class="content">
+                <span class="descriptor-name">{{selectedMeshTerm.name}}</span>
+                <span class="descriptor-id">
+                  {{selectedMeshTerm.id}}
+                  {{#if selectedMeshTerm.trees}}
+                    - {{selectedMeshTerm.trees.lastObject.treeNumber}}
+                  {{/if}}
+                </span>
+              </div>
+              {{fa-icon 'remove'}}
             </ul>
           {{else}}
             {{mesh-manager

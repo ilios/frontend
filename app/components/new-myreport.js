@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   i18n: service(),
   currentUser: service(),
   flashMessages: service(),
-  classNames: ['detail-view', 'new-myreport'],
+  classNames: ['form-container', 'detail-view', 'new-myreport', 'mesh-manager'],
   title: null,
   currentSubject: 'course',
   currentPrepositionalObject: null,
