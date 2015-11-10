@@ -40,11 +40,12 @@ export default Ember.Component.extend({
       {value: 'program', label: this.get('i18n').t('general.programs'), subjects: ['course', 'session', 'topic']},
       {value: 'program year', label: this.get('i18n').t('general.programYears'), subjects: ['course', 'session', 'topic']},
       {value: 'instructor', label: this.get('i18n').t('general.instructors'), subjects: ['course', 'session', 'instructor group', 'learning material', 'topic', 'session type']},
-      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroups'), subjects: ['course', 'session', 'learning material', 'topic', 'session type']},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterials'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'sessiontype']},
-      {value: 'competency', label: this.get('i18n').t('general.competencies'), subjects: ['course', 'session', 'session type']},
+      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroups'), subjects: ['course', 'session', 'instructor', 'learning material', 'topic', 'session type']},
+      {value: 'learning material', label: this.get('i18n').t('general.learningMaterials'), subjects: ['course', 'session', 'instructor', 'instructor group', 'topic', 'mesh term', 'sessiontype']},
+      {value: 'competency', label: this.get('i18n').t('general.competencies'), subjects: ['course', 'session', 'topic', 'session type']},
       {value: 'topic', label: this.get('i18n').t('general.topics'), subjects: ['course', 'session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term']},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerms'), subjects: ['course', 'session', 'learning material', 'session type']},
+      {value: 'mesh term', label: this.get('i18n').t('general.meshTerms'), subjects: ['course', 'session', 'learning material', 'topic', 'session type']},
+      {value: 'session type', label: this.get('i18n').t('general.sessionTypes'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
     ];
     
     const subject = this.get('currentSubject');
