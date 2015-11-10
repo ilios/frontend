@@ -45,4 +45,13 @@ export default DS.Model.extend({
     }
     
   }),
+  isFile: computed('link', 'citation', 'absoluteFileUri', function() {
+    return (this.get('type') === 'file');
+  }),
+  isLink: computed('link', 'citation', 'absoluteFileUri', function() {
+    return (this.get('type') === 'link');
+  }),
+  isCitation: computed('link', 'citation', 'absoluteFileUri', function() {
+    return (this.get('type') === 'citation');
+  })
 });
