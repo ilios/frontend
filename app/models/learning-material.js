@@ -19,7 +19,7 @@ export default DS.Model.extend({
   filename: DS.attr('string'),
   mimetype: DS.attr('string'),
   filesize: DS.attr('number'),
-  link: DS.attr('string', {defaultValue: 'http://'}),
+  link: DS.attr('string'),
   absoluteFileUri: DS.attr('string'),
   type: computed('filename', 'citation', 'link', function(){
     if (this.get('filename')) {
