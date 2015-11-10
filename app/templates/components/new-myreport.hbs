@@ -29,10 +29,16 @@
       </div>
       {{#liquid-if currentPrepositionalObject class='crossFade'}}
         {{#if (is-equal currentPrepositionalObject 'instructor')}}
-          {{user-search
-            addUser='chooseInstructor'
-            roles='1'
-          }}
+          {{#if selectedUser}}
+            <ul class='removable-list'>
+              <li {{action 'changePrepositionalObjectId' null}}>{{selectedUser.fullName}} {{fa-icon 'remove'}}</li>
+            </ul>
+          {{else}}
+            {{user-search
+              addUser='chooseInstructor'
+              roles='1'
+            }}
+          {{/if}}
         {{else}}
           <div class='selectable-list'>
             {{#liquid-if prepositionalObjectIdList.isFulfilled class='crossFade'}}

@@ -3,7 +3,7 @@ import DS from 'ember-data';
 
 const { computed, inject, RSVP, isEmpty } = Ember;
 const { service } = inject;
-const { PromiseArray } = DS;
+const { PromiseArray, PromiseObject } = DS;
 
 export default Ember.Component.extend({
   store: service(),
@@ -84,12 +84,23 @@ export default Ember.Component.extend({
     
     return currentSubject.label;
   }),
+  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
+    if(
+      this.get('currentPrepositionalObject') === 'instructor' &&
+      this.get('currentPrepositionalObjectId')
+    ){
+      return this.get('store').peekRecord('user', this.get('currentPrepositionalObjectId'));
+    } else {
+      return null;
+    }
+  }),
   actions: {
     changeSubject(subject){
       this.set('currentSubject', subject);
     },
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
+      this.set('currentPrepositionalObjectId', null);
     },
     changePrepositionalObjectId(id){
       this.set('currentPrepositionalObjectId', id);
