@@ -149,9 +149,9 @@ test('create new file learning material', function(assert) {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions .button', container).then(function(){
+    click('.learning-material-actions .button', container).then(function(){
       //pick the file type
-      click('.detail-actions ul li:eq(0)');
+      click('.learning-material-actions ul li:eq(0)');
     });
   });
   andThen(function(){
@@ -189,9 +189,9 @@ test('create new link learning material', function(assert) {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions .button', container).then(function(){
+    click('.learning-material-actions .button', container).then(function(){
       //pick the link type
-      click('.detail-actions ul li:eq(1)');
+      click('.learning-material-actions ul li:eq(1)');
     });
   });
   andThen(function(){
@@ -230,9 +230,9 @@ test('create new citation learning material', function(assert) {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions .button', container).then(function(){
+    click('.learning-material-actions .button', container).then(function(){
       //pick the citation type
-      click('.detail-actions ul li:eq(2)');
+      click('.learning-material-actions ul li:eq(2)');
     });
   });
   andThen(function(){
@@ -266,8 +266,8 @@ test('issue #345 second new learning material defaults', function(assert) {
   var container;
   andThen(function() {
     container = find('.detail-learning-materials');
-    click(find('.detail-actions .button', container)).then(function(){
-      click(find('.detail-actions ul li:eq(0)', container));
+    click(find('.learning-material-actions .button', container)).then(function(){
+      click(find('.learning-material-actions ul li:eq(0)', container));
     });
   });
   andThen(function(){
@@ -276,13 +276,13 @@ test('issue #345 second new learning material defaults', function(assert) {
     click('.detail-learning-materials .newlearningmaterial .cancel');
   });
   andThen(function(){
-    click(find('.detail-actions .button', container)).then(function(){
-      click(find('.detail-actions ul li:eq(0)', container));
+    click(find('.learning-material-actions .button', container)).then(function(){
+      click(find('.learning-material-actions ul li:eq(0)', container));
     });
   });
   andThen(function(){
-    click(find('.detail-actions .button', container)).then(function(){
-      click(find('.detail-actions ul li:eq(0)', container));
+    click(find('.learning-material-actions .button', container)).then(function(){
+      click(find('.learning-material-actions ul li:eq(0)', container));
     });
     assert.equal(getElementText(find('select:eq(0) option:selected', container)), getText(fixtures.statuses[0].title));
     assert.equal(getElementText(find('select:eq(1) option:selected', container)), getText(fixtures.roles[0].title));
@@ -296,8 +296,8 @@ test('cancel new learning material', function(assert) {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions .button', container);
-    click('.detail-actions ul li:eq(0)');
+    click('.learning-material-actions .button', container);
+    click('.learning-material-actions ul li:eq(0)');
   });
   andThen(function(){
     click('.detail-learning-materials .newlearningmaterial .cancel');
@@ -589,7 +589,7 @@ test('find and add learning material', function(assert) {
       later(function(){
         let searchResults = find('.results li', container);
         assert.equal(searchResults.length, 1);
-        assert.equal(getElementText($(searchResults[0])), getText('Letter to Doc Brown'));
+        assert.equal(getElementText($('.results li:eq(0) h4')), getText('Letter to Doc Brown'));
         click(searchResults[0]);
 
         andThen(function(){

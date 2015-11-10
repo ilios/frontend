@@ -14,10 +14,8 @@
       </span>
     {{/if}}
   </div>
-  <div class="filter-tools">
-    {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
-  </div>
-  <div class='detail-actions'>
+
+  <div class='learning-material-actions'>
     {{#if isManaging}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
@@ -29,6 +27,9 @@
       {{/action-menu}}
     {{/if}}
   </div>
+
+  {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
+
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
       {{#if isManagingMaterial}}

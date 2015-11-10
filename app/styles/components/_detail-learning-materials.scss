@@ -1,0 +1,11 @@
+.detail-learning-materials {
+  .learning-material-actions {
+    @include span-columns(3 of 12);
+    @include omega;
+    float: right;
+    margin-top: 1em;
+    padding-right: .3em;
+    text-align: right;
+    vertical-align: middle;
+  }
+}

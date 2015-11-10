@@ -1,0 +1,52 @@
+.learningmaterial-search {
+  clear: both;
+  display: block;
+  overflow: hidden;
+
+  .search-input {
+    display: block;
+    margin: 1em auto;
+    width: 400px;
+  }
+
+  .results {
+    background: $white;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    max-height: 14em;
+    max-width: 700px;
+    overflow: auto;
+
+    li {
+      border-bottom: 1px solid $learner-group-grey;
+      min-height: 3.25em;
+      padding: .25em 1em;
+      position: relative;
+
+      &:hover {
+        background: $super-light-grey;
+      }
+
+      .learning-material-title {
+        color: $black;
+        display: block;
+        margin: 0;
+      }
+
+      .learning-material-description {
+        color: $dark-grey;
+        display: block;
+        font-size: .75em;
+      }
+
+      .learning-material-status {
+        color: $ilios-red;
+        font-size: .75em;
+        position: absolute;
+        right: 5px;
+        top: 0;
+      }
+    }
+  }
+}

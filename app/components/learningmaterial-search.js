@@ -1,26 +1,32 @@
 import Ember from 'ember';
 
-const {inject, run, computed} = Ember;
-const {service} = inject;
-const {debounce} = run;
-const {or, notEmpty} = computed;
+const { Component, computed, inject, run } = Ember;
+const { service } = inject;
+const { debounce } = run;
+const { notEmpty, or } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
+  classNames: ['learningmaterial-search'],
+
   store: service(),
   i18n: service(),
-  classNames: ['learningmaterial-search'],
+
   results: [],
   currentMaterials: [],
   searching: false,
   showMoreInputPrompt: false,
   showNoResultsMessage: false,
   currentlySearchingForTerm: false,
+
   hasResults: notEmpty('results'),
+
   showList: or('searching', 'showMoreInputPrompt', 'showNoResultsMessage', 'hasResults'),
+
   actions: {
     clear() {
       let input = this.$('input')[0];
       input.value = '';
+
       this.setProperties({
         searchTerms: '',
         showMoreInputPrompt: false,
@@ -30,49 +36,64 @@ export default Ember.Component.extend({
         showClearButton: false,
       });
     },
-    inputValueChanged(){
+
+    inputValueChanged() {
       let input = this.$('input')[0];
       let searchTerms = input.value;
-      if(this.get('currentlySearchingForTerm') === searchTerms){
+
+      if (this.get('currentlySearchingForTerm') === searchTerms) {
         return;
       }
+
       this.setProperties({
         currentlySearchingForTerm: searchTerms,
         showMoreInputPrompt: false,
         showNoResultsMessage: false,
         searching: false,
       });
+
       let noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
-      if(noWhiteSpaceTerm.length === 0){
+
+      if (noWhiteSpaceTerm.length === 0){
         this.send('clear');
         return;
-      } else if(noWhiteSpaceTerm.length < 3){
+      } else if (noWhiteSpaceTerm.length < 3) {
         this.setProperties({
           results: [],
           showMoreInputPrompt: true,
         });
+
         return;
       }
+
       this.set('searching', true);
-      debounce(this, function(){
+
+      debounce(this, function() {
         this.send('search', searchTerms);
-      }, 1000);
+      }, 300);
     },
-    search(searchTerms){
+
+    search(searchTerms) {
+      const store = this.get('store');
+
       this.set('searching', true);
-      this.get('store').query('learningMaterial', {q: searchTerms}).then(learningMaterials => {
-        let results = learningMaterials.filter(learningMaterial => {
+      store.query('learningMaterial', { q: searchTerms }).then((learningMaterials) => {
+        let results = learningMaterials.filter((learningMaterial) => {
           return !this.get('currentMaterials').contains(learningMaterial);
         });
+
         this.set('searching', false);
-        if(results.get('length') === 0){
+
+        if (results.get('length') === 0) {
           this.set('showNoResultsMessage', true);
         }
+
         this.set('results', results.sortBy('title'));
       });
     },
-    add(lm){
+
+    add(lm) {
       this.sendAction('add', lm);
-    },
+    }
   }
 });
