@@ -64,15 +64,39 @@ export default Ember.Component.extend({
       limit: 1000
     };
     store.query(model, query).then(objects => {
-      let label = type === 'mesh term'?'name':'title';
-      let values = objects.map(object => {
-        return {
-          value: object.get('id'),
-          label: object.get(label)
-        };
-      }).sortBy('label');
+      if(type === 'program year'){
+        RSVP.all(objects.mapBy('cohort')).then(cohorts => {
+          let promises = [];
+          let values = [];
+          cohorts.forEach(cohort => {
+            promises.pushObject(cohort.get('programYear').then(programYear => {
+              return programYear.get('program').then(program => {
+                return program.get('school').then(school => {
+                  let value = programYear.get('id');
+                  let label = school.get('title') + ' ' +
+                    program.get('title') + ' ' +
+                    cohort.get('displayTitle');
+                  values.pushObject({value,label});
+                });
+              });
+            }));
+            RSVP.all(promises).then(()=> {
+              defer.resolve(values.sortBy('label'));
+            });
+          });
+        });
+      } else {
+        let label = type === 'mesh term'?'name':'title';
+        let values = objects.map(object => {
+          return {
+            value: object.get('id'),
+            label: object.get(label)
+          };
+        }).sortBy('label');
+        
+        defer.resolve(values);
+      }
       
-      defer.resolve(values);
     });
     return PromiseArray.create({
       promise: defer.promise
