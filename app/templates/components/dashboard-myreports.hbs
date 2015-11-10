@@ -1,27 +1,38 @@
 <div class='dashboard-block-header'>
   {{t 'dashboard.myReports'}}
-  <div class="dashboard-block-actions">{{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}</div>
+  <div class="dashboard-block-actions">
+    {{#liquid-if selectedReport class='crossFade'}}
+      <button {{action 'selectReport' null}}>{{t 'dashboard.allReports'}}</button>
+    {{else}}
+      {{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}
+    {{/liquid-if}}
+  </div>
 </div>
 
-<div class='dashboard-block-body'>
-  {{#liquid-if myReportEditorOn class='vertical'}}
-    {{new-myreport close='toggleEditor'}}
-  {{/liquid-if}}
-  {{#if listOfReports.isFulfilled}}
-    {{#if sortedReports.length}}
-      <table>
-        <tbody>
-          {{#each sortedReports as |report|}}
-          <tr {{action 'selectReport' report}} class='clickable'>
-            <td>{{fa-icon 'external-link-square'}} {{report.displayTitle.content}}</td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
+{{#liquid-if selectedReport class='crossFade'}}
+  <h3>{{selectedReport.displayTitle.content}}</h3>
+  report details will go here
+{{else}}
+  <div class='dashboard-block-body'>
+    {{#liquid-if myReportEditorOn class='vertical'}}
+      {{new-myreport close='toggleEditor'}}
+    {{/liquid-if}}
+    {{#if listOfReports.isFulfilled}}
+      {{#if sortedReports.length}}
+        <table>
+          <tbody>
+            {{#each sortedReports as |report|}}
+            <tr {{action 'selectReport' report}} class='clickable'>
+              <td>{{fa-icon 'external-link-square'}} {{report.displayTitle.content}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        {{t 'general.none'}}
+      {{/if}}
     {{else}}
-      {{t 'general.none'}}
+      <h1>{{fa-icon 'spinner' spin=true}}</h1>
     {{/if}}
-  {{else}}
-    <h1>{{fa-icon 'spinner' spin=true}}</h1>
-  {{/if}}
-</div>
+  </div>
+{{/liquid-if}}

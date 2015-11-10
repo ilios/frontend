@@ -373,6 +373,7 @@ export default {
     'associatedToThe': 'Associated with',
     'reportMissingMeshTerm': 'MeSH Term is Required',
     'reportMissingInstructor': 'Instructor is Required',
+    'allReports': 'All Reports',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',
     'topicOrDetail': 'Topic/Detail',

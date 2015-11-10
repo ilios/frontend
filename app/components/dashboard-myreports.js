@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['dashboard-block', 'dashboard-double-block'],
   myReportEditorOn: false,
+  selectedReport: null,
   reportSorting: ['title'],
   sortedReports: Ember.computed.sort('listOfReports', 'reportSorting'),
   listOfReports: Ember.computed('currentUser.model.allRelatedCourses.[]', function(){
@@ -23,9 +24,11 @@ export default Ember.Component.extend({
     toggleEditor() {
       this.set('myReportEditorOn', !this.get('myReportEditorOn'));
     },
-
     closeEditor() {
       this.set('myReportEditorOn', false);
+    },
+    selectReport(report){
+      this.set('selectedReport', report);
     }
   }
 });
