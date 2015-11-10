@@ -4,7 +4,8 @@ import DS from 'ember-data';
 export default Ember.Component.extend({
   currentUser: Ember.inject.service(),
   tagName: 'div',
-  classNames: ['dashboard-block'],
+  classNames: ['dashboard-block', 'dashboard-double-block'],
+  myReportEditorOn: true,
   reportSorting: ['title'],
   sortedReports: Ember.computed.sort('listOfReports', 'reportSorting'),
   listOfReports: Ember.computed('currentUser.model.allRelatedCourses.[]', function(){

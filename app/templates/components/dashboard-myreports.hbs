@@ -4,6 +4,9 @@
 </div>
 
 <div class='dashboard-block-body'>
+  {{#liquid-if myReportEditorOn class='vertical'}}
+    {{new-myreport close='toggleEditor'}}
+  {{/liquid-if}}
   {{#if listOfReports.isFulfilled}}
     {{#if sortedReports.length}}
       <table>
@@ -21,11 +24,4 @@
   {{else}}
     <h1>{{fa-icon 'spinner' spin=true}}</h1>
   {{/if}}
-  {{#liquid-if myReportEditorOn class='vertical'}}
-      {{new-myreport
-        toggleFn=myReportEditorOn
-        closeEditor='closeEditor'
-        class="form-container"
-      }}
-  {{/liquid-if}}
 </div>

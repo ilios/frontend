@@ -1,28 +1,57 @@
-<section class='new-myreport'>
-    <div class="form-title">{{t 'dashboard.newReport'}}</div>
-    <div class="detail-content">
-        <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
-        <div class="form-data">{{input value=myreport.title placeholder=placeholder}}</div>
-        <label class="form-label">{{t 'general.all'}}:</label>
-        <div class='selectable-list'>
-            <ul>
-                {{#each subjects as |subject|}}
-                    <li {{action 'add' subject}}>{{subject}}</li>
-                {{/each}}
-            </ul>
-        </div>
-        {{input type='checkbox' checked=false}}
-        <label class="form-label">{{t 'dashboard.associatedToThe'}}:</label>
-        <div class='selectable-list'>
-            <ul>
-                {{#each prepositionalObjects as |po|}}
-                    <li {{action 'add' po}}>{{po}}</li>
-                {{/each}}
-            </ul>
-        </div>
-        <div class="input-buttons">
-            <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-            <button class='cancel text' {{action 'closeEditor'}}>{{t 'general.cancel'}}</button>
-        </div>
+<div class="form-title">{{t 'dashboard.newReport'}}</div>
+<div class="detail-content">
+    <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
+    <div class="form-data">{{input value=title}}</div>
+    <label class="form-label">{{t 'general.all'}}:</label>
+    <div class='selectable-list'>
+      <select onchange={{action "changeSubject" value="target.value"}}>
+        {{#each subjectList as |option|}}
+          <option value={{option.value}} selected={{is-equal option.value currentSubject}}>
+            {{option.label}}
+          </option>
+        {{/each}}
+      </select>
     </div>
-</section>
+    {{input enter='toggleIsAssociatedTo' type='checkbox' checked=isAssociatedTo}}
+    <label class="form-label">{{t 'dashboard.associatedToThe'}}:</label>
+    {{#if isAssociatedTo}}
+      <div class='selectable-list'>
+        <select onchange={{action "changePrepositionalObject" value="target.value"}}>
+          <option value=null selected={{is-equal null currentPrepositionalObject}}>
+            {{t 'general.all'}} {{currentSubjectLabel}}
+          </option>
+          {{#each prepositionalObjectList as |option|}}
+            <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObject}}>
+              {{option.label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      {{#liquid-if currentPrepositionalObject class='crossFade'}}
+        {{#if (is-equal currentPrepositionalObject 'instructor')}}
+          {{user-search
+            addUser='chooseInstructor'
+            roles='1'
+          }}
+        {{else}}
+          <div class='selectable-list'>
+            {{#liquid-if prepositionalObjectIdList.isFulfilled class='crossFade'}}
+              <select onchange={{action "changePrepositionalObjectId" value="target.value"}}>
+                {{#each prepositionalObjectIdList as |option|}}
+                  <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
+                    {{option.label}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else}}
+              {{fa-icon 'spinner' spin=true}}
+            {{/liquid-if}}
+          </div>
+        {{/if}}
+      {{/liquid-if}}
+    {{/if}}
+    <div class="input-buttons">
+        <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+        <button class='cancel text' {{action 'closeEditor'}}>{{t 'general.cancel'}}</button>
+    </div>
+</div>

@@ -102,6 +102,7 @@ $course: #ddd1e7;
     border: 1px solid $ilios-blue;
     margin-top: 1em;
 
+    
     .dashboard-block-actions {
       float: right;
     }
@@ -116,9 +117,9 @@ $course: #ddd1e7;
     }
 
     .form-label {
-      text-align: left;
       font-size: .9em;
       font-weight: bold;
+      text-align: left;
 
       &.sub-label {
         font-size: .8em;
@@ -142,14 +143,18 @@ $course: #ddd1e7;
     }
 
     .dashboard-block-body {
-      height: 200px;
+      height: 20em;
       overflow-y: scroll;
+    }
+    
+    &.dashboard-double-block .dashboard-block-body {
+      height: 40em;
     }
 
     .form-container {
+      border: $header-grey 2px solid;
       margin: 10px;
       padding: 10px;
-      border: $header-grey 2px solid;
     }
   }
 
