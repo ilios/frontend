@@ -11,7 +11,19 @@
 
 {{#liquid-if selectedReport class='crossFade'}}
   <h3>{{selectedReport.displayTitle.content}}</h3>
-  report details will go here
+  {{#if reportResultsList.isFulfilled}}
+    {{#if reportResultsList.length}}
+      <ul>
+        {{#each reportResultsList as |item|}}
+          <li>{{item.value}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      {{t 'general.none'}}
+    {{/if}}
+  {{else}}
+    <h1>{{fa-icon 'spinner' spin=true}}</h1>
+  {{/if}}
 {{else}}
   <div class='dashboard-block-body'>
     {{#liquid-if myReportEditorOn class='vertical'}}
