@@ -3,12 +3,13 @@ import DS from 'ember-data';
 
 const { computed, inject, RSVP, isEmpty } = Ember;
 const { service } = inject;
-const { PromiseArray, PromiseObject } = DS;
+const { PromiseArray } = DS;
 
 export default Ember.Component.extend({
   store: service(),
   i18n: service(),
   currentUser: service(),
+  flashMessages: service(),
   classNames: ['form-container', 'new-myreport'],
   title: null,
   currentSubject: 'course',
@@ -115,7 +116,21 @@ export default Ember.Component.extend({
       this.sendAction('close');
     },
     save(){
+      const flashMessages = this.get('flashMessages');
       const store = this.get('store');
+      let object = this.get('currentPrepositionalObject');
+      if(
+        object &&
+        !this.get('currentPrepositionalObjectId')
+      ) {
+        if(object === 'instructor'){
+          flashMessages.alert('dashboard.reportMissingInstructor');
+        }
+        if(object === 'mesh term'){
+          flashMessages.alert('dashboard.reportMissingMeshTerm');
+        }
+        return;
+      }
       this.get('currentUser.model').then(user => {
         
         let title = this.get('title');
