@@ -42,6 +42,7 @@ export default {
     'users': 'Users',
     'sessions': 'Sessions',
     'session': 'Session',
+    'sessionTypes': 'Session Types',
     'programYears': 'Program Years',
     'learners': 'Learners',
     'learnerGroups': 'Learner Groups',
