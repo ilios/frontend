@@ -13,7 +13,7 @@
         <tbody>
           {{#each sortedReports as |report|}}
           <tr {{action 'selectReport' report}} class='clickable'>
-            <td>{{fa-icon 'external-link-square'}} {{report.title}}</td>
+            <td>{{fa-icon 'external-link-square'}} {{report.displayTitle.content}}</td>
           </tr>
           {{/each}}
         </tbody>

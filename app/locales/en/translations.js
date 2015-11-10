@@ -368,6 +368,8 @@ export default {
     'myReports': 'My Reports',
     'newReport': 'New Report',
     'reportTitle': 'Report Title',
+    'reportDisplayTitleWithObject': 'All {{subject}} for {{object}}',
+    'reportDisplayTitleWithoutObject': 'All {{subject}}',
     'associatedToThe': 'Associated to',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',
