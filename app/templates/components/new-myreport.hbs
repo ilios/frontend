@@ -39,6 +39,16 @@
               roles='1'
             }}
           {{/if}}
+        {{else if (is-equal currentPrepositionalObject 'mesh term')}}
+          {{#if selectedMeshTerm}}
+            <ul class='removable-list'>
+              <li {{action 'changePrepositionalObjectId' null}}>{{selectedMeshTerm.name}} {{fa-icon 'remove'}}</li>
+            </ul>
+          {{else}}
+            {{mesh-manager
+              add='chooseMeshTerm'
+            }}
+          {{/if}}
         {{else}}
           <div class='selectable-list'>
             {{#liquid-if prepositionalObjectIdList.isFulfilled class='crossFade'}}

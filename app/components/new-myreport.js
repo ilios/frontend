@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   i18n: service(),
   currentUser: service(),
   flashMessages: service(),
-  classNames: ['form-container', 'new-myreport'],
+  classNames: ['detail-view', 'new-myreport'],
   title: null,
   currentSubject: 'course',
   currentPrepositionalObject: null,
@@ -95,6 +95,16 @@ export default Ember.Component.extend({
       return null;
     }
   }),
+  selectedMeshTerm: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
+    if(
+      this.get('currentPrepositionalObject') === 'mesh term' &&
+      this.get('currentPrepositionalObjectId')
+    ){
+      return this.get('store').peekRecord('mesh-descriptor', this.get('currentPrepositionalObjectId'));
+    } else {
+      return null;
+    }
+  }),
   actions: {
     changeSubject(subject){
       this.set('currentSubject', subject);
@@ -111,6 +121,9 @@ export default Ember.Component.extend({
     },
     chooseInstructor(user){
       this.set('currentPrepositionalObjectId', user.get('id'));
+    },
+    chooseMeshTerm(term){
+      this.set('currentPrepositionalObjectId', term.get('id'));
     },
     closeEditor(){
       this.sendAction('close');
