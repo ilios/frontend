@@ -17,11 +17,7 @@ module('Acceptance: Session - Publication Check' + testgroup, {
     server.create('course', {
       sessions: [1,2]
     });
-    server.create('sessionType', {
-      sessions: [1],
-      school: 1
-    });
-    server.create('sessionType', {
+    server.createList('sessionType', 2, {
       school: 1
     });
     server.create('sessionDescription', {
@@ -241,17 +237,17 @@ test('change type', function(assert) {
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
+    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
     click(find('.sessiontype .editable', container));
     andThen(function(){
       let options = find('.sessiontype select option', container);
       assert.equal(options.length, 2);
       assert.equal(getElementText(options.eq(0)), getText('session type 0'));
       assert.equal(getElementText(options.eq(1)), getText('session type 1'));
-      pickOption(find('.sessiontype select', container), 'session type 1', assert);
+      pickOption(find('.sessiontype select', container), 'session type 0', assert);
       click(find('.sessiontype .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
+        assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
       });
     });
   });

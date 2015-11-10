@@ -21,11 +21,7 @@ module('Acceptance: Session - Overview' + testgroup, {
     });
     server.create('academicYear');
     server.create('course');
-    fixtures.selectedSessionType = server.create('sessionType', {
-      sessions: [1],
-      school: 1
-    });
-    fixtures.otherSessionType = server.create('sessionType', {
+    fixtures.sessionTypes = server.createList('sessionType', 2, {
       school: 1
     });
     fixtures.sessionDescription = server.create('sessionDescription');
@@ -48,7 +44,7 @@ test('check fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText(fixtures.selectedSessionType.title));
+    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
     assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
     assert.equal(find('.sessionilmhours', container).length, 0);
   });
@@ -184,22 +180,23 @@ test('change title', function(assert) {
 test('change type', function(assert) {
   server.create('session', {
     course: 1,
-    sessionType: 2
+    sessionType: 1
   });
   visit(url);
   andThen(function() {
     var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText(fixtures.selectedSessionType.title));
+    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
     click(find('.sessiontype .editable', container));
     andThen(function(){
+      
       let options = find('.sessiontype select option', container);
       assert.equal(options.length, 2);
-      assert.equal(getElementText(options.eq(0)), getText(fixtures.selectedSessionType.title));
-      assert.equal(getElementText(options.eq(1)), getText(fixtures.otherSessionType.title));
-      pickOption(find('.sessiontype select', container), fixtures.otherSessionType.title, assert);
+      assert.equal(getElementText(options.eq(0)), getText('session type 0'));
+      assert.equal(getElementText(options.eq(1)), getText('session type 1'));
+      pickOption(find('.sessiontype select', container), 'session type 1', assert);
       click(find('.sessiontype .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.sessiontype .editable', container)), getText(fixtures.otherSessionType.title));
+        assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
       });
     });
   });

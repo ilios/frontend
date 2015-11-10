@@ -56,10 +56,8 @@ export default Ember.Component.extend(Publishable, {
     changeSessionType: function(newId){
       var session = this.get('session');
       var type = this.get('sessionTypes').findBy('id', newId);
-      session.set('clerkshipType', type);
-      session.save().then(newSession => {
-        type.get('sessions').addObject(newSession);
-      });
+      session.set('sessionType', type);
+      session.save();
     },
     changeSupplemental: function(value){
       this.get('session').set('supplemental', value);
