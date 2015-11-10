@@ -38,7 +38,6 @@ export default Ember.Component.extend({
       {value: 'course', label: this.get('i18n').t('general.courses'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
       {value: 'session', label: this.get('i18n').t('general.sessions'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term', 'session type']},
       {value: 'program', label: this.get('i18n').t('general.programs'), subjects: ['course', 'session', 'topic']},
-      {value: 'program year', label: this.get('i18n').t('general.programYears'), subjects: ['course', 'session', 'topic']},
       {value: 'instructor', label: this.get('i18n').t('general.instructors'), subjects: ['course', 'session', 'instructor group', 'learning material', 'topic', 'session type']},
       {value: 'instructor group', label: this.get('i18n').t('general.instructorGroups'), subjects: ['course', 'session', 'instructor', 'learning material', 'topic', 'session type']},
       {value: 'learning material', label: this.get('i18n').t('general.learningMaterials'), subjects: ['course', 'session', 'instructor', 'instructor group', 'topic', 'mesh term', 'sessiontype']},
@@ -64,39 +63,15 @@ export default Ember.Component.extend({
       limit: 1000
     };
     store.query(model, query).then(objects => {
-      if(type === 'program year'){
-        RSVP.all(objects.mapBy('cohort')).then(cohorts => {
-          let promises = [];
-          let values = [];
-          cohorts.forEach(cohort => {
-            promises.pushObject(cohort.get('programYear').then(programYear => {
-              return programYear.get('program').then(program => {
-                return program.get('school').then(school => {
-                  let value = programYear.get('id');
-                  let label = school.get('title') + ' ' +
-                    program.get('title') + ' ' +
-                    cohort.get('displayTitle');
-                  values.pushObject({value,label});
-                });
-              });
-            }));
-            RSVP.all(promises).then(()=> {
-              defer.resolve(values.sortBy('label'));
-            });
-          });
-        });
-      } else {
-        let label = type === 'mesh term'?'name':'title';
-        let values = objects.map(object => {
-          return {
-            value: object.get('id'),
-            label: object.get(label)
-          };
-        }).sortBy('label');
-        
-        defer.resolve(values);
-      }
+      let label = type === 'mesh term'?'name':'title';
+      let values = objects.map(object => {
+        return {
+          value: object.get('id'),
+          label: object.get(label)
+        };
+      }).sortBy('label');
       
+      defer.resolve(values);
     });
     return PromiseArray.create({
       promise: defer.promise
