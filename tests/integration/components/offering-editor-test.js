@@ -29,29 +29,6 @@ test('`toggleMultiDay` action triggers properly', function(assert) {
   assert.ok(isEmpty(this.$(endDateInput)), 'end date input is not visible');
 });
 
-test('`create` actions bubble up (to create learnergroup and close editor)', function(assert) {
-  assert.expect(2);
-
-  const flashMessages = {
-    clearMessages() {}
-  };
-
-  this.set('flashMessages', flashMessages);
-
-  this.render(hbs`{{offering-editor addMultipleOfferings='addMultipleOfferings' closeEditor='closeEditor' flashMessages=flashMessages}}`);
-
-  this.on('addMultipleOfferings', () => {
-    assert.ok(true, 'action bubbles up to create learnergroup');
-  });
-
-  this.on('closeEditor', () => {
-    assert.ok(true, 'action bubbles up to close editor');
-  });
-
-  this.$('.done').click();
-});
-
-
 test('`cancel` action bubbles up', function(assert) {
   assert.expect(1);
 

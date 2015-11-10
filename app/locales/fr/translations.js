@@ -260,7 +260,8 @@ export default {
     'calendarOff': "Calendrier éteindé",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer cette offre avec {{learnerGroupCount}} groupes d'apprenants?  Ça action ne peut pas être défait.",
     'offering': 'Offre',
-    'smallGroups': 'Groupes particulaires'
+    'smallGroups': 'Groupes particulaires',
+    'smallGroupMessage': "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de 'small groups'. Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton 'offre' au-dessus."
   },
   'learningMaterials': {
     'displayName': "Nom d'affichage",

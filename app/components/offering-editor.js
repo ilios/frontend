@@ -224,30 +224,37 @@ export default Component.extend({
     },
 
     create() {
-      if (this.datesValidated() && this.timesValidated()) {
-        let datesHash = this.calculateDateTimes();
-        let learnerGroups = this.getAllLearnerGroups();
+      const flashMessages = this.get('flashMessages');
 
-        let params = {
-          startDate: datesHash.startDate.toDate(),
-          endDate: datesHash.endDate.toDate(),
-          learnerGroups
-        };
+      if (!(this.datesValidated() && this.timesValidated())) {
+        flashMessages.alert('general.invalidDatetimes');
+        return;
+      }
 
-        if (this.get('smallGroupMode')) {
-          this.sendAction('addMultipleOfferings', params);
-        } else {
-          params.room = this.get('room') || 'TBD';
-          params.instructors = this.get('instructors');
-          params.instructorGroups = this.get('instructorGroups');
+      let datesHash = this.calculateDateTimes();
+      let learnerGroups = this.getAllLearnerGroups();
+      let params = {
+        startDate: datesHash.startDate.toDate(),
+        endDate: datesHash.endDate.toDate(),
+        learnerGroups
+      };
 
-          this.sendAction('addSingleOffering', params);
+      if (this.get('smallGroupMode')) {
+        if (isEmpty(learnerGroups)) {
+          this.get('flashMessages').alert('offerings.smallGroupMessage');
+          return;
         }
 
-        this.send('cancel');
+        this.sendAction('addMultipleOfferings', params);
       } else {
-        this.get('flashMessages').alert('general.invalidDatetimes');
+        params.room = this.get('room') || 'TBD';
+        params.instructors = this.get('instructors');
+        params.instructorGroups = this.get('instructorGroups');
+
+        this.sendAction('addSingleOffering', params);
       }
+
+      this.send('cancel');
     },
 
     cancel() {
