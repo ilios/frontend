@@ -1,4 +1,5 @@
 <input
+  class="search-input"
   type="search"
   placeholder={{t 'learningMaterials.searchPlaceholder'}}
   incremental=true
@@ -7,6 +8,7 @@
   results=5
   autosave='ilios-global-search'
 />
+
 <ul class="results {{unless showList 'hidden'}}" {{action 'clear'}}>
   {{#if searching}}
     <li>{{t 'general.currentlySearchingPrompt'}}</li>
@@ -17,7 +19,11 @@
   {{else}}
     {{#each results as |learningMaterial|}}
       <li {{action 'add' learningMaterial}}>
-        {{learningMaterial.title}}
+        <h4 class="learning-material-title">{{learningMaterial.title}}</h4>
+        <span class="learning-material-description">{{learningMaterial.description}}</span>
+        {{#if learningMaterial.status.title}}
+          <span class="learning-material-status">{{learningMaterial.status.title}}</span>
+        {{/if}}
       </li>
     {{/each}}
   {{/if}}
