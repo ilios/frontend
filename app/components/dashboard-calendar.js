@@ -305,14 +305,15 @@ export default Ember.Component.extend({
   selectedCourses: [],
   allCourses: Ember.computed('selectedSchool', 'selectedAcademicYear', function(){
     let defer = Ember.RSVP.defer();
-    this.get('selectedSchool').then(school => {
-      this.get('selectedAcademicYear').then(year => {
+    this.get('selectedSchool').then((school) => {
+      this.get('selectedAcademicYear').then((year) => {
         this.get('store').query('course', {
           filters: {
             school: school.get('id'),
             year: year.get('title')
-          }
-        }).then(courses => {
+          },
+          limit: 1000
+        }).then((courses) => {
           defer.resolve(courses.sortBy('title'));
         });
       });
