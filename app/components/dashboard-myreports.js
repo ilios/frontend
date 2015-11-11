@@ -53,6 +53,10 @@ export default Component.extend({
     },
     selectReport(report){
       this.set('selectedReport', report);
+    },
+    deleteReport(report){
+      report.deleteRecord();
+      report.save();
     }
   }
 });
