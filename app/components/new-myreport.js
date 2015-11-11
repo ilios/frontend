@@ -15,7 +15,6 @@ export default Ember.Component.extend({
   currentSubject: 'course',
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
-  isAssociatedTo: false,
   subjectList: computed('i18n.locale', function(){
     let list = [
       {value: 'course', label: this.get('i18n').t('general.courses')},
@@ -35,25 +34,25 @@ export default Ember.Component.extend({
   }),
   prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
     let list = [
-      {value: 'course', label: this.get('i18n').t('general.courses'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
-      {value: 'session', label: this.get('i18n').t('general.sessions'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term', 'session type']},
-      {value: 'program', label: this.get('i18n').t('general.programs'), subjects: ['course', 'session', 'topic']},
-      {value: 'instructor', label: this.get('i18n').t('general.instructors'), subjects: ['course', 'session', 'instructor group', 'learning material', 'topic', 'session type']},
-      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroups'), subjects: ['course', 'session', 'instructor', 'learning material', 'topic', 'session type']},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterials'), subjects: ['course', 'session', 'instructor', 'instructor group', 'topic', 'mesh term', 'sessiontype']},
-      {value: 'competency', label: this.get('i18n').t('general.competencies'), subjects: ['course', 'session', 'topic', 'session type']},
-      {value: 'topic', label: this.get('i18n').t('general.topics'), subjects: ['course', 'session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term']},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerms'), subjects: ['course', 'session', 'learning material', 'topic', 'session type']},
-      {value: 'session type', label: this.get('i18n').t('general.sessionTypes'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
+      {value: 'course', label: this.get('i18n').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
+      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term', 'session type']},
+      {value: 'program', label: this.get('i18n').t('general.program'), subjects: ['course', 'session', 'topic']},
+      {value: 'instructor', label: this.get('i18n').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'topic', 'session type']},
+      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'topic', 'session type']},
+      {value: 'learning material', label: this.get('i18n').t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'topic', 'mesh term', 'sessiontype']},
+      {value: 'competency', label: this.get('i18n').t('general.competency'), subjects: ['course', 'session', 'topic', 'session type']},
+      {value: 'topic', label: this.get('i18n').t('general.topic'), subjects: ['course', 'session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term']},
+      {value: 'mesh term', label: this.get('i18n').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'topic', 'session type']},
+      {value: 'session type', label: this.get('i18n').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
     ];
     
     const subject = this.get('currentSubject');
     
     return list.filter(item =>item.subjects.contains(subject));
   }),
-  prepositionalObjectIdList: computed('currentPrepositionalObject', 'isAssociatedTo', function(){
+  prepositionalObjectIdList: computed('currentPrepositionalObject', function(){
     const type = this.get('currentPrepositionalObject');
-    if(isEmpty(type) || type === 'instructor' || !this.get('isAssociatedTo')){
+    if(isEmpty(type) || type === 'instructor'){
       return [];
     }
     let defer = RSVP.defer();
@@ -115,9 +114,6 @@ export default Ember.Component.extend({
     },
     changePrepositionalObjectId(id){
       this.set('currentPrepositionalObjectId', id);
-    },
-    toggleIsAssciatedTo(){
-      this.set('isAssociatedTo', !this.get('isAssociatedTo'));
     },
     chooseInstructor(user){
       this.set('currentPrepositionalObjectId', user.get('id'));
