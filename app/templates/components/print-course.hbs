@@ -198,11 +198,11 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.objectives'}} ({{course.objectives.length}})
+          {{t 'general.objectives'}} ({{session.objectives.length}})
         </div>
         <div class='detail-content'>
           <ul>
-            {{#each course.objectives as |objective|}}
+            {{#each session.objectives as |objective|}}
               <li>{{objective.textTitle}}</li>
             {{/each}}
           </ul>
