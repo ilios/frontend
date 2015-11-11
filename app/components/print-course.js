@@ -21,8 +21,8 @@ export default Ember.Component.extend({
     let deferred = RSVP.defer();
     let SessionProxy = ObjectProxy.extend({
       sortTitle: ['title'],
-      sortedTopics: computed.sort('content.topics.[]', 'sortTitle'),
-      sortedMeshDescriptors: computed.sort('content.meshDescriptors.[]', 'sortTitle'),
+      sortedTopics: computed.sort('content.topics', 'sortTitle'),
+      sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
     });
     course.get('sessions').then(function(sessions){
       let noDraftSessions = sessions.filterBy('isPublishedOrScheduled');
