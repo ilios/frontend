@@ -1,26 +1,22 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import tHelper from "ember-i18n/helper";
 
-moduleForComponent('new-myreport', 'Integration | Component | new myreport', {
-  integration: true
+moduleForComponent('new-report', 'Integration | Component | new report', {
+  integration: true,
+  beforeEach: function() {
+    this.container.lookup('service:i18n').set('locale', 'en');
+    this.registry.register('helper:t', tHelper);
+  }
 });
 
 test('it renders', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{new-myreport}}`);
+  this.render(hbs`{{new-report}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#new-myreport}}
-      template block text
-    {{/new-myreport}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$().text().search(/New Report/) === 0);
 });

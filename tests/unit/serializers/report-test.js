@@ -4,7 +4,12 @@ import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 moduleForModel('offering', 'Unit | Serializer | report' + testgroup, {
   // Specify the other units that are required for this test.
   needs: [
-    'serializer:report'
+    'serializer:report',
+    'model:session',
+    'model:learner-group',
+    'model:publish-event',
+    'model:instructor-group',
+    'model:user',
   ]
 });
 
