@@ -1,1 +1,5 @@
-{{print-course course=model}}
+{{#if model.isPublishedOrScheduled}}
+  {{print-course course=model}}
+{{else}}
+  {{t 'courses.noPrintDraft'}}
+{{/if}}
