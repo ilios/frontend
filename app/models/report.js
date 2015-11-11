@@ -49,10 +49,8 @@ export default DS.Model.extend({
       let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithoutObject', {
         subject
       });
-      
       defer.resolve(displayTitle);
     }
-    
     
     return PromiseObject.create({
       promise: defer.promise
