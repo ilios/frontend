@@ -31,8 +31,8 @@ export default Ember.Service.extend({
       limit: 1000
     };
     if(object && objectId){
-      query.filter = {};
-      query.filter[object] = objectId;
+      query.filters = {};
+      query.filters[object] = objectId;
     }
     
     return query;
