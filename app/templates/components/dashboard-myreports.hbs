@@ -34,8 +34,8 @@
         <table>
           <tbody>
             {{#each sortedReports as |report|}}
-            <tr {{action 'selectReport' report}} class='clickable'>
-              <td colspan=4>{{fa-icon 'external-link-square'}} {{report.displayTitle.content}}</td>
+            <tr>
+              <td {{action 'selectReport' report}} class='link clickable' colspan=4>{{fa-icon 'external-link-square'}} {{report.displayTitle.content}}</td>
               <td class='text-right remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>
             </tr>
             {{/each}}
