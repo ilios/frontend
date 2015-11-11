@@ -1,8 +1,10 @@
 {{#if event}}
   <div class='ilios-event-print-course'>
-    {{#link-to 'printCourse' course}}
-      <button>{{t 'general.printSummary'}}</button>
-    {{/link-to}}
+    {{#if course.isPublishedOrScheduled}}
+      {{#link-to 'printCourse' course}}
+        <button>{{t 'general.printSummary'}}</button>
+      {{/link-to}}
+    {{/if}}
   </div>
   {{ilios-calendar-single-event
     courseTitle=course.title
