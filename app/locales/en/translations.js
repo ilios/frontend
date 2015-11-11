@@ -25,6 +25,7 @@ export default {
     'competencies': 'Competencies',
     'competency': 'Competency',
     'courses': 'Courses',
+    'course': 'Course',
     'programs': 'Programs',
     'program': 'Program',
     'objectives': 'Objectives',
