@@ -47,7 +47,9 @@ export default Ember.Component.extend({
 
   learnerGroups: null,
 
-  filteredCohorts: computed('cohorts.[]', 'filter', function(){
+  changeFlag: false,
+
+  filteredCohorts: computed('cohorts.[]', 'filter', 'changeFlag', function(){
     let cohortProxy = ObjectProxy.extend({
       selectedLearnerGroups: [],
 
@@ -105,7 +107,7 @@ export default Ember.Component.extend({
     return cohorts.map((cohort) => {
       let proxy = cohortProxy.create({
         content: cohort,
-        selectedLearnerGroups: this.get('learnerGroups')[cohort.id]
+        selectedLearnerGroups: this.get('learnerGroups')[cohort.id] || []
       });
 
       return proxy;
@@ -250,10 +252,10 @@ export default Ember.Component.extend({
               topLevelGroup.get('cohort').then((cohort) => {
                 const groupHash = this.get('learnerGroups');
 
-                if (groupHash[cohort.id] === undefined) {
-                  groupHash[cohort.id] = [ group ];
-                } else {
+                if (groupHash[cohort.id]) {
                   groupHash[cohort.id].pushObject(group);
+                } else {
+                  groupHash[cohort.id] = [ group ];
                 }
               });
             });
@@ -274,10 +276,8 @@ export default Ember.Component.extend({
         });
       }
     },
-    cancel: function(){
-      this.set('buffer', null);
-      this.set('isEditing', false);
-      this.get('flashMessages').clearMessages();
+    cancel() {
+      this.setProperties({ buffer: null, isEditing: false, learnerGroups: {} });
     },
     addInstructorGroupToBuffer(instructorGroup){
       this.get('buffer.instructorGroups').pushObject(instructorGroup);
@@ -329,14 +329,24 @@ export default Ember.Component.extend({
     },
 
     addLearnerGroup(group, cohortId) {
-      let learnerGroups = this.get('learnerGroups');
+      const learnerGroups = this.get('learnerGroups');
 
       group.get('allDescendants').then((descendants) => {
         if (isEmpty(descendants)) {
-          learnerGroups[cohortId].addObject(group);
+          if (learnerGroups[cohortId]) {
+            learnerGroups[cohortId].addObject(group);
+          } else {
+            learnerGroups[cohortId] = [ group ];
+          }
         } else {
-          learnerGroups[cohortId].addObjects(descendants);
+          if (learnerGroups[cohortId]) {
+            learnerGroups[cohortId].addObjects(descendants);
+          } else {
+            learnerGroups[cohortId] = descendants;
+          }
         }
+
+        this.set('changeFlag', !this.get('changeFlag'));
       });
     },
 
