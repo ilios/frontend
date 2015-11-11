@@ -383,6 +383,8 @@ export default {
     'whichIs': 'which is',
     'reportMissingMeshTerm': 'MeSH Term is Required',
     'reportMissingInstructor': 'Instructor is Required',
+    'reportMissingObjectForInstructor': 'Association is required when Instructor is the subject',
+    'reportMissingObjectForMeshTerm': 'Association is required when MeSH Term is the subject',
     'allReports': 'All Reports',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',

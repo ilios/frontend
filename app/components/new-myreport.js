@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, inject, RSVP, isEmpty } = Ember;
+const { computed, inject, RSVP, isEmpty, isPresent } = Ember;
 const { service } = inject;
 const { PromiseArray } = DS;
 
@@ -127,7 +127,18 @@ export default Ember.Component.extend({
     save(){
       const flashMessages = this.get('flashMessages');
       const store = this.get('store');
+      const subject = this.get('currentSubject');
       let object = this.get('currentPrepositionalObject');
+      if(isPresent(subject) && isEmpty(object)) {
+        if(subject === 'instructor'){
+          flashMessages.alert('dashboard.reportMissingObjectForInstructor');
+          return;
+        }
+        if(subject === 'mesh term'){
+          flashMessages.alert('dashboard.reportMissingObjectForMeshTerm');
+          return;
+        }
+      }
       if(
         object &&
         !this.get('currentPrepositionalObjectId')
