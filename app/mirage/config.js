@@ -352,6 +352,10 @@ export default function() {
       }
       return new Mirage.Response(400, {}, {errors: errors});
     });
+    
+    this.get('/auth/logout', function() {
+      return new Mirage.Response(200);
+    });
 
     this.post('/upload', function() {
       let hash = "";
