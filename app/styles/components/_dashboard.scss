@@ -102,16 +102,59 @@ $course: #ddd1e7;
     border: 1px solid $ilios-blue;
     margin-top: 1em;
 
+    
+    .dashboard-block-actions {
+      float: right;
+    }
+
     .dashboard-block-header {
       background-color: $grey;
-      color: $ilios-orange;
-      font-weight: bold;
       padding: .5em;
     }
 
+    .form-title {
+      margin-bottom: .5em;
+    }
+
+    .form-label {
+      font-size: .9em;
+      font-weight: bold;
+      text-align: left;
+
+      &.sub-label {
+        font-size: .8em;
+        font-style: italic;
+        font-weight: normal;
+      }
+    }
+
+    .input-buttons {
+      float: right;
+    }
+
+    .form-data input {
+      width: 100%;
+    }
+
+    .dashboard-block-header,
+    .form-title {
+      color: $ilios-orange;
+      font-weight: bold;
+    }
+
     .dashboard-block-body {
-      height: 200px;
+      height: 20em;
       overflow-y: scroll;
+    }
+    
+    &.dashboard-double-block .dashboard-block-body {
+      height: 40em;
+    }
+
+    .form-container {
+      border: $header-grey 2px solid;
+      margin: 10px;
+      padding: 10px;
     }
   }
 

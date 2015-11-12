@@ -1,0 +1,81 @@
+<div class="form-title">{{t 'dashboard.newReport'}}</div>
+<div class="detail-content">
+    <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
+    <div class="form-data">{{input value=title}}</div>
+    
+    <p>
+      {{t 'general.all'}}
+      <select onchange={{action "changeSubject" value="target.value"}}>
+        {{#each subjectList as |option|}}
+          <option value={{option.value}} selected={{is-equal option.value currentSubject}}>
+            {{option.label}}
+          </option>
+        {{/each}}
+      </select>
+    </p>
+    <p>
+      {{t 'dashboard.associatedWith'}}
+      <select onchange={{action "changePrepositionalObject" value="target.value"}}>
+        <option value=null selected={{is-equal null currentPrepositionalObject}}>
+          {{t 'general.anything'}}
+        </option>
+        {{#each prepositionalObjectList as |option|}}
+          <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObject}}>
+            {{option.label}}
+          </option>
+        {{/each}}
+      </select>
+    </p>
+    {{#liquid-if currentPrepositionalObject class='crossFade'}}
+      <p>
+        {{t 'dashboard.whichIs'}}
+        {{#if (is-equal currentPrepositionalObject 'instructor')}}
+          {{#if selectedUser}}
+            <ul class='removable-list'>
+              <li {{action 'changePrepositionalObjectId' null}}>{{selectedUser.fullName}} {{fa-icon 'remove'}}</li>
+            </ul>
+          {{else}}
+            {{user-search
+              addUser='chooseInstructor'
+              roles='1'
+            }}
+          {{/if}}
+        {{else if (is-equal currentPrepositionalObject 'mesh term')}}
+          {{#if selectedMeshTerm}}
+            <ul class='removable-list selected-mesh-terms'>
+              <div class="content">
+                <span class="descriptor-name">{{selectedMeshTerm.name}}</span>
+                <span class="descriptor-id">
+                  {{selectedMeshTerm.id}}
+                  {{#if selectedMeshTerm.trees}}
+                    - {{selectedMeshTerm.trees.lastObject.treeNumber}}
+                  {{/if}}
+                </span>
+              </div>
+              {{fa-icon 'remove'}}
+            </ul>
+          {{else}}
+            {{mesh-manager
+              add='chooseMeshTerm'
+            }}
+          {{/if}}
+        {{else}}
+          {{#liquid-if prepositionalObjectIdList.isFulfilled class='crossFade'}}
+            <select onchange={{action "changePrepositionalObjectId" value="target.value"}}>
+              {{#each prepositionalObjectIdList as |option|}}
+                <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
+                  {{option.label}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/liquid-if}}
+        {{/if}}
+      </p>
+    {{/liquid-if}}
+    <div class="input-buttons">
+        <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+        <button class='cancel text' {{action 'closeEditor'}}>{{t 'general.cancel'}}</button>
+    </div>
+</div>
