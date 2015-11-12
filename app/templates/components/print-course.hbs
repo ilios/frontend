@@ -198,11 +198,11 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.objectives'}} ({{course.objectives.length}})
+          {{t 'general.objectives'}} ({{session.objectives.length}})
         </div>
         <div class='detail-content'>
           <ul>
-            {{#each course.objectives as |objective|}}
+            {{#each session.objectives as |objective|}}
               <li>{{objective.textTitle}}</li>
             {{/each}}
           </ul>
@@ -211,10 +211,10 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.learningMaterials'}} ({{session.sessionLearningMaterials.length}})
+          {{t 'general.learningMaterials'}} ({{session.learningMaterials.length}})
         </div>
         <div class='detail-content'>
-         {{#if session.sessionLearningMaterials.length}}
+         {{#if session.learningMaterials.length}}
          <table>
             <thead>
               <tr>
@@ -226,7 +226,7 @@
               </tr>
             </thead>
             <tbody>
-              {{#each session.sessionLearningMaterials as |lm|}}
+              {{#each session.learningMaterials as |lm|}}
                 <tr>
                   <td class='text-left' colspan=2>
                     {{lm.learningMaterial.title}}
@@ -251,7 +251,7 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.topics'}} ({{session.topics.length}})
+          {{t 'general.topics'}} ({{session.sortedTopics.length}})
         </div>
 
         <div class='detail-content'>
@@ -265,7 +265,7 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.mesh'}} ({{session.meshDescriptors.length}})
+          {{t 'general.mesh'}} ({{session.sortedMeshDescriptors.length}})
         </div>
         <div class='detail-content'>
           <ul class='inline-list'>

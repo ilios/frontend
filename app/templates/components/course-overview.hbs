@@ -3,9 +3,11 @@
     {{t 'general.overview'}}
   </div>
   <div class='detail-actions'>
-    {{#link-to 'printCourse' course}}
-      <button>{{t 'general.printSummary'}}</button>
-    {{/link-to}}
+    {{#if course.isPublishedOrScheduled}}
+      {{#link-to 'printCourse' course}}
+        <button>{{t 'general.printSummary'}}</button>
+      {{/link-to}}
+    {{/if}}
   </div>
   <div class='detail-content form-container'>
       <div class="form-col-6 multi-row">

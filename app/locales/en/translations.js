@@ -230,6 +230,7 @@ export default {
     'instructorsManageTitle': 'Manage Instructors',
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
     'confirmSessionRemoval': 'Are you sure you want to delete this session?',
+    'noPrintDraft': 'Courses which are in draft status cannot be printed',
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',

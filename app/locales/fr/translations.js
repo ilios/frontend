@@ -230,6 +230,7 @@ export default {
     'instructorsManageTitle': "Manager Instructeurs",
     'confirmObjectiveRemoval': "Êtes vous sûr de vouloir supprimer cet objectif?",
     'confirmSessionRemoval': 'Êtes vous sûr de vouloir supprimer cette séance?',
+    'noPrintDraft': 'Cours qui sont au stade de projet ne peuvent pas étre imprimés',
   },
   'sessions': {
     'specialAttireRequired': "Special Attire Required",
