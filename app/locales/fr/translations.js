@@ -232,8 +232,8 @@ export default {
     'confirmSessionRemoval': 'Êtes vous sûr de vouloir supprimer cette séance?',
   },
   'sessions': {
-    'specialAttireRequired': "Special Attire Required",
-    'specialEquipmentRequired': "Special Equipment Required",
+    'specialAttireRequired': "Vêtements particuliers requis",
+    'specialEquipmentRequired': "Équipage particulier requis",
     'supplementalCurriculum': "Supplemental Curriculum",
     'type': "Genre de Session",
     'backToSessionList': "Retour à Liste du sessions",
