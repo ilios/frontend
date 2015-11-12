@@ -75,7 +75,7 @@
       </div>
     </div>
   {{/if}}
-  {{#if learningMaterial.learningMaterial.citation}}
+  {{#if learningMaterial.learningMaterial.isCitation}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
     <div class="form-data">
@@ -83,7 +83,7 @@
     </div>
   </div>
   {{/if}}
-  {{#if learningMaterial.learningMaterial.link}}
+  {{#if learningMaterial.learningMaterial.isLink}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.link'}}:</label>
     <div class="form-data weblink">
@@ -91,7 +91,7 @@
     </div>
   </div>
   {{/if}}
-  {{#if learningMaterial.learningMaterial.filename}}
+  {{#if learningMaterial.learningMaterial.isFile}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.file'}}:</label>
     <div class="form-data filename">

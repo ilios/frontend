@@ -40,7 +40,6 @@ module('Acceptance: Session - Learning Materials' + testgroup, {
     fixtures.learningMaterials = [];
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      type: 'file',
       owningUser: 4136,
       status: 1,
       userRole: 1,
@@ -49,24 +48,23 @@ module('Acceptance: Session - Learning Materials' + testgroup, {
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      type: 'file',
       owningUser: 4136,
       status: 1,
       userRole: 1,
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
+      filename: 'filename',
+      absoluteFileUri: 'http://example.com/file',
       sessionLearningMaterials: [2],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
-      type: 'link',
       link: 'www.example.com',
       status: 1,
       sessionLearningMaterials: [3],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
-      type: 'citation',
       citation: 'a citation',
       status: 1,
       sessionLearningMaterials: [4],
