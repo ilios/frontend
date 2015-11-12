@@ -66,7 +66,7 @@
     "ember-normalize": "0.0.9",
     "ember-noscript": "^2.0.0",
     "ember-pikaday": "0.12.0",
-    "ember-rl-dropdown": "0.5.0",
+    "ember-rl-dropdown": "0.7.0",
     "ember-tooltips": "0.4.0",
     "ember-try": "0.0.8",
     "ember-validations": "2.0.0-alpha.4",
