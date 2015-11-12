@@ -12,7 +12,8 @@
       <span class='control list-reset'>
         {{froala-editor
           params=editorParams
-          value=buffer 
+          value=buffer
+          contentChanged=(action "contentChanged")
         }}
       </span>
       <span class='actions'>

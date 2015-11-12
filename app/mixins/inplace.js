@@ -9,7 +9,7 @@ export default Mixin.create({
     value: null,
     //use a value buffer to avoid sending data up
     buffer: null,
-    valueChanges: false,
+    valueChanged: false,
     clickPromptTranslation: null,
     clickPrompt: computed('i18n.locale', 'clickPromptTranslation', function() {
       if (this.get('clickPromptTranslation')) {
