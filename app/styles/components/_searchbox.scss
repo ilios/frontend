@@ -30,20 +30,4 @@
     padding-left: 6px;
     width: 20px;
   }
-
-  .close {
-    @include position(absolute, 0 0 0 'auto');
-    background-color: transparent;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    color: $base-font-color;
-    margin-right: -25px;
-    outline: none;
-    padding: 5px 10px;
-
-    img {
-      height: 12px;
-      opacity: .7;
-    }
-  }
 }
