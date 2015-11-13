@@ -220,6 +220,7 @@ export default {
     'filterPlaceholder': "",
     'title': "Titre de Cours",
     'objectiveParentTitle': "Choisi Objectifs mères",
+    'objectiveParentTitleSingular': 'Choisi Objectif mère',
     'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
     'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
     'newObjectiveSaved': 'Nouvel objective sauvé',

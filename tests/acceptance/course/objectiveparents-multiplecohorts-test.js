@@ -107,9 +107,9 @@ test('list parent objectives by competency', function(assert) {
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let objective = fixtures.courseObjectives[0];
-      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
+      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjective');
       assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
-      let expectedCohortTitles = 'Select Parent For: ' + 
+      let expectedCohortTitles = 'Select Parent For: ' +
         fixtures.program.title + fixtures.cohorts[0].title +
         fixtures.program.title + fixtures.cohorts[1].title;
       assert.equal(getElementText(find('.group-picker', objectiveManager)), getText(expectedCohortTitles));
@@ -121,7 +121,7 @@ test('list parent objectives by competency', function(assert) {
       assert.ok(competencyTitles.eq(0).hasClass('selected'));
       assert.equal(getElementText(competencyTitles.eq(1)), getText('competency 1'));
       assert.ok(!competencyTitles.eq(1).hasClass('selected'));
-      
+
       let items = find('li', parentPicker);
       assert.equal(getElementText(items.eq(0)), getText('objective 0'));
       assert.equal(getElementText(items.eq(1)), getText('objective 1'));
@@ -129,8 +129,7 @@ test('list parent objectives by competency', function(assert) {
       assert.ok($(items.eq(0)).hasClass('selected'));
       assert.ok(!$(items.eq(1)).hasClass('selected'));
       assert.ok(!$(items.eq(2)).hasClass('selected'));
-      
-      
+
       pickOption(find('.group-picker select', objectiveManager), 'program 0 cohort 1', assert);
       andThen(()=>{
         let parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -141,7 +140,7 @@ test('list parent objectives by competency', function(assert) {
         assert.ok(competencyTitles.eq(0).hasClass('selected'));
         assert.equal(getElementText(competencyTitles.eq(1)), getText('competency 1'));
         assert.ok(!competencyTitles.eq(1).hasClass('selected'));
-        
+
         let items = find('li', parentPicker);
         assert.equal(getElementText(items.eq(0)), getText('objective 3'));
         assert.equal(getElementText(items.eq(1)), getText('objective 4'));
@@ -150,8 +149,6 @@ test('list parent objectives by competency', function(assert) {
         assert.ok(!$(items.eq(1)).hasClass('selected'));
         assert.ok(!$(items.eq(2)).hasClass('selected'));
       });
-      
-      
     });
   });
 });
@@ -166,7 +163,7 @@ test('change course objective parent', function(assert) {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
       select('.objective-manager .group-picker select', 'program 0 cohort 0').then(()=>{
-        click('li:eq(1)', parentPicker);        
+        click('li:eq(1)', parentPicker);
       });
       andThen(function(){
         assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));

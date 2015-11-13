@@ -8,6 +8,7 @@ const {or, notEmpty} = computed;
 
 export default Ember.Component.extend({
   store: service(),
+  i18n: service(),
   flashMessages: service(),
   subject: null,
   classNames: ['detail-objectives'],
@@ -27,6 +28,16 @@ export default Ember.Component.extend({
   newObjectiveEditorOn: false,
   newObjectiveTitle: null,
   editorParams: config.froalaEditorDefaults,
+
+  objectiveParentTitle: computed('isCourse', 'isSession', 'isProgramYear', {
+    get() {
+      const i18n = this.get('i18n');
+      const isCourse = this.get('isCourse');
+
+      return isCourse ? i18n.t('courses.objectiveParentTitleSingular') : i18n.t('courses.objectiveParentTitle');
+    }
+  }),
+
   actions: {
     manageParents: function(objective){
       objective.get('parents').then((parents) => {

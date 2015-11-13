@@ -84,7 +84,7 @@ test('list parent objectives by competency', function(assert) {
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let objective = fixtures.courseObjectives[0];
-      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
+      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjective');
       assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
       let expectedCohortTitle = 'Select Parent For: ' + fixtures.program.title + fixtures.cohort.title;
       assert.equal(getElementText(find('.group-picker', objectiveManager)), getText(expectedCohortTitle));
