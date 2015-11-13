@@ -62,7 +62,7 @@ var cohortProxy = Ember.Object.extend({
 });
 
 export default Ember.Component.extend({
-  classNames: ['objective-manager'],
+  classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   showObjectiveList: false,
   showCohortList: false,

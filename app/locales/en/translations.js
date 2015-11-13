@@ -220,6 +220,7 @@ export default {
     'filterPlaceholder': '',
     'title': 'Course Title',
     'objectiveParentTitle': 'Select Parent Objectives',
+    'objectiveParentTitleSingular': 'Select Parent Objective',
     'objectiveDescriptorTitle': 'Select MeSH Descriptors for Objective',
     'lmDescriptorTitle': 'Select MeSH Descriptors for Learning Materials',
     'newObjectiveSaved': 'New Objective Saved',
