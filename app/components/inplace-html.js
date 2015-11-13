@@ -10,19 +10,30 @@ export default Ember.Component.extend(InPlace, {
   },
   actions: {
     save() {
-      const editor = this.$('.control .froala-box');
-      let value;
-      if(editor){
-        let html = editor.editable('getHTML');
-        let plainText = html.replace(/(<([^>]+)>)/ig,"");
-        //if all we have is empty html then save null
-        if(plainText.length === 0){
-          html = null;
-        } 
-        value = html;
+      //if no change is made froala sometimes returns a blank so we have to check this first
+      if (this.get('valueChanged')) {
+        const editor = this.$('.control .froala-box');
+        let value;
+        if(editor){
+          let html = editor.editable('getHTML');
+          let plainText = html.replace(/(<([^>]+)>)/ig,"");
+          //if all we have is empty html then save null
+          if(plainText.length === 0){
+            html = null;
+          } 
+          value = html;
+        }
+        this.sendAction('save', value, this.get('condition'));
       }
       this.setProperties({ buffer: null, valueChanged: false, isEditing: false });
-      this.sendAction('save', value, this.get('condition'));
+    },
+    contentChanged(event, editor){
+      const html = editor.getHTML();
+      const buffer = this.get('buffer');
+      const isEditing = this.get('isEditing');
+      if (isEditing && html !== buffer) {
+        this.set('valueChanged', true);
+      }
     }
   }
 });
