@@ -18,8 +18,6 @@ var User = DS.Model.extend({
   userSyncIgnore:  DS.attr('boolean'),
   icsFeedKey:  DS.attr('string'),
   reminders: DS.hasMany('user-made-reminder', {async: true}),
-  learningMaterials: DS.hasMany('learning-material', {async: true}),
-  publishEvents: DS.hasMany('publish-event', {async: true}),
   reports: DS.hasMany('report', {async: true}),
   school: DS.belongsTo('school', {async: true}),
   directedCourses: DS.hasMany('course', {async: true}),
@@ -56,7 +54,6 @@ var User = DS.Model.extend({
     }
   ),
   programYears: DS.hasMany('program-year', {async: true}),
-  alerts: DS.hasMany('alert', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
   cohorts: DS.hasMany('cohort', {
       async: true,

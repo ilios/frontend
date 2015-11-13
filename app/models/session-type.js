@@ -7,5 +7,4 @@ export default DS.Model.extend({
   assessmentOption: DS.belongsTo('assessment-option', {async: true}),
   school: DS.belongsTo('school', {async: true}),
   aamcMethods: DS.hasMany('aamc-method', {async: true}),
-  sessions: DS.hasMany('session', {async: true}),
 });

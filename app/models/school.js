@@ -6,7 +6,6 @@ export default DS.Model.extend({
   templatePrefix: DS.attr('string'),
   iliosAdministratorEmail: DS.attr('string'),
   changeAlertRecipients: DS.attr('string'),
-  alerts: DS.hasMany('alert', {async: true}),
   competencies: DS.hasMany('competencies', {async: true}),
   courses: DS.hasMany('course', {async: true}),
   programs: DS.hasMany('program', {async: true}),
