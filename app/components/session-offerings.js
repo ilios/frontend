@@ -34,27 +34,24 @@ export default Component.extend({
     addSingleOffering({ startDate, endDate, room, learnerGroups, instructors, instructorGroups }) {
       const store = this.get('store');
       const session = this.get('session');
-      let offering = store.createRecord('offering', { session, startDate, endDate, room });
+      let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups, instructors, instructorGroups });
 
       offering.save().then((offering) => {
         offering.get('learnerGroups').then((offeringlearnerGroups) => {
           learnerGroups.forEach((learnerGroup) => {
             offeringlearnerGroups.pushObject(learnerGroup);
-            learnerGroup.save();
           });
         });
 
         if (isPresent(instructors)) {
           offering.get('instructors').then((offeringInstructors) => {
             offeringInstructors.pushObjects(instructors);
-            offeringInstructors.save();
           });
         }
 
         if (isPresent(instructorGroups)) {
           offering.get('instructorGroups').then((offeringInstructorGroups) => {
             offeringInstructorGroups.pushObjects(instructorGroups);
-            offeringInstructorGroups.save();
           });
         }
       });
@@ -69,7 +66,8 @@ export default Component.extend({
 
       learnerGroups.forEach((learnerGroup) => {
         const room = learnerGroup.get('location') || 'TBD';
-        let offering = store.createRecord('offering', { session, startDate, endDate, room });
+        let learnerGroups = [ learnerGroup ];
+        let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups });
 
         offeringPromises.pushObject(offering.save());
       });
@@ -80,14 +78,12 @@ export default Component.extend({
         learnerGroups.forEach((learnerGroup, index) => {
           offerings[index].get('learnerGroups').then((offeringLearnerGroups) => {
             offeringLearnerGroups.pushObject(learnerGroup);
-            promises.pushObject(learnerGroup.save());
           });
 
           learnerGroup.get('instructors').then((defaultInstructors) => {
             if (isPresent(defaultInstructors)) {
               offerings[index].get('instructors').then((offeringInstructors) => {
                 offeringInstructors.pushObjects(defaultInstructors);
-                promises.pushObjects(offeringInstructors.save());
               });
             }
           });
@@ -96,7 +92,6 @@ export default Component.extend({
             if (isPresent(defaultInstructorGroups)) {
               offerings[index].get('instructorGroups').then((offeringInstructorGroups) => {
                 offeringInstructorGroups.pushObjects(defaultInstructorGroups);
-                promises.pushObjects(offeringInstructorGroups.save());
               });
             }
           });
