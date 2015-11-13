@@ -245,8 +245,8 @@ export default {
     'noPrintDraft': 'Cours qui sont au stade de projet ne peuvent pas étre imprimés',
   },
   'sessions': {
-    'specialAttireRequired': "Special Attire Required",
-    'specialEquipmentRequired': "Special Equipment Required",
+    'specialAttireRequired': "Vêtements particuliers requis",
+    'specialEquipmentRequired': "Équipage particulier requis",
     'supplementalCurriculum': "Supplemental Curriculum",
     'type': "Genre de Session",
     'backToSessionList': "Retour à Liste du sessions",
