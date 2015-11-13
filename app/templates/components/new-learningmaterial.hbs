@@ -83,7 +83,15 @@
   {{#if isLink}}
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.url'}}:</label>
-    <div class="form-data">{{input type='text' value=learningMaterial.link}}</div>
+    <div class="form-data">
+      <input type="text" value={{learningMaterial.link}} class="{{if topErrorMessageUrl 'has-error'}}"
+        onChange={{action "changeUrl" value="target.value"}}
+        oninput={{action "changeUrl" value="target.value"}}
+        onfocus={{action "displayUrlError"}} />
+      {{#if topErrorMessageUrl}}
+        <span class="validation-error-message">{{topErrorMessageUrl}}</span>
+      {{/if}}
+    </div>
   </div>
   {{/if}}
   {{#if isCitation}}

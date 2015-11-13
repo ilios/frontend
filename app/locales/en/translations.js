@@ -422,5 +422,6 @@ export default {
     'even': "must be even",
     'alphanumeric': "must be alphanumeric",
     'alphanumeric2': "must be alphanumeric ('-' and ':' allowed)",
+    'url': 'must be a valid url'
   }
 };

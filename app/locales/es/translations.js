@@ -422,5 +422,6 @@ export default {
     'even': "debe ser número par",
     'alphanumeric': "debe ser alfanumérico",
     'alphanumeric2': "debe ser alfanumérico ('-' y ':' permitido)",
+    'url': 'debe ser una dirección URL válida'
   }
 };

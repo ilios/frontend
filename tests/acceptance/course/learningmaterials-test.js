@@ -173,6 +173,7 @@ test('create new file learning material', function(assert) {
     andThen(function(){
       let container = find('.detail-learning-materials');
       let rows = find('.detail-content tbody tr', container);
+
       assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
       let row = rows.eq(fixtures.course.learningMaterials.length);
       assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
@@ -182,10 +183,12 @@ test('create new file learning material', function(assert) {
 });
 
 test('create new link learning material', function(assert) {
+  const testTitle = 'testsome title';
+  const testAuthor = 'testsome author';
+  const testDescription = 'testsome description';
+  const testUrl = 'http://www.ucsf.edu/';
+
   visit(url);
-  var testTitle = 'testsome title';
-  var testAuthor = 'testsome author';
-  var testDescription = 'testsome description';
   andThen(function() {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
@@ -206,6 +209,7 @@ test('create new link learning material', function(assert) {
     let selectBoxes = find('select', newLmContainer);
     fillIn(inputs.eq(0), testTitle);
     fillIn(inputs.eq(1), testAuthor);
+    fillIn(inputs.eq(2), testUrl);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
     find('.froala-box', newLmContainer).editable('setHTML', testDescription);
