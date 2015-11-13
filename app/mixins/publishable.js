@@ -1,13 +1,16 @@
 import Ember from 'ember';
 
+const { RSVP, inject, computed } = Ember;
+const { service } = inject;
+
 export default Ember.Mixin.create({
   publishTarget: null,
   publishEventCollectionName: null,
-  currentUser: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
-  store: Ember.inject.service(),
+  currentUser: service(),
+  flashMessages: service(),
+  store: service(),
   showCheckLink: true,
-  menuTitle: Ember.computed.oneWay('publishTarget.status'),
+  menuTitle: computed.oneWay('publishTarget.status'),
   menuIcon: function(){
     if(this.get('publishTarget.publishedAsTbd')){
       return 'clock-o';
@@ -17,7 +20,7 @@ export default Ember.Mixin.create({
     }
     return 'cloud';
   }.property('publishTarget.isPublished', 'publishTarget.publishedAsTbd'),
-  showTbd: Ember.computed.not('publishTarget.isScheduled'),
+  showTbd: computed.not('publishTarget.isScheduled'),
   showAsIs: function(){
     return (
       (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
@@ -34,7 +37,7 @@ export default Ember.Mixin.create({
       this.get('publishTarget.allPublicationIssuesLength') === 0
     );
   }.property('publishTarget.isPublished', 'publishTarget.allPublicationIssuesLength'),
-  showUnPublish: Ember.computed.or('publishTarget.isPublished', 'publishTarget.isScheduled'),
+  showUnPublish: computed.or('publishTarget.isPublished', 'publishTarget.isScheduled'),
   publicationStatus: function(){
     if(this.get('publishTarget.isScheduled')){
       return 'scheduled';
@@ -46,7 +49,7 @@ export default Ember.Mixin.create({
   }.property('publishTarget.isPublished', 'publishTarget.isScheduled'),
   actions: {
     unpublish: function(){
-      var publishTarget = this.get('publishTarget');
+      let publishTarget = this.get('publishTarget');
       publishTarget.get('publishEvent').then(publishEvent => {
         publishTarget.set('publishedAsTbd', false);
         publishTarget.set('publishEvent', null);
@@ -59,45 +62,47 @@ export default Ember.Mixin.create({
       });
     },
     publishAsTbd: function(){
-      var publishTarget = this.get('publishTarget');
-      publishTarget.set('publishedAsTbd', true);
-      publishTarget.get('publishEvent').then(publishEvent => {
+      let publishTarget = this.get('publishTarget');
+      let promises = [];
+      if(!publishTarget.get('publishedAsTbd')){
+        publishTarget.set('publishedAsTbd', true);
+        promises.pushObject(publishTarget.save());
+      }
+      promises.pushObject(publishTarget.get('publishEvent').then(publishEvent => {
         if(!publishEvent){
           publishEvent = this.get('store').createRecord('publish-event', {
             administrator: this.get('currentUser.model')
           });
-          publishEvent.save().then(publishEvent => {
-            publishTarget.set('publishEvent', publishEvent);
-            publishTarget.save().then(() => {
-              this.get('flashMessages').success('publish.message.schedule');
-            });
-          });
-        } else {
-          publishTarget.save().then(() => {
-            this.get('flashMessages').success('publish.message.schedule');
-          });
+          publishEvent.get(this.get('publishEventCollectionName')).removeObject(publishTarget);
+          publishTarget.set('publishEvent', publishEvent);
+          return publishTarget.save();
         }
+      }));
+      
+      RSVP.all(promises).then(()=>{
+        this.get('flashMessages').success('publish.message.scheduled');
       });
     },
     publish: function(){
-      var publishTarget = this.get('publishTarget');
-      publishTarget.set('publishedAsTbd', false);
-      publishTarget.get('publishEvent').then(publishEvent => {
+      let publishTarget = this.get('publishTarget');
+      let promises = [];
+      if(publishTarget.get('publishedAsTbd')){
+        publishTarget.set('publishedAsTbd', false);
+        promises.pushObject(publishTarget.save());
+      }
+      promises.pushObject(publishTarget.get('publishEvent').then(publishEvent => {
         if(!publishEvent){
           publishEvent = this.get('store').createRecord('publish-event', {
             administrator: this.get('currentUser.model')
           });
-          publishEvent.save().then(publishEvent => {
-            publishTarget.set('publishEvent', publishEvent);
-            publishTarget.save().then(() => {
-              this.get('flashMessages').success('publish.message.publish');
-            });
-          });
-        } else {
-          publishTarget.save().then(() => {
-            this.get('flashMessages').success('publish.message.publish');
-          });
+          publishEvent.get(this.get('publishEventCollectionName')).removeObject(publishTarget);
+          publishTarget.set('publishEvent', publishEvent);
+          return publishTarget.save();
         }
+      }));
+      
+      RSVP.all(promises).then(()=>{
+        this.get('flashMessages').success('publish.message.publish');
       });
     },
   }
