@@ -130,8 +130,11 @@ test('list learning materials', function(assert) {
       //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));assert.equal(getElementText(find('td:eq(2)', row)), getText(lm.originalAuthor));
       let required = sessionLm.required?'Yes':'No';
       assert.equal(getElementText(find('td:eq(3)', row)), getText(required));
-      let publicNotes = sessionLm.publicNotes?'Yes':'No';
-      assert.equal(getElementText(find('td:eq(4)', row)), getText(publicNotes));
+      let notes = sessionLm.notes? 'Yes' : 'No';
+      assert.equal(getElementText(find('td:eq(4)', row)), getText(notes));
+      let notesBool = sessionLm.notes? true : false;
+      let publicNotes = sessionLm.publicNotes ? true : false;
+      assert.equal(find('td:eq(4) i', row).hasClass('fa-eye'), publicNotes && notesBool);
       let meshTerms = find('td:eq(5) li', row);
       if('meshDescriptors' in sessionLm){
         assert.equal(meshTerms.length, sessionLm.meshDescriptors.length);
@@ -407,7 +410,8 @@ test('edit learning material', function(assert) {
           click('.detail-learning-materials button.bigadd');
           andThen(function(){
             assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
-            assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'));
+            assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('Yes'), 'there is content in notes');
+            assert.ok(isEmpty(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4) i')), 'publicNotes is false and `eye` icon is not visible');
             assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
 
             click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
@@ -438,7 +442,8 @@ test('cancel editing learning material', function(assert) {
       click('.detail-learning-materials button.bigcancel');
       andThen(function(){
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('No'));
-        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('Yes'));
+        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'), 'no content is available under notes');
+        assert.ok(isEmpty(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
         assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[0].title));
       });
     });
