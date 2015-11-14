@@ -402,4 +402,8 @@ export default function() {
         jwt: encodedData
       };
     });
+    
+    this.post('/errors', function(){
+      //doesn't do anything, just swallows errors
+    });
 }
