@@ -33,7 +33,7 @@ module.exports = function(defaults) {
       useScss: true
     },
     babel: {
-      includePolyfill: true
+      browserPolyfill: true
     }
   });
   app.import('bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js');
