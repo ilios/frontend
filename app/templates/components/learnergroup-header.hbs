@@ -1,13 +1,12 @@
 <div class='detail-header'>
   <span class='title'>
     <h2>
-
       {{learnerGroup.cohort.displayTitle}} {{fa-icon 'angle-right'}}
       {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
       {{inplace-text tagName='span' value=learnerGroup.title save='changeTitle'}}
     </h2>
   </span>
   <span class='info'>
-    {{t 'learnerGroups.members'}}: {{learnerGroup.usersOnlyAtThisLevel.length}}
+    {{t 'learnerGroups.members'}}: {{learnerGroup.users.length}}
   </span>
 </div>
