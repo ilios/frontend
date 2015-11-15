@@ -28,7 +28,9 @@
     {{/if}}
   </div>
 
-  {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
+  {{#unless isManaging}}
+    {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
+  {{/unless}}
 
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
