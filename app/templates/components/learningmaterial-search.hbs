@@ -20,7 +20,7 @@
     {{#each results as |learningMaterial|}}
       <li {{action 'add' learningMaterial}}>
         <h4 class="learning-material-title">{{learningMaterial.title}}</h4>
-        <span class="learning-material-description">{{learningMaterial.description}}</span>
+        <span class="learning-material-description">{{{learningMaterial.description}}}</span>
         {{#if learningMaterial.status.title}}
           <span class="learning-material-status">{{learningMaterial.status.title}}</span>
         {{/if}}
