@@ -188,7 +188,8 @@ export default {
     'notInThisGroup': "Pas dans ce groupe",
     'selectGroup': "Choisi Groupe",
     'multiEdit': 'Modifier de multiples groupes',
-    'includeAll': 'Cochez toutes'
+    'includeAll': 'Cochez toutes',
+    'message': "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours."
   },
   'courses': {
     'currentSchool': "Écôle actuelle",

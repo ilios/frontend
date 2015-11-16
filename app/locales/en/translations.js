@@ -188,7 +188,8 @@ export default {
     'notInThisGroup': 'Not in this group',
     'selectGroup': 'Select Group',
     'multiEdit': 'Multi-Edit',
-    'includeAll': 'Check All'
+    'includeAll': 'Check All',
+    'message': 'No learner groups available; No cohort is attached to this course.'
   },
   'courses': {
     'currentSchool': 'Current School',
