@@ -7,25 +7,41 @@ const { computed } = Ember;
 const { alias } = computed;
 
 export default Ember.Component.extend(EmberValidations, {
+  init() {
+    const type = this.get('learningMaterial.type');
+
+    switch (type) {
+      case 'file':
+        this.set('isFile', true);
+        break;
+      case 'link':
+        this.setProperties({ isLink: true, 'validations.urlBuffer': { presence: true, url: true } });
+        break;
+      case 'citation':
+        this.set('isCitation', true);
+        break;
+    }
+
+    this._super(...arguments);
+  },
+
+  willDestroy() {
+    let validations = this.get('validations');
+    delete validations.urlBuffer;
+  },
+
   layout: layout,
   classNames: ['newlearningmaterial'],
   learningMaterial: null,
   learningMaterialStatuses: [],
   learningMaterialUserRoles: [],
   hasCopyrightPermission: false,
-  isFile: function(){
-    return this.get('learningMaterial.type') === 'file';
-  }.property('learningMaterial.type'),
-  isLink: function(){
-    return this.get('learningMaterial.type') === 'link';
-  }.property('learningMaterial.type'),
-  isCitation: function(){
-    return this.get('learningMaterial.type') === 'citation';
-  }.property('learningMaterial.type'),
+
   editorParams: config.froalaEditorDefaults,
 
   titleBuffer: alias('learningMaterial.title'),
   authorBuffer: alias('learningMaterial.originalAuthor'),
+  urlBuffer: alias('learningMaterial.link'),
   validations: {
     'titleBuffer': {
       presence: true,
@@ -50,8 +66,15 @@ export default Ember.Component.extend(EmberValidations, {
     }
   }),
 
+  topErrorMessageUrl: computed('errors.urlBuffer.[]', 'displayUrlError', function() {
+    if (this.get('displayUrlError')) {
+      return this.get('errors.urlBuffer')[0];
+    }
+  }),
+
   displayNameError: false,
   displayAuthorError: false,
+  displayUrlError: false,
 
   actions: {
     save() {
@@ -99,12 +122,20 @@ export default Ember.Component.extend(EmberValidations, {
       this.set('learningMaterial.title', name);
     },
 
+    changeUrl(url) {
+      this.set('learningMaterial.link', url);
+    },
+
     displayNameError() {
       this.set('displayNameError', true);
     },
 
     displayAuthorError() {
       this.set('displayAuthorError', true);
+    },
+
+    displayUrlError() {
+      this.set('displayUrlError', true);
     }
   }
 });

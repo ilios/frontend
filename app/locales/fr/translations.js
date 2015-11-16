@@ -422,5 +422,6 @@ export default {
     'even': "doit être une chiffre pair",
     'alphanumeric': "doit être une valeur alphanumérique",
     'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)",
+    'url': 'doit être une URL valide'
   }
 };
