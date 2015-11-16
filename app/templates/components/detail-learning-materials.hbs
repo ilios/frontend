@@ -95,11 +95,15 @@
         	        {{/if}}
                 </td>
                 <td class='text-center' colspan=2>
-        	        {{#if lmProxy.publicNotes}}
+                  {{#if lmProxy.notes}}
         	          <span class='add'>{{t 'general.yes'}}</span>
+
+                    {{#if lmProxy.publicNotes}}
+                      {{fa-icon 'eye'}}
+                    {{/if}}
         	        {{else}}
         	          <span class='remove'>{{t 'general.no'}}</span>
-        	        {{/if}}
+        	        {{/if}}  
                 </td>
                 <td class='text-center' colspan=2>
                   {{#if lmProxy.sortedDescriptors.length}}
