@@ -5,8 +5,9 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
-const {run} = Ember;
-const {later} = run;
+
+const { isEmpty, isPresent, run } = Ember;
+const { later } = run;
 
 var application;
 var fixtures = {};
@@ -379,11 +380,15 @@ test('view citation learning material details', function(assert) {
 });
 
 test('edit learning material', function(assert) {
+  const searchBox = '.search-input';
+
   visit(url);
   andThen(function() {
+    assert.ok(isPresent(find(searchBox)), 'learner-gorup search box is visible');
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       let container = $('.learningmaterial-manager');
+      assert.ok(isEmpty(find(searchBox)), 'learner-gorup search box is hidden while in edit mode');
       click(find('.required input', container));
       click(find('.publicnotes input', container));
       click(find('.status .editable', container)).then(function(){
