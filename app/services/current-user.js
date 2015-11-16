@@ -7,7 +7,8 @@ const { computed, observer, on } = Ember;
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   currentUserId: null,
-  model: function(){
+
+  model: computed('currentUserId', function(){
     let deferred = Ember.RSVP.defer();
     let currentUserId = this.get('currentUserId');
     if (!currentUserId) {
@@ -15,7 +16,7 @@ export default Ember.Service.extend({
       ajax(url).then(data => {
         if(data.userId){
           this.set('currentUserId', data.userId);
-          this.get('store').find('user', data.userId).then(function(user){
+          this.get('store').find('user', data.userId).then((user) => {
             deferred.resolve(user);
           });
         } else {
@@ -25,7 +26,7 @@ export default Ember.Service.extend({
         deferred.resolve(null);
       });
     } else {
-      this.get('store').find('user', currentUserId).then(function(user){
+      this.get('store').find('user', currentUserId).then((user) => {
         deferred.resolve(user);
       });
     }
@@ -33,7 +34,8 @@ export default Ember.Service.extend({
     return DS.PromiseObject.create({
       promise: deferred.promise
     });
-  }.property('currentUserId'),
+  }),
+
   availableCohortsObserver: function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){

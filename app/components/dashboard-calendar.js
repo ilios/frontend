@@ -13,12 +13,9 @@ export default Ember.Component.extend({
   currentUser: service(),
   store: service(),
   i18n: service(),
-  date: null,
-  showFilters: false,
   selectedDate: null,
   selectedView: null,
-  mySchedule: true,
-  courseFilters: false,
+
   dueTranslation: Ember.computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.dueThisDay');
   }),
@@ -327,6 +324,7 @@ export default Ember.Component.extend({
   }),
   selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
     let defer = RSVP.defer();
+
     if(this.get('schoolPickedByUser')){
       defer.resolve(this.get('schoolPickedByUser'));
     } else {
@@ -341,7 +339,6 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  schoolPickedByUser: null,
   hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
   allSchools: Ember.computed(function(){
     return DS.PromiseArray.create({
@@ -355,7 +352,6 @@ export default Ember.Component.extend({
   schools: Ember.computed('allSchools.[]', 'selectedSchool', function(){
     return this.get('allSchools').sortBy('title');
   }),
-  academicYearSelectedByUser: null,
   selectedAcademicYear: Ember.computed('academicYearSelectedByUser', function(){
     if(this.get('academicYearSelectedByUser')){
       //wrap it in a proxy so the is-equal comparison works the same as the promise
@@ -447,14 +443,14 @@ export default Ember.Component.extend({
     selectEvent(event){
       this.sendAction('selectEvent', event);
     },
-    toggleShowFilters(){
-      this.set('showFilters', !this.get('showFilters'));
+    toggleShowFilters() {
+      this.sendAction('toggleShowFilters');
     },
-    toggleMySchedule(){
+    toggleMySchedule() {
       this.sendAction('toggleMySchedule');
     },
-    toggleCourseFilters(){
-      this.set('courseFilters', !this.get('courseFilters'));
+    toggleCourseFilters() {
+      this.sendAction('toggleCourseFilters');
     },
     toggleTopic(topic){
       if(this.get('selectedTopics').contains(topic)){
@@ -491,19 +487,23 @@ export default Ember.Component.extend({
         this.get('selectedCourses').pushObject(course);
       }
     },
-    pickSchool(){
+
+    pickSchool() {
       let selectedEl = this.$('.calendar-school-picker select')[0];
       let selectedIndex = selectedEl.selectedIndex;
       const schools = this.get('schools');
       let school = schools.toArray()[selectedIndex];
-      this.set('schoolPickedByUser', school);
+
+      this.sendAction('changeSchool', school);
     },
-    changeSelectedYear(){
+
+    changeSelectedYear() {
       let selectedEl = this.$('.calendar-year-picker select')[0];
       let selectedIndex = selectedEl.selectedIndex;
       this.get('academicYears').then(years => {
         let year = years.toArray()[selectedIndex];
-        this.set('academicYearSelectedByUser', year);
+
+        this.sendAction('changeAcademicYear', year);
       });
     },
 

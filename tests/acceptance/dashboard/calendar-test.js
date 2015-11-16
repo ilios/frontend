@@ -883,3 +883,47 @@ test('filter tags work properly', function(assert) {
     assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
   });
 });
+
+test('query params work', function(assert) {
+  const calendarSlider = '.switch-label:eq(0)';
+  const scheduleSlider = '.switch-label:eq(1)';
+  const filterSlider = '.switch-label:eq(2)';
+  const courseSlider = '.switch-label:eq(3)';
+  const academicYearDropdown = '.calendar-year-picker select';
+
+  visit('/dashboard');
+  click(calendarSlider);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard?showCalendar=true');
+  });
+
+  click(scheduleSlider);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true');
+  });
+
+  click(filterSlider);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true&showFilters=true');
+  });
+
+  click(courseSlider);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard?courseFilters=true&mySchedule=false&showCalendar=true&showFilters=true');
+  });
+
+  pickOption(academicYearDropdown, '2015 - 2016', assert);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=true&mySchedule=false&showCalendar=true&showFilters=true');
+  });
+
+  click(filterSlider);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true');
+  });
+
+  click(calendarSlider);
+  andThen(() => {
+    assert.equal(currentURL(), '/dashboard');
+  });
+});

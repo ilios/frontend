@@ -1,44 +1,124 @@
-import moment from 'moment';
 import Ember from 'ember';
+import moment from 'moment';
 
-export default Ember.Controller.extend({
-  queryParams: ['date', 'view', 'showCalendar', 'mySchedule'],
-  currentUser: Ember.inject.service(),
+const { computed, Controller, inject } = Ember;
+const { service } = inject;
+
+export default Controller.extend({
+  queryParams: ['date', 'view', 'showCalendar', 'mySchedule', 'showFilters', 'courseFilters', 'school', 'academicYear'],
   date: null,
   view: 'week',
   showCalendar: false,
   mySchedule: true,
-  selectedDate: Ember.computed('date', function(){
-    if(this.get('date')){
-      return moment(this.get('date'), 'YYYY-MM-DD').format();
-    }
+  showFilters: false,
+  courseFilters: false,
+  academicYear: null,
+  school: null,
 
-    return moment().format();
-  }),
-  selectedView: Ember.computed('view', function(){
-    let view = this.get('view');
-    let viewOptions = ['month', 'week', 'day'];
-    if(viewOptions.indexOf(view) === -1){
-      view = 'week';
-    }
+  currentUser: service(),
 
-    return view;
+  academicYearSelectedByUser: computed('academicYear', {
+    get() {
+      const academicYear = this.get('academicYear');
+      const { academicYears } = this.get('model');
+
+      return academicYears.find((year) => year.get('title') === parseInt(academicYear));
+    },
+
+    set(key, value) {
+      this.set('academicYear', value.get('title'));
+
+      return value;
+    }
   }),
+
+  schoolPickedByUser: computed('school', {
+    get() {
+      const school = this.get('school');
+      const { schools } = this.get('model');
+
+      return schools.find((availableSchool) => availableSchool.get('title') === school);
+    },
+
+    set(key, value) {
+      this.set('school', value.get('title'));
+
+      return value;
+    }
+  }),
+
+  selectedDate: computed('date', {
+    get() {
+      const date = this.get('date');
+
+      if (date) {
+        return moment(date, 'YYYY-MM-DD').format();
+      }
+
+      return moment().format();
+    }
+  }),
+
+  selectedView: computed('view', {
+    get() {
+      let view = this.get('view');
+      let viewOptions = ['month', 'week', 'day'];
+
+      if (viewOptions.indexOf(view) === -1) {
+        view = 'week';
+      }
+
+      return view;
+    }
+  }),
+
   actions: {
-    changeDate(newDate){
+    changeDate(newDate) {
       this.set('date', moment(newDate).format('YYYY-MM-DD'));
     },
-    changeView(newView){
+
+    changeView(newView) {
       this.set('view', newView);
     },
-    selectEvent(event){
+
+    selectEvent(event) {
       this.transitionToRoute('events', event.slug);
     },
-    toggleShowCalendar(){
-      this.set('showCalendar', !this.get('showCalendar'));
+
+    toggleShowCalendar() {
+      if (this.get('showCalendar')) {
+        this.setProperties({ showCalendar: false, mySchedule: true, showFilters: false, school: null, academicYear: null, courseFilters: false });
+      } else {
+        this.set('showCalendar', true);
+      }
     },
-    toggleMySchedule(){
-      this.set('mySchedule', !this.get('mySchedule'));
+
+    toggleMySchedule() {
+      if (this.get('mySchedule')) {
+        this.setProperties({ mySchedule: false, school: null });
+      } else {
+        this.set('mySchedule', true);
+      }
+    },
+
+    toggleShowFilters() {
+      if (this.get('showFilters')) {
+        this.setProperties({ showFilters: false, school: null, academicYear: null, courseFilters: false });
+      } else {
+        this.set('showFilters', true);
+      }
+    },
+
+    toggleCourseFilters() {
+      this.set('courseFilters', !this.get('courseFilters'));
+    },
+
+    changeAcademicYear(year) {
+      this.set('academicYearSelectedByUser', year);
+    },
+
+    changeSchool(school) {
+      this.set('schoolPickedByUser', school);
     }
   }
 });
