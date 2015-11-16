@@ -17,7 +17,6 @@ export default Ember.Service.extend({
         if(data.userId){
           this.set('currentUserId', data.userId);
           this.get('store').find('user', data.userId).then((user) => {
-            this.set('user', user);
             deferred.resolve(user);
           });
         } else {
@@ -28,7 +27,6 @@ export default Ember.Service.extend({
       });
     } else {
       this.get('store').find('user', currentUserId).then((user) => {
-        this.set('user', user);
         deferred.resolve(user);
       });
     }

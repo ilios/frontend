@@ -15,12 +15,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
 	},
 
 	model() {
-		const user = this.get('currentUser.user');
+		const user = this.get('currentUser.model');
 		const schools = user.get('schools');
 		const store = this.store;
 		const academicYears = store.findAll('academic-year');
 
-		return hash({ user, schools, academicYears });
+		return hash({ schools, academicYears });
 	},
 
 	setupController() {
