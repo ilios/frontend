@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, inject, RSVP} = Ember;
+const {computed, inject, isPresent, RSVP} = Ember;
 const {notEmpty, or, not} = computed;
 const {service} = inject;
 const {PromiseArray} = DS;
@@ -24,6 +24,16 @@ export default Ember.Component.extend({
   newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
+
+  displaySearchBox: computed('isManaging', 'newLearningMaterials.[]', {
+    get() {
+      const isManaging = this.get('isManaging');
+      const present = isPresent(this.get('newLearningMaterials'));
+
+      return isManaging ? false : present ? false : true;
+    }
+  }).readOnly(),
+
   learningMaterialStatuses: function(){
     var self = this;
     return PromiseArray.create({

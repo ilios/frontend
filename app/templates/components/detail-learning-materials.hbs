@@ -28,9 +28,9 @@
     {{/if}}
   </div>
 
-  {{#unless isManaging}}
+  {{#if displaySearchBox}}
     {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
-  {{/unless}}
+  {{/if}}
 
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
@@ -91,8 +91,8 @@
         	        {{#if lmProxy.required}}
         	          <span class='add'>{{t 'general.yes'}}</span>
         	        {{else}}
-        	          <span class='remove'>{{t 'general.no'}}</span>
-        	        {{/if}}
+                    <span class='remove'>{{t 'general.no'}}</span>
+                  {{/if}}
                 </td>
                 <td class='text-center' colspan=2>
                   {{#if lmProxy.notes}}
@@ -103,7 +103,7 @@
                     {{/if}}
         	        {{else}}
         	          <span class='remove'>{{t 'general.no'}}</span>
-        	        {{/if}}  
+        	        {{/if}}
                 </td>
                 <td class='text-center' colspan=2>
                   {{#if lmProxy.sortedDescriptors.length}}
