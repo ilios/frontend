@@ -188,7 +188,8 @@ export default {
     'notInThisGroup': 'No en este grupo',
     'selectGroup': 'Seleccione Grupo',
     'multiEdit': 'Editar múltiples grupos',
-    'includeAll': 'Marque todo'
+    'includeAll': 'Marque todo',
+    'message': 'No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación.'
   },
   'courses': {
     'currentSchool': 'Escuela Actual',

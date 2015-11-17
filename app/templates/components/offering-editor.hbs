@@ -62,18 +62,22 @@
 {{/unless}}
 
 <div class="offering-learnergroups">
-  {{#each availableLearnerGroups as |cohort|}}
-    <div class="cohort-container">
-      <header class="cohort-title center">{{cohort.programYear.program.title}} {{cohort.displayTitle}}</header>
+  {{#if availableLearnerGroups}}
+    {{#each availableLearnerGroups as |cohort|}}
+      <div class="cohort-container">
+        <header class="cohort-title center">{{cohort.programYear.program.title}} {{cohort.displayTitle}}</header>
 
-      {{offering-editor-learnergroups
-        cohort=cohort
-        learnerGroups=learnerGroups
-        addLearnerGroup='addLearnerGroup'
-        removeLearnerGroup='removeLearnerGroup'
-      }}
-    </div>
-  {{/each}}
+        {{offering-editor-learnergroups
+          cohort=cohort
+          learnerGroups=learnerGroups
+          addLearnerGroup='addLearnerGroup'
+          removeLearnerGroup='removeLearnerGroup'
+        }}
+      </div>
+    {{/each}}
+  {{else}}
+    <span class="offering-learnergroups-message">{{t 'learnerGroups.message'}}</span>
+  {{/if}}
 </div>
 
 {{#unless smallGroupMode}}
