@@ -147,13 +147,17 @@ test('list learning materials', function(assert) {
 });
 
 test('create new file learning material', function(assert) {
+  const testTitle = 'testsome title';
+  const testAuthor = 'testsome author';
+  const testDescription = 'testsome description';
+  const searchBox = '.search-input';
+
   visit(url);
-  var testTitle = 'testsome title';
-  var testAuthor = 'testsome author';
-  var testDescription = 'testsome description';
   andThen(function() {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
+
+    assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
     click('.learning-material-actions .button', container).then(function(){
       //pick the file type
@@ -161,6 +165,7 @@ test('create new file learning material', function(assert) {
     });
   });
   andThen(function(){
+    assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
     let labels = find('.detail-learning-materials .newlearningmaterial label');
     assert.equal(labels.length, 9);
@@ -192,11 +197,14 @@ test('create new link learning material', function(assert) {
   const testAuthor = 'testsome author';
   const testDescription = 'testsome description';
   const testUrl = 'http://www.ucsf.edu/';
+  const searchBox = '.search-input';
 
   visit(url);
   andThen(function() {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
+
+    assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
     click('.learning-material-actions .button', container).then(function(){
       //pick the link type
@@ -204,6 +212,7 @@ test('create new link learning material', function(assert) {
     });
   });
   andThen(function(){
+    assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
     let labels = find('.detail-learning-materials .newlearningmaterial label');
     assert.equal(labels.length, 7);
@@ -231,13 +240,17 @@ test('create new link learning material', function(assert) {
 });
 
 test('create new citation learning material', function(assert) {
+  const testTitle = 'testsome title';
+  const testAuthor = 'testsome author';
+  const testDescription = 'testsome description';
+  const searchBox = '.search-input';
+
   visit(url);
-  var testTitle = 'testsome title';
-  var testAuthor = 'testsome author';
-  var testDescription = 'testsome description';
   andThen(function() {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
+
+    assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
     click('.learning-material-actions .button', container).then(function(){
       //pick the citation type
@@ -245,6 +258,7 @@ test('create new citation learning material', function(assert) {
     });
   });
   andThen(function(){
+    assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
     let labels = find('.detail-learning-materials .newlearningmaterial label');
     assert.equal(labels.length, 7);
