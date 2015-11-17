@@ -28,7 +28,7 @@
     "ember-cli": "1.13.12",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-autoprefixer": "0.5.0",
-    "ember-cli-babel": "^5.1.5",
+    "ember-cli-babel": "Dhaulagiri/ember-cli-babel#br-polyfille",
     "ember-cli-blanket": "0.6.2",
     "ember-cli-bourbon": "^1.1.0",
     "ember-cli-clipboard": "0.2.1",
