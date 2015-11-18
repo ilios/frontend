@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
-const { computed, Controller, inject, isEmpty, RSVP, run } = Ember;
-const { Promise } = RSVP;
+const { computed, Controller, inject, isEmpty, PromiseProxyMixin, run } = Ember;
 const { service } = inject;
-const { PromiseArray } = DS;
 const { debounce } = run;
 const { trim } = Ember.$;
+
+const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
 
 function cleanQuery(query) {
   return trim(query).replace(/[\-,?~!@#$%&*+\-'="]/, '');
@@ -66,12 +65,20 @@ export default Controller.extend({
       const school = this.get('school');
 
       if (!isEmpty(cleanQuery(q))) {
-        return this.get('store').query('user', { school, limit, q }).then((user) => {
+        return this.get('store').query('user', { school, limit, q }).then((users) => {
           return users;
         });
       }
     }
   }).readOnly(),
+
+  proxyContent: computed('searchResults', function() {
+    const searchResults = this.get('searchResults');
+
+    return ProxyContent.create({
+      promise: searchResults
+    });
+  }),
 
   _updateQuery(value) {
     this.set('query', value);
@@ -83,7 +90,7 @@ export default Controller.extend({
       const school = this.get('school');
       const offset = this.get('offset') - 20;
 
-      return this.get('store').query('user', { school, limit, offset }).then((users) => {
+      this.get('store').query('user', { school, limit, offset, 'order_by[lastName]': 'ASC'  }).then((users) => {
         this.setProperties({ model: users, offset });
       });
     },
@@ -93,7 +100,7 @@ export default Controller.extend({
       const school = this.get('school');
       const offset = this.get('offset') + 20;
 
-      this.get('store').query('user', { school, limit, offset }).then((users) => {
+      this.get('store').query('user', { school, limit, offset, 'order_by[lastName]': 'ASC' }).then((users) => {
         this.setProperties({ model: users, offset });
       });
     },

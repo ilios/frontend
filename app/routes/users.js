@@ -12,7 +12,11 @@ export default Route.extend({
         const school = userSchool.get('id');
         const limit = 21;
 
-        return this.store.query('user', { school, limit }).then((users) => {
+        return this.store.query('user', {
+          school,
+          limit,
+          'order_by[lastName]': 'ASC'
+        }).then((users) => {
           return users;
         });
       });

@@ -11,10 +11,9 @@
     </div>
 
     <div id='textfilter' class="filter">
-      <input type="text"
+      <input type="text" placeholder={{t 'user.searchUsers'}}
         onChange={{action "changeValue" value="target.value"}}
-        oninput={{action "changeValue" value="target.value"}}
-        placeholder="Search for users" />
+        oninput={{action "changeValue" value="target.value"}} />
     </div>
   </div>
 
@@ -29,10 +28,10 @@
     </div>
     <div class='resultslist-list'>
       {{#if query}}
-        {{#if searchResults}}
-          {{user-list users=searchResults}}
-        {{else}}
+        {{#if proxyContent.isPending}}
           <span>Searching...</span>
+        {{else}}
+          {{user-list users=proxyContent.content}}
         {{/if}}
       {{else}}
         {{user-list users=users}}

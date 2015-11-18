@@ -365,6 +365,7 @@ export default {
     'firstName': 'First Name',
     'lastName': 'Last Name',
     'manageUsers': 'Manage Users',
+    'searchUsers': 'Search for users'
   },
   'language': {
     'select': {
