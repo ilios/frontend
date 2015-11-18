@@ -41,7 +41,6 @@ export default Ember.Component.extend({
   actions: {
     manageParents: function(objective){
       objective.get('parents').then((parents) => {
-        scrollTo(".detail-objectives");
         this.set('initialStateForManageParentsObjective', parents.toArray());
         this.set('mangeParentsObjective', objective);
       });
@@ -125,7 +124,6 @@ export default Ember.Component.extend({
         parents.clear();
         parents.addObjects(this.get('initialStateForManageParentsObjective'));
         self.set('mangeParentsObjective', null);
-        scrollTo("#objective-" + objective.get('id'));
       }
 
       if(this.get('isManagingDescriptors')){
