@@ -36,6 +36,24 @@ export default Ember.Component.extend({
     }
   },
 
+  startDateFlag: false,
+  endDateFlag: false,
+
+  checkDate(whichDate) {
+    const startDate = this.get('course.startDate');
+    const endDate = this.get('course.endDate');
+
+    if (endDate <= startDate) {
+      if (whichDate === 'start') {
+        this.set('startDateFlag', true);
+      } else {
+        this.set('endDateFlag', true);
+      }
+    } else {
+      this.setProperties({ startDateFlag: false, endDateFlag: false });
+    }
+  },
+
   actions: {
     addDirector: function(user){
       var course = this.get('course');
@@ -62,14 +80,19 @@ export default Ember.Component.extend({
         course.save();
       }
     },
+
     changeStartDate: function(newDate){
       this.get('course').set('startDate', newDate);
       this.get('course').save();
+      this.checkDate('end');
     },
+
     changeEndDate: function(newDate){
       this.get('course').set('endDate', newDate);
       this.get('course').save();
+      this.checkDate('start');
     },
+
     changeExternalId: function(value){
       this.get('course').set('externalId', value);
       this.get('course').save();
