@@ -1,4 +1,21 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const { inject, Route } = Ember;
+const { service } = inject;
+
+export default Route.extend({
+  currentUser: service(),
+
+  model() {
+    return this.get('currentUser.model').then((user) => {
+      return user.get('school').then((userSchool) => {
+        const school = userSchool.get('id');
+        const limit = 21;
+
+        return this.store.query('user', { school, limit }).then((users) => {
+          return users;
+        });
+      });
+    });
+  }
 });

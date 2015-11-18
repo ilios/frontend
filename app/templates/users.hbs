@@ -4,14 +4,20 @@
       <label class="inline-label">
         {{t 'general.school'}}:
       </label>
+
       <div id="school-selection" class="inline-data">
         {{currentUser.model.school.title}}
       </div>
     </div>
+
     <div id='textfilter' class="filter">
-      {{input type='text' value=textFilter placeholder=placeholderValue}}
+      <input type="text"
+        onChange={{action "changeValue" value="target.value"}}
+        oninput={{action "changeValue" value="target.value"}}
+        placeholder="Search for users" />
     </div>
   </div>
+
   <section class='resultslist'>
     <div class="resultslist-header">
       <div class="resultslist-title">
@@ -22,9 +28,27 @@
       </div> -->
     </div>
     <div class='resultslist-list'>
-      {{user-list
-        users=sortedUsers
-      }}
+      {{#if query}}
+        {{#if searchResults}}
+          {{user-list users=searchResults}}
+        {{else}}
+          <span>Searching...</span>
+        {{/if}}
+      {{else}}
+        {{user-list users=users}}
+      {{/if}}
     </div>
+
+    {{#unless query}}
+      <div class="users-pagination">
+        {{#if prevPages}}
+          <button {{action 'getPrevPage'}}>Prev</button>
+        {{/if}}
+
+        {{#if morePages}}
+          <button {{action 'getNextPage'}}>Next</button>
+        {{/if}}
+      </div>
+    {{/unless}}
   </section>
 </section>

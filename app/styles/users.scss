@@ -1,0 +1,20 @@
+.users-pagination {
+  display: block;
+  margin-bottom: 2em;
+  text-align: center;
+
+  button {
+    background: $white;
+    border: 2px solid $moderate-grey;
+    border-radius: 0;
+    color: $moderate-grey;
+    font-weight: bold;
+    height: 40px;
+    outline: none;
+    width: 60px;
+
+    &:hover {
+      background: $header-grey;
+    }
+  }
+}
