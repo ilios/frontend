@@ -27,6 +27,8 @@ export default Ember.Component.extend({
   isEditing: false,
   type: null,
 
+  insertPadding: not('displaySearchBox'),
+
   displaySearchBox: computed('isManaging', 'isEditing', {
     get() {
       const isManaging = this.get('isManaging');
