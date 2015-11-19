@@ -1,8 +1,13 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default Ember.Component.extend({
-  store: Ember.inject.service(),
+const { Component, inject } = Ember;
+const { service } = inject;
+
+export default Component.extend({
+  store: service(),
+  flashMessages: service(),
+
   editable: true,
   course: null,
   directorsSort: ['lastName', 'firstName'],
@@ -44,6 +49,8 @@ export default Ember.Component.extend({
     const endDate = this.get('course.endDate');
 
     if (endDate <= startDate) {
+      this.get('flashMessages').warning('courses.courseDateMessage');
+
       if (whichDate === 'start') {
         this.set('startDateFlag', true);
       } else {

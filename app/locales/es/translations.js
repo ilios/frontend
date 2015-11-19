@@ -245,6 +245,7 @@ export default {
     'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
     'confirmSessionRemoval': "¿Está seguro que desea eliminar este sessión?",
     'noPrintDraft': 'Cursos que se encuentran en estado borrador no se puede imprimir',
+    'courseDateMessage': 'Fecha de inicio de curso debe ser antes de la fecha de fin de curso'
   },
   'sessions': {
     'specialAttireRequired': 'Vestimenta Especial Requerido',
