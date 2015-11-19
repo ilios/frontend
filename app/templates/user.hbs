@@ -1,2 +1,38 @@
 {{global-search}}
-Placeholder for user: #{{model.id}} {{model.fullName}}
+
+<div class="user-info">
+  <div class="form-col-12">
+    <label class="form-label">Campus ID:</label>
+    <div class="form-data">{{model.campusId}}</div>
+  </div>
+
+  <div class="form-col-12">
+    <label class="form-label">{{t 'user.fullName'}}:</label>
+    <div class="form-data">{{model.fullName}}</div>
+  </div>
+
+  <div class="form-col-12">
+    <label class="form-label">{{t 'user.lastName'}}:</label>
+    <div class="form-data">{{model.lastName}}</div>
+  </div>
+
+  <div class="form-col-12">
+    <label class="form-label">{{t 'user.firstName'}}:</label>
+    <div class="form-data">{{model.firstName}}</div>
+  </div>
+
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.email'}}:</label>
+    <div class="form-data">{{model.email}}</div>
+  </div>
+
+  <div class="form-col-12">
+    <label class="form-label">Phone:</label>
+    <div class="form-data">{{model.phone}}</div>
+  </div>
+
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.school'}}</label>
+    <div class="form-data">{{model.school.title}}</div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.user-info {
+  margin-top: 4em;
+
+  .form-label {
+    @include span-columns(4 of 10);
+  }
+
+  .form-data {
+    @include span-columns(6 of 10);
+  }
+}

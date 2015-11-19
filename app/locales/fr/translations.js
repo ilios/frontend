@@ -364,6 +364,7 @@ export default {
   'user': {
     'firstName': 'Prénom',
     'lastName': 'Nom de famille',
+    'fullName': 'Nom et prénom(s)',
     'manageUsers': 'Gérer les utilisateurs',
     'searchUsers': "Recherche d'utilisateurs"
   },
