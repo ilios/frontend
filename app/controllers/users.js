@@ -23,6 +23,9 @@ export default Controller.extend({
     });
   },
 
+  queryParams: ['page'],
+  page: 1,
+
   currentUser: service(),
   store: service(),
 
@@ -30,13 +33,11 @@ export default Controller.extend({
   delay: 500,
 
   limit: 20,
-  offset: 0,
 
-  prevPages: computed('offset', {
+  prevPages: computed('page', {
     get() {
-      const offset = this.get('offset');
-
-      return offset !== 0;
+      const page = this.get('page');
+      return page !== 1;
     }
   }).readOnly(),
 
@@ -53,7 +54,10 @@ export default Controller.extend({
     get() {
       const users = this.get('model').toArray();
 
-      users.pop();
+      if (users.length === 21) {
+        users.pop();
+      }
+
       return users;
     }
   }).readOnly(),
@@ -86,23 +90,11 @@ export default Controller.extend({
 
   actions: {
     getPrevPage() {
-      const limit = this.get('limit') + 1;
-      const school = this.get('school');
-      const offset = this.get('offset') - 20;
-
-      this.get('store').query('user', { school, limit, offset, 'order_by[lastName]': 'ASC'  }).then((users) => {
-        this.setProperties({ model: users, offset });
-      });
+      this.set('page', this.get('page') - 1);
     },
 
     getNextPage() {
-      const limit = this.get('limit') + 1;
-      const school = this.get('school');
-      const offset = this.get('offset') + 20;
-
-      this.get('store').query('user', { school, limit, offset, 'order_by[lastName]': 'ASC' }).then((users) => {
-        this.setProperties({ model: users, offset });
-      });
+      this.set('page', this.get('page') + 1);
     },
 
     changeValue(value) {

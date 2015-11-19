@@ -364,9 +364,9 @@ export default {
   'user': {
     'firstName': 'Prénom',
     'lastName': 'Nom de famille',
-    'fullName': 'Nom et prénom(s)',
+    'fullName': 'Nom complet',
     'manageUsers': 'Gérer les utilisateurs',
-    'searchUsers': "Recherche d'utilisateurs"
+    'searchUsers': "Rechercher des utilisateurs"
   },
   'language': {
     'select': {

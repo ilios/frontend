@@ -29,7 +29,7 @@
     <div class='resultslist-list'>
       {{#if query}}
         {{#if proxyContent.isPending}}
-          <span>Searching...</span>
+          {{pulse-loader}}
         {{else}}
           {{user-list users=proxyContent.content}}
         {{/if}}
