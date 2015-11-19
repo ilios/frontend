@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
 const { computed, inject, Component } = Ember;
 const { service } = inject;
+const { PromiseArray } = DS;
 
 export default Component.extend({
   reporting: service(),
@@ -12,7 +14,9 @@ export default Component.extend({
   reportSorting: ['title'],
   sortedReports: computed.sort('listOfReports', 'reportSorting'),
   listOfReports: computed('reporting.reportsList.[]', function(){
-    return this.get('reporting').get('reportsList');
+    return PromiseArray.create({
+      promise: this.get('reporting').get('reportsList')
+    });
   }),
   reportResultsList: computed('selectedReport', function(){
     const report = this.get('selectedReport');
