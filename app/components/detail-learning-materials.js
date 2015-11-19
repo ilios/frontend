@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, inject, isPresent, RSVP} = Ember;
+const {computed, inject, RSVP} = Ember;
 const {notEmpty, or, not} = computed;
 const {service} = inject;
 const {PromiseArray} = DS;
@@ -19,18 +19,20 @@ export default Ember.Component.extend({
   managingMaterial: null,
   meshMaterial: null,
   isSession: not('isCourse'),
-  newLearningMaterials: [],
   classNames: ['detail-learning-materials'],
   newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
 
-  displaySearchBox: computed('isManaging', 'newLearningMaterials.[]', {
+  isEditing: false,
+  type: null,
+
+  displaySearchBox: computed('isManaging', 'isEditing', {
     get() {
       const isManaging = this.get('isManaging');
-      const present = isPresent(this.get('newLearningMaterials'));
+      const isEditing = this.get('isEditing');
 
-      return isManaging ? false : present ? false : true;
+      return isManaging ? false : isEditing ? false : true;
     }
   }).readOnly(),
 
@@ -149,75 +151,41 @@ export default Ember.Component.extend({
         });
       }
     },
-    cancel(){
-      this.set('bufferMaterial', null);
-      this.set('managingMaterial', null);
-      this.set('bufferTerms', []);
-      this.set('meshMaterial', null);
 
+    cancel() {
+      this.setProperties({ bufferMaterial: null, managingMaterial: null, bufferTerms: [], meshMaterial: null });
     },
+
     addNewLearningMaterial(type){
-      var self = this;
-      if(type === 'file' || type === 'citation' || type === 'link'){
-        self.get('learningMaterialStatuses').then(function(statuses){
-          self.get('learningMaterialUserRoles').then(function(roles){
-            //default the status to Final if that status exists
-            var defaultStatus = statuses.find(function(status){
-              return status.get('title') === 'Final';
-            });
-            if(!defaultStatus){
-              defaultStatus = statuses.get('firstObject');
-            }
-            self.get('currentUser').get('model').then(user => {
-              let data = {
-                type: type,
-                owningUser: user,
-                status: defaultStatus,
-                userRole: roles.get('firstObject')
-              };
-              if (type === 'link') {
-                data.link = 'http://';
-              }
-              var lm = self.get('store').createRecord('learning-material', data);
-              self.get('newLearningMaterials').addObject(lm);
-            });
-          });
-        });
-      }
+      this.setProperties({ type, isEditing: true });
     },
-    saveNewLearningMaterial(lm){
-      var self = this;
-      var subjectLm;
-      var lmCollectionType;
-      self.get('newLearningMaterials').removeObject(lm);
-      if(this.get('isCourse')){
-        subjectLm = this.get('store').createRecord('course-learning-material', {
-          course: this.get('subject')
-        });
-        lmCollectionType = 'courseLearningMaterials';
-      }
-      if(this.get('isSession')){
-        subjectLm = this.get('store').createRecord('session-learning-material', {
-          session: this.get('subject')
-        });
-        lmCollectionType = 'sessionLearningMaterials';
-      }
-      lm.save().then(function(savedLm){
-        subjectLm.set('learningMaterial', savedLm);
-        subjectLm.save().then(function(savedSubjectLm){
-          lm.get(lmCollectionType).then(function(collection){
-            collection.addObject(savedSubjectLm);
-          });
 
-          self.get('subject.learningMaterials').then(function(lms){
-            lms.addObject(savedSubjectLm);
-          });
+    saveNewLearningMaterial(params) {
+      const store = this.get('store');
+      const isCourse = this.get('isCourse');
+      const subject = this.get('subject');
+
+      let lmSubject;
+      let lm = this.get('store').createRecord('learning-material', params);
+
+      if (isCourse) {
+        lmSubject = store.createRecord('course-learning-material', { course: subject });
+      } else {
+        lmSubject = store.createRecord('session-learning-material', { session: subject });
+      }
+
+      lm.save().then((savedLm) => {
+        lmSubject.set('learningMaterial', savedLm);
+        lmSubject.save().then(() => {
+          this.set('isEditing', false);
         });
       });
     },
-    removeNewLearningMaterial(lm){
-      this.get('newLearningMaterials').removeObject(lm);
+
+    removeNewLearningMaterial() {
+      this.set('isEditing', false);
     },
+
     addTermToBuffer(term){
       this.get('bufferTerms').addObject(term);
     },

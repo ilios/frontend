@@ -3,12 +3,13 @@ import config from 'ilios/config/environment';
 import layout from '../templates/components/new-learningmaterial';
 import EmberValidations from 'ember-validations';
 
-const { computed } = Ember;
+const { computed, inject } = Ember;
 const { alias } = computed;
+const { service } = inject;
 
 export default Ember.Component.extend(EmberValidations, {
   init() {
-    const type = this.get('learningMaterial.type');
+    const type = this.get('type');
 
     switch (type) {
       case 'file':
@@ -23,6 +24,27 @@ export default Ember.Component.extend(EmberValidations, {
     }
 
     this._super(...arguments);
+    const component = this;
+
+    this.get('currentUser.model').then((user) => {
+      component.set('owner', user);
+    });
+
+    this.get('learningMaterialStatuses').then((statuses) => {
+      let defaultStatus = statuses.find((status) => status.get('title') === 'Final');
+
+      if (!defaultStatus) {
+        defaultStatus = statuses.get('firstObject');
+      }
+
+      this.set('status', defaultStatus);
+    });
+
+    this.get('learningMaterialUserRoles').then((roles) => {
+      const defaultRole = roles.get('firstObject');
+
+      this.set('userRole', defaultRole);
+    });
   },
 
   willDestroy() {
@@ -30,18 +52,20 @@ export default Ember.Component.extend(EmberValidations, {
     delete validations.urlBuffer;
   },
 
+  classNames: ['new-learning-material'],
+
+  currentUser: service(),
+
   layout: layout,
-  classNames: ['newlearningmaterial'],
-  learningMaterial: null,
   learningMaterialStatuses: [],
   learningMaterialUserRoles: [],
   hasCopyrightPermission: false,
 
   editorParams: config.froalaEditorDefaults,
 
-  titleBuffer: alias('learningMaterial.title'),
-  authorBuffer: alias('learningMaterial.originalAuthor'),
-  urlBuffer: alias('learningMaterial.link'),
+  titleBuffer: alias('title'),
+  authorBuffer: alias('originalAuthor'),
+  urlBuffer: alias('link'),
   validations: {
     'titleBuffer': {
       presence: true,
@@ -76,54 +100,145 @@ export default Ember.Component.extend(EmberValidations, {
   displayAuthorError: false,
   displayUrlError: false,
 
+  filename: null,
+  fileHash: null,
+  status: null,
+  userRole: null,
+  description: null,
+  originalAuthor: null,
+  title: null,
+  link: 'http://',
+  copyrightPermission: false,
+  copyrightRationale: null,
+  owner: null,
+  citation: null,
+
+  checkFileFields(params) {
+    const copyrightPermission = this.get('copyrightPermission');
+    const copyrightRationale = this.get('copyrightRationale');
+    const filename = this.get('filename');
+    const fileHash = this.get('fileHash');
+
+    params.copyrightPermission = copyrightPermission;
+
+    if (copyrightRationale) {
+      params.copyrightRationale = copyrightRationale;
+    }
+
+    if (filename) {
+      params.filename = filename;
+    }
+
+    if (fileHash) {
+      params.fileHash = fileHash;
+    }
+  },
+
+  checkLinkFields(params) {
+    const link = this.get('link');
+
+    if (link) {
+      params.link = link;
+    }
+  },
+
+  checkCitationFields(params) {
+    const citation = this.get('citation');
+
+    if (citation) {
+      params.citation = citation;
+    }
+  },
+
   actions: {
     save() {
       this.validate()
         .then(() => {
-          this.sendAction('save', this.get('learningMaterial'));
+          const type = this.get('type');
+          const status = this.get('status');
+          const userRole = this.get('userRole');
+          const description = this.get('description');
+          const originalAuthor = this.get('originalAuthor');
+          const title = this.get('title');
+          const owningUser = this.get('owner');
+          const params = {};
+
+          if (description) {
+            params.description = description;
+          }
+
+          params.type = type;
+          params.owningUser = owningUser;
+          params.status = status;
+          params.userRole = userRole;
+          params.originalAuthor = originalAuthor;
+          params.title = title;
+
+          if (type === 'file') {
+            this.checkFileFields(params);
+          } else if (type === 'link') {
+            this.checkLinkFields(params);
+          } else {
+            this.checkCitationFields(params);
+          }
+
+          this.sendAction('save', params);
         })
         .catch(() => {
           return;
         });
     },
 
-    remove: function(){
-      this.sendAction('remove', this.get('learningMaterial'));
+    remove() {
+      this.sendAction('remove');
     },
-    setFile: function(e){
-      this.get('learningMaterial').set('filename', e.filename);
-      this.get('learningMaterial').set('fileHash', e.fileHash);
+
+    setFile(e) {
+      this.setProperties({ filename: e.filename, fileHash: e.fileHash });
     },
-    changeSelectedStatus(){
-      let selectedEl = this.$('select')[0];
-      let selectedIndex = selectedEl.selectedIndex;
-      let learningMaterialStatuses = this.get('learningMaterialStatuses');
-      let status = learningMaterialStatuses.toArray()[selectedIndex];
-      this.set('learningMaterial.status', status);
+
+    changeSelectedStatus() {
+      const selectedEl = this.$('select')[0];
+      const selectedIndex = selectedEl.selectedIndex;
+      const learningMaterialStatuses = this.get('learningMaterialStatuses');
+      const status = learningMaterialStatuses.toArray()[selectedIndex];
+
+      this.set('status', status);
     },
-    changeSelectedRole(){
-      let selectedEl = this.$('select')[1];
-      let selectedIndex = selectedEl.selectedIndex;
-      let learningMaterialUserRoles = this.get('learningMaterialUserRoles');
-      let role = learningMaterialUserRoles.toArray()[selectedIndex];
-      this.set('learningMaterial.userRole', role);
+
+    changeSelectedRole() {
+      const selectedEl = this.$('select')[1];
+      const selectedIndex = selectedEl.selectedIndex;
+      const learningMaterialUserRoles = this.get('learningMaterialUserRoles');
+      const role = learningMaterialUserRoles.toArray()[selectedIndex];
+
+      this.set('userRole', role);
     },
-    changeDescription(event, editor){
-      if(editor){
-        this.get('learningMaterial').set('description', editor.getHTML());
+
+    changeDescription(event, editor) {
+      if (editor) {
+        this.set('description', editor.getHTML());
       }
     },
 
     changeAuthor(author) {
-      this.set('learningMaterial.originalAuthor', author);
+      this.set('originalAuthor', author);
     },
 
     changeDisplayName(name) {
-      this.set('learningMaterial.title', name);
+      this.set('title', name);
     },
 
     changeUrl(url) {
-      this.set('learningMaterial.link', url);
+      this.set('link', url);
+    },
+
+    changeCitation(value) {
+      this.set('citation', value);
+    },
+
+    changeCopyrightRationale(value) {
+      this.set('copyrightRationale', value);
     },
 
     displayNameError() {

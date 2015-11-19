@@ -20,11 +20,15 @@
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
-        <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
-        <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'learningMaterials.link'}}</li>
-        <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'learningMaterials.citation'}}</li>
-      {{/action-menu}}
+      {{#if isEditing}}
+        <button class="collapse-button" {{action 'removeNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
+      {{else}}
+        {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
+          <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
+          <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'learningMaterials.link'}}</li>
+          <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'learningMaterials.citation'}}</li>
+        {{/action-menu}}
+      {{/if}}
     {{/if}}
   </div>
 
@@ -55,16 +59,15 @@
         }}
       {{/if}}
     {{else}}
-      {{#if newLearningMaterials.length}}
-        {{#each newLearningMaterials as |lm|}}
-          {{new-learningmaterial
-            learningMaterial=lm
-            learningMaterialStatuses=learningMaterialStatuses
-            learningMaterialUserRoles=learningMaterialUserRoles
-            save='saveNewLearningMaterial'
-            remove='removeNewLearningMaterial'}}
-        {{/each}}
-      {{/if}}
+      {{#liquid-if isEditing class="vertical"}}
+        {{new-learningmaterial
+          type=type
+          learningMaterialStatuses=learningMaterialStatuses
+          learningMaterialUserRoles=learningMaterialUserRoles
+          save='saveNewLearningMaterial'
+          remove='removeNewLearningMaterial'}}
+      {{/liquid-if}}
+
       {{#if proxyMaterials.length}}
         <table>
           <thead>

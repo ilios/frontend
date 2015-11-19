@@ -2,7 +2,7 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
     <div class="form-data">
-      <input type="text" value={{learningMaterial.title}} class="{{if topErrorMessageTitle 'has-error'}}"
+      <input type="text" class="{{if topErrorMessageTitle 'has-error'}}"
         onChange={{action "changeDisplayName" value="target.value"}}
         oninput={{action "changeDisplayName" value="target.value"}}
         onfocus={{action "displayNameError"}} />
@@ -11,26 +11,29 @@
       {{/if}}
     </div>
   </div>
+
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.status'}}:</label>
     <div class="form-data">
       <select {{action 'changeSelectedStatus' on='change'}}>
-        {{#each learningMaterialStatuses as |status|}}
-          <option value="{{status}}" selected={{is-equal status learningMaterial.status}}>
-            {{status.title}}
+        {{#each learningMaterialStatuses as |lmStatus|}}
+          <option value="{{lmStatus}}" selected={{is-equal lmStatus status}}>
+            {{lmStatus.title}}
           </option>
         {{/each}}
       </select>
     </div>
   </div>
+
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.owner'}}:</label>
-    <div class="form-data"><span class='owninguser'>{{learningMaterial.owningUser.fullName}}</span></div>
+    <div class="form-data"><span class='owninguser'>{{owner.fullName}}</span></div>
   </div>
+
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
     <div class="form-data">
-      <input type="text" value={{learningMaterial.originalAuthor}} class="{{if topErrorMessageAuthor 'has-error'}}"
+      <input type="text" class="{{if topErrorMessageAuthor 'has-error'}}"
         onChange={{action "changeAuthor" value="target.value"}}
         oninput={{action "changeAuthor" value="target.value"}}
         onfocus={{action "displayAuthorError"}} />
@@ -39,18 +42,20 @@
       {{/if}}
     </div>
   </div>
+
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
     <div class="form-data">
       <select {{action 'changeSelectedRole' on='change'}}>
         {{#each learningMaterialUserRoles as |role|}}
-          <option value="{{role}}" selected={{is-equal role learningMaterial.userRole}}>
+          <option value="{{role}}" selected={{is-equal role userRole}}>
             {{role.title}}
           </option>
         {{/each}}
       </select>
     </div>
   </div>
+
   <div class="form-col-12">
     <label class="form-label">{{t 'general.description'}}:</label>
     <div class="form-data">
@@ -61,48 +66,64 @@
       }}
     </div>
   </div>
+
   {{#if isFile}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
-    <div class="form-data">
-      <p id="lm-copyright-agreement-text">{{input type='checkbox' checked=learningMaterial.copyrightPermission}}
-      {{t 'learningMaterials.copyrightAgreement'}}</p>
-    </div>
-  </div>
-    {{#unless learningMaterial.copyrightPermission}}
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
-      <div class="form-data">{{input type='text' value=learningMaterial.copyrightRationale}}</div>
+      <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
+      <div class="form-data">
+        <p id="lm-copyright-agreement-text">{{input type='checkbox' checked=copyrightPermission}}
+        {{t 'learningMaterials.copyrightAgreement'}}</p>
+      </div>
     </div>
+
+    {{#unless copyrightPermission}}
+      <div class="form-col-12">
+        <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
+        <div class="form-data">
+          <input type="text"
+            onChange={{action "changeCopyrightRationale" value="target.value"}}
+            oninput={{action "changeCopyrightRationale" value="target.value"}}
+          />
+        </div>
+      </div>
     {{/unless}}
+
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.file'}}:</label>
       <div class="form-data">{{file-upload finishedUploading='setFile' url="/upload"}}</div>
     </div>
   {{/if}}
+
   {{#if isLink}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.url'}}:</label>
-    <div class="form-data">
-      <input type="text" value={{learningMaterial.link}} class="{{if topErrorMessageUrl 'has-error'}}"
-        onChange={{action "changeUrl" value="target.value"}}
-        oninput={{action "changeUrl" value="target.value"}}
-        onfocus={{action "displayUrlError"}} />
-      {{#if topErrorMessageUrl}}
-        <span class="validation-error-message">{{topErrorMessageUrl}}</span>
-      {{/if}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.url'}}:</label>
+      <div class="form-data">
+        <input type="text" value={{link}} class="{{if topErrorMessageUrl 'has-error'}}"
+          onChange={{action "changeUrl" value="target.value"}}
+          oninput={{action "changeUrl" value="target.value"}}
+          onfocus={{action "displayUrlError"}} />
+        {{#if topErrorMessageUrl}}
+          <span class="validation-error-message">{{topErrorMessageUrl}}</span>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  {{/if}}
-  {{#if isCitation}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
-    <div class="form-data citation">{{textarea value=learningMaterial.citation}}</div>
-  </div>
   {{/if}}
 
-<div class="form-col-12 form-data-submit">
-  <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-  <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
-</div>
+  {{#if isCitation}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+      <div class="form-data citation">
+        <textarea
+          type='text'
+          onChange={{action "changeCitation" value="target.value"}}
+          oninput={{action "changeCitation" value="target.value"}}
+        >{{citation}}</textarea>
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="form-col-12 form-data-submit">
+    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+    <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+  </div>
 </div>
