@@ -278,6 +278,43 @@ test('change end date', function(assert) {
   });
 });
 
+test('invalid date combination triggers edit mode', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
+  const course = server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+
+  const startDate = '.coursestartdate .editable';
+  const startDateInput = '.coursestartdate input';
+  const endDateInput = '.courseenddate input';
+  const startDateDone = '.coursestartdate .done';
+  const endDateDone = '.courseenddate .done';
+
+  visit(url);
+  click(startDate);
+  andThen(() => {
+    const interactor = openDatepicker(find(startDateInput));
+    const newDate = moment(course.endDate).add(5, 'year');
+    interactor.selectDate(newDate.toDate());
+  });
+
+  click(startDateDone);
+  andThen(() => {
+    assert.ok(find(endDateInput).is(':visible'), 'invalid date combo triggered end-date in edit mode');
+    const interactor = openDatepicker(find(endDateInput));
+    const newDate = moment(course.endDate).add(2, 'year');
+    interactor.selectDate(newDate.toDate());
+  });
+
+  click(endDateDone);
+  andThen(() => {
+    assert.ok(find(startDateInput).is(':visible'), 'invalid date combo triggered start-date in edit mode');
+  });
+});
+
 test('change externalId', function(assert) {
   server.create('user', {
     id: 4136
