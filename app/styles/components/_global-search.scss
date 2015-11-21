@@ -1,7 +1,6 @@
 .global-search {
   float: right;
   margin-top: 2em;
-  position: relative;
 
   input {
     display: block;
@@ -21,7 +20,6 @@
     max-height: 400px;
     overflow-x: visible;
     overflow-y: auto;
-    position: absolute;
     width: 300px;
     z-index: 100;
 
@@ -38,6 +36,11 @@
       &.inactive {
         color: darken($header-grey, 20);
         font-style: italic;
+      }
+
+      div {
+        font-size: 14px;
+        text-align: left;
       }
     }
   }

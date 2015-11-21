@@ -22,12 +22,11 @@ export default Route.extend({
         const offset = (limit - 1) * (params.page - 1);
 
         return this.store.query('user', {
-          school,
-          limit,
-          offset,
-          'order_by[lastName]': 'ASC'
+          school, limit, offset,
+          'order_by[lastName]': 'ASC',
+          'order_by[firstName]': 'ASC'
         }).then((users) => {
-          return users;
+          return users.toArray();
         });
       });
     });

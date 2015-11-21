@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, RSVP } = Ember;
+const { computed, PromiseProxyMixin, RSVP } = Ember;
 const { PromiseArray } = DS;
+const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
 
 var User = DS.Model.extend({
   lastName: DS.attr('string'),
@@ -55,6 +56,19 @@ var User = DS.Model.extend({
   ),
   programYears: DS.hasMany('program-year', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
+
+  isStudent: computed('roles', {
+    get() {
+      const isStudent = this.get('roles').then((roles) => {
+        return !!roles.find((role) => role.get('title') === 'Student');
+      });
+
+      return ProxyContent.create({
+        promise: isStudent
+      });
+    }
+  }).readOnly(),
+
   cohorts: DS.hasMany('cohort', {
       async: true,
       inverse: 'users'
@@ -91,6 +105,16 @@ var User = DS.Model.extend({
       }
       return first + ' ' + last;
   }),
+
+  displayName: computed('firstName', 'middleName', 'lastName', {
+    get() {
+      const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
+      const middleInitial = middleName.charAt(0);
+
+      return `${firstName} ${middleInitial}. ${lastName}`;
+    }
+  }).readOnly(),
+
   allRelatedCourses: computed(
     'directedCourses.[]',
     'learnerGroups.[]',

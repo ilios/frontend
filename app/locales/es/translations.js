@@ -111,7 +111,15 @@ export default {
     'transitionErrorMessage': 'Lo sentimos! No le podemos conseguir donde pidió ir...',
     'errorDisplayMessage': 'Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde.',
     'backToDashboard': 'Detrás a Tablero',
-    'showMore': 'Mostrar más'
+    'showMore': 'Mostrar más',
+    'primarySchool': 'Escuela Primaria',
+    'unassigned': 'Unassigned',
+    'student': 'Estudiante',
+    'phone': 'Teléfono',
+    'primaryCohort': 'Primary Cohort',
+    'secondaryCohorts': 'Secondary Cohorts',
+    'noLearnerGroups': 'No learner groups',
+    'noResultsFound': 'No results found. Please try again.'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',

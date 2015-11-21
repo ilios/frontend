@@ -111,7 +111,15 @@ export default {
     'transitionErrorMessage': 'Désolé, nous ne pouvons pas vous faire demander où vous aller : quelque chose semble être cassé.',
     'errorDisplayMessage': "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez S'il vous plaît de rafraîchir ou vérifier en arrière plus tard.",
     'backToDashboard': 'Retour à tableau de bord',
-    'showMore': 'Afficher plus'
+    'showMore': 'Afficher plus',
+    'primarySchool': 'École Première',
+    'unassigned': 'Non attribuée',
+    'student': 'Étudiant',
+    'phone': 'Téléphone',
+    'primaryCohort': 'Cohorte Première',
+    'secondaryCohorts': 'Cohortes Secondaires',
+    'noLearnerGroups': 'Pas de groupes des Étudiants',
+    'noResultsFound': 'Aucun résultat n’a été trouvé. Veuillez réessayer.'
   },
   'programs': {
     'programTitle': "Titre de Diplôme",

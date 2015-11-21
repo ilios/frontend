@@ -1,11 +1,41 @@
-.user-info {
-  margin-top: 4em;
+.user-container {
+  overflow: hidden;
+  min-height: 500px;
+  position: relative;
+  text-align: center;
 
-  .form-label {
-    @include span-columns(4 of 10);
+  .user-display-name {
+    margin-bottom: 0;
+    text-align: center;
   }
 
-  .form-data {
-    @include span-columns(6 of 10);
+  .user-is-student {
+    color: $ilios-green;
+  }
+
+  .global-search {
+    position: absolute;
+    right: 0;
+  }
+
+  .user-info {
+    margin-top: 2em;
+    overflow: hidden;
+
+    .form-label {
+      @include span-columns(4 of 10);
+    }
+
+    .form-data {
+      @include span-columns(6 of 10);
+    }
+
+    .secondary-cohort {
+      font-size: 12px;
+    }
+
+    .learner-group {
+      font-size: 12px;
+    }
   }
 }

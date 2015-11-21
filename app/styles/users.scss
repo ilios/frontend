@@ -1,20 +1,18 @@
-.users-pagination {
-  display: block;
-  margin-bottom: 2em;
-  text-align: center;
-
-  button {
-    background: $white;
-    border: 2px solid $moderate-grey;
-    border-radius: 0;
-    color: $moderate-grey;
-    font-weight: bold;
-    height: 40px;
-    outline: none;
-    width: 60px;
-
-    &:hover {
-      background: $header-grey;
-    }
+.resultslist-header {
+  .user-title {
+    float: left;
+    margin: 0;
   }
+
+  .pagination-top {
+    float: right;
+  }
+}
+
+.pagination-bottom {
+  margin-bottom: 2em;
+}
+
+.resultslist-list {
+  text-align: center;
 }
