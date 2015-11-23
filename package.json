@@ -69,7 +69,7 @@
     "ember-tooltips": "0.4.0",
     "ember-validations": "2.0.0-alpha.4",
     "emberx-select": "2.0.2",
-    "ilios-calendar": "ilios/calendar#v2.2.0",
+    "ilios-calendar": "ilios/calendar#v2.3.0",
     "liquid-fire": "0.21.3",
     "liquid-tether": "0.1.9",
     "pluralize": "^1.2.1",
