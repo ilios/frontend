@@ -13,36 +13,22 @@ let mockCourses = [
 ];
 
 let currentUserMock = Ember.Service.extend({
-  model: Ember.computed(function(){
-    let model = Ember.Object.extend({
-      allRelatedCourses: Ember.computed(function() {
-        return Ember.RSVP.resolve(mockCourses);
-      })
-    });
-    return new Ember.RSVP.resolve(model.create());
+  relatedCourses: Ember.computed(function() {
+    return Ember.RSVP.resolve(mockCourses);
   }),
   canEditCourses: true
 });
 
 let currentUserMockNoCourses = Ember.Service.extend({
-  model: Ember.computed(function(){
-    let model = Ember.Object.extend({
-      allRelatedCourses: Ember.computed(function() {
-        return Ember.RSVP.resolve([]);
-      }),
-    });
-    return new Ember.RSVP.resolve(model.create());
-  })
+  relatedCourses: Ember.computed(function() {
+    return Ember.RSVP.resolve([]);
+  }),
+  canEditCourses: true
 });
 
 let currentUserMockUnprivileged = Ember.Service.extend({
-  model: Ember.computed(function(){
-    let model = Ember.Object.extend({
-      allRelatedCourses: Ember.computed(function() {
-        return Ember.RSVP.resolve(mockCourses);
-      })
-    });
-    return new Ember.RSVP.resolve(model.create());
+  relatedCourses: Ember.computed(function() {
+    return Ember.RSVP.resolve(mockCourses);
   }),
   canEditCourses: false
 });
@@ -60,7 +46,6 @@ test('list courses for privileged users', function(assert) {
   this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{dashboard-mycourses}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
-  
   Ember.run.later(()=> {
     for(let i = 0; i < 3; i++){
       let a = this.$(`table a:eq(${i})`);

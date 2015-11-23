@@ -1,24 +1,24 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default Ember.Component.extend({
-  currentUser: Ember.inject.service(),
+const { Component, computed, inject } = Ember;
+const { service }= inject;
+
+export default Component.extend({
+  currentUser: service(),
   tagName: 'div',
   classNames: ['dashboard-block'],
   courseSorting: ['startDate:desc'],
-  sortedListOfCourses: Ember.computed.sort('listOfCourses', 'courseSorting'),
-  listOfCourses: Ember.computed('currentUser.model.allRelatedCourses.[]', function(){
-    let defer = Ember.RSVP.defer();
-    this.get('currentUser').get('model').then( user => {
-      user.get('allRelatedCourses').then( courses => {
-        let filteredCourses = courses.filter(course => {
-          return (!course.get('locked') && !course.get('archived'));
-        });
-        defer.resolve(filteredCourses);
+  sortedListOfCourses: computed.sort('listOfCourses', 'courseSorting'),
+  listOfCourses: computed('currentUser.relatedCourses.[]', function(){
+    let promise = new Ember.RSVP.Promise(resolve => {
+      this.get('currentUser').get('relatedCourses').then(courses => {
+        let filteredCourses = courses.filter(course=>!course.get('locked') && !course.get('archived'));
+        resolve(filteredCourses);
       });
     });
     return DS.PromiseArray.create({
-      promise: defer.promise
+      promise: promise
     });
   }),
 });

@@ -8,29 +8,17 @@ let mockReports = [
   Ember.Object.create({displayTitle: {content: 'courses for session'}, subject: 'courses', prepositionalObject: 'session', prepositionalObjectTableRowId: 11, user: 1}),
 ];
 
-let currentUserMock = Ember.Service.extend({
-  model: Ember.computed(function(){
-    let model = Ember.Object.extend({
-      reports: Ember.computed(function() {
-        return Ember.RSVP.resolve(mockReports);
-      })
-    });
-    return new Ember.RSVP.resolve(model.create());
+let reportingMock = Ember.Service.extend({
+  reportsList: Ember.computed(function(){
+    return Ember.RSVP.resolve(mockReports);
   })
 });
 
-let currentUserMockNoReports = Ember.Service.extend({
-  model: Ember.computed(function(){
-    let model = Ember.Object.extend({
-      reports: Ember.computed(function() {
-        return Ember.RSVP.resolve([]);
-      })
-    });
-    return new Ember.RSVP.resolve(model.create());
+let reportingMockNoReports = Ember.Service.extend({
+  reportsList: Ember.computed(function(){
+    return Ember.RSVP.resolve([]);
   })
 });
-
-
 
 moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard myreports', {
   integration: true,
@@ -42,8 +30,7 @@ moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard m
 
 test('list reports', function(assert) {
   assert.expect(4);
-  this.container.register('service:mockcurrentuser', currentUserMock);
-  this.container.injection('component', 'currentUser', 'service:mockcurrentuser');
+  this.register('service:reporting', reportingMock);
   this.render(hbs`{{dashboard-myreports}}`);
   
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
@@ -56,11 +43,9 @@ test('list reports', function(assert) {
 
 test('display none when no reports', function(assert) {
   assert.expect(2);
-  this.container.register('service:mockcurrentuser', currentUserMockNoReports);
-  this.container.injection('component', 'currentUser', 'service:mockcurrentuser');
+  this.register('service:reporting', reportingMockNoReports);
   this.render(hbs`{{dashboard-myreports}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
-  
   assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
   
 });

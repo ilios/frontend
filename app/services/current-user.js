@@ -2,7 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import ajax from 'ic-ajax';
 
-const { computed, observer, on } = Ember;
+const { computed, observer, on, RSVP, isEmpty } = Ember;
+const { PromiseArray } = DS;
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
@@ -236,4 +237,23 @@ export default Ember.Service.extend({
         this.set('canViewAdminDashboard', hasRole.contains(true));
       });
   })),
+  relatedCourses: computed('model', function(){
+    let defer = RSVP.defer();
+    this.get('model').then( user => {
+      if(isEmpty(user)){
+        defer.resolve([]);
+        return;
+      }
+      this.get('store').query('course', {
+        filters: {
+          users: [user.get('id')]
+        }
+      }).then(filteredCourses => {
+        defer.resolve(filteredCourses);
+      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  })
 });
