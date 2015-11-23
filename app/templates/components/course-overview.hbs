@@ -31,24 +31,33 @@
 
       <div class="form-col-6 multi-row">
         <label class='form-label'>{{t "general.start"}}:</label>
-        <div class="form-data coursestartdate">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
+
+        <div class="form-data coursestartdate">
+          {{inplace-date value=course.startDate save='changeStartDate' isEditing=startDateFlag}}
+        </div>
+
         <label class="form-label">{{t "general.end"}}:</label>
-        <div class="form-data courseenddate">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
+
+        <div class="form-data courseenddate">
+          {{inplace-date value=course.endDate save='changeEndDate' isEditing=endDateFlag}}
+        </div>
       </div>
+
       <div class="form-col-12 coursedirectors">
         <label>{{t "general.directors"}}:</label>
-          <span>
-            <ul class='removable-list'>
-              {{#each sortedDirectors as |user|}}
-              <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-              {{/each}}
-            </ul>
-          </span>
-          {{user-search
-            addUser='addDirector'
-            roles='1'
-            currentlyActiveUsers=course.directors
-          }}
+
+        <span>
+          <ul class='removable-list'>
+            {{#each sortedDirectors as |user|}}
+            <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+            {{/each}}
+          </ul>
+        </span>
+        {{user-search
+          addUser='addDirector'
+          roles='1'
+          currentlyActiveUsers=course.directors
+        }}
       </div>
   </div>
 </section>

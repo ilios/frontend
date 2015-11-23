@@ -245,6 +245,7 @@ export default {
     'confirmObjectiveRemoval': "Êtes vous sûr de vouloir supprimer cet objectif?",
     'confirmSessionRemoval': 'Êtes vous sûr de vouloir supprimer cette séance?',
     'noPrintDraft': 'Cours qui sont au stade de projet ne peuvent pas étre imprimés',
+    'courseDateMessage': 'La date de début du cours doit être avant la date de fin'
   },
   'sessions': {
     'specialAttireRequired': "Vêtements particuliers requis",
