@@ -406,12 +406,4 @@ export default function() {
     this.post('/errors', function(){
       //doesn't do anything, just swallows errors
     });
-
-    this.get('/api/users', function(db) {
-      debugger
-
-      return {
-        users: db.events
-      };
-    });
 }

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import { b as testgroup } from 'ilios/tests/helpers/test-groups';
 
 const { run } = Ember;
 
@@ -9,13 +8,14 @@ let application;
 let fixtures = {};
 let url = '/users';
 
-module(`Acceptance: Users ${testgroup}`, {
+module('Acceptance: Users', {
   beforeEach() {
     application = startApp();
     authenticateSession();
 
-    fixtures.user = server.create('user', { id: 4136 });
+    fixtures.user = server.create('user', { id: 4136, campusId: '123', email: 'user@example.edu' });
     server.create('school');
+    server.createList('user', 90, { school: 1, campusId: '555', email: 'user@example.edu' });
   },
 
   afterEach() {
@@ -33,32 +33,31 @@ test('can see list of users and transition to user route', function(assert) {
 
   visit(url);
   andThen(() => {
-    assert.equal(find(userSchool).text().trim(), 'Medicine', 'user school is shown');
+    assert.equal(find(userSchool).text().trim(), 'school 0', 'user school is shown');
     assert.equal(getCellContent(0), '', 'user is a student');
-    assert.equal(getCellContent(1), '', 'name is shown');
-    assert.equal(getCellContent(2), '', 'campus ID is shown');
-    assert.equal(getCellContent(3), '', 'email is shown');
-    assert.equal(getCellContent(4), '', 'primary school is shown');
+    assert.equal(getCellContent(1), '0 guy m. Mc0son', 'name is shown');
+    assert.equal(getCellContent(2), '123', 'campus ID is shown');
+    assert.equal(getCellContent(3), 'user@example.edu', 'email is shown');
+    assert.equal(getCellContent(4), 'school 0', 'primary school is shown');
   });
 
   click(firstStudent);
   andThen(() => {
-    assert.equal(currentURL(), '/user/12323', 'tranistioned to `user` route');
+    assert.equal(currentURL(), '/users/4136', 'tranistioned to `user` route');
   });
 });
 
 test('can page through list of users', function(assert) {
-  const leftArrow = '.left-arrow';
-  const rightArrow = '.right-arrow';
+  const leftArrow = '.prev-arrow';
+  const rightArrow = '.next-arrow';
   const prevButton = '.prev-button';
   const nextButton = '.next-button';
 
   visit(url);
-
   click(nextButton);
   andThen(() => {
     assert.equal(currentURL(), '/users?page=2', 'query param shown');
-    assert.equal(getCellContent(1), '', 'content is visible');
+    assert.equal(getCellContent(1), '0 guy m. Mc0son', 'content is visible');
   });
 
   click(rightArrow);
@@ -78,25 +77,27 @@ test('can page through list of users', function(assert) {
 });
 
 test('can search for a user and transition to user route', function(assert) {
+  server.createList('user', 40, { firstName: 'test', lastName: 'name', school: 1 });
+
   const userSearch = '.user-search';
-  const leftArrow = '.left-arrow';
-  const rightArrow = '.right-arrow';
+  const leftArrow = '.prev-arrow';
+  const rightArrow = '.next-arrow';
 
   visit(url);
-  fillIn(userSearch, 'John');
-  // triggerEvent(userSearch, 'oninput');
+  fillIn(userSearch, 'test name');
+  triggerEvent(userSearch, 'input');
   andThen(() => {
-    assert.equal(getCellContent(1), '', 'content is visible');
+    assert.equal(getCellContent(1), 'test m. name', 'content is visible');
   });
 
   click(rightArrow);
   andThen(() => {
     assert.equal(currentURL(), '/users', 'no query params for search');
-    assert.equal(getCellContent(1), '', 'content is visible');
+    assert.equal(getCellContent(1), 'test m. name', 'content is visible');
   });
 
   click(leftArrow);
   andThen(() => {
-    assert.equal(getCellContent(1), '', 'content is visible');
+    assert.equal(getCellContent(1), 'test m. name', 'content is visible');
   });
 });

@@ -113,13 +113,13 @@ export default {
     'backToDashboard': 'Detrás a Tablero',
     'showMore': 'Mostrar más',
     'primarySchool': 'Escuela Primaria',
-    'unassigned': 'Unassigned',
+    'unassigned': 'No asignado',
     'student': 'Estudiante',
     'phone': 'Teléfono',
-    'primaryCohort': 'Primary Cohort',
-    'secondaryCohorts': 'Secondary Cohorts',
-    'noLearnerGroups': 'No learner groups',
-    'noResultsFound': 'No results found. Please try again.'
+    'primaryCohort': 'Clase de la Graduación Principal',
+    'secondaryCohorts': 'Clases de la Graduación Secondarias',
+    'noLearnerGroups': 'No Grupos de Aprendedores',
+    'noResultsFound': 'Ningún resultado encontrado. Por favor intente otra vez.'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',

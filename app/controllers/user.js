@@ -9,7 +9,7 @@ export default Controller.extend({
       const model = this.get('model');
 
       const cohorts = model.get('cohorts').then((cohorts) => {
-        model.get('primaryCohort').then((primaryCohort) => {
+        return model.get('primaryCohort').then((primaryCohort) => {
           return cohorts.removeObject(primaryCohort);
         });
       });
