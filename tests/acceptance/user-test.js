@@ -80,3 +80,58 @@ test('can search for users', function(assert) {
     assert.equal(find(name).text(), '10 guy M. Mc10son', 'user name is shown');
   });
 });
+
+function clickCheckBox(i) {
+  return click(`.user-permissions-row input:eq(${i})`);
+}
+
+function checkMarked(i) {
+  return find(`.user-permissions-row input:eq(${i})`).prop('checked');
+}
+
+test('can set user-roles', function(assert) {
+  server.create('userRole', { title: 'Course Director'});
+  server.create('userRole', { title: 'Faculty'});
+  server.create('userRole', { title: 'Developer'});
+  server.create('userRole', { title: 'Former Student'});
+
+  visit(url);
+  andThen(() => {
+    assert.notOk(checkMarked(0), 'unchecked: Course Director');
+    assert.notOk(checkMarked(1), 'unchecked: Instructor');
+    assert.notOk(checkMarked(2), 'unchecked: Developer');
+    assert.notOk(checkMarked(3), 'unchecked: Former Student');
+    assert.notOk(checkMarked(4), 'unchecked: Disable User');
+    assert.notOk(checkMarked(5), 'unchecked: Exclude From Sync');
+  });
+
+  clickCheckBox(0);
+  clickCheckBox(1);
+  clickCheckBox(2);
+  clickCheckBox(3);
+  clickCheckBox(4);
+  clickCheckBox(5);
+  andThen(() => {
+    assert.ok(checkMarked(0), 'checked: Course Director');
+    assert.ok(checkMarked(1), 'checked: Instructor');
+    assert.ok(checkMarked(2), 'checked: Developer');
+    assert.ok(checkMarked(3), 'checked: Former Student');
+    assert.ok(checkMarked(4), 'checked: Disable User');
+    assert.ok(checkMarked(5), 'checked: Exclude From Sync');
+  });
+
+  clickCheckBox(0);
+  clickCheckBox(1);
+  clickCheckBox(2);
+  clickCheckBox(3);
+  clickCheckBox(4);
+  clickCheckBox(5);
+  andThen(() => {
+    assert.notOk(checkMarked(0), 'unchecked: Course Director');
+    assert.notOk(checkMarked(1), 'unchecked: Instructor');
+    assert.notOk(checkMarked(2), 'unchecked: Developer');
+    assert.notOk(checkMarked(3), 'unchecked: Former Student');
+    assert.notOk(checkMarked(4), 'unchecked: Disable User');
+    assert.notOk(checkMarked(5), 'unchecked: Exclude From Sync');
+  });
+});

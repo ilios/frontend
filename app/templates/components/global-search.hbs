@@ -2,7 +2,8 @@
   type="search"
   placeholder={{t 'general.globalSearchPlaceholder'}}
   incremental=true
-  oninput={{action "inputValueChanged"}}
+  onsearch={{action "inputValueChanged"}}
+  onkeyup={{action "inputValueChanged"}}
   results=5
   autosave='ilios-global-search'
 />
