@@ -1,5 +1,5 @@
-<section class='detail-block filter-detail-block'>
-  <div class='detail-title'>
+<section class="detail-block filter-detail-block detail-container {{if insertPadding 'padding-top'}}">
+  <div class='detail-title-absolute'>
     {{#unless isManaging}}
       {{t 'general.learningMaterials'}} ({{proxyMaterials.length}})
     {{/unless}}
@@ -15,7 +15,7 @@
     {{/if}}
   </div>
 
-  <div class='learning-material-actions'>
+  <div class='detail-actions-absolute'>
     {{#if isManaging}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>

@@ -1,11 +1,23 @@
-.detail-learning-materials {
-  .learning-material-actions {
-    @include span-columns(3 of 12);
-    @include omega;
-    float: right;
+.detail-container {
+  position: relative;
+
+  &.padding-top {
+    padding-top: 4em;
+  }
+
+  .detail-title-absolute {
+    color: $ilios-orange;
+    font-weight: bold;
+    margin-top: 1em;
+    position: absolute;
+    top: 0;
+  }
+
+  .detail-actions-absolute {
     margin-top: 1em;
     padding-right: .3em;
-    text-align: right;
-    vertical-align: middle;
+    position: absolute;
+    right: .8em;
+    top: 0;
   }
 }

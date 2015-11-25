@@ -159,21 +159,21 @@ test('open and close details', function(assert) {
     year: 2013,
     school: 1
   });
-  visit(url);
 
+  visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var details = find('#course-details .detail-view-details');
     assert.equal(find('.detail-title', details).length, 1);
     click('.detail-collapsed-control', details).then(function(){
-      assert.equal(find('.detail-title', details).length, 7);
+      assert.equal(find('.detail-title', details).length, 6);
       assert.equal(currentURL(), '/courses/1?details=true');
     });
   });
 
   andThen(function() {
     var details = find('#course-details .detail-view-details');
-    assert.equal(find('.detail-title', details).length, 7);
+    assert.equal(find('.detail-title', details).length, 6);
     click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 1);
       assert.equal(currentURL(), '/courses/1');

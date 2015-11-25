@@ -159,9 +159,9 @@ test('create new file learning material', function(assert) {
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
-    click('.learning-material-actions .button', container).then(function(){
+    click('.detail-actions-absolute .button', container).then(function(){
       //pick the file type
-      click('.learning-material-actions ul li:eq(0)');
+      click('.detail-actions-absolute ul li:eq(0)');
     });
   });
   andThen(function(){
@@ -206,9 +206,9 @@ test('create new link learning material', function(assert) {
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
-    click('.learning-material-actions .button', container).then(function(){
+    click('.detail-actions-absolute .button', container).then(function(){
       //pick the link type
-      click('.learning-material-actions ul li:eq(1)');
+      click('.detail-actions-absolute ul li:eq(1)');
     });
   });
   andThen(function(){
@@ -252,9 +252,9 @@ test('create new citation learning material', function(assert) {
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
-    click('.learning-material-actions .button', container).then(function(){
+    click('.detail-actions-absolute .button', container).then(function(){
       //pick the citation type
-      click('.learning-material-actions ul li:eq(2)');
+      click('.detail-actions-absolute ul li:eq(2)');
     });
   });
   andThen(function(){
@@ -285,8 +285,8 @@ test('create new citation learning material', function(assert) {
 });
 
 test('can only add one learning-material at a time', function(assert) {
-  const addButton = '.learning-material-actions .button';
-  const fileButton = '.learning-material-actions ul li:eq(0)';
+  const addButton = '.detail-actions-absolute .button';
+  const fileButton = '.detail-actions-absolute ul li:eq(0)';
   const collapseButton = '.collapse-button';
   const component = '.new-learning-material';
 
@@ -313,8 +313,8 @@ test('cancel new learning material', function(assert) {
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
     assert.equal(rows.length, fixtures.session.learningMaterials.length);
-    click('.learning-material-actions .button', container);
-    click('.learning-material-actions ul li:eq(0)');
+    click('.detail-actions-absolute .button', container);
+    click('.detail-actions-absolute ul li:eq(0)');
   });
   andThen(function(){
     click('.detail-learning-materials .new-learning-material .cancel');
