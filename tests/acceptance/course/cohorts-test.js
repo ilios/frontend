@@ -88,7 +88,7 @@ test('manage cohorts', function(assert) {
     click(find('.detail-actions button', container));
     andThen(function(){
       assert.equal(find('.removable-list li', container).length, 1);
-      assert.equal(getElementText(find('.selectable-list li ul li', container)), getText('cohort 1'));
+      assert.equal(getElementText(find('.selectable-list ul li', container)), getText('school 0 | program 0 | cohort 1'));
     });
   });
 });
@@ -101,7 +101,7 @@ test('save cohort chages', function(assert) {
     click(find('.detail-actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
-        click(find('.selectable-list li ul li:eq(1)', container)).then(function(){
+        click(find('.selectable-list ul li:eq(0)', container)).then(function(){
           click('button.bigadd', container);
         });
       });
@@ -122,7 +122,7 @@ test('cancel cohort changes', function(assert) {
     click(find('.detail-actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
-        click(find('.selectable-list li ul li:eq(1)', container)).then(function(){
+        click(find('.selectable-list ul li:eq(0)', container)).then(function(){
           click('button.bigcancel', container);
         });
       });
@@ -139,14 +139,14 @@ test('removing a cohort remove course objectives parents linked to that cohort',
   assert.expect(3);
   visit(url);
   andThen(function() {
-    var parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
     assert.equal(parents.length, 2);
     click('.detail-cohorts .detail-actions button');
     andThen(function(){
       click('.detail-cohorts .removable-list li:eq(0)');
       click('.detail-cohorts button.bigadd');
       andThen(function(){
-        var parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+        let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
         assert.equal(parents.length, 1);
         assert.equal(getElementText(parents), getText(fixtures.parentObjective2.title));
       });

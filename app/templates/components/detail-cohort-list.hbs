@@ -1,0 +1,34 @@
+{{#if sortedCohorts.isFulfilled}}
+  {{#if sortedCohorts.length}}
+    <table>
+      <thead>
+        <tr>
+          <th class='text-left'>{{t 'general.school'}}</th>
+          <th class='text-left'>{{t 'general.program'}}</th>
+          <th class='text-center'>{{t 'general.cohort'}}</th>
+          <th class='text-center'>{{t 'general.level'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each sortedCohorts as |cohort|}}
+        <tr>
+          <td class='text-left'>{{cohort.programYear.program.school.title}}</td>
+          <td class='text-left'>{{cohort.programYear.program.title}}</td>
+          <td class='text-center'>
+            {{#if cohort.title}}
+              {{cohort.title}}
+            {{else}}
+              {{t 'general.classOf' year = cohort.programYear.classOfYear}}
+            {{/if}}
+          </td>
+          <td class='text-center'>{{cohort.currentLevel}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    {{t 'courses.noCohorts'}}
+  {{/if}}
+{{else}}
+  <li>{{fa-icon 'spinner' spin=true}}</li>
+{{/if}}

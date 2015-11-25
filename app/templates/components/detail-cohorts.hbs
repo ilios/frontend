@@ -5,7 +5,7 @@
         {{t 'courses.cohortsManageTitle'}}
       </span>
     {{else}}
-      {{t 'courses.cohorts'}} ({{cohorts.length}})
+      {{t 'courses.cohorts'}} ({{course.cohorts.length}})
     {{/if}}
   </div>
 
@@ -20,60 +20,16 @@
     {{/if}}
   </div>
   <div class='detail-content'>
-    {{#if isManaging}}
-      <ul class='removable-list'>
-        {{#each cohorts as |cohort|}}
-          <li {{action 'remove' cohort}}>
-            {{cohort.programYear.program.school.title}} | 
-            {{cohort.programYear.program.title}} |
-            {{cohort.title}} | {{fa-icon 'remove'}}
-          </li>
-        {{/each}}
-      </ul>
-      <div class='selectable-list'>
-        <h5>{{t 'courses.availableCohorts'}}</h5>
-        <ul>
-          {{#each filteredPrograms as |program|}}
-            <li class='static'>{{program.school.title}} | {{program.title}}
-              <ul>
-                {{#each program.availableCohorts as |cohort|}}
-                  <li {{action 'add' cohort}}> 
-                    {{cohort.displayTitle}}
-                  </li>
-
-                {{else}}
-                  <li class='static'>{{t 'courses.noAvailableCohorts'}}</li>
-                {{/each}}
-              </ul>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
+    {{#liquid-if isManaging class="horizontal"}}
+        {{detail-cohort-manager
+          selectedCohorts=bufferedCohorts
+          add='addCohortToBuffer'
+          remove='removeCohortFromBuffer'
+        }}
     {{else}}
-      {{#if cohorts.length}}
-        <table>
-          <thead>
-            <tr>
-              <th class='text-left'>{{t 'general.school'}}</th>
-              <th class='text-left'>{{t 'general.program'}}</th>
-              <th class='text-center'>{{t 'general.cohort'}}</th>
-              <th class='text-center'>{{t 'general.level'}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each cohorts as |cohort|}}
-            <tr>
-              <td class='text-left'>{{cohort.programYear.program.school.title}}</td>
-              <td class='text-left'>{{cohort.programYear.program.title}}</td>
-              <td class='text-center'>{{cohort.displayTitle}}</td>
-              <td class='text-center'>{{cohort.currentLevel}}</td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      {{else}}
-        {{t 'courses.noCohorts'}}
-      {{/if}}
-    {{/if}}
+      {{detail-cohort-list
+        cohorts=course.cohorts
+      }}
+    {{/liquid-if}}
   </div>
 </section>

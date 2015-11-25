@@ -87,5 +87,27 @@ export default DS.Model.extend({
       return '';
     }
     return title.replace(/(<([^>]+)>)/ig,"");
-  }.property('title')
+  }.property('title'),
+  //Remove any parents with a relationship to the cohort
+  removeParentWithProgramYears(programYearsToRemove){
+    return new RSVP.Promise(resolve => {
+      this.get('parents').then(parents => {
+        let promises = [];
+        parents.forEach(parent => {
+          promises.pushObject(parent.get('programYears').then(programYears => {
+            let programYear = programYears.get('firstObject');
+            if(programYearsToRemove.contains(programYear)){
+              parents.removeObject(parent);
+              parent.get('children').removeObject(this);
+            }
+          }));
+        });
+        RSVP.all(promises).then(() => {
+          this.save().then(() => {
+            resolve();
+          });
+        });
+      });
+    });
+  }
 });
