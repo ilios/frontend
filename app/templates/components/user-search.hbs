@@ -14,15 +14,28 @@
         <ul class='results'>
           {{#each results as |proxy|}}
             {{#if proxy.isUser}}
-              <li {{action 'addUser' proxy.content}}class="{{if proxy.isActive 'active' 'inactive'}}">
-                <div class='livesearch-user-name'>{{proxy.fullName}}</div>
-                <div class='livesearch-user-email'>{{proxy.email}}</div>
-              </li>
+              {{#if proxy.isActive}}
+                <li {{action 'addUser' proxy.content}} class="active">
+                  <div class='livesearch-user-name'>{{proxy.fullName}}</div>
+                  <div class='livesearch-user-email'>{{proxy.email}}</div>
+                </li>
+              {{else}}
+                <li class="inactive">
+                  <div class='livesearch-user-name'>{{proxy.fullName}}</div>
+                  <div class='livesearch-user-email'>{{proxy.email}}</div>
+                </li>
+              {{/if}}
             {{/if}}
             {{#if proxy.isInstructorGroup}}
-              <li {{action 'addInstructorGroup' proxy.content}}class="{{if proxy.isActive 'active' 'inactive'}}">
-                {{proxy.title}}
-              </li>
+              {{#if proxy.isActive}}
+                <li {{action 'addInstructorGroup' proxy.content}} class="active">
+                  {{proxy.title}}
+                </li>
+              {{else}}
+                <li class="inactive">
+                  {{proxy.title}}
+                </li>
+              {{/if}}
             {{/if}}
           {{/each}}
         </ul>
