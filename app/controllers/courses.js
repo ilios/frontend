@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
+import moment from 'moment';
 
 const { computed, RSVP, isEmpty, isPresent } = Ember;
 const { gt, sort } = computed;
@@ -142,8 +143,17 @@ export default Ember.Controller.extend({
         return year.get('title') === parseInt(this.get('yearTitle'));
       });
     }
-
-    return years.get('lastObject');
+    let currentYear = moment().format('YYYY');
+    const currentMonth = parseInt(moment().format('M'));
+    if(currentMonth < 6){
+      currentYear--;
+    }
+    let defaultYear = years.find(year => year.get('id') === currentYear);
+    if(isEmpty(defaultYear)){
+      defaultYear = years.get('lastObject');
+    }
+    
+    return defaultYear;
   }),
   actions: {
     editCourse: function(course){
