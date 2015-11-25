@@ -93,6 +93,8 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV['simple-auth'].store = 'simple-auth-session-store:ephemeral';
+    ENV.flashMessageDefaults.timeout = 100;
+    ENV.flashMessageDefaults.extendedTimeout = 100;
   }
 
   if (environment === 'heroku') {
