@@ -111,7 +111,7 @@ test('filters by title', function(assert) {
 });
 
 test('filters by year', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
   var firstCourse = server.create('course', {
     year: 2013,
     school: 1,
@@ -122,19 +122,13 @@ test('filters by year', function(assert) {
   });
   visit('/courses');
   andThen(function() {
-    click('#yearsfilter button').then(function(){
-      var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-      click(yearOptions.eq(0));
-    });
+    pickOption('#yearsfilter select', '2013 - 2014', assert);
     andThen(function(){
       assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
     });
   });
   andThen(function() {
-    click('#yearsfilter button').then(function(){
-      var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-      click(yearOptions.eq(1));
-    });
+    pickOption('#yearsfilter select', '2014 - 2015', assert);
     andThen(function(){
       assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
     });
@@ -195,14 +189,11 @@ test('filters options', function(assert) {
     var filters = find('#courses .filter');
     assert.equal(filters.length, 4);
     assert.equal(find('#school-selection').eq(0).text().trim(), fixtures.schools[0].title);
-    click('#yearsfilter button');
-    andThen(function(){
-      var yearOptions = find('#yearsfilter ul.dropdown-menu li');
-      assert.equal(yearOptions.length, fixtures.academicYears.length);
-      for(let i = 0; i < fixtures.academicYears.length; i++){
-        assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), fixtures.academicYears[i].title);
-      }
-    });
+    var yearOptions = find('#yearsfilter select option');
+    assert.equal(yearOptions.length, fixtures.academicYears.length);
+    assert.equal(getElementText(yearOptions.eq(0)).substring(0,4), 2014);
+    assert.equal(getElementText(yearOptions.eq(1)).substring(0,4), 2013);
+
   });
 });
 
