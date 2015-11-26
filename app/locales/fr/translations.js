@@ -341,7 +341,7 @@ export default {
     'loadingEvents': "Rassembler les événements...",
     'offeredAt': "À {{date}}",
     'taughtBy': "Dispensé à {{instructors}}",
-    'sessionIs': "Cette séance est '{{type}}'",
+    'sessionIs': "Cette séance est `{{type}}`",
     'courseObjectives': "Objectifs du Cours",
     'courseLearningMaterials': "Matières d’Étude du Cours",
     'sessionObjectives': "Objectifs de la Séance",
@@ -370,7 +370,7 @@ export default {
     'select': {
       'en': "English (en_US)",
       'es': "Español (es_MX)",
-      'fr': "Français (fr)'
+      'fr': "Français (fr)",
     }
   },
   'dashboard': {
@@ -397,7 +397,7 @@ export default {
     'topicOrDetail': "Sujet/Détail",
     'courseOrType': "Cours/Type",
     'usersCalendar': "Calendrier de {{name}}",
-    'myCalendar': "Mon Calendrier'
+    'myCalendar': "Mon Calendrier",
   },
   'errors': {
     'inclusion': "ne figure pas dans la liste",
@@ -423,6 +423,6 @@ export default {
     'even': "doit être une chiffre pair",
     'alphanumeric': "doit être une valeur alphanumérique",
     'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)",
-    'url': "doit être une URL valide',
+    'url': "doit être une URL valide",
   }
 };
