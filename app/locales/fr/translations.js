@@ -217,7 +217,7 @@ export default {
     'findDirector': "Trouver Directeur",
     'expandDetail': "Afficher Détails",
     'collapseDetail': "Masquer Détails",
-    'firstOffering': “Premier Offre",
+    'firstOffering': "Premier Offre",
     'filterPlaceholder': "",
     'title': "Titre de Cours",
     'objectiveParentTitle': "Choisi Objectifs mères",
