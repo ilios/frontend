@@ -43,15 +43,15 @@ test('can search for users', function(assert) {
 
   visit(url);
   fillIn(userSearch, 'son');
-  triggerEvent(userSearch, 'input');
+  triggerEvent(userSearch, 'keyup');
   andThen(() => {
-    assert.equal(find(secondResultUsername).text(), '10 guy m. Mc10son', 'user name is correct');
+    assert.equal(find(secondResultUsername).text(), '10 guy M. Mc10son', 'user name is correct');
     assert.equal(find(secondResultEmail).text(), 'user@example.edu', 'user email is correct');
   });
 
   click(secondResultUsername);
   andThen(() => {
     assert.equal(currentURL(), '/users/11', 'new user profile is shown');
-    assert.equal(find(name).text(), '10 guy m. Mc10son', 'user name is shown');
+    assert.equal(find(name).text(), '10 guy M. Mc10son', 'user name is shown');
   });
 });

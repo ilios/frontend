@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
-const { computed, Controller, PromiseProxyMixin } = Ember;
-const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
+const { computed, Controller } = Ember;
+const { PromiseObject } = DS;
 
 export default Controller.extend({
   secondaryCohorts: computed('model', {
@@ -14,7 +15,7 @@ export default Controller.extend({
         });
       });
 
-      return ProxyContent.create({
+      return PromiseObject.create({
         promise: cohorts
       });
     }

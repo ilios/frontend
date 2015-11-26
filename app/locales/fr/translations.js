@@ -119,7 +119,11 @@ export default {
     'primaryCohort': 'Cohorte Première',
     'secondaryCohorts': 'Cohortes Secondaires',
     'noLearnerGroups': 'Pas de groupes des Étudiants',
-    'noResultsFound': 'Aucun résultat n’a été trouvé. Veuillez réessayer.'
+    'noResultsFound': 'Aucun résultat n’a été trouvé. Veuillez réessayer.',
+    'campusId': 'Campus ID',
+    'prev': 'Précéd',
+    'next': 'Proch',
+    'disabled': 'désactivée'
   },
   'programs': {
     'programTitle': "Titre de Diplôme",

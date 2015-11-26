@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
-const { inject, Route, run } = Ember;
+const { inject, Route, RSVP, run } = Ember;
 const { service } = inject;
 const { once } = run;
+const { hash } = RSVP;
 
 export default Route.extend({
   currentUser: service(),
@@ -26,10 +27,18 @@ export default Route.extend({
           'order_by[lastName]': 'ASC',
           'order_by[firstName]': 'ASC'
         }).then((users) => {
-          return users.toArray();
+          // Should just return `users.toArray()` after re-write
+          return hash({ users: users.toArray(), school });
         });
       });
     });
+  },
+
+  // This needs to be removed after re-write
+  setupController: function(controller, model) {
+    this._super(...arguments);
+
+    controller.set('school', model.school);
   },
 
   actions: {

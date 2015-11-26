@@ -119,7 +119,11 @@ export default {
     'primaryCohort': 'Primary Cohort',
     'secondaryCohorts': 'Secondary Cohorts',
     'noLearnerGroups': 'No learner groups',
-    'noResultsFound': 'No results found. Please try again.'
+    'noResultsFound': 'No results found. Please try again.',
+    'campusId': 'Campus ID',
+    'prev': 'Prev',
+    'next': 'Next',
+    'disabled': 'disabled'
   },
   'programs': {
     'programTitle': 'Program Title',

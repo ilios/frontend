@@ -218,7 +218,8 @@ test('instructors', function(assert) {
       assert.equal(instructors.length, offeringInstructors.length);
       for(let i = 0; i < offeringInstructors.length; i++){
         let instructor = fixtures.users[offeringInstructors[i] - 1];
-        let instructorTitle = instructor.firstName + instructor.lastName;
+        const middleInitial = instructor.middleName.charAt(0).toUpperCase();
+        const instructorTitle = `${instructor.firstName} ${middleInitial}. ${instructor.lastName}`;
         assert.equal(getElementText(instructors.eq(i)), getText(instructorTitle));
       }
     }
@@ -333,7 +334,7 @@ test('users can create a new offering or small groups (single and multi-day)', f
     assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
     assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
     assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
-    assert.equal(find(instructor).text(), '0 guy Mc0son', 'instructor is correct');
+    assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
   });
 
   click(expandButton);
@@ -436,11 +437,11 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
     assert.equal(find(endTime).text().trim(), 'Ends: 5:55 PM', 'end time is correct');
     assert.equal(find(learnerGroup1).text(), 'learner group 1', 'correct learner group is picked');
     assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
-    assert.equal(find(instructor1).text(), '3 guy Mc3son', 'instructor is correct');
-    assert.equal(find(instructor2).text(), '4 guy Mc4son', 'instructor is correct');
-    assert.equal(find(instructor3).text(), '5 guy Mc5son', 'instructor is correct');
-    assert.equal(find(instructor4).text(), '6 guy Mc6son', 'instructor is correct');
-    assert.equal(find(instructor5).text(), '7 guy Mc7son', 'instructor is correct');
+    assert.equal(find(instructor1).text(), '3 guy M. Mc3son', 'instructor is correct');
+    assert.equal(find(instructor2).text(), '4 guy M. Mc4son', 'instructor is correct');
+    assert.equal(find(instructor3).text(), '5 guy M. Mc5son', 'instructor is correct');
+    assert.equal(find(instructor4).text(), '6 guy M. Mc6son', 'instructor is correct');
+    assert.equal(find(instructor5).text(), '7 guy M. Mc7son', 'instructor is correct');
   });
 
   click(editButton);
@@ -470,9 +471,9 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
     assert.equal(find(multiDayEnds).text().trim(), 'Ends Sunday December 25th @ 7:30 PM', 'multi-day statement is correct');
     assert.equal(find(learnerGroup1).text(), 'learner group 1', 'learner group is correct');
     assert.equal(find(learnerGroup2).text(), 'learner group 0', 'learner group is correct');
-    assert.equal(find(instructor1).text(), '1 guy Mc1son', 'instructor is correct');
-    assert.equal(find(instructor2).text(), '2 guy Mc2son', 'instructor is correct');
-    assert.equal(find(instructor3).text(), '5 guy Mc5son', 'instructor is correct');
-    assert.equal(find(instructor4).text(), '6 guy Mc6son', 'instructor is correct');
+    assert.equal(find(instructor1).text(), '1 guy M. Mc1son', 'instructor is correct');
+    assert.equal(find(instructor2).text(), '2 guy M. Mc2son', 'instructor is correct');
+    assert.equal(find(instructor3).text(), '5 guy M. Mc5son', 'instructor is correct');
+    assert.equal(find(instructor4).text(), '6 guy M. Mc6son', 'instructor is correct');
   });
 });

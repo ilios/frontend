@@ -119,7 +119,11 @@ export default {
     'primaryCohort': 'Clase de la Graduación Principal',
     'secondaryCohorts': 'Clases de la Graduación Secondarias',
     'noLearnerGroups': 'No Grupos de Aprendedores',
-    'noResultsFound': 'Ningún resultado encontrado. Por favor intente otra vez.'
+    'noResultsFound': 'Ningún resultado encontrado. Por favor intente otra vez.',
+    'campusId': 'Campus ID',
+    'prev': 'Anterior',
+    'next': 'Siguiente',
+    'disabled': 'desactivado'
   },
   'programs': {
     'programTitle': 'Titulo de Programa',

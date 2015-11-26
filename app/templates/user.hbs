@@ -1,14 +1,14 @@
 <div class="user-container">
   {{global-search}}
 
-  <h1 class="user-display-name">{{model.displayName}}</h1>
+  <h1 class="user-display-name">{{model.fullName}}</h1>
   {{#if model.isStudent.content}}
     <span class="user-is-student">{{t 'general.student'}}</span>
   {{/if}}
 
   <div class="user-info">
     <div class="form-col-12">
-      <label class="form-label">Campus ID:</label>
+      <label class="form-label">{{t 'general.campusId'}}:</label>
       <div class="form-data">{{model.campusId}}</div>
     </div>
 

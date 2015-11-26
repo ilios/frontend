@@ -2,7 +2,8 @@
   type="search"
   placeholder={{t 'general.globalSearchPlaceholder'}}
   incremental=true
-  oninput={{action "inputValueChanged"}}
+  onsearch={{action "inputValueChanged"}}
+  onkeyup={{action "inputValueChanged"}}
   results=5
   autosave='ilios-global-search'
 />
@@ -19,7 +20,7 @@
       {{#if proxy.isUser}}
         <li>
           {{#link-to 'user' proxy}}
-            <div class='livesearch-user-name'>{{proxy.displayName}}</div>
+            <div class='livesearch-user-name'>{{proxy.fullName}}</div>
             <div class='livesearch-user-email'>{{proxy.email}}</div>
           {{/link-to}}
         </li>

@@ -97,21 +97,22 @@ var User = DS.Model.extend({
       promise: defer.promise
     });
   }),
-  fullName: computed('firstName', 'lastName', function() {
-      var first = this.get('firstName');
-      var last = this.get('lastName');
-      if(!first || !last){
-        return '';
-      }
-      return first + ' ' + last;
-  }),
 
-  displayName: computed('firstName', 'middleName', 'lastName', {
+  fullName: computed('firstName', 'middleName', 'lastName', {
     get() {
       const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
-      const middleInitial = middleName.charAt(0);
 
-      return `${firstName} ${middleInitial}. ${lastName}`;
+      if (!firstName || !lastName) {
+        return '';
+      }
+
+      const middleInitial = middleName.charAt(0).toUpperCase();
+
+      if (middleInitial) {
+        return `${firstName} ${middleInitial}. ${lastName}`;
+      } else {
+        return `${firstName} ${lastName}`;
+      }
     }
   }).readOnly(),
 

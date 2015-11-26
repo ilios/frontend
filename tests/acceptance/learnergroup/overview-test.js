@@ -89,8 +89,8 @@ test('check fields', function(assert) {
 
     var items = find('.detail-overview .removable-list li');
     assert.equal(items.length, 2);
-    assert.equal(getElementText(items.eq(0)), getText('3 guy Mc3son'));
-    assert.equal(getElementText(items.eq(1)), getText('4 guy Mc4son'));
+    assert.equal(getElementText(items.eq(0)), getText('3 guy M. Mc3son'));
+    assert.equal(getElementText(items.eq(1)), getText('4 guy M. Mc4son'));
     assert.equal(getElementText(find('.detail-overview .learnergroupcourses')), getText('Associated Courses: course 0, course 1'));
   });
 });
@@ -121,15 +121,15 @@ test('search default instructors', function(assert) {
     fillIn(find('.search-box input', container), 'guy').then(function(){
       var searchResults = find('.results li', container);
       assert.equal(searchResults.length, 5);
-      assert.equal(getElementText(searchResults.eq(0)), getText('0 guy Mc0son'));
+      assert.equal(getElementText(searchResults.eq(0)), getText('0 guy M. Mc0son'));
       assert.ok(searchResults.eq(0).hasClass('active'));
-      assert.equal(getElementText(searchResults.eq(1)), getText('1 guy Mc1son'));
+      assert.equal(getElementText(searchResults.eq(1)), getText('1 guy M. Mc1son'));
       assert.ok(searchResults.eq(1).hasClass('active'));
-      assert.equal(getElementText(searchResults.eq(2)), getText('2 guy Mc2son'));
+      assert.equal(getElementText(searchResults.eq(2)), getText('2 guy M. Mc2son'));
       assert.ok(searchResults.eq(2).hasClass('active'));
-      assert.equal(getElementText(searchResults.eq(3)), getText('3 guy Mc3son'));
+      assert.equal(getElementText(searchResults.eq(3)), getText('3 guy M. Mc3son'));
       assert.ok(searchResults.eq(3).hasClass('inactive'));
-      assert.equal(getElementText(searchResults.eq(4)), getText('4 guy Mc4son'));
+      assert.equal(getElementText(searchResults.eq(4)), getText('4 guy M. Mc4son'));
       assert.ok(searchResults.eq(4).hasClass('inactive'));
     });
   });
@@ -142,16 +142,16 @@ test('add default instructor', function(assert) {
     var container = find('.learnergroup-overview').eq(0);
     var items = find('.removable-list li', container);
     assert.equal(items.length, 2);
-    assert.equal(getElementText(items.eq(0)), getText('3 guy Mc3son'));
-    assert.equal(getElementText(items.eq(1)), getText('4 guy Mc4son'));
+    assert.equal(getElementText(items.eq(0)), getText('3 guy M. Mc3son'));
+    assert.equal(getElementText(items.eq(1)), getText('4 guy M. Mc4son'));
 
     fillIn(find('.search-box input', container), 'guy').then(function(){
       click('.results li:eq(1)', container).then(function(){
         var items = find('.removable-list li', container);
         assert.equal(items.length, 3);
-        assert.equal(getElementText(items.eq(0)), getText('1 guy Mc1son'));
-        assert.equal(getElementText(items.eq(1)), getText('3 guy Mc3son'));
-        assert.equal(getElementText(items.eq(2)), getText('4 guy Mc4son'));
+        assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
+        assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
+        assert.equal(getElementText(items.eq(2)), getText('4 guy M. Mc4son'));
       });
     });
   });
@@ -165,7 +165,7 @@ test('remove default instructor', function(assert) {
     click('.removable-list li:eq(0)', container).then(function(){
       var items = find('.removable-list li', container);
       assert.equal(items.length, 1);
-      assert.equal(getElementText(items.eq(0)), getText('4 guy Mc4son'));
+      assert.equal(getElementText(items.eq(0)), getText('4 guy M. Mc4son'));
     });
   });
 });

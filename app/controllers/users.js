@@ -1,28 +1,17 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
-const { computed, Controller, inject, isEmpty, PromiseProxyMixin, run } = Ember;
+const { computed, Controller, inject, isEmpty, run } = Ember;
 const { service } = inject;
 const { debounce } = run;
 const { trim } = Ember.$;
-
-const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
+const { PromiseObject } = DS;
 
 function cleanQuery(query) {
   return trim(query).replace(/[\-,?~!@#$%&*+\-'="]/, '');
 }
 
 export default Controller.extend({
-  init() {
-    this._super(...arguments);
-
-    // This needs to be removed after user session re-write
-    this.get('currentUser.model').then((user) => {
-      user.get('school').then((userSchool) => {
-        this.set('school', userSchool.get('id'));
-      });
-    });
-  },
-
   queryParams: ['page'],
   page: 1,
 
@@ -45,13 +34,13 @@ export default Controller.extend({
   morePages: computed('model', {
     get() {
       const { model, limit } = this.getProperties('model', 'limit');
-      return model.length > limit;
+      return model.users.length > limit;
     }
   }).readOnly(),
 
   users: computed('model', {
     get() {
-      const users = this.get('model');
+      const users = this.get('model.users');
 
       if (users.length === 21) {
         return users.slice(0, 20);
@@ -87,7 +76,7 @@ export default Controller.extend({
         });
       }
 
-      return ProxyContent.create({
+      return PromiseObject.create({
         promise: searchResults
       });
     }
