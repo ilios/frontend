@@ -109,7 +109,7 @@ export default {
     'invalidDatetimes': "Dates/Heures invalides",
     'globalSearchPlaceholder': "Trouver des utilisateurs...",
     'transitionErrorMessage': "Désolé, nous ne pouvons pas vous faire demander où vous aller : quelque chose semble être cassé.",
-    'errorDisplayMessage': "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez S'il vous plaît de rafraîchir ou vérifier en arrière plus tard.",
+    'errorDisplayMessage': "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez s'il vous plaît de rafraîchir ou vérifier en arrière plus tard.",
     'backToDashboard': "Retour à tableau de bord",
     'showMore': "Afficher plus",
 	  'primarySchool': "École Première",
