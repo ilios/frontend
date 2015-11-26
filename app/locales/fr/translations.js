@@ -377,7 +377,7 @@ export default {
     'showFilters': "Montrez les Filtres",
     'hideFilters': "Cachez les Filtres",
     'sessionTypes': "Types de Séance",
-    'courseLevels':  'Niveaux de Cours",
+    'courseLevels':  "Niveaux de Cours",
     'programAndCohort': "Diplôme et Cohortes",
     'mySchedule': "Mon Calendrier (liste)",
     'myReports': "Mes Rapports",
