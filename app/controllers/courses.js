@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
+import moment from 'moment';
 
 const { computed, RSVP, isEmpty, isPresent } = Ember;
-const { gt } = computed;
+const { gt, sort } = computed;
 const { PromiseArray } = DS;
 
 export default Ember.Controller.extend({
@@ -21,6 +22,10 @@ export default Ember.Controller.extend({
   titleFilter: null,
   userCoursesOnly: false,
   showNewCourseForm: false,
+  sortSchoolsBy:['title'],
+  sortedSchools: sort('model.schools', 'sortSchoolsBy'),
+  sortYearsBy:['title:desc'],
+  sortedYears: sort('model.years', 'sortYearsBy'),
   newCourses: [],
   courses: computed('selectedSchool', 'selectedYear', function(){
     let defer = RSVP.defer();
@@ -138,8 +143,17 @@ export default Ember.Controller.extend({
         return year.get('title') === parseInt(this.get('yearTitle'));
       });
     }
-
-    return years.get('lastObject');
+    let currentYear = moment().format('YYYY');
+    const currentMonth = parseInt(moment().format('M'));
+    if(currentMonth < 6){
+      currentYear--;
+    }
+    let defaultYear = years.find(year => year.get('id') === currentYear);
+    if(isEmpty(defaultYear)){
+      defaultYear = years.get('lastObject');
+    }
+    
+    return defaultYear;
   }),
   actions: {
     editCourse: function(course){
@@ -162,11 +176,11 @@ export default Ember.Controller.extend({
       });
       this.get('newCourses').removeObject(courseProxy);
     },
-    changeSelectedYear: function(year){
-      this.set('yearTitle', year.get('title'));
+    changeSelectedYear: function(yearTitle){
+      this.set('yearTitle', yearTitle);
     },
-    changeSelectedSchool: function(school){
-      this.set('schoolId', school.get('id'));
+    changeSelectedSchool: function(schoolId){
+      this.set('schoolId', schoolId);
     },
     //called by the 'toggle-mycourses' component
     toggleMyCourses: function(){

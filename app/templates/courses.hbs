@@ -3,26 +3,33 @@
     {{toggle-mycourses isChecked=userCoursesOnly toggleMyCourses='toggleMyCourses'}}
     <div id='schoolsfilter' class="filter">
       <label class="inline-label">
-        {{t 'general.school'}}:
+        {{fa-icon 'university'}}
       </label>
       <div id="school-selection" class="inline-data">
         {{#if hasMoreThanOneSchool}}
-          {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each model.schools as |school|}}
-              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
+          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+            {{#each sortedSchools as |school|}}
+              <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+                {{school.title}}
+              </option>
             {{/each}}
-          {{/action-menu}}
+          </select>
         {{else}}
           {{selectedSchool.title}}
         {{/if}}
       </div>
     </div>
     <div id='yearsfilter' class="filter">
-      {{#action-menu title=selectedYear.academicYearTitle icon=false}}
-        {{#each model.years as |year|}}
-          <li {{action 'changeSelectedYear' year}}>{{year.academicYearTitle}}</li>
+      <label class="inline-label">
+        {{fa-icon 'calendar'}}
+      </label>
+      <select onchange={{action "changeSelectedYear" value="target.value"}}>
+        {{#each sortedYears as |year|}}
+          <option value={{year.year}} selected={{is-equal year selectedYear}}>
+            {{year.academicYearTitle}}
+          </option>
         {{/each}}
-      {{/action-menu}}
+      </select>
     </div>
 
     <div id='titlefilter' class="filter">
