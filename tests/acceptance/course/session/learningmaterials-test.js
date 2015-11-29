@@ -169,7 +169,8 @@ test('create new file learning material', function(assert) {
     //check that we got the right form
     let labels = find('.detail-learning-materials .new-learning-material label');
     assert.equal(labels.length, 9);
-    let userName = fixtures.user.firstName + fixtures.user.lastName;
+    const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
+    const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(getElementText(find('.detail-learning-materials .new-learning-material .owninguser')), getText(userName));
     let newLmContainer = find('.detail-learning-materials .new-learning-material');
     let inputs = find('input', newLmContainer);
@@ -216,7 +217,8 @@ test('create new link learning material', function(assert) {
     //check that we got the right form
     let labels = find('.detail-learning-materials .new-learning-material label');
     assert.equal(labels.length, 7);
-    let userName = fixtures.user.firstName + fixtures.user.lastName;
+    const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
+    const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(getElementText(find('.detail-learning-materials .new-learning-material .owninguser')), getText(userName));
     let newLmContainer = find('.detail-learning-materials .new-learning-material');
     let inputs = find('input', newLmContainer);
@@ -262,7 +264,8 @@ test('create new citation learning material', function(assert) {
     //check that we got the right form
     let labels = find('.detail-learning-materials .new-learning-material label');
     assert.equal(labels.length, 7);
-    let userName = fixtures.user.firstName + fixtures.user.lastName;
+    const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
+    const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(getElementText(find('.detail-learning-materials .new-learning-material .owninguser')), getText(userName));
     let newLmContainer = find('.detail-learning-materials .new-learning-material');
     let inputs = find('input', newLmContainer);

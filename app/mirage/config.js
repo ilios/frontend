@@ -4,7 +4,7 @@ import Mirage from 'ember-cli-mirage';
 
 export default function() {
     this.timing = 100;
-    
+
     this.pretender.post.call(this.pretender, '/write-blanket-coverage', this.pretender.passthrough);
     this.get('/api/aamcmethods', getAll);
     this.get('/api/aamcmethods/:id', 'aamcMethod');
@@ -255,12 +255,12 @@ export default function() {
     this.get('/api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
     this.put('/api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
     this.delete('/api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
-    
+
     this.post('/api/sessionlearningmaterials', function(db, request) {
       let attrs = JSON.parse(request.requestBody);
       let record = db.sessionLearningMaterial.insert(attrs);
       let lm = db.learningMaterials.find(record.learningMaterial);
-      
+
       if(lm){
         lm.sessionLearningMaterials.pushObject(record);
       }
@@ -308,7 +308,7 @@ export default function() {
         userEvents: userEvents
       };
     });
-    
+
     this.get('/api/schoolevents/:schoolid', function(db, requst) {
       let from = moment.unix(requst.queryParams.from);
       let to = moment.unix(requst.queryParams.to);
@@ -352,7 +352,7 @@ export default function() {
       }
       return new Mirage.Response(400, {}, {errors: errors});
     });
-    
+
     this.get('/auth/logout', function() {
       return new Mirage.Response(200);
     });
@@ -402,7 +402,7 @@ export default function() {
         jwt: encodedData
       };
     });
-    
+
     this.post('/errors', function(){
       //doesn't do anything, just swallows errors
     });

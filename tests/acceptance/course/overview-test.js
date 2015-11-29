@@ -57,7 +57,7 @@ test('check fields', function(assert) {
     var endDate = moment(course.endDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.courseenddate', container)), endDate);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText(clerkshipType.title));
-    assert.equal(getElementText(find('.coursedirectors li', container)), getText('A Director'));
+    assert.equal(getElementText(find('.coursedirectors li', container)), getText('A M. Director'));
   });
 });
 
@@ -414,11 +414,11 @@ test('manage directors', function(assert) {
       andThen(function(){
         let searchResults = find('.live-search li', directors);
         assert.equal(searchResults.length, 3);
-        assert.equal(getElementText($(searchResults[0])), getText('0 guy Mc0son'));
+        assert.equal(getElementText($(searchResults[0])), getText('0 guy M. Mc0son'));
         assert.ok(!$(searchResults[0]).hasClass('inactive'));
-        assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
+        assert.equal(getElementText($(searchResults[1])), getText('Added M. Guy'));
         assert.ok($(searchResults[1]).hasClass('inactive'));
-        assert.equal(getElementText($(searchResults[2])), getText('Disabled Guy'));
+        assert.equal(getElementText($(searchResults[2])), getText('Disabled M. Guy'));
         assert.ok($(searchResults[2]).hasClass('inactive'));
 
         click('.removable-list li:eq(0)', directors).then(function(){
@@ -426,7 +426,7 @@ test('manage directors', function(assert) {
           click(searchResults[0]);
         });
         andThen(function(){
-          assert.equal(getElementText(find('.coursedirectors .removable-list')), getText('0 guy Mc0son'));
+          assert.equal(getElementText(find('.coursedirectors .removable-list')), getText('0 guy M. Mc0son'));
         });
     });
   });
@@ -466,8 +466,8 @@ test('search twice and list should be correct', function(assert) {
       andThen(function(){
         let searchResults = find('.live-search li', directors);
         assert.equal(searchResults.length, 2);
-        assert.equal(getElementText($(searchResults[0])), getText('0 guy Mc0son'));
-        assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
+        assert.equal(getElementText($(searchResults[0])), getText('0 guy M. Mc0son'));
+        assert.equal(getElementText($(searchResults[1])), getText('Added M. Guy'));
         click(searchResults[0]).then(function(){
           let searchBoxInput = find('input', searchBox);
           fillIn(searchBoxInput, 'guy');
@@ -475,8 +475,8 @@ test('search twice and list should be correct', function(assert) {
           andThen(function(){
             let searchResults = find('.live-search li', directors);
             assert.equal(searchResults.length, 2);
-            assert.equal(getElementText($(searchResults[0])), getText('0 guy Mc0son'));
-            assert.equal(getElementText($(searchResults[1])), getText('Added Guy'));
+            assert.equal(getElementText($(searchResults[0])), getText('0 guy M. Mc0son'));
+            assert.equal(getElementText($(searchResults[1])), getText('Added M. Guy'));
           });
         });
     });

@@ -111,7 +111,19 @@ export default {
     'transitionErrorMessage': 'Sorry, we can’t get you where you asked to go: something seems to be broken...',
     'errorDisplayMessage': 'Sorry! Something went wrong with your request. Please try refreshing or check back later.',
     'backToDashboard': 'Back to Dashboard',
-    'showMore': 'Show more'
+    'showMore': 'Show more',
+    'primarySchool': 'Primary School',
+    'unassigned': 'Unassigned',
+    'student': 'Student',
+    'phone': 'Phone',
+    'primaryCohort': 'Primary Cohort',
+    'secondaryCohorts': 'Secondary Cohorts',
+    'noLearnerGroups': 'No learner groups',
+    'noResultsFound': 'No results found. Please try again.',
+    'campusId': 'Campus ID',
+    'prev': 'Prev',
+    'next': 'Next',
+    'disabled': 'disabled'
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -364,7 +376,9 @@ export default {
   'user': {
     'firstName': 'First Name',
     'lastName': 'Last Name',
+    'fullName': 'Full Name',
     'manageUsers': 'Manage Users',
+    'searchUsers': 'Search for users'
   },
   'language': {
     'select': {

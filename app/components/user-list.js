@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  users: [],
+const { Component } = Ember;
+
+export default Component.extend({
+  classNames: ['user-list'],
+
+  users: []
 });

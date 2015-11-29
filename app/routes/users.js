@@ -1,4 +1,50 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const { inject, Route, RSVP, run } = Ember;
+const { service } = inject;
+const { once } = run;
+const { hash } = RSVP;
+
+export default Route.extend({
+  currentUser: service(),
+
+  queryParams: {
+    page: {
+      refreshModel: true
+    }
+  },
+
+  model(params) {
+    // Next two lines should be removed after user session re-write
+    return this.get('currentUser.model').then((user) => {
+      return user.get('school').then((userSchool) => {
+        const school = userSchool.get('id');
+        const limit = 21;
+        const offset = (limit - 1) * (params.page - 1);
+
+        return this.store.query('user', {
+          school, limit, offset,
+          'order_by[lastName]': 'ASC',
+          'order_by[firstName]': 'ASC'
+        }).then((users) => {
+          // Should just return `users.toArray()` after re-write
+          return hash({ users: users.toArray(), school });
+        });
+      });
+    });
+  },
+
+  // This needs to be removed after re-write
+  setupController: function(controller, model) {
+    this._super(...arguments);
+
+    controller.set('school', model.school);
+  },
+
+  actions: {
+    // Workaround for Ember bug #5566
+    queryParamsDidChange() {
+      once(this, this.refresh);
+    }
+  }
 });

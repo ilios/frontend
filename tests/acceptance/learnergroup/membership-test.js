@@ -69,9 +69,9 @@ test('this group members', function(assert) {
     let container = find('.detail-overview');
     assert.equal(currentPath(), 'learnerGroup');
     assert.equal(getElementText(find('.detail-title', container)), getText('learner group 1 Members (2)'));
-    assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('1 guy Mc1son'));
+    assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('1 guy M. Mc1son'));
     assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 > learner group 1'));
-    assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(1)'), container), getText('2 guy Mc2son'));
+    assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(1)'), container), getText('2 guy M. Mc2son'));
     assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(1)'), container), getText('learner group 0 > learner group 1'));
 
     click('.learnergroup-group-membership:eq(0) .editable').then(function(){
@@ -136,9 +136,9 @@ test('cohort members', function(assert) {
   andThen(function() {
     let container = find('.cohortmembers');
     assert.equal(getElementText(find('.detail-title', container)), getText('Cohort Members NOT assigned to learner group 0 (2)'));
-    assert.equal(getElementText(find('.learnergroup-username:eq(0)', container)), getText('7 guy Mc7son'));
+    assert.equal(getElementText(find('.learnergroup-username:eq(0)', container)), getText('7 guy M. Mc7son'));
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(0)', container)), getText('Not in this group'));
-    assert.equal(getElementText(find('.learnergroup-username:eq(1)', container)), getText('8 guy Mc8son'));
+    assert.equal(getElementText(find('.learnergroup-username:eq(1)', container)), getText('8 guy M. Mc8son'));
     assert.equal(getElementText(find('.learnergroup-group-membership:eq(1)', container)), getText('Not in this group'));
     click('.learnergroup-group-membership:eq(0) .editable', container).then(function(){
       let options = find('.learnergroup-group-membership:eq(0) select option', container);
@@ -157,9 +157,9 @@ test('cohort members', function(assert) {
         // Assertion below needs to be fixed (issue #1157)
         // assert.equal(getElementText(find('.detail-header .info')),getText('Members: 3'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (3)'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('1 guy Mc1son'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(1)'), container), getText('2 guy Mc2son'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(2)'), container), getText('7 guy Mc7son'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('1 guy M. Mc1son'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(1)'), container), getText('2 guy M. Mc2son'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(2)'), container), getText('7 guy M. Mc7son'));
       });
     });
   });
@@ -176,10 +176,10 @@ test('move group member to another subgroup', function(assert) {
         // Assertion below needs to be fixed (issue #1157)
         // assert.equal(getElementText(find('.detail-header .info')),getText('Members: 1'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (1)'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('2 guy Mc2son'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('2 guy M. Mc2son'));
         assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 > learner group 1'));
 
-        assert.equal(getElementText(find('.toplevelgroupmembers .learnergroup-username:eq(0)')), getText('1 guy Mc1son'));
+        assert.equal(getElementText(find('.toplevelgroupmembers .learnergroup-username:eq(0)')), getText('1 guy M. Mc1son'));
         assert.equal(getElementText(find('.toplevelgroupmembers .learnergroup-group-membership:eq(0)')), getText('learner group 0 > learner group 2'));
       });
     });
@@ -197,10 +197,10 @@ test('remove group member back to cohort', function(assert) {
         // Assertion below needs to be fixed (issue #1157)
         // assert.equal(getElementText(find('.detail-header .info')),getText('Members: 1'));
         assert.equal(getElementText(find('.detail-overview .detail-title')), getText('learner group 1 Members (1)'));
-        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('2 guy Mc2son'));
+        assert.equal(getElementText(find('.detail-content .learnergroup-username:eq(0)'), container), getText('2 guy M. Mc2son'));
         assert.equal(getElementText(find('.detail-content .learnergroup-group-membership:eq(0)'), container), getText('learner group 0 > learner group 1'));
 
-        assert.equal(getElementText(find('.cohortmembers .learnergroup-username:eq(0)')), getText('1 guy Mc1son'));
+        assert.equal(getElementText(find('.cohortmembers .learnergroup-username:eq(0)')), getText('1 guy M. Mc1son'));
         assert.equal(getElementText(find('.cohortmembers .learnergroup-group-membership:eq(0)')), getText('Not in this group'));
       });
     });
@@ -273,14 +273,14 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   visit(url);
   click(toggleSwitch);
   andThen(function() {
-    assert.equal(find(member1).text(), '1 guy Mc1son');
-    assert.equal(find(member2).text(), '2 guy Mc2son');
-    assert.equal(find(member3).text(), '3 guy Mc3son');
-    assert.equal(find(member4).text(), '4 guy Mc4son');
-    assert.equal(find(member5).text(), '5 guy Mc5son');
-    assert.equal(find(member6).text(), '6 guy Mc6son');
-    assert.equal(find(member7).text(), '7 guy Mc7son');
-    assert.equal(find(member8).text(), '8 guy Mc8son');
+    assert.equal(find(member1).text(), '1 guy M. Mc1son');
+    assert.equal(find(member2).text(), '2 guy M. Mc2son');
+    assert.equal(find(member3).text(), '3 guy M. Mc3son');
+    assert.equal(find(member4).text(), '4 guy M. Mc4son');
+    assert.equal(find(member5).text(), '5 guy M. Mc5son');
+    assert.equal(find(member6).text(), '6 guy M. Mc6son');
+    assert.equal(find(member7).text(), '7 guy M. Mc7son');
+    assert.equal(find(member8).text(), '8 guy M. Mc8son');
 
     assert.equal(find(member1Group).text(), 'learner group 0 > learner group 1');
     assert.equal(find(member2Group).text(), 'learner group 0 > learner group 1');
@@ -296,7 +296,7 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   click(saveButton);
   andThen(function() {
     // Checks if request occurs when no option is chosen from the select component
-    assert.equal(find(member1).text(), '1 guy Mc1son', 'no action was performed b/c no option was chosen');
+    assert.equal(find(member1).text(), '1 guy M. Mc1son', 'no action was performed b/c no option was chosen');
     assert.equal(find(member1Group).text(), 'learner group 0 > learner group 1', 'no action was performed b/c no option was chosen');
   });
 
@@ -306,19 +306,19 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   click(saveButton);
   andThen(function() {
     // Checks if request occurs when no students are checkmarked
-    assert.equal(find(member1).text(), '1 guy Mc1son', 'no action was performed b/c nothing was checked');
-    assert.equal(find(member1).text(), '1 guy Mc1son', 'no action was performed b/c nothing was checked');
+    assert.equal(find(member1).text(), '1 guy M. Mc1son', 'no action was performed b/c nothing was checked');
+    assert.equal(find(member1).text(), '1 guy M. Mc1son', 'no action was performed b/c nothing was checked');
   });
 
   click(checkBox2);
   click(saveButton);
   andThen(function() {
     // Checks top box
-    assert.equal(find(member6).text(), '2 guy Mc2son', 'moved to not assigned');
+    assert.equal(find(member6).text(), '2 guy M. Mc2son', 'moved to not assigned');
     assert.equal(find(member6Group).text(), 'Not in this group', 'moved to not assigned');
 
     // Checks bottom box
-    assert.equal(find(NAmember1).text(), '2 guy Mc2son', 'moved to not assigned');
+    assert.equal(find(NAmember1).text(), '2 guy M. Mc2son', 'moved to not assigned');
     assert.equal(find(NAmember1Group).text(), 'Not in this group', 'moved to not assigned');
   });
 
@@ -329,15 +329,15 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   click(saveButton);
   andThen(function() {
     // Checks top box
-    assert.equal(find(member2).text(), '3 guy Mc3son', 'changed assignment');
+    assert.equal(find(member2).text(), '3 guy M. Mc3son', 'changed assignment');
     assert.equal(find(member2Group).text(), 'learner group 0', 'changed assignment');
-    assert.equal(find(member3).text(), '4 guy Mc4son', 'changed assignment');
+    assert.equal(find(member3).text(), '4 guy M. Mc4son', 'changed assignment');
     assert.equal(find(member3Group).text(), 'learner group 0', 'changed assignment');
 
     // Checks middle box
-    assert.equal(find(LAmember1).text(), '3 guy Mc3son', 'changed assignment');
+    assert.equal(find(LAmember1).text(), '3 guy M. Mc3son', 'changed assignment');
     assert.equal(find(LAmember1Group).text(), 'learner group 0', 'changed assignment');
-    assert.equal(find(LAmember2).text(), '4 guy Mc4son', 'changed assignment');
+    assert.equal(find(LAmember2).text(), '4 guy M. Mc4son', 'changed assignment');
     assert.equal(find(LAmember2Group).text(), 'learner group 0', 'changed assignment');
   });
 
@@ -348,15 +348,15 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   click(saveButton);
   andThen(function() {
     // Checks top box
-    assert.equal(find(member5).text(), '3 guy Mc3son', 'moved to not assigned');
+    assert.equal(find(member5).text(), '3 guy M. Mc3son', 'moved to not assigned');
     assert.equal(find(member5Group).text(), 'Not in this group', 'moved to not assigned');
-    assert.equal(find(member6).text(), '5 guy Mc5son', 'moved to not assigned');
+    assert.equal(find(member6).text(), '5 guy M. Mc5son', 'moved to not assigned');
     assert.equal(find(member6Group).text(), 'Not in this group', 'moved to not assigned');
 
     // Checks bottom box
-    assert.equal(find(NAmember2).text(), '3 guy Mc3son', 'moved to not assigned');
+    assert.equal(find(NAmember2).text(), '3 guy M. Mc3son', 'moved to not assigned');
     assert.equal(find(NAmember2Group).text(), 'Not in this group', 'moved to not assigned');
-    assert.equal(find(NAmember3).text(), '5 guy Mc5son', 'moved to not assigned');
+    assert.equal(find(NAmember3).text(), '5 guy M. Mc5son', 'moved to not assigned');
     assert.equal(find(NAmember3Group).text(), 'Not in this group', 'moved to not assigned');
   });
 
@@ -366,16 +366,16 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   click(saveButton);
   andThen(function() {
     // Checks top box
-    assert.equal(find(member2).text(), '3 guy Mc3son', 'moved to original group');
+    assert.equal(find(member2).text(), '3 guy M. Mc3son', 'moved to original group');
     assert.equal(find(member2Group).text(), 'learner group 0 > learner group 1', 'moved to original group');
   });
 
   click(toggleSwitch);
   andThen(function() {
     // Checks top box (single-edit)
-    assert.equal(find(member1).text(), '1 guy Mc1son');
+    assert.equal(find(member1).text(), '1 guy M. Mc1son');
     assert.equal(find(member1GroupSE).text(), 'learner group 0 > learner group 1');
-    assert.equal(find(member2).text(), '3 guy Mc3son');
+    assert.equal(find(member2).text(), '3 guy M. Mc3son');
     assert.equal(find(member2GroupSE).text(), 'learner group 0 > learner group 1');
   });
 });

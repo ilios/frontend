@@ -1,2 +1,71 @@
-{{global-search}}
-Placeholder for user: #{{model.id}} {{model.fullName}}
+<div class="user-container">
+  {{global-search}}
+
+  <h1 class="user-display-name">{{model.fullName}}</h1>
+  {{#if model.isStudent.content}}
+    <span class="user-is-student">{{t 'general.student'}}</span>
+  {{/if}}
+
+  <div class="user-info">
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.campusId'}}:</label>
+      <div class="form-data">{{model.campusId}}</div>
+    </div>
+
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.email'}}:</label>
+      <div class="form-data">{{model.email}}</div>
+    </div>
+
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.phone'}}:</label>
+      <div class="form-data">{{model.phone}}</div>
+    </div>
+
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.primarySchool'}}:</label>
+      <div class="form-data">{{model.school.title}}</div>
+    </div>
+
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.primaryCohort'}}:</label>
+      <div class="form-data">
+        {{#if model.primaryCohort.title}}
+          {{model.primaryCohort.title}}
+        {{else}}
+          {{t 'general.unassigned'}}
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
+      <div class="form-data">
+        {{#if secondaryCohorts.content}}
+          <ul>
+            {{#each secondaryCohorts.content as |cohort|}}
+              <li class="secondary-cohort">{{cohort.title}}</li>
+            {{/each}}
+          </ul>
+        {{else}}
+          {{t 'general.unassigned'}}
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.learnerGroups'}}:</label>
+      <div class="form-data">
+        {{#if model.learnerGroups}}
+          <ul>
+            {{#each model.learnerGroups as |group|}}
+              <li class="learner-group">{{group.title}}</li>
+            {{/each}}
+          </ul>
+        {{else}}
+          {{t 'general.noLearnerGroups'}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
