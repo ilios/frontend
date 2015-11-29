@@ -1,60 +1,76 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  store: Ember.inject.service(),
-  parentGroup: null,
+const { Component, computed, inject, ObjectProxy } = Ember;
+const { service } = inject;
+const { oneWay } = computed;
+
+export default Component.extend({
+  store: service(),
+
   classNames: ['learnergroup-subgroup-list'],
-  learnerGroups: Ember.computed.oneWay('parentGroup.children'),
+
+  parentGroup: null,
+
+  learnerGroups: oneWay('parentGroup.children'),
+
   sortBy: ['title'],
   sortedLearnerGroups: Ember.computed.sort('learnerGroups', 'sortBy'),
-  proxiedLearnerGroups: function(){
-    return this.get('sortedLearnerGroups').map(function(learnerGroup){
-      return Ember.ObjectProxy.create({
-        content: learnerGroup,
-        showRemoveConfirmation: false
+
+  proxiedLearnerGroups: computed('sortedLearnerGroups.[]', {
+    get() {
+      const sortedLearnerGroups = this.get('sortedLearnerGroups');
+
+      return sortedLearnerGroups.map((learnerGroup) => {
+        return ObjectProxy.create({
+          content: learnerGroup,
+          showRemoveConfirmation: false
+        });
       });
-    });
-  }.property('sortedLearnerGroups.@each'),
-  newLearnerGroups: [],
+    }
+  }).readOnly(),
+
+  showNewLearnerGroupForm: false,
+
   actions: {
-    editLearnerGroup: function(learnerGroupProxy){
-      let learnerGroup = learnerGroupProxy.get('content');
+    editLearnerGroup(learnerGroupProxy) {
+      const learnerGroup = learnerGroupProxy.get('content');
       this.transitionToRoute('learnergroup', learnerGroup);
     },
-    cancelRemove: function(learnerGroupProxy){
+
+    cancelRemove(learnerGroupProxy) {
       learnerGroupProxy.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(learnerGroupProxy){
+
+    confirmRemove(learnerGroupProxy) {
       learnerGroupProxy.set('showRemoveConfirmation', true);
     },
-    removeLearnerGroup: function(learnerGroupProxy){
-      let learnerGroup = learnerGroupProxy.get('content');
-      this.get('parentGroup.children').removeObject(learnerGroup);
-      learnerGroup.deleteRecord();
-      learnerGroup.save();
-    },
-    addLearnerGroup: function(){
-      var learnerGroup = this.get('store').createRecord('learnerGroup', {
-        title: null,
-      });
-      this.get('newLearnerGroups').addObject(learnerGroup);
-    },
-    saveNewLearnerGroup: function(newLearnerGroup){
-      this.get('parentGroup.cohort').then(cohort=> {
-        this.get('newLearnerGroups').removeObject(newLearnerGroup);
 
-        newLearnerGroup.set('parent', this.get('parentGroup'));
-        newLearnerGroup.set('cohort', cohort);
-        newLearnerGroup.save().then(
-          savedLearnerGroup => {
-            this.get('parentGroup').get('children').addObject(savedLearnerGroup);
-            cohort.get('learnerGroups').addObject(savedLearnerGroup);
-          }
-        );
+    removeLearnerGroup(learnerGroupProxy) {
+      const learnerGroup = learnerGroupProxy.get('content');
+      this.get('parentGroup.children').removeObject(learnerGroup);
+      learnerGroup.destroyRecord();
+    },
+
+    toggleNewLearnerGroupForm() {
+      this.set('showNewLearnerGroupForm', !this.get('showNewLearnerGroupForm'));
+    },
+
+    saveNewLearnerGroup(title) {
+      const { store, parentGroup } = this.getProperties('store', 'parentGroup');
+
+      parentGroup.get('cohort').then((cohort) => {
+        const newLearnerGroup = store.createRecord('learner-group', { title, parent: parentGroup, cohort });
+
+        newLearnerGroup.save().then((savedLearnerGroup) => {
+          parentGroup.get('children').addObject(savedLearnerGroup);
+          cohort.get('learnerGroups').addObject(savedLearnerGroup);
+          this.send('cancel');
+        });
       });
     },
-    removeNewLearnerGroup: function(newLearnerGroup){
-      this.get('newLearnerGroups').removeObject(newLearnerGroup);
-    },
-  },
+
+    cancel() {
+      this.set('showNewLearnerGroupForm', false);
+    }
+  }
 });

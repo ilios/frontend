@@ -53,3 +53,13 @@
     border-color: $ilios-red;
   }
 }
+
+.new-learnergroup {
+  input {
+    outline: none;
+  }
+
+  .has-error {
+    border-color: $ilios-red;
+  }
+}
