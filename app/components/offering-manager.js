@@ -196,7 +196,7 @@ export default Ember.Component.extend({
             user.get('offerings').removeObject(offering);
           });
           this.get('buffer.instructors').forEach(user => {
-            user.get('offerings').pushObject(offering);
+            user.get('instructedOfferings').pushObject(offering);
             instructors.pushObject(user);
           });
         }));
