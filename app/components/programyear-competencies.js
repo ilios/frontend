@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   programYear: null,
   classNames: ['programyear-competencies'],
   isManaging: false,
+  isSaving: false,
   bufferCompetencies: [],
   actions: {
     manage: function(){
@@ -14,16 +15,19 @@ export default Ember.Component.extend({
       });
     },
     save: function(){
-      var programYear = this.get('programYear');
-      var competencies = programYear.get('competencies');
-      competencies.clear();
-      competencies.addObjects(this.get('bufferCompetencies'));
-      this.get('bufferCompetencies').forEach(function(competency){
-        competency.get('programYears').addObject(programYear);
-        competency.save();
+      this.set('isSaving', true);
+      let programYear = this.get('programYear');
+      programYear.get('competencies').then(competencies => {
+        competencies.clear();
+        this.get('bufferCompetencies').forEach(competency => {
+          competency.get('programYears').addObject(programYear);
+          competencies.addObject(competency);
+        });
+        programYear.save().then(()=> {
+          this.set('isSaving', false);
+          this.set('isManaging', false);
+        });
       });
-      programYear.save();
-      this.set('isManaging', false);
     },
     cancel: function(){
       this.set('bufferCompetencies', []);
