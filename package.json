@@ -14,8 +14,8 @@
   },
   "repository": "https://github.com/ilios/frontend",
   "engines": {
-    "node": "^0.12.7",
-    "npm": "2.7.x"
+    "node": "^5.1",
+    "npm": "^3.3"
   },
   "author": "",
   "license": "GNU GPL v3",
