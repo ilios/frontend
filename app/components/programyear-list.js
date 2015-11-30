@@ -123,7 +123,9 @@ export default Component.extend({
     },
 
     confirmRemove(programYearProxy) {
-      programYearProxy.get('content').destroyRecord();
+      const programYear = programYearProxy.get('content');
+      programYear.deleteRecord();
+      programYear.save();
     },
 
     cancelRemove(programYearProxy) {

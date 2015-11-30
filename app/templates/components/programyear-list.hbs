@@ -37,59 +37,59 @@
             </tr>
           </thead>
           <tbody>
-            {{#each proxiedProgramYears as |programYear|}}
-              <tr class="{{if programYear.showRemoveConfirmation 'confirm-removal'}}">
+            {{#each proxiedProgramYears as |programYearProxy|}}
+              <tr class="{{if programYearProxy.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left'>
-                  {{#link-to 'programYear.index' program programYear}}
-                    {{fa-icon 'external-link-square'}} {{programYear.academicYear}}
+                  {{#link-to 'programYear.index' program programYearProxy.content}}
+                    {{fa-icon 'external-link-square'}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
-                <td class='text-left'>{{programYear.cohort.displayTitle}}</td>
+                <td class='text-left'>{{programYearProxy.cohort.displayTitle}}</td>
 
                 <td class='text-left'>
-                  {{#if programYear.competencies.length}}
-                    {{programYear.competencies.length}}
+                  {{#if programYearProxy.competencies.length}}
+                    {{programYearProxy.competencies.length}}
                   {{else}}
                     {{fa-icon 'warning' classNames='warning'}}
                   {{/if}}
                 </td>
                 <td class='text-left'>
-                  {{#if programYear.objectives.length}}
-                    {{programYear.objectives.length}}
+                  {{#if programYearProxy.objectives.length}}
+                    {{programYearProxy.objectives.length}}
                   {{else}}
                     {{fa-icon 'warning' classNames='warning'}}
                   {{/if}}
                 </td>
                 <td class='text-left'>
-                  {{#if programYear.directors.length}}
-                    {{programYear.directors.length}}
+                  {{#if programYearProxy.directors.length}}
+                    {{programYearProxy.directors.length}}
                   {{else}}
                     {{fa-icon 'warning' classNames='warning'}}
                   {{/if}}
                 </td>
                 <td class='text-left'>
-                  {{#if programYear.topics.length}}
-                    {{programYear.topics.length}}
+                  {{#if programYearProxy.topics.length}}
+                    {{programYearProxy.topics.length}}
                   {{else}}
                     {{fa-icon 'warning' classNames='warning'}}
                   {{/if}}
                 </td>
 
-                <td class='text-center'>{{publication-status item=programYear showIcon=false}}</td>
+                <td class='text-center'>{{publication-status item=programYearProxy.content showIcon=false}}</td>
                 <td class='text-center'>
-                  {{#link-to 'programYear.index' program programYear class="program-year-link edit"}}{{fa-icon 'edit'}}{{/link-to}}
-                  <span class="clickable trash {{if programYear.showRemoveConfirmation 'confirm-removal'}}" {{action 'remove' programYear}}>{{fa-icon 'trash'}}</span>
+                  {{#link-to 'programYear.index' program programYearProxy.content class="program-year-link edit"}}{{fa-icon 'edit'}}{{/link-to}}
+                  <span class="clickable trash {{if programYearProxy.showRemoveConfirmation 'confirm-removal'}}" {{action 'remove' programYearProxy}}>{{fa-icon 'trash'}}</span>
                 </td>
               </tr>
 
-              {{#if programYear.showRemoveConfirmation}}
+              {{#if programYearProxy.showRemoveConfirmation}}
                 <tr class='confirm-removal'>
                   <td colspan=8>
                     <div class='confirm-message'>
-                      {{t 'programYears.confirmRemove' courseCount=program.courseCount}} <br />
+                      {{t 'programYears.confirmRemove' courseCount=programYearProxy.cohort.courses.length}} <br />
                       <div class="confirm-buttons">
-                        <button {{action 'confirmRemove' programYear}} class='remove text'>{{t 'general.yes'}}</button>
-                        <button {{action 'cancelRemove' programYear}} class='done text'>{{t 'general.cancel'}}</button>
+                        <button {{action 'confirmRemove' programYearProxy}} class='remove text'>{{t 'general.yes'}}</button>
+                        <button {{action 'cancelRemove' programYearProxy}} class='done text'>{{t 'general.cancel'}}</button>
                       </div>
                     </div>
                   </td>
