@@ -75,7 +75,7 @@
               </td>
               <td class='text-center'>{{publication-status item=sessionProxy.content showIcon=false}}</td>
               <td class='text-center'>
-                {{#link-to 'session.index' course sessionProxy.content}}
+                {{#link-to 'session.index' course sessionProxy.content class='edit'}}
                   {{fa-icon 'edit'}}
                 {{/link-to}}
                 <span class='clickable remove' {{action 'confirmRemoval' sessionProxy}}>{{fa-icon 'trash'}}</span>
