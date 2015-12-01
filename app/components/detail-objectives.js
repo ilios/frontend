@@ -60,57 +60,51 @@ export default Ember.Component.extend({
       });
     },
     save: function(){
-      var self = this;
       if(this.get('isManagingParents')){
         let objective = this.get('mangeParentsObjective');
-        objective.get('parents').then(function(newParents){
-          let oldParents = self.get('initialStateForManageParentsObjective').filter(function(parent){
+        objective.get('parents').then(newParents => {
+          let oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
             return !newParents.contains(parent);
           });
-          oldParents.forEach(function(parent){
+          oldParents.forEach(parent => {
             parent.get('children').removeObject(objective);
-            parent.save();
           });
-          objective.save().then(function(){
-            newParents.save().then(function(){
-              self.set('mangeParentsObjective', null);
-              scrollTo("#objective-" + objective.get('id'));
-            });
+          objective.save().then(() => {
+            this.set('mangeParentsObjective', null);
+            scrollTo("#objective-" + objective.get('id'));
           });
         });
       }
       if(this.get('isManagingDescriptors')){
         let objective = this.get('manageDescriptorsObjective');
-        objective.get('meshDescriptors').then(function(newDescriptors){
-          let oldDescriptors = self.get('initialStateForManageMeshObjective').filter(function(descriptor){
+        objective.get('meshDescriptors').then(newDescriptors => {
+          let oldDescriptors = this.get('initialStateForManageMeshObjective').filter(descriptor => {
             return !newDescriptors.contains(descriptor);
           });
-          oldDescriptors.forEach(function(descriptor){
+          oldDescriptors.forEach(descriptor => {
             descriptor.get('objectives').removeObject(objective);
           });
-          newDescriptors.forEach(function(descriptor){
+          newDescriptors.forEach(descriptor => {
             descriptor.get('objectives').addObject(objective);
           });
-          objective.save().then(function(){
-              self.set('manageDescriptorsObjective', null);
-              scrollTo("#objective-" + objective.get('id'));
+          objective.save().then(() => {
+            this.set('manageDescriptorsObjective', null);
+            scrollTo("#objective-" + objective.get('id'));
           });
         });
       }
       if(this.get('isManagingCompetency')){
         let objective = this.get('manageCompetencyObjective');
-        objective.get('competency').then(function(newCompetency){
-          let oldCompetency = self.get('initialStateForManageCompetencyObjective');
+        objective.get('competency').then(newCompetency => {
+          let oldCompetency = this.get('initialStateForManageCompetencyObjective');
           if(oldCompetency){
             oldCompetency.get('objectives').removeObject(objective);
-            oldCompetency.save();
           }
           if(newCompetency){
             newCompetency.get('objectives').addObject(objective);
-            newCompetency.save();
           }
-          objective.save().then(function(){
-            self.set('manageCompetencyObjective', null);
+          objective.save().then(() => {
+            this.set('manageCompetencyObjective', null);
             scrollTo("#objective-" + objective.get('id'));
           });
         });
