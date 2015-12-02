@@ -172,17 +172,22 @@ export default Ember.Component.extend({
   },
 
   userCanDelete: computed('offering.session.course', 'offering.allInstructors.[]', 'currentUser.model.directedCourses.[]', function(){
+    const offering = this.get('offering');
+    if(isEmpty(offering)){
+      return false;
+    }
+    
     let defer = RSVP.defer();
     this.get('currentUser.userIsDeveloper').then(isDeveloper => {
       if(isDeveloper){
         defer.resolve(true);
       } else {
         this.get('currentUser.model').then(user => {
-          this.get('offering').get('allInstructors').then(allInstructors => {
+          offering.get('allInstructors').then(allInstructors => {
             if(allInstructors.contains(user)){
               defer.resolve(true);
             } else {
-              this.get('offering').get('session').then(session => {
+              offering.get('session').then(session => {
                 session.get('course').then(course => {
                   user.get('directedCourses').then(directedCourses => {
                     defer.resolve(directedCourses.contains(course));
