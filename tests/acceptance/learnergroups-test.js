@@ -6,7 +6,10 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
+const { isEmpty, isPresent } = Ember;
+
 var application;
+const url = '/learnergroups';
 
 module('Acceptance: Learner Groups' + testgroup, {
   beforeEach: function() {
@@ -293,25 +296,45 @@ test('filters by title', function(assert) {
   });
 });
 
+function getCellData(row, cell) {
+  return find(`.resultslist-list tbody tr:eq(${row}) td:eq(${cell})`).text().trim();
+}
+
 test('add new learnergroup', function(assert) {
-  server.create('user', {id: 4136});
-  server.create('school');
-  assert.expect(1);
-  visit('/learnergroups');
-  andThen(function() {
-    click('.resultslist-actions button');
-    fillIn('.newlearnergroup-title', 'new test tile');
-    click('.newlearnergroup .done');
+  assert.expect(2);
+
+  server.create('user', { id: 4136 });
+  server.create('school', { programs: [1] });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
   });
-  andThen(function(){
-    assert.equal(currentPath(), 'learnerGroups');
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('cohort', {
+    programYear: 1
+  });
+
+  const expandButton = '.expand-button';
+  const input = '.new-learnergroup input';
+  const done = '.new-learnergroup .done';
+
+  visit(url);
+  click(expandButton);
+  fillIn(input, 'A New Test Title');
+  click(done);
+  andThen(() => {
+    assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
+    assert.equal(getCellData(0, 1), 0, 'member count is correct');
   });
 });
 
 test('cancel adding new learnergroup', function(assert) {
-  assert.expect(6);
-  server.create('user', {id: 4136});
+  assert.expect(8);
 
+  server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
   });
@@ -330,19 +353,32 @@ test('cancel adding new learnergroup', function(assert) {
   server.create('learnerGroup', {
     cohort: 1,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.resultslist-actions button').then(function(){
-      assert.equal(find('.newlearnergroup').length, 1);
-      click('.newlearnergroup .cancel');
-    });
+
+  const expandButton = '.expand-button';
+  const collapseButton = '.collapse-button';
+  const cancelButton = '.new-learnergroup .cancel';
+  const component = '.new-learnergroup';
+
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    assert.ok(isPresent(find(collapseButton)), 'collapse button is visible');
+    assert.ok(isPresent(find(component)), '`new-learnergroup` component is visible');
   });
-  andThen(function(){
-    assert.equal(find('.newlearnergroup').length, 0);
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+
+  click(cancelButton);
+  andThen(() => {
+    assert.ok(isPresent(find(expandButton)), 'expand button is visible');
+    assert.ok(isEmpty(find(component)), '`new-learnergroup` component is not visible');
+    assert.equal(getCellData(0, 0), 'learner group 0');
+  });
+
+  click(expandButton);
+  click(collapseButton);
+  andThen(() => {
+    assert.ok(isPresent(find(expandButton)), 'expand button is visible');
+    assert.ok(isEmpty(find(component)), '`new-learnergroup` component is not visible');
+    assert.equal(getCellData(0, 0), 'learner group 0');
   });
 });
 
