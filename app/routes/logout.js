@@ -15,11 +15,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
         session.invalidate();
       }
       if(response.status === 'redirect'){
-        let currentPath = window.location.href;
-        let loginPath = currentPath.replace('logout', 'login');
-        let loginRoute = encodeURIComponent(loginPath);
-        let logoutUrl = response.logoutUrl + '?url=' + loginRoute;
-        window.location.replace(logoutUrl);
+        window.location.replace(response.logoutUrl);
       } else {
         this.get('flashMessages').success('auth.confirmLogout');
         this.transitionTo('login');
