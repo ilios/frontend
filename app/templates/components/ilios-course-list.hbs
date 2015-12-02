@@ -8,7 +8,7 @@
       <th class='text-center' colspan=2>{{t 'courses.startDate'}}</th>
       <th class='text-center' colspan=2>{{t 'courses.endDate'}}</th>
       <th class='text-center' colspan=2>{{t 'general.status'}}</th>
-      <th class='text-center' colspan=2>{{t 'general.actions'}}</th>
+      <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
@@ -28,15 +28,17 @@
         <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment-format course.startDate 'MM/DD/YY'}}</td>
         <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment-format course.endDate 'MM/DD/YY'}}</td>
         <td class='text-center' colspan=2 {{action 'edit' course}}>{{publication-status item=course showIcon=false}}</td>
-        <td class='text-center' colspan=2>
-          {{#action-menu}}
-            <li {{action 'edit' course}}>{{t 'general.edit'}}</li>
-            <li {{action 'confirmRemove' course}}>{{t 'general.remove'}}</li>
-          {{/action-menu}}
+        <td class='text-left' colspan=1>
+          {{#link-to 'course' course.content class='edit'}}
+            {{fa-icon 'edit'}}
+          {{/link-to}}
+          {{#if course.userCanDelete}}
+            <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>
+          {{/if}}
         </td>
       </tr>
       {{#if course.showRemoveConfirmation}}
-        <tr class='confirm-removal'><td colspan=16>
+        <tr class='confirm-removal'><td colspan=15>
           <div class='confirm-message'>
             {{t 'courses.confirmRemove' publishedOfferingcount=course.publishedOfferingCount}} <br />
            <div class="confirm-buttons">
