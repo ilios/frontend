@@ -103,7 +103,9 @@
     {{#if editable}}
       <span class='offering-block-time-offering-actions offering-detail-box'>
         <span class='clickable edit' {{action 'edit'}}>{{fa-icon 'edit'}}</span>
-        <span class='clickable remove' {{action 'confirmRemove'}}>{{fa-icon 'trash'}}</span>
+        {{#if userCanDelete}}
+          <span class='clickable remove' {{action 'confirmRemove'}}>{{fa-icon 'trash'}}</span>
+        {{/if}}
       </span>
     {{/if}}
     {{#if showRemoveConfirmation class='vertical'}}
@@ -111,8 +113,8 @@
         <div class='confirm-message'>
           {{t 'offerings.confirmRemove' learnerGroupCount=offering.learnerGroups.length}} <br />
           <div class="confirm-buttons">
-            <button {{action 'remove' course}} class='remove text'>{{t 'general.yes'}}</button>
-            <button {{action 'cancelRemove' course}} class='cancel text'>{{t 'general.cancel'}}</button>
+            <button {{action 'remove'}} class='remove text'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove'}} class='cancel text'>{{t 'general.cancel'}}</button>
          </div>
         </div>
       </div>
