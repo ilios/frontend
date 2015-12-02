@@ -8,7 +8,13 @@ export default RESTAdapter.extend({
   namespace: config.adapterNamespace,
 
   coalesceFindRequests: true,
-
+  
+  // Ember Data 2.0 Reload behavior
+  shouldReloadRecord: function() { return true; },
+  shouldReloadAll: function() { return true; },
+  shouldBackgroundReloadRecord: function() { return true; },
+  shouldBackgroundReloadAll: function() { return true; },
+  
   findMany(store, type, ids, snapshots) {
     let url = this.urlForFindMany(ids, type.modelName, snapshots);
 
