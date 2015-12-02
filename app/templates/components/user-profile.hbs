@@ -1,131 +1,129 @@
-<div class="user-container">
-  {{global-search}}
+{{global-search}}
 
-  <h1 class="user-display-name">{{model.fullName}}</h1>
-  {{#if model.isStudent.content}}
-    <span class="user-is-student">{{t 'general.student'}}</span>
-  {{/if}}
+<h1 class="user-display-name">{{user.fullName}}</h1>
+{{#if user.isStudent.content}}
+  <span class="user-is-student">{{t 'general.student'}}</span>
+{{/if}}
 
-  <div class="user-profile">
-    <section class="user-permissions">
-      <h4 class="user-permissions-header">User Roles</h4>
+<div class="user-profile">
+  <section class="user-permissions">
+    <h4 class="user-permissions-header">{{t 'user.userRoles'}}</h4>
 
-      <div class="user-permissions-body {{if inProgress 'disable-actions'}}">
-        <div class="user-permissions-row">
-          {{#if isCourseDirector.content}}
-            <input type="checkbox" checked {{action 'removeRole' 'Course Director'}}>
-          {{else}}
-            <input type="checkbox" {{action 'addRole' 'Course Director'}}>
-          {{/if}}
-          <span>Course Director</span>
-        </div>
-        <div class="user-permissions-row">
-          {{#if isInstructor.content}}
-            <input type="checkbox" checked {{action 'removeRole' 'Faculty'}}>
-          {{else}}
-            <input type="checkbox" {{action 'addRole' 'Faculty'}}>
-          {{/if}}
-          <span>Instructor</span>
-        </div>
-        <div class="user-permissions-row">
-          {{#if isDeveloper.content}}
-            <input type="checkbox" checked {{action 'removeRole' 'Developer'}}>
-          {{else}}
-            <input type="checkbox" {{action 'addRole' 'Developer'}}>
-          {{/if}}
-          <span>Developer</span>
-        </div>
-        <div class="user-permissions-row">
-          {{#if isFormerStudent.content}}
-            <input type="checkbox" checked {{action 'removeRole' 'Former Student'}}>
-          {{else}}
-            <input type="checkbox" {{action 'addRole' 'Former Student'}}>
-          {{/if}}
-          <span>Former Student</span>
-        </div>
-
-        <hr>
-
-        <div class="user-permissions-row">
-          {{#if isDisabled}}
-            <input type="checkbox" checked {{action 'enableUser'}}>
-          {{else}}
-            <input type="checkbox" {{action 'disableUser'}}>
-          {{/if}}
-          <span>Disable User</span>
-        </div>
-        <div class="user-permissions-row">
-          {{#if removeFromSync}}
-            <input type="checkbox" checked {{action 'includeToSync'}}>
-          {{else}}
-            <input type="checkbox" {{action 'excludeFromSync'}}>
-          {{/if}}
-          <span>Exclude From Sync</span>
-        </div>
+    <div class="user-permissions-body {{if inProgress 'disable-actions'}}">
+      <div class="user-permissions-row">
+        {{#if isCourseDirector.content}}
+          <input type="checkbox" checked {{action 'removeRole' 'Course Director'}}>
+        {{else}}
+          <input type="checkbox" {{action 'addRole' 'Course Director'}}>
+        {{/if}}
+        <span>{{t 'user.courseDirector'}}</span>
       </div>
-    </section>
-
-    <section class="user-info">
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.campusId'}}:</label>
-        <div class="form-data">{{model.campusId}}</div>
+      <div class="user-permissions-row">
+        {{#if isInstructor.content}}
+          <input type="checkbox" checked {{action 'removeRole' 'Faculty'}}>
+        {{else}}
+          <input type="checkbox" {{action 'addRole' 'Faculty'}}>
+        {{/if}}
+        <span>{{t 'user.instructor'}}</span>
+      </div>
+      <div class="user-permissions-row">
+        {{#if isDeveloper.content}}
+          <input type="checkbox" checked {{action 'removeRole' 'Developer'}}>
+        {{else}}
+          <input type="checkbox" {{action 'addRole' 'Developer'}}>
+        {{/if}}
+        <span>{{t 'user.developer'}}</span>
+      </div>
+      <div class="user-permissions-row">
+        {{#if isFormerStudent.content}}
+          <input type="checkbox" checked {{action 'removeRole' 'Former Student'}}>
+        {{else}}
+          <input type="checkbox" {{action 'addRole' 'Former Student'}}>
+        {{/if}}
+        <span>{{t 'user.formerStudent'}}</span>
       </div>
 
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.email'}}:</label>
-        <div class="form-data">{{model.email}}</div>
-      </div>
+      <hr>
 
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.phone'}}:</label>
-        <div class="form-data">{{model.phone}}</div>
+      <div class="user-permissions-row">
+        {{#if isDisabled}}
+          <input type="checkbox" checked {{action 'enableUser'}}>
+        {{else}}
+          <input type="checkbox" {{action 'disableUser'}}>
+        {{/if}}
+        <span>{{t 'user.disableUser'}}</span>
       </div>
+      <div class="user-permissions-row">
+        {{#if removeFromSync}}
+          <input type="checkbox" checked {{action 'includeToSync'}}>
+        {{else}}
+          <input type="checkbox" {{action 'excludeFromSync'}}>
+        {{/if}}
+        <span>{{t 'user.excludeFromSync'}}</span>
+      </div>
+    </div>
+  </section>
 
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.primarySchool'}}:</label>
-        <div class="form-data">{{model.school.title}}</div>
-      </div>
+  <section class="user-info">
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.campusId'}}:</label>
+      <div class="form-data">{{user.campusId}}</div>
+    </div>
 
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.primaryCohort'}}:</label>
-        <div class="form-data">
-          {{#if model.primaryCohort.title}}
-            {{model.primaryCohort.title}}
-          {{else}}
-            {{t 'general.unassigned'}}
-          {{/if}}
-        </div>
-      </div>
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.email'}}:</label>
+      <div class="form-data">{{user.email}}</div>
+    </div>
 
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
-        <div class="form-data">
-          {{#if secondaryCohorts.content}}
-            <ul class="secondary-cohorts">
-              {{#each secondaryCohorts.content as |cohort|}}
-                <li class="secondary-cohort">{{cohort.title}}</li>
-              {{/each}}
-            </ul>
-          {{else}}
-            {{t 'general.unassigned'}}
-          {{/if}}
-        </div>
-      </div>
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.phone'}}:</label>
+      <div class="form-data">{{user.phone}}</div>
+    </div>
 
-      <div class="user-info-row">
-        <label class="form-label">{{t 'general.learnerGroups'}}:</label>
-        <div class="form-data">
-          {{#if model.learnerGroups}}
-            <ul class="learner-groups">
-              {{#each model.learnerGroups as |group|}}
-                <li class="learner-group">{{group.title}}</li>
-              {{/each}}
-            </ul>
-          {{else}}
-            {{t 'general.noLearnerGroups'}}
-          {{/if}}
-        </div>
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.primarySchool'}}:</label>
+      <div class="form-data">{{user.school.title}}</div>
+    </div>
+
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.primaryCohort'}}:</label>
+      <div class="form-data">
+        {{#if user.primaryCohort.title}}
+          {{user.primaryCohort.title}}
+        {{else}}
+          {{t 'general.unassigned'}}
+        {{/if}}
       </div>
-    </section>
-  </div>
+    </div>
+
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
+      <div class="form-data">
+        {{#if secondaryCohorts.content}}
+          <ul class="secondary-cohorts">
+            {{#each secondaryCohorts.content as |cohort|}}
+              <li class="secondary-cohort">{{cohort.title}}</li>
+            {{/each}}
+          </ul>
+        {{else}}
+          {{t 'general.unassigned'}}
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="user-info-row">
+      <label class="form-label">{{t 'general.learnerGroups'}}:</label>
+      <div class="form-data">
+        {{#if user.learnerGroups}}
+          <ul class="learner-groups">
+            {{#each user.learnerGroups as |group|}}
+              <li class="learner-group">{{group.title}}</li>
+            {{/each}}
+          </ul>
+        {{else}}
+          {{t 'general.noLearnerGroups'}}
+        {{/if}}
+      </div>
+    </div>
+  </section>
 </div>

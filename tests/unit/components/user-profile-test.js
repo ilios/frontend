@@ -16,24 +16,24 @@ test('properties have default values', function(assert) {
 test('`isDisabled` computed property works', function(assert) {
   assert.expect(2);
 
-  const model = Ember.Object.create({ enabled: true });
-  const component = this.subject({ model });
+  const user = Ember.Object.create({ enabled: true });
+  const component = this.subject({ user });
 
   assert.ok(!component.get('isDisabled'), 'isDisabled is false');
 
-  model.set('enabled', false);
+  user.set('enabled', false);
   assert.ok(component.get('isDisabled'), 'isDisabled is true');
 });
 
 test('`removeFromSync` computed property works', function(assert) {
   assert.expect(2);
 
-  const model = Ember.Object.create({ userSyncIgnore: true });
-  const component = this.subject({ model });
+  const user = Ember.Object.create({ userSyncIgnore: true });
+  const component = this.subject({ user });
 
   assert.ok(component.get('removeFromSync'), 'removeFromSync is true');
 
-  model.set('userSyncIgnore', false);
+  user.set('userSyncIgnore', false);
   assert.ok(!component.get('removeFromSync'), 'removeFromSync is false');
 });
 
@@ -42,12 +42,12 @@ test('`removeFromSync` computed property works', function(assert) {
 //   assert.expect(1);
 //
 //   const userRole = Ember.Object.create({ title: 'Course Director' });
-//   const model = Ember.Object.create({
+//   const user = Ember.Object.create({
 //     roles: new Ember.RSVP.Promise((resolve) => {
 //       resolve([ userRole ]);
 //     })
 //   });
-//   const component = this.subject({ model });
+//   const component = this.subject({ user });
 //
 //   Ember.run.next(this, () => {
 //     assert.ok(component.get('isCourseDirector.content'), 'true');

@@ -8,6 +8,8 @@ const { service } = inject;
 export default Component.extend({
   store: service(),
 
+  classNames: ['user-profile'],
+
   roles: computed({
     get() {
       const store = this.get('store');
@@ -17,7 +19,7 @@ export default Component.extend({
 
   secondaryCohorts: computed('user', {
     get() {
-      const user = this.get('model');
+      const user = this.get('user');
 
       const cohorts = user.get('cohorts').then((cohorts) => {
         return user.get('primaryCohort').then((primaryCohort) => {
@@ -29,9 +31,9 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  isCourseDirector: computed('model.roles.[]', {
+  isCourseDirector: computed('user.roles.[]', {
     get() {
-      const roles = this.get('model.roles');
+      const roles = this.get('user.roles');
       const isCourseDirector = roles.then((userRoles) => {
         return !!userRoles.find((userRole) => userRole.get('title') === 'Course Director');
       });
@@ -40,9 +42,9 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  isInstructor: computed('model.roles.[]', {
+  isInstructor: computed('user.roles.[]', {
     get() {
-      const roles = this.get('model.roles');
+      const roles = this.get('user.roles');
       const isInstructor = roles.then((userRoles) => {
         return !!userRoles.find((userRole) => userRole.get('title') === 'Faculty');
       });
@@ -51,9 +53,9 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  isDeveloper: computed('model.roles.[]', {
+  isDeveloper: computed('user.roles.[]', {
     get() {
-      const roles = this.get('model.roles');
+      const roles = this.get('user.roles');
       const isDeveloper = roles.then((userRoles) => {
         return !!userRoles.find((userRole) => userRole.get('title') === 'Developer');
       });
@@ -62,9 +64,9 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  isFormerStudent: computed('model.roles.[]', {
+  isFormerStudent: computed('user.roles.[]', {
     get() {
-      const roles = this.get('model.roles');
+      const roles = this.get('user.roles');
       const isFormerStudent = roles.then((userRoles) => {
         return !!userRoles.find((userRole) => userRole.get('title') === 'Former Student');
       });
@@ -75,16 +77,16 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  isDisabled: computed('model.enabled', {
+  isDisabled: computed('user.enabled', {
     get() {
-      const isDisabled = !this.get('model.enabled');
+      const isDisabled = !this.get('user.enabled');
       return isDisabled ? true : false;
     }
   }).readOnly(),
 
-  removeFromSync: computed('model.userSyncIgnore', {
+  removeFromSync: computed('user.userSyncIgnore', {
     get() {
-      const removeFromSync = this.get('model.userSyncIgnore');
+      const removeFromSync = this.get('user.userSyncIgnore');
       return removeFromSync ? true : false;
     }
   }).readOnly(),
@@ -94,8 +96,7 @@ export default Component.extend({
   actions: {
     addRole(roleToAdd) {
       this.set('inProgress', true);
-      const user = this.get('model');
-      const roles = this.get('roles');
+      const { user, roles } = this.getProperties('user', 'roles');
 
       roles.then((roles) => {
         const userRole = roles.find((role) => role.get('title') === roleToAdd);
@@ -111,7 +112,7 @@ export default Component.extend({
 
     removeRole(roleToRemove) {
       this.set('inProgress', true);
-      const user = this.get('model');
+      const user = this.get('user');
 
       user.get('roles').then((roles) => {
         const userRole = roles.find((role) => role.get('title') === roleToRemove);
@@ -124,7 +125,7 @@ export default Component.extend({
 
     enableUser() {
       this.set('inProgress', true);
-      const user = this.get('model');
+      const user = this.get('user');
       user.set('enabled' , true);
       user.save().then(() => {
         this.set('inProgress', false);
@@ -133,7 +134,7 @@ export default Component.extend({
 
     disableUser() {
       this.set('inProgress', true);
-      const user = this.get('model');
+      const user = this.get('user');
       user.set('enabled' , false);
       user.save().then(() => {
         this.set('inProgress', false);
@@ -142,7 +143,7 @@ export default Component.extend({
 
     includeToSync() {
       this.set('inProgress', true);
-      const user = this.get('model');
+      const user = this.get('user');
       user.set('userSyncIgnore' , false);
       user.save().then(() => {
         this.set('inProgress', false);
@@ -151,7 +152,7 @@ export default Component.extend({
 
     excludeFromSync() {
       this.set('inProgress', true);
-      const user = this.get('model');
+      const user = this.get('user');
       user.set('userSyncIgnore' , true);
       user.save().then(() => {
         this.set('inProgress', false);

@@ -1,6 +1,7 @@
 .global-search {
   float: right;
   margin-top: 2em;
+  z-index: 100;
 
   input {
     display: block;
@@ -21,7 +22,6 @@
     overflow-x: visible;
     overflow-y: auto;
     width: 300px;
-    z-index: 100;
 
     li {
       border-bottom: 1px solid $base-border-color;
