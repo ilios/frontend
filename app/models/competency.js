@@ -6,8 +6,8 @@ const { empty } = computed;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
-  school: DS.belongsTo('school'),
-  objectives: DS.hasMany('objective',  {async: true}),
+  school: DS.belongsTo('school', {async: true}),
+  objectives: DS.hasMany('objective', {async: true}),
   parent: DS.belongsTo('competency', {async: true, inverse: 'children'}),
   children: DS.hasMany('competency', {async: true, inverse: 'parent'}),
   aamcPcrses: DS.hasMany('aamc-pcrs',  {async: true}),
