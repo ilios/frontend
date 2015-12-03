@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const {computed, RSVP} = Ember;
-const {PromiseArray} = DS;
+const { Component, computed, RSVP } = Ember;
+const { PromiseArray } = DS;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['detail-topics'],
   subject: null,
   isManaging: false,
@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   bufferedTopics: [],
   availableTopics: computed('isCourse', 'isSession', 'isProgramYear', 'subject', function(){
     let defer = RSVP.defer();
-    
+
     if(this.get('isCourse')){
       this.get('subject').get('school').then(school => {
         school.get('topics').then(topics => {
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     } else {
       throw new Error("detail-topic component called without isCourse, isSession, or isProgramYear context");
     }
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -67,7 +67,7 @@ export default Ember.Component.extend({
           this.set('isSaving', false);
         });
       });
-      
+
     },
     cancel(){
       this.set('bufferedTopics', []);

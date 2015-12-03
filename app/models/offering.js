@@ -4,6 +4,7 @@ import momentFormat from 'ember-moment/computeds/format';
 
 const { computed, RSVP } = Ember;
 const { PromiseArray } = DS;
+const { not } = computed;
 
 export default DS.Model.extend({
   room: DS.attr('string'),
@@ -31,28 +32,36 @@ export default DS.Model.extend({
   endTime: momentFormat('endDate', 'HHmm'),
   startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
   endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
-  isSingleDay: function(){
+  isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function(){
     return this.get('startYearAndDayOfYear') === this.get('endYearAndDayOfYear');
-  }.property('startYearAndDayOfYear', 'endYearAndDayOfYear'),
-  isMultiDay: Ember.computed.not('isSingleDay'),
-  dateKey: function(){
+  }),
+  isMultiDay: not('isSingleDay'),
+  dateKey: computed('startDayOfYear', 'startYear', function(){
     return this.get('startYear') + this.get('startDayOfYear');
-  }.property('startDayOfYear', 'startYear'),
-  timeKey: function(){
-    let properties = [
-      'startYear',
-      'startDayOfYear',
-      'startTime',
-      'endYear',
-      'endDayOfYear',
-      'endTime'
-    ];
-    let key = '';
-    for(let i = 0; i < properties.length; i++){
-      key += this.get(properties[i]);
+  }),
+  timeKey: computed(
+    'startDayOfYear',
+    'startYear',
+    'startTime',
+    'endDayOfYear',
+    'endYear',
+    'endTime',
+    function(){
+      let properties = [
+        'startYear',
+        'startDayOfYear',
+        'startTime',
+        'endYear',
+        'endDayOfYear',
+        'endTime'
+      ];
+      let key = '';
+      for(let i = 0; i < properties.length; i++){
+        key += this.get(properties[i]);
+      }
+      return key;
     }
-    return key;
-  }.property('startDayOfYear', 'startYear', 'startTime', 'endDayOfYear', 'endYear', 'endTime'),
+  ),
   allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users.[]', function(){
     var defer = Ember.RSVP.defer();
     this.get('instructorGroups').then(instructorGroups => {

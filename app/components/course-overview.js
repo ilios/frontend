@@ -1,14 +1,16 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   store: Ember.inject.service(),
   editable: true,
   course: null,
   directorsSort: ['lastName', 'firstName'],
-  directorsWithFullName: Ember.computed.filterBy('course.directors', 'fullName'),
-  sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
-  levelOptions: function(){
+  directorsWithFullName: computed.filterBy('course.directors', 'fullName'),
+  sortedDirectors: computed.sort('directorsWithFullName', 'directorsSort'),
+  levelOptions: computed(function(){
     var arr = [];
     for(let i=1;i<=5; i++){
       arr.pushObject(Ember.Object.create({
@@ -18,9 +20,9 @@ export default Ember.Component.extend({
     }
 
     return arr;
-  }.property(),
+  }),
   classNames: ['course-overview'],
-  clerkshipTypeOptions: function(){
+  clerkshipTypeOptions: computed(function(){
     var deferred = Ember.RSVP.defer();
     this.get('store').findAll('course-clerkship-type').then(function(clerkshipTypes){
       deferred.resolve(clerkshipTypes.sortBy('title'));
@@ -28,7 +30,7 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property(),
+  }),
 
   externalIdValidations: {
     'validationBuffer': {

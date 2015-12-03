@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
-const { computed, Handlebars } = Ember;
+const { Component, computed, Handlebars } = Ember;
 const { SafeString } = Handlebars;
 const { collect, sum } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   expanded: false,
   classNames: ['big-text'],
   length: 200,

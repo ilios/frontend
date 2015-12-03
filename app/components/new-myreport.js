@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, inject, RSVP, isEmpty, isPresent } = Ember;
+const { Component, computed, inject, RSVP, isEmpty, isPresent } = Ember;
 const { service } = inject;
 const { PromiseArray } = DS;
 
-export default Ember.Component.extend({
+export default Component.extend({
   store: service(),
   i18n: service(),
   currentUser: service(),
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
       {value: 'mesh term', label: this.get('i18n').t('general.meshTerms')},
       {value: 'session type', label: this.get('i18n').t('general.sessionTypes')},
     ];
-    
+
     return list;
   }),
   prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
@@ -45,9 +45,9 @@ export default Ember.Component.extend({
       {value: 'mesh term', label: this.get('i18n').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'topic', 'session type']},
       {value: 'session type', label: this.get('i18n').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
     ];
-    
+
     const subject = this.get('currentSubject');
-    
+
     return list.filter(item =>item.subjects.contains(subject));
   }),
   prepositionalObjectIdList: computed('currentPrepositionalObject', function(){
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
           label: object.get(label)
         };
       }).sortBy('label');
-      
+
       defer.resolve(values);
     });
     return PromiseArray.create({
@@ -81,7 +81,7 @@ export default Ember.Component.extend({
     let currentSubject = this.get('subjectList').find(subject => {
       return subject.value === currentSubjectValue;
     });
-    
+
     return currentSubject.label;
   }),
   selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
@@ -152,7 +152,7 @@ export default Ember.Component.extend({
         return;
       }
       this.get('currentUser.model').then(user => {
-        
+
         let title = this.get('title');
         let subject = this.get('currentSubject');
         let prepositionalObject = this.get('currentPrepositionalObject');
@@ -164,7 +164,7 @@ export default Ember.Component.extend({
           prepositionalObject,
           prepositionalObjectTableRowId
         });
-        
+
         report.save().then(() => {
           this.sendAction('close');
         });

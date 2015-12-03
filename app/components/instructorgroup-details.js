@@ -1,12 +1,15 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { filterBy, sort } = computed;
+
+export default Component.extend({
   instructorGroup: null,
   usersSort: ['lastName', 'firstName'],
-  usersWithFullName: Ember.computed.filterBy('instructorGroup.users', 'fullName'),
-  sortedUsers: Ember.computed.sort('usersWithFullName', 'usersSort'),
+  usersWithFullName: filterBy('instructorGroup.users', 'fullName'),
+  sortedUsers: sort('usersWithFullName', 'usersSort'),
   courseSort: ['title'],
-  sortedCourses: Ember.computed.sort('instructorGroup.courses', 'courseSort'),
+  sortedCourses: sort('instructorGroup.courses', 'courseSort'),
   actions: {
     changeTitle: function(newTitle){
       this.get('instructorGroup').set('title', newTitle);

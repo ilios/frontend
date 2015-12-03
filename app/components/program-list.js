@@ -1,15 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   programs: [],
-  proxiedPrograms: function(){
+  proxiedPrograms: computed('programs.@each', function(){
     return this.get('programs').map(function(program){
       return Ember.ObjectProxy.create({
         content: program,
         showRemoveConfirmation: false
       });
     });
-  }.property('programs.@each'),
+  }),
   actions: {
     edit: function(programProxy){
       this.sendAction('edit', programProxy.get('content'));

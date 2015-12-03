@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { notEmpty, oneWay } = computed;
+
+export default Component.extend({
   store: Ember.inject.service(),
   classNames: ['user-search'],
   results: [],
@@ -14,7 +17,7 @@ export default Ember.Component.extend({
   availableInstructorGroups: [],
   currentlyActiveInstructorGroups: [],
   currentlySearchingForTerm: false,
-  integrateInstructorGroups: Ember.computed.notEmpty('availableInstructorGroups'),
+  integrateInstructorGroups: notEmpty('availableInstructorGroups'),
   actions: {
     search: function(searchTerms){
       if(this.get('currentlySearchingForTerm') === searchTerms){
@@ -37,24 +40,24 @@ export default Ember.Component.extend({
       let userProxy = Ember.ObjectProxy.extend({
         isUser: true,
         currentlyActiveUsers: [],
-        isActive: function(){
+        isActive: computed('content', 'currentlyActiveUsers.@each', function(){
           let user = this.get('content');
           if(!user.get('enabled')){
             return false;
           }
           return !this.get('currentlyActiveUsers').contains(user);
-        }.property('content', 'currentlyActiveUsers.@each'),
-        sortTerm: Ember.computed('content.firstName', 'content.lastName', function(){
+        }),
+        sortTerm: computed('content.firstName', 'content.lastName', function(){
           return this.get('content.lastName')+this.get('content.firstName');
         }),
       });
       let instructorGroupProxy = Ember.ObjectProxy.extend({
         isInstructorGroup: true,
         currentlyActiveInstructorGroups: [],
-        isActive: function(){
+        isActive: computed('content', 'currentlyActiveInstructorGroups.@each', function(){
           return !this.get('currentlyActiveInstructorGroups').contains(this.get('content'));
-        }.property('content', 'currentlyActiveInstructorGroups.@each'),
-        sortTerm: Ember.computed.oneWay('content.title'),
+        }),
+        sortTerm: oneWay('content.title'),
       });
       let query = {
         q: searchTerms

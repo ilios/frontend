@@ -1,11 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   selectedItems: Ember.A(),
   item: null,
-  selected: function(){
+  selected: computed('item', 'selectedItems.@each', function(){
     return this.get('selectedItems').contains(this.item);
-  }.property('item', 'selectedItems.@each'),
+  }),
   click: function() {
     this.sendAction('action', this.get('item'));
   }

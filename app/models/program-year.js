@@ -2,6 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
+const { computed } = Ember;
+
 export default DS.Model.extend(PublishableModel,{
   startYear: DS.attr('string'),
   locked: DS.attr('boolean'),
@@ -13,30 +15,27 @@ export default DS.Model.extend(PublishableModel,{
   topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
-  academicYear: function(){
+  academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
-  }.property('startYear'),
-  classOfYear: function(){
+  }),
+  classOfYear: computed('startYear', 'program.duration', function(){
     return (parseInt(this.get('startYear'))+parseInt(this.get('program.duration')));
-  }.property('startYear', 'program.duration'),
-  requiredPublicationIssues: function(){
+  }),
+  requiredPublicationIssues: computed('startYear', 'cohort', 'program', function(){
     return this.getRequiredPublicationIssues();
-  }.property(
-    'startYear',
-    'cohort',
-    'program'
-  ),
-  optionalPublicationIssues: function(){
-    return this.getOptionalPublicationIssues();
-  }.property(
+  }),
+  optionalPublicationIssues: computed(
     'directors.length',
     'competencies.length',
     'topics.length',
-    'objectives.length'
+    'objectives.length',
+    function(){
+      return this.getOptionalPublicationIssues();
+    }
   ),
   requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
   optionalPublicationLengthFields: ['directors', 'competencies', 'topics', 'objectives'],
-  domains: function(){
+  domains: computed('competencies.@each.domain', function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
@@ -71,5 +70,5 @@ export default DS.Model.extend(PublishableModel,{
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('competencies.@each.domain'),
+  }),
 });

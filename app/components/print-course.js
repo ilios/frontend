@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, RSVP, ObjectProxy } = Ember;
+const { Component, computed, RSVP, ObjectProxy } = Ember;
 const { PromiseArray } = DS;
 
-export default Ember.Component.extend({
+export default Component.extend({
   course: null,
   tagName: 'section',
   classNames: ['printable course'],

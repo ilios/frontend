@@ -3,6 +3,9 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
+const { computed } = Ember;
+const { filterBy, mapBy, notEmpty, sort, sum } = computed;
+
 var Session = DS.Model.extend(PublishableModel, {
   title: DS.attr('string'),
   attireRequired: DS.attr('boolean'),
@@ -18,11 +21,11 @@ var Session = DS.Model.extend(PublishableModel, {
   sessionDescription: DS.belongsTo('session-description', {async: true}),
   learningMaterials: DS.hasMany('session-learning-material', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
-  isIndependentLearning: Ember.computed.notEmpty('ilmSession.content'),
-  offeringLearnerGroupsLength: Ember.computed.mapBy('offerings', 'learnerGroups.length'),
-  learnerGroupCount: Ember.computed.sum('offeringLearnerGroupsLength'),
-  offeringsWithStartDate: Ember.computed.filterBy('offerings', 'startDate'),
-  sortedOfferingsByDate: Ember.computed.sort('offeringsWithStartDate', function(a,b){
+  isIndependentLearning: notEmpty('ilmSession.content'),
+  offeringLearnerGroupsLength: mapBy('offerings', 'learnerGroups.length'),
+  learnerGroupCount: sum('offeringLearnerGroupsLength'),
+  offeringsWithStartDate: filterBy('offerings', 'startDate'),
+  sortedOfferingsByDate: sort('offeringsWithStartDate', function(a,b){
     var aDate = moment(a.get('startDate'));
     var bDate = moment(b.get('startDate'));
     if(aDate === bDate){
@@ -30,7 +33,7 @@ var Session = DS.Model.extend(PublishableModel, {
     }
     return aDate > bDate ? 1 : -1;
   }),
-  firstOfferingDate: function(){
+  firstOfferingDate: computed('sortedOfferingsByDate.@each', 'ilmSession.dueDate', function(){
     var self = this;
     var deferred = Ember.RSVP.defer();
     this.get('ilmSession').then(function(ilmSession){
@@ -47,34 +50,36 @@ var Session = DS.Model.extend(PublishableModel, {
     return DS.PromiseObject.create({
       promise: deferred.promise
     });
-  }.property('sortedOfferingsByDate.@each', 'ilmSession.dueDate'),
-  searchString: function(){
+  }),
+  searchString: computed('title', 'sessionType.title', 'status', function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
-  }.property('title', 'sessionType.title', 'status'),
+  }),
   optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
-  requiredPublicationIssues: function(){
-    if(!this.get('isIndependentLearning')){
-      this.set('requiredPublicationLengthFields', ['offerings']);
-      this.set('requiredPublicationSetFields', ['title']);
-    } else {
-      this.set('requiredPublicationLengthFields', []);
-      this.set('requiredPublicationSetFields', ['title', 'ilmSession.dueDate']);
-    }
-    return this.getRequiredPublicationIssues();
-  }.property(
+  requiredPublicationIssues: computed(
     'title',
     'offerings.length',
     'ilmSession.isPublishable',
-    'isIndependentLearning'
+    'isIndependentLearning',
+    function(){
+      if(!this.get('isIndependentLearning')){
+        this.set('requiredPublicationLengthFields', ['offerings']);
+        this.set('requiredPublicationSetFields', ['title']);
+      } else {
+        this.set('requiredPublicationLengthFields', []);
+        this.set('requiredPublicationSetFields', ['title', 'ilmSession.dueDate']);
+      }
+      return this.getRequiredPublicationIssues();
+    }
   ),
-  optionalPublicationIssues: function(){
-    return this.getOptionalPublicationIssues();
-  }.property(
+  optionalPublicationIssues: computed(
     'topics.length',
     'objectives.length',
-    'meshDescriptors.length'
+    'meshDescriptors.length',
+    function(){
+      return this.getOptionalPublicationIssues();
+    }
   ),
-  associatedLearnerGroups: function(){
+  associatedLearnerGroups: computed('offerings.@each.learnerGroups.@each', function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
       Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
@@ -92,7 +97,7 @@ var Session = DS.Model.extend(PublishableModel, {
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('offerings.@each.learnerGroups.@each'),
+  }),
 });
 
 export default Session;

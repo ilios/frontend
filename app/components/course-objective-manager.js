@@ -1,28 +1,30 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { Component, computed, observer, on } = Ember;
+
 var competencyGroup = Ember.Object.extend({
   title: '',
   originalObjectives: [],
-  uniqueObjectives: Ember.computed.uniq('originalObjectives'),
+  uniqueObjectives: computed.uniq('originalObjectives'),
   objectiveSorting: ['title'],
-  objectives: Ember.computed.sort('uniqueObjectives', 'objectiveSorting'),
-  selectedObjectives: Ember.computed.filterBy('uniqueObjectives', 'selected', true),
-  selected: Ember.computed.gt('selectedObjectives.length', 0),
+  objectives: computed.sort('uniqueObjectives', 'objectiveSorting'),
+  selectedObjectives: computed.filterBy('uniqueObjectives', 'selected', true),
+  selected: computed.gt('selectedObjectives.length', 0),
 });
 
 var objectiveProxy = Ember.ObjectProxy.extend({
   courseObjective: null,
-  selected: function(){
+  selected: computed('content', 'courseObjective.parents.@each', function(){
     return this.get('courseObjective.parents').contains(this.get('content'));
-  }.property('content', 'courseObjective.parents.@each'),
+  }),
 });
 
 var cohortProxy = Ember.Object.extend({
   cohort: null,
   objective: [],
-  id: Ember.computed.oneWay('cohort.id'),
-  title: function(){
+  id: computed.oneWay('cohort.id'),
+  title: computed('cohort.displayTitle', 'cohort.programYear.program.title', function(){
     var program = this.get('cohort.programYear.program.title');
     var cohort = this.get('cohort.displayTitle');
     if(program && cohort) {
@@ -30,8 +32,8 @@ var cohortProxy = Ember.Object.extend({
     }
 
     return '';
-  }.property('cohort.displayTitle', 'cohort.programYear.program.title'),
-  objectivesByCompetency: function(){
+  }),
+  objectivesByCompetency: computed('objectives.[]', function(){
     let deferred = Ember.RSVP.defer();
     let objectives = this.get('objectives');
     let competencies = [];
@@ -58,51 +60,55 @@ var cohortProxy = Ember.Object.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('objectives.[]')
+  })
 });
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   showObjectiveList: false,
   showCohortList: false,
-  cohorts: function(){
-    var courseObjective = this.get('courseObjective');
-    var groups = [];
-    if(!courseObjective){
-      return [];
-    }
-    var deferred = Ember.RSVP.defer();
-    courseObjective.get('courses').then(function(courses){
-      var course = courses.get('firstObject');
-      course.get('cohorts').then(function(cohorts){
-        var promises = cohorts.map(function(cohort){
-          return cohort.get('objectives').then(function(objectives){
-            var objectiveProxies = objectives.map(function(objective){
-              return objectiveProxy.create({
-                content: objective,
-                courseObjective: courseObjective,
+  cohorts: computed(
+    'courseObjective.courses.@each',
+    'courseObjective.courses.@each.cohorts.length',
+    function(){
+      var courseObjective = this.get('courseObjective');
+      var groups = [];
+      if(!courseObjective){
+        return [];
+      }
+      var deferred = Ember.RSVP.defer();
+      courseObjective.get('courses').then(function(courses){
+        var course = courses.get('firstObject');
+        course.get('cohorts').then(function(cohorts){
+          var promises = cohorts.map(function(cohort){
+            return cohort.get('objectives').then(function(objectives){
+              var objectiveProxies = objectives.map(function(objective){
+                return objectiveProxy.create({
+                  content: objective,
+                  courseObjective: courseObjective,
+                });
               });
+              var group = cohortProxy.create({
+                cohort: cohort,
+                objectives: objectiveProxies
+              });
+              groups.pushObject(group);
             });
-            var group = cohortProxy.create({
-              cohort: cohort,
-              objectives: objectiveProxies
-            });
-            groups.pushObject(group);
+          });
+          Ember.RSVP.all(promises).then(function(){
+            deferred.resolve(groups);
           });
         });
-        Ember.RSVP.all(promises).then(function(){
-          deferred.resolve(groups);
-        });
       });
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
-  }.property('courseObjective.courses.@each', 'courseObjective.courses.@each.cohorts.length'),
+      return DS.PromiseArray.create({
+        promise: deferred.promise
+      });
+    }
+  ),
   selectedCohortId: null,
-  multipleCohorts: Ember.computed.gt('availableCohorts.length', 1),
-  availableCohorts: function(){
+  multipleCohorts: computed.gt('availableCohorts.length', 1),
+  availableCohorts: computed('cohorts.@each.id', 'cohorts.@each.title', function(){
     var cohorts = this.get('cohorts');
     if(!cohorts){
       return [];
@@ -113,8 +119,8 @@ export default Ember.Component.extend({
         title: cohort.get('title')
       };
     }).sortBy('title');
-  }.property('cohorts.@each.id', 'cohorts.@each.title'),
-  currentCohort: function(){
+  }),
+  currentCohort: computed('selectedCohortId', 'cohorts.@each', function(){
     var selectedCohortId = this.get('selectedCohortId');
     if(selectedCohortId){
       var matchingGroups = this.get('cohorts').filterBy('id', selectedCohortId);
@@ -125,24 +131,29 @@ export default Ember.Component.extend({
     }
 
     return null;
-  }.property('selectedCohortId', 'cohorts.@each'),
-  watchCohorts: function(){
-    Ember.run.later(this, function(){
-      if(this.get('selectedCohortId') == null){
-        var firstCohort = this.get('availableCohorts.firstObject');
-        if(firstCohort != null){
-          this.set('selectedCohortId', firstCohort.id);
+  }),
+  watchCohorts: on('init', observer(
+    'availableCohorts.@each',
+    'selectedCohortId',
+    'availableCohorts.length',
+    function(){
+      Ember.run.later(this, function(){
+        if(this.get('selectedCohortId') == null){
+          var firstCohort = this.get('availableCohorts.firstObject');
+          if(firstCohort != null){
+            this.set('selectedCohortId', firstCohort.id);
+          }
         }
-      }
-    }, 500);
+      }, 500);
 
-    //debounce this to avoid weird saving behavior and animations
-    Ember.run.debounce(this, function(){
-      if(!this.get('isDestroyed')){
-        this.set('showCohortList', this.get('availableCohorts.length') > 0);
-      }
-    }, 500);
-  }.observes('availableCohorts.@each', 'selectedCohortId', 'availableCohorts.length').on('init'),
+      //debounce this to avoid weird saving behavior and animations
+      Ember.run.debounce(this, function(){
+        if(!this.get('isDestroyed')){
+          this.set('showCohortList', this.get('availableCohorts.length') > 0);
+        }
+      }, 500);
+    }
+  )),
   actions: {
     addParent: function(parentProxy){
       var courseObjective = this.get('courseObjective');

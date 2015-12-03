@@ -2,15 +2,18 @@ import moment from 'moment';
 import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 
-export default Ember.Component.extend(Publishable, {
+const { Component, computed } = Ember;
+const { oneWay, sort } = computed;
+
+export default Component.extend(Publishable, {
   session: null,
-  publishTarget: Ember.computed.oneWay('session'),
+  publishTarget: oneWay('session'),
   publishEventCollectionName: 'sessions',
   editable: true,
   classNames: ['session-overview'],
   sortTypes: ['title'],
   sessionTypes: [],
-  sortedSessionTypes: Ember.computed.sort('sessionTypes', 'sortTypes'),
+  sortedSessionTypes: sort('sessionTypes', 'sortTypes'),
   showCheckLink: true,
 
   titleValidations: {

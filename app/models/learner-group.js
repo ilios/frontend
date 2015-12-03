@@ -1,6 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
+const { computed } = Ember;
+const { empty, mapBy, sum } = computed;
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   location: DS.attr('string'),
@@ -20,7 +23,7 @@ export default DS.Model.extend({
       inverse: 'instructedLearnerGroups'
     }
   ),
-  courses: Ember.computed('offerings.[]', 'ilmSessions.[]', function(){
+  courses: computed('offerings.[]', 'ilmSessions.[]', function(){
     var defer = Ember.RSVP.defer();
     let promises = [];
     let allCourses = [];
@@ -72,15 +75,15 @@ export default DS.Model.extend({
       promise: defer.promise
     });
   }),
-  childUsers: Ember.computed.mapBy('children', 'users'),
-  childUserLengths: Ember.computed.mapBy('childUsers', 'length'),
-  childUsersTotal: Ember.computed.sum('childUserLengths'),
-  childrenUsersCounts: Ember.computed.mapBy('children', 'childUsersTotal'),
-  childrenUsersTotal: Ember.computed.sum('childrenUsersCounts'),
-  usersCount: function(){
+  childUsers: mapBy('children', 'users'),
+  childUserLengths: mapBy('childUsers', 'length'),
+  childUsersTotal: sum('childUserLengths'),
+  childrenUsersCounts: mapBy('children', 'childUsersTotal'),
+  childrenUsersTotal: sum('childrenUsersCounts'),
+  usersCount: computed('users.length', 'childUsersTotal', 'childrenUsersTotal', function(){
     return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
-  }.property('users.length', 'childUsersTotal', 'childrenUsersTotal'),
-  availableUsers: function(){
+  }),
+  availableUsers: computed('users', 'parent.users.@each', 'parent.childUsers.@each', function(){
     var group = this;
     return new Ember.RSVP.Promise(function(resolve) {
       group.get('parent').then(function(parent){
@@ -105,8 +108,8 @@ export default DS.Model.extend({
         }
       });
     });
-  }.property('users', 'parent.users.@each', 'parent.childUsers.@each'),
-  allDescendantUsers: function(){
+  }),
+  allDescendantUsers: computed('users.@each', 'children.@each.users.@each', function(){
     var deferred = Ember.RSVP.defer();
     this.get('users').then(users => {
       this.get('children').then(children => {
@@ -121,8 +124,8 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('users.@each', 'children.@each.users.@each'),
-  usersOnlyAtThisLevel: function(){
+  }),
+  usersOnlyAtThisLevel: computed('users.@each', 'allDescendants.@each', function(){
     var deferred = Ember.RSVP.defer();
     this.get('users').then(users => {
       this.get('allDescendants').then(descendants => {
@@ -147,7 +150,7 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('users.@each', 'allDescendants.@each'),
+  }),
   destroyChildren: function(){
     var group = this;
     return new Ember.RSVP.Promise(function(resolve) {
@@ -162,15 +165,15 @@ export default DS.Model.extend({
       });
     });
   },
-  allParentsTitle: function(){
+  allParentsTitle: computed('allParentTitles', function(){
     let title = '';
     this.get('allParentTitles').forEach(str => {
       title += str + ' > ';
     });
 
     return title;
-  }.property('allParentTitles'),
-  allParentTitles: function(){
+  }),
+  allParentTitles: computed('parent.{title,allParentTitles}', function(){
     let titles = [];
     if(this.get('parent.content')){
       if(this.get('parent.allParentTitles')){
@@ -180,12 +183,12 @@ export default DS.Model.extend({
     }
 
     return titles;
-  }.property('parent.{title,allParentTitles}'),
-  sortTitle: function(){
+  }),
+  sortTitle: computed('title', 'allParentsTitle', function(){
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
-  }.property('title', 'allParentsTitle'),
-  allDescendants: function(){
+  }),
+  allDescendants: computed('children.@each.allDescendants.@each', function(){
     var deferred = Ember.RSVP.defer();
     this.get('children').then(function(learnerGroups){
       var groups = [];
@@ -209,8 +212,8 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('children.@each.allDescendants.@each'),
-  allParents: function(){
+  }),
+  allParents: computed('parent', 'parent.allParents.@each', function(){
     var deferred = Ember.RSVP.defer();
     this.get('parent').then(parent => {
       var parents = [];
@@ -228,8 +231,8 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('parent', 'parent.allParents.@each'),
-  topLevelGroup: function(){
+  }),
+  topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
     let promise = new Ember.RSVP.Promise(
       resolve => {
         this.get('parent').then(
@@ -250,8 +253,8 @@ export default DS.Model.extend({
     return DS.PromiseObject.create({
       promise: promise
     });
-  }.property('parent', 'parent.topLevelGroup'),
-  isTopLevelGroup: Ember.computed.empty('parent.content'),
+  }),
+  isTopLevelGroup: empty('parent.content'),
   removeUserFromGroupAndAllDescendants(user){
     let groups = [this];
     return new Ember.RSVP.Promise(resolve => {

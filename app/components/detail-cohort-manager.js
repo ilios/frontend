@@ -3,12 +3,12 @@ import DS from 'ember-data';
 
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, inject, RSVP} = Ember;
-const {service} = inject;
-const {PromiseArray} = DS;
-const {sort} = computed;
+const { Component, computed, inject, RSVP} = Ember;
+const { service } = inject;
+const { PromiseArray } = DS;
+const { sort } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   i18n: service(),
   currentUser: service(),
   tagName: 'section',
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
           });
         });
       });
-      
+
       return PromiseArray.create({
         promise: defer.promise
       });
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
   availableCohorts: computed('useableCohorts.[]', 'selectedCohorts.[]', {
     get(){
       let defer = RSVP.defer();
-      
+
       this.get('useableCohorts').then(useableCohorts => {
         let availableCohorts = useableCohorts.filter(cohort => {
           return (
@@ -64,7 +64,7 @@ export default Ember.Component.extend({
         });
         defer.resolve(availableCohorts);
       });
-      
+
       return PromiseArray.create({
         promise: defer.promise
       });

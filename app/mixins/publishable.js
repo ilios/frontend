@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const { RSVP, inject, computed } = Ember;
 const { service } = inject;
+const { not, oneWay, or } = computed;
 
 export default Ember.Mixin.create({
   publishTarget: null,
@@ -10,8 +11,8 @@ export default Ember.Mixin.create({
   flashMessages: service(),
   store: service(),
   showCheckLink: true,
-  menuTitle: computed.oneWay('publishTarget.status'),
-  menuIcon: function(){
+  menuTitle: oneWay('publishTarget.status'),
+  menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
     if(this.get('publishTarget.publishedAsTbd')){
       return 'clock-o';
     }
@@ -19,26 +20,36 @@ export default Ember.Mixin.create({
       return 'star';
     }
     return 'cloud';
-  }.property('publishTarget.isPublished', 'publishTarget.publishedAsTbd'),
-  showTbd: computed.not('publishTarget.isScheduled'),
-  showAsIs: function(){
-    return (
-      (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
-      this.get('publishTarget.requiredPublicationIssues.length') === 0 &&
-      this.get('publishTarget.allPublicationIssuesLength') !== 0
-    );
-  }.property('publishTarget.isPublished','publishTarget.isScheduled', 'publishTarget.requiredPublicationIssues.length', 'publishTarget.allPublicationIssuesLength'),
-  showReview: function(){
+  }),
+  showTbd: not('publishTarget.isScheduled'),
+  showAsIs: computed(
+    'publishTarget.isPublished',
+    'publishTarget.isScheduled',
+    'publishTarget.requiredPublicationIssues.length',
+    'publishTarget.allPublicationIssuesLength',
+    function(){
+      return (
+        (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
+        this.get('publishTarget.requiredPublicationIssues.length') === 0 &&
+        this.get('publishTarget.allPublicationIssuesLength') !== 0
+      );
+    }
+  ),
+  showReview: computed('publishTarget.allPublicationIssuesLength', 'showCheckLink', function(){
     return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.get('showCheckLink');
-  }.property('publishTarget.allPublicationIssuesLength', 'showCheckLink'),
-  showPublish: function(){
-    return (
-      (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
-      this.get('publishTarget.allPublicationIssuesLength') === 0
-    );
-  }.property('publishTarget.isPublished', 'publishTarget.allPublicationIssuesLength'),
-  showUnPublish: computed.or('publishTarget.isPublished', 'publishTarget.isScheduled'),
-  publicationStatus: function(){
+  }),
+  showPublish: computed(
+    'publishTarget.isPublished',
+    'publishTarget.allPublicationIssuesLength',
+    function(){
+      return (
+        (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
+        this.get('publishTarget.allPublicationIssuesLength') === 0
+      );
+    }
+  ),
+  showUnPublish: or('publishTarget.isPublished', 'publishTarget.isScheduled'),
+  publicationStatus: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
     if(this.get('publishTarget.isScheduled')){
       return 'scheduled';
     } else if (this.get('publishTarget.isPublished')){
@@ -46,7 +57,7 @@ export default Ember.Mixin.create({
     }
 
     return 'notpublished';
-  }.property('publishTarget.isPublished', 'publishTarget.isScheduled'),
+  }),
   actions: {
     unpublish: function(){
       let publishTarget = this.get('publishTarget');
@@ -78,7 +89,7 @@ export default Ember.Mixin.create({
           return publishTarget.save();
         }
       }));
-      
+
       RSVP.all(promises).then(()=>{
         this.get('flashMessages').success('publish.message.scheduled');
       });
@@ -100,7 +111,7 @@ export default Ember.Mixin.create({
           return publishTarget.save();
         }
       }));
-      
+
       RSVP.all(promises).then(()=>{
         this.get('flashMessages').success('publish.message.publish');
       });

@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { computed, Controller } = Ember;
+const { alias } = computed;
+
+export default Controller.extend({
   needs: ["program", "programYear"],
-  program: Ember.computed.alias("controllers.program.model"),
-  programYear: Ember.computed.alias("controllers.programYear.model"),
+  program: alias("controllers.program.model"),
+  programYear: alias("controllers.programYear.model"),
 });

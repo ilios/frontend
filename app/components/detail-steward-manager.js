@@ -1,30 +1,33 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { filter, mapBy } = computed;
+
+export default Component.extend({
   store: Ember.inject.service(),
   stewards: [],
   tagName: 'section',
   classNames: ['detail-block'],
-  stewardedDepartmentlessSchools: Ember.computed.filter('stewards', function(steward){
+  stewardedDepartmentlessSchools: filter('stewards', function(steward){
     return !steward.get('department.content');
   }),
-  stewardedSchools: Ember.computed.mapBy('stewardedDepartmentlessSchools', 'school'),
-  selectedSchools: Ember.computed.mapBy('stewardedSchools', 'content'),
-  stewardedDepartments: Ember.computed.mapBy('stewards', 'department'),
-  selectedDepartments: Ember.computed.mapBy('stewardedDepartments', 'content'),
-  schools: Ember.computed(function(){
+  stewardedSchools: mapBy('stewardedDepartmentlessSchools', 'school'),
+  selectedSchools: mapBy('stewardedSchools', 'content'),
+  stewardedDepartments: mapBy('stewards', 'department'),
+  selectedDepartments: mapBy('stewardedDepartments', 'content'),
+  schools: computed(function(){
     return DS.PromiseArray.create({
       promise: this.get('store').findAll('school')
     });
   }),
-  availableSchools: Ember.computed('stewardedSchools.@each', 'stewardedDepartments.@each', 'schools.@each', function(){
+  availableSchools: computed('stewardedSchools.@each', 'stewardedDepartments.@each', 'schools.@each', function(){
     let defer = Ember.RSVP.defer();
     let schoolProxy = Ember.ObjectProxy.extend({
       departments: [],
       selectedSchools: [],
       //display those with departments or those who are not already solo-assigned
-      display: Ember.computed('content', 'departments.length', function(){
+      display: computed('content', 'departments.length', function(){
         return this.get('departments').length > 0 ||
                !this.get('selectedSchools').contains(this.get('content'));
       }),
@@ -55,13 +58,13 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  stewardSchools: Ember.computed('selectedSchools.@each', 'selectedDepartments.@each', 'schools.@each', function(){
+  stewardSchools: computed('selectedSchools.@each', 'selectedDepartments.@each', 'schools.@each', function(){
     let defer = Ember.RSVP.defer();
     let schoolProxy = Ember.ObjectProxy.extend({
       departments: [],
       selectedSchools: [],
       //display those with departments or those who are not already solo-assigned
-      display: Ember.computed('content', 'departments.length', function(){
+      display: computed('content', 'departments.length', function(){
         return this.get('departments').length > 0 ||
                this.get('selectedSchools').contains(this.get('content'));
       })

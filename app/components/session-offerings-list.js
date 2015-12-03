@@ -3,40 +3,46 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { oneWay, sort } = computed;
+
+export default Component.extend({
   store: Ember.inject.service(),
   session: null,
-  offerings: Ember.computed.oneWay('session.offerings'),
+  offerings: oneWay('session.offerings'),
   editable: true,
-  offeringBlocks: function(){
-    var offerings = this.get('offerings');
-    if(offerings == null){
-      return Ember.A();
-    }
-    var deferred = Ember.RSVP.defer();
-    offerings.then(function(offerings){
-      let dateBlocks = {};
-      offerings.forEach(function(offering){
-        let key = offering.get('dateKey');
-        if(!(key in dateBlocks)){
-          dateBlocks[key] = OfferingDateBlock.create({
-            dateKey: key
-          });
-        }
-        dateBlocks[key].addOffering(offering);
-
-      });
-      //convert indexed object to array
-      let dateBlockArray = [];
-      for(let key in dateBlocks){
-        dateBlockArray.pushObject(dateBlocks[key]);
+  offeringBlocks: computed(
+    'offerings.@each.{startDate,endDate,room,instructorGroups.@each}',
+    function(){
+      var offerings = this.get('offerings');
+      if(offerings == null){
+        return Ember.A();
       }
-      deferred.resolve(dateBlockArray.sortBy('dateStamp'));
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
-  }.property('offerings.@each.{startDate,endDate,room,instructorGroups.@each}'),
+      var deferred = Ember.RSVP.defer();
+      offerings.then(function(offerings){
+        let dateBlocks = {};
+        offerings.forEach(function(offering){
+          let key = offering.get('dateKey');
+          if(!(key in dateBlocks)){
+            dateBlocks[key] = OfferingDateBlock.create({
+              dateKey: key
+            });
+          }
+          dateBlocks[key].addOffering(offering);
+
+        });
+        //convert indexed object to array
+        let dateBlockArray = [];
+        for(let key in dateBlocks){
+          dateBlockArray.pushObject(dateBlocks[key]);
+        }
+        deferred.resolve(dateBlockArray.sortBy('dateStamp'));
+      });
+      return DS.PromiseArray.create({
+        promise: deferred.promise
+      });
+    }
+  ),
   actions: {
     removeOffering: function(offering){
       let session = this.get('session');
@@ -66,16 +72,16 @@ var OfferingBlock = Ember.Object.extend({
 var OfferingDateBlock = OfferingBlock.extend({
   dateKey: null,
   //convert our day of the year key into a date at midnight
-  date: function(){
+  date: computed('dateKey', function(){
     var year = this.get('dateKey').substring(0,4);
     var dayOfYear = this.get('dateKey').substring(4);
     var date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
-  }.property('dateKey'),
+  }),
   dateStamp: momentFormat('date', 'X'),
   dayOfWeek: momentFormat('date', 'dddd'),
   dayOfMonth: momentFormat('date', 'MMMM Do'),
-  offeringTimeBlocks: function(){
+  offeringTimeBlocks: computed('offerings.@each.{startDate,endDate}', function(){
     let offeringGroups = {};
     this.get('offerings').forEach(function(offering){
       let key = offering.get('timeKey');
@@ -93,27 +99,27 @@ var OfferingDateBlock = OfferingBlock.extend({
     }
 
     return offeringGroupArray.sortBy('timeKey');
-  }.property('offerings.@each.{startDate,endDate}')
+  })
 });
 
 var OfferingTimeBlock = OfferingBlock.extend({
   timeKey: null,
-  isMultiDay: function(){
+  isMultiDay: computed('startDate', 'endDate', function(){
     return this.get('startDate').format('DDDDYYYY') !== this.get('endDate').format('DDDDYYYY');
-  }.property('startDate', 'endDate'),
+  }),
   //pull our times out of the key
-  startDate: function(){
+  startDate: computed('timeKey', function(){
     let key = this.get('timeKey').substring(0,11);
     return moment(key, 'YYYYDDDHHmm');
-  }.property('timeKey'),
-  endDate: function(){
+  }),
+  endDate: computed('timeKey', function(){
     let key = this.get('timeKey').substring(11);
     return moment(key, 'YYYYDDDHHmm');
-  }.property('timeKey'),
+  }),
   startTime: momentFormat('startDate', 'LT'),
   endTime: momentFormat('endDate', 'LT'),
   longStartText: momentFormat('startDate', 'dddd MMMM Do [@] LT'),
   longEndText: momentFormat('endDate', 'dddd MMMM Do [@] LT'),
   sortOfferingsBy: ['learnerGroups.firstObject.title'],
-  sortedOfferings: Ember.computed.sort('offerings', 'sortOfferingsBy'),
+  sortedOfferings: sort('offerings', 'sortOfferingsBy'),
 });

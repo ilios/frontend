@@ -2,6 +2,8 @@ import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { computed, observer } = Ember;
+
 export default DS.Model.extend({
   i18n: Ember.inject.service(),
   title: DS.attr('string'),
@@ -10,7 +12,7 @@ export default DS.Model.extend({
   learnerGroups: DS.hasMany('learner-group', {async: true}),
   users: DS.hasMany('user', {async: true}),
   displayTitle: '',
-  competencies: function(){
+  competencies: computed('programYear.competencies.@each', function(){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve) {
       self.get('programYear').then(function(programYear){
@@ -21,8 +23,8 @@ export default DS.Model.extend({
         }
       });
     });
-  }.property('programYear.competencies.@each'),
-  objectives: function(){
+  }),
+  objectives: computed('programYear.objectives.@each', function(){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve) {
       self.get('programYear').then(function(programYear){
@@ -33,8 +35,8 @@ export default DS.Model.extend({
         }
       });
     });
-  }.property('programYear.objectives.@each'),
-  topLevelLearnerGroups: function(){
+  }),
+  topLevelLearnerGroups: computed('learnerGroups.@each', function(){
     let defer = Ember.RSVP.defer();
     this.get('learnerGroups').then(groups => {
       let topLevelGroups = Ember.A();
@@ -52,8 +54,8 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('learnerGroups.@each'),
-  displayTitleObserver: function(){
+  }),
+  displayTitleObserver: observer('title', 'programYear.classOfYear', function(){
     var self = this;
     if(this.get('title.length') > 0){
       this.set('displayTitle', this.get('title'));
@@ -65,12 +67,12 @@ export default DS.Model.extend({
         self.set('displayTitle', title);
       });
     }
-  }.observes('title', 'programYear.classOfYear'),
-  currentLevel: function(){
+  }),
+  currentLevel: computed('programYear.startYear', function(){
     var startYear = this.get('programYear.startYear');
     if(startYear){
       return Math.abs(moment().year(startYear).diff(moment(), 'years'));
     }
     return '';
-  }.property('programYear.startYear')
+  })
 });

@@ -1,10 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { alias, sort } = computed;
+
+export default Component.extend({
   programYear: null,
   classNames: ['programyear-objective-list'],
-  objectives: Ember.computed.alias('programYear.objectives'),
-  sortedObjectives: Ember.computed.sort('objectives', function(a, b){
+  objectives: alias('programYear.objectives'),
+  sortedObjectives: sort('objectives', function(a, b){
     return parseInt(a.get( 'id' )) - parseInt(b.get( 'id' ));
   }),
   actions: {

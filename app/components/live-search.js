@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import LiveSearchItem from 'ilios/mixins/live-search-item';
 
-export default Ember.Component.extend({
+const { Component, computed, observer } = Ember;
+
+export default Component.extend({
   keyDown: function(event) {
     if (event.which === 27) {
       this.send('clear');  // ESC key
@@ -15,10 +17,10 @@ export default Ember.Component.extend({
   showMoreInputPrompt: false,
   searchReturned: false,
   searching: false,
-  sortedSearchResults: function(){
+  sortedSearchResults: computed('results.@each', function(){
     return this.get('results').sortBy('sortTerm');
-  }.property('results.@each'),
-  searchResults: function(key, values){
+  }),
+  searchResults: computed(function(key, values){
     if (arguments.length > 1) {
       values.forEach(function(obj){
         if(!LiveSearchItem.detect(obj)){
@@ -28,10 +30,10 @@ export default Ember.Component.extend({
       this.set('results', values);
     }
     return this.get('results');
-  }.property(),
-  watchSeatchTerms: function(){
+  }),
+  watchSeatchTerms: observer('searchTerms', function(){
     this.send('search');
-  }.observes('searchTerms'),
+  }),
   actions: {
     add: function(obj) {
       this.sendAction('add', obj);

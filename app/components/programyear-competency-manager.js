@@ -1,20 +1,22 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   filter: '',
   availableCompetencies: [],
   selectedCompetencies: [],
   tagName: 'section',
   classNames: ['detail-block'],
-  filteredCompetencies: function(){
+  filteredCompetencies: computed('availableCompetencies.@each', 'selectedCompetencies.@each', function(){
     return this.get('availableCompetencies').filter(
       competency => {
         return !this.get('selectedCompetencies').contains(competency);
       }
     );
-  }.property('availableCompetencies.@each', 'selectedCompetencies.@each'),
-  filteredDomains: function(){
+  }),
+  filteredDomains: computed('filteredCompetencies.@each.domain', function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
@@ -51,8 +53,8 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('filteredCompetencies.@each.domain'),
-  selectedDomains: function(){
+  }),
+  selectedDomains: computed('selectedCompetencies.@each.domain', function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
@@ -87,7 +89,7 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('selectedCompetencies.@each.domain'),
+  }),
   actions: {
     removeCompetency: function(competency){
       this.sendAction('remove', competency);

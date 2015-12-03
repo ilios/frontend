@@ -1,13 +1,15 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   currentUser: Ember.inject.service(),
   classNames: ['detail-instructors'],
   ilmSession: null,
   isManaging: false,
   instructorGroupBuffer: [],
   instructorBuffer: [],
-  titleCount: Ember.computed('ilmSession.instructorGroups.length', 'ilmSession.instructors.length', function(){
+  titleCount: computed('ilmSession.instructorGroups.length', 'ilmSession.instructors.length', function(){
     return this.get('ilmSession.instructorGroups.length') +
            this.get('ilmSession.instructors.length');
   }),

@@ -1,17 +1,20 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { sort } = computed;
+
+export default Component.extend({
   i18n: Ember.inject.service(),
   instructors: [],
   availableInstructorGroups: [],
   sortInstructorsBy: ['title'],
   classNames: ['detail-block'],
   tagName: 'section',
-  sortedInstructors: Ember.computed.sort('instructors', 'sortInstructorsBy'),
+  sortedInstructors: sort('instructors', 'sortInstructorsBy'),
   instructorGroups: [],
   sortGroupsBy: ['title'],
-  sortedInstructorGroups: Ember.computed.sort('instructorGroups', 'sortGroupsBy'),
+  sortedInstructorGroups: sort('instructorGroups', 'sortGroupsBy'),
   userSearchPlaceholder: t('general.findInstructorOrGroup'),
   actions: {
     addInstructor(user){

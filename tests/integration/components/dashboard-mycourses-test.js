@@ -4,6 +4,8 @@ import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
+const { computed } = Ember;
+
 let mockCourses = [
   Ember.Object.create({title: 'first', level: 4, academicYear: '2012-2013', locked: false, archived: false}),
   Ember.Object.create({title: 'second', level: 1, academicYear: '2013-2014', locked: false, archived: false}),
@@ -13,21 +15,21 @@ let mockCourses = [
 ];
 
 let currentUserMock = Ember.Service.extend({
-  relatedCourses: Ember.computed(function() {
+  relatedCourses: computed(function() {
     return Ember.RSVP.resolve(mockCourses);
   }),
   canEditCourses: true
 });
 
 let currentUserMockNoCourses = Ember.Service.extend({
-  relatedCourses: Ember.computed(function() {
+  relatedCourses: computed(function() {
     return Ember.RSVP.resolve([]);
   }),
   canEditCourses: true
 });
 
 let currentUserMockUnprivileged = Ember.Service.extend({
-  relatedCourses: Ember.computed(function() {
+  relatedCourses: computed(function() {
     return Ember.RSVP.resolve(mockCourses);
   }),
   canEditCourses: false
@@ -57,7 +59,7 @@ test('list courses for privileged users', function(assert) {
 
     assert.equal(this.$(`table tr`).length, 3);
   });
-  
+
 });
 
 
@@ -66,7 +68,7 @@ test('list courses for un-privileged users', function(assert) {
   this.register('service:currentUser', currentUserMockUnprivileged);
   this.render(hbs`{{dashboard-mycourses}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
-  
+
   Ember.run.later(()=> {
     for(let i = 0; i < 3; i++){
       let a = this.$(`table a:eq(${i})`);
@@ -78,7 +80,7 @@ test('list courses for un-privileged users', function(assert) {
 
     assert.equal(this.$(`table tr`).length, 3);
   });
-  
+
 });
 
 test('display none when no courses', function(assert) {
@@ -86,7 +88,7 @@ test('display none when no courses', function(assert) {
   this.register('service:currentUser', currentUserMockNoCourses);
   this.render(hbs`{{dashboard-mycourses}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
-  
+
   assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
-  
+
 });

@@ -1,14 +1,16 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, observer } = Ember;
+
+export default Component.extend({
   classNames: ['search-box'],
   value: null,
   liveSearch: true,
-  watchValue: function(){
+  watchValue: observer('value', 'liveSearch', function(){
     if(this.get('liveSearch')){
       this.send('search');
     }
-  }.observes('value', 'liveSearch'),
+  }),
   actions: {
     clear: function() {
       this.set('value', '');

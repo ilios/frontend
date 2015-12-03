@@ -3,11 +3,11 @@ import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 import moment from 'moment';
 
-const { computed, RSVP, isEmpty, isPresent } = Ember;
+const { computed, Controller, RSVP, isEmpty, isPresent, observer } = Ember;
 const { gt, sort } = computed;
 const { PromiseArray } = DS;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   i18n: Ember.inject.service(),
   currentUser: Ember.inject.service(),
   queryParams: {
@@ -68,9 +68,9 @@ export default Ember.Controller.extend({
   }),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
-  watchFilter: function(){
+  watchFilter: observer('titleFilter', function(){
     Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('titleFilter'),
+  }),
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },
@@ -152,7 +152,7 @@ export default Ember.Controller.extend({
     if(isEmpty(defaultYear)){
       defaultYear = years.get('lastObject');
     }
-    
+
     return defaultYear;
   }),
   actions: {

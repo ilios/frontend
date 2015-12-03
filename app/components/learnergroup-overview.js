@@ -1,20 +1,21 @@
 import Ember from 'ember';
 
-const { observer, run } = Ember;
+const { Component, computed, observer, run } = Ember;
+const { filterBy, mapBy, sort } = computed;
 const { once } = run;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['learnergroup-overview'],
   learnerGroup: null,
   instructorsSort: ['lastName', 'firstName'],
-  instructorsWithFullName: Ember.computed.filterBy('learnerGroup.instructors', 'fullName'),
-  sortedInstructors: Ember.computed.sort('instructorsWithFullName', 'instructorsSort'),
+  instructorsWithFullName: filterBy('learnerGroup.instructors', 'fullName'),
+  sortedInstructors: sort('instructorsWithFullName', 'instructorsSort'),
   courseSort: ['title'],
-  sortedCourses: Ember.computed.sort('learnerGroup.courses', 'courseSort'),
-  associatedCoursesTitles: Ember.computed.mapBy('sortedCourses', 'title'),
-  associatedCoursesString: function(){
+  sortedCourses: sort('learnerGroup.courses', 'courseSort'),
+  associatedCoursesTitles: mapBy('sortedCourses', 'title'),
+  associatedCoursesString: computed('associatedCoursesTitles.@each', function(){
     return this.get('associatedCoursesTitles').join(', ');
-  }.property('associatedCoursesTitles.@each'),
+  }),
 
   multiEditModeOn: false,
   includeAll: false,

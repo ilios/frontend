@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const { Component, computed, inject, ObjectProxy } = Ember;
 const { service } = inject;
-const { oneWay } = computed;
+const { oneWay, sort } = computed;
 
 export default Component.extend({
   store: service(),
@@ -14,7 +14,7 @@ export default Component.extend({
   learnerGroups: oneWay('parentGroup.children'),
 
   sortBy: ['title'],
-  sortedLearnerGroups: Ember.computed.sort('learnerGroups', 'sortBy'),
+  sortedLearnerGroups: sort('learnerGroups', 'sortBy'),
 
   proxiedLearnerGroups: computed('sortedLearnerGroups.[]', {
     get() {

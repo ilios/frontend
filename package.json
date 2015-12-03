@@ -69,6 +69,7 @@
     "ember-rl-dropdown": "0.7.0",
     "ember-tooltips": "0.4.0",
     "ember-validations": "2.0.0-alpha.4",
+    "ember-watson": "^0.7.0",
     "emberx-select": "2.0.2",
     "ilios-calendar": "ilios/calendar#v2.3.0",
     "liquid-fire": "0.21.3",
