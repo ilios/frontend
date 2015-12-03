@@ -1,0 +1,81 @@
+.user-profile {
+  min-height: 500px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+
+  .user-display-name {
+    margin: 1.5em 0 0;
+    text-align: center;
+  }
+
+  .user-is-student {
+    color: $ilios-green;
+    text-align: center;
+  }
+
+  .global-search {
+    position: absolute;
+    right: 0;
+  }
+
+  .user-profile {
+    margin-top: 2em;
+
+    .user-permissions {
+      background: $header-grey;
+      border-radius: 1em;
+      display: inline-block;
+      min-height: 300px;
+      padding: 1em;
+      text-align: center;
+      vertical-align: top;
+      width: 250px;
+
+      .user-permissions-header {
+        font-size: 1.5em;
+        margin: 0 0 1em;
+        text-align: center;
+      }
+
+      .user-permissions-body {
+        display: inline-block;
+        text-align: left;
+      }
+
+      .disable-actions {
+        pointer-events: none;
+      }
+
+      hr {
+        border: 1px solid $moderate-grey;
+        margin: 1em 0;
+      }
+    }
+
+    .user-info {
+      display: inline-block;
+
+      .form-label {
+        display: inline-block;
+        margin-right: 1em;
+        text-align: right;
+        vertical-align: top;
+        width: 200px;
+      }
+
+      .form-data {
+        display: inline-block;
+        width: 400px;
+      }
+
+      .secondary-cohort {
+        font-size: 12px;
+      }
+
+      .learner-group {
+        font-size: 12px;
+      }
+    }
+  }
+}

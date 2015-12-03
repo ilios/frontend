@@ -378,7 +378,14 @@ export default {
     'lastName': 'Apellido',
     'fullName': 'Nombre completo',
     'manageUsers': 'Administrar Usuarios',
-    'searchUsers': 'Buscar usuarios'
+    'searchUsers': 'Buscar usuarios',
+    'userRoles': 'Funciones de usuario',
+    'courseDirector': 'Director del Curso',
+    'instructor': 'Instructor',
+    'developer': 'Desarrollador',
+    'formerStudent': 'Antiguo Estudiante',
+    'disableUser': 'Desactivar el usuario',
+    'excludeFromSync': 'Excluir de la sincronización'
   },
   'language': {
     'select': {
