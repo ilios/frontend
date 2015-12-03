@@ -1,6 +1,6 @@
 {
   "name": "ilios",
-  "version": "0.1.0",
+  "version": "1.0.0-rc1",
   "description": "Curriculum Management System for the Health Professions",
   "private": true,
   "directories": {
@@ -49,6 +49,7 @@
     "ember-cli-release": "0.2.8",
     "ember-cli-sauce": "^1.4.2",
     "ember-cli-simple-auth": "^0.8.0",
+    "ember-cli-simple-auth-cookie-store": "0.8.0",
     "ember-cli-simple-auth-testing": "0.8.0",
     "ember-cli-simple-auth-token": "^0.7.3",
     "ember-cli-sri": "^1.2.0",
