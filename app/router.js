@@ -6,12 +6,20 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('dashboard');
+  this.route('dashboard', {
+    resetNamespace: true
+  });
   this.route('courses');
-  this.resource('course', { path: 'courses/:course_id'}, function(){
+  this.route('course', {
+    path: 'courses/:course_id',
+    resetNamespace: true
+  }, function(){
     this.route('publicationCheck', { path: '/publicationcheck'});
     this.route('publishall', { path: '/publishall'});
-    this.resource("session", {path: '/sessions/:session_id'}, function(){
+    this.route("session", {
+      path: '/sessions/:session_id',
+      resetNamespace: true
+    }, function(){
       this.route('publicationCheck', {path: '/publicationcheck'});
     });
   });
@@ -25,9 +33,15 @@ Router.map(function() {
   this.route('programs');
   this.route('learnerGroup', { path: 'learnergroups/:learner_group_id'});
   this.route('learnerGroups', { path: 'learnergroups'});
-  this.resource('program', { path: 'programs/:program_id'}, function(){
+  this.route('program', {
+    path: 'programs/:program_id',
+    resetNamespace: true
+  }, function(){
     this.route('publicationCheck', { path: '/publicationcheck'});
-    this.resource("programYear", {path: '/programyears/:program-year_id'}, function(){
+    this.route("programYear", {
+      path: '/programyears/:program-year_id',
+      resetNamespace: true
+    }, function(){
       this.route('publicationCheck', {path: '/publicationcheck'});
     });
   });
