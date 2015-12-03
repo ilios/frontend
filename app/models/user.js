@@ -25,18 +25,15 @@ var User = DS.Model.extend({
   learnerGroups: DS.hasMany('learner-group', {
       async: true,
       inverse: 'users'
-    }
-  ),
+    }),
   instructedLearnerGroups: DS.hasMany('learner-group', {
       async: true,
       inverse: 'instructors'
-    }
-  ),
+    }),
   instructorGroups: DS.hasMany('instructor-group', {
       async: true,
       inverse: 'users'
-    }
-  ),
+    }),
   instructorIlmSessions: DS.hasMany('ilm-session', {
       async: true,
       inverse: 'instructors'
@@ -52,8 +49,7 @@ var User = DS.Model.extend({
   instructedOfferings: DS.hasMany('offering', {
       async: true,
       inverse: 'instructors'
-    }
-  ),
+    }),
   programYears: DS.hasMany('program-year', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
 
