@@ -5,7 +5,7 @@ import moment from 'moment';
 const { computed, copy, inject, isEmpty, ObjectProxy, RSVP } = Ember;
 const { notEmpty } = computed;
 const { all, Promise } = RSVP;
-const { PromiseArray } = DS;
+const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 
 export default Ember.Component.extend({
@@ -171,6 +171,40 @@ export default Ember.Component.extend({
     return output;
   },
 
+  userCanDelete: computed('offering.session.course', 'offering.allInstructors.[]', 'currentUser.model.directedCourses.[]', function(){
+    const offering = this.get('offering');
+    if(isEmpty(offering)){
+      return false;
+    }
+    
+    let defer = RSVP.defer();
+    this.get('currentUser.userIsDeveloper').then(isDeveloper => {
+      if(isDeveloper){
+        defer.resolve(true);
+      } else {
+        this.get('currentUser.model').then(user => {
+          offering.get('allInstructors').then(allInstructors => {
+            if(allInstructors.contains(user)){
+              defer.resolve(true);
+            } else {
+              offering.get('session').then(session => {
+                session.get('course').then(course => {
+                  user.get('directedCourses').then(directedCourses => {
+                    defer.resolve(directedCourses.contains(course));
+                  });
+                });
+              });
+            }
+          });
+        });
+      }
+    });
+    
+    return PromiseObject.create({
+      promise: defer.promise
+    });
+  }),
+  
   actions: {
     save() {
       if (this.datesValidated() && this.timesValidated()) {

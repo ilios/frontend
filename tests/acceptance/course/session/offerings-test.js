@@ -36,14 +36,18 @@ module('Acceptance: Session - Offerings' + testgroup, {
     server.create('course', {
       sessions: [1],
       cohorts: [1],
-      school: 1
+      school: 1,
+      directors: [4136]
     });
     server.create('sessionType', {
       school: 1
     });
 
     fixtures.users =  [];
-    fixtures.users.pushObject(server.create('user', {id: 4136}));
+    fixtures.users.pushObject(server.create('user', {
+      id: 4136,
+      directedCourses: [1]
+    }));
     //users 2, 3
     fixtures.users.pushObjects(server.createList('user', 2, {
       instructorGroups: [1],
@@ -382,8 +386,8 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
   const location = '.room input';
 
   const selectedLearnerGroup = '.selected-subgroup-style:first';
-  const removeInstructorFirst = '.removable-list li:first i';
-  const removeInstructorLast = '.removable-list li:last i';
+  const removeInstructorFirst = '.session-offerings .removable-list li:first i';
+  const removeInstructorLast = '.session-offerings .removable-list li:last i';
 
   const learnerGroupOne = '.selectable li:first';
   const searchBox = '.search-box:last input';

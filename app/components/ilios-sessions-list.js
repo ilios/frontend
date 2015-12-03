@@ -2,16 +2,44 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, isEmpty, observer, RSVP, run } = Ember;
-const { PromiseArray } = DS;
+const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy } = Ember;
+const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
+
+const SessionProxy = ObjectProxy.extend({
+  content: null,
+  currentUser: null,
+  expandOfferings: false,
+  showRemoveConfirmation: false,
+  userCanDelete: computed('content.course', 'currentUser.model.directedCourses.[]', function(){
+    let defer = RSVP.defer();
+    this.get('currentUser.userIsDeveloper').then(isDeveloper => {
+      if(isDeveloper){
+        defer.resolve(true);
+      } else {
+        this.get('content').get('course').then(course => {
+          this.get('currentUser.model').then(user => {
+            user.get('directedCourses').then(directedCourses => {
+              defer.resolve(directedCourses.contains(course));
+            });
+          });
+        });
+      }
+    });
+    
+    return PromiseObject.create({
+      promise: defer.promise
+    });
+  })
+});
 
 export default Component.extend({
   classNames: ['detail-view', 'sessions-list'],
 
   store: service(),
   i18n: service(),
+  currentUser: service(),
 
   filter: '',
   course: null,
@@ -37,10 +65,9 @@ export default Component.extend({
     let defer = RSVP.defer();
     course.get('sessions').then(sessions => {
       let proxiedSessions = sessions.map(session => {
-        return Ember.ObjectProxy.create({
+        return SessionProxy.create({
           content: session,
-          expandOfferings: false,
-          showRemoveConfirmation: false
+          currentUser: this.get('currentUser')
         });
       });
 
