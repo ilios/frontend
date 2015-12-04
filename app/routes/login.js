@@ -14,7 +14,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
   },
   attemptSSOAuth(){
     let defer = Ember.RSVP.defer();
-    var configUrl = '/auth/config';
+    var configUrl = '/application/config';
     var loginUrl = '/auth/login';
     ajax(configUrl).then(data => {
       let config = data.config;
