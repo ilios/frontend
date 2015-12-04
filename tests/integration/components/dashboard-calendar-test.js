@@ -1,9 +1,8 @@
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
-// import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import tHelper from "ember-i18n/helper";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 let today = moment();
 let mockEvents = [
@@ -32,7 +31,7 @@ test('it renders', function(assert) {
 
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
-  
+
   /*
   {{dashboard-calendar
     selectedDate=selectedDate

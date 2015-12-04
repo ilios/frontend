@@ -5,7 +5,8 @@ import {
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
-let {run} = Ember;
+
+const { run } = Ember;
 
 moduleForModel('objective', 'Unit | Model | Objective' + testgroup, {
   needs: modelList
@@ -19,7 +20,7 @@ test('it exists', function(assert) {
 
 test('top parent with no parents should be self', function(assert) {
   assert.expect(2);
-  
+
   var model = this.subject();
   model.get('topParents').then(topParents => {
     assert.ok(topParents.get('length') === 1);
@@ -38,13 +39,13 @@ test('corrent top parents with single parent tree', function(assert) {
     let parent2 = store.createRecord('objective', {
       children: [parent1]
     });
-    
+
     model.get('topParents').then(topParents => {
       assert.ok(topParents.get('length') === 1);
       assert.equal(topParents.get('firstObject'), parent2);
     });
   });
-  
+
 });
 
 test('corrent top parents with multi parent tree', function(assert) {
@@ -64,12 +65,12 @@ test('corrent top parents with multi parent tree', function(assert) {
     let parent4 = store.createRecord('objective', {
       children: [parent2]
     });
-    
+
     model.get('topParents').then(topParents => {
       assert.ok(topParents.get('length') === 2);
       assert.ok(topParents.contains(parent3));
       assert.ok(topParents.contains(parent4));
     });
   });
-  
+
 });

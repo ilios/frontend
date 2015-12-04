@@ -1,7 +1,7 @@
-import Ember from 'ember';
 import PublishableMixin from '../../../mixins/publishable';
 import { module, test } from 'qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 module('Unit | Mixin | publishable' + testgroup);
 

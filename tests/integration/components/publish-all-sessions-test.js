@@ -1,8 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-import Ember from 'ember';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 const {RSVP} = Ember;
 
@@ -21,7 +21,7 @@ test('it renders', function(assert) {
   this.set('sessions', RSVP.resolve(sessions));
 
   this.render(hbs`{{publish-all-sessions sessions=sessions}}`);
-  
+
   assert.ok(this.$().text().search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
   assert.ok(this.$().text().search(/Sessions Complete: ready to publish \(0\)/) !== -1);
   assert.ok(this.$().text().search(/Sessions Requiring Review \(0\)/) !== -1);

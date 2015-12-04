@@ -1,5 +1,5 @@
+import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
-import Ember from 'ember';
 import {
   module,
   test
@@ -60,7 +60,7 @@ module('Acceptance: Course - Session List' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

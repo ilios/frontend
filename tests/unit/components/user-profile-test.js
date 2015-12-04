@@ -25,18 +25,6 @@ test('`isDisabled` computed property works', function(assert) {
   assert.ok(component.get('isDisabled'), 'isDisabled is true');
 });
 
-test('`removeFromSync` computed property works', function(assert) {
-  assert.expect(2);
-
-  const user = Ember.Object.create({ userSyncIgnore: true });
-  const component = this.subject({ user });
-
-  assert.ok(component.get('removeFromSync'), 'removeFromSync is true');
-
-  user.set('userSyncIgnore', false);
-  assert.ok(!component.get('removeFromSync'), 'removeFromSync is false');
-});
-
 // Couldn't get this one to pass:
 // test('`isCourseDirector` computed property works', function(assert) {
 //   assert.expect(1);
@@ -53,3 +41,14 @@ test('`removeFromSync` computed property works', function(assert) {
 //     assert.ok(component.get('isCourseDirector.content'), 'true');
 //   });
 // });
+test('`removeFromSync` computed property works', function(assert) {
+  assert.expect(2);
+
+  const user = Ember.Object.create({ userSyncIgnore: true });
+  const component = this.subject({ user });
+
+  assert.ok(component.get('removeFromSync'), 'removeFromSync is true');
+
+  user.set('userSyncIgnore', false);
+  assert.ok(!component.get('removeFromSync'), 'removeFromSync is false');
+});

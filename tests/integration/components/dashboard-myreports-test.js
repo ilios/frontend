@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
+import Ember from 'ember';
 
 const { computed } = Ember;
 

@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 var application;
 var fixtures = {};
@@ -30,7 +31,7 @@ module('Acceptance: Course - Objective Create' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 
@@ -60,7 +61,7 @@ test('save new objective', function(assert) {
       });
     }, 100);
   });
-  
+
 });
 
 test('cancel new objective', function(assert) {

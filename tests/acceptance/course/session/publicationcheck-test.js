@@ -1,5 +1,5 @@
+import destroyApp from '../../../helpers/destroy-app';
 import moment from 'moment';
-import Ember from 'ember';
 import {
   module,
   test
@@ -7,6 +7,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import Ember from 'ember';
 
 var application;
 module('Acceptance: Session - Publication Check' + testgroup, {
@@ -41,7 +42,7 @@ module('Acceptance: Session - Publication Check' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

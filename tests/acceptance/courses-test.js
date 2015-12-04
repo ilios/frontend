@@ -1,10 +1,8 @@
-import Ember from 'ember';
-import {
-  module,
-  test
-} from 'qunit';
+import destroyApp from '../helpers/destroy-app';
+import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 var application;
 var fixtures = {};
@@ -23,7 +21,7 @@ module('Acceptance: Courses' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 
