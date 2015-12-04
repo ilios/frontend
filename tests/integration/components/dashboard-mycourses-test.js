@@ -1,36 +1,42 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import Ember from 'ember';
+import DS from 'ember-data';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
-import Ember from 'ember';
 
 const { computed } = Ember;
+const { PromiseArray } = DS;
 
 let mockCourses = [
   Ember.Object.create({title: 'first', level: 4, academicYear: '2012-2013', locked: false, archived: false}),
   Ember.Object.create({title: 'second', level: 1, academicYear: '2013-2014', locked: false, archived: false}),
   Ember.Object.create({title: 'third', level: 1, academicYear: '2012-2013', locked: false, archived: false}),
-  Ember.Object.create({title: 'locked', level: 1, academicYear: '2012-2013', locked: true, archived: false}),
-  Ember.Object.create({title: 'archived', level: 1, academicYear: '2012-2013', locked: false, archived: true}),
 ];
 
 let currentUserMock = Ember.Service.extend({
-  relatedCourses: computed(function() {
-    return Ember.RSVP.resolve(mockCourses);
+  activeRelatedCoursesInThisYearAndLastYear: computed(function() {
+    return PromiseArray.create({
+      promise: Ember.RSVP.resolve(mockCourses)
+    });
   }),
   canEditCourses: true
 });
 
 let currentUserMockNoCourses = Ember.Service.extend({
-  relatedCourses: computed(function() {
-    return Ember.RSVP.resolve([]);
+  activeRelatedCoursesInThisYearAndLastYear: computed(function() {
+    return PromiseArray.create({
+      promise: Ember.RSVP.resolve([])
+    });
   }),
   canEditCourses: true
 });
 
 let currentUserMockUnprivileged = Ember.Service.extend({
-  relatedCourses: computed(function() {
-    return Ember.RSVP.resolve(mockCourses);
+  activeRelatedCoursesInThisYearAndLastYear: computed(function() {
+    return PromiseArray.create({
+      promise: Ember.RSVP.resolve(mockCourses)
+    });
   }),
   canEditCourses: false
 });

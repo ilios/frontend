@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import ajax from 'ic-ajax';
+import moment from 'moment';
 
 const { computed, observer, on, RSVP, isEmpty } = Ember;
 const { PromiseArray } = DS;
@@ -237,23 +238,40 @@ export default Ember.Service.extend({
         this.set('canViewAdminDashboard', hasRole.contains(true));
       });
   })),
-  relatedCourses: computed('model', function(){
-    let defer = RSVP.defer();
-    this.get('model').then( user => {
-      if(isEmpty(user)){
-        defer.resolve([]);
-        return;
-      }
-      this.get('store').query('course', {
-        filters: {
-          users: [user.get('id')]
+  activeRelatedCoursesInThisYearAndLastYear: computed(
+    'model',
+    'model.instructedOfferings.[]',
+    'model.instructorGroups.[]',
+    'model.instructedLearnerGroups.[]',
+    'model.directedCourses.[]',
+    'model.instructorIlmSessions.[]',
+    function(){
+      let defer = RSVP.defer();
+      this.get('model').then( user => {
+        if(isEmpty(user)){
+          defer.resolve([]);
+          return;
         }
-      }).then(filteredCourses => {
-        defer.resolve(filteredCourses);
+        let currentYear = moment().format('YYYY');
+        const currentMonth = parseInt(moment().format('M'));
+        if(currentMonth < 6){
+          currentYear--;
+        }
+        const previousYear = currentYear -1;
+        this.get('store').query('course', {
+          filters: {
+            users: [user.get('id')],
+            year: [previousYear, currentYear],
+            locked: false,
+            archived: false
+          }
+        }).then(filteredCourses => {
+          defer.resolve(filteredCourses);
+        });
       });
-    });
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  })
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+    }
+  )
 });
