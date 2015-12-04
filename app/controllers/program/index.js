@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
-const { computed, Controller } = Ember;
+const { computed, Controller, inject } = Ember;
 const { alias } = computed;
+const { controller } = inject;
 
 export default Controller.extend({
-  needs: "program",
-  program: alias("controllers.program.model"),
+  programController: controller('program'),
+
+  program: alias('programController.model'),
 });
