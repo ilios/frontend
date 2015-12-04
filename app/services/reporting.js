@@ -102,6 +102,24 @@ export default Service.extend({
     });
     
     return RSVP.all(map);
+  },
+  programResults(results){
+    const canView = this.get('currentUser.canViewPrograms');
+    let map = results.map(item => {
+      return new RSVP.Promise(resolve => {
+        let rhett = {};
+        item.get('school').then(school => {
+          rhett.value = school.get('title') + ': ' + item.get('title');
+          if(canView){
+              rhett.route = 'program';
+              rhett.model = item;
+          }
+          resolve(rhett);
+        });
+      });
+    });
+    
+    return RSVP.all(map);
   }
 });
 
