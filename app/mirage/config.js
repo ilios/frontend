@@ -377,7 +377,7 @@ export default function() {
       };
     });
 
-    this.get('/auth/config', function() {
+    this.get('/application/config', function() {
       return { config: {
         type: 'form'
       }};
