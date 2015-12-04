@@ -15,7 +15,22 @@
     {{#if reportResultsList.length}}
       <ul>
         {{#each reportResultsList as |item|}}
-          <li>{{item.value}}</li>
+          {{#if item.model2}}
+            <li>
+              {{#link-to item.route item.model item.model2}}
+                {{item.value}}
+              {{/link-to}}
+            </li>
+          {{else if item.model}}
+            <li>
+              {{#link-to item.route item.model}}
+                {{item.value}}
+              {{/link-to}}
+            </li>
+          {{else}}
+            <li>{{item.value}}</li>
+          
+          {{/if}}
         {{/each}}
       </ul>
     {{else}}
