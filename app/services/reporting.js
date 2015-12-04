@@ -128,7 +128,7 @@ export default Service.extend({
         let rhett = {};
         item.get('program').then(program => {
           program.get('school').then(school => {
-            rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + item.get('title');
+            rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + item.get('classOfYear');
             if(canView){
                 rhett.route = 'programYear';
                 rhett.model = program;
@@ -142,19 +142,44 @@ export default Service.extend({
     });
     
     return RSVP.all(map);
+  },
+  instructorsResults(results){
+    let map = results.map( result => {
+      return {
+        value: result.get('fullName')
+      };
+    });
+    return RSVP.resolve(map);
+  },
+  titleResults(results){
+    let map = results.map( result => {
+      return {
+        value: result.get('title')
+      };
+    });
+    return RSVP.resolve(map);
+  },
+  instructorGroupsResults(results){
+    return this.titleResults(results);
+  },
+  learningMaterialsResults(results){
+    return this.titleResults(results);
+  },
+  competenciesResults(results){
+    return this.titleResults(results);
+  },
+  topicsResults(results){
+    return this.titleResults(results);
+  },
+  settionTypesResults(results){
+    return this.titleResults(results);
+  },
+  meshTermsResults(results){
+    let map = results.map( result => {
+      return {
+        value: result.get('name')
+      };
+    });
+    return RSVP.resolve(map);
   }
 });
-
-/*
-{value: 'course', label: this.get('i18n').t('general.courses')},
-{value: 'session', label: this.get('i18n').t('general.sessions')},
-{value: 'program', label: this.get('i18n').t('general.programs')},
-{value: 'program year', label: this.get('i18n').t('general.programYears')},
-{value: 'instructor', label: this.get('i18n').t('general.instructors')},
-{value: 'instructor group', label: this.get('i18n').t('general.instructorGroups')},
-{value: 'learning material', label: this.get('i18n').t('general.learningMaterials')},
-{value: 'competency', label: this.get('i18n').t('general.competencies')},
-{value: 'topic', label: this.get('i18n').t('general.topics')},
-{value: 'mesh term', label: this.get('i18n').t('general.meshTerms')},
-{value: 'session type', label: this.get('i18n').t('general.sessionTypes')},
- */
