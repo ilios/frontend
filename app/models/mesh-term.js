@@ -10,5 +10,5 @@ export default DS.Model.extend({
   printable: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
-  concepts: DS.hasMany('mesh-concept',  {async: true}),
+  concepts: DS.hasMany('mesh-concept', {async: true}),
 });

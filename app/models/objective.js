@@ -11,7 +11,7 @@ export default DS.Model.extend({
   //While it is possible at some point that objectives will be allowed to
   //link to multiple courses, for now we just reflect a many to one relationship
   course: alias('courses.firstObject'),
-  programYears: DS.hasMany('program-year',  {async: true}),
+  programYears: DS.hasMany('program-year', {async: true}),
   //While it is possible at some point that objectives will be allowed to
   //link to multiple program years, for now we just reflect a many to one relationship
   programYear: alias('programYears.firstObject'),

@@ -16,13 +16,11 @@ export default DS.Model.extend({
   users: DS.hasMany('user', {
       async: true,
       inverse: 'learnerGroups'
-    }
-  ),
+    }),
   instructors: DS.hasMany('user', {
       async: true,
       inverse: 'instructedLearnerGroups'
-    }
-  ),
+    }),
   courses: computed('offerings.[]', 'ilmSessions.[]', function(){
     var defer = Ember.RSVP.defer();
     let promises = [];

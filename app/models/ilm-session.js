@@ -13,13 +13,11 @@ export default DS.Model.extend({
   instructors: DS.hasMany('user', {
       async: true,
       inverse: 'instructorIlmSessions'
-    }
-  ),
+    }),
   learners: DS.hasMany('user', {
       async: true,
       inverse: 'learnerIlmSessions'
-    }
-  ),
+    }),
   allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users.[]', function(){
     var defer = RSVP.defer();
     this.get('instructorGroups').then(instructorGroups => {

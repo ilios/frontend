@@ -10,8 +10,8 @@ export default DS.Model.extend({
   objectives: DS.hasMany('objective', {async: true}),
   parent: DS.belongsTo('competency', {async: true, inverse: 'children'}),
   children: DS.hasMany('competency', {async: true, inverse: 'parent'}),
-  aamcPcrses: DS.hasMany('aamc-pcrs',  {async: true}),
-  programYears: DS.hasMany('program-year',  {async: true}),
+  aamcPcrses: DS.hasMany('aamc-pcrs', {async: true}),
+  programYears: DS.hasMany('program-year', {async: true}),
   isDomain: empty('parent.content'),
   domain: computed('parent', 'parent.domain', function(){
     let promise = new Ember.RSVP.Promise(
