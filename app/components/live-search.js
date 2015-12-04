@@ -20,6 +20,7 @@ export default Component.extend({
   sortedSearchResults: computed('results.@each', function(){
     return this.get('results').sortBy('sortTerm');
   }),
+
   searchResults: computed(function(key, values){
     if (arguments.length > 1) {
       values.forEach(function(obj){
@@ -31,6 +32,7 @@ export default Component.extend({
     }
     return this.get('results');
   }),
+
   watchSeatchTerms: observer('searchTerms', function(){
     this.send('search');
   }),

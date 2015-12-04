@@ -1,7 +1,5 @@
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
-// import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import tHelper from "ember-i18n/helper";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 

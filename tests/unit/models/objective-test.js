@@ -4,7 +4,6 @@ import {
 } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
-import Ember from 'ember';
 let {run} = Ember;
 
 moduleForModel('objective', 'Unit | Model | Objective' + testgroup, {

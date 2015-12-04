@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import destroyApp from '../helpers/destroy-app';
 import {
   module,
   test
@@ -49,7 +49,7 @@ module('Acceptance: Course - Mesh Terms' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 
