@@ -1,82 +1,78 @@
 import Ember from 'ember';
 
-const { Component, inject, run, computed } = Ember;
+const { Component, computed, inject, isEmpty, run } = Ember;
 const { service } = inject;
 const { debounce } = run;
-const { or, notEmpty } = computed;
+const { trim } = Ember.$;
+const { PromiseObject } = DS;
+
+function cleanQuery(query) {
+  return trim(query).replace(/[\-,?~!@#$%&*+\-'="]/, '');
+}
 
 export default Component.extend({
   store: service(),
   i18n: service(),
+
   classNames: ['global-search'],
-  results: [],
-  searching: false,
+
+  query: null,
+  delay: 500,
+
   showMoreInputPrompt: false,
-  showNoResultsMessage: false,
-  currentlySearchingForTerm: false,
-  hasResults: notEmpty('results'),
-  showList: or('searching', 'showMoreInputPrompt', 'showNoResultsMessage', 'hasResults'),
+
+  revisedQuery: computed('query', {
+    get() {
+      const query = this.get('query');
+      const revisedQuery = cleanQuery(query);
+      const validate = this.checkQueryLength(revisedQuery);
+
+      if (validate) {
+        this.set('showMoreInputPrompt', false);
+      } else {
+        this.set('showMoreInputPrompt', true);
+      }
+
+      return revisedQuery;
+    }
+  }).readOnly(),
+
+  _updateQuery(value) {
+    this.set('query', value);
+  },
+
+  checkQueryLength(query) {
+    return query.length > 2 ? true : false;
+  },
+
+  searchResults: computed('revisedQuery', {
+    get() {
+      const q = this.get('revisedQuery');
+      const store = this.get('store');
+
+      if (!isEmpty(q)) {
+        const searchResults = store.query('user', {
+          q,
+          'order_by[lastName]': 'ASC',
+          'order_by[firstName]': 'ASC'
+        }).then((users) => {
+          return users;
+        });
+
+        return PromiseObject.create({
+          promise: searchResults
+        });
+      }
+    }
+  }).readOnly(),
+
   actions: {
     clear() {
-      let input = this.$('input')[0];
-      input.value = '';
-      this.setProperties({
-        searchTerms: '',
-        showMoreInputPrompt: false,
-        showNoResultsMessage: false,
-        searching: false,
-        results: [],
-        showClearButton: false,
-      });
+      this.setProperties({ query: null, showMoreInputPrompt: false });
     },
-    inputValueChanged(){
-      let input = this.$('input')[0];
-      let searchTerms = input.value;
-      if(this.get('currentlySearchingForTerm') === searchTerms){
-        return;
-      }
-      this.setProperties({
-        currentlySearchingForTerm: searchTerms,
-        showMoreInputPrompt: false,
-        showNoResultsMessage: false,
-        searching: false,
-      });
-      let noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
-      if(noWhiteSpaceTerm.length === 0){
-        this.send('clear');
-        return;
-      } else if(noWhiteSpaceTerm.length < 3){
-        this.setProperties({
-          results: [],
-          showMoreInputPrompt: true,
-        });
-        return;
-      }
-      this.set('searching', true);
-      debounce(this, function(){
-        this.send('search', searchTerms);
-      }, 1000);
-    },
-    search(searchTerms){
-      this.set('searching', true);
-      let searchResultProxy = Ember.ObjectProxy.extend({
-        isUser: false,
-        sortString: '',
-      });
-      this.get('store').query('user', {q: searchTerms}).then(users => {
-        let results = users.map(user => {
-          return searchResultProxy.create({
-            content: user,
-            isUser: true,
-            sortString: user.get('lastName')+user.get('firstName'),
-          });
-        });
-        this.set('searching', false);
-        if(results.get('length') === 0){
-          this.set('showNoResultsMessage', true);
-        }
-        this.set('results', results.sortBy('sortString'));
-      });
-    },
+
+    changeValue(value) {
+      debounce(this, this._updateQuery, value, this.get('delay'));
+    }
   }
 });
