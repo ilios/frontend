@@ -32,19 +32,8 @@ export default Component.extend({
   offeredAt: computed('niceStartTime', function(){
     return this.get('i18n').t('calendar.offeredAt', {date: this.get('niceStartTime')});
   }),
-  instructorList: computed('isOffering', 'offering.allInstructors.[]', function(){
-    let defer = RSVP.defer();
-    let relationship = this.get('isOffering')?'offering':'ilmSession';
-    this.get(relationship).then(related => {
-      related.get('allInstructors').then(instructors => {
-        let instructorNames = instructors.sortBy('lastName').mapBy('fullName');
-        defer.resolve(instructorNames.join(', '));
-      });
-    });
-
-    return PromiseObject.create({
-      promise: defer.promise
-    });
+  instructorList: computed('event.instructors.[]', function(){
+    return RSVP.resolve(this.get('event.instructors'));
   }),
   taughtBy: computed('i18n.locale', 'instructorList', function(){
     let defer = RSVP.defer();
