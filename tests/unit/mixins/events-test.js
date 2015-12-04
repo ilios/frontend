@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import EventMixin from '../../../mixins/events';
 import { module, test } from 'qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
