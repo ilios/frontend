@@ -29,7 +29,7 @@ export default Service.extend({
       this.getModel(subject),
       this.getQuery(subject, object, objectId)
     ).then(results => {
-      let mapper = subject + 'Results';
+      let mapper = pluralize(subject.camelize()) + 'Results';
       this[mapper](results).then(mappedResults => {
         defer.resolve(mappedResults.sortBy('value'));
       });
@@ -116,6 +116,28 @@ export default Service.extend({
           }
           resolve(rhett);
         });
+      });
+    });
+    
+    return RSVP.all(map);
+  },
+  programYearsResults(results){
+    const canView = this.get('currentUser.canViewPrograms');
+    let map = results.map(item => {
+      return new RSVP.Promise(resolve => {
+        let rhett = {};
+        item.get('program').then(program => {
+          program.get('school').then(school => {
+            rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + item.get('title');
+            if(canView){
+                rhett.route = 'programYear';
+                rhett.model = program;
+                rhett.model2 = item;
+            }
+            resolve(rhett);
+          });
+        });
+        
       });
     });
     
