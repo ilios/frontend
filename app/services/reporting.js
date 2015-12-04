@@ -69,7 +69,7 @@ export default Service.extend({
     
     return query;
   },
-  courseResults(results){
+  coursesResults(results){
     const canViewCourses = this.get('currentUser.canViewCourses');
     let map = results.map(course => {
       let rhett = {};
@@ -84,7 +84,7 @@ export default Service.extend({
     
     return RSVP.resolve(map);
   },
-  sessionResults(results){
+  sessionsResults(results){
     const canView = this.get('currentUser.canViewCourses');
     let map = results.map(item => {
       return new RSVP.Promise(resolve => {
@@ -103,7 +103,7 @@ export default Service.extend({
     
     return RSVP.all(map);
   },
-  programResults(results){
+  programsResults(results){
     const canView = this.get('currentUser.canViewPrograms');
     let map = results.map(item => {
       return new RSVP.Promise(resolve => {
