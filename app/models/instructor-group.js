@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { computed } = Ember;
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   school: DS.belongsTo('school', {async: true}),
@@ -8,7 +10,7 @@ export default DS.Model.extend({
   ilmSessions: DS.hasMany('ilm-session', {async: true}),
   users: DS.hasMany('user', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
-  courses: Ember.computed('offerings.[]', 'ilmSessions.[]', function(){
+  courses: computed('offerings.[]', 'ilmSessions.[]', function(){
     var defer = Ember.RSVP.defer();
     let promises = [];
     let allCourses = [];

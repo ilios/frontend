@@ -2,6 +2,9 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
+const { computed } = Ember;
+const { mapBy, sum } = computed;
+
 export default DS.Model.extend(PublishableModel,{
   title: DS.attr('string'),
   shortTitle: DS.attr('string'),
@@ -12,22 +15,16 @@ export default DS.Model.extend(PublishableModel,{
       inverse: 'program'
   }),
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
-  cohortPromises: Ember.computed.mapBy('programYears', 'cohort'),
-  cohorts: Ember.computed.mapBy('cohortPromises', 'content'),
-  courseCounts: Ember.computed.mapBy('programYears', 'cohort.courses.length'),
-  courseCount: Ember.computed.sum('courseCounts'),
+  cohortPromises: mapBy('programYears', 'cohort'),
+  cohorts: mapBy('cohortPromises', 'content'),
+  courseCounts: mapBy('programYears', 'cohort.courses.length'),
+  courseCount: sum('courseCounts'),
   requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
   optionalPublicationLengthFields: ['programYears'],
-  requiredPublicationIssues: function(){
+  requiredPublicationIssues: computed('title', 'shortTitle', 'duration', function(){
     return this.getRequiredPublicationIssues();
-  }.property(
-    'title',
-    'shortTitle',
-    'duration'
-  ),
-  optionalPublicationIssues: function(){
+  }),
+  optionalPublicationIssues: computed('programYears.length', function(){
     return this.getOptionalPublicationIssues();
-  }.property(
-    'programYears.length'
-  ),
+  }),
 });

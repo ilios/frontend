@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
-const { RSVP } = Ember;
+const { Component, RSVP } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['detail-cohorts'],
   subject: null,
   isManaging: false,
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
           cohortList.pushObject(cohort);
         });
         RSVP.all(removedCohorts.mapBy('programYear')).then(programYearsToRemove => {
-          course.get('objectives').then(objectives => {  
+          course.get('objectives').then(objectives => {
             RSVP.all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove)).then(()=> {
               course.save().then(()=>{
                 this.set('isManaging', false);
@@ -37,12 +37,12 @@ export default Ember.Component.extend({
               });
             });
           });
-          
-          
+
+
         });
-        
+
       });
-      
+
     },
     cancel(){
       this.set('bufferedCohorts', []);

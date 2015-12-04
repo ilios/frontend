@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   templatePrefix: DS.attr('string'),
@@ -15,7 +17,7 @@ export default DS.Model.extend({
   curriculumInventoryInsitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
-  cohorts: function(){
+  cohorts: computed('programs.@each', function(){
     var school = this;
     return new Ember.RSVP.Promise(function(resolve) {
       school.get('programs').then(function(programs){
@@ -41,7 +43,7 @@ export default DS.Model.extend({
         });
       });
     });
-  }.property('programs.@each'),
+  }),
   getCohortsForYear(year){
     let defer = Ember.RSVP.defer();
     this.getProgramYearsForYear(year).then(programYears => {
@@ -56,8 +58,8 @@ export default DS.Model.extend({
         defer.resolve(cohorts);
       });
     });
-    
-    
+
+
     return DS.PromiseArray.create({
       promise: defer.promise
     });

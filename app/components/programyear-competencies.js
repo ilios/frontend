@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   programYear: null,
   classNames: ['programyear-competencies'],
   isManaging: false,

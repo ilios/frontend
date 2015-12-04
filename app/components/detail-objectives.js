@@ -2,11 +2,11 @@ import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
 import config from 'ilios/config/environment';
 
-const {computed, inject} = Ember;
-const {service} = inject;
-const {or, notEmpty} = computed;
+const { Component, computed, inject } = Ember;
+const { service } = inject;
+const { or, notEmpty } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   store: service(),
   i18n: service(),
   flashMessages: service(),

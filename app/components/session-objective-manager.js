@@ -1,18 +1,20 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { Component, computed, observer, on } = Ember;
+
 var objectiveProxy = Ember.ObjectProxy.extend({
   sessionObjective: null,
-  selected: function(){
+  selected: computed('content', 'sessionObjective.parents.@each', function(){
     return this.get('sessionObjective.parents').contains(this.get('content'));
-  }.property('content', 'sessionObjective.parents.@each'),
+  }),
 });
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['objective-manager'],
   sessionObjective: null,
   showObjectiveList: false,
-  course: function(){
+  course: computed('sessionObjective.courses.@each', function(){
     var sessionObjective = this.get('sessionObjective');
     if(!sessionObjective){
       return null;
@@ -27,8 +29,8 @@ export default Ember.Component.extend({
     return DS.PromiseObject.create({
       promise:deferred.promise
     });
-  }.property('sessionObjective.courses.@each'),
-  proxiedObjectives: function(){
+  }),
+  proxiedObjectives: computed('course', 'course.objectives.@each', function(){
     var sessionObjective = this.get('sessionObjective');
     if(!sessionObjective){
       return [];
@@ -51,8 +53,8 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('course', 'course.objectives.@each'),
-  watchProxiedObjectives: function(){
+  }),
+  watchProxiedObjectives: on('init', observer('proxiedObjectives.length', function(){
     //debounce setting showObjectiveList to avoid animating changes when
     //a save causes the proxied list to change
     Ember.run.debounce(this, function(){
@@ -60,7 +62,7 @@ export default Ember.Component.extend({
         this.set('showObjectiveList', this.get('proxiedObjectives.length') > 0);
       }
     }, 500);
-  }.observes('proxiedObjectives.length').on('init'),
+  })),
   actions: {
     addParent: function(parentProxy){
       var newParent = parentProxy.get('content');

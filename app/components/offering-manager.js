@@ -2,13 +2,13 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
 
-const { computed, copy, inject, isEmpty, ObjectProxy, RSVP } = Ember;
-const { notEmpty } = computed;
+const { Component, computed, copy, inject, isEmpty, ObjectProxy, RSVP } = Ember;
+const { alias, notEmpty, sort } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 
-export default Ember.Component.extend({
+export default Component.extend({
   init() {
     this._super(...arguments);
 
@@ -21,13 +21,13 @@ export default Ember.Component.extend({
   editable: true,
   sortBy: ['lastName', 'firstName'],
   classNames: ['offering-manager'],
-  sortedInstructors: Ember.computed.sort('instructors', 'sortBy'),
+  sortedInstructors: sort('instructors', 'sortBy'),
   isMultiDay: false,
-  cohorts: Ember.computed.alias('offering.session.course.cohorts'),
-  availableInstructorGroups: Ember.computed.alias('offering.session.course.school.instructorGroups'),
+  cohorts: alias('offering.session.course.cohorts'),
+  availableInstructorGroups: alias('offering.session.course.school.instructorGroups'),
   showRemoveConfirmation: false,
   buffer: null,
-  allInstructors: function(){
+  allInstructors: computed('instructors.@each', 'instructorGroups.@each.users.@each', function(){
     var self = this;
     var defer = Ember.RSVP.defer();
     var instructorGroups = this.get('instructorGroups');
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('instructors.@each', 'instructorGroups.@each.users.@each'),
+  }),
 
   learnerGroups: null,
 

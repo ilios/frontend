@@ -1,15 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   learnerGroups: [],
-  proxiedLearnerGroups: function(){
+  proxiedLearnerGroups: computed('learnerGroups.@each', function(){
     return this.get('learnerGroups').map(function(learnerGroup){
       return Ember.ObjectProxy.create({
         content: learnerGroup,
         showRemoveConfirmation: false
       });
     });
-  }.property('learnerGroups.@each'),
+  }),
   actions: {
     edit: function(learnerGroupProxy){
       this.sendAction('edit', learnerGroupProxy.get('content'));

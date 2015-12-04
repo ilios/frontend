@@ -1,11 +1,14 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { filterBy, sort } = computed;
+
+export default Component.extend({
   classNames: ['programyear-overview'],
   programYear: null,
   directorsSort: ['lastName', 'firstName'],
-  directorsWithFullName: Ember.computed.filterBy('programYear.directors', 'fullName'),
-  sortedDirectors: Ember.computed.sort('directorsWithFullName', 'directorsSort'),
+  directorsWithFullName: filterBy('programYear.directors', 'fullName'),
+  sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
   actions: {
     addDirector: function(user){
       let programYear = this.get('programYear');

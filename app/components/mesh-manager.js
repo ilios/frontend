@@ -2,14 +2,16 @@ import Ember from 'ember';
 import layout from '../templates/components/mesh-manager';
 import { translationMacro as t } from "ember-i18n";
 
+const { Component, computed } = Ember;
+
 var ProxiedDescriptors = Ember.ObjectProxy.extend({
   terms: [],
-  isActive: function(){
+  isActive: computed('content', 'terms.@each', function(){
     return !this.get('terms').contains(this.get('content'));
-  }.property('content', 'terms.@each')
+  })
 });
 
-export default Ember.Component.extend({
+export default Component.extend({
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
   layout: layout,
@@ -25,13 +27,13 @@ export default Ember.Component.extend({
   searching: false,
   searchReturned: false,
   sortTerms: ['name'],
-  sortedTerms: function(){
+  sortedTerms: computed('terms.@each.name', function(){
     var terms = this.get('terms');
     if(!terms || terms.length === 0){
       return [];
     }
     return terms.sortBy('name');
-  }.property('terms.@each.name'),
+  }),
   tagName: 'section',
   actions: {
     search: function(query){

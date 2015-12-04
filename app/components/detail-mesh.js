@@ -1,16 +1,18 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
   classNames: ['detail-mesh'],
   placeholder: t('courses.meshSearchPlaceholder'),
   subject: null,
-  terms: Ember.computed.oneWay('subject.meshDescriptors'),
+  terms: computed.oneWay('subject.meshDescriptors'),
   isCourse: false,
   sortTerms: ['title'],
-  sortedTerms: Ember.computed.sort('terms', 'sortTerms'),
+  sortedTerms: computed.sort('terms', 'sortTerms'),
   isSession: false,
   isManaging: false,
   bufferTerms: [],

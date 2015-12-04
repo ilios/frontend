@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import layout from '../templates/components/offering-block';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   layout: layout,
   block: null,
   actions: {

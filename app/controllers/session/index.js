@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { computed, Controller } = Ember;
+const { alias } = computed;
+
+export default Controller.extend({
   needs: ["course", "session"],
-  courseController: Ember.computed.alias("controllers.course"),
-  sessionController: Ember.computed.alias("controllers.session"),
+  courseController: alias("controllers.course"),
+  sessionController: alias("controllers.session"),
 });

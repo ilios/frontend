@@ -1,31 +1,34 @@
 import Ember from 'ember';
 import layout from '../templates/components/learningmaterial-manager';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { not } = computed;
+
+export default Component.extend({
   layout: layout,
   classNames: ['learningmaterial-manager'],
   learningMaterial: null,
   valueBuffer: null,
   isCourse: false,
-  isSession: Ember.computed.not('isCourse'),
+  isSession: not('isCourse'),
   learningMaterialStatuses: [],
-  statusOptions: function(){
+  statusOptions: computed('learningMaterialStatuses.@each', function(){
     return this.get('learningMaterialStatuses').map(function(status){
       return Ember.Object.create({
         id: status.get('id'),
         title: status.get('title')
       });
     }).sortBy('title');
-  }.property('learningMaterialStatuses.@each'),
-  isFile: function(){
+  }),
+  isFile: computed('learningMaterial.learningMaterial.type', function(){
     return this.get('learningMaterial.learningMaterial.type') === 'file';
-  }.property('learningMaterial.learningMaterial.type'),
-  isLink: function(){
+  }),
+  isLink: computed('learningMaterial.learningMaterial.type', function(){
     return this.get('learningMaterial.learningMaterial.type') === 'link';
-  }.property('learningMaterial.learningMaterial.type'),
-  isCitation: function(){
+  }),
+  isCitation: computed('learningMaterial.learningMaterial.type', function(){
     return this.get('learningMaterial.learningMaterial.type') === 'citation';
-  }.property('learningMaterial.learningMaterial.type'),
+  }),
   actions: {
     changeStatus: function(statusId){
       var newStatus = this.get('learningMaterialStatuses').findBy('id', statusId);

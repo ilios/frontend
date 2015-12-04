@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const {Component, computed, RSVP, inject} = Ember;
-const {PromiseArray} = DS;
-const {equal} = computed;
-const {service} = inject;
+const { Component, computed, RSVP, inject } = Ember;
+const { PromiseArray } = DS;
+const { equal } = computed;
+const { service } = inject;
 
 export default Component.extend({
   store: service(),
@@ -20,37 +20,37 @@ export default Component.extend({
   }),
   publishableSessions: computed('sessions.@each.allPublicationIssuesLength', function(){
     let defer = RSVP.defer();
-    
+
     this.get('sessions').then(sessions=>{
       let filteredSessions = sessions.filter(session => {
         return session.get('allPublicationIssuesLength') === 0;
       });
-      
+
       defer.resolve(filteredSessions);
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
   }),
   unPublishableSessions: computed('sessions.@each.requiredPublicationIssues', function(){
     let defer = RSVP.defer();
-    
+
     this.get('sessions').then(sessions=>{
       let filteredSessions = sessions.filter(session => {
         return session.get('requiredPublicationIssues').get('length') > 0;
       });
-      
+
       defer.resolve(filteredSessions);
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
   }),
   overridableSessions: computed('sessions.@each.{requiredPublicationIssues,optionalPublicationIssues}', function(){
     let defer = RSVP.defer();
-    
+
     this.get('sessions').then(sessions=>{
       let filteredSessions = sessions.filter(session => {
         return (
@@ -58,10 +58,10 @@ export default Component.extend({
           session.get('optionalPublicationIssues').get('length') > 0
         );
       });
-      
+
       defer.resolve(filteredSessions);
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -130,7 +130,7 @@ export default Component.extend({
           this.get('flashMessages').success('general.savedSuccessfully');
         });
       });
-      
+
     },
     togglePublishableCollapsed(){
       this.set('publishableCollapsed', !this.get('publishableCollapsed'));

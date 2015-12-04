@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-let {computed, RSVP, isEmpty} =  Ember;
-let {alias, gt, gte} = computed;
+const { computed, RSVP, isEmpty } =  Ember;
+const { alias, gt, gte } = computed;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -65,7 +65,7 @@ export default DS.Model.extend({
           allTopParents.pushObjects(topParents.toArray());
         }));
       });
-      
+
       RSVP.all(promises).then(()=>{
         defer.resolve(allTopParents);
       });
@@ -74,20 +74,20 @@ export default DS.Model.extend({
       promise: defer.promise
     });
   }),
-  shortTitle: function(){
+  shortTitle: computed('title', function(){
     var title = this.get('title');
     if(title === undefined){
       return '';
     }
     return title.substr(0,200);
-  }.property('title'),
-  textTitle: function(){
+  }),
+  textTitle: computed('title', function(){
     var title = this.get('title');
     if(title === undefined){
       return '';
     }
     return title.replace(/(<([^>]+)>)/ig,"");
-  }.property('title'),
+  }),
   //Remove any parents with a relationship to the cohort
   removeParentWithProgramYears(programYearsToRemove){
     return new RSVP.Promise(resolve => {

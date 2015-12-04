@@ -2,12 +2,12 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const { computed, RSVP, isEmpty, isPresent, inject } = Ember;
+const { computed, Controller, RSVP, isEmpty, isPresent, inject, observer } = Ember;
 const { gt } = computed;
 const { service } = inject;
 const { PromiseArray } = DS;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   i18n: service(),
   currentUser: service(),
   queryParams: {
@@ -34,16 +34,16 @@ export default Ember.Controller.extend({
         defer.resolve(instructorGroups);
       });
     }
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
   }),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
-  watchFilter: function(){
+  watchFilter: observer('titleFilter', function(){
     Ember.run.debounce(this, this.setFilter, 500);
-  }.observes('titleFilter'),
+  }),
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },
@@ -66,8 +66,8 @@ export default Ember.Controller.extend({
         }
         defer.resolve(filteredInstructorGroups.sortBy('title'));
       });
-      
-      
+
+
       return PromiseArray.create({
         promise: defer.promise
       });

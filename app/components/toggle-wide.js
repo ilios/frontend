@@ -1,16 +1,19 @@
 import Ember from 'ember';
 import randomString from '../utils/random-string';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { oneWay } = computed;
+
+export default Component.extend({
   tagName: 'label',
   classNames: ['switch', 'switch-wide', 'switch-green'],
-  cssId: Ember.computed(function() {
+  cssId: computed(function() {
     return randomString();
   }),
   onLabel: null,
   offLabel: null,
   value: false,
-  switchValue: Ember.computed.oneWay('value'),
+  switchValue: oneWay('value'),
   actions: {
     click(){
       this.sendAction();

@@ -1,6 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
+const { computed } = Ember;
+const { empty } = computed;
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   school: DS.belongsTo('school'),
@@ -9,8 +12,8 @@ export default DS.Model.extend({
   children: DS.hasMany('competency', {async: true, inverse: 'parent'}),
   aamcPcrses: DS.hasMany('aamc-pcrs',  {async: true}),
   programYears: DS.hasMany('program-year',  {async: true}),
-  isDomain: Ember.computed.empty('parent.content'),
-  domain: function(){
+  isDomain: empty('parent.content'),
+  domain: computed('parent', 'parent.domain', function(){
     let promise = new Ember.RSVP.Promise(
       resolve => {
         this.get('parent').then(
@@ -29,5 +32,5 @@ export default DS.Model.extend({
     return DS.PromiseObject.create({
       promise: promise
     });
-  }.property('parent','parent.domain'),
+  }),
 });

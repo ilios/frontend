@@ -3,11 +3,11 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { computed, isPresent, RSVP, inject } = Ember;
+const { Component, computed, isPresent, on, RSVP, inject } = Ember;
 const { PromiseObject } = DS;
 const { service } = inject;
 
-export default Ember.Component.extend({
+export default Component.extend({
   userEvents: service(),
   schoolEvents: service(),
   currentUser: service(),
@@ -16,25 +16,25 @@ export default Ember.Component.extend({
   selectedDate: null,
   selectedView: null,
 
-  dueTranslation: Ember.computed('i18n.locale', function(){
+  dueTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.dueThisDay');
   }),
-  dayTranslation: Ember.computed('i18n.locale', function(){
+  dayTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.day');
   }),
-  weekTranslation: Ember.computed('i18n.locale', function(){
+  weekTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.week');
   }),
-  monthTranslation: Ember.computed('i18n.locale', function(){
+  monthTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.month');
   }),
-  loadingEventsTranslation: Ember.computed('i18n.locale', function(){
+  loadingEventsTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.loadingEvents');
   }),
   icsInstructionsTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.icsInstructions');
   }),
-  setup: Ember.on('init', function() {
+  setup: on('init', function() {
     //do these on setup otherwise tests were failing because
     //the old filter value hung around
     this.set('selectedTopics', []);
@@ -43,14 +43,14 @@ export default Ember.Component.extend({
     this.set('selectedCohorts', []);
     this.set('selectedCourses', []);
   }),
-  fromTimeStamp: Ember.computed('selectedDate', 'selectedView', function(){
+  fromTimeStamp: computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).startOf(this.get('selectedView')).unix();
   }),
-  toTimeStamp: Ember.computed('selectedDate', 'selectedView', function(){
+  toTimeStamp: computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).endOf(this.get('selectedView')).unix();
   }),
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
-  ourEvents: Ember.computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
+  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
     if(this.get('mySchedule')) {
       return DS.PromiseArray.create({
         promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
@@ -88,7 +88,7 @@ export default Ember.Component.extend({
       });
     }
   }),
-  filteredEvents: Ember.computed(
+  filteredEvents: computed(
     'ourEvents.[]',
     'eventsWithSelectedTopics.[]',
     'eventsWithSelectedSessionTypes.[]',
@@ -129,7 +129,7 @@ export default Ember.Component.extend({
       });
 
   }),
-  eventsWithSelectedTopics: Ember.computed('ourEvents.[]', 'selectedTopics.[]', function(){
+  eventsWithSelectedTopics: computed('ourEvents.[]', 'selectedTopics.[]', function(){
     let selectedTopics = this.get('selectedTopics');
     if(selectedTopics.length === 0) {
       return this.get('ourEvents');
@@ -155,7 +155,7 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedSessionTypes: Ember.computed('ourEvents.[]', 'selectedSessionTypes.[]', function(){
+  eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', function(){
     let selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
     let events = this.get('ourEvents');
     if(selectedSessionTypes.length === 0) {
@@ -179,7 +179,7 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedCourseLevels: Ember.computed('ourEvents.[]', 'selectedCourseLevels.[]', function(){
+  eventsWithSelectedCourseLevels: computed('ourEvents.[]', 'selectedCourseLevels.[]', function(){
     let selectedCourseLevels = this.get('selectedCourseLevels');
     let events = this.get('ourEvents');
     if(selectedCourseLevels.length === 0) {
@@ -203,7 +203,7 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedCohorts: Ember.computed('ourEvents.[]', 'selectedCohorts.[]', function(){
+  eventsWithSelectedCohorts: computed('ourEvents.[]', 'selectedCohorts.[]', function(){
     let selectedCohorts = this.get('selectedCohorts').mapBy('id');
     let events = this.get('ourEvents');
     if(selectedCohorts.length === 0) {
@@ -229,7 +229,7 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  eventsWithSelectedCourses: Ember.computed('ourEvents.[]', 'selectedCourses.[]', function(){
+  eventsWithSelectedCourses: computed('ourEvents.[]', 'selectedCourses.[]', function(){
     let selectedCourses = this.get('selectedCourses').mapBy('id');
     let events = this.get('ourEvents');
     if(selectedCourses.length === 0) {
@@ -254,7 +254,7 @@ export default Ember.Component.extend({
     });
   }),
   selectedTopics: [],
-  topics: Ember.computed('selectedSchool.topics.[]', 'selectedTopics.[]', function(){
+  topics: computed('selectedSchool.topics.[]', 'selectedTopics.[]', function(){
     return DS.PromiseArray.create({
       promise: this.get('selectedSchool').then(school => {
         return school.get('topics').then( topics => {
@@ -264,7 +264,7 @@ export default Ember.Component.extend({
     });
   }),
   selectedSessionTypes: [],
-  sessionTypes: Ember.computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
+  sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
     return DS.PromiseArray.create({
       promise: this.get('selectedSchool').then(school => {
         return school.get('sessionTypes').then( types => {
@@ -274,7 +274,7 @@ export default Ember.Component.extend({
     });
   }),
   selectedCourseLevels: [],
-  courseLevels: Ember.computed('selectedCourseLevels.[]', function(){
+  courseLevels: computed('selectedCourseLevels.[]', function(){
     let levels = [];
     for(let i =1; i <=5; i++){
       levels.pushObject(i);
@@ -283,7 +283,7 @@ export default Ember.Component.extend({
     return levels;
   }),
   selectedCohorts: [],
-  allCohorts: Ember.computed('selectedSchool', 'selectedAcademicYear', function(){
+  allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
     let defer = Ember.RSVP.defer();
     this.get('selectedSchool').then(school => {
       this.get('selectedAcademicYear').then(year => {
@@ -296,11 +296,11 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  cohorts: Ember.computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
+  cohorts: computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
     return this.get('allCohorts');
   }),
   selectedCourses: [],
-  allCourses: Ember.computed('selectedSchool', 'selectedAcademicYear', function(){
+  allCourses: computed('selectedSchool', 'selectedAcademicYear', function(){
     let defer = Ember.RSVP.defer();
     this.get('selectedSchool').then((school) => {
       this.get('selectedAcademicYear').then((year) => {
@@ -319,7 +319,7 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  courses: Ember.computed('allCourses.[]', 'selectedCourses.[]', function(){
+  courses: computed('allCourses.[]', 'selectedCourses.[]', function(){
     return this.get('allCourses');
   }),
   selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
@@ -339,8 +339,8 @@ export default Ember.Component.extend({
       promise: defer.promise
     });
   }),
-  hasMoreThanOneSchool: Ember.computed.gt('schools.length', 1),
-  allSchools: Ember.computed(function(){
+  hasMoreThanOneSchool: computed.gt('schools.length', 1),
+  allSchools: computed(function(){
     return DS.PromiseArray.create({
       promise: this.get('currentUser.model').then(user => {
         return user.get('schools').then(schools => {
@@ -349,10 +349,10 @@ export default Ember.Component.extend({
       })
     });
   }),
-  schools: Ember.computed('allSchools.[]', 'selectedSchool', function(){
+  schools: computed('allSchools.[]', 'selectedSchool', function(){
     return this.get('allSchools').sortBy('title');
   }),
-  selectedAcademicYear: Ember.computed('academicYearSelectedByUser', function(){
+  selectedAcademicYear: computed('academicYearSelectedByUser', function(){
     if(this.get('academicYearSelectedByUser')){
       //wrap it in a proxy so the is-equal comparison works the same as the promise
       return DS.PromiseObject.create({
@@ -366,10 +366,10 @@ export default Ember.Component.extend({
       })
     });
   }),
-  allAcademicYears: Ember.computed(function(){
+  allAcademicYears: computed(function(){
     return this.get('store').findAll('academic-year');
   }),
-  academicYears: Ember.computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
+  academicYears: computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
     return DS.PromiseArray.create({
       promise: this.get('allAcademicYears').then(years => {
         return years.sortBy('title');

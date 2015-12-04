@@ -23,7 +23,7 @@ const CourseProxy = ObjectProxy.extend({
         });
       }
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });

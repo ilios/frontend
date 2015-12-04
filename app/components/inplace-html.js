@@ -2,7 +2,9 @@ import Ember from 'ember';
 import config from 'ilios/config/environment';
 import InPlace from 'ilios/mixins/inplace';
 
-export default Ember.Component.extend(InPlace, {
+const { Component } = Ember;
+
+export default Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-html'],
   editorParams: config.froalaEditorDefaults,
   willDestroyElement(){
@@ -20,7 +22,7 @@ export default Ember.Component.extend(InPlace, {
           //if all we have is empty html then save null
           if(plainText.length === 0){
             html = null;
-          } 
+          }
           value = html;
         }
         this.sendAction('save', value, this.get('condition'));

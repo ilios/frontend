@@ -1,29 +1,37 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { alias, sort } = computed;
+
+export default Component.extend({
   i18n: Ember.inject.service(),
   placeholder: t('general.filterPlaceholder'),
   filter: '',
   sortBy: ['title'],
   subject: null,
   availableInstructorGroups: [],
-  instructorGroups: Ember.computed.alias('subject.instructorGroups'),
-  sortedInstructorGroups: Ember.computed.sort('instructorGroups', 'sortBy'),
-  filteredAvailableInstructorGroups: function(){
-    var self = this;
-    var filter = this.get('filter');
-    var exp = new RegExp(filter, 'gi');
-    var instructorGroups = this.get('availableInstructorGroups')?this.get('availableInstructorGroups'):[];
-    return instructorGroups.filter(function(group) {
-      return (
-        group.get('title') !== undefined &&
-        self.get('instructorGroups') &&
-        exp.test(group.get('title')) &&
-        !self.get('instructorGroups').contains(group)
-      );
-    }).sortBy('title');
-  }.property('instructorGroups.@each', 'filter', 'availableInstructorGroups.@each.title'),
+  instructorGroups: alias('subject.instructorGroups'),
+  sortedInstructorGroups: sort('instructorGroups', 'sortBy'),
+  filteredAvailableInstructorGroups: computed(
+    'instructorGroups.@each',
+    'filter',
+    'availableInstructorGroups.@each.title',
+    function(){
+      var self = this;
+      var filter = this.get('filter');
+      var exp = new RegExp(filter, 'gi');
+      var instructorGroups = this.get('availableInstructorGroups')?this.get('availableInstructorGroups'):[];
+      return instructorGroups.filter(function(group) {
+        return (
+          group.get('title') !== undefined &&
+          self.get('instructorGroups') &&
+          exp.test(group.get('title')) &&
+          !self.get('instructorGroups').contains(group)
+        );
+      }).sortBy('title');
+    }
+  ),
   actions: {
     add: function(instructorGroup){
       var subject = this.get('subject');

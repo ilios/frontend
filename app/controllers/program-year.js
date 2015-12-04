@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { computed, Controller } = Ember;
+const { alias } = computed;
+
+export default Controller.extend({
   needs: "program",
-  program: Ember.computed.alias("controllers.program.model"),
+  program: alias("controllers.program.model"),
 });

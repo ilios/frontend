@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   i18n: Ember.inject.service(),
   isMenuVisible: false,
   actions: {

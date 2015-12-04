@@ -2,12 +2,12 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, inject, RSVP} = Ember;
-const {notEmpty, or, not} = computed;
-const {service} = inject;
-const {PromiseArray} = DS;
+const { Component, computed, inject, RSVP} = Ember;
+const { notEmpty, or, not } = computed;
+const { service } = inject;
+const { PromiseArray } = DS;
 
-export default Ember.Component.extend({
+export default Component.extend({
   currentUser: service(),
   store: service(),
   i18n: service(),
@@ -38,12 +38,12 @@ export default Ember.Component.extend({
     }
   }).readOnly(),
 
-  learningMaterialStatuses: function(){
+  learningMaterialStatuses: computed(function(){
     var self = this;
     return PromiseArray.create({
       promise: self.get('store').findAll('learning-material-status')
     });
-  }.property(),
+  }),
   learningMaterialUserRoles: computed(function(){
     var self = this;
     return PromiseArray.create({
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
     let materialProxy = Ember.ObjectProxy.extend({
       sortTerms: ['name'],
       confirmRemoval: false,
-      sortedDescriptors: Ember.computed.sort('content.meshDescriptors', 'sortTerms')
+      sortedDescriptors: computed.sort('content.meshDescriptors', 'sortTerms')
     });
     return this.get('subject.learningMaterials').map(material => {
       return materialProxy.create({

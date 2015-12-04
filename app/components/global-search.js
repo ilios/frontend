@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
-const {inject, run, computed} = Ember;
-const {service} = inject;
-const {debounce} = run;
-const {or, notEmpty} = computed;
+const { Component, inject, run, computed } = Ember;
+const { service } = inject;
+const { debounce } = run;
+const { or, notEmpty } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   store: service(),
   i18n: service(),
   classNames: ['global-search'],

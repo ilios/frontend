@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Helper, observer } = Ember;
+
 export function notIn([values, item]) {
   if(!values){
     return false;
@@ -10,7 +12,7 @@ export function notIn([values, item]) {
   return !values.contains(item);
 }
 
-export default Ember.Helper.extend({
+export default Helper.extend({
   values: [],
   compute: function([values, item]) {
     this.set('values', values);
@@ -18,7 +20,7 @@ export default Ember.Helper.extend({
     return notIn([values, item]);
   },
 
-  recomputeOnArrayChange: Ember.observer('values.[]', function() {
+  recomputeOnArrayChange: observer('values.[]', function() {
     this.recompute();
   })
 });

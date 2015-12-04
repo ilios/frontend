@@ -3,19 +3,21 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
+const { computed } = Ember;
+
 let mockReports = [
   Ember.Object.create({displayTitle: {content: 'all courses'}, subject: 'courses', user: 1}),
   Ember.Object.create({displayTitle: {content: 'courses for session'}, subject: 'courses', prepositionalObject: 'session', prepositionalObjectTableRowId: 11, user: 1}),
 ];
 
 let reportingMock = Ember.Service.extend({
-  reportsList: Ember.computed(function(){
+  reportsList: computed(function(){
     return Ember.RSVP.resolve(mockReports);
   })
 });
 
 let reportingMockNoReports = Ember.Service.extend({
-  reportsList: Ember.computed(function(){
+  reportsList: computed(function(){
     return Ember.RSVP.resolve([]);
   })
 });
@@ -32,7 +34,7 @@ test('list reports', function(assert) {
   assert.expect(4);
   this.register('service:reporting', reportingMock);
   this.render(hbs`{{dashboard-myreports}}`);
-  
+
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
   for(let i = 0; i < 2; i++){
     let tds = this.$(`table tr:eq(${i}) td`);
@@ -47,5 +49,5 @@ test('display none when no reports', function(assert) {
   this.render(hbs`{{dashboard-myreports}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
   assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
-  
+
 });

@@ -3,11 +3,11 @@ import config from 'ilios/config/environment';
 import layout from '../templates/components/new-learningmaterial';
 import EmberValidations from 'ember-validations';
 
-const { computed, inject } = Ember;
+const { Component, computed, inject } = Ember;
 const { alias } = computed;
 const { service } = inject;
 
-export default Ember.Component.extend(EmberValidations, {
+export default Component.extend(EmberValidations, {
   init() {
     const type = this.get('type');
 

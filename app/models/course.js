@@ -3,6 +3,9 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
+const { computed } = Ember;
+const { filterBy, mapBy, sum } = computed;
+
 var Course = DS.Model.extend(PublishableModel, {
   title: DS.attr('string'),
   level: DS.attr('number'),
@@ -21,10 +24,10 @@ var Course = DS.Model.extend(PublishableModel, {
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
   sessions: DS.hasMany('session', {async: true}),
-  academicYear: function(){
+  academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
-  }.property('year'),
-  competencies: function(){
+  }),
+  competencies: computed('objectives.@each.treeCompetencies', function(){
     var defer = Ember.RSVP.defer();
     this.get('objectives').then(function(objectives){
       var promises = objectives.getEach('treeCompetencies');
@@ -41,8 +44,8 @@ var Course = DS.Model.extend(PublishableModel, {
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('objectives.@each.treeCompetencies'),
-  domains: function(){
+  }),
+  domains: computed('competencies.@each.domain', function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
@@ -77,10 +80,10 @@ var Course = DS.Model.extend(PublishableModel, {
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }.property('competencies.@each.domain'),
-  publishedSessions: Ember.computed.filterBy('sessions', 'isPublished'),
-  publishedSessionOfferingCounts: Ember.computed.mapBy('publishedSessions', 'offerings.length'),
-  publishedOfferingCount: Ember.computed.sum('publishedSessionOfferingCounts'),
+  }),
+  publishedSessions: filterBy('sessions', 'isPublished'),
+  publishedSessionOfferingCounts: mapBy('publishedSessions', 'offerings.length'),
+  publishedOfferingCount: sum('publishedSessionOfferingCounts'),
   setDatesBasedOnYear: function(){
     var today = moment();
     var firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
@@ -93,21 +96,18 @@ var Course = DS.Model.extend(PublishableModel, {
   requiredPublicationLengthFields: ['cohorts'],
   optionalPublicationSetFields: [],
   optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
-  requiredPublicationIssues: function(){
+  requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function(){
     return this.getRequiredPublicationIssues();
-  }.property(
-    'startDate',
-    'endDate',
-    'cohorts.length'
-  ),
-  optionalPublicationIssues: function(){
-    return this.getOptionalPublicationIssues();
-  }.property(
+  }),
+  optionalPublicationIssues: computed(
     'topics.length',
     'objectives.length',
-    'meshDescriptors.length'
+    'meshDescriptors.length',
+    function(){
+      return this.getOptionalPublicationIssues();
+    }
   ),
-  associatedLearnerGroups: function(){
+  associatedLearnerGroups: computed('sessions.[].associatedLearnerGroups.[]', function(){
     var deferred = Ember.RSVP.defer();
     this.get('sessions').then(function(sessions){
       Ember.RSVP.all(sessions.mapBy('associatedLearnerGroups')).then(function(sessionLearnerGroups){
@@ -120,7 +120,7 @@ var Course = DS.Model.extend(PublishableModel, {
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
-  }.property('sessions.[].associatedLearnerGroups.[]'),
+  }),
 });
 
 export default Course;

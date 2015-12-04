@@ -1,10 +1,13 @@
 import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { not } = computed;
+
+export default Component.extend({
   course: null,
   collapsed: true,
-  notCollapsed: Ember.computed.not('collapsed'),
+  notCollapsed: not('collapsed'),
   actions: {
     expand: function(){
       this.sendAction('collapsedState', false);

@@ -1,4 +1,7 @@
+import Ember from 'ember';
 import DS from 'ember-data';
+
+const { computed } = Ember;
 
 export default DS.Model.extend({
   name: DS.attr('string'),
@@ -12,14 +15,14 @@ export default DS.Model.extend({
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   descriptors: DS.hasMany('mesh-descriptor',  {async: true}),
-  truncatedScopeNote: function() {
+  truncatedScopeNote: computed('scopeNote', function() {
     let scopeNote = this.get('scopeNote');
     if (250 < scopeNote.length) {
         scopeNote = scopeNote.substring(0, 250);
     }
     return scopeNote;
-  }.property('scopeNote'),
-  hasTruncatedScopeNote: function() {
+  }),
+  hasTruncatedScopeNote: computed('scopeNote', 'truncatedScopeNote', function() {
     return this.get('scopeNote').length !== this.get('truncatedScopeNote').length;
-  }.property('scopeNote', 'truncatedScopeNote')
+  })
 });

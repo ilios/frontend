@@ -1,13 +1,15 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   store: Ember.inject.service(),
   classNames: ['detail-stewards'],
   programYear: null,
   isManaging: false,
   bufferStewards: [],
-  stewardsBySchool: Ember.computed('programYear.stewards.@each', function(){
+  stewardsBySchool: computed('programYear.stewards.@each', function(){
     let deferred = Ember.RSVP.defer();
     let programYear = this.get('programYear');
 

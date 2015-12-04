@@ -3,12 +3,12 @@ import DS from 'ember-data';
 
 import { translationMacro as t } from "ember-i18n";
 
-const {computed, inject, RSVP} = Ember;
-const {service} = inject;
-const {PromiseArray} = DS;
-const {sort} = computed;
+const { Component, computed, inject, RSVP } = Ember;
+const { service } = inject;
+const { PromiseArray } = DS;
+const { sort } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   i18n: service(),
   tagName: 'section',
   classNames: ['detail-block'],
@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   filteredAvailableTopics: computed('availableTopics.[]', 'selectedTopics.[]', 'filter', function(){
     let defer = RSVP.defer();
     let exp = new RegExp(this.get('filter'), 'gi');
-    
+
     this.get('availableTopics').then(availableTopics => {
       let filteredTopics = availableTopics.filter(topic => {
         return (
@@ -31,10 +31,10 @@ export default Ember.Component.extend({
           !this.get('selectedTopics').contains(topic)
         );
       });
-      
+
       defer.resolve(filteredTopics.sortBy('title'));
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });

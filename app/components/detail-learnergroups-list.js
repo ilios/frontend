@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+const { sort } = computed;
+
+export default Component.extend({
   learnerGroups: [],
   sortBy: ['title'],
-  sortedLearnerGroups: Ember.computed.sort('learnerGroups', 'sortBy'),
+  sortedLearnerGroups: sort('learnerGroups', 'sortBy'),
 });

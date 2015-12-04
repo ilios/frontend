@@ -2,12 +2,12 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const {computed, inject, RSVP, isEmpty} = Ember;
-const {PromiseObject, PromiseArray} = DS;
-const {notEmpty} = computed;
+const { Component, computed, inject, RSVP, isEmpty} = Ember;
+const { PromiseObject, PromiseArray } = DS;
+const { notEmpty } = computed;
 const { service } = inject;
 
-export default Ember.Component.extend({
+export default Component.extend({
   store: service(),
   i18n: service(),
   event: null,

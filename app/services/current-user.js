@@ -37,16 +37,16 @@ export default Ember.Service.extend({
     });
   }),
 
-  availableCohortsObserver: function(){
+  availableCohortsObserver: observer('availableCohorts.@each', function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){
       if(!cohorts.contains(self.get('currentCohort'))){
         self.set('currentCohort', null);
       }
     });
-  }.observes('availableCohorts.@each'),
+  }),
   currentCohort: null,
-  availableCohorts: function(){
+  availableCohorts: computed('currentSchool', function(){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve) {
       self.get('currentSchool').then(function(school){
@@ -72,7 +72,7 @@ export default Ember.Service.extend({
         });
       });
     });
-  }.property('currentSchool'),
+  }),
   userRoleTitles: computed('model.roles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('model').then(user => {
