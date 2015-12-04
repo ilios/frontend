@@ -404,8 +404,8 @@ export default {
     'myReports': 'Mis Reportes',
     'newReport': 'Nuevo Reporte',
     'reportTitle': 'Rítulo de Reporte',
-    'reportDisplayTitleWithObject': 'Todos {{subject}} para {{object}}',
-    'reportDisplayTitleWithoutObject': 'Todos {{subject}}',
+    'reportDisplayTitleWithObject': 'Todos {{subject}} para {{object}} en {{school}}',
+    'reportDisplayTitleWithoutObject': 'Todos {{subject}} en {{school}}',
     'associatedWith': 'Ssociado con',
     'whichIs': 'cuál es',
     'reportMissingMeshTerm': 'Término de MeSH es Necesario',
@@ -418,7 +418,8 @@ export default {
     'topicOrDetail': 'Topico/Detalle',
     'courseOrType': 'Curso/Tipo',
     'usersCalendar': "Calendario de{{name}}",
-    'myCalendar': 'Mi Calendario'
+    'myCalendar': 'Mi Calendario',
+    'allSchools': 'Todas las Escuelas',
   },
   'errors': {
     'inclusion': "no está incluido en la lista",

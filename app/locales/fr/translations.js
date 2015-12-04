@@ -404,8 +404,8 @@ export default {
     'myReports': "Mes Rapports",
     'newReport': "nouveau rapport",
     'reportTitle': "Titre du Rapport",
-    'reportDisplayTitleWithObject': "tous {{subject}} pour {{object}}",
-    'reportDisplayTitleWithoutObject': "tous {{subject}}",
+    'reportDisplayTitleWithObject': "tous {{subject}} pour {{object}} en {{school}}",
+    'reportDisplayTitleWithoutObject': "tous {{subject}} en {{school}}",
     'associatedWith': "associée de",
     'whichIs': "qui est",
     'reportMissingMeshTerm': "terme de MeSH requis",
@@ -419,6 +419,7 @@ export default {
     'courseOrType': "Cours/Type",
     'usersCalendar': "Calendrier de {{name}}",
     'myCalendar': "Mon Calendrier",
+    'allSchools': 'Toutes les écoles',
   },
   'errors': {
     'inclusion': "ne figure pas dans la liste",
