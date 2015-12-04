@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/session-offerings';
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, isPresent, RSVP } = Ember;
+const { Component, computed, inject, isPresent, RSVP, copy } = Ember;
 const { service } = inject;
 const { alias, oneWay } = computed;
 const { all } = RSVP;
@@ -57,7 +57,7 @@ export default Component.extend({
       });
     },
 
-    addMultipleOfferings({ learnerGroups, startDate, endDate }) {
+    addMultipleOfferings({ learnerGroups, startDate: sharedStartDateObj, endDate: sharedEndDateObj }) {
       this.set('saving', true);
 
       const store = this.get('store');
@@ -66,6 +66,8 @@ export default Component.extend({
 
       learnerGroups.forEach((learnerGroup) => {
         const room = learnerGroup.get('location') || 'TBD';
+        const startDate = copy(sharedStartDateObj);
+        const endDate = copy(sharedEndDateObj);
         let learnerGroups = [ learnerGroup ];
         let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups });
 
