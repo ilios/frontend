@@ -25,16 +25,17 @@ export default Service.extend({
     const object = report.get('prepositionalObject');
     const objectId = report.get('prepositionalObjectTableRowId');
     let defer = RSVP.defer();
-    this.get('store').query(
-      this.getModel(subject),
-      this.getQuery(subject, object, objectId)
-    ).then(results => {
-      let mapper = pluralize(subject.camelize()) + 'Results';
-      this[mapper](results).then(mappedResults => {
-        defer.resolve(mappedResults.sortBy('value'));
+    report.get('school').then(school => {
+      this.get('store').query(
+        this.getModel(subject),
+        this.getQuery(subject, object, objectId, school)
+      ).then(results => {
+        let mapper = pluralize(subject.camelize()) + 'Results';
+        this[mapper](results).then(mappedResults => {
+          defer.resolve(mappedResults.sortBy('value'));
+        });
       });
     });
-    
     return DS.PromiseArray.create({
       promise: defer.promise
     });
@@ -50,9 +51,10 @@ export default Service.extend({
     
     return model;
   },
-  getQuery(subject, object, objectId){
+  getQuery(subject, object, objectId, school){
     let query = {
-      limit: 1000
+      limit: 1000,
+      filters: {}
     };
     
     if(object && objectId){
@@ -63,8 +65,11 @@ export default Service.extend({
       if(subject = 'session' && object === 'session type'){
         what = 'sessionType';
       }
-      query.filters = {};
       query.filters[what] = objectId;
+    } else {
+      if(subject !== 'mesh term' && subject !== 'instructor' && subject !== 'learning material' && school){
+        query.filters['schools'] = [school.get('id')];  
+      }
     }
     
     return query;
