@@ -16,6 +16,7 @@ export default {
     'add': 'Agregue',
     'addNew': 'Agregue Nuevo',
     'all': 'Todos',
+    'for': 'Para',
     'anything': 'Caulquier Cosa',
     'none': 'Ningún',
     'close': 'Cerrar',

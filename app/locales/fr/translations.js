@@ -16,6 +16,7 @@ export default {
     'add': "Ajouté",
     'addNew': "Ajouté Neuf",
     'all': "Tous",
+    'for': 'Pour',
     'anything': "Quelque chose",
     'none': "Nul",
     'close': "Fermé",

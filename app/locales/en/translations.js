@@ -16,6 +16,7 @@ export default {
     'add': 'Add',
     'addNew': 'Add New',
     'all': 'All',
+    'for': 'For',
     'anything': 'Anything',
     'none': 'None',
     'close': 'Close',

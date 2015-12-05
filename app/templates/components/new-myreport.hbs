@@ -2,7 +2,19 @@
 <div class="detail-content">
     <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
     <div class="form-data">{{input value=title}}</div>
-    
+    <p>
+      {{t 'general.for'}}
+      <select onchange={{action "changeSchool" value="target.value"}}>
+        <option value=null selected={{is-equal null currentSchool}}>
+          {{t 'dashboard.allSchools'}}
+        </option>
+        {{#each schoolList as |school|}}
+          <option value={{school.id}} selected={{is-equal school currentSchool}}>
+            {{school.title}}
+          </option>
+        {{/each}}
+      </select>
+    </p>
     <p>
       {{t 'general.all'}}
       <select onchange={{action "changeSubject" value="target.value"}}>

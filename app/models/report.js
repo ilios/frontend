@@ -21,48 +21,49 @@ export default DS.Model.extend({
     }
     let subject = this.get('subject');
     let prepositionalObject = this.get('prepositionalObject');
-    if(isPresent(prepositionalObject)){
-      let model = prepositionalObject.dasherize();
-      if(model === 'instructor'){
-        model = 'user';
-      }
-      if(model === 'mesh-term'){
-        model = 'mesh-descriptor';
-      }
-      this.store.findRecord(model, this.get('prepositionalObjectTableRowId')).then(record => {
-        let object;
-        if(model === 'user'){
-          object = record.get('fullName');
-        } else if(model === 'mesh-descriptor'){
-          object = record.get('name');
-        } else {
-          object = record.get('title');
-        }
-        this.get('school').then(schoolObj => {
-          let school;
-          if(schoolObj){
-             school = schoolObj.get('title');
-          } else {
-            school = this.get('i18n').t('dashboard.allSchools');
-          }
-          let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithObject', {
-            subject,
-            object,
-            school
-          });
-          
-          defer.resolve(displayTitle);
-        });
-        
-        
-      });
-    } else {
-      let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithoutObject', {
-        subject
-      });
-      defer.resolve(displayTitle);
-    }
     
+    this.get('school').then(schoolObj => {
+      let school;
+      if(schoolObj){
+         school = schoolObj.get('title');
+      } else {
+        school = this.get('i18n').t('dashboard.allSchools');
+      }
+      if(isPresent(prepositionalObject)){
+        let model = prepositionalObject.dasherize();
+        if(model === 'instructor'){
+          model = 'user';
+        }
+        if(model === 'mesh-term'){
+          model = 'mesh-descriptor';
+        }
+        this.store.findRecord(model, this.get('prepositionalObjectTableRowId')).then(record => {
+          let object;
+          if(model === 'user'){
+            object = record.get('fullName');
+          } else if(model === 'mesh-descriptor'){
+            object = record.get('name');
+          } else {
+            object = record.get('title');
+          }
+            let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithObject', {
+              subject,
+              object,
+              school
+            });
+            
+            defer.resolve(displayTitle);
+          
+          
+        });
+      } else {
+        let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithoutObject', {
+          subject,
+          school
+        });
+        defer.resolve(displayTitle);
+      }
+    });
     return PromiseObject.create({
       promise: defer.promise
     });

@@ -12,6 +12,7 @@ export default Component.extend({
   flashMessages: service(),
   classNames: ['form-container', 'detail-view', 'new-myreport', 'mesh-manager'],
   title: null,
+  currentSchool: null,
   currentSubject: 'course',
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
@@ -104,7 +105,22 @@ export default Component.extend({
       return null;
     }
   }),
+  schoolList: computed('currentUser.schools.[]',function(){
+    let defer = RSVP.defer();
+    this.get('currentUser').get('model').then(user => {
+      user.get('schools').then(schools => {
+        defer.resolve(schools.sortBy('title'));
+      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   actions: {
+    changeSchool(schoolId){
+      let school = this.get('schoolList').find(school =>  school.get('id') === schoolId);
+      this.set('currentSchool', school);
+    },
     changeSubject(subject){
       this.set('currentSubject', subject);
     },
@@ -157,14 +173,15 @@ export default Component.extend({
         let subject = this.get('currentSubject');
         let prepositionalObject = this.get('currentPrepositionalObject');
         let prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
+        let school = this.get('currentSchool');
         let report = store.createRecord('report', {
           title,
           user,
           subject,
           prepositionalObject,
-          prepositionalObjectTableRowId
+          prepositionalObjectTableRowId,
+          school
         });
-
         report.save().then(() => {
           this.sendAction('close');
         });
