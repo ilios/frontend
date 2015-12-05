@@ -51,7 +51,7 @@ export default Component.extend({
 
     return list.filter(item =>item.subjects.contains(subject));
   }),
-  prepositionalObjectIdList: computed('currentPrepositionalObject', function(){
+  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', function(){
     const type = this.get('currentPrepositionalObject');
     if(isEmpty(type) || type === 'instructor'){
       return [];
@@ -60,8 +60,20 @@ export default Component.extend({
     let model = type.dasherize();
     const store = this.get('store');
     let query = {
-      limit: 1000
+      limit: 1000,
+      filters: {}
     };
+    let schoolScopedModels = [
+      'topic',
+      'session',
+      'program',
+      'session-type',
+      'instructor-group',
+      'competency',
+    ];
+    if(schoolScopedModels.contains(model)){
+      query.filters.school = this.get('currentSchool').get('id');
+    }
     store.query(model, query).then(objects => {
       let label = type === 'mesh term'?'name':'title';
       let values = objects.map(object => {
