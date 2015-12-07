@@ -1,54 +1,72 @@
 <section id='learnerGroups' class='fullwidth main-border'>
   <div class="filter-tools">
-    <div id='schoolsfilter' class="filter">
+    <div class="filter">
       <label class="inline-label">
-        {{t 'general.school'}}:
+        {{fa-icon 'university'}}
       </label>
-      <div id="school-selection" class="inline-data">
+      <div class="inline-data">
         {{#if hasMoreThanOneSchool}}
-          {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each schools as |school|}}
-              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
+          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+            {{#each sortedSchools as |school|}}
+              <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
+                {{school.title}}
+              </option>
             {{/each}}
-          {{/action-menu}}
+          </select>
         {{else}}
-          {{selectedSchool.title}}
+          {{#if selectedSchool}}
+            {{selectedSchool.title}}
+          {{else if schools.isFulfilled}}
+            {{t 'general.none'}}
+          {{/if}}
         {{/if}}
       </div>
     </div>
-    <div id='programsfilter' class="filter">
+    <div class="filter">
       <label class="inline-label">
-        {{t 'general.program'}}:
+        {{fa-icon 'users'}}
       </label>
-      <div id="program-selection" class="inline-data">
+      <div class="inline-data">
         {{#if hasMoreThanOneProgram}}
-          {{#action-menu title=selectedProgram.title icon=false}}
-            {{#each programs as |program|}}
-              <li {{action 'changeSelectedProgram' program}}>{{program.title}}</li>
+          <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+            {{#each sortedPrograms as |program|}}
+              <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
+                {{program.title}}
+              </option>
             {{/each}}
-          {{/action-menu}}
+          </select>
         {{else}}
-          {{selectedProgram.title}}
+          {{#if selectedProgram}}
+            {{selectedProgram.title}}
+          {{else if programs.isFulfilled}}
+            {{t 'general.none'}}
+          {{/if}}
         {{/if}}
       </div>
     </div>
     <div id='programyearsfilter' class="filter">
       <label class="inline-label">
-        {{t 'general.cohort'}}:
+        {{fa-icon 'calendar'}}
       </label>
       <div id="programyear-selection" class="inline-data">
         {{#if hasMoreThanOneProgramYear}}
-          {{#action-menu title=selectedProgramYear.cohort.displayTitle icon=false}}
-            {{#each programYears as |programYear|}}
-              <li {{action 'changeSelectedProgramYear' programYear}}>{{programYear.cohort.displayTitle}}</li>
+          <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
+            {{#each sortedProgramYears as |programYear|}}
+              <option value={{programYear.id}} selected={{is-equal programYear selectedProgramYear.content}}>
+                {{programYear.cohort.title}}
+              </option>
             {{/each}}
-          {{/action-menu}}
+          </select>
         {{else}}
-          {{selectedProgramYear.cohort.displayTitle}}
+          {{#if selectedProgramYear}}
+            {{selectedProgramYear.cohort.title}}
+          {{else if programYears.isFulfilled}}
+            {{t 'general.none'}}
+          {{/if}}
         {{/if}}
       </div>
     </div>
-    <div id='titlefilter' class="filter">
+    <div id='titlefilter' class="filter string-filter">
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
@@ -69,11 +87,15 @@
     </section>
 
     <div class='resultslist-list'>
-      {{learnergroup-list
-        learnerGroups=filteredLearnerGroups
-        edit='editLearnerGroup'
-        remove='removeLearnerGroup'
-      }}
+      {{#if learnerGroups.isFulfilled}}
+        {{learnergroup-list
+          learnerGroups=filteredLearnerGroups
+          edit='editLearnerGroup'
+          remove='removeLearnerGroup'
+        }}
+      {{else}}
+        {{pulse-loader}}
+      {{/if}}
     </div>
   </section>
 </section>

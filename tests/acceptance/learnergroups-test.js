@@ -33,6 +33,9 @@ test('visiting /learnergroups', function(assert) {
 });
 
 test('single option filters', function(assert) {
+  const schoolsFilter = '.filter:eq(0)';
+  const programsFilter = '.filter:eq(1)';
+  const yearsFilter = '.filter:eq(2)';
   assert.expect(3);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -51,14 +54,18 @@ test('single option filters', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(getElementText(find('#schoolsfilter')), getText('School: school 0'));
-    assert.equal(getElementText(find('#programsfilter')), getText('Program: program 0'));
-    assert.equal(getElementText(find('#programyearsfilter')), getText('Cohort: cohort 0'));
+    assert.equal(getElementText(find(schoolsFilter)), getText('school 0'));
+    assert.equal(getElementText(find(programsFilter)), getText('program 0'));
+    assert.equal(getElementText(find(yearsFilter)), getText('cohort 0'));
   });
 });
 
 test('multiple programs filter', function(assert) {
-  assert.expect(6);
+  const selectedProgram = '.filter:eq(1) select option:selected';
+  const programOptions = '.filter:eq(1) select option';
+  const programSelectList = '.filter:eq(1) select';
+  const firstListedLearnerGroup = '.resultslist-list tbody tr td:eq(0)';
+  assert.expect(7);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1,2]
@@ -95,23 +102,25 @@ test('multiple programs filter', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    var container = find('#programsfilter');
-    assert.equal(getElementText(find('button', container)), getText('program 1'));
-    assert.equal(getElementText(find('.resultslist-list tbody tr td:eq(0)')),getText(secondLearnergroup.title));
-    click('button', container).then(function(){
-      var options = find('li', container);
-      assert.equal(options.length, 2);
-      assert.equal(getElementText(options.eq(0)), getText('program 0'));
-      assert.equal(getElementText(options.eq(1)), getText('program 1'));
-      click(options.eq(0)).then(function(){
-        assert.equal(getElementText(find('.resultslist-list tbody tr td:eq(0)')),getText(firstLearnergroup.title));
-      });
+    assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
+    assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
+    var options = find(programOptions);
+    assert.equal(options.length, 2);
+    assert.equal(getElementText(options.eq(0)), getText('program 0'));
+    assert.equal(getElementText(options.eq(1)), getText('program 1'));
+    pickOption(programSelectList, 'program 1', assert);
+    andThen(() => {
+      assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
     });
   });
 });
 
 test('multiple program years filter', function(assert) {
-  assert.expect(6);
+  const selectedProgramYear = '.filter:eq(2) select option:selected';
+  const programYearOptions = '.filter:eq(2) select option';
+  const programYearSelectList = '.filter:eq(2) select';
+  const firstListedLearnerGroup = '.resultslist-list tbody tr td:eq(0)';
+  assert.expect(7);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
@@ -144,17 +153,15 @@ test('multiple program years filter', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    var container = find('#programyearsfilter');
-    assert.equal(getElementText(find('button', container)), getText('cohort 1'));
-    assert.equal(getElementText(find('.resultslist-list tbody tr td:eq(0)')),getText(secondLearnergroup.title));
-    click('button', container).then(function(){
-      var options = find('li', container);
-      assert.equal(options.length, 2);
-      assert.equal(getElementText(options.eq(0)), getText('cohort 0'));
-      assert.equal(getElementText(options.eq(1)), getText('cohort 1'));
-      click(options.eq(0)).then(function(){
-        assert.equal(getElementText(find('.resultslist-list tbody tr td:eq(0)')),getText(firstLearnergroup.title));
-      });
+    assert.equal(getElementText(find(selectedProgramYear)), getText('cohort 1'));
+    assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
+    var options = find(programYearOptions);
+    assert.equal(options.length, 2);
+    assert.equal(getElementText(options.eq(0)), getText('cohort 1'));
+    assert.equal(getElementText(options.eq(1)), getText('cohort 0'));
+    pickOption(programYearSelectList, 'cohort 0', assert);
+    andThen(function(){
+      assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
     });
   });
 });
