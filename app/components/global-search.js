@@ -1,14 +1,12 @@
 import Ember from 'ember';
+import DS from 'ember-data';
+import queryUtils from '../utils/query-utils';
 
 const { Component, computed, inject, isEmpty, run } = Ember;
 const { service } = inject;
 const { debounce } = run;
-const { trim } = Ember.$;
 const { PromiseObject } = DS;
-
-function cleanQuery(query) {
-  return trim(query).replace(/[\-,?~!@#$%&*+\-'="]/, '');
-}
+const { cleanQuery } = queryUtils;
 
 export default Component.extend({
   store: service(),
@@ -25,7 +23,7 @@ export default Component.extend({
     get() {
       const query = this.get('query');
       const revisedQuery = cleanQuery(query);
-      const validate = this.checkQueryLength(revisedQuery);
+      const validate = revisedQuery.length > 2;
 
       if (validate) {
         this.set('showMoreInputPrompt', false);
@@ -37,12 +35,8 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  _updateQuery(value) {
+  updateQuery(value) {
     this.set('query', value);
-  },
-
-  checkQueryLength(query) {
-    return query.length > 2 ? true : false;
   },
 
   searchResults: computed('revisedQuery', {
@@ -72,7 +66,7 @@ export default Component.extend({
     },
 
     changeValue(value) {
-      debounce(this, this._updateQuery, value, this.get('delay'));
+      debounce(this, this.updateQuery, value, this.get('delay'));
     }
   }
 });
