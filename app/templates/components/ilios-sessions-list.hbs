@@ -45,10 +45,10 @@
         <table class='active-background'>
           <thead>
             <tr>
-              <th class='text-left' colspan=2>{{t 'general.title'}}</th>
+              <th class='text-left' colspan=3>{{t 'general.title'}}</th>
               <th class='text-left' >{{t 'general.type'}}</th>
               <th class='text-center' >{{t 'general.groups'}}</th>
-              <th class='text-center' >{{t 'courses.firstOffering'}}</th>
+              <th class='text-left' colspan=2>{{t 'courses.firstOffering'}}</th>
               <th class='text-center' >{{t 'general.offerings'}}</th>
               <th class='text-center' >{{t 'general.status'}}</th>
               <th class='text-center' >{{t 'general.actions'}}</th>
@@ -57,7 +57,7 @@
           <tbody>
             {{#each filteredContent as |sessionProxy|}}
               <tr class="{{if sessionProxy.showRemoveConfirmation 'confirm-removal'}}">
-                <td class='text-left' colspan=2>
+                <td class='text-left' colspan=3>
                   {{#link-to 'session.index' course sessionProxy.content}}
                     {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
                   {{/link-to}}
@@ -70,10 +70,14 @@
                   {{/liquid-if}}
                 </td>
                 <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
-                <td class='text-center'>
+                <td class='text-left' colspan=2>
                   {{#liquid-if sessionProxy.firstOfferingDate.isFulfilled class='crossFade'}}
                     {{#if sessionProxy.firstOfferingDate}}
-                      {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
+                      {{#if sessionProxy.ilmSession}}
+                        <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate.content 'ha M/D/YY'}}
+                      {{else}}
+                        {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
+                      {{/if}}
                     {{/if}}
                   {{else}}
                     {{fa-icon 'spinner' spin=true}}
@@ -98,7 +102,7 @@
                 </td>
               </tr>
               {{#if sessionProxy.showRemoveConfirmation}}
-                <tr class='confirm-removal'><td colspan=8>
+                <tr class='confirm-removal'><td colspan=10>
                   <div class='confirm-message'>
                     {{t 'courses.confirmSessionRemoval'}}<br />
                     <div class="confirm-buttons">
@@ -110,13 +114,13 @@
               {{/if}}
               {{#if sessionProxy.expandOfferings}}
                 <tr class='donthover'>
-                  <td colspan=8 class='text-right' {{action 'toggleExpandedOffering' sessionProxy}}>
+                  <td colspan=10 class='text-right' {{action 'toggleExpandedOffering' sessionProxy}}>
                     {{t 'general.close'}}
                     {{fa-icon 'times'}}
                   </td>
                 </tr>
                 <tr>
-                  <td colspan=8>
+                  <td colspan=10>
                     {{#if sessionProxy.offerings.length}}
                       {{session-offerings-list session=sessionProxy.content editable=false}}
                     {{else}}
@@ -126,7 +130,7 @@
                   </tr>
                 {{/if}}
               {{else}}
-                <tr><td colspan=8>{{t 'courses.noSessions'}}</td></tr>
+                <tr><td colspan=10>{{t 'courses.noSessions'}}</td></tr>
               {{/each}}
           </tbody>
         </table>
