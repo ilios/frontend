@@ -29,7 +29,7 @@ module.exports = function(environment) {
     },
     'simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
-      serverTokenRefreshEndpoint: '/auth/refresh',
+      serverTokenRefreshEndpoint: '/auth/token',
       tokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
