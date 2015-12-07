@@ -1,10 +1,13 @@
 import Ember from 'ember';
 
-const { computed, Controller } = Ember;
+const { computed, Controller, inject } = Ember;
+const { controller } = inject;
 const { alias } = computed;
 
 export default Controller.extend({
-  needs: ["program", "programYear"],
-  program: alias("controllers.program.model"),
-  programYear: alias("controllers.programYear.model"),
+  programYearController: controller('programYear'),
+  programController: controller('program'),
+
+  program: alias('programController.model'),
+  programYear: alias('programYearController.model')
 });
