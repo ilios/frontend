@@ -63,6 +63,7 @@
     "ember-cli-uploader": "^0.3.10",
     "ember-froala": "1.2.0",
     "ember-i18n": "4.1.4",
+    "ember-inflector": "1.9.3",
     "ember-legacy-views": "0.2.0",
     "ember-load": "0.0.2",
     "ember-modal-dialog": "0.8.2",
