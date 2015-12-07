@@ -201,7 +201,8 @@ export default {
     'selectGroup': 'Select Group',
     'multiEdit': 'Multi-Edit',
     'includeAll': 'Check All',
-    'message': 'No learner groups available; No cohort is attached to this course.'
+    'message': 'No learner groups available; No cohort is attached to this course.',
+    'selectProgram': 'Select a Program',
   },
   'courses': {
     'currentSchool': 'Current School',

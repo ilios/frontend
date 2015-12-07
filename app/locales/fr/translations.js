@@ -202,6 +202,7 @@ export default {
     'multiEdit': "Modifier de multiples groupes",
     'includeAll': "Cochez toutes",
     'message': "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours.",
+    'selectProgram': 'Choisi Diplôme',
   },
   'courses': {
     'currentSchool': "Écôle Actuelle",

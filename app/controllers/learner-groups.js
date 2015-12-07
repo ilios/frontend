@@ -148,7 +148,11 @@ export default Controller.extend({
       if(program){
         defer.resolve(program);
       } else {
-        defer.resolve(programs.sortBy('title').get('firstObject'));
+        if(programs.length > 1){
+          defer.resolve(null);
+        } else {
+          defer.resolve(programs.sortBy('title').get('firstObject'));
+        }
       }
     });
     

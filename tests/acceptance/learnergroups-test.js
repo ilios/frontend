@@ -65,7 +65,7 @@ test('multiple programs filter', function(assert) {
   const programOptions = '.filter:eq(1) select option';
   const programSelectList = '.filter:eq(1) select';
   const firstListedLearnerGroup = '.resultslist-list tbody tr td:eq(0)';
-  assert.expect(7);
+  assert.expect(10);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1,2]
@@ -102,15 +102,20 @@ test('multiple programs filter', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
-    assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
-    var options = find(programOptions);
-    assert.equal(options.length, 2);
-    assert.equal(getElementText(options.eq(0)), getText('program 0'));
-    assert.equal(getElementText(options.eq(1)), getText('program 1'));
-    pickOption(programSelectList, 'program 1', assert);
-    andThen(() => {
-      assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
+    assert.equal(getElementText(find(selectedProgram)), getText('Select a Program'));
+    assert.equal(find(firstListedLearnerGroup).length, 0);
+    pickOption(programSelectList, 'program 0', assert);
+    andThen(function(){
+      assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
+      var options = find(programOptions);
+      assert.equal(options.length, 3);
+      assert.equal(getElementText(options.eq(0)), getText('Select a Program'));
+      assert.equal(getElementText(options.eq(1)), getText('program 0'));
+      assert.equal(getElementText(options.eq(2)), getText('program 1'));
+      pickOption(programSelectList, 'program 1', assert);
+      andThen(() => {
+        assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
+      });
     });
   });
 });
