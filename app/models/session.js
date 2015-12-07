@@ -3,8 +3,9 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
-const { computed } = Ember;
-const { filterBy, mapBy, notEmpty, sort, sum } = computed;
+const { computed, isEmpty, isPresent, RSVP } = Ember;
+const { mapBy, notEmpty, sum } = computed;
+const { PromiseArray, PromiseObject } = DS;
 
 var Session = DS.Model.extend(PublishableModel, {
   title: DS.attr('string'),
@@ -24,30 +25,43 @@ var Session = DS.Model.extend(PublishableModel, {
   isIndependentLearning: notEmpty('ilmSession.content'),
   offeringLearnerGroupsLength: mapBy('offerings', 'learnerGroups.length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
-  offeringsWithStartDate: filterBy('offerings', 'startDate'),
-  sortedOfferingsByDate: sort('offeringsWithStartDate', function(a,b){
-    var aDate = moment(a.get('startDate'));
-    var bDate = moment(b.get('startDate'));
-    if(aDate === bDate){
-      return 0;
+  sortedOfferingsByDate: computed('offerings.[]', {
+    get() {
+      let defer = RSVP.defer();
+      this.get('offerings').then(offerings => {
+        let sortedOfferingsByDate = offerings.filter(offering => isPresent(offering.get('startDate'))).sort((a, b) => {
+          let aDate = moment(a.get('startDate'));
+          let bDate = moment(b.get('startDate'));
+          if(aDate === bDate){
+            return 0;
+          }
+          return aDate > bDate ? 1 : -1;
+        });
+        
+        defer.resolve(sortedOfferingsByDate);
+      });
+
+      return PromiseArray.create({
+        promise: defer.promise
+      });
     }
-    return aDate > bDate ? 1 : -1;
-  }),
+  }).readOnly(),
   firstOfferingDate: computed('sortedOfferingsByDate.[]', 'ilmSession.dueDate', function(){
-    var self = this;
     var deferred = Ember.RSVP.defer();
-    this.get('ilmSession').then(function(ilmSession){
+    this.get('ilmSession').then(ilmSession => {
       if(ilmSession){
         deferred.resolve(ilmSession.get('dueDate'));
       } else {
-        var offerings = self.get('sortedOfferingsByDate');
-        if(offerings.length === 0){
-          deferred.resolve(null);
-        }
-        deferred.resolve(offerings.get('firstObject.startDate'));
+        this.get('sortedOfferingsByDate').then(offerings => {
+          if(isEmpty(offerings)){
+            deferred.resolve(null);
+          } else {
+            deferred.resolve(offerings.get('firstObject.startDate'));
+          }
+        });
       }
     });
-    return DS.PromiseObject.create({
+    return PromiseObject.create({
       promise: deferred.promise
     });
   }),

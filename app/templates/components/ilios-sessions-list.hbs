@@ -62,12 +62,22 @@
                     {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
                   {{/link-to}}
                 </td>
-                <td class='text-left'>{{sessionProxy.sessionType.title}}</td>
+                <td class='text-left'>
+                  {{#liquid-if sessionProxy.sessionType.isFulfilled class='crossFade'}}
+                    {{sessionProxy.sessionType.title}}
+                  {{else}}
+                    {{fa-icon 'spinner' spin=true}}
+                  {{/liquid-if}}
+                </td>
                 <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
                 <td class='text-center'>
-                  {{#if sessionProxy.firstOfferingDate.content}}
-                    {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
-                  {{/if}}
+                  {{#liquid-if sessionProxy.firstOfferingDate.isFulfilled class='crossFade'}}
+                    {{#if sessionProxy.firstOfferingDate}}
+                      {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
+                    {{/if}}
+                  {{else}}
+                    {{fa-icon 'spinner' spin=true}}
+                  {{/liquid-if}}
                 </td>
                 <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>
                   {{sessionProxy.offerings.length}}
