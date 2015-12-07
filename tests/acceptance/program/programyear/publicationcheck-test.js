@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
@@ -27,7 +27,7 @@ module('Acceptance: Program - Publication Check' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
@@ -93,7 +93,7 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents' + testgrou
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

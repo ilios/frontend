@@ -1,8 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-import Ember from 'ember';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 moduleForComponent('offering-editor-learnergroups', 'Integration | Component | offering editor learnergroups' + testgroup, {
   integration: true,

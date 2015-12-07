@@ -1,11 +1,12 @@
+import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
-import Ember from 'ember';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 const { isEmpty } = Ember;
 
@@ -107,7 +108,7 @@ module('Acceptance: Dashboard Calendar' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

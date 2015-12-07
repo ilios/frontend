@@ -1,5 +1,5 @@
+import destroyApp from '../../../helpers/destroy-app';
 import moment from 'moment';
-import Ember from 'ember';
 import {
   module,
   test
@@ -7,6 +7,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import Ember from 'ember';
 
 var application;
 var fixtures = {};
@@ -28,7 +29,7 @@ module('Acceptance: Session - Overview' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 
@@ -188,7 +189,7 @@ test('change type', function(assert) {
     assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
     click(find('.sessiontype .editable', container));
     andThen(function(){
-      
+
       let options = find('.sessiontype select option', container);
       assert.equal(options.length, 2);
       assert.equal(getElementText(options.eq(0)), getText('session type 0'));

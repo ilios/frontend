@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
@@ -102,7 +102,7 @@ module('Acceptance: Session - Independent Learning' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 const { isEmpty, isPresent, run } = Ember;
 const { later } = run;
@@ -109,7 +110,7 @@ module('Acceptance: Session - Learning Materials' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 

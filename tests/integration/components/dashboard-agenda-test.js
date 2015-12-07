@@ -1,9 +1,9 @@
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 let today = moment();
 let mockEvents = [
@@ -34,7 +34,7 @@ test('it renders with events', function(assert) {
   this.container.register('service:mockuserevents', userEventsMock);
   this.container.injection('component', 'userEvents', 'service:mockuserevents');
   assert.expect(6);
-  
+
   this.render(hbs`{{dashboard-agenda}}`);
 
   for(let i = 0; i < 3; i++){
@@ -48,7 +48,7 @@ test('it renders blank', function(assert) {
   this.container.register('service:mockuserevents', blankEventsMock);
   this.container.injection('component', 'userEvents', 'service:mockuserevents');
   assert.expect(1);
-  
+
   this.render(hbs`{{dashboard-agenda}}`);
 
   assert.equal(this.$().text().trim(), 'No upcoming events');

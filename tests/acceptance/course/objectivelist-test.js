@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import Ember from 'ember';
 
 var application;
 var fixtures = {};
@@ -23,7 +24,7 @@ module('Acceptance: Course - Objective List' + testgroup, {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    destroyApp(application);
   }
 });
 
@@ -156,7 +157,7 @@ test('edit objective title', function(assert) {
         let editor = find('.froala-box', td);
         let editorContents = editor.editable('getText');
         assert.equal(getText(editorContents), getText(objective.title));
-        
+
         editor.editable('setHTML', 'new title');
         click(find('.actions .done', td));
         andThen(function(){
