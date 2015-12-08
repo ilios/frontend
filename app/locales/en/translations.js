@@ -16,6 +16,7 @@ export default {
     'add': 'Add',
     'addNew': 'Add New',
     'all': 'All',
+    'for': 'For',
     'anything': 'Anything',
     'none': 'None',
     'close': 'Close',
@@ -405,8 +406,8 @@ export default {
     'myReports': 'My Reports',
     'newReport': 'New Report',
     'reportTitle': 'Report Title',
-    'reportDisplayTitleWithObject': 'All {{subject}} for {{object}}',
-    'reportDisplayTitleWithoutObject': 'All {{subject}}',
+    'reportDisplayTitleWithObject': 'All {{subject}} for {{object}} in {{school}}',
+    'reportDisplayTitleWithoutObject': 'All {{subject}} in {{school}}',
     'associatedWith': 'Associated with',
     'whichIs': 'which is',
     'reportMissingMeshTerm': 'MeSH Term is Required',
@@ -419,7 +420,8 @@ export default {
     'topicOrDetail': 'Topic/Detail',
     'courseOrType': 'Course/Type',
     'usersCalendar': "{{name}}'s Calendar",
-    'myCalendar': 'My Calendar'
+    'myCalendar': 'My Calendar',
+    'allSchools': 'All Schools',
   },
   'errors': {
     'inclusion': "is not included in the list",

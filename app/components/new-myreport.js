@@ -12,6 +12,7 @@ export default Component.extend({
   flashMessages: service(),
   classNames: ['form-container', 'detail-view', 'new-myreport', 'mesh-manager'],
   title: null,
+  currentSchool: null,
   currentSubject: 'course',
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
@@ -50,7 +51,7 @@ export default Component.extend({
 
     return list.filter(item =>item.subjects.contains(subject));
   }),
-  prepositionalObjectIdList: computed('currentPrepositionalObject', function(){
+  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', function(){
     const type = this.get('currentPrepositionalObject');
     if(isEmpty(type) || type === 'instructor'){
       return [];
@@ -58,9 +59,25 @@ export default Component.extend({
     let defer = RSVP.defer();
     let model = type.dasherize();
     const store = this.get('store');
+    const school = this.get('currentSchool');
     let query = {
-      limit: 1000
+      limit: 1000,
+      filters: {}
     };
+    if(isPresent(school)){
+      let schoolScopedModels = [
+        'topic',
+        'session',
+        'program',
+        'session-type',
+        'instructor-group',
+        'competency',
+      ];
+      if(schoolScopedModels.contains(model)){
+        query.filters.school = this.get('currentSchool').get('id');
+      }
+    }
+    
     store.query(model, query).then(objects => {
       let label = type === 'mesh term'?'name':'title';
       let values = objects.map(object => {
@@ -104,9 +121,26 @@ export default Component.extend({
       return null;
     }
   }),
+  schoolList: computed('currentUser.schools.[]',function(){
+    let defer = RSVP.defer();
+    this.get('currentUser').get('model').then(user => {
+      user.get('schools').then(schools => {
+        defer.resolve(schools.sortBy('title'));
+      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
   actions: {
+    changeSchool(schoolId){
+      let school = this.get('schoolList').find(school =>  school.get('id') === schoolId);
+      this.set('currentSchool', school);
+    },
     changeSubject(subject){
       this.set('currentSubject', subject);
+      this.set('currentPrepositionalObject', null);
+      this.set('currentPrepositionalObjectId', null);
     },
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
@@ -157,14 +191,15 @@ export default Component.extend({
         let subject = this.get('currentSubject');
         let prepositionalObject = this.get('currentPrepositionalObject');
         let prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
+        let school = this.get('currentSchool');
         let report = store.createRecord('report', {
           title,
           user,
           subject,
           prepositionalObject,
-          prepositionalObjectTableRowId
+          prepositionalObjectTableRowId,
+          school
         });
-
         report.save().then(() => {
           this.sendAction('close');
         });
