@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import LiveSearchItem from 'ilios/mixins/live-search-item';
 
 const { Component, computed, observer } = Ember;
 
@@ -19,18 +18,6 @@ export default Component.extend({
   searching: false,
   sortedSearchResults: computed('results.[]', function(){
     return this.get('results').sortBy('sortTerm');
-  }),
-
-  searchResults: computed(function(key, values){
-    if (arguments.length > 1) {
-      values.forEach(function(obj){
-        if(!LiveSearchItem.detect(obj)){
-          throw new Error("You must pass an array of Live Search Items to the search results property.");
-        }
-      });
-      this.set('results', values);
-    }
-    return this.get('results');
   }),
 
   watchSeatchTerms: observer('searchTerms', function(){
