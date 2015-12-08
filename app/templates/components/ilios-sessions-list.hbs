@@ -71,7 +71,7 @@
                   {{#liquid-if sessionProxy.firstOfferingDate.isFulfilled class='crossFade'}}
                     {{#if sessionProxy.firstOfferingDate}}
                       {{#if sessionProxy.ilmSession}}
-                        <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate.content 'ha M/D/YY'}}
+                        <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate.content 'M/D/YY'}}
                       {{else}}
                         {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
                       {{/if}}
