@@ -1,123 +1,143 @@
 <section id='sessions' class='detail-block filter-detail-block'>
   <div class='sessions detail-title'>
-    {{t 'general.sessions'}} ({{proxiedSessions.length}})
+    {{t 'general.sessions'}} ({{course.sessions.length}})
   </div>
-  <div class="filter-tools">
-    <div id='titlefilter' class="filter">
-      {{input type='text' value=filter placeholder=placeholderValue}}
-    </div>
-  </div>
-  <div class='detail-actions'>
-    <div class='resultslist-actions'>
-      {{expand-collapse-button value=editorOn action="toggleEditor"}}
-    </div>
-
-    {{#if proxiedSessions.length}}
-      {{#link-to 'course.publishall' course}}
-        <button>{{t 'publish.all' sessionCount=course.sessions.length}}</button>
-      {{/link-to}}
-    {{/if}}
-  </div>
-
-  <section class='resultslist'>
-    {{#liquid-if editorOn class='vertical'}}
-      {{new-session
-        sessionTypes=course.school.sessionTypes
-        save='save'
-        cancel='cancel'
-      }}
-    {{/liquid-if}}
-
-    {{#if saved}}
-      <div class='saved-result'>
-        {{#link-to 'session.index' course savedSession}}
-          {{fa-icon 'external-link-square'}} {{savedSession.title}}
-        {{/link-to}}
-        {{t 'general.savedSuccessfully'}}
+  {{#if filteredContent.isFulfilled}}
+    <div class="filter-tools">
+      <div id='titlefilter' class="filter">
+        {{input type='text' value=filter placeholder=placeholderValue}}
       </div>
-    {{/if}}
-
-    <div class='resultslist-list'>
-      <table class='active-background'>
-        <thead>
-          <tr>
-            <th class='text-left' colspan=2>{{t 'general.title'}}</th>
-            <th class='text-left' >{{t 'general.type'}}</th>
-            <th class='text-center' >{{t 'general.groups'}}</th>
-            <th class='text-center' >{{t 'courses.firstOffering'}}</th>
-            <th class='text-center' >{{t 'general.offerings'}}</th>
-            <th class='text-center' >{{t 'general.status'}}</th>
-            <th class='text-center' >{{t 'general.actions'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each filteredContent as |sessionProxy|}}
-            <tr class="{{if sessionProxy.showRemoveConfirmation 'confirm-removal'}}">
-              <td class='text-left' colspan=2>
-                {{#link-to 'session.index' course sessionProxy.content}}
-                  {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
-                {{/link-to}}
-              </td>
-              <td class='text-left'>{{sessionProxy.sessionType.title}}</td>
-              <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
-              <td class='text-center'>
-                {{#if sessionProxy.firstOfferingDate.content}}
-                  {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
-                {{/if}}
-              </td>
-              <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>
-                {{sessionProxy.offerings.length}}
-                {{#if sessionProxy.expandOfferings}}
-                  {{fa-icon 'caret-down'}}
-                {{else}}
-                  {{fa-icon 'eye'}}
-                {{/if}}
-              </td>
-              <td class='text-center'>{{publication-status item=sessionProxy.content showIcon=false}}</td>
-              <td class='text-center'>
-                {{#link-to 'session.index' course sessionProxy.content class='edit'}}
-                  {{fa-icon 'edit'}}
-                {{/link-to}}
-                {{#if sessionProxy.userCanDelete}}
-                  <span class='clickable remove' {{action 'confirmRemoval' sessionProxy}}>{{fa-icon 'trash'}}</span>
-                {{/if}}
-              </td>
-            </tr>
-            {{#if sessionProxy.showRemoveConfirmation}}
-              <tr class='confirm-removal'><td colspan=8>
-                <div class='confirm-message'>
-                  {{t 'courses.confirmSessionRemoval'}}<br />
-                  <div class="confirm-buttons">
-                    <button {{action 'remove' sessionProxy}} class='remove text'>{{t 'general.yes'}}</button>
-                    <button {{action 'cancelRemove' sessionProxy}} class='done text'>{{t 'general.cancel'}}</button>
-                  </div>
-                </div>
-              </td></tr>
-            {{/if}}
-            {{#if sessionProxy.expandOfferings}}
-              <tr class='donthover'>
-                <td colspan=8 class='text-right' {{action 'toggleExpandedOffering' sessionProxy}}>
-                  {{t 'general.close'}}
-                  {{fa-icon 'times'}}
-                </td>
-              </tr>
-              <tr>
-                <td colspan=8>
-                  {{#if sessionProxy.offerings.length}}
-                    {{session-offerings-list session=sessionProxy.content editable=false}}
-                  {{else}}
-                    <p>{{t 'sessions.noOfferings'}}</p>
-                  {{/if}}
-
-                </td>
-              </tr>
-            {{/if}}
-          {{else}}
-            <tr><td colspan=8>{{t 'courses.noSessions'}}</td></tr>
-          {{/each}}
-
-        </tbody>
-      </table>
     </div>
-  </section>
+    <div class='detail-actions'>
+      <div class='resultslist-actions'>
+        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+      </div>
+
+      {{#if proxiedSessions.length}}
+        {{#link-to 'course.publishall' course}}
+          <button>{{t 'publish.all' sessionCount=course.sessions.length}}</button>
+        {{/link-to}}
+      {{/if}}
+    </div>
+
+    <section class='resultslist'>
+      {{#liquid-if isSaving}}
+        <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
+      {{/liquid-if}}
+      
+      {{#liquid-if editorOn class='vertical'}}
+        {{new-session
+          sessionTypes=course.school.sessionTypes
+          save='save'
+          cancel='cancel'
+        }}
+      {{/liquid-if}}
+
+      {{#liquid-if saved}}
+        <div class='saved-result'>
+          {{#link-to 'session.index' course savedSession}}
+            {{fa-icon 'external-link-square'}} {{savedSession.title}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/liquid-if}}
+
+      <div class='resultslist-list'>
+        <table class='active-background'>
+          <thead>
+            <tr>
+              <th class='text-left' colspan=3>{{t 'general.title'}}</th>
+              <th class='text-left' >{{t 'general.type'}}</th>
+              <th class='text-center' >{{t 'general.groups'}}</th>
+              <th class='text-left' colspan=2>{{t 'courses.firstOffering'}}</th>
+              <th class='text-center' >{{t 'general.offerings'}}</th>
+              <th class='text-center' >{{t 'general.status'}}</th>
+              <th class='text-center' >{{t 'general.actions'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each filteredContent as |sessionProxy|}}
+              <tr class="{{if sessionProxy.showRemoveConfirmation 'confirm-removal'}}">
+                <td class='text-left' colspan=3>
+                  {{#link-to 'session.index' course sessionProxy.content}}
+                    {{fa-icon 'external-link-square'}} {{sessionProxy.title}}
+                  {{/link-to}}
+                </td>
+                <td class='text-left'>
+                  {{#liquid-if sessionProxy.sessionType.isFulfilled class='crossFade'}}
+                    {{sessionProxy.sessionType.title}}
+                  {{else}}
+                    {{fa-icon 'spinner' spin=true}}
+                  {{/liquid-if}}
+                </td>
+                <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
+                <td class='text-left' colspan=2>
+                  {{#liquid-if sessionProxy.firstOfferingDate.isFulfilled class='crossFade'}}
+                    {{#if sessionProxy.firstOfferingDate}}
+                      {{#if sessionProxy.ilmSession}}
+                        <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate.content 'M/D/YY'}}
+                      {{else}}
+                        {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
+                      {{/if}}
+                    {{/if}}
+                  {{else}}
+                    {{fa-icon 'spinner' spin=true}}
+                  {{/liquid-if}}
+                </td>
+                <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>
+                  {{sessionProxy.offerings.length}}
+                  {{#if sessionProxy.expandOfferings}}
+                    {{fa-icon 'caret-down'}}
+                  {{else}}
+                    {{fa-icon 'eye'}}
+                  {{/if}}
+                </td>
+                <td class='text-center'>{{publication-status item=sessionProxy.content showIcon=false}}</td>
+                <td class='text-center'>
+                  {{#link-to 'session.index' course sessionProxy.content class='edit'}}
+                    {{fa-icon 'edit'}}
+                  {{/link-to}}
+                  {{#if sessionProxy.userCanDelete}}
+                    <span class='clickable remove' {{action 'confirmRemoval' sessionProxy}}>{{fa-icon 'trash'}}</span>
+                  {{/if}}
+                </td>
+              </tr>
+              {{#if sessionProxy.showRemoveConfirmation}}
+                <tr class='confirm-removal'><td colspan=10>
+                  <div class='confirm-message'>
+                    {{t 'courses.confirmSessionRemoval'}}<br />
+                    <div class="confirm-buttons">
+                      <button {{action 'remove' sessionProxy}} class='remove text'>{{t 'general.yes'}}</button>
+                      <button {{action 'cancelRemove' sessionProxy}} class='done text'>{{t 'general.cancel'}}</button>
+                    </div>
+                  </div>
+                </td></tr>
+              {{/if}}
+              {{#if sessionProxy.expandOfferings}}
+                <tr class='donthover'>
+                  <td colspan=10 class='text-right' {{action 'toggleExpandedOffering' sessionProxy}}>
+                    {{t 'general.close'}}
+                    {{fa-icon 'times'}}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan=10>
+                    {{#if sessionProxy.offerings.length}}
+                      {{session-offerings-list session=sessionProxy.content editable=false}}
+                    {{else}}
+                      <p>{{t 'sessions.noOfferings'}}</p>
+                    {{/if}}
+                    </td>
+                  </tr>
+                {{/if}}
+              {{else}}
+                <tr><td colspan=10>{{t 'courses.noSessions'}}</td></tr>
+              {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  {{else}}
+    <br /><h1>{{fa-icon 'spinner' spin=true}}</h1>
+  {{/if}}
 </section>

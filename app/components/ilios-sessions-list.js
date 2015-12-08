@@ -113,6 +113,7 @@ export default Component.extend({
 
   saved: false,
   savedSession: null,
+  isSaving: null,
 
   actions: {
     toggleEditor() {
@@ -131,17 +132,16 @@ export default Component.extend({
       const component = this;
       const store = this.get('store');
       const course = this.get('course');
+      
+      component.setProperties({ editorOn: false, isSaving: true, saved: false, savedSession: null });
+      
+      let newSession = store.createRecord('session', { title, sessionType, course });
 
-      let newSession = store.createRecord('session', { title, sessionType });
-
-      newSession.set('course', course);
       newSession.save().then((savedSession) => {
         course.get('sessions').then((sessions) => {
           sessions.addObject(savedSession);
-          course.save().then(() => {
-            component.send('cancel');
-            component.setProperties({ saved: true, savedSession: newSession });
-          });
+          component.send('cancel');
+          component.setProperties({ saved: true, savedSession: newSession, isSaving: false });
         });
       });
     },
