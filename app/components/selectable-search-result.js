@@ -5,7 +5,7 @@ const { Component, computed } = Ember;
 export default Component.extend({
   selectedItems: Ember.A(),
   item: null,
-  selected: computed('item', 'selectedItems.@each', function(){
+  selected: computed('item', 'selectedItems.[]', function(){
     return this.get('selectedItems').contains(this.item);
   }),
   click: function() {

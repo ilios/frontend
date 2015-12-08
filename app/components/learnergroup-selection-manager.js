@@ -14,17 +14,17 @@ export default Component.extend({
   cohorts: [],
   learnerGroups: alias('subject.learnerGroups'),
   sortedLearnerGroups: sort('learnerGroups', 'sortBy'),
-  filteredCohorts: computed('cohorts.@each', 'filter', 'learnerGroups.@each', function(){
+  filteredCohorts: computed('cohorts.[]', 'filter', 'learnerGroups.[]', function(){
     var self = this;
     var cohortProxy = Ember.ObjectProxy.extend({
       selectedLearnerGroups: [],
       hasAvailableLearnerGroups: notEmpty('filteredAvailableLearnerGroups'),
       filter: '',
       filteredAvailableLearnerGroups: computed(
-        'content.learnerGroups.@each',
-        'content.learnerGroups.@each.allDescendants.@each',
+        'content.learnerGroups.[]',
+        'content.learnerGroups.@each.allDescendants.[]',
         'filter',
-        'selectedLearnerGroups.@each',
+        'selectedLearnerGroups.[]',
         function(){
           var defer = Ember.RSVP.defer();
           var self = this;

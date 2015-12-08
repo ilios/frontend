@@ -4,7 +4,7 @@ const { Component, computed } = Ember;
 
 export default Component.extend({
   instructorGroups: [],
-  proxiedInstructorGroups: computed('instructorGroups.@each', function(){
+  proxiedInstructorGroups: computed('instructorGroups.[]', function(){
     return this.get('instructorGroups').map(function(instructorGroup){
       return Ember.ObjectProxy.create({
         content: instructorGroup,

@@ -21,7 +21,7 @@ export default Component.extend({
       promise: this.get('store').findAll('school')
     });
   }),
-  availableSchools: computed('stewardedSchools.@each', 'stewardedDepartments.@each', 'schools.@each', function(){
+  availableSchools: computed('stewardedSchools.[]', 'stewardedDepartments.[]', 'schools.[]', function(){
     let defer = Ember.RSVP.defer();
     let schoolProxy = Ember.ObjectProxy.extend({
       departments: [],
@@ -58,7 +58,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  stewardSchools: computed('selectedSchools.@each', 'selectedDepartments.@each', 'schools.@each', function(){
+  stewardSchools: computed('selectedSchools.[]', 'selectedDepartments.[]', 'schools.[]', function(){
     let defer = Ember.RSVP.defer();
     let schoolProxy = Ember.ObjectProxy.extend({
       departments: [],

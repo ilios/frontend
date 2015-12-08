@@ -12,7 +12,7 @@ export default Component.extend({
   isCourse: false,
   isSession: not('isCourse'),
   learningMaterialStatuses: [],
-  statusOptions: computed('learningMaterialStatuses.@each', function(){
+  statusOptions: computed('learningMaterialStatuses.[]', function(){
     return this.get('learningMaterialStatuses').map(function(status){
       return Ember.Object.create({
         id: status.get('id'),

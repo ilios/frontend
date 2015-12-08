@@ -6,7 +6,7 @@ const { Component, computed } = Ember;
 
 var ProxiedDescriptors = Ember.ObjectProxy.extend({
   terms: [],
-  isActive: computed('content', 'terms.@each', function(){
+  isActive: computed('content', 'terms.[]', function(){
     return !this.get('terms').contains(this.get('content'));
   })
 });

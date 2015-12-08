@@ -17,7 +17,7 @@ export default Component.extend({
   showMoreInputPrompt: false,
   searchReturned: false,
   searching: false,
-  sortedSearchResults: computed('results.@each', function(){
+  sortedSearchResults: computed('results.[]', function(){
     return this.get('results').sortBy('sortTerm');
   }),
 
