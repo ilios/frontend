@@ -1,9 +1,6 @@
 <section id='sessions' class='detail-block filter-detail-block'>
   <div class='sessions detail-title'>
-    {{t 'general.sessions'}}
-    {{#if proxiedSessions.isFulfilled}}
-      ({{proxiedSessions.length}})
-    {{/if}}
+    {{t 'general.sessions'}} ({{course.sessions.length}})
   </div>
   {{#if filteredContent.isFulfilled}}
     <div class="filter-tools">
