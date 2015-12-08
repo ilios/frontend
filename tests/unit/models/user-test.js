@@ -16,6 +16,25 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
+test('full name', function(assert) {
+  let model = this.subject();
+  Ember.run(()=>{
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    model.set('middleName', 'middle');
+    assert.equal(model.get('fullName'), 'first m. last');
+  });
+});
+
+test('full name no middle name', function(assert) {
+  let model = this.subject();
+  Ember.run(()=>{
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    assert.equal(model.get('fullName'), 'first last');
+  });
+});
+
 test('gets all directed courses', function(assert) {
   let model = this.subject();
   let store = this.store();
