@@ -21,6 +21,10 @@
     </div>
 
     <section class='resultslist'>
+      {{#liquid-if isSaving}}
+        <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
+      {{/liquid-if}}
+      
       {{#liquid-if editorOn class='vertical'}}
         {{new-session
           sessionTypes=course.school.sessionTypes
@@ -29,14 +33,14 @@
         }}
       {{/liquid-if}}
 
-      {{#if saved}}
+      {{#liquid-if saved}}
         <div class='saved-result'>
           {{#link-to 'session.index' course savedSession}}
             {{fa-icon 'external-link-square'}} {{savedSession.title}}
           {{/link-to}}
           {{t 'general.savedSuccessfully'}}
         </div>
-      {{/if}}
+      {{/liquid-if}}
 
       <div class='resultslist-list'>
         <table class='active-background'>
