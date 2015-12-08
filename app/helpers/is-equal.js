@@ -1,11 +1,27 @@
 import Ember from 'ember';
 
-export function isEqual(params) {
-  if(params.length < 2){
-    return false;
-  }
+const { isBlank, Helper, observer, run } = Ember;
+const { once } = run;
 
-  return params[0] === params[1];
+export function isEqual(params) {
+  const validate = isBlank(params) || isBlank(params[0]) || isBlank(params[1]);
+
+  return validate ? false : params[0] === params[1];
 }
 
-export default Ember.HTMLBars.makeBoundHelper(isEqual);
+export default Helper.extend({
+  value1: null,
+  value2: null,
+
+  compute([ value1, value2 ]) {
+    this.setProperties({ value1, value2 });
+
+    return isEqual([ value1, value2 ]);
+  },
+
+  recomputeOnArrayChange: observer('value1', 'value2', function() {
+    once(this, () => {
+      this.recompute();
+    });
+  })
+});
