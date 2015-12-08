@@ -139,6 +139,8 @@ export default Component.extend({
     },
     changeSubject(subject){
       this.set('currentSubject', subject);
+      this.set('currentPrepositionalObject', null);
+      this.set('currentPrepositionalObjectId', null);
     },
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
