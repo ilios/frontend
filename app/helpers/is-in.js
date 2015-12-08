@@ -3,10 +3,11 @@ import Ember from 'ember';
 const { Helper, observer } = Ember;
 
 export function isIn([values, item]) {
-  if(!values){
+  if (!values) {
     return false;
   }
-  if(!item){
+
+  if (!item) {
     return false;
   }
 
@@ -15,7 +16,8 @@ export function isIn([values, item]) {
 
 export default Helper.extend({
   values: [],
-  compute: function([values, item]) {
+
+  compute([values, item]) {
     this.set('values', values);
 
     return isIn([values, item]);

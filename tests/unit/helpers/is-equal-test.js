@@ -1,14 +1,27 @@
 import { isEqual } from '../../../helpers/is-equal';
 import { module, test } from 'qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
+import { a as testgroup } from 'ilios/tests/helpers/test-groups';
 
 module('Unit | Helper | is equal' + testgroup);
 
 test('correctly compares values', function(assert) {
-  var result = isEqual([42, 42]);
+  let result = isEqual([ 42, 42 ]);
   assert.ok(result);
-  result = isEqual([42, '42']);
-  assert.ok(!result);
-  result = isEqual(['42', '42']);
+
+  result = isEqual([ 42, '42' ]);
+  assert.notOk(result);
+
+  result = isEqual([ '42', '42' ]);
   assert.ok(result);
+});
+
+test('returns false when arguments are empty or `isBlank`', function(assert) {
+  let result = isEqual([]);
+  assert.notOk(result);
+
+  result = isEqual([ 42 ]);
+  assert.notOk(result);
+
+  result = isEqual([ undefined, undefined ]);
+  assert.notOk(result);
 });
