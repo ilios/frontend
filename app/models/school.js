@@ -17,7 +17,7 @@ export default DS.Model.extend({
   curriculumInventoryInsitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
-  cohorts: computed('programs.@each', function(){
+  cohorts: computed('programs.[]', function(){
     var school = this;
     return new Ember.RSVP.Promise(function(resolve) {
       school.get('programs').then(function(programs){

@@ -9,7 +9,7 @@ export default Component.extend({
   programYear: null,
   isManaging: false,
   bufferStewards: [],
-  stewardsBySchool: computed('programYear.stewards.@each', function(){
+  stewardsBySchool: computed('programYear.stewards.[]', function(){
     let deferred = Ember.RSVP.defer();
     let programYear = this.get('programYear');
 

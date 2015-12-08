@@ -15,7 +15,7 @@ var competencyGroup = Ember.Object.extend({
 
 var objectiveProxy = Ember.ObjectProxy.extend({
   courseObjective: null,
-  selected: computed('content', 'courseObjective.parents.@each', function(){
+  selected: computed('content', 'courseObjective.parents.[]', function(){
     return this.get('courseObjective.parents').contains(this.get('content'));
   }),
 });
@@ -69,7 +69,7 @@ export default Component.extend({
   showObjectiveList: false,
   showCohortList: false,
   cohorts: computed(
-    'courseObjective.courses.@each',
+    'courseObjective.courses.[]',
     'courseObjective.courses.@each.cohorts.length',
     function(){
       var courseObjective = this.get('courseObjective');
@@ -120,7 +120,7 @@ export default Component.extend({
       };
     }).sortBy('title');
   }),
-  currentCohort: computed('selectedCohortId', 'cohorts.@each', function(){
+  currentCohort: computed('selectedCohortId', 'cohorts.[]', function(){
     var selectedCohortId = this.get('selectedCohortId');
     if(selectedCohortId){
       var matchingGroups = this.get('cohorts').filterBy('id', selectedCohortId);
@@ -133,7 +133,7 @@ export default Component.extend({
     return null;
   }),
   watchCohorts: on('init', observer(
-    'availableCohorts.@each',
+    'availableCohorts.[]',
     'selectedCohortId',
     'availableCohorts.length',
     function(){

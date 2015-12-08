@@ -33,7 +33,7 @@ var Session = DS.Model.extend(PublishableModel, {
     }
     return aDate > bDate ? 1 : -1;
   }),
-  firstOfferingDate: computed('sortedOfferingsByDate.@each', 'ilmSession.dueDate', function(){
+  firstOfferingDate: computed('sortedOfferingsByDate.[]', 'ilmSession.dueDate', function(){
     var self = this;
     var deferred = Ember.RSVP.defer();
     this.get('ilmSession').then(function(ilmSession){
@@ -79,7 +79,7 @@ var Session = DS.Model.extend(PublishableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
-  associatedLearnerGroups: computed('offerings.@each.learnerGroups.@each', function(){
+  associatedLearnerGroups: computed('offerings.@each.learnerGroups.[]', function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
       Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){

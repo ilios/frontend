@@ -14,7 +14,7 @@ export default Component.extend({
   instructorGroups: alias('subject.instructorGroups'),
   sortedInstructorGroups: sort('instructorGroups', 'sortBy'),
   filteredAvailableInstructorGroups: computed(
-    'instructorGroups.@each',
+    'instructorGroups.[]',
     'filter',
     'availableInstructorGroups.@each.title',
     function(){

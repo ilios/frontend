@@ -27,7 +27,7 @@ export default Component.extend({
   availableInstructorGroups: alias('offering.session.course.school.instructorGroups'),
   showRemoveConfirmation: false,
   buffer: null,
-  allInstructors: computed('instructors.@each', 'instructorGroups.@each.users.@each', function(){
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users.[]', function(){
     var self = this;
     var defer = Ember.RSVP.defer();
     var instructorGroups = this.get('instructorGroups');
@@ -176,7 +176,7 @@ export default Component.extend({
     if(isEmpty(offering)){
       return false;
     }
-    
+
     let defer = RSVP.defer();
     this.get('currentUser.userIsDeveloper').then(isDeveloper => {
       if(isDeveloper){
@@ -199,12 +199,12 @@ export default Component.extend({
         });
       }
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
   }),
-  
+
   actions: {
     save() {
       if (this.datesValidated() && this.timesValidated()) {

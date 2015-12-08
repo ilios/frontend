@@ -5,7 +5,7 @@ const { Component, computed, observer, on } = Ember;
 
 var objectiveProxy = Ember.ObjectProxy.extend({
   sessionObjective: null,
-  selected: computed('content', 'sessionObjective.parents.@each', function(){
+  selected: computed('content', 'sessionObjective.parents.[]', function(){
     return this.get('sessionObjective.parents').contains(this.get('content'));
   }),
 });
@@ -14,7 +14,7 @@ export default Component.extend({
   classNames: ['objective-manager'],
   sessionObjective: null,
   showObjectiveList: false,
-  course: computed('sessionObjective.courses.@each', function(){
+  course: computed('sessionObjective.courses.[]', function(){
     var sessionObjective = this.get('sessionObjective');
     if(!sessionObjective){
       return null;
@@ -30,7 +30,7 @@ export default Component.extend({
       promise:deferred.promise
     });
   }),
-  proxiedObjectives: computed('course', 'course.objectives.@each', function(){
+  proxiedObjectives: computed('course', 'course.objectives.[]', function(){
     var sessionObjective = this.get('sessionObjective');
     if(!sessionObjective){
       return [];

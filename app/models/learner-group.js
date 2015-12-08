@@ -81,7 +81,7 @@ export default DS.Model.extend({
   usersCount: computed('users.length', 'childUsersTotal', 'childrenUsersTotal', function(){
     return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
   }),
-  availableUsers: computed('users', 'parent.users.@each', 'parent.childUsers.@each', function(){
+  availableUsers: computed('users', 'parent.users.[]', 'parent.childUsers.[]', function(){
     var group = this;
     return new Ember.RSVP.Promise(function(resolve) {
       group.get('parent').then(function(parent){
@@ -107,7 +107,7 @@ export default DS.Model.extend({
       });
     });
   }),
-  allDescendantUsers: computed('users.@each', 'children.@each.users.@each', function(){
+  allDescendantUsers: computed('users.[]', 'children.@each.users.[]', function(){
     var deferred = Ember.RSVP.defer();
     this.get('users').then(users => {
       this.get('children').then(children => {
@@ -123,7 +123,7 @@ export default DS.Model.extend({
       promise: deferred.promise
     });
   }),
-  usersOnlyAtThisLevel: computed('users.@each', 'allDescendants.@each', function(){
+  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
     var deferred = Ember.RSVP.defer();
     this.get('users').then(users => {
       this.get('allDescendants').then(descendants => {
@@ -186,7 +186,7 @@ export default DS.Model.extend({
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
   }),
-  allDescendants: computed('children.@each.allDescendants.@each', function(){
+  allDescendants: computed('children.@each.allDescendants.[]', function(){
     var deferred = Ember.RSVP.defer();
     this.get('children').then(function(learnerGroups){
       var groups = [];
@@ -211,7 +211,7 @@ export default DS.Model.extend({
       promise: deferred.promise
     });
   }),
-  allParents: computed('parent', 'parent.allParents.@each', function(){
+  allParents: computed('parent', 'parent.allParents.[]', function(){
     var deferred = Ember.RSVP.defer();
     this.get('parent').then(parent => {
       var parents = [];

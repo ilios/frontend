@@ -40,7 +40,7 @@ export default Component.extend({
       let userProxy = Ember.ObjectProxy.extend({
         isUser: true,
         currentlyActiveUsers: [],
-        isActive: computed('content', 'currentlyActiveUsers.@each', function(){
+        isActive: computed('content', 'currentlyActiveUsers.[]', function(){
           let user = this.get('content');
           if(!user.get('enabled')){
             return false;
@@ -54,7 +54,7 @@ export default Component.extend({
       let instructorGroupProxy = Ember.ObjectProxy.extend({
         isInstructorGroup: true,
         currentlyActiveInstructorGroups: [],
-        isActive: computed('content', 'currentlyActiveInstructorGroups.@each', function(){
+        isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){
           return !this.get('currentlyActiveInstructorGroups').contains(this.get('content'));
         }),
         sortTerm: oneWay('content.title'),

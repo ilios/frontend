@@ -4,7 +4,7 @@ const { Component, computed } = Ember;
 
 export default Component.extend({
   programs: [],
-  proxiedPrograms: computed('programs.@each', function(){
+  proxiedPrograms: computed('programs.[]', function(){
     return this.get('programs').map(function(program){
       return Ember.ObjectProxy.create({
         content: program,

@@ -37,7 +37,7 @@ export default Ember.Service.extend({
     });
   }),
 
-  availableCohortsObserver: observer('availableCohorts.@each', function(){
+  availableCohortsObserver: observer('availableCohorts.[]', function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){
       if(!cohorts.contains(self.get('currentCohort'))){

@@ -13,7 +13,7 @@ export default Component.extend({
   courseSort: ['title'],
   sortedCourses: sort('learnerGroup.courses', 'courseSort'),
   associatedCoursesTitles: mapBy('sortedCourses', 'title'),
-  associatedCoursesString: computed('associatedCoursesTitles.@each', function(){
+  associatedCoursesString: computed('associatedCoursesTitles.[]', function(){
     return this.get('associatedCoursesTitles').join(', ');
   }),
 

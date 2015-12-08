@@ -9,8 +9,8 @@ export default Component.extend({
   learnerGroup: null,
   notInThisGroup: t('learnerGroups.notInThisGroup'),
   topLevelGroupMembersNotInThisGroup: computed(
-    'learnerGroup.topLevelGroup.allDescendantUsers.@each',
-    'learnerGroup.user.@each',
+    'learnerGroup.topLevelGroup.allDescendantUsers.[]',
+    'learnerGroup.user.[]',
     function(){
       var deferred = Ember.RSVP.defer();
       this.get('learnerGroup.usersOnlyAtThisLevel').then(currentUsers => {
@@ -30,9 +30,9 @@ export default Component.extend({
     }
   ),
   cohortMembersNotInAnyGroup: computed(
-    'learnerGroup.topLevelGroup.allDescendantUsers.@each',
-    'learnerGroup.user.@each',
-    'learnerGroup.cohort.users.@each',
+    'learnerGroup.topLevelGroup.allDescendantUsers.[]',
+    'learnerGroup.user.[]',
+    'learnerGroup.cohort.users.[]',
     function(){
       var deferred = Ember.RSVP.defer();
       this.get('learnerGroup.topLevelGroup').then(topLevelGroup => {

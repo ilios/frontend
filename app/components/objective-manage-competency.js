@@ -9,7 +9,7 @@ export default Component.extend({
   programYear: oneWay('objective.programYear'),
   showCompetencyList: notEmpty('programYear.competencies'),
   classNames: ['objective-manager', 'objective-manage-competency'],
-  competencies: computed('programYear.competencies.@each', 'objective.competency', function(){
+  competencies: computed('programYear.competencies.[]', 'objective.competency', function(){
     if(!this.get('programYear')){
       return [];
     }
@@ -26,7 +26,7 @@ export default Component.extend({
     let domainProxy = Ember.ObjectProxy.extend({
       selectedCompetency: null,
       subCompetencies: [],
-      selected: computed('subCompetencies.@each', 'selectedCompetency', function(){
+      selected: computed('subCompetencies.[]', 'selectedCompetency', function(){
         let selectedSubCompetencies = this.get('subCompetencies').filter(competencyProxy => {
           return competencyProxy.get('id') === this.get('selectedCompetency.id');
         });

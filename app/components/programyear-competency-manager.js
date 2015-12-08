@@ -9,7 +9,7 @@ export default Component.extend({
   selectedCompetencies: [],
   tagName: 'section',
   classNames: ['detail-block'],
-  filteredCompetencies: computed('availableCompetencies.@each', 'selectedCompetencies.@each', function(){
+  filteredCompetencies: computed('availableCompetencies.[]', 'selectedCompetencies.[]', function(){
     return this.get('availableCompetencies').filter(
       competency => {
         return !this.get('selectedCompetencies').contains(competency);

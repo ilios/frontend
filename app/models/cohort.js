@@ -12,7 +12,7 @@ export default DS.Model.extend({
   learnerGroups: DS.hasMany('learner-group', {async: true}),
   users: DS.hasMany('user', {async: true}),
   displayTitle: '',
-  competencies: computed('programYear.competencies.@each', function(){
+  competencies: computed('programYear.competencies.[]', function(){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve) {
       self.get('programYear').then(function(programYear){
@@ -24,7 +24,7 @@ export default DS.Model.extend({
       });
     });
   }),
-  objectives: computed('programYear.objectives.@each', function(){
+  objectives: computed('programYear.objectives.[]', function(){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve) {
       self.get('programYear').then(function(programYear){
@@ -36,7 +36,7 @@ export default DS.Model.extend({
       });
     });
   }),
-  topLevelLearnerGroups: computed('learnerGroups.@each', function(){
+  topLevelLearnerGroups: computed('learnerGroups.[]', function(){
     let defer = Ember.RSVP.defer();
     this.get('learnerGroups').then(groups => {
       let topLevelGroups = Ember.A();
