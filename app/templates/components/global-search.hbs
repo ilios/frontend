@@ -2,29 +2,33 @@
   type="search"
   placeholder={{t 'general.globalSearchPlaceholder'}}
   incremental=true
-  onsearch={{action "inputValueChanged"}}
-  onkeyup={{action "inputValueChanged"}}
+  onsearch={{action 'changeValue' value="target.value"}}
+  onkeyup={{action 'changeValue' value="target.value"}}
   results=5
   autosave='ilios-global-search'
 />
 
-<ul class="results {{unless showList 'hidden'}}" {{action 'clear'}}>
-  {{#if searching}}
-    <li>{{t 'general.currentlySearchingPrompt'}}</li>
-  {{else if showMoreInputPrompt}}
+<ul class="results" {{action 'clear'}}>
+  {{#if revisedQuery}}
+    {{#if showMoreInputPrompt}}
       <li>{{t 'general.moreInputRequiredPrompt'}}</li>
-  {{else if showNoResultsMessage}}
-      <li>{{t 'general.noSearchResultsPrompt'}}</li>
-  {{else}}
-    {{#each results as |proxy|}}
-      {{#if proxy.isUser}}
-        <li>
-          {{#link-to 'user' proxy}}
-            <div class='livesearch-user-name'>{{proxy.fullName}}</div>
-            <div class='livesearch-user-email'>{{proxy.email}}</div>
-          {{/link-to}}
-        </li>
+    {{else}}
+      {{#if searchResults.isPending}}
+        <li>{{t 'general.currentlySearchingPrompt'}}</li>
+      {{else}}
+        {{#if searchResults.content}}
+          {{#each searchResults.content as |proxy|}}
+            <li>
+              {{#link-to 'user' proxy}}
+                <div class='livesearch-user-name'>{{proxy.fullName}}</div>
+                <div class='livesearch-user-email'>{{proxy.email}}</div>
+              {{/link-to}}
+            </li>
+          {{/each}}
+        {{else}}
+          <li>{{t 'general.noSearchResultsPrompt'}}</li>
+        {{/if}}
       {{/if}}
-    {{/each}}
+    {{/if}}
   {{/if}}
 </ul>

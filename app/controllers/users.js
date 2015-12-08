@@ -1,15 +1,12 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import queryUtils from '../utils/query-utils';
 
 const { computed, Controller, inject, isEmpty, run } = Ember;
 const { service } = inject;
 const { debounce } = run;
-const { trim } = Ember.$;
 const { PromiseObject } = DS;
-
-function cleanQuery(query) {
-  return trim(query).replace(/[\-,?~!@#$%&*+\-'="]/, '');
-}
+const { cleanQuery } = queryUtils;
 
 export default Controller.extend({
   queryParams: ['page'],
