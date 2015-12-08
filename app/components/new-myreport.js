@@ -59,21 +59,25 @@ export default Component.extend({
     let defer = RSVP.defer();
     let model = type.dasherize();
     const store = this.get('store');
+    const school = this.get('currentSchool');
     let query = {
       limit: 1000,
       filters: {}
     };
-    let schoolScopedModels = [
-      'topic',
-      'session',
-      'program',
-      'session-type',
-      'instructor-group',
-      'competency',
-    ];
-    if(schoolScopedModels.contains(model)){
-      query.filters.school = this.get('currentSchool').get('id');
+    if(isPresent(school)){
+      let schoolScopedModels = [
+        'topic',
+        'session',
+        'program',
+        'session-type',
+        'instructor-group',
+        'competency',
+      ];
+      if(schoolScopedModels.contains(model)){
+        query.filters.school = this.get('currentSchool').get('id');
+      }
     }
+    
     store.query(model, query).then(objects => {
       let label = type === 'mesh term'?'name':'title';
       let values = objects.map(object => {
