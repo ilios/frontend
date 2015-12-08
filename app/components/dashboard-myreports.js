@@ -8,7 +8,7 @@ const { PromiseArray } = DS;
 export default Component.extend({
   reporting: service(),
   tagName: 'div',
-  classNames: ['dashboard-block', 'dashboard-double-block'],
+  classNames: ['dashboard-block', 'dashboard-double-block', 'dashboard-myreports'],
   myReportEditorOn: false,
   selectedReport: null,
   reportSorting: ['title'],
