@@ -319,8 +319,8 @@ test('manage instructors search users', function(assert) {
       fillIn(searchBoxInput, 'guy');
       click('span.search-icon', searchBox).then(()=>{
         let searchResults = find('.live-search .results li', container);
-        assert.equal(searchResults.length, 7);
-        let expectedResults = '0 guy M. Mc0son 1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son 5 guy M. Mc5son 6 guy M. Mc6son';
+        assert.equal(searchResults.length, 8);
+        let expectedResults = '7 Results 0 guy M. Mc0son 1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son 5 guy M. Mc5son 6 guy M. Mc6son';
         assert.equal(getElementText(searchResults), getText(expectedResults));
 
         let activeResults = find('.live-search .results li.active', container);
@@ -349,8 +349,8 @@ test('manage instructors search groups', function(assert) {
       fillIn(searchBoxInput, 'group');
       click('span.search-icon', searchBox).then(()=>{
         let searchResults = find('.live-search .results li', container);
-        assert.equal(searchResults.length, 5);
-        let expectedResults = 'instructorgroup 0 instructorgroup 1 instructorgroup 2 instructorgroup 3 instructorgroup 4';
+        assert.equal(searchResults.length, 6);
+        let expectedResults = '5 Results instructorgroup 0 instructorgroup 1 instructorgroup 2 instructorgroup 3 instructorgroup 4';
         assert.equal(getElementText(searchResults), getText(expectedResults));
 
         let activeResults = find('.live-search .results li.active', container);
@@ -372,7 +372,7 @@ test('add instructor group', function(assert) {
       let input = find('.search-box input', container);
       fillIn(input, 'group');
       click('span.search-icon', container).then(()=>{
-        click('.live-search .results li:eq(3)');
+        click('.live-search .results li:eq(4)');
       });
     });
     andThen(function(){
@@ -406,7 +406,7 @@ test('add instructor', function(assert) {
       let input = find('.search-box input', container);
       fillIn(input, 'guy');
       click('span.search-icon', container).then(()=>{
-        click('.live-search .results li:eq(4)');
+        click('.live-search .results li:eq(5)');
       });
     });
     andThen(function(){

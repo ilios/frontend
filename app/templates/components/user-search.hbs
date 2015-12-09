@@ -12,6 +12,7 @@
     {{else}}
       {{#if results.length}}
         <ul class='results'>
+          <li class='results-count'>{{results.length}} {{t 'general.results'}}</li>
           {{#each results as |proxy|}}
             {{#if proxy.isUser}}
               {{#if proxy.isActive}}

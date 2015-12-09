@@ -391,7 +391,7 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
 
   const learnerGroupOne = '.selectable li:first';
   const searchBox = '.search-box:last input';
-  const searchBoxOption = '.live-search li:first';
+  const searchBoxOption = '.live-search li:contains("instructor group 0")';
   const createButton = '.done';
 
   const dayOfWeek = '.offering-block-date-dayofweek:first';
@@ -470,6 +470,7 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
   click(searchBoxOption);
   click(createButton);
   andThen(() => {
+    
     assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
     assert.equal(find(multiDayStarts).text().trim(), 'Starts Wednesday October 5th @ 11:45 AM', 'multi-day statement is correct');
     assert.equal(find(multiDayEnds).text().trim(), 'Ends Sunday December 25th @ 7:30 PM', 'multi-day statement is correct');

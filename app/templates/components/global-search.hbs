@@ -17,6 +17,7 @@
         <li>{{t 'general.currentlySearchingPrompt'}}</li>
       {{else}}
         {{#if searchResults.content}}
+          <li class='results-count'>{{searchResults.content.length}} {{t 'general.results'}}</li>
           {{#each searchResults.content as |proxy|}}
             <li>
               {{#link-to 'user' proxy}}
