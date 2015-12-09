@@ -48,7 +48,8 @@ export default Component.extend({
         const searchResults = store.query('user', {
           q,
           'order_by[lastName]': 'ASC',
-          'order_by[firstName]': 'ASC'
+          'order_by[firstName]': 'ASC',
+          limit: 100
         }).then((users) => {
           return users;
         });
