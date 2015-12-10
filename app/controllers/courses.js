@@ -56,7 +56,7 @@ export default Controller.extend({
       all.pushObjects(courses.toArray());
       let selectedYearTitle = this.get('selectedYear').get('title');
       let newCourses = this.get('newCourses').filter(course => {
-        return course.get('year') === selectedYearTitle;
+        return course.get('year') === selectedYearTitle && !all.contains(course);
       });
       all.pushObjects(newCourses.toArray());
       defer.resolve(all);
