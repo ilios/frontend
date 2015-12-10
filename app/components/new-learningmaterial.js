@@ -3,7 +3,7 @@ import config from 'ilios/config/environment';
 import layout from '../templates/components/new-learningmaterial';
 import EmberValidations from 'ember-validations';
 
-const { Component, computed, inject } = Ember;
+const { Component, computed, inject, set } = Ember;
 const { alias } = computed;
 const { service } = inject;
 
@@ -13,7 +13,7 @@ export default Component.extend(EmberValidations, {
 
     switch (type) {
       case 'file':
-        this.set('isFile', true);
+        this.setProperties({ 'isFile': true, 'validations.fileHash': { presence: true } });
         break;
       case 'link':
         this.setProperties({ isLink: true, 'validations.urlBuffer': { presence: true, url: true } });
@@ -45,11 +45,15 @@ export default Component.extend(EmberValidations, {
 
       this.set('userRole', defaultRole);
     });
+    
+    set(this, 'showUploadStatus', false);
+    set(this, 'fileUploadPercentage', 0);
   },
 
   willDestroy() {
     let validations = this.get('validations');
     delete validations.urlBuffer;
+    delete validations.fileHash;
   },
 
   classNames: ['new-learning-material'],
@@ -194,7 +198,22 @@ export default Component.extend(EmberValidations, {
     },
 
     setFile(e) {
-      this.setProperties({ filename: e.filename, fileHash: e.fileHash });
+      this.setProperties({
+        filename: e.filename,
+        fileHash: e.fileHash,
+        showUploadStatus: false,
+        fileUploadPercentage: 100
+      });
+    },
+
+    startUploadingFile() {
+      set(this, 'fileHash', null);
+      set(this, 'showUploadStatus', true);
+      set(this, 'fileUploadPercentage', 0);
+    },
+
+    setFileUploadPercentage(percent) {
+      set(this, 'fileUploadPercentage', Math.floor(percent));
     },
 
     changeSelectedStatus() {
