@@ -3,11 +3,15 @@ import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 import moment from 'moment';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, observer } = Ember;
+const { computed, Controller, RSVP, isEmpty, isPresent, observer, set } = Ember;
 const { gt, sort } = computed;
 const { PromiseArray } = DS;
 
 export default Controller.extend({
+  init() {
+    this._super(...arguments);
+    set(this, 'newCourses', []);
+  },
   i18n: Ember.inject.service(),
   currentUser: Ember.inject.service(),
   queryParams: {
