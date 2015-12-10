@@ -102,7 +102,7 @@ var User = DS.Model.extend({
         return '';
       }
 
-      const middleInitial = middleName.charAt(0).toUpperCase();
+      const middleInitial = middleName?middleName.charAt(0):false;
 
       if (middleInitial) {
         return `${firstName} ${middleInitial}. ${lastName}`;
