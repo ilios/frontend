@@ -2,8 +2,8 @@
 $learner-group-grey: #d3d3d3;
 
 .learnergroup-select-container {
-  margin: 0 auto;
-  width: 500px;
+  margin: 0 0 2em;
+  text-align: center;
 
   .learnergroup-select {
     display: inline-block;
@@ -17,7 +17,7 @@ $learner-group-grey: #d3d3d3;
       outline: none;
       overflow-x: hidden;
       position: relative;
-      width: 400px;
+      width: 420px;
 
       &::after {
         color: $learner-group-grey;
@@ -31,16 +31,19 @@ $learner-group-grey: #d3d3d3;
     }
 
     .ff-option-list {
+      height: 240px;
+      overflow-y: auto;
       position: absolute;
-      width: 380px;
+      width: 420px;
 
       .ff-option {
         background: $white;
         border-bottom: 1px solid $learner-group-grey;
-        box-sizing: content-box;
+        font-size: 14px;
         outline: none;
-        padding: 0 10px;
-        width: 380px;
+        padding: 0 8px;
+        text-align: left;
+        width: 100%;
       }
 
       .ff-option:hover {
@@ -52,7 +55,6 @@ $learner-group-grey: #d3d3d3;
   .learnergroup-action {
     display: inline-block;
     vertical-align: top;
-    width: 90px;
 
     .save-all {
       background: $ilios-green;
