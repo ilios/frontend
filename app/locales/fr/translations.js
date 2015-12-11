@@ -219,7 +219,7 @@ export default {
     'startDate': "Date de début",
     'endDate': "Date de fin",
     'level': "Niveau",
-    'allCourses': "Touts Cours",
+    'allCourses': "Tous les Cours",
     'newSession': "Session neuf",
     'backToCourses': "Retour à liste",
     'details': "Détails de Cours",
