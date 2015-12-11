@@ -240,3 +240,32 @@ test('new course in another year does not display in list', function(assert) {
     });
   });
 });
+
+test('new course does not appear twice when navigating back', function(assert) {
+  assert.expect(5);
+
+  const url = '/courses?year=2014';
+  const expandButton = '.expand-button';
+  const input = '.new-course input';
+  const selectField = '.new-course select';
+  const saveButton = '.done';
+  const savedLink = '.saved-result a';
+  const courseTitle = "Course 1";
+  const course1InList = `tbody tr:contains("${courseTitle}")`;
+
+  visit(url);
+  click(expandButton);
+  fillIn(input, courseTitle);
+  pickOption(selectField, '2014 - 2015', assert);
+  click(saveButton);
+  andThen(() => {
+    assert.equal(find(savedLink).length, 1, 'one copy of the save link');
+    assert.equal(find(course1InList).length, 1, 'one copy of the course in the list');
+  });
+  click(savedLink);
+  visit(url);
+  andThen(() => {
+    assert.equal(find(savedLink).length, 1, 'one copy of the save link');
+    assert.equal(find(course1InList).length, 1, 'one copy of the course in the list');
+  });
+});
