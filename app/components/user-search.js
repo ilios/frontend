@@ -60,7 +60,8 @@ export default Component.extend({
         sortTerm: oneWay('content.title'),
       });
       let query = {
-        q: searchTerms
+        q: searchTerms,
+        limit: 100
       };
       if (this.get('roles')) {
         query.filters = {

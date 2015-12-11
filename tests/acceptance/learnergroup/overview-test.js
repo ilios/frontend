@@ -121,17 +121,18 @@ test('search default instructors', function(assert) {
     var container = find('.learnergroup-overview').eq(0);
     fillIn(find('.search-box input', container), 'guy').then(function(){
       var searchResults = find('.results li', container);
-      assert.equal(searchResults.length, 5);
-      assert.equal(getElementText(searchResults.eq(0)), getText('0 guy M. Mc0son'));
-      assert.ok(searchResults.eq(0).hasClass('active'));
-      assert.equal(getElementText(searchResults.eq(1)), getText('1 guy M. Mc1son'));
+      assert.equal(searchResults.length, 6);
+      assert.equal(getElementText(searchResults.eq(0)), getText('5 Results'));
+      assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son'));
       assert.ok(searchResults.eq(1).hasClass('active'));
-      assert.equal(getElementText(searchResults.eq(2)), getText('2 guy M. Mc2son'));
+      assert.equal(getElementText(searchResults.eq(2)), getText('1 guy M. Mc1son'));
       assert.ok(searchResults.eq(2).hasClass('active'));
-      assert.equal(getElementText(searchResults.eq(3)), getText('3 guy M. Mc3son'));
-      assert.ok(searchResults.eq(3).hasClass('inactive'));
-      assert.equal(getElementText(searchResults.eq(4)), getText('4 guy M. Mc4son'));
+      assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son'));
+      assert.ok(searchResults.eq(3).hasClass('active'));
+      assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son'));
       assert.ok(searchResults.eq(4).hasClass('inactive'));
+      assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son'));
+      assert.ok(searchResults.eq(5).hasClass('inactive'));
     });
   });
 });
@@ -147,7 +148,7 @@ test('add default instructor', function(assert) {
     assert.equal(getElementText(items.eq(1)), getText('4 guy M. Mc4son'));
 
     fillIn(find('.search-box input', container), 'guy').then(function(){
-      click('.results li:eq(1)', container).then(function(){
+      click('.results li:eq(2)', container).then(function(){
         var items = find('.removable-list li', container);
         assert.equal(items.length, 3);
         assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));

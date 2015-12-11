@@ -36,7 +36,7 @@ test('can search for users', function(assert) {
   server.createList('user', 20, { email: 'user@example.edu' });
 
   const userSearch = '.global-search input';
-  const secondResult = '.global-search .results li:eq(1)';
+  const secondResult = '.global-search .results li:eq(2)';
   const secondResultUsername = `${secondResult} a .livesearch-user-name`;
   const secondResultEmail = `${secondResult} a .livesearch-user-email`;
   const name = '.user-display-name';
