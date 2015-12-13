@@ -1,8 +1,5 @@
 import destroyApp from '../../helpers/destroy-app';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, skip, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
@@ -199,7 +196,7 @@ test('no associated courses', function(assert) {
   });
 });
 
-test('toggleSwitch for multi-editing works', function(assert) {
+skip('toggleSwitch for multi-editing works', function(assert) {
   const toggleSwitch = '.switch-label';
   const checkBoxLabel = '.check-all-label';
   const checkAllBox = '.check-all-input';
@@ -229,7 +226,7 @@ test('toggleSwitch for multi-editing works', function(assert) {
   });
 });
 
-test('`Check All` checkbox checks all or none', function(assert) {
+skip('`Check All` checkbox checks all or none', function(assert) {
   const toggleSwitch = '.switch-label';
   const checkAllBox = '.check-all-input';
   const checkBoxes = '.learnergroup-list .ember-checkbox';
