@@ -90,7 +90,19 @@
 
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.file'}}:</label>
-      <div class="form-data">{{file-upload finishedUploading='setFile' url="/upload"}}</div>
+      <div class="form-data">
+        {{file-upload
+          finishedUploading='setFile'
+          startUploading='startUploadingFile'
+          setUploadPercentage='setFileUploadPercentage'
+          url="/upload"
+        }}
+        {{#if showUploadStatus}}
+          {{fa-icon 'spinner' spin=true}} {{fileUploadPercentage}}%
+        {{else if fileHash}}
+          {{fa-icon 'check' class='add'}}
+        {{/if}}
+      </div>
     </div>
   {{/if}}
 
