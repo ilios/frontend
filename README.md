@@ -5,41 +5,39 @@
 [![Slack](https://ilios-slack.herokuapp.com/badge.svg)](https://ilios-slack.herokuapp.com/)
 [![Stories in Ready](https://badge.waffle.io/ilios/frontend.png?label=ready&title=Ready)](https://waffle.io/ilios/frontend)
 
-## MAJOR WORK IN PROGRESS
+## Web interface for accessing and managing [Ilios Platform](https://github.com/ilios/ilios) data.
 
-While this will eventually replace the existing Ilios frontend entirely, right
-now it does nothing.  Only developers should be working with this code at this time.
+### Directions for devlopers working with this ember-cli app
 
-
-## Prerequisites
+#### Prerequisites
 
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM) and [Bower](http://bower.io/)
 
-## Installation
+#### Installation
 
 * `git clone https://github.com/ilios/frontend.git` this repository
 * change into the new directory
 * `npm install`
 * `bower install`
 
-## Running / Development
+#### Running / Development
 
 * `ember serve`
 * Visit your app at http://localhost:4200.
 
-### Code Generators
+##### Code Generators
 
 Make use of the many generators for code, try `ember help generate` for more details
 
-### Running Tests
+#### Running Tests
 
 * `ember test`
 * `ember test --server`
 
-### Building
+##### Building
 
 * `ember build` (development)
 * `ember build --environment production` (production)
@@ -47,7 +45,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 ### Deploying
 
 
-## Further Reading / Useful Links
+#### Further Reading / Useful Links
 
 * ember: http://emberjs.com/
 * ember-cli: http://www.ember-cli.com/
@@ -58,7 +56,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 ## Open Source Heroes
 
 Every day these for profit companies make developing Ilios possible.  Without the free tier of service they offer to open source software we would be nowhere so if you have a chance to pay them for something please do.
-
 
 - [GitHub](https://github.com)
 - [Travis CI](https://travis-ci.org/)  
