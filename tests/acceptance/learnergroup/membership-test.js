@@ -1,5 +1,5 @@
 import destroyApp from '../../helpers/destroy-app';
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 
@@ -204,7 +204,7 @@ test('remove group member back to cohort', function(assert) {
   });
 });
 
-skip('multi-edit save (bulk-saving) works properly and knows when to trigger', function(assert) {
+test('multi-edit save (bulk-saving) works properly and knows when to trigger', function(assert) {
   const toggleSwitch = '.switch-label';
   const checkAllBox = '.check-all-input';
   const selectInputField = '.ff-select-field';

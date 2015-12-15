@@ -66,6 +66,12 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    IliosFeatures: {
+      // Turns the multi-editing feature of learner-groups on/off
+      // Applicable to `learnergroup-overview` component
+      learnerGroupMultiedit: false
     }
   };
 
@@ -78,6 +84,7 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.redirectAfterShibLogin = false;
+    ENV.IliosFeatures.learnerGroupMultiedit = true;
   }
 
   if (environment === 'test') {
@@ -95,6 +102,7 @@ module.exports = function(environment) {
     ENV['simple-auth'].store = 'simple-auth-session-store:ephemeral';
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
+    ENV.IliosFeatures.learnerGroupMultiedit = true;
   }
 
   if (environment === 'heroku') {
