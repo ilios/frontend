@@ -12,11 +12,18 @@ export default Ember.Service.extend(EventMixin, {
     var url = '/' + config.adapterNamespace + '/schoolevents/' +
     schoolId + '?from=' + from + '&to=' + to;
     ajax(url).then(data => {
-      let events = data.events.sortBy('startDate').map(event => {
+      let events = data.events.map(event => {
         event.slug = this.getSlugForEvent(event);
+        if (event.ilmSession) {
+          let startDate = moment(moment.utc(event.startDate).format('YYYYMMDD'), 'YYYYMMDD').hour(17).minute(0).second(0);
+          let endDate = moment(moment.utc(event.endDate).format('YYYYMMDD'), 'YYYYMMDD').hour(17).minute(15).second(0);
+          event.startDate = startDate.format();
+          event.endDate = endDate.format();
+          
+        }
         
         return event;
-      });
+      }).sortBy('startDate');
       
       deferred.resolve(events);
     });
