@@ -6,6 +6,7 @@ const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy }
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
+const { sort } = computed;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -108,6 +109,24 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
+  
+  sortAscending: true,
+  sortItem: 'title',
+  sortSessionBy: computed('sortAscending', 'sortItem', function(){
+    const direction = this.get('sortAscending')?'asc':'desc';
+    let sortItem = this.get('sortItem');
+    if(sortItem === 'sessionType'){
+      sortItem = 'sessionType.title';
+    }
+    if(sortItem === 'offerings'){
+      sortItem = 'offerings.length';
+    }
+    if(sortItem === 'firstOfferingDate'){
+      sortItem = 'firstOfferingDate.content';
+    }
+    return [sortItem + ':' + direction];
+  }),
+  sortedSessionList: sort('filteredContent', 'sortSessionBy'),
 
   editorOn: false,
 
@@ -159,6 +178,14 @@ export default Component.extend({
     },
     cancelRemove(sessionProxy){
       sessionProxy.set('showRemoveConfirmation', false);
-    }
+    },
+    sortBy(item){
+      if (item === this.get('sortItem')){
+        this.set('sortAscending', !this.get('sortAscending'));
+      } else {
+        this.set('sortAscending', true);
+      }
+      this.set('sortItem', item);
+    },
   }
 });
