@@ -142,10 +142,23 @@ export default Component.extend(MembersMixin, {
     },
 
     bulkSave(value) {
+      this.set('saving', true);
+      let toSaveArray = [];
+      let promises = [];
+
       this.get('toBulkSave').forEach((studentId) => {
-        this.sendPutRequests(value, studentId);
+        const promise = this.sendPutRequests(value, studentId).then((toSave) => {
+          toSaveArray.pushObjects(toSave);
+        });
+
+        promises.pushObject(promise);
       });
-      this.set('toBulkSave', []);
+
+      all(promises).then(() => {
+        all(toSaveArray.uniq().invoke('save')).then(() => {
+          this.setProperties({ toBulkSave: [], saving: false });
+        });
+      });
     },
 
     saveAll() {
