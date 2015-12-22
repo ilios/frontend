@@ -259,8 +259,8 @@ export default Ember.Service.extend({
         }
         const previousYear = currentYear -1;
         this.get('store').query('course', {
+          my: true,
           filters: {
-            users: [user.get('id')],
             year: [previousYear, currentYear],
             locked: false,
             archived: false
