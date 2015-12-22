@@ -44,10 +44,10 @@ export default Component.extend({
     this.set('selectedCourses', []);
   }),
   fromTimeStamp: computed('selectedDate', 'selectedView', function(){
-    return moment.utc(this.get('selectedDate')).startOf(this.get('selectedView')).unix();
+    return moment(this.get('selectedDate')).startOf(this.get('selectedView')).unix();
   }),
   toTimeStamp: computed('selectedDate', 'selectedView', function(){
-    return moment.utc(this.get('selectedDate')).endOf(this.get('selectedView')).unix();
+    return moment(this.get('selectedDate')).endOf(this.get('selectedView')).unix();
   }),
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
   ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
