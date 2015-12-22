@@ -138,27 +138,23 @@ export default Mixin.create({
   }),
 
   sendPutRequests(groupIdString, userId) {
-    this.set('saving', true);
-    let groupId = parseInt(groupIdString);
-    let toSave = [];
-    let component = this;
+    const groupId = parseInt(groupIdString);
+    const toSave = [];
+    const store = this.get('store');
+    const user = store.peekRecord('user', userId);
 
-    this.get('store').find('user', userId).then((user) => {
-      component.get('topLevelGroup').then((topLevelGroup) => {
+    return new Promise((resolve) => {
+      this.get('topLevelGroup').then((topLevelGroup) => {
         topLevelGroup.removeUserFromGroupAndAllDescendants(user).then((groups) => {
           toSave.pushObjects(groups);
           if (groupId === -1) {
-            all(toSave.uniq().invoke('save')).finally(() => {
-              component.set('saving', false);
-            });
+            resolve(toSave);
           } else {
-            component.get('store').find('learnerGroup', groupId).then(learnerGroup => {
-              learnerGroup.addUserToGroupAndAllParents(user).then(groups =>{
-                toSave.pushObjects(groups);
-                all(toSave.uniq().invoke('save')).finally(() => {
-                  component.set('saving', false);
-                });
-              });
+            const learnerGroup = store.peekRecord('learnerGroup', groupId);
+
+            learnerGroup.addUserToGroupAndAllParents(user).then((groups) =>{
+              toSave.pushObjects(groups);
+              resolve(toSave);
             });
           }
         });
