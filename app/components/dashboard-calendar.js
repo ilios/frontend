@@ -44,16 +44,16 @@ export default Component.extend({
     this.set('selectedCourses', []);
   }),
   fromTimeStamp: computed('selectedDate', 'selectedView', function(){
-    return moment.utc(this.get('selectedDate')).startOf(this.get('selectedView')).subtract(this.get('skew'), 'days').unix();
+    return moment(this.get('selectedDate')).startOf(this.get('selectedView')).subtract(this.get('skew'), 'days').unix();
   }),
   toTimeStamp: computed('selectedDate', 'selectedView', function(){
-    return moment.utc(this.get('selectedDate')).endOf(this.get('selectedView')).add(this.get('skew'), 'days').unix();
+    return moment(this.get('selectedDate')).endOf(this.get('selectedView')).add(this.get('skew'), 'days').unix();
   }),
   clockSkew: computed('selectedView', function(){
     if(this.set('selectedView') === 'month'){
       return 6;
     }
-    
+
     return 1;
   }),
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
