@@ -10,8 +10,8 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    const fromTimeStamp = moment.utc().hour(0).minute(0).unix();
-    const toTimeStamp = moment.utc().hour(23).minute(59).add(30, 'days').unix();
+    const fromTimeStamp = moment().hour(0).minute(0).unix();
+    const toTimeStamp = moment().hour(23).minute(59).add(30, 'days').unix();
 
     this.setProperties({ fromTimeStamp, toTimeStamp });
   },
