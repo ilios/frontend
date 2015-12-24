@@ -71,7 +71,7 @@ module.exports = function(environment) {
     IliosFeatures: {
       // Turns the multi-editing feature of learner-groups on/off
       // Applicable to `learnergroup-overview` component
-      learnerGroupMultiedit: false
+      learnerGroupMultiedit: true
     }
   };
 
