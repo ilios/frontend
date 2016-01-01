@@ -260,9 +260,10 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
   andThen(() => {
     const thisYear = new Date().getFullYear();
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
-
+    const classOfYear = `Class of ${(thisYear + 4).toString()}`;
+    
     assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
-    assert.equal(getTableDataText(0, 1).text(), 'Class of 2019', 'cohort class year shown');
+    assert.equal(getTableDataText(0, 1).text().trim(), classOfYear, 'cohort class year shown');
     assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
     assert.ok(getTableDataText(0, 3, 'i').hasClass('fa-warning'), 'warning label shown');
     assert.ok(getTableDataText(0, 4, 'i').hasClass('fa-warning'), 'warning label shown');
