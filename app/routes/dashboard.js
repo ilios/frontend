@@ -1,5 +1,5 @@
 import Ember from "ember";
-import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const { inject, Route, RSVP } = Ember;
 const { service } = inject;
@@ -24,8 +24,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     },
 
     setupController() {
-    this._super.apply(this, arguments);
-
-        this.controllerFor('application').set('pageTitleTranslation', 'navigation.dashboard');
+      this._super.apply(this, arguments);
+      this.controllerFor('application').set('pageTitleTranslation', 'navigation.dashboard');
     }
 });

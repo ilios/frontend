@@ -1,32 +1,32 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ajax from 'ic-ajax';
 import moment from 'moment';
 
-const { computed, observer, on, RSVP, isEmpty } = Ember;
+const { computed, observer, on, RSVP, isEmpty, inject, get } = Ember;
 const { PromiseArray } = DS;
+const { service } = inject;
 
 export default Ember.Service.extend({
-  store: Ember.inject.service(),
-  currentUserId: null,
+  store: service(),
+  session: service(),
+  currentUserId: computed('session.data.authenticated.jwt', function(){
+    const session = this.get('session');
+    const jwt = session.get('data.authenticated.jwt');
+    
+    if(isEmpty(jwt)){
+      return null;
+    }
+    const js = atob(jwt.split('.')[1]);
+    const obj = Ember.$.parseJSON(js);
+    
+    return get(obj, 'user_id');
+  }),
 
   model: computed('currentUserId', function(){
     let deferred = Ember.RSVP.defer();
     let currentUserId = this.get('currentUserId');
     if (!currentUserId) {
-      var url = '/auth/whoami';
-      ajax(url).then(data => {
-        if(data.userId){
-          this.set('currentUserId', data.userId);
-          this.get('store').find('user', data.userId).then((user) => {
-            deferred.resolve(user);
-          });
-        } else {
-          deferred.resolve(null);
-        }
-      }, () => {
-        deferred.resolve(null);
-      });
+      deferred.resolve(null);
     } else {
       this.get('store').find('user', currentUserId).then((user) => {
         deferred.resolve(user);

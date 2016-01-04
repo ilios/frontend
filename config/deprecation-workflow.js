@@ -1,7 +1,6 @@
 window.deprecationWorkflow = window.deprecationWorkflow || {};
 window.deprecationWorkflow.config = {
   workflow: [
-    // This is thrown by ember simple auth which wont be fixed until 1.0
     { handler: "silence", matchMessage: "`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container." },
 
     // These are all from Addons

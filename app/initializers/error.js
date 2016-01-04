@@ -3,7 +3,7 @@ import config from '../config/environment';
 
 export default {
   name: 'error-service',
-  after: ['flash-messages', 'simple-auth'],
+  after: ['flash-messages'],
 
   _initializeApplicationController(container) {
     return container.lookup('controller:application');

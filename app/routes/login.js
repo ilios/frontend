@@ -1,10 +1,13 @@
 import Ember from 'ember';
 import EmberConfig from 'ilios/config/environment';
-import UnauthenticatedRouteMixin from 'simple-auth/mixins/unauthenticated-route-mixin';
+import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 import ajax from 'ic-ajax';
 
+const { service }  = Ember.inject;
+
 export default Ember.Route.extend(UnauthenticatedRouteMixin, {
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
+  session: service(),
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   beforeModel(transition){
@@ -42,12 +45,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
           if(response.status === 'success'){
             let authenticator = 'authenticator:ilios-jwt';
           
-            this.get('session').authenticate(authenticator, {jwt: response.jwt}).then(() => {
-              let jwt = this.get('session').get('secure.jwt');
-              let js = atob(jwt.split('.')[1]);
-              let obj = Ember.$.parseJSON(js);
-              this.get('currentUser').set('currentUserId', obj.user_id);
-            });
+            this.get('session').authenticate(authenticator, {jwt: response.jwt});
           }
         });
       }

@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, inject } = Ember;
 const { oneWay, equal } = computed;
+const { service } = inject;
 
 export default Component.extend({
-  session: null,
+  session: service(),
   currentUser: Ember.inject.service(),
   i18n: Ember.inject.service(),
   userName: oneWay('currentUser.model.fullName'),

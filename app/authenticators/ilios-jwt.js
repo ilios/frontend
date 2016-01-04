@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import JwtTokenAuthenticator from 'simple-auth-token/authenticators/jwt';
+import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
 export default JwtTokenAuthenticator.extend({
   /**
@@ -11,36 +11,37 @@ export default JwtTokenAuthenticator.extend({
                                  successfully acquired from the server and rejects
                                  otherwise
   */
-  authenticate: function(credentials) {
+  authenticate: function(credentials, headers) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       if(this.tokenPropertyName in credentials){
-        let token = credentials[this.tokenPropertyName];
-        let tokenData = this.getTokenData(token);
-        let expiresAt = tokenData[this.tokenExpireName];
+        const token = Ember.get(credentials, this.tokenPropertyName);
+        const tokenData = this.getTokenData(token);
+        const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+        
+        this.scheduleAccessTokenRefresh(expiresAt, token);
+        
         let response  = {};
         response[this.tokenPropertyName] = token;
         response[this.tokenExpireName] = expiresAt;
-        this.scheduleAccessTokenRefresh(expiresAt, token);
 
         resolve(this.getResponseData(response));
       } else {
         var data = this.getAuthenticateData(credentials);
 
-        this.makeRequest(this.serverTokenEndpoint, data).then(response => {
-          var self = this;
-          Ember.run(function() {
-            var token = response[self.tokenPropertyName],
-              tokenData = self.getTokenData(token),
-              expiresAt = tokenData[self.tokenExpireName],
-              tokenExpireData = {};
+        this.makeRequest(this.serverTokenEndpoint, data, headers).then(response => {
+          Ember.run(() => {
+            const token = Ember.get(response, this.tokenPropertyName);
+            const tokenData = this.getTokenData(token);
+            const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+            const tokenExpireData = {};
 
-            self.scheduleAccessTokenRefresh(expiresAt, token);
+            this.scheduleAccessTokenRefresh(expiresAt, token);
 
-            tokenExpireData[self.tokenExpireName] = expiresAt;
+            tokenExpireData[this.tokenExpireName] = expiresAt;
 
             response = Ember.merge(response, tokenExpireData);
 
-            resolve(self.getResponseData(response));
+            resolve(this.getResponseData(response));
           });
         }, function(xhr) {
           Ember.run(function() {
