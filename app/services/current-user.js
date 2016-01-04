@@ -11,8 +11,12 @@ export default Ember.Service.extend({
   session: service(),
   currentUserId: computed('session.data.authenticated.jwt', function(){
     const session = this.get('session');
-    const jwt = session.get('data.authenticated.jwt');
+    if(isEmpty(session)){
+      return null;
+    }
     
+    const jwt = session.get('data.authenticated.jwt');
+
     if(isEmpty(jwt)){
       return null;
     }
