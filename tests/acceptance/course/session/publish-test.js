@@ -5,6 +5,7 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
@@ -13,8 +14,7 @@ var fixtures = {};
 module('Acceptance: Session - Publish' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
-    server.create('user', {id: 4136});
+    setupAuthentication(application);
     server.create('school');
     server.create('course');
     server.create('offering');

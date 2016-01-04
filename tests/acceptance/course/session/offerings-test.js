@@ -6,6 +6,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
@@ -15,7 +16,9 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Offerings' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
+    fixtures.users =  [];
+    
+    fixtures.users.pushObject(setupAuthentication(application, {id: 4136, directedCourses: [1]}));
     server.create('school', {
       courses: [1],
       instructorGroups: [1,2],
@@ -43,11 +46,6 @@ module('Acceptance: Session - Offerings' + testgroup, {
       school: 1
     });
 
-    fixtures.users =  [];
-    fixtures.users.pushObject(server.create('user', {
-      id: 4136,
-      directedCourses: [1]
-    }));
     //users 2, 3
     fixtures.users.pushObjects(server.createList('user', 2, {
       instructorGroups: [1],

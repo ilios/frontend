@@ -5,6 +5,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 
 var application;
@@ -12,7 +13,7 @@ var application;
 module('Acceptance: Programs' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
+    setupAuthentication(application, false);
   },
 
   afterEach: function() {

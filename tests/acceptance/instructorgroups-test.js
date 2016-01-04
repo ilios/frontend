@@ -6,13 +6,14 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 
 module('Acceptance: Instructor Groups' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
+    setupAuthentication(application, false);
   },
 
   afterEach: function() {

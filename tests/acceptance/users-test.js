@@ -1,19 +1,18 @@
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 
 const { run } = Ember;
 
 let application;
-let fixtures = {};
 let url = '/users';
 
 module('Acceptance: Users', {
   beforeEach() {
     application = startApp();
-    authenticateSession();
+    setupAuthentication(application, { id: 4136, campusId: '123', email: 'user@example.edu' });
 
-    fixtures.user = server.create('user', { id: 4136, campusId: '123', email: 'user@example.edu' });
     server.create('school');
     server.createList('user', 90, { school: 1, campusId: '555', email: 'user@example.edu' });
   },

@@ -4,6 +4,7 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
@@ -12,8 +13,7 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Independent Learning' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
-    server.create('user', {
+    setupAuthentication(application, {
       id: 4136,
       school: 1
     });

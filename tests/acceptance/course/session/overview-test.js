@@ -6,6 +6,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import Ember from 'ember';
 
@@ -15,8 +16,7 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Overview' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
-    server.create('user', {id: 4136});
+    setupAuthentication(application);
     server.create('school', {
       sessionTypes: [1,2]
     });

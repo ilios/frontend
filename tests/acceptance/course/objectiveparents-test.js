@@ -5,6 +5,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 var url = '/courses/1?details=true';
@@ -12,8 +13,7 @@ var fixtures = {};
 module('Acceptance: Course - Objective Parents' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
-    server.create('user', {id: 4136});
+    setupAuthentication(application);
     server.create('school');
     // server.create('academicYear', {id: 2013});
     fixtures.program = server.create('program');
