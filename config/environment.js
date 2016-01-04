@@ -80,7 +80,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.learnerGroupMultiedit = true;
@@ -96,7 +96,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
