@@ -16,17 +16,9 @@ export default Ember.Service.extend(EventMixin, {
         ajax(url).then(data => {
           let events = data.userEvents.map(event => {
             event.slug = this.getSlugForEvent(event);
-            if (event.ilmSession) {
-              let startDate = moment(moment.utc(event.startDate).format('YYYYMMDD'), 'YYYYMMDD').hour(17).minute(0).second(0);
-              let endDate = moment(moment.utc(event.endDate).format('YYYYMMDD'), 'YYYYMMDD').hour(17).minute(15).second(0);
-              event.startDate = startDate.format();
-              event.endDate = endDate.format();
-              
-            }
-            
             return event;
           }).sortBy('startDate');
-          
+
           deferred.resolve(events);
         });
       } else {
@@ -42,7 +34,7 @@ export default Ember.Service.extend(EventMixin, {
     let to = from.clone().hour(24);
     let type = slug.substring(9, 10);
     let id = parseInt(slug.substring(10));
-    
+
     return new Ember.RSVP.Promise(resolved => {
       this.getEvents(from.unix(), to.unix()).then(events => {
         let event = events.find( event => {
@@ -53,12 +45,12 @@ export default Ember.Service.extend(EventMixin, {
             return event.ilmSession === id;
           }
         });
-        
+
         resolved(event);
       });
     });
-    
-   
+
+
   },
   getSlugForEvent(event){
     let slug = 'U';

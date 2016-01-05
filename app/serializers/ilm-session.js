@@ -7,19 +7,15 @@ export default RESTSerializer.extend({
   isNewSerializerAPI: true,
   serialize(snapshot, options) {
     let json = this._super(snapshot, options);
+
+    // set time to 5pm, always.
     let dueDate = moment(json.dueDate);
-    json.dueDate = dueDate.format('YYYY-MM-DD');
-    
+    dueDate.hour('17');
+    dueDate.minute('00');
+    json.dueDate = dueDate.format();
+
     //don't persist this, it is handled by the server
     delete json.updatedAt;
-
     return json;
-  },
-  normalize(modelClass, resourceHash, prop){
-    let dueDate = moment.utc(resourceHash.dueDate).format('YYYY-MM-DD');
-    let localDueDate = moment(dueDate, 'YYYY-MM-DD');
-    resourceHash.dueDate = localDueDate.format();
-    
-    return this._super(modelClass, resourceHash, prop);
   }
 });
