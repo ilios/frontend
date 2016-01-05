@@ -45,7 +45,6 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
           }
           if(response.status === 'success'){
             let authenticator = 'authenticator:ilios-jwt';
-          
             this.get('session').authenticate(authenticator, {jwt: response.jwt});
           }
         });
