@@ -2,14 +2,15 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed } = Ember;
+const { alias, oneWay, not } = computed;
 
 export default Ember.Mixin.create({
   i18n: Ember.inject.service(),
   publishedAsTbd: DS.attr('boolean'),
-  publishEvent: DS.belongsTo('publish-event', {async: true}),
-  isPublished: computed.notEmpty('publishEvent.content'),
-  isNotPublished: computed.not('isPublished'),
-  isScheduled: computed.oneWay('publishedAsTbd'),
+  published: DS.attr('boolean'),
+  isPublished: alias('published'),
+  isNotPublished: not('isPublished'),
+  isScheduled: oneWay('publishedAsTbd'),
   status: computed('i18n.locale', 'isPublished', 'publishedAsTbd', function(){
     if(this.get('publishedAsTbd')){
       return this.get('i18n').t('general.scheduled');

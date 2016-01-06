@@ -111,24 +111,21 @@ export default Component.extend({
     },
     save(){
       this.set('isSaving', true);
-      let publishEvent = this.get('store').createRecord('publish-event');
       let asIsSessions = this.get('sessionsToOverride');
-      publishEvent.save().then(savedPublishEvent => {
-        let promises = [];
-        this.get('overridableSessions').forEach(session =>{
-          session.set('publishedAsTbd', !asIsSessions.contains(session));
-          session.set('publishEvent', savedPublishEvent);
-          promises.pushObject(session.save());
-        });
-        this.get('publishableSessions').forEach(session => {
-          session.set('publishEvent', savedPublishEvent);
-          promises.pushObject(session.save());
-        });
-        RSVP.all(promises).then(()=>{
-          this.set('isSaving', false);
-          this.sendAction('saved');
-          this.get('flashMessages').success('general.savedSuccessfully');
-        });
+      let promises = [];
+      this.get('overridableSessions').forEach(session =>{
+        session.set('publishedAsTbd', !asIsSessions.contains(session));
+        session.set('published', true);
+        promises.pushObject(session.save());
+      });
+      this.get('publishableSessions').forEach(session => {
+        session.set('published', true);
+        promises.pushObject(session.save());
+      });
+      RSVP.all(promises).then(()=>{
+        this.set('isSaving', false);
+        this.sendAction('saved');
+        this.get('flashMessages').success('general.savedSuccessfully');
       });
 
     },

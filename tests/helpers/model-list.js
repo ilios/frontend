@@ -39,7 +39,6 @@ export default [
   'model:program-year',
   'model:program',
   'model:program-year-steward',
-  'model:publish-event',
   'model:report',
   'model:school',
   'model:session-description',

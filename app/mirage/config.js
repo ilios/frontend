@@ -227,12 +227,6 @@ export default function() {
     this.delete('/api/programs/:id', 'program');
     this.post('/api/programs', 'program');
 
-    this.get('/api/publishevents', getAll);
-    this.get('/api/publishevents/:id', 'publishEvent');
-    this.put('/api/publishevents/:id', 'publishEvent');
-    this.delete('/api/publishevents/:id', 'publishEvent');
-    this.post('/api/publishevents', 'publishEvent');
-
     this.get('/api/reports', getAll);
     this.get('/api/reports/:id', 'report');
     this.put('/api/reports/:id', 'report');

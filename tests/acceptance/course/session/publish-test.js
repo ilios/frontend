@@ -23,18 +23,14 @@ module('Acceptance: Session - Publish' + testgroup, {
       session: 4,
       dueDate: moment().format()
     });
-    server.create('publishEvent', {
-      administrator: 4136,
-      sessions: [1, 2],
-    });
     fixtures.publishedSession = server.create('session', {
-      publishEvent: 1,
+      published: true,
       course: 1,
       offerings: [1]
     });
     fixtures.scheduledSession = server.create('session', {
       course: 1,
-      publishEvent: 1,
+      published: true,
       publishedAsTbd: true,
       offerings: [1],
     });

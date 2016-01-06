@@ -25,20 +25,16 @@ module('Acceptance: Course - Publish' + testgroup, {
 });
 
 test('check published course', function(assert) {
-  server.create('publishEvent', {
-    administrator: 4136,
-    courses: [1],
-  });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 1,
+    published: true,
     cohorts: [1],
   });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 2,
+    published: true,
     publishedAsTbd: true,
     cohorts: [1],
   });
@@ -67,14 +63,10 @@ test('check published course', function(assert) {
 });
 
 test('check scheduled course', function(assert) {
-  server.create('publishEvent', {
-    administrator: 4136,
-    courses: [1],
-  });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 1,
+    published: true,
     publishedAsTbd: true,
     cohorts: [1],
   });
@@ -163,14 +155,10 @@ test('check schedule draft course', function(assert) {
 });
 
 test('check publish scheduled course', function(assert) {
-  server.create('publishEvent', {
-    administrator: 4136,
-    courses: [1],
-  });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 1,
+    published: true,
     publishedAsTbd: true,
     cohorts: [1],
   });
@@ -188,14 +176,10 @@ test('check publish scheduled course', function(assert) {
 });
 
 test('check unpublish scheduled course', function(assert) {
-  server.create('publishEvent', {
-    administrator: 4136,
-    courses: [1],
-  });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 1,
+    published: true,
     publishedAsTbd: true,
     cohorts: [1],
   });
@@ -213,14 +197,10 @@ test('check unpublish scheduled course', function(assert) {
 });
 
 test('check schedule published course', function(assert) {
-  server.create('publishEvent', {
-    administrator: 4136,
-    courses: [1],
-  });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 1,
+    published: true,
     cohorts: [1],
   });
   visit('/courses/1');
@@ -237,14 +217,10 @@ test('check schedule published course', function(assert) {
 });
 
 test('check unpublish published course', function(assert) {
-  server.create('publishEvent', {
-    administrator: 4136,
-    courses: [1],
-  });
   server.create('course', {
     year: 2013,
     school: 1,
-    publishEvent: 1,
+    published: true,
     cohorts: [1],
   });
   visit('/courses/1');

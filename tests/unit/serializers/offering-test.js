@@ -8,7 +8,6 @@ moduleForModel('offering', 'Unit | Serializer | offering' + testgroup, {
     'model:session',
     'model:learner-group',
     'model:instructor-group',
-    'model:publish-event',
     'model:user',
   ]
 });

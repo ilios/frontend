@@ -5,7 +5,6 @@ export default [
     'shortTitle' : "MD",
     'duration' : 4,
     'publishedAsTbd' : false,
-    'publishEvent' : "15302",
     'school' : "1",
     'programYears' : [ '42','67' ],
     'curriculumInventoryReports' : [ '9','10' ]
@@ -17,7 +16,6 @@ export default [
     'shortTitle' : "PharmD",
     'duration' : 4,
     'publishedAsTbd' : false,
-    'publishEvent' : "13",
     'school' : "3",
     'programYears' : [ '58','69' ],
     'curriculumInventoryReports' : []

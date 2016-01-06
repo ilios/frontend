@@ -15,19 +15,15 @@ module('Acceptance: Program - Publish' + testgroup, {
     authenticateSession();
     server.create('user', {id: 4136});
     server.create('school');
-    server.create('publishEvent', {
-      administrator: 4136,
-      programs: [1, 2],
-    });
     fixtures.published = server.create('program', {
       startYear: 2013,
       school: 1,
-      publishEvent: 1,
+      published: true,
     });
     fixtures.scheduled = server.create('program', {
       startYear: 2013,
       school: 1,
-      publishEvent: 1,
+      published: true,
       publishedAsTbd: true
     });
     fixtures.draft = server.create('program', {

@@ -8,7 +8,6 @@ const { oneWay, sort } = computed;
 export default Component.extend(Publishable, {
   session: null,
   publishTarget: oneWay('session'),
-  publishEventCollectionName: 'sessions',
   editable: true,
   classNames: ['session-overview'],
   sortTypes: ['title'],

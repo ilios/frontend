@@ -25,7 +25,6 @@ var models = [
   'meshTrees',
   'programYears',
   'programYearStewards',
-  'publishEvents',
   'recurringEvents',
   'sessionDescriptions',
   'sessionLearningMaterials',

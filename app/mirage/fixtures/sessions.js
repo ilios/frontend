@@ -12,7 +12,7 @@ export default [
     'topics' : [ '16' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58417",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -30,7 +30,7 @@ export default [
     'topics' : [ '53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58466",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -48,7 +48,7 @@ export default [
     'topics' : [ '2','15','163' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58456",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -66,7 +66,7 @@ export default [
     'topics' : [ '8' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58422",
+    'published': true,
     'learningMaterials' : [ '47172','47208','49240','49241','49252','49253','49254','49255','49256','49257','49359','49360' ],
     'offerings' : []
   },
@@ -84,7 +84,7 @@ export default [
     'topics' : [ '53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58461",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -102,7 +102,7 @@ export default [
     'topics' : [ '50' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58465",
+    'published': true,
     'learningMaterials' : [ '47394','47395','47396','47397','49523','49524','49531','49532','49553','49554' ],
     'offerings' : []
   },
@@ -120,7 +120,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58430",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -138,7 +138,7 @@ export default [
     'topics' : [ '25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58440",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -156,7 +156,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58421",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -174,7 +174,7 @@ export default [
     'topics' : [ '25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58435",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -192,7 +192,7 @@ export default [
     'topics' : [ '57' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58467",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -210,7 +210,7 @@ export default [
     'topics' : [ '25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58441",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -228,7 +228,7 @@ export default [
     'topics' : [ '5' ],
     'objectives' : [ '76444','76445','76446','76447','76448','76449','76450','76451','76452','76453','76454','76455','76456','76457' ],
     'meshDescriptors' : [ 'D000254','D001812','D004058','D005057','D007473','D008565','D008566','D010599','D011506','D011978','D017920','D018528','D020168','D027981' ],
-    'publishEvent' : "58425",
+    'published': true,
     'learningMaterials' : [ '47355','47360','47361','49244','49245','49281','49397','49398','49399','49403' ],
     'offerings' : []
   },
@@ -263,7 +263,7 @@ export default [
     'topics' : [ '5','8','50' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58497",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : [ '46117','46118','46119','46120','46121','46122','46123','46124','46125','46126','46127','46128' ]
   },
@@ -281,7 +281,7 @@ export default [
     'topics' : [ '2','166' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58477",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -299,7 +299,7 @@ export default [
     'topics' : [ '2','25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58475",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -317,7 +317,7 @@ export default [
     'topics' : [ '2','25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58442",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -335,7 +335,7 @@ export default [
     'topics' : [ '5' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58503",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -353,7 +353,7 @@ export default [
     'topics' : [ '16' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58418",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -371,7 +371,7 @@ export default [
     'topics' : [ '37','51' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58408",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -389,7 +389,7 @@ export default [
     'topics' : [ '50' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58504",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -407,7 +407,7 @@ export default [
     'topics' : [ '2','166' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58478",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -425,7 +425,7 @@ export default [
     'topics' : [ '37','50','51' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58409",
+    'published': true,
     'learningMaterials' : [ '47200','49274','49548','49549','49550','49551','49636','49637','49638','49639' ],
     'offerings' : []
   },
@@ -443,7 +443,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58391",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -461,7 +461,7 @@ export default [
     'topics' : [ '50' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58521",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -479,7 +479,7 @@ export default [
     'topics' : [ '4','158' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58531",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -497,7 +497,7 @@ export default [
     'topics' : [ '21' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58526",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -515,7 +515,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58515",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -533,7 +533,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58394",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -551,7 +551,7 @@ export default [
     'topics' : [ '21' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58528",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -569,7 +569,7 @@ export default [
     'topics' : [ '21' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58530",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -587,7 +587,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58522",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -605,7 +605,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58512",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -623,7 +623,7 @@ export default [
     'topics' : [ '25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58523",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -641,7 +641,7 @@ export default [
     'topics' : [ '2','25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58524",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -659,7 +659,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58490",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -677,7 +677,7 @@ export default [
     'topics' : [ '25' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58525",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -712,7 +712,7 @@ export default [
     'topics' : [ '21' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59675",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -730,7 +730,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58529",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -748,7 +748,7 @@ export default [
     'topics' : [ '53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58506",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -766,7 +766,7 @@ export default [
     'topics' : [ '53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58517",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -784,7 +784,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58439",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -802,7 +802,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58468",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -820,7 +820,7 @@ export default [
     'topics' : [ '19','53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58455",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -838,7 +838,7 @@ export default [
     'topics' : [ '50' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59673",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -856,7 +856,7 @@ export default [
     'topics' : [ '4','13','158','159' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58532",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -874,7 +874,7 @@ export default [
     'topics' : [ '4','13','158','159' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58533",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -892,7 +892,7 @@ export default [
     'topics' : [ '50' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59676",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -910,7 +910,7 @@ export default [
     'topics' : [ '16' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58535",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -928,7 +928,7 @@ export default [
     'topics' : [ '4','13','158','159' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59677",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : [ '46220','46221','46222','46223','46224','46225','46226','46227','46228','46229','46230','46231','53076','53089','53090' ]
   },
@@ -946,7 +946,7 @@ export default [
     'topics' : [ '48' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59680",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -964,7 +964,7 @@ export default [
     'topics' : [ '8','48' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59682",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -982,7 +982,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [ '76770','76771','76772','76773','76774','76775','76776','76777','76778','76779','76780','76781','76782','76783','85487','85488' ],
     'meshDescriptors' : [ 'D002339','D009333' ],
-    'publishEvent' : "58392",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1000,7 +1000,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58537",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1018,7 +1018,7 @@ export default [
     'topics' : [ '4','160','162' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58438",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1036,7 +1036,7 @@ export default [
     'topics' : [ '48' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58462",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1054,7 +1054,7 @@ export default [
     'topics' : [ '4','150','158' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58474",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1072,7 +1072,7 @@ export default [
     'topics' : [ '2','10','150' ],
     'objectives' : [ '76851','76852','76853','76854','76855','76856','76857','76858','76859','76860','76861','76862','85497','85498' ],
     'meshDescriptors' : [ 'D000715','D005269','D013848','D052097' ],
-    'publishEvent' : "58403",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1090,7 +1090,7 @@ export default [
     'topics' : [ '53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59678",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : [ '46262','46263','46264','46265','46266','46267','46268','46269','46270','46271','46272','46273' ]
   },
@@ -1108,7 +1108,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58518",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1126,7 +1126,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58431",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1144,7 +1144,7 @@ export default [
     'topics' : [ '5' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58508",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1162,7 +1162,7 @@ export default [
     'topics' : [ '2','15','163' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58427",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1180,7 +1180,7 @@ export default [
     'topics' : [ '21' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59679",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1198,7 +1198,7 @@ export default [
     'topics' : [ '2','15' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59683",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : [ '46282','46283','46284','46285','46286','46287','46288','46289','46290','46291','46292','46293','49803','49804','49805','49806','49807','49808','49809','49810' ]
   },
@@ -1216,7 +1216,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58436",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1234,7 +1234,7 @@ export default [
     'topics' : [ '53' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58473",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1252,7 +1252,7 @@ export default [
     'topics' : [ '2','15','163' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58470",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1270,7 +1270,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58507",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1288,7 +1288,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58476",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1306,7 +1306,7 @@ export default [
     'topics' : [ '57' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58520",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1324,7 +1324,7 @@ export default [
     'topics' : [ '2' ],
     'objectives' : [ '76922','76923','76924','76925','76926','76927','76928','76929','76930','76931','76932','76933','76934','76935','76936' ],
     'meshDescriptors' : [ 'D001132' ],
-    'publishEvent' : "58527",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1342,7 +1342,7 @@ export default [
     'topics' : [ '2','15' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "59674",
+    'published': true,
     'learningMaterials' : [ '47239','47240','47241','47242','47243','50711','50712','50758','50760','51107' ],
     'offerings' : []
   },
@@ -1394,7 +1394,7 @@ export default [
     'topics' : [ '5' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58446",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1463,7 +1463,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58423",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1498,7 +1498,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58432",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1516,7 +1516,7 @@ export default [
     'topics' : [ '151' ],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58451",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1534,7 +1534,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58489",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1552,7 +1552,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58488",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1570,7 +1570,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58433",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1588,7 +1588,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58484",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1606,7 +1606,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58447",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1624,7 +1624,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58469",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : [ '46356','46357','46358','46359','46360','46361','46362','46363','46364','46365','46366','46367','46368','46369','46370','46371','46372','46373','46374','46375','46376','46377','46378','46379','46380','46381','46382','46383','54599' ]
   },
@@ -1642,7 +1642,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58450",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1660,7 +1660,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58449",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1695,7 +1695,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58486",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1713,7 +1713,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58429",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1731,7 +1731,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58494",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1766,7 +1766,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58500",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1784,7 +1784,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58426",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1802,7 +1802,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58481",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1820,7 +1820,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58386",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1838,7 +1838,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58393",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1856,7 +1856,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58388",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1874,7 +1874,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58395",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1892,7 +1892,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58397",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1910,7 +1910,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58399",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1928,7 +1928,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58401",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1946,7 +1946,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58402",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1964,7 +1964,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58405",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -1982,7 +1982,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58479",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2000,7 +2000,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58480",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2018,7 +2018,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58534",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2036,7 +2036,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58485",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2054,7 +2054,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58448",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2072,7 +2072,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58434",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2090,7 +2090,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58472",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2108,7 +2108,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58482",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2126,7 +2126,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58487",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },
@@ -2144,7 +2144,7 @@ export default [
     'topics' : [],
     'objectives' : [],
     'meshDescriptors' : [],
-    'publishEvent' : "58502",
+    'published': true,
     'learningMaterials' : [],
     'offerings' : []
   },

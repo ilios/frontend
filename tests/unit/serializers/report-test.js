@@ -7,7 +7,6 @@ moduleForModel('offering', 'Unit | Serializer | report' + testgroup, {
     'serializer:report',
     'model:session',
     'model:learner-group',
-    'model:publish-event',
     'model:instructor-group',
     'model:user',
   ]
