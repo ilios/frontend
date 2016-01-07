@@ -72,13 +72,22 @@ export default Component.extend({
             let sessionEvents = {};
             let promises = [];
             events.forEach(event => {
-              promises.pushObject(this.get('schoolEvents').getSessionForEvent(event).then(session => {
-                let sid = session.get('id');
+              if(event.name === 'Scheduled'){
+                let sid = 'sched' + moment(event.startDate).unix() + moment(event.endDate).unix();
                 if(!(sid in sessionEvents)){
                   sessionEvents[sid] = [];
                 }
                 sessionEvents[sid].pushObject(event);
-              }));
+              }
+              else {
+                promises.pushObject(this.get('schoolEvents').getSessionForEvent(event).then(session => {
+                  let sid = session.get('id');
+                  if(!(sid in sessionEvents)){
+                    sessionEvents[sid] = [];
+                  }
+                  sessionEvents[sid].pushObject(event);
+                }));
+              }
             });
             Ember.RSVP.all(promises).then(() => {
               let singleEventPerSession = [];
