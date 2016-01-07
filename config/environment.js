@@ -23,11 +23,10 @@ module.exports = function(environment) {
       types: [ 'success', 'warning', 'info', 'alert' ],
       injectionFactories: []
     },
-    'simple-auth': {
-      authorizer: 'simple-auth-authorizer:token',
-      store: 'simple-auth-session-store:cookie'
+    'ember-simple-auth': {
+      authorizer: 'authorizer:token'
     },
-    'simple-auth-token': {
+    'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
       serverTokenRefreshEndpoint: '/auth/token',
       tokenPropertyName: 'jwt',
@@ -81,7 +80,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.learnerGroupMultiedit = true;
@@ -97,9 +96,8 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
+    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
-    ENV['simple-auth'].store = 'simple-auth-session-store:ephemeral';
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.IliosFeatures.learnerGroupMultiedit = true;

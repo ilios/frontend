@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import config from 'ilios/config/environment';
+import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 
 const { RESTAdapter } = DS;
 
-export default RESTAdapter.extend({
+export default RESTAdapter.extend(DataAdapterMixin, {
   namespace: config.adapterNamespace,
 
   coalesceFindRequests: true,
@@ -30,5 +31,7 @@ export default RESTAdapter.extend({
     return Ember.String.pluralize(type.camelize().toLowerCase());
   },
 
-  sortQueryParams: false
+  sortQueryParams: false,
+  
+  authorizer: 'authorizer:token'
 });

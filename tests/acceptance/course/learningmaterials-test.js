@@ -5,6 +5,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 
 const { isEmpty, isPresent, run } = Ember;
@@ -16,9 +17,7 @@ var url = '/courses/1?details=true';
 module('Acceptance: Course - Learning Materials' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
-
-    fixtures.user = server.create('user', {id: 4136});
+    fixtures.user = setupAuthentication(application);
     server.create('school');
     server.create('academicYear');
     fixtures.statuses = [];

@@ -5,6 +5,7 @@ const { service } = inject;
 
 export default Controller.extend({
   currentUser: service(),
+  session: service(),
 
   i18n: service(),
 

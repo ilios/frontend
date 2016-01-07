@@ -1,19 +1,17 @@
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 
 const { run } = Ember;
 
 let application;
-let fixtures = {};
 let url = '/admin';
 
 module('Acceptance: Admin', {
   beforeEach() {
     application = startApp();
-    authenticateSession();
-
-    fixtures.user = server.create('user', { id: 4136 });
+    setupAuthentication(application);
     server.create('school');
   },
 

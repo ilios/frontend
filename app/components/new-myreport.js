@@ -124,9 +124,13 @@ export default Component.extend({
   schoolList: computed('currentUser.schools.[]',function(){
     let defer = RSVP.defer();
     this.get('currentUser').get('model').then(user => {
-      user.get('schools').then(schools => {
-        defer.resolve(schools.sortBy('title'));
-      });
+      if(isEmpty(user)){
+        defer.resolve([]);
+      } else {
+        user.get('schools').then(schools => {
+          defer.resolve(schools.sortBy('title'));
+        });
+      }
     });
     return PromiseArray.create({
       promise: defer.promise

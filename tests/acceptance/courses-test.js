@@ -2,6 +2,8 @@ import destroyApp from '../helpers/destroy-app';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+
 import Ember from 'ember';
 
 var application;
@@ -10,8 +12,8 @@ var fixtures = {};
 module('Acceptance: Courses' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    authenticateSession();
-    server.create('user', {id: 4136});
+    setupAuthentication(application);
+    
     fixtures.schools = [];
     fixtures.schools.pushObjects(server.createList('school', 2));
 

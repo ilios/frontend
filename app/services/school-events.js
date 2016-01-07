@@ -1,17 +1,21 @@
 import Ember from 'ember';
 import config from 'ilios/config/environment';
 import EventMixin from 'ilios/mixins/events';
-import ajax from 'ic-ajax';
 import moment from 'moment';
 
+const { service } = Ember.inject;
+
 export default Ember.Service.extend(EventMixin, {
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
+  ajax: service(),
+  
   getEvents(schoolId, from, to){
     var deferred = Ember.RSVP.defer();
     var url = '/' + config.adapterNamespace + '/schoolevents/' +
     schoolId + '?from=' + from + '&to=' + to;
-    ajax(url).then(data => {
+    const ajax = this.get('ajax');
+    ajax.request(url).then(data => {
       let events = data.events.map(event => {
         event.slug = this.getSlugForEvent(event);
         return event;

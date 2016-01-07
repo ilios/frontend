@@ -1,10 +1,14 @@
 import Ember from 'ember';
 import EmberConfig from 'ilios/config/environment';
-import UnauthenticatedRouteMixin from 'simple-auth/mixins/unauthenticated-route-mixin';
-import ajax from 'ic-ajax';
+import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
+
+const { service }  = Ember.inject;
 
 export default Ember.Route.extend(UnauthenticatedRouteMixin, {
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
+  session: service(),
+  ajax: service(),
+  
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   beforeModel(transition){
@@ -16,7 +20,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
     let defer = Ember.RSVP.defer();
     var configUrl = '/application/config';
     var loginUrl = '/auth/login';
-    ajax(configUrl).then(data => {
+    this.get('ajax').request(configUrl).then(data => {
       let config = data.config;
       if(config.type === 'form' || config.type === 'ldap'){
         defer.resolve();
@@ -24,7 +28,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
       }
       
       if(config.type === 'shibboleth'){
-        ajax(loginUrl).then(response => {
+        this.get('ajax').request(loginUrl).then(response => {
           if(response.status === 'redirect'){
             let shibbolethLoginUrl = config.loginUrl;
             if(EmberConfig.redirectAfterShibLogin){
@@ -41,13 +45,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
           }
           if(response.status === 'success'){
             let authenticator = 'authenticator:ilios-jwt';
-          
-            this.get('session').authenticate(authenticator, {jwt: response.jwt}).then(() => {
-              let jwt = this.get('session').get('secure.jwt');
-              let js = atob(jwt.split('.')[1]);
-              let obj = Ember.$.parseJSON(js);
-              this.get('currentUser').set('currentUserId', obj.user_id);
-            });
+            this.get('session').authenticate(authenticator, {jwt: response.jwt});
           }
         });
       }
