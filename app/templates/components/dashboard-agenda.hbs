@@ -2,13 +2,22 @@
   <table>
     <tbody>
       {{#each weeksEvents as |event|}}
-        {{#link-to 'events' event.slug}}
-          <tr class='clickable'>
-            <td class='event-date'>{{fa-icon 'external-link-square'}} {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
+        {{#if event.isBlanked}}
+          <tr>
+            <td class='event-date'>{{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
             <td>{{event.name}}</td>
             <td>{{event.location}}</td>
           </tr>
-        {{/link-to}}
+        {{/if}}
+        {{#unless event.isBlanked}}
+          {{#link-to 'events' event.slug}}
+            <tr class='clickable'>
+              <td class='event-date'>{{fa-icon 'external-link-square'}} {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
+              <td>{{event.name}}</td>
+              <td>{{event.location}}</td>
+            </tr>
+          {{/link-to}}
+        {{/unless}}
       {{/each}}
     </tbody>
   </table>
