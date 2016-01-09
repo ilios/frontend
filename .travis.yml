@@ -17,7 +17,7 @@ before_install:
   - rm -rf ~/.nvm
   - git clone https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
-  - nvm install v5
+  - nvm install v5.1
   - if [ ! -d travis-phantomjs ]; then wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-macosx.zip -O phantomjs.zip; fi
   - if [ ! -d travis-phantomjs ]; then unzip phantomjs.zip; fi
   - if [ ! -d travis-phantomjs ]; then mv phantomjs-2.0.0-macosx travis-phantomjs; fi
