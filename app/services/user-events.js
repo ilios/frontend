@@ -21,6 +21,7 @@ export default Ember.Service.extend(EventMixin, {
         const ajax = this.get('ajax');
         ajax.request(url).then(data => {
           let events = data.userEvents.map(event => {
+            event.isBlanked = !event.offering && !event.ilmSession;
             event.slug = this.getSlugForEvent(event);
             return event;
           }).sortBy('startDate');
