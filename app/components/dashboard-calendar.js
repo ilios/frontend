@@ -155,13 +155,15 @@ export default Component.extend({
     let defer = Ember.RSVP.defer();
     let promises = [];
     this.get('ourEvents').forEach(event => {
-      promises.pushObject(this.get('userEvents').getTopicIdsForEvent(event).then( topics => {
-        if (topics.any( topicId => {
-          return selectedTopics.contains(topicId);
-        })) {
-          matchingEvents.pushObject(event);
-        }
-      }));
+      if (event.ilmEvent || event.offering) {
+        promises.pushObject(this.get('userEvents').getTopicIdsForEvent(event).then(topics => {
+          if (topics.any(topicId => {
+                return selectedTopics.contains(topicId);
+              })) {
+            matchingEvents.pushObject(event);
+          }
+        }));
+      }
     });
 
     Ember.RSVP.all(promises).then(()=> {
@@ -181,11 +183,13 @@ export default Component.extend({
     let defer = Ember.RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then( id => {
-        if (selectedSessionTypes.contains(id)) {
-          matchingEvents.pushObject(event);
-        }
-      }));
+      if (event.ilmEvent || event.offering) {
+        promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then(id => {
+          if (selectedSessionTypes.contains(id)) {
+            matchingEvents.pushObject(event);
+          }
+        }));
+      }
     });
 
     Ember.RSVP.all(promises).then(()=> {
@@ -205,11 +209,13 @@ export default Component.extend({
     let defer = Ember.RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then( level => {
-        if (selectedCourseLevels.contains(level)) {
-          matchingEvents.pushObject(event);
-        }
-      }));
+      if (event.ilmEvent || event.offering) {
+        promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then(level => {
+          if (selectedCourseLevels.contains(level)) {
+            matchingEvents.pushObject(event);
+          }
+        }));
+      }
     });
 
     Ember.RSVP.all(promises).then(()=> {
@@ -229,13 +235,15 @@ export default Component.extend({
     let defer = Ember.RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then( cohorts => {
-        if (cohorts.any( cohortId => {
-          return selectedCohorts.contains(cohortId);
-        })) {
-          matchingEvents.pushObject(event);
-        }
-      }));
+      if (event.ilmEvent || event.offering) {
+        promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
+          if (cohorts.any(cohortId => {
+                return selectedCohorts.contains(cohortId);
+              })) {
+            matchingEvents.pushObject(event);
+          }
+        }));
+      }
     });
 
     Ember.RSVP.all(promises).then(()=> {
@@ -255,11 +263,13 @@ export default Component.extend({
     let defer = Ember.RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then( courseId => {
-        if (selectedCourses.contains(courseId)) {
-          matchingEvents.pushObject(event);
-        }
-      }));
+      if (event.ilmEvent || event.offering) {
+        promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
+          if (selectedCourses.contains(courseId)) {
+            matchingEvents.pushObject(event);
+          }
+        }));
+      }
     });
 
     Ember.RSVP.all(promises).then(()=> {
