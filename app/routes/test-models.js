@@ -33,7 +33,6 @@ export default Ember.Route.extend({
         offerings: this.store.query('offering', {limit: 2}),
         programyears: this.store.query('program-year', {limit: 2}),
         programs: this.store.query('program', {limit: 2}),
-        publishevents: this.store.query('publish-event', {limit: 2}),
         reports: this.store.query('report', {limit: 2}),
         schools: this.store.query('school', {limit: 2}),
         sessiondescriptions: this.store.query('session-description', {limit: 2}),

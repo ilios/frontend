@@ -7,5 +7,4 @@ const { alias } = computed;
 export default Component.extend(Publishable, {
   programYear: null,
   publishTarget: alias('programYear'),
-  publishEventCollectionName: 'programYears',
 });

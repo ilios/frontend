@@ -5,7 +5,6 @@ moduleForModel('session', 'Unit | Serializer | Session ' + testgroup, {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:session',
-    'model:publish-event',
     'model:session-type',
     'model:course',
     'model:ilm-session',

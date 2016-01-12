@@ -9,8 +9,6 @@ export default Component.extend(Publishable, {
 
   publishTarget: alias('course'),
 
-  publishEventCollectionName: 'courses',
-
   editable: true,
 
   titleValidations: {

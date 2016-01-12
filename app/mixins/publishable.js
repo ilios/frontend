@@ -6,7 +6,6 @@ const { not, oneWay, or } = computed;
 
 export default Ember.Mixin.create({
   publishTarget: null,
-  publishEventCollectionName: null,
   currentUser: service(),
   flashMessages: service(),
   store: service(),
@@ -61,63 +60,26 @@ export default Ember.Mixin.create({
   actions: {
     unpublish: function(){
       let publishTarget = this.get('publishTarget');
-      publishTarget.get('publishEvent').then(publishEvent => {
-        publishTarget.set('publishedAsTbd', false);
-        publishTarget.set('publishEvent', null);
-        if(publishEvent){
-          publishEvent.get(this.get('publishEventCollectionName')).removeObject(publishTarget);
-        }
-        publishTarget.save().then(()=>{
-          this.get('flashMessages').success('publish.message.unPublish');
-        });
+      publishTarget.set('publishedAsTbd', false);
+      publishTarget.set('published', false);
+      publishTarget.save().then(()=>{
+        this.get('flashMessages').success('publish.message.unPublish');
       });
     },
     publishAsTbd: function(){
       let publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', true);
-      publishTarget.get('publishEvent').then(publishEvent => {
-        let promise;
-        if(!publishEvent){
-          publishEvent = this.get('store').createRecord('publish-event', {
-            administrator: this.get('currentUser.model')
-          });
-          promise = publishEvent.save().then(newEvent => {
-            newEvent.get(this.get('publishEventCollectionName')).addObject(publishTarget);
-            publishTarget.set('publishEvent', newEvent);
-            
-            return publishTarget.save();
-          });
-        } else {
-          promise = publishTarget.save();
-        }
-
-        promise.then(()=>{
-          this.get('flashMessages').success('publish.message.schedule');
-        });
+      publishTarget.set('published', true);
+      publishTarget.save().then(()=>{
+        this.get('flashMessages').success('publish.message.schedule');
       });
     },
     publish: function(){
       let publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', false);
-      publishTarget.get('publishEvent').then(publishEvent => {
-        let promise;
-        if(!publishEvent){
-          publishEvent = this.get('store').createRecord('publish-event', {
-            administrator: this.get('currentUser.model')
-          });
-          promise = publishEvent.save().then(newEvent => {
-            newEvent.get(this.get('publishEventCollectionName')).addObject(publishTarget);
-            publishTarget.set('publishEvent', newEvent);
-            
-            return publishTarget.save();
-          });
-        } else {
-          promise = publishTarget.save();
-        }
-
-        promise.then(()=>{
-          this.get('flashMessages').success('publish.message.publish');
-        });
+      publishTarget.set('published', true);
+      publishTarget.save().then(()=>{
+        this.get('flashMessages').success('publish.message.publish');
       });
     },
   }

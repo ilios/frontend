@@ -8,7 +8,6 @@ export default Component.extend(Publishable, {
   program: null,
 
   publishTarget: alias('program'),
-  publishEventCollectionName: 'programs',
 
   titleValidations: {
     'validationBuffer': {
