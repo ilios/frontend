@@ -5,7 +5,6 @@ moduleForModel('course', 'Unit | Serializer | course ' + testgroup, {
     // Specify the other units that are required for this test.
     needs: [
         'serializer:course',
-        'model:publish-event',
         'model:school',
         'model:user',
         'model:course',
@@ -27,4 +26,3 @@ test('it serializes records', function(assert) {
 
     assert.ok(serializedRecord);
 });
-
