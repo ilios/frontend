@@ -89,7 +89,7 @@
                   {{fa-icon 'external-link-square'}} {{lmProxy.learningMaterial.title}}
                 </td>
                 <td class='text-center' colspan=2>{{lmProxy.learningMaterial.type}}</td>
-                <td class='text-center' colspan=2>{{lmProxy.learningMaterial.originalAuthor}}</td>
+                <td class='text-center' colspan=2>{{lmProxy.learningMaterial.owningUser.fullName}}</td>
                 <td class='text-center' colspan=2>
         	        {{#if lmProxy.required}}
         	          <span class='add'>{{t 'general.yes'}}</span>

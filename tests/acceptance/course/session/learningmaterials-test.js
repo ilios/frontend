@@ -63,12 +63,18 @@ module('Acceptance: Session - Learning Materials' + testgroup, {
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
       status: 1,
+      owningUser: 4136,
+      userRole: 1,
+      copyrightPermission: true,
       sessionLearningMaterials: [3],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
       status: 1,
+      owningUser: 4136,
+      userRole: 1,
+      copyrightPermission: true,
       sessionLearningMaterials: [4],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
@@ -117,6 +123,8 @@ module('Acceptance: Session - Learning Materials' + testgroup, {
 test('list learning materials', function(assert) {
   visit(url);
   andThen(function() {
+	const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
+	const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(currentPath(), 'course.session.index');
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
@@ -128,8 +136,9 @@ test('list learning materials', function(assert) {
       assert.equal(getElementText(find('td:eq(0)', row)), getText(lm.title));
       //TODO: we are no longer populating for 'type', so we need to pull all these tests out
       //of the loop and test each fixture individually
-      //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));assert.equal(getElementText(find('td:eq(2)', row)), getText(lm.originalAuthor));
+      //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
       let required = sessionLm.required?'Yes':'No';
+      assert.equal(getElementText(find('td:eq(2)', row)), getText(userName));
       assert.equal(getElementText(find('td:eq(3)', row)), getText(required));
       let notes = sessionLm.notes? 'Yes' : 'No';
       assert.equal(getElementText(find('td:eq(4)', row)), getText(notes));
@@ -372,10 +381,9 @@ test('view link learning material details', function(assert) {
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
       assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
-      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(find('.copyrightpermission', container).length, 1);
       assert.equal(find('.copyrightrationale', container).length, 0);
       assert.equal(find('.citation', container).length, 0);
-      assert.equal(find('.copyrightpermission', container).length, 0);
     });
   });
 });
@@ -390,10 +398,9 @@ test('view citation learning material details', function(assert) {
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[3].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[3].description));
       assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
-      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(find('.copyrightpermission', container).length, 1);
       assert.equal(find('.copyrightrationale', container).length, 0);
       assert.equal(find('.file', container).length, 0);
-      assert.equal(find('.copyrightpermission', container).length, 0);
     });
   });
 });
