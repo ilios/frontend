@@ -59,12 +59,14 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
       status: 1,
+      owningUser: 4136,
       courseLearningMaterials: [3],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
       status: 1,
+      owningUser: 4136,
       courseLearningMaterials: [4],
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
@@ -113,6 +115,8 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
 test('list learning materials', function(assert) {
   visit(url);
   andThen(function() {
+	const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
+	const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(currentPath(), 'course.index');
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);
@@ -125,7 +129,7 @@ test('list learning materials', function(assert) {
       //TODO: we are no longer populating for 'type', so we need to pull all these tests out
       //of the loop and test individually
       //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
-      assert.equal(getElementText(find('td:eq(2)', row)), getText(lm.originalAuthor));
+      assert.equal(getElementText(find('td:eq(2)', row)), getText(userName));
       let required = courseLm.required?'Yes':'No';
       assert.equal(getElementText(find('td:eq(3)', row)), getText(required));
       let notes = courseLm.notes? 'Yes' : 'No';
