@@ -15,6 +15,8 @@ export default Component.extend({
   noSessionsAsIs: equal('sessionsToOverride.length', 0),
   publishableCollapsed: true,
   unPublishableCollapsed: true,
+  totalSessionsToSave: null,
+  currentSessionsSaved: null,
   allSessionsAsIs: computed('sessionsToOverride.[]', 'overridableSessions.[]', function(){
     return this.get('sessionsToOverride').get('length') === this.get('overridableSessions').get('length');
   }),
@@ -87,6 +89,7 @@ export default Component.extend({
       return parseInt(this.get('unPublishableSessions.length'));
     }
   ),
+  
   actions: {
     toggleSession(session){
       if(this.get('sessionsToOverride').contains(session)){
@@ -112,21 +115,38 @@ export default Component.extend({
     save(){
       this.set('isSaving', true);
       let asIsSessions = this.get('sessionsToOverride');
-      let promises = [];
+      let sessionsToSave = [];
       this.get('overridableSessions').forEach(session =>{
         session.set('publishedAsTbd', !asIsSessions.contains(session));
         session.set('published', true);
-        promises.pushObject(session.save());
+        sessionsToSave.pushObject(session);
       });
       this.get('publishableSessions').forEach(session => {
         session.set('published', true);
-        promises.pushObject(session.save());
+        sessionsToSave.pushObject(session);
       });
-      RSVP.all(promises).then(()=>{
-        this.set('isSaving', false);
-        this.sendAction('saved');
-        this.get('flashMessages').success('general.savedSuccessfully');
-      });
+      
+      this.set('totalSessionsToSave', sessionsToSave.length);
+      this.set('currentSessionsSaved', 0);
+      this.set('isSaving', true);
+      
+      
+      let saveSomeSessions = (sessions) => {
+        let chunk = sessions.splice(0, 6);
+        
+        RSVP.all(chunk.invoke('save')).then(() => {
+          if (sessions.length){
+            this.set('currentSessionsSaved', this.get('currentSessionsSaved') + chunk.length);
+            saveSomeSessions(sessions);
+          } else {
+            this.set('isSaving', false);
+            this.sendAction('saved');
+            this.get('flashMessages').success('general.savedSuccessfully');
+          }
+        });
+      };
+      
+      saveSomeSessions(sessionsToSave);
 
     },
     togglePublishableCollapsed(){

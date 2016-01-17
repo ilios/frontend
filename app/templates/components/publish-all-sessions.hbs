@@ -1,5 +1,9 @@
 {{#liquid-if isSaving class='crossFade'}}
-  {{wait-saving}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalSessionsToSave
+    currentProgress=currentSessionsSaved
+  }}
 {{/liquid-if}}
 
 <div class='publish-all-sessions-unpublishable'>
