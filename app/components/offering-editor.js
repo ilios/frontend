@@ -146,11 +146,9 @@ export default Component.extend({
   getAllLearnerGroups() {
     const groupHash = this.get('learnerGroups');
     const output = [];
-
+    
     for (let key in groupHash) {
-      groupHash[key].forEach((group) => {
-        output.push(group);
-      });
+      output.pushObjects(groupHash[key]);
     }
 
     return output;
