@@ -6,7 +6,12 @@
   <div class="learnergroup-list-top">
     {{#each proxiedMembers as |userProxy|}}
       <div class="form-col-12">
-        <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+        <label class="form-label learnergroup-username">
+          {{userProxy.fullName}}
+          {{#unless userProxy.enabled}}
+            <em>({{t 'general.disabled'}})</em>
+          {{/unless}}
+        </label>
         <div class="form-data learnergroup-group-membership">
           {{multiedit-select
             condition=userProxy.id
@@ -24,7 +29,12 @@
     <p class="middle-header">Learner Assignments</p>
     {{#each membersNotInThisGroup as |userProxy|}}
       <div class="form-col-12">
-        <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+        <label class="form-label learnergroup-username">
+          {{userProxy.fullName}}
+          {{#unless userProxy.enabled}}
+            <em>({{t 'general.disabled'}})</em>
+          {{/unless}}
+        </label>
         <div class="form-data learnergroup-group-membership">
           {{multiedit-select
             condition=userProxy.id
@@ -42,7 +52,12 @@
     <p class="bottom-header">Cohort Members NOT assigned</p>
     {{#each membersNotAssigned as |userProxy|}}
       <div class="form-col-12">
-        <label class="form-label learnergroup-username">{{userProxy.fullName}}</label>
+        <label class="form-label learnergroup-username">
+          {{userProxy.fullName}}
+          {{#unless userProxy.enabled}}
+            <em>({{t 'general.disabled'}})</em>
+          {{/unless}}
+        </label>
         <div class="form-data learnergroup-group-membership">
           {{multiedit-select
             condition=userProxy.id

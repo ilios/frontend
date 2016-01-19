@@ -18,6 +18,9 @@ var customHelpers = function() {
     return app.testHelpers.wait();
   });
   Ember.Test.registerHelper('getElementText', function(app, element){
+    if (typeof element === 'string'){
+      element = find(element);
+    }
     return element.text().replace(/[\t\n\s]+/g, "");
   });
   Ember.Test.registerHelper('getText', function(app, string){
