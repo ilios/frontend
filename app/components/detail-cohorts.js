@@ -7,6 +7,7 @@ export default Component.extend({
   subject: null,
   isManaging: false,
   isSaving: false,
+  editable: true,
   bufferedCohorts: [],
   actions: {
     manage(){

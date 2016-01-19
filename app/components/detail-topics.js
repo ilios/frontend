@@ -12,6 +12,7 @@ export default Component.extend({
   isCourse: false,
   isSession: false,
   isProgramYear: false,
+  editable: true,
   bufferedTopics: [],
   availableTopics: computed('isCourse', 'isSession', 'isProgramYear', 'subject', function(){
     let defer = RSVP.defer();

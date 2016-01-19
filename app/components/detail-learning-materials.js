@@ -13,6 +13,7 @@ export default Component.extend({
   i18n: service(),
   subject: null,
   isCourse: false,
+  editable: true,
   isManaging: or('isManagingMaterial', 'isManagingMesh'),
   isManagingMaterial: notEmpty('managingMaterial'),
   isManagingMesh: notEmpty('meshMaterial'),

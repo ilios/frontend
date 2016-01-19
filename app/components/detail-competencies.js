@@ -4,4 +4,5 @@ const { Component } = Ember;
 
 export default Component.extend({
   course: null,
+  editable: true,
 });

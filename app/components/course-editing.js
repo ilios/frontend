@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
-const { Component } = Ember;
-
+const { Component, computed } = Ember;
+const { not } = computed;
+  
 export default Component.extend({
+  editable: not('course.locked'),
   actions: {
     save: function(){
       var self = this;
