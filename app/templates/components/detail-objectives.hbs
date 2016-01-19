@@ -25,7 +25,9 @@
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
+      {{#if editable}}
+        {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
+      {{/if}}
     {{/liquid-if}}
   </div>
   <div class='detail-content'>
@@ -50,6 +52,7 @@
       {{#if isCourse}}
         {{course-objective-list
           course=subject
+          editable=editable
           manageParents="manageParents"
           manageDescriptors="manageDescriptors"
         }}
@@ -57,6 +60,7 @@
       {{#if isSession}}
         {{session-objective-list
           session=subject
+          editable=editable
           manageParents="manageParents"
           manageDescriptors="manageDescriptors"
         }}
