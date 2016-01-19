@@ -271,3 +271,34 @@ test('new course does not appear twice when navigating back', function(assert) {
     assert.equal(find(course1InList).length, 1, 'one copy of the course in the list');
   });
 });
+
+test('locked courses', function(assert) {
+  assert.expect(6);
+  server.create('course', {
+    year: 2014,
+    school: 1
+  });
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    locked: true
+  });
+
+  const url = '/courses?year=2014';
+
+  visit(url);
+  andThen(() => {
+    function getContent(row, column) {
+      return find(`tbody tr:eq(${row}) td:eq(${column})`).text().trim();
+    }
+
+    assert.equal(getContent(0, 0), 'course 0', 'course name is correct');
+    assert.equal(getContent(0, 6), 'Not Published', 'status');
+    assert.ok(find(`tbody tr:eq(0) td:eq(6) i.fa-lock`).length === 0);
+
+    assert.equal(getContent(1, 0), 'course 1', 'course name is correct');
+    assert.equal(getContent(1, 6), 'Not Published', 'status');
+    assert.ok(find(`tbody tr:eq(1) td:eq(6) i.fa-lock`).length === 1);
+    
+  });
+});
