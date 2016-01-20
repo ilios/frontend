@@ -478,7 +478,7 @@ test('manage terms', function(assert) {
   visit(url);
   andThen(function() {
     let container = find('.detail-learning-materials').eq(0);
-    click('.detail-content tbody tr:eq(0) td:eq(5) a', container).then(function(){
+    click('.detail-content tbody tr:eq(0) td:eq(5) .link', container).then(function(){
       assert.equal(getElementText(find('.detail-specific-title', container)), 'SelectMeSHDescriptorsforLearningMaterials');
     });
 
@@ -543,7 +543,7 @@ test('save terms', function(assert) {
   visit(url);
   andThen(function() {
     let container = find('.detail-learning-materials').eq(0);
-    click('.detail-content tbody tr:eq(0) td:eq(5) a', container);
+    click('.detail-content tbody tr:eq(0) td:eq(5) .link', container);
     andThen(function() {
       let meshManager = find('.mesh-manager', container).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
@@ -569,7 +569,7 @@ test('cancel term changes', function(assert) {
   visit(url);
   andThen(function() {
     let container = find('.detail-learning-materials').eq(0);
-    click('.detail-content tbody tr:eq(0) td:eq(5) a', container);
+    click('.detail-content tbody tr:eq(0) td:eq(5) .link', container);
     andThen(function() {
       let meshManager = find('.mesh-manager', container).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);

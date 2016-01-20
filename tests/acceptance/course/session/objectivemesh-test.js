@@ -94,7 +94,7 @@ test('manage terms', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.session-objective-list tbody tr:eq(1) td:eq(2) a', detailObjectives);
+    click('.session-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives);
     andThen(function() {
       assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
@@ -157,7 +157,7 @@ test('save terms', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.session-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives);
+    click('.session-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
     andThen(function() {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
@@ -183,7 +183,7 @@ test('cancel changes', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.session-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives);
+    click('.session-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
     andThen(function() {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
