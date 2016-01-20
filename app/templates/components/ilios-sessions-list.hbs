@@ -126,7 +126,7 @@
                   {{#link-to 'session.index' course sessionProxy.content class='edit'}}
                     {{fa-icon 'edit'}}
                   {{/link-to}}
-                  {{#if sessionProxy.userCanDelete}}
+                  {{#if (and sessionProxy.userCanDelete editable)}}
                     <span class='clickable remove' {{action 'confirmRemoval' sessionProxy}}>{{fa-icon 'trash'}}</span>
                   {{/if}}
                 </td>
