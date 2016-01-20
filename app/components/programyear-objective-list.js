@@ -5,6 +5,7 @@ const { alias, sort } = computed;
 
 export default Component.extend({
   programYear: null,
+  editable: true,
   classNames: ['programyear-objective-list'],
   objectives: alias('programYear.objectives'),
   sortedObjectives: sort('objectives', function(a, b){

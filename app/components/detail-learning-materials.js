@@ -13,6 +13,7 @@ export default Component.extend({
   i18n: service(),
   subject: null,
   isCourse: false,
+  editable: true,
   isManaging: or('isManagingMaterial', 'isManagingMesh'),
   isManagingMaterial: notEmpty('managingMaterial'),
   isManagingMesh: notEmpty('meshMaterial'),
@@ -33,8 +34,9 @@ export default Component.extend({
     get() {
       const isManaging = this.get('isManaging');
       const isEditing = this.get('isEditing');
+      const editable = this.get('editable');
 
-      return isManaging ? false : isEditing ? false : true;
+      return isManaging ? false : isEditing ? false : editable;
     }
   }).readOnly(),
 

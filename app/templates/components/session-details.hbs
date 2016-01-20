@@ -4,27 +4,32 @@
       course=course
       session=session
       sessionTypes=sessionTypes
+      editable=editable
     }}
     {{#liquid-if session.isIndependentLearning class='vertical'}}
       {{detail-learnergroups
         subject=session.ilmSession
         cohorts=session.course.cohorts
         isIlmSession=true
+        editable=editable
       }}
       {{detail-instructors
         ilmSession=session.ilmSession
+        editable=editable
       }}
     {{/liquid-if}}
-    {{detail-objectives subject=session isSession=true}}
-    {{detail-learning-materials subject=session isCourse=false}}
+    {{detail-objectives subject=session isSession=true editable=editable}}
+    {{detail-learning-materials subject=session isCourse=false editable=editable}}
     {{detail-topics
       subject=session
       isSession=true
+      editable=editable
     }}
     {{detail-mesh
       subject=session
       isSession=true
+      editable=editable
     }}
-    {{session-offerings session=session}}
+    {{session-offerings session=session editable=editable}}
   </div>
 </div>

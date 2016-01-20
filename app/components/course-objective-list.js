@@ -5,6 +5,7 @@ const { sort, alias } = computed;
 
 export default Component.extend({
   course: null,
+  editable: true,
   objectives: alias('course.objectives'),
   proxiedObjectives: computed('objectives.[]', function(){
     return this.get('objectives').map(objective => {

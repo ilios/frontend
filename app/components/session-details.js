@@ -1,11 +1,13 @@
 import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
+const { not } = computed;
 
 export default Component.extend({
   sessionTypes: [],
   session: null,
+  editable: not('course.locked'),
   didInsertElement: function(){
     scrollTo("#session-" + this.get('session.id'));
   },

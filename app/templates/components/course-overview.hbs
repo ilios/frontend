@@ -13,30 +13,61 @@
       <div class="form-col-6 multi-row">
         <label class="form-label">{{t "courses.externalId"}}:</label>
         <div class="form-data courseexternalid">
-          {{inplace-text value=course.externalId save='changeExternalId' validations=externalIdValidations}}
+          {{#if editable}}
+            {{inplace-text value=course.externalId save='changeExternalId' validations=externalIdValidations}}
+          {{else}}
+            {{course.externalId}}&nbsp;
+          {{/if}}
         </div>
         <label class="form-label">{{t "courses.clerkshipType"}}:</label>
         <div class="form-data clerkshiptype">
-          {{inplace-select
-            value=course.clerkshipType.id
-            options=clerkshipTypeOptions
-            save='changeClerkshipType'
-            selectPromptTranslation='courses.notAClerkship'
-            clickPromptTranslation='courses.notAClerkship'
-          }}
+          {{#if editable}}
+            {{inplace-select
+              value=course.clerkshipType.id
+              options=clerkshipTypeOptions
+              save='changeClerkshipType'
+              selectPromptTranslation='courses.notAClerkship'
+              clickPromptTranslation='courses.notAClerkship'
+            }}
+          {{else}}
+            {{#if course.clerkshipType}}
+              {{course.clerkshipType.title}}
+            {{else}}
+              {{t 'courses.notAClerkship'}}
+            {{/if}}
+          {{/if}}
         </div>
         <label class="form-label">{{t "courses.level"}}:</label>
-        <div class="form-data courselevel">{{inplace-select value=course.level options=levelOptions save='changeLevel'}}</div>
+        <div class="form-data courselevel">
+          {{#if editable}}
+            {{inplace-select value=course.level options=levelOptions save='changeLevel'}}
+          {{else}}
+            {{course.level}}&nbsp;
+          {{/if}}
+        </div>
       </div>
 
       <div class="form-col-6 multi-row">
         <label class='form-label'>{{t "general.start"}}:</label>
-        <div class="form-data coursestartdate">{{inplace-date value=course.startDate save='changeStartDate'}}</div>
+        <div class="form-data coursestartdate">
+          {{#if editable}}
+            {{inplace-date value=course.startDate save='changeStartDate'}}
+          {{else}}
+            {{moment-format course.startDate 'MM/DD/YY'}}&nbsp;
+          {{/if}}
+        </div>
         <label class="form-label">{{t "general.end"}}:</label>
-        <div class="form-data courseenddate">{{inplace-date value=course.endDate save='changeEndDate'}}</div>
+        <div class="form-data courseenddate">
+          {{#if editable}}
+            {{inplace-date value=course.endDate save='changeEndDate'}}
+          {{else}}
+            {{moment-format course.endDate 'MM/DD/YY'}}&nbsp;
+          {{/if}}
+        </div>
       </div>
       <div class="form-col-12 coursedirectors">
         <label>{{t "general.directors"}}:</label>
+        {{#if editable}}
           <span>
             <ul class='removable-list'>
               {{#each sortedDirectors as |user|}}
@@ -49,6 +80,13 @@
             roles='1'
             currentlyActiveUsers=course.directors
           }}
+        {{else}}
+          <ul class='inline-list'>
+            {{#each sortedDirectors as |user|}}
+              <li>{{user.fullName}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
       </div>
   </div>
 </section>

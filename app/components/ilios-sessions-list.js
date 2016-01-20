@@ -6,7 +6,7 @@ const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy }
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
-const { sort } = computed;
+const { sort, not } = computed;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -41,6 +41,8 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   currentUser: service(),
+
+  editable: not('course.locked'),
 
   filter: '',
   course: null,
