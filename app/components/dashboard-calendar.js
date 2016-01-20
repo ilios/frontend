@@ -3,11 +3,21 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, isPresent, on, RSVP, inject } = Ember;
+const { Component, computed, isPresent, RSVP, inject } = Ember;
 const { PromiseObject } = DS;
 const { service } = inject;
 
 export default Component.extend({
+  init() {
+    this._super(...arguments);
+    //do these on setup otherwise tests were failing because
+    //the old filter value hung around
+    this.set('selectedTopics', []);
+    this.set('selectedSessionTypes', []);
+    this.set('selectedCourseLevels', []);
+    this.set('selectedCohorts', []);
+    this.set('selectedCourses', []);
+  },
   userEvents: service(),
   schoolEvents: service(),
   currentUser: service(),
@@ -33,15 +43,6 @@ export default Component.extend({
   }),
   icsInstructionsTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.icsInstructions');
-  }),
-  setup: on('init', function() {
-    //do these on setup otherwise tests were failing because
-    //the old filter value hung around
-    this.set('selectedTopics', []);
-    this.set('selectedSessionTypes', []);
-    this.set('selectedCourseLevels', []);
-    this.set('selectedCohorts', []);
-    this.set('selectedCourses', []);
   }),
   fromTimeStamp: computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).startOf(this.get('selectedView')).subtract(this.get('skew'), 'days').unix();
