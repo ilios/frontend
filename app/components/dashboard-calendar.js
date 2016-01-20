@@ -81,7 +81,8 @@ export default Component.extend({
               }
               else {
                 promises.pushObject(this.get('schoolEvents').getSessionForEvent(event).then(session => {
-                  let sid = session.get('id');
+                  let sid = session.get('id') + moment(event.startDate).format() +
+                      moment(event.endDate).format();
                   if(!(sid in sessionEvents)){
                     sessionEvents[sid] = [];
                   }
@@ -90,11 +91,11 @@ export default Component.extend({
               }
             });
             Ember.RSVP.all(promises).then(() => {
-              let singleEventPerSession = [];
+              let singleEventPerSessionAndTime = [];
               for(let id in sessionEvents){
-                singleEventPerSession.pushObject(sessionEvents[id].get('firstObject'));
+                singleEventPerSessionAndTime.pushObject(sessionEvents[id].get('firstObject'));
               }
-              deferred.resolve(singleEventPerSession);
+              deferred.resolve(singleEventPerSessionAndTime);
             });
           }
         });
