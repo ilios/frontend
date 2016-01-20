@@ -17,12 +17,14 @@
 
   <div class='detail-actions-absolute'>
     {{#if isManaging}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      {{#if editable}}
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      {{/if}}
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       {{#if isEditing}}
         <button class="collapse-button" {{action 'removeNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
-      {{else}}
+      {{elseif editable}}
         {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
           <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
           <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'learningMaterials.link'}}</li>
@@ -44,6 +46,7 @@
           valueBuffer=bufferMaterial
           learningMaterialStatuses=learningMaterialStatuses
           isCourse=isCourse
+          editable=editable
           changeStatus='changeStatus'
           changeNotes='changeNotes'
           changeRequired='changeRequired'
@@ -111,21 +114,29 @@
                 <td class='text-center' colspan=2>
                   {{#if lmProxy.sortedDescriptors.length}}
                     <ul>
-                      <a href='#' {{action 'manageDescriptors' lmProxy.content}}>
-                        {{#each lmProxy.sortedDescriptors as |descriptor|}}
+                      {{#each lmProxy.sortedDescriptors as |descriptor|}}
+                        {{#if editable}}
+                          <li class='clickable link' {{action 'manageDescriptors' lmProxy.content}}>{{descriptor.name}}</li>
+                        {{else}}
                           <li>{{descriptor.name}}</li>
-                        {{/each}}
-                      </a>
+                        {{/if}}
+                      {{/each}}
                     </ul>
                   {{else}}
-                    <button {{action 'manageDescriptors' lmProxy.content}}>{{t 'general.addNew'}}</button>
+                    {{#if editable}}
+                      <button {{action 'manageDescriptors' lmProxy.content}}>{{t 'general.addNew'}}</button>
+                    {{else}}
+                      {{t 'general.none'}}
+                    {{/if}}
                   {{/if}}
                 </td>
                 <td class='text-center' colspan=2>
                   {{lmProxy.learningMaterial.status.title}}
                 </td>
                 <td class='text-left text-top' colspan=1>
-                  <span class='clickable remove' {{action 'confirmRemoval' lmProxy}}>{{fa-icon 'trash'}}</span>
+                  {{#if editable}}
+                    <span class='clickable remove' {{action 'confirmRemoval' lmProxy}}>{{fa-icon 'trash'}}</span>
+                  {{/if}}
                 </td>
               </tr>
 

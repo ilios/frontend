@@ -6,29 +6,53 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.status'}}:</label>
     <div class="form-data status">
-    {{inplace-select
-      value=valueBuffer.status.id
-      options=statusOptions
-      save='changeStatus'
-    }}
+      {{#if editable}}
+        {{inplace-select
+          value=valueBuffer.status.id
+          options=statusOptions
+          save='changeStatus'
+        }}
+      {{else}}
+        {{valueBuffer.status.title}}
+      {{/if}}
     </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'general.required'}}:</label>
     <div class="form-data required">
-      {{inplace-boolean value=valueBuffer.required save='changeRequired'}}
+      {{#if editable}}
+        {{inplace-boolean value=valueBuffer.required save='changeRequired'}}
+      {{else}}
+        {{#if valueBuffer.required}}
+          <span class='add'>{{t 'general.yes'}}</span>
+        {{else}}
+          <span class='remove'>{{t 'general.no'}}</span>
+        {{/if}}
+      {{/if}}
     </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.instructionalNotes'}}:</label>
     <div class="form-data notes">
-      {{inplace-html value=valueBuffer.notes save='changeNotes'}}
+      {{#if editable}}
+        {{inplace-html value=valueBuffer.notes save='changeNotes'}}
+      {{else}}
+        <span class='list-reset'>{{{valueBuffer.notes}}}</span>
+      {{/if}}
     </div>
   </div>
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.showNotesToStudents'}}:</label>
     <div class="form-data publicnotes">
-      {{inplace-boolean value=valueBuffer.publicNotes save='changePublicNotes'}}
+      {{#if editable}}
+        {{inplace-boolean value=valueBuffer.publicNotes save='changePublicNotes'}}
+      {{else}}
+        {{#if valueBuffer.publicNotes}}
+          <span class='add'>{{t 'general.yes'}}</span>
+        {{else}}
+          <span class='remove'>{{t 'general.no'}}</span>
+        {{/if}}
+      {{/if}}
     </div>
   </div>
   <div class="form-col-12">
