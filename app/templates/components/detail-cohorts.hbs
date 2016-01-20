@@ -15,7 +15,7 @@
         {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
       </button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{elseif editable}}
+    {{else if editable}}
       <button {{action 'manage'}}>{{t 'courses.cohortsManageTitle'}}</button>
     {{/if}}
   </div>

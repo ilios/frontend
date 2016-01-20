@@ -13,7 +13,7 @@
     {{#if isManaging}}
         <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
         <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{elseif editable}}
+    {{else if editable}}
       <button {{action 'manage'}}>{{t 'courses.meshManageTitle'}}</button>
     {{/if}}
   </div>
