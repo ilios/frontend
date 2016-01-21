@@ -200,7 +200,7 @@ test('toggleSwitch for multi-editing works', function(assert) {
   const toggleSwitch = '.switch-label';
   const checkBoxLabel = '.check-all-label';
   const checkAllBox = '.check-all-input';
-  const membersCheckBoxes = '.learnergroup-list .ember-checkbox';
+  const membersCheckBoxes = '.learnergroup-list input:checkbox';
   const selectInputField = '.ff-select-field';
 
   visit('/learnergroups/3');
@@ -229,7 +229,7 @@ test('toggleSwitch for multi-editing works', function(assert) {
 test('`Check All` checkbox checks all or none', function(assert) {
   const toggleSwitch = '.switch-label';
   const checkAllBox = '.check-all-input';
-  const checkBoxes = '.learnergroup-list .ember-checkbox';
+  const checkBoxes = '.learnergroup-list input:checkbox';
 
   visit(url);
   click(toggleSwitch);

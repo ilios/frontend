@@ -219,6 +219,15 @@ test('remove group member back to cohort', function(assert) {
 });
 
 test('multi-edit save (bulk-saving) works properly and knows when to trigger', function(assert) {
+  let changeCheckbox = function(selector){
+    return andThen(()=>{
+      let el = find(selector);
+      el.prop('checked', !el.prop('checked'));
+      triggerEvent(el, 'change');
+      
+    });
+  };
+  
   const toggleSwitch = '.switch-label';
   const checkAllBox = '.check-all-input';
   const selectInputField = '.ff-select-field';
@@ -251,10 +260,10 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
   const member8Group = '.learnergroup-list:eq(0) .learnergroup-group-membership:eq(7) .non-editable';
 
   // const checkBox1 = '.checkbox:eq(0)'; jshint unused variable
-  const checkBox2 = '.checkbox:eq(1)';
-  const checkBox3 = '.checkbox:eq(2)';
-  const checkBox4 = '.checkbox:eq(3)';
-  const checkBox5 = '.checkbox:eq(4)';
+  const checkBox2 = '.learnergroup-members-multiedit input:checkbox:eq(1)';
+  const checkBox3 = '.learnergroup-members-multiedit input:checkbox:eq(2)';
+  const checkBox4 = '.learnergroup-members-multiedit input:checkbox:eq(3)';
+  const checkBox5 = '.learnergroup-members-multiedit input:checkbox:eq(4)';
   // const checkBox6 = '.checkbox:eq(5)'; jshint unused variable
   // const checkBox7 = '.checkbox:eq(6)'; jshint unused variable
   // const checkBox8 = '.checkbox:eq(7)'; jshint unused variable
@@ -321,7 +330,7 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
     assert.equal(getElementText(member1), getText('1 guy M. Mc1son'), 'no action was performed b/c nothing was checked');
   });
 
-  click(checkBox2);
+  changeCheckbox(checkBox2);
   click(saveButton);
   andThen(function() {
     // Checks top box
@@ -333,8 +342,8 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
     assert.equal(getElementText(NAmember1Group), getText('Not in this group'), 'moved to not assigned');
   });
 
-  click(checkBox2);
-  click(checkBox3);
+  changeCheckbox(checkBox2);
+  changeCheckbox(checkBox3);
   click(selectInputField);
   click(selectOptionTwo);
   click(saveButton);
@@ -352,8 +361,8 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
     assert.equal(find(LAmember2Group).text(), 'learner group 0', 'changed assignment');
   });
 
-  click(checkBox2);
-  click(checkBox4);
+  changeCheckbox(checkBox2);
+  changeCheckbox(checkBox4);
   click(selectInputField);
   click(selectOptionOne);
   click(saveButton);
@@ -371,7 +380,7 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
     assert.equal(find(NAmember3Group).text(), 'Not in this group', 'moved to not assigned');
   });
 
-  click(checkBox5);
+  changeCheckbox(checkBox5);
   click(selectInputField);
   click(selectOptionThree);
   click(saveButton);

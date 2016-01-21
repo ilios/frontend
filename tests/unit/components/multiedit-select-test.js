@@ -60,5 +60,5 @@ test('`toggleCheckBox` action is called', function(assert) {
 
   this.render();
 
-  component.$('.checkbox').click();
+  component.$('input:checkbox').click();
 });
