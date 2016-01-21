@@ -64,7 +64,7 @@ export default Component.extend({
         promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
       });
     } else {
-      let deferred = Ember.RSVP.defer();
+      let deferred = RSVP.defer();
       this.get('selectedSchool').then(school => {
         this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')).then(events => {
           if(this.get('selectedView') === 'day'){
@@ -91,7 +91,7 @@ export default Component.extend({
                 }));
               }
             });
-            Ember.RSVP.all(promises).then(() => {
+            RSVP.all(promises).then(() => {
               let singleEventPerSessionAndTime = [];
               for(let id in sessionEvents){
                 singleEventPerSessionAndTime.pushObject(sessionEvents[id].get('firstObject'));
@@ -114,7 +114,7 @@ export default Component.extend({
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
     function() {
-      let defer = Ember.RSVP.defer();
+      let defer = RSVP.defer();
       let promises = [];
       let eventTypes = [
         'eventsWithSelectedTopics',
@@ -130,17 +130,22 @@ export default Component.extend({
         }));
       });
 
-      Ember.RSVP.all(promises).then(()=> {
-        this.get('ourEvents').then(events => {
-          let filteredEvents = events.filter(event => {
-            return allFilteredEvents.every(arr => {
-              let bool = arr.contains(event);
+      RSVP.all(promises).then(()=> {
+        let ourEvents = this.get('ourEvents');
+        if(!ourEvents){
+          defer.resolve([]);
+        } else {
+          ourEvents.then(events => {
+            let filteredEvents = events.filter(event => {
+              return allFilteredEvents.every(arr => {
+                let bool = arr.contains(event);
 
-              return bool;
+                return bool;
+              });
             });
+            defer.resolve(filteredEvents);
           });
-          defer.resolve(filteredEvents);
-        });
+        }
       });
       return DS.PromiseArray.create({
         promise: defer.promise
@@ -154,7 +159,7 @@ export default Component.extend({
     }
     selectedTopics = selectedTopics.mapBy('id');
     let matchingEvents = [];
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     let promises = [];
     this.get('ourEvents').forEach(event => {
       if (event.ilmEvent || event.offering) {
@@ -168,7 +173,7 @@ export default Component.extend({
       }
     });
 
-    Ember.RSVP.all(promises).then(()=> {
+    RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
     return DS.PromiseArray.create({
@@ -182,7 +187,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmEvent || event.offering) {
@@ -194,7 +199,7 @@ export default Component.extend({
       }
     });
 
-    Ember.RSVP.all(promises).then(()=> {
+    RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
     return DS.PromiseArray.create({
@@ -208,7 +213,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmEvent || event.offering) {
@@ -220,7 +225,7 @@ export default Component.extend({
       }
     });
 
-    Ember.RSVP.all(promises).then(()=> {
+    RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
     return DS.PromiseArray.create({
@@ -234,7 +239,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmEvent || event.offering) {
@@ -248,7 +253,7 @@ export default Component.extend({
       }
     });
 
-    Ember.RSVP.all(promises).then(()=> {
+    RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
     return DS.PromiseArray.create({
@@ -262,7 +267,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmEvent || event.offering) {
@@ -274,7 +279,7 @@ export default Component.extend({
       }
     });
 
-    Ember.RSVP.all(promises).then(()=> {
+    RSVP.all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
     return DS.PromiseArray.create({
@@ -312,7 +317,7 @@ export default Component.extend({
   }),
   selectedCohorts: [],
   allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     this.get('selectedSchool').then(school => {
       this.get('selectedAcademicYear').then(year => {
         school.getCohortsForYear(year.get('title')).then(cohorts => {
@@ -329,7 +334,7 @@ export default Component.extend({
   }),
   selectedCourses: [],
   allCourses: computed('selectedSchool', 'selectedAcademicYear', function(){
-    let defer = Ember.RSVP.defer();
+    let defer = RSVP.defer();
     this.get('selectedSchool').then((school) => {
       this.get('selectedAcademicYear').then((year) => {
         this.get('store').query('course', {
@@ -384,7 +389,7 @@ export default Component.extend({
     if(this.get('academicYearSelectedByUser')){
       //wrap it in a proxy so the is-equal comparison works the same as the promise
       return DS.PromiseObject.create({
-        promise: Ember.RSVP.resolve(this.get('academicYearSelectedByUser'))
+        promise: RSVP.resolve(this.get('academicYearSelectedByUser'))
       });
     }
 
