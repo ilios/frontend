@@ -392,7 +392,7 @@ let showFilters = function(){
 };
 let pickTopic = function(i) {
   let topics = find('.topicfilter');
-  return click(find('li', topics).eq(i));
+  return click(find('li>span', topics).eq(i));
 };
 
 test('test topic filter', function(assert) {
@@ -440,7 +440,7 @@ test('test topic filter', function(assert) {
 
 let pickSessionType = function(i) {
   let types = find('.sessiontypefilter');
-  return click(find('li', types).eq(i));
+  return click(find('li>span', types).eq(i));
 };
 
 test('test session type filter', function(assert) {
@@ -488,7 +488,7 @@ test('test session type filter', function(assert) {
 
 let pickCourseLevel = function(i) {
   let levels = find('.courselevelfilter');
-  return click(find('li', levels).eq(i));
+  return click(find('li>span', levels).eq(i));
 };
 let clearCourseLevels = function() {
   let levels = find('.courselevelfilter');
@@ -531,7 +531,7 @@ test('test course level filter', function(assert) {
 
 let pickCohort = function(i) {
   let cohorts = find('.cohortfilter');
-  return click(find('li', cohorts).eq(i));
+  return click(find('li>span', cohorts).eq(i));
 };
 let clearCohorts = function() {
   let cohorts = find('.cohortfilter');
@@ -580,7 +580,7 @@ let chooseCourseFilter = function(){
 
 let pickCourse = function(i) {
   let courses = find('.coursefilter');
-  return click(find('li', courses).eq(i));
+  return click(find('li>span', courses).eq(i));
 };
 let clearCourses = function() {
   let courses = find('.coursefilter');
