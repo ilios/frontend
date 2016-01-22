@@ -38,8 +38,12 @@ export default Component.extend({
   taughtBy: computed('i18n.locale', 'instructorList', function(){
     let defer = RSVP.defer();
 
-    this.get('instructorList').then(instructors => {
-      defer.resolve(this.get('i18n').t('calendar.taughtBy', {instructors}));
+    this.get('instructorList').then((instructors) => {
+      if (isEmpty(instructors)) {
+        defer.resolve('');
+      } else {
+        defer.resolve(this.get('i18n').t('calendar.taughtBy', {instructors}));
+      }
     });
 
     return PromiseObject.create({
@@ -77,6 +81,9 @@ export default Component.extend({
       promise: this.get('store').findRecord('ilm-session', ilmSessionId)
     });
   }),
+  noContentPhrase: computed('i18n.locale', function(){
+    return this.get('i18n').t('general.none');
+  }),
   coursePhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('courses.courseTitle');
   }),
@@ -86,7 +93,7 @@ export default Component.extend({
   courseLearningMaterialsPhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.courseLearningMaterials');
   }),
-  courseObjectives: computed('i18n.locale', 'offering.session.course.objectives.@each.topParents.[]', function(){
+  courseObjectives: computed('i18n.locale', 'thesession.course.objectives.[]', function(){
     let defer = RSVP.defer();
 
     this.get('thesession').then(session => {
