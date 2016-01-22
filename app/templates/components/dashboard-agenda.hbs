@@ -10,13 +10,11 @@
           </tr>
         {{/if}}
         {{#unless event.isBlanked}}
-          {{#link-to 'events' event.slug}}
             <tr class='clickable'>
-              <td class='event-date'>{{fa-icon 'external-link-square'}} {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
-              <td>{{event.name}}</td>
-              <td>{{event.location}}</td>
+              <td class='event-date'>{{fa-icon 'external-link-square'}} {{#link-to 'events' event.slug}}{{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}{{/link-to}}</td>
+              <td>{{#link-to 'events' event.slug}}{{event.name}}{{/link-to}}</td>
+              <td>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
             </tr>
-          {{/link-to}}
         {{/unless}}
       {{/each}}
     </tbody>
