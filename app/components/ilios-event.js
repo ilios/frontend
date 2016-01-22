@@ -127,7 +127,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  courseLearningMaterials: computed('i18n.locale', function() {
+  courseLearningMaterials: computed('i18n.locale', 'session.course', function() {
     let defer = Ember.RSVP.defer();
 
     this.get('thesession').then(session => {
@@ -221,7 +221,7 @@ export default Component.extend({
     });
   }),
 
-  sessionLearningMaterials: computed('i18n.locale', function() {
+  sessionLearningMaterials: computed('i18n.locale', 'session', function() {
     let defer = Ember.RSVP.defer();
 
     this.get('thesession').then(session => {
