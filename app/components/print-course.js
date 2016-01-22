@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { Component, computed, RSVP, ObjectProxy } = Ember;
+const { Component, computed, RSVP, ObjectProxy, inject } = Ember;
 const { PromiseArray } = DS;
+const { service } = inject;
 
 export default Component.extend({
+  store: service(),
   course: null,
   tagName: 'section',
   classNames: ['printable course'],
@@ -23,6 +25,14 @@ export default Component.extend({
       sortTitle: ['title'],
       sortedTopics: computed.sort('content.topics', 'sortTitle'),
       sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
+      sessionLearningMaterials: computed('content', function(){
+        let session = this.get('content').get('id');
+        return this.get('store').query('sessionLearningMaterial', {
+          filters: {
+            session
+          }
+        });
+      })
     });
     course.get('sessions').then(function(sessions){
       let noDraftSessions = sessions.filterBy('isPublishedOrScheduled');
@@ -40,4 +50,14 @@ export default Component.extend({
     });
 
   }),
+  
+  courseLearningMaterials: computed('course', function(){
+    let course = this.get('course').get('id');
+    return this.get('store').query('courseLearningMaterial', {
+      filters: {
+        course
+      }
+    });
+  }),
+  
 });

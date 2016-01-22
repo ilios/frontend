@@ -101,28 +101,26 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.learningMaterials'}} ({{course.learningMaterials.length}})
+          {{t 'general.learningMaterials'}} ({{courseLearningMaterials.length}})
         </div>
         <div class='detail-content'>
-         {{#if course.learningMaterials.length}}
+         {{#if courseLearningMaterials.length}}
          <table>
             <thead>
               <tr>
                 <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
                 <th class='text-center'>{{t 'general.type'}}</th>
-                <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
                 <th class='text-center'>{{t 'general.required'}}</th>
                 <th class='text-left'>{{t 'learningMaterials.notes'}}</th>
               </tr>
             </thead>
             <tbody>
-              {{#each course.learningMaterials as |lm|}}
+              {{#each courseLearningMaterials as |lm|}}
                 <tr>
                   <td class='text-left' colspan=2>
                     {{lm.learningMaterial.title}}
                   </td>
                   <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                  <td class='text-center'>{{lm.learningMaterial.owningUser.fullName}}</td>
                   <td class='text-center'>
         	        {{#if lm.required}}
         	          <span class='add'>{{t 'general.yes'}}</span>
@@ -211,28 +209,26 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.learningMaterials'}} ({{session.learningMaterials.length}})
+          {{t 'general.learningMaterials'}} ({{session.sessionLearningMaterials.length}})
         </div>
         <div class='detail-content'>
-         {{#if session.learningMaterials.length}}
+         {{#if session.sessionLearningMaterials.length}}
          <table>
             <thead>
               <tr>
                 <th class='text-left' colspan=2>{{t 'learningMaterials.displayName'}}</th>
                 <th class='text-center'>{{t 'general.type'}}</th>
-                <th class='text-center'>{{t 'learningMaterials.owner'}}</th>
                 <th class='text-center'>{{t 'general.required'}}</th>
                 <th class='text-left'>{{t 'learningMaterials.notes'}}</th>
               </tr>
             </thead>
             <tbody>
-              {{#each session.learningMaterials as |lm|}}
+              {{#each session.sessionLearningMaterials as |lm|}}
                 <tr>
                   <td class='text-left' colspan=2>
                     {{lm.learningMaterial.title}}
                   </td>
                   <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                  <td class='text-center'>{{lm.learningMaterial.owningUser.fullName}}</td>
                   <td class='text-center'>
                   {{#if lm.required}}
                     <span class='add'>{{t 'general.yes'}}</span>
