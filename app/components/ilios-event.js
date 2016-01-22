@@ -127,49 +127,50 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  courseLearningMaterials: computed(
-    'i18n.locale',
-    'offering.session.course.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
-    function(){
-      let defer = RSVP.defer();
+  courseLearningMaterials: computed('i18n.locale', function() {
+    let defer = Ember.RSVP.defer();
 
-      this.get('thesession').then(session => {
-        session.get('course').then(course => {
-          course.get('learningMaterials').then(courseLearningMaterials => {
-            let promises = [];
-            let mappedLearningMaterials = [];
-            courseLearningMaterials.forEach(courseLearningMaterial => {
+    this.get('thesession').then(session => {
+      session.get('course').then(course => {
+        this.get('store').query('courseLearningMaterial', {
+          filters: {
+            course: course.get('id')
+          },
+          limit: 1000
+        }).then((courseLearningMaterials) => {
+          let promises = [];
+          let mappedLearningMaterials = [];
+          courseLearningMaterials.forEach(courseLearningMaterial => {
 
-              promises.pushObject(courseLearningMaterial.get('learningMaterial').then((learningMaterial) => {
-                let notes = '';
+            promises.pushObject(courseLearningMaterial.get('learningMaterial').then((learningMaterial) => {
+              let notes = '';
 
-                if (courseLearningMaterial.get('publicNotes')) {
-                  notes = courseLearningMaterial.get('notes');
-                }
+              if (courseLearningMaterial.get('publicNotes')) {
+                notes = courseLearningMaterial.get('notes');
+              }
 
-                mappedLearningMaterials.pushObject({
-                  title: learningMaterial.get('title'),
-                  description: learningMaterial.get('description'),
-                  required: courseLearningMaterial.get('required'),
-                  notes,
-                  url: learningMaterial.get('url'),
-                  type: learningMaterial.get('type'),
-                  mimetype: learningMaterial.get('mimetype'),
-                  filesize: learningMaterial.get('filesize'),
-                  citation: learningMaterial.get('citation'),
-                });
-              }));
-            });
-            RSVP.all(promises).then(()=>{
-              defer.resolve(mappedLearningMaterials);
-            });
+              mappedLearningMaterials.pushObject({
+                title: learningMaterial.get('title'),
+                description: learningMaterial.get('description'),
+                required: courseLearningMaterial.get('required'),
+                notes,
+                url: learningMaterial.get('url'),
+                type: learningMaterial.get('type'),
+                mimetype: learningMaterial.get('mimetype'),
+                filesize: learningMaterial.get('filesize'),
+                citation: learningMaterial.get('citation'),
+              });
+            }));
+          });
+          RSVP.all(promises).then(()=>{
+            defer.resolve(mappedLearningMaterials);
           });
         });
       });
-
-      return PromiseArray.create({
-        promise: defer.promise
-      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
   }),
   sessionPhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('general.session');
@@ -219,47 +220,49 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  sessionLearningMaterials: computed(
-    'i18n.locale',
-    'offering.session.learningMaterials.@each.learningMaterial.[title,absoluteFileUri]',
-    function(){
-      let defer = RSVP.defer();
 
-      this.get('thesession').then(session => {
-        session.get('learningMaterials').then(sessionLearningMaterials => {
-          let promises = [];
-          let mappedLearningMaterials = [];
-          sessionLearningMaterials.forEach(sessionLearningMaterial => {
+  sessionLearningMaterials: computed('i18n.locale', function() {
+    let defer = Ember.RSVP.defer();
 
-            promises.pushObject(sessionLearningMaterial.get('learningMaterial').then((learningMaterial) => {
-              let notes = '';
+    this.get('thesession').then(session => {
+      this.get('store').query('sessionLearningMaterial', {
+        filters: {
+          session: session.get('id')
+        },
+        limit: 1000
+      }).then((sessionLearningMaterials) => {
+        let promises = [];
+        let mappedLearningMaterials = [];
+        sessionLearningMaterials.forEach(sessionLearningMaterials => {
 
-              if (sessionLearningMaterial.get('publicNotes')) {
-                notes = sessionLearningMaterial.get('notes');
-              }
+          promises.pushObject(sessionLearningMaterials.get('learningMaterial').then((learningMaterial) => {
+            let notes = '';
 
-              mappedLearningMaterials.pushObject({
-                title: learningMaterial.get('title'),
-                description: learningMaterial.get('description'),
-                required: sessionLearningMaterial.get('required'),
-                notes,
-                url: learningMaterial.get('url'),
-                type: learningMaterial.get('type'),
-                mimetype: learningMaterial.get('mimetype'),
-                filesize: learningMaterial.get('filesize'),
-                citation: learningMaterial.get('citation'),
-              });
-            }));
-          });
-          RSVP.all(promises).then(()=>{
-            defer.resolve(mappedLearningMaterials);
-          });
+            if (sessionLearningMaterials.get('publicNotes')) {
+              notes = sessionLearningMaterials.get('notes');
+            }
+
+            mappedLearningMaterials.pushObject({
+              title: learningMaterial.get('title'),
+              description: learningMaterial.get('description'),
+              required: sessionLearningMaterials.get('required'),
+              notes,
+              url: learningMaterial.get('url'),
+              type: learningMaterial.get('type'),
+              mimetype: learningMaterial.get('mimetype'),
+              filesize: learningMaterial.get('filesize'),
+              citation: learningMaterial.get('citation'),
+            });
+          }));
+        });
+        RSVP.all(promises).then(()=>{
+          defer.resolve(mappedLearningMaterials);
         });
       });
-
-      return PromiseArray.create({
-        promise: defer.promise
-      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
   }),
   requiredPhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('general.required');
