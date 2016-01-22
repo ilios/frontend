@@ -422,6 +422,7 @@ export default {
     'usersCalendar': "Calendario de{{name}}",
     'myCalendar': 'Mi Calendario',
     'allSchools': 'Todas las Escuelas',
+    'activeFilters': 'Filtros Activos',
   },
   'errors': {
     'inclusion': "no está incluido en la lista",
