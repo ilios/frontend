@@ -122,7 +122,7 @@
                     {{lm.learningMaterial.title}}
                   </td>
                   <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                  <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+                  <td class='text-center'>{{lm.learningMaterial.owningUser.fullName}}</td>
                   <td class='text-center'>
         	        {{#if lm.required}}
         	          <span class='add'>{{t 'general.yes'}}</span>
@@ -232,7 +232,7 @@
                     {{lm.learningMaterial.title}}
                   </td>
                   <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                  <td class='text-center'>{{lm.learningMaterial.originalAuthor}}</td>
+                  <td class='text-center'>{{lm.learningMaterial.owningUser.fullName}}</td>
                   <td class='text-center'>
                   {{#if lm.required}}
                     <span class='add'>{{t 'general.yes'}}</span>
