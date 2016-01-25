@@ -259,6 +259,7 @@ export default {
     'confirmObjectiveRemoval': "Êtes vous sûr de vouloir supprimer cet objectif?",
     'confirmSessionRemoval': "Êtes vous sûr de vouloir supprimer cette séance?",
     'noPrintDraft': "Cours qui sont au stade de projet ne peuvent pas étre imprimés",
+    'expandSessions': 'Voir plus de séances',
   },
   'sessions': {
     'specialAttireRequired': "Vêtements particuliers requis",
