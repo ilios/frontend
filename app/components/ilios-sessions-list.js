@@ -200,7 +200,7 @@ export default Component.extend({
       sessionProxy.set('showRemoveConfirmation', false);
     },
     loadAllSessions(){
-      this.set('forceFullSessionList', true);
+      this.sendAction('setForceFullSessionsList', true);
     },
     sortBy(item){
       this.set('forceFullSessionList', true);
