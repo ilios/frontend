@@ -259,6 +259,7 @@ export default {
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
     'confirmSessionRemoval': 'Are you sure you want to delete this session?',
     'noPrintDraft': 'Courses which are in draft status cannot be printed',
+    'expandSessions': 'Show More Sessions',
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',

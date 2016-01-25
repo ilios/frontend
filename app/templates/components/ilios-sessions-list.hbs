@@ -1,6 +1,13 @@
 <section id='sessions' class='detail-block filter-detail-block'>
   <div class='sessions detail-title'>
-    {{t 'general.sessions'}} ({{course.sessions.length}})
+    {{t 'general.sessions'}}
+    {{#if proxiedSessions.isFulfilled}}
+      {{#if allSessionsLoaded}}
+        ({{sessionsCount}})
+      {{else}}
+        ({{proxiedSessions.length}} / {{sessionsCount}})
+      {{/if}}
+    {{/if}}
   </div>
   {{#if filteredContent.isFulfilled}}
     <div class="filter-tools">
@@ -17,7 +24,7 @@
 
       {{#if (and proxiedSessions.length editable)}}
         {{#link-to 'course.publishall' course}}
-          <button>{{t 'publish.all' sessionCount=course.sessions.length}}</button>
+          <button>{{t 'publish.all' sessionCount=sessionsCount}}</button>
         {{/link-to}}
       {{/if}}
     </div>
@@ -166,6 +173,9 @@
         </table>
       </div>
     </section>
+    {{#unless allSessionsLoaded}}
+      <div {{action 'loadAllSessions'}} class='detail-collapsed-control'><span>{{t 'courses.expandSessions'}}{{fa-icon "fa-plus-square"}}</span></div>
+    {{/unless}}
   {{else}}
     <br /><h1>{{fa-icon 'spinner' spin=true}}</h1>
   {{/if}}

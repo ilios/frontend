@@ -6,7 +6,7 @@ const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy }
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
-const { sort, not } = computed;
+const { sort, not, alias } = computed;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -43,6 +43,8 @@ export default Component.extend({
   currentUser: service(),
 
   editable: not('course.locked'),
+  forceFullSessionList: false,
+  sessionsCount: alias('course.sessions.length'),
 
   filter: '',
   course: null,
@@ -60,13 +62,22 @@ export default Component.extend({
     this.set('debouncedFilter', this.get('filter'));
   },
 
-  proxiedSessions: computed('course', 'course.sessions.[]', function() {
-    let course = this.get('course');
+  proxiedSessions: computed('course', 'forceFullSessionList', function() {
+    let course = this.get('course.id');
     if(isEmpty(course)){
       return [];
     }
     let defer = RSVP.defer();
-    course.get('sessions').then(sessions => {
+    let limit = 1000;
+    let order_by = {'id': 'asc'};
+    if(!this.get('forceFullSessionList')){
+      limit = 50;
+      order_by = {'title': 'asc'};
+    }
+    
+    this.get('store').query('session', {limit, order_by, filters: {
+      course
+    }}).then(sessions => {
       let proxiedSessions = sessions.map(session => {
         return SessionProxy.create({
           content: session,
@@ -80,6 +91,13 @@ export default Component.extend({
     return PromiseArray.create({
       promise: defer.promise
     });
+  }),
+  
+  allSessionsLoaded: computed('proxiedSessions.length', 'course.sessions.length', function(){
+    let loaded = this.get('proxiedSessions.length');
+    let total = this.get('sessionsCount');
+    
+    return loaded >= total;
   }),
 
   filteredContent: computed('proxiedSessions.@each.searchString', 'debouncedFilter', function(){
@@ -181,7 +199,11 @@ export default Component.extend({
     cancelRemove(sessionProxy){
       sessionProxy.set('showRemoveConfirmation', false);
     },
+    loadAllSessions(){
+      this.set('forceFullSessionList', true);
+    },
     sortBy(item){
+      this.set('forceFullSessionList', true);
       if (item === this.get('sortItem')){
         this.set('sortAscending', !this.get('sortAscending'));
       } else {
