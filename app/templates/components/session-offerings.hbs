@@ -9,7 +9,9 @@
     </div>
 
     <div class='detail-actions'>
-      {{expand-collapse-button value=offeringEditorOn action="toggleEditor"}}
+      {{#if editable}}
+        {{expand-collapse-button value=offeringEditorOn action="toggleEditor"}}
+      {{/if}}
     </div>
   </div>
 
@@ -42,7 +44,7 @@
           <label>{{ t 'general.actions' }}</label>
         </div>
       </div>
-      {{session-offerings-list session=session}}
+      {{session-offerings-list session=session editable=editable}}
     {{else}}
       <p>{{t 'sessions.noOfferings'}}</p>
     {{/if}}

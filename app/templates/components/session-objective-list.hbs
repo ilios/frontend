@@ -11,37 +11,58 @@
     {{#each sortedObjectives as |objectiveProxy|}}
     <tr id="objective-{{objectiveProxy.id}}" class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
       <td class='text-left text-top' colspan=3>
-        {{inplace-html value=objectiveProxy.title save='changeObjectiveTitle' condition=objectiveProxy.id}}
+        {{#if editable}}
+          {{inplace-html value=objectiveProxy.content.title save='changeObjectiveTitle' condition=objectiveProxy.content.id}}
+        {{else}}
+          {{objectiveProxy.content.title}}
+        {{/if}}
       </td>
+      
       <td class='text-left text-top' colspan="2">
         {{#if objectiveProxy.hasParents}}
           {{#each objectiveProxy.parents as |parent|}}
-            <a href='#' {{action 'manageParents' objectiveProxy.content}}>
+            {{#if editable}}
+              <span class='clickable link' {{action 'manageParents' objectiveProxy.content}}>
+                {{parent.textTitle}}
+              </span>
+            {{else}}
               {{parent.textTitle}}
-            </a>
+            {{/if}}
             {{#if objectiveProxy.hasMultipleParents}}
               <br /><br />
             {{/if}}
           {{/each}}
         {{else}}
-          <button {{action 'manageParents' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
+          {{#if editable}}
+            <button {{action 'manageParents' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
+          {{else}}
+            {{t 'general.none'}}
+          {{/if}}
         {{/if}}
       </td>
       <td class='text-left text-top' colspan="2">
         {{#if objectiveProxy.meshDescriptors.length}}
           <ul>
-            <a href='#' {{action 'manageDescriptors' objectiveProxy.content}}>
-              {{#each objectiveProxy.meshDescriptors as |descriptor|}}
+            {{#each objectiveProxy.meshDescriptors as |descriptor|}}
+              {{#if editable}}
+                <li class='clickable link' {{action 'manageDescriptors' objectiveProxy.content}}>{{descriptor.name}}</li>
+              {{else}}
                 <li>{{descriptor.name}}</li>
-              {{/each}}
-            </a>
+              {{/if}}
+            {{/each}}
           </ul>
         {{else}}
-          <button {{action 'manageDescriptors' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
+          {{#if editable}}
+            <button {{action 'manageDescriptors' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
+          {{else}}
+            {{t 'general.none'}}
+          {{/if}}
         {{/if}}
       </td>
       <td class='text-left text-top' colspan=1>
-        <span class='clickable remove' {{action 'confirmRemoval' objectiveProxy}}>{{fa-icon 'trash'}}</span>
+        {{#if editable}}
+          <span class='clickable remove' {{action 'confirmRemoval' objectiveProxy}}>{{fa-icon 'trash'}}</span>
+        {{/if}}
       </td>
     </tr>
     {{#if objectiveProxy.showRemoveConfirmation}}

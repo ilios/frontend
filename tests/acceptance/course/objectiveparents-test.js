@@ -79,7 +79,7 @@ test('list parent objectives by competency', function(assert) {
   andThen(function() {
     let tds = find('.course-objective-list tbody tr:eq(0) td');
     assert.equal(tds.length, 4);
-    click('a', tds.eq(1));
+    click('.link', tds.eq(1));
 
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
@@ -119,7 +119,7 @@ test('change course objective parent', function(assert) {
   visit(url);
   andThen(function() {
     let tds = find('.course-objective-list tbody tr:eq(0) td');
-    click('a', tds.eq(1));
+    click('.link', tds.eq(1));
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -138,7 +138,7 @@ test('save changes', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
     click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
     click('.detail-objectives:eq(0) button.bigadd');
   });
@@ -155,7 +155,7 @@ test('cancel changes', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
     click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
     click('.detail-objectives:eq(0) button.bigcancel');
   });

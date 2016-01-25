@@ -62,7 +62,7 @@ test('list session objectives', function(assert) {
   andThen(function() {
     let tds = find('.session-objective-list tbody tr:eq(0) td');
     assert.equal(tds.length, 4);
-    click('a', tds.eq(1));
+    click('.link', tds.eq(1));
     andThen(function() {
       assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
       let objectiveManager = find('.objective-manager').eq(0);
@@ -92,7 +92,7 @@ test('change session objective parent', function(assert) {
   assert.expect(3);
   visit(url);
   andThen(function() {
-    click('.session-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -111,7 +111,7 @@ test('deselect all parents for session objective', function(assert) {
   assert.expect(3);
   visit(url);
   andThen(function() {
-    click('.session-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -132,7 +132,7 @@ test('multiple parents for session objective', function(assert) {
   assert.expect(3);
   visit(url);
   andThen(function() {
-    click('.session-objective-list tbody tr:eq(1) td:eq(1) a');
+    click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manager').eq(0);
       let parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -150,7 +150,7 @@ test('save changes', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.session-objective-list tbody tr:eq(1) td:eq(1) a');
+    click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
     click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
     click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
     click('.detail-objectives:eq(0) button.bigadd');
@@ -168,7 +168,7 @@ test('cancel changes', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.session-objective-list tbody tr:eq(1) td:eq(1) a');
+    click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
     click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
     click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
     click('.detail-objectives:eq(0) button.bigcancel');

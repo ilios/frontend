@@ -1,4 +1,8 @@
 {{#modal-dialog translucentOverlay=true}}
   {{pulse-loader}}
   <h2 class='page-title'>{{t 'general.waitSaving'}}</h2>
+  
+  {{#if showProgress}}
+    {{progress-bar percentage=progress}}
+  {{/if}}
 {{/modal-dialog}}

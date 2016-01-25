@@ -7,25 +7,29 @@
     {{/if}}
   </span>
   <span class ='header-actions'>
-    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
-      {{#if showAsIs}}
-        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
-      {{/if}}
-      {{#if showPublish}}
-        <li class='good' {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
-      {{/if}}
-      {{#if showReview}}
-        {{#link-to 'session.publicationCheck' course session}}
-          <li class='good' >{{t 'publish.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
-        {{/link-to}}
-      {{/if}}
-      {{#if showTbd}}
-        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
-      {{/if}}
-      {{#if showUnPublish}}
-        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishSession'}}</li>
-      {{/if}}
-    {{/action-menu}}
+    {{#if editable}}
+      {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
+        {{#if showAsIs}}
+          <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+        {{/if}}
+        {{#if showPublish}}
+          <li class='good' {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
+        {{/if}}
+        {{#if showReview}}
+          {{#link-to 'session.publicationCheck' course session}}
+            <li class='good' >{{t 'publish.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
+          {{/link-to}}
+        {{/if}}
+        {{#if showTbd}}
+          <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+        {{/if}}
+        {{#if showUnPublish}}
+          <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishSession'}}</li>
+        {{/if}}
+      {{/action-menu}}
+    {{else}}
+      {{publication-status item=session}}
+    {{/if}}
   </span>
 </div>
 <section class='detail-overview detail-block form-container'>
@@ -36,42 +40,104 @@
     <div class="form-col-12 sessiontype">
       <label class="form-label">{{t "sessions.type"}}:</label>
       <div class="form-data">
-        {{inplace-select
-          value=session.sessionType.id
-          options=sortedSessionTypes
-          save='changeSessionType'
-        }}
+        {{#if editable}}
+          {{inplace-select
+            value=session.sessionType.id
+            options=sortedSessionTypes
+            save='changeSessionType'
+          }}
+        {{else}}
+          {{session.sessionType.title}}&nbsp;
+        {{/if}}
       </div>
     </div>
     <div class="form-col-12 sessionsupplemental">
       <label class="form-label">{{t "sessions.supplementalCurriculum"}}:</label>
-      <div class="form-data">{{inplace-boolean value=session.supplemental save='changeSupplemental'}}</div>
+      <div class="form-data">
+        {{#if editable}}
+          {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
+        {{else}}
+          {{#if session.supplemental}}
+            <span class='add'>{{t 'general.yes'}}</span>
+          {{else}}
+            <span class='remove'>{{t 'general.no'}}</span>
+          {{/if}}
+        {{/if}}
+      </div>
     </div>
     <div class="form-col-6 sessionspecialattire">
       <label class="form-label">{{t "sessions.specialAttireRequired"}}:</label>
-      <div class="form-data">{{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}</div>
+      <div class="form-data">
+        {{#if editable}}
+          {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
+        {{else}}
+          {{#if session.attireRequired}}
+            <span class='add'>{{t 'general.yes'}}</span>
+          {{else}}
+            <span class='remove'>{{t 'general.no'}}</span>
+          {{/if}}
+        {{/if}}
+      </div>
     </div>
     <div class="form-col-6 sessionspecialequipment">
       <label class="form-label">{{t "sessions.specialEquipmentRequired"}}:</label>
-      <div class="form-data">{{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}</div>
+      <div class="form-data">
+        {{#if editable}}
+          {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
+        {{else}}
+          {{#if session.equipmentRequired}}
+            <span class='add'>{{t 'general.yes'}}</span>
+          {{else}}
+            <span class='remove'>{{t 'general.no'}}</span>
+          {{/if}}
+        {{/if}}
+      </div>
     </div>
     <div class="form-col-4-left independentlearningcontrol">
       <label class="form-label">{{t "sessions.independentLearning"}}:</label>
-      <div class="form-data">{{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}</div>
+      <div class="form-data">
+        {{#if editable}}
+          {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
+        {{else}}
+          {{#if session.isIndependentLearning}}
+            <span class='add'>{{t 'general.yes'}}</span>
+          {{else}}
+            <span class='remove'>{{t 'general.no'}}</span>
+          {{/if}}
+        {{/if}}
+      </div>
     </div>
     {{#if session.isIndependentLearning}}
-    <div class="form-col-4 form-col-4-middle sessionilmhours">
-      <label class="form-label">{{t "sessions.hours"}}:</label>
-      <div class="form-data">{{inplace-text value=session.ilmSession.hours save='changeIlmHours' validations=hoursValidations}}</div>
-    </div>
-    <div class="form-col-4 form-col-4-right sessionilmduedate">
-      <label class="form-label">{{t "sessions.dueBy"}}:</label>
-      <div class="form-data">{{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}</div>
-    </div>
+      <div class="form-col-4 form-col-4-middle sessionilmhours">
+        <label class="form-label">{{t "sessions.hours"}}:</label>
+        <div class="form-data">
+          {{#if editable}}
+            {{inplace-text value=session.ilmSession.hours save='changeIlmHours' validations=hoursValidations}}
+          {{else}}
+            {{session.ilmSession.hours}}&nbsp;
+          {{/if}}
+          </div>
+      </div>
+      <div class="form-col-4 form-col-4-right sessionilmduedate">
+        <label class="form-label">{{t "sessions.dueBy"}}:</label>
+        <div class="form-data">
+          {{#if editable}}
+            {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}
+          {{else}}
+            {{moment-format session.ilmSession.dueDate 'MM/DD/YY'}}
+          {{/if}}
+        </div>
+      </div>
     {{/if}}
     <div class="form-col-12 sessiondescription">
       <label class="form-label">{{t "general.description"}}:</label>
-      <div class="form-data">{{inplace-html value=session.sessionDescription.description save='changeDescription'}}</div>
+      <div class="form-data">
+        {{#if editable}}
+          {{inplace-html value=session.sessionDescription.description save='changeDescription'}}
+        {{else}}
+          <span class='list-reset'>{{{session.sessionDescription.description}}}</span>
+        {{/if}}
+      </div>
     </div>
     {{#unless session.isIndependentLearning}}
       <div class="form-col-12 sessionassociatedgroups">

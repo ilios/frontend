@@ -2,10 +2,11 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { Component, computed } = Ember;
+const { not } = computed;
 
 export default Component.extend({
   store: Ember.inject.service(),
-  editable: true,
+  editable: not('course.locked'),
   course: null,
   directorsSort: ['lastName', 'firstName'],
   directorsWithFullName: computed.filterBy('course.directors', 'fullName'),

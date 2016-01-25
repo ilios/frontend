@@ -4,6 +4,7 @@ const { sort, alias } = computed;
 
 export default Component.extend({
   session: null,
+  editable: true,
   classNames: ['session-objective-list'],
   objectives: alias('session.objectives'),
   proxiedObjectives: computed('objectives.[]', function(){

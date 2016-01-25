@@ -10,10 +10,12 @@
     </div>
     <div class='detail-actions'>
       <div class='resultslist-actions'>
-        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+        {{#if editable}}
+          {{expand-collapse-button value=editorOn action="toggleEditor"}}
+        {{/if}}
       </div>
 
-      {{#if proxiedSessions.length}}
+      {{#if (and proxiedSessions.length editable)}}
         {{#link-to 'course.publishall' course}}
           <button>{{t 'publish.all' sessionCount=course.sessions.length}}</button>
         {{/link-to}}
@@ -124,7 +126,7 @@
                   {{#link-to 'session.index' course sessionProxy.content class='edit'}}
                     {{fa-icon 'edit'}}
                   {{/link-to}}
-                  {{#if sessionProxy.userCanDelete}}
+                  {{#if (and sessionProxy.userCanDelete editable)}}
                     <span class='clickable remove' {{action 'confirmRemoval' sessionProxy}}>{{fa-icon 'trash'}}</span>
                   {{/if}}
                 </td>

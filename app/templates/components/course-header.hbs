@@ -1,5 +1,6 @@
 <div class='detail-header'>
   <span class='title'>
+    {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
     {{#if editable}}
       {{#if course}}
         {{inplace-text tagName='h2' value=course.title save='changeTitle' validations=titleValidations}}
@@ -12,25 +13,31 @@
     <h4>{{course.academicYear}}</h4>
   </span>
   <span class ='header-actions'>
-    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
-      {{#if showAsIs}}
-        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
-      {{/if}}
-      {{#if showPublish}}
-        <li class='good' {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
-      {{/if}}
-      {{#if showReview}}
-        {{#link-to 'course.publicationCheck' course}}
-          <li class='good' >{{t 'publish.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
-        {{/link-to}}
-      {{/if}}
-      {{#if showTbd}}
-        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
-      {{/if}}
-      {{#if showUnPublish}}
-        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishCourse'}}</li>
-      {{/if}}
+    {{#if editable}}
+    
+      {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
+        {{#if showAsIs}}
+          <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+        {{/if}}
+        {{#if showPublish}}
+          <li class='good' {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
+        {{/if}}
+        {{#if showReview}}
+          {{#link-to 'course.publicationCheck' course}}
+            <li class='good' >{{t 'publish.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
+          {{/link-to}}
+        {{/if}}
+        {{#if showTbd}}
+          <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+        {{/if}}
+        {{#if showUnPublish}}
+          <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishCourse'}}</li>
+        {{/if}}
 
-    {{/action-menu}}
+      {{/action-menu}}
+    
+    {{else}}
+      {{publication-status item=course}}
+    {{/if}}
   </span>
 </div>

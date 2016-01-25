@@ -15,6 +15,7 @@ export default Component.extend({
   sortedTerms: computed.sort('terms', 'sortTerms'),
   isSession: false,
   isManaging: false,
+  editable: true,
   bufferTerms: [],
   actions: {
     manage: function(){

@@ -11,6 +11,7 @@ export default Component.extend({
   valueBuffer: null,
   isCourse: false,
   isSession: not('isCourse'),
+  editable: true,
   learningMaterialStatuses: [],
   statusOptions: computed('learningMaterialStatuses.[]', function(){
     return this.get('learningMaterialStatuses').map(function(status){

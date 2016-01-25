@@ -138,14 +138,14 @@ test('removing a cohort remove course objectives parents linked to that cohort',
   assert.expect(3);
   visit(url);
   andThen(function() {
-    let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+    let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
     assert.equal(parents.length, 2);
     click('.detail-cohorts .detail-actions button');
     andThen(function(){
       click('.detail-cohorts .removable-list li:eq(0)');
       click('.detail-cohorts button.bigadd');
       andThen(function(){
-        let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) a');
+        let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
         assert.equal(parents.length, 1);
         assert.equal(getElementText(parents), getText(fixtures.parentObjective2.title));
       });

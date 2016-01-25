@@ -15,6 +15,7 @@ export default Component.extend({
   isCourse: false,
   isSession: false,
   isProgramYear: false,
+  editable: true,
   isManaging: or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
   isManagingParents: notEmpty('mangeParentsObjective'),
   mangeParentsObjective: null,

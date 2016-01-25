@@ -7,7 +7,7 @@
       <th class='text-center' colspan=1>{{t 'courses.level'}}</th>
       <th class='text-center' colspan=2>{{t 'courses.startDate'}}</th>
       <th class='text-center' colspan=2>{{t 'courses.endDate'}}</th>
-      <th class='text-center' colspan=2>{{t 'general.status'}}</th>
+      <th class='text-left' colspan=2>{{t 'general.status'}}</th>
       <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
     </tr>
   </thead>
@@ -27,7 +27,10 @@
         <td class='text-center' colspan=1 {{action 'edit' course}}>{{course.level}}</td>
         <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment-format course.startDate 'MM/DD/YY'}}</td>
         <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment-format course.endDate 'MM/DD/YY'}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' course}}>{{publication-status item=course showIcon=false}}</td>
+        <td class='text-left' colspan=2 {{action 'edit' course}}>
+          {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
+          {{publication-status item=course showIcon=false}}
+        </td>
         <td class='text-left' colspan=1>
           {{#link-to 'course' course.content class='edit'}}
             {{fa-icon 'edit'}}

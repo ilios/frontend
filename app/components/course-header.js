@@ -2,14 +2,14 @@ import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 
 const { Component, computed } = Ember;
-const { alias } = computed;
+const { alias, not } = computed;
 
 export default Component.extend(Publishable, {
   course: null,
 
   publishTarget: alias('course'),
 
-  editable: true,
+  editable: not('course.locked'),
 
   titleValidations: {
     'validationBuffer': {
