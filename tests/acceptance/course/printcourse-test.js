@@ -6,10 +6,10 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import Ember from 'ember';
+//import Ember from 'ember';
 
-const { isEmpty, isPresent, run } = Ember;
-const { later } = run;
+//const { isEmpty, isPresent, run } = Ember;
+//const { later } = run;
 
 var application;
 var fixtures = {};
