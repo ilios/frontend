@@ -5,7 +5,7 @@ import { translationMacro as t } from "ember-i18n";
 const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy } = Ember;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
-const { debounce } = run;
+const { debounce, later } = run;
 const { sort, not, alias } = computed;
 
 const SessionProxy = ObjectProxy.extend({
@@ -44,7 +44,8 @@ export default Component.extend({
 
   editable: not('course.locked'),
   forceFullSessionList: false,
-  sessionsCount: alias('course.sessions.length'),
+  sessionsCount: alias('sessions.length'),
+  sessions: alias('course.sessions'),
 
   filter: '',
   course: null,
@@ -61,31 +62,30 @@ export default Component.extend({
   setFilter() {
     this.set('debouncedFilter', this.get('filter'));
   },
-
-  proxiedSessions: computed('course', 'forceFullSessionList', function() {
+  
+  proxiedSessions: computed('sessions.[]', 'forceFullSessionList', function() {
     let course = this.get('course.id');
     if(isEmpty(course)){
       return [];
     }
     let defer = RSVP.defer();
-    let limit = 1000;
-    let order_by = {'id': 'asc'};
-    if(!this.get('forceFullSessionList')){
-      limit = 50;
-      order_by = {'title': 'asc'};
-    }
-    
-    this.get('store').query('session', {limit, order_by, filters: {
-      course
-    }}).then(sessions => {
+    this.get('sessions').then(sessions => {
+      if(!this.get('forceFullSessionList')){
+        sessions = sessions.sortBy('title').slice(0, 50);
+      }
       let proxiedSessions = sessions.map(session => {
         return SessionProxy.create({
           content: session,
           currentUser: this.get('currentUser')
         });
       });
-
-      defer.resolve(proxiedSessions);
+      
+      //By running this later it ensures that the loading spinner
+      //pops up otherwise the new list starts rendering and on a big page 
+      //it just appears to be frozen
+      later(() => {
+        defer.resolve(proxiedSessions);
+      });
     });
 
     return PromiseArray.create({
@@ -100,7 +100,7 @@ export default Component.extend({
     return loaded >= total;
   }),
 
-  filteredContent: computed('proxiedSessions.@each.searchString', 'debouncedFilter', function(){
+  filteredContent: computed('proxiedSessions.[]', 'debouncedFilter', function(){
     let defer = RSVP.defer();
     this.get('proxiedSessions').then(sessions => {
       let filter = this.get('debouncedFilter');
