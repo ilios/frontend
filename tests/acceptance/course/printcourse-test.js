@@ -79,7 +79,8 @@ module('Acceptance: Course - Print Course' + testgroup, {
 });
 
 test('test print course', function(assert) {
-  
+  	pauseTest();
+	  QUnit.config.testTimeout = 100000;
   visit('/course/1/print');
 
   andThen(function() {
@@ -88,7 +89,7 @@ test('test print course', function(assert) {
 	assert.equal(find('.detail-content ul li:eq(1)').text(), 'Gigawatt Conversion');
 	assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(0)').text().trim(), 'Save the Clock Tower');
 	assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(1)').text(), 'file');
-	assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(2)').text(), 'Emmet M. Brown');
+	assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(2)').text().trim(), 'No');
 	assert.equal(find('.detail-content ul li:eq(2)').text(), 'Flux Capacitor');
   });
 });
