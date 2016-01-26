@@ -79,8 +79,7 @@ module('Acceptance: Course - Print Course' + testgroup, {
 });
 
 test('test print course', function(assert) {
-  	pauseTest();
-	  QUnit.config.testTimeout = 100000;
+  
   visit('/course/1/print');
 
   andThen(function() {
