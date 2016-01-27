@@ -55,3 +55,30 @@
 .center {
   text-align: center;
 }
+
+.make-recurring-options {
+  clear: both;
+
+  .make-recurring-days {
+    display: inline-block;
+    width: 140px;
+
+    .day-of-week {
+      font-size: 14px;
+    }
+  }
+
+  .make-recurring-input-container {
+    display: inline-block;
+    vertical-align: top;
+
+    .make-recurring-input {
+      outline: none;
+    }
+
+    .make-recurring-input-label {
+      display: block;
+      font-size: 12px;
+    }
+  }
+}
