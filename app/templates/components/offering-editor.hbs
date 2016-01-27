@@ -54,6 +54,67 @@
   </div>
 </div>
 
+<div class="form-col-12">
+  <label class="form-label">{{t 'offerings.makeRecurring'}}:</label>
+  <div class="form-data">
+    <div class="make-recurring-slider">
+      <span class='control form-data switch yes-no switch-green' {{action 'toggleMakeRecurring'}}>
+        <input checked={{makeRecurring}} type='checkbox' class="switch-input" />
+        <span class="switch-label" data-on='{{t 'general.on'}}' data-off='{{t 'general.off'}}'></span>
+        <span class="switch-handle"></span>
+      </span>
+    </div>
+
+    {{#if makeRecurring}}
+      <div class="make-recurring-options">
+        <div class="make-recurring-days">
+          <div>
+            {{input type="checkbox" name="sunday" checked=recurringDays.sunday}}
+            <label class="day-of-week">{{t 'offerings.sunday'}}</label>
+          </div>
+          <div>
+            {{input type="checkbox" name="monday" checked=recurringDays.monday}}
+            <label class="day-of-week">{{t 'offerings.monday'}}</label>
+          </div>
+          <div>
+            {{input type="checkbox" name="tuesday" checked=recurringDays.tuesday}}
+            <label class="day-of-week">{{t 'offerings.tuesday'}}</label>
+          </div>
+          <div>
+            {{input type="checkbox" name="wednesday" checked=recurringDays.wednesday}}
+            <label class="day-of-week">{{t 'offerings.wednesday'}}</label>
+          </div>
+          <div>
+            {{input type="checkbox" name="thursday" checked=recurringDays.thursday}}
+            <label class="day-of-week">{{t 'offerings.thursday'}}</label>
+          </div>
+          <div>
+            {{input type="checkbox" name="friday" checked=recurringDays.friday}}
+            <label class="day-of-week">{{t 'offerings.friday'}}</label>
+          </div>
+          <div>
+            {{input type="checkbox" name="saturday" checked=recurringDays.saturday}}
+            <label class="day-of-week">{{t 'offerings.saturday'}}</label>
+          </div>
+        </div>
+
+        <div class="make-recurring-input-container">
+          <input type="text"
+            onChange={{action "changeValue" value="target.value"}}
+            oninput={{action "changeValue" value="target.value"}}
+            class="make-recurring-input {{if topErrorMessage 'has-error'}}"
+            placeholder="e.g. 3"
+            onfocus={{action "displayError"}} />
+          {{#if topErrorMessage}}
+            <span class="validation-error-message">{{topErrorMessage}}</span>
+          {{/if}}
+          <label class="make-recurring-input-label">{{t 'offerings.numberOfWeeks'}}</label>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>
+
 {{#unless smallGroupMode}}
   <div class="form-col-12">
     <label class="form-label">{{t 'general.location'}}:</label>
