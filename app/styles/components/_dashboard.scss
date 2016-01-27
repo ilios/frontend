@@ -28,6 +28,10 @@ $course: #ddd1e7;
     table {
       margin: 0;
       padding: 0;
+
+      td:last-child {
+        width: 30px;
+      }
     }
 
     .event-date {
@@ -102,7 +106,7 @@ $course: #ddd1e7;
     border: 1px solid $ilios-blue;
     margin-top: 1em;
 
-    
+
     .dashboard-block-actions {
       float: right;
     }
@@ -146,7 +150,7 @@ $course: #ddd1e7;
       height: 20em;
       overflow-y: scroll;
     }
-    
+
     &.dashboard-double-block .dashboard-block-body {
       height: 40em;
     }
