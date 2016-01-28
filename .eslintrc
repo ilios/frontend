@@ -1,0 +1,12 @@
+{
+    "env": {
+        "es6": true
+     },
+    "ecmaFeatures": {
+        "modules": true,
+    },
+    "rules": {
+    	/* Stylistic Issues http://eslint.org/docs/rules/#stylistic-issues */
+    	indent: [2, 2] /* two-space indentation */
+    }
+}

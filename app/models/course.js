@@ -33,7 +33,7 @@ var Course = DS.Model.extend(PublishableModel, {
       var promises = objectives.getEach('treeCompetencies');
       Ember.RSVP.all(promises).then(function(trees){
         var competencies = trees.reduce(function(array, set){
-            return array.pushObjects(set.toArray());
+          return array.pushObjects(set.toArray());
         }, []);
         competencies = competencies.uniq().filter(function(item){
           return item != null;

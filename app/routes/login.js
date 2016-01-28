@@ -33,7 +33,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
             let shibbolethLoginUrl = config.loginUrl;
             if(EmberConfig.redirectAfterShibLogin){
               let attemptedRoute = encodeURIComponent(window.location.href);
-               shibbolethLoginUrl += '?target=' + attemptedRoute;
+              shibbolethLoginUrl += '?target=' + attemptedRoute;
             }
             window.location.replace(shibbolethLoginUrl);
           }

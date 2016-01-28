@@ -117,7 +117,7 @@ test('no offerings', function(assert) {
     var container = find('.sessions-list');
     click('tbody tr:eq(1) td:eq(4)', container);
     andThen(()=>{
-        assert.equal(getElementText(find('tbody tr:eq(3)')), getText('This session has no offerings'));
+      assert.equal(getElementText(find('tbody tr:eq(3)')), getText('This session has no offerings'));
     });
   });
 });

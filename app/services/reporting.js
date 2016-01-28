@@ -97,9 +97,9 @@ export default Service.extend({
         item.get('course').then(course => {
           rhett.value = course.get('academicYear') + ' ' + course.get('title') + ' ' + item.get('title');
           if(canView){
-              rhett.route = 'session';
-              rhett.model = course;
-              rhett.model2 = item;
+            rhett.route = 'session';
+            rhett.model = course;
+            rhett.model2 = item;
           }
           resolve(rhett);
         });
@@ -116,8 +116,8 @@ export default Service.extend({
         item.get('school').then(school => {
           rhett.value = school.get('title') + ': ' + item.get('title');
           if(canView){
-              rhett.route = 'program';
-              rhett.model = item;
+            rhett.route = 'program';
+            rhett.model = item;
           }
           resolve(rhett);
         });
@@ -135,9 +135,9 @@ export default Service.extend({
           program.get('school').then(school => {
             rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + item.get('classOfYear');
             if(canView){
-                rhett.route = 'programYear';
-                rhett.model = program;
-                rhett.model2 = item;
+              rhett.route = 'programYear';
+              rhett.model = program;
+              rhett.model2 = item;
             }
             resolve(rhett);
           });

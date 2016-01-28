@@ -146,9 +146,9 @@ test('cancel remove learnergroup', function(assert) {
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)', container)),getText('learnergroup 1'));
     click('.resultslist-list tbody tr:eq(0) td:eq(2) span').then(function(){
       click('.confirm-buttons .done').then(() => {
-          assert.equal(find('.resultslist-list tbody tr').length, 2);
-          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)', container)),getText('learnergroup 1'));
-          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)', container)),getText('learnergroup 2'));
+        assert.equal(find('.resultslist-list tbody tr').length, 2);
+        assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)', container)),getText('learnergroup 1'));
+        assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)', container)),getText('learnergroup 2'));
       });
     });
   });

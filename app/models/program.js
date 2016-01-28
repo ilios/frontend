@@ -11,8 +11,8 @@ export default DS.Model.extend(PublishableModel,{
   duration: DS.attr('number', { defaultValue: 1 }),
   school: DS.belongsTo('school', {async: true}),
   programYears: DS.hasMany('program-year', {
-      async: true,
-      inverse: 'program'
+    async: true,
+    inverse: 'program'
   }),
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
   cohortPromises: mapBy('programYears', 'cohort'),

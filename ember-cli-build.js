@@ -1,4 +1,4 @@
-/*jshint node:true*/
+/* eslint-env node */
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
@@ -24,6 +24,9 @@ module.exports = function(defaults) {
     },
     babel: {
       includePolyfill: true
+    },
+    'ember-cli-qunit': {
+      useLintTree: false
     }
   });
   app.import('bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js');

@@ -64,7 +64,7 @@ export default Component.extend({
       });
 
       ilmSession.save().then(() => {
-            this.set('isManaging', false);
+        this.set('isManaging', false);
       });
 
     },

@@ -25,7 +25,7 @@ export default DS.Model.extend({
     this.get('school').then(schoolObj => {
       let school;
       if(schoolObj){
-         school = schoolObj.get('title');
+        school = schoolObj.get('title');
       } else {
         school = this.get('i18n').t('dashboard.allSchools');
       }
@@ -46,15 +46,13 @@ export default DS.Model.extend({
           } else {
             object = record.get('title');
           }
-            let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithObject', {
-              subject,
-              object,
-              school
-            });
+          let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithObject', {
+            subject,
+            object,
+            school
+          });
             
-            defer.resolve(displayTitle);
-          
-          
+          defer.resolve(displayTitle);
         });
       } else {
         let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithoutObject', {

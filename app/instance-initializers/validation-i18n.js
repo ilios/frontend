@@ -12,8 +12,8 @@ export function initialize(instance) {
 
   ValidationMessages.replaceRegex = function(text, context) {
     var regex = new RegExp('{{(.*?)}}'),
-        attributeName = '',
-        result = text;
+      attributeName = '',
+      result = text;
 
     while (regex.test(result)) {
       attributeName = regex.exec(result)[1];

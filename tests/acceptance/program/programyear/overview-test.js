@@ -19,7 +19,7 @@ module('Acceptance: Program Year - Overview' + testgroup, {
     });
     server.createList('user', 2);
     server.create('program', {
-    programYears: [1]
+      programYears: [1]
     });
     server.create('programYear', {
       program: 1,

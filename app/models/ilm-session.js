@@ -11,13 +11,13 @@ export default DS.Model.extend({
   learnerGroups: DS.hasMany('learner-group', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
   instructors: DS.hasMany('user', {
-      async: true,
-      inverse: 'instructorIlmSessions'
-    }),
+    async: true,
+    inverse: 'instructorIlmSessions'
+  }),
   learners: DS.hasMany('user', {
-      async: true,
-      inverse: 'learnerIlmSessions'
-    }),
+    async: true,
+    inverse: 'learnerIlmSessions'
+  }),
   allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users.[]', function(){
     var defer = RSVP.defer();
     this.get('instructorGroups').then(instructorGroups => {
@@ -25,7 +25,7 @@ export default DS.Model.extend({
       promises.pushObject(this.get('instructors'));
       RSVP.all(promises).then(trees => {
         var instructors = trees.reduce((array, set) => {
-            return array.pushObjects(set.toArray());
+          return array.pushObjects(set.toArray());
         }, []);
         instructors = instructors.uniq().sortBy('lastName', 'firstName');
         defer.resolve(instructors);
