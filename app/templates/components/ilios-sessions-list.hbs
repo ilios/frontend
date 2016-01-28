@@ -1,13 +1,6 @@
 <section id='sessions' class='detail-block filter-detail-block'>
   <div class='sessions detail-title'>
-    {{t 'general.sessions'}}
-    {{#if proxiedSessions.isFulfilled}}
-      {{#if allSessionsLoaded}}
-        ({{sessionsCount}})
-      {{else}}
-        ({{proxiedSessions.length}} / {{sessionsCount}})
-      {{/if}}
-    {{/if}}
+    {{t 'general.sessions'}} ({{sessionsCount}})
   </div>
   {{#if filteredContent.isFulfilled}}
     <div class="filter-tools">
@@ -22,7 +15,7 @@
         {{/if}}
       </div>
 
-      {{#if (and proxiedSessions.length editable)}}
+      {{#if (and sessions.length editable)}}
         {{#link-to 'course.publishall' course}}
           <button>{{t 'publish.all' sessionCount=sessionsCount}}</button>
         {{/link-to}}
@@ -33,7 +26,7 @@
       {{#liquid-if isSaving}}
         <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
       {{/liquid-if}}
-      
+
       {{#liquid-if editorOn class='vertical'}}
         {{new-session
           sessionTypes=course.school.sessionTypes
@@ -50,7 +43,13 @@
           {{t 'general.savedSuccessfully'}}
         </div>
       {{/liquid-if}}
-
+      {{pagedlist-controls
+        offset=offset
+        limit=limit
+        total=sessionsCount
+        setOffset='setOffset'
+        setLimit='setLimit'
+      }}
       <div class='resultslist-list'>
         <table class='active-background'>
           <thead>
@@ -92,7 +91,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each sortedSessionList as |sessionProxy|}}
+            {{#each displayedSessions as |sessionProxy|}}
               <tr class="{{if sessionProxy.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left' colspan=3>
                   {{#link-to 'session.index' course sessionProxy.content}}
@@ -173,9 +172,13 @@
         </table>
       </div>
     </section>
-    {{#unless allSessionsLoaded}}
-      <div {{action 'loadAllSessions'}} class='detail-collapsed-control'><span>{{t 'courses.expandSessions'}}{{fa-icon "fa-plus-square"}}</span></div>
-    {{/unless}}
+    {{pagedlist-controls
+      offset=offset
+      limit=limit
+      total=sessionsCount
+      setOffset='setOffset'
+      setLimit='setLimit'
+    }}
   {{else}}
     <br /><h1>{{fa-icon 'spinner' spin=true}}</h1>
   {{/if}}

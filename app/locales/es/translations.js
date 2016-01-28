@@ -124,7 +124,9 @@ export default {
     'campusId': 'Campus ID',
     'prev': 'Anterior',
     'next': 'Siguiente',
-    'disabled': 'desactivado'
+    'disabled': 'desactivado',
+    'pagedResultsCount': 'Mostrando {{start}} - {{end}} de {{total}}',
+    'perPage': 'Por Página',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -259,7 +261,6 @@ export default {
     'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
     'confirmSessionRemoval': "¿Está seguro que desea eliminar este sessión?",
     'noPrintDraft': 'Cursos que se encuentran en estado borrador no se puede imprimir',
-    'expandSessions': 'Mostrar Más Sesiones',
   },
   'sessions': {
     'specialAttireRequired': 'Vestimenta Especial Requerido',

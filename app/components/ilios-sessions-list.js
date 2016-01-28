@@ -5,7 +5,7 @@ import { translationMacro as t } from "ember-i18n";
 const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy } = Ember;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
-const { debounce, later } = run;
+const { debounce } = run;
 const { sort, not, alias } = computed;
 
 const SessionProxy = ObjectProxy.extend({
@@ -28,7 +28,7 @@ const SessionProxy = ObjectProxy.extend({
         });
       }
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
@@ -46,6 +46,8 @@ export default Component.extend({
   forceFullSessionList: false,
   sessionsCount: alias('sessions.length'),
   sessions: alias('course.sessions'),
+  offset: 0,
+  limit: 25,
 
   filter: '',
   course: null,
@@ -62,42 +64,27 @@ export default Component.extend({
   setFilter() {
     this.set('debouncedFilter', this.get('filter'));
   },
-  
-  proxiedSessions: computed('sessions.[]', 'forceFullSessionList', function() {
+
+  proxiedSessions: computed('sessions.[]', function() {
     let course = this.get('course.id');
     if(isEmpty(course)){
       return [];
     }
     let defer = RSVP.defer();
     this.get('sessions').then(sessions => {
-      if(!this.get('forceFullSessionList')){
-        sessions = sessions.sortBy('title').slice(0, 50);
-      }
       let proxiedSessions = sessions.map(session => {
         return SessionProxy.create({
           content: session,
           currentUser: this.get('currentUser')
         });
       });
-      
-      //By running this later it ensures that the loading spinner
-      //pops up otherwise the new list starts rendering and on a big page 
-      //it just appears to be frozen
-      later(() => {
-        defer.resolve(proxiedSessions);
-      });
+
+      defer.resolve(proxiedSessions);
     });
 
     return PromiseArray.create({
       promise: defer.promise
     });
-  }),
-  
-  allSessionsLoaded: computed('proxiedSessions.length', 'course.sessions.length', function(){
-    let loaded = this.get('proxiedSessions.length');
-    let total = this.get('sessionsCount');
-    
-    return loaded >= total;
   }),
 
   filteredContent: computed('proxiedSessions.[]', 'debouncedFilter', function(){
@@ -129,7 +116,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  
+
   sortAscending: true,
   sortItem: 'title',
   sortSessionBy: computed('sortAscending', 'sortItem', function(){
@@ -147,6 +134,15 @@ export default Component.extend({
     return [sortItem + ':' + direction];
   }),
   sortedSessionList: sort('filteredContent', 'sortSessionBy'),
+
+  displayedSessions: computed('sortedSessionList.[]', 'offset', 'limit', function(){
+    const limit = this.get('limit');
+    const offset = this.get('offset');
+    const end = limit + offset;
+    let sessions = this.get('sortedSessionList');
+
+    return sessions.slice(offset, end);
+  }),
 
   editorOn: false,
 
@@ -171,9 +167,9 @@ export default Component.extend({
       const component = this;
       const store = this.get('store');
       const course = this.get('course');
-      
+
       component.setProperties({ editorOn: false, isSaving: true, saved: false, savedSession: null });
-      
+
       let newSession = store.createRecord('session', { title, sessionType, course });
 
       newSession.save().then((savedSession) => {
@@ -199,9 +195,6 @@ export default Component.extend({
     cancelRemove(sessionProxy){
       sessionProxy.set('showRemoveConfirmation', false);
     },
-    loadAllSessions(){
-      this.sendAction('setForceFullSessionsList', true);
-    },
     sortBy(item){
       this.set('forceFullSessionList', true);
       if (item === this.get('sortItem')){
@@ -211,5 +204,12 @@ export default Component.extend({
       }
       this.set('sortItem', item);
     },
+
+    setOffset(offset){
+      this.sendAction('setOffset', offset);
+    },
+    setLimit(limit){
+      this.sendAction('setLimit', limit);
+    }
   }
 });

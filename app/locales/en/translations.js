@@ -124,7 +124,9 @@ export default {
     'campusId': 'Campus ID',
     'prev': 'Prev',
     'next': 'Next',
-    'disabled': 'disabled'
+    'disabled': 'disabled',
+    'pagedResultsCount': 'Showing {{start}} - {{end}} of {{total}}',
+    'perPage': 'Per Page',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -259,7 +261,6 @@ export default {
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
     'confirmSessionRemoval': 'Are you sure you want to delete this session?',
     'noPrintDraft': 'Courses which are in draft status cannot be printed',
-    'expandSessions': 'Show More Sessions',
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',

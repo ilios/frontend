@@ -2,12 +2,17 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   queryParams: {
-    forceFullSessionList: 'showAllSessions'
+    sessionOffset: 'offset',
+    sessionLimit: 'limit'
   },
-  forceFullSessionList: false,
+  sessionOffset: 0,
+  sessionLimit: 25,
   actions: {
-    setForceFullSessionsList(value){
-      this.set('forceFullSessionList', value);
+    setSessionOffset(offset){
+      this.set('sessionOffset', offset);
+    },
+    setSessionLimit(limit){
+      this.set('sessionLimit', limit);
     }
   }
 });
