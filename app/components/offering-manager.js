@@ -35,7 +35,7 @@ export default Component.extend({
     promises.pushObject(self.get('instructors'));
     Ember.RSVP.all(promises).then(function(trees){
       var instructors = trees.reduce(function(array, set){
-          return array.pushObjects(set.toArray());
+        return array.pushObjects(set.toArray());
       }, []);
       instructors = instructors.uniq().sortBy('lastName', 'firstName');
       defer.resolve(instructors);

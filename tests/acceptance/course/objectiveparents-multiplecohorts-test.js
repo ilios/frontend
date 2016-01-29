@@ -51,30 +51,30 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents' + testgrou
     }));
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        children: [7],
-        programYears: [1],
-        competency: 1
+      children: [7],
+      programYears: [1],
+      competency: 1
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        competency: 2,
-        programYears: [1],
+      competency: 2,
+      programYears: [1],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        competency: 2,
-        programYears: [1],
+      competency: 2,
+      programYears: [1],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        children: [7],
-        programYears: [2],
-        competency: 1
+      children: [7],
+      programYears: [2],
+      competency: 1
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        competency: 2,
-        programYears: [2],
+      competency: 2,
+      programYears: [2],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        competency: 2,
-        programYears: [2],
+      competency: 2,
+      programYears: [2],
     }));
     fixtures.courseObjectives = [];
     fixtures.courseObjectives.pushObject(server.create('objective', {

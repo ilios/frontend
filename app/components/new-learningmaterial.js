@@ -12,15 +12,15 @@ export default Component.extend(EmberValidations, {
     const type = this.get('type');
 
     switch (type) {
-      case 'file':
-        this.setProperties({ 'isFile': true, 'validations.fileHash': { presence: true } });
-        break;
-      case 'link':
-        this.setProperties({ isLink: true, 'validations.urlBuffer': { presence: true, url: true } });
-        break;
-      case 'citation':
-        this.set('isCitation', true);
-        break;
+    case 'file':
+      this.setProperties({ 'isFile': true, 'validations.fileHash': { presence: true } });
+      break;
+    case 'link':
+      this.setProperties({ isLink: true, 'validations.urlBuffer': { presence: true, url: true } });
+      break;
+    case 'citation':
+      this.set('isCitation', true);
+      break;
     }
 
     this._super(...arguments);

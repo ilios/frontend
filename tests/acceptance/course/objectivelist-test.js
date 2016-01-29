@@ -34,11 +34,11 @@ test('list objectives', function(assert) {
   fixtures.competencies.pushObjects(server.createList('competency', 2));
   fixtures.parentObjectives = [];
   fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [3],
-      competency: 1
+    children: [3],
+    competency: 1
   }));
   fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [4]
+    children: [4]
   }));
 
   fixtures.meshDescriptors = [];

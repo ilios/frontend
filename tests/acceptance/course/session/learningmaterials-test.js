@@ -123,8 +123,8 @@ module('Acceptance: Session - Learning Materials' + testgroup, {
 test('list learning materials', function(assert) {
   visit(url);
   andThen(function() {
-	const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
-	const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
+    const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
+    const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(currentPath(), 'course.session.index');
     let container = find('.detail-learning-materials');
     let rows = find('.detail-content tbody tr', container);

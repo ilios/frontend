@@ -40,17 +40,17 @@ module('Acceptance: Course - Objective Parents' + testgroup, {
     }));
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        children: [4],
-        programYears: [1],
-        competency: 1
+      children: [4],
+      programYears: [1],
+      competency: 1
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        competency: 2,
-        programYears: [1],
+      competency: 2,
+      programYears: [1],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        competency: 2,
-        programYears: [1],
+      competency: 2,
+      programYears: [1],
     }));
     fixtures.courseObjectives = [];
     fixtures.courseObjectives.pushObject(server.create('objective', {

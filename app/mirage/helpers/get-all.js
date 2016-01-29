@@ -77,27 +77,27 @@ export default function getAll(db, request){
         let comparisonString;
 
         switch (modelName) {
-          case 'users':
-            comparisonString = (obj.firstName + obj.lastName + obj.middleName + obj.email).toLowerCase();
-            break;
-          case 'meshDescriptors':
-            comparisonString = (obj.name + obj.annotation).toLowerCase();
-            break;
-          case 'learningMaterials':
-            comparisonString = (obj.title).toLowerCase();
-            break;
-          default:
-            console.log('No Q comparison defined for ' + modelName);
-            return false;
+        case 'users':
+          comparisonString = (obj.firstName + obj.lastName + obj.middleName + obj.email).toLowerCase();
+          break;
+        case 'meshDescriptors':
+          comparisonString = (obj.name + obj.annotation).toLowerCase();
+          break;
+        case 'learningMaterials':
+          comparisonString = (obj.title).toLowerCase();
+          break;
+        default:
+          console.log('No Q comparison defined for ' + modelName);
+          return false;
         }
         var matchedSearchTerms = 0;
         for (let i = 0; i < queryArray.length; i++) {
-            var term = queryArray[i].toLowerCase();
-            var n = comparisonString.indexOf(term);
-            //if the index returned is not -1, increment matchedSearchTerms
-            if (n > -1){
-              matchedSearchTerms++;
-            }
+          var term = queryArray[i].toLowerCase();
+          var n = comparisonString.indexOf(term);
+          //if the index returned is not -1, increment matchedSearchTerms
+          if (n > -1){
+            matchedSearchTerms++;
+          }
         }
         //if the number of matching search terms is equal to the number searched, return true
         return (matchedSearchTerms === queryArray.length);

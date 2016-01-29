@@ -23,33 +23,33 @@ var User = DS.Model.extend({
   school: DS.belongsTo('school', {async: true}),
   directedCourses: DS.hasMany('course', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {
-      async: true,
-      inverse: 'users'
-    }),
+    async: true,
+    inverse: 'users'
+  }),
   instructedLearnerGroups: DS.hasMany('learner-group', {
-      async: true,
-      inverse: 'instructors'
-    }),
+    async: true,
+    inverse: 'instructors'
+  }),
   instructorGroups: DS.hasMany('instructor-group', {
-      async: true,
-      inverse: 'users'
-    }),
+    async: true,
+    inverse: 'users'
+  }),
   instructorIlmSessions: DS.hasMany('ilm-session', {
-      async: true,
-      inverse: 'instructors'
+    async: true,
+    inverse: 'instructors'
   }),
   learnerIlmSessions: DS.hasMany('ilm-session', {
-      async: true,
-      inverse: 'learners'
+    async: true,
+    inverse: 'learners'
   }),
   offerings: DS.hasMany('offering', {
-      async: true,
-      inverse: 'learners'
+    async: true,
+    inverse: 'learners'
   }),
   instructedOfferings: DS.hasMany('offering', {
-      async: true,
-      inverse: 'instructors'
-    }),
+    async: true,
+    inverse: 'instructors'
+  }),
   programYears: DS.hasMany('program-year', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
 
@@ -66,8 +66,8 @@ var User = DS.Model.extend({
   }).readOnly(),
 
   cohorts: DS.hasMany('cohort', {
-      async: true,
-      inverse: 'users'
+    async: true,
+    inverse: 'users'
   }),
   primaryCohort: DS.belongsTo('cohort', {async: true}),
   pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
@@ -126,77 +126,77 @@ var User = DS.Model.extend({
       let promises = [];
       let allCourses = [];
       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('directedCourses').then(courses => {
-           allCourses.pushObjects(courses.toArray());
-           resolve();
-         });
-       }));
-       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('learnerGroups').then(groups => {
-           RSVP.all(groups.mapBy('courses')).then(all => {
-             all.forEach(arr => {
-               allCourses.pushObjects(arr);
-             });
-             resolve();
-           });
-         });
-       }));
-       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('instructorGroups').then(groups => {
-           RSVP.all(groups.mapBy('courses')).then(all => {
-             all.forEach(arr => {
-               allCourses.pushObjects(arr);
-             });
-             resolve();
-           });
-         });
-       }));
-       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('instructedOfferings').then(offerings => {
-           RSVP.all(offerings.mapBy('session')).then(sessions => {
-             RSVP.all(sessions.mapBy('course')).then(courses => {
-               allCourses.pushObjects(courses);
-               resolve();
-             });
-           });
-         });
-       }));
-       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('offerings').then(offerings => {
-           RSVP.all(offerings.mapBy('session')).then(sessions => {
-             RSVP.all(sessions.mapBy('course')).then(courses => {
-               allCourses.pushObjects(courses);
-               resolve();
-             });
-           });
-         });
-       }));
-       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('learnerIlmSessions').then(ilmSessions => {
-           RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
-             RSVP.all(sessions.mapBy('course')).then(courses => {
-               allCourses.pushObjects(courses);
-               resolve();
-             });
-           });
-         });
-       }));
-       promises.pushObject(new RSVP.Promise(resolve => {
-         this.get('instructorIlmSessions').then(ilmSessions => {
-           RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
-             RSVP.all(sessions.mapBy('course')).then(courses => {
-               allCourses.pushObjects(courses);
-               resolve();
-             });
-           });
-         });
-       }));
-       RSVP.all(promises).then(()=>{
-         defer.resolve(allCourses.uniq());
-       });
-       return PromiseArray.create({
-         promise: defer.promise
-       });
+        this.get('directedCourses').then(courses => {
+          allCourses.pushObjects(courses.toArray());
+          resolve();
+        });
+      }));
+      promises.pushObject(new RSVP.Promise(resolve => {
+        this.get('learnerGroups').then(groups => {
+          RSVP.all(groups.mapBy('courses')).then(all => {
+            all.forEach(arr => {
+              allCourses.pushObjects(arr);
+            });
+            resolve();
+          });
+        });
+      }));
+      promises.pushObject(new RSVP.Promise(resolve => {
+        this.get('instructorGroups').then(groups => {
+          RSVP.all(groups.mapBy('courses')).then(all => {
+            all.forEach(arr => {
+              allCourses.pushObjects(arr);
+            });
+            resolve();
+          });
+        });
+      }));
+      promises.pushObject(new RSVP.Promise(resolve => {
+        this.get('instructedOfferings').then(offerings => {
+          RSVP.all(offerings.mapBy('session')).then(sessions => {
+            RSVP.all(sessions.mapBy('course')).then(courses => {
+              allCourses.pushObjects(courses);
+              resolve();
+            });
+          });
+        });
+      }));
+      promises.pushObject(new RSVP.Promise(resolve => {
+        this.get('offerings').then(offerings => {
+          RSVP.all(offerings.mapBy('session')).then(sessions => {
+            RSVP.all(sessions.mapBy('course')).then(courses => {
+              allCourses.pushObjects(courses);
+              resolve();
+            });
+          });
+        });
+      }));
+      promises.pushObject(new RSVP.Promise(resolve => {
+        this.get('learnerIlmSessions').then(ilmSessions => {
+          RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
+            RSVP.all(sessions.mapBy('course')).then(courses => {
+              allCourses.pushObjects(courses);
+              resolve();
+            });
+          });
+        });
+      }));
+      promises.pushObject(new RSVP.Promise(resolve => {
+        this.get('instructorIlmSessions').then(ilmSessions => {
+          RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
+            RSVP.all(sessions.mapBy('course')).then(courses => {
+              allCourses.pushObjects(courses);
+              resolve();
+            });
+          });
+        });
+      }));
+      RSVP.all(promises).then(()=>{
+        defer.resolve(allCourses.uniq());
+      });
+      return PromiseArray.create({
+        promise: defer.promise
+      });
     }
   ),
   absoluteIcsUri: computed('icsFeedKey', function(){

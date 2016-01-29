@@ -171,7 +171,8 @@ export default Ember.Service.extend({
         this.set('canViewPrograms', hasRole.contains(true));
         this.set('canEditPrograms', hasRole.contains(true));
       });
-  })),
+    }
+  )),
   //Course
   canViewCourse: computed('model', function(){
     return false;
@@ -188,7 +189,8 @@ export default Ember.Service.extend({
         this.set('canViewCourses', hasRole.contains(true));
         this.set('canEditCourses', hasRole.contains(true));
       });
-  })),
+    }
+  )),
   canViewInstructorGroups: false,
   canEditInstructorGroups: false,
   instructorGroupsPrivilegesObserver: on('init', observer('privileges',
@@ -200,7 +202,8 @@ export default Ember.Service.extend({
         this.set('canViewInstructorGroups', hasRole.contains(true));
         this.set('canEditInstructorGroups', hasRole.contains(true));
       });
-  })),
+    }
+  )),
   //Instructor Group
   canViewInstructorGroup: computed('model', function(){
     return false;
@@ -216,7 +219,8 @@ export default Ember.Service.extend({
         this.set('canViewLearnerGroups', hasRole.contains(true));
         this.set('canEditLearnerGroups', hasRole.contains(true));
       });
-  })),
+    }
+  )),
   //Learner Group
   canViewLearnerGroup: computed('model', function(){
     return false;
@@ -241,7 +245,8 @@ export default Ember.Service.extend({
       ]).then(hasRole => {
         this.set('canViewAdminDashboard', hasRole.contains(true));
       });
-  })),
+    }
+  )),
   activeRelatedCoursesInThisYearAndLastYear: computed(
     'model',
     'model.instructedOfferings.[]',

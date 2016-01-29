@@ -31,12 +31,12 @@ test('list objectives', function(assert) {
   assert.expect(40);
   fixtures.parentObjectives = [];
   fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [3,4],
-      courses: [1]
+    children: [3,4],
+    courses: [1]
   }));
   fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [4],
-      courses: [1]
+    children: [4],
+    courses: [1]
   }));
 
 

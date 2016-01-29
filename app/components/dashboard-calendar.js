@@ -150,8 +150,8 @@ export default Component.extend({
       return DS.PromiseArray.create({
         promise: defer.promise
       });
-
-  }),
+    }
+  ),
   eventsWithSelectedTopics: computed('ourEvents.[]', 'selectedTopics.[]', function(){
     let selectedTopics = this.get('selectedTopics');
     if(selectedTopics.length === 0) {
@@ -165,8 +165,8 @@ export default Component.extend({
       if (event.ilmEvent || event.offering) {
         promises.pushObject(this.get('userEvents').getTopicIdsForEvent(event).then(topics => {
           if (topics.any(topicId => {
-                return selectedTopics.contains(topicId);
-              })) {
+            return selectedTopics.contains(topicId);
+          })) {
             matchingEvents.pushObject(event);
           }
         }));
@@ -245,8 +245,8 @@ export default Component.extend({
       if (event.ilmEvent || event.offering) {
         promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
           if (cohorts.any(cohortId => {
-                return selectedCohorts.contains(cohortId);
-              })) {
+            return selectedCohorts.contains(cohortId);
+          })) {
             matchingEvents.pushObject(event);
           }
         }));
@@ -442,22 +442,22 @@ export default Component.extend({
           let model = filter.get('constructor.modelName');
 
           switch (model) {
-            case 'topic':
-              hash.class = 'tag-topic';
-              hash.name = filter.get('title');
-              break;
-            case 'session-type':
-              hash.class = 'tag-session-type';
-              hash.name = filter.get('title');
-              break;
-            case 'cohort':
-              hash.class = 'tag-cohort';
-              hash.name = `${filter.get('displayTitle')} ${filter.get('programYear.program.title')}`;
-              break;
-            case 'course':
-              hash.class = 'tag-course';
-              hash.name = filter.get('title');
-              break;
+          case 'topic':
+            hash.class = 'tag-topic';
+            hash.name = filter.get('title');
+            break;
+          case 'session-type':
+            hash.class = 'tag-session-type';
+            hash.name = filter.get('title');
+            break;
+          case 'cohort':
+            hash.class = 'tag-cohort';
+            hash.name = `${filter.get('displayTitle')} ${filter.get('programYear.program.title')}`;
+            break;
+          case 'course':
+            hash.class = 'tag-course';
+            hash.name = filter.get('title');
+            break;
           }
         }
 
@@ -557,18 +557,18 @@ export default Component.extend({
         let model = filter.get('constructor.modelName');
 
         switch (model) {
-          case 'topic':
-            this.send('toggleTopic', filter);
-            break;
-          case 'session-type':
-            this.send('toggleSessionType', filter);
-            break;
-          case 'cohort':
-            this.send('toggleCohort', filter);
-            break;
-          case 'course':
-            this.send('toggleCourse', filter);
-            break;
+        case 'topic':
+          this.send('toggleTopic', filter);
+          break;
+        case 'session-type':
+          this.send('toggleSessionType', filter);
+          break;
+        case 'cohort':
+          this.send('toggleCohort', filter);
+          break;
+        case 'course':
+          this.send('toggleCourse', filter);
+          break;
         }
       }
     }

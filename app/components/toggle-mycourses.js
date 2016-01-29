@@ -6,8 +6,8 @@ const { Component } = Ember;
 export default Component.extend({
   layout: layout,
   actions: {
-  	toggleMyCourses: function(){
-  	  this.sendAction('toggleMyCourses');
-  	}
+    toggleMyCourses: function(){
+      this.sendAction('toggleMyCourses');
+    }
   }
 });

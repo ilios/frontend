@@ -1,4 +1,4 @@
-// jshint unused:false
+/* eslint-disable no-unused-vars */
 /* global QUnit */
 import Ember from 'ember';
 import Application from '../../app';

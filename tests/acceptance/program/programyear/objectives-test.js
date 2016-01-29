@@ -227,7 +227,7 @@ test('save competency', function(assert) {
         click('.detail-objectives button.bigadd');
       });
       andThen(function(){
-          assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 2 (competency 0)'));
+        assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 2 (competency 0)'));
       });
     });
   });
@@ -244,7 +244,7 @@ test('save no competency', function(assert) {
         click('.detail-objectives button.bigadd');
       });
       andThen(function(){
-          assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('Add New'));
+        assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('Add New'));
       });
     });
   });
@@ -261,7 +261,7 @@ test('cancel competency change', function(assert) {
         click('.detail-objectives button.bigcancel');
       });
       andThen(function(){
-          assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 1 (competency 0)'));
+        assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 1 (competency 0)'));
       });
     });
   });
@@ -278,7 +278,7 @@ test('cancel remove competency change', function(assert) {
         click('.detail-objectives button.bigcancel');
       });
       andThen(function(){
-          assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 1 (competency 0)'));
+        assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 1 (competency 0)'));
       });
     });
   });
@@ -295,7 +295,7 @@ test('add competency', function(assert) {
         click('.detail-objectives button.bigadd');
       });
       andThen(function(){
-          assert.equal(getElementText(find('.programyear-objective-list tbody tr:eq(1) td:eq(1)')), getText('competency 2 (competency 0)'));
+        assert.equal(getElementText(find('.programyear-objective-list tbody tr:eq(1) td:eq(1)')), getText('competency 2 (competency 0)'));
       });
     });
   });

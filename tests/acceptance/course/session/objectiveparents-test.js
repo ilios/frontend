@@ -18,15 +18,15 @@ module('Acceptance: Session - Objective Parents' + testgroup, {
     server.create('sessionType');
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        children: [4,5],
-        courses: [1]
+      children: [4,5],
+      courses: [1]
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        courses: [1],
-        children: [4]
+      courses: [1],
+      children: [4]
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-        courses: [1],
+      courses: [1],
     }));
     fixtures.sessionObjectives = [];
     fixtures.sessionObjectives.pushObject(server.create('objective', {

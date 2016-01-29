@@ -15,12 +15,12 @@ export default DS.Model.extend({
   learnerGroups: DS.hasMany('learner-group', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
   learners: DS.hasMany('user', {
-      async: true,
-      inverse: 'offerings'
+    async: true,
+    inverse: 'offerings'
   }),
   instructors: DS.hasMany('user', {
-      async: true,
-      inverse: 'instructedOfferings'
+    async: true,
+    inverse: 'instructedOfferings'
   }),
   //startFoo and key properties are used in creating offering blocks
   startDayOfYear: momentFormat('startDate', 'DDDD'),
@@ -68,7 +68,7 @@ export default DS.Model.extend({
       promises.pushObject(this.get('instructors'));
       RSVP.all(promises).then(trees => {
         var instructors = trees.reduce((array, set) => {
-            return array.pushObjects(set.toArray());
+          return array.pushObjects(set.toArray());
         }, []);
         instructors = instructors.uniq().sortBy('lastName', 'firstName');
         defer.resolve(instructors);

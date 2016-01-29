@@ -71,7 +71,8 @@ export default Controller.extend({
       return PromiseArray.create({
         promise: defer.promise
       });
-  }),
+    }
+  ),
   selectedSchool: computed('model.[]', 'schoolId', function(){
     let schools = this.get('model');
     if(isPresent(this.get('schoolId'))){

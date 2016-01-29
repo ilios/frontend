@@ -18,7 +18,7 @@ export default DS.Model.extend({
   truncatedScopeNote: computed('scopeNote', function() {
     let scopeNote = this.get('scopeNote');
     if (250 < scopeNote.length) {
-        scopeNote = scopeNote.substring(0, 250);
+      scopeNote = scopeNote.substring(0, 250);
     }
     return scopeNote;
   }),

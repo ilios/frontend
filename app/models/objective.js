@@ -38,7 +38,7 @@ export default DS.Model.extend({
         var promises = parents.getEach('treeCompetencies');
         Ember.RSVP.all(promises).then(function(trees){
           var competencies = trees.reduce(function(array, set){
-              return array.pushObjects(set.toArray());
+            return array.pushObjects(set.toArray());
           }, []);
           competencies.pushObject(competency);
           competencies = competencies.uniq().filter(function(item){
