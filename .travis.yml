@@ -18,10 +18,11 @@ before_install:
   - git clone https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
   - nvm install v5
-  - if [ ! -d travis-phantomjs ]; then wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-macosx.zip -O phantomjs.zip; fi
-  - if [ ! -d travis-phantomjs ]; then unzip phantomjs.zip; fi
-  - if [ ! -d travis-phantomjs ]; then mv phantomjs-2.0.0-macosx travis-phantomjs; fi
-  - export PATH=$PWD/travis-phantomjs/bin:$PATH
+  - PHANTOM_DIR=$PWD/../travis-phantom
+  - if [ ! -d $PHANTOM_DIR ]; then wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-macosx.zip -O phantomjs.zip; fi
+  - if [ ! -d $PHANTOM_DIR ]; then unzip phantomjs.zip; fi
+  - if [ ! -d $PHANTOM_DIR ]; then mv phantomjs-2.0.0-macosx $PHANTOM_DIR; fi
+  - export PATH=$PHANTOM_DIR/bin:$PATH
   - phantomjs -v
   - npm config set spin false
   - npm install -g bower
@@ -33,7 +34,7 @@ install:
 
 script:
   - scss-lint
-  - node_modules/.bin/ember test --launch=PhantomJS
+  - npm test
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
