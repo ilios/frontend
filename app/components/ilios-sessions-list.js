@@ -6,7 +6,7 @@ const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy }
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
-const { sort, not } = computed;
+const { sort, not, alias } = computed;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -28,7 +28,7 @@ const SessionProxy = ObjectProxy.extend({
         });
       }
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
@@ -43,6 +43,11 @@ export default Component.extend({
   currentUser: service(),
 
   editable: not('course.locked'),
+  forceFullSessionList: false,
+  sessionsCount: alias('sessions.length'),
+  sessions: alias('course.sessions'),
+  offset: 0,
+  limit: 25,
 
   filter: '',
   course: null,
@@ -60,13 +65,13 @@ export default Component.extend({
     this.set('debouncedFilter', this.get('filter'));
   },
 
-  proxiedSessions: computed('course', 'course.sessions.[]', function() {
-    let course = this.get('course');
+  proxiedSessions: computed('sessions.[]', function() {
+    let course = this.get('course.id');
     if(isEmpty(course)){
       return [];
     }
     let defer = RSVP.defer();
-    course.get('sessions').then(sessions => {
+    this.get('sessions').then(sessions => {
       let proxiedSessions = sessions.map(session => {
         return SessionProxy.create({
           content: session,
@@ -82,7 +87,7 @@ export default Component.extend({
     });
   }),
 
-  filteredContent: computed('proxiedSessions.@each.searchString', 'debouncedFilter', function(){
+  filteredContent: computed('proxiedSessions.[]', 'debouncedFilter', function(){
     let defer = RSVP.defer();
     this.get('proxiedSessions').then(sessions => {
       let filter = this.get('debouncedFilter');
@@ -111,7 +116,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  
+
   sortAscending: true,
   sortItem: 'title',
   sortSessionBy: computed('sortAscending', 'sortItem', function(){
@@ -129,6 +134,15 @@ export default Component.extend({
     return [sortItem + ':' + direction];
   }),
   sortedSessionList: sort('filteredContent', 'sortSessionBy'),
+
+  displayedSessions: computed('sortedSessionList.[]', 'offset', 'limit', function(){
+    const limit = this.get('limit');
+    const offset = this.get('offset');
+    const end = limit + offset;
+    let sessions = this.get('sortedSessionList');
+
+    return sessions.slice(offset, end);
+  }),
 
   editorOn: false,
 
@@ -153,9 +167,9 @@ export default Component.extend({
       const component = this;
       const store = this.get('store');
       const course = this.get('course');
-      
+
       component.setProperties({ editorOn: false, isSaving: true, saved: false, savedSession: null });
-      
+
       let newSession = store.createRecord('session', { title, sessionType, course });
 
       newSession.save().then((savedSession) => {
@@ -182,6 +196,7 @@ export default Component.extend({
       sessionProxy.set('showRemoveConfirmation', false);
     },
     sortBy(item){
+      this.set('forceFullSessionList', true);
       if (item === this.get('sortItem')){
         this.set('sortAscending', !this.get('sortAscending'));
       } else {
@@ -189,5 +204,12 @@ export default Component.extend({
       }
       this.set('sortItem', item);
     },
+
+    setOffset(offset){
+      this.sendAction('setOffset', offset);
+    },
+    setLimit(limit){
+      this.sendAction('setLimit', limit);
+    }
   }
 });

@@ -124,7 +124,9 @@ export default {
     'campusId': 'Campus ID',
     'prev': 'Anterior',
     'next': 'Siguiente',
-    'disabled': 'desactivado'
+    'disabled': 'desactivado',
+    'pagedResultsCount': 'Mostrando {{start}} - {{end}} de {{total}}',
+    'perPage': 'Por Página',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',

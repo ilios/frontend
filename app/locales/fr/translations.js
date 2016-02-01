@@ -125,6 +125,8 @@ export default {
     'prev': "Précéd.",
     'next': "Proch.",
     'disabled': "désactivée",
+    'pagedResultsCount': 'Montrant {{start}} - {{end}} de {{total}}',
+    'perPage': 'Par Page',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
