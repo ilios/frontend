@@ -217,6 +217,12 @@ $course: #ddd1e7;
       }
     }
   }
+
+  .recently-updated-display {
+    i {
+      color: $ilios-red;
+    }
+  }
 }
 
 .ilios-event {
