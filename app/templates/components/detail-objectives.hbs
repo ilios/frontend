@@ -2,6 +2,7 @@
   <div class='detail-title'>
     {{#unless isManaging}}
       {{t 'general.objectives'}} ({{subject.objectives.length}})
+      {{fa-icon 'caret-down' class='clickable' click=(action "toggleObjectiveDetails")}}
     {{/unless}}
     {{#if isManagingParents}}
       <span class='detail-specific-title'>

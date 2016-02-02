@@ -1,4 +1,8 @@
-{{detail-objectives subject=course isCourse=true editable=editable}}
+{{#liquid-if objectiveDetails}}
+  {{detail-objectives subject=course isCourse=true editable=editable toggleObjectiveDetails='toggleObjectiveDetails'}}
+{{else}}
+  {{collapsed-objectives subject=course isCourse=true toggleObjectiveDetails='toggleObjectiveDetails'}}
+{{/liquid-if}}
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
 {{detail-competencies course=course editable=editable}}
 {{detail-topics

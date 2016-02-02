@@ -1,0 +1,48 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'general.objectives'}} ({{subject.objectives.length}})
+    {{fa-icon 'caret-right' class='clickable' click=(action "toggleObjectiveDetails")}}
+
+    <br />
+    {{#if objectives.isPending}}
+      <h3>{{fa-icon 'spinner' spin=true}}</h3>
+    {{/if}}
+  </div>
+  {{#unless objectives.isPending}}
+    <div class='detail-content'>
+      <table class='condensed'>
+        <thead>
+          <tr>
+            <th class='text-left' colspan=10>{{t 'general.description'}}</th>
+            <th class='text-left' colspan=1>{{t 'general.parentObjectives'}}</th>
+            <th class='text-left' colspan=1>{{t 'general.meshTerms'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each sortedObjectives as |objective|}}
+          <tr>
+            <td class='text-left text-top clickable link' colspan=10>
+              {{big-text text=objective.title action='toggleObjectiveDetails'}}
+            </td>
+            <td class='text-left text-top' colspan=1>
+              {{#if objective.parents.length}}
+                {{fa-icon 'circle' class='yes'}}
+              {{else}}
+                {{fa-icon 'ban' class='no'}}
+              {{/if}}
+            </td>
+            <td class='text-left text-top' colspan=1>
+              {{#if objective.meshDescriptors.length}}
+                {{fa-icon 'circle' class='yes'}}
+              {{else}}
+                {{fa-icon 'ban' class='no'}}
+              {{/if}}
+            </td>
+
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/unless}}
+</section>

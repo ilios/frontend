@@ -23,8 +23,9 @@ export default Component.extend({
     }
   }),
   cleanText: computed('text', function(){
+    const text = this.get('text') || '';
     //strip any possible HTML out of the text
-    return this.get('text').replace(/(<([^>]+)>)/ig,"");
+    return text.replace(/(<([^>]+)>)/ig,"");
   }),
   displayText: computed('cleanText', 'totalLength', 'length', 'expanded', function(){
     let cleanText = this.get('cleanText');

@@ -170,5 +170,8 @@ export default Component.extend({
         this.set('newObjectiveTitle', editor.getHTML());
       }
     },
+    toggleObjectiveDetails(){
+      this.sendAction('toggleObjectiveDetails');
+    },
   }
 });

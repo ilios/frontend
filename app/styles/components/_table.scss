@@ -28,4 +28,15 @@ table {
     padding: 1em .5em .5em;
     vertical-align: middle;
   }
+
+  &.condensed {
+    font-size: .8em;
+
+    tr,
+    td,
+    th {
+      padding: 0;
+      margin: 0;
+    }
+  }
 }

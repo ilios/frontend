@@ -2,9 +2,10 @@ import Ember from 'ember';
 
 const { Component, computed } = Ember;
 const { not } = computed;
-  
+
 export default Component.extend({
   editable: not('course.locked'),
+  objectiveDetails: false,
   actions: {
     save: function(){
       var self = this;
@@ -14,6 +15,9 @@ export default Component.extend({
           self.set('course', course);
         }
       });
+    },
+    toggleObjectiveDetails(){
+      this.sendAction('toggleObjectiveDetails');
     }
   }
 });
