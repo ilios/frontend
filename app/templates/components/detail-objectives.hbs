@@ -1,8 +1,7 @@
-<section class='detail-block'>
-  <div class='detail-title'>
+<section class='detail-block {{if objectives.length "collapsible"}}'>
+  <div class='detail-title {{if objectives.length "clickable"}}' {{action "toggleObjectiveDetails"}}>
     {{#unless isManaging}}
       {{t 'general.objectives'}} ({{subject.objectives.length}})
-      {{fa-icon 'caret-down' class='clickable' click=(action "toggleObjectiveDetails")}}
     {{/unless}}
     {{#if isManagingParents}}
       <span class='detail-specific-title'>

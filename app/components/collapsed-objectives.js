@@ -1,17 +1,13 @@
 import Ember from 'ember';
 
 const { Component, computed } = Ember;
-const { alias, sort } = computed;
+const { alias, filterBy } = computed;
 
 export default Component.extend({
   subject: null,
-  isCourse: false,
-  isSession: false,
-  isProgramYear: false,
   objectives: alias('subject.objectives'),
-  sortedObjectives: sort('objectives', function(a, b){
-    return parseInt(a.get( 'id' )) - parseInt(b.get( 'id' ));
-  }),
+  objectivesWithParents: filterBy('objectives', 'hasParents', true),
+  objectivesWithMesh: filterBy('objectives', 'hasMesh', true),
   actions: {
     toggleObjectiveDetails(){
       this.sendAction('toggleObjectiveDetails');

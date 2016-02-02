@@ -1,46 +1,54 @@
-<section class='detail-block'>
-  <div class='detail-title'>
+<section class='detail-block collapsed'>
+  <div class='detail-title clickable' {{action "toggleObjectiveDetails"}}>
     {{t 'general.objectives'}} ({{subject.objectives.length}})
-    {{fa-icon 'caret-right' class='clickable' click=(action "toggleObjectiveDetails")}}
-
-    <br />
-    {{#if objectives.isPending}}
-      <h3>{{fa-icon 'spinner' spin=true}}</h3>
-    {{/if}}
   </div>
+  {{#if objectives.isPending}}
+    <h3>{{fa-icon 'spinner' spin=true}}</h3>
+  {{/if}}
   {{#unless objectives.isPending}}
     <div class='detail-content'>
       <table class='condensed'>
         <thead>
           <tr>
-            <th class='text-left' colspan=10>{{t 'general.description'}}</th>
-            <th class='text-left' colspan=1>{{t 'general.parentObjectives'}}</th>
-            <th class='text-left' colspan=1>{{t 'general.meshTerms'}}</th>
+            <th class='text-left'>{{t 'general.summary'}}</th>
+            <th class='text-center'>{{t 'general.parentObjectives'}}</th>
+            <th class='text-center'>{{t 'general.meshTerms'}}</th>
           </tr>
         </thead>
         <tbody>
-        {{#each sortedObjectives as |objective|}}
           <tr>
-            <td class='text-left text-top clickable link' colspan=10>
-              {{big-text text=objective.title action='toggleObjectiveDetails'}}
+            <td class='summary-highlight'>
+              {{t 'courses.objectiveCount' count=objectives.length}}
             </td>
-            <td class='text-left text-top' colspan=1>
-              {{#if objective.parents.length}}
+            <td class='text-middle text-center' rowspan=3>
+              {{#if (eq objectivesWithParents.length objectives.length)}}
                 {{fa-icon 'circle' class='yes'}}
+              {{else if (gte objectivesWithParents.length 1)}}
+                {{fa-icon 'circle' class='maybe'}}
               {{else}}
                 {{fa-icon 'ban' class='no'}}
               {{/if}}
             </td>
-            <td class='text-left text-top' colspan=1>
-              {{#if objective.meshDescriptors.length}}
+            <td class='text-middle text-center' rowspan=3>
+              {{#if (eq objectivesWithMesh.length objectives.length)}}
                 {{fa-icon 'circle' class='yes'}}
+              {{else if (gte objectivesWithMesh.length 1)}}
+                {{fa-icon 'circle' class='maybe'}}
               {{else}}
                 {{fa-icon 'ban' class='no'}}
               {{/if}}
             </td>
-
           </tr>
-          {{/each}}
+          <tr>
+            <td class='summary-highlight'>
+              &nbsp;&nbsp;{{t 'courses.parentCount' count=objectivesWithParents.length}}
+            </td>
+          </tr>
+          <tr>
+            <td class='summary-highlight'>
+              &nbsp;&nbsp;{{t 'courses.meshCount' count=objectivesWithMesh.length}}
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
