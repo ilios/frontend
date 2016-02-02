@@ -4,10 +4,10 @@ const { computed, Controller } = Ember;
 const { not } = computed;
 
 export default Controller.extend({
-  queryParams: ['details', 'objectiveDetails'],
+  queryParams: ['details', 'courseObjectiveDetails'],
 
   details: false,
-  objectiveDetails: false,
+  courseObjectiveDetails: false,
 
   // Pass the state var that ilios-course-details expects
   collapsed: not('details'),
@@ -17,8 +17,8 @@ export default Controller.extend({
       // We have reveresed verb collapsed/details so reverse the passed state
       this.set('details', !state);
     },
-    toggleObjectiveDetails() {
-      this.set('objectiveDetails', !this.get('objectiveDetails'));
+    toggleCourseObjectiveDetails() {
+      this.set('courseObjectiveDetails', !this.get('courseObjectiveDetails'));
     }
   }
 });

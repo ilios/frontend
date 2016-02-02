@@ -8,7 +8,7 @@ export default Component.extend({
   course: null,
   collapsed: true,
   notCollapsed: not('collapsed'),
-  objectiveDetails: null,
+  courseObjectiveDetails: null,
   actions: {
     expand: function(){
       this.sendAction('collapsedState', false);
@@ -18,8 +18,8 @@ export default Component.extend({
       //when the button is clicked to collapse, animate the focus to the top of the page
       scrollTo("body");
     },
-    toggleObjectiveDetails(){
-      this.sendAction('toggleObjectiveDetails');
+    toggleCourseObjectiveDetails(){
+      this.sendAction('toggleCourseObjectiveDetails');
     }
   }
 

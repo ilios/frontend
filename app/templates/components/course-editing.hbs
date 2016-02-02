@@ -1,7 +1,7 @@
-{{#liquid-if objectiveDetails}}
-  {{detail-objectives subject=course isCourse=true editable=editable toggleObjectiveDetails='toggleObjectiveDetails'}}
+{{#liquid-if courseObjectiveDetails}}
+  {{detail-objectives subject=course isCourse=true editable=editable toggleObjectiveDetails='toggleCourseObjectiveDetails'}}
 {{else}}
-  {{collapsed-objectives subject=course isCourse=true toggleObjectiveDetails='toggleObjectiveDetails'}}
+  {{collapsed-objectives subject=course isCourse=true toggleObjectiveDetails='toggleCourseObjectiveDetails'}}
 {{/liquid-if}}
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
 {{detail-competencies course=course editable=editable}}
