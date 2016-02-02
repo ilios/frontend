@@ -9,11 +9,11 @@
 
   <div class='detail-content'>
     <section class='resultslist'>
-      <section class='resultslist-new'>
         {{#liquid-if showNewLearnerGroupForm class='vertical'}}
-          {{new-learnergroup save='saveNewLearnerGroup' cancel='cancel'}}
+          <section class='resultslist-new'>
+            {{new-learnergroup save='saveNewLearnerGroup' cancel='cancel'}}
+          </section>
         {{/liquid-if}}
-      </section>
 
       <div class='resultslist-list'>
         <table>
