@@ -8,7 +8,7 @@ import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
-var url = '/courses/1?details=true';
+var url = '/courses/1?details=true&courseObjectiveDetails=true';
 var fixtures = {};
 module('Acceptance: Course with multiple Cohorts - Objective Parents' + testgroup, {
   beforeEach: function() {

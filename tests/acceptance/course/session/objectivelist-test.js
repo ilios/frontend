@@ -10,7 +10,7 @@ import Ember from 'ember';
 
 var application;
 var fixtures = {};
-var url = '/courses/1/sessions/1';
+var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
 module('Acceptance: Session - Objective List' + testgroup, {
   beforeEach: function() {
     application = startApp();

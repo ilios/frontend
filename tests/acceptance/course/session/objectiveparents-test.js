@@ -8,7 +8,7 @@ import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
-var url = '/courses/1/sessions/1';
+var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
 var fixtures = {};
 module('Acceptance: Session - Objective Parents' + testgroup, {
   beforeEach: function() {
