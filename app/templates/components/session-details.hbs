@@ -18,7 +18,11 @@
         editable=editable
       }}
     {{/liquid-if}}
-    {{detail-objectives subject=session isSession=true editable=editable}}
+    {{#liquid-if sessionObjectiveDetails}}
+      {{detail-objectives subject=session isSession=true editable=editable toggleObjectiveDetails='toggleSessionObjectiveDetails'}}
+    {{else}}
+      {{collapsed-objectives subject=session isSession=true editable=editable toggleObjectiveDetails='toggleSessionObjectiveDetails'}}
+    {{/liquid-if}}
     {{detail-learning-materials subject=session isCourse=false editable=editable}}
     {{detail-topics
       subject=session
