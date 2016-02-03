@@ -4,25 +4,29 @@
 
 <div class="learnergroup-list">
   <div class="learnergroup-list-top">
-    {{#each proxiedMembers as |userProxy|}}
-      <div class="form-col-12">
-        <label class="form-label learnergroup-username">
-          {{userProxy.fullName}}
-          {{#unless userProxy.enabled}}
-            <em>({{t 'general.disabled'}})</em>
-          {{/unless}}
-        </label>
-        <div class="form-data learnergroup-group-membership">
-          {{inplace-select
-            value=userProxy.lowestGroupInTree.id
-            options=learnerGroupOptions
-            save='changeLearnerGroup'
-            condition=userProxy.id
-            displayValueOverride=userProxy.groupDisplayValueString
-            selectPromptTranslation='learnerGroups.selectGroup'
-          }}
+    {{#if members.isFulfilled}}
+      {{#each proxiedMembers as |userProxy|}}
+        <div class="form-col-12">
+          <label class="form-label learnergroup-username">
+            {{userProxy.fullName}}
+            {{#unless userProxy.enabled}}
+              <em>({{t 'general.disabled'}})</em>
+            {{/unless}}
+          </label>
+          <div class="form-data learnergroup-group-membership">
+            {{inplace-select
+              value=userProxy.lowestGroupInTree.id
+              options=learnerGroupOptions
+              save='changeLearnerGroup'
+              condition=userProxy.id
+              displayValueOverride=userProxy.groupDisplayValueString
+              selectPromptTranslation='learnerGroups.selectGroup'
+            }}
+          </div>
         </div>
-      </div>
-    {{/each}}
+      {{/each}}
+    {{else}}
+      <h1 class='center'>{{fa-icon 'spinner' spin=true}}</h1>
+    {{/if}}
   </div>
 </div>
