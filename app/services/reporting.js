@@ -48,7 +48,7 @@ export default Service.extend({
     if(model === 'mesh-term'){
       model = 'mesh-descriptor';
     }
-    
+
     return model;
   },
   getQuery(subject, object, objectId, school){
@@ -56,7 +56,7 @@ export default Service.extend({
       limit: 1000,
       filters: {}
     };
-    
+
     if(object && objectId){
       let what = pluralize(object.camelize());
       if(object === 'mesh term'){
@@ -68,10 +68,10 @@ export default Service.extend({
       query.filters[what] = objectId;
     } else {
       if(subject !== 'mesh term' && subject !== 'instructor' && subject !== 'learning material' && school){
-        query.filters['schools'] = [school.get('id')];  
+        query.filters['schools'] = [school.get('id')];
       }
     }
-    
+
     return query;
   },
   coursesResults(results){
@@ -83,10 +83,10 @@ export default Service.extend({
         rhett.route = 'course';
         rhett.model = course;
       }
-      
+
       return rhett;
     });
-    
+
     return RSVP.resolve(map);
   },
   sessionsResults(results){
@@ -105,7 +105,7 @@ export default Service.extend({
         });
       });
     });
-    
+
     return RSVP.all(map);
   },
   programsResults(results){
@@ -123,7 +123,7 @@ export default Service.extend({
         });
       });
     });
-    
+
     return RSVP.all(map);
   },
   programYearsResults(results){
@@ -142,10 +142,10 @@ export default Service.extend({
             resolve(rhett);
           });
         });
-        
+
       });
     });
-    
+
     return RSVP.all(map);
   },
   instructorsResults(results){
@@ -176,7 +176,7 @@ export default Service.extend({
   topicsResults(results){
     return this.titleResults(results);
   },
-  settionTypesResults(results){
+  sessionTypesResults(results){
     return this.titleResults(results);
   },
   meshTermsResults(results){
