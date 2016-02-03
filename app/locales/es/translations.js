@@ -246,7 +246,7 @@ export default {
     },
     'parentCount': {
       'one': '1 tiene un Principal objetivo',
-      'other': '{{count}} tiene un Principal objetivo'
+      'other': '{{count}} tienen Objetivos Principales'
     },
     'meshCount': {
       'one': '1 tiene MeSH',
