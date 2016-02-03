@@ -242,7 +242,7 @@ export default {
     'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
     'objectiveCount': {
       'one': 'Il y a 1 objectif',
-      'other': 'Il y a des {{count}} objectifs'
+      'other': 'Il y a {{count}} objectifs'
     },
     'parentCount': {
       'one': '1 a un objectif mère',
