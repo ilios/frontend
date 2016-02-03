@@ -171,10 +171,10 @@ export default Component.extend({
         this.set('newObjectiveTitle', editor.getHTML());
       }
     },
-    toggleObjectiveDetails(){
+    collapse(){
       this.get('objectives').then(objectives => {
         if(objectives.length){
-          this.sendAction('toggleObjectiveDetails');
+          this.attrs.collapse();
         }
       });
     },

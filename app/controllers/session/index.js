@@ -17,8 +17,5 @@ export default Controller.extend({
     setSessionLimit(limit){
       this.set('sessionLimit', limit);
     },
-    toggleSessionObjectiveDetails() {
-      this.set('sessionObjectiveDetails', !this.get('sessionObjectiveDetails'));
-    }
   }
 });

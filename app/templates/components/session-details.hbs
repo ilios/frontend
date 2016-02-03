@@ -19,9 +19,9 @@
       }}
     {{/liquid-if}}
     {{#liquid-if (or (eq session.objectives.length 0) sessionObjectiveDetails)}}
-      {{detail-objectives subject=session isSession=true editable=editable toggleObjectiveDetails='toggleSessionObjectiveDetails'}}
+      {{detail-objectives subject=session isSession=true editable=editable collapse=(action this.attrs.setSessionObjectiveDetails false)}}
     {{else}}
-      {{collapsed-objectives subject=session editable=editable toggleObjectiveDetails='toggleSessionObjectiveDetails'}}
+      {{collapsed-objectives subject=session editable=editable expand=(action this.attrs.setSessionObjectiveDetails true)}}
     {{/liquid-if}}
     {{detail-learning-materials subject=session isCourse=false editable=editable}}
     {{detail-topics

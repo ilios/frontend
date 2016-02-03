@@ -8,9 +8,4 @@ export default Component.extend({
   objectives: alias('subject.objectives'),
   objectivesWithParents: filterBy('objectives', 'hasParents', true),
   objectivesWithMesh: filterBy('objectives', 'hasMesh', true),
-  actions: {
-    toggleObjectiveDetails(){
-      this.sendAction('toggleObjectiveDetails');
-    }
-  }
 });

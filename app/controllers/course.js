@@ -17,8 +17,5 @@ export default Controller.extend({
       // We have reveresed verb collapsed/details so reverse the passed state
       this.set('details', !state);
     },
-    toggleCourseObjectiveDetails() {
-      this.set('courseObjectiveDetails', !this.get('courseObjectiveDetails'));
-    }
   }
 });

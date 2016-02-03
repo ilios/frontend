@@ -10,7 +10,7 @@
         {{course-editing
           course=course
           courseObjectiveDetails=courseObjectiveDetails
-          toggleCourseObjectiveDetails='toggleCourseObjectiveDetails'
+          setCourseObjectiveDetails=(action this.attrs.setCourseObjectiveDetails)
         }}
         <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'courses.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
       {{/if}}

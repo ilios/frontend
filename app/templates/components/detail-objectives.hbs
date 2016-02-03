@@ -1,5 +1,5 @@
 <section class='detail-block {{if objectives.length "collapsible"}}'>
-  <div class='detail-title {{if objectives.length "clickable"}}' {{action "toggleObjectiveDetails"}}>
+  <div class='detail-title {{if objectives.length "clickable"}}' {{action 'collapse'}}>
     {{#unless isManaging}}
       {{t 'general.objectives'}} ({{subject.objectives.length}})
     {{/unless}}

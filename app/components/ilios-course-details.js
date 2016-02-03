@@ -18,9 +18,6 @@ export default Component.extend({
       //when the button is clicked to collapse, animate the focus to the top of the page
       scrollTo("body");
     },
-    toggleCourseObjectiveDetails(){
-      this.sendAction('toggleCourseObjectiveDetails');
-    }
   }
 
 });
