@@ -11,7 +11,7 @@ export function initialize(instance) {
   if (currentEnv !== 'test') {
     const controller = instance.container.lookup('controller:application');
     const ajax = instance.container.lookup('service:ajax');
-    
+
     // Global error handler in Ember run loop
     Ember.onerror = (error) => {
       if (error) {
@@ -42,7 +42,7 @@ export function initialize(instance) {
       }
     });
   }
-  
+
 }
 
 
@@ -73,7 +73,7 @@ export default {
 
     return errorData;
   },
-  
+
   incrementLastErrorSent(){
     this.lastErrorSent = moment().unix();
   },
