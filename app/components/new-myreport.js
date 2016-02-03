@@ -150,6 +150,14 @@ export default Component.extend({
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
       this.set('currentPrepositionalObjectId', null);
+      this.get('prepositionalObjectIdList').then(list => {
+        if(!this.get('currentPrepositionalObjectId')){
+          let first = list.get('firstObject');
+          if(first){
+            this.set('currentPrepositionalObjectId', first.value);
+          }
+        }
+      });
     },
     changePrepositionalObjectId(id){
       this.set('currentPrepositionalObjectId', id);
