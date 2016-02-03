@@ -14,14 +14,13 @@ moduleForComponent('collapsed-objectives', 'Integration | Component | collapsed 
   }
 });
 
-test('displays all objectives', function(assert) {
-  assert.expect(11);
-  server.create('meshDescriptor');
+test('displays summary data', function(assert) {
+  assert.expect(9);
   let hasMesh = server.create('objective', {
-    meshDescriptors: [1]
+    hasMesh: true
   });
   let hasParents = server.create('objective', {
-    parents: [1]
+    hasParents: true
   });
   let plain = server.create('objective');
   let objectives = [hasMesh, hasParents, plain].map(obj => Ember.Object.create(obj));
@@ -31,47 +30,18 @@ test('displays all objectives', function(assert) {
   });
 
   this.set('subject', course);
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
-
-  this.render(hbs`{{collapsed-objectives subject=subject isCourse=true}}`);
+  this.render(hbs`{{collapsed-objectives subject=subject}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives (3)');
   assert.equal(this.$('table tr').length, 4);
-  assert.equal(this.$('tr:eq(1)').text().trim(), objectives[0].get('title'));
-  assert.equal(this.$('tr:eq(2)').text().trim(), objectives[1].get('title'));
-  assert.equal(this.$('tr:eq(3)').text().trim(), objectives[2].get('title'));
+  assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'There are 3 objectives');
+  assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), '1 has a parent');
+  assert.equal(this.$('tr:eq(3) td:eq(0)').text().trim(), '1 has MeSH');
 
-
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-ban'));
+  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-circle'));
+  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('maybe'));
   assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('fa-circle'));
-
-  assert.ok(this.$('tr:eq(2) td:eq(1) i').hasClass('fa-circle'));
-  assert.ok(this.$('tr:eq(2) td:eq(2) i').hasClass('fa-ban'));
-
-  assert.ok(this.$('tr:eq(3) td:eq(1) i').hasClass('fa-ban'));
-  assert.ok(this.$('tr:eq(3) td:eq(2) i').hasClass('fa-ban'));
-});
-
-test('clicking objective title opens full view', function(assert) {
-  assert.expect(2);
-
-  let objective = server.create('objective');
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
-
-  const course = Object.create({
-    objectives
-  });
-
-  this.set('subject', course);
-  this.on('click', function() {
-    assert.ok(true);
-  });
-
-  this.render(hbs`{{collapsed-objectives subject=subject isCourse=true toggleObjectiveDetails='click'}}`);
-
-  assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
-  this.$('tr:eq(1) td span').click()
+  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('maybe'));
 });
 
 test('clicking expand icon opens full view', function(assert) {
@@ -84,8 +54,92 @@ test('clicking expand icon opens full view', function(assert) {
     assert.ok(true);
   });
 
-  this.render(hbs`{{collapsed-objectives subject=subject isCourse=true toggleObjectiveDetails='click'}}`);
+  this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives ()');
-  this.$('.detail-title i').click()
+  this.$('.detail-title').click();
+});
+
+test('icons all parents correctly', function(assert) {
+  assert.expect(4);
+  let objective = server.create('objective', {
+    hasParents: true
+  });
+  let objectives = [objective].map(obj => Ember.Object.create(obj));
+
+  const course = Object.create({
+    objectives
+  });
+
+  this.set('subject', course);
+  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+
+  assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
+  assert.equal(this.$('table tr').length, 4);
+
+  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-circle'));
+  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('yes'));
+});
+
+test('icons no parents correctly', function(assert) {
+  assert.expect(4);
+  let objective = server.create('objective', {
+    hasParents: false
+  });
+  let objectives = [objective].map(obj => Ember.Object.create(obj));
+
+  const course = Object.create({
+    objectives
+  });
+
+  this.set('subject', course);
+  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+
+  assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
+  assert.equal(this.$('table tr').length, 4);
+
+  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-ban'));
+  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('no'));
+});
+
+test('icons all mesh correctly', function(assert) {
+  assert.expect(4);
+  let objective = server.create('objective', {
+    hasMesh: true
+  });
+  let objectives = [objective].map(obj => Ember.Object.create(obj));
+
+  const course = Object.create({
+    objectives
+  });
+
+  this.set('subject', course);
+  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+
+  assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
+  assert.equal(this.$('table tr').length, 4);
+
+  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('fa-circle'));
+  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('yes'));
+});
+
+test('icons no mesh correctly', function(assert) {
+  assert.expect(4);
+  let objective = server.create('objective', {
+    hasMesh: false
+  });
+  let objectives = [objective].map(obj => Ember.Object.create(obj));
+
+  const course = Object.create({
+    objectives
+  });
+
+  this.set('subject', course);
+  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+
+  assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
+  assert.equal(this.$('table tr').length, 4);
+
+  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('fa-ban'));
+  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('no'));
 });
