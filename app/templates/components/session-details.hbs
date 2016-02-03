@@ -19,7 +19,13 @@
       }}
     {{/liquid-if}}
     {{#liquid-if (or (eq session.objectives.length 0) sessionObjectiveDetails)}}
-      {{detail-objectives subject=session isSession=true editable=editable collapse=(action this.attrs.setSessionObjectiveDetails false)}}
+      {{detail-objectives
+        subject=session
+        isSession=true
+        editable=editable
+        collapse=(action this.attrs.setSessionObjectiveDetails false)
+        expand=(action this.attrs.setSessionObjectiveDetails true)
+      }}
     {{else}}
       {{collapsed-objectives subject=session editable=editable expand=(action this.attrs.setSessionObjectiveDetails true)}}
     {{/liquid-if}}

@@ -1,5 +1,11 @@
 {{#liquid-if (or (eq course.objectives.length 0) courseObjectiveDetails)}}
-  {{detail-objectives subject=course isCourse=true editable=editable collapse=(action this.attrs.setCourseObjectiveDetails false)}}
+  {{detail-objectives
+    subject=course
+    isCourse=true
+    editable=editable
+    collapse=(action this.attrs.setCourseObjectiveDetails false)
+    expand=(action this.attrs.setCourseObjectiveDetails true)
+  }}
 {{else}}
   {{collapsed-objectives subject=course expand=(action this.attrs.setCourseObjectiveDetails true)}}
 {{/liquid-if}}

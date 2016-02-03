@@ -159,6 +159,9 @@ export default Component.extend({
       });
     },
     toggleNewObjectiveEditor() {
+      //force expand the objective component
+      //otherwise adding the first new objective will cause it to close
+      this.attrs.expand();
       this.set('newObjectiveTitle', null);
       this.set('newObjectiveEditorOn', !this.get('newObjectiveEditorOn'));
     },
