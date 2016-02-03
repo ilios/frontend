@@ -36,7 +36,7 @@ export default Component.extend({
   prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
     let list = [
       {value: 'course', label: this.get('i18n').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term', 'session type']},
-      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term', 'session type']},
+      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'topic', 'mesh term']},
       {value: 'program', label: this.get('i18n').t('general.program'), subjects: ['course', 'session', 'topic', 'session type']},
       {value: 'instructor', label: this.get('i18n').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'topic', 'session type']},
       {value: 'instructor group', label: this.get('i18n').t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'topic', 'session type']},
