@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { pluralize } from 'ember-inflector';
+import { singularize, pluralize } from 'ember-inflector';
 
 const { inject, Service, RSVP, computed } = Ember;
 const { PromiseArray } = DS;
@@ -62,8 +62,12 @@ export default Service.extend({
       if(object === 'mesh term'){
         what = 'meshDescriptors';
       }
-      if(subject === 'session' && object === 'session type'){
-        what = 'sessionType';
+
+      if(subject === 'session'){
+        let sessionSingulars = ['sessionTypes', 'courses'];
+        if(sessionSingulars.contains(what)){
+          what = singularize(what);
+        }
       }
       if(subject === 'instructor'){
         let specialInstructed = ['learningMaterials', 'topics', 'sessionTypes'];
