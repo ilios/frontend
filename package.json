@@ -72,7 +72,7 @@
     "ember-simple-auth-token": "1.0.0",
     "ember-tooltips": "0.4.0",
     "ember-truth-helpers": "1.2.0",
-    "ember-validations": "2.0.0-alpha.4",
+    "ember-validations": "dockyard/ember-validations#4c1d9cce601ed9017a9c975c262c7e74c09424d7",
     "ember-watson": "^0.7.0",
     "emberx-select": "2.0.2",
     "eslint": "^1.10.3",
