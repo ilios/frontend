@@ -21,7 +21,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     this.controllerFor('application').set('pageTitleTranslation', 'navigation.programs');
   },
   queryParams: {
-    filter: {
+    titleFilter: {
       replace: true
     }
   }

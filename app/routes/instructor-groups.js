@@ -22,7 +22,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     this.controllerFor('application').set('pageTitleTranslation', 'navigation.instructorGroups');
   },
   queryParams: {
-    filter: {
+    titleFilter: {
       replace: true
     }
   }
