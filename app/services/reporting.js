@@ -65,8 +65,11 @@ export default Service.extend({
       if(subject === 'session' && object === 'session type'){
         what = 'sessionType';
       }
-      if(subject === 'instructor' && object === 'learning material'){
-        what = 'instructedLearningMaterials';
+      if(subject === 'instructor'){
+        let specialInstructed = ['learningMaterials', 'topics', 'sessionTypes'];
+        if(specialInstructed.contains(what)){
+          what = 'instructed' + what.capitalize();
+        }
       }
       query.filters[what] = objectId;
     } else {
