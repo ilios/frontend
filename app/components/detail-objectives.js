@@ -4,13 +4,14 @@ import config from 'ilios/config/environment';
 
 const { Component, computed, inject } = Ember;
 const { service } = inject;
-const { or, notEmpty } = computed;
+const { or, notEmpty, alias } = computed;
 
 export default Component.extend({
   store: service(),
   i18n: service(),
   flashMessages: service(),
   subject: null,
+  objectives:  alias('subject.objectives'),
   classNames: ['detail-objectives'],
   isCourse: false,
   isSession: false,
@@ -158,6 +159,9 @@ export default Component.extend({
       });
     },
     toggleNewObjectiveEditor() {
+      //force expand the objective component
+      //otherwise adding the first new objective will cause it to close
+      this.attrs.expand();
       this.set('newObjectiveTitle', null);
       this.set('newObjectiveEditorOn', !this.get('newObjectiveEditorOn'));
     },
@@ -169,6 +173,13 @@ export default Component.extend({
       if(editor){
         this.set('newObjectiveTitle', editor.getHTML());
       }
+    },
+    collapse(){
+      this.get('objectives').then(objectives => {
+        if(objectives.length){
+          this.attrs.collapse();
+        }
+      });
     },
   }
 });

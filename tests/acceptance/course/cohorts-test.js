@@ -9,7 +9,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 var fixtures = {};
-var url = '/courses/1?details=true';
+var url = '/courses/1?details=true&courseObjectiveDetails=true';
 module('Acceptance: Course - Cohorts' + testgroup, {
   beforeEach: function() {
     application = startApp();

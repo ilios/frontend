@@ -71,6 +71,7 @@
     "ember-simple-auth": "1.0.1",
     "ember-simple-auth-token": "1.0.0",
     "ember-tooltips": "0.4.0",
+    "ember-truth-helpers": "1.2.0",
     "ember-validations": "2.0.0-alpha.4",
     "ember-watson": "^0.7.0",
     "emberx-select": "2.0.2",

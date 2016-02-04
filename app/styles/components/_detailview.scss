@@ -21,10 +21,6 @@ $collapse-control-shadow-grey: #e2e2e2;
     .detail-block {
       border-bottom: 1px dotted $text-blue;
 
-      .detail-title {
-        color: $text-blue;
-      }
-
       table thead {
         background-color: $text-blue;
         color: $white;
@@ -106,14 +102,6 @@ $collapse-control-shadow-grey: #e2e2e2;
       padding-left: .8em;
       padding-right: .8em;
 
-      &.collapsed .detail-title::after {
-        content: '\25BA';
-      }
-
-      &.collapsible .detail-title::after {
-        content: '\25BC';
-      }
-
       // special handling for the detail-blocks that contain a filter element
       &.filter-detail-block {
         .detail-title {
@@ -135,7 +123,7 @@ $collapse-control-shadow-grey: #e2e2e2;
 
       .detail-title {
         @include span-columns(9 of 12);
-        color: $ilios-orange;
+        color: $text-blue;
         font-size: $base-font-size;
         font-weight: bold;
         margin-top: 1em;
@@ -176,6 +164,27 @@ $collapse-control-shadow-grey: #e2e2e2;
             opacity: .9;
             z-index: 5;
           }
+        }
+      }
+
+      &.collapsed {
+        .detail-title {
+          @include span-columns(2 of 12);
+
+          &::after {
+            content: '\25BA';
+          }
+        }
+
+        .detail-content {
+          @include span-columns(10 of 12);
+          margin: 0;
+        }
+      }
+
+      &.collapsible {
+        .detail-title::after {
+          content: '\25BC';
         }
       }
     }
@@ -365,6 +374,11 @@ $collapse-control-shadow-grey: #e2e2e2;
       color: $white;
     }
 
+  }
+
+  .summary-highlight {
+    color: $ilios-orange;
+    font-weight: bold;
   }
 }
 

@@ -30,6 +30,7 @@ export default DS.Model.extend({
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
+  hasMesh: gte('meshDescriptors.length', 1),
   treeCompetencies: computed('competency', 'parents.@each.treeCompetencies.[]', function(){
     var defer = RSVP.defer();
     var self = this;

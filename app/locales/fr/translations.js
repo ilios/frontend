@@ -127,6 +127,7 @@ export default {
     'disabled': "désactivée",
     'pagedResultsCount': 'Montrant {{start}} - {{end}} de {{total}}',
     'perPage': 'Par Page',
+    'summary': 'Résumé',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -239,6 +240,18 @@ export default {
     'objectiveParentTitle': "Choisi Objectifs mères",
     'objectiveParentTitleSingular': "Choisi Objectif mère",
     'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
+    'objectiveCount': {
+      'one': 'Il y a 1 objectif',
+      'other': 'Il y a {{count}} objectifs'
+    },
+    'parentCount': {
+      'one': '1 a un objectif mère',
+      'other': '{{count}} ont des objectifs mères'
+    },
+    'meshCount': {
+      'one': '1 a des MeSH',
+      'other': '{{count}} ont MeSH'
+    },
     'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
     'newObjectiveSaved': "Nouvel objective sauvé",
     'chooseCohortTitle': "Choisi objectif mère pour",

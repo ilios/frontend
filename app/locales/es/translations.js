@@ -127,6 +127,7 @@ export default {
     'disabled': 'desactivado',
     'pagedResultsCount': 'Mostrando {{start}} - {{end}} de {{total}}',
     'perPage': 'Por Página',
+    'summary': 'Resumen',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -239,6 +240,18 @@ export default {
     'objectiveParentTitle': 'Seleccione Objetivos Principales',
     'objectiveParentTitleSingular': 'Seleccione Objetivo Principale',
     'objectiveDescriptorTitle': 'Seleccione Descriptores de MeSH para Objetivo',
+    'objectiveCount': {
+      'one': 'Hay 1 objetivo',
+      'other': 'Hay {{count}} objetivos'
+    },
+    'parentCount': {
+      'one': '1 tiene un Principal objetivo',
+      'other': '{{count}} tienen Objetivos Principales'
+    },
+    'meshCount': {
+      'one': '1 tiene MeSH',
+      'other': '{{count}} tienen MeSH'
+    },
     'lmDescriptorTitle': 'Seleccione Descriptores de MeSH para Materiales de Aprendizaje',
     'newObjectiveSaved': 'Nuevo Objetivo Guardado',
     'chooseCohortTitle': 'Seleccione Matriz Para',

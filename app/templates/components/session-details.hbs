@@ -18,7 +18,17 @@
         editable=editable
       }}
     {{/liquid-if}}
-    {{detail-objectives subject=session isSession=true editable=editable}}
+    {{#liquid-if (or (eq session.objectives.length 0) sessionObjectiveDetails)}}
+      {{detail-objectives
+        subject=session
+        isSession=true
+        editable=editable
+        collapse=(action this.attrs.setSessionObjectiveDetails false)
+        expand=(action this.attrs.setSessionObjectiveDetails true)
+      }}
+    {{else}}
+      {{collapsed-objectives subject=session editable=editable expand=(action this.attrs.setSessionObjectiveDetails true)}}
+    {{/liquid-if}}
     {{detail-learning-materials subject=session isCourse=false editable=editable}}
     {{detail-topics
       subject=session

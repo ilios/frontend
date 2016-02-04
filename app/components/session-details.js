@@ -8,6 +8,8 @@ export default Component.extend({
   sessionTypes: [],
   session: null,
   editable: not('course.locked'),
+  sessionObjectiveDetails: null,
+
   didInsertElement: function(){
     scrollTo("#session-" + this.get('session.id'));
   },
@@ -20,6 +22,9 @@ export default Component.extend({
           self.set('session', session);
         }
       });
+    },
+    toggleSessionObjectiveDetails(){
+      this.sendAction('toggleSessionObjectiveDetails');
     }
   }
 
