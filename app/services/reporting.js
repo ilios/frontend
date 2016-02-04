@@ -62,7 +62,7 @@ export default Service.extend({
       if(object === 'mesh term'){
         what = 'meshDescriptors';
       }
-      if(subject = 'session' && object === 'session type'){
+      if(subject === 'session' && object === 'session type'){
         what = 'sessionType';
       }
       query.filters[what] = objectId;
