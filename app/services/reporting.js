@@ -65,6 +65,9 @@ export default Service.extend({
       if(subject === 'session' && object === 'session type'){
         what = 'sessionType';
       }
+      if(subject === 'instructor' && object === 'learning material'){
+        what = 'instructedLearningMaterials';
+      }
       query.filters[what] = objectId;
     } else {
       if(subject !== 'mesh term' && subject !== 'instructor' && subject !== 'learning material' && school){
