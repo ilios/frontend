@@ -5,6 +5,7 @@ $session-type: #d6ebf2;
 $course-level: #ffd27f;
 $cohort: #cfc;
 $course: #ddd1e7;
+$updated-color: #945c58;
 
 .dashboard {
   .calendar-profile {
@@ -220,7 +221,7 @@ $course: #ddd1e7;
 
   .recently-updated-display {
     i {
-      color: $ilios-red;
+      color: $updated-color;
     }
   }
 }
