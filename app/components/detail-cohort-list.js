@@ -10,7 +10,7 @@ export default Component.extend({
     let defer = RSVP.defer();
 
     this.get('cohorts').then(cohorts => {
-      defer.resolve(cohorts.sortBy(['school', 'displayTitle']));
+      defer.resolve(cohorts.sortBy('school', 'displayTitle'));
     });
 
     return PromiseArray.create({
