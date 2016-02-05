@@ -29,7 +29,7 @@ export function initialize(instance) {
 
     // Global error handler for promises
     Ember.RSVP.on('error', (error) => {
-      if (error) {
+      if (error && !error instanceof 'TransitionAborted') {
         const mappedError = this.mapError(error);
 
         console.log(error);
