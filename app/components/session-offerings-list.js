@@ -48,7 +48,6 @@ export default Component.extend({
       let session = this.get('session');
       session.get('offerings').then(offerings => {
         offerings.removeObject(offering);
-        session.save();
         offering.deleteRecord();
         offering.save();
       });
