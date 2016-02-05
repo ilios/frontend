@@ -4,14 +4,15 @@ import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
+import initializer from "ilios/instance-initializers/ember-i18n";
 
 let today = moment();
-let mockEvents = [
+const mockEvents = [
   {name: 'first', startDate: today.format(), location: 123},
   {name: 'second', startDate: today.format(), location: 456},
   {name: 'third', startDate: today.format(), location: 789},
 ];
-let userEventsMock = Ember.Service.extend({
+const userEventsMock = Ember.Service.extend({
   getEvents(){
     return new Ember.RSVP.resolve(mockEvents);
   }
@@ -24,15 +25,14 @@ let blankEventsMock = Ember.Service.extend({
 
 moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agenda' + testgroup, {
   integration: true,
-  beforeEach: function() {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
-  }
+  setup(){
+    initializer.initialize(this);
+  },
 });
 
 test('it renders with events', function(assert) {
-  this.container.register('service:mockuserevents', userEventsMock);
-  this.container.injection('component', 'userEvents', 'service:mockuserevents');
+  this.register('service:user-events', userEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
   assert.expect(6);
 
   this.render(hbs`{{dashboard-agenda}}`);
@@ -45,8 +45,8 @@ test('it renders with events', function(assert) {
 });
 
 test('it renders blank', function(assert) {
-  this.container.register('service:mockuserevents', blankEventsMock);
-  this.container.injection('component', 'userEvents', 'service:mockuserevents');
+  this.register('service:user-events', blankEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
   assert.expect(1);
 
   this.render(hbs`{{dashboard-agenda}}`);
