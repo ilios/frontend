@@ -30,7 +30,8 @@ test('displays summary data', function(assert) {
   });
 
   this.set('subject', course);
-  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+  this.on('click', parseInt);
+  this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives (3)');
   assert.equal(this.$('table tr').length, 4);
@@ -72,7 +73,8 @@ test('icons all parents correctly', function(assert) {
   });
 
   this.set('subject', course);
-  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+  this.on('click', parseInt);
+  this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
@@ -93,7 +95,8 @@ test('icons no parents correctly', function(assert) {
   });
 
   this.set('subject', course);
-  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+  this.on('click', parseInt);
+  this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
@@ -114,7 +117,8 @@ test('icons all mesh correctly', function(assert) {
   });
 
   this.set('subject', course);
-  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+  this.on('click', parseInt);
+  this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
@@ -135,7 +139,8 @@ test('icons no mesh correctly', function(assert) {
   });
 
   this.set('subject', course);
-  this.render(hbs`{{collapsed-objectives subject=subject}}`);
+  this.on('click', parseInt);
+  this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
 
   assert.equal(this.$('.detail-title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
