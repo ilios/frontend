@@ -88,26 +88,30 @@
     <div class="user-info-row">
       <label class="form-label">{{t 'general.primaryCohort'}}:</label>
       <div class="form-data">
-        {{#if user.primaryCohort.title}}
-          {{user.primaryCohort.title}}
-        {{else}}
-          {{t 'general.unassigned'}}
-        {{/if}}
+        {{#liquid-if user.primaryCohort.isFulfilled}}
+          {{#if user.primaryCohort.title}}
+            {{user.primaryCohort.programYear.program.title}} {{user.primaryCohort.title}}
+          {{else}}
+            {{t 'general.unassigned'}}
+          {{/if}}
+        {{/liquid-if}}
       </div>
     </div>
 
     <div class="user-info-row">
       <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
       <div class="form-data">
-        {{#if secondaryCohorts.content}}
-          <ul class="secondary-cohorts">
-            {{#each secondaryCohorts.content as |cohort|}}
-              <li class="secondary-cohort">{{cohort.title}}</li>
-            {{/each}}
-          </ul>
-        {{else}}
-          {{t 'general.unassigned'}}
-        {{/if}}
+        {{#liquid-if secondaryCohorts.isFulfilled}}
+          {{#if secondaryCohorts.length}}
+            <ul class="secondary-cohorts">
+              {{#each secondaryCohorts as |cohort|}}
+                <li class="secondary-cohort">{{cohort.programYear.program.title}} {{cohort.title}}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{t 'general.unassigned'}}
+          {{/if}}
+        {{/liquid-if}}
       </div>
     </div>
 

@@ -21,8 +21,10 @@ module('Acceptance: User', {
       learnerGroups: [3, 5]
     };
     setupAuthentication(application, userObject);
-    
-    server.create('school');
+
+    server.create('school', { programs: [1]});
+    server.create('program', {programYears: [1, 2, 3]});
+    server.createList('programYear', 3, { program: 1});
     server.create('cohort', { title: 'Medicine', users: [ 4136 ] });
     server.createList('cohort', 2, {  users: [ 4136 ] });
     server.createList('learnerGroup', 5, { title: 'Group 1', users: [ 4136 ] });
@@ -49,9 +51,9 @@ test('can see user profile', function(assert) {
     assert.equal(getUserContent(1), 'user@example.edu', 'email is shown');
     assert.equal(getUserContent(2), '111-111-1111', 'phone is shown');
     assert.equal(getUserContent(3), 'school 0', 'primary school is shown');
-    assert.equal(getUserContent(4), 'Medicine', 'primary cohort is shown');
-    assert.equal(find(`${secondaryCohorts}:first`).text(), 'cohort 1', 'secondary cohort is shown');
-    assert.equal(find(`${secondaryCohorts}:last`).text(), 'cohort 2', 'secondary cohort is shown');
+    assert.equal(getUserContent(4), 'program 0 Medicine', 'primary cohort is shown');
+    assert.equal(find(`${secondaryCohorts}:first`).text(), 'program 0 cohort 1', 'secondary cohort is shown');
+    assert.equal(find(`${secondaryCohorts}:last`).text(), 'program 0 cohort 2', 'secondary cohort is shown');
     assert.equal(find(`${learnerGroups}:first`).text(), 'Group 1', 'learner group is shown');
     assert.equal(find(`${learnerGroups}:last`).text(), 'Group 1', 'learner group is shown');
   });
