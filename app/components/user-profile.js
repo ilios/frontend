@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed, Component, inject } = Ember;
-const { PromiseObject } = DS;
+const { PromiseObject, PromiseArray } = DS;
 const { service } = inject;
 
 export default Component.extend({
@@ -21,13 +21,15 @@ export default Component.extend({
     get() {
       const user = this.get('user');
 
-      const cohorts = user.get('cohorts').then((cohorts) => {
+      let promise = user.get('cohorts').then((cohorts) => {
         return user.get('primaryCohort').then((primaryCohort) => {
-          return cohorts.removeObject(primaryCohort);
+          return cohorts.filter(cohort => {
+            return cohort.get('id') !== primaryCohort.get('id');
+          });
         });
       });
 
-      return PromiseObject.create({ promise: cohorts });
+      return PromiseArray.create({ promise });
     }
   }).readOnly(),
 
