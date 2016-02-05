@@ -7,11 +7,10 @@ moduleForComponent('recently-updated-display', 'Unit | Component | recently upda
 
 test('`recentlyUpdated` computed property works', function(assert) {
   const lastModified = moment().subtract(5, 'day');
-  const attrs = { lastModified };
-  const component = this.subject({ attrs });
+  const component = this.subject({ lastModified });
 
   assert.ok(component.get('recentlyUpdated'), 'last modified within 5 days');
 
-  component.set('attrs.lastModified', moment().subtract(7, 'day'));
+  component.set('lastModified', moment().subtract(7, 'day'));
   assert.notOk(component.get('recentlyUpdated'), 'last modified more than 5 days');
 });
