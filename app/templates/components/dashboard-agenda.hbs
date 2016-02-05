@@ -1,26 +1,30 @@
-{{#if weeksEvents.length}}
-  <table>
-    <tbody>
-      {{#each weeksEvents as |event|}}
-        {{#if event.isBlanked}}
-          <tr>
-            <td class='event-date'>{{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
-            <td>{{event.name}}</td>
-            <td>{{event.location}}</td>
-            <td>{{recently-updated-display lastModified=event.lastModified}}</td>
-          </tr>
-        {{/if}}
-        {{#unless event.isBlanked}}
-            <tr class='clickable'>
-              <td class='event-date'>{{fa-icon 'external-link-square'}} {{#link-to 'events' event.slug}}{{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}{{/link-to}}</td>
-              <td>{{#link-to 'events' event.slug}}{{event.name}}{{/link-to}}</td>
-              <td>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
+{{#liquid-if weeksEvents.isFulfilled}}
+  {{#if weeksEvents.length}}
+    <table>
+      <tbody>
+        {{#each weeksEvents as |event|}}
+          {{#if event.isBlanked}}
+            <tr>
+              <td class='event-date'>{{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}</td>
+              <td>{{event.name}}</td>
+              <td>{{event.location}}</td>
               <td>{{recently-updated-display lastModified=event.lastModified}}</td>
             </tr>
-        {{/unless}}
-      {{/each}}
-    </tbody>
-  </table>
+          {{/if}}
+          {{#unless event.isBlanked}}
+              <tr class='clickable'>
+                <td class='event-date'>{{fa-icon 'external-link-square'}} {{#link-to 'events' event.slug}}{{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}{{/link-to}}</td>
+                <td>{{#link-to 'events' event.slug}}{{event.name}}{{/link-to}}</td>
+                <td>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
+                <td>{{recently-updated-display lastModified=event.lastModified}}</td>
+              </tr>
+          {{/unless}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    {{t 'dashboard.noEvents'}}
+  {{/if}}
 {{else}}
-  {{t 'dashboard.noEvents'}}
-{{/if}}
+  <p>{{fa-icon 'spinner' spin=true}} {{t 'calendar.loadingEvents'}}</p>
+{{/liquid-if}}
