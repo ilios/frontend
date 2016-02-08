@@ -53,10 +53,15 @@ export default Component.extend({
   }),
   prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', function(){
     const type = this.get('currentPrepositionalObject');
-    if(isEmpty(type) || type === 'instructor'){
-      return [];
-    }
+
     let defer = RSVP.defer();
+    if(isEmpty(type) || type === 'instructor'){
+      defer.resolve([]);
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+    }
+
     let model = type.dasherize();
     const store = this.get('store');
     const school = this.get('currentSchool');
