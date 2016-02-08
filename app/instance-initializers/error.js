@@ -29,15 +29,16 @@ export function initialize(instance) {
 
     // Global error handler for promises
     Ember.RSVP.on('error', (error) => {
-      if (error && !error instanceof 'TransitionAborted') {
+      if (error) {
         const mappedError = this.mapError(error);
+        if (mappedError.mainMessage !== 'TransitionAborted') {
+          console.log(error);
+          controller.addError(mappedError);
+          this.logError(mappedError, ajax);
 
-        console.log(error);
-        controller.addError(mappedError);
-        this.logError(mappedError, ajax);
-
-        if (error.stack) {
-          console.error(error.stack);
+          if (error.stack) {
+            console.error(error.stack);
+          }
         }
       }
     });
@@ -52,7 +53,9 @@ export default {
   initialize: initialize,
   lastErrorSent: null,
   mapError(error) {
-    let errorData = {};
+    let errorData = {
+      mainMessage: null
+    };
 
     if (error.message) {
       errorData.mainMessage = error.message;
