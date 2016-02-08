@@ -76,7 +76,7 @@
     "ember-watson": "^0.7.0",
     "emberx-select": "2.0.2",
     "eslint": "^1.10.3",
-    "ilios-calendar": "^3.1.0",
+    "ilios-calendar": "^4.0.0",
     "liquid-fire": "0.22.1",
     "liquid-tether": "0.1.9",
     "pluralize": "^1.2.1",
