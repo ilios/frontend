@@ -1,13 +1,15 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
+import ValidationError from 'ilios/mixins/validation-error';
+import EmberValidations from 'ember-validations';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP } = Ember;
 const { notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
 
-export default Component.extend({
+export default Component.extend(EmberValidations, ValidationError, {
   init() {
     this._super(...arguments);
 
@@ -45,6 +47,12 @@ export default Component.extend({
   instructors: null,
   instructorGroups: null,
   learnerGroups: null,
+
+  validations: {
+    room : {
+      length: {maximum: 60, allowBlank: true}
+    }
+  },
 
   availableLearnerGroups: computed('cohorts.[]', function() {
     let cohortProxy = ObjectProxy.extend({
@@ -222,37 +230,39 @@ export default Component.extend({
     },
 
     create() {
+      this.validate().then(() => {
       const flashMessages = this.get('flashMessages');
-
-      if (!(this.datesValidated() && this.timesValidated())) {
-        flashMessages.alert('general.invalidDatetimes');
-        return;
-      }
-
-      let datesHash = this.calculateDateTimes();
-      let learnerGroups = this.getAllLearnerGroups();
-      let params = {
-        startDate: datesHash.startDate.toDate(),
-        endDate: datesHash.endDate.toDate(),
-        learnerGroups
-      };
-
-      if (this.get('smallGroupMode')) {
-        if (isEmpty(learnerGroups)) {
-          this.get('flashMessages').alert('offerings.smallGroupMessage');
+        if (!(this.datesValidated() && this.timesValidated())) {
+          flashMessages.alert('general.invalidDatetimes');
           return;
         }
+        let datesHash = this.calculateDateTimes();
+        let learnerGroups = this.getAllLearnerGroups();
+        let params = {
+          startDate: datesHash.startDate.toDate(),
+          endDate: datesHash.endDate.toDate(),
+          learnerGroups
+        };
 
-        this.sendAction('addMultipleOfferings', params);
-      } else {
-        params.room = this.get('room') || 'TBD';
-        params.instructors = this.get('instructors');
-        params.instructorGroups = this.get('instructorGroups');
+        if (this.get('smallGroupMode')) {
+          if (isEmpty(learnerGroups)) {
+            this.get('flashMessages').alert('offerings.smallGroupMessage');
+            return;
+          }
 
-        this.sendAction('addSingleOffering', params);
-      }
+          this.sendAction('addMultipleOfferings', params);
+        } else {
+          params.room = this.get('room') || 'TBD';
+          params.instructors = this.get('instructors');
+          params.instructorGroups = this.get('instructorGroups');
 
-      this.send('cancel');
+          this.sendAction('addSingleOffering', params);
+        }
+
+        this.send('cancel');
+      }).catch(() => {
+        // @todo flash validation error.[ST 2016/02/09]
+      });
     },
 
     cancel() {
