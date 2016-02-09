@@ -261,10 +261,10 @@ export default Component.extend(EmberValidations, ValidationError, {
 
         this.send('cancel');
       }).catch(() => {
-        const roomTooLongMsg = this.get('errors.room');
-        if (roomTooLongMsg) {
-          this.get('flashMessages').alert(roomTooLongMsg);
-        }
+        const keys = Ember.keys(this.get('errors'));
+        keys.forEach((key) => {
+          this.get('flashMessages').alert(this.get('errors.' + key));
+        });
       });
     },
 
