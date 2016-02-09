@@ -65,7 +65,7 @@ export default Component.extend({
     this.set('debouncedFilter', this.get('filter'));
   },
 
-  proxiedSessions: computed('sessions.[]', function() {
+  proxiedSessions: computed('sessions.@each.firstOfferingDate', function() {
     let course = this.get('course.id');
     if(isEmpty(course)){
       return [];
