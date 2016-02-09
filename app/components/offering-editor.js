@@ -231,7 +231,7 @@ export default Component.extend(EmberValidations, ValidationError, {
 
     create() {
       this.validate().then(() => {
-      const flashMessages = this.get('flashMessages');
+        const flashMessages = this.get('flashMessages');
         if (!(this.datesValidated() && this.timesValidated())) {
           flashMessages.alert('general.invalidDatetimes');
           return;
