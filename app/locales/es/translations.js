@@ -307,7 +307,7 @@ export default {
     'smallGroups': 'Grupos Pequeños',
     'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba.",
     'errors' : {
-      'roomTooLong': "Location name is too long (maximum is 60 characters)"
+      'roomTooLong': "El nombre de la ubicación es demasiado largo (el máximo es 60 caracteres)"
     }
   },
   'learningMaterials': {
