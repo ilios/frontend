@@ -30,6 +30,7 @@ export default Component.extend(EmberValidations, ValidationError, {
   availableInstructorGroups: alias('offering.session.course.school.instructorGroups'),
   showRemoveConfirmation: false,
   buffer: null,
+  room: alias('buffer.room'),
   allInstructors: computed('instructors.[]', 'instructorGroups.@each.users.[]', function(){
     var self = this;
     var defer = Ember.RSVP.defer();
@@ -53,7 +54,7 @@ export default Component.extend(EmberValidations, ValidationError, {
   changeFlag: false,
 
   validations: {
-    'buffer.room' : {
+    'room' : {
       length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }}
     }
   },
@@ -273,10 +274,11 @@ export default Component.extend(EmberValidations, ValidationError, {
           this.get('flashMessages').alert('general.invalidDatetimes');
         }
       }).catch(() => {
-        const roomTooLongMsg = this.get('errors.buffer.room');
-        if (roomTooLongMsg) {
-          this.get('flashMessages').alert(roomTooLongMsg);
-        }
+        const keys = Ember.keys(this.get('errors'));
+        keys.forEach((key) => {
+          console.log(key);
+          this.get('flashMessages').alert(this.get('errors.' + key));
+        });
       });
 
     },

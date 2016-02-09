@@ -307,7 +307,7 @@ export default {
     'smallGroups': 'Small Groups',
     'smallGroupMessage': "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above.",
     'errors' : {
-      'roomTooLong': "Room is too long (maximum is 60 characters)"
+      'roomTooLong': "Location name is too long (maximum is 60 characters)"
     }
   },
   'learningMaterials': {
