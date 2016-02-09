@@ -305,7 +305,16 @@ export default {
     'confirmRemove': 'Are you sure you want to delete this offering with {{learnerGroupCount}} learner groups? This action cannot be undone.',
     'offering': 'Offering',
     'smallGroups': 'Small Groups',
-    'smallGroupMessage': "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above."
+    'smallGroupMessage': "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above.",
+    'makeRecurring': 'Make Recurring',
+    'numberOfWeeks': 'Number of weeks (positive integers only)',
+    'sunday': 'Sunday',
+    'monday': 'Monday',
+    'tuesday': 'Tuesday',
+    'wednesday': 'Wednesday',
+    'thursday': 'Thursday',
+    'friday': 'Friday',
+    'saturday': 'Saturday'
   },
   'learningMaterials': {
     'displayName': 'Display Name',

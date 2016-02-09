@@ -1,13 +1,15 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
+import ValidationError from 'ilios/mixins/validation-error';
+import EmberValidations from 'ember-validations';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP } = Ember;
-const { notEmpty } = computed;
+const { alias, notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
 
-export default Component.extend({
+export default Component.extend(EmberValidations, ValidationError, {
   init() {
     this._super(...arguments);
 
@@ -21,6 +23,15 @@ export default Component.extend({
 
     const cohorts = this.get('cohorts');
     const learnerGroups = {};
+    const recurringDays = {
+      sunday: false,
+      monday: false,
+      tuesday: false,
+      wednesday: false,
+      thursday: false,
+      friday: false,
+      saturday: false
+    };
 
     if (cohorts && isPresent(cohorts)) {
       cohorts.forEach((cohort) => {
@@ -28,7 +39,7 @@ export default Component.extend({
       });
     }
 
-    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime });
+    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime, recurringDays });
   },
 
   classNames: ['offering-editor'],
@@ -45,6 +56,10 @@ export default Component.extend({
   instructors: null,
   instructorGroups: null,
   learnerGroups: null,
+
+  makeRecurring: false,
+  recurringDays: null,
+  numberOfWeeks: null,
 
   availableLearnerGroups: computed('cohorts.[]', function() {
     let cohortProxy = ObjectProxy.extend({
@@ -146,12 +161,37 @@ export default Component.extend({
   getAllLearnerGroups() {
     const groupHash = this.get('learnerGroups');
     const output = [];
-    
+
     for (let key in groupHash) {
       output.pushObjects(groupHash[key]);
     }
 
     return output;
+  },
+
+  filterRecurringDays() {
+    const recurringDaysArray = [];
+    const recurringDays = this.get('recurringDays');
+    const daysOfWeek = {
+      sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6
+    }
+
+    for (let key in recurringDays) {
+      if (recurringDays[key]) {
+        recurringDaysArray.push(daysOfWeek[key]);
+      }
+    }
+
+    return recurringDaysArray;
+  },
+
+  validationBuffer: alias('numberOfWeeks'),
+  validations: {
+    'validationBuffer': {
+      presence: true,
+      numericality: true,
+      numericality: { greaterThan: 0, onlyInteger: true }
+    }
   },
 
   actions: {
@@ -222,42 +262,68 @@ export default Component.extend({
     },
 
     create() {
-      const flashMessages = this.get('flashMessages');
+      this.validate()
+        .then(() => {
+          const flashMessages = this.get('flashMessages');
 
-      if (!(this.datesValidated() && this.timesValidated())) {
-        flashMessages.alert('general.invalidDatetimes');
-        return;
-      }
+          if (!(this.datesValidated() && this.timesValidated())) {
+            flashMessages.alert('general.invalidDatetimes');
+            return;
+          }
 
-      let datesHash = this.calculateDateTimes();
-      let learnerGroups = this.getAllLearnerGroups();
-      let params = {
-        startDate: datesHash.startDate.toDate(),
-        endDate: datesHash.endDate.toDate(),
-        learnerGroups
-      };
+          let datesHash = this.calculateDateTimes();
+          let learnerGroups = this.getAllLearnerGroups();
+          let recurringOptions = {
+            days: this.filterRecurringDays(),
+            numberOfWeeks: this.get('numberOfWeeks')
+          };
+          let params = {
+            startDate: datesHash.startDate.toDate(),
+            endDate: datesHash.endDate.toDate(),
+            learnerGroups, recurringOptions
+          };
 
-      if (this.get('smallGroupMode')) {
-        if (isEmpty(learnerGroups)) {
-          this.get('flashMessages').alert('offerings.smallGroupMessage');
+          if (this.get('smallGroupMode')) {
+            if (isEmpty(learnerGroups)) {
+              this.get('flashMessages').alert('offerings.smallGroupMessage');
+              return;
+            }
+
+            if (this.get('makeRecurring')) {
+              this.sendAction('addMultipleOfferingsRecurring', params);
+            } else {
+              this.sendAction('addMultipleOfferings', params);
+            }
+          } else {
+            params.room = this.get('room') || 'TBD';
+            params.instructors = this.get('instructors');
+            params.instructorGroups = this.get('instructorGroups');
+
+            if (this.get('makeRecurring')) {
+              this.sendAction('addSingleOfferingRecurring', params);
+            } else {
+              this.sendAction('addSingleOffering', params);
+            }
+          }
+
+          this.send('cancel');
+        })
+        .catch(() => {
           return;
-        }
-
-        this.sendAction('addMultipleOfferings', params);
-      } else {
-        params.room = this.get('room') || 'TBD';
-        params.instructors = this.get('instructors');
-        params.instructorGroups = this.get('instructorGroups');
-
-        this.sendAction('addSingleOffering', params);
-      }
-
-      this.send('cancel');
+        });
     },
 
     cancel() {
       this.get('flashMessages').clearMessages();
       this.sendAction('closeEditor');
+    },
+
+    toggleMakeRecurring() {
+      this.set('makeRecurring', !this.get('makeRecurring'))
+    },
+
+    changeValue(value) {
+      this.set('numberOfWeeks', parseInt(value));
     }
   }
 });
