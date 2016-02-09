@@ -25,7 +25,7 @@ var Session = DS.Model.extend(PublishableModel, {
   isIndependentLearning: notEmpty('ilmSession.content'),
   offeringLearnerGroupsLength: mapBy('offerings', 'learnerGroups.length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
-  sortedOfferingsByDate: computed('offerings.[]', {
+  sortedOfferingsByDate: computed('offerings.@each.startDate', {
     get() {
       let defer = RSVP.defer();
       this.get('offerings').then(offerings => {
@@ -37,7 +37,7 @@ var Session = DS.Model.extend(PublishableModel, {
           }
           return aDate > bDate ? 1 : -1;
         });
-        
+
         defer.resolve(sortedOfferingsByDate);
       });
 
@@ -46,7 +46,7 @@ var Session = DS.Model.extend(PublishableModel, {
       });
     }
   }).readOnly(),
-  firstOfferingDate: computed('sortedOfferingsByDate.[]', 'ilmSession.dueDate', function(){
+  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
     var deferred = Ember.RSVP.defer();
     this.get('ilmSession').then(ilmSession => {
       if(ilmSession){

@@ -7,6 +7,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
@@ -14,7 +15,7 @@ var url = '/courses/1';
 module('Acceptance: Course - Session List' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
+    setupAuthentication(application, {id: 4136, directedCourses: [1]});
     server.create('school');
     fixtures.sessionTypes = server.createList('sessionType', 1, {
       sessions: [1,2,3,4]
@@ -188,6 +189,39 @@ test('new session goes away when we navigate #643', function(assert) {
     andThen(function(){
       assert.equal(currentPath(), 'course.index');
       assert.equal(find('.saved-result').length, 0);
+    });
+  });
+
+});
+
+test('first offering is updated when offering is updated #1276', function(assert) {
+  visit(url);
+  const newStartDate = new Date(2010, 6, 4);
+  andThen(function() {
+    let container = find('.sessions-list');
+    assert.equal(getElementText(find('tr:eq(1) td:eq(3)', container), getText), getText(moment(fixtures.offerings[0].startDate).format('MM/DD/YYYY h:mma')));
+
+    return click('tr:eq(1) .edit', container).then(()=> {
+      assert.equal(currentPath(), 'course.session.index');
+      let offerings = find('.offering-block-time-offering');
+      assert.equal(offerings.length, 3);
+      let offering = find('.offering-block-time-offering').eq(0);
+      return click('.offering-block-time-offering-actions .edit', offering).then(function(){
+        let container = find('.offering-manager');
+        const startDateInput = '.startdate input';
+        const doneButton = '.done';
+        let startDateInteractor = openDatepicker(find(startDateInput, container));
+        startDateInteractor.selectDate(newStartDate);
+        return click(doneButton).then(() => {
+          return click('#session-details .backtolink a');
+        });
+      });
+
+    });
+    andThen(function(){
+      let container = find('.sessions-list');
+      assert.equal(currentPath(), 'course.index');
+      assert.equal(getElementText(find('tr:eq(1) td:eq(3)', container), getText), getText(moment(newStartDate).format('MM/DD/YYYY h:mma')));
     });
   });
 
