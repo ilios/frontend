@@ -54,7 +54,7 @@ export default Component.extend(EmberValidations, ValidationError, {
 
   validations: {
     'buffer.room' : {
-      length: {maximum: 60, allowBlank: true}
+      length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }}
     }
   },
 
@@ -273,7 +273,10 @@ export default Component.extend(EmberValidations, ValidationError, {
           this.get('flashMessages').alert('general.invalidDatetimes');
         }
       }).catch(() => {
-        // @todo flash validation error.[ST 2016/02/09]
+        const roomTooLongMsg = this.get('errors.buffer.room');
+        if (roomTooLongMsg) {
+          this.get('flashMessages').alert(roomTooLongMsg);
+        }
       });
 
     },

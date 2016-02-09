@@ -50,7 +50,7 @@ export default Component.extend(EmberValidations, ValidationError, {
 
   validations: {
     room : {
-      length: {maximum: 60, allowBlank: true}
+      length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }}
     }
   },
 
@@ -261,7 +261,10 @@ export default Component.extend(EmberValidations, ValidationError, {
 
         this.send('cancel');
       }).catch(() => {
-        // @todo flash validation error.[ST 2016/02/09]
+        const roomTooLongMsg = this.get('errors.room');
+        if (roomTooLongMsg) {
+          this.get('flashMessages').alert(roomTooLongMsg);
+        }
       });
     },
 

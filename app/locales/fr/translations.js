@@ -306,6 +306,9 @@ export default {
     'offering': "Offre",
     'smallGroups': "Groupes Particulaires",
     'smallGroupMessage': "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de 'small groups'. Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton 'offre' au-dessus.",
+    'errors' : {
+      'roomTooLong': "Room is too long (maximum is 60 characters)"
+    }
   },
   'learningMaterials': {
     'displayName': "Nom d’Affichage",

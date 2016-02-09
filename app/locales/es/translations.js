@@ -305,7 +305,10 @@ export default {
     'confirmRemove': '¿Estás seguro que quieres borrar este ofrecimiento con {{learnerGroupCount}} grupos de aprendedores? Esta acción no se puede deshacer.',
     'offering': 'Ofrecimiento',
     'smallGroups': 'Grupos Pequeños',
-    'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba."
+    'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba.",
+    'errors' : {
+      'roomTooLong': "Room is too long (maximum is 60 characters)"
+    }
   },
   'learningMaterials': {
     'displayName': 'Nombre de Mostrar',
