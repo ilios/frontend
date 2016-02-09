@@ -31,6 +31,12 @@ export default Component.extend({
   newObjectiveTitle: null,
   editorParams: config.froalaEditorDefaults,
 
+  showCollapsible: computed('isManaging', 'objectives', function(){
+    const isManaging = this.get('isManaging');
+    const objectives = this.get('objectives');
+    return objectives.get('length') && ! isManaging;
+  }),
+
   objectiveParentTitle: computed('isCourse', 'isSession', 'isProgramYear', {
     get() {
       const i18n = this.get('i18n');

@@ -1,25 +1,27 @@
-<section class='detail-block {{if objectives.length "collapsible"}}'>
-  <div class='detail-title {{if objectives.length "clickable"}}' {{action 'collapse'}}>
-    {{#unless isManaging}}
+<section class='detail-block {{if showCollapsible "collapsible"}}'>
+  {{#if isManaging}}
+      <div class='detail-title'>
+          {{#if isManagingParents}}
+              <span class='detail-specific-title'>
+                  {{objectiveParentTitle}}
+              </span>
+          {{/if}}
+          {{#if isManagingDescriptors}}
+              <span class='detail-specific-title'>
+                  {{t 'courses.objectiveDescriptorTitle'}}
+              </span>
+          {{/if}}
+          {{#if isManagingCompetency}}
+              <span class='detail-specific-title'>
+                  {{t 'programs.objectiveCompetencyManagerTitle'}}
+              </span>
+          {{/if}}
+      </div>
+  {{else}}
+    <div class='detail-title {{if objectives.length "clickable"}}' {{action 'collapse'}}>
       {{t 'general.objectives'}} ({{subject.objectives.length}})
-    {{/unless}}
-    {{#if isManagingParents}}
-      <span class='detail-specific-title'>
-        {{objectiveParentTitle}}
-      </span>
-    {{/if}}
-    {{#if isManagingDescriptors}}
-      <span class='detail-specific-title'>
-        {{t 'courses.objectiveDescriptorTitle'}}
-      </span>
-    {{/if}}
-    {{#if isManagingCompetency}}
-      <span class='detail-specific-title'>
-        {{t 'programs.objectiveCompetencyManagerTitle'}}
-      </span>
-    {{/if}}
-  </div>
-
+    </div>
+  {{/if}}
   <div class='detail-actions'>
     {{#liquid-if isManaging class='horizontal'}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
