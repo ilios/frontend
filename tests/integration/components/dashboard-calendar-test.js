@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
-import tHelper from "ember-i18n/helper";
+import initializer from "ilios/instance-initializers/ember-i18n";
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
@@ -18,11 +18,12 @@ let userEventsMock = Ember.Service.extend({
 
 moduleForComponent('dashboard-calendar', 'Integration | Component | dashboard calendar' + testgroup, {
   integration: true,
+  setup(){
+    initializer.initialize(this);
+  },
   beforeEach: function() {
-    this.container.register('service:mockuserevents', userEventsMock);
-    this.container.injection('component', 'userEvents', 'service:mockuserevents');
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    this.register('service:user-events', userEventsMock);
+    this.inject.service('user-events', { as: 'userEvents' });
   }
 });
 

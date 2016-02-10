@@ -17,7 +17,7 @@ module('Acceptance: Session - Offerings' + testgroup, {
   beforeEach: function() {
     application = startApp();
     fixtures.users =  [];
-    
+
     fixtures.users.pushObject(setupAuthentication(application, {id: 4136, directedCourses: [1]}));
     server.create('school', {
       courses: [1],
@@ -244,6 +244,7 @@ test('remove offering', function(assert) {
   assert.expect(2);
   visit(url);
   andThen(function() {
+
     let offerings = find('.offering-block-time-offering');
     assert.equal(offerings.length, 3);
     let offering = find('.offering-block-time-offering').eq(0);
@@ -468,7 +469,7 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
   click(searchBoxOption);
   click(createButton);
   andThen(() => {
-    
+
     assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
     assert.equal(find(multiDayStarts).text().trim(), 'Starts Wednesday October 5th @ 11:45 AM', 'multi-day statement is correct');
     assert.equal(find(multiDayEnds).text().trim(), 'Ends Sunday December 25th @ 7:30 PM', 'multi-day statement is correct');

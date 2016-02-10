@@ -252,7 +252,7 @@ export default function() {
 
   this.post('/api/sessionlearningmaterials', function(db, request) {
     let attrs = JSON.parse(request.requestBody);
-    let record = db.sessionLearningMaterial.insert(attrs);
+    let record = db.sessionLearningMaterials.insert(attrs);
     let lm = db.learningMaterials.find(record.learningMaterial);
 
     if(lm){

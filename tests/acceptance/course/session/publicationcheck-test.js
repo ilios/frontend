@@ -119,7 +119,7 @@ test('check remove ilm', function(assert) {
     var container = find('.session-overview');
     assert.equal(find('.sessionilmhours', container).length, 1);
     assert.equal(find('.sessionilmduedate', container).length, 1);
-    var dueDate = moment.utc(ilmSession.dueDate).format('MM/DD/YY');
+    var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
     assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
     click(find('.independentlearningcontrol input', container));
@@ -190,7 +190,7 @@ test('change ilm due date', function(assert) {
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     var container = find('.session-overview .sessionilmduedate');
-    var dueDate = moment.utc(ilmSession.dueDate).format('MM/DD/YY');
+    var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.editable', container)), dueDate);
     click(find('.editable', container));
     andThen(function(){

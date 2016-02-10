@@ -15,7 +15,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         model.schools = schools;
         this.get('store').findAll('academic-year').then(years => {
           model.years = years.toArray();
-          
+
           defer.resolve(model);
         });
       });
@@ -28,7 +28,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this.controllerFor('application').set('pageTitleTranslation', 'navigation.courses');
   },
   queryParams: {
-    filter: {
+    titleFilter: {
       replace: true
     }
   }

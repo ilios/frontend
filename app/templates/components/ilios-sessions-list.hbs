@@ -2,7 +2,7 @@
   <div class='sessions detail-title'>
     {{t 'general.sessions'}} ({{sessionsCount}})
   </div>
-  {{#if filteredContent.isFulfilled}}
+  {{#if proxiedSessions.isFulfilled}}
     <div class="filter-tools">
       <div id='titlefilter' class="filter">
         {{input type='text' value=filter placeholder=placeholderValue}}

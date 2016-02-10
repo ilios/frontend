@@ -51,11 +51,11 @@ test('check fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var container = find('.course-overview');
-    var startDate = moment(course.startDate).format('MM/DD/YY');
+    var startDate = moment.utc(course.startDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.coursestartdate', container)), startDate);
     assert.equal(getElementText(find('.courseexternalid', container)), 123);
     assert.equal(getElementText(find('.courselevel', container)), 3);
-    var endDate = moment(course.endDate).format('MM/DD/YY');
+    var endDate = moment.utc(course.endDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.courseenddate', container)), endDate);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText(clerkshipType.title));
     assert.equal(getElementText(find('.coursedirectors li', container)), getText('A M. Director'));
@@ -81,11 +81,11 @@ test('check detail fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var container = find('.course-overview');
-    var startDate = moment(course.startDate).format('MM/DD/YY');
+    var startDate = moment.utc(course.startDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.coursestartdate .editable', container)), startDate);
     assert.equal(getElementText(find('.courseexternalid .editable', container)), 123);
     assert.equal(getElementText(find('.courselevel .editable', container)), 3);
-    var endDate = moment(course.endDate).format('MM/DD/YY');
+    var endDate = moment.utc(course.endDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.courseenddate .editable', container)), endDate);
     assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(clerkshipType.title));
   });
@@ -219,7 +219,7 @@ test('change start date', function(assert) {
     year: 2013,
     school: 1,
   });
-  var startDate = moment(course.startDate).format('MM/DD/YY');
+  var startDate = moment.utc(course.startDate).format('MM/DD/YY');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.course-overview .coursestartdate')), startDate);
@@ -253,7 +253,7 @@ test('change end date', function(assert) {
     year: 2013,
     school: 1,
   });
-  var endDate = moment(course.endDate).format('MM/DD/YY');
+  var endDate = moment.utc(course.endDate).format('MM/DD/YY');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.course-overview .courseenddate')), endDate);

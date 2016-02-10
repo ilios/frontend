@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { singularize, pluralize } from 'ember-inflector';
 
-const { inject, Service, RSVP, computed } = Ember;
+const { inject, Service, RSVP, computed, isEmpty } = Ember;
 const { PromiseArray } = DS;
 const { service } = inject;
 
@@ -12,9 +12,13 @@ export default Service.extend({
   reportsList: computed('currentUser.model.reports.[]', function(){
     let defer = RSVP.defer();
     this.get('currentUser').get('model').then( user => {
-      user.get('reports').then( reports => {
-        defer.resolve(reports);
-      });
+      if(isEmpty(user)){
+        defer.resolve([]);
+      } else {
+        user.get('reports').then( reports => {
+          defer.resolve(reports);
+        });
+      }
     });
     return PromiseArray.create({
       promise: defer.promise

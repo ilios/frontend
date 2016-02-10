@@ -12,5 +12,3 @@ import './helpers/flash-message';
 import './helpers/custom-helpers';
 
 setResolver(resolver);
-
-Ember.Inflector.inflector.uncountable('aamc-pcrs');
