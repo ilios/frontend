@@ -321,7 +321,7 @@ export default {
     'wednesday': 'Miércoles',
     'thursday': 'Jueves',
     'friday': 'Viernes',
-    'saturday': 'Sábado'
+    'saturday': 'Sábado',
   },
   'learningMaterials': {
     'displayName': 'Nombre de Mostrar',

@@ -321,7 +321,7 @@ export default {
     'wednesday': 'Wednesday',
     'thursday': 'Thursday',
     'friday': 'Friday',
-    'saturday': 'Saturday'
+    'saturday': 'Saturday',
   },
   'learningMaterials': {
     'displayName': 'Display Name',

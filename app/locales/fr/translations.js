@@ -321,7 +321,7 @@ export default {
     'wednesday': 'Mercredi',
     'thursday': 'Jeudi',
     'friday': 'Vendredi',
-    'saturday': 'Samedi'
+    'saturday': 'Samedi',
   },
   'learningMaterials': {
     'displayName': "Nom d’Affichage",
