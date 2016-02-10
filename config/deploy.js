@@ -6,18 +6,14 @@ module.exports = function(deployTarget) {
     exclude: ['.DS_Store', '*-test.js']
     // include other plugin configuration that applies to all deploy targets here
   };
-  
+
   ENV.s3 = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     acl: 'public-read',
     region: 'us-west-2',
     bucket: 'ilios-frontend-assets'
   };
-  
+
   ENV['s3-index'] = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'us-west-2'
   };
 
