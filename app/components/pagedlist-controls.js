@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   offset: null,
   limit: null,
   total: null,
+  limitless: false,
   start: computed('offset', function(){
     return parseInt(this.get('offset')) + 1;
   }),
@@ -22,7 +23,7 @@ export default Ember.Component.extend({
     return end;
   }),
   offsetOptions: computed('total', function(){
-    const total = this.get('total');
+    const total = this.get('limitless')?1000:this.get('total');
     const available = [10, 25, 50, 100, 200, 400, 1000];
     let options = available.filter(option => {
       return option < total;
@@ -31,7 +32,11 @@ export default Ember.Component.extend({
 
     return options;
   }),
-  lastPage: computed('total', 'limit', 'offset', function(){
+  lastPage: computed('total', 'limit', 'offset', 'limitless', function(){
+    if(this.get('limitless')) {
+      return false;
+    }
+
     const total = parseInt(this.get('total'));
     const limit = parseInt(this.get('limit'));
     const offset = parseInt(this.get('offset'));

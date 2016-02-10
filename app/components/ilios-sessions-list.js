@@ -43,7 +43,6 @@ export default Component.extend({
   currentUser: service(),
 
   editable: not('course.locked'),
-  forceFullSessionList: false,
   sessionsCount: alias('sessions.length'),
   sessions: alias('course.sessions'),
   offset: 0,
