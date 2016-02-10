@@ -28,7 +28,7 @@
     <p>
       {{t 'dashboard.associatedWith'}}
       <select onchange={{action "changePrepositionalObject" value="target.value"}}>
-        <option value=null selected={{is-equal null currentPrepositionalObject}}>
+        <option value='' selected={{is-equal null currentPrepositionalObject}}>
           {{t 'general.anything'}}
         </option>
         {{#each prepositionalObjectList as |option|}}
