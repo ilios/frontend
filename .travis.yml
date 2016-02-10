@@ -24,6 +24,7 @@ before_install:
   - if [ ! -d $PHANTOM_DIR ]; then mv phantomjs-2.0.0-macosx $PHANTOM_DIR; fi
   - export PATH=$PHANTOM_DIR/bin:$PATH
   - phantomjs -v
+  - npm set progress=false
   - npm config set spin false
   - npm install -g bower
   - travis_retry gem install scss-lint --no-ri --no-rdoc
