@@ -36,9 +36,9 @@ $offering-switch-blue: #009ccc;
 }
 
 .switch-label {
-  @include transition-property(opacity background);
-  @include transition-duration(.15s);
-  @include transition-timing-function(ease-out);
+  //@include transition-property(opacity background);
+  //@include transition-duration(.15s);
+  //@include transition-timing-function(ease-out);
   background: $switch-label-blue;
   border-radius: inherit;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12), inset 0 0 2px rgba(0, 0, 0, .15);
@@ -52,7 +52,7 @@ $offering-switch-blue: #009ccc;
 
 .switch-label:before,
 .switch-label:after {
-  @include transition(inherit);
+  //@include transition(inherit);
   line-height: 1;
   margin-top: -.5em;
   position: absolute;
@@ -89,7 +89,7 @@ $offering-switch-blue: #009ccc;
 
 .switch-handle {
   @include background-image(linear-gradient(top , $white 40%, $toggle-background-grey));
-  @include transition(left .15s ease-out);
+  //@include transition(left .15s ease-out);
   background: $white;
   border-radius: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, .2);
