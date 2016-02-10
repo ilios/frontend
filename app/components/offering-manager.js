@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
+import ValidationError from 'ilios/mixins/validation-error';
+import EmberValidations from 'ember-validations';
 
 const { Component, computed, copy, inject, isEmpty, ObjectProxy, RSVP } = Ember;
 const { alias, notEmpty, sort } = computed;
@@ -8,7 +10,8 @@ const { all, Promise } = RSVP;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 
-export default Component.extend({
+
+export default Component.extend(EmberValidations, ValidationError, {
   init() {
     this._super(...arguments);
 
@@ -27,6 +30,7 @@ export default Component.extend({
   availableInstructorGroups: alias('offering.session.course.school.instructorGroups'),
   showRemoveConfirmation: false,
   buffer: null,
+  room: alias('buffer.room'),
   allInstructors: computed('instructors.[]', 'instructorGroups.@each.users.[]', function(){
     var self = this;
     var defer = Ember.RSVP.defer();
@@ -48,6 +52,12 @@ export default Component.extend({
   learnerGroups: null,
 
   changeFlag: false,
+
+  validations: {
+    'room' : {
+      length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }}
+    }
+  },
 
   filteredCohorts: computed('cohorts.[]', 'filter', 'changeFlag', function(){
     let cohortProxy = ObjectProxy.extend({
@@ -205,63 +215,72 @@ export default Component.extend({
 
   actions: {
     save() {
-      if (this.datesValidated() && this.timesValidated()) {
-        let combinedGroups = this.getAllLearnerGroups();
+      this.validate().then(() => {
+        if (this.datesValidated() && this.timesValidated()) {
+          let combinedGroups = this.getAllLearnerGroups();
 
-        var offering = this.get('offering');
-        let promises = [];
-        promises.push(offering.get('instructorGroups').then(instructorGroups => {
-          let removableInstructorGroups = instructorGroups.filter(group => !this.get('buffer.instructorGroups').contains(group));
-          instructorGroups.clear();
-          removableInstructorGroups.forEach(group => {
-            group.get('offerings').removeObject(offering);
-          });
-          this.get('buffer.instructorGroups').forEach(group => {
-            group.get('offerings').pushObject(offering);
-            instructorGroups.pushObject(group);
-          });
-        }));
-        promises.push(offering.get('instructors').then(instructors => {
-          let removableInstructors = instructors.filter(user => !this.get('buffer.instructors').contains(user));
-          instructors.clear();
-          removableInstructors.forEach(user => {
-            user.get('offerings').removeObject(offering);
-          });
-          this.get('buffer.instructors').forEach(user => {
-            user.get('instructedOfferings').pushObject(offering);
-            instructors.pushObject(user);
-          });
-        }));
-        promises.push(offering.get('learnerGroups').then(learnerGroups => {
-          let removeableLearnerGroups = learnerGroups.filter(group => !combinedGroups.contains(group));
-          learnerGroups.clear();
-          removeableLearnerGroups.forEach(group => {
-            group.get('offerings').removeObject(offering);
-          });
-          combinedGroups.forEach(group => {
-            group.get('offerings').pushObject(offering);
-            learnerGroups.pushObject(group);
-          });
-        }));
+          var offering = this.get('offering');
+          let promises = [];
+          promises.push(offering.get('instructorGroups').then(instructorGroups => {
+            let removableInstructorGroups = instructorGroups.filter(group => !this.get('buffer.instructorGroups').contains(group));
+            instructorGroups.clear();
+            removableInstructorGroups.forEach(group => {
+              group.get('offerings').removeObject(offering);
+            });
+            this.get('buffer.instructorGroups').forEach(group => {
+              group.get('offerings').pushObject(offering);
+              instructorGroups.pushObject(group);
+            });
+          }));
+          promises.push(offering.get('instructors').then(instructors => {
+            let removableInstructors = instructors.filter(user => !this.get('buffer.instructors').contains(user));
+            instructors.clear();
+            removableInstructors.forEach(user => {
+              user.get('offerings').removeObject(offering);
+            });
+            this.get('buffer.instructors').forEach(user => {
+              user.get('instructedOfferings').pushObject(offering);
+              instructors.pushObject(user);
+            });
+          }));
+          promises.push(offering.get('learnerGroups').then(learnerGroups => {
+            let removeableLearnerGroups = learnerGroups.filter(group => !combinedGroups.contains(group));
+            learnerGroups.clear();
+            removeableLearnerGroups.forEach(group => {
+              group.get('offerings').removeObject(offering);
+            });
+            combinedGroups.forEach(group => {
+              group.get('offerings').pushObject(offering);
+              learnerGroups.pushObject(group);
+            });
+          }));
 
-        let datesHash = this.calculateDateTimes();
+          let datesHash = this.calculateDateTimes();
 
-        const room = this.get('buffer.room') || 'TBD';
-        const startDate = datesHash.startDate.toDate();
-        const endDate = datesHash.endDate.toDate();
+          const room = this.get('buffer.room') || 'TBD';
+          const startDate = datesHash.startDate.toDate();
+          const endDate = datesHash.endDate.toDate();
 
-        offering.setProperties({ room, startDate, endDate });
+          offering.setProperties({ room, startDate, endDate });
 
-        promises.pushObject(offering.save());
-        Ember.RSVP.all(promises).then(() => {
-          if(!this.get('isDestroyed')){
-            this.sendAction('save', offering);
-            this.send('cancel');
-          }
+          promises.pushObject(offering.save());
+          Ember.RSVP.all(promises).then(() => {
+            if(!this.get('isDestroyed')){
+              this.sendAction('save', offering);
+              this.send('cancel');
+            }
+          });
+        } else {
+          this.get('flashMessages').alert('general.invalidDatetimes');
+        }
+      }).catch(() => {
+        const keys = Ember.keys(this.get('errors'));
+        keys.forEach((key) => {
+          console.log(key);
+          this.get('flashMessages').alert(this.get('errors.' + key));
         });
-      } else {
-        this.get('flashMessages').alert('general.invalidDatetimes');
-      }
+      });
+
     },
     edit() {
       let offering = this.get('offering');
