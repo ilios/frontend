@@ -413,6 +413,8 @@ export default {
     'excludeFromSync': 'Exclude From Sync',
     'new': 'New User',
     'saved': 'New User Saved Successfully',
+    'username': 'Username',
+    'password': 'Password',
   },
   'language': {
     'select': {

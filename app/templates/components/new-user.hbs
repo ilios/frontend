@@ -94,6 +94,32 @@
         <span class="validation-error-message">{{errors.phone}}</span>
       {{/if}}
     </div>
+    <label class="form-label">{{t "user.username"}}:</label>
+    <div class="form-data">
+      {{one-way-input
+        value=username
+        update=(action (mut username))
+        onenter=(action "save")
+        onescape=(action this.attrs.close)
+        focusOut=(action 'addErrorDisplayFor' 'username')
+      }}
+      {{#if (and errors.username (is-in showErrorsFor 'username'))}}
+        <span class="validation-error-message">{{errors.username}}</span>
+      {{/if}}
+    </div>
+    <label class="form-label">{{t "user.password"}}:</label>
+    <div class="form-data">
+      {{one-way-input
+        value=password
+        update=(action (mut password))
+        onenter=(action "save")
+        onescape=(action this.attrs.close)
+        focusOut=(action 'addErrorDisplayFor' 'password')
+      }}
+      {{#if (and errors.password (is-in showErrorsFor 'password'))}}
+        <span class="validation-error-message">{{errors.password}}</span>
+      {{/if}}
+    </div>
     <label class="form-label">{{t "general.primarySchool"}}:</label>
     <div class="form-data form-data-select">
       <select onchange={{action "setSchool" value="target.value"}}>

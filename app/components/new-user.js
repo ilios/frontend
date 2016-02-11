@@ -16,14 +16,6 @@ export default Ember.Component.extend(EmberValidations, {
 
   init(){
     this._super(...arguments);
-
-    //for testing
-    this.set('firstName', 'Jon');
-    this.set('lastName', 'Johnson');
-    this.set('campusId', '1234');
-    this.set('email', 'j@example.com');
-
-
     this.set('showErrorsFor', []);
   },
 
@@ -33,6 +25,8 @@ export default Ember.Component.extend(EmberValidations, {
   campusId: null,
   otherId: null,
   email: null,
+  username: null,
+  password: null,
   phone: null,
   schoolId: null,
 
@@ -54,6 +48,13 @@ export default Ember.Component.extend(EmberValidations, {
     'lastName': {
       presence: true,
       length: { maximum: 30 }
+    },
+    'username': {
+      presence: true,
+      length: { maximum: 100 }
+    },
+    'password': {
+      presence: true
     },
     'campusId': {
       length: { maximum: 16 }
@@ -105,7 +106,17 @@ export default Ember.Component.extend(EmberValidations, {
       }
       this.validate().then(()=>{
         this.set('isSaving', true);
-        const { firstName, middleName, lastName, campusId, otherId, email, phone } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone');
+        const {
+          firstName,
+          middleName,
+          lastName,
+          campusId,
+          otherId,
+          email,
+          phone,
+          username,
+          password
+        } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
         this.get('bestSelectedSchool').then(school => {
           let user = this.get('store').createRecord('user', {
             firstName,
@@ -116,14 +127,21 @@ export default Ember.Component.extend(EmberValidations, {
             school,
           });
           user.save().then(newUser => {
-            this.set('isSaving', false);
-            this.get('flashMessages').success('user.saved');
-            this.attrs.transitionToUser(newUser.get('id'));
+            let authentication = this.get('store').createRecord('authentication', {
+              user: newUser,
+              username,
+              password
+            });
+            authentication.save().then(()=>{
+              this.set('isSaving', false);
+              this.get('flashMessages').success('user.saved');
+              this.attrs.transitionToUser(newUser.get('id'));
+            });
           });
         });
 
       }).catch(() => {
-        this.set('showErrorsFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone']);
+        this.set('showErrorsFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
         return;
       });
 
