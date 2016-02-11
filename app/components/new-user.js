@@ -113,15 +113,15 @@ export default Ember.Component.extend(EmberValidations, {
             lastName,
             campusId,
             email,
-            primarySchool: school
+            school,
+          });
+          user.save().then(newUser => {
+            this.set('isSaving', false);
+            this.get('flashMessages').success('user.saved');
+            
           });
         });
 
-        user.save().then(newUser => {
-          this.set('isSaving', false);
-          this.get('flashMessages').success('user.saved');
-
-        });
       }).catch(() => {
         this.set('showErrorsFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone']);
         return;
