@@ -49,6 +49,9 @@ export default Controller.extend({
     },
     toggleNewUserForm(){
       this.set('showNewUserForm', !this.get('showNewUserForm'));
+    },
+    transitionToUser(userId){
+      this.transitionToRoute('user', userId);
     }
   }
 });

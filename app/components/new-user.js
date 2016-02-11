@@ -118,7 +118,7 @@ export default Ember.Component.extend(EmberValidations, {
           user.save().then(newUser => {
             this.set('isSaving', false);
             this.get('flashMessages').success('user.saved');
-            
+            this.attrs.transitionToUser(newUser.get('id'));
           });
         });
 
