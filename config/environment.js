@@ -72,11 +72,9 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-
+    //Hide a feature while it is in development
     IliosFeatures: {
-      // Turns the multi-editing feature of learner-groups on/off
-      // Applicable to `learnergroup-overview` component
-      learnerGroupMultiedit: true
+      allowAddNewUser: false
     }
   };
 
@@ -89,8 +87,7 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.redirectAfterShibLogin = false;
-    ENV.IliosFeatures.learnerGroupMultiedit = true;
-    
+    ENV.IliosFeatures.allowAddNewUser = true;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
   }
 
@@ -108,8 +105,7 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
-    ENV.IliosFeatures.learnerGroupMultiedit = true;
-
+    ENV.IliosFeatures.allowAddNewUser = true;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
   }
 
@@ -127,6 +123,7 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+    ENV.IliosFeatures.allowAddNewUser = true;
 
   }
 
@@ -137,6 +134,5 @@ module.exports = function(environment) {
   if (environment === 'staging') {
   }
 */
-
   return ENV;
 };

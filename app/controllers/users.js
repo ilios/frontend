@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import config from '../config/environment';
 import DS from 'ember-data';
 import { cleanQuery } from '../utils/query-utils';
 
 const { computed, Controller, inject, run } = Ember;
 const { service } = inject;
 const { debounce } = run;
+const { IliosFeatures: { allowAddNewUser } } = config;
 
 export default Controller.extend({
   store: service(),
@@ -17,6 +19,7 @@ export default Controller.extend({
   offset: 0,
   limit: 25,
   query: '',
+  allowAddNewUser: allowAddNewUser,
   showNewUserForm: false,
 
   delay: 500,
