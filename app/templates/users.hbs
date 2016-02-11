@@ -12,7 +12,17 @@
   <section class='resultslist'>
     <div class="resultslist-header">
       <h2 class="user-title">{{t 'general.users'}}</h2>
+      <div class='resultslist-actions'>
+        {{expand-collapse-button value=showNewUserForm  action="toggleNewUserForm"}}
+      </div>
     </div>
+      <section class='resultslist-new'>
+        {{#liquid-if showNewUserForm class='vertical'}}
+          {{new-user
+            close=(action (mut showNewUserForm false))
+          }}
+        {{/liquid-if}}
+      </section>
     {{#if users.isFulfilled}}
       {{pagedlist-controls
         offset=offset

@@ -399,7 +399,9 @@ export default {
   'user': {
     'firstName': 'First Name',
     'lastName': 'Last Name',
+    'middleName': 'Middle Name',
     'fullName': 'Full Name',
+    'otherId': 'Other ID',
     'manageUsers': 'Manage Users',
     'searchUsers': 'Search for users',
     'userRoles': 'User Roles',
@@ -408,7 +410,9 @@ export default {
     'developer': 'Developer',
     'formerStudent': 'Former Student',
     'disableUser': 'Disable User',
-    'excludeFromSync': 'Exclude From Sync'
+    'excludeFromSync': 'Exclude From Sync',
+    'new': 'New User',
+    'new': 'New User Saved Successfully',
   },
   'language': {
     'select': {
@@ -469,7 +473,8 @@ export default {
     'even': "must be even",
     'alphanumeric': "must be alphanumeric",
     'alphanumeric2': "must be alphanumeric ('-' and ':' allowed)",
-    'url': 'must be a valid url'
+    'url': 'must be a valid url',
+    'email': 'must be a valid email address',
   },
   'myreport': {
     'errors': {

@@ -25,6 +25,7 @@
     "codeclimate-test-reporter": "~0.1.1",
     "elemental-calendar": "0.0.8",
     "ember-ajax": "0.7.1",
+    "ember-browserify": "1.1.6",
     "ember-can": "0.7.0",
     "ember-cli": "^2.3.0-beta.2",
     "ember-cli-app-version": "^1.0.0",
@@ -89,7 +90,8 @@
     "liquid-tether": "0.1.9",
     "loader.js": "^4.0.0",
     "pluralize": "^1.2.1",
-    "ui-select": "firefly-ui/ui-select#v0.0.10"
+    "ui-select": "firefly-ui/ui-select#v0.0.10",
+    "validator": "^4.8.0"
   },
   "ember-addon": {
     "paths": [

@@ -11,11 +11,13 @@ export default Controller.extend({
   queryParams: {
     offset: 'offset',
     limit: 'limit',
-    query: 'filter'
+    query: 'filter',
+    showNewUserForm: 'addUser'
   },
   offset: 0,
   limit: 25,
   query: '',
+  showNewUserForm: false,
 
   delay: 500,
 
@@ -41,6 +43,9 @@ export default Controller.extend({
   actions: {
     changeQuery(value) {
       debounce(this, this._updateQuery, value, this.get('delay'));
+    },
+    toggleNewUserForm(){
+      this.set('showNewUserForm', !this.get('showNewUserForm'));
     }
   }
 });
