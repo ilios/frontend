@@ -11,5 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{new-user}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'New User');
 });

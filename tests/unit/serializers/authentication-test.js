@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('authentication', 'Unit | Serializer | authentication', {
   // Specify the other units that are required for this test.
-  needs: ['serializer:authentication']
+  needs: ['serializer:authentication', 'model:user']
 });
 
 // Replace this with your real tests.
