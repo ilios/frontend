@@ -69,7 +69,7 @@ test('check remove ilm', function(assert) {
     var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
     assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
-    click(find('.independentlearningcontrol input', container));
+    click(find('.independentlearningcontrol .switch-handle', container));
     andThen(function(){
       assert.equal(find('.sessionilmhours', container).length, 0);
       assert.equal(find('.sessionilmduedate', container).length, 0);
@@ -89,7 +89,7 @@ test('check add ilm', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
-    click(find('.independentlearningcontrol input', container));
+    click(find('.independentlearningcontrol .switch-handle', container));
     andThen(function(){
       assert.equal(find('.sessionilmhours', container).length, 1);
       assert.equal(find('.sessionilmduedate', container).length, 1);

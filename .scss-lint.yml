@@ -9,3 +9,5 @@ linters:
     max_depth: 4
   Comment:
     allowed: '^[/*]*'
+  QualifyingElement:
+    allow_element_with_attribute: true

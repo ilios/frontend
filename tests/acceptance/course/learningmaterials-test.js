@@ -427,8 +427,8 @@ test('edit learning material', function(assert) {
     andThen(function(){
       let container = $('.learningmaterial-manager');
       assert.ok(isEmpty(find(searchBox)), 'learner-gorup search box is hidden while in edit mode');
-      click(find('.required input', container));
-      click(find('.publicnotes input', container));
+      click(find('.required .switch-handle', container));
+      click(find('.publicnotes .switch-handle', container));
       click(find('.status .editable', container)).then(function(){
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
         click(find('.status .done', container));
@@ -468,8 +468,8 @@ test('cancel editing learning material', function(assert) {
     click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
-      click(find('.required input', container));
-      click(find('.publicnotes input', container));
+      click(find('.required .switch-handle', container));
+      click(find('.publicnotes .switch-handle', container));
       click(find('.status .editable', container)).then(function(){
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
         click(find('.status .done', container));
