@@ -124,6 +124,18 @@ export default function() {
   this.delete('/api/topics/:id', 'topic');
   this.post('/api/topics', 'topic');
 
+  this.get('/api/vocabularies', getAll);
+  this.get('/api/vocabularies/:id', 'vocabulary');
+  this.put('/api/vocabularies/:id', 'vocabulary');
+  this.delete('/api/vocabularies/:id', 'vocabulary');
+  this.post('/api/vocabularies', 'vocabulary');
+
+  this.get('/api/terms', getAll);
+  this.get('/api/terms/:id', 'term');
+  this.put('/api/terms/:id', 'term');
+  this.delete('/api/terms/:id', 'term');
+  this.post('/api/terms', 'term');
+
   this.get('/api/ilmsessions', getAll);
   this.get('/api/ilmsessions/:id', 'ilmSession');
   this.put('/api/ilmsessions/:id', 'ilmSession');
