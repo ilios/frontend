@@ -412,7 +412,7 @@ export default {
     'disableUser': 'Disable User',
     'excludeFromSync': 'Exclude From Sync',
     'new': 'New User',
-    'new': 'New User Saved Successfully',
+    'saved': 'New User Saved Successfully',
   },
   'language': {
     'select': {
