@@ -184,6 +184,9 @@ export default {
     'members': 'Members',
     'associatedCourses': 'Associated Courses',
     'backToInstructorGroups': 'Back to Instructor Groups List',
+    'errors' : {
+      'titleTooLong': "Instructor group title is too long (maximum is 60 characters)"
+    }
   },
   'learnerGroups': {
     'learnerGroupTitle': 'Learner Group Title',

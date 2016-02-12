@@ -184,6 +184,9 @@ export default {
     'members': 'Miembros',
     'associatedCourses': 'Cursos Asociados',
     'backToInstructorGroups': 'Atrás a la Lista de Grupos de Instructores',
+    'errors' : {
+      'titleTooLong': "Titulo de Grupo de Instructores es demasiado largo (el máximo es 60 caracteres)"
+    }
   },
   'learnerGroups': {
     'learnerGroupTitle': 'Título de Grupo de Instructores',
