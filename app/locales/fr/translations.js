@@ -467,5 +467,10 @@ export default {
     'alphanumeric': "doit être une valeur alphanumérique",
     'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)",
     'url': "doit être une URL valide",
+  },
+  'myreport': {
+    'errors': {
+      'titleTooLong':  "Titre du Rapport est trop long (max. 240 caractères)"
+    }
   }
 };

@@ -467,5 +467,10 @@ export default {
     'alphanumeric': "must be alphanumeric",
     'alphanumeric2': "must be alphanumeric ('-' and ':' allowed)",
     'url': 'must be a valid url'
+  },
+  'myreport': {
+    'errors': {
+      'titleTooLong':  "Report title is too long (maximum is 240 characters)"
+    }
   }
 };
