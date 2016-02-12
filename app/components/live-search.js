@@ -20,7 +20,7 @@ export default Component.extend({
     return this.get('results').sortBy('sortTerm');
   }),
 
-  watchSeatchTerms: observer('searchTerms', function(){
+  watchSearchTerms: observer('searchTerms', function(){
     this.send('search');
   }),
   actions: {

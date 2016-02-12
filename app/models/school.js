@@ -14,7 +14,7 @@ export default DS.Model.extend({
   departments: DS.hasMany('department', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  curriculumInventoryInsitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
+  curriculumInventoryInstitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
   cohorts: computed('programs.[]', function(){
