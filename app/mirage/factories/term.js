@@ -1,5 +1,5 @@
 import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
-    title: (i) => `term ${i}`,
+  title: (i) => `term ${i}`,
 });
