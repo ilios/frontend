@@ -5,7 +5,7 @@ import validator from 'npm:validator';
 const { inject, computed, RSVP } = Ember;
 const { service } = inject;
 const { oneWay, sort } = computed;
-const { PromiseObject } = DS;
+const { PromiseObject, PromiseArray } = DS;
 
 export default Ember.Component.extend(EmberValidations, {
   store: service(),
@@ -35,7 +35,20 @@ export default Ember.Component.extend(EmberValidations, {
 
   sortBy: ['title'],
   sortedSchools: sort('schools', 'sortBy'),
-  schools: oneWay('currentUser.model.schools'),
+  schools: computed('currentUser.model.schools.[]', {
+    get(){
+      let defer = RSVP.defer();
+      this.get('currentUser.model').then(user => {
+        user.get('schools').then(schools => {
+          defer.resolve(schools);
+        });
+      });
+  
+      return PromiseArray.create({
+        promise: defer.promise
+      })
+    }
+  }).readOnly(),
 
   validations: {
     'firstName': {

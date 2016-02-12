@@ -1,148 +1,148 @@
 <div class="new-result-title">{{t 'user.new'}}</div>
 
 {{#if schools.isFulfilled}}
-<div class="detail-content form-container">
-  <div class="form-col-6 multi-row">
-    <label class="form-label">{{t "user.firstName"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=firstName
-        update=(action (mut firstName))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'firstName')
-      }}
-      {{#if (and errors.firstName (is-in showErrorsFor 'firstName'))}}
-        <span class="validation-error-message">{{errors.firstName}}</span>
-      {{/if}}
+  <div class="detail-content form-container">
+    <div class="form-col-6 multi-row">
+      <label class="form-label">{{t "user.firstName"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=firstName
+          update=(action (mut firstName))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'firstName')
+        }}
+        {{#if (and errors.firstName (is-in showErrorsFor 'firstName'))}}
+          <span class="validation-error-message">{{errors.firstName}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "user.middleName"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=middleName
+          update=(action (mut middleName))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'middleName')
+        }}
+        {{#if (and errors.middleName (is-in showErrorsFor 'middleName'))}}
+          <span class="validation-error-message">{{errors.middleName}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "user.lastName"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=lastName
+          update=(action (mut lastName))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'lastName')
+        }}
+        {{#if (and errors.lastName (is-in showErrorsFor 'lastName'))}}
+          <span class="validation-error-message">{{errors.lastName}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "general.campusId"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=campusId
+          update=(action (mut campusId))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'campusId')
+        }}
+        {{#if (and errors.campusId (is-in showErrorsFor 'campusId'))}}
+          <span class="validation-error-message">{{errors.campusId}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "user.otherId"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=otherId
+          update=(action (mut otherId))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'otherId')
+        }}
+        {{#if (and errors.otherId (is-in showErrorsFor 'otherId'))}}
+          <span class="validation-error-message">{{errors.otherId}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "general.email"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=email
+          update=(action (mut email))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'email')
+        }}
+        {{#if (and errors.email (is-in showErrorsFor 'email'))}}
+          <span class="validation-error-message">{{errors.email}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "general.phone"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=phone
+          update=(action (mut phone))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'phone')
+        }}
+        {{#if (and errors.phone (is-in showErrorsFor 'phone'))}}
+          <span class="validation-error-message">{{errors.phone}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "user.username"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=username
+          update=(action (mut username))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'username')
+        }}
+        {{#if (and errors.username (is-in showErrorsFor 'username'))}}
+          <span class="validation-error-message">{{errors.username}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "user.password"}}:</label>
+      <div class="form-data">
+        {{one-way-input
+          value=password
+          update=(action (mut password))
+          onenter=(action "save")
+          onescape=(action this.attrs.close)
+          focusOut=(action 'addErrorDisplayFor' 'password')
+        }}
+        {{#if (and errors.password (is-in showErrorsFor 'password'))}}
+          <span class="validation-error-message">{{errors.password}}</span>
+        {{/if}}
+      </div>
+      <label class="form-label">{{t "general.primarySchool"}}:</label>
+      <div class="form-data form-data-select">
+        <select onchange={{action "setSchool" value="target.value"}}>
+          {{#each sortedSchools as |school|}}
+            <option value={{school.id}} selected={{is-equal school bestSelectedSchool}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
     </div>
-    <label class="form-label">{{t "user.middleName"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=middleName
-        update=(action (mut middleName))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'middleName')
-      }}
-      {{#if (and errors.middleName (is-in showErrorsFor 'middleName'))}}
-        <span class="validation-error-message">{{errors.middleName}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "user.lastName"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=lastName
-        update=(action (mut lastName))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'lastName')
-      }}
-      {{#if (and errors.lastName (is-in showErrorsFor 'lastName'))}}
-        <span class="validation-error-message">{{errors.lastName}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "general.campusId"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=campusId
-        update=(action (mut campusId))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'campusId')
-      }}
-      {{#if (and errors.campusId (is-in showErrorsFor 'campusId'))}}
-        <span class="validation-error-message">{{errors.campusId}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "user.otherId"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=otherId
-        update=(action (mut otherId))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'otherId')
-      }}
-      {{#if (and errors.otherId (is-in showErrorsFor 'otherId'))}}
-        <span class="validation-error-message">{{errors.otherId}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "general.email"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=email
-        update=(action (mut email))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'email')
-      }}
-      {{#if (and errors.email (is-in showErrorsFor 'email'))}}
-        <span class="validation-error-message">{{errors.email}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "general.phone"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=phone
-        update=(action (mut phone))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'phone')
-      }}
-      {{#if (and errors.phone (is-in showErrorsFor 'phone'))}}
-        <span class="validation-error-message">{{errors.phone}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "user.username"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=username
-        update=(action (mut username))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'username')
-      }}
-      {{#if (and errors.username (is-in showErrorsFor 'username'))}}
-        <span class="validation-error-message">{{errors.username}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "user.password"}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=password
-        update=(action (mut password))
-        onenter=(action "save")
-        onescape=(action this.attrs.close)
-        focusOut=(action 'addErrorDisplayFor' 'password')
-      }}
-      {{#if (and errors.password (is-in showErrorsFor 'password'))}}
-        <span class="validation-error-message">{{errors.password}}</span>
-      {{/if}}
-    </div>
-    <label class="form-label">{{t "general.primarySchool"}}:</label>
-    <div class="form-data form-data-select">
-      <select onchange={{action "setSchool" value="target.value"}}>
-        {{#each sortedSchools as |school|}}
-          <option value={{school.id}} selected={{is-equal school bestSelectedSchool}}>
-            {{school.title}}
-          </option>
-        {{/each}}
-      </select>
-    </div>
-  </div>
 
-  <div class="form-col-6 form-data-submit">
-    <button class='done text' {{action 'save'}}>
-      {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
-      {{else}}
-        {{t 'general.done'}}
-      {{/if}}
-    </button>
-    <button class='cancel text' {{action (action this.attrs.close)}}>{{t 'general.cancel'}}</button>
+    <div class="form-col-6 form-data-submit">
+      <button class='done text' {{action 'save'}}>
+        {{#if isSaving}}
+          {{fa-icon 'spinner' spin=true}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
+      <button class='cancel text' {{action (action this.attrs.close)}}>{{t 'general.cancel'}}</button>
+    </div>
   </div>
-</div>
 {{else}}
   {{fa-icon 'spinner' spin=true}}
 {{/if}}
