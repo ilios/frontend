@@ -423,7 +423,7 @@ export default {
     'mySchedule': 'Mi Horario',
     'myReports': 'Mis Reportes',
     'newReport': 'Nuevo Reporte',
-    'reportTitle': 'Rítulo de Reporte',
+    'reportTitle': 'Título de Reporte',
     'reportDisplayTitleWithObject': 'Todos {{subject}} para {{object}} en {{school}}',
     'reportDisplayTitleWithoutObject': 'Todos {{subject}} en {{school}}',
     'associatedWith': 'Ssociado con',
@@ -467,5 +467,10 @@ export default {
     'alphanumeric': "debe ser alfanumérico",
     'alphanumeric2': "debe ser alfanumérico ('-' y ':' permitido)",
     'url': 'debe ser una dirección URL válida'
+  },
+  'myreport': {
+    'errors': {
+      'titleTooLong':  "Título de Reporte es demasiado largo (el máximo es 240 caracteres)"
+    }
   }
 };
