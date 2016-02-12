@@ -13,6 +13,7 @@ export default DS.Model.extend({
   programs: DS.hasMany('program', {async: true}),
   departments: DS.hasMany('department', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
+  vocabularies: DS.hasMany('vocabulary', {async: true}),
   instructorGroups: DS.hasMany('instructor-group', {async: true}),
   curriculumInventoryInstitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),

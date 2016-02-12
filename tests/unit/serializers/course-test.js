@@ -12,6 +12,7 @@ moduleForModel('course', 'Unit | Serializer | course ' + testgroup, {
     'model:session',
     'model:offering',
     'model:topic',
+    'model:term',
     'model:objective',
     'model:cohort',
     'model:mesh-descriptor',

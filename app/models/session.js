@@ -17,6 +17,7 @@ var Session = DS.Model.extend(PublishableModel, {
   course: DS.belongsTo('course', {async: true}),
   ilmSession: DS.belongsTo('ilm-session', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
+  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),

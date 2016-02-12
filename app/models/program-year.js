@@ -13,6 +13,7 @@ export default DS.Model.extend(PublishableModel,{
   directors: DS.hasMany('user', {async: true}),
   competencies: DS.hasMany('competency', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
+  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
   academicYear: computed('startYear', function(){

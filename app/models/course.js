@@ -20,6 +20,7 @@ var Course = DS.Model.extend(PublishableModel, {
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
+  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
