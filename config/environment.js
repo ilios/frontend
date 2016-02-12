@@ -8,14 +8,15 @@ module.exports = function(environment) {
     locationType: 'auto',
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
-      'default-src': "'none'",
-      'script-src': "'self'",
-      'font-src': "'self'",
-      'connect-src': "'self'",
-      'img-src': "'self' data:",
-      'style-src': "'self'",
-      'media-src': "'self'"
+      'default-src': ["'none'"],
+      'script-src':  ["'self'"],
+      'font-src':    ["'self'"],
+      'connect-src': ["'self'"],
+      'img-src':     ["'self', data:"],
+      'style-src':   ["'self'"],
+      'media-src':   ["'self'"]
     },
+    contentSecurityPolicyMeta: true,
     flashMessageDefaults: {
       timeout: 2000,
       extendedTimeout: 3000,
@@ -84,8 +85,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
-    ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
+    ENV.contentSecurityPolicy['script-src'].push("'unsafe-eval'");
+    ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
+    ENV.contentSecurityPolicy['style-src'].push("'unsafe-inline'");
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.allowAddNewUser = true;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
@@ -101,8 +103,9 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval' 'unsafe-inline'";
-    ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
+    ENV.contentSecurityPolicy['script-src'].push("'unsafe-eval'");
+    ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
+    ENV.contentSecurityPolicy['style-src'].push("'unsafe-inline'");
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.IliosFeatures.allowAddNewUser = true;
@@ -118,8 +121,6 @@ module.exports = function(environment) {
   //Just like dev except we can use proxy to get data from the API
   // Example for vagrant ember serve --env=proxy --proxy='http://10.10.10.10'
   if (environment === 'proxy') {
-    ENV.contentSecurityPolicy['script-src'] += " 'unsafe-eval'";
-    ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
