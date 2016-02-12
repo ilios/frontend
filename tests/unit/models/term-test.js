@@ -4,7 +4,7 @@ import modelList from '../../helpers/model-list';
 
 moduleForModel('term', 'Unit | Model | term' + testgroup, {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: modelList
 });
 
 test('it exists', function(assert) {

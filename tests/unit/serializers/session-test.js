@@ -9,6 +9,7 @@ moduleForModel('session', 'Unit | Serializer | Session ' + testgroup, {
     'model:course',
     'model:ilm-session',
     'model:topic',
+    'model:term',
     'model:objective',
     'model:mesh-descriptor',
     'model:session-description',
@@ -21,6 +22,6 @@ test('it removes all non postable fields', function(assert) {
   var record = this.subject();
 
   var serializedRecord = record.serialize();
-  
+
   assert.ok(!("updatedAt" in serializedRecord));
 });

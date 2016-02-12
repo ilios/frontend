@@ -1,6 +1,7 @@
 export default [
   'model:aamc-method',
   'model:aamc-pcrs',
+  'model:academic-year',
   'model:alert-change-type',
   'model:alert',
   'model:assessment-option',
@@ -17,8 +18,6 @@ export default [
   'model:curriculum-inventory-sequence-block-session',
   'model:curriculum-inventory-sequence',
   'model:department',
-  'model:topic',
-  'model:academic-year',
   'model:ilm-session',
   'model:instructor-group',
   'model:learner-group',
@@ -45,7 +44,10 @@ export default [
   'model:session-learning-material',
   'model:session-type',
   'model:session',
+  'model:term',
+  'model:topic',
   'model:user-made-reminder',
   'model:user-role',
-  'model:user'
+  'model:user',
+  'model:vocabulary'
 ];
