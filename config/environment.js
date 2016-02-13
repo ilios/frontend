@@ -13,10 +13,9 @@ module.exports = function(environment) {
       'font-src':    ["'self'"],
       'connect-src': ["'self'"],
       'img-src':     ["'self', data:"],
-      'style-src':   ["'self'"],
+      'style-src':   ["'self'", "'unsafe-inline'"],
       'media-src':   ["'self'"]
     },
-    contentSecurityPolicyMeta: true,
     flashMessageDefaults: {
       timeout: 2000,
       extendedTimeout: 3000,
@@ -87,7 +86,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-eval'");
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
-    ENV.contentSecurityPolicy['style-src'].push("'unsafe-inline'");
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.allowAddNewUser = true;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
@@ -105,7 +103,6 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-eval'");
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
-    ENV.contentSecurityPolicy['style-src'].push("'unsafe-inline'");
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.IliosFeatures.allowAddNewUser = true;
@@ -125,7 +122,6 @@ module.exports = function(environment) {
       enabled: false
     };
     ENV.IliosFeatures.allowAddNewUser = true;
-
   }
 
 /*
