@@ -43,7 +43,7 @@ export default Ember.Component.extend(EmberValidations, {
           defer.resolve(schools);
         });
       });
-  
+
       return PromiseArray.create({
         promise: defer.promise
       })
@@ -138,6 +138,7 @@ export default Ember.Component.extend(EmberValidations, {
             campusId,
             email,
             school,
+            enabled: true
           });
           user.save().then(newUser => {
             let authentication = this.get('store').createRecord('authentication', {
