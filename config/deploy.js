@@ -13,18 +13,12 @@ module.exports = function(deployTarget) {
     bucket: 'ilios-frontend-assets'
   };
 
-  ENV['s3-index'] = {
-    region: 'us-west-2'
-  };
-
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].bucket = 'frontend-apiv1.0-index-stage';
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].bucket = 'frontend-apiv1.0-index-prod';
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
