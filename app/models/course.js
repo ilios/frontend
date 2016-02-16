@@ -122,6 +122,22 @@ var Course = DS.Model.extend(PublishableModel, {
       promise: deferred.promise
     });
   }),
+  vocabularies: computed('terms.@each.vocabulary', function(){
+    var defer = Ember.RSVP.defer();
+    this.get('terms').then(function(terms){
+      var promises = terms.get('vocabulary');
+      Ember.RSVP.all(promises).then(function(vocabularies){
+        let vocabs = vocabularies.reduce(function(array, vocab){
+          return array.pushObject(vocab);
+        }, []);
+        vocabs = vocabs.uniq();
+        defer.resolve(vocabs);
+      });
+    });
+    return DS.PromiseArray.create({
+      promise: defer.promise
+    });
+  })
 });
 
 export default Course;
