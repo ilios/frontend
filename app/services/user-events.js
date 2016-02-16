@@ -1,22 +1,25 @@
 import Ember from 'ember';
-import config from 'ilios/config/environment';
 import EventMixin from 'ilios/mixins/events';
 import moment from 'moment';
 
-const { inject } = Ember;
+const { inject, computed } = Ember;
 const { service } = inject;
+const { reads } = computed;
 
 export default Ember.Service.extend(EventMixin, {
   store: service(),
   currentUser: service(),
   session: service(),
   ajax: service(),
-  
+  serverVariables: service(),
+
+  namespace: reads('serverVariables.apiNameSpace'),
+
   getEvents(from, to){
     var deferred = Ember.RSVP.defer();
     this.get('currentUser.model').then(user => {
       if( user ){
-        var url = '/' + config.adapterNamespace + '/userevents/' +
+        var url = '/' + this.get('namespace') + '/userevents/' +
         user.get('id') + '?from=' + from + '&to=' + to;
         const ajax = this.get('ajax');
         ajax.request(url).then(data => {

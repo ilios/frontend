@@ -1,12 +1,17 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import config from 'ilios/config/environment';
 import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 
+const { inject, computed } = Ember;
+const { service } = inject;
+const { reads } = computed;
 const { RESTAdapter } = DS;
 
 export default RESTAdapter.extend(DataAdapterMixin, {
-  namespace: config.adapterNamespace,
+  serverVariables: service(),
+
+  namespace: reads('serverVariables.apiNameSpace'),
+  host: reads('serverVariables.apiHost'),
 
   coalesceFindRequests: true,
 
@@ -32,6 +37,6 @@ export default RESTAdapter.extend(DataAdapterMixin, {
   },
 
   sortQueryParams: false,
-  
+
   authorizer: 'authorizer:token'
 });

@@ -55,6 +55,13 @@ module.exports = function(environment) {
         // 'html' //temporarily disabled due to bug
       ]
     },
+    serverVariables: {
+      tagPrefix: 'iliosconfig',
+      vars: ['api-host', 'api-name-space'],
+      defaults: {
+        'api-name-space': 'api/v1'
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -84,6 +91,10 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.learnerGroupMultiedit = true;
+
+    ENV.serverVariables.defaults = {
+      'apiNameSpace': ''
+    };
   }
 
   if (environment === 'test') {
@@ -101,6 +112,10 @@ module.exports = function(environment) {
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.IliosFeatures.learnerGroupMultiedit = true;
+
+    ENV.serverVariables.defaults = {
+      'apiNameSpace': ''
+    };
   }
 
   if (environment === 'heroku') {
@@ -117,16 +132,13 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
-    ENV.adapterNamespace = 'api/v1';
 
   }
 
   if (environment === 'production') {
-    ENV.adapterNamespace = 'api/v1';
   }
 
   if (environment === 'staging') {
-    ENV.adapterNamespace = 'api/v1';
   }
 
   return ENV;
