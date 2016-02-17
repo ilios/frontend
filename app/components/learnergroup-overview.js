@@ -26,8 +26,6 @@ export default Component.extend({
     }
   }),
 
-  isActive: learnerGroupMultiedit,
-
   actions: {
     addInstructor: function(user){
       var learnerGroup = this.get('learnerGroup');
