@@ -1,3 +1,19 @@
 <section class='detail-block {{if showCollapsible "collapsible"}}'>
-    <em>todo</em>
+    {{#if isManaging}}
+        <div class='detail-title'>
+            <span class='detail-specific-title'>{{t 'taxonomies.termsManageTitle'}}</span>
+        </div>
+    {{else}}
+        <div class='detail-title {{if terms.length "clickable"}}' {{action 'collapse'}}>
+            {{t 'general.terms'}} ({{subject.terms.length}})
+        </div>
+    {{/if}}
+    <div class='detail-actions'>
+        {{#if isManaging}}
+            <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+            <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+        {{else if editable}}
+            <button {{action 'manage'}}>{{t 'taxonomies.termsManageTitle'}}</button>
+        {{/if}}
+    </div>
 </section>
