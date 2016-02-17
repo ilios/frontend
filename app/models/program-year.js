@@ -72,4 +72,17 @@ export default DS.Model.extend(PublishableModel,{
       promise: defer.promise
     });
   }),
+  vocabularies: computed('terms.@each.vocabulary', function(){
+    var deferred = Ember.RSVP.defer();
+    this.get('terms').then(function(terms){
+      Ember.RSVP.all(terms.mapBy('vocabulary')).then(function(vocabs) {
+        let v = [].concat.apply([], vocabs);
+        v = v ? v.uniq().sortBy('title'):[];
+        deferred.resolve(v);
+      });
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
 });

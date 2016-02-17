@@ -123,19 +123,16 @@ var Course = DS.Model.extend(PublishableModel, {
     });
   }),
   vocabularies: computed('terms.@each.vocabulary', function(){
-    var defer = Ember.RSVP.defer();
+    var deferred = Ember.RSVP.defer();
     this.get('terms').then(function(terms){
-      var promises = terms.get('vocabulary');
-      Ember.RSVP.all(promises).then(function(vocabularies){
-        let vocabs = vocabularies.reduce(function(array, vocab){
-          return array.pushObject(vocab);
-        }, []);
-        vocabs = vocabs.uniq();
-        defer.resolve(vocabs);
+      Ember.RSVP.all(terms.mapBy('vocabulary')).then(function(vocabs) {
+        let v = [].concat.apply([], vocabs);
+        v = v ? v.uniq().sortBy('title'):[];
+        deferred.resolve(v);
       });
     });
     return DS.PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   })
 });
