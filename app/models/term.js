@@ -8,14 +8,8 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
   vocabulary: DS.belongsTo('vocabulary', {async: true}),
-  parent: DS.hasMany('term', {
-    inverse: 'children',
-    async: true
-  }),
-  children: DS.hasMany('term', {
-    inverse: 'parent',
-    async: true
-  }),
+  parent: DS.belongsTo('term', { inverse: 'children', async: true }),
+  children: DS.hasMany('term', { inverse: 'parent', async: true }),
   isTopLevel: empty('parent.content'),
   allParentTitles: computed('parent.{title,allParentTitles}', function(){
     let titles = [];
