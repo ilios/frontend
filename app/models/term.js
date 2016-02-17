@@ -1,4 +1,8 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+
+const { computed } =  Ember;
+const { empty } = computed;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -11,5 +15,16 @@ export default DS.Model.extend({
   children: DS.hasMany('term', {
     inverse: 'parent',
     async: true
-  })
+  }),
+  isTopLevel: empty('parent.content'),
+  allParentTitles: computed('parent.{title,allParentTitles}', function(){
+    let titles = [];
+    if (! this.get('isTopLevel')){
+      if (this.get('parent.allParentTitles')){
+        titles.pushObjects(this.get('parent.allParentTitles'));
+      }
+      titles.pushObject(this.get('parent.title'));
+    }
+    return titles;
+  }),
 });
