@@ -37,6 +37,8 @@ export default {
     'actions': 'Actions',
     'topics': 'Topics',
     'topic': 'Topic',
+    'term': 'Term',
+    'terms': 'Terms',
     'email': 'Email',
     'cohort': 'Cohort',
     'cohorts': 'Cohorts',
@@ -130,6 +132,8 @@ export default {
     'summary': 'Summary',
     'manage': 'Manage',
     'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms.',
+    'vocabularies': 'Vocabularies',
+    'vocabulary': 'Vocabulary',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -509,5 +513,8 @@ export default {
     },
     'userNotAddableFromDirectory': "This user is missing required information and cannot be added",
     'goToUser': "Show user record in ilios",
-  }
+  },
+  'taxonomies' : {
+    'assignedTerms': 'Assigned terms',
+  },
 };
