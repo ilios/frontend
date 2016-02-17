@@ -4,40 +4,40 @@ module.exports = function(deployTarget) {
   var ENV = {
     build: {},
     exclude: ['.DS_Store', '*-test.js']
-    // include other plugin configuration that applies to all deploy targets here
   };
 
   ENV.s3 = {
     acl: 'public-read',
     region: 'us-west-2',
-    // bucket: 'ilios-frontend-assets'
+    bucket: 'ilios-frontend-assets'
   };
 
-  ENV.redis = {
-    // host: '<your-redis-host>',
-    // port: '<your-redis-port>',
-    // password: '<your-redis-password>',
-    filePattern: 'index.json'
+  ENV['s3-index'] = {
+    region: 'us-west-2',
+    filePattern: 'index.json',
+    bucket: 'frontend-json-config',
   };
 
   ENV.gzip = {
+    //dont gzip JSON files
     filePattern: '**/*.{js,css,ico,map,xml,txt,svg,eot,ttf,woff,woff2}'
   };
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
+    ENV['s3-index'].prefix = 'stage-v1.1';
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
+    ENV['s3-index'].prefix = 'prod-v1.1';
   }
 
   if (deployTarget === 'development') {
     ENV.build.environment = 'production';
+    ENV['s3-index'].prefix = 'dev-v1.1';
     ENV.s3.region = 'us-west-1';
     ENV.s3.bucket = 'dev-ilioscdn';
-    ENV.redis.host = '192.168.99.100';
-    ENV.redis.allowOverwrite = true;
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
