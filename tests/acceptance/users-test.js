@@ -27,12 +27,10 @@ function getCellContent(i) {
 }
 
 test('can see list of users and transition to user route', function(assert) {
-  const userSchool = '#school-selection';
   const firstStudent = 'tbody tr td:eq(1) a';
 
   visit(url);
   andThen(() => {
-    assert.equal(find(userSchool).text().trim(), 'school 0', 'user school is shown');
     assert.equal(getCellContent(0), '', 'user is a student');
     assert.equal(getCellContent(1), '0 guy M. Mc0son', 'name is shown');
     assert.equal(getCellContent(2), '123', 'campus ID is shown');
@@ -47,29 +45,26 @@ test('can see list of users and transition to user route', function(assert) {
 });
 
 test('can page through list of users', function(assert) {
-  const leftArrow = '.prev-arrow';
-  const rightArrow = '.next-arrow';
-  const prevButton = '.prev-button';
-  const nextButton = '.next-button';
+  const leftArrow = '.backward';
+  const rightArrow = '.forward';
 
   visit(url);
-  click(nextButton);
+  click(rightArrow);
   andThen(() => {
-    assert.equal(currentURL(), '/users?page=2', 'query param shown');
-    assert.equal(getCellContent(1), '0 guy M. Mc0son', 'content is visible');
+    assert.equal(currentURL(), '/users?offset=25', 'query param shown');
   });
 
   click(rightArrow);
   andThen(() => {
-    assert.equal(currentURL(), '/users?page=3', 'query param shown');
+    assert.equal(currentURL(), '/users?offset=50', 'query param shown');
   });
 
   click(leftArrow);
   andThen(() => {
-    assert.equal(currentURL(), '/users?page=2', 'query param shown');
+    assert.equal(currentURL(), '/users?offset=25', 'query param shown');
   });
 
-  click(prevButton);
+  click(leftArrow);
   andThen(() => {
     assert.equal(currentURL(), '/users', 'back to first page');
   });
@@ -78,9 +73,9 @@ test('can page through list of users', function(assert) {
 test('can search for a user and transition to user route', function(assert) {
   server.createList('user', 40, { firstName: 'Test', lastName: 'Name', school: 1 });
 
-  const userSearch = '.user-search';
-  const leftArrow = '.prev-arrow';
-  const rightArrow = '.next-arrow';
+  const userSearch = '.user-search input';
+  const leftArrow = '.backward';
+  const rightArrow = '.forward';
 
   visit(url);
   fillIn(userSearch, 'Test Name');
@@ -89,14 +84,8 @@ test('can search for a user and transition to user route', function(assert) {
     assert.equal(getCellContent(1), 'Test M. Name', 'content is visible');
   });
 
-  click(rightArrow);
   andThen(() => {
-    assert.equal(currentURL(), '/users', 'no query params for search');
-    assert.equal(getCellContent(1), 'Test M. Name', 'content is visible');
-  });
-
-  click(leftArrow);
-  andThen(() => {
+    assert.equal(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
     assert.equal(getCellContent(1), 'Test M. Name', 'content is visible');
   });
 });
