@@ -3,11 +3,9 @@
     {{learnerGroup.title}} {{t 'learnerGroups.members'}} ({{learnerGroup.usersOnlyAtThisLevel.length}})
   </div>
   <div class='detail-content'>
-    {{#if isActive}}
-      <div class="overview-toggle-container">
-        {{toggle-onoff label="learnerGroups.multiEdit" on=multiEditModeOn action="toggleSwitch"}}
-      </div>
-    {{/if}}
+    <div class="overview-toggle-container">
+      {{toggle-onoff label="learnerGroups.multiEdit" on=multiEditModeOn action="toggleSwitch"}}
+    </div>
 
     {{#if multiEditModeOn}}
       <div class="multi-edit-container">
