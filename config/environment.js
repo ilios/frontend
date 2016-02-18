@@ -6,7 +6,6 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    adapterNamespace: 'api',
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
       'default-src': "'none'",
@@ -91,10 +90,8 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.learnerGroupMultiedit = true;
-
-    ENV.serverVariables.defaults = {
-      'apiNameSpace': ''
-    };
+    
+    ENV.serverVariables.defaults['api-name-space'] = 'api';
   }
 
   if (environment === 'test') {
@@ -113,9 +110,7 @@ module.exports = function(environment) {
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.IliosFeatures.learnerGroupMultiedit = true;
 
-    ENV.serverVariables.defaults = {
-      'apiNameSpace': ''
-    };
+    ENV.serverVariables.defaults['api-name-space'] = 'api';
   }
 
   if (environment === 'heroku') {
