@@ -21,7 +21,7 @@
             {{taxonomy-manager}}
         {{else}}
             <ul class='removable-list selected-taxonomy-terms'>
-                {{#each subject.terms as |term|}}
+                {{#each sortedTerms as |term|}}
                     <li class="content">
                         <span class="term-title">
                         {{#if term.isTopLevel }}

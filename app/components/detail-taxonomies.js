@@ -4,7 +4,7 @@ import config from 'ilios/config/environment';
 
 const { Component, computed, inject } = Ember;
 const { service } = inject;
-const { or, notEmpty, alias } = computed;
+const { alias, sort } = computed;
 
 export default Component.extend({
     store: service(),
@@ -24,6 +24,13 @@ export default Component.extend({
         const terms = this.get('terms');
         return terms.get('length') && ! isManaging;
     }),
+
+    termsSorting: [
+        'vocabulary.school.title',
+        'vocabulary.title',
+        'titleWithParentsTitle'
+    ],
+    sortedTerms: sort('terms', 'termsSorting'),
 
     actions: {
         collapse(){
