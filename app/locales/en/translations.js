@@ -483,5 +483,10 @@ export default {
       'one': 'There is one user waiting to be updated',
       'other': 'There are {{count}} users waiting to be updated'
     },
+    'pendingUserUpdates': {
+      'filterBy': 'Filter by user name',
+      'missingFromDirectory': 'Missing from the directory',
+      'emailMismatch': 'The email address in the directory is {{value}}'
+    }
   }
 };
