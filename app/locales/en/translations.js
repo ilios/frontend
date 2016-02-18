@@ -485,8 +485,8 @@ export default {
     },
     'pendingUserUpdates': {
       'filterBy': 'Filter by user name',
-      'missingFromDirectory': 'Missing from the directory',
-      'emailMismatch': 'The email address in the directory is {{value}}'
+      'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization',
+      'emailMismatch': 'The email address in the directory {{update.value}} does not match the email in ilios {{update.user.email}}'
     }
   }
 };
