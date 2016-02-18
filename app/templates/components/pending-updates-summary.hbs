@@ -1,0 +1,10 @@
+{{#if updates.isFulfilled}}
+  <p>{{t 'admin.pendingUpdatesSummary' count=updates.length}}</p>
+  {{#if updates.length}}
+    {{#link-to 'pending-user-updates'}}
+      <button>{{t 'general.manage'}}</button>
+    {{/link-to}}
+  {{/if}}
+{{else}}
+  {{fa-icon 'spinner' spin = true}}
+{{/if}}

@@ -128,6 +128,7 @@ export default {
     'pagedResultsCount': 'Showing {{start}} - {{end}} of {{total}}',
     'perPage': 'Per Page',
     'summary': 'Summary',
+    'manage': 'Manage',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -475,5 +476,12 @@ export default {
     'errors': {
       'titleTooLong':  "Report title is too long (maximum is 240 characters)"
     }
+  },
+  'admin': {
+    'pendingUpdatesSummary': {
+      'none': 'There are no users waiting to be updated',
+      'one': 'There is one user waiting to be updated',
+      'other': 'There are {{count}} users waiting to be updated'
+    },
   }
 };
