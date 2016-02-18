@@ -21,4 +21,12 @@ export default DS.Model.extend({
     }
     return titles;
   }),
+  titleWithParentsTitle: computed('title', 'parent.{title,allParentTitles}', function(){
+    let title = this.get('title');
+    const parentTitles = this.get('allParentTitles');
+    if (! empty(parentTitles)) {
+      title = parentTitles.join(' > ') + ' > ' + title;
+    }
+    return title;
+  }),
 });
