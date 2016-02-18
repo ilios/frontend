@@ -122,6 +122,7 @@ var Course = DS.Model.extend(PublishableModel, {
       promise: deferred.promise
     });
   }),
+
   vocabularies: computed('terms.@each.vocabulary', function(){
     var deferred = Ember.RSVP.defer();
     this.get('terms').then(function(terms){
@@ -129,6 +130,20 @@ var Course = DS.Model.extend(PublishableModel, {
         let v = [].concat.apply([], vocabs);
         v = v ? v.uniq().sortBy('title'):[];
         deferred.resolve(v);
+      });
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
+
+  termsWithAllParents: computed('terms.[]', function() {
+    var deferred = Ember.RSVP.defer();
+    this.get('terms').then(function(terms){
+      Ember.RSVP.all(terms.mapBy('termWithAllParents')).then(function(parentTerms) {
+        let t = [].concat.apply([], parentTerms);
+        t = t ? t.uniq() : [];
+        deferred.resolve(t);
       });
     });
     return DS.PromiseArray.create({

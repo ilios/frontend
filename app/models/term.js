@@ -11,22 +11,60 @@ export default DS.Model.extend({
   parent: DS.belongsTo('term', { inverse: 'children', async: true }),
   children: DS.hasMany('term', { inverse: 'parent', async: true }),
   isTopLevel: empty('parent.content'),
-  allParentTitles: computed('parent.{title,allParentTitles}', function(){
-    let titles = [];
-    if (! this.get('isTopLevel')){
-      if (this.get('parent.allParentTitles')){
-        titles.pushObjects(this.get('parent.allParentTitles'));
+
+  allParents: computed('parent', 'parent.allParents.[]', function(){
+    var deferred = Ember.RSVP.defer();
+    this.get('parent').then(parent => {
+      var parents = [];
+      if(!parent){
+        deferred.resolve(parents);
+      } else {
+        parents.pushObject(parent);
+        parent.get('allParents').then(allParents => {
+          parents.pushObjects(allParents);
+          deferred.resolve(parents);
+        });
       }
-      titles.pushObject(this.get('parent.title'));
-    }
-    return titles;
+
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
   }),
-  titleWithParentsTitle: computed('title', 'parent.{title,allParentTitles}', function(){
-    let title = this.get('title');
-    const parentTitles = this.get('allParentTitles');
-    if (! empty(parentTitles)) {
-      title = parentTitles.join(' > ') + ' > ' + title;
-    }
-    return title;
+
+  termWithAllParents: computed('allParents', function(){
+    let deferred = Ember.RSVP.defer();
+    let terms = [];
+    let term = this;
+    this.get('allParents').then(allParents => {
+      terms.pushObjects(allParents);
+      terms.pushObject(term);
+      deferred.resolve(terms);
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
   }),
+
+  allParentTitles: computed('parent.{title,allParentTitles}', function() {
+    let deferred = Ember.RSVP.defer();
+
+    this.get('parent').then(parent => {
+      let titles = [];
+      if(!parent){
+        deferred.resolve(titles);
+      } else {
+        parent.get('allParents').then(parents => {
+          titles = titles.concat(parents.mapBy('title'));
+          titles.push(this.get('parent.title'));
+          deferred.resolve(titles);
+        });
+      }
+    });
+
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
+
 });

@@ -12,6 +12,7 @@ export default Component.extend({
     flashMessages: service(),
     subject: null,
     terms:  alias('subject.terms'),
+    termsWithAllParents: alias('subject.termsWithAllParents'),
     classNames: ['detail-taxonomies'],
     isCourse: false,
     isSession: false,
@@ -28,7 +29,7 @@ export default Component.extend({
     termsSorting: [
         'vocabulary.school.title',
         'vocabulary.title',
-        'titleWithParentsTitle'
+        'title',
     ],
     sortedTerms: sort('terms', 'termsSorting'),
 
