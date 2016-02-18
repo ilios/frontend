@@ -478,15 +478,16 @@ export default {
     }
   },
   'admin': {
+    'pendingUpdatesSummaryTitle': 'Updates from the Campus Directory',
     'pendingUpdatesSummary': {
-      'none': 'There are no users waiting to be updated',
-      'one': 'There is one user waiting to be updated',
-      'other': 'There are {{count}} users waiting to be updated'
+      'one': 'There is one user needing attention',
+      'other': 'There are {{count}} users needing attention'
     },
     'pendingUserUpdates': {
       'filterBy': 'Filter by user name',
       'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization',
-      'emailMismatch': 'The email address in the directory {{update.value}} does not match the email in ilios {{update.user.email}}'
+      'emailMismatch': 'The email address in the directory {{update.value}} does not match the email in ilios {{update.user.email}}',
+      'updateIlios': 'Update Ilios'
     }
   }
 };
