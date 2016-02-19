@@ -1,3 +1,5 @@
+/*eslint no-console: 0*/
+
 import getName from './get-name';
 
 export default function getAll(db, request){

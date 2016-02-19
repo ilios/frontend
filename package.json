@@ -82,7 +82,7 @@
     "ember-validations": "dockyard/ember-validations#4c1d9cce601ed9017a9c975c262c7e74c09424d7",
     "ember-watson": "^0.7.0",
     "emberx-select": "2.0.2",
-    "eslint": "^1.10.3",
+    "eslint": "^2.2.0",
     "ilios-calendar": "^4.0.0",
     "liquid-fire": "0.22.1",
     "liquid-tether": "0.1.9",

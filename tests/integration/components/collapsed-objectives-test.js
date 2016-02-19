@@ -1,11 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import DS from 'ember-data';
 import startMirage from '../../helpers/start-mirage';
 
-const { Object, RSVP } = Ember;
-const { PromiseArray } = DS;
+const { Object } = Ember;
 
 moduleForComponent('collapsed-objectives', 'Integration | Component | collapsed objectives', {
   integration: true,

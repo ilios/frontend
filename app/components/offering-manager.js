@@ -276,7 +276,6 @@ export default Component.extend(EmberValidations, ValidationError, {
       }).catch(() => {
         const keys = Ember.keys(this.get('errors'));
         keys.forEach((key) => {
-          console.log(key);
           this.get('flashMessages').alert(this.get('errors.' + key));
         });
       });
