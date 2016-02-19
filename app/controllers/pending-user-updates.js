@@ -8,6 +8,7 @@ const { PromiseArray } = DS;
 
 export default Controller.extend({
   store: service(),
+  flashMessages: service(),
   queryParams: ['offset', 'limit', 'filter', 'school'],
   offset: 0,
   limit: 25,
@@ -30,6 +31,7 @@ export default Controller.extend({
   }),
 
   deletedUpdates: [],
+  updatesBeingSaved: [],
 
   allUpdates: computed('selectedSchool', function(){
     let defer = RSVP.defer();
@@ -70,33 +72,46 @@ export default Controller.extend({
       this.set('school', schoolId);
     },
     updateEmailAddress(update){
+      this.get('updatesBeingSaved').pushObject(update);
       update.get('user').then(user => {
         user.set('email', update.get('value'));
         user.save().then(() => {
-          this.get('deletedUpdates').pushObject(update);
           update.deleteRecord();
-          update.save();
+          update.save().then(() => {
+            this.get('deletedUpdates').pushObject(update);
+            this.get('updatesBeingSaved').removeObject(update);
+            this.get('flashMessages').success('general.savedSuccessfully');
+          });
         });
       });
     },
     disableUser(update){
+      this.get('updatesBeingSaved').pushObject(update);
       update.get('user').then(user => {
         user.set('enabled', false);
         user.save().then(() => {
-          this.get('deletedUpdates').pushObject(update);
           update.deleteRecord();
-          update.save();
+          update.save().then(() => {
+            this.get('deletedUpdates').pushObject(update);
+            this.get('updatesBeingSaved').removeObject(update);
+            this.get('flashMessages').success('general.savedSuccessfully');
+
+          });
         });
       });
 
     },
     excludeFromSync(update){
+      this.get('updatesBeingSaved').pushObject(update);
       update.get('user').then(user => {
         user.set('userSyncIgnore', true);
         user.save().then(() => {
-          this.get('deletedUpdates').pushObject(update);
           update.deleteRecord();
-          update.save();
+          update.save().then(() => {
+            this.get('deletedUpdates').pushObject(update);
+            this.get('updatesBeingSaved').removeObject(update);
+            this.get('flashMessages').success('general.savedSuccessfully');
+          });
         });
       });
 
