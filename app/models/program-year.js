@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
+import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed } = Ember;
 
-export default DS.Model.extend(PublishableModel,{
+export default DS.Model.extend(PublishableModel, CategorizableModel, {
   startYear: DS.attr('string'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
@@ -13,7 +14,6 @@ export default DS.Model.extend(PublishableModel,{
   directors: DS.hasMany('user', {async: true}),
   competencies: DS.hasMany('competency', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
-  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
   academicYear: computed('startYear', function(){
@@ -70,19 +70,6 @@ export default DS.Model.extend(PublishableModel,{
 
     return DS.PromiseArray.create({
       promise: defer.promise
-    });
-  }),
-  vocabularies: computed('terms.@each.vocabulary', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('terms').then(function(terms){
-      Ember.RSVP.all(terms.mapBy('vocabulary')).then(function(vocabs) {
-        let v = [].concat.apply([], vocabs);
-        v = v ? v.uniq().sortBy('title'):[];
-        deferred.resolve(v);
-      });
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 });

@@ -2,12 +2,13 @@ import moment from 'moment';
 import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
+import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { mapBy, notEmpty, sum } = computed;
 const { PromiseArray, PromiseObject } = DS;
 
-var Session = DS.Model.extend(PublishableModel, {
+var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   title: DS.attr('string'),
   attireRequired: DS.attr('boolean'),
   equipmentRequired: DS.attr('boolean'),
@@ -17,7 +18,6 @@ var Session = DS.Model.extend(PublishableModel, {
   course: DS.belongsTo('course', {async: true}),
   ilmSession: DS.belongsTo('ilm-session', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
-  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),
@@ -109,19 +109,6 @@ var Session = DS.Model.extend(PublishableModel, {
       });
     });
 
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
-  }),
-  vocabularies: computed('terms.@each.vocabulary', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('terms').then(function(terms){
-      Ember.RSVP.all(terms.mapBy('vocabulary')).then(function(vocabs) {
-        let v = [].concat.apply([], vocabs);
-        v = v ? v.uniq().sortBy('title'):[];
-        deferred.resolve(v);
-      });
-    });
     return DS.PromiseArray.create({
       promise: deferred.promise
     });

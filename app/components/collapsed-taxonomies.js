@@ -5,5 +5,5 @@ const { alias } = computed;
 
 export default Component.extend({
     subject: null,
-    vocabularies: alias('subject.vocabularies'),
+    vocabularies: alias('subject.associatedVocabularies'),
 });

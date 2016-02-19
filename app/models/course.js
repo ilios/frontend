@@ -2,11 +2,12 @@ import moment from 'moment';
 import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
+import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed } = Ember;
 const { filterBy, mapBy, sum } = computed;
 
-var Course = DS.Model.extend(PublishableModel, {
+var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
   title: DS.attr('string'),
   level: DS.attr('number'),
   year: DS.attr('number'),
@@ -20,7 +21,6 @@ var Course = DS.Model.extend(PublishableModel, {
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
   topics: DS.hasMany('topic', {async: true}),
-  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
@@ -122,34 +122,6 @@ var Course = DS.Model.extend(PublishableModel, {
       promise: deferred.promise
     });
   }),
-
-  vocabularies: computed('terms.@each.vocabulary', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('terms').then(function(terms){
-      Ember.RSVP.all(terms.mapBy('vocabulary')).then(function(vocabs) {
-        let v = [].concat.apply([], vocabs);
-        v = v ? v.uniq().sortBy('title'):[];
-        deferred.resolve(v);
-      });
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
-  }),
-
-  termsWithAllParents: computed('terms.[]', function() {
-    var deferred = Ember.RSVP.defer();
-    this.get('terms').then(function(terms){
-      Ember.RSVP.all(terms.mapBy('termWithAllParents')).then(function(parentTerms) {
-        let t = [].concat.apply([], parentTerms);
-        t = t ? t.uniq() : [];
-        deferred.resolve(t);
-      });
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
-  })
 });
 
 export default Course;
