@@ -4,6 +4,7 @@ const { Component, computed } = Ember;
 const { sort } = computed;
 
 export default Component.extend({
+    canEdit: false,
     vocabulary: null,
     terms: null,
     classNames: ['detail-taxonomies'],
@@ -25,4 +26,10 @@ export default Component.extend({
         });
         return filteredTerms;
     }),
+
+    actions: {
+        remove: function(term){
+            this.sendAction('remove', term);
+        }
+    }
 });

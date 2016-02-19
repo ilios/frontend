@@ -25,7 +25,7 @@
             remove='removeTermFromBuffer'}}
         {{else}}
             {{#each vocabularies as |vocab| }}
-                {{detail-terms-list vocabulary=vocab terms=terms}}
+                {{detail-terms-list vocabulary=vocab terms=terms canEdit=false}}
             {{/each}}
         {{/liquid-if}}
     </div>

@@ -3,21 +3,5 @@
     .muted {
       color: lighten($default-text-color, 50%);
     }
-    .content {
-      display: inline-block;
-
-      .term-title {
-        display: block;
-      }
-
-      .term-vocabulary {
-        display: block;
-        font-size: smaller;
-      }
-    }
-
-    .fa {
-      vertical-align: top;
-    }
   }
 }

@@ -1,22 +1,8 @@
-<ul class='removable-list tag-list selected-taxonomy-terms'>
-  {{#each sortedTerms as |term|}}
-    <li {{action 'remove' term}}>
-      <div class="content">
-        <span class="term-vocabulary">
-          {{term.vocabulary.title}} ({{term.vocabulary.school.title}})
-        </span>
-        <span class="term-title">
-          {{#if term.isTopLevel }}
-            {{term.title}}
-          {{else}}
-            {{#each term.allParentTitles as |title|}}
-              <span class="muted">{{title}} &raquo;</span>
-            {{/each}}
-            {{term.title}}
-          {{/if}}
-        </span>
-      </div>
-      {{fa-icon 'remove'}}
-    </li>
-  {{/each}}
-</ul>
+{{#each vocabularies as |vocab| }}
+  {{detail-terms-list
+    vocabulary=vocab
+    terms=selectedTerms
+    canEdit=true
+    remove='remove'
+  }}
+{{/each}}
