@@ -31,7 +31,7 @@ export default DS.Model.extend({
     });
   }),
 
-  termWithAllParents: computed('allParents', function(){
+  termWithAllParents: computed('allParents.[]', function(){
     let deferred = Ember.RSVP.defer();
     let terms = [];
     let term = this;
@@ -46,7 +46,7 @@ export default DS.Model.extend({
     });
   }),
 
-  allParentTitles: computed('parent.{title,allParentTitles}', function() {
+  allParentTitles: computed('parent.{title,allParentTitles.[]}', function() {
     let deferred = Ember.RSVP.defer();
 
     this.get('parent').then(parent => {
@@ -68,7 +68,7 @@ export default DS.Model.extend({
 
   }),
 
-  titleWithParentTitles: computed('title', 'allParentTitles', function() {
+  titleWithParentTitles: computed('title', 'allParentTitles.[]', function() {
     let deferred = Ember.RSVP.defer();
     this.get('allParentTitles').then(parentTitles => {
       let title;
@@ -84,4 +84,5 @@ export default DS.Model.extend({
       promise: deferred.promise
     });
   }),
+
 });
