@@ -130,11 +130,13 @@ module.exports = function(environment) {
 
   }
 
+/*
   if (environment === 'production') {
   }
 
   if (environment === 'staging') {
   }
+*/
 
   return ENV;
 };

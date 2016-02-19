@@ -1,3 +1,4 @@
+/*eslint no-console: 0*/
 import Ember from 'ember';
 import config from '../config/environment';
 import moment from 'moment';
