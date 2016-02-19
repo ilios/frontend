@@ -90,12 +90,13 @@ export default Controller.extend({
       update.get('user').then(user => {
         user.set('enabled', false);
         user.save().then(() => {
-          update.deleteRecord();
-          update.save().then(() => {
-            this.get('deletedUpdates').pushObject(update);
-            this.get('updatesBeingSaved').removeObject(update);
-            this.get('flashMessages').success('general.savedSuccessfully');
-
+          user.get('pendingUserUpdates').then(updates => {
+            updates.invoke('deleteRecord');
+            RSVP.all(updates.invoke('save')).then(() => {
+              this.get('deletedUpdates').pushObject(update);
+              this.get('updatesBeingSaved').removeObject(update);
+              this.get('flashMessages').success('general.savedSuccessfully');
+            });
           });
         });
       });
@@ -106,11 +107,13 @@ export default Controller.extend({
       update.get('user').then(user => {
         user.set('userSyncIgnore', true);
         user.save().then(() => {
-          update.deleteRecord();
-          update.save().then(() => {
-            this.get('deletedUpdates').pushObject(update);
-            this.get('updatesBeingSaved').removeObject(update);
-            this.get('flashMessages').success('general.savedSuccessfully');
+          user.get('pendingUserUpdates').then(updates => {
+            updates.invoke('deleteRecord');
+            RSVP.all(updates.invoke('save')).then(() => {
+              this.get('deletedUpdates').pushObject(update);
+              this.get('updatesBeingSaved').removeObject(update);
+              this.get('flashMessages').success('general.savedSuccessfully');
+            });
           });
         });
       });
