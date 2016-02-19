@@ -29,7 +29,7 @@ export default Component.extend({
     termsSorting: [
         'vocabulary.school.title',
         'vocabulary.title',
-        'title',
+        'titleWithParentTitles', // @TODO doesn't seem to work correctly, fix this [ST 2016/02/18]
     ],
     sortedTerms: sort('terms', 'termsSorting'),
 

@@ -25,7 +25,6 @@ export default DS.Model.extend({
           deferred.resolve(parents);
         });
       }
-
     });
     return DS.PromiseArray.create({
       promise: deferred.promise
@@ -41,6 +40,7 @@ export default DS.Model.extend({
       terms.pushObject(term);
       deferred.resolve(terms);
     });
+
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
@@ -65,6 +65,23 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: deferred.promise
     });
+
   }),
 
+  titleWithParentTitles: computed('title', 'allParentTitles', function() {
+    let deferred = Ember.RSVP.defer();
+    this.get('allParentTitles').then(parentTitles => {
+      let title;
+      if (! parentTitles.get('length')) {
+        title = this.get('title');
+      } else {
+        title = parentTitles.join(' > ') + ' > ' + this.get('title');
+      }
+      deferred.resolve(title);
+    });
+
+    return DS.PromiseObject.create({
+      promise: deferred.promise
+    });
+  }),
 });
