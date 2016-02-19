@@ -128,6 +128,7 @@ export default {
     'pagedResultsCount': 'Montrant {{start}} - {{end}} de {{total}}',
     'perPage': 'Par Page',
     'summary': 'Résumé',
+    'manage': 'Administrer',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -475,5 +476,18 @@ export default {
     'errors': {
       'titleTooLong':  "Titre du Rapport est trop long (max. 240 caractères)"
     }
-  }
+  },
+  'admin': {
+    'pendingUpdatesSummaryTitle': 'Mises du répertoire de Campus',
+    'pendingUpdatesSummary': {
+      'one': 'Il y a un utilisateur nécessitant une attention particulière',
+      'other': 'Il y a des {{count}} utilisateurs nécessitants une attention particulière'
+    },
+    'pendingUserUpdates': {
+      'filterBy': 'Filtre par nom d’utilisateur',
+      'missingFromDirectory': 'Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization.',
+      'emailMismatch': 'L’address email dans le répertoire ({{update.value}}) ne correspond pas à ce email dans ilios ({{update.user.email}}).',
+      'updateIlios': 'Mettre à jour Ilios'
+    }
+  },
 };
