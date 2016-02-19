@@ -1,12 +1,10 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import DS from 'ember-data';
 import startMirage from '../../helpers/start-mirage';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
-const { PromiseArray } = DS;
+const { Object, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('pending-updates-summary', 'Integration | Component | pending updates summary', {
@@ -17,18 +15,18 @@ moduleForComponent('pending-updates-summary', 'Integration | Component | pending
 });
 
 test('it renders', function(assert) {
-  let primarySchool = Ember.Object.create(server.create('school'));
-  let secondarySchool = Ember.Object.create(server.create('school'));
-  let user = Ember.Object.create({
+  let primarySchool = Object.create(server.create('school'));
+  let secondarySchool = Object.create(server.create('school'));
+  let user = Object.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
   });
-  let currentUserMock = Ember.Service.extend({
+  let currentUserMock = Service.extend({
     model: resolve(user)
   });
 
-  let storeMock = Ember.Service.extend({
-    query(what, obj){
+  let storeMock = Service.extend({
+    query(what){
       assert.equal('pending-user-update', what);
       return resolve([1, 2, 3, 4, 5]);
     }

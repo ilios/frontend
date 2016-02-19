@@ -22,7 +22,7 @@ export default Component.extend({
         });
       });
     },
-    disableUser(update){
+    disableUser(){
       this.set('isSaving', true);
       let user = this.get('user');
       user.set('enabled', false);
@@ -37,7 +37,7 @@ export default Component.extend({
       });
 
     },
-    excludeFromSync(update){
+    excludeFromSync(){
       this.set('isSaving', true);
       let user = this.get('user');
       user.set('userSyncIgnore', true);
