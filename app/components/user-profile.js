@@ -23,6 +23,9 @@ export default Component.extend({
 
       let promise = user.get('cohorts').then((cohorts) => {
         return user.get('primaryCohort').then((primaryCohort) => {
+          if (!primaryCohort) {
+            return cohorts;
+          }
           return cohorts.filter(cohort => {
             return cohort.get('id') !== primaryCohort.get('id');
           });
