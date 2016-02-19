@@ -215,6 +215,12 @@ export default function() {
   this.delete('/api/offerings/:id', 'offering');
   this.post('/api/offerings', 'offering');
 
+  this.get('/api/pendinguserupdates', getAll);
+  this.get('/api/pendinguserupdates/:id', 'pendingUserUpdate');
+  this.put('/api/pendinguserupdates/:id', 'pendingUserUpdate');
+  this.delete('/api/pendinguserupdates/:id', 'pendingUserUpdate');
+  this.post('/api/pendinguserupdates', 'pendingUserUpdate');
+
   this.get('/api/permissions', getAll);
   this.get('/api/permissions/:id', 'permission');
   this.put('/api/permissions/:id', 'permission');
