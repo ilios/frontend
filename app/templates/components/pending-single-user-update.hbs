@@ -1,0 +1,34 @@
+{{#liquid-if updates.isFulfilled class='crossFade'}}
+  {{#if isSaving}}
+    <h2>{{fa-icon 'spinner' spin=true}}</h2>
+  {{else}}
+    {{#each updates as |update|}}
+      <div class='update'>
+        <div class='explanation'>
+          <h2>{{fa-icon 'exclamation-triangle' class='no'}}</h2>
+          {{t
+            (concat 'admin.pendingUserUpdates.' update.type)
+            update=update
+          }}
+        </div>
+
+        <div class='actions'>
+          {{#if (eq update.type 'emailMismatch')}}
+            <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
+            {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
+            {{t 'admin.pendingUserUpdates.updateIlios'}}
+          </span>
+          {{/if}}
+          <span class='clickable link' onclick={{action 'excludeFromSync' update}}>
+            {{fa-icon 'ban' class='no' title=(t 'user.excludeFromSync')}}
+            {{t 'user.excludeFromSync'}}
+          </span>
+          <span class='clickable link' onclick={{action 'disableUser' update}}>
+            {{fa-icon 'times' class='no' title=(t 'user.disableUser')}}
+            {{t 'user.disableUser'}}
+          </span>
+        </div>
+      </div>
+    {{/each}}
+  {{/if}}
+{{/liquid-if}}
