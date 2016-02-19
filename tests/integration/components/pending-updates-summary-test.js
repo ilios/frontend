@@ -40,6 +40,7 @@ test('it renders', function(assert) {
   this.render(hbs`{{pending-updates-summary}}`);
 
   return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/There are 5 users waiting to be updated/), 0);
+    assert.equal(this.$().text().trim().search(/Updates from the Campus Directory/), 0);
+    assert.notEqual(this.$().text().trim().search(/There are 5 users needing attention/), -1);
   });
 });
