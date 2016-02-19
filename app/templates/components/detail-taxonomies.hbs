@@ -18,27 +18,11 @@
     </div>
     <div class='detail-content'>
         {{#liquid-if isManaging class="horizontal"}}
-            {{taxonomy-manager}}
+            {{taxonomy-manager subject=subject}}
         {{else}}
-            <ul class='removable-list selected-taxonomy-terms'>
-                {{#each sortedTerms as |term|}}
-                    <li class="content">
-                        <span class="term-title">
-                        {{#if term.isTopLevel }}
-                            {{term.title}}
-                        {{else}}
-                            {{#each term.allParentTitles as |title|}}
-                                {{title}} &raquo;
-                            {{/each}}
-                            <strong>{{term.title}}</strong>
-                        {{/if}}
-                        </span>
-                        <span class="term-vocabulary">
-                            {{term.vocabulary.title}} ({{term.vocabulary.school.title}})
-                        </span>
-                    </li>
-                {{/each}}
-            </ul>
+            {{#each vocabularies as |vocab| }}
+                {{detail-terms-list vocabulary=vocab terms=terms}}
+            {{/each}}
         {{/liquid-if}}
     </div>
 </section>

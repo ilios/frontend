@@ -1,0 +1,15 @@
+<div><strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})</div>
+<ul class='removable-list selected-taxonomy-terms'>
+  {{#each sortedTerms as |term|}}
+    <li>
+      {{#if term.isTopLevel }}
+        {{term.title}}
+      {{else}}
+        {{#each term.allParentTitles as |title|}}
+          <span class="muted">{{title}} &raquo;</span>
+        {{/each}}
+          {{term.title}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>

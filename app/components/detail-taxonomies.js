@@ -4,16 +4,17 @@ import config from 'ilios/config/environment';
 
 const { Component, computed, inject } = Ember;
 const { service } = inject;
-const { alias, sort } = computed;
+const { alias } = computed;
 
 export default Component.extend({
     store: service(),
     i18n: service(),
     flashMessages: service(),
     subject: null,
+    bufferedTerms: [],
     terms:  alias('subject.terms'),
-    termsWithAllParents: alias('subject.termsWithAllParents'),
-    classNames: ['detail-taxonomies'],
+    vocabularies: alias('subject.associatedVocabularies'),
+    classNames: ['taxonomy-manager'],
     isCourse: false,
     isSession: false,
     isProgramYear: false,
@@ -26,14 +27,13 @@ export default Component.extend({
         return terms.get('length') && ! isManaging;
     }),
 
-    termsSorting: [
-        'vocabulary.school.title',
-        'vocabulary.title',
-        'titleWithParentTitles', // @TODO doesn't seem to work correctly, fix this [ST 2016/02/18]
-    ],
-    sortedTerms: sort('terms', 'termsSorting'),
-
     actions: {
+        manage(){
+            this.get('subject.terms').then(terms => {
+                this.set('bufferedTerms', terms.toArray());
+                this.set('isManaging', true);
+            });
+        },
         collapse(){
             this.get('terms').then(terms => {
                 if(terms.length){
