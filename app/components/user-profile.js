@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, Component, inject } = Ember;
+const { computed, Component, inject, RSVP } = Ember;
 const { PromiseObject, PromiseArray } = DS;
 const { service } = inject;
 
@@ -142,7 +142,13 @@ export default Component.extend({
       const user = this.get('user');
       user.set('enabled' , false);
       user.save().then(() => {
-        this.set('inProgress', false);
+        user.get('pendingUserUpdates').then(updates => {
+          updates.invoke('deleteRecord');
+          RSVP.all(updates.invoke('save')).then(() => {
+            this.set('inProgress', false);
+            this.get('flashMessages').success('general.savedSuccessfully');
+          });
+        });
       });
     },
 
@@ -160,7 +166,13 @@ export default Component.extend({
       const user = this.get('user');
       user.set('userSyncIgnore' , true);
       user.save().then(() => {
-        this.set('inProgress', false);
+        user.get('pendingUserUpdates').then(updates => {
+          updates.invoke('deleteRecord');
+          RSVP.all(updates.invoke('save')).then(() => {
+            this.set('inProgress', false);
+            this.get('flashMessages').success('general.savedSuccessfully');
+          });
+        });
       });
     }
   }
