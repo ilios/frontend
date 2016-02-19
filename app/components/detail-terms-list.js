@@ -9,9 +9,9 @@ export default Component.extend({
     classNames: ['detail-taxonomies'],
 
     termsSorting: [
+        //'titleWithParentTitles.content', // @todo does not work, sorting on 'title instead. Revisit [ST 2016/02/19]
         'title',
     ],
-
     sortedTerms: sort('filteredTerms', 'termsSorting'),
 
     filteredTerms: computed('terms.[]', 'vocabulary', function() {
@@ -23,7 +23,6 @@ export default Component.extend({
                 filteredTerms.push(term);
             }
         });
-
         return filteredTerms;
     }),
 });

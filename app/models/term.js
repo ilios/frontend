@@ -11,6 +11,9 @@ export default DS.Model.extend({
   parent: DS.belongsTo('term', { inverse: 'children', async: true }),
   children: DS.hasMany('term', { inverse: 'parent', async: true }),
   isTopLevel: empty('parent.content'),
+  programYears: DS.hasMany('programYear', { async: true }),
+  sessions: DS.hasMany('session', { async: true }),
+  courses: DS.hasMany('course', { async: true }),
 
   allParents: computed('parent', 'parent.allParents.[]', function(){
     var deferred = Ember.RSVP.defer();

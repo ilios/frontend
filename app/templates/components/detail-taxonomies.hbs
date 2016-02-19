@@ -18,7 +18,11 @@
     </div>
     <div class='detail-content'>
         {{#liquid-if isManaging class="horizontal"}}
-            {{taxonomy-manager subject=subject}}
+            {{taxonomy-manager
+            subject=subject
+            selectedTerms=bufferedTerms
+            add='addTermToBuffer'
+            remove='removeTermFromBuffer'}}
         {{else}}
             {{#each vocabularies as |vocab| }}
                 {{detail-terms-list vocabulary=vocab terms=terms}}

@@ -41,5 +41,35 @@ export default Component.extend({
                 }
             });
         },
+        save: function(){
+            let subject = this.get('subject');
+            let terms = subject.get('terms');
+            let promises = [];
+            terms.clear();
+            terms.addObjects(this.get('bufferedTerms'));
+            this.get('bufferedTerms').forEach((term)=>{
+                if(this.get('isCourse')){
+                    term.get('courses').addObject(subject);
+                } else if(this.get('isSession')){
+                    term.get('sessions').addObject(subject);
+                } else if(this.get('isProgramYear')) {
+                    term.get('programYears').addObject(subject);
+                }
+            });
+            promises.pushObject(subject.save());
+            Ember.RSVP.all(promises).then(()=> {
+                this.set('isManaging', false);
+            });
+        },
+        cancel: function(){
+            this.set('bufferedTerms', []);
+            this.set('isManaging', false);
+        },
+        addTermToBuffer: function(term){
+            this.get('bufferedTerms').addObject(term);
+        },
+        removeTermFromBuffer: function(term){
+            this.get('bufferedTerms').removeObject(term);
+        }
     }
 });
