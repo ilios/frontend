@@ -19,8 +19,7 @@ module.exports = function(environment) {
     flashMessageDefaults: {
       timeout: 2000,
       extendedTimeout: 3000,
-      types: [ 'success', 'warning', 'info', 'alert' ],
-      injectionFactories: []
+      types: [ 'success', 'warning', 'info', 'alert' ]
     },
     'ember-simple-auth': {
       authorizer: 'authorizer:token'
