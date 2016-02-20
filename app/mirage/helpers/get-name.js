@@ -23,6 +23,7 @@ var models = [
   'meshQualifiers',
   'meshPreviousIndexings',
   'meshTrees',
+  'pendingUserUpdates',
   'programYears',
   'programYearStewards',
   'recurringEvents',

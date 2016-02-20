@@ -52,6 +52,7 @@ Router.map(function() {
   this.route('user', {path: '/users/:user_id'});
   this.route('fourOhFour', { path: "*path"});
   this.route('logout');
+  this.route('pending-user-updates', {path: '/admin/userupdates'});
 });
 
 export default Router;

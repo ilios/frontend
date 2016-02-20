@@ -128,6 +128,7 @@ export default {
     'pagedResultsCount': 'Showing {{start}} - {{end}} of {{total}}',
     'perPage': 'Per Page',
     'summary': 'Summary',
+    'manage': 'Manage',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -474,6 +475,19 @@ export default {
   'myreport': {
     'errors': {
       'titleTooLong':  "Report title is too long (maximum is 240 characters)"
+    }
+  },
+  'admin': {
+    'pendingUpdatesSummaryTitle': 'Updates from the Campus Directory',
+    'pendingUpdatesSummary': {
+      'one': 'There is one user needing attention',
+      'other': 'There are {{count}} users needing attention'
+    },
+    'pendingUserUpdates': {
+      'filterBy': 'Filter by user name',
+      'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization.',
+      'emailMismatch': 'The email address in the directory ({{update.value}}) does not match the email in ilios ({{update.user.email}}).',
+      'updateIlios': 'Update Ilios'
     }
   }
 };

@@ -1,8 +1,22 @@
 .admin-container {
   min-height: 500px;
-  
+
   .global-search {
     position: absolute;
     right: 0;
   }
+
+  .summaries {
+    margin-top: 2em;
+
+    .summary-block {
+      @include span-columns(5 of 12);
+
+      background-color: $grey;
+      border: 1px dashed $ilios-orange;
+      margin: 1em 0;
+      padding: 0 2em .75em;
+    }
+  }
+
 }

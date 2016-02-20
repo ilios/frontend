@@ -1,0 +1,31 @@
+<h2>{{t 'admin.pendingUpdatesSummaryTitle'}}</h2>
+{{#if schools.isFulfilled}}
+  <div id='schoolsfilter' class="filter">
+    <label class="inline-label">
+      {{fa-icon 'university'}}
+    </label>
+    <div id="school-selection" class="inline-data">
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each sortedSchools as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
+    </div>
+  </div>
+{{/if}}
+{{#if updates.isFulfilled}}
+  <p>{{t 'admin.pendingUpdatesSummary' count=updates.length}}</p>
+  {{#if updates.length}}
+    {{#link-to 'pending-user-updates' (query-params school=selectedSchool.id)}}
+      <button>{{t 'general.manage'}}</button>
+    {{/link-to}}
+  {{/if}}
+{{else}}
+  {{fa-icon 'spinner' spin = true}}
+{{/if}}
