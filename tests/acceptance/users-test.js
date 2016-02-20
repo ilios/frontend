@@ -74,8 +74,6 @@ test('can search for a user and transition to user route', function(assert) {
   server.createList('user', 40, { firstName: 'Test', lastName: 'Name', school: 1 });
 
   const userSearch = '.user-search input';
-  const leftArrow = '.backward';
-  const rightArrow = '.forward';
 
   visit(url);
   fillIn(userSearch, 'Test Name');

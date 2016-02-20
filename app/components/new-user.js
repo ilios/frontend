@@ -4,7 +4,7 @@ import EmberValidations, { validator as emberValidator } from 'ember-validations
 import validator from 'npm:validator';
 const { inject, computed, RSVP } = Ember;
 const { service } = inject;
-const { oneWay, sort } = computed;
+const { sort } = computed;
 const { PromiseObject, PromiseArray } = DS;
 
 export default Ember.Component.extend(EmberValidations, {
@@ -136,7 +136,9 @@ export default Ember.Component.extend(EmberValidations, {
             middleName,
             lastName,
             campusId,
+            otherId,
             email,
+            phone,
             school,
             enabled: true
           });

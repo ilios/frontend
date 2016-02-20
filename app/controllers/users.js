@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import config from '../config/environment';
-import DS from 'ember-data';
 import { cleanQuery } from '../utils/query-utils';
 
 const { computed, Controller, inject, run } = Ember;
