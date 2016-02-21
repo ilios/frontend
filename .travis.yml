@@ -44,7 +44,7 @@ script:
   - npm test
 
 after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember deploy production
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy production
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
