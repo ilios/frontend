@@ -33,13 +33,6 @@ module.exports = function(deployTarget) {
     ENV['s3-index'].prefix = 'prod-v1.1';
   }
 
-  if (deployTarget === 'development') {
-    ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'dev-v1.1';
-    ENV.s3.region = 'us-west-1';
-    ENV.s3.bucket = 'dev-ilioscdn';
-  }
-
   // Note: if you need to build some configuration asynchronously, you can return
   // a promise that resolves with the ENV object instead of returning the
   // ENV object synchronously.
