@@ -43,11 +43,8 @@ script:
   - scss-lint
   - npm test
 
-deploy:
-  provider: script
-  script: ember deploy production
-  on:
-    branch: master
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember deploy production
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
