@@ -8,6 +8,7 @@ const { service } = inject;
 export default Component.extend({
   store: service(),
   course: null,
+  includeUnpublishedSessions: false,
   tagName: 'section',
   classNames: ['printable course'],
   sortTitle: ['title'],
@@ -34,9 +35,11 @@ export default Component.extend({
         });
       })
     });
-    course.get('sessions').then(function(sessions){
-      let noDraftSessions = sessions.filterBy('isPublishedOrScheduled');
-      let proxiedSessions = noDraftSessions.map(function(session){
+    course.get('sessions').then(sessions => {
+      if (!this.get('includeUnpublishedSessions')) {
+        sessions = sessions.filterBy('isPublishedOrScheduled');
+      }
+      let proxiedSessions = sessions.map(function(session){
         return SessionProxy.create({
           content: session
         });
@@ -50,7 +53,7 @@ export default Component.extend({
     });
 
   }),
-  
+
   courseLearningMaterials: computed('course', function(){
     let course = this.get('course').get('id');
     return this.get('store').query('courseLearningMaterial', {
@@ -59,5 +62,5 @@ export default Component.extend({
       }
     });
   }),
-  
+
 });

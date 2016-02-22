@@ -1,5 +1,1 @@
-{{#if model.isPublishedOrScheduled}}
-  {{print-course course=model}}
-{{else}}
-  {{t 'courses.noPrintDraft'}}
-{{/if}}
+{{print-course course=model includeUnpublishedSessions=includeUnpublishedSessions}}
