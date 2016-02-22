@@ -1,10 +1,8 @@
 import Ember from 'ember';
-import config from '../config/environment';
 
 const { Component, computed, observer, run } = Ember;
 const { filterBy, mapBy, sort } = computed;
 const { once } = run;
-const { IliosFeatures: { learnerGroupMultiedit } } = config;
 
 export default Component.extend({
   classNames: ['learnergroup-overview'],
@@ -27,8 +25,6 @@ export default Component.extend({
       once(this, this.set, 'includeAll', false);
     }
   }),
-
-  isActive: learnerGroupMultiedit,
 
   actions: {
     addInstructor: function(user){

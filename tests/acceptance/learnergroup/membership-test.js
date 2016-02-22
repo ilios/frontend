@@ -224,10 +224,10 @@ test('multi-edit save (bulk-saving) works properly and knows when to trigger', f
       let el = find(selector);
       el.prop('checked', !el.prop('checked'));
       triggerEvent(el, 'change');
-      
+
     });
   };
-  
+
   const toggleSwitch = '.switch-label';
   const checkAllBox = '.check-all-input';
   const selectInputField = '.ff-select-field';

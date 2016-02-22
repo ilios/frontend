@@ -14,7 +14,7 @@ export default Ember.Service.extend({
     if(isEmpty(session)){
       return null;
     }
-    
+
     const jwt = session.get('data.authenticated.jwt');
 
     if(isEmpty(jwt)){
@@ -22,7 +22,7 @@ export default Ember.Service.extend({
     }
     const js = atob(jwt.split('.')[1]);
     const obj = Ember.$.parseJSON(js);
-    
+
     return get(obj, 'user_id');
   }),
 

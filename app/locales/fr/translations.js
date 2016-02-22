@@ -400,7 +400,9 @@ export default {
   'user': {
     'firstName': "Prénom",
     'lastName': "Nom de famille",
+    'middleName': 'Deuxième Prénom',
     'fullName': "Nom complet",
+    'otherId': 'Autre ID',
     'manageUsers': "Gérer les utilisateurs",
     'searchUsers': "Rechercher des utilisateurs",
     'userRoles': 'Rôles des Utilisateurs',
@@ -409,7 +411,11 @@ export default {
     'developer': 'Administrateur',
     'formerStudent': 'Ancien Étudiant',
     'disableUser': 'Désactiver compte d’utilisateur',
-    'excludeFromSync': 'Exclure de Sync'
+    'excludeFromSync': 'Exclure de Sync',
+    'new': 'Nouvel utilisateur',
+    'saved': 'Nouvel utilisateur enregistré avec succès',
+    'username': 'Nom d’utilisateur',
+    'password': 'Mot de passe',
   },
   'language': {
     'select': {
@@ -471,6 +477,7 @@ export default {
     'alphanumeric': "doit être une valeur alphanumérique",
     'alphanumeric2': "doit être une valeur alphanumérique ('-' et ':' sont permis)",
     'url': "doit être une URL valide",
+    'email': 'Doit être une e-mail valide',
   },
   'myreport': {
     'errors': {

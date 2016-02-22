@@ -30,6 +30,6 @@ module.exports = function(defaults) {
     }
   });
   app.import('bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js');
-  
+
   return app.toTree();
 };

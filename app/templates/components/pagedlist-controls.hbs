@@ -2,17 +2,30 @@
   <span class='clickable link backward' {{action 'goBack'}}>{{fa-icon 'backward'}}</span>
 {{/unless}}
 
-{{t 'general.pagedResultsCount' start=start end=end total=total}}
+{{#unless limitless}}
+  {{t 'general.pagedResultsCount' start=start end=end total=total}}
+{{else}}
+  <select onchange={{action "setLimit" value="target.value"}}>
+    {{#each offsetOptions as |option|}}
+      <option value={{option}} selected={{is-equal option limit}}>
+        {{option}}
+      </option>
+    {{/each}}
+  </select>
+  {{t 'general.perPage'}}
+{{/unless}}
 
 {{#unless lastPage}}
   <span class='clickable link forward' {{action 'goForward'}}>{{fa-icon 'forward'}}</span>
 {{/unless}}
 
-<select onchange={{action "setLimit" value="target.value"}}>
-  {{#each offsetOptions as |option|}}
-    <option value={{option}} selected={{is-equal option limit}}>
-      {{option}}
-    </option>
-  {{/each}}
-</select>
-{{t 'general.perPage'}}
+{{#unless limitless}}
+  <select onchange={{action "setLimit" value="target.value"}}>
+    {{#each offsetOptions as |option|}}
+      <option value={{option}} selected={{is-equal option limit}}>
+        {{option}}
+      </option>
+    {{/each}}
+  </select>
+  {{t 'general.perPage'}}
+{{/unless}}
