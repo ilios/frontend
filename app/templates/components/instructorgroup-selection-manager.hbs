@@ -8,14 +8,14 @@
 </ul>
 {{search-box value=filter placeholder=placeholder}}
 <div class='selectable-list'>
-  <h5>{{t 'courses.availalbeInstructorGroups'}}</h5>
+  <h5>{{t 'courses.availableInstructorGroups'}}</h5>
   <ul>
     {{#each filteredAvailableInstructorGroups as |instructorGroup|}}
       <li {{action 'add' instructorGroup}}>
           {{instructorGroup.title}}
       </li>
     {{else}}
-      <li class='static'>{{t 'courses.noAvailalbeInstructorGroups'}}</li>
+      <li class='static'>{{t 'courses.noAvailableInstructorGroups'}}</li>
     {{/each}}
   </ul>
 </div>
