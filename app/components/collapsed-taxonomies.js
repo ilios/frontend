@@ -4,6 +4,6 @@ const { Component, computed } = Ember;
 const { alias } = computed;
 
 export default Component.extend({
-    subject: null,
-    vocabularies: alias('subject.associatedVocabularies'),
+  subject: null,
+  vocabularies: alias('subject.associatedVocabularies'),
 });

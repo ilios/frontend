@@ -2,7 +2,7 @@ import { intersectionCount } from '../../../helpers/intersection-count';
 import { module, test } from 'qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-module('Unit | Helper | intersection count + testgroup');
+module('Unit | Helper | intersection count ' + testgroup);
 
 test('correctly calculates intersection count between two arrays', function(assert) {
   let result = intersectionCount([[42], [42]]);
