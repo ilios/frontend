@@ -4,12 +4,14 @@ import moment from 'moment';
 import ValidationError from 'ilios/mixins/validation-error';
 import EmberValidations from 'ember-validations';
 
-const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP } = Ember;
+const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP, inject } = Ember;
 const { notEmpty } = computed;
 const { all, Promise } = RSVP;
+const { service } = inject;
 const { PromiseArray } = DS;
 
 export default Component.extend(EmberValidations, ValidationError, {
+  flashMessages: service(),
   init() {
     this._super(...arguments);
 
@@ -154,7 +156,7 @@ export default Component.extend(EmberValidations, ValidationError, {
   getAllLearnerGroups() {
     const groupHash = this.get('learnerGroups');
     const output = [];
-    
+
     for (let key in groupHash) {
       output.pushObjects(groupHash[key]);
     }
