@@ -153,7 +153,7 @@ export default Controller.extend({
     if(currentMonth < 6){
       currentYear--;
     }
-    let defaultYear = years.find(year => year.get('id') === currentYear);
+    let defaultYear = years.find(year => parseInt(year.get('id')) === currentYear);
     if(isEmpty(defaultYear)){
       defaultYear = years.get('lastObject');
     }
