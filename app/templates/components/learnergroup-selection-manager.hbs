@@ -13,7 +13,7 @@
 </ul>
 {{search-box value=filter placeholder=placeholder}}
 <div class='selectable-list'>
-  <h5>{{t 'courses.availalbeLearnerGroups'}}</h5>
+  <h5>{{t 'courses.availableLearnerGroups'}}</h5>
   <ul>
     {{#each filteredCohorts as |cohort|}}
       <li class='static'>{{cohort.displayTitle}}
@@ -29,7 +29,7 @@
             </li>
 
           {{else}}
-            <li class='static'>{{t 'courses.noAvailalbeLearnerGroups'}}</li>
+            <li class='static'>{{t 'courses.noAvailableLearnerGroups'}}</li>
           {{/each}}
         </ul>
       </li>
