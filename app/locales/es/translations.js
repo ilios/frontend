@@ -37,6 +37,8 @@ export default {
     'actions': 'Acciones',
     'topics': 'Temas',
     'topic': 'Tema',
+    'term': 'Término',
+    'terms': 'Términos',
     'email': 'Correo',
     'cohort': 'Clase de la Graduación',
     'cohorts': 'Clases de la Graduación',
@@ -130,6 +132,8 @@ export default {
     'summary': 'Resumen',
     'manage': 'Manage',
     'tooManyResults': 'La búsqueda ha devuelto más de {{count}} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales.',
+    'vocabularies': 'Vocabularios',
+    'vocabulary': 'Vocabulario',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -509,5 +513,9 @@ export default {
     },
     'userNotAddableFromDirectory': "ste usuario está faltando información requerida y no se puede agregar",
     'goToUser': "Mostrar registro de usuario en Ilios",
+    'taxonomies' : {
+      'assignedTerms': 'Términos asignados',
+      'termsManageTitle': 'Maneje Términos',
+    },
   }
 };

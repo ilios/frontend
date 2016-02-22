@@ -37,6 +37,8 @@ export default {
     'actions': "Actions",
     'topics': "Sujêts",
     'topic': "Sujet",
+    'term': 'Terme',
+    'terms': 'Termes',
     'email': "Email",
     'cohort': "Cohorte",
     'cohorts': "Cohortes",
@@ -130,6 +132,8 @@ export default {
     'summary': 'Résumé',
     'manage': 'Administrer',
     'tooManyResults': 'Votre recherche présente plus que les {{count}} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes.',
+    'vocabularies': 'Vocabulaires',
+    'vocabulary': 'Vocabulaire',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -509,5 +513,9 @@ export default {
     },
     'userNotAddableFromDirectory': "Cette utilisateur manque les informations requises, et ne peut pas être ajouté",
     'goToUser': "Présentant enregistrement d'utilisateur en Ilios",
+  },
+  'taxonomies' : {
+    'assignedTerms': 'Termes assignées',
+    'termsManageTitle': 'Manager des Termes',
   },
 };
