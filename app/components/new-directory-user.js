@@ -12,6 +12,7 @@ export default Ember.Component.extend(EmberValidations, {
   currentUser: service(),
   ajax: service(),
   flashMessages: service(),
+  iliosConfig: service(),
 
   init(){
     this._super(...arguments);
@@ -43,6 +44,14 @@ export default Ember.Component.extend(EmberValidations, {
   tooManyResults: false,
   searchTerms: null,
 
+  allowCustomUserName: computed('iliosConfig.authenticationType', function(){
+    return PromiseObject.create({
+      promise: this.get('iliosConfig.authenticationType').then(type => {
+        return type === 'form';
+      })
+    });
+  }),
+
   sortBy: ['title'],
   sortedSchools: sort('schools', 'sortBy'),
   schools: computed('currentUser.model.schools.[]', {
@@ -66,7 +75,9 @@ export default Ember.Component.extend(EmberValidations, {
       length: { maximum: 100 }
     },
     'password': {
-      presence: true
+      presence: {
+        'if': 'allowCustomUserName'
+      }
     },
     'otherId': {
       length: { maximum: 16 }
@@ -178,6 +189,7 @@ export default Ember.Component.extend(EmberValidations, {
       this.set('email', user.email);
       this.set('campusId', user.campusId);
       this.set('phone', user.telephoneNumber);
+      this.set('username', user.username);
     }
   }
 });

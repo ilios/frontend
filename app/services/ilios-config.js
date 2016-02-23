@@ -21,5 +21,9 @@ export default Ember.Service.extend(EventMixin, {
 
   userSearchType: computed('config.userSearchType', function(){
     return this.itemFromConfig('userSearchType');
+  }),
+
+  authenticationType: computed('config.type', function(){
+    return this.itemFromConfig('type');
   })
 });
