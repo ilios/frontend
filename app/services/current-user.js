@@ -179,6 +179,7 @@ export default Ember.Service.extend({
   }),
   canViewCourses: false,
   canEditCourses: false,
+  canPrintUnpublishedCourse: false,
   coursesPrivilegesObserver: on('init', observer('privileges',
     function(){
       Ember.RSVP.all([
@@ -188,6 +189,7 @@ export default Ember.Service.extend({
       ]).then(hasRole => {
         this.set('canViewCourses', hasRole.contains(true));
         this.set('canEditCourses', hasRole.contains(true));
+        this.set('canPrintUnpublishedCourse', hasRole.contains(true));
       });
     }
   )),
