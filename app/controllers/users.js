@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import config from '../config/environment';
 import { cleanQuery } from '../utils/query-utils';
 
@@ -6,20 +7,24 @@ const { computed, Controller, inject, run } = Ember;
 const { service } = inject;
 const { debounce } = run;
 const { IliosFeatures: { allowAddNewUser } } = config;
+const { PromiseObject } = DS;
 
 export default Controller.extend({
   store: service(),
+  iliosConfig: service(),
   queryParams: {
     offset: 'offset',
     limit: 'limit',
     query: 'filter',
-    showNewUserForm: 'addUser'
+    showNewUserForm: 'addUser',
+    searchTerms: 'search'
   },
   offset: 0,
   limit: 25,
   query: '',
   allowAddNewUser: allowAddNewUser,
   showNewUserForm: false,
+  searchTerms: null,
 
   delay: 500,
 
@@ -34,6 +39,14 @@ export default Controller.extend({
       })
     }
   }).readOnly(),
+
+  newUserComponent: computed('iliosConfig.userSearchType', function(){
+    return PromiseObject.create({
+      promise: this.get('iliosConfig.userSearchType').then(userSearchType => {
+        return userSearchType === 'ldap'?'new-directory-user':'new-user';
+      })
+    });
+  }),
 
   _updateQuery(value) {
     if(value !== this.get('query')){
