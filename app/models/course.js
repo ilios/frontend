@@ -122,6 +122,56 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
       promise: deferred.promise
     });
   }),
+
+  /**
+   * All schools associated with this course.
+   * This includes the course-owning school, as well as schools owning associated cohorts.
+   * @property schools
+   * @type {Ember.computed}
+   * @public
+   */
+  schools: computed('school', 'cohorts.[]', function() {
+    let schools = [];
+    let promises = [];
+
+    // get course-owning school
+    let promise = new Ember.RSVP.Promise(resolve => {
+      this.get('school').then(school => {
+        schools.pushObject(school);
+        resolve();
+      });
+
+    });
+    promises.pushObject(promise);
+
+    // get schools from associated cohorts
+    promise = new Ember.RSVP.Promise(resolve => {
+      this.get('cohorts').then(cohorts => {
+        Ember.RSVP.map(cohorts.mapBy('programYear'), programYear => {
+            return programYear.get('program').then(program => {
+              return program.get('school').then(school => {
+                schools.pushObject(school);
+              });
+            });
+        }).then(() => {
+          resolve();
+        });
+      });
+    });
+    promises.pushObject(promise);
+
+    // once the two promises above resolve,
+    // dedupe all schools and return a promise-array containing the dupe-free list of schools.
+    let deferred = Ember.RSVP.defer();
+    Ember.RSVP.all(promises).then(() => {
+      let s = schools.uniq();
+      deferred.resolve(s);
+    });
+
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
 });
 
 export default Course;

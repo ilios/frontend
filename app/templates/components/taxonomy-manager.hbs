@@ -6,3 +6,11 @@
     remove='remove'
   }}
 {{/each}}
+
+<select>
+{{#each subject.schools as |school|}}
+    {{#each school.vocabularies as |vocab|}}
+        <option>{{vocab.title}} ({{school.title}})</option>
+    {{/each}}
+{{/each}}
+</select>
