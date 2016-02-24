@@ -1,4 +1,4 @@
-{{#each vocabularies as |vocab| }}
+{{#each subject.associatedVocabularies as |vocab| }}
   {{detail-terms-list
     vocabulary=vocab
     terms=selectedTerms
@@ -7,10 +7,19 @@
   }}
 {{/each}}
 
-<select>
-{{#each subject.schools as |school|}}
-    {{#each school.vocabularies as |vocab|}}
-        <option>{{vocab.title}} ({{school.title}})</option>
-    {{/each}}
-{{/each}}
-</select>
+{{#if subject.assignableVocabularies.length}}
+<div>
+  <label class="inline-label">
+    {{t 'general.vocabulary'}}
+  </label>
+  <div id="vocabulary-selection" class="inline-data">
+    <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
+      {{#each subject.assignableVocabularies as |vocab|}}
+          <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+{{/if}}
+
+{{selectedVocabulary.title}}
