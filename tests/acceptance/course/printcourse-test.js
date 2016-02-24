@@ -4,21 +4,15 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-//import Ember from 'ember';
-
-//const { isEmpty, isPresent, run } = Ember;
-//const { later } = run;
 
 var application;
-var fixtures = {};
 
-module('Acceptance: Course - Print Course' + testgroup, {
+module('Acceptance: Course - Print Course', {
 
   beforeEach: function() {
     application = startApp();
-    fixtures.user = setupAuthentication(application);
+    setupAuthentication(application);
     server.create('school');
     server.create('academicYear');
     server.create('course', {
@@ -78,7 +72,7 @@ module('Acceptance: Course - Print Course' + testgroup, {
 
 });
 
-test('test print course', function(assert) {
+test('test print course learning materials', function(assert) {
 
   visit('/course/1/print');
 
