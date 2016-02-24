@@ -20,6 +20,7 @@ export default Component.extend(EmberValidations, {
       break;
     case 'citation':
       this.set('isCitation', true);
+      this.setProperties({ isCitation: true, 'validations.citationBuffer': { presence: true} });
       break;
     }
 
@@ -45,7 +46,7 @@ export default Component.extend(EmberValidations, {
 
       this.set('userRole', defaultRole);
     });
-    
+
     set(this, 'showUploadStatus', false);
     set(this, 'fileUploadPercentage', 0);
   },
@@ -53,6 +54,7 @@ export default Component.extend(EmberValidations, {
   willDestroy() {
     let validations = this.get('validations');
     delete validations.urlBuffer;
+    delete validations.citationBuffer;
     delete validations.fileHash;
   },
 
@@ -70,6 +72,7 @@ export default Component.extend(EmberValidations, {
   titleBuffer: alias('title'),
   authorBuffer: alias('originalAuthor'),
   urlBuffer: alias('link'),
+  citationBuffer: alias('citation'),
   validations: {
     'titleBuffer': {
       presence: true,
@@ -100,9 +103,16 @@ export default Component.extend(EmberValidations, {
     }
   }),
 
+  topErrorMessageCitation: computed('errors.citationBuffer.[]', 'displayCitationError', function() {
+    if (this.get('displayCitationError')) {
+      return this.get('errors.citationBuffer')[0];
+    }
+  }),
+
   displayNameError: false,
   displayAuthorError: false,
   displayUrlError: false,
+  displayCitationError: false,
 
   filename: null,
   fileHash: null,
@@ -270,6 +280,10 @@ export default Component.extend(EmberValidations, {
 
     displayUrlError() {
       this.set('displayUrlError', true);
+    },
+
+    displayCitationError() {
+      this.set('displayCitationError', true);
     }
   }
 });
