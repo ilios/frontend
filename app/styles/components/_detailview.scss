@@ -214,6 +214,31 @@ $collapse-control-shadow-grey: #e2e2e2;
     }
   }
 
+  .tag-tree {
+    margin-bottom: $base-font-size;
+
+    li {
+      margin-left: 10px;
+
+      div {
+        background-color: $white;
+        border-radius: 4px;
+        border: 1px $header-grey solid;
+        margin-top: 5px;
+        padding: .2em .4em .2em .6em;
+        vertical-align: middle;
+
+        &.selected {
+          background-color: $header-grey;
+        }
+      }
+
+      .actions {
+        float: right;
+      }
+    }
+  }
+
   .inline-list {
     margin-bottom: $base-font-size;
 
