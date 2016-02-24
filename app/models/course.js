@@ -172,6 +172,31 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
       promise: deferred.promise
     });
   }),
+
+  /**
+   * All vocabularies that are eligible for assignment to this course.
+   * @property assignableVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  assignableVocabularies: computed('schools.@each.vocabularies', function() {
+    var deferred = Ember.RSVP.defer();
+    this.get('schools').then(function (terms) {
+      Ember.RSVP.all(terms.mapBy('vocabularies')).then(function (schoolVocabs) {
+        let v = [];
+        schoolVocabs.forEach(vocabs => {
+          vocabs.forEach(vocab => {
+            v.pushObject(vocab);
+          })
+        });
+        v = v.sortBy('school.title', 'title');
+        deferred.resolve(v);
+      });
+    });
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
 });
 
 export default Course;
