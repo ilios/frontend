@@ -1,0 +1,17 @@
+<ul>
+  {{#each terms as |term|}}
+    {{#if (is-in selectedTerms term)}}
+      <li class="assigned">{{term.title}} <span {{action 'remove' term}}>{{fa-icon 'remove'}}</span>
+      {{#if term.hasChildren}}
+        {{selectable-terms-list selectedTerms=selectedTerms terms=term.children add='add' remove='remove'}}
+      {{/if}}
+      </li>
+    {{else}}
+      <li>{{term.title}} <span {{action 'add' term}}>{{fa-icon 'plus'}}</span>
+        {{#if term.hasChildren}}
+          {{selectable-terms-list selectedTerms=selectedTerms terms=term.children add='add' remove='remove'}}
+        {{/if}}
+      </li>
+    {{/if}}
+  {{/each}}
+</ul>

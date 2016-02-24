@@ -8,18 +8,21 @@
 {{/each}}
 
 {{#if subject.assignableVocabularies.length}}
-<div>
-  <label class="inline-label">
-    {{t 'general.vocabulary'}}
-  </label>
-  <div id="vocabulary-selection" class="inline-data">
-    <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
-      {{#each subject.assignableVocabularies as |vocab|}}
-          <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
-      {{/each}}
-    </select>
+  <div class='vocabulary-picker'>
+    <label class="inline-label">
+      {{t 'general.vocabulary'}}
+    </label>
+    <div id="vocabulary-selection" class="inline-data">
+      <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
+        {{#each subject.assignableVocabularies as |vocab|}}
+            <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
+        {{/each}}
+      </select>
+    </div>
   </div>
-</div>
+  <div class='terms-picker'>
+    {{selectable-terms-list selectedTerms=selectedTerms terms=selectedVocabulary.topLevelTerms add='add' remove='remove'}}
+  </div>
 {{/if}}
 
-{{selectedVocabulary.title}}
+

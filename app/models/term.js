@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 const { computed } =  Ember;
-const { empty } = computed;
+const { empty, notEmpty } = computed;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -14,6 +14,7 @@ export default DS.Model.extend({
   programYears: DS.hasMany('programYear', { async: true }),
   sessions: DS.hasMany('session', { async: true }),
   courses: DS.hasMany('course', { async: true }),
+  hasChildren: notEmpty('children.content'),
 
   allParents: computed('parent', 'parent.allParents.[]', function(){
     var deferred = Ember.RSVP.defer();
