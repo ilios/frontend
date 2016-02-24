@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const { Component, computed, inject, isPresent } = Ember;
 const { service } = inject;
-const { alias, sort } = computed;
+const { sort } = computed;
 
 export default Component.extend({
   store: service(),
