@@ -5,7 +5,7 @@ import PublishableModel from 'ilios/mixins/publishable-model';
 import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
-const { mapBy, notEmpty, sum } = computed;
+const { alias, mapBy, notEmpty, sum } = computed;
 const { PromiseArray, PromiseObject } = DS;
 
 var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
@@ -113,6 +113,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       promise: deferred.promise
     });
   }),
+  assignableVocabularies: alias('course.assignableVocabularies'),
 });
 
 export default Session;
