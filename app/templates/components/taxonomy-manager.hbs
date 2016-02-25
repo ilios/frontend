@@ -1,16 +1,19 @@
-{{#each subject.assignableVocabularies as |vocab| }}
-  {{detail-terms-list
-    vocabulary=vocab
-    terms=selectedTerms
-    canEdit=true
-    remove='remove'
-  }}
-{{/each}}
-
+{{#if selectedTerms}}
+  <div class='selected-terms'>
+    {{#each subject.assignableVocabularies as |vocab| }}
+      {{detail-terms-list
+        vocabulary=vocab
+        terms=selectedTerms
+        canEdit=true
+        remove='remove'
+      }}
+    {{/each}}
+  </div>
+{{/if}}
 {{#if subject.assignableVocabularies.length}}
   <div class='vocabulary-picker'>
     <label class="inline-label">
-      {{t 'general.vocabulary'}}
+      <strong>{{t 'general.vocabulary'}}</strong>
     </label>
     <div id="vocabulary-selection" class="inline-data">
       <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
@@ -20,7 +23,7 @@
       </select>
     </div>
   </div>
-  <div class='tag-tree'>
+  <div class='terms-picker tag-tree'>
     {{selectable-terms-list selectedTerms=selectedTerms terms=selectedVocabulary.topLevelTerms add='add' remove='remove'}}
   </div>
 {{/if}}
