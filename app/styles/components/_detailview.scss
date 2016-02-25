@@ -218,7 +218,7 @@ $collapse-control-shadow-grey: #e2e2e2;
     margin-bottom: $base-font-size;
 
     li {
-      margin-left: 10px;
+      margin-left: 20px;
 
       div {
         background-color: $white;
@@ -236,7 +236,12 @@ $collapse-control-shadow-grey: #e2e2e2;
       .actions {
         float: right;
       }
+
+      &.top-level {
+        margin-left: 0;
+      }
     }
+
   }
 
   .inline-list {
