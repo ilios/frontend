@@ -515,6 +515,7 @@ export default {
     'goToUser': "Mostrar registro de usuario en Ilios",
     'taxonomies' : {
       'assignedTerms': 'Términos asignados',
+      'selectVocabulary': 'Seleccione un Vocabulario',
       'termsManageTitle': 'Maneje Términos',
     },
   }

@@ -516,6 +516,8 @@ export default {
   },
   'taxonomies' : {
     'assignedTerms': 'Assigned terms',
+    'selectVocabulary': 'Select Vocabulary',
     'termsManageTitle': 'Manage Terms',
+
   },
 };
