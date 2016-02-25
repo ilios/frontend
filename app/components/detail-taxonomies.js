@@ -10,8 +10,6 @@ export default Component.extend({
   flashMessages: service(),
   subject: null,
   bufferedTerms: [],
-  terms: alias('subject.terms'),
-  vocabularies: alias('subject.associatedVocabularies'),
   classNames: ['taxonomy-manager'],
   isCourse: false,
   isSession: false,
@@ -19,9 +17,9 @@ export default Component.extend({
   isManaging: false,
   editable: true,
 
-  showCollapsible: computed('isManaging', 'terms', function () {
+  showCollapsible: computed('isManaging', 'subject.terms.[]', function () {
     const isManaging = this.get('isManaging');
-    const terms = this.get('terms');
+    const terms = this.get('subject.terms');
     return terms.get('length') && !isManaging;
   }),
 
@@ -33,8 +31,8 @@ export default Component.extend({
       });
     },
     collapse(){
-      this.get('terms').then(terms => {
-        if (terms.length) {
+      this.get('subject.terms').then(terms => {
+        if (terms.get('length')) {
           this.attrs.collapse();
         }
       });

@@ -4,7 +4,7 @@
             <span class='detail-specific-title'>{{t 'taxonomies.termsManageTitle'}}</span>
         </div>
     {{else}}
-        <div class='detail-title {{if terms.length "clickable"}}' {{action 'collapse'}}>
+        <div class='detail-title {{if subject.terms.length "clickable"}}' {{action 'collapse'}}>
             {{t 'general.terms'}} ({{subject.terms.length}})
         </div>
     {{/if}}
@@ -24,8 +24,8 @@
             add='addTermToBuffer'
             remove='removeTermFromBuffer'}}
         {{else}}
-            {{#each vocabularies as |vocab| }}
-                {{detail-terms-list vocabulary=vocab terms=terms canEdit=false}}
+            {{#each subject.associatedVocabularies as |vocab| }}
+                {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
             {{/each}}
         {{/liquid-if}}
     </div>
