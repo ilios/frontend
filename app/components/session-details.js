@@ -26,7 +26,9 @@ export default Component.extend({
     },
     toggleSessionObjectiveDetails(){
       this.sendAction('toggleSessionObjectiveDetails');
-    }
+    },
+    toggleSessionTaxonomyDetails(){
+      this.sendAction('toggleSessionTaxonomyDetails');
+    },
   }
-
 });
