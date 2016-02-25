@@ -64,8 +64,8 @@
   }
 }
 
-.make-recurring-input-container {
-  .has-error {
+input {
+  &.has-error {
     border-color: $ilios-red;
   }
 }

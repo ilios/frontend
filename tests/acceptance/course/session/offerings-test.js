@@ -489,7 +489,7 @@ test('users can create recurring small groups', function(assert) {
 
   const expandButton = '.expand-button';
   const makeRecurringButton = '.make-recurring-slider .switch-label';
-  const makeRecurringInput = '.make-recurring-input ';
+  const makeRecurringInput = '.make-recurring-input';
 
   const startDateInput = '.offering-startdate-picker input';
   const startTimes = '.starttime select';

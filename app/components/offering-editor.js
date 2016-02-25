@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
-import ValidationError from 'ilios/mixins/validation-error';
 import EmberValidations from 'ember-validations';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, observer, RSVP, inject } = Ember;
@@ -10,7 +9,7 @@ const { all, Promise } = RSVP;
 const { service } = inject;
 const { PromiseArray } = DS;
 
-export default Component.extend(EmberValidations, ValidationError, {
+export default Component.extend(EmberValidations, {
   flashMessages: service(),
   init() {
     this._super(...arguments);
@@ -26,6 +25,7 @@ export default Component.extend(EmberValidations, ValidationError, {
     const cohorts = this.get('cohorts');
     const learnerGroups = {};
     const recurringDays = this.setDefaultCheckedDay();
+    const showErrorsFor = [];
 
     if (cohorts && isPresent(cohorts)) {
       cohorts.forEach((cohort) => {
@@ -33,7 +33,7 @@ export default Component.extend(EmberValidations, ValidationError, {
       });
     }
 
-    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime, recurringDays });
+    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime, recurringDays, showErrorsFor });
   },
 
   classNames: ['offering-editor'],
@@ -51,9 +51,10 @@ export default Component.extend(EmberValidations, ValidationError, {
   instructorGroups: null,
   learnerGroups: null,
 
+  showErrorsFor: [],
   validations: {
     room : {
-      length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }},
+      length: {maximum: 60, allowBlank: true},
     },
     'numberOfWeeks': {
       presence: {
@@ -339,13 +340,6 @@ export default Component.extend(EmberValidations, ValidationError, {
 
         this.send('cancel');
       }).catch(() => {
-        const keys = Object.keys(this.get('errors'));
-        const translatableKeys = ['room'];
-        keys.forEach((key) => {
-          if (translatableKeys.contains(key)){
-            this.get('flashMessages').alert(this.get('errors.' + key));
-          }
-        });
         return;
       });
     },
@@ -358,9 +352,8 @@ export default Component.extend(EmberValidations, ValidationError, {
     toggleMakeRecurring() {
       this.set('makeRecurring', !this.get('makeRecurring'))
     },
-
-    changeValue(value) {
-      this.set('numberOfWeeks', parseInt(value));
+    addErrorDisplayFor(field){
+      this.get('showErrorsFor').pushObject(field);
     }
   }
 });

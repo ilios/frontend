@@ -314,7 +314,7 @@ export default {
       'roomTooLong': "Location name is too long (maximum is 60 characters)"
     },
     'makeRecurring': 'Make Recurring',
-    'numberOfWeeks': 'Number of weeks (positive integers only)',
+    'numberOfWeeks': 'Number of weeks',
     'sunday': 'Sunday',
     'monday': 'Monday',
     'tuesday': 'Tuesday',

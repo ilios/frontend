@@ -99,16 +99,16 @@
         </div>
 
         <div class="make-recurring-input-container">
-          <input type="text"
-            onChange={{action "changeValue" value="target.value"}}
-            oninput={{action "changeValue" value="target.value"}}
-            class="make-recurring-input {{if topErrorMessage 'has-error'}}"
-            placeholder="e.g. 3"
-            onfocus={{action "displayError"}} />
-          {{#if topErrorMessage}}
-            <span class="validation-error-message">{{topErrorMessage}}</span>
-          {{/if}}
+          {{one-way-input
+            value=numberOfWeeks
+            update=(action (mut numberOfWeeks))
+            focusOut=(action 'addErrorDisplayFor' 'numberOfWeeks')
+            class=(concat 'make-recurring-input ' (if (and errors.numberOfWeeks (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
+          }}
           <label class="make-recurring-input-label">{{t 'offerings.numberOfWeeks'}}</label>
+          {{#if (and errors.numberOfWeeks (is-in showErrorsFor 'numberOfWeeks'))}}
+            <span class="validation-error-message">{{errors.numberOfWeeks}}</span>
+          {{/if}}
         </div>
       </div>
     {{/if}}
@@ -118,7 +118,20 @@
 {{#unless smallGroupMode}}
   <div class="form-col-12">
     <label class="form-label">{{t 'general.location'}}:</label>
-    <div class="form-data"><span class='room'>{{input value=room placeholder="i.e. Rm. 111"}}</span></div>
+    <div class="form-data">
+      <span class='room'>
+        {{one-way-input
+          value=room
+          update=(action (mut room))
+          focusOut=(action 'addErrorDisplayFor' 'room')
+          focusIn=(action 'addErrorDisplayFor' 'room')
+          class=(if (and errors.room (is-in showErrorsFor 'room')) 'has-error')
+        }}
+      </span>
+      {{#if (and errors.room (is-in showErrorsFor 'room'))}}
+        <span class="validation-error-message">{{errors.room}}</span>
+      {{/if}}
+    </div>
   </div>
 {{/unless}}
 
