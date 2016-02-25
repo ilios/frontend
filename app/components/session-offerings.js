@@ -27,7 +27,7 @@ export default Component.extend({
 
   newButtonTitle: t('general.add'),
 
-  offeringEditorOn: true,
+  offeringEditorOn: false,
 
   cohorts: alias('session.course.cohorts'),
 
