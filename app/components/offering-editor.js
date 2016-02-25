@@ -56,8 +56,14 @@ export default Component.extend(EmberValidations, ValidationError, {
       length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }},
     },
     'numberOfWeeks': {
-      presence: true,
-      numericality: { greaterThan: 0, onlyInteger: true }
+      presence: {
+        'if': 'makeRecurring',
+      },
+      numericality: {
+        'if': 'makeRecurring',
+        greaterThan: 0,
+        onlyInteger: true
+      }
     }
   },
   makeRecurring: false,
