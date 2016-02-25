@@ -190,6 +190,15 @@ export default Ember.Component.extend(EmberValidations, {
       this.set('campusId', user.campusId);
       this.set('phone', user.telephoneNumber);
       this.set('username', user.username);
+    },
+    unPickUser(){
+      this.set('selectedUser', false);
+      this.set('firstName', null);
+      this.set('lastName', null);
+      this.set('email', null);
+      this.set('campusId', null);
+      this.set('phone', null);
+      this.set('username', null);
     }
   }
 });

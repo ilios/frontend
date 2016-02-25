@@ -406,7 +406,7 @@ export default {
     'otherId': 'Other ID',
     'manageUsers': 'Manage Users',
     'searchUsers': 'Search for users',
-    'searchDirectory': 'Search Directory for new users',
+    'searchDirectory': 'Search directory for new users',
     'userRoles': 'User Roles',
     'courseDirector': 'Course Director',
     'instructor': 'Instructor',

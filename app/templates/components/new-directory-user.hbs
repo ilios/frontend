@@ -92,7 +92,7 @@
             {{t 'general.done'}}
           {{/if}}
         </button>
-        <button class='cancel text' {{action (action this.attrs.close)}}>{{t 'general.cancel'}}</button>
+        <button class='cancel text' {{action 'unPickUser'}}>{{t 'general.cancel'}}</button>
       </div>
     </div>
   {{else}}
@@ -113,8 +113,8 @@
     {{fa-icon 'spinner' spin=true}} {{t 'general.currentlySearchingPrompt'}}
   {{else if searchResultsReturned}}
     {{#if searchResults.length}}
-      <section>
-        <div class='resultslist-list'>
+      <section class='new-directory-user-search-results'>
+        <div>
           {{#if searchResults.length}}
             <table>
               <thead>
@@ -156,10 +156,10 @@
             <span class="no-results">{{general.noResultsFound}}</span>
           {{/if}}
         </div>
-        {{#if tooManyResults}}
-          <p><em>{{t 'general.tooManyResults' count=50}}</em></p>
-        {{/if}}
       </section>
+      {{#if tooManyResults}}
+        <p><em>{{t 'general.tooManyResults' count=50}}</em></p>
+      {{/if}}
     {{else}}
       <p><em>{{t 'general.noResultsFound'}}</em></p>
     {{/if}}
