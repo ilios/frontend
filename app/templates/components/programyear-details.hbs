@@ -1,5 +1,16 @@
 {{programyear-competencies programYear=programYear}}
-{{detail-objectives subject=programYear isProgramYear=true}}
+{{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
+  {{detail-objectives
+  subject=programYear
+  isProgramYear=true
+  editable=editable
+  collapse=(action this.attrs.setPyObjectiveDetails false)
+  expand=(action this.attrs.setPyObjectiveDetails true)
+  }}
+{{else}}
+  {{collapsed-objectives subject=programYear editable=editable expand=(action this.attrs.setPyObjectiveDetails true)}}
+{{/liquid-if}}
+
 {{detail-topics
   subject=programYear
   isProgramYear=true
