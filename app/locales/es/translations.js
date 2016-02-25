@@ -129,6 +129,7 @@ export default {
     'perPage': 'Por Página',
     'summary': 'Resumen',
     'manage': 'Manage',
+    'tooManyResults': 'La búsqueda ha devuelto más de {{count}} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales.',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -405,6 +406,7 @@ export default {
     'otherId': 'Otro ID',
     'manageUsers': 'Administrar Usuarios',
     'searchUsers': 'Buscar usuarios',
+    'searchDirectory': 'Busque el directorio para nuevos usuarios',
     'userRoles': 'Funciones de usuario',
     'courseDirector': 'Director del Curso',
     'instructor': 'Instructor',
@@ -495,6 +497,8 @@ export default {
       'missingFromDirectory': 'No se puede encontrar el usuario en el directorio, por favor actualice, desactive, o excluya su cuenta de la sincronización.',
       'emailMismatch': 'La dirección de correo electrónico en el directorio ({{update.value}}) does not match the email in Ilios ({{update.user.email}}).',
       'updateIlios': 'Actualice Ilios'
-    }
+    },
+    'userNotAddableFromDirectory': "ste usuario está faltando información requerida y no se puede agregar",
+    'goToUser': "Mostrar registro de usuario en Ilios",
   }
 };

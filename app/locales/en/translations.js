@@ -129,7 +129,7 @@ export default {
     'perPage': 'Per Page',
     'summary': 'Summary',
     'manage': 'Manage',
-    'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms',
+    'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms.',
   },
   'programs': {
     'programTitle': 'Program Title',
