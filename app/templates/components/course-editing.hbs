@@ -11,16 +11,16 @@
 {{/liquid-if}}
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
 {{detail-competencies course=course editable=editable}}
-{{#liquid-if (or (eq course.terms.length 0) taxonomyDetails)}}
+{{#liquid-if (or (eq course.terms.length 0) courseTaxonomyDetails)}}
     {{detail-taxonomies
     subject=course
     isCourse=true
     editable=editable
-    collapse=(action this.attrs.setTaxonomyDetails false)
-    expand=(action this.attrs.setTaxonomyDetails true)
+    collapse=(action this.attrs.setCourseTaxonomyDetails false)
+    expand=(action this.attrs.setCourseTaxonomyDetails true)
     }}
 {{else}}
-    {{collapsed-taxonomies subject=course expand=(action this.attrs.setTaxonomyDetails true)}}
+    {{collapsed-taxonomies subject=course expand=(action this.attrs.setCourseTaxonomyDetails true)}}
 {{/liquid-if}}
 {{detail-topics
   subject=course

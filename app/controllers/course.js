@@ -4,18 +4,18 @@ const { computed, Controller } = Ember;
 const { not } = computed;
 
 export default Controller.extend({
-  queryParams: ['details', 'courseObjectiveDetails', 'taxonomyDetails'],
+  queryParams: ['details', 'courseObjectiveDetails', 'courseTaxonomyDetails'],
 
   details: false,
   courseObjectiveDetails: false,
-  taxonomyDetails: false,
+  courseTaxonomyDetails: false,
 
-  // Pass the state var that ilios-cocoururse-details expects
+  // Pass the state var that ilios-course-details expects
   collapsed: not('details'),
 
   actions: {
     collapsedState(state) {
-      // We have reveresed verb collapsed/details so reverse the passed state
+      // We have reversed verb collapsed/details so reverse the passed state
       this.set('details', !state);
     },
   }

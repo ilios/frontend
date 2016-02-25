@@ -10,9 +10,9 @@
         {{course-editing
           course=course
           courseObjectiveDetails=courseObjectiveDetails
-          taxonomyDetails = taxonomyDetails
+          courseTaxonomyDetails = courseTaxonomyDetails
           setCourseObjectiveDetails=(action this.attrs.setCourseObjectiveDetails)
-          setTaxonomyDetails=(action this.attrs.setTaxonomyDetails)
+          setCourseTaxonomyDetails=(action this.attrs.setCourseTaxonomyDetails)
         }}
         <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'courses.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
       {{/if}}

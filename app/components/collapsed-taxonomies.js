@@ -1,9 +1,7 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
-const { alias } = computed;
+const { Component } = Ember;
 
 export default Component.extend({
   subject: null,
-  vocabularies: alias('subject.associatedVocabularies'),
 });
