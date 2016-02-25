@@ -5,7 +5,7 @@
       <input type="text" class="{{if topErrorMessageTitle 'has-error'}}"
         onChange={{action "changeDisplayName" value="target.value"}}
         oninput={{action "changeDisplayName" value="target.value"}}
-        onfocus={{action "displayNameError"}} />
+        onblur={{action "displayNameError"}} />
       {{#if topErrorMessageTitle}}
         <span class="validation-error-message">{{topErrorMessageTitle}}</span>
       {{/if}}
@@ -36,7 +36,7 @@
       <input type="text" class="{{if topErrorMessageAuthor 'has-error'}}"
         onChange={{action "changeAuthor" value="target.value"}}
         oninput={{action "changeAuthor" value="target.value"}}
-        onfocus={{action "displayAuthorError"}} />
+        onblur={{action "displayAuthorError"}} />
       {{#if topErrorMessageAuthor}}
         <span class="validation-error-message">{{topErrorMessageAuthor}}</span>
       {{/if}}
@@ -55,6 +55,38 @@
       </select>
     </div>
   </div>
+
+  {{#if isLink}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.url'}}:</label>
+      <div class="form-data">
+        <input type="text" value={{link}} class="{{if topErrorMessageUrl 'has-error'}}"
+          onChange={{action "changeUrl" value="target.value"}}
+          oninput={{action "changeUrl" value="target.value"}}
+          onblur={{action "displayUrlError"}} />
+        {{#if topErrorMessageUrl}}
+          <span class="validation-error-message">{{topErrorMessageUrl}}</span>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if isCitation}}
+    <div class="form-col-12">
+      <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+      <div class="form-data citation">
+        <textarea
+          type='text'
+          onChange={{action "changeCitation" value="target.value"}}
+          oninput={{action "changeCitation" value="target.value"}}
+          onblur={{action "displayCitationError"}}
+        >{{citation}}</textarea>
+        {{#if topErrorMessageCitation}}
+          <span class="validation-error-message">{{topErrorMessageCitation}}</span>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
 
   <div class="form-col-12">
     <label class="form-label">{{t 'general.description'}}:</label>
@@ -102,34 +134,6 @@
         {{else if fileHash}}
           {{fa-icon 'check' class='add'}}
         {{/if}}
-      </div>
-    </div>
-  {{/if}}
-
-  {{#if isLink}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.url'}}:</label>
-      <div class="form-data">
-        <input type="text" value={{link}} class="{{if topErrorMessageUrl 'has-error'}}"
-          onChange={{action "changeUrl" value="target.value"}}
-          oninput={{action "changeUrl" value="target.value"}}
-          onfocus={{action "displayUrlError"}} />
-        {{#if topErrorMessageUrl}}
-          <span class="validation-error-message">{{topErrorMessageUrl}}</span>
-        {{/if}}
-      </div>
-    </div>
-  {{/if}}
-
-  {{#if isCitation}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
-      <div class="form-data citation">
-        <textarea
-          type='text'
-          onChange={{action "changeCitation" value="target.value"}}
-          oninput={{action "changeCitation" value="target.value"}}
-        >{{citation}}</textarea>
       </div>
     </div>
   {{/if}}
