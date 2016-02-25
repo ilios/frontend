@@ -15,16 +15,18 @@ export default Component.extend({
   isSession: false,
   isProgramYear: false,
   isManaging: false,
+  isSaving: false,
   editable: true,
 
   showCollapsible: computed('isManaging', 'subject.terms.[]', function () {
     const isManaging = this.get('isManaging');
     const terms = this.get('subject.terms');
-    return terms.get('length') && !isManaging;
+    return !isManaging && terms.get('length');
   }),
 
   actions: {
     manage(){
+      this.attrs.expand();
       this.get('subject.terms').then(terms => {
         this.set('bufferedTerms', terms.toArray());
         this.set('isManaging', true);
@@ -37,24 +39,19 @@ export default Component.extend({
         }
       });
     },
-    save: function () {
+    save(){
+      this.set('isSaving', true);
       let subject = this.get('subject');
-      let terms = subject.get('terms');
-      let promises = [];
-      terms.clear();
-      terms.addObjects(this.get('bufferedTerms'));
-      this.get('bufferedTerms').forEach((term)=> {
-        if (this.get('isCourse')) {
-          term.get('courses').addObject(subject);
-        } else if (this.get('isSession')) {
-          term.get('sessions').addObject(subject);
-        } else if (this.get('isProgramYear')) {
-          term.get('programYears').addObject(subject);
-        }
-      });
-      promises.pushObject(subject.save());
-      Ember.RSVP.all(promises).then(()=> {
-        this.set('isManaging', false);
+      subject.get('terms').then(termsList => {
+        termsList.clear();
+        this.get('bufferedTerms').forEach(term=>{
+          termsList.pushObject(term);
+        });
+        subject.save().then(()=>{
+          this.set('bufferedTerms', []);
+          this.set('isSaving', false);
+          this.set('isManaging', false);
+        });
       });
     },
     cancel: function () {
