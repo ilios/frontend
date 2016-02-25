@@ -1,31 +1,33 @@
-<div>
-  <strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})
-</div>
-<ul class="{{if canEdit 'removable-list' null}} tag-list selected-taxonomy-terms">
-  {{#each sortedTerms as |term|}}
-    {{#if canEdit}}
-      <li {{action 'remove' term}}>
-        {{#if term.isTopLevel }}
-          {{term.title}}
-        {{else}}
-          {{#each term.allParentTitles as |title|}}
-            <span class="muted">{{title}} &raquo;</span>
-          {{/each}}
-          {{term.title}}
-        {{/if}}
-        {{fa-icon 'remove'}}
-      </li>
-    {{else}}
-      <li>
-        {{#if term.isTopLevel}}
-          {{term.title}}
-        {{else}}
-          {{#each term.allParentTitles as |title|}}
-            <span class="muted">{{title}} &raquo;</span>
-          {{/each}}
-          {{term.title}}
-        {{/if}}
-      </li>
-    {{/if}}
-  {{/each}}
-</ul>
+{{#if sortedTerms}}
+  <div>
+    <strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})
+  </div>
+  <ul class="{{if canEdit 'removable-list' null}} tag-list selected-taxonomy-terms">
+    {{#each sortedTerms as |term|}}
+      {{#if canEdit}}
+        <li {{action 'remove' term}}>
+          {{#if term.isTopLevel}}
+            {{term.title}}
+          {{else}}
+            {{#each term.allParentTitles as |title|}}
+              <span class="muted">{{title}} &raquo;</span>
+            {{/each}}
+            {{term.title}}
+          {{/if}}
+          {{fa-icon 'remove'}}
+        </li>
+      {{else}}
+        <li>
+          {{#if term.isTopLevel}}
+            {{term.title}}
+          {{else}}
+            {{#each term.allParentTitles as |title|}}
+              <span class="muted">{{title}} &raquo;</span>
+            {{/each}}
+            {{term.title}}
+          {{/if}}
+        </li>
+      {{/if}}
+    {{/each}}
+  </ul>
+{{/if}}
