@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 const { Component, computed, inject } = Ember;
 const { service } = inject;
-const { alias } = computed;
 
 export default Component.extend({
   store: service(),
@@ -11,9 +10,6 @@ export default Component.extend({
   subject: null,
   bufferedTerms: [],
   classNames: ['taxonomy-manager'],
-  isCourse: false,
-  isSession: false,
-  isProgramYear: false,
   isManaging: false,
   isSaving: false,
   editable: true,
