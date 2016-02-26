@@ -10,7 +10,7 @@
           <tr>
               <th>{{t 'programs.matriculationYear'}}</th>
               <th>{{t 'general.directors'}}</th>
-              <th>{{t 'general.topics'}}</th>
+              <th>{{t 'general.terms'}}</th>
               <th>{{t 'general.competencies'}}</th>
               <th>{{t 'general.objectives'}}</th>
           </tr>
@@ -23,8 +23,8 @@
             {{else}}
               <td class='no'>{{t 'general.no'}}</td>
             {{/if}}
-            {{#if model.topics.length}}
-              <td class='yes'>{{t 'general.yes'}} ({{model.topics.length}})</td>
+            {{#if model.terms.length}}
+              <td class='yes'>{{t 'general.yes'}} ({{model.terms.length}})</td>
             {{else}}
               <td class='no'>{{t 'general.no'}}</td>
             {{/if}}

@@ -118,12 +118,6 @@ export default function() {
   this.delete('/api/departments/:id', 'department');
   this.post('/api/departments', 'department');
 
-  this.get('/api/topics', getAll);
-  this.get('/api/topics/:id', 'topic');
-  this.put('/api/topics/:id', 'topic');
-  this.delete('/api/topics/:id', 'topic');
-  this.post('/api/topics', 'topic');
-
   this.get('/api/vocabularies', getAll);
   this.get('/api/vocabularies/:id', 'vocabulary');
   this.put('/api/vocabularies/:id', 'vocabulary');

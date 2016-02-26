@@ -74,7 +74,7 @@ export default Service.extend({
         }
       }
       if(subject === 'instructor'){
-        let specialInstructed = ['learningMaterials', 'topics', 'sessionTypes'];
+        let specialInstructed = ['learningMaterials', 'sessionTypes'];
         if(specialInstructed.contains(what)){
           what = 'instructed' + what.capitalize();
         }
@@ -185,9 +185,6 @@ export default Service.extend({
     return this.titleResults(results);
   },
   competenciesResults(results){
-    return this.titleResults(results);
-  },
-  topicsResults(results){
     return this.titleResults(results);
   },
   sessionTypesResults(results){

@@ -20,7 +20,6 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
   school: DS.belongsTo('school', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
-  topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
@@ -96,12 +95,12 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
   requiredPublicationSetFields: ['startDate', 'endDate'],
   requiredPublicationLengthFields: ['cohorts'],
   optionalPublicationSetFields: [],
-  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function(){
     return this.getRequiredPublicationIssues();
   }),
   optionalPublicationIssues: computed(
-    'topics.length',
+    'terms.length',
     'objectives.length',
     'meshDescriptors.length',
     function(){

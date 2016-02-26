@@ -40,11 +40,6 @@
     {{else}}
       {{collapsed-taxonomies subject=session expand=(action this.attrs.setSessionTaxonomyDetails true)}}
     {{/liquid-if}}
-    {{detail-topics
-      subject=session
-      isSession=true
-      editable=editable
-    }}
     {{detail-mesh
       subject=session
       isSession=true

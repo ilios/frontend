@@ -73,15 +73,13 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.topics'}} ({{course.topics.length}})
+          {{t 'general.terms'}} ({{course.terms.length}})
         </div>
 
         <div class='detail-content'>
-          <ul class='inline-list'>
-            {{#each sortedTopics as |topic|}}
-              <li>{{topic.title}}</li>
+            {{#each course.associatedVocabularies as |vocab|}}
+              {{detail-terms-list vocabulary=vocab terms=course.terms canEdit=false}}
             {{/each}}
-          </ul>
         </div>
       </section>
 
@@ -247,15 +245,15 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.topics'}} ({{session.sortedTopics.length}})
+          {{t 'general.terms'}} ({{session.terms.length}})
         </div>
 
         <div class='detail-content'>
-          <ul class='inline-list'>
-            {{#each session.sortedTopics as |topic|}}
-              <li>{{topic.title}}</li>
+          <div class='detail-content'>
+            {{#each session.associatedVocabularies as |vocab|}}
+              {{detail-terms-list vocabulary=vocab terms=session.terms canEdit=false}}
             {{/each}}
-          </ul>
+          </div>
         </div>
       </section>
 

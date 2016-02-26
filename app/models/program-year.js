@@ -13,7 +13,6 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
   cohort: DS.belongsTo('cohort', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   competencies: DS.hasMany('competency', {async: true}),
-  topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
   academicYear: computed('startYear', function(){
@@ -28,14 +27,14 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
   optionalPublicationIssues: computed(
     'directors.length',
     'competencies.length',
-    'topics.length',
+    'terms.length',
     'objectives.length',
     function(){
       return this.getOptionalPublicationIssues();
     }
   ),
   requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
-  optionalPublicationLengthFields: ['directors', 'competencies', 'topics', 'objectives'],
+  optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
   domains: computed('competencies.@each.domain', function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};

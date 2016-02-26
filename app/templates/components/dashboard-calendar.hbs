@@ -24,7 +24,7 @@
       {{toggle-wide
         value=courseFilters
         onLabel='dashboard.courseOrType'
-        offLabel='dashboard.topicOrDetail'
+        offLabel='dashboard.detail'
         action='toggleCourseFilters'
         cssId='togglecoursefilters'
       }}
@@ -98,22 +98,6 @@
           {{/if}}
         </div>
       {{else}}
-        <div id='calendar-topicfilter' class='calendar-filter-list topicfilter'>
-          {{t 'general.topics'}}
-          {{#if topics.isFulfilled}}
-            <ul>
-              {{#each topics as |topic|}}
-                <li class='clickable'>
-                  <input {{action 'toggleTopic' topic on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedTopics topic}} />
-                  <span {{action 'toggleTopic' topic}} class="list-indentation">{{topic.title}}</span>
-                </li>
-              {{/each}}
-            </ul>
-          {{else}}
-            {{fa-icon "spinner" spin=true}}
-          {{/if}}
-        </div>
-
         <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
           {{t 'dashboard.sessionTypes'}}
           {{#if sessionTypes.isFulfilled}}

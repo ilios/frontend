@@ -17,7 +17,6 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   sessionType: DS.belongsTo('session-type', {async: true}),
   course: DS.belongsTo('course', {async: true}),
   ilmSession: DS.belongsTo('ilm-session', {async: true}),
-  topics: DS.hasMany('topic', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),
@@ -69,7 +68,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   searchString: computed('title', 'sessionType.title', 'status', function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }),
-  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed(
     'title',
     'offerings.length',
@@ -87,7 +86,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
     }
   ),
   optionalPublicationIssues: computed(
-    'topics.length',
+    'terms.length',
     'objectives.length',
     'meshDescriptors.length',
     function(){

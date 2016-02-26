@@ -39,9 +39,10 @@ export default Ember.Route.extend({
       sessionlearningmaterials: this.store.query('session-learning-material', {limit: 2}),
       sessiontypes: this.store.query('session-type', {limit: 2}),
       sessions: this.store.query('session', {limit: 2}),
-      topics: this.store.query('topic', {limit: 2}),
+      terms: this.store.query('term', {limit: 2}),
       users: this.store.query('user', {limit: 2}),
       userroles: this.store.query('user-role', {limit: 2}),
+      vocabularies: this.store.query('vocabulary', {limit: 2}),
     };
     return Ember.RSVP.hash(promises);
   },
