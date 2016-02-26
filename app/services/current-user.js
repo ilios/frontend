@@ -156,6 +156,22 @@ export default Ember.Service.extend({
   }),
   //will be customizable
   preferredDashboard: 'dashboard.week',
+  //School
+  canViewSchool: computed('model', function(){
+    return false;
+  }),
+  canViewSchools: false,
+  canEditSchools: false,
+  schoolsPrivilegesObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewSchools', hasRole.contains(true));
+        this.set('canEditSchools', hasRole.contains(true));
+      });
+    }
+  )),
   //Program
   canViewProgram: computed('model', function(){
     return false;
