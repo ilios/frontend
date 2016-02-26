@@ -148,11 +148,11 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
     promise = new Ember.RSVP.Promise(resolve => {
       this.get('cohorts').then(cohorts => {
         Ember.RSVP.map(cohorts.mapBy('programYear'), programYear => {
-            return programYear.get('program').then(program => {
-              return program.get('school').then(school => {
-                schools.pushObject(school);
-              });
+          return programYear.get('program').then(program => {
+            return program.get('school').then(school => {
+              schools.pushObject(school);
             });
+          });
         }).then(() => {
           resolve();
         });

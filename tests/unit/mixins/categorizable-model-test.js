@@ -7,7 +7,7 @@ module('Unit | Mixin | categorizable model' + testgroup);
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  var CategorizableModelMixin = Ember.Object.extend(CategorizableModelMixin);
-  var subject = CategorizableModelMixin.create();
+  let M = Ember.Object.extend(CategorizableModelMixin);
+  let subject = M.create();
   assert.ok(subject);
 });
