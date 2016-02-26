@@ -69,31 +69,66 @@
       <div class="make-recurring-options">
         <div class="make-recurring-days">
           <div>
-            {{input type="checkbox" name="sunday" checked=recurringDays.sunday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '0') (eq defaultCheckedDay '0'))
+              click=(action 'toggleDayInRecurrindgDays' '0')
+              disabled=(eq defaultCheckedDay '0')
+            }}
             <label class="day-of-week">{{t 'offerings.sunday'}}</label>
           </div>
           <div>
-            {{input type="checkbox" name="monday" checked=recurringDays.monday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '1') (eq defaultCheckedDay '1'))
+              click=(action 'toggleDayInRecurrindgDays' '1')
+              disabled=(eq defaultCheckedDay '1')
+            }}
             <label class="day-of-week">{{t 'offerings.monday'}}</label>
           </div>
           <div>
-            {{input type="checkbox" name="tuesday" checked=recurringDays.tuesday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '2') (eq defaultCheckedDay '2'))
+              click=(action 'toggleDayInRecurrindgDays' '2')
+              disabled=(eq defaultCheckedDay '2')
+            }}
             <label class="day-of-week">{{t 'offerings.tuesday'}}</label>
           </div>
           <div>
-            {{input type="checkbox" name="wednesday" checked=recurringDays.wednesday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '3') (eq defaultCheckedDay '3'))
+              click=(action 'toggleDayInRecurrindgDays' '3')
+              disabled=(eq defaultCheckedDay '3')
+            }}
             <label class="day-of-week">{{t 'offerings.wednesday'}}</label>
           </div>
           <div>
-            {{input type="checkbox" name="thursday" checked=recurringDays.thursday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '4') (eq defaultCheckedDay '4'))
+              click=(action 'toggleDayInRecurrindgDays' '4')
+              disabled=(eq defaultCheckedDay '4')
+            }}
             <label class="day-of-week">{{t 'offerings.thursday'}}</label>
           </div>
           <div>
-            {{input type="checkbox" name="friday" checked=recurringDays.friday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '5') (eq defaultCheckedDay '5'))
+              click=(action 'toggleDayInRecurrindgDays' '5')
+              disabled=(eq defaultCheckedDay '5')
+            }}
             <label class="day-of-week">{{t 'offerings.friday'}}</label>
           </div>
           <div>
-            {{input type="checkbox" name="saturday" checked=recurringDays.saturday}}
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '6') (eq defaultCheckedDay '6'))
+              click=(action 'toggleDayInRecurrindgDays' '6')
+              disabled=(eq defaultCheckedDay '6')
+            }}
             <label class="day-of-week">{{t 'offerings.saturday'}}</label>
           </div>
         </div>

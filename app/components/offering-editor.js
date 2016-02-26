@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import moment from 'moment';
 import EmberValidations from 'ember-validations';
 
-const { Component, computed, isEmpty, isPresent, ObjectProxy, observer, RSVP, inject } = Ember;
+const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP, inject } = Ember;
 const { notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { service } = inject;
@@ -24,7 +24,7 @@ export default Component.extend(EmberValidations, {
 
     const cohorts = this.get('cohorts');
     const learnerGroups = {};
-    const recurringDays = this.setDefaultCheckedDay();
+    const recurringDays = [];
     const showErrorsFor = [];
 
     if (cohorts && isPresent(cohorts)) {
@@ -179,53 +179,11 @@ export default Component.extend(EmberValidations, {
     return output;
   },
 
-  filterRecurringDays() {
-    const recurringDaysArray = [];
-    const recurringDays = this.get('recurringDays');
-    const daysOfWeek = {
-      sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6
-    };
-
-    for (let key in recurringDays) {
-      if (recurringDays[key]) {
-        recurringDaysArray.push(daysOfWeek[key]);
-      }
-    }
-
-    return recurringDaysArray;
-  },
-
-  defaultCheckedDay: observer('startDate', function() {
+  defaultCheckedDay: computed('startDate', function() {
     const startDate = this.get('startDate');
 
-    this.set('recurringDays', this.setDefaultCheckedDay(startDate));
+    return moment(startDate).day().toString();
   }),
-
-  setDefaultCheckedDay(startDate) {
-    let momentDay;
-
-    if (startDate) {
-      momentDay = moment(startDate).day().toString();
-    } else {
-      momentDay = moment().day().toString();
-    }
-
-    const daysOfWeek = {
-      '0': 'sunday', '1': 'monday', '2': 'tuesday', '3': 'wednesday', '4': 'thursday', '5': 'friday', '6': 'saturday'
-    };
-    const day = daysOfWeek[momentDay];
-    const daysHash = {};
-
-    for (let key in daysOfWeek) {
-      if (daysOfWeek[key] === day) {
-        daysHash[daysOfWeek[key]] = true;
-      } else {
-        daysHash[daysOfWeek[key]] = false;
-      }
-    }
-
-    return daysHash;
-  },
 
   actions: {
     setOfferingType(value) {
@@ -304,9 +262,11 @@ export default Component.extend(EmberValidations, {
         }
         let datesHash = this.calculateDateTimes();
         let learnerGroups = this.getAllLearnerGroups();
+        const days = this.get('recurringDays');
+        const numberOfWeeks = this.get('numberOfWeeks');
         let recurringOptions = {
-          days: this.filterRecurringDays(),
-          numberOfWeeks: this.get('numberOfWeeks')
+          days,
+          numberOfWeeks
         };
         let params = {
           startDate: datesHash.startDate.toDate(),
@@ -354,6 +314,14 @@ export default Component.extend(EmberValidations, {
     },
     addErrorDisplayFor(field){
       this.get('showErrorsFor').pushObject(field);
+    },
+    toggleDayInRecurrindgDays(day){
+      let recurringDays = this.get('recurringDays');
+      if (recurringDays.contains(day)) {
+        this.get('recurringDays').removeObject(day);
+      } else {
+        this.get('recurringDays').pushObject(day);
+      }
     }
   }
 });

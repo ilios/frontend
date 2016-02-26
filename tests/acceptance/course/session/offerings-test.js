@@ -560,7 +560,6 @@ test('users can create recurring small groups', function(assert) {
   });
 });
 
-
 test('users can create recurring single offerings', function(assert) {
   assert.expect(29);
 
@@ -637,5 +636,47 @@ test('users can create recurring single offerings', function(assert) {
     assert.equal(find(learnerGroups).eq(6).text(), 'learner group 0', 'fourth correct learner group is picked');
     assert.equal(find(learnerGroups).eq(7).text(), 'learner group 1', 'fourth correct learner group is picked');
 
+  });
+});
+
+test('recurring start date is default day and cannot be changes', function(assert) {
+  assert.expect(14);
+
+  const expandButton = '.expand-button';
+  const makeRecurringButton = '.make-recurring-slider .switch-label';
+  const offeringButton = '.second-button';
+
+  const startDateInput = '.offering-startdate-picker input';
+  const recurringInputs = '.make-recurring-days input';
+
+  visit(url);
+  click(expandButton);
+  click(offeringButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    startDateInteractor.selectDate(new Date(2015, 4, 22));
+
+  });
+
+  click(makeRecurringButton);
+
+  andThen(() => {
+    let inputs = find(recurringInputs);
+    assert.ok(!inputs.eq(0).prop('disabled'));
+    assert.ok(!inputs.eq(0).prop('checked'));
+    assert.ok(!inputs.eq(1).prop('disabled'));
+    assert.ok(!inputs.eq(1).prop('checked'));
+    assert.ok(!inputs.eq(2).prop('disabled'));
+    assert.ok(!inputs.eq(2).prop('checked'));
+    assert.ok(!inputs.eq(3).prop('disabled'));
+    assert.ok(!inputs.eq(3).prop('checked'));
+    assert.ok(!inputs.eq(4).prop('disabled'));
+    assert.ok(!inputs.eq(4).prop('checked'));
+    assert.ok(inputs.eq(5).prop('disabled'));
+    assert.ok(inputs.eq(5).prop('checked'));
+    assert.ok(!inputs.eq(6).prop('disabled'));
+    assert.ok(!inputs.eq(6).prop('checked'));
   });
 });
