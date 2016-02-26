@@ -1,57 +1,61 @@
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
-import ValidationError from 'ilios/mixins/validation-error';
 import EmberValidations from 'ember-validations';
 
-const { computed, Component, inject, isBlank } = Ember;
-const { alias, sort } = computed;
+const { computed, Component, inject, isEmpty, isPresent } = Ember;
+const { sort } = computed;
 const { service } = inject;
 
-export default Component.extend(EmberValidations, ValidationError, {
+export default Component.extend(EmberValidations, {
   init() {
     this._super(...arguments);
 
-    const defaultSessionType = this.get('sortedSessionTypes')[0];
-    this.set('sessionType', defaultSessionType);
+    this.set('showErrorsFor', []);
   },
 
   classNames: ['new-session', 'resultslist-new', 'form-container'],
 
   i18n: service(),
 
-  placeholder: t('sessions.sessionTitlePlaceholder'),
-
   sessionTypes: [],
   sortSessionsBy: ['title'],
   sortedSessionTypes: sort('sessionTypes', 'sortSessionsBy'),
 
-  validationBuffer: alias('title'),
+  showErrorsFor: [],
   validations: {
-    'validationBuffer': {
+    'title': {
       presence: true,
       length: { minimum: 3, maximum: 200 }
     }
   },
 
   title: null,
-  sessionType: null,
+  selectedSessionTypeId: null,
 
-  titleCheck() {
-    const title = this.get('title');
 
-    return isBlank(title) ? true : false;
-  },
+  selectedSessionType: computed('sessionTypes.[]', 'selectedSessionTypeId', function(){
+    let sessionTypes = this.get('sessionTypes');
+    const selectedSessionTypeId = this.get('selectedSessionTypeId');
+    if(isPresent(selectedSessionTypeId)){
+      return sessionTypes.find(sessionType => {
+        return parseInt(sessionType.get('id')) === parseInt(selectedSessionTypeId);
+      });
+    }
+
+    //try and default to a type names 'Lecture';
+    let lectureType = sessionTypes.find(sessionType => sessionType.get('title') === 'Lecture');
+    if(isEmpty(lectureType)){
+      lectureType = sessionTypes.get('firstObject');
+    }
+
+    return lectureType;
+  }),
 
   actions: {
     save() {
-      if (this.titleCheck()) {
-        return;
-      }
-
       this.validate()
         .then(() => {
           const title = this.get('title');
-          const sessionType = this.get('sessionType');
+          const sessionType = this.get('selectedSessionType');
 
           this.sendAction('save', title, sessionType);
         })
@@ -64,17 +68,8 @@ export default Component.extend(EmberValidations, ValidationError, {
       this.sendAction('cancel');
     },
 
-    changeSessionType() {
-      const selectedEl = this.$('select')[0];
-      const selectedIndex = selectedEl.selectedIndex;
-      const sortedSessionTypes = this.get('sortedSessionTypes');
-      const sessionType = sortedSessionTypes.toArray()[selectedIndex];
-
-      this.set('sessionType', sessionType);
+    addErrorDisplayFor(field){
+      this.get('showErrorsFor').pushObject(field);
     },
-
-    changeValue(value) {
-      this.set('title', value);
-    }
   }
 });
