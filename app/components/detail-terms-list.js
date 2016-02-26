@@ -22,7 +22,7 @@ export default Component.extend({
    * A vocabulary model.
    *
    * @property vocabulary
-   * @type {DS.Model}
+   * @type {Object}
    */
   vocabulary: null,
 

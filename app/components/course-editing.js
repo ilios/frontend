@@ -17,11 +17,5 @@ export default Component.extend({
         }
       });
     },
-    toggleCourseObjectiveDetails(){
-      this.sendAction('toggleCourseObjectiveDetails');
-    },
-    toggleCourseTaxonomyDetails(){
-      this.sendAction('toggleCourseTaxonomyDetails');
-    }
   }
 });
