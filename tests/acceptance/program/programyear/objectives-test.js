@@ -8,7 +8,7 @@ import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
-var url = '/programs/1/programyears/1';
+var url = '/programs/1/programyears/1?pyObjectiveDetails=true';
 module('Acceptance: Program Year - Objectives' + testgroup, {
   beforeEach: function() {
     application = startApp();

@@ -6,6 +6,5 @@ const { alias } = computed;
 
 export default Controller.extend({
   programController: controller('program'),
-
-  program: alias('programController.model')
+  program: alias('programController.model'),
 });
