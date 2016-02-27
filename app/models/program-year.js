@@ -4,6 +4,7 @@ import PublishableModel from 'ilios/mixins/publishable-model';
 import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed } = Ember;
+const { alias } = computed;
 
 export default DS.Model.extend(PublishableModel, CategorizableModel, {
   startYear: DS.attr('string'),
@@ -71,4 +72,5 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
       promise: defer.promise
     });
   }),
+  assignableVocabularies: alias('program.school.vocabularies'),
 });
