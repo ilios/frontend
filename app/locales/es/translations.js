@@ -510,10 +510,10 @@ export default {
     },
     'userNotAddableFromDirectory': "ste usuario está faltando información requerida y no se puede agregar",
     'goToUser': "Mostrar registro de usuario en Ilios",
-    'taxonomies' : {
-      'assignedTerms': 'Términos asignados',
-      'selectVocabulary': 'Seleccione un Vocabulario',
-      'termsManageTitle': 'Maneje Términos',
-    },
-  }
+  },
+  'taxonomies' : {
+    'assignedTerms': 'Términos asignados',
+    'selectVocabulary': 'Seleccione un Vocabulario',
+    'termsManageTitle': 'Maneje Términos',
+  },
 };
