@@ -13,15 +13,21 @@ module('Acceptance: Course - Publication Check' + testgroup, {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
+    server.create('school', {
+      vocabularies: [1],
+    });
+    server.create('vocabulary', {
+      terms: [1],
+    });
     server.create('cohort', {
       courses: [1],
     });
     server.create('objective', {
       courses: [1],
     });
-    server.create('topic', {
+    server.create('term', {
       courses: [1],
+      vocabulary: 1,
     });
     server.create('meshDescriptor', {
       courses: [1],
@@ -31,7 +37,7 @@ module('Acceptance: Course - Publication Check' + testgroup, {
       school: 1,
       cohorts: [1],
       objectives: [1],
-      topics: [1],
+      terms: [1],
       meshDescriptors: [1],
     });
     fixtures.emptyCourse = server.create('course', {
