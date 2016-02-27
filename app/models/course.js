@@ -179,9 +179,9 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   assignableVocabularies: computed('schools.@each.vocabularies', function() {
-    var deferred = Ember.RSVP.defer();
-    this.get('schools').then(function (terms) {
-      Ember.RSVP.all(terms.mapBy('vocabularies')).then(function (schoolVocabs) {
+    let deferred = Ember.RSVP.defer();
+    this.get('schools').then(function (schools) {
+      Ember.RSVP.all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
         let v = [];
         schoolVocabs.forEach(vocabs => {
           vocabs.forEach(vocab => {
