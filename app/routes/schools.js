@@ -1,8 +1,10 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { service } = Ember.inject;
+const { Route, inject } = Ember;
+const { service } = inject;
 
-export default Ember.Route.extend({
+export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   model(){
     return this.get('store').findAll('school');
