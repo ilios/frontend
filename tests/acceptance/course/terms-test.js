@@ -20,7 +20,7 @@ module('Acceptance: Course - Terms' + testgroup, {
     });
     server.create('vocabulary', {
       terms: [1, 2],
-      school: [1],
+      school: 1,
     });
     server.create('academicYear', {id: 2013});
 
