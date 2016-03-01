@@ -1,0 +1,24 @@
+<div class="backtolink">
+  {{#link-to 'schools'}}{{t 'schools.backToSchools'}}{{/link-to}}
+</div>
+
+<div class='detail-view'>
+  <div class='detail-view-main-title'>
+    <div class='detail-header'>
+      <span class='title'>
+        {{inplace-text tagName='h2' value=school.title save='changeTitle' validations=titleValidations}}
+      </span>
+    </div>
+  </div>
+  <div class='detail-view-details'>
+    {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
+      {{school-competencies-expanded
+        school=school
+        collapse=(action this.attrs.setSchoolCompetencyDetails false)
+        expand=(action this.attrs.setSchoolCompetencyDetails true)
+      }}
+    {{else}}
+      {{school-competencies-collapsed school=school expand=(action this.attrs.setSchoolCompetencyDetails true)}}
+    {{/if}}
+  </div>
+</div>

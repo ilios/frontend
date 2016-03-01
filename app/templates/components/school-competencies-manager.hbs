@@ -1,0 +1,13 @@
+<ul class='removable-list'>
+  {{#each sortedCompetencies as |competency|}}
+    <li {{action this.attrs.remove competency}}>{{competency.title}} {{fa-icon 'remove'}}</li>
+  {{/each}}
+</ul>
+<div>
+  {{one-way-input
+    value=newCompetencyValue
+    update=(action (mut newCompetencyValue))
+    onenter=(action 'commit')
+  }}
+  <button class='save text' {{action 'commit'}}>{{t 'general.add'}}</button>
+</div>

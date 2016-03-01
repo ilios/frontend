@@ -219,6 +219,12 @@ export default {
   'schools': {
     'new': 'New School',
     'administratorEmail': 'Administrator Email',
+    'backToSchools': 'Back to Schools List',
+    'competencyCount': {
+      'one': 'There is 1 competency',
+      'other': 'There are {{count}} competencies'
+    },
+    'manageCompetencies': 'Manage Competenceis',
   },
   'courses': {
     'currentSchool': 'Current School',

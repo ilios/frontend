@@ -169,7 +169,7 @@ $collapse-control-shadow-grey: #e2e2e2;
 
       &.collapsed {
         .detail-title {
-          @include span-columns(2 of 12);
+          @include span-columns(3 of 12);
 
           &::after {
             content: '\25BA';
@@ -177,7 +177,7 @@ $collapse-control-shadow-grey: #e2e2e2;
         }
 
         .detail-content {
-          @include span-columns(10 of 12);
+          @include span-columns(9 of 12);
           margin: 0;
         }
       }
