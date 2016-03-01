@@ -19,20 +19,8 @@ module('Acceptance: Dashboard Calendar' + testgroup, {
     setupAuthentication(application);
     server.create('school', {
       sessionTypes: [1,2,3],
-      topics: [1,2,3],
       programs: [1],
       courses: [1]
-    });
-    server.create('topic', {
-      sessions: [1],
-      school: 1,
-    });
-    server.create('topic', {
-      courses: [1],
-      school: 1,
-    });
-    server.create('topic', {
-      school: 1,
     });
     server.create('program', {
       programYears: [1,2],
@@ -67,7 +55,6 @@ module('Acceptance: Dashboard Calendar' + testgroup, {
       school: 1,
     });
     server.create('session', {
-      topics: [1],
       offerings: [1],
       course: 1,
       sessionType: 1,
@@ -86,7 +73,6 @@ module('Acceptance: Dashboard Calendar' + testgroup, {
       title: 2015
     });
     server.create('course', {
-      topics: [2],
       sessions: [1,2],
       level: 1,
       school: 1,
@@ -390,53 +376,6 @@ let showFilters = function(){
     return click(find('.showfilters span'));
   });
 };
-let pickTopic = function(i) {
-  let topics = find('.topicfilter');
-  return click(find('li>span', topics).eq(i));
-};
-
-test('test topic filter', function(assert) {
-  let today = moment().hour(8);
-  server.create('userevent', {
-    user: 4136,
-    startDate: today.format(),
-    endDate: today.clone().add(1, 'hour').format(),
-    offering: 1
-  });
-  server.create('userevent', {
-    user: 4136,
-    startDate: today.format(),
-    endDate: today.clone().add(1, 'hour').format(),
-    offering: 2
-  });
-  visit('/dashboard?showCalendar=true');
-  showFilters();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    pickTopic(0).then(() => {
-      let events = find('div.event');
-      assert.equal(events.length, 1);
-    });
-
-  });
-  andThen(function() {
-    pickTopic(1).then(() => {
-      let events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    pickTopic(0).then(() => {
-      pickTopic(1).then(() => {
-        pickTopic(2).then(() => {
-          let events = find('div.event');
-          assert.equal(events.length, 0);
-        });
-      });
-    });
-  });
-});
 
 let pickSessionType = function(i) {
   let types = find('.sessiontypefilter');
@@ -628,38 +567,6 @@ test('test course filter', function(assert) {
   });
 });
 
-test('test topic and session type filter together', function(assert) {
-  let today = moment().hour(8);
-  server.create('userevent', {
-    user: 4136,
-    startDate: today.format(),
-    endDate: today.clone().add(1, 'hour').format(),
-    offering: 1
-  });
-  server.create('userevent', {
-    user: 4136,
-    startDate: today.format(),
-    endDate: today.clone().add(1, 'hour').format(),
-    offering: 2
-  });
-  visit('/dashboard?showCalendar=true');
-  showFilters();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    pickTopic(0).then(() => {
-      let events = find('div.event');
-      assert.equal(events.length, 1);
-    });
-  });
-  andThen(function() {
-    pickSessionType(1).then(() => {
-      let events = find('div.event');
-      assert.equal(events.length, 0);
-    });
-  });
-});
-
 test('test course and session type filter together', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
@@ -795,7 +702,6 @@ test('academic year filters courses', function(assert) {
 
 test('clear all filters', function(assert) {
   const clearFilter = '.calendar-clear-filters';
-  const topic = '.topicfilter li:first input';
   const sessiontype = '.sessiontypefilter li:first input';
   const courselevel = '.courselevelfilter li:first input';
   const cohort = '.cohortfilter li:first input';
@@ -806,13 +712,11 @@ test('clear all filters', function(assert) {
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
   });
 
-  click(topic);
   click(sessiontype);
   click(courselevel);
   click(cohort);
   andThen(() => {
     assert.ok(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
-    assert.ok(find(topic).prop('checked'), 'filter is checked');
     assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
     assert.ok(find(courselevel).prop('checked'), 'filter is checked');
     assert.ok(find(cohort).prop('checked'), 'filter is checked');
@@ -821,7 +725,6 @@ test('clear all filters', function(assert) {
   click(clearFilter);
   andThen(() => {
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.ok(!find(topic).prop('checked'), 'filter is unchecked');
     assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
     assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
     assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
@@ -829,7 +732,6 @@ test('clear all filters', function(assert) {
 });
 
 test('filter tags work properly', function(assert) {
-  const topic = '.topicfilter li:first input';
   const sessiontype = '.sessiontypefilter li:first input';
   const courselevel = '.courselevelfilter li:first input';
   const cohort = '.cohortfilter li:first input';
@@ -851,30 +753,26 @@ test('filter tags work properly', function(assert) {
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
   });
 
-  click(topic);
   click(sessiontype);
   click(courselevel);
   click(cohort);
   andThen(() => {
-    assert.equal(getTagText(0), 'topic 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
-    assert.equal(getTagText(2), 'Course Level 1', 'filter tag is active');
-    assert.equal(getTagText(3), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+    assert.equal(getTagText(1), 'Course Level 1', 'filter tag is active');
+    assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
   });
 
-  clickTag(2);
+
+  clickTag(1);
   andThen(() => {
     assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
-    assert.equal(getTagText(0), 'topic 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
-    assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+    assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
   });
 
   clickTag(0);
   andThen(() => {
-    assert.ok(!find(topic).prop('checked'), 'filter is unchecked');
-    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
   });
 
   click(clearFilter);

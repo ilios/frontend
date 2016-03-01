@@ -21,15 +21,20 @@ module('Acceptance: Course - Print Course', {
       published: true,
       title: 'Back to the Future',
       cohorts: [1],
-      topics: [1],
+      terms: [1],
       objectives: [1],
       learningMaterials: [1],
       meshDescriptors: [1]
     });
-    server.create('topic', {
+    server.create('vocabulary', {
+      title: 'Topics',
+      terms: [1],
+      school: 1,
+    });
+    server.create('term', {
       title: 'Time Travel',
       sessions: [1],
-      school: 1,
+      vocabulary: 1,
     });
     server.create('objective', {
       sessions: [1],
@@ -78,7 +83,7 @@ test('test print course learning materials', function(assert) {
 
   andThen(function() {
     assert.equal(find('.detail-header h2:eq(0)').text(), 'Back to the Future');
-    assert.equal(find('.detail-content ul li:eq(0)').text(), 'Time Travel');
+    assert.equal(find('.detail-content ul li:eq(0)').text().trim(), 'Time Travel');
     assert.equal(find('.detail-content ul li:eq(1)').text(), 'Gigawatt Conversion');
     assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(0)').text().trim(), 'Save the Clock Tower');
     assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(1)').text(), 'file');

@@ -8,7 +8,6 @@ moduleForModel('session', 'Unit | Serializer | Session ' + testgroup, {
     'model:session-type',
     'model:course',
     'model:ilm-session',
-    'model:topic',
     'model:term',
     'model:objective',
     'model:mesh-descriptor',

@@ -118,17 +118,25 @@ test('check directors', function(assert) {
   });
 });
 
-test('check topics', function(assert) {
+test('check terms', function(assert) {
   server.create('program', {
     school: 1,
-    programYears: [1]
+    programYears: [1],
+    vocabularies: [1],
   });
-  server.createList('topic', 5, {
-    programYear: 1
+
+  server.create('vocabulary', {
+    school: 1,
+    terms: [1, 2, 3, 4, 5],
+  });
+
+  server.createList('term', 5, {
+    programYear: 1,
+    vocabulary: 1,
   });
   server.create('programYear', {
     program: 1,
-    topics: [1,2,3,4,5]
+    terms: [1,2,3,4,5]
   });
   visit(url);
   andThen(function() {
@@ -276,11 +284,17 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
   server.createList('user', 3, {
     directedProgramYears: [1]
   });
+  server.createList('school', {
+    vocabularies: [1],
+    programs: [1],
+
+  });
   server.createList('competency', 3, {
     programYears: [1]
   });
-  server.createList('topic', 3, {
-    programYears: [1]
+  server.createList('term', 3, {
+    programYears: [1],
+    vocabulary: 1
   });
   server.createList('objective', 3, {
     programYears: [1]
@@ -293,6 +307,10 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     school: 1,
     programYears: [1]
   });
+  server.create('vocabulary', {
+    school: 1,
+    terms: [1, 2, 3],
+  });
   const currentYear = parseInt(moment().format('YYYY'));
   server.create('programYear', {
     program: 1,
@@ -300,7 +318,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     cohort: 1,
     directors: [2,3,4],
     competencies: [1,2,3],
-    topics: [1,2,3],
+    terms: [1,2,3],
     objectives: [1,2,3],
     stewards: [1],
   });

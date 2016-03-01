@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForModel('course', 'Unit | Serializer | course ' + testgroup, {
+moduleForModel('course', 'Unit | Serializer | Course ' + testgroup, {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:course',
@@ -11,7 +11,6 @@ moduleForModel('course', 'Unit | Serializer | course ' + testgroup, {
     'model:course-clerkship-type',
     'model:session',
     'model:offering',
-    'model:topic',
     'model:term',
     'model:objective',
     'model:cohort',
