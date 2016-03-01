@@ -66,10 +66,24 @@ test('manage terms', function(assert) {
   andThen(function() {
     var container = find('.taxonomy-manager');
     click(find('.detail-actions button', container));
-    andThen(function(){
+    andThen(function() {
       assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
       assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
       assert.equal(getElementText(find('.selectable-terms-list li:eq(1)', container)), getText('term 1'));
+      /**
+       * SHAMEFUL KLUDGE!
+       * Turns out, the test errors out in 'afterEach()' with the following message:
+       * "Error: Assertion Failed: Cannot call get with 'vocabularies' on an undefined object."
+       * This exception is raised in the course::assignableVocabularies() method.
+       * After stepping through the code, my best guess is that not all calls have been completed by the time
+       * the application is being destroyed.
+       * In other words, the test completes "too fast" for it's own good.
+       * My ham-fisted workaround is to simulate an additional user interaction,
+       * which does nothing else but stall for time.
+       * Lame, but seems to do the trick.
+       * [ST 2016/03/01]
+       */
+      click('button.bigcancel', container);
     });
   });
 });
