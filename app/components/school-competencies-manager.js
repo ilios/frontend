@@ -11,7 +11,7 @@ export default Component.extend({
   actions: {
     commit(){
       let value = this.get('newCompetencyValue');
-      if (value.length) {
+      if (isPresent(value)) {
         this.attrs.add(value);
         this.set('newCompetencyValue', null);
       }

@@ -1,8 +1,25 @@
-<ul class='removable-list'>
-  {{#each sortedCompetencies as |competency|}}
-    <li {{action this.attrs.remove competency}}>{{competency.title}} {{fa-icon 'remove'}}</li>
-  {{/each}}
-</ul>
+{{#if competencies.length}}
+  <table class='results-list'>
+    <thead>
+      <tr>
+        <th>{{t 'general.competency'}}</th>
+        <th>{{t 'general.objectives'}}</th>
+        <th>{{t 'general.actions'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each sortedCompetencies as |competency|}}
+        <tr>
+          <td>{{competency.title}}</td>
+          <td>{{competency.objectives.length}}</td>
+          <td>{{#if (eq competency.objectives.length 0)}}
+             {{fa-icon 'trash' class='remove clickable' click=(action this.attrs.remove competency)}}
+          {{/if}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
 <div>
   {{one-way-input
     value=newCompetencyValue
