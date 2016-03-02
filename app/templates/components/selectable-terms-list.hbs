@@ -1,15 +1,8 @@
 {{#each sortedTerms as |term|}}
-  {{#if (is-in selectedTerms term)}}
-    <li class="{{if term.isTopLevel 'top-level'}}"><div class="selected" {{action 'remove' term}}>{{term.title}} <span class="actions">{{fa-icon 'remove'}}</span></div>
+  <li class="{{if term.isTopLevel 'top-level'}}">
+    {{selectable-terms-list-item selectedTerms=selectedTerms term=term add='add' remove='remove'}}
     {{#if term.hasChildren}}
       {{selectable-terms-list selectedTerms=selectedTerms terms=term.children add='add' remove='remove'}}
     {{/if}}
-    </li>
-  {{else}}
-    <li class="{{if term.isTopLevel 'top-level' 'sub-level'}}"><div {{action 'add' term}}>{{term.title}} <span class="actions">{{fa-icon 'plus' class='add'}}</span></div>
-      {{#if term.hasChildren}}
-        {{selectable-terms-list selectedTerms=selectedTerms terms=term.children add='add' remove='remove'}}
-      {{/if}}
-    </li>
-  {{/if}}
+  </li>
 {{/each}}

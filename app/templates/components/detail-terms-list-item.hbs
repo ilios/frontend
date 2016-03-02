@@ -1,0 +1,11 @@
+{{#if term.isTopLevel}}
+  {{term.title}}
+{{else}}
+  {{#each term.allParentTitles as |title|}}
+    <span class="muted">{{title}} &raquo;</span>
+  {{/each}}
+  {{term.title}}
+{{/if}}
+{{#if canEdit}}
+  {{fa-icon 'remove'}}
+{{/if}}

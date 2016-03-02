@@ -5,28 +5,9 @@
   <ul class="{{if canEdit 'removable-list' null}} tag-list selected-taxonomy-terms">
     {{#each sortedTerms as |term|}}
       {{#if canEdit}}
-        <li {{action 'remove' term}}>
-          {{#if term.isTopLevel}}
-            {{term.title}}
-          {{else}}
-            {{#each term.allParentTitles as |title|}}
-              <span class="muted">{{title}} &raquo;</span>
-            {{/each}}
-            {{term.title}}
-          {{/if}}
-          {{fa-icon 'remove'}}
-        </li>
+        {{detail-terms-list-item canEdit=true remove=remove term=term}}
       {{else}}
-        <li>
-          {{#if term.isTopLevel}}
-            {{term.title}}
-          {{else}}
-            {{#each term.allParentTitles as |title|}}
-              <span class="muted">{{title}} &raquo;</span>
-            {{/each}}
-            {{term.title}}
-          {{/if}}
-        </li>
+        {{detail-terms-list-item canEdit=false term=term}}
       {{/if}}
     {{/each}}
   </ul>

@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-const { computed } = Ember;
+const { Component, computed } = Ember;
 const { sort } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['selectable-terms-list'],
   tagName: 'ul',
   selectedTerms: [],
