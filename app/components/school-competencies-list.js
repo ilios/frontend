@@ -6,12 +6,14 @@ const { PromiseArray } = DS;
 
 export default Component.extend({
   competencies: [],
-  sortedCompetencies: computed('competencies.[]', function(){
+  domains: computed('competencies.[]', function(){
     let defer = RSVP.defer();
-
     this.get('competencies').then(competencies => {
-      defer.resolve(competencies.sortBy('title'));
+      RSVP.all(competencies.mapBy('domain')).then(domains => {
+        defer.resolve(domains.uniq());
+      });
     });
+
 
     return PromiseArray.create({
       promise: defer.promise
