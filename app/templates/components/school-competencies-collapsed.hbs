@@ -10,15 +10,19 @@
       <table class='condensed'>
         <thead>
           <tr>
+            <th class='text-left'>{{t 'general.domain'}}</th>
             <th class='text-left'>{{t 'general.summary'}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class='summary-highlight'>
-              {{t 'schools.competencyCount' count=school.competencies.length}}
-            </td>
-          </tr>
+          {{#each domains as |domain|}}
+            <tr>
+              <td>{{domain.title}}</td>
+              <td class='summary-highlight'>
+                {{t 'schools.competencyCount' count=domain.children.length}}
+              </td>
+            </tr>
+          {{/each}}
         </tbody>
       </table>
     </div>

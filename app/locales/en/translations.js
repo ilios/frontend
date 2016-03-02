@@ -25,6 +25,7 @@ export default {
     'scheduled': 'Scheduled',
     'competencies': 'Competencies',
     'competency': 'Competency',
+    'domain': 'Domain',
     'courses': 'Courses',
     'course': 'Course',
     'programs': 'Programs',
