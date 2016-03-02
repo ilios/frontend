@@ -13,18 +13,18 @@ export default Component.extend({
     const competencies = this.get('school.competencies');
     return competencies.get('length') && ! isManaging;
   }),
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.get('school.competencies').then(competencies => {
+      this.set('bufferedCompetencies', competencies.toArray());
+    });
+  },
   actions: {
     collapse(){
       this.get('school.competencies').then(competencies => {
         if(competencies.length){
           this.attrs.collapse();
         }
-      });
-    },
-    manage(){
-      this.get('school.competencies').then(competencies => {
-        this.set('bufferedCompetencies', competencies.toArray());
-        this.set('isManaging', true);
       });
     },
     addCompetencyToBuffer(title){
@@ -66,7 +66,7 @@ export default Component.extend({
     },
     cancel(){
       this.set('bufferedCompetencies', []);
-      this.set('isManaging', false);
+      this.sendAction('setSchoolManageCompetencies', false);
     },
   }
 });

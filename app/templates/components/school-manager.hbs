@@ -16,6 +16,8 @@
         school=school
         collapse=(action this.attrs.setSchoolCompetencyDetails false)
         expand=(action this.attrs.setSchoolCompetencyDetails true)
+        isManaging=schoolManageCompetencies
+        setSchoolManageCompetencies=this.attrs.setSchoolManageCompetencies
       }}
     {{else}}
       {{school-competencies-collapsed school=school expand=(action this.attrs.setSchoolCompetencyDetails true)}}

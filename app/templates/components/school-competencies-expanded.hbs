@@ -14,7 +14,7 @@
         </button>
         <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      <button {{action 'manage'}}>{{t 'schools.manageCompetencies'}}</button>
+      <button {{action this.attrs.setSchoolManageCompetencies true}}>{{t 'schools.manageCompetencies'}}</button>
     {{/if}}
   </div>
   <div class='detail-content'>
