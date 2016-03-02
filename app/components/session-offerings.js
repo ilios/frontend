@@ -1,11 +1,12 @@
 import Ember from 'ember';
 import layout from '../templates/components/session-offerings';
 import { translationMacro as t } from "ember-i18n";
+import moment from 'moment';
 
-const { Component, computed, inject, isPresent, RSVP, copy } = Ember;
+const { Component, computed, inject, RSVP, copy } = Ember;
 const { service } = inject;
 const { alias, oneWay } = computed;
-const { all } = RSVP;
+const { all, hash } = RSVP;
 
 export default Component.extend({
   saving: false,
@@ -30,114 +31,144 @@ export default Component.extend({
 
   cohorts: alias('session.course.cohorts'),
 
-  actions: {
-    addSingleOffering({ startDate, endDate, room, learnerGroups, instructors, instructorGroups }) {
-      const store = this.get('store');
-      const session = this.get('session');
-      let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups, instructors, instructorGroups });
+  createSchedule(startDate, endDate, { days, numberOfWeeks }) {
+    // First datetime picked by user:
+    const schedule = [{ startDate, endDate }];
 
-      offering.save().then((offering) => {
-        offering.get('learnerGroups').then((offeringlearnerGroups) => {
-          learnerGroups.forEach((learnerGroup) => {
-            offeringlearnerGroups.pushObject(learnerGroup);
-          });
+    const numOfWeeks = parseInt(numberOfWeeks);
+    const userPickedDay = moment(startDate).day();
+    const repeatedDays = schedule.slice();
+
+    // If applicable, add time(s) for the rest of first week:
+    days.forEach((day) => {
+      if (day < userPickedDay) {
+        repeatedDays.push({
+          startDate: moment(startDate).subtract(userPickedDay - day, 'days').toDate(),
+          endDate: moment(endDate).subtract(userPickedDay - day, 'days').toDate()
         });
+      }
 
-        if (isPresent(instructors)) {
-          offering.get('instructors').then((offeringInstructors) => {
-            offeringInstructors.pushObjects(instructors);
-          });
-        }
+      if (userPickedDay < day) {
+        const dateObj = {
+          startDate: moment(startDate).add(day - userPickedDay, 'days').toDate(),
+          endDate: moment(endDate).add(day - userPickedDay, 'days').toDate()
+        };
 
-        if (isPresent(instructorGroups)) {
-          offering.get('instructorGroups').then((offeringInstructorGroups) => {
-            offeringInstructorGroups.pushObjects(instructorGroups);
-          });
-        }
+        repeatedDays.push(dateObj);
+        schedule.push(dateObj);
+      }
+    });
+
+    // Implement schedule for next n-1 weeks:
+    let counter = 7;
+
+    for (let i = 1; i < numOfWeeks; i++) {
+      repeatedDays.forEach(({ startDate, endDate }) => {
+        schedule.push({
+          startDate: moment(startDate).add(counter, 'days').toDate(),
+          endDate: moment(endDate).add(counter, 'days').toDate()
+        });
       });
+
+      counter += 7;
+    }
+
+    return schedule;
+  },
+
+  returnSingleOfferingPromise({ startDate, endDate, room, learnerGroups, instructors, instructorGroups }) {
+    const store = this.get('store');
+    const session = this.get('session');
+
+    let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups, instructors, instructorGroups });
+
+    return offering.save();
+  },
+
+  actions: {
+    addSingleOffering(params) {
+      this.returnSingleOfferingPromise(params);
     },
 
     addMultipleOfferings({ learnerGroups, startDate: sharedStartDateObj, endDate: sharedEndDateObj }) {
       this.set('saving', true);
 
-      const store = this.get('store');
-      const session = this.get('session');
       let offeringPromises = [];
 
       learnerGroups.forEach((learnerGroup) => {
         const room = learnerGroup.get('location') || 'TBD';
         const startDate = copy(sharedStartDateObj);
         const endDate = copy(sharedEndDateObj);
-        let learnerGroups = [ learnerGroup ];
-        let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups });
+        const learnerGroups = [ learnerGroup ];
+        const instructors = learnerGroup.get('instructors');
+        const instructorGroups = learnerGroup.get('instructorGroups');
 
-        offeringPromises.pushObject(offering.save());
+        let promise = hash({ room, startDate, endDate, learnerGroups, instructors, instructorGroups });
+
+        offeringPromises.pushObject(promise);
       });
 
-      all(offeringPromises).then((offerings) => {
+      all(offeringPromises).then((offeringParams) => {
         let promises = [];
 
-        learnerGroups.forEach((learnerGroup, index) => {
-          offerings[index].get('learnerGroups').then((offeringLearnerGroups) => {
-            offeringLearnerGroups.pushObject(learnerGroup);
-          });
-
-          learnerGroup.get('instructors').then((defaultInstructors) => {
-            if (isPresent(defaultInstructors)) {
-              offerings[index].get('instructors').then((offeringInstructors) => {
-                offeringInstructors.pushObjects(defaultInstructors);
-              });
-            }
-          });
-
-          learnerGroup.get('instructorGroups').then((defaultInstructorGroups) => {
-            if (isPresent(defaultInstructorGroups)) {
-              offerings[index].get('instructorGroups').then((offeringInstructorGroups) => {
-                offeringInstructorGroups.pushObjects(defaultInstructorGroups);
-              });
-            }
-          });
+        offeringParams.forEach((params) => {
+          promises.pushObject(this.returnSingleOfferingPromise(params));
         });
 
-        all(promises).finally(() => {
-          this.set('saving', false);
+        all(promises).then(() => {
+          this.set('saving', false)
+        });
+      });
+    },
+
+    addSingleOfferingRecurring(params) {
+      this.set('saving', true);
+
+      const schedule = this.createSchedule(params.startDate, params.endDate, params.recurringOptions);
+      const offeringPromises = [];
+
+      schedule.forEach(({ startDate, endDate }) => {
+        params.startDate = startDate;
+        params.endDate = endDate;
+
+        offeringPromises.pushObject(this.returnSingleOfferingPromise(params));
+      });
+
+      all(offeringPromises).then(() => {
+        this.set('saving', false);
+      });
+    },
+
+    addMultipleOfferingsRecurring({ learnerGroups, startDate: sharedStartDateObj, endDate: sharedEndDateObj, recurringOptions }) {
+      this.set('saving', true);
+
+      const schedule = this.createSchedule(sharedStartDateObj, sharedEndDateObj, recurringOptions);
+      const offeringPromises = [];
+
+      learnerGroups.forEach((learnerGroup) => {
+        const room = learnerGroup.get('location') || 'TBD';
+        const learnerGroups = [ learnerGroup ];
+        const instructors = learnerGroup.get('instructors');
+        const instructorGroups = learnerGroup.get('instructorGroups');
+
+        schedule.forEach(({ startDate, endDate }) => {
+          let promise = hash({ room, startDate, endDate, learnerGroups, instructors, instructorGroups });
+
+          offeringPromises.pushObject(promise);
         });
       });
 
-      // MORE ELEGANT SOLUTION (FIX POLYMORPHIC RELATIONSHIP ERROR):
-      //
-      // const promises = learnerGroups.map((learnerGroup) => {
-      //   const room = learnerGroup.get('location');
-      //   const offering = store.createRecord('offering', { session, startDate, endDate, room });
-      //   const offeringPromise = offering.save();
-      //
-      //   const learnerGroupsPromise = offeringPromise.then(() => {
-      //       return offering.get('learnerGroups');
-      //     })
-      //     .then((groups) => {
-      //       groups.pushObject('learnerGroup');
-      //     });
-      //
-      //   const instructorsPromise = offeringPromise.then(() => {
-      //       const instructors = offering.get('instructors');
-      //       const defaultInstructors = learnerGroup.get('instructorUsers');
-      //
-      //       return hash({ instructors, defaultInstructors });
-      //     })
-      //     .then(({ instructors, defaultInstructors }) => {
-      //       if (isPresent(defaultInstructors)) {
-      //         instructors.pushObjects(defaultInstructors);
-      //       }
-      //     });
-      //
-      //   return all([ learnerGroupsPromise, instructorsPromise ]).then(() => {
-      //     return offering.save();
-      //   })
-      // });
-      //
-      // all(promises).finally(() => {
-      //   this.set('saving', false);
-      // });
+      all(offeringPromises).then((offeringParams) => {
+        let promises = [];
+
+        offeringParams.forEach((params) => {
+          promises.pushObject(this.returnSingleOfferingPromise(params));
+        });
+
+        all(promises).then(() => {
+          this.set('saving', false)
+        });
+      });
     },
 
     toggleEditor() {

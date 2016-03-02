@@ -313,7 +313,16 @@ export default {
     'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba.",
     'errors' : {
       'roomTooLong': "El nombre de la ubicación es demasiado largo (el máximo es 60 caracteres)"
-    }
+    },
+    'makeRecurring': 'Hacer Recurrente',
+    'numberOfWeeks': 'Número de semanas (enteros positivos sólo)',
+    'sunday': 'Domingo',
+    'monday': 'Lunes',
+    'tuesday': 'Martes',
+    'wednesday': 'Miércoles',
+    'thursday': 'Jueves',
+    'friday': 'Viernes',
+    'saturday': 'Sábado',
   },
   'learningMaterials': {
     'displayName': 'Nombre de Mostrar',

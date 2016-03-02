@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
-import ValidationError from 'ilios/mixins/validation-error';
 import EmberValidations from 'ember-validations';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP, inject } = Ember;
@@ -10,7 +9,7 @@ const { all, Promise } = RSVP;
 const { service } = inject;
 const { PromiseArray } = DS;
 
-export default Component.extend(EmberValidations, ValidationError, {
+export default Component.extend(EmberValidations, {
   flashMessages: service(),
   init() {
     this._super(...arguments);
@@ -25,6 +24,8 @@ export default Component.extend(EmberValidations, ValidationError, {
 
     const cohorts = this.get('cohorts');
     const learnerGroups = {};
+    const recurringDays = [];
+    const showErrorsFor = [];
 
     if (cohorts && isPresent(cohorts)) {
       cohorts.forEach((cohort) => {
@@ -32,7 +33,7 @@ export default Component.extend(EmberValidations, ValidationError, {
       });
     }
 
-    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime });
+    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime, recurringDays, showErrorsFor });
   },
 
   classNames: ['offering-editor'],
@@ -50,11 +51,25 @@ export default Component.extend(EmberValidations, ValidationError, {
   instructorGroups: null,
   learnerGroups: null,
 
+  showErrorsFor: [],
   validations: {
     room : {
-      length: {maximum: 60, allowBlank: true, messages: { tooLong: "offerings.errors.roomTooLong" }}
+      length: {maximum: 60, allowBlank: true},
+    },
+    'numberOfWeeks': {
+      presence: {
+        'if': 'makeRecurring',
+      },
+      numericality: {
+        'if': 'makeRecurring',
+        greaterThan: 0,
+        onlyInteger: true
+      }
     }
   },
+  makeRecurring: false,
+  recurringDays: null,
+  numberOfWeeks: null,
 
   availableLearnerGroups: computed('cohorts.[]', function() {
     let cohortProxy = ObjectProxy.extend({
@@ -164,6 +179,12 @@ export default Component.extend(EmberValidations, ValidationError, {
     return output;
   },
 
+  defaultCheckedDay: computed('startDate', function() {
+    const startDate = this.get('startDate');
+
+    return moment(startDate).day().toString();
+  }),
+
   actions: {
     setOfferingType(value) {
       this.set('smallGroupMode', value);
@@ -234,16 +255,24 @@ export default Component.extend(EmberValidations, ValidationError, {
     create() {
       this.validate().then(() => {
         const flashMessages = this.get('flashMessages');
+
         if (!(this.datesValidated() && this.timesValidated())) {
           flashMessages.alert('general.invalidDatetimes');
           return;
         }
         let datesHash = this.calculateDateTimes();
         let learnerGroups = this.getAllLearnerGroups();
+        const days = this.get('recurringDays');
+        const numberOfWeeks = this.get('numberOfWeeks');
+        let recurringOptions = {
+          days,
+          numberOfWeeks
+        };
         let params = {
           startDate: datesHash.startDate.toDate(),
           endDate: datesHash.endDate.toDate(),
-          learnerGroups
+          learnerGroups,
+          recurringOptions
         };
 
         if (this.get('smallGroupMode')) {
@@ -252,27 +281,47 @@ export default Component.extend(EmberValidations, ValidationError, {
             return;
           }
 
-          this.sendAction('addMultipleOfferings', params);
+          if (this.get('makeRecurring')) {
+            this.sendAction('addMultipleOfferingsRecurring', params);
+          } else {
+            this.sendAction('addMultipleOfferings', params);
+          }
         } else {
           params.room = this.get('room') || 'TBD';
           params.instructors = this.get('instructors');
           params.instructorGroups = this.get('instructorGroups');
 
-          this.sendAction('addSingleOffering', params);
+          if (this.get('makeRecurring')) {
+            this.sendAction('addSingleOfferingRecurring', params);
+          } else {
+            this.sendAction('addSingleOffering', params);
+          }
         }
 
         this.send('cancel');
       }).catch(() => {
-        const keys = Ember.keys(this.get('errors'));
-        keys.forEach((key) => {
-          this.get('flashMessages').alert(this.get('errors.' + key));
-        });
+        return;
       });
     },
 
     cancel() {
       this.get('flashMessages').clearMessages();
       this.sendAction('closeEditor');
+    },
+
+    toggleMakeRecurring() {
+      this.set('makeRecurring', !this.get('makeRecurring'))
+    },
+    addErrorDisplayFor(field){
+      this.get('showErrorsFor').pushObject(field);
+    },
+    toggleDayInRecurrindgDays(day){
+      let recurringDays = this.get('recurringDays');
+      if (recurringDays.contains(day)) {
+        this.get('recurringDays').removeObject(day);
+      } else {
+        this.get('recurringDays').pushObject(day);
+      }
     }
   }
 });

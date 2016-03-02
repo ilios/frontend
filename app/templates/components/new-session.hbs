@@ -5,12 +5,14 @@
     <div class="form-label">{{t 'general.title'}}:</div>
 
     <div class="form-data form-data-text form-input-row">
-      <input type="text" placeholder={{placeholder}} class="{{if topErrorMessage 'has-error'}}"
-        onChange={{action "changeValue" value="target.value"}}
-        oninput={{action "changeValue" value="target.value"}}
-        onfocus={{action "displayError"}} />
-      {{#if topErrorMessage}}
-        <span class="validation-error-message">{{topErrorMessage}}</span>
+      {{one-way-input
+        value=title
+        update=(action (mut title))
+        focusOut=(action 'addErrorDisplayFor' 'title')
+        class=(if (and errors.title (is-in showErrorsFor 'title')) 'has-error')
+      }}
+      {{#if (and errors.title (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{errors.title}}</span>
       {{/if}}
     </div>
   </label>
@@ -20,9 +22,9 @@
 
     <div class="form-data form-data-select form-input-row">
     {{#if sortedSessionTypes}}
-      <select {{action 'changeSessionType' on='change'}}>
+      <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
         {{#each sortedSessionTypes as |sessionType|}}
-          <option value="{{sessionType}}" selected={{is-equal sessionType.id session.sessionType.id}}>
+          <option value="{{sessionType.id}}" selected={{is-equal sessionType.id selectedSessionType.id}}>
             {{sessionType.title}}
           </option>
         {{/each}}

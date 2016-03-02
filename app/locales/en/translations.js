@@ -313,7 +313,16 @@ export default {
     'smallGroupMessage': "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above.",
     'errors' : {
       'roomTooLong': "Location name is too long (maximum is 60 characters)"
-    }
+    },
+    'makeRecurring': 'Make Recurring',
+    'numberOfWeeks': 'Number of weeks',
+    'sunday': 'Sunday',
+    'monday': 'Monday',
+    'tuesday': 'Tuesday',
+    'wednesday': 'Wednesday',
+    'thursday': 'Thursday',
+    'friday': 'Friday',
+    'saturday': 'Saturday',
   },
   'learningMaterials': {
     'displayName': 'Display Name',

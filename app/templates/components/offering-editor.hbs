@@ -54,10 +54,119 @@
   </div>
 </div>
 
+<div class="form-col-12">
+  <label class="form-label">{{t 'offerings.makeRecurring'}}:</label>
+  <div class="form-data">
+    <div class="make-recurring-slider">
+      <span class='control form-data switch yes-no switch-green' {{action 'toggleMakeRecurring'}}>
+        <input checked={{makeRecurring}} type='checkbox' class="switch-input" />
+        <span class="switch-label" data-on='{{t 'general.on'}}' data-off='{{t 'general.off'}}'></span>
+        <span class="switch-handle"></span>
+      </span>
+    </div>
+
+    {{#if makeRecurring}}
+      <div class="make-recurring-options">
+        <div class="make-recurring-days">
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '0') (eq defaultCheckedDay '0'))
+              click=(action 'toggleDayInRecurrindgDays' '0')
+              disabled=(eq defaultCheckedDay '0')
+            }}
+            <label class="day-of-week">{{t 'offerings.sunday'}}</label>
+          </div>
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '1') (eq defaultCheckedDay '1'))
+              click=(action 'toggleDayInRecurrindgDays' '1')
+              disabled=(eq defaultCheckedDay '1')
+            }}
+            <label class="day-of-week">{{t 'offerings.monday'}}</label>
+          </div>
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '2') (eq defaultCheckedDay '2'))
+              click=(action 'toggleDayInRecurrindgDays' '2')
+              disabled=(eq defaultCheckedDay '2')
+            }}
+            <label class="day-of-week">{{t 'offerings.tuesday'}}</label>
+          </div>
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '3') (eq defaultCheckedDay '3'))
+              click=(action 'toggleDayInRecurrindgDays' '3')
+              disabled=(eq defaultCheckedDay '3')
+            }}
+            <label class="day-of-week">{{t 'offerings.wednesday'}}</label>
+          </div>
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '4') (eq defaultCheckedDay '4'))
+              click=(action 'toggleDayInRecurrindgDays' '4')
+              disabled=(eq defaultCheckedDay '4')
+            }}
+            <label class="day-of-week">{{t 'offerings.thursday'}}</label>
+          </div>
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '5') (eq defaultCheckedDay '5'))
+              click=(action 'toggleDayInRecurrindgDays' '5')
+              disabled=(eq defaultCheckedDay '5')
+            }}
+            <label class="day-of-week">{{t 'offerings.friday'}}</label>
+          </div>
+          <div>
+            {{one-way-input
+              type='checkbox'
+              checked=(or (is-in recurringDays '6') (eq defaultCheckedDay '6'))
+              click=(action 'toggleDayInRecurrindgDays' '6')
+              disabled=(eq defaultCheckedDay '6')
+            }}
+            <label class="day-of-week">{{t 'offerings.saturday'}}</label>
+          </div>
+        </div>
+
+        <div class="make-recurring-input-container">
+          {{one-way-input
+            value=numberOfWeeks
+            update=(action (mut numberOfWeeks))
+            focusOut=(action 'addErrorDisplayFor' 'numberOfWeeks')
+            class=(concat 'make-recurring-input ' (if (and errors.numberOfWeeks (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
+          }}
+          <label class="make-recurring-input-label">{{t 'offerings.numberOfWeeks'}}</label>
+          {{#if (and errors.numberOfWeeks (is-in showErrorsFor 'numberOfWeeks'))}}
+            <span class="validation-error-message">{{errors.numberOfWeeks}}</span>
+          {{/if}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>
+
 {{#unless smallGroupMode}}
   <div class="form-col-12">
     <label class="form-label">{{t 'general.location'}}:</label>
-    <div class="form-data"><span class='room'>{{input value=room placeholder="i.e. Rm. 111"}}</span></div>
+    <div class="form-data">
+      <span class='room'>
+        {{one-way-input
+          value=room
+          update=(action (mut room))
+          focusOut=(action 'addErrorDisplayFor' 'room')
+          focusIn=(action 'addErrorDisplayFor' 'room')
+          class=(if (and errors.room (is-in showErrorsFor 'room')) 'has-error')
+        }}
+      </span>
+      {{#if (and errors.room (is-in showErrorsFor 'room'))}}
+        <span class="validation-error-message">{{errors.room}}</span>
+      {{/if}}
+    </div>
   </div>
 {{/unless}}
 

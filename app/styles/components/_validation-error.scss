@@ -63,3 +63,9 @@
     border-color: $ilios-red;
   }
 }
+
+input {
+  &.has-error {
+    border-color: $ilios-red;
+  }
+}

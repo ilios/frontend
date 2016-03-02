@@ -313,7 +313,16 @@ export default {
     'smallGroupMessage': "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de 'small groups'. Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton 'offre' au-dessus.",
     'errors' : {
       'roomTooLong': "Nom de l'emplacement est trop long (max. 60 caractères)"
-    }
+    },
+    'makeRecurring': 'Activité Récurrente',
+    'numberOfWeeks': 'Nombre de semaines (entier positif)',
+    'sunday': 'Dimanche',
+    'monday': 'Lundi',
+    'tuesday': 'Mardi',
+    'wednesday': 'Mercredi',
+    'thursday': 'Jeudi',
+    'friday': 'Vendredi',
+    'saturday': 'Samedi',
   },
   'learningMaterials': {
     'displayName': "Nom d’Affichage",

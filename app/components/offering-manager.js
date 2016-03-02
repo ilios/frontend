@@ -171,11 +171,11 @@ export default Component.extend(EmberValidations, ValidationError, {
   getAllLearnerGroups() {
     const groupHash = this.get('learnerGroups');
     const output = [];
-    
+
     for (let key in groupHash) {
       output.pushObjects(groupHash[key]);
     }
-    
+
     return output;
   },
 
@@ -218,7 +218,6 @@ export default Component.extend(EmberValidations, ValidationError, {
       this.validate().then(() => {
         if (this.datesValidated() && this.timesValidated()) {
           let combinedGroups = this.getAllLearnerGroups();
-
           var offering = this.get('offering');
           let promises = [];
           promises.push(offering.get('instructorGroups').then(instructorGroups => {
@@ -279,7 +278,6 @@ export default Component.extend(EmberValidations, ValidationError, {
           this.get('flashMessages').alert(this.get('errors.' + key));
         });
       });
-
     },
     edit() {
       let offering = this.get('offering');

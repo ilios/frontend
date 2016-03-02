@@ -321,6 +321,7 @@ test('users can create a new offering or small groups (single and multi-day)', f
     pickOption(endBoxes[0], '3', assert);
     pickOption(endBoxes[1], '23', assert);
     pickOption(endBoxes[2], 'pm', assert);
+
   });
 
   fillIn(location, 'Rm. 111');
@@ -479,5 +480,203 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
     assert.equal(find(instructor2).text(), '2 guy M. Mc2son', 'instructor is correct');
     assert.equal(find(instructor3).text(), '5 guy M. Mc5son', 'instructor is correct');
     assert.equal(find(instructor4).text(), '6 guy M. Mc6son', 'instructor is correct');
+  });
+});
+
+
+test('users can create recurring small groups', function(assert) {
+  assert.expect(29);
+
+  const expandButton = '.expand-button';
+  const makeRecurringButton = '.make-recurring-slider .switch-label';
+  const makeRecurringInput = '.make-recurring-input';
+
+  const startDateInput = '.offering-startdate-picker input';
+  const startTimes = '.starttime select';
+  const endTimes = '.endtime select';
+  const learnerGroupOne = '.selectable li:first';
+  const learnerGroupTwo = '.selectable li:last';
+  const createButton = '.done';
+
+  const daysOfWeek = '.offering-block-date-dayofweek';
+  const daysOfMonth = '.offering-block-date-dayofmonth';
+  const startsTime = '.offering-block-time-time-starttime';
+  const endsTime = '.offering-block-time-time-endtime';
+  const learnerGroups = '.offering-block-time-offering-learner_groups ul li';
+
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    startDateInteractor.selectDate(new Date(2015, 4, 22));
+
+    let startBoxes = find(startTimes, container);
+    pickOption(startBoxes[0], '2', assert);
+    pickOption(startBoxes[1], '15', assert);
+
+    let endBoxes = find(endTimes, container);
+    pickOption(endBoxes[0], '3', assert);
+    pickOption(endBoxes[1], '23', assert);
+    pickOption(endBoxes[2], 'pm', assert);
+  });
+
+  click(makeRecurringButton);
+  fillIn(makeRecurringInput, '4');
+  click(learnerGroupOne);
+  click(learnerGroupTwo);
+
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(daysOfWeek).eq(0).text(), 'Friday', 'first day of the week is correct');
+    assert.equal(find(daysOfWeek).eq(1).text(), 'Friday', 'second day of the week is correct');
+    assert.equal(find(daysOfWeek).eq(2).text(), 'Friday', 'third day of the week is correct');
+    assert.equal(find(daysOfWeek).eq(3).text(), 'Friday', 'fourth day of the week is correct');
+
+    assert.equal(find(daysOfMonth).eq(0).text(), 'May 22nd', 'first day of month is correct');
+    assert.equal(find(daysOfMonth).eq(1).text(), 'May 29th', 'second day of month is correct');
+    assert.equal(find(daysOfMonth).eq(2).text(), 'June 5th', 'third day of month is correct');
+    assert.equal(find(daysOfMonth).eq(3).text(), 'June 12th', 'fourth day of month is correct');
+
+    assert.equal(find(startsTime).eq(0).text().trim(), 'Starts: 2:15 AM', 'first start time is correct');
+    assert.equal(find(startsTime).eq(1).text().trim(), 'Starts: 2:15 AM', 'second start time is correct');
+    assert.equal(find(startsTime).eq(2).text().trim(), 'Starts: 2:15 AM', 'third start time is correct');
+    assert.equal(find(startsTime).eq(3).text().trim(), 'Starts: 2:15 AM', 'fourth start time is correct');
+
+    assert.equal(find(endsTime).eq(0).text().trim(), 'Ends: 3:23 PM', 'first end time is correct');
+    assert.equal(find(endsTime).eq(1).text().trim(), 'Ends: 3:23 PM', 'second end time is correct');
+    assert.equal(find(endsTime).eq(2).text().trim(), 'Ends: 3:23 PM', 'third end time is correct');
+    assert.equal(find(endsTime).eq(3).text().trim(), 'Ends: 3:23 PM', 'fourth end time is correct');
+
+    assert.equal(find(learnerGroups).eq(0).text(), 'learner group 0', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(1).text(), 'learner group 1', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(2).text(), 'learner group 0', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(3).text(), 'learner group 1', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(4).text(), 'learner group 0', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(5).text(), 'learner group 1', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(6).text(), 'learner group 0', 'fourth correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(7).text(), 'learner group 1', 'fourth correct learner group is picked');
+  });
+});
+
+test('users can create recurring single offerings', function(assert) {
+  assert.expect(29);
+
+  const expandButton = '.expand-button';
+  const makeRecurringButton = '.make-recurring-slider .switch-label';
+  const makeRecurringInput = '.make-recurring-input ';
+  const offeringButton = '.second-button';
+
+  const startDateInput = '.offering-startdate-picker input';
+  const startTimes = '.starttime select';
+  const endTimes = '.endtime select';
+  const learnerGroupOne = '.selectable li:first';
+  const learnerGroupTwo = '.selectable li:last';
+  const createButton = '.done';
+
+  const daysOfWeek = '.offering-block-date-dayofweek';
+  const daysOfMonth = '.offering-block-date-dayofmonth';
+  const startsTime = '.offering-block-time-time-starttime';
+  const endsTime = '.offering-block-time-time-endtime';
+  const learnerGroups = '.offering-block-time-offering-learner_groups ul li';
+
+  visit(url);
+  click(expandButton);
+  click(offeringButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    startDateInteractor.selectDate(new Date(2015, 4, 22));
+
+    let startBoxes = find(startTimes, container);
+    pickOption(startBoxes[0], '2', assert);
+    pickOption(startBoxes[1], '15', assert);
+
+    let endBoxes = find(endTimes, container);
+    pickOption(endBoxes[0], '3', assert);
+    pickOption(endBoxes[1], '23', assert);
+    pickOption(endBoxes[2], 'pm', assert);
+  });
+
+  click(makeRecurringButton);
+  fillIn(makeRecurringInput, '4');
+  click(learnerGroupOne);
+  click(learnerGroupTwo);
+
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(daysOfWeek).eq(0).text(), 'Friday', 'first day of the week is correct');
+    assert.equal(find(daysOfWeek).eq(1).text(), 'Friday', 'second day of the week is correct');
+    assert.equal(find(daysOfWeek).eq(2).text(), 'Friday', 'third day of the week is correct');
+    assert.equal(find(daysOfWeek).eq(3).text(), 'Friday', 'fourth day of the week is correct');
+
+    assert.equal(find(daysOfMonth).eq(0).text(), 'May 22nd', 'first day of month is correct');
+    assert.equal(find(daysOfMonth).eq(1).text(), 'May 29th', 'second day of month is correct');
+    assert.equal(find(daysOfMonth).eq(2).text(), 'June 5th', 'third day of month is correct');
+    assert.equal(find(daysOfMonth).eq(3).text(), 'June 12th', 'fourth day of month is correct');
+
+    assert.equal(find(startsTime).eq(0).text().trim(), 'Starts: 2:15 AM', 'first start time is correct');
+    assert.equal(find(startsTime).eq(1).text().trim(), 'Starts: 2:15 AM', 'second start time is correct');
+    assert.equal(find(startsTime).eq(2).text().trim(), 'Starts: 2:15 AM', 'third start time is correct');
+    assert.equal(find(startsTime).eq(3).text().trim(), 'Starts: 2:15 AM', 'fourth start time is correct');
+
+    assert.equal(find(endsTime).eq(0).text().trim(), 'Ends: 3:23 PM', 'first end time is correct');
+    assert.equal(find(endsTime).eq(1).text().trim(), 'Ends: 3:23 PM', 'second end time is correct');
+    assert.equal(find(endsTime).eq(2).text().trim(), 'Ends: 3:23 PM', 'third end time is correct');
+    assert.equal(find(endsTime).eq(3).text().trim(), 'Ends: 3:23 PM', 'fourth end time is correct');
+
+    assert.equal(find(learnerGroups).eq(0).text(), 'learner group 0', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(1).text(), 'learner group 1', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(2).text(), 'learner group 0', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(3).text(), 'learner group 1', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(4).text(), 'learner group 0', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(5).text(), 'learner group 1', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(6).text(), 'learner group 0', 'fourth correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(7).text(), 'learner group 1', 'fourth correct learner group is picked');
+
+  });
+});
+
+test('recurring start date is default day and cannot be changes', function(assert) {
+  assert.expect(14);
+
+  const expandButton = '.expand-button';
+  const makeRecurringButton = '.make-recurring-slider .switch-label';
+  const offeringButton = '.second-button';
+
+  const startDateInput = '.offering-startdate-picker input';
+  const recurringInputs = '.make-recurring-days input';
+
+  visit(url);
+  click(expandButton);
+  click(offeringButton);
+  andThen(() => {
+    let container = find('.session-offerings');
+
+    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    startDateInteractor.selectDate(new Date(2015, 4, 22));
+
+  });
+
+  click(makeRecurringButton);
+
+  andThen(() => {
+    let inputs = find(recurringInputs);
+    assert.ok(!inputs.eq(0).prop('disabled'));
+    assert.ok(!inputs.eq(0).prop('checked'));
+    assert.ok(!inputs.eq(1).prop('disabled'));
+    assert.ok(!inputs.eq(1).prop('checked'));
+    assert.ok(!inputs.eq(2).prop('disabled'));
+    assert.ok(!inputs.eq(2).prop('checked'));
+    assert.ok(!inputs.eq(3).prop('disabled'));
+    assert.ok(!inputs.eq(3).prop('checked'));
+    assert.ok(!inputs.eq(4).prop('disabled'));
+    assert.ok(!inputs.eq(4).prop('checked'));
+    assert.ok(inputs.eq(5).prop('disabled'));
+    assert.ok(inputs.eq(5).prop('checked'));
+    assert.ok(!inputs.eq(6).prop('disabled'));
+    assert.ok(!inputs.eq(6).prop('checked'));
   });
 });
