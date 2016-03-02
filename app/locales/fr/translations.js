@@ -129,6 +129,7 @@ export default {
     'perPage': 'Par Page',
     'summary': 'Résumé',
     'manage': 'Administrer',
+    'tooManyResults': 'Votre recherche présente plus que les {{count}} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes.',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -405,6 +406,7 @@ export default {
     'otherId': 'Autre ID',
     'manageUsers': "Gérer les utilisateurs",
     'searchUsers': "Rechercher des utilisateurs",
+    'searchDirectory': 'Consultez le répertoire pour les utilisateurs nouvels',
     'userRoles': 'Rôles des Utilisateurs',
     'courseDirector': 'Directeur de Cours',
     'instructor': 'Instructeur',
@@ -495,6 +497,8 @@ export default {
       'missingFromDirectory': 'Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization.',
       'emailMismatch': 'L’address email dans le répertoire ({{update.value}}) ne correspond pas à ce email dans ilios ({{update.user.email}}).',
       'updateIlios': 'Mettre à jour Ilios'
-    }
+    },
+    'userNotAddableFromDirectory': "Cette utilisateur manque les informations requises, et ne peut pas être ajouté",
+    'goToUser': "Présentant enregistrement d'utilisateur en Ilios",
   },
 };

@@ -129,6 +129,7 @@ export default {
     'perPage': 'Per Page',
     'summary': 'Summary',
     'manage': 'Manage',
+    'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms.',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -405,6 +406,7 @@ export default {
     'otherId': 'Other ID',
     'manageUsers': 'Manage Users',
     'searchUsers': 'Search for users',
+    'searchDirectory': 'Search directory for new users',
     'userRoles': 'User Roles',
     'courseDirector': 'Course Director',
     'instructor': 'Instructor',
@@ -495,6 +497,8 @@ export default {
       'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization.',
       'emailMismatch': 'The email address in the directory ({{update.value}}) does not match the email in ilios ({{update.user.email}}).',
       'updateIlios': 'Update Ilios'
-    }
+    },
+    'userNotAddableFromDirectory': "This user is missing required information and cannot be added",
+    'goToUser': "Show user record in ilios",
   }
 };

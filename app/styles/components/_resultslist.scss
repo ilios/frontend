@@ -68,7 +68,7 @@
         color: $white;
       }
     }
-    
+
     .sortable {
       cursor: pointer;
     }
@@ -86,9 +86,8 @@
   }
 
   .resultslist-new {
-    border: 1px dotted $ilios-orange;
     clear: both;
-    padding: 0 1em 2em;
+    padding: 0 1em;
 
     .new-result {
       border: 1px solid $header-grey;

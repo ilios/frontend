@@ -1,0 +1,167 @@
+{{#liquid-if selectedUser class='horizontal'}}
+  {{#if (and schools.isFulfilled allowCustomUserName.isFulfilled)}}
+    <div class="detail-content form-container">
+      <div class="form-col-6 multi-row">
+        <label class="form-label">{{t "user.firstName"}}:</label>
+        <div class="form-data">
+          {{firstName}}
+        </div>
+        <label class="form-label">{{t "user.lastName"}}:</label>
+        <div class="form-data">
+          {{lastName}}
+        </div>
+        <label class="form-label">{{t "general.campusId"}}:</label>
+        <div class="form-data">
+          {{campusId}}
+        </div>
+        <label class="form-label">{{t "general.email"}}:</label>
+        <div class="form-data">
+          {{email}}
+        </div>
+        <label class="form-label">{{t "general.phone"}}:</label>
+        <div class="form-data">
+          {{#if phone.length}}
+            {{phone}}
+          {{else}}
+            &nbsp;
+          {{/if}}
+        </div>
+        <label class="form-label">{{t "user.otherId"}}:</label>
+        <div class="form-data">
+          {{one-way-input
+            value=otherId
+            update=(action (mut otherId))
+            onenter=(action "save")
+            onescape=(action this.attrs.close)
+            focusOut=(action 'addErrorDisplayFor' 'otherId')
+          }}
+          {{#if (and errors.otherId (is-in showErrorsFor 'otherId'))}}
+            <span class="validation-error-message">{{errors.otherId}}</span>
+          {{/if}}
+        </div>
+        <label class="form-label">{{t "user.username"}}:</label>
+        <div class="form-data">
+          {{#if allowCustomUserName}}
+              {{one-way-input
+                value=username
+                update=(action (mut username))
+                onenter=(action "save")
+                onescape=(action this.attrs.close)
+                focusOut=(action 'addErrorDisplayFor' 'username')
+              }}
+              {{#if (and errors.username (is-in showErrorsFor 'username'))}}
+                <span class="validation-error-message">{{errors.username}}</span>
+              {{/if}}
+          {{else}}
+            {{username}}
+          {{/if}}
+        </div>
+
+        {{#if allowCustomUserName}}
+          <label class="form-label">{{t "user.password"}}:</label>
+          <div class="form-data">
+            {{one-way-input
+              value=password
+              update=(action (mut password))
+              onenter=(action "save")
+              onescape=(action this.attrs.close)
+              focusOut=(action 'addErrorDisplayFor' 'password')
+            }}
+            {{#if (and errors.password (is-in showErrorsFor 'password'))}}
+              <span class="validation-error-message">{{errors.password}}</span>
+            {{/if}}
+          </div>
+        {{/if}}
+        <label class="form-label">{{t "general.primarySchool"}}:</label>
+        <div class="form-data form-data-select">
+          <select onchange={{action "setSchool" value="target.value"}}>
+            {{#each sortedSchools as |school|}}
+              <option value={{school.id}} selected={{is-equal school bestSelectedSchool}}>
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-col-6 form-data-submit">
+        <button class='done text' {{action 'save'}}>
+          {{#if isSaving}}
+            {{fa-icon 'spinner' spin=true}}
+          {{else}}
+            {{t 'general.done'}}
+          {{/if}}
+        </button>
+        <button class='cancel text' {{action 'unPickUser'}}>{{t 'general.cancel'}}</button>
+      </div>
+    </div>
+  {{else}}
+    {{fa-icon 'spinner' spin=true}}
+  {{/if}}
+{{else}}
+  <div class="new-result-title">{{t 'user.new'}}</div>
+  <div id='new-directory-user-search-tools'>
+    {{one-way-input
+      value=searchTerms
+      update=(action attrs.setSearchTerms)
+      onenter=(action "findUsersInDirectory")
+      onescape=(action attrs.setSearchTerms '')
+    }}
+    <button type='search' {{action 'findUsersInDirectory'}}>{{t 'user.searchDirectory'}}</button>
+  </div>
+  {{#liquid-if isSearching class='crossFade'}}
+    {{fa-icon 'spinner' spin=true}} {{t 'general.currentlySearchingPrompt'}}
+  {{else if searchResultsReturned}}
+    {{#if searchResults.length}}
+      <section class='new-directory-user-search-results'>
+        <div>
+          {{#if searchResults.length}}
+            <table>
+              <thead>
+                <tr>
+                  <th class='text-right' colspan=1></th>
+                  <th class='text-left' colspan=3>{{t 'user.fullName'}}</th>
+                  <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
+                  <th class='text-left' colspan=5>{{t 'general.email'}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each searchResults as |user|}}
+                  <tr>
+                    <td class='text-right' colspan=1>
+                      {{#if user.user}}
+                        {{fa-icon 'sun-o' class='warning clickable' click=(action attrs.transitionToUser user.user) title=(t 'admin.gotToUser')}}
+                      {{else}}
+                        {{#if user.addable}}
+                          {{fa-icon 'plus' class='yes clickable' click=(action 'pickUser' user) title=(t 'general.addNew')}}
+                        {{else}}
+                          {{fa-icon 'ambulance' class='no' title=(t 'admin.userNotAddableFromDirectory')}}
+                        {{/if}}
+                      {{/if}}
+                    </td>
+                    <td class='text-left' colspan=3>
+                      {{#if user.user}}
+                        {{#link-to 'user' user.user}}{{user.firstName}} {{user.lastName}}{{/link-to}}
+                      {{else}}
+                        {{user.firstName}} {{user.lastName}}
+                      {{/if}}
+                    </td>
+                    <td class='text-left' colspan=2>{{user.campusId}}</td>
+                    <td class='text-left' colspan=5>{{user.email}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{else}}
+            <span class="no-results">{{general.noResultsFound}}</span>
+          {{/if}}
+        </div>
+      </section>
+      {{#if tooManyResults}}
+        <p><em>{{t 'general.tooManyResults' count=50}}</em></p>
+      {{/if}}
+    {{else}}
+      <p><em>{{t 'general.noResultsFound'}}</em></p>
+    {{/if}}
+  {{/liquid-if}}
+{{/liquid-if}}
