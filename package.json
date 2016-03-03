@@ -91,7 +91,7 @@
     "loader.js": "^4.0.0",
     "pluralize": "^1.2.1",
     "ui-select": "firefly-ui/ui-select#v0.0.10",
-    "validator": "^4.8.0"
+    "validator": "^5.1.0"
   },
   "ember-addon": {
     "paths": [
