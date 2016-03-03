@@ -45,6 +45,23 @@ module('Acceptance: Course - Terms' + testgroup, {
   }
 });
 
+test('taxonomy summary', function(assert) {
+  assert.expect(7);
+  visit('/courses/1?details=true');
+  andThen(function() {
+    var container = find('.collapsed-taxonomies');
+    var title = find('.detail-title', container);
+    assert.equal(title.text().trim(), 'Terms (' + fixtures.course.terms.length + ')');
+    assert.equal(find('tr:eq(0) th:eq(0)', container).text().trim(), 'Vocabulary');
+    assert.equal(find('tr:eq(0) th:eq(1)', container).text().trim(), 'School');
+    assert.equal(find('tr:eq(0) th:eq(2)', container).text().trim(), 'Assigned terms');
+
+    assert.equal(find('tr:eq(1) td:eq(0)', container).text().trim(), 'Vocabulary 1');
+    assert.equal(find('tr:eq(1) td:eq(1)', container).text().trim(), 'school 0');
+    assert.equal(find('tr:eq(1) td:eq(2)', container).text().trim(), fixtures.course.terms.length);
+  });
+});
+
 test('list terms', function(assert) {
   assert.expect(2);
   visit(url);
