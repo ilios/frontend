@@ -43,7 +43,7 @@
         {{t 'dashboard.whichIs'}}
         {{#if (is-equal currentPrepositionalObject 'instructor')}}
           {{#if selectedUser}}
-            <ul class='removable-list'>
+            <ul class='removable-list tag-list'>
               <li {{action 'changePrepositionalObjectId' null}}>{{selectedUser.fullName}} {{fa-icon 'remove'}}</li>
             </ul>
           {{else}}
@@ -53,7 +53,7 @@
           {{/if}}
         {{else if (is-equal currentPrepositionalObject 'mesh term')}}
           {{#if selectedMeshTerm}}
-            <ul class='removable-list selected-mesh-terms'>
+            <ul class='removable-list tag-list selected-mesh-terms'>
               <div class="content">
                 <span class="descriptor-name">{{selectedMeshTerm.name}}</span>
                 <span class="descriptor-id">

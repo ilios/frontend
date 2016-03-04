@@ -10,9 +10,14 @@
 {{else}}
   {{collapsed-objectives subject=programYear editable=editable expand=(action this.attrs.setPyObjectiveDetails true)}}
 {{/liquid-if}}
-
-{{detail-topics
+{{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
+  {{detail-taxonomies
   subject=programYear
-  isProgramYear=true
-}}
+  editable=editable
+  collapse=(action this.attrs.setPyTaxonomyDetails false)
+  expand=(action this.attrs.setPyTaxonomyDetails true)
+  }}
+{{else}}
+  {{collapsed-taxonomies subject=programYear expand=(action this.attrs.setPyTaxonomyDetails true)}}
+{{/liquid-if}}
 {{detail-stewards programYear=programYear}}

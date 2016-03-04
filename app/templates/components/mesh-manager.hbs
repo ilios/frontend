@@ -1,7 +1,7 @@
 {{#if targetItemTitle}}
   <h2>{{t 'mesh.targetItemTitle' title=targetItemTitle}}</h2>
 {{/if}}
-<ul class='removable-list selected-mesh-terms'>
+<ul class='removable-list tag-list selected-mesh-terms'>
   {{#each sortedTerms as |term|}}
     <li {{action 'remove' term}}>
       <div class="content">

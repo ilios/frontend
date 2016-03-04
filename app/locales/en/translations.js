@@ -35,8 +35,8 @@ export default {
     'status': 'Status',
     'title': 'Title',
     'actions': 'Actions',
-    'topics': 'Topics',
-    'topic': 'Topic',
+    'term': 'Term',
+    'terms': 'Terms',
     'email': 'Email',
     'cohort': 'Cohort',
     'cohorts': 'Cohorts',
@@ -130,6 +130,8 @@ export default {
     'summary': 'Summary',
     'manage': 'Manage',
     'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms.',
+    'vocabularies': 'Vocabularies',
+    'vocabulary': 'Vocabulary',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -264,7 +266,6 @@ export default {
     'confirmRemove': 'Are you sure you want to delete this course, with {{publishedOfferingCount}} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone.',
     'meshSearchPlaceholder': 'Search MeSH',
     'meshManageTitle': 'Manage MeSH',
-    'topicsManageTitle': 'Manage Topics',
     'clerkshipType': 'Clerkship Type',
     'notAClerkship': 'Not a Clerkship',
     'cohortsManageTitle': 'Manage Cohorts',
@@ -456,7 +457,7 @@ export default {
     'allReports': 'All Reports',
     'allEvents': 'All Events',
     'noEvents': 'No upcoming events',
-    'topicOrDetail': 'Topic/Detail',
+    'detail': 'Detail',
     'courseOrType': 'Course/Type',
     'usersCalendar': "{{name}}'s Calendar",
     'myCalendar': 'My Calendar',
@@ -509,5 +510,11 @@ export default {
     },
     'userNotAddableFromDirectory': "This user is missing required information and cannot be added",
     'goToUser': "Show user record in ilios",
-  }
+  },
+  'taxonomies' : {
+    'assignedTerms': 'Assigned terms',
+    'selectVocabulary': 'Select Vocabulary',
+    'termsManageTitle': 'Manage Terms',
+
+  },
 };

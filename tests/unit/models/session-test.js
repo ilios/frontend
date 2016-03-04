@@ -42,7 +42,7 @@ test('check optional publication items', function(assert) {
   var model = this.subject();
   var store = this.store();
   assert.equal(model.get('optionalPublicationIssues').length, 3);
-  model.get('topics').addObject(store.createRecord('topic'));
+  model.get('terms').addObject(store.createRecord('term'));
   assert.equal(model.get('optionalPublicationIssues').length, 2);
   model.get('objectives').addObject(store.createRecord('objective'));
   assert.equal(model.get('optionalPublicationIssues').length, 1);

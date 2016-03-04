@@ -4,8 +4,9 @@ const { Controller, inject } = Ember;
 const { controller } = inject;
 
 export default Controller.extend({
-  queryParams: ['sessionObjectiveDetails'],
+  queryParams: ['sessionObjectiveDetails', 'sessionTaxonomyDetails'],
   sessionObjectiveDetails: false,
+  sessionTaxonomyDetails: false,
 
   sessionController: controller('session'),
   courseController: controller('course'),

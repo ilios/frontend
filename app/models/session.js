@@ -2,12 +2,13 @@ import moment from 'moment';
 import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
+import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
-const { mapBy, notEmpty, sum } = computed;
+const { alias, mapBy, notEmpty, sum } = computed;
 const { PromiseArray, PromiseObject } = DS;
 
-var Session = DS.Model.extend(PublishableModel, {
+var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   title: DS.attr('string'),
   attireRequired: DS.attr('boolean'),
   equipmentRequired: DS.attr('boolean'),
@@ -16,8 +17,6 @@ var Session = DS.Model.extend(PublishableModel, {
   sessionType: DS.belongsTo('session-type', {async: true}),
   course: DS.belongsTo('course', {async: true}),
   ilmSession: DS.belongsTo('ilm-session', {async: true}),
-  topics: DS.hasMany('topic', {async: true}),
-  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   sessionDescription: DS.belongsTo('session-description', {async: true}),
@@ -69,7 +68,7 @@ var Session = DS.Model.extend(PublishableModel, {
   searchString: computed('title', 'sessionType.title', 'status', function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }),
-  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed(
     'title',
     'offerings.length',
@@ -87,7 +86,7 @@ var Session = DS.Model.extend(PublishableModel, {
     }
   ),
   optionalPublicationIssues: computed(
-    'topics.length',
+    'terms.length',
     'objectives.length',
     'meshDescriptors.length',
     function(){
@@ -113,6 +112,7 @@ var Session = DS.Model.extend(PublishableModel, {
       promise: deferred.promise
     });
   }),
+  assignableVocabularies: alias('course.assignableVocabularies'),
 });
 
 export default Session;

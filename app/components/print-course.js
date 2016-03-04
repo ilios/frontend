@@ -14,7 +14,6 @@ export default Component.extend({
   sortTitle: ['title'],
   sortDirectorsBy: ['lastName', 'firstName'],
   sortedDirectors: computed.sort('course.directors', 'sortDirectorsBy'),
-  sortedTopics: computed.sort('course.topics', 'sortTitle'),
   sortedMeshDescriptors: computed.sort('course.meshDescriptors', 'sortTitle'),
   sortedSessionProxies: computed('course.sessions.[]', function(){
     const course = this.get('course');
@@ -24,7 +23,6 @@ export default Component.extend({
     let deferred = RSVP.defer();
     let SessionProxy = ObjectProxy.extend({
       sortTitle: ['title'],
-      sortedTopics: computed.sort('content.topics', 'sortTitle'),
       sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
       sessionLearningMaterials: computed('content', function(){
         let session = this.get('content').get('id');

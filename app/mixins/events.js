@@ -16,23 +16,23 @@ export default Ember.Mixin.create({
     
     return promise;
   },
-  getTopicIdsForEvent(event){
+  getTermIdsForEvent(event){
     var defer = Ember.RSVP.defer();
     this.getSessionForEvent(event).then( session => {
       let promises = [];
-      let selectedTopics = [];
-      promises.pushObject(session.get('topics').then( topics => {
-        let topicIds = topics.mapBy('id');
-        selectedTopics.pushObjects(topicIds);
+      let selectedTerms = [];
+      promises.pushObject(session.get('terms').then( terms => {
+        let termIds = terms.mapBy('id');
+        selectedTerms.pushObjects(termIds);
       }));
       promises.pushObject(session.get('course').then( course => {
-        promises.pushObject(course.get('topics').then( topics => {
-          let topicIds = topics.mapBy('id');
-          selectedTopics.pushObjects(topicIds);
+        promises.pushObject(course.get('terms').then( terms => {
+          let termIds = terms.mapBy('id');
+          selectedTerms.pushObjects(termIds);
         }));
       }));
       Ember.RSVP.all(promises).then(() => {
-        defer.resolve(selectedTopics.uniq());
+        defer.resolve(selectedTerms.uniq());
       });
     });
 

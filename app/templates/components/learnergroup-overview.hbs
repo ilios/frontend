@@ -46,7 +46,7 @@
 
     <label>{{t "learnerGroups.defaultInstructors"}}:</label>
      <span>
-       <ul class='removable-list'>
+       <ul class='removable-list tag-list'>
          {{#each sortedInstructors as |user|}}
           <li {{action 'removeInstructor' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
          {{/each}}

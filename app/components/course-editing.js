@@ -6,6 +6,7 @@ const { not } = computed;
 export default Component.extend({
   editable: not('course.locked'),
   courseObjectiveDetails: false,
+  courseTaxonomyDetails: false,
   actions: {
     save: function(){
       var self = this;
@@ -16,8 +17,5 @@ export default Component.extend({
         }
       });
     },
-    toggleCourseObjectiveDetails(){
-      this.sendAction('toggleCourseObjectiveDetails');
-    }
   }
 });

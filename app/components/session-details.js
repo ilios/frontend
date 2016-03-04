@@ -9,6 +9,7 @@ export default Component.extend({
   session: null,
   editable: not('course.locked'),
   sessionObjectiveDetails: null,
+  sessionTaxonomyDetails: null,
 
   didInsertElement: function(){
     scrollTo("#session-" + this.get('session.id'));
@@ -23,9 +24,5 @@ export default Component.extend({
         }
       });
     },
-    toggleSessionObjectiveDetails(){
-      this.sendAction('toggleSessionObjectiveDetails');
-    }
   }
-
 });

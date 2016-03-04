@@ -18,6 +18,10 @@ module('Acceptance: Session - Publication Check' + testgroup, {
     server.create('course', {
       sessions: [1,2]
     });
+    server.create('vocabulary', {
+      terms: [1],
+      school: 1,
+    });
     server.createList('sessionType', 2, {
       school: 1
     });
@@ -25,7 +29,8 @@ module('Acceptance: Session - Publication Check' + testgroup, {
       session: 1,
     });
     server.create('school', {
-      sessionTypes: [1,2]
+      sessionTypes: [1,2],
+      vocabularies: [1],
     });
     server.create('offering', {
       sessions: [1],
@@ -33,8 +38,9 @@ module('Acceptance: Session - Publication Check' + testgroup, {
     server.create('objective', {
       sessions: [1],
     });
-    server.create('topic', {
+    server.create('term', {
       sessions: [1],
+      vocabulary: 1,
     });
     server.create('meshDescriptor', {
       sessions: [1],
@@ -51,7 +57,7 @@ test('full session count', function(assert) {
     course: 1,
     offerings: [1],
     objectives: [1],
-    topics: [1],
+    terms: [1],
     meshDescriptors: [1],
     sessionType: 1,
     sessionDescription: 1

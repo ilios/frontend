@@ -21,7 +21,7 @@
       <div class='detail-content'>
         <label>{{t "general.instructors"}}:</label>
         <span>
-          <ul class='removable-list'>
+          <ul class='removable-list tag-list'>
             {{#each sortedUsers as |user|}}
             <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
             {{/each}}

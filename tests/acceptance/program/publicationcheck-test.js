@@ -15,7 +15,7 @@ module('Acceptance: Program Year - Publication Check' + testgroup, {
     setupAuthentication(application);
     server.create('school');
     server.create('objective');
-    server.create('topic');
+    server.create('term');
     server.create('competency');
     server.create('program', {
       programYears: [1]
@@ -26,7 +26,7 @@ module('Acceptance: Program Year - Publication Check' + testgroup, {
       program: 1,
       directors: [4136],
       objectives: [1],
-      topics: [1],
+      terms: [1],
       competencies: [1],
     });
     fixtures.emptyProgramYear = server.create('programYear', {

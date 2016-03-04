@@ -2,11 +2,12 @@ import moment from 'moment';
 import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
+import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed } = Ember;
 const { filterBy, mapBy, sum } = computed;
 
-var Course = DS.Model.extend(PublishableModel, {
+var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
   title: DS.attr('string'),
   level: DS.attr('number'),
   year: DS.attr('number'),
@@ -19,8 +20,6 @@ var Course = DS.Model.extend(PublishableModel, {
   school: DS.belongsTo('school', {async: true}),
   directors: DS.hasMany('user', {async: true}),
   cohorts: DS.hasMany('cohort', {async: true}),
-  topics: DS.hasMany('topic', {async: true}),
-  terms: DS.hasMany('term', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
   learningMaterials: DS.hasMany('course-learning-material', {async: true}),
@@ -96,12 +95,12 @@ var Course = DS.Model.extend(PublishableModel, {
   requiredPublicationSetFields: ['startDate', 'endDate'],
   requiredPublicationLengthFields: ['cohorts'],
   optionalPublicationSetFields: [],
-  optionalPublicationLengthFields: ['topics', 'objectives', 'meshDescriptors'],
+  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function(){
     return this.getRequiredPublicationIssues();
   }),
   optionalPublicationIssues: computed(
-    'topics.length',
+    'terms.length',
     'objectives.length',
     'meshDescriptors.length',
     function(){
@@ -118,6 +117,81 @@ var Course = DS.Model.extend(PublishableModel, {
       });
     });
 
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
+
+  /**
+   * All schools associated with this course.
+   * This includes the course-owning school, as well as schools owning associated cohorts.
+   * @property schools
+   * @type {Ember.computed}
+   * @public
+   */
+  schools: computed('school', 'cohorts.[]', function() {
+    let schools = [];
+    let promises = [];
+
+    // get course-owning school
+    let promise = new Ember.RSVP.Promise(resolve => {
+      this.get('school').then(school => {
+        schools.pushObject(school);
+        resolve();
+      });
+
+    });
+    promises.pushObject(promise);
+
+    // get schools from associated cohorts
+    promise = new Ember.RSVP.Promise(resolve => {
+      this.get('cohorts').then(cohorts => {
+        Ember.RSVP.map(cohorts.mapBy('programYear'), programYear => {
+          return programYear.get('program').then(program => {
+            return program.get('school').then(school => {
+              schools.pushObject(school);
+            });
+          });
+        }).then(() => {
+          resolve();
+        });
+      });
+    });
+    promises.pushObject(promise);
+
+    // once the two promises above resolve,
+    // dedupe all schools and return a promise-array containing the dupe-free list of schools.
+    let deferred = Ember.RSVP.defer();
+    Ember.RSVP.all(promises).then(() => {
+      let s = schools.uniq();
+      deferred.resolve(s);
+    });
+
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
+
+  /**
+   * All vocabularies that are eligible for assignment to this course.
+   * @property assignableVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  assignableVocabularies: computed('schools.@each.vocabularies', function() {
+    let deferred = Ember.RSVP.defer();
+    this.get('schools').then(function (schools) {
+      Ember.RSVP.all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
+        let v = [];
+        schoolVocabs.forEach(vocabs => {
+          vocabs.forEach(vocab => {
+            v.pushObject(vocab);
+          })
+        });
+        v = v.sortBy('school.title', 'title');
+        deferred.resolve(v);
+      });
+    });
     return DS.PromiseArray.create({
       promise: deferred.promise
     });

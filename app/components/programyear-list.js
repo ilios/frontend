@@ -83,8 +83,8 @@ export default Component.extend({
         promises.pushObject(latestProgramYear.get('competencies').then((competencies) => {
           newProgramYear.get('competencies').pushObjects(competencies.toArray());
         }));
-        promises.pushObject(latestProgramYear.get('topics').then((topics) => {
-          newProgramYear.get('topics').pushObjects(topics.toArray());
+        promises.pushObject(latestProgramYear.get('terms').then((terms) => {
+          newProgramYear.get('terms').pushObjects(terms.toArray());
         }));
         promises.pushObject(latestProgramYear.get('objectives').then((objectives) => {
           newProgramYear.get('objectives').pushObjects(objectives.toArray());

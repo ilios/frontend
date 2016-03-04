@@ -12,7 +12,6 @@ export default Component.extend({
     this._super(...arguments);
     //do these on setup otherwise tests were failing because
     //the old filter value hung around
-    this.set('selectedTopics', []);
     this.set('selectedSessionTypes', []);
     this.set('selectedCourseLevels', []);
     this.set('selectedCohorts', []);
@@ -108,7 +107,6 @@ export default Component.extend({
   }),
   filteredEvents: computed(
     'ourEvents.[]',
-    'eventsWithSelectedTopics.[]',
     'eventsWithSelectedSessionTypes.[]',
     'eventsWithSelectedCourseLevels.[]',
     'eventsWithSelectedCohorts.[]',
@@ -117,7 +115,6 @@ export default Component.extend({
       let defer = RSVP.defer();
       let promises = [];
       let eventTypes = [
-        'eventsWithSelectedTopics',
         'eventsWithSelectedSessionTypes',
         'eventsWithSelectedCourseLevels',
         'eventsWithSelectedCohorts',
@@ -152,34 +149,7 @@ export default Component.extend({
       });
     }
   ),
-  eventsWithSelectedTopics: computed('ourEvents.[]', 'selectedTopics.[]', function(){
-    let selectedTopics = this.get('selectedTopics');
-    if(selectedTopics.length === 0) {
-      return this.get('ourEvents');
-    }
-    selectedTopics = selectedTopics.mapBy('id');
-    let matchingEvents = [];
-    let defer = RSVP.defer();
-    let promises = [];
-    this.get('ourEvents').forEach(event => {
-      if (event.ilmEvent || event.offering) {
-        promises.pushObject(this.get('userEvents').getTopicIdsForEvent(event).then(topics => {
-          if (topics.any(topicId => {
-            return selectedTopics.contains(topicId);
-          })) {
-            matchingEvents.pushObject(event);
-          }
-        }));
-      }
-    });
 
-    RSVP.all(promises).then(()=> {
-      defer.resolve(matchingEvents);
-    });
-    return DS.PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
   eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', function(){
     let selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
     let events = this.get('ourEvents');
@@ -286,16 +256,7 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-  selectedTopics: [],
-  topics: computed('selectedSchool.topics.[]', 'selectedTopics.[]', function(){
-    return DS.PromiseArray.create({
-      promise: this.get('selectedSchool').then(school => {
-        return school.get('topics').then( topics => {
-          return topics.sortBy('title');
-        });
-      })
-    });
-  }),
+
   selectedSessionTypes: [],
   sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
     return DS.PromiseArray.create({
@@ -410,15 +371,14 @@ export default Component.extend({
     });
   }),
 
-  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedTopics.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
+  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
     get() {
-      const a = this.get('selectedTopics');
-      const b = this.get('selectedSessionTypes');
-      const c = this.get('selectedCourseLevels');
-      const d = this.get('selectedCohorts');
-      const e = this.get('selectedCourses');
+      const a = this.get('selectedSessionTypes');
+      const b = this.get('selectedCourseLevels');
+      const c = this.get('selectedCohorts');
+      const d = this.get('selectedCourses');
 
-      let results = a.concat(b, c, d, e);
+      let results = a.concat(b, c, d);
       this.set('activeFilters', results);
 
       return isPresent(results) ? true : false;
@@ -442,10 +402,6 @@ export default Component.extend({
           let model = filter.get('constructor.modelName');
 
           switch (model) {
-          case 'topic':
-            hash.class = 'tag-topic';
-            hash.name = filter.get('title');
-            break;
           case 'session-type':
             hash.class = 'tag-session-type';
             hash.name = filter.get('title');
@@ -484,13 +440,6 @@ export default Component.extend({
     },
     toggleCourseFilters() {
       this.sendAction('toggleCourseFilters');
-    },
-    toggleTopic(topic){
-      if(this.get('selectedTopics').contains(topic)){
-        this.get('selectedTopics').removeObject(topic);
-      } else {
-        this.get('selectedTopics').pushObject(topic);
-      }
     },
     toggleSessionType(sessionType){
       if(this.get('selectedSessionTypes').contains(sessionType)){
@@ -543,11 +492,10 @@ export default Component.extend({
     clearFilters() {
       const selectedCourses = [];
       const selectedSessionTypes = [];
-      const selectedTopics = [];
       const selectedCourseLevels = [];
       const selectedCohorts = [];
 
-      this.setProperties({ selectedCourses, selectedSessionTypes, selectedTopics, selectedCourseLevels, selectedCohorts });
+      this.setProperties({ selectedCourses, selectedSessionTypes, selectedCourseLevels, selectedCohorts });
     },
 
     removeFilter(filter) {
@@ -557,9 +505,6 @@ export default Component.extend({
         let model = filter.get('constructor.modelName');
 
         switch (model) {
-        case 'topic':
-          this.send('toggleTopic', filter);
-          break;
         case 'session-type':
           this.send('toggleSessionType', filter);
           break;

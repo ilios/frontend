@@ -30,11 +30,16 @@
       {{collapsed-objectives subject=session editable=editable expand=(action this.attrs.setSessionObjectiveDetails true)}}
     {{/liquid-if}}
     {{detail-learning-materials subject=session isCourse=false editable=editable}}
-    {{detail-topics
-      subject=session
-      isSession=true
-      editable=editable
-    }}
+    {{#liquid-if (or (eq session.terms.length 0) sessionTaxonomyDetails)}}
+      {{detail-taxonomies
+        subject=session
+        editable=editable
+        collapse=(action this.attrs.setSessionTaxonomyDetails false)
+        expand=(action this.attrs.setSessionTaxonomyDetails true)
+      }}
+    {{else}}
+      {{collapsed-taxonomies subject=session expand=(action this.attrs.setSessionTaxonomyDetails true)}}
+    {{/liquid-if}}
     {{detail-mesh
       subject=session
       isSession=true

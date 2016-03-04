@@ -35,8 +35,8 @@ export default {
     'status': 'Estado',
     'title': 'Titulo' ,
     'actions': 'Acciones',
-    'topics': 'Temas',
-    'topic': 'Tema',
+    'term': 'Término',
+    'terms': 'Términos',
     'email': 'Correo',
     'cohort': 'Clase de la Graduación',
     'cohorts': 'Clases de la Graduación',
@@ -130,6 +130,8 @@ export default {
     'summary': 'Resumen',
     'manage': 'Manage',
     'tooManyResults': 'La búsqueda ha devuelto más de {{count}} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales.',
+    'vocabularies': 'Vocabularios',
+    'vocabulary': 'Vocabulario',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -264,7 +266,6 @@ export default {
     'confirmRemove': ' ¿Estás seguro que quieres borrar este curso, con {{publishedOfferingCount}} ofrecimientos publicados? Esta acción borrará todas las sessiones y ofrecimientos para este curso y no se puede deshacer.',
     'meshSearchPlaceholder': 'Buscar MeSH',
     'meshManageTitle': 'Administrar MeSH',
-    'topicsManageTitle': 'Administrar Temas',
     'clerkshipType': 'Tipo de Rotación',
     'notAClerkship': 'No una Rotación',
     'cohortsManageTitle': 'Administrar Clases de La Graduación',
@@ -456,7 +457,7 @@ export default {
     'allReports': 'todos reportes',
     'allEvents': 'Todos los Eventos',
     'noEvents': 'No eventos próximos',
-    'topicOrDetail': 'Topico/Detalle',
+    'detail': 'Detalle',
     'courseOrType': 'Curso/Tipo',
     'usersCalendar': "Calendario de{{name}}",
     'myCalendar': 'Mi Calendario',
@@ -509,5 +510,10 @@ export default {
     },
     'userNotAddableFromDirectory': "ste usuario está faltando información requerida y no se puede agregar",
     'goToUser': "Mostrar registro de usuario en Ilios",
-  }
+  },
+  'taxonomies' : {
+    'assignedTerms': 'Términos asignados',
+    'selectVocabulary': 'Seleccione un Vocabulario',
+    'termsManageTitle': 'Maneje Términos',
+  },
 };

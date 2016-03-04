@@ -191,6 +191,12 @@ $collapse-control-shadow-grey: #e2e2e2;
   }
 
   .removable-list {
+    li {
+      cursor: pointer;
+    }
+  }
+
+  .tag-list {
     margin-bottom: $base-font-size;
 
     ul,
@@ -201,12 +207,41 @@ $collapse-control-shadow-grey: #e2e2e2;
     li {
       background-color: $header-grey;
       border-radius: 4px;
-      cursor: pointer;
       margin-right: .3em;
       margin-top: 10px;
       padding: .2em .4em .2em .6em;
       vertical-align: middle;
     }
+  }
+
+  .tag-tree {
+    margin-bottom: $base-font-size;
+
+    li {
+      margin-left: 20px;
+
+      div {
+        background-color: $white;
+        border: 1px $header-grey solid;
+        border-radius: 4px;
+        margin-top: 5px;
+        padding: .2em .4em .2em .6em;
+        vertical-align: middle;
+
+        &.selected {
+          background-color: $header-grey;
+        }
+      }
+
+      .actions {
+        float: right;
+      }
+
+      &.top-level {
+        margin-left: 0;
+      }
+    }
+
   }
 
   .inline-list {

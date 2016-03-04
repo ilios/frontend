@@ -45,7 +45,6 @@ export default [
   'model:session-type',
   'model:session',
   'model:term',
-  'model:topic',
   'model:user-made-reminder',
   'model:user-role',
   'model:user',
