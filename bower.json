@@ -10,7 +10,7 @@
     "normalize.css": "~3.0.3",
     "pretender": "0.10.1",
     "blanket": "~1.1.7",
-    "lodash": "~3.10.0",
+    "lodash": "~4.0.0",
     "Faker": "~3.0.1",
     "tooltipster": "~3.3.0",
     "font-awesome": "~4.5.0",
