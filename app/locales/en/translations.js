@@ -226,6 +226,7 @@ export default {
       'other': 'There are {{count}} competencies'
     },
     'manageCompetencies': 'Manage Competenceis',
+    'newDomain': 'New Domain',
   },
   'courses': {
     'currentSchool': 'Current School',

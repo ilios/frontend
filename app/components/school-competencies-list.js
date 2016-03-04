@@ -10,7 +10,7 @@ export default Component.extend({
     let defer = RSVP.defer();
     this.get('competencies').then(competencies => {
       RSVP.all(competencies.mapBy('domain')).then(domains => {
-        defer.resolve(domains.uniq());
+        defer.resolve(domains.uniq().sortBy('title'));
       });
     });
 
