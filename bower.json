@@ -1,7 +1,7 @@
 {
   "name": "ilios",
   "dependencies": {
-    "ember": "2.3.0",
+    "ember": "~2.4.1",
     "ember-cli-shims": "0.1.0",
     "ember-cli-test-loader": "0.2.2",
     "ember-qunit-notifications": "0.1.0",
@@ -10,7 +10,7 @@
     "normalize.css": "~3.0.3",
     "pretender": "0.10.1",
     "blanket": "~1.1.7",
-    "lodash": "~3.10.0",
+    "lodash": "~4.0.0",
     "Faker": "~3.0.1",
     "tooltipster": "~3.3.0",
     "font-awesome": "~4.5.0",
@@ -20,8 +20,5 @@
     "FroalaWysiwygEditor": "~1.2.8",
     "clipboard": "~1.5.5",
     "jquery": "1.11.3"
-  },
-  "resolutions": {
-    "ember": "2.3.0"
   }
 }
