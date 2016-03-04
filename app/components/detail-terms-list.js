@@ -64,7 +64,9 @@ export default Component.extend({
     let deferred = Ember.RSVP.defer();
     Ember.RSVP.all(promises).then(() => {
       let sorted = temp.sort(function(a, b) {
-        return (a.title > b.title ? 1 : (a.title < b.title ? -1 : 0));
+        let titleA = a.title.toLowerCase();
+        let titleB = b.title.toLowerCase();
+        return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
       });
       deferred.resolve(sorted.mapBy('term'));
     });
