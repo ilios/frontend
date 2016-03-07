@@ -90,3 +90,31 @@ test('check associatedLearnerGroups', function(assert) {
     });
   });
 });
+
+test('check learer groups count', function(assert) {
+  assert.expect(2);
+  let session = this.subject();
+  let store = this.store();
+
+  Ember.run(() => {
+    let learnerGroup1 = store.createRecord('learner-group');
+    let learnerGroup2 = store.createRecord('learner-group');
+    let learnerGroup3 = store.createRecord('learner-group');
+    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
+    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+
+    session.get('offerings').pushObjects([offering1, offering2]);
+
+    assert.equal(session.get('learnerGroupCount'), 3);
+
+    let learnerGroup4 = store.createRecord('learner-group');
+    let offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
+    session.get('offerings').pushObject(offering3);
+    let learnerGroup5 = store.createRecord('learner-group');
+    offering1.get('learnerGroups').pushObject(learnerGroup5);
+
+    assert.equal(session.get('learnerGroupCount'), 5);
+
+
+  });
+});
