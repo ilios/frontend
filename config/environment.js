@@ -9,7 +9,7 @@ module.exports = function(environment) {
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
       'default-src': ["'none'"],
-      'script-src':  ["'self'"],
+      'script-src':  ["'self'", "'unsafe-eval'"],
       'font-src':    ["'self'"],
       'connect-src': ["'self'"],
       'img-src':     ["'self'", 'data:'],
@@ -83,7 +83,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.contentSecurityPolicy['script-src'].push("'unsafe-eval'");
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.redirectAfterShibLogin = false;
     ENV.IliosFeatures.allowAddNewUser = true;
@@ -100,7 +99,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.contentSecurityPolicy['script-src'].push("'unsafe-eval'");
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
@@ -120,6 +118,7 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+    ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.IliosFeatures.allowAddNewUser = true;
   }
 
