@@ -61,7 +61,7 @@ export default DS.Model.extend({
       return key;
     }
   ),
-  allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users.[]', function(){
+  allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users', function(){
     var defer = Ember.RSVP.defer();
     this.get('instructorGroups').then(instructorGroups => {
       var promises = instructorGroups.getEach('users');
