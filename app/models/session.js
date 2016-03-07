@@ -93,7 +93,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
-  associatedLearnerGroups: computed('offerings.@each.learnerGroups.[]', function(){
+  associatedLearnerGroups: computed('offerings.@each.learnerGroups', function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
       Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
