@@ -106,3 +106,79 @@ test('top level groups return false for the list of available users', function(a
     });
   });
 });
+
+test('check allDescendantUsers', function(assert) {
+  assert.expect(11);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  return learnerGroup.get('allDescendantUsers').then(users => {
+    assert.equal(users.length, 0);
+
+    let user1 = store.createRecord('user');
+    let user2 = store.createRecord('user');
+    let user3 = store.createRecord('user');
+    learnerGroup.get('users').pushObject(user1);
+    let subGroup1 = store.createRecord('learner-group', {users: [user2]});
+    let subGroup2 = store.createRecord('learner-group', {users: [user3]});
+    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
+
+    return learnerGroup.get('allDescendantUsers').then(users => {
+      assert.equal(users.length, 3);
+      assert.ok(users.contains(user1));
+      assert.ok(users.contains(user2));
+      assert.ok(users.contains(user3));
+      let user4 = store.createRecord('user');
+      let user5 = store.createRecord('user');
+      learnerGroup.get('users').pushObject(user4);
+      let subGroup3 = store.createRecord('learner-group', {users: [user5]});
+      learnerGroup.get('children').pushObject(subGroup3);
+
+      return learnerGroup.get('allDescendantUsers').then(users => {
+        assert.equal(users.length, 5);
+        assert.ok(users.contains(user1));
+        assert.ok(users.contains(user2));
+        assert.ok(users.contains(user3));
+        assert.ok(users.contains(user4));
+        assert.ok(users.contains(user5));
+      });
+
+    });
+  });
+});
+
+test('check allDescendants', function(assert) {
+  assert.expect(11);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  return learnerGroup.get('allDescendants').then(groups => {
+    assert.equal(groups.length, 0);
+
+    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup});
+    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1});
+    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2});
+
+    return learnerGroup.get('allDescendants').then(groups => {
+      assert.equal(groups.length, 3);
+      assert.ok(groups.contains(subGroup1));
+      assert.ok(groups.contains(subGroup2));
+      assert.ok(groups.contains(subGroup3));
+
+      let subGroup4 = store.createRecord('learner-group');
+      learnerGroup.get('children').pushObject(subGroup4);
+      let subGroup5 = store.createRecord('learner-group');
+      subGroup3.get('children').pushObject(subGroup5);
+
+      return learnerGroup.get('allDescendants').then(groups => {
+        assert.equal(groups.length, 5);
+        assert.ok(groups.contains(subGroup1));
+        assert.ok(groups.contains(subGroup2));
+        assert.ok(groups.contains(subGroup3));
+        assert.ok(groups.contains(subGroup4));
+        assert.ok(groups.contains(subGroup5));
+      });
+
+    });
+  });
+});

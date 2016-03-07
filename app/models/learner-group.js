@@ -107,7 +107,7 @@ export default DS.Model.extend({
       });
     });
   }),
-  allDescendantUsers: computed('users.[]', 'children.@each.users.[]', function(){
+  allDescendantUsers: computed('users.[]', 'children.@each.users', function(){
     var deferred = Ember.RSVP.defer();
     this.get('users').then(users => {
       this.get('children').then(children => {
@@ -186,7 +186,7 @@ export default DS.Model.extend({
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
   }),
-  allDescendants: computed('children.@each.allDescendants.[]', function(){
+  allDescendants: computed('children.@each.allDescendants', function(){
     var deferred = Ember.RSVP.defer();
     this.get('children').then(function(learnerGroups){
       var groups = [];
