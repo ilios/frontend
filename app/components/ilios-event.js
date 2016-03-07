@@ -188,7 +188,7 @@ export default Component.extend({
   sessionLearningMaterialsPhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.sessionLearningMaterials');
   }),
-  sessionObjectives: computed('i18n.locale', 'offering.session.objectives.@each.topParents.[]', function(){
+  sessionObjectives: computed('i18n.locale', 'offering.session.objectives.@each.topParents', function(){
     let defer = RSVP.defer();
 
     this.get('thesession').then(session => {

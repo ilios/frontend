@@ -108,7 +108,7 @@ export default Component.extend({
   ),
   selectedCohortId: null,
   multipleCohorts: computed.gt('availableCohorts.length', 1),
-  availableCohorts: computed('cohorts.@each.id', 'cohorts.@each.title', function(){
+  availableCohorts: computed('cohorts.@each.{id, title}', function(){
     var cohorts = this.get('cohorts');
     if(!cohorts){
       return [];

@@ -31,7 +31,7 @@ export default Component.extend(EmberValidations, ValidationError, {
   showRemoveConfirmation: false,
   buffer: null,
   room: alias('buffer.room'),
-  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users.[]', function(){
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', function(){
     var self = this;
     var defer = Ember.RSVP.defer();
     var instructorGroups = this.get('instructorGroups');
@@ -67,7 +67,7 @@ export default Component.extend(EmberValidations, ValidationError, {
 
       filter: '',
 
-      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', 'filter', function(){
+      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants', 'selectedLearnerGroups.[]', 'filter', function(){
         let defer = RSVP.defer();
         let proxy = this;
         let filter = proxy.get('filter');
