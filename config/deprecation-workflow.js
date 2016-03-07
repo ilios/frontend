@@ -6,5 +6,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-application.injected-container"},
     { handler: "silence", matchId: "ember-application.app-instance-container"},
     { handler: "silence", matchId: "ember-views.render-double-modify"},
+    { handler: "silence", matchId: "ember-legacy-views"},
   ]
 };
