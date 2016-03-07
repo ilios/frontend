@@ -1,3 +1,6 @@
+import {initialize} from 'ilios/initializers/inflector';
+initialize();
+
 export default [
   'model:aamc-method',
   'model:aamc-pcrs',
