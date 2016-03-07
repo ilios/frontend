@@ -4,10 +4,12 @@ import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
 import CategorizableModel from 'ilios/mixins/categorizable-model';
 
-const { computed } = Ember;
+const { computed, RSVP } = Ember;
 const { filterBy, mapBy, sum } = computed;
+const { Promise } = RSVP;
+const { Model, PromiseArray } = DS;
 
-var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
+export default Model.extend(PublishableModel, CategorizableModel, {
   title: DS.attr('string'),
   level: DS.attr('number'),
   year: DS.attr('number'),
@@ -28,28 +30,30 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }),
   competencies: computed('objectives.@each.treeCompetencies', function(){
-    var defer = Ember.RSVP.defer();
-    this.get('objectives').then(function(objectives){
-      var promises = objectives.getEach('treeCompetencies');
-      Ember.RSVP.all(promises).then(function(trees){
-        var competencies = trees.reduce(function(array, set){
-          return array.pushObjects(set.toArray());
-        }, []);
-        competencies = competencies.uniq().filter(function(item){
-          return item != null;
+    let promise = new Promise(resolve => {
+      this.get('objectives').then(function(objectives){
+        var promises = objectives.getEach('treeCompetencies');
+        Ember.RSVP.all(promises).then(function(trees){
+          var competencies = trees.reduce(function(array, set){
+            return array.pushObjects(set.toArray());
+          }, []);
+          competencies = competencies.uniq().filter(function(item){
+            return item != null;
+          });
+          resolve(competencies);
         });
-        defer.resolve(competencies);
       });
     });
-    return DS.PromiseArray.create({
-      promise: defer.promise
+
+    return PromiseArray.create({
+      promise: promise
     });
   }),
   domains: computed('competencies.@each.domain', function(){
-    var defer = Ember.RSVP.defer();
-    var domainContainer = {};
-    var domainIds = [];
-    var promises = [];
+    let defer = RSVP.defer();
+    let domainContainer = {};
+    let domainIds = [];
+    let promises = [];
     this.get('competencies').forEach(function(competency){
       promises.pushObject(competency.get('domain').then(
         domain => {
@@ -61,7 +65,7 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
             });
           }
           if(competency.get('id') !== domain.get('id')){
-            var subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
+            let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
             if(!subCompetencies.contains(competency)){
               subCompetencies.pushObject(competency);
               subCompetencies.sortBy('title');
@@ -70,14 +74,14 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
         }
       ));
     });
-    Ember.RSVP.all(promises).then(function(){
-      var domains = domainIds.map(function(id){
+    RSVP.all(promises).then(function(){
+      let domains = domainIds.map(function(id){
         return domainContainer[id];
       }).sortBy('title');
       defer.resolve(domains);
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
@@ -85,10 +89,10 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
   publishedSessionOfferingCounts: mapBy('publishedSessions', 'offerings.length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
   setDatesBasedOnYear: function(){
-    var today = moment();
-    var firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
-    var startDate = today < firstDayOfYear?firstDayOfYear:today;
-    var endDate = moment(startDate).add('8', 'weeks');
+    let today = moment();
+    let firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
+    let startDate = today < firstDayOfYear?firstDayOfYear:today;
+    let endDate = moment(startDate).add('8', 'weeks');
     this.set('startDate', startDate.toDate());
     this.set('endDate', endDate.toDate());
   },
@@ -108,16 +112,16 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
     }
   ),
   associatedLearnerGroups: computed('sessions.[].associatedLearnerGroups.[]', function(){
-    var deferred = Ember.RSVP.defer();
+    let deferred = Ember.RSVP.defer();
     this.get('sessions').then(function(sessions){
-      Ember.RSVP.all(sessions.mapBy('associatedLearnerGroups')).then(function(sessionLearnerGroups){
-        var allGroups = [].concat.apply([],sessionLearnerGroups);
-        var groups = allGroups?allGroups.uniq().sortBy('title'):[];
+      RSVP.all(sessions.mapBy('associatedLearnerGroups')).then(function(sessionLearnerGroups){
+        let allGroups = [].concat.apply([],sessionLearnerGroups);
+        let groups = allGroups?allGroups.uniq().sortBy('title'):[];
         deferred.resolve(groups);
       });
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
@@ -134,7 +138,7 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
     let promises = [];
 
     // get course-owning school
-    let promise = new Ember.RSVP.Promise(resolve => {
+    let promise = new Promise(resolve => {
       this.get('school').then(school => {
         schools.pushObject(school);
         resolve();
@@ -146,7 +150,7 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
     // get schools from associated cohorts
     promise = new Ember.RSVP.Promise(resolve => {
       this.get('cohorts').then(cohorts => {
-        Ember.RSVP.map(cohorts.mapBy('programYear'), programYear => {
+        RSVP.map(cohorts.mapBy('programYear'), programYear => {
           return programYear.get('program').then(program => {
             return program.get('school').then(school => {
               schools.pushObject(school);
@@ -162,12 +166,12 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
     // once the two promises above resolve,
     // dedupe all schools and return a promise-array containing the dupe-free list of schools.
     let deferred = Ember.RSVP.defer();
-    Ember.RSVP.all(promises).then(() => {
+    RSVP.all(promises).then(() => {
       let s = schools.uniq();
       deferred.resolve(s);
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
@@ -181,7 +185,7 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
   assignableVocabularies: computed('schools.@each.vocabularies', function() {
     let deferred = Ember.RSVP.defer();
     this.get('schools').then(function (schools) {
-      Ember.RSVP.all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
+      RSVP.all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
         let v = [];
         schoolVocabs.forEach(vocabs => {
           vocabs.forEach(vocab => {
@@ -192,10 +196,8 @@ var Course = DS.Model.extend(PublishableModel, CategorizableModel, {
         deferred.resolve(v);
       });
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
 });
-
-export default Course;

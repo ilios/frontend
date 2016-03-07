@@ -70,7 +70,7 @@ export default Component.extend({
   showCohortList: false,
   cohorts: computed(
     'courseObjective.courses.[]',
-    'courseObjective.courses.@each.cohorts.length',
+    'courseObjective.courses.@each.cohorts',
     function(){
       var courseObjective = this.get('courseObjective');
       var groups = [];

@@ -3,54 +3,58 @@ import Ember from 'ember';
 
 const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
+const { Promise } = RSVP;
+const { Model, attr, belongsTo, hasMany, PromiseArray } = DS;
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  competency: DS.belongsTo('competency', {async: true}),
-  courses: DS.hasMany('course', {async: true}),
+export default Model.extend({
+  title: attr('string'),
+  competency: belongsTo('competency', {async: true}),
+  courses: hasMany('course', {async: true}),
   //While it is possible at some point that objectives will be allowed to
   //link to multiple courses, for now we just reflect a many to one relationship
   course: alias('courses.firstObject'),
-  programYears: DS.hasMany('program-year', {async: true}),
+  programYears: hasMany('program-year', {async: true}),
   //While it is possible at some point that objectives will be allowed to
   //link to multiple program years, for now we just reflect a many to one relationship
   programYear: alias('programYears.firstObject'),
-  sessions: DS.hasMany('session', {async: true}),
+  sessions: hasMany('session', {async: true}),
   //While it is possible at some point that objectives will be allowed to
   //link to multiple sessions, for now we just reflect a many to one relationship
   session: alias('sessions.firstObject'),
-  parents: DS.hasMany('objective', {
+  parents: hasMany('objective', {
     inverse: 'children',
     async: true
   }),
-  children: DS.hasMany('objective', {
+  children: hasMany('objective', {
     inverse: 'parents',
     async: true
   }),
-  meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
+  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
   hasMesh: gte('meshDescriptors.length', 1),
   treeCompetencies: computed('competency', 'parents.@each.treeCompetencies.[]', function(){
-    var defer = RSVP.defer();
-    var self = this;
-    this.get('competency').then(function(competency){
-      self.get('parents').then(function(parents){
-        var promises = parents.getEach('treeCompetencies');
-        Ember.RSVP.all(promises).then(function(trees){
-          var competencies = trees.reduce(function(array, set){
-            return array.pushObjects(set.toArray());
-          }, []);
-          competencies.pushObject(competency);
-          competencies = competencies.uniq().filter(function(item){
-            return item != null;
+    let title = this.get('title');
+    let promise = new Promise(resolve => {
+      this.get('competency').then(competency => {
+        this.get('parents').then(parents => {
+          let promises = parents.getEach('treeCompetencies');
+          RSVP.all(promises).then(function(trees){
+            let competencies = trees.reduce(function(array, set){
+              return array.pushObjects(set.toArray());
+            }, []);
+            competencies.pushObject(competency);
+            competencies = competencies.uniq().filter(function(item){
+              return item != null;
+            });
+            resolve(competencies);
           });
-          defer.resolve(competencies);
         });
       });
     });
-    return DS.PromiseArray.create({
-      promise: defer.promise
+
+    return PromiseArray.create({
+      promise: promise
     });
   }),
   topParents: computed('parents.[]', function(){
@@ -71,7 +75,7 @@ export default DS.Model.extend({
         defer.resolve(allTopParents);
       });
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
