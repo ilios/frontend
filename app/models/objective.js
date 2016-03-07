@@ -33,8 +33,7 @@ export default Model.extend({
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
   hasMesh: gte('meshDescriptors.length', 1),
-  treeCompetencies: computed('competency', 'parents.@each.treeCompetencies.[]', function(){
-    let title = this.get('title');
+  treeCompetencies: computed('competency', 'parents.@each.treeCompetencies', function(){
     let promise = new Promise(resolve => {
       this.get('competency').then(competency => {
         this.get('parents').then(parents => {
