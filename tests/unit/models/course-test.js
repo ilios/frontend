@@ -4,6 +4,7 @@ import {
 } from 'ember-qunit';
 import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
+import Ember from 'ember';
 
 moduleForModel('course', 'Unit | Model | Course' + testgroup, {
   needs: modelList
@@ -83,5 +84,31 @@ test('check competencies', function(assert) {
       });
 
     });
+  });
+});
+
+test('check publishedSessionOfferingCounts count', function(assert) {
+  assert.expect(2);
+  let course = this.subject();
+  let store = this.store();
+
+  Ember.run(() => {
+    let offering1 = store.createRecord('offering');
+    let offering2 = store.createRecord('offering');
+    let offering3 = store.createRecord('offering');
+    let offering4 = store.createRecord('offering');
+
+    let session1 = store.createRecord('session', {offerings: [offering1, offering2], published: true});
+    let session2 = store.createRecord('session', {offerings: [offering3], published: true});
+    let session3 = store.createRecord('session', {offerings: [offering4], published: false});
+
+    course.get('sessions').pushObjects([session1, session2, session3]);
+
+    assert.equal(course.get('publishedOfferingCount'), 3);
+    let offering5 = store.createRecord('offering');
+    session1.get('offerings').pushObject(offering5);
+    session3.set('published', true);
+
+    assert.equal(course.get('publishedOfferingCount'), 5);
   });
 });

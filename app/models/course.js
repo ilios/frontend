@@ -86,7 +86,8 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     });
   }),
   publishedSessions: filterBy('sessions', 'isPublished'),
-  publishedSessionOfferingCounts: mapBy('publishedSessions', 'offerings.length'),
+  publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
+  publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
   setDatesBasedOnYear: function(){
     let today = moment();

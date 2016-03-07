@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
-import Ember from 'ember';
+// import Ember from 'ember';
 
 moduleForModel('program', 'Unit | Model | Program', {
   needs: modelList
