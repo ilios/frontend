@@ -15,9 +15,9 @@ export default DS.Model.extend(PublishableModel,{
     inverse: 'program'
   }),
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
-  cohortPromises: mapBy('programYears', 'cohort'),
-  cohorts: mapBy('cohortPromises', 'content'),
-  courseCounts: mapBy('programYears', 'cohort.courses.length'),
+  cohorts: mapBy('programYears', 'cohort'),
+  courses: mapBy('cohorts', 'courses'),
+  courseCounts: mapBy('courses', 'length'),
   courseCount: sum('courseCounts'),
   requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
   optionalPublicationLengthFields: ['programYears'],
