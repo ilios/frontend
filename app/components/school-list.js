@@ -2,7 +2,7 @@ import Ember from 'ember';
 import EmberValidations, { validator as emberValidator } from 'ember-validations';
 import validator from 'npm:validator';
 
-const { Component, computed, inject } = Ember;
+const { Component, computed, inject, isEmpty } = Ember;
 const { sort } = computed;
 const { service } = inject;
 
@@ -25,6 +25,9 @@ export default Component.extend(EmberValidations, {
       length: { maximum: 100 },
       inline: emberValidator(function() {
         const email = this.model.get('iliosAdministratorEmail');
+        if(isEmpty(email)){
+          return false;
+        }
         if (!validator.isEmail(email)) {
           return this.model.get('i18n').t('errors.email');
         }
