@@ -11,14 +11,19 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{school-competencies-manager}}`);
 
-  assert.equal(this.$().text().trim(), '');
 
-  // Template block usage:"
-  this.render(hbs`
-    {{#school-competencies-manager}}
-      template block text
-    {{/school-competencies-manager}}
-  `);
+  assert.equal(this.$('label').text().trim(), 'New Domain');
+  assert.equal(this.$('button').text().trim(), 'Add');
+});
 
-  assert.equal(this.$().text().trim(), 'template block text');
+test('add new domain', function(assert) {
+  assert.expect(1);
+  this.on('add', (value) => {
+    assert.equal(value, 'new domain');
+  });
+  this.render(hbs`{{school-competencies-manager add=(action 'add')}}`);
+  this.$('input').val('new domain');
+  this.$('input').trigger('change');
+  this.$('button').click();
+
 });
