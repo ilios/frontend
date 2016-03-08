@@ -1,22 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
-const { Component, computed, RSVP } = Ember;
-const { PromiseArray } = DS;
+const { Component, computed } = Ember;
+const { filterBy, sort } = computed
 
 export default Component.extend({
   competencies: [],
-  domains: computed('competencies.[]', function(){
-    let defer = RSVP.defer();
-    this.get('competencies').then(competencies => {
-      RSVP.all(competencies.mapBy('domain')).then(domains => {
-        defer.resolve(domains.uniq().sortBy('title'));
-      });
-    });
-
-
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
+  allDomains: filterBy('competencies', 'isDomain'),
+  sortDomainsBy: ['title'],
+  domains: sort('allDomains', 'sortDomainsBy'),
 });
