@@ -225,7 +225,7 @@ export default {
       'one': 'There is 1 competency',
       'other': 'There are {{count}} competencies'
     },
-    'manageCompetencies': 'Manage Competenceis',
+    'manageCompetencies': 'Manage Competencies',
     'newDomain': 'New Domain',
   },
   'courses': {
