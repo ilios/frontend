@@ -169,7 +169,7 @@ $collapse-control-shadow-grey: #e2e2e2;
 
       &.collapsed {
         .detail-title {
-          @include span-columns(2 of 12);
+          @include span-columns(3 of 12);
 
           &::after {
             content: '\25BA';
@@ -177,7 +177,7 @@ $collapse-control-shadow-grey: #e2e2e2;
         }
 
         .detail-content {
-          @include span-columns(10 of 12);
+          @include span-columns(9 of 12);
           margin: 0;
         }
       }
@@ -414,6 +414,25 @@ $collapse-control-shadow-grey: #e2e2e2;
   .summary-highlight {
     color: $ilios-orange;
     font-weight: bold;
+  }
+
+  .hierarchical-list-manager {
+    background-color: $grey;
+    border: 1px solid $black;
+    margin: 1em;
+    padding: 1em;
+
+
+    h4 {
+      font-weight: bold;
+      margin-bottom: 1em;
+      width: 100%;
+    }
+
+    ul {
+      margin-left: 2em;
+    }
+
   }
 }
 

@@ -14,6 +14,9 @@
 			{{#if (can 'edit instructorGroups')}}
 				<li id='slidingnavmenu-instructorgroups'>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
 			{{/if}}
+			{{#if (can 'edit schools')}}
+				<li id='slidingnavmenu-schools'>{{#link-to 'schools'}}{{fa-icon 'university'}} {{t 'general.schools'}}{{/link-to}}</li>
+			{{/if}}
 			{{#if (can 'edit programs')}}
 				<li id='slidingnavmenu-programs'>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
 			{{/if}}

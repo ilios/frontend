@@ -56,12 +56,11 @@ export default Mixin.create({
       const value = this.get('value');
       const buffer = this.get('buffer');
       const condition = this.get('condition');
-
       if (this.get('validations')) {
         this.validate()
           .then(() => {
             if (!isEqual(value, buffer)) {
-              this.sendAction('save', buffer);
+              this.sendAction('save', buffer, condition);
             }
 
             this.set('isEditing', false);

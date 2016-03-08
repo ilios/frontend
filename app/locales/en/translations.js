@@ -25,6 +25,7 @@ export default {
     'scheduled': 'Scheduled',
     'competencies': 'Competencies',
     'competency': 'Competency',
+    'domain': 'Domain',
     'courses': 'Courses',
     'course': 'Course',
     'programs': 'Programs',
@@ -132,6 +133,7 @@ export default {
     'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms.',
     'vocabularies': 'Vocabularies',
     'vocabulary': 'Vocabulary',
+    'schools': 'Schools',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -214,6 +216,17 @@ export default {
     'includeAll': 'Check All',
     'message': 'No learner groups available; No cohort is attached to this course.',
     'selectProgram': 'Select a Program',
+  },
+  'schools': {
+    'new': 'New School',
+    'administratorEmail': 'Administrator Email',
+    'backToSchools': 'Back to Schools List',
+    'competencyCount': {
+      'one': 'There is 1 competency',
+      'other': 'There are {{count}} competencies'
+    },
+    'manageCompetencies': 'Manage Competencies',
+    'newDomain': 'New Domain',
   },
   'courses': {
     'currentSchool': 'Current School',
