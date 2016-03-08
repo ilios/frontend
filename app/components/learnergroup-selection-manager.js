@@ -22,7 +22,7 @@ export default Component.extend({
       filter: '',
       filteredAvailableLearnerGroups: computed(
         'content.learnerGroups.[]',
-        'content.learnerGroups.@each.allDescendants.[]',
+        'content.learnerGroups.@each.allDescendants',
         'filter',
         'selectedLearnerGroups.[]',
         function(){

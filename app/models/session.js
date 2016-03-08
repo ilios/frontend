@@ -23,7 +23,8 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   learningMaterials: DS.hasMany('session-learning-material', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
   isIndependentLearning: notEmpty('ilmSession.content'),
-  offeringLearnerGroupsLength: mapBy('offerings', 'learnerGroups.length'),
+  offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
+  offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   sortedOfferingsByDate: computed('offerings.@each.startDate', {
     get() {
@@ -93,7 +94,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
-  associatedLearnerGroups: computed('offerings.@each.learnerGroups.[]', function(){
+  associatedLearnerGroups: computed('offerings.@each.learnerGroups', function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
       Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){

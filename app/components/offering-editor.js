@@ -77,7 +77,7 @@ export default Component.extend(EmberValidations, {
 
       hasAvailableLearnerGroups: notEmpty('filteredAvailableLearnerGroups'),
 
-      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants.[]', 'selectedLearnerGroups.[]', function() {
+      filteredAvailableLearnerGroups: computed('content.learnerGroups.[]', 'content.learnerGroups.@each.allDescendants', 'selectedLearnerGroups.[]', function() {
         let defer = RSVP.defer();
         let proxy = this;
 
