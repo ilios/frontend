@@ -1,24 +1,40 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import initializer from "ilios/instance-initializers/ember-i18n";
+import startMirage from '../../helpers/start-mirage';
+import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
+
+const { Object } = Ember;
 
 moduleForComponent('school-competencies-collapsed', 'Integration | Component | school competencies collapsed', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(this);
+    startMirage(this.container);
+  }
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });"
+  assert.expect(3);
+  let domain = server.create('competency', {school: 1, isDomain: true, children: [2]});
+  let competency = server.create('competency', {school: 1, parent: 1});
 
-  this.render(hbs`{{school-competencies-collapsed}}`);
+  let competencies = [domain, competency].map(obj => Object.create(obj));
 
-  assert.equal(this.$().text().trim(), '');
+  const school = Object.create({
+    competencies
+  });
 
-  // Template block usage:"
-  this.render(hbs`
-    {{#school-competencies-collapsed}}
-      template block text
-    {{/school-competencies-collapsed}}
-  `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  this.set('school', school);
+  this.on('click', parseInt);
+  this.render(hbs`{{school-competencies-collapsed school=school expand=(action 'click')}}`);
+
+  return wait().then(() => {
+    assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
+    assert.ok(this.$().text().trim().search(/competency 0/) > 0);
+    assert.ok(this.$().text().trim().search(/There is 1 competency/) > 0);
+  });
+
 });
