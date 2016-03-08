@@ -25,6 +25,7 @@ export default {
     'scheduled': 'Programado',
     'competencies': 'Competencias',
     'competency': 'Competencia',
+    'domain': 'Dominio',
     'courses': 'Cursos',
     'course': 'curso',
     'programs': 'Programas',
@@ -132,6 +133,7 @@ export default {
     'tooManyResults': 'La búsqueda ha devuelto más de {{count}} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales.',
     'vocabularies': 'Vocabularios',
     'vocabulary': 'Vocabulario',
+    'schools': 'Escuelas',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -214,6 +216,17 @@ export default {
     'includeAll': 'Marque todo',
     'message': 'No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación.',
     'selectProgram': 'Seleccione un Programa',
+  },
+  'schools': {
+    'new': 'Nueva Escuela',
+    'administratorEmail': 'Correo Eelectrónico del Administrador',
+    'backToSchools': 'Atrás a la Lista de Escuelas',
+    'competencyCount': {
+      'one': 'Hay 1 competencia',
+      'other': 'Hay {{count}} competencias'
+    },
+    'manageCompetencies': 'Maneje Competencias',
+    'newDomain': 'Nuevo Dominio',
   },
   'courses': {
     'currentSchool': 'Escuela Actual',

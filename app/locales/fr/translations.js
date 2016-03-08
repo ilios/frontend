@@ -25,6 +25,7 @@ export default {
     'scheduled': "Prevu",
     'competencies': "Compétences",
     'competency': "Compétence",
+    'domain': 'Domaine',
     'courses': "Les Cours",
     'course': "Cours",
     'programs': "Diplômes",
@@ -132,6 +133,7 @@ export default {
     'tooManyResults': 'Votre recherche présente plus que les {{count}} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes.',
     'vocabularies': 'Vocabulaires',
     'vocabulary': 'Vocabulaire',
+    'schools': 'Écoles',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -214,6 +216,17 @@ export default {
     'includeAll': "Cochez toutes",
     'message': "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours.",
     'selectProgram': 'Choisi Diplôme',
+  },
+  'schools': {
+    'new': 'École nouvelle',
+    'administratorEmail': "Courriel d'administrateur",
+    'backToSchools': "Retour à liste d'écoles",
+    'competencyCount': {
+      'one': 'Il y a 1 compétence',
+      'other': 'Il y a de {{count}} compétences'
+    },
+    'manageCompetencies': "Manager des Compétences",
+    'newDomain': 'Domaine nouvelle',
   },
   'courses': {
     'currentSchool': "Écôle Actuelle",
