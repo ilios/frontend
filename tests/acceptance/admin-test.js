@@ -43,8 +43,8 @@ test('can search for users', function(assert) {
   fillIn(userSearch, 'son');
   triggerEvent(userSearch, 'keyup');
   andThen(() => {
-    assert.equal(find(secondResultUsername).text(), '1 guy M. Mc1son', 'user name is correct');
-    assert.equal(find(secondResultEmail).text(), 'user@example.edu', 'user email is correct');
+    assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
+    assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
   });
 
   click(secondResultUsername);
