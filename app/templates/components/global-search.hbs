@@ -23,7 +23,7 @@
               {{#link-to 'user' proxy}}
                 <div class='livesearch-user-name'>
                   {{#unless proxy.enabled}}
-                    {{fa-icon 'user-times' title=(t 'general.disabled')}}
+                    {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
                   {{/unless}}
                   {{proxy.fullName}}
                 </div>
