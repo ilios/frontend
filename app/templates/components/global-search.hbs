@@ -21,7 +21,12 @@
           {{#each searchResults.content as |proxy|}}
             <li>
               {{#link-to 'user' proxy}}
-                <div class='livesearch-user-name'>{{proxy.fullName}}</div>
+                <div class='livesearch-user-name'>
+                  {{#unless proxy.enabled}}
+                    {{fa-icon 'user-times' title=(t 'general.disabled')}}
+                  {{/unless}}
+                  {{proxy.fullName}}
+                </div>
                 <div class='livesearch-user-email'>{{proxy.email}}</div>
               {{/link-to}}
             </li>
