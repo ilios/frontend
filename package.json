@@ -83,7 +83,7 @@
     "ember-truth-helpers": "1.2.0",
     "ember-validations": "dockyard/ember-validations#4c1d9cce601ed9017a9c975c262c7e74c09424d7",
     "ember-watson": "^0.8.0",
-    "emberx-select": "2.0.2",
+    "emberx-select": "2.1.0",
     "eslint": "^2.2.0",
     "ilios-calendar": "^4.0.0",
     "liquid-fire": "0.23.0",
