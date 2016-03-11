@@ -229,6 +229,12 @@ export default {
     },
     'manageCompetencies': 'Manage Competencies',
     'newDomain': 'New Domain',
+    'termCount': {
+      'one': 'There is 1 term',
+      'other': 'There are {{count}} terms'
+    },
+    'manageVocabularies': 'Manage Vocabularies',
+    'confirmVocabularyRemoval': 'Are you sure you want to delete this vocabulary?',
   },
   'courses': {
     'currentSchool': 'Current School',
