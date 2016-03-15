@@ -74,7 +74,7 @@ export default Service.extend({
         }
       }
       if(subject === 'instructor'){
-        let specialInstructed = ['learningMaterials', 'sessionTypes'];
+        let specialInstructed = ['learningMaterials', 'sessionTypes', 'courses', 'sessions'];
         if(specialInstructed.contains(what)){
           what = 'instructed' + what.capitalize();
         }
