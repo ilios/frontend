@@ -88,8 +88,12 @@ export default Component.extend(EmberValidations, ValidationError, {
         'instructor-group',
         'competency',
       ];
-      if(schoolScopedModels.contains(model)){
-        query.filters.school = this.get('currentSchool').get('id');
+      if(schoolScopedModels.contains(model)) {
+        if ('session' === model) {
+          query.filters.schools = [this.get('currentSchool').get('id')];
+        } else {
+          query.filters.school = this.get('currentSchool').get('id');
+        }
       }
     }
 
