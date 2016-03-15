@@ -70,7 +70,7 @@
     "ember-load": "0.0.4",
     "ember-load-initializers": "^0.5.0",
     "ember-modal-dialog": "0.8.3",
-    "ember-moment": "6.0.0",
+    "ember-moment": "6.1.0",
     "ember-normalize": "0.0.9",
     "ember-noscript": "^2.0.0",
     "ember-one-way-controls": "0.5.3",
