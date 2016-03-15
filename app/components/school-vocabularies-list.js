@@ -2,9 +2,9 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, inject } = Ember;
-const { sort, reads, filterBy } = computed;
+const { Component, computed, inject, RSVP, isPresent } = Ember;
 const { service } = inject;
+const { Promise } = RSVP;
 
 const Validations = buildValidations({
   newVocabularyTitle: [
@@ -19,11 +19,20 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   school: null,
-  vocabularies: reads('school.vocabularies'),
   newVocabularies: [],
   sortBy: ['title'],
-  filteredVocabularies: filterBy('vocabularies', 'isNew', false),
-  sortedVocabularies: sort('filteredVocabularies', 'sortBy'),
+  sortedVocabularies: computed('school.vocabularies', function(){
+    const school = this.get('school');
+    return new Promise((resolve, reject) => {
+      if (isPresent(school)) {
+        school.get('vocabularies').then(vocabularies => {
+          resolve(vocabularies.filterBy('isNew', false).sortBy('title').toArray());
+        });
+      } else {
+        reject();
+      }
+    });
+  }),
   editable: true,
   showNewVocabularyForm: false,
   newVocabularyTitle: null,

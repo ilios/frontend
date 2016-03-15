@@ -17,6 +17,7 @@
             onescape=(action 'toggleShowNewVocabularyForm')
             focusOut=(action 'addErrorDisplayFor' 'newVocabularyTitle')
           }}
+          new title: {{newVocabularyTitle}}
           {{#if (and (v-get this 'newVocabularyTitle' 'isInvalid') (is-in showErrorsFor 'newVocabularyTitle'))}}
             <span class="validation-error-message">{{v-get this 'newVocabularyTitle' 'message'}}</span>
           {{/if}}
@@ -44,7 +45,7 @@
     {{/each}}
   </section>
   <div class='resultslist-list'>
-    {{#liquid-if (is-fulfilled vocabularies.promise) 'crossFade'}}
+    {{#liquid-if (is-fulfilled sortedVocabularies) 'crossFade'}}
       <table>
         <thead>
           <tr>
@@ -54,12 +55,10 @@
           </tr>
         </thead>
         <tbody>
-        {{#each sortedVocabularies as |vocabulary|}}
+        {{#each (await sortedVocabularies) as |vocabulary|}}
           <tr class="{{if (is-in showRemovalConfirmationFor vocabulary) 'confirm-removal'}}">
             <td class='text-left text-top' colspan=3>
-              {{#if vocabulary.title.length}}
-                {{inplace-text value=vocabulary.title save='changeVocabularyTitle' condition=vocabulary}}
-              {{/if}}
+              {{inplace-text value=vocabulary.title save='changeVocabularyTitle' condition=vocabulary}}
             </td>
             <td class='text-left text-top' colspan=1>
               {{vocabulary.terms.length}}
