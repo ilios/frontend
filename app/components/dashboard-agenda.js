@@ -7,11 +7,19 @@ const { service } = inject;
 const { PromiseArray } = DS;
 
 export default Component.extend({
+  /**
+   * Days in advance of the current date.
+   * @property daysInAdvance
+   * @type int
+   * @public
+   */
+  daysInAdvance: 60,
+
   init() {
     this._super(...arguments);
 
     const fromTimeStamp = moment().hour(0).minute(0).unix();
-    const toTimeStamp = moment().hour(23).minute(59).add(30, 'days').unix();
+    const toTimeStamp = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
 
     this.setProperties({ fromTimeStamp, toTimeStamp });
   },
