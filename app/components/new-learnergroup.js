@@ -2,12 +2,12 @@ import Ember from 'ember';
 import ValidationError from 'ilios/mixins/validation-error';
 import EmberValidations from 'ember-validations';
 
-const { Component, computed, inject } = Ember;
+const { Component, inject } = Ember;
 const { service } = inject;
-const { alias } = computed;
 
 export default Component.extend(ValidationError, EmberValidations, {
   i18n: service(),
+  multiModeSupported: false,
   singleMode: true,
 
   tagName: 'section',

@@ -11,7 +11,12 @@
     <section class='resultslist'>
         {{#liquid-if showNewLearnerGroupForm class='vertical'}}
           <section class='resultslist-new'>
-            {{new-learnergroup save='saveNewLearnerGroup' generateNewLearnerGroups='generateNewLearnerGroups' cancel='cancel'}}
+            {{new-learnergroup
+              save='saveNewLearnerGroup'
+              generateNewLearnerGroups='generateNewLearnerGroups'
+              cancel='cancel'
+              multiModeSupported=true
+            }}
           </section>
         {{/liquid-if}}
 
