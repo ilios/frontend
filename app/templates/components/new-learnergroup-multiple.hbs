@@ -1,0 +1,18 @@
+<label class="form-col form-col-12">
+  <div class="form-label">Number of Groups:</div>
+
+  <div class="form-data form-data-text form-input-row">
+    <input type="text" placeholder='Number of groups to generate.'
+           class="{{if topErrorMessage 'has-error'}}"
+           onChange={{action "changeValue" value="target.value"}}
+           oninput={{action "changeValue" value="target.value"}}
+           onfocus={{action "displayError"}} />
+    {{#if topErrorMessage}}
+      <span class="validation-error-message">{{topErrorMessage}}</span>
+    {{/if}}
+  </div>
+</label>
+<div class="form-col-6 form-data-submit">
+  <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+  <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+</div>
