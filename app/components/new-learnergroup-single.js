@@ -26,9 +26,9 @@ export default Component.extend(ValidationError, EmberValidations, {
     save() {
       this.validate()
         .then(() => {
-            const title = this.get('title');
-            this.sendAction('save', title)
-          })
+          const title = this.get('title');
+          this.sendAction('save', title)
+        })
         .catch(() => {});
     },
 
@@ -37,7 +37,7 @@ export default Component.extend(ValidationError, EmberValidations, {
     },
 
     changeValue(value) {
-       this.set('title', value);
+      this.set('title', value);
     },
   }
 });

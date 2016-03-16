@@ -25,12 +25,12 @@ export default Component.extend(ValidationError, EmberValidations, {
 
   actions: {
     save() {
-     this.validate()
-      .then(() => {
-        const num = this.get('numSubGroups');
-        this.sendAction('generateNewLearnerGroups', num)
-      })
-      .catch(() => {});
+      this.validate()
+        .then(() => {
+          const num = this.get('numSubGroups');
+          this.sendAction('generateNewLearnerGroups', num)
+        })
+        .catch(() => {});
     },
 
     cancel() {
