@@ -8,6 +8,7 @@ const { alias } = computed;
 
 export default Component.extend(ValidationError, EmberValidations, {
   i18n: service(),
+  singleMode: true,
 
   tagName: 'section',
   classNames: ['new-learnergroup', 'new-result', 'form-container'],
@@ -23,6 +24,9 @@ export default Component.extend(ValidationError, EmberValidations, {
   },
 
   actions: {
+    setMode(value) {
+      this.set('singleMode', value);
+    },
     save() {
       this.validate()
         .then(() => {

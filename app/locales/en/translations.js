@@ -217,6 +217,8 @@ export default {
     'includeAll': 'Check All',
     'message': 'No learner groups available; No cohort is attached to this course.',
     'selectProgram': 'Select a Program',
+    'singleGroup': 'Single Group',
+    'multipleGroups': 'Multiple Groups'
   },
   'schools': {
     'new': 'New School',

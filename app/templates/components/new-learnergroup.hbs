@@ -1,6 +1,17 @@
-<div class="new-result-title">{{t 'learnerGroups.new'}}</div>
+<div class="form-col-12">
+  <label class="form-label">Create New:</label>
+  <div class="form-data">
+    {{click-choice-buttons
+    buttonContent1=(t 'learnerGroups.singleGroup')
+    buttonContent2=(t 'learnerGroups.multipleGroups')
+    firstChoicePicked=singleMode
+    action="setMode"
+    }}
+  </div>
+</div>
 
 <div class="detail-content">
+{{#if singleMode}}
   <label class="form-col form-col-12">
     <div class="form-label">{{t 'general.title'}}:</div>
 
@@ -15,7 +26,9 @@
       {{/if}}
     </div>
   </label>
-
+{{else}}
+  <div>TODO</div>
+{{/if}}
   <div class="form-col-6 form-data-submit">
     <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
     <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
