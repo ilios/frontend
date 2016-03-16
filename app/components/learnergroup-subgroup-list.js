@@ -69,6 +69,24 @@ export default Component.extend({
       });
     },
 
+    generateNewLearnerGroups(num) {
+      const { store, parentGroup } = this.getProperties('store', 'parentGroup');
+      parentGroup.get('cohort').then((cohort) => {
+        let promises = [];
+        for (let i = 0; i < num; i++) {
+          let newGroup = store.createRecord('learner-group', {
+            title: parentGroup.get('title') + ' ' + (i + 1),
+            parent: parentGroup,
+            cohort
+          });
+          promises.pushObject(newGroup.save());
+        }
+        Ember.RSVP.all(promises).then(() => {
+          this.send('cancel');
+        });
+      });
+    },
+
     cancel() {
       this.set('showNewLearnerGroupForm', false);
     }

@@ -22,6 +22,9 @@ export default Component.extend(ValidationError, EmberValidations, {
     },
     save(title){
       this.sendAction('save', title);
+    },
+    generateNewLearnerGroups(num){
+      this.sendAction('generateNewLearnerGroups', num);
     }
   }
 });
