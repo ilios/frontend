@@ -15,6 +15,7 @@ export default {
     'home': "Accueil",
     'add': "Ajouté",
     'addNew': "Ajouté Neuf",
+    'createNew': "Créer Neuf",
     'all': "Tous",
     'for': 'Pour',
     'anything': "Quelque chose",

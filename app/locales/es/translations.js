@@ -15,6 +15,7 @@ export default {
     'home': 'Inicio',
     'add': 'Agregue',
     'addNew': 'Agregue Nuevo',
+    'createNew': 'Crear Nuevo',
     'all': 'Todos',
     'for': 'Para',
     'anything': 'Caulquier Cosa',

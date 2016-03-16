@@ -15,6 +15,7 @@ export default {
     'home': 'Home',
     'add': 'Add',
     'addNew': 'Add New',
+    'createNew': 'Create New',
     'all': 'All',
     'for': 'For',
     'anything': 'Anything',
