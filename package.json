@@ -97,5 +97,8 @@
     "paths": [
       "lib/ilios-prerender"
     ]
+  },
+  "dependencies": {
+    "string-padding": "^1.0.2"
   }
 }
