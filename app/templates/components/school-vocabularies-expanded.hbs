@@ -1,25 +1,17 @@
 {{#if (is-fulfilled showCollapsible)}}
   <section class='detail-block {{if showCollapsible "collapsible"}}'>
-    {{#if isManaging}}
-        <div class='detail-title'>
-        </div>
-    {{else}}
-      <div class='detail-title {{if showCollapsible "clickable"}}' {{action 'collapse'}}>
-        {{t 'general.vocabularies'}} ({{school.vocabularies.length}})
-      </div>
-    {{/if}}
-    <div class='detail-actions'>
-      {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>
-          {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
-        </button>
-        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-      {{/if}}
+    <div class='detail-title {{if showCollapsible "clickable"}}' {{action 'collapse'}}>
+      {{t 'general.vocabularies'}} ({{school.vocabularies.length}})
     </div>
     <div class='detail-content'>
-      {{school-vocabularies-list
-        school=school
-      }}
+      {{#liquid-if isManaging class='crossFade'}}
+        {{school-vocabulary-manager vocabulary=managedVocabulary}}
+      {{else}}
+        {{school-vocabularies-list
+          school=school
+          manageVocabulary=this.attrs.setSchoolManagedVocabulary
+        }}
+      {{/liquid-if}}
     </div>
   </section>
 {{/if}}

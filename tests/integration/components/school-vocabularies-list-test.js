@@ -28,8 +28,9 @@ test('it renders', function(assert) {
     vocabularies: RSVP.resolve(vocabularies)
   });
 
+  this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   return wait().then(() => {
     assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'Vocabulary 1');
     assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'Vocabulary 2');
@@ -63,8 +64,9 @@ test('can create new vocabulary', function(assert) {
     vocabularies: RSVP.resolve([])
   });
 
+  this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   this.$('.expand-button').click();
   this.$('input').val('new vocab').trigger('change');
   return wait().then(() => {
@@ -90,8 +92,9 @@ test('cannot delete vocabularies with terms', function(assert) {
     vocabularies: RSVP.resolve(vocabularies)
   });
 
+  this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   return wait().then(() => {
     assert.equal(this.$('tr:eq(1) td:eq(2) i').length, 1);
     assert.equal(this.$('tr:eq(2) td:eq(2) i').length, 1);
@@ -119,9 +122,9 @@ test('clicking delete removes the vocabulary', function(assert) {
   const school = Object.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
-
+  this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   return wait().then(() => {
     assert.notOk(this.$('tr:eq(1)').hasClass('confirm-removal'));
     assert.equal(this.$('tr:eq(1) td:eq(2) .remove').length, 1);
@@ -132,6 +135,28 @@ test('clicking delete removes the vocabulary', function(assert) {
       assert.ok(this.$('tr:eq(1)').hasClass('confirm-removal'));
       this.$('tr:eq(2) .remove').click();
     });
+  });
+
+});
+
+test('clicking edit fires the action to manage the vocab', function(assert) {
+  assert.expect(1);
+  let  vocabulary1 = server.create('vocabulary', {school: 1, isNew: false});
+  let  vocabulary2 = server.create('vocabulary', {school: 1, isNew: false});
+
+  let vocabularies = [vocabulary1, vocabulary2].map(obj => Object.create(obj));
+
+  const school = Object.create({
+    vocabularies: RSVP.resolve(vocabularies)
+  });
+
+  this.set('school', school);
+  this.on('edit', function(vocab){
+    assert.equal(vocab.get('id'), vocabulary1.id);
+  });
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
+  return wait().then(() => {
+    this.$('tr:eq(1) i').click();
   });
 
 });

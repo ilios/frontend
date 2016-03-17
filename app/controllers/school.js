@@ -7,10 +7,10 @@ export default Controller.extend({
     'schoolCompetencyDetails',
     'schoolManageCompetencies',
     'schoolVocabularyDetails',
-    'schoolManageVocabularies',
+    'schoolManagedVocabulary',
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,
   schoolVocabularyDetails: false,
-  schoolManageVocabularies: false,
+  schoolManagedVocabulary: null,
 });

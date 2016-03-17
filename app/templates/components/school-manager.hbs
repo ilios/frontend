@@ -47,8 +47,8 @@
         school=school
         collapse=(action this.attrs.setSchoolVocabularyDetails false)
         expand=(action this.attrs.setSchoolVocabularyDetails true)
-        isManaging=schoolManageVocabularies
-        setSchoolManageVocabulary=this.attrs.setSchoolManageVocabularies
+        managedVocabularyId=schoolManagedVocabulary
+        setSchoolManagedVocabulary=this.attrs.setSchoolManagedVocabulary
       }}
     {{else}}
       {{school-vocabularies-collapsed school=school expand=(action this.attrs.setSchoolVocabularyDetails true)}}

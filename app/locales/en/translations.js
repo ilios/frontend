@@ -235,6 +235,7 @@ export default {
     },
     'manageVocabularies': 'Manage Vocabularies',
     'confirmVocabularyRemoval': 'Are you sure you want to delete this vocabulary?',
+    'newTerm': 'New Term',
   },
   'courses': {
     'currentSchool': 'Current School',

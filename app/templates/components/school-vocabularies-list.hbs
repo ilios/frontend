@@ -17,7 +17,6 @@
             onescape=(action 'toggleShowNewVocabularyForm')
             focusOut=(action 'addErrorDisplayFor' 'newVocabularyTitle')
           }}
-          new title: {{newVocabularyTitle}}
           {{#if (and (v-get this 'newVocabularyTitle' 'isInvalid') (is-in showErrorsFor 'newVocabularyTitle'))}}
             <span class="validation-error-message">{{v-get this 'newVocabularyTitle' 'message'}}</span>
           {{/if}}
@@ -58,7 +57,7 @@
         {{#each (await sortedVocabularies) as |vocabulary|}}
           <tr class="{{if (is-in showRemovalConfirmationFor vocabulary) 'confirm-removal'}}">
             <td class='text-left text-top' colspan=3>
-              {{inplace-text value=vocabulary.title save='changeVocabularyTitle' condition=vocabulary}}
+              <span class='clickable link' {{action this.attrs.manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
             </td>
             <td class='text-left text-top' colspan=1>
               {{vocabulary.terms.length}}
@@ -66,7 +65,7 @@
 
             <td class='text-left text-top' colspan=1>
               {{#if editable}}
-                <span class='clickable edit' {{action 'editVocabulary' vocabulary}}>{{fa-icon 'edit'}}</span>
+                <span class='clickable edit' {{action this.attrs.manageVocabulary vocabulary.id}}>{{fa-icon 'edit'}}</span>
                 {{#if (eq vocabulary.terms.length 0)}}
                    {{fa-icon 'trash' class='remove clickable' click=(action 'confirmRemoval' vocabulary)}}
                 {{/if}}

@@ -20,7 +20,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   school: null,
   newVocabularies: [],
-  sortBy: ['title'],
   sortedVocabularies: computed('school.vocabularies', function(){
     const school = this.get('school');
     return new Promise((resolve, reject) => {
@@ -39,10 +38,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSavingNewVocabulary: false,
   showRemovalConfirmationFor: [],
   actions: {
-    changeVocabularyTitle(title, vocabulary){
-      vocabulary.set('title', title);
-      vocabulary.save();
-    },
     toggleShowNewVocabularyForm(){
       this.set('newVocabularyTitle', null);
       this.set('showNewVocabularyForm', !this.get('showNewVocabularyForm'));
