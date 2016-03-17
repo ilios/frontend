@@ -72,16 +72,16 @@ export default Component.extend({
     generateNewLearnerGroups(num) {
       const { store, parentGroup } = this.getProperties('store', 'parentGroup');
       parentGroup.get('cohort').then((cohort) => {
-        let promises = [];
+        let groups = [];
         for (let i = 0; i < num; i++) {
           let newGroup = store.createRecord('learner-group', {
             title: parentGroup.get('title') + ' ' + (i + 1),
             parent: parentGroup,
             cohort
           });
-          promises.pushObject(newGroup.save());
+          groups.pushObject(newGroup);
         }
-        Ember.RSVP.all(promises).then(() => {
+        Ember.RSVP.all(groups.invoke('save')).then(() => {
           this.send('cancel');
         });
       });

@@ -10,6 +10,8 @@ export default Component.extend(ValidationError, EmberValidations, {
   i18n: service(),
   singleMode: true,
 
+  isSaving: false,
+
   tagName: 'div',
 
   numSubGroups: null,
@@ -27,8 +29,9 @@ export default Component.extend(ValidationError, EmberValidations, {
     save() {
       this.validate()
         .then(() => {
+          this.set('isSaving', true);
           const num = this.get('numSubGroups');
-          this.sendAction('generateNewLearnerGroups', num)
+          this.sendAction('generateNewLearnerGroups', num);
         })
         .catch(() => {});
     },
