@@ -8,9 +8,11 @@ export default Controller.extend({
     'schoolManageCompetencies',
     'schoolVocabularyDetails',
     'schoolManagedVocabulary',
+    'schoolManagedVocabularyTerm',
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,
   schoolVocabularyDetails: false,
   schoolManagedVocabulary: null,
+  schoolManagedVocabularyTerm: null,
 });

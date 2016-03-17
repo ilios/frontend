@@ -1,4 +1,18 @@
-{{inplace-text tagName='h5' value=vocabulary.title save='changeVocabularyTitle'}}
+{{#deferred-content allParents as |d|}}
+  {{#d.fulfilled as |parents|}}
+  <div class='breadcrumbs'>
+    <span {{action this.attrs.manageTerm null}}>{{vocabulary.title}}</span>
+    {{#each parents as |parent|}}
+      <span {{action this.attrs.manageTerm parent.id}}>{{parent.title}}</span>
+    {{/each}}
+  </div>
+  {{/d.fulfilled}}
+{{/deferred-content}}
+
+
+{{#if term}}
+  {{inplace-text tagName='h5' value=term.title save='changeTermTitle'}}
+{{/if}}
 {{#deferred-content sortedTerms as |d|}}
   {{#d.settled}}
     {{t 'general.terms'}}:
@@ -10,6 +24,8 @@
     <ul class='tag-list'>
       {{#each terms as |term|}}
         <li class='clickable link' {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+      {{else}}
+        {{t 'general.none'}}
       {{/each}}
     </ul>
   {{/d.fulfilled}}

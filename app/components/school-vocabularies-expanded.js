@@ -9,7 +9,9 @@ export default Component.extend({
   store: service(),
   school: null,
   managedVocabularyId: null,
+  managedTermId: null,
   managedVocabulary: null,
+  managedTerm: null,
   isManaging: notEmpty('managedVocabulary'),
   showCollapsible: computed('isManaging', 'school.vocabularies.length', function(){
     return new Promise(resolve => {
@@ -23,11 +25,20 @@ export default Component.extend({
   didReceiveAttrs(){
     this._super(...arguments);
     const managedVocabularyId = this.get('managedVocabularyId');
+    const managedTermId = this.get('managedTermId');
     if(isPresent(managedVocabularyId)){
       this.get('school.vocabularies').then(vocabularies => {
         let managedVocabulary = vocabularies.findBy('id', managedVocabularyId);
         this.set('managedVocabulary', managedVocabulary);
-      })
+        if(isPresent(managedTermId)){
+          managedVocabulary.get('terms').then(terms => {
+            let managedTerm = terms.findBy('id', managedTermId);
+            this.set('managedTerm', managedTerm);
+          });
+        } else {
+          this.set('managedTerm', null);
+        }
+      });
     } else {
       this.set('managedVocabulary', null);
     }

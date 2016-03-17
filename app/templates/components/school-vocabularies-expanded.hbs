@@ -4,14 +4,24 @@
       {{t 'general.vocabularies'}} ({{school.vocabularies.length}})
     </div>
     <div class='detail-content'>
-      {{#liquid-if isManaging class='crossFade'}}
-        {{school-vocabulary-manager vocabulary=managedVocabulary}}
+      {{#if managedTermId}}
+        {{school-vocabulary-term-manager
+          vocabulary=managedVocabulary
+          term=managedTerm
+          manageTerm=this.attrs.setSchoolManagedVocabularyTerm
+          manageVocabulary=this.attrs.setSchoolManagedVocabulary
+        }}
+      {{else if managedVocabularyId}}
+        {{school-vocabulary-manager
+          vocabulary=managedVocabulary
+          manageTerm=this.attrs.setSchoolManagedVocabularyTerm
+        }}
       {{else}}
         {{school-vocabularies-list
           school=school
           manageVocabulary=this.attrs.setSchoolManagedVocabulary
         }}
-      {{/liquid-if}}
+      {{/if}}
     </div>
   </section>
 {{/if}}
