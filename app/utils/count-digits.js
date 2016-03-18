@@ -5,4 +5,4 @@ export default function countDigits(n) {
     throw new TypeError(n + ' is not a decimal number.');
   }
   return Math.max(Math.floor(Math.log(Math.abs(x)) * Math.LOG10E), 0) + 1;
-};
+}
