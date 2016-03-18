@@ -98,8 +98,5 @@
     "paths": [
       "lib/ilios-prerender"
     ]
-  },
-  "dependencies": {
-    "ember-pad": "^1.1.0"
   }
 }
