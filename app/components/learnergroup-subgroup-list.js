@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import pad from 'ember-pad/utils/pad';
+import countDigits from '../utils/count-digits';
 
 const { Component, computed, inject, ObjectProxy } = Ember;
 const { service } = inject;
@@ -71,18 +73,21 @@ export default Component.extend({
 
     generateNewLearnerGroups(num) {
       const { store, parentGroup } = this.getProperties('store', 'parentGroup');
-      parentGroup.get('cohort').then((cohort) => {
-        let groups = [];
-        for (let i = 0; i < num; i++) {
-          let newGroup = store.createRecord('learner-group', {
-            title: parentGroup.get('title') + ' ' + (i + 1),
-            parent: parentGroup,
-            cohort
+      parentGroup.get('subgroupNumberingOffset').then((offset) => {
+        parentGroup.get('cohort').then((cohort) => {
+          let groups = [];
+          const padBy = countDigits(num + offset - 1) - 1;
+          for (let i = 0; i < num; i++) {
+            let newGroup = store.createRecord('learner-group', {
+              title: parentGroup.get('title') + ' ' + pad(offset + i, padBy),
+              parent: parentGroup,
+              cohort
+            });
+            groups.pushObject(newGroup);
+          }
+          Ember.RSVP.all(groups.invoke('save')).then(() => {
+            this.send('cancel');
           });
-          groups.pushObject(newGroup);
-        }
-        Ember.RSVP.all(groups.invoke('save')).then(() => {
-          this.send('cancel');
         });
       });
     },
