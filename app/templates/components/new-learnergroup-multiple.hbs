@@ -5,10 +5,10 @@
 {{else}}
   <label class="form-col form-col-12">
 
-    <div class="form-label">Number of Groups:</div>
+    <div class="form-label">{{t 'learnerGroups.numberOfGroups'}}:</div>
 
     <div class="form-data form-data-text form-input-row">
-      <input type="text" placeholder='Number of groups to generate.'
+      <input type="text" placeholder='{{t 'learnerGroups.numberOfGroupsToGenerate'}}'
              class="{{if topErrorMessage 'has-error'}}"
              onChange={{action "changeValue" value="target.value"}}
              oninput={{action "changeValue" value="target.value"}}
