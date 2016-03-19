@@ -119,6 +119,46 @@ test('cancel adding new learnergroup', function(assert) {
   });
 });
 
+test('switching between single- and multi-group mode', function(assert) {
+  assert.expect(11);
+
+  const expandButton = '.expand-button';
+  const singleGroupButton = '.first-button';
+  const multiGroupsButton = '.second-button';
+  const activeClass = 'active';
+  const container = find('.learnergroup-subgroup-list')[0];
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    assert.ok(isPresent(find(singleGroupButton, container)), 'single group button is visible');
+    assert.ok(isPresent(find(multiGroupsButton, container)), 'multi-groups button is visible');
+    assert.ok($(singleGroupButton, container).hasClass(activeClass), 'single group button is active by default');
+    assert.ok(!$(multiGroupsButton, container).hasClass(activeClass), 'multi-groups button is not active by default');
+    assert.equal(
+      getElementText(find('.resultslist-new .detail-content .form-label', container)),
+      getText('Title:'),
+      'single group entry form is visible by default'
+    );
+    click(multiGroupsButton).then(() => {
+      assert.ok(!$(singleGroupButton, container).hasClass(activeClass), 'single group button is not active');
+      assert.ok($(multiGroupsButton, container).hasClass(activeClass), 'multi-groups button is active');
+      assert.equal(
+        getElementText(find('.resultslist-new .detail-content .form-label', container)),
+        getText('Number of Groups:'),
+        'multi-groups entry form is visible by default'
+      );
+      click(singleGroupButton).then(() => {
+        assert.ok($(singleGroupButton, container).hasClass(activeClass), 'single group button is active, again');
+        assert.ok(!$(multiGroupsButton, container).hasClass(activeClass), 'multi-groups button is not active, again');
+        assert.equal(
+          getElementText(find('.resultslist-new .detail-content .form-label', container)),
+          getText('Title:'),
+          'single group entry form is visible, again'
+        );
+      });
+    });
+  });
+});
 
 test('remove learnergroup', function(assert) {
   assert.expect(5);
