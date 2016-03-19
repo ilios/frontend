@@ -3,8 +3,7 @@ import Ember from 'ember';
 const { Mixin } = Ember;
 
 export default Mixin.create({
-
-  init(){
+  didReceiveAttrs(){
     this._super(...arguments);
     this.set('showErrorsFor', []);
   },
