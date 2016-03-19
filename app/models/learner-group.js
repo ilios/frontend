@@ -126,9 +126,7 @@ export default DS.Model.extend({
     const regex = new RegExp('^' + escapeRegExp(this.get('title')) + ' ([0-9]+)$');
     let deferred = Ember.RSVP.defer();
     this.get('children').then(groups => {
-      let offset = groups.filter((item) => {
-        return regex.test(item.get('title'));
-      }).reduce((previousValue, item) => {
+      let offset = groups.reduce((previousValue, item) => {
         let rhett = previousValue;
         let matches = regex.exec(item.get('title'));
         if (! isEmpty(matches)) {
