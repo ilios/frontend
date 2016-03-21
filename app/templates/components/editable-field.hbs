@@ -1,0 +1,21 @@
+<span class='content'>
+  {{#unless isEditing}}
+    <span {{action 'edit'}} class='editable'>
+      {{#if value}}
+        {{value}}
+      {{else}}
+        {{clickPrompt}}
+      {{/if}}
+    </span>
+  {{else}}
+    <span class='editor'>
+      {{yield isSaving (action 'save') (action 'close')}}
+      <span class='actions'>
+        <button class='done icon' title='{{t "general.save"}}' {{action 'save'}}>
+          {{fa-icon (if isSaving 'spinner' 'check') spin=isSaving}}
+        </button>
+        <button class='cancel icon' title='{{t "general.cancel"}}' {{action 'close'}}>{{fa-icon 'times'}}</button>
+      </span>
+    </span>
+  {{/unless}}
+</span>
