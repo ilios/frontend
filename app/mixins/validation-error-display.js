@@ -15,5 +15,8 @@ export default Mixin.create({
     removeErrorDisplayFor(field){
       this.get('showErrorsFor').removeObject(field);
     },
+    clearErrorDisplay(){
+      this.set('showErrorsFor', []);
+    },
   }
 });
