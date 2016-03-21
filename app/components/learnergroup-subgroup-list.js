@@ -80,7 +80,7 @@ export default Component.extend({
       parentGroup.get('subgroupNumberingOffset').then((offset) => {
         parentGroup.get('cohort').then((cohort) => {
           let groups = [];
-          const padBy = countDigits(num + offset - 1) - 1;
+          const padBy = countDigits(offset + parseInt(num, 10));
           for (let i = 0; i < num; i++) {
             let newGroup = store.createRecord('learner-group', {
               title: parentGroup.get('title') + ' ' + pad(offset + i, padBy),
