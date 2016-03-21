@@ -12,9 +12,26 @@
         <label class="form-label">{{t "courses.externalId"}}:</label>
         <div class="form-data courseexternalid">
           {{#if editable}}
-            {{inplace-text value=course.externalId save='changeExternalId' validations=externalIdValidations}}
+            {{#editable-field
+              value=externalId
+              save=(action 'changeExternalId')
+              close=(action 'revertExternalIdChanges')
+              as |isSaving save close|
+            }}
+              {{one-way-input
+                value=externalId
+                update=(action (mut externalId))
+                onenter=save
+                onescape=close
+                disabled=isSaving
+                focusOut=(action 'addErrorDisplayFor' 'externalId')
+              }}
+              {{#if (and (v-get this 'externalId' 'isInvalid') (is-in showErrorsFor 'externalId'))}}
+                <span class="validation-error-message">{{v-get this 'externalId' 'message'}}</span>
+              {{/if}}
+            {{/editable-field}}
           {{else}}
-            {{course.externalId}}&nbsp;
+            {{externalId}}&nbsp;
           {{/if}}
         </div>
         <label class="form-label">{{t "courses.clerkshipType"}}:</label>

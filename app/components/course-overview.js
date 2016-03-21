@@ -1,13 +1,30 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP } = Ember;
 const { not } = computed;
+const { Promise } = RSVP;
 
-export default Component.extend({
+const Validations = buildValidations({
+  externalId: [
+    validator('length', {
+      min: 2,
+      max: 18
+    }),
+  ],
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
   store: Ember.inject.service(),
   editable: not('course.locked'),
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('externalId', this.get('course.externalId'));
+  },
   course: null,
+  externalId: null,
   directorsSort: ['lastName', 'firstName'],
   directorsWithFullName: computed.filterBy('course.directors', 'fullName'),
   sortedDirectors: computed.sort('directorsWithFullName', 'directorsSort'),
@@ -32,12 +49,6 @@ export default Component.extend({
       promise: deferred.promise
     });
   }),
-
-  externalIdValidations: {
-    'validationBuffer': {
-      length: { minimum: 2, maximum: 50 }
-    }
-  },
 
   actions: {
     addDirector: function(user){
@@ -73,10 +84,31 @@ export default Component.extend({
       this.get('course').set('endDate', newDate);
       this.get('course').save();
     },
-    changeExternalId: function(value){
-      this.get('course').set('externalId', value);
-      this.get('course').save();
+    changeExternalId() {
+      const newExternalId = this.get('externalId');
+      const course = this.get('course');
+      this.send('addErrorDisplayFor', 'externalId');
+      return new Promise((resolve, reject) => {
+        this.validate().then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'externalId');
+            course.set('externalId', newExternalId);
+            course.save().then((newCourse) => {
+              this.set('externalId', newCourse.get('externalId'));
+              this.set('course', newCourse);
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
+      });
     },
+    revertExternalIdChanges(){
+      const course = this.get('course');
+      this.set('externalId', course.get('externalId'));
+    },
+
     changeLevel: function(value){
       this.get('course').set('level', value);
       this.get('course').save();
