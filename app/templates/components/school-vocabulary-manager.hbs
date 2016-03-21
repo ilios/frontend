@@ -1,36 +1,50 @@
-{{inplace-text tagName='h5' value=vocabulary.title save='changeVocabularyTitle'}}
-{{#deferred-content sortedTerms as |d|}}
-  {{#d.settled}}
-    {{t 'general.terms'}}:
-  {{/d.settled}}
-  {{#d.pending}}
-    {{fa-icon 'spinner' spin=true}}
-  {{/d.pending}}
-  {{#d.fulfilled as |terms|}}
-    <ul class='tag-list'>
-      {{#each terms as |term|}}
-        <li class='clickable link' {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
-      {{/each}}
-    </ul>
-  {{/d.fulfilled}}
-{{/deferred-content}}
+<div class='breadcrumbs'>
+  <span {{action this.attrs.manageVocabulary null}}>{{t 'schools.allVocabularies'}}</span>
+  <span>{{vocabulary.title}}</span>
+</div><br />
 
-<div>
-  <label>{{t 'schools.newTerm'}}:</label>
-  {{one-way-input
-    value=newTermTitle
-    update=(action (mut newTermTitle))
-    onenter=(action 'createTerm')
-    focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
-  }}
-  {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
-    <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
-  {{/if}}
-  <button class='save text' {{action 'createTerm'}}>
-    {{#if isSavingNewTerm}}
-      {{fa-icon 'spinner' spin=true}}
-    {{else}}
-      {{t 'general.add'}}
+{{inplace-text tagName='h5' value=vocabulary.title save='changeVocabularyTitle'}}
+
+{{#each newTerms as |term|}}
+  <div class='saved-result'>
+    <span class='clickable link' {{action this.attrs.manageTerm term.id}}>
+      {{fa-icon 'external-link-square'}} {{term.title}}
+    </span>
+    {{t 'general.savedSuccessfully'}}
+  </div>
+{{/each}}
+
+<div class='selectable-list'>
+  <div class='selectable-list-form'>
+    {{one-way-input
+      value=newTermTitle
+      update=(action (mut newTermTitle))
+      onenter=(action 'createTerm')
+      focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
+      keyPress=(action 'addErrorDisplayFor' 'newTermTitle')
+    }}
+    <button class='save text' {{action 'createTerm'}}>
+      {{#if isSavingNewTerm}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.add'}}
+      {{/if}}
+    </button>
+
+    {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
+      <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
     {{/if}}
-  </button>
+  </div>
+  {{#deferred-content sortedTerms as |d|}}
+    {{#d.pending}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/d.pending}}
+    {{#d.fulfilled as |terms|}}
+      <ul>
+        {{#each terms as |term|}}
+          <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+        {{/each}}
+      </ul>
+    {{/d.fulfilled}}
+  {{/deferred-content}}
 </div>

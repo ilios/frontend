@@ -12,8 +12,9 @@ export default Mixin.create({
   valueChanged: false,
   clickPromptTranslation: null,
   clickPrompt: computed('i18n.locale', 'clickPromptTranslation', function() {
-    if (this.get('clickPromptTranslation')) {
-      return this.get('i18n').t(this.get('selectPromptTranslation'));
+    const clickPromptTranslation = this.get('clickPromptTranslation');
+    if (clickPromptTranslation) {
+      return this.get('i18n').t(clickPromptTranslation);
     }
 
     return this.get('i18n').t('general.clickToEdit');

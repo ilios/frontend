@@ -49,6 +49,7 @@ export default Component.extend({
         if(vocabularies.get('length')){
           this.attrs.collapse();
           this.attrs.setSchoolManagedVocabulary(null);
+          this.attrs.setSchoolManagedVocabularyTerm(null);
         }
       });
     },

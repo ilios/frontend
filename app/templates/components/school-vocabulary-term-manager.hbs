@@ -1,52 +1,66 @@
 {{#deferred-content allParents as |d|}}
   {{#d.fulfilled as |parents|}}
   <div class='breadcrumbs'>
+    <span {{action 'clearVocabAndTerm'}}>{{t 'schools.allVocabularies'}}</span>
     <span {{action this.attrs.manageTerm null}}>{{vocabulary.title}}</span>
     {{#each parents as |parent|}}
       <span {{action this.attrs.manageTerm parent.id}}>{{parent.title}}</span>
     {{/each}}
+    <span>{{term.title}}</span>
   </div>
   {{/d.fulfilled}}
 {{/deferred-content}}
 
 
 {{#if term}}
-  {{inplace-text tagName='h5' value=term.title save='changeTermTitle'}}
+  <p>
+    {{inplace-text value=term.title save='changeTermTitle'}}
+    {{#unless (or term.hasChildren term.hasAssociations)}}
+      {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
+    {{/unless}}
+  </p>
+  <p>
+    {{inplace-textarea value=term.description save='changeTermDescription' clickPromptTranslation='schools.clickToAddTermDescription'}}
+  </p>
 {{/if}}
-{{#deferred-content sortedTerms as |d|}}
-  {{#d.settled}}
-    {{t 'general.terms'}}:
-  {{/d.settled}}
-  {{#d.pending}}
-    {{fa-icon 'spinner' spin=true}}
-  {{/d.pending}}
-  {{#d.fulfilled as |terms|}}
-    <ul class='tag-list'>
-      {{#each terms as |term|}}
-        <li class='clickable link' {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+{{#each newTerms as |term|}}
+  <div class='saved-result'>
+    <span class='clickable link' {{action this.attrs.manageTerm term.id}}>
+      {{fa-icon 'external-link-square'}} {{term.title}}
+    </span>
+    {{t 'general.savedSuccessfully'}}
+  </div>
+{{/each}}
+<div class='selectable-list'>
+  <div class='selectable-list-form'>
+    {{one-way-input
+      value=newTermTitle
+      update=(action (mut newTermTitle))
+      onenter=(action 'createTerm')
+      focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
+      keyPress=(action 'addErrorDisplayFor' 'newTermTitle')
+    }}
+    <button class='save text' {{action 'createTerm'}}>
+      {{#if isSavingNewTerm}}
+        {{fa-icon 'spinner' spin=true}}
       {{else}}
-        {{t 'general.none'}}
-      {{/each}}
-    </ul>
-  {{/d.fulfilled}}
-{{/deferred-content}}
-
-<div>
-  <label>{{t 'schools.newTerm'}}:</label>
-  {{one-way-input
-    value=newTermTitle
-    update=(action (mut newTermTitle))
-    onenter=(action 'createTerm')
-    focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
-  }}
-  {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
-    <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
-  {{/if}}
-  <button class='save text' {{action 'createTerm'}}>
-    {{#if isSavingNewTerm}}
-      {{fa-icon 'spinner' spin=true}}
-    {{else}}
-      {{t 'general.add'}}
+        {{t 'general.add'}}
+      {{/if}}
+    </button>
+    {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
+      <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
     {{/if}}
-  </button>
+  </div>
+  {{#deferred-content sortedTerms as |d|}}
+    {{#d.pending}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/d.pending}}
+    {{#d.fulfilled as |terms|}}
+      <ul>
+        {{#each terms as |term|}}
+          <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+        {{/each}}
+      </ul>
+    {{/d.fulfilled}}
+  {{/deferred-content}}
 </div>

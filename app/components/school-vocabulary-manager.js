@@ -12,6 +12,18 @@ const Validations = buildValidations({
     validator('length', {
       min: 1,
       max: 200
+    }),
+    validator('exclusion', {
+      dependentKeys: ['vocabulary.topLevelTerms.@each.title'],
+      in(){
+        const vocabulary = this.get('model.vocabulary');
+        if (isPresent(vocabulary)) {
+          return vocabulary.get('topLevelTerms').mapBy('title');
+        }
+
+        return [];
+      },
+      descriptionKey: 'general.term',
     })
   ],
 });
@@ -19,6 +31,13 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   vocabulary: null,
+  newTermTitle: null,
+  isSavingNewTerm: false,
+  newTerms: [],
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('newTerms', []);
+  },
   sortedTerms: computed('vocabulary.terms.[]', function(){
     return new Promise(resolve => {
       const vocabulary = this.get('vocabulary');
@@ -26,13 +45,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         resolve([]);
       } else {
         vocabulary.get('terms').then(terms => {
-          resolve(terms.sortBy('title'));
+          resolve(
+            terms.filterBy('isTopLevel')
+              .filterBy('isNew', false)
+              .filterBy('isDeleted', false)
+              .sortBy('title')
+            );
         });
       }
     });
   }),
-  newTermTitle: null,
-  isSavingNewTerm: false,
   actions: {
     changeVocabularyTitle(title){
       const vocabulary = this.get('vocabulary');
@@ -40,17 +62,23 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       vocabulary.save();
     },
     createTerm(){
-      let title = this.get('newTermTitle');
-      const vocabulary = this.get('vocabulary');
-      const store = this.get('store');
-      if (isPresent(title)) {
-        this.set('isSavingNewTerm', true);
-        let term = store.createRecord('term', {title, vocabulary});
-        term.save().then(() => {
-          this.set('newTermTitle', null);
-          this.set('isSavingNewTerm', false);
-        });
-      }
+      this.send('addErrorDisplayFor', 'newTermTitle');
+      this.set('isSavingNewTerm', true);
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          this.send('removeErrorDisplayFor', 'newTermTitle');
+          let title = this.get('newTermTitle');
+          const vocabulary = this.get('vocabulary');
+          const store = this.get('store');
+          let term = store.createRecord('term', {title, vocabulary});
+          return term.save().then((newTerm) => {
+            this.set('newTermTitle', null);
+            this.get('newTerms').pushObject(newTerm);
+          });
+        }
+      }).finally(() => {
+        this.set('isSavingNewTerm', false);
+      });
     }
   }
 });

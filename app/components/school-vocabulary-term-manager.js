@@ -12,14 +12,34 @@ const Validations = buildValidations({
     validator('length', {
       min: 1,
       max: 200
+    }),
+    validator('exclusion', {
+      dependentKeys: ['term.children.@each.title'],
+      in(){
+        const term = this.get('model.term');
+        if (isPresent(term)) {
+          return term.get('children').mapBy('title');
+        }
+
+        return [];
+      },
+      descriptionKey: 'general.term',
     })
   ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
+  flashMessages: service(),
   term: null,
   vocabulary: null,
+  newTermTitle: null,
+  isSavingNewTerm: false,
+  newTerms: [],
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('newTerms', []);
+  },
   sortedTerms: computed('term.children.[]', function(){
     return new Promise(resolve => {
       const term = this.get('term');
@@ -27,7 +47,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         resolve([]);
       } else {
         term.get('children').then(terms => {
-          resolve(terms.sortBy('title'));
+          resolve(terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title'));
         });
       }
     });
@@ -38,35 +58,62 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       if (isEmpty(term)) {
         resolve([]);
       } else {
-        resolve(term.get('allParents'));
+        term.get('allParents').then(allParents => {
+          resolve(allParents.toArray().reverse())
+        })
       }
     });
   }),
-  newTermTitle: null,
-  isSavingNewTerm: false,
   actions: {
     changeTermTitle(title){
       const term = this.get('term');
       term.set('title', title);
-      term.save();
+      term.save().then(newTerm => {
+        this.set('term', newTerm);
+      });
+    },
+    changeTermDescription(description){
+      const term = this.get('term');
+      term.set('description', description);
+      term.save().then(newTerm => {
+        this.set('term', newTerm);
+      });
     },
     createTerm(){
-      let title = this.get('newTermTitle');
-      const parent = this.get('term');
-      const vocabulary = this.get('vocabulary');
-      const store = this.get('store');
-      if (isPresent(title)) {
-        this.set('isSavingNewTerm', true);
-        let term = store.createRecord('term', {title, parent, vocabulary});
+      this.send('addErrorDisplayFor', 'newTermTitle');
+      this.set('isSavingNewTerm', true);
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          this.send('removeErrorDisplayFor', 'newTermTitle');
+          let title = this.get('newTermTitle');
+          const parent = this.get('term');
+          const vocabulary = this.get('vocabulary');
+          const store = this.get('store');
+          let term = store.createRecord('term', {title, parent, vocabulary});
+          return term.save().then((newTerm) => {
+            this.set('newTermTitle', null);
+            this.get('newTerms').pushObject(newTerm);
+          });
+        }
+      }).finally(() => {
+        this.set('isSavingNewTerm', false);
+      });
+    },
+    deleteTerm(){
+      const term = this.get('term');
+      term.get('parent').then(parent => {
+        let goTo = isEmpty(parent)?null:parent.get('id');
+        this.attrs.manageTerm(goTo);
+        term.deleteRecord();
         term.save().then(() => {
-          this.set('newTermTitle', null);
-          this.set('isSavingNewTerm', false);
+          this.get('flashMessages').success('schools.successfullyRemovedTerm');
         });
-      }
+      });
+
     },
-    selectVocabulary(id){
+    clearVocabAndTerm(){
+      this.attrs.manageVocabulary(null);
       this.attrs.manageTerm(null);
-      this.attrs.manageVocabulary(id);
-    },
+    }
   }
 });
