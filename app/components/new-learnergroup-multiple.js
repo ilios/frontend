@@ -21,7 +21,7 @@ export default Component.extend(ValidationError, EmberValidations, {
   validations: {
     'validationBuffer': {
       presence: true,
-      numericality: { onlyInteger: true, greaterThan: 0, lessThanOrEqualTo : 50 }
+      numericality: { onlyInteger: true, greaterThan: 0, lessThanOrEqualTo : 12 }
     },
   },
 
