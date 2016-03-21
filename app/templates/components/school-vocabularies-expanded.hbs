@@ -1,28 +1,26 @@
-{{#if (is-fulfilled showCollapsible)}}
-  <section class='detail-block {{if showCollapsible "collapsible"}}'>
-    <div class='detail-title {{if showCollapsible "clickable"}}' {{action 'collapse'}}>
-      {{t 'general.vocabularies'}} ({{school.vocabularies.length}})
-    </div>
-    <div class='detail-content'>
-      {{#if managedTermId}}
-        {{school-vocabulary-term-manager
-          vocabulary=managedVocabulary
-          term=managedTerm
-          manageTerm=this.attrs.setSchoolManagedVocabularyTerm
-          manageVocabulary=this.attrs.setSchoolManagedVocabulary
-        }}
-      {{else if managedVocabularyId}}
-        {{school-vocabulary-manager
-          vocabulary=managedVocabulary
-          manageTerm=this.attrs.setSchoolManagedVocabularyTerm
-          manageVocabulary=this.attrs.setSchoolManagedVocabulary
-        }}
-      {{else}}
-        {{school-vocabularies-list
-          school=school
-          manageVocabulary=this.attrs.setSchoolManagedVocabulary
-        }}
-      {{/if}}
-    </div>
-  </section>
-{{/if}}
+<section class='detail-block {{if showCollapsible "collapsible"}}'>
+  <div class='detail-title {{if showCollapsible "clickable"}}' {{action 'collapse'}}>
+    {{t 'general.vocabularies'}} ({{school.vocabularies.length}})
+  </div>
+  <div class='detail-content'>
+    {{#if managedTermId}}
+      {{school-vocabulary-term-manager
+        vocabulary=managedVocabulary
+        term=managedTerm
+        manageTerm=this.attrs.setSchoolManagedVocabularyTerm
+        manageVocabulary=this.attrs.setSchoolManagedVocabulary
+      }}
+    {{else if managedVocabularyId}}
+      {{school-vocabulary-manager
+        vocabulary=managedVocabulary
+        manageTerm=this.attrs.setSchoolManagedVocabularyTerm
+        manageVocabulary=this.attrs.setSchoolManagedVocabulary
+      }}
+    {{else}}
+      {{school-vocabularies-list
+        school=school
+        manageVocabulary=this.attrs.setSchoolManagedVocabulary
+      }}
+    {{/if}}
+  </div>
+</section>
