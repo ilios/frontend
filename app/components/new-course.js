@@ -1,20 +1,36 @@
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, inject, isEmpty, computed, isPresent } = Ember;
+const { Component, inject } = Ember;
 const { service } = inject;
-const { alias } = computed;
 
-export default Component.extend(ValidationError, EmberValidations, {
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 3,
+      max: 200
+    }),
+  ],
+  selectedYear: [
+    validator('presence', true)
+  ],
+  currentSchool: [
+    validator('presence', true)
+  ],
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('selectedYear', this.get('currentYear'));
+  },
   tagName: 'section',
   classNames: ['new-course', 'new-result', 'form-container'],
 
   i18n: service(),
   store: service(),
-
-  placeholder: t('courses.courseTitlePlaceholder'),
 
   years: [],
 
@@ -22,25 +38,7 @@ export default Component.extend(ValidationError, EmberValidations, {
   currentSchool: null,
   title: null,
   selectedYear: null,
-
-  bestSelectedYear: computed('selectedYear', 'currentYear', function() {
-    const selectedYear = this.get('selectedYear');
-    const currentYear = this.get('currentYear');
-
-    if (isPresent(selectedYear)) {
-      return selectedYear;
-    }
-
-    return currentYear;
-  }),
-
-  validationBuffer: alias('title'),
-  validations: {
-    'validationBuffer': {
-      presence: true,
-      length: { minimum: 3, maximum: 200 }
-    }
-  },
+  isSaving: false,
 
   actions: {
     setYear(yearTitle) {
@@ -50,28 +48,24 @@ export default Component.extend(ValidationError, EmberValidations, {
 
       this.set('selectedYear', selectedYear);
     },
-
     save() {
-      this.validate()
-        .then(() => {
-          let year = this.get('selectedYear') || this.get('currentYear');
-
-          if (isEmpty(year)) {
-            throw new Error("Tried to save a course with no year context");
-          }
-
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          this.send('removeErrorDisplayFor', 'title');
           let course = this.get('store').createRecord('course', {
             title: this.get('title'),
             school: this.get('currentSchool'),
-            year: year.get('title'),
+            year: this.get('selectedYear').get('title'),
             level: 1,
           });
 
-          this.sendAction('save', course);
-        })
-        .catch(() => {
-          return;
-        });
+          this.get('save')(course).finally(() =>{
+            this.set('isSaving', true);
+          });
+        }
+      });
     },
 
     cancel() {
