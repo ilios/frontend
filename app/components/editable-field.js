@@ -13,11 +13,13 @@ export default Component.extend({
     save(){
       this.set('isSaving', true);
       this.get('save')().then(() => {
-        this.set('isSaving', false);
         this.set('isEditing', false);
+      }).finally(() => {
+        this.set('isSaving', false);
       });
     },
     close(){
+      this.get('close')();
       this.set('isEditing', false);
     },
   }
