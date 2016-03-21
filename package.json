@@ -66,6 +66,7 @@
     "ember-export-application-global": "^1.0.4",
     "ember-froala": "1.2.0",
     "ember-i18n": "4.2.0",
+    "ember-i18n-cp-validations": "2.4.0",
     "ember-inflector": "1.9.4",
     "ember-legacy-views": "0.2.0",
     "ember-load": "0.0.4",
