@@ -170,7 +170,7 @@ export default Controller.extend({
     },
     saveNewCourse: function(newCourse){
       newCourse.setDatesBasedOnYear();
-      newCourse.save().then(savedCourse => {
+      return newCourse.save().then(savedCourse => {
         this.set('showNewCourseForm', false);
         this.get('newCourses').pushObject(savedCourse);
       });
