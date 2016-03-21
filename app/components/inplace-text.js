@@ -1,11 +1,9 @@
 import Ember from 'ember';
-import InPlaceValidation from 'ilios/mixins/inplace-validation';
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import InPlace from 'ilios/mixins/inplace';
 
 const { Component, isBlank } = Ember;
 
-export default Component.extend(InPlaceValidation, EmberValidations, ValidationError, {
+export default Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-text'],
 
   init() {
