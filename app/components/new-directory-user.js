@@ -1,12 +1,37 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+
 const { inject, computed, RSVP, isEmpty, isPresent } = Ember;
 const { service } = inject;
 const { sort } = computed;
 const { PromiseObject, PromiseArray } = DS;
 
-export default Ember.Component.extend(EmberValidations, {
+const Validations = buildValidations({
+  username: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: 'allowCustomUserName.content',
+      disabled(){
+        return !this.get('model.allowCustomUserName.content');
+      }
+    }),
+    validator('length', {
+      max: 100
+    }),
+  ],
+  password: [
+    validator('presence', true)
+  ],
+  otherId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+});
+
+export default Ember.Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   i18n: service(),
   currentUser: service(),
@@ -16,7 +41,6 @@ export default Ember.Component.extend(EmberValidations, {
 
   init(){
     this._super(...arguments);
-    this.set('showErrorsFor', []);
     this.set('searchResults', []);
     if (isPresent(this.get('searchTerms'))) {
       this.send('findUsersInDirectory');
@@ -35,7 +59,6 @@ export default Ember.Component.extend(EmberValidations, {
   phone: null,
   schoolId: null,
 
-  showErrorsFor: [],
   searchResults: [],
   isSaving: false,
   selectedUser: false,
@@ -69,21 +92,6 @@ export default Ember.Component.extend(EmberValidations, {
     }
   }).readOnly(),
 
-  validations: {
-    'username': {
-      presence: true,
-      length: { maximum: 100 }
-    },
-    'password': {
-      presence: {
-        'if': 'allowCustomUserName'
-      }
-    },
-    'otherId': {
-      length: { maximum: 16 }
-    },
-  },
-
   bestSelectedSchool: computed('schools.[]', 'schoolId', function(){
     let defer = RSVP.defer();
     const schoolId = this.get('schoolId');
@@ -108,24 +116,16 @@ export default Ember.Component.extend(EmberValidations, {
   }),
   actions: {
     save(){
+      this.send('addErrorDisplayFor', 'username');
+      this.send('addErrorDisplayFor', 'password');
+      this.send('addErrorDisplayFor', 'otherId');
       if(this.get('isSaving')){
         return;
       }
-      this.validate().then(()=>{
-        this.set('isSaving', true);
-        const {
-          firstName,
-          middleName,
-          lastName,
-          campusId,
-          otherId,
-          email,
-          phone,
-          username,
-          password
-        } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
-        this.get('bestSelectedSchool').then(school => {
-          let user = this.get('store').createRecord('user', {
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          this.set('isSaving', true);
+          const {
             firstName,
             middleName,
             lastName,
@@ -133,31 +133,37 @@ export default Ember.Component.extend(EmberValidations, {
             otherId,
             email,
             phone,
-            school,
-            enabled: true
-          });
-          user.save().then(newUser => {
-            let authentication = this.get('store').createRecord('authentication', {
-              user: newUser,
-              username,
-              password
+            username,
+            password
+          } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
+          this.get('bestSelectedSchool').then(school => {
+            let user = this.get('store').createRecord('user', {
+              firstName,
+              middleName,
+              lastName,
+              campusId,
+              otherId,
+              email,
+              phone,
+              school,
+              enabled: true
             });
-            authentication.save().then(()=>{
-              this.set('isSaving', false);
-              this.get('flashMessages').success('user.saved');
-              this.attrs.transitionToUser(newUser.get('id'));
+            user.save().then(newUser => {
+              let authentication = this.get('store').createRecord('authentication', {
+                user: newUser,
+                username,
+                password
+              });
+              authentication.save().then(()=>{
+                this.send('clearErrorDisplay');
+                this.set('isSaving', false);
+                this.get('flashMessages').success('user.saved');
+                this.attrs.transitionToUser(newUser.get('id'));
+              });
             });
           });
-        });
-
-      }).catch(() => {
-        this.set('showErrorsFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
-        return;
+        }
       });
-
-    },
-    addErrorDisplayFor(field){
-      this.get('showErrorsFor').pushObject(field);
     },
     setSchool(schoolId){
       this.set('schoolId', schoolId);
