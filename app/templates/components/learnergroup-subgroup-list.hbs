@@ -10,16 +10,23 @@
   <div class='detail-content'>
     <section class='resultslist'>
         {{#liquid-if showNewLearnerGroupForm class='vertical'}}
-          <section class='resultslist-new'>
-            {{new-learnergroup
+          {{#liquid-if isSaving class='crossFade'}}
+            {{wait-saving
+            showProgress=true
+            totalProgress=totalGroupsToSave
+            currentProgress=currentGroupsSaved
+            }}
+          {{else}}
+            <section class='resultslist-new'>
+              {{new-learnergroup
               save='saveNewLearnerGroup'
               generateNewLearnerGroups='generateNewLearnerGroups'
               cancel='cancel'
               multiModeSupported=true
-            }}
-          </section>
+              }}
+            </section>
+          {{/liquid-if}}
         {{/liquid-if}}
-
       <div class='resultslist-list'>
         <table>
           <thead>

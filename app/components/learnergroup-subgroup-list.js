@@ -8,13 +8,12 @@ const { oneWay, sort } = computed;
 
 export default Component.extend({
   store: service(),
-
+  isSaving: false,
+  totalGroupsToSave: null,
+  currentGroupsSaved: null,
   classNames: ['learnergroup-subgroup-list'],
-
   parentGroup: null,
-
   learnerGroups: oneWay('parentGroup.children'),
-
   sortBy: ['title'],
   sortedLearnerGroups: sort('learnerGroups', 'sortBy'),
 
@@ -73,6 +72,11 @@ export default Component.extend({
 
     generateNewLearnerGroups(num) {
       const { store, parentGroup } = this.getProperties('store', 'parentGroup');
+
+      this.set('totalGroupsToSave', num);
+      this.set('currentGroupsSaved', 0);
+      this.set('isSaving', true);
+
       parentGroup.get('subgroupNumberingOffset').then((offset) => {
         parentGroup.get('cohort').then((cohort) => {
           let groups = [];
@@ -85,9 +89,22 @@ export default Component.extend({
             });
             groups.pushObject(newGroup);
           }
-          Ember.RSVP.all(groups.invoke('save')).then(() => {
-            this.send('cancel');
-          });
+
+          let saveSomeGroups = (groups) => {
+            let chunk = groups.splice(0, 6);
+
+            Ember.RSVP.all(chunk.invoke('save')).then(() => {
+              if (groups.length){
+                this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
+                saveSomeGroups(groups);
+              } else {
+                this.set('isSaving', false);
+                this.send('cancel');
+                this.get('flashMessages').success('general.savedSuccessfully');
+              }
+            });
+          };
+          saveSomeGroups(groups);
         });
       });
     },

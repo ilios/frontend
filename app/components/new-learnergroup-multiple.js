@@ -9,19 +9,14 @@ const { alias } = computed;
 export default Component.extend(ValidationError, EmberValidations, {
   i18n: service(),
   singleMode: true,
-
-  isSaving: false,
-
   tagName: 'div',
-
   numSubGroups: null,
 
   validationBuffer: alias('numSubGroups'),
-
   validations: {
     'validationBuffer': {
       presence: true,
-      numericality: { onlyInteger: true, greaterThan: 0, lessThanOrEqualTo : 12 }
+      numericality: { onlyInteger: true, greaterThan: 0, lessThanOrEqualTo : 50 }
     },
   },
 
@@ -29,7 +24,6 @@ export default Component.extend(ValidationError, EmberValidations, {
     save() {
       this.validate()
         .then(() => {
-          this.set('isSaving', true);
           const num = this.get('numSubGroups');
           this.sendAction('generateNewLearnerGroups', num);
         })
