@@ -67,7 +67,7 @@
     "ember-i18n": "4.2.0",
     "ember-inflector": "1.9.4",
     "ember-legacy-views": "0.2.0",
-    "ember-load": "0.0.4",
+    "ember-load": "0.0.5",
     "ember-load-initializers": "^0.5.0",
     "ember-modal-dialog": "0.8.3",
     "ember-moment": "6.1.0",
