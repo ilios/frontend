@@ -11,6 +11,7 @@ import Ember from 'ember';
 const { isEmpty, isPresent } = Ember;
 
 var application;
+var fixtures = {};
 var url = '/learnergroups/1';
 module('Acceptance: Learner Group - Subgroups' + testgroup, {
   beforeEach: function() {
@@ -23,18 +24,18 @@ module('Acceptance: Learner Group - Subgroups' + testgroup, {
     server.create('cohort', {
       learnerGroups: [1,2,3,4,5]
     });
-    server.create('learnerGroup', {
+    fixtures.learnerGroup1 = server.create('learnerGroup', {
       cohort: 1,
       parent: 1,
       children: [2,3],
     });
-    server.create('learnerGroup', {
+    fixtures.learnerGroup2 = server.create('learnerGroup', {
       cohort: 1,
       parent: 1,
       children: [4,5],
       users: [2,3]
     });
-    server.create('learnerGroup', {
+    fixtures.learnerGroup3 = server.create('learnerGroup', {
       cohort: 1,
       parent: 1
     });
@@ -119,6 +120,82 @@ test('cancel adding new learnergroup', function(assert) {
   });
 });
 
+test('switching between single- and multi-group mode', function(assert) {
+  assert.expect(11);
+
+  const expandButton = '.expand-button';
+  const singleGroupButton = '.first-button';
+  const multiGroupsButton = '.second-button';
+  const activeClass = 'active';
+  const container = find('.learnergroup-subgroup-list')[0];
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    assert.ok(isPresent(find(singleGroupButton, container)), 'single group button is visible');
+    assert.ok(isPresent(find(multiGroupsButton, container)), 'multi-groups button is visible');
+    assert.ok($(singleGroupButton, container).hasClass(activeClass), 'single group button is active by default');
+    assert.ok(!$(multiGroupsButton, container).hasClass(activeClass), 'multi-groups button is not active by default');
+    assert.equal(
+      getElementText(find('.resultslist-new .detail-content .form-label', container)),
+      getText('Title:'),
+      'single group entry form is visible by default'
+    );
+    click(multiGroupsButton).then(() => {
+      assert.ok(!$(singleGroupButton, container).hasClass(activeClass), 'single group button is not active');
+      assert.ok($(multiGroupsButton, container).hasClass(activeClass), 'multi-groups button is active');
+      assert.equal(
+        getElementText(find('.resultslist-new .detail-content .form-label', container)),
+        getText('Number of Groups:'),
+        'multi-groups entry form is visible by default'
+      );
+      click(singleGroupButton).then(() => {
+        assert.ok($(singleGroupButton, container).hasClass(activeClass), 'single group button is active, again');
+        assert.ok(!$(multiGroupsButton, container).hasClass(activeClass), 'multi-groups button is not active, again');
+        assert.equal(
+          getElementText(find('.resultslist-new .detail-content .form-label', container)),
+          getText('Title:'),
+          'single group entry form is visible, again'
+        );
+      });
+    });
+  });
+});
+
+test('generate new learnergroups', function(assert) {
+  assert.expect(11);
+
+  const expandButton = '.expand-button';
+  const input = '.new-learnergroup input';
+  const done = '.new-learnergroup .done';
+  const multiGroupsButton = '.second-button';
+  const parentLearnergroupTitle = fixtures.learnerGroup1.title;
+
+  visit(url);
+  // add five subgroups
+  click(expandButton);
+  click(multiGroupsButton);
+  fillIn(input, '5');
+  click(done);
+  andThen(() => {
+    assert.equal(find('.resultslist-list tbody tr').length, 7, 'all subgroups are displayed.');
+    for (let i = 0; i < 5; i++) {
+      assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
+    }
+    assert.equal(getCellData(5, 0), 'learner group 1');
+    assert.equal(getCellData(6, 0), 'learner group 2');
+
+    // add two more subgroups
+    click(expandButton);
+    click(multiGroupsButton);
+    fillIn(input, '2');
+    click(done);
+    andThen(() => {
+      assert.equal(find('.resultslist-list tbody tr').length, 9, 'all subgroups are still displayed.');
+      assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
+      assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
+    });
+  });
+});
 
 test('remove learnergroup', function(assert) {
   assert.expect(5);

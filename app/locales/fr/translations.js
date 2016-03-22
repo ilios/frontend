@@ -217,6 +217,10 @@ export default {
     'includeAll': "Cochez toutes",
     'message': "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours.",
     'selectProgram': 'Choisi Diplôme',
+    'singleGroup': 'Seul groupe',
+    'multipleGroups': 'Plusieurs groupes',
+    'numberOfGroups': 'Nombre de groupes',
+    'numberOfGroupsToGenerate': 'Nombre de groupes pour générer.',
   },
   'schools': {
     'new': 'École nouvelle',

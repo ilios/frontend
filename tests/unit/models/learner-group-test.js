@@ -182,3 +182,25 @@ test('check allDescendants', function(assert) {
     });
   });
 });
+
+test('check subgroupNumberingOffset', function(assert) {
+  const groupTitle = 'Lorem Ipsum';
+  let store = this.store();
+  let learnerGroup = this.subject();
+  assert.expect(3);
+  Ember.run(() => {
+    learnerGroup.set('title', groupTitle);
+    learnerGroup.get('subgroupNumberingOffset').then((offset) => {
+      assert.equal(offset, 1); // no subgroups. offset is 1.
+      store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 1' });
+      store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 3' });
+      learnerGroup.get('subgroupNumberingOffset').then((offset) => {
+        assert.equal(offset, 4); // highest number is 3. 3 + 1 = 4. offset is 4.
+        store.createRecord('learner-group', {parent: learnerGroup, title: 'not the parent title 4' });
+        learnerGroup.get('subgroupNumberingOffset').then((offset) => {
+          assert.equal(offset, 4); // subgroup with title-mismatch is ignored, offset is still 4.
+        });
+      });
+    });
+  });
+});

@@ -217,6 +217,10 @@ export default {
     'includeAll': 'Marque todo',
     'message': 'No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación.',
     'selectProgram': 'Seleccione un Programa',
+    'singleGroup': 'Solo grupo',
+    'multipleGroups': 'Múltiples grupos',
+    'numberOfGroups': 'Número de grupos',
+    'numberOfGroupsToGenerate': 'número de grupos para generar.',
   },
   'schools': {
     'new': 'Nueva Escuela',

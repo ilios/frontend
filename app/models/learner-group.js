@@ -1,7 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed } = Ember;
+
+const { computed, isEmpty } = Ember;
 const { empty, mapBy, sum } = computed;
 
 export default DS.Model.extend({
@@ -107,6 +109,38 @@ export default DS.Model.extend({
       });
     });
   }),
+  /**
+   * Get the offset for numbering generated subgroups.
+   *
+   * This is best explained by an example:
+   * A learner group 'Foo' has three similarly named subgroups 'Foo 1', 'Foo 2', and 'Foo 4'. The highest identified
+   * subgroup number is 4, so the offset for generating new subgroups is 5.
+   * If no subgroups exist, or none of the subgroup names match the <code>(Parent) (Number)</code> pattern, then the
+   * offset will default to 1.
+   *
+   * @property subgroupNumberingOffset
+   * @type {Ember.computed}
+   * @public
+   */
+  subgroupNumberingOffset: computed('children.[]', function () {
+    const regex = new RegExp('^' + escapeRegExp(this.get('title')) + ' ([0-9]+)$');
+    let deferred = Ember.RSVP.defer();
+    this.get('children').then(groups => {
+      let offset = groups.reduce((previousValue, item) => {
+        let rhett = previousValue;
+        let matches = regex.exec(item.get('title'));
+        if (! isEmpty(matches)) {
+          rhett = Math.max(rhett, parseInt(matches[1], 10));
+        }
+        return rhett;
+      }, 0);
+      deferred.resolve(++offset);
+    });
+    return DS.PromiseObject.create({
+      promise: deferred.promise
+    });
+  }),
+
   allDescendantUsers: computed('users.[]', 'children.@each.users', function(){
     var deferred = Ember.RSVP.defer();
     this.get('users').then(users => {
