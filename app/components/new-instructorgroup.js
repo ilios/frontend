@@ -1,37 +1,39 @@
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { inject, Component } = Ember;
 const { service } = inject;
 
-export default Component.extend(EmberValidations, ValidationError, {
-  init() {
-    this._super(...arguments);
-  },
-  i18n: service(),
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      max: 60,
+      descriptionKey: 'general.title'
+    }),
+  ]
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  placeholder: t('instructorGroups.instructorGroupTitlePlaceholder'),
   title: null,
-  validations: {
-    title : {
-      length: {maximum: 60, allowBlank: true, messages: { tooLong: "instructorGroups.errors.titleTooLong" }}
-    }
-  },
+  currentSchool: null,
+  isSaving: false,
   actions: {
     save: function(){
-      this.validate().then(() => {
-        let instructorGroup = this.get('store').createRecord('instructorGroup', {
-          title: this.get('title'),
-          school: this.get('currentSchool')
-        });
-        this.sendAction('save', instructorGroup);
-      }).catch(() => {
-        const keys = Ember.keys(this.get('errors'));
-        keys.forEach((key) => {
-          this.get('flashMessages').alert(this.get('errors.' + key));
-        });
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          let instructorGroup = this.get('store').createRecord('instructorGroup', {
+            title: this.get('title'),
+            school: this.get('currentSchool')
+          });
+          this.get('save')(instructorGroup).finally(()=>{
+            this.set('isSaving', false);
+          })
+        }
       });
     },
     cancel: function(){

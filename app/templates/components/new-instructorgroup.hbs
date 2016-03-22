@@ -3,10 +3,30 @@
     <div class="detail-content">
 	  <div class="form-col-12">
 	    <label class="form-label">{{t 'general.title'}}</label>
-	    <div class="form-data newinstructorgroup-title">{{input value=title placeholder=placeholder}}</div>
+	    <div class="form-data newinstructorgroup-title">
+        {{one-way-input
+          value=title
+          update=(action (mut title))
+          onenter=(action 'save')
+          onescape=(action 'cancel')
+          disabled=isSaving
+          focusOut=(action 'addErrorDisplayFor' 'title')
+          keyDown=(action 'addErrorDisplayFor' 'title')
+          placeholder=(t 'instructorGroups.instructorGroupTitlePlaceholder')
+        }}
+        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+        {{/if}}
+      </div>
 	  </div>
 	  <div class="form-col-6 form-data-submit">
-	    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+      <button class='done text' {{action 'save'}}>
+        {{#if isSaving}}
+          {{fa-icon 'spinner' spin=true}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
 	    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
 	  </div>
     </div>
