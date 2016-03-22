@@ -1,45 +1,42 @@
 import Ember from 'ember';
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, inject } = Ember;
-const { service } = inject;
-const { alias } = computed;
+const { Component } = Ember;
 
-export default Component.extend(ValidationError, EmberValidations, {
-  i18n: service(),
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 3,
+      max: 60,
+      descriptionKey: 'general.title'
+    }),
+  ]
+});
 
+export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
   classNames: ['new-learnergroup', 'new-result', 'form-container'],
-
+  isSaving: false,
   title: null,
 
-  validationBuffer: alias('title'),
-  validations: {
-    'validationBuffer': {
-      presence: true,
-      length: { minimum: 3, maximum: 200 }
-    }
-  },
-
   actions: {
-    save() {
-      this.validate()
-        .then(() => {
+    save: function(){
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
           const title = this.get('title');
-          this.sendAction('save', title);
-        })
-        .catch(() => {
-          return;
-        });
+          this.get('save')(title).finally(()=>{
+            this.set('isSaving', false);
+            this.send('clearErrorDisplay');
+          })
+        }
+      });
     },
-
     cancel() {
       this.sendAction('cancel');
-    },
-
-    changeValue(value) {
-      this.set('title', value);
     }
   }
 });
