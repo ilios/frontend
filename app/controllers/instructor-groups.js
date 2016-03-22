@@ -91,7 +91,7 @@ export default Controller.extend({
       instructorGroup.save();
     },
     saveNewInstructorGroup: function(newInstructorGroup){
-      newInstructorGroup.save().then(savedInstructorGroup => {
+      return newInstructorGroup.save().then(savedInstructorGroup => {
         this.get('newInstructorGroups').pushObject(savedInstructorGroup);
         this.set('showNewInstructorGroupForm', false);
       });

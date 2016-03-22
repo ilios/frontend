@@ -36,7 +36,7 @@
       {{#liquid-if showNewInstructorGroupForm class='vertical'}}
         {{new-instructorgroup
           currentSchool=selectedSchool
-          save='saveNewInstructorGroup'
+          save=(action 'saveNewInstructorGroup')
           cancel='toggleNewInstructorGroupForm'
         }}
       {{/liquid-if}}
