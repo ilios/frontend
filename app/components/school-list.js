@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, inject, isEmpty } = Ember;
+const { Component, computed, inject } = Ember;
 const { sort } = computed;
 const { service } = inject;
 
