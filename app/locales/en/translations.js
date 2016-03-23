@@ -513,11 +513,6 @@ export default {
     'phone': '{{description}} must be a valid phone number',
     'url': '{{description}} must be a valid url'
   },
-  'myreport': {
-    'errors': {
-      'titleTooLong':  "Report title is too long (maximum is 240 characters)"
-    }
-  },
   'admin': {
     'pendingUpdatesSummaryTitle': 'Updates from the Campus Directory',
     'pendingUpdatesSummary': {

@@ -29,7 +29,7 @@
             </li>
           {{else}}
             <li>{{item.value}}</li>
-          
+
           {{/if}}
         {{/each}}
       </ul>
@@ -42,7 +42,7 @@
 {{else}}
   <div class='dashboard-block-body'>
     {{#liquid-if myReportEditorOn class='vertical'}}
-      {{new-myreport close='toggleEditor'}}
+      {{new-myreport close=(action 'toggleEditor')}}
     {{/liquid-if}}
     {{#if listOfReports.isFulfilled}}
       {{#if sortedReports.length}}
@@ -51,7 +51,7 @@
             {{#each sortedReports as |report|}}
             <tr>
               <td {{action 'selectReport' report}} class='link clickable' colspan=4>
-                {{fa-icon 'external-link-square'}} 
+                {{fa-icon 'external-link-square'}}
                 {{report.displayTitle.content}}
               </td>
               <td class='text-right remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>

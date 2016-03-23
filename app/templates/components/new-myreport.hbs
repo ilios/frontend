@@ -1,7 +1,19 @@
 <div class="form-title">{{t 'dashboard.newReport'}}</div>
 <div class="detail-content">
     <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
-    <div class="form-data">{{input value=title}}</div>
+    <div class="form-data">
+      {{one-way-input
+        value=title
+        update=(action (mut title))
+        onescape=(action this.attrs.close)
+        disabled=isSaving
+        focusOut=(action 'addErrorDisplayFor' 'title')
+        keyDown=(action 'addErrorDisplayFor' 'title')
+      }}
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{/if}}
+    </div>
     <p>
       {{t 'general.for'}}
       <select onchange={{action "changeSchool" value="target.value"}}>
@@ -86,7 +98,13 @@
       </p>
     {{/liquid-if}}
     <div class="input-buttons">
-        <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-        <button class='cancel text' {{action 'closeEditor'}}>{{t 'general.cancel'}}</button>
+      <button class='done text' {{action 'save'}}>
+        {{#if isSaving}}
+          {{fa-icon 'spinner' spin=true}}
+        {{else}}
+          {{t 'general.save'}}
+        {{/if}}
+      </button>
+      <button class='cancel text' {{action this.attrs.close}}>{{t 'general.cancel'}}</button>
     </div>
 </div>
