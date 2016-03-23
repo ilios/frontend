@@ -1,29 +1,82 @@
 import Ember from 'ember';
 import config from 'ilios/config/environment';
-import layout from '../templates/components/new-learningmaterial';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, inject, set } = Ember;
-const { alias } = computed;
+const { equal } = computed;
 const { service } = inject;
 
-export default Component.extend(EmberValidations, {
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 4,
+      max: 60
+    }),
+  ],
+  originalAuthor: [
+    validator('presence', true),
+    validator('length', {
+      min: 2,
+      max: 80
+    }),
+  ],
+  fileHash: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['isFile'],
+      disabled(){
+        return !this.get('model.isFile');
+      }
+    }),
+  ],
+  filename: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['isFile'],
+      disabled(){
+        return !this.get('model.isFile');
+      }
+    }),
+  ],
+  link: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['isLink'],
+      disabled(){
+        return !this.get('model.isLink');
+      }
+    }),
+  ],
+  citation: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['isCitation'],
+      disabled(){
+        return !this.get('model.isCitation');
+      }
+    }),
+  ],
+  copyrightRationale: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['copyrightPermission'],
+      disabled(){
+        return !this.get('model.isFile') || this.get('model.copyrightPermission');
+      }
+    }),
+    validator('length', {
+      min: 2,
+      max: 65000
+    }),
+  ],
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
+  store: service(),
+  currentUser: service(),
   init() {
-    const type = this.get('type');
-
-    switch (type) {
-    case 'file':
-      this.setProperties({ 'isFile': true, 'validations.fileHash': { presence: true } });
-      break;
-    case 'link':
-      this.setProperties({ isLink: true, 'validations.urlBuffer': { presence: true, url: true } });
-      break;
-    case 'citation':
-      this.set('isCitation', true);
-      this.setProperties({ isCitation: true, 'validations.citationBuffer': { presence: true} });
-      break;
-    }
-
     this._super(...arguments);
     const component = this;
 
@@ -51,68 +104,16 @@ export default Component.extend(EmberValidations, {
     set(this, 'fileUploadPercentage', 0);
   },
 
-  willDestroy() {
-    let validations = this.get('validations');
-    delete validations.urlBuffer;
-    delete validations.citationBuffer;
-    delete validations.fileHash;
-  },
+  isFile: equal('type', 'file'),
+  isCitation: equal('type', 'citation'),
+  isLink: equal('type', 'link'),
 
   classNames: ['new-learning-material'],
 
-  currentUser: service(),
-
-  layout: layout,
   learningMaterialStatuses: [],
   learningMaterialUserRoles: [],
-  hasCopyrightPermission: false,
 
   editorParams: config.froalaEditorDefaults,
-
-  titleBuffer: alias('title'),
-  authorBuffer: alias('originalAuthor'),
-  urlBuffer: alias('link'),
-  citationBuffer: alias('citation'),
-  validations: {
-    'titleBuffer': {
-      presence: true,
-      length: { minimum: 4, maximum: 60 }
-    },
-
-    'authorBuffer': {
-      presence: true,
-      length: { minimum: 2, maximum: 80 }
-    }
-  },
-
-  topErrorMessageTitle: computed('errors.titleBuffer.[]', 'displayNameError', function() {
-    if (this.get('displayNameError')) {
-      return this.get('errors.titleBuffer')[0];
-    }
-  }),
-
-  topErrorMessageAuthor: computed('errors.authorBuffer.[]', 'displayAuthorError', function() {
-    if (this.get('displayAuthorError')) {
-      return this.get('errors.authorBuffer')[0];
-    }
-  }),
-
-  topErrorMessageUrl: computed('errors.urlBuffer.[]', 'displayUrlError', function() {
-    if (this.get('displayUrlError')) {
-      return this.get('errors.urlBuffer')[0];
-    }
-  }),
-
-  topErrorMessageCitation: computed('errors.citationBuffer.[]', 'displayCitationError', function() {
-    if (this.get('displayCitationError')) {
-      return this.get('errors.citationBuffer')[0];
-    }
-  }),
-
-  displayNameError: false,
-  displayAuthorError: false,
-  displayUrlError: false,
-  displayCitationError: false,
 
   filename: null,
   fileHash: null,
@@ -127,84 +128,80 @@ export default Component.extend(EmberValidations, {
   owner: null,
   citation: null,
 
-  checkFileFields(params) {
-    const copyrightPermission = this.get('copyrightPermission');
-    const copyrightRationale = this.get('copyrightRationale');
-    const filename = this.get('filename');
-    const fileHash = this.get('fileHash');
-
-    params.copyrightPermission = copyrightPermission;
-
-    if (copyrightRationale) {
-      params.copyrightRationale = copyrightRationale;
-    }
-
-    if (filename) {
-      params.filename = filename;
-    }
-
-    if (fileHash) {
-      params.fileHash = fileHash;
-    }
-  },
-
-  checkLinkFields(params) {
-    const link = this.get('link');
-
-    if (link) {
-      params.link = link;
-    }
-  },
-
-  checkCitationFields(params) {
-    const citation = this.get('citation');
-
-    if (citation) {
-      params.citation = citation;
-    }
-  },
-
   actions: {
-    save() {
-      this.validate()
-        .then(() => {
+    save: function(){
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.send('addErrorDisplayFor', 'originalAuthor');
+      this.send('addErrorDisplayFor', 'fileHash');
+      this.send('addErrorDisplayFor', 'url');
+      this.send('addErrorDisplayFor', 'citation');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const title = this.get('title');
           const type = this.get('type');
           const status = this.get('status');
           const userRole = this.get('userRole');
           const description = this.get('description');
           const originalAuthor = this.get('originalAuthor');
-          const title = this.get('title');
           const owningUser = this.get('owner');
-          const params = {};
 
-          if (description) {
-            params.description = description;
+          let learningMaterial = this.get('store').createRecord('learningMaterial', {
+            title,
+            status,
+            userRole,
+            description,
+            originalAuthor,
+            owningUser
+          });
+          switch(type){
+          case 'file': {
+            const copyrightPermission = this.get('copyrightPermission');
+            const copyrightRationale = this.get('copyrightRationale');
+            const filename = this.get('filename');
+            const fileHash = this.get('fileHash');
+            learningMaterial.setProperties({copyrightRationale, copyrightPermission, filename, fileHash});
+            break;
+          }
+          case 'link': {
+            const link = this.get('link');
+            learningMaterial.setProperties({link});
+            break;
+          }
+          case 'citation': {
+            const citation = this.get('citation');
+            learningMaterial.setProperties({citation});
+            break;
+          }
           }
 
-          params.type = type;
-          params.owningUser = owningUser;
-          params.status = status;
-          params.userRole = userRole;
-          params.originalAuthor = originalAuthor;
-          params.title = title;
-
-          if (type === 'file') {
-            this.checkFileFields(params);
-          } else if (type === 'link') {
-            this.checkLinkFields(params);
-          } else {
-            this.checkCitationFields(params);
-          }
-
-          this.sendAction('save', params);
-        })
-        .catch(() => {
-          return;
-        });
+          this.get('save')(learningMaterial).finally(()=>{
+            this.send('clearErrorDisplay');
+          })
+        }
+      }).finally(() => {
+        this.set('isSaving', false);
+      });
     },
 
-    remove() {
-      this.sendAction('remove');
+    changeStatus(id){
+      this.get('learningMaterialStatuses').then(statuses => {
+        let status = statuses.findBy('id', id);
+        this.set('status', status);
+      });
+    },
+
+    changeUserRole(id){
+      this.get('learningMaterialUserRoles').then(roles => {
+        let userRole = roles.findBy('id', id);
+        this.set('userRole', userRole);
+      });
+    },
+
+    changeDescription(event, editor) {
+      if (editor) {
+        this.set('description', editor.getHTML());
+      }
     },
 
     setFile(e) {
@@ -225,65 +222,5 @@ export default Component.extend(EmberValidations, {
     setFileUploadPercentage(percent) {
       set(this, 'fileUploadPercentage', Math.floor(percent));
     },
-
-    changeSelectedStatus() {
-      const selectedEl = this.$('select')[0];
-      const selectedIndex = selectedEl.selectedIndex;
-      const learningMaterialStatuses = this.get('learningMaterialStatuses');
-      const status = learningMaterialStatuses.toArray()[selectedIndex];
-
-      this.set('status', status);
-    },
-
-    changeSelectedRole() {
-      const selectedEl = this.$('select')[1];
-      const selectedIndex = selectedEl.selectedIndex;
-      const learningMaterialUserRoles = this.get('learningMaterialUserRoles');
-      const role = learningMaterialUserRoles.toArray()[selectedIndex];
-
-      this.set('userRole', role);
-    },
-
-    changeDescription(event, editor) {
-      if (editor) {
-        this.set('description', editor.getHTML());
-      }
-    },
-
-    changeAuthor(author) {
-      this.set('originalAuthor', author);
-    },
-
-    changeDisplayName(name) {
-      this.set('title', name);
-    },
-
-    changeUrl(url) {
-      this.set('link', url);
-    },
-
-    changeCitation(value) {
-      this.set('citation', value);
-    },
-
-    changeCopyrightRationale(value) {
-      this.set('copyrightRationale', value);
-    },
-
-    displayNameError() {
-      this.set('displayNameError', true);
-    },
-
-    displayAuthorError() {
-      this.set('displayAuthorError', true);
-    },
-
-    displayUrlError() {
-      this.set('displayUrlError', true);
-    },
-
-    displayCitationError() {
-      this.set('displayCitationError', true);
-    }
   }
 });

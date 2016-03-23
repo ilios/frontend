@@ -23,7 +23,7 @@
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       {{#if isEditing}}
-        <button class="collapse-button" {{action 'removeNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
+        <button class="collapse-button" {{action 'cancelNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
       {{else if editable}}
         {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
           <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
@@ -67,8 +67,8 @@
           type=type
           learningMaterialStatuses=learningMaterialStatuses
           learningMaterialUserRoles=learningMaterialUserRoles
-          save='saveNewLearningMaterial'
-          remove='removeNewLearningMaterial'}}
+          save=(action 'saveNewLearningMaterial')
+          cancel=(action 'cancelNewLearningMaterial')}}
       {{/liquid-if}}
 
       {{#if proxyMaterials.length}}
