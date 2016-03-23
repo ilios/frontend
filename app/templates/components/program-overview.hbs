@@ -6,7 +6,6 @@
     <div class="inline-label-data-block programtitleshort">
       <label>{{t "programs.programTitleShort"}}:</label>
       {{#editable-field
-         tagName='div'
          value=shortTitle
          save=(action 'changeShortTitle')
          close=(action 'revertShortTitleChanges')
