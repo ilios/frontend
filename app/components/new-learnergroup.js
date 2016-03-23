@@ -1,15 +1,10 @@
 import Ember from 'ember';
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
 
-const { Component, inject } = Ember;
-const { service } = inject;
+const { Component } = Ember;
 
-export default Component.extend(ValidationError, EmberValidations, {
-  i18n: service(),
+export default Component.extend({
   multiModeSupported: false,
   singleMode: true,
-
   tagName: 'section',
   classNames: ['new-learnergroup', 'new-result', 'form-container'],
 

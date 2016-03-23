@@ -12,17 +12,17 @@
         {{#liquid-if showNewLearnerGroupForm class='vertical'}}
           {{#liquid-if isSaving class='crossFade'}}
             {{wait-saving
-            showProgress=true
-            totalProgress=totalGroupsToSave
-            currentProgress=currentGroupsSaved
+              showProgress=true
+              totalProgress=totalGroupsToSave
+              currentProgress=currentGroupsSaved
             }}
           {{else}}
             <section class='resultslist-new'>
               {{new-learnergroup
-              save='saveNewLearnerGroup'
-              generateNewLearnerGroups='generateNewLearnerGroups'
-              cancel='cancel'
-              multiModeSupported=true
+                save='saveNewLearnerGroup'
+                generateNewLearnerGroups='generateNewLearnerGroups'
+                cancel='cancel'
+                multiModeSupported=true
               }}
             </section>
           {{/liquid-if}}

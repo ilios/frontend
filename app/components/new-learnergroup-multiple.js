@@ -1,41 +1,38 @@
 import Ember from 'ember';
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, inject } = Ember;
-const { service } = inject;
-const { alias } = computed;
+const { Component } = Ember;
 
-export default Component.extend(ValidationError, EmberValidations, {
-  i18n: service(),
-  singleMode: true,
-  tagName: 'div',
+const Validations = buildValidations({
+  numSubGroups: [
+    validator('presence', true),
+    validator('number', {
+      allowString: true,
+      integer: true,
+      gt: 0,
+      lte: 50
+    }),
+  ],
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
   numSubGroups: null,
-
-  validationBuffer: alias('numSubGroups'),
-  validations: {
-    'validationBuffer': {
-      presence: true,
-      numericality: { onlyInteger: true, greaterThan: 0, lessThanOrEqualTo : 50 }
-    },
-  },
+  isSaving: false,
 
   actions: {
     save() {
-      this.validate()
-        .then(() => {
+      this.send('addErrorDisplayFor', 'numSubGroups');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
           const num = this.get('numSubGroups');
           this.sendAction('generateNewLearnerGroups', num);
-        })
-        .catch(() => {});
+        }
+      });
     },
 
     cancel() {
       this.sendAction('cancel');
     },
-
-    changeValue(value) {
-      this.set('numSubGroups', value);
-    }
   }
 });
