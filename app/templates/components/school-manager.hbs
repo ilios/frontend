@@ -6,7 +6,26 @@
   <div class='detail-view-main-title'>
     <div class='detail-header'>
       <span class='title'>
-        {{inplace-text tagName='h2' value=school.title save='changeTitle' validations=titleValidations}}
+        {{#editable-field
+          tagName='h2'
+          value=title
+          save=(action 'changeTitle')
+          close=(action 'revertTitleChanges')
+          as |isSaving save close|
+        }}
+          {{one-way-input
+            value=title
+            update=(action (mut title))
+            onenter=save
+            onescape=close
+            disabled=isSaving
+            focusOut=(action 'addErrorDisplayFor' 'title')
+            keyPress=(action 'addErrorDisplayFor' 'title')
+          }}
+          {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+            <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
       </span>
     </div>
   </div>
