@@ -1,14 +1,17 @@
 <label class="form-col form-col-12">
   <div class="form-label">{{t 'general.title'}}:</div>
-
   <div class="form-data form-data-text form-input-row">
-    <input type="text" placeholder={{t 'learnerGroups.learnerGroupTitlePlaceholder'}}
-        class="{{if topErrorMessage 'has-error'}}"
-           onChange={{action "changeValue" value="target.value"}}
-           oninput={{action "changeValue" value="target.value"}}
-           onfocus={{action "displayError"}} />
-    {{#if topErrorMessage}}
-      <span class="validation-error-message">{{topErrorMessage}}</span>
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=(action 'save')
+      onescape=(action this.attrs.cancel)
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      placeholder=(t 'learnerGroups.learnerGroupTitlePlaceholder')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
   </div>
 </label>
