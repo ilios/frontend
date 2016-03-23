@@ -16,20 +16,22 @@ const Validations = buildValidations({
       max: 60
     }),
   ],
-  numberOfWeeks: [
-    validator('presence', {
-      dependentKeys: ['makeRecurring'],
-      presence: true,
-      disabled(){
-        return !this.get('model.makeRecurring');
-      }
-    }),
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gt: 0,
-    }),
-  ]
+  numberOfWeeks: {
+    dependentKeys: ['makeRecurring'],
+    disabled(){
+      return !this.get('model.makeRecurring');
+    },
+    validators: [
+      validator('presence', {
+        presence: true
+      }),
+      validator('number', {
+        allowString: true,
+        integer: true,
+        gt: 0,
+      }),
+    ]
+  }
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
@@ -312,6 +314,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           }
           this.send('clearErrorDisplay');
           this.send('cancel');
+        } else {
+          console.log(validations.get('errors'));
         }
       });
     },

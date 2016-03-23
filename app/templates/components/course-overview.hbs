@@ -37,13 +37,21 @@
         <label class="form-label">{{t "courses.clerkshipType"}}:</label>
         <div class="form-data clerkshiptype">
           {{#if editable}}
-            {{inplace-select
-              value=course.clerkshipType.id
-              options=clerkshipTypeOptions
-              save='changeClerkshipType'
-              selectPromptTranslation='courses.notAClerkship'
-              clickPromptTranslation='courses.notAClerkship'
+            {{#editable-field
+              value=(if course.clerkshipType course.clerkshipType.title (t 'courses.notAClerkship'))
+              save=(action 'changeClerkshipType')
+              close=(action 'revertClerkshipTypeChanges')
+              as |isSaving save close|
             }}
+              <select onchange={{action "setCourseClerkshipType" value="target.value"}}>
+                <option value=null selected={{is-empty selectedClerkshipType}}>{{t 'courses.notAClerkship'}}</option>
+                {{#each clerkshipTypeOptions as |clerkshipType|}}
+                  <option value={{clerkshipType.id}} selected={{is-equal clerkshipType selectedClerkshipType}}>
+                    {{clerkshipType.title}}
+                  </option>
+                {{/each}}
+              </select>
+            {{/editable-field}}
           {{else}}
             {{#if course.clerkshipType}}
               {{course.clerkshipType.title}}
