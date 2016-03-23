@@ -138,11 +138,11 @@
             value=numberOfWeeks
             update=(action (mut numberOfWeeks))
             focusOut=(action 'addErrorDisplayFor' 'numberOfWeeks')
-            class=(concat 'make-recurring-input ' (if (and errors.numberOfWeeks (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
+            class=(concat 'make-recurring-input ' (if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
           }}
           <label class="make-recurring-input-label">{{t 'offerings.numberOfWeeks'}}</label>
-          {{#if (and errors.numberOfWeeks (is-in showErrorsFor 'numberOfWeeks'))}}
-            <span class="validation-error-message">{{errors.numberOfWeeks}}</span>
+          {{#if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks'))}}
+            <span class="validation-error-message">{{v-get this 'numberOfWeeks' 'message'}}</span>
           {{/if}}
         </div>
       </div>
@@ -160,11 +160,11 @@
           update=(action (mut room))
           focusOut=(action 'addErrorDisplayFor' 'room')
           focusIn=(action 'addErrorDisplayFor' 'room')
-          class=(if (and errors.room (is-in showErrorsFor 'room')) 'has-error')
+          class=(if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room')) 'has-error')
         }}
       </span>
-      {{#if (and errors.room (is-in showErrorsFor 'room'))}}
-        <span class="validation-error-message">{{errors.room}}</span>
+      {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
+        <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
       {{/if}}
     </div>
   </div>

@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP, inject } = Ember;
 const { notEmpty } = computed;
@@ -9,9 +10,31 @@ const { all, Promise } = RSVP;
 const { service } = inject;
 const { PromiseArray } = DS;
 
-export default Component.extend(EmberValidations, {
+const Validations = buildValidations({
+  room: [
+    validator('length', {
+      max: 60
+    }),
+  ],
+  numberOfWeeks: [
+    validator('presence', {
+      dependentKeys: ['makeRecurring'],
+      presence: true,
+      disabled(){
+        return !this.get('model.makeRecurring');
+      }
+    }),
+    validator('number', {
+      allowString: true,
+      integer: true,
+      gt: 0,
+    }),
+  ]
+});
+
+export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     const instructors = [];
@@ -25,7 +48,6 @@ export default Component.extend(EmberValidations, {
     const cohorts = this.get('cohorts');
     const learnerGroups = {};
     const recurringDays = [];
-    const showErrorsFor = [];
 
     if (cohorts && isPresent(cohorts)) {
       cohorts.forEach((cohort) => {
@@ -33,7 +55,7 @@ export default Component.extend(EmberValidations, {
       });
     }
 
-    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime, recurringDays, showErrorsFor });
+    this.setProperties({ instructors, instructorGroups, learnerGroups, startDate, endDate, startTime, endTime, recurringDays });
   },
 
   classNames: ['offering-editor'],
@@ -52,21 +74,7 @@ export default Component.extend(EmberValidations, {
   learnerGroups: null,
 
   showErrorsFor: [],
-  validations: {
-    room : {
-      length: {maximum: 60, allowBlank: true},
-    },
-    'numberOfWeeks': {
-      presence: {
-        'if': 'makeRecurring',
-      },
-      numericality: {
-        'if': 'makeRecurring',
-        greaterThan: 0,
-        onlyInteger: true
-      }
-    }
-  },
+
   makeRecurring: false,
   recurringDays: null,
   numberOfWeeks: null,
@@ -253,54 +261,58 @@ export default Component.extend(EmberValidations, {
     },
 
     create() {
-      this.validate().then(() => {
-        const flashMessages = this.get('flashMessages');
+      const flashMessages = this.get('flashMessages');
+      this.send('addErrorDisplayFor', 'room');
+      this.send('addErrorDisplayFor', 'numberOfWeeks');
 
-        if (!(this.datesValidated() && this.timesValidated())) {
-          flashMessages.alert('general.invalidDatetimes');
-          return;
-        }
-        let datesHash = this.calculateDateTimes();
-        let learnerGroups = this.getAllLearnerGroups();
-        const days = this.get('recurringDays');
-        const numberOfWeeks = this.get('numberOfWeeks');
-        let recurringOptions = {
-          days,
-          numberOfWeeks
-        };
-        let params = {
-          startDate: datesHash.startDate.toDate(),
-          endDate: datesHash.endDate.toDate(),
-          learnerGroups,
-          recurringOptions
-        };
 
-        if (this.get('smallGroupMode')) {
-          if (isEmpty(learnerGroups)) {
-            this.get('flashMessages').alert('offerings.smallGroupMessage');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          if (!(this.datesValidated() && this.timesValidated())) {
+            flashMessages.alert('general.invalidDatetimes');
             return;
           }
 
-          if (this.get('makeRecurring')) {
-            this.sendAction('addMultipleOfferingsRecurring', params);
-          } else {
-            this.sendAction('addMultipleOfferings', params);
-          }
-        } else {
-          params.room = this.get('room') || 'TBD';
-          params.instructors = this.get('instructors');
-          params.instructorGroups = this.get('instructorGroups');
+          let datesHash = this.calculateDateTimes();
+          let learnerGroups = this.getAllLearnerGroups();
+          const days = this.get('recurringDays');
+          const numberOfWeeks = this.get('numberOfWeeks');
+          let recurringOptions = {
+            days,
+            numberOfWeeks
+          };
+          let params = {
+            startDate: datesHash.startDate.toDate(),
+            endDate: datesHash.endDate.toDate(),
+            learnerGroups,
+            recurringOptions
+          };
 
-          if (this.get('makeRecurring')) {
-            this.sendAction('addSingleOfferingRecurring', params);
+          if (this.get('smallGroupMode')) {
+            if (isEmpty(learnerGroups)) {
+              this.get('flashMessages').alert('offerings.smallGroupMessage');
+              return;
+            }
+
+            if (this.get('makeRecurring')) {
+              this.sendAction('addMultipleOfferingsRecurring', params);
+            } else {
+              this.sendAction('addMultipleOfferings', params);
+            }
           } else {
-            this.sendAction('addSingleOffering', params);
+            params.room = this.get('room') || 'TBD';
+            params.instructors = this.get('instructors');
+            params.instructorGroups = this.get('instructorGroups');
+
+            if (this.get('makeRecurring')) {
+              this.sendAction('addSingleOfferingRecurring', params);
+            } else {
+              this.sendAction('addSingleOffering', params);
+            }
           }
+          this.send('clearErrorDisplay');
+          this.send('cancel');
         }
-
-        this.send('cancel');
-      }).catch(() => {
-        return;
       });
     },
 
@@ -311,9 +323,6 @@ export default Component.extend(EmberValidations, {
 
     toggleMakeRecurring() {
       this.set('makeRecurring', !this.get('makeRecurring'))
-    },
-    addErrorDisplayFor(field){
-      this.get('showErrorsFor').pushObject(field);
     },
     toggleDayInRecurrindgDays(day){
       let recurringDays = this.get('recurringDays');

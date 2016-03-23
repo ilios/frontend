@@ -216,6 +216,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   actions: {
     save() {
+      this.send('addErrorDisplayFor', 'room');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           if (this.datesValidated() && this.timesValidated()) {
@@ -268,6 +269,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             Ember.RSVP.all(promises).then(() => {
               if(!this.get('isDestroyed')){
                 this.sendAction('save', offering);
+                this.send('clearErrorDisplay');
                 this.send('cancel');
               }
             });
