@@ -129,7 +129,25 @@
         <label class="form-label">{{t "sessions.hours"}}:</label>
         <div class="form-data">
           {{#if editable}}
-            {{inplace-text value=session.ilmSession.hours save='changeIlmHours' validations=hoursValidations}}
+            {{#editable-field
+              value=hours
+              save=(action 'changeIlmHours')
+              close=(action 'revertIlmHoursChanges')
+              as |isSaving save close|
+            }}
+              {{one-way-input
+                value=hours
+                update=(action (mut hours))
+                onenter=save
+                onescape=close
+                disabled=isSaving
+                focusOut=(action 'addErrorDisplayFor' 'hours')
+                keyDown=(action 'addErrorDisplayFor' 'hours')
+              }}
+              {{#if (and (v-get this 'hours' 'isInvalid') (is-in showErrorsFor 'hours'))}}
+                <span class="validation-error-message">{{v-get this 'hours' 'message'}}</span>
+              {{/if}}
+            {{/editable-field}}
           {{else}}
             {{session.ilmSession.hours}}&nbsp;
           {{/if}}

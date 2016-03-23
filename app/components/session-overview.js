@@ -1,6 +1,5 @@
 import moment from 'moment';
 import Ember from 'ember';
-import DS from 'ember-data';
 import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -21,8 +20,7 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('number', {
       allowString: true,
-      integer: true,
-      gt: 0
+      positive: true,
     }),
   ],
 });
@@ -31,9 +29,15 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('title', this.get('session.title'));
+    this.get('session.ilmSession').then(ilmSession => {
+      if (ilmSession){
+        this.set('hours', ilmSession.get('hours'));
+      }
+    })
   },
   session: null,
   title: null,
+  hours: null,
   publishTarget: oneWay('session'),
   editable: true,
   classNames: ['session-overview'],
@@ -54,10 +58,14 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
           ilmSession.save();
         });
       } else {
+        const hours = 1;
+        const dueDate = moment().add(6, 'weeks').toDate();
+        this.set('hours', hours);
+
         var ilmSession = this.get('store').createRecord('ilm-session', {
-          session: session,
-          hours: 1,
-          dueDate: moment().add(6, 'weeks').toDate()
+          session,
+          hours,
+          dueDate
         });
         ilmSession.save().then(function(savedIlmSession){
           session.set('ilmSession', savedIlmSession);
@@ -108,11 +116,32 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       this.get('session').set('attireRequired', value);
       this.get('session').save();
     },
-    changeIlmHours: function(value){
-      this.get('session.ilmSession').then(function(ilmSession){
-        if(ilmSession){
-          ilmSession.set('hours', value);
-          ilmSession.save();
+    changeIlmHours() {
+      const newHours = this.get('hours');
+      const session = this.get('session');
+      this.send('addErrorDisplayFor', 'hours');
+      return new Promise((resolve, reject) => {
+        this.validate({ on: ['hours'] }).then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'hours');
+            session.get('ilmSession').then(function(ilmSession){
+              if(ilmSession){
+                ilmSession.set('hours', newHours);
+                resolve(ilmSession.save());
+              } else {
+                reject();
+              }
+            });
+          } else {
+            reject();
+          }
+        });
+      });
+    },
+    revertIlmHoursChanges(){
+      this.get('session').get('ilmSession').then(ilmSession => {
+        if (ilmSession) {
+          this.set('hours', ilmSession.get('hours'));
         }
       });
     },
