@@ -63,7 +63,6 @@ const Validations = buildValidations({
 
 export default Ember.Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
-  i18n: service(),
   currentUser: service(),
   flashMessages: service(),
 
