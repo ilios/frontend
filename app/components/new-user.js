@@ -1,23 +1,71 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import EmberValidations, { validator as emberValidator } from 'ember-validations';
-import validator from 'npm:validator';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+
 const { inject, computed, RSVP } = Ember;
 const { service } = inject;
 const { sort } = computed;
 const { PromiseObject, PromiseArray } = DS;
 
-export default Ember.Component.extend(EmberValidations, {
+const Validations = buildValidations({
+  firstName: [
+    validator('presence', true),
+    validator('length', {
+      max: 20
+    }),
+  ],
+  middleName: [
+    validator('length', {
+      max: 20
+    }),
+  ],
+  lastName: [
+    validator('presence', true),
+    validator('length', {
+      max: 20
+    }),
+  ],
+  username: [
+    validator('presence', true),
+    validator('length', {
+      max: 100
+    }),
+  ],
+  password: [
+    validator('presence', true)
+  ],
+  campusId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+  otherId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+  email: [
+    validator('presence', true),
+    validator('length', {
+      max: 100
+    }),
+    validator('format', {
+      type: 'email'
+    }),
+  ],
+  phone: [
+    validator('length', {
+      max: 20
+    }),
+  ]
+});
+
+export default Ember.Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   i18n: service(),
   currentUser: service(),
-
   flashMessages: service(),
-
-  init(){
-    this._super(...arguments);
-    this.set('showErrorsFor', []);
-  },
 
   firstName: null,
   middleName: null,
@@ -30,7 +78,6 @@ export default Ember.Component.extend(EmberValidations, {
   phone: null,
   schoolId: null,
 
-  showErrorsFor: [],
   isSaving: false,
 
   sortBy: ['title'],
@@ -49,46 +96,6 @@ export default Ember.Component.extend(EmberValidations, {
       })
     }
   }).readOnly(),
-
-  validations: {
-    'firstName': {
-      presence: true,
-      length: { maximum: 20 }
-    },
-    'middleName': {
-      length: { maximum: 20 }
-    },
-    'lastName': {
-      presence: true,
-      length: { maximum: 30 }
-    },
-    'username': {
-      presence: true,
-      length: { maximum: 100 }
-    },
-    'password': {
-      presence: true
-    },
-    'campusId': {
-      length: { maximum: 16 }
-    },
-    'otherId': {
-      length: { maximum: 16 }
-    },
-    'email': {
-      presence: true,
-      length: { maximum: 100 },
-      inline: emberValidator(function() {
-        const email = this.model.get('email');
-        if (!validator.isEmail(email)) {
-          return this.model.get('i18n').t('errors.email');
-        }
-      }),
-    },
-    'phone': {
-      length: { maximum: 20 }
-    },
-  },
 
   bestSelectedSchool: computed('schools.[]', 'schoolId', function(){
     let defer = RSVP.defer();
@@ -113,25 +120,15 @@ export default Ember.Component.extend(EmberValidations, {
     });
   }),
   actions: {
-    save(){
+    save: function(){
       if(this.get('isSaving')){
         return;
       }
-      this.validate().then(()=>{
-        this.set('isSaving', true);
-        const {
-          firstName,
-          middleName,
-          lastName,
-          campusId,
-          otherId,
-          email,
-          phone,
-          username,
-          password
-        } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
-        this.get('bestSelectedSchool').then(school => {
-          let user = this.get('store').createRecord('user', {
+      this.set('isSaving', true);
+      this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const {
             firstName,
             middleName,
             lastName,
@@ -139,28 +136,38 @@ export default Ember.Component.extend(EmberValidations, {
             otherId,
             email,
             phone,
-            school,
-            enabled: true
-          });
-          user.save().then(newUser => {
-            let authentication = this.get('store').createRecord('authentication', {
-              user: newUser,
-              username,
-              password
+            username,
+            password
+          } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
+          this.get('bestSelectedSchool').then(school => {
+            let user = this.get('store').createRecord('user', {
+              firstName,
+              middleName,
+              lastName,
+              campusId,
+              otherId,
+              email,
+              phone,
+              school,
+              enabled: true
             });
-            authentication.save().then(()=>{
+            user.save().then(newUser => {
+              let authentication = this.get('store').createRecord('authentication', {
+                user: newUser,
+                username,
+                password
+              });
+              return authentication.save().then(()=>{
+                this.get('flashMessages').success('user.saved');
+                this.attrs.transitionToUser(newUser.get('id'));
+              });
+            }).finally(() => {
               this.set('isSaving', false);
-              this.get('flashMessages').success('user.saved');
-              this.attrs.transitionToUser(newUser.get('id'));
+              this.send('clearErrorDisplay');
             });
           });
-        });
-
-      }).catch(() => {
-        this.set('showErrorsFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
-        return;
+        }
       });
-
     },
     addErrorDisplayFor(field){
       this.get('showErrorsFor').pushObject(field);
