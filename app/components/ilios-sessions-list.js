@@ -162,21 +162,13 @@ export default Component.extend({
       this.set('editorOn', false);
     },
 
-    save(title, sessionType) {
-      const component = this;
-      const store = this.get('store');
+    save(session) {
+      this.set('isSaving', true);
       const course = this.get('course');
+      session.set('course', course);
 
-      component.setProperties({ editorOn: false, isSaving: true, saved: false, savedSession: null });
-
-      let newSession = store.createRecord('session', { title, sessionType, course });
-
-      newSession.save().then((savedSession) => {
-        course.get('sessions').then((sessions) => {
-          sessions.addObject(savedSession);
-          component.send('cancel');
-          component.setProperties({ saved: true, savedSession: newSession, isSaving: false });
-        });
+      return session.save().then((savedSession) => {
+        this.setProperties({ saved: true, savedSession, isSaving: false });
       });
     },
 

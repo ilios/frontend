@@ -8,11 +8,13 @@
       {{one-way-input
         value=title
         update=(action (mut title))
+        onenter=(action 'save')
+        onescape=(action this.attrs.cancel)
         focusOut=(action 'addErrorDisplayFor' 'title')
-        class=(if (and errors.title (is-in showErrorsFor 'title')) 'has-error')
+        class=(if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error')
       }}
-      {{#if (and errors.title (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{errors.title}}</span>
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
       {{/if}}
     </div>
   </label>
@@ -38,7 +40,13 @@
   </label>
 
   <div class="form-col-6 form-data-submit">
-    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
+    <button class='done text' {{action 'save'}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.save'}}
+      {{/if}}
+    </button>
     <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
   </div>
 </div>

@@ -1,35 +1,33 @@
 import Ember from 'ember';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { computed, Component, inject, isEmpty, isPresent } = Ember;
 const { sort } = computed;
 const { service } = inject;
 
-export default Component.extend(EmberValidations, {
-  init() {
-    this._super(...arguments);
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 3,
+      max: 200,
+      descriptionKey: 'general.title'
+    }),
+  ]
+});
 
-    this.set('showErrorsFor', []);
-  },
-
+export default Component.extend(ValidationErrorDisplay, Validations, {
+  store: service(),
   classNames: ['new-session', 'resultslist-new', 'form-container'],
-
-  i18n: service(),
 
   sessionTypes: [],
   sortSessionsBy: ['title'],
   sortedSessionTypes: sort('sessionTypes', 'sortSessionsBy'),
 
-  showErrorsFor: [],
-  validations: {
-    'title': {
-      presence: true,
-      length: { minimum: 3, maximum: 200 }
-    }
-  },
-
   title: null,
   selectedSessionTypeId: null,
+  isSaving: false,
 
 
   selectedSessionType: computed('sessionTypes.[]', 'selectedSessionTypeId', function(){
@@ -51,25 +49,20 @@ export default Component.extend(EmberValidations, {
   }),
 
   actions: {
-    save() {
-      this.validate()
-        .then(() => {
-          const title = this.get('title');
-          const sessionType = this.get('selectedSessionType');
-
-          this.sendAction('save', title, sessionType);
-        })
-        .catch(() => {
-          return;
-        });
-    },
-
-    cancel() {
-      this.sendAction('cancel');
-    },
-
-    addErrorDisplayFor(field){
-      this.get('showErrorsFor').pushObject(field);
+    save: function(){
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          let session = this.get('store').createRecord('session', {
+            title: this.get('title'),
+            sessionType: this.get('selectedSessionType')
+          });
+          this.get('save')(session).finally(()=>{
+            this.get('cancel')();
+          });
+        }
+      });
     },
   }
 });
