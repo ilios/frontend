@@ -191,9 +191,6 @@ export default {
     'members': 'Miembros',
     'associatedCourses': 'Cursos Asociados',
     'backToInstructorGroups': 'Atrás a la Lista de Grupos de Instructores',
-    'errors' : {
-      'titleTooLong': "Titulo de Grupo de Instructores es demasiado largo (el máximo es 60 caracteres)"
-    }
   },
   'learnerGroups': {
     'learnerGroupTitle': 'Título de Grupo de Instructores',
@@ -330,9 +327,6 @@ export default {
     'offering': 'Ofrecimiento',
     'smallGroups': 'Grupos Pequeños',
     'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba.",
-    'errors' : {
-      'roomTooLong': "El nombre de la ubicación es demasiado largo (el máximo es 60 caracteres)"
-    },
     'makeRecurring': 'Hacer Recurrente',
     'numberOfWeeks': 'Número de semanas (enteros positivos sólo)',
     'sunday': 'Domingo',
@@ -508,11 +502,6 @@ export default {
     'alphanumeric2': "debe ser alfanumérico ('-' y ':' permitido)",
     'url': 'debe ser una dirección URL válida',
     'email': 'debe ser una dirección válida de correo electrónico',
-  },
-  'myreport': {
-    'errors': {
-      'titleTooLong':  "Título de Reporte es demasiado largo (el máximo es 240 caracteres)"
-    }
   },
   'admin': {
     'pendingUpdatesSummaryTitle': 'Actualizaciones del Directorio del Campus',
