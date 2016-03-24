@@ -285,10 +285,11 @@ export default Ember.Service.extend({
           currentYear--;
         }
         const previousYear = currentYear -1;
+        const nextYear = currentYear +1;
         this.get('store').query('course', {
           my: true,
           filters: {
-            year: [previousYear, currentYear],
+            year: [previousYear, currentYear, nextYear],
             locked: false,
             archived: false
           }
