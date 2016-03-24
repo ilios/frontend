@@ -314,8 +314,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           }
           this.send('clearErrorDisplay');
           this.send('cancel');
-        } else {
-          console.log(validations.get('errors'));
         }
       });
     },
