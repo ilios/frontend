@@ -6,6 +6,7 @@ export default Component.extend({
   isEditing: false,
   isSaving: false,
   classNames: ['editinplace'],
+  clickPrompt: null,
   actions: {
     edit(){
       this.set('isEditing', true);
