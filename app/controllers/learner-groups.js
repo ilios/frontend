@@ -212,7 +212,7 @@ export default Controller.extend({
     },
 
     changeSelectedProgram(programId) {
-      let program = this.get('programs').find(program => program.get('id') === programId);
+      let program = this.get('programs').findBy('id', programId);
       program.get('school').then(school => {
         this.set('schoolId', school.get('id'));
         this.set('programId', programId);
