@@ -1,16 +1,13 @@
-{{#deferred-content allParents as |d|}}
-  {{#d.fulfilled as |parents|}}
+{{#if (is-fulfilled allParents)}}
   <div class='breadcrumbs'>
     <span {{action 'clearVocabAndTerm'}}>{{t 'schools.allVocabularies'}}</span>
     <span {{action this.attrs.manageTerm null}}>{{vocabulary.title}}</span>
-    {{#each parents as |parent|}}
+    {{#each (await allParents) as |parent|}}
       <span {{action this.attrs.manageTerm parent.id}}>{{parent.title}}</span>
     {{/each}}
     <span>{{term.title}}</span>
   </div>
-  {{/d.fulfilled}}
-{{/deferred-content}}
-
+{{/if}}
 
 {{#if term}}
   <p>
@@ -51,16 +48,14 @@
       <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
     {{/if}}
   </div>
-  {{#deferred-content sortedTerms as |d|}}
-    {{#d.pending}}
-      {{fa-icon 'spinner' spin=true}}
-    {{/d.pending}}
-    {{#d.fulfilled as |terms|}}
-      <ul>
-        {{#each terms as |term|}}
-          <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
-        {{/each}}
-      </ul>
-    {{/d.fulfilled}}
-  {{/deferred-content}}
+
+  {{#if (is-fulfilled sortedTerms)}}
+    <ul>
+      {{#each (await sortedTerms) as |term|}}
+        <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    {{fa-icon 'spinner' spin=true}}
+  {{/if}}
 </div>

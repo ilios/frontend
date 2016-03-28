@@ -35,16 +35,14 @@
       <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
     {{/if}}
   </div>
-  {{#deferred-content sortedTerms as |d|}}
-    {{#d.pending}}
-      {{fa-icon 'spinner' spin=true}}
-    {{/d.pending}}
-    {{#d.fulfilled as |terms|}}
-      <ul>
-        {{#each terms as |term|}}
-          <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
-        {{/each}}
-      </ul>
-    {{/d.fulfilled}}
-  {{/deferred-content}}
+
+  {{#if (is-fulfilled sortedTerms)}}
+    <ul>
+      {{#each (await sortedTerms) as |term|}}
+        <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    {{fa-icon 'spinner' spin=true}}
+  {{/if}}
 </div>

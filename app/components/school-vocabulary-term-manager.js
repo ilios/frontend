@@ -43,9 +43,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   sortedTerms: computed('term.children.[]', function(){
     return new Promise(resolve => {
       const term = this.get('term');
-      if (isEmpty(term)) {
-        resolve([]);
-      } else {
+      if (isPresent(term)) {
         term.get('children').then(terms => {
           resolve(terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title'));
         });
@@ -55,9 +53,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   allParents: computed('term.allParents.[]', function(){
     return new Promise(resolve => {
       const term = this.get('term');
-      if (isEmpty(term)) {
-        resolve([]);
-      } else {
+      if (isPresent(term)) {
         term.get('allParents').then(allParents => {
           resolve(allParents.toArray().reverse())
         })

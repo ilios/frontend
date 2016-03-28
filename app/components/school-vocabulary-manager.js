@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, isPresent, isEmpty, inject, RSVP } = Ember;
+const { Component, computed, isPresent, inject, RSVP } = Ember;
 const { service } = inject;
 const { Promise } = RSVP;
 
@@ -41,9 +41,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   sortedTerms: computed('vocabulary.terms.[]', function(){
     return new Promise(resolve => {
       const vocabulary = this.get('vocabulary');
-      if (isEmpty(vocabulary)) {
-        resolve([]);
-      } else {
+      if (isPresent(vocabulary)) {
         vocabulary.get('terms').then(terms => {
           resolve(
             terms.filterBy('isTopLevel')
