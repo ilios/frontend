@@ -1,16 +1,23 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, inject, RSVP, isEmpty, isPresent } = Ember;
 const { service } = inject;
 const { PromiseArray } = DS;
 
-export default Component.extend(EmberValidations, ValidationError, {
-  init() {
-    this._super(...arguments);
-  },
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      max: 240,
+      descriptionKey: 'general.title'
+    }),
+  ]
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   i18n: service(),
   currentUser: service(),
@@ -21,12 +28,7 @@ export default Component.extend(EmberValidations, ValidationError, {
   currentSubject: 'course',
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
-
-  validations: {
-    title : {
-      length: {maximum: 240, allowBlank: true, messages: { tooLong: "myreport.errors.titleTooLong" }}
-    }
-  },
+  isSaving: false,
 
   subjectList: computed('i18n.locale', function(){
     let list = [
@@ -190,56 +192,57 @@ export default Component.extend(EmberValidations, ValidationError, {
       this.sendAction('close');
     },
     save(){
-      this.validate().then(() => {
-        const flashMessages = this.get('flashMessages');
-        const store = this.get('store');
-        const subject = this.get('currentSubject');
-        let object = this.get('currentPrepositionalObject');
-        if (isPresent(subject) && isEmpty(object)) {
-          if (subject === 'instructor') {
-            flashMessages.alert('dashboard.reportMissingObjectForInstructor');
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const flashMessages = this.get('flashMessages');
+          const store = this.get('store');
+          const subject = this.get('currentSubject');
+          let object = this.get('currentPrepositionalObject');
+          if (isPresent(subject) && isEmpty(object)) {
+            if (subject === 'instructor') {
+              flashMessages.alert('dashboard.reportMissingObjectForInstructor');
+              return;
+            }
+            if (subject === 'mesh term') {
+              flashMessages.alert('dashboard.reportMissingObjectForMeshTerm');
+              return;
+            }
+          }
+          if (
+              object && !this.get('currentPrepositionalObjectId')
+          ) {
+            if (object === 'instructor') {
+              flashMessages.alert('dashboard.reportMissingInstructor');
+            }
+            if (object === 'mesh term') {
+              flashMessages.alert('dashboard.reportMissingMeshTerm');
+            }
             return;
           }
-          if (subject === 'mesh term') {
-            flashMessages.alert('dashboard.reportMissingObjectForMeshTerm');
-            return;
-          }
-        }
-        if (
-            object && !this.get('currentPrepositionalObjectId')
-        ) {
-          if (object === 'instructor') {
-            flashMessages.alert('dashboard.reportMissingInstructor');
-          }
-          if (object === 'mesh term') {
-            flashMessages.alert('dashboard.reportMissingMeshTerm');
-          }
-          return;
-        }
-        this.get('currentUser.model').then(user => {
+          this.get('currentUser.model').then(user => {
 
-          let title = this.get('title');
-          let subject = this.get('currentSubject');
-          let prepositionalObject = this.get('currentPrepositionalObject');
-          let prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
-          let school = this.get('currentSchool');
-          let report = store.createRecord('report', {
-            title,
-            user,
-            subject,
-            prepositionalObject,
-            prepositionalObjectTableRowId,
-            school
+            let title = this.get('title');
+            let subject = this.get('currentSubject');
+            let prepositionalObject = this.get('currentPrepositionalObject');
+            let prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
+            let school = this.get('currentSchool');
+            let report = store.createRecord('report', {
+              title,
+              user,
+              subject,
+              prepositionalObject,
+              prepositionalObjectTableRowId,
+              school
+            });
+            report.save().then(() => {
+              this.set('isSaving', false);
+              this.send('clearErrorDisplay', 'title');
+              this.get('close')();
+            });
           });
-          report.save().then(() => {
-            this.sendAction('close');
-          });
-        });
-      }).catch(() => {
-        const keys = Ember.keys(this.get('errors'));
-        keys.forEach((key) => {
-          this.get('flashMessages').alert(this.get('errors.' + key));
-        });
+        }
       });
     }
   }

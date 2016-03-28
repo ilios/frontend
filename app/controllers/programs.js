@@ -127,14 +127,13 @@ export default Controller.extend({
       program.save();
     },
 
-    save(title) {
-      const store = this.store;
+    save(program) {
       const school = this.get('selectedSchool');
       const duration = 4;
 
-      let newProgram = store.createRecord('program', { title, school, duration });
+      program.setProperties({school, duration});
 
-      newProgram.save().then((savedProgram) => {
+      return program.save().then((savedProgram) => {
         this.send('cancel');
         this.setProperties({ saved: true, savedProgram });
       });

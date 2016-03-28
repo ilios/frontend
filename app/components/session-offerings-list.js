@@ -12,7 +12,7 @@ export default Component.extend({
   offerings: oneWay('session.offerings'),
   editable: true,
   offeringBlocks: computed(
-    'offerings.@each.{startDate,endDate,room,instructorGroups.[]}',
+    'offerings.@each.{startDate,endDate,room,instructorGroups}',
     function(){
       var offerings = this.get('offerings');
       if(offerings == null){

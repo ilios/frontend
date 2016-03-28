@@ -1,22 +1,30 @@
 <div class="new-result-title">{{t 'programs.new'}}</div>
-
 <div class="detail-content">
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.title'}}</div>
-
-    <div class="form-data form-data-text form-input-row">
-      <input type="text" placeholder={{placeholder}} class="{{if topErrorMessage 'has-error'}}"
-        onChange={{action "changeValue" value="target.value"}}
-        oninput={{action "changeValue" value="target.value"}}
-        onfocus={{action "displayError"}} />
-      {{#if topErrorMessage}}
-        <span class="validation-error-message">{{topErrorMessage}}</span>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.title'}}</label>
+    <div class="form-data newinstructorgroup-title">
+      {{one-way-input
+        value=title
+        update=(action (mut title))
+        onenter=(action 'save')
+        onescape=(action this.attrs.cancel)
+        disabled=isSaving
+        focusOut=(action 'addErrorDisplayFor' 'title')
+        placeholder=(t 'programs.programTitlePlaceholder')
+      }}
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
       {{/if}}
     </div>
-  </label>
-
+  </div>
   <div class="form-col-6 form-data-submit">
-    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+    <button class='done text' {{action 'save'}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    <button class='cancel text' {{action this.attrs.cancel}}>{{t 'general.cancel'}}</button>
   </div>
 </div>

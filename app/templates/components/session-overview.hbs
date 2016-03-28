@@ -1,7 +1,24 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if editable}}
-      {{inplace-text value=session.title save='changeTitle' validations=titleValidations}}
+      {{#editable-field
+        value=title
+        save=(action 'changeTitle')
+        close=(action 'revertTitleChanges')
+      as |isSaving save close|
+      }}
+        {{one-way-input
+          value=title
+          update=(action (mut title))
+          onenter=save
+          onescape=close
+          disabled=isSaving
+          focusOut=(action 'addErrorDisplayFor' 'title')
+        }}
+        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+        {{/if}}
+      {{/editable-field}}
     {{else}}
       <h2>{{session.title}}</h2>
     {{/if}}
@@ -112,7 +129,25 @@
         <label class="form-label">{{t "sessions.hours"}}:</label>
         <div class="form-data">
           {{#if editable}}
-            {{inplace-text value=session.ilmSession.hours save='changeIlmHours' validations=hoursValidations}}
+            {{#editable-field
+              value=hours
+              save=(action 'changeIlmHours')
+              close=(action 'revertIlmHoursChanges')
+              as |isSaving save close|
+            }}
+              {{one-way-input
+                value=hours
+                update=(action (mut hours))
+                onenter=save
+                onescape=close
+                disabled=isSaving
+                focusOut=(action 'addErrorDisplayFor' 'hours')
+                keyDown=(action 'addErrorDisplayFor' 'hours')
+              }}
+              {{#if (and (v-get this 'hours' 'isInvalid') (is-in showErrorsFor 'hours'))}}
+                <span class="validation-error-message">{{v-get this 'hours' 'message'}}</span>
+              {{/if}}
+            {{/editable-field}}
           {{else}}
             {{session.ilmSession.hours}}&nbsp;
           {{/if}}

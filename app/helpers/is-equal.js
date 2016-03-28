@@ -13,7 +13,7 @@ export default Helper.extend({
   value1: null,
   value2: null,
 
-  compute([ value1, value2 ]) {
+  compute([ value1 = null, value2 = null ]) {
     this.setProperties({ value1, value2 });
 
     return isEqual([ value1, value2 ]);

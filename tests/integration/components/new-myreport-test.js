@@ -15,8 +15,8 @@ test('it renders', function(assert) {
 
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
-
-  this.render(hbs`{{new-myreport}}`);
+  this.on('close', parseInt);
+  this.render(hbs`{{new-myreport close=(action 'close')}}`);
 
   assert.equal(this.$().text().search(/New Report/), 0);
 });

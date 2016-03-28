@@ -1,59 +1,43 @@
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
-import ValidationError from 'ilios/mixins/validation-error';
-import EmberValidations from 'ember-validations';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, inject, isBlank } = Ember;
+const { Component, inject } = Ember;
 const { service } = inject;
-const { alias } = computed;
 
-export default Component.extend(ValidationError, EmberValidations, {
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 3,
+      max: 200,
+      descriptionKey: 'general.title'
+    }),
+  ]
+});
+
+export default Component.extend(ValidationErrorDisplay, Validations, {
+  store: service(),
   tagName: 'section',
   classNames: ['new-program', 'new-result', 'form-container', 'resultslist-new'],
-
-  i18n: service(),
-
-  placeholder: t('programs.programTitlePlaceholder'),
-
   title: null,
-
-  titleCheck() {
-    const title = this.get('title');
-
-    return isBlank(title) ? true : false;
-  },
-
-  validationBuffer: alias('title'),
-  validations: {
-    'validationBuffer': {
-      presence: true,
-      length: { minimum: 3, maximum: 200 }
-    }
-  },
+  isSaving: false,
 
   actions: {
-    save() {
-      if (this.titleCheck()) {
-        return;
-      }
-
-      this.validate()
-        .then(() => {
-          const title = this.get('title');
-
-          this.sendAction('save', title);
-        })
-        .catch(() => {
-          return;
-        });
-    },
-
-    cancel() {
-      this.sendAction('cancel');
-    },
-
-    changeValue(value) {
-      this.set('title', value);
+    save: function(){
+      this.set('isSaving', true);
+      this.send('addErrorDisplayFor', 'title');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          let program = this.get('store').createRecord('program', {
+            title: this.get('title'),
+            school: this.get('currentSchool')
+          });
+          this.get('save')(program).finally(()=>{
+            this.set('isSaving', false);
+          })
+        }
+      });
     }
   }
 });

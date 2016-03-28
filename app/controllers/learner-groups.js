@@ -19,7 +19,7 @@ export default Controller.extend({
     programYearId: 'programYear',
     titleFilter: 'filter',
   },
-  
+
   placeholderValue: t('learnerGroups.titleFilterPlaceholder'),
 
   schoolId: null,
@@ -39,11 +39,11 @@ export default Controller.extend({
   },
 
   schools: oneWay('model.schools'),
-  
+
   sortByTitle:['title'],
   sortedSchools: sort('schools', 'sortByTitle'),
   hasMoreThanOneSchool: gt('schools.length', 1),
-  
+
   programs: computed('selectedSchool.programs.[]', function(){
     let defer = RSVP.defer();
     this.get('selectedSchool').then(school => {
@@ -53,14 +53,14 @@ export default Controller.extend({
         defer.resolve(school.get('programs'));
       }
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
   }),
   sortedPrograms: sort('programs', 'sortByTitle'),
   hasMoreThanOneProgram: gt('programs.length', 1),
-  
+
   programYears: computed('selectedProgram.programYears.[]', function(){
     let defer = RSVP.defer();
     this.get('selectedProgram').then(program => {
@@ -70,7 +70,7 @@ export default Controller.extend({
         defer.resolve(program.get('programYears'));
       }
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -78,7 +78,7 @@ export default Controller.extend({
   sortByStartYear: ['startYear:desc'],
   sortedProgramYears: sort('programYears', 'sortByStartYear'),
   hasMoreThanOneProgramYear: gt('programYears.length', 1),
-  
+
   learnerGroups: computed('selectedProgramYear.cohort.topLevelLearnerGroups.[]', function(){
     let defer = RSVP.defer();
     this.get('selectedProgramYear').then(programYear => {
@@ -92,7 +92,7 @@ export default Controller.extend({
         });
       }
     });
-    
+
     return PromiseArray.create({
       promise: defer.promise
     });
@@ -143,7 +143,7 @@ export default Controller.extend({
         program =  programs.find(program => {
           return program.get('id') === this.get('programId');
         });
-        
+
       }
       if(program){
         defer.resolve(program);
@@ -155,8 +155,8 @@ export default Controller.extend({
         }
       }
     });
-    
-    
+
+
     return PromiseObject.create({
       promise: defer.promise
     });
@@ -177,7 +177,7 @@ export default Controller.extend({
         defer.resolve(programYears.sortBy('startYear').get('lastObject'));
       }
     });
-    
+
     return PromiseObject.create({
       promise: defer.promise
     });
@@ -198,10 +198,10 @@ export default Controller.extend({
     saveNewLearnerGroup(title) {
       const { selectedProgramYear, store } = this.getProperties('selectedProgramYear', 'store');
 
-      selectedProgramYear.get('cohort').then((cohort) => {
+      return selectedProgramYear.get('cohort').then((cohort) => {
         const newLearnerGroup = store.createRecord('learner-group', { title, cohort });
 
-        newLearnerGroup.save().then(() => {
+        return newLearnerGroup.save().then(() => {
           this.send('cancel');
         });
       });
@@ -212,7 +212,7 @@ export default Controller.extend({
     },
 
     changeSelectedProgram(programId) {
-      let program = this.get('programs').find(program => program.get('id') === programId);
+      let program = this.get('programs').findBy('id', programId);
       program.get('school').then(school => {
         this.set('schoolId', school.get('id'));
         this.set('programId', programId);

@@ -1,23 +1,23 @@
 {{#if multiModeSupported}}
-<div class="form-col-12">
-  <label class="form-label">{{t 'general.createNew'}}:</label>
-  <div class="form-data">
-    {{click-choice-buttons
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.createNew'}}:</label>
+    <div class="form-data">
+      {{click-choice-buttons
       buttonContent1=(t 'learnerGroups.singleGroup')
       buttonContent2=(t 'learnerGroups.multipleGroups')
       firstChoicePicked=singleMode
       action="setMode"
-    }}
+      }}
+    </div>
   </div>
-</div>
 {{else}}
   <div class="new-result-title">{{t 'learnerGroups.new'}}</div>
 {{/if}}
 
 <div class="detail-content">
-{{#if singleMode}}
-  {{new-learnergroup-single save='save' cancel='cancel'}}
-{{else}}
-  {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel='cancel'}}
-{{/if}}
+  {{#if singleMode}}
+    {{new-learnergroup-single save='save' cancel='cancel'}}
+  {{else}}
+    {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel='cancel'}}
+  {{/if}}
 </div>

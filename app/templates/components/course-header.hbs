@@ -3,7 +3,26 @@
     {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
     {{#if editable}}
       {{#if course}}
-        {{inplace-text tagName='h2' value=course.title save='changeTitle' validations=titleValidations}}
+        {{#editable-field
+          tagName='h2'
+          value=courseTitle
+          save=(action 'changeTitle')
+          close=(action 'revertTitleChanges')
+          as |isSaving save close|
+        }}
+          {{one-way-input
+            value=courseTitle
+            update=(action (mut courseTitle))
+            onenter=save
+            onescape=close
+            disabled=isSaving
+            focusOut=(action 'addErrorDisplayFor' 'courseTitle')
+            keyPress=(action 'addErrorDisplayFor' 'courseTitle')
+          }}
+          {{#if (and (v-get this 'courseTitle' 'isInvalid') (is-in showErrorsFor 'courseTitle'))}}
+            <span class="validation-error-message">{{v-get this 'courseTitle' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
       {{/if}}
     {{else}}
       {{#if course}}
@@ -14,7 +33,7 @@
   </span>
   <span class ='header-actions'>
     {{#if editable}}
-    
+
       {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
         {{#if showAsIs}}
           <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
@@ -35,7 +54,7 @@
         {{/if}}
 
       {{/action-menu}}
-    
+
     {{else}}
       {{publication-status item=course}}
     {{/if}}

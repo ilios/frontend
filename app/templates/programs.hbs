@@ -35,7 +35,7 @@
     </div>
 
     {{#if editorOn}}
-      {{new-program save='save' cancel='cancel'}}
+      {{new-program save=(action 'save') cancel=(action 'cancel')}}
     {{/if}}
 
     {{#if saved}}

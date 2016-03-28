@@ -2,12 +2,14 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
     <div class="form-data">
-      <input type="text" class="{{if topErrorMessageTitle 'has-error'}}"
-        onChange={{action "changeDisplayName" value="target.value"}}
-        oninput={{action "changeDisplayName" value="target.value"}}
-        onblur={{action "displayNameError"}} />
-      {{#if topErrorMessageTitle}}
-        <span class="validation-error-message">{{topErrorMessageTitle}}</span>
+      {{one-way-input
+        value=title
+        update=(action (mut title))
+        disabled=isSaving
+        focusOut=(action 'addErrorDisplayFor' 'title')
+      }}
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
       {{/if}}
     </div>
   </div>
@@ -15,9 +17,9 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.status'}}:</label>
     <div class="form-data">
-      <select {{action 'changeSelectedStatus' on='change'}}>
+      <select  onchange={{action "changeStatus" value="target.value"}}>
         {{#each learningMaterialStatuses as |lmStatus|}}
-          <option value="{{lmStatus}}" selected={{is-equal lmStatus status}}>
+          <option value={{lmStatus.id}} selected={{is-equal lmStatus status}}>
             {{lmStatus.title}}
           </option>
         {{/each}}
@@ -33,12 +35,14 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
     <div class="form-data">
-      <input type="text" class="{{if topErrorMessageAuthor 'has-error'}}"
-        onChange={{action "changeAuthor" value="target.value"}}
-        oninput={{action "changeAuthor" value="target.value"}}
-        onblur={{action "displayAuthorError"}} />
-      {{#if topErrorMessageAuthor}}
-        <span class="validation-error-message">{{topErrorMessageAuthor}}</span>
+      {{one-way-input
+        value=originalAuthor
+        update=(action (mut originalAuthor))
+        disabled=isSaving
+        focusOut=(action 'addErrorDisplayFor' 'originalAuthor')
+      }}
+      {{#if (and (v-get this 'originalAuthor' 'isInvalid') (is-in showErrorsFor 'originalAuthor'))}}
+        <span class="validation-error-message">{{v-get this 'originalAuthor' 'message'}}</span>
       {{/if}}
     </div>
   </div>
@@ -46,9 +50,9 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
     <div class="form-data">
-      <select {{action 'changeSelectedRole' on='change'}}>
+      <select  onchange={{action "changeUserRole" value="target.value"}}>
         {{#each learningMaterialUserRoles as |role|}}
-          <option value="{{role}}" selected={{is-equal role userRole}}>
+          <option value={{role.id}} selected={{is-equal role userRole}}>
             {{role.title}}
           </option>
         {{/each}}
@@ -60,12 +64,15 @@
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.url'}}:</label>
       <div class="form-data">
-        <input type="text" value={{link}} class="{{if topErrorMessageUrl 'has-error'}}"
-          onChange={{action "changeUrl" value="target.value"}}
-          oninput={{action "changeUrl" value="target.value"}}
-          onblur={{action "displayUrlError"}} />
-        {{#if topErrorMessageUrl}}
-          <span class="validation-error-message">{{topErrorMessageUrl}}</span>
+        {{one-way-input
+          value=link
+          update=(action (mut link))
+          disabled=isSaving
+          focusOut=(action 'addErrorDisplayFor' 'link')
+          keyDown=(action 'addErrorDisplayFor' 'link')
+        }}
+        {{#if (and (v-get this 'link' 'isInvalid') (is-in showErrorsFor 'link'))}}
+          <span class="validation-error-message">{{v-get this 'link' 'message'}}</span>
         {{/if}}
       </div>
     </div>
@@ -75,14 +82,9 @@
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
       <div class="form-data citation">
-        <textarea
-          type='text'
-          onChange={{action "changeCitation" value="target.value"}}
-          oninput={{action "changeCitation" value="target.value"}}
-          onblur={{action "displayCitationError"}}
-        >{{citation}}</textarea>
-        {{#if topErrorMessageCitation}}
-          <span class="validation-error-message">{{topErrorMessageCitation}}</span>
+        {{textarea value=citation focus-out=(action 'addErrorDisplayFor' 'citation') key-press=(action 'addErrorDisplayFor' 'citation') }}
+        {{#if (and (v-get this 'citation' 'isInvalid') (is-in showErrorsFor 'citation'))}}
+          <span class="validation-error-message">{{v-get this 'citation' 'message'}}</span>
         {{/if}}
       </div>
     </div>
@@ -93,8 +95,8 @@
     <div class="form-data">
       {{froala-editor
         params=editorParams
-        value=learningMaterial.description
-        contentChanged=(action "changeDescription")
+        value=description
+        contentChanged=(action 'changeDescription')
       }}
     </div>
   </div>
@@ -103,8 +105,13 @@
     <div class="form-col-12">
       <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
       <div class="form-data">
-        <p id="lm-copyright-agreement-text">{{input type='checkbox' checked=copyrightPermission}}
-        {{t 'learningMaterials.copyrightAgreement'}}</p>
+        <p id="lm-copyright-agreement-text">
+          {{one-way-checkbox
+              checked=copyrightPermission
+              update=(action (mut copyrightPermission))
+          }}
+          {{t 'learningMaterials.copyrightAgreement'}}
+        </p>
       </div>
     </div>
 
@@ -112,10 +119,10 @@
       <div class="form-col-12">
         <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
         <div class="form-data">
-          <input type="text"
-            onChange={{action "changeCopyrightRationale" value="target.value"}}
-            oninput={{action "changeCopyrightRationale" value="target.value"}}
-          />
+          {{textarea value=copyrightRationale focus-out=(action 'addErrorDisplayFor' 'copyrightRationale') key-press=(action 'addErrorDisplayFor' 'copyrightRationale') }}
+          {{#if (and (v-get this 'copyrightRationale' 'isInvalid') (is-in showErrorsFor 'copyrightRationale'))}}
+            <span class="validation-error-message">{{v-get this 'copyrightRationale' 'message'}}</span>
+          {{/if}}
         </div>
       </div>
     {{/unless}}
@@ -139,7 +146,13 @@
   {{/if}}
 
   <div class="form-col-12 form-data-submit">
-    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-    <button class='cancel text' {{action 'remove'}}>{{t 'general.cancel'}}</button>
+    <button class='done text' {{action 'save'}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    <button class='cancel text' {{action this.attrs.cancel}}>{{t 'general.cancel'}}</button>
   </div>
 </div>

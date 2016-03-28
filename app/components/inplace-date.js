@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import InPlaceValidation from 'ilios/mixins/inplace-validation';
+import InPlace from 'ilios/mixins/inplace';
 
 const { Component, computed, isEqual, observer } = Ember;
 const { oneWay } = computed;
 
-export default Component.extend(InPlaceValidation, {
+export default Component.extend(InPlace, {
   classNames: ['editinplace', 'inplace-select'],
 
   dateFormat: 'MM/DD/YY',

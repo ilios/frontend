@@ -1,10 +1,12 @@
 import Ember from 'ember';
-import InPlaceValidation from 'ilios/mixins/inplace-validation';
+import InPlace from 'ilios/mixins/inplace';
 
-const { Component, computed, ObjectProxy } = Ember;
+const { Component, computed, ObjectProxy, inject } = Ember;
 const { notEmpty } = computed;
+const { service } = inject;
 
-export default Component.extend(InPlaceValidation, {
+export default Component.extend(InPlace, {
+  i18n: service(),
   classNames: ['editinplace', 'inplace-select'],
 
   selectPromptTranslation: null,

@@ -41,7 +41,17 @@
     </div>
     <div class="form-col-12">
       <label class="form-label">{{t 'general.location'}}:</label>
-      <div class="form-data"><span class='room'>{{input value=buffer.room}}</span></div>
+      <div class="form-data"><span class='room'>
+        {{one-way-input
+          value=room
+          update=(action (mut room))
+          focusOut=(action 'addErrorDisplayFor' 'room')
+          keyDown=(action 'addErrorDisplayFor' 'room')
+        }}
+        {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
+          <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
+        {{/if}}
+      </span></div>
     </div>
     <div class="form-col-12">
       <div class="offering-learnergroups">

@@ -164,29 +164,29 @@ export default Component.extend({
       this.setProperties({ type, isEditing: true });
     },
 
-    saveNewLearningMaterial(params) {
+    saveNewLearningMaterial(lm) {
       const store = this.get('store');
       const isCourse = this.get('isCourse');
       const subject = this.get('subject');
 
-      let lmSubject;
-      let lm = this.get('store').createRecord('learning-material', params);
 
-      if (isCourse) {
-        lmSubject = store.createRecord('course-learning-material', { course: subject });
-      } else {
-        lmSubject = store.createRecord('session-learning-material', { session: subject });
-      }
 
-      lm.save().then((savedLm) => {
+      return lm.save().then((savedLm) => {
+        let lmSubject;
+
+        if (isCourse) {
+          lmSubject = store.createRecord('course-learning-material', { course: subject });
+        } else {
+          lmSubject = store.createRecord('session-learning-material', { session: subject });
+        }
         lmSubject.set('learningMaterial', savedLm);
-        lmSubject.save().then(() => {
+        return lmSubject.save().then(() => {
           this.set('isEditing', false);
         });
       });
     },
 
-    removeNewLearningMaterial() {
+    cancelNewLearningMaterial() {
       this.set('isEditing', false);
     },
 

@@ -1,28 +1,58 @@
 import Ember from 'ember';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, inject } = Ember;
+const { Component, inject, RSVP } = Ember;
 const { service } = inject;
+const { Promise } = RSVP;
 
-export default Component.extend({
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      max: 60,
+      descriptionKey: 'general.title'
+    }),
+  ]
+});
+
+export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
+
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('title', this.get('school.title'));
+  },
   classNames: [ 'full-width', 'school-manager' ],
   tagName: 'section',
   school: null,
-  titleValidations: {
-    'validationBuffer': {
-      presence: true,
-      length: { maximum: 60 }
-    }
-  },
+  title: null,
 
   actions: {
-    changeTitle(newTitle) {
+    changeTitle() {
       const school = this.get('school');
-
-      school.set('title', newTitle);
-      school.save().then(()=>{
-        this.get('flashMessages').success('general.savedSuccessfully');
+      const newTitle = this.get('title');
+      this.send('addErrorDisplayFor', 'title');
+      return new Promise((resolve, reject) => {
+        this.validate().then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('clearErrorDisplay');
+            school.set('title', newTitle);
+            school.save().then((newSchool) => {
+              this.set('title', newSchool.get('title'));
+              this.set('school', newSchool);
+              this.get('flashMessages').success('general.savedSuccessfully');
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
       });
-    }
+    },
+    revertTitleChanges(){
+      const school = this.get('school');
+      this.set('title', school.get('title'));
+    },
   }
 });
