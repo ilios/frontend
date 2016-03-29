@@ -79,11 +79,11 @@ test('errors show up', function(assert) {
     this.$('.done').click();
     return wait().then(() => {
       let boxes = this.$('.form-data');
-      assert.equal(boxes.eq(0).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(2).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(5).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(7).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(8).text().trim(), "This field can not be blank");
+      assert.equal(boxes.eq(0).text().trim(), "This field can't be blank");
+      assert.equal(boxes.eq(2).text().trim(), "This field can't be blank");
+      assert.equal(boxes.eq(5).text().trim(), "This field can't be blank");
+      assert.equal(boxes.eq(7).text().trim(), "This field can't be blank");
+      assert.equal(boxes.eq(8).text().trim(), "This field can't be blank");
     });
 
   });
