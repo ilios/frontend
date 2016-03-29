@@ -229,6 +229,17 @@ export default {
     },
     'manageCompetencies': "Manager des Compétences",
     'newDomain': 'Domaine nouvelle',
+    'termCount': {
+      'one': 'Il y a 1 terme',
+      'other': 'Il y a {{count}} termes'
+    },
+    'manageVocabularies': 'Manager vocabulaires',
+    'allVocabularies': 'Touts vocabulaires',
+    'confirmVocabularyRemoval': 'Êtes vous sûr de vouloir supprimer cette vocabulaire?',
+    'newTerm': 'Nouveau terme',
+    'successfullyRemovedTerm': 'Le terme soit correctement supprimé',
+    'successfullyAddedTerm': 'Le terme soit correctement ajouté',
+    'clickToAddTermDescription': 'Cliquez pour ajouter des notices descriptives',
   },
   'courses': {
     'currentSchool': "Écôle Actuelle",
