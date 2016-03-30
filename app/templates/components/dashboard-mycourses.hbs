@@ -9,17 +9,14 @@
         <tbody>
           {{#each sortedListOfCourses as |course|}}
             {{#if (can 'edit courses')}}
-              {{#link-to 'course' course}}
-                <tr class='clickable'>
-                  <td>{{fa-icon 'external-link-square'}}</td>
-                  <td>{{course.academicYear}}</td>
-                  <td colspan=2>{{course.title}}</td>
-                </tr>
-              {{/link-to}}
+              <tr class='clickable'>
+                <td>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.academicYear}}{{/link-to}}</td>
+                <td>{{#link-to 'course' course}}{{course.title}}{{/link-to}}</td>
+              </tr>
             {{else}}
-              <tr>                
-                <td colspan=1>{{course.academicYear}}</td>
-                <td colspan=3>{{course.title}}</td>
+              <tr>
+                <td>{{course.academicYear}}</td>
+                <td>{{course.title}}</td>
               </tr>
             {{/if}}
           {{/each}}

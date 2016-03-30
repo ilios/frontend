@@ -50,17 +50,17 @@ moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard m
 });
 
 test('list courses for privileged users', function(assert) {
-  assert.expect(11);
+  assert.expect(8);
   this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{dashboard-mycourses}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
   Ember.run.later(()=> {
-    for(let i = 0; i < 3; i++){
+    for(let i = 0; i < 2; i++){
       let a = this.$(`table a:eq(${i})`);
       assert.equal(a.length, 1);
       let tds = this.$(`table tr:eq(${i}) td`);
-      assert.equal(tds.eq(1).text().trim(), mockCourses[i].academicYear);
-      assert.equal(tds.eq(2).text().trim(), mockCourses[i].title);
+      assert.equal(tds.eq(0).text().trim(), mockCourses[i].academicYear);
+      assert.equal(tds.eq(1).text().trim(), mockCourses[i].title);
     }
 
     assert.equal(this.$(`table tr`).length, 3);
