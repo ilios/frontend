@@ -25,7 +25,7 @@ test('it renders', function(assert) {
   let vocabularies = [vocabulary1, vocabulary2].map(obj => Object.create(obj));
 
   const school = Object.create({
-    vocabularies: RSVP.resolve(Object.create(vocabularies))
+    vocabularies: RSVP.resolve(vocabularies)
   });
 
 

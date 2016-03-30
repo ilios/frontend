@@ -13,15 +13,20 @@ const Validations = buildValidations({
       min: 1,
       max: 200
     }),
-    validator('exclusion', {
+    validator('async-exclusion', {
       dependentKeys: ['vocabulary.topLevelTerms.@each.title'],
       in(){
-        const vocabulary = this.get('model.vocabulary');
-        if (isPresent(vocabulary)) {
-          return vocabulary.get('topLevelTerms').mapBy('title');
-        }
+        return new Promise(resolve => {
+          const vocabulary = this.get('model.vocabulary');
+          if (isPresent(vocabulary)) {
+            return vocabulary.get('topLevelTerms').then(topLevelTerms => {
+              resolve(topLevelTerms.mapBy('title'));
+            });
+          }
 
-        return [];
+          resolve([]);
+        });
+
       },
       descriptionKey: 'general.term',
     })

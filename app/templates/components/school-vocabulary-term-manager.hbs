@@ -10,13 +10,13 @@
 {{/if}}
 
 {{#if term}}
-  <p>
+  <p class='term-title'>
     {{inplace-text value=term.title save='changeTermTitle'}}
     {{#unless (or term.hasChildren term.hasAssociations)}}
       {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
     {{/unless}}
   </p>
-  <p>
+  <p class='term-description'>
     {{inplace-textarea value=term.description save='changeTermDescription' clickPromptTranslation='schools.clickToAddTermDescription'}}
   </p>
 {{/if}}

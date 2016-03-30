@@ -151,8 +151,8 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   });
 
   this.set('school', school);
-  this.on('edit', function(vocab){
-    assert.equal(vocab.get('id'), vocabulary1.id);
+  this.on('edit', function(id){
+    assert.equal(id, vocabulary1.id);
   });
   this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   return wait().then(() => {

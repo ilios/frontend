@@ -1,24 +1,31 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+
+const { Object, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('school-vocabulary-manager', 'Integration | Component | school vocabulary manager', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  let vocabulary = Object.create({
+    title: 'fake vocab',
+    topLevelTerms: resolve([])
+  });
 
-  this.render(hbs`{{school-vocabulary-manager}}`);
+  this.set('vocabulary', vocabulary);
+  this.on('nothing', parseInt);
+  this.render(hbs`{{school-vocabulary-manager
+    vocabulary=vocabulary
+    manageTerm=(action 'nothing')
+    manageVocabulary=(action 'nothing')
+  }}`);
 
-  assert.equal(this.$().text().trim(), '');
+  const all = '.breadcrumbs span:eq(0)';
+  const vocab = '.breadcrumbs span:eq(1)';
 
-  // Template block usage:
-  this.render(hbs`
-    {{#school-vocabulary-manager}}
-      template block text
-    {{/school-vocabulary-manager}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$(all).text().trim(), 'All Vocabularies');
+  assert.equal(this.$(vocab).text().trim(), vocabulary.title);
 });

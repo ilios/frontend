@@ -13,15 +13,20 @@ const Validations = buildValidations({
       min: 1,
       max: 200
     }),
-    validator('exclusion', {
+    validator('async-exclusion', {
       dependentKeys: ['term.children.@each.title'],
       in(){
-        const term = this.get('model.term');
-        if (isPresent(term)) {
-          return term.get('children').mapBy('title');
-        }
+        return new Promise(resolve => {
+          const term = this.get('model.term');
+          if (isPresent(term)) {
+            term.get('children').then(children => {
+              resolve(children.mapBy('title'));
+            });
+          }
 
-        return [];
+          resolve([]);
+        });
+
       },
       descriptionKey: 'general.term',
     })

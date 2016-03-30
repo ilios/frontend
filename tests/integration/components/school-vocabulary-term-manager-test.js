@@ -1,24 +1,56 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+
+const { Object, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('school-vocabulary-term-manager', 'Integration | Component | school vocabulary term manager', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  let allParents = resolve([
+    {id: 1, title: 'first'},
+    {id: 2, title: 'second'},
+  ]);
+  let children = resolve([]);
+  let vocabulary = Object.create({
+    title: 'fake vocab'
+  });
+  let title = 'fake term';
+  let description = 'fake tescription';
+  let term = Object.create({
+    allParents,
+    children,
+    vocabulary: resolve(vocabulary),
+    title,
+    description
+  });
+  this.set('term', term);
+  this.set('vocabulary', vocabulary);
+  this.on('nothing', parseInt);
+  this.render(hbs`{{
+    school-vocabulary-term-manager
+    term=term
+    vocabulary=vocabulary
+    manageTerm=(action 'nothing')
+    manageVocabulary=(action 'nothing')
+  }}`);
 
-  this.render(hbs`{{school-vocabulary-term-manager}}`);
+  const all = '.breadcrumbs span:eq(0)';
+  const vocab = '.breadcrumbs span:eq(1)';
+  const firstParent = '.breadcrumbs span:eq(3)';
+  const secondParent = '.breadcrumbs span:eq(2)';
+  const termCrumb = '.breadcrumbs span:eq(4)';
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#school-vocabulary-term-manager}}
-      template block text
-    {{/school-vocabulary-term-manager}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  const termTitle = '.term-title';
+  const termDescription = '.term-description';
+  assert.equal(this.$(all).text().trim(), 'All Vocabularies');
+  assert.equal(this.$(vocab).text().trim(), vocabulary.title);
+  assert.equal(this.$(firstParent).text().trim(), 'first');
+  assert.equal(this.$(secondParent).text().trim(), 'second');
+  assert.equal(this.$(termCrumb).text().trim(), title);
+  assert.equal(this.$(termTitle).text().trim(), title);
+  assert.equal(this.$(termDescription).text().trim(), description);
 });
