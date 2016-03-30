@@ -7,6 +7,7 @@ export default Component.extend({
   editable: not('course.locked'),
   courseObjectiveDetails: false,
   courseTaxonomyDetails: false,
+  courseCompetencyDetails: false,
   actions: {
     save: function(){
       var self = this;

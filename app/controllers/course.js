@@ -4,11 +4,12 @@ const { computed, Controller } = Ember;
 const { not } = computed;
 
 export default Controller.extend({
-  queryParams: ['details', 'courseObjectiveDetails', 'courseTaxonomyDetails'],
+  queryParams: ['details', 'courseObjectiveDetails', 'courseTaxonomyDetails', 'courseCompetencyDetails'],
 
   details: false,
   courseObjectiveDetails: false,
   courseTaxonomyDetails: false,
+  courseCompetencyDetails: false,
 
   // Pass the state var that ilios-course-details expects
   collapsed: not('details'),

@@ -1,5 +1,5 @@
-<section class='detail-block'>
-  <div class='detail-title'>
+<section class='detail-block {{if showCollapsible "collapsible"}}'>
+  <div class='detail-title {{if course.competencies.length "clickable"}}' {{action 'collapse'}}>
     {{t 'general.competencies'}} ({{course.competencies.length}})
   </div>
   <div class='detail-content'>

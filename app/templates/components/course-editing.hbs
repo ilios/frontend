@@ -9,22 +9,36 @@
 {{else}}
   {{collapsed-objectives subject=course expand=(action this.attrs.setCourseObjectiveDetails true)}}
 {{/liquid-if}}
+
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
-{{detail-competencies course=course editable=editable}}
+
+{{#liquid-if (or (eq course.competencies.length 0) courseCompetencyDetails)}}
+  {{detail-competencies
+    course=course
+    editable=editable
+    collapse=(action this.attrs.setCourseCompetencyDetails false)
+    expand=(action this.attrs.setCourseCompetencyDetails true)
+  }}
+{{else}}
+  {{collapsed-competencies subject=course expand=(action this.attrs.setCourseCompetencyDetails true)}}
+{{/liquid-if}}
+
 {{#liquid-if (or (eq course.terms.length 0) courseTaxonomyDetails)}}
-    {{detail-taxonomies
+  {{detail-taxonomies
     subject=course
     isCourse=true
     editable=editable
     collapse=(action this.attrs.setCourseTaxonomyDetails false)
     expand=(action this.attrs.setCourseTaxonomyDetails true)
-    }}
+  }}
 {{else}}
-    {{collapsed-taxonomies subject=course expand=(action this.attrs.setCourseTaxonomyDetails true)}}
+  {{collapsed-taxonomies subject=course expand=(action this.attrs.setCourseTaxonomyDetails true)}}
 {{/liquid-if}}
+
 {{detail-mesh
   subject=course
   isCourse=true
   editable=editable
 }}
+
 {{detail-cohorts course=course editable=editable}}
