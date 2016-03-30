@@ -162,6 +162,13 @@ $updated-color: #945c58;
     }
   }
 
+  .dashboard-my-courses {
+    .dashboard-block-body {
+      table {
+        width: auto;
+      }
+    }
+  }
   .ilios-calendar-container {
     min-height: 25em;
   }
