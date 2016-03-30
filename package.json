@@ -83,7 +83,7 @@
     "ember-tooltips": "0.5.9",
     "ember-truth-helpers": "1.2.0",
     "ember-watson": "^0.8.0",
-    "emberx-select": "2.1.0",
+    "emberx-select": "2.1.1",
     "eslint": "^2.2.0",
     "ilios-calendar": "^4.0.0",
     "liquid-fire": "0.23.0",
