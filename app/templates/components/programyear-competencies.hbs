@@ -1,14 +1,15 @@
-<section class='detail-block'>
-  <div class='detail-title'>
-    {{#if isManaging}}
+<section class='detail-block {{if showCollapsible "collapsible"}}'>
+  {{#if isManaging}}
+    <div class='detail-title'>
       <span class='detail-specific-title'>
         {{t 'programs.competenciesManageTitle'}}
       </span>
-    {{else}}
-      {{t 'general.competencies'}}
-    {{/if}}
-  </div>
-
+    </div>
+  {{else}}
+    <div class='detail-title {{if programYear.competencies.length "clickable"}}' {{action 'collapse'}}>
+      {{t 'general.competencies'}} ({{programYear.competencies.length}})
+    </div>
+  {{/if}}
   <div class='detail-actions'>
     {{#if isManaging}}
         <button class='bigadd' {{action 'save'}}>

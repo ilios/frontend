@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
 
 export default Component.extend({
   programYear: null,
@@ -8,6 +8,13 @@ export default Component.extend({
   isManaging: false,
   isSaving: false,
   bufferCompetencies: [],
+
+  showCollapsible: computed('isManaging', 'programYear.competencies.[]', function () {
+    const isManaging = this.get('isManaging');
+    const competencies = this.get('programYear.competencies');
+    return !isManaging && competencies.get('length');
+  }),
+
   actions: {
     manage: function(){
       var self = this;
@@ -48,6 +55,13 @@ export default Component.extend({
           this.get('bufferCompetencies').removeObject(child);
         });
       });
-    }
+    },
+    collapse(){
+      this.get('programYear.competencies').then(competencies => {
+        if (competencies.get('length')) {
+          this.attrs.collapse();
+        }
+      });
+    },
   }
 });

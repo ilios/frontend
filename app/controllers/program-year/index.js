@@ -5,9 +5,10 @@ const { controller } = inject;
 const { alias, not } = computed;
 
 export default Controller.extend({
-  queryParams: ['pyObjectiveDetails', 'pyTaxonomyDetails'],
+  queryParams: ['pyObjectiveDetails', 'pyTaxonomyDetails', 'pyCompetencyDetails'],
   pyObjectiveDetails: false,
   pyTaxonomyDetails: false,
+  pyCompetencyDetails: false,
 
   programYearController: controller('programYear'),
   programController: controller('program'),
