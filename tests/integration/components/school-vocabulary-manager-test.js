@@ -12,7 +12,7 @@ moduleForComponent('school-vocabulary-manager', 'Integration | Component | schoo
 test('it renders', function(assert) {
   let vocabulary = Object.create({
     title: 'fake vocab',
-    topLevelTerms: resolve([])
+    terms: resolve([])
   });
 
   this.set('vocabulary', vocabulary);
