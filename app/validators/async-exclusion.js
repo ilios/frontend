@@ -15,6 +15,8 @@ export default BaseValidator.extend({
       promise.then(excluded => {
         if (excluded.contains(value)) {
           resolve(this.createErrorMessage('exclusion', value, options));
+        } else {
+          resolve(true);
         }
       });
     });
