@@ -22,9 +22,9 @@ const Validations = buildValidations({
             term.get('children').then(children => {
               resolve(children.mapBy('title'));
             });
+          } else {
+            resolve([]);
           }
-
-          resolve([]);
         });
 
       },
