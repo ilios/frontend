@@ -19,8 +19,8 @@ const Validations = buildValidations({
         return new Promise(resolve => {
           const vocabulary = this.get('model.vocabulary');
           if (isPresent(vocabulary)) {
-            return vocabulary.get('topLevelTerms').then(topLevelTerms => {
-              resolve(topLevelTerms.mapBy('title'));
+            return vocabulary.get('terms').then(terms => {
+              resolve(terms.filterBy('isTopLevel', true).mapBy('title'));
             });
           }
 
