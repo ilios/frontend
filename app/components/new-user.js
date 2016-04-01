@@ -1,12 +1,8 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import NewUser from 'ilios/mixins/newuser';
 
-const { inject, computed, RSVP } = Ember;
-const { service } = inject;
-const { sort } = computed;
-const { PromiseObject, PromiseArray } = DS;
+const { Component } = Ember;
 
 const Validations = buildValidations({
   firstName: [
@@ -61,118 +57,6 @@ const Validations = buildValidations({
   ]
 });
 
-export default Ember.Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
-  currentUser: service(),
-  flashMessages: service(),
+export default Component.extend(NewUser, Validations, {
 
-  firstName: null,
-  middleName: null,
-  lastName: null,
-  campusId: null,
-  otherId: null,
-  email: null,
-  username: null,
-  password: null,
-  phone: null,
-  schoolId: null,
-
-  isSaving: false,
-
-  sortBy: ['title'],
-  sortedSchools: sort('schools', 'sortBy'),
-  schools: computed('currentUser.model.schools.[]', {
-    get(){
-      let defer = RSVP.defer();
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          defer.resolve(schools);
-        });
-      });
-
-      return PromiseArray.create({
-        promise: defer.promise
-      })
-    }
-  }).readOnly(),
-
-  bestSelectedSchool: computed('schools.[]', 'schoolId', function(){
-    let defer = RSVP.defer();
-    const schoolId = this.get('schoolId');
-    this.get('schools').then(schools => {
-      if (schoolId) {
-        let currentSchool = schools.find(school => {
-          return school.get('id') === schoolId;
-        });
-        if (currentSchool) {
-          defer.resolve(currentSchool);
-          return;
-        }
-      }
-      this.get('currentUser.model').then(user => {
-        defer.resolve(user.get('school'));
-      });
-    });
-
-    return PromiseObject.create({
-      promise: defer.promise
-    });
-  }),
-  actions: {
-    save: function(){
-      if(this.get('isSaving')){
-        return;
-      }
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const {
-            firstName,
-            middleName,
-            lastName,
-            campusId,
-            otherId,
-            email,
-            phone,
-            username,
-            password
-          } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
-          this.get('bestSelectedSchool').then(school => {
-            let user = this.get('store').createRecord('user', {
-              firstName,
-              middleName,
-              lastName,
-              campusId,
-              otherId,
-              email,
-              phone,
-              school,
-              enabled: true
-            });
-            user.save().then(newUser => {
-              let authentication = this.get('store').createRecord('authentication', {
-                user: newUser,
-                username,
-                password
-              });
-              return authentication.save().then(()=>{
-                this.get('flashMessages').success('user.saved');
-                this.attrs.transitionToUser(newUser.get('id'));
-              });
-            }).finally(() => {
-              this.set('isSaving', false);
-              this.send('clearErrorDisplay');
-            });
-          });
-        }
-      });
-    },
-    addErrorDisplayFor(field){
-      this.get('showErrorsFor').pushObject(field);
-    },
-    setSchool(schoolId){
-      this.set('schoolId', schoolId);
-    }
-  }
 });

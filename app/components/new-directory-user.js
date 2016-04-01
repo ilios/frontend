@@ -1,12 +1,10 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import NewUser from 'ilios/mixins/newuser';
 
-const { inject, computed, RSVP, isEmpty, isPresent } = Ember;
+const { inject, computed, isEmpty, isPresent, RSVP } = Ember;
 const { service } = inject;
-const { sort } = computed;
-const { PromiseObject, PromiseArray } = DS;
+const { Promise } = RSVP;
 
 const Validations = buildValidations({
   username: [
@@ -31,12 +29,9 @@ const Validations = buildValidations({
   ],
 });
 
-export default Ember.Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
+export default Ember.Component.extend(NewUser, Validations, {
   i18n: service(),
-  currentUser: service(),
   ajax: service(),
-  flashMessages: service(),
   iliosConfig: service(),
 
   init(){
@@ -48,19 +43,7 @@ export default Ember.Component.extend(Validations, ValidationErrorDisplay, {
   },
   classNames: ['new-directory-user'],
 
-  firstName: null,
-  middleName: null,
-  lastName: null,
-  campusId: null,
-  otherId: null,
-  email: null,
-  username: null,
-  password: null,
-  phone: null,
-  schoolId: null,
-
   searchResults: [],
-  isSaving: false,
   selectedUser: false,
   isSearching: false,
   searchResultsReturned: false,
@@ -68,106 +51,14 @@ export default Ember.Component.extend(Validations, ValidationErrorDisplay, {
   searchTerms: null,
 
   allowCustomUserName: computed('iliosConfig.authenticationType', function(){
-    return PromiseObject.create({
-      promise: this.get('iliosConfig.authenticationType').then(type => {
-        return type === 'form';
-      })
+    return new Promise (resolve => {
+      this.get('iliosConfig.authenticationType').then(type => {
+        resolve(type === 'form');
+      });
     });
   }),
 
-  sortBy: ['title'],
-  sortedSchools: sort('schools', 'sortBy'),
-  schools: computed('currentUser.model.schools.[]', {
-    get(){
-      let defer = RSVP.defer();
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          defer.resolve(schools);
-        });
-      });
-
-      return PromiseArray.create({
-        promise: defer.promise
-      })
-    }
-  }).readOnly(),
-
-  bestSelectedSchool: computed('schools.[]', 'schoolId', function(){
-    let defer = RSVP.defer();
-    const schoolId = this.get('schoolId');
-    this.get('schools').then(schools => {
-      if (schoolId) {
-        let currentSchool = schools.find(school => {
-          return school.get('id') === schoolId;
-        });
-        if (currentSchool) {
-          defer.resolve(currentSchool);
-          return;
-        }
-      }
-      this.get('currentUser.model').then(user => {
-        defer.resolve(user.get('school'));
-      });
-    });
-
-    return PromiseObject.create({
-      promise: defer.promise
-    });
-  }),
   actions: {
-    save(){
-      this.send('addErrorDisplayFor', 'username');
-      this.send('addErrorDisplayFor', 'password');
-      this.send('addErrorDisplayFor', 'otherId');
-      if(this.get('isSaving')){
-        return;
-      }
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          this.set('isSaving', true);
-          const {
-            firstName,
-            middleName,
-            lastName,
-            campusId,
-            otherId,
-            email,
-            phone,
-            username,
-            password
-          } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password');
-          this.get('bestSelectedSchool').then(school => {
-            let user = this.get('store').createRecord('user', {
-              firstName,
-              middleName,
-              lastName,
-              campusId,
-              otherId,
-              email,
-              phone,
-              school,
-              enabled: true
-            });
-            user.save().then(newUser => {
-              let authentication = this.get('store').createRecord('authentication', {
-                user: newUser,
-                username,
-                password
-              });
-              authentication.save().then(()=>{
-                this.send('clearErrorDisplay');
-                this.set('isSaving', false);
-                this.get('flashMessages').success('user.saved');
-                this.attrs.transitionToUser(newUser.get('id'));
-              });
-            });
-          });
-        }
-      });
-    },
-    setSchool(schoolId){
-      this.set('schoolId', schoolId);
-    },
     findUsersInDirectory(){
       let searchTerms = this.get('searchTerms');
       this.set('searchResultsReturned', false);

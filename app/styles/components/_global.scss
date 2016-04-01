@@ -50,7 +50,7 @@ button {
     font-weight: bold;
     width: 1.5em;
 
-    &:hover {
+    &:enabled:hover {
       color: $white;
     }
   }
@@ -62,7 +62,7 @@ button {
       border-color: $ilios-red;
     }
 
-    &:hover {
+    &:enabled:hover {
       background-color: $ilios-red;
     }
 
@@ -76,7 +76,7 @@ button {
       border-color: $ilios-green;
     }
 
-    &:hover {
+    &:enabled:hover {
       background-color: $ilios-green;
     }
   }
@@ -85,6 +85,11 @@ button {
     border-style: solid;
     border-width: 1px;
     width: 95px;
+  }
+
+  &:disabled {
+    cursor: auto;
+    opacity: .5;
   }
 }
 
