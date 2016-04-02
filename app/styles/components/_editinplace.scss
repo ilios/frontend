@@ -8,6 +8,10 @@
   .editable {
     color: $ilios-blue;
     cursor: pointer;
+
+    &.prompt {
+      font-style: italic;
+    }
   }
 
   .editor {
