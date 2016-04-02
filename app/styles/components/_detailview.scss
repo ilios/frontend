@@ -320,6 +320,12 @@ $collapse-control-shadow-grey: #e2e2e2;
 
   }
 
+  .selectable-list-header {
+    font-size: 1.1 * $base-font-size;
+    font-weight: bold;
+    margin-bottom: .25em;
+  }
+
   .detail-header {
     @include span-columns(12 of 12);
     background-color: $header-grey;

@@ -11,7 +11,7 @@
 
 {{#if term}}
   <p class='term-title'>
-    {{inplace-text value=term.title save='changeTermTitle'}}
+    {{inplace-text tagName='h5' value=term.title save='changeTermTitle'}}
     {{#unless (or term.hasChildren term.hasAssociations)}}
       {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
     {{/unless}}
@@ -28,6 +28,7 @@
     {{t 'general.savedSuccessfully'}}
   </div>
 {{/each}}
+<h5 class='selectable-list-header'>{{t 'schools.subTerms'}}:</h5>
 <div class='selectable-list'>
   <div class='selectable-list-form'>
     {{one-way-input

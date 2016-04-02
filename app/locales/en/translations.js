@@ -240,6 +240,7 @@ export default {
     'successfullyRemovedTerm': 'Term Deleted Successfully',
     'successfullyAddedTerm': 'Term Added Successfully',
     'clickToAddTermDescription': 'Click to add descriptive notes',
+    'subTerms': 'Sub-terms',
   },
   'courses': {
     'currentSchool': 'Current School',
