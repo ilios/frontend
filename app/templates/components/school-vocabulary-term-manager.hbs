@@ -11,7 +11,7 @@
 
 {{#if term}}
   <p class='term-title'>
-    {{inplace-text tagName='h5' value=term.title save='changeTermTitle'}}
+    {{inplace-text value=term.title save='changeTermTitle'}}
     {{#unless (or term.hasChildren term.hasAssociations)}}
       {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
     {{/unless}}
