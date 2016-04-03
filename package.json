@@ -55,7 +55,7 @@
     "ember-cli-qunit": "^1.4.0",
     "ember-cli-release": "0.2.8",
     "ember-cli-sauce": "^1.4.2",
-    "ember-cli-server-variables": "0.0.4",
+    "ember-cli-server-variables": "1.0.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-cli-uploader": "^0.3.10",
