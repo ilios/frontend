@@ -32,7 +32,7 @@ export default Mixin.create(ValidationErrorDisplay, {
   primaryCohortId: null,
 
   isSaving: false,
-  nonStudentMode: false,
+  nonStudentMode: true,
 
   schools: computed('currentUser.model.schools.[]', {
     get(){
@@ -95,6 +95,11 @@ export default Mixin.create(ValidationErrorDisplay, {
       },
       limit: 1000,
     });
+
+    //prefetch programYears and programs so that ember data will coalesce these requests.
+    let programYears = yield RSVP.all(cohorts.getEach('programYear'));
+    yield RSVP.all(programYears.getEach('program'));
+
     cohorts = cohorts.toArray();
     let all = [];
 
