@@ -5,18 +5,20 @@ import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
 const { Service, Object, RSVP } = Ember;
+const { resolve } = RSVP;
 
 const mockSchools = [
-  {id: 2, title: 'second'},
-  {id: 1, title: 'first'},
-  {id: 3, title: 'third'},
+  {id: 2, title: 'second', cohorts: resolve([])},
+  {id: 1, title: 'first', cohorts: resolve([])},
+  {id: 3, title: 'third', cohorts: resolve([])},
 ];
 const mockUser = Object.create({
-  schools: RSVP.resolve(mockSchools)
+  schools: resolve(mockSchools),
+  school: resolve(Object.create(mockSchools[0]))
 });
 
 const currentUserMock = Service.extend({
-  model: RSVP.resolve(mockUser)
+  model: resolve(mockUser)
 });
 
 moduleForComponent('new-user', 'Integration | Component | new users', {
@@ -80,11 +82,11 @@ test('errors show up', function(assert) {
     this.$('.done').click();
     return wait().then(() => {
       let boxes = this.$('.form-data');
-      assert.equal(boxes.eq(0).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(2).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(5).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(7).text().trim(), "This field can not be blank");
-      assert.equal(boxes.eq(8).text().trim(), "This field can not be blank");
+      assert.ok(boxes.eq(1).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(3).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(6).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(8).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(9).text().search(/blank/) > -1);
     });
 
   });

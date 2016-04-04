@@ -17,33 +17,16 @@ export default DS.Model.extend({
   curriculumInventoryInstitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
-  cohorts: computed('programs.[]', function(){
-    var school = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      school.get('programs').then(function(programs){
-        var promises = programs.map(function(program){
-          return program.get('programYears');
-        });
-        Ember.RSVP.hash(promises).then(function(hash){
-          var promises = [];
-          Object.keys(hash).forEach(function(key) {
-            hash[key].forEach(function(programYear){
-              promises.push(programYear.get('cohort'));
-            });
-          });
-          Ember.RSVP.hash(promises).then(function(hash){
-            var cohorts = Ember.A();
-            Object.keys(hash).forEach(function(key) {
-              if(hash[key] != null){
-                cohorts.pushObject(hash[key]);
-              }
-            });
-            resolve(cohorts);
-          });
-        });
+  cohorts: computed('programs.@each.programYears', {
+    get(){
+      return this.get('store').query('cohort', {
+        filters: {
+          schools: [this.get('id')]
+        },
+        limit: 1000
       });
-    });
-  }),
+    }
+  }).readOnly(),
   getCohortsForYear(year){
     let defer = Ember.RSVP.defer();
     this.getProgramYearsForYear(year).then(programYears => {

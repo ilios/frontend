@@ -118,6 +118,7 @@ export default {
     'primarySchool': 'Primary School',
     'unassigned': 'Unassigned',
     'student': 'Student',
+    'nonStudent': 'Non-Student',
     'phone': 'Phone',
     'primaryCohort': 'Primary Cohort',
     'secondaryCohorts': 'Secondary Cohorts',
