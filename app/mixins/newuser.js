@@ -92,7 +92,6 @@ export default Mixin.create(ValidationErrorDisplay, {
     let cohorts = yield this.get('store').query('cohort', {
       filters: {
         schools: [school.get('id')],
-        // startYears: [lastYear, thisYear, nextYear]
       },
       limit: 1000,
     });
