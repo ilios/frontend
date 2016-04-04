@@ -118,6 +118,7 @@ export default {
     'primarySchool': 'Escuela Primaria',
     'unassigned': 'No asignado',
     'student': 'Estudiante',
+    'nonStudent': 'No estudiante',
     'phone': 'Teléfono',
     'primaryCohort': 'Clase de la Graduación Principal',
     'secondaryCohorts': 'Clases de la Graduación Secondarias',
