@@ -41,5 +41,19 @@
     {{else}}
       {{school-competencies-collapsed school=school expand=(action this.attrs.setSchoolCompetencyDetails true)}}
     {{/if}}
+
+    {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
+      {{school-vocabularies-expanded
+        school=school
+        collapse=(action this.attrs.setSchoolVocabularyDetails false)
+        expand=(action this.attrs.setSchoolVocabularyDetails true)
+        managedVocabularyId=schoolManagedVocabulary
+        setSchoolManagedVocabulary=this.attrs.setSchoolManagedVocabulary
+        managedTermId=schoolManagedVocabularyTerm
+        setSchoolManagedVocabularyTerm=this.attrs.setSchoolManagedVocabularyTerm
+      }}
+    {{else}}
+      {{school-vocabularies-collapsed school=school expand=(action this.attrs.setSchoolVocabularyDetails true)}}
+    {{/if}}
   </div>
 </div>

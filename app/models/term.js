@@ -2,9 +2,10 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 const { computed } =  Ember;
-const { empty, notEmpty } = computed;
+const { empty, notEmpty, collect, sum, gte } = computed;
+const { Model } = DS;
 
-export default DS.Model.extend({
+export default Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
   vocabulary: DS.belongsTo('vocabulary', {async: true}),
@@ -15,6 +16,9 @@ export default DS.Model.extend({
   sessions: DS.hasMany('session', { async: true }),
   courses: DS.hasMany('course', { async: true }),
   hasChildren: notEmpty('children.content'),
+  associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
+  totalAssociations: sum('associatedLengths'),
+  hasAssociations: gte('totalAssociations', 1),
 
   allParents: computed('parent', 'parent.allParents.[]', function(){
     var deferred = Ember.RSVP.defer();

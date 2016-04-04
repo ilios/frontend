@@ -1,6 +1,6 @@
 <span class='content'>
   {{#unless isEditing}}
-    <span class='editable'>
+    <span class='editable {{unless value.length "prompt"}}'>
       {{#if value.length}}
         {{big-text text=value action='edit'}}
       {{else}}

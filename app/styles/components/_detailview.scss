@@ -277,16 +277,16 @@ $collapse-control-shadow-grey: #e2e2e2;
   .selectable-list {
     @include position(relative);
     @include clearfix;
+    background-color: $white;
+    border: 1px solid $base-link-color;
+    height: 10em;
     margin-bottom: $base-font-size;
+    overflow-y: scroll;
     width: 80%;
 
     ul {
       @include padding(.5em 1em .5em .5em);
-      background-color: $white;
-      border: 1px solid $base-link-color;
-      height: 10em;
-      overflow-y: scroll;
-      width: 80%;
+
 
       ul {
         background-color: transparent;
@@ -314,6 +314,16 @@ $collapse-control-shadow-grey: #e2e2e2;
       }
     }
 
+    .selectable-list-form {
+      margin: .5em;
+    }
+
+  }
+
+  .selectable-list-header {
+    font-size: 1.1 * $base-font-size;
+    font-weight: bold;
+    margin-bottom: .25em;
   }
 
   .detail-header {

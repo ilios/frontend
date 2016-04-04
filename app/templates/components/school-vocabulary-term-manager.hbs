@@ -1,0 +1,62 @@
+{{#if (is-fulfilled allParents)}}
+  <div class='breadcrumbs'>
+    <span {{action 'clearVocabAndTerm'}}>{{t 'schools.allVocabularies'}}</span>
+    <span {{action this.attrs.manageTerm null}}>{{vocabulary.title}}</span>
+    {{#each (await allParents) as |parent|}}
+      <span {{action this.attrs.manageTerm parent.id}}>{{parent.title}}</span>
+    {{/each}}
+    <span>{{term.title}}</span>
+  </div>
+{{/if}}
+
+{{#if term}}
+  <p class='term-title'>
+    {{inplace-text value=term.title save='changeTermTitle'}}
+    {{#unless (or term.hasChildren term.hasAssociations)}}
+      {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
+    {{/unless}}
+  </p>
+  <p class='term-description'>
+    {{inplace-textarea value=term.description save='changeTermDescription' clickPromptTranslation='schools.clickToAddTermDescription'}}
+  </p>
+{{/if}}
+{{#each newTerms as |term|}}
+  <div class='saved-result'>
+    <span class='clickable link' {{action this.attrs.manageTerm term.id}}>
+      {{fa-icon 'external-link-square'}} {{term.title}}
+    </span>
+    {{t 'general.savedSuccessfully'}}
+  </div>
+{{/each}}
+<h5 class='selectable-list-header'>{{t 'schools.subTerms'}}:</h5>
+<div class='selectable-list'>
+  <div class='selectable-list-form'>
+    {{one-way-input
+      value=newTermTitle
+      update=(action (mut newTermTitle))
+      onenter=(action 'createTerm')
+      focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
+      keyPress=(action 'addErrorDisplayFor' 'newTermTitle')
+    }}
+    <button class='save text' {{action 'createTerm'}}>
+      {{#if isSavingNewTerm}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.add'}}
+      {{/if}}
+    </button>
+    {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
+      <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
+    {{/if}}
+  </div>
+
+  {{#if (is-fulfilled sortedTerms)}}
+    <ul>
+      {{#each (await sortedTerms) as |term|}}
+        <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    {{fa-icon 'spinner' spin=true}}
+  {{/if}}
+</div>

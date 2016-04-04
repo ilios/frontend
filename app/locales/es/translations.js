@@ -229,6 +229,18 @@ export default {
     },
     'manageCompetencies': 'Maneje Competencias',
     'newDomain': 'Nuevo Dominio',
+    'termCount': {
+      'one': 'Hay 1 término',
+      'other': 'Hay {{count}} términos'
+    },
+    'manageVocabularies': 'Maneje Vocabularios',
+    'allVocabularies': 'Todos los Vocabularios',
+    'confirmVocabularyRemoval': '¿Está seguro que desea eliminar este vocabulario?',
+    'newTerm': 'Nuevo Termino',
+    'successfullyRemovedTerm': 'Término Eliminado Correctamente',
+    'successfullyAddedTerm': 'Término Agregado Correctamente',
+    'clickToAddTermDescription': 'Haga clic para agregar notas descriptivas',
+    'subTerms': 'Términos subordinados',
   },
   'courses': {
     'currentSchool': 'Escuela Actual',
