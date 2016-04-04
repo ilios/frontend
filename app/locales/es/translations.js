@@ -136,6 +136,7 @@ export default {
     'vocabularies': 'Vocabularios',
     'vocabulary': 'Vocabulario',
     'schools': 'Escuelas',
+    'universalLocator': 'Localizador universal de',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
