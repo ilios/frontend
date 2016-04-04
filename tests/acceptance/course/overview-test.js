@@ -57,8 +57,10 @@ test('check fields', function(assert) {
     assert.equal(getElementText(find('.courselevel', container)), 3);
     var endDate = moment.utc(course.endDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.courseenddate', container)), endDate);
+    assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText(clerkshipType.title));
     assert.equal(getElementText(find('.coursedirectors li', container)), getText('A M. Director'));
+
   });
 });
 
