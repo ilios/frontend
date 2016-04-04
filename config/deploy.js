@@ -25,12 +25,12 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'stage-v1.2';
+    ENV['s3-index'].prefix = 'stage-v1.3';
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'prod-v1.2';
+    ENV['s3-index'].prefix = 'prod-v1.3';
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
