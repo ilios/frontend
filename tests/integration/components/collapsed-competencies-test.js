@@ -5,7 +5,7 @@ import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object, RSVP } = Ember;
 
 moduleForComponent('collapsed-competencies', 'Integration | Component | collapsed competencies', {
   integration: true,
@@ -16,20 +16,27 @@ moduleForComponent('collapsed-competencies', 'Integration | Component | collapse
 });
 
 test('it renders', function(assert) {
-  assert.expect(1);
-  let domain = server.create('competency', {school: 1, isDomain: true, children: [2]});
-  let competency = server.create('competency', {school: 1, parent: 1});
-  let competencies = [domain, competency].map(obj => Object.create(obj));
+  assert.expect(4);
+  let schoolA = server.create('school', {title: 'Medicine'});
+  let schoolB = server.create('school', {title: 'Pharmacy'});
+  let competencyA = Object.create(server.create('competency', { school: 1 }));
+  competencyA.school = RSVP.resolve(schoolA);
+  let competencyB = Object.create(server.create('competency', { school: 2 }));
+  competencyB.school = RSVP.resolve(schoolB);
+  let competencies = [competencyA, competencyB];
 
   const course = Object.create({
-    competencies
+    competencies: RSVP.resolve(competencies)
   });
 
   this.set('course', course);
   this.on('click', parseInt);
   this.render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
   return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
+    let content = this.$().text().trim();
+    assert.equal(content.search(/Competencies \(2\)/), 0);
+    assert.notEqual(content.search(/School(\s+)Competencies/), -1);
+    assert.notEqual(content.search(/Medicine(\s+)1/), -1);
+    assert.notEqual(content.search(/Pharmacy(\s+)1/), -1);
   });
-
 });
