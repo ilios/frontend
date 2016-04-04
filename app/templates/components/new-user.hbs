@@ -142,14 +142,14 @@
     {{else}}
       {{fa-icon 'spinner' spin=true}}
     {{/if}}
-    {{#unless nonStudentMode class='vertical'}}
+    {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
       <label class="form-label">{{t "general.primaryCohort"}}:</label>
-      {{#if (and (is-fulfilled bestSelectedSchool.cohorts) (is-fulfilled bestSelectedCohort))}}
+      {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <div class="form-data form-data-select">
           <select onchange={{action "setPrimaryCohort" value="target.value"}}>
-            {{#each (sort-by 'programYear.program.title' (sort-by 'title' (get (await bestSelectedSchool) 'cohorts'))) as |cohort|}}
-              <option value={{cohort.id}} selected={{eq cohort (await bestSelectedCohort)}}>
-                {{cohort.programYear.program.title}} {{cohort.title}}
+            {{#each (sort-by 'title' cohorts) as |cohort|}}
+              <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+                {{cohort.title}}
               </option>
             {{/each}}
           </select>
@@ -157,7 +157,7 @@
       {{else}}
         {{fa-icon 'spinner' spin=true}}
       {{/if}}
-    {{/unless}}
+    {{/if}}
   </div>
 
   <div class="form-col-6 form-data-submit">

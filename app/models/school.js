@@ -20,7 +20,10 @@ export default DS.Model.extend({
   cohorts: computed('programs.@each.programYears', {
     get(){
       return this.get('store').query('cohort', {
-        school: this.get('id')
+        filters: {
+          schools: [this.get('id')]
+        },
+        limit: 1000
       });
     }
   }).readOnly(),

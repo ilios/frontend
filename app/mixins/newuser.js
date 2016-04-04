@@ -1,15 +1,23 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import moment from 'moment';
 
 const { Mixin, inject, computed, RSVP } = Ember;
 const { service } = inject;
 const { Promise } = RSVP;
+const { oneWay } = computed;
 
 
 export default Mixin.create(ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
   flashMessages: service(),
+
+  init(){
+    this._super(...arguments);
+    this.get('loadCohorts').perform();
+  },
 
   firstName: null,
   middleName: null,
@@ -24,7 +32,7 @@ export default Mixin.create(ValidationErrorDisplay, {
   primaryCohortId: null,
 
   isSaving: false,
-  nonStudentMode: true,
+  nonStudentMode: false,
 
   schools: computed('currentUser.model.schools.[]', {
     get(){
@@ -71,12 +79,47 @@ export default Mixin.create(ValidationErrorDisplay, {
                 return;
               }
             }
-            resolve(cohorts.get('firstObject'));
+            resolve(cohorts.get('lastObject'));
           });
         });
       });
     }
   }).readOnly(),
+
+  cohorts: oneWay('loadCohorts.lastSuccessful.value'),
+  loadCohorts: task(function * () {
+    let school = yield this.get('bestSelectedSchool');
+    let cohorts = yield this.get('store').query('cohort', {
+      filters: {
+        schools: [school.get('id')],
+        // startYears: [lastYear, thisYear, nextYear]
+      },
+      limit: 1000,
+    });
+    cohorts = cohorts.toArray();
+    let all = [];
+
+    for(let i = 0; i < cohorts.length; i++){
+      let cohort = cohorts[i];
+      let obj = {
+        id: cohort.get('id')
+      };
+      let programYear = yield cohort.get('programYear');
+      let program = yield programYear.get('program');
+      obj.title = program.get('title') + ' ' + cohort.get('title');
+      obj.startYear = programYear.get('startYear');
+      obj.duration = program.get('duration');
+
+      all.pushObject(obj);
+    }
+
+    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
+    return all.filter(obj=> {
+      let finalYear = parseInt(obj.startYear) + parseInt(obj.duration);
+      return finalYear > lastYear;
+    });
+
+  }).restartable(),
 
   actions: {
     save: function(){
@@ -146,6 +189,7 @@ export default Mixin.create(ValidationErrorDisplay, {
     },
     setSchool(id){
       this.set('schoolId', id);
+      this.get('loadCohorts').perform();
     },
     setPrimaryCohort(id){
       this.set('primaryCohortId', id);
