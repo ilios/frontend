@@ -40,3 +40,28 @@ test('it renders', function(assert) {
     assert.notEqual(content.search(/Pharmacy(\s+)1/), -1);
   });
 });
+
+test('clicking the header expands the list', function(assert) {
+  assert.expect(2);
+  let schoolA = server.create('school', {title: 'Medicine'});
+  let schoolB = server.create('school', {title: 'Pharmacy'});
+  let competencyA = Object.create(server.create('competency', { school: 1 }));
+  competencyA.school = RSVP.resolve(schoolA);
+  let competencyB = Object.create(server.create('competency', { school: 2 }));
+  competencyB.school = RSVP.resolve(schoolB);
+  let competencies = [competencyA, competencyB];
+
+  const course = Object.create({
+    competencies: RSVP.resolve(competencies)
+  });
+
+  this.set('course', course);
+  this.on('click', () => {
+    assert.ok(true, 'Action was fired');
+  });
+  this.render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
+  return wait().then(() => {
+    assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
+    this.$('.detail-title').click();
+  });
+});
