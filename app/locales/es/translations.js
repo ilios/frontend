@@ -240,6 +240,7 @@ export default {
     'successfullyRemovedTerm': 'Término Eliminado Correctamente',
     'successfullyAddedTerm': 'Término Agregado Correctamente',
     'clickToAddTermDescription': 'Haga clic para agregar notas descriptivas',
+    'subTerms': 'Términos subordinados',
   },
   'courses': {
     'currentSchool': 'Escuela Actual',

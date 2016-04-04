@@ -240,6 +240,7 @@ export default {
     'successfullyRemovedTerm': 'Le terme soit correctement supprimé',
     'successfullyAddedTerm': 'Le terme soit correctement ajouté',
     'clickToAddTermDescription': 'Cliquez pour ajouter des notices descriptives',
+    'subTerms': 'Sous-termes',
   },
   'courses': {
     'currentSchool': "Écôle Actuelle",
