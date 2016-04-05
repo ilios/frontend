@@ -10,6 +10,7 @@ export default Component.extend({
   notCollapsed: not('collapsed'),
   courseObjectiveDetails: null,
   courseTaxonomyDetails: null,
+  courseCompetencyDetails: null,
   actions: {
     expand: function(){
       this.sendAction('collapsedState', false);

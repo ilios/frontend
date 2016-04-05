@@ -8,7 +8,7 @@ import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
-var url = '/programs/1/programyears/1';
+var url = '/programs/1/programyears/1?pyCompetencyDetails=true';
 module('Acceptance: Program Year - Competencies' + testgroup, {
   beforeEach: function() {
     application = startApp();
@@ -55,7 +55,7 @@ test('list', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.programyear-competencies');
-    assert.equal(getElementText(find('.detail-title', container)), getText('Competencies'));
+    assert.equal(getElementText(find('.detail-title', container)), getText('Competencies (2)'));
     var competencies = 'competency 0 competency 1 competency 2';
     assert.equal(getElementText(find('.static-list', container)), getText(competencies));
   });

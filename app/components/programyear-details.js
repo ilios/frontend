@@ -7,4 +7,5 @@ export default Component.extend({
   programYear: null,
   pyObjectiveDetails: null,
   pyTaxonomyDetails: null,
+  pyCompetencyDetails: null,
 });
