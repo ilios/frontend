@@ -136,6 +136,7 @@ export default {
     'vocabularies': 'Vocabulaires',
     'vocabulary': 'Vocabulaire',
     'schools': 'Écoles',
+    'universalLocator': 'Localisateur universel',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
