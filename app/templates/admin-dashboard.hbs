@@ -12,6 +12,9 @@
 
     <div class='summaries'>
       {{pending-updates-summary}}
+      {{#if showUnassignedStudents}}
+        {{unassigned-students-summary}}
+      {{/if}}
     </div>
   </section>
 </div>

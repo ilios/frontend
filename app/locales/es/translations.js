@@ -537,6 +537,11 @@ export default {
     },
     'userNotAddableFromDirectory': "ste usuario está faltando información requerida y no se puede agregar",
     'goToUser': "Mostrar registro de usuario en Ilios",
+    'unassignedStudentsSummaryTitle': 'Estudiantes que Requieren Asignación de Cohorte',
+    'unassignedStudentsSummary': {
+      'one': 'Hay un estudiante que requiere asignación de cohorte',
+      'other': 'Hay {{count}} estudiantes que requieren asignación de cohorte'
+    },
   },
   'taxonomies' : {
     'assignedTerms': 'Términos asignados',

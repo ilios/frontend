@@ -10,8 +10,9 @@ const { reads, gt, sort } = computed;
 export default Component.extend({
   store: service(),
   currentUser: service(),
-  tagName: 'section',
-  classNames: ['pending-updates-summary', 'summary-block'],
+  tagName: 'div',
+  classNameBindings: [':pending-updates-summary', ':summary-block', 'alert'],
+  alert: computed.gt('updates.length', 0),
   schoolId: null,
   hasMoreThanOneSchool: gt('currentUser.model.schools.length', 1),
   schools: reads('currentUser.model.schools'),

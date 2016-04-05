@@ -537,6 +537,11 @@ export default {
     },
     'userNotAddableFromDirectory': "This user is missing required information and cannot be added",
     'goToUser': "Show user record in ilios",
+    'unassignedStudentsSummaryTitle': 'Students Requiring Cohort Assignment',
+    'unassignedStudentsSummary': {
+      'one': 'There is one student needing assignment to a cohort',
+      'other': 'There are {{count}} students needing assignment to a cohort'
+    },
   },
   'taxonomies' : {
     'assignedTerms': 'Assigned terms',

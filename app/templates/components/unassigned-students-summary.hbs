@@ -1,0 +1,37 @@
+<h2>
+  {{#if (gt (get (await unassignedStudents) 'length') 1)}}
+    {{fa-icon 'warning'  class='no'}}
+  {{/if}}
+  {{t 'admin.unassignedStudentsSummaryTitle'}}
+</h2>
+{{#if (is-fulfilled schools)}}
+  <div id='schoolsfilter' class="filter">
+    <label class="inline-label">
+      {{fa-icon 'university'}}
+    </label>
+    <div id="school-selection" class="inline-data">
+      {{#if (gt (get (await schools) 'length') 1)}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each (sort-by 'title' (await schools)) as |school|}}
+            <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{get (await selectedSchool) 'title'}}
+      {{/if}}
+    </div>
+  </div>
+{{/if}}
+
+{{#if (is-fulfilled unassignedStudents)}}
+  <p>{{t 'admin.unassignedStudentsSummary' count=(get (await unassignedStudents) 'length')}}</p>
+  {{#if (gt (get (await unassignedStudents) 'length') 0)}}
+    {{#link-to 'assign-students' (query-params school=(get (await selectedSchool) 'id'))}}
+      <button>{{t 'general.manage'}}</button>
+    {{/link-to}}
+  {{/if}}
+{{else}}
+  {{fa-icon 'spinner' spin = true}}
+{{/if}}

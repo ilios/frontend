@@ -537,6 +537,11 @@ export default {
     },
     'userNotAddableFromDirectory': "Cette utilisateur manque les informations requises, et ne peut pas être ajouté",
     'goToUser': "Présentant enregistrement d'utilisateur en Ilios",
+    'unassignedStudentsSummaryTitle': "Étudiants qui ont besoin affectation à une cohorte",
+    'unassignedStudentsSummary': {
+      'one': "Il y a un étudiant qui a besoin affectation à une cohorte",
+      'other': "Il y a {{count}} étudiants qui ont besoin affectation à une cohorte"
+    },
   },
   'taxonomies' : {
     'assignedTerms': 'Termes assignées',
