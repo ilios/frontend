@@ -79,7 +79,7 @@ test('can search for users', function(assert) {
   click(secondResultUsername);
   andThen(() => {
     assert.equal(currentURL(), '/users/2', 'new user profile is shown');
-    assert.equal(find(name).text(), '1 guy M. Mc1son', 'user name is shown');
+    assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
   });
 });
 

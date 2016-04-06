@@ -8,7 +8,8 @@ moduleForComponent('user-profile', 'Unit | Component | user profile ', {
 test('properties have default values', function(assert) {
   assert.expect(1);
 
-  const component = this.subject();
+  const user = Ember.Object.create();
+  const component = this.subject({ user });
 
   assert.ok(!component.get('inProgress'), 'false by default');
 });
