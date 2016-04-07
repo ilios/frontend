@@ -34,11 +34,11 @@ $sliding-menu-color-hover: #fff;
     text-align: center;
     width: 120px;
     z-index: 201;
-    
+
     @include media($giant-screen) {
       display: none;
     }
-    
+
     i {
       @include transform(rotate(-90deg));
       margin-right: 10px;
@@ -61,7 +61,7 @@ $sliding-menu-color-hover: #fff;
     -webkit-overflow-scrolling: touch;
     padding-top: 2em;
     z-index: 201;
-    
+
     @include media($giant-screen) {
       @include transform(translateX(0));
     }
@@ -82,6 +82,12 @@ $sliding-menu-color-hover: #fff;
       }
     }
 
+    .loading-indicator {
+      font-size: 2em;
+      text-align: center;
+      width: 100%;
+    }
+
     &.is-menu-visible {
       @include transform(translateX(0));
     }
@@ -97,7 +103,7 @@ $sliding-menu-color-hover: #fff;
 
     &.is-menu-visible {
       visibility: visible;
-      
+
       @include media($giant-screen) {
         visibility: hidden;
       }

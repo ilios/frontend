@@ -3,27 +3,33 @@
 		{{fa-icon 'bars'}} {{t 'navigation.menu'}}
 	</a>
 	<nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible 'is-menu-visible'}}">
-		<ul>
-			<li id='slidingnavmenu-dashboard'>{{#link-to 'dashboard'}}{{fa-icon 'home'}} {{t 'navigation.dashboard'}}{{/link-to}}</li>
-			{{#if (can 'edit courses')}}
-				<li id='slidingnavmenu-courses'>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
-			{{/if}}
-			{{#if (can 'edit learnerGroups')}}
-				<li id='slidingnavmenu-learnergroups'>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
-			{{/if}}
-			{{#if (can 'edit instructorGroups')}}
-				<li id='slidingnavmenu-instructorgroups'>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
-			{{/if}}
-			{{#if (can 'edit schools')}}
-				<li id='slidingnavmenu-schools'>{{#link-to 'schools'}}{{fa-icon 'university'}} {{t 'general.schools'}}{{/link-to}}</li>
-			{{/if}}
-			{{#if (can 'edit programs')}}
-				<li id='slidingnavmenu-programs'>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
-			{{/if}}
-			{{#if (can 'view adminDashboard')}}
-				<li id='slidingnavmenu-admindashboard'>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'navigation.admin'}}{{/link-to}}</li>
-			{{/if}}
-		</ul>
+		{{#if (is-fulfilled permissions)}}
+			<ul>
+				<li id='slidingnavmenu-dashboard'>{{#link-to 'dashboard'}}{{fa-icon 'home'}} {{t 'navigation.dashboard'}}{{/link-to}}</li>
+				{{#if (get (await permissions) 'isFaculty')}}
+					<li id='slidingnavmenu-courses'>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
+				{{/if}}
+				{{#if (get (await permissions) 'isFaculty')}}
+					<li id='slidingnavmenu-learnergroups'>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
+				{{/if}}
+				{{#if (get (await permissions) 'isFaculty')}}
+					<li id='slidingnavmenu-instructorgroups'>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
+				{{/if}}
+				{{#if (get (await permissions) 'isFaculty')}}
+					<li id='slidingnavmenu-schools'>{{#link-to 'schools'}}{{fa-icon 'university'}} {{t 'general.schools'}}{{/link-to}}</li>
+				{{/if}}
+				{{#if (get (await permissions) 'isFaculty')}}
+					<li id='slidingnavmenu-programs'>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
+				{{/if}}
+				{{#if (get (await permissions) 'isAdmin')}}
+					<li id='slidingnavmenu-admindashboard'>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'navigation.admin'}}{{/link-to}}</li>
+				{{/if}}
+			</ul>
+		{{else}}
+			<div class='loading-indicator'>
+				{{fa-icon 'spinner' spin=true}}
+			</div>
+		{{/if}}
 	</nav>
 	<div {{action 'toggleMenuVisibility'}} class="menu-screen {{if isMenuVisible 'is-menu-visible'}}"></div>
 </div>
