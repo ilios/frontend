@@ -177,7 +177,8 @@ export default Component.extend({
     },
     changeNewObjectiveTitle(event, editor){
       if(editor){
-        this.set('newObjectiveTitle', editor.getHTML());
+        const contents = editor.html.get();
+        this.set('newObjectiveTitle', contents);
       }
     },
     collapse(){

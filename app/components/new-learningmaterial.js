@@ -200,7 +200,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     changeDescription(event, editor) {
       if (editor) {
-        this.set('description', editor.getHTML());
+        this.set('description', editor.html.get());
       }
     },
 

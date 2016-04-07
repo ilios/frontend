@@ -18,8 +18,8 @@ module('Unit | Initializer | froala' + testgroup, {
 
 test('froala key is in the jquery global', function(assert) {
   initialize(registry, application);
-  
-  let key = $.Editable.DEFAULTS.key;
+
+  let key = $.FroalaEditor.DEFAULTS.key;
   assert.ok(key);
   assert.ok(key.length > 10);
 });

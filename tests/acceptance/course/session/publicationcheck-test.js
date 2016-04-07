@@ -323,10 +323,11 @@ test('change description', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.sessiondescription .froala-box');
-        let editorContents = editor.editable('getText');
+        let editor = find('.sessiondescription .froalaEditor');
+        let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), description);
-        editor.editable('setHTML', 'test new description');
+        editor.froalaEditor('html.set', 'test new description');
+        editor.froalaEditor('events.trigger', 'contentChanged');
         click(find('.editinplace .actions .done', container));
         andThen(function(){
           assert.equal(getElementText(find('.content', container)), getText('test new description'));
@@ -349,10 +350,11 @@ test('add description', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.sessiondescription .froala-box');
-        let editorContents = editor.editable('getText');
+        let editor = find('.sessiondescription .froalaEditor');
+        let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), '');
-        editor.editable('setHTML', 'test new description');
+        editor.froalaEditor('html.set', 'test new description');
+        editor.froalaEditor('events.trigger', 'contentChanged');
         click(find('.editinplace .actions .done', container));
         andThen(function(){
           assert.equal(getElementText(find('.content', container)), getText('test new description'));
