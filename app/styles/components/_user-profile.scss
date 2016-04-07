@@ -19,18 +19,19 @@
     right: 0;
   }
 
-  .user-profile {
+  .user-profile-details {
+    @include span-columns(12 of 12);
+
     margin-top: 2em;
 
     .user-permissions {
+      @include span-columns(3 of 12);
       background: $header-grey;
       border-radius: 1em;
-      display: inline-block;
       min-height: 300px;
       padding: 1em;
       text-align: center;
       vertical-align: top;
-      width: 250px;
 
       .user-permissions-header {
         font-size: 1.5em;
@@ -54,27 +55,17 @@
     }
 
     .user-info {
-      display: inline-block;
+      @include shift(1 of 12);
+      @include span-columns(8 of 12);
+    }
 
-      .form-label {
-        display: inline-block;
-        margin-right: 1em;
-        text-align: right;
-        vertical-align: top;
-        width: 200px;
-      }
+    //override form styles since we are in smaller space
+    .form-col-6 {
+      @include span-columns(6 of 8);
 
-      .form-data {
-        display: inline-block;
-        width: 400px;
-      }
-
-      .secondary-cohort {
-        font-size: 12px;
-      }
-
-      .learner-group {
-        font-size: 12px;
+      &.form-data-submit {
+        @include shift(1);
+        @include span-columns(5 of 8);
       }
     }
   }

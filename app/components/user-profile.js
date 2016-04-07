@@ -1,14 +1,89 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import { task } from 'ember-concurrency';
 
 const { computed, Component, inject, RSVP } = Ember;
 const { PromiseObject, PromiseArray } = DS;
 const { service } = inject;
 
-export default Component.extend({
+const Validations = buildValidations({
+  firstName: [
+    validator('presence', true),
+    validator('length', {
+      max: 20
+    }),
+  ],
+  middleName: [
+    validator('length', {
+      max: 20
+    }),
+  ],
+  lastName: [
+    validator('presence', true),
+    validator('length', {
+      max: 20
+    }),
+  ],
+  campusId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+  otherId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+  email: [
+    validator('presence', true),
+    validator('length', {
+      max: 100
+    }),
+    validator('format', {
+      type: 'email'
+    }),
+  ],
+  phone: [
+    validator('length', {
+      max: 20
+    }),
+  ]
+});
+
+export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
+  currentUser: service(),
+  flashMessages: service(),
+
+
+  didReceiveAttrs(){
+    this._super(...arguments);
+    const user = this.get('user');
+    this.setProperties(user.getProperties(
+      'firstName',
+      'middleName',
+      'lastName',
+      'campusId',
+      'otherId',
+      'email',
+      'phone'
+    ));
+  },
 
   classNames: ['user-profile'],
+
+  firstName: null,
+  middleName: null,
+  lastName: null,
+  campusId: null,
+  otherId: null,
+  email: null,
+  phone: null,
+
+  isEditing: false,
+  isSaving: false,
 
   roles: computed({
     get() {
@@ -98,6 +173,29 @@ export default Component.extend({
 
   inProgress: false,
 
+  save: task(function * () {
+    this.set('isSaving', true);
+    this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone']);
+    let {validations} = yield this.validate();
+    if (validations.get('isValid')) {
+      const user = this.get('user');
+      user.setProperties(this.getProperties(
+        'firstName',
+        'middleName',
+        'lastName',
+        'campusId',
+        'otherId',
+        'email',
+        'phone'
+      ));
+      yield user.save();
+      this.send('clearErrorDisplay');
+      this.set('isEditing', false);
+      this.get('flashMessages').success('general.savedSuccessfully');
+    }
+    this.set('isSaving', false);
+  }).drop(),
+
   actions: {
     addRole(roleToAdd) {
       this.set('inProgress', true);
@@ -174,6 +272,6 @@ export default Component.extend({
           });
         });
       });
-    }
+    },
   }
 });
