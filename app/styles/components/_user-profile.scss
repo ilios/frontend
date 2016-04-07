@@ -19,6 +19,22 @@
     right: 0;
   }
 
+  // override for secondary cohorts picker
+  .secondary-cohorts {
+    .removable-list {
+      white-space: normal;
+
+      li {
+        white-space: nowrap;
+      }
+    }
+
+    .selectable-list {
+      overflow-x: scroll;
+      width: 100%;
+    }
+  }
+
   .user-profile-details {
     @include span-columns(12 of 12);
 
@@ -62,6 +78,8 @@
     //override form styles since we are in smaller space
     .form-col-6 {
       @include span-columns(6 of 8);
+
+
 
       &.form-data-submit {
         @include shift(1);
