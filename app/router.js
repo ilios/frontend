@@ -55,6 +55,7 @@ Router.map(function() {
   this.route('pending-user-updates', {path: '/admin/userupdates'});
   this.route('schools');
   this.route('school', { path: 'schools/:school_id'});
+  this.route('assign-students', {path: '/admin/assignstudents'});
 });
 
 export default Router;
