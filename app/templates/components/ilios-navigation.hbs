@@ -8,17 +8,9 @@
 				<li id='slidingnavmenu-dashboard'>{{#link-to 'dashboard'}}{{fa-icon 'home'}} {{t 'navigation.dashboard'}}{{/link-to}}</li>
 				{{#if (get (await permissions) 'isFaculty')}}
 					<li id='slidingnavmenu-courses'>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'navigation.courses'}}{{/link-to}}</li>
-				{{/if}}
-				{{#if (get (await permissions) 'isFaculty')}}
 					<li id='slidingnavmenu-learnergroups'>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'navigation.learnerGroups'}}{{/link-to}}</li>
-				{{/if}}
-				{{#if (get (await permissions) 'isFaculty')}}
 					<li id='slidingnavmenu-instructorgroups'>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'navigation.instructorGroups'}}{{/link-to}}</li>
-				{{/if}}
-				{{#if (get (await permissions) 'isFaculty')}}
 					<li id='slidingnavmenu-schools'>{{#link-to 'schools'}}{{fa-icon 'university'}} {{t 'general.schools'}}{{/link-to}}</li>
-				{{/if}}
-				{{#if (get (await permissions) 'isFaculty')}}
 					<li id='slidingnavmenu-programs'>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'navigation.programs'}}{{/link-to}}</li>
 				{{/if}}
 				{{#if (get (await permissions) 'isAdmin')}}
