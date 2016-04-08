@@ -44,9 +44,9 @@
     <table>
       <thead>
         <tr>
-          <th class='text-right clickable' colspan="1" onclick={{action 'toggleCheck'}}>
-            {{fa-icon 'check'}}{{t 'general.all'}}
+          <th class='text-left clickable' colspan="1" onclick={{action 'toggleCheck'}}>
             <input type='checkbox' checked={{gt selectedUserIds.length 0}} />
+            {{t 'general.all'}}
           </th>
           <th class='text-left' colspan="4">{{t 'user.fullName'}}</th>
           <th class='text-left' colspan="4">{{t 'general.email'}}</th>
@@ -56,7 +56,7 @@
       <tbody>
         {{#each filteredStudents as |user|}}
           <tr class='{{if (is-in selectedUserIds user.id) "highlighted"}}'>
-            <td class='text-right clickable' colspan="1" {{action 'toggleUserSelection' user.id}}>
+            <td class='text-left clickable' colspan="1" {{action 'toggleUserSelection' user.id}}>
               {{#if (is-in selectedUserIds user.id)}}
                 <input type='checkbox' checked />
               {{else}}
