@@ -1,1 +1,40 @@
-{{outlet}}
+<section class='fullwidth main-border assign-students'>
+  <div class="filter-tools">
+    <div id='schoolsfilter' class="filter">
+      <label class="inline-label">
+        {{fa-icon 'university'}}
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if hasMoreThanOneSchool}}
+          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+            {{#each (sort-by 'title' model.schools) as |school|}}
+              <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{selectedSchool.title}}
+        {{/if}}
+      </div>
+    </div>
+
+    <div id='titlefilter' class="filter">
+      <input type='text' value={{filter}} placeholder={{t 'admin.pendingUserUpdates.filterBy'}} oninput={{action (mut filter) value="target.value"}} />
+    </div>
+  </div>
+
+  {{#liquid-if (is-fulfilled displayedUnassignedStudents)}}
+    {{assign-students
+      students=(await unassignedStudents)
+      school=selectedSchool
+      limit=limit
+      offset=offset
+      setOffset=(action (mut offset))
+      setLimit=(action (mut limit))
+    }}
+  {{else}}
+    {{fa-icon 'spinner' spin=true}}
+  {{/liquid-if}}
+
+</section>

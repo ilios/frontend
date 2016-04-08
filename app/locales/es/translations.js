@@ -543,6 +543,10 @@ export default {
       'one': 'Hay un estudiante que requiere asignación de cohorte',
       'other': 'Hay {{count}} estudiantes que requieren asignación de cohorte'
     },
+    'unassignedStudentsConfirmation': {
+      'one': 'Asignar el usuario seleccionado a',
+      'other': 'Asignar {{count}} usuarios seleccionados a',
+    },
   },
   'taxonomies' : {
     'assignedTerms': 'Términos asignados',

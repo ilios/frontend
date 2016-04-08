@@ -528,20 +528,24 @@ export default {
     'pendingUpdatesSummaryTitle': 'Updates from the Campus Directory',
     'pendingUpdatesSummary': {
       'one': 'There is one user needing attention',
-      'other': 'There are {{count}} users needing attention'
+      'other': 'There are {{count}} users needing attention',
     },
     'pendingUserUpdates': {
       'filterBy': 'Filter by user name',
       'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization.',
       'emailMismatch': 'The email address in the directory ({{update.value}}) does not match the email in ilios ({{update.user.email}}).',
-      'updateIlios': 'Update Ilios'
+      'updateIlios': 'Update Ilios',
     },
     'userNotAddableFromDirectory': "This user is missing required information and cannot be added",
     'goToUser': "Show user record in ilios",
     'unassignedStudentsSummaryTitle': 'Students Requiring Cohort Assignment',
     'unassignedStudentsSummary': {
       'one': 'There is one student needing assignment to a cohort',
-      'other': 'There are {{count}} students needing assignment to a cohort'
+      'other': 'There are {{count}} students needing assignment to a cohort',
+    },
+    'unassignedStudentsConfirmation': {
+      'one': 'Assign selected user to',
+      'other': 'Assign {{count}} selected users to',
     },
   },
   'taxonomies' : {
