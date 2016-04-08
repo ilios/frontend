@@ -9,6 +9,7 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   store: service(),
+  flashMessages: service(),
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -115,6 +116,8 @@ export default Component.extend({
     }
     this.set('selectedUserIds', []);
     this.set('isSaving', false);
+
+    this.get('flashMessages').success('general.savedSuccessfully');
 
   }).drop(),
 
