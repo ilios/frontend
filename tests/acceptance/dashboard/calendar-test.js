@@ -450,6 +450,7 @@ test('test course level filter', function(assert) {
   });
   visit('/dashboard?showCalendar=true');
   showFilters();
+  chooseDetailFilter();
   andThen(function() {
     let events = find('div.event');
     assert.equal(events.length, 2);
@@ -493,6 +494,7 @@ test('test cohort filter', function(assert) {
   });
   visit('/dashboard?showCalendar=true');
   showFilters();
+  chooseDetailFilter();
   andThen(function() {
     let events = find('div.event');
     assert.equal(events.length, 2);
@@ -511,7 +513,7 @@ test('test cohort filter', function(assert) {
   });
 });
 
-let chooseCourseFilter = function(){
+let chooseDetailFilter = function(){
   andThen(function(){
     return click(find('.togglecoursefilters span'));
   });
@@ -548,7 +550,6 @@ test('test course filter', function(assert) {
   });
   visit('/dashboard?showCalendar=true');
   showFilters();
-  chooseCourseFilter();
   andThen(function() {
     let events = find('div.event');
     assert.equal(events.length, 3);
@@ -589,7 +590,6 @@ test('test course and session type filter together', function(assert) {
   });
   visit('/dashboard?showCalendar=true');
   showFilters();
-  chooseCourseFilter();
   andThen(function() {
     let events = find('div.event');
     assert.equal(events.length, 3);
@@ -661,6 +661,7 @@ test('academic year filters cohort', function(assert) {
   });
   visit('/dashboard?showCalendar=true');
   showFilters();
+  chooseDetailFilter();
   andThen(() => {
     pickOption('.calendar-year-picker select', '2015 - 2016', assert);
     andThen(()=> {
@@ -685,7 +686,6 @@ test('academic year filters courses', function(assert) {
   });
   visit('/dashboard?showCalendar=true');
   showFilters();
-  chooseCourseFilter();
   andThen(() => {
     pickOption('.calendar-year-picker select', '2015 - 2016', assert);
     andThen(()=> {
@@ -708,6 +708,7 @@ test('clear all filters', function(assert) {
 
   visit('/dashboard?showCalendar=true');
   showFilters();
+  chooseDetailFilter();
   andThen(() => {
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
   });
@@ -749,6 +750,7 @@ test('filter tags work properly', function(assert) {
 
   visit('/dashboard?showCalendar=true');
   showFilters();
+  chooseDetailFilter();
   andThen(() => {
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
   });
@@ -787,7 +789,6 @@ test('query params work', function(assert) {
   const calendarSlider = '.switch-label:eq(0)';
   const scheduleSlider = '.switch-label:eq(1)';
   const filterSlider = '.switch-label:eq(2)';
-  const courseSlider = '.switch-label:eq(3)';
   const academicYearDropdown = '.calendar-year-picker select';
 
   visit('/dashboard');
@@ -806,14 +807,14 @@ test('query params work', function(assert) {
     assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true&showFilters=true');
   });
 
-  click(courseSlider);
+  chooseDetailFilter();
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?courseFilters=true&mySchedule=false&showCalendar=true&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&showCalendar=true&showFilters=true');
   });
 
   pickOption(academicYearDropdown, '2015 - 2016', assert);
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=true&mySchedule=false&showCalendar=true&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&showCalendar=true&showFilters=true');
   });
 
   click(filterSlider);
