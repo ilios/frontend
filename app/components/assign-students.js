@@ -14,6 +14,8 @@ export default Component.extend({
   didReceiveAttrs(){
     this._super(...arguments);
     this.get('loadCohorts').perform();
+    this.set('selectedUserIds', []);
+    this.set('savedUserIds', []);
   },
   students: [],
   school: null,
@@ -100,6 +102,7 @@ export default Component.extend({
   }).restartable(),
 
   save: task(function * () {
+    this.set('savedUserIds', []);
     this.set('isSaving', true);
     let ids = this.get('selectedUserIds');
     let cohort = yield this.get('bestSelectedCohort');
@@ -114,8 +117,8 @@ export default Component.extend({
       yield RSVP.all(parts.invoke('save'));
       this.get('savedUserIds').pushObjects(parts.mapBy('id'));
     }
-    this.set('selectedUserIds', []);
     this.set('isSaving', false);
+    this.set('selectedUserIds', []);
 
     this.get('flashMessages').success('general.savedSuccessfully');
 
