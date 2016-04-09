@@ -128,6 +128,12 @@ test('check all checks all', function(assert) {
 });
 
 test('save sets primary cohort', function(assert) {
+  let flashmessagesMock = Ember.Service.extend({
+    success(message){
+      assert.equal(message, 'general.savedSuccessfully');
+    }
+  });
+  this.register('service:flashMessages', flashmessagesMock);
   let program = Object.create({
     duration: 20,
     title: 'program title'
