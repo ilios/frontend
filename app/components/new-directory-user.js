@@ -20,7 +20,13 @@ const Validations = buildValidations({
     }),
   ],
   password: [
-    validator('presence', true)
+    validator('presence', {
+      presence: true,
+      dependentKeys: 'allowCustomUserName.content',
+      disabled(){
+        return !this.get('model.allowCustomUserName.content');
+      }
+    })
   ],
   otherId: [
     validator('length', {
