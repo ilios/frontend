@@ -34,21 +34,10 @@
   </div>
   <div class='detail-content'>
     {{#liquid-if newObjectiveEditorOn class='vertical'}}
-      <section class='resultslist-new'>
-        <section class='newobjective'>
-          <label>
-            {{t 'general.description'}}:
-            {{froala-editor
-              params=editorParams
-              value=newObjectiveTitle
-              contentChanged=(action "changeNewObjectiveTitle")
-            }}
-          </label>
-          <br />
-          <button class='done text' {{action 'saveNewObjective'}}>{{t 'general.done'}}</button>
-          <button class='cancel text' {{action 'closeNewObjectiveEditor'}}>{{t 'general.cancel'}}</button>
-        </section>
-      </section>
+      {{new-objective
+        save=(action 'saveNewObjective')
+        cancel=(action 'toggleNewObjectiveEditor')
+      }}
     {{/liquid-if}}
     {{#liquid-unless isManaging class="horizontal"}}
       {{#if isCourse}}

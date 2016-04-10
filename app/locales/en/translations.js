@@ -290,6 +290,7 @@ export default {
     },
     'lmDescriptorTitle': 'Select MeSH Descriptors for Learning Materials',
     'newObjectiveSaved': 'New Objective Saved',
+    'newObjective': 'New Objective',
     'chooseCohortTitle': 'Select Parent For',
     'missingCohortMessage': 'Please add at least one cohort to this course.',
     'confirmRemove': 'Are you sure you want to delete this course, with {{publishedOfferingCount}} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone.',

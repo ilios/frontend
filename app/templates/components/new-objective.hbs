@@ -1,0 +1,29 @@
+<div class="new-result-title">{{t 'courses.newObjective'}}</div>
+
+<div class="detail-content">
+  <label class="form-col form-col-12">
+    <div class="form-label">{{t 'general.description'}}:</div>
+
+    <div class="form-data form-data-text form-input-row">
+      {{froala-editor
+        params=editorParams
+        value=title
+        contentChanged=(action "changeTitle")
+      }}
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{/if}}
+    </div>
+  </label>
+
+  <div class="form-col-6 form-data-submit">
+    <button class='done text' {{action 'save'}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    <button class='cancel text' {{action this.attrs.cancel}}>{{t 'general.cancel'}}</button>
+  </div>
+</div>
