@@ -1,6 +1,12 @@
 .removable-list {
   li {
     cursor: pointer;
+
+    .removex {
+      display: inline;
+      margin: 0;
+      padding: 0 .4em;
+    }
   }
 }
 

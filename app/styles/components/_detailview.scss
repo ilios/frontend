@@ -190,12 +190,6 @@ $collapse-control-shadow-grey: #e2e2e2;
     }
   }
 
-  .removex {
-    display: inline;
-    margin: 0;
-    padding: 0 .4em;
-  }
-
   .detail-header {
     @include span-columns(12 of 12);
     background-color: $header-grey;
