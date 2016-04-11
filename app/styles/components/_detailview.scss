@@ -233,26 +233,6 @@ $collapse-control-shadow-grey: #e2e2e2;
     }
   }
 
-  .static-list {
-    background-color: $white;
-    border: 1px solid $input-box-grey;
-    border-radius: $base-border-radius;
-    padding: 1em 2em;
-    width: 80%;
-
-    li {
-      font-weight: bold;
-    }
-
-    ul {
-      margin-left: 1em;
-
-      li {
-        font-weight: normal;
-      }
-    }
-  }
-
   .active-background,
   .active-background:hover {
     background-color: $active-background-color;
