@@ -11,7 +11,7 @@ export default Controller.extend({
   showCalendar: false,
   mySchedule: true,
   showFilters: false,
-  courseFilters: false,
+  courseFilters: true,
   academicYear: null,
   school: null,
 
@@ -87,7 +87,7 @@ export default Controller.extend({
 
     toggleShowCalendar() {
       if (this.get('showCalendar')) {
-        this.setProperties({ showCalendar: false, mySchedule: true, showFilters: false, school: null, academicYear: null, courseFilters: false });
+        this.setProperties({ showCalendar: false, mySchedule: true, showFilters: false, school: null, academicYear: null, courseFilters: true });
       } else {
         this.set('showCalendar', true);
       }
@@ -103,7 +103,7 @@ export default Controller.extend({
 
     toggleShowFilters() {
       if (this.get('showFilters')) {
-        this.setProperties({ showFilters: false, school: null, academicYear: null, courseFilters: false });
+        this.setProperties({ showFilters: false, school: null, academicYear: null, courseFilters: true });
       } else {
         this.set('showFilters', true);
       }
