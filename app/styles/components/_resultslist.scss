@@ -12,7 +12,7 @@
     padding: .4em;
 
     .resultslist-title {
-      @include span-columns(2 of 12);
+      @include span-columns(4 of 12);
       h2 {
         font-size: $base-font-size;
         margin: .3em 1em;
@@ -45,6 +45,10 @@
         border-bottom: 0;
         border-top: 0;
       }
+
+      &.highlighted {
+        background-color: lighten($ilios-green, 30%);
+      }
     }
 
     thead tr {
@@ -76,7 +80,7 @@
 
   .resultslist-actions {
     @include span-columns(2 of 12);
-    @include shift(8);
+    @include shift(6);
     text-align: right;
   }
 
@@ -85,7 +89,8 @@
     margin-top: .2em;
   }
 
-  .resultslist-new {
+  .resultslist-new,
+  .resultslist-save {
     clear: both;
     padding: 0 1em;
 
@@ -106,6 +111,10 @@
       font-weight: bold;
       margin-bottom: 1em;
     }
+  }
+
+  .resultslist-save {
+    padding-top: 2em;
   }
 }
 
