@@ -60,7 +60,7 @@ export default Component.extend({
         this.set('manageDescriptorsObjective', objective);
       });
     },
-    mangeCompetency: function(objective){
+    manageCompetency: function(objective){
       objective.get('competency').then((competency) => {
         scrollTo(".detail-objectives");
         this.set('initialStateForManageCompetencyObjective', competency);

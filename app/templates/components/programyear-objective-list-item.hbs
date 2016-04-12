@@ -1,0 +1,38 @@
+<td id='objective-{{objective.id}}' class='text-left text-top' colspan=3>
+  {{#editable-field
+    value=title
+    renderHtml=true
+    save=(action 'saveTitleChanges' )
+    close=(action 'revertTitleChanges')
+    as |isSaving save close|
+  }}
+    {{froala-editor
+      params=editorParams
+      value=title
+      contentChanged=(action "changeTitle")
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  {{/editable-field}}
+</td>
+<td class='text-left text-top' colspan=2>
+  {{#if objective.competency}}
+    <span class='clickable link' {{action this.attrs.manageCompetency objective}}>
+      {{objective.competency.title}}
+    </span>
+  {{else}}
+    <button {{action this.attrs.manageCompetency objective}}>{{t 'general.addNew'}}</button>
+  {{/if}}
+</td>
+<td class='text-left text-top' colspan=2>
+  {{#if objective.meshDescriptors.length}}
+    <ul>
+      {{#each objective.meshDescriptors as |descriptor|}}
+        <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <button {{action this.attrs.manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+  {{/if}}
+</td>
