@@ -44,23 +44,23 @@
         {{course-objective-list
           course=subject
           editable=editable
-          manageParents="manageParents"
-          manageDescriptors="manageDescriptors"
+          manageParents=(action "manageParents")
+          manageDescriptors=(action "manageDescriptors")
         }}
       {{/if}}
       {{#if isSession}}
         {{session-objective-list
           session=subject
           editable=editable
-          manageParents="manageParents"
-          manageDescriptors="manageDescriptors"
+          manageParents=(action "manageParents")
+          manageDescriptors=(action "manageDescriptors")
         }}
       {{/if}}
       {{#if isProgramYear}}
         {{programyear-objective-list
           programYear=subject
-          manageDescriptors="manageDescriptors"
-          mangeCompetency="mangeCompetency"
+          manageDescriptors=(action "manageDescriptors")
+          mangeCompetency=(action "mangeCompetency")
         }}
       {{/if}}
     {{else}}

@@ -17,7 +17,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
-  classNames: ['new-objective', 'new-result', 'form-container'],
+  classNames: ['newobjective', 'new-result', 'form-container'],
   editorParams: config.froalaEditorDefaults,
 
   title: null,

@@ -1,0 +1,75 @@
+  <td id='objective-{{objective.id}}' class='text-left text-top' colspan=3>
+    {{#if editable}}
+      {{#editable-field
+        value=title
+        save=(action 'saveTitleChanges' )
+        close=(action 'revertTitleChanges')
+        as |isSaving save close|
+      }}
+        {{froala-editor
+          params=editorParams
+          value=title
+          contentChanged=(action "changeTitle")
+        }}
+        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+        {{/if}}
+      {{/editable-field}}
+    {{else}}
+      {{{objective.title}}}
+    {{/if}}
+  </td>
+  <td class='text-left text-top' colspan=2>
+    {{#if objective.hasParents}}
+      {{#each objective.parents as |parent|}}
+        {{#if course.hasMultipleCohorts}}
+          <strong>
+            {{parent.programYear.program.title}}&nbsp
+            {{parent.programYear.cohort.displayTitle}}
+          </strong>
+          <br />
+        {{/if}}
+        {{#if editable}}
+          <span class='clickable link' {{action this.attrs.manageParents objective}}>
+            {{parent.textTitle}}
+          </span>
+        {{else}}
+          {{parent.textTitle}}
+        {{/if}}
+        {{#if parent.competency}}
+          ({{parent.competency.title}})
+        {{/if}}
+        <br />
+      {{/each}}
+    {{else}}
+      {{#if editable}}
+        <button {{action this.attrs.manageParents objective}}>{{t 'general.addNew'}}</button>
+      {{else}}
+        {{t 'general.none'}}
+      {{/if}}
+    {{/if}}
+  </td>
+  <td class='text-left text-top' colspan=2>
+    {{#if objective.meshDescriptors.length}}
+      <ul>
+        {{#each objective.meshDescriptors as |descriptor|}}
+          {{#if editable}}
+            <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
+          {{else}}
+            <li>{{descriptor.name}}</li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    {{else}}
+      {{#if editable}}
+        <button {{action this.attrs.manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+      {{else}}
+        {{t 'general.none'}}
+      {{/if}}
+    {{/if}}
+  </td>
+  <td class='text-left text-top' colspan=1>
+    {{#if editable}}
+      <span class='clickable remove' {{action this.attrs.remove objective}}>{{fa-icon 'trash'}}</span>
+    {{/if}}
+  </td>

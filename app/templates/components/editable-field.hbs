@@ -2,7 +2,7 @@
   {{#unless isEditing}}
     <span {{action 'edit'}} class='editable'>
       {{#if value}}
-        {{value}}
+        {{big-text text=value renderHtml=renderHtml}}
       {{else}}
         {{clickPrompt}}
       {{/if}}

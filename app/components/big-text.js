@@ -23,7 +23,12 @@ export default Component.extend({
     }
   }),
   cleanText: computed('text', function(){
-    const text = this.get('text') || '';
+    let text = this.get('text') || '';
+
+    if ((typeof text === 'object' && 'toString' in text || typeof text === 'number')){
+      text = text.toString();
+    }
+
     //strip any possible HTML out of the text
     return text.replace(/(<([^>]+)>)/ig,"");
   }),

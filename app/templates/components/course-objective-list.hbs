@@ -8,81 +8,34 @@
     </tr>
   </thead>
   <tbody>
-  {{#each sortedObjectives as |objectiveProxy|}}
-    <tr id="objective-{{objectiveProxy.id}}" class="{{if objectiveProxy.showRemoveConfirmation 'confirm-removal'}}">
-      <td class='text-left text-top' colspan=3>
-        {{#if editable}}
-          {{inplace-html value=objectiveProxy.content.title save='changeObjectiveTitle' condition=objectiveProxy.content.id}}
-        {{else}}
-          {{{objectiveProxy.title}}}
+    {{#if (is-fulfilled objectives)}}
+      {{#each sortedObjectives as |objective|}}
+        {{course-objective-list-item
+          objective=objective
+          course=course
+          showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
+          remove=(action 'confirmRemoval')
+          manageParents=this.attrs.manageParents
+          manageDescriptors=this.attrs.manageDescriptors
+        }}
+        {{#if (is-in objectivesForRemovalConfirmation objective.id)}}
+          <tr class='confirm-removal'><td colspan=8>
+            <div class='confirm-message'>
+              {{t 'courses.confirmObjectiveRemoval'}}<br />
+              <div class="confirm-buttons">
+                <button {{action 'remove' objective}} class='remove text'>{{t 'general.yes'}}</button>
+                <button {{action 'cancelRemove' objective}} class='done text'>{{t 'general.cancel'}}</button>
+              </div>
+            </div>
+          </td></tr>
         {{/if}}
-      </td>
-      <td class='text-left text-top' colspan=2>
-        {{#if objectiveProxy.hasParents}}
-          {{#each objectiveProxy.parents as |parent|}}
-            {{#if course.hasMultipleCohorts}}
-              <strong>
-                {{parent.programYear.program.title}}&nbsp
-                {{parent.programYear.cohort.displayTitle}}
-              </strong>
-              <br />
-            {{/if}}
-            {{#if editable}}
-              <span class='clickable link' {{action 'manageParents' objectiveProxy.content}}>
-                {{parent.textTitle}}
-              </span>
-            {{else}}
-              {{parent.textTitle}}
-            {{/if}}
-            {{#if parent.competency}}
-              ({{parent.competency.title}})
-            {{/if}}
-            <br />
-          {{/each}}
-        {{else}}
-          {{#if editable}}
-            <button {{action 'manageParents' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
-          {{else}}
-            {{t 'general.none'}}
-          {{/if}}
-        {{/if}}
-      </td>
-      <td class='text-left text-top' colspan=2>
-        {{#if objectiveProxy.meshDescriptors.length}}
-          <ul>
-            {{#each objectiveProxy.meshDescriptors as |descriptor|}}
-              {{#if editable}}
-                <li class='clickable link' {{action 'manageDescriptors' objectiveProxy.content}}>{{descriptor.name}}</li>
-              {{else}}
-                <li>{{descriptor.name}}</li>
-              {{/if}}
-            {{/each}}
-          </ul>
-        {{else}}
-          {{#if editable}}
-            <button {{action 'manageDescriptors' objectiveProxy.content}}>{{t 'general.addNew'}}</button>
-          {{else}}
-            {{t 'general.none'}}
-          {{/if}}
-        {{/if}}
-      </td>
-      <td class='text-left text-top' colspan=1>
-        {{#if editable}}
-          <span class='clickable remove' {{action 'confirmRemoval' objectiveProxy}}>{{fa-icon 'trash'}}</span>
-        {{/if}}
-      </td>
-    </tr>
-    {{#if objectiveProxy.showRemoveConfirmation}}
-      <tr class='confirm-removal'><td colspan=8>
-        <div class='confirm-message'>
-          {{t 'courses.confirmObjectiveRemoval'}}<br />
-          <div class="confirm-buttons">
-            <button {{action 'remove' objectiveProxy}} class='remove text'>{{t 'general.yes'}}</button>
-            <button {{action 'cancelRemove' objectiveProxy}} class='done text'>{{t 'general.cancel'}}</button>
-          </div>
-        </div>
-      </td></tr>
+      {{/each}}
+    {{else}}
+      {{#each (repeat course.objectives.length) as |empty|}}
+        <tr>
+          <td colspan=8>{{fa-icon 'spinner' spin = true}}</td>
+        </tr>
+      {{/each}}
     {{/if}}
-    {{/each}}
   </tbody>
 </table>
