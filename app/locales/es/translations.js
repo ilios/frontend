@@ -290,6 +290,7 @@ export default {
     },
     'lmDescriptorTitle': 'Seleccione Descriptores de MeSH para Materiales de Aprendizaje',
     'newObjectiveSaved': 'Nuevo Objetivo Guardado',
+    'newObjective': 'Nuevo Objetivo',
     'chooseCohortTitle': 'Seleccione Matriz Para',
     'missingCohortMessage': 'Favor de agregar por lo menos un Clase de La Graduación a este curso.',
     'confirmRemove': ' ¿Estás seguro que quieres borrar este curso, con {{publishedOfferingCount}} ofrecimientos publicados? Esta acción borrará todas las sessiones y ofrecimientos para este curso y no se puede deshacer.',
