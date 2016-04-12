@@ -18,14 +18,13 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{programyear-objective-list-item
     objective=objective
-    manageParents=(action 'nothing')
+    manageDescriptors=(action 'nothing')
     manageCompetency=(action 'nothing')
   }}`);
 
   assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
   assert.equal(this.$('td:eq(1) button').text().trim(), 'Add New');
   assert.equal(this.$('td:eq(2) button').text().trim(), 'Add New');
-  assert.equal(this.$('td:eq(3) i').length, 1);
 });
 
 
@@ -43,7 +42,7 @@ test('can change title', function(assert) {
   this.render(hbs`{{programyear-objective-list-item
     objective=objective
     remove=(action 'nothing')
-    manageParents=(action 'nothing')
+    manageDescriptors=(action 'nothing')
     manageCompetency=(action 'nothing')
   }}`);
 
@@ -67,8 +66,8 @@ test('can manage competency', function(assert) {
   this.render(hbs`{{programyear-objective-list-item
     objective=objective
     remove=(action 'nothing')
-    manageParents=(action 'something')
-    manageCompetency=(action 'nothing')
+    manageDescriptors=(action 'nothing')
+    manageCompetency=(action 'something')
   }}`);
 
   this.$('td:eq(1) button').click();
@@ -88,8 +87,8 @@ test('can manage descriptors', function(assert) {
   this.render(hbs`{{programyear-objective-list-item
     objective=objective
     remove=(action 'nothing')
-    manageParents=(action 'nothing')
-    manageCompetency=(action 'something')
+    manageDescriptors=(action 'something')
+    manageCompetency=(action 'nothing')
   }}`);
 
   this.$('td:eq(2) button').click();
