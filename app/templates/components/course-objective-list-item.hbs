@@ -2,6 +2,7 @@
     {{#if editable}}
       {{#editable-field
         value=title
+        renderHtml=true
         save=(action 'saveTitleChanges' )
         close=(action 'revertTitleChanges')
         as |isSaving save close|
