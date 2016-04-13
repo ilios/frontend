@@ -9,7 +9,6 @@ const { PromiseArray } = DS;
 
 const Validations = buildValidations({
   title: [
-    validator('presence', true),
     validator('length', {
       max: 240,
       descriptionKey: 'general.title'
