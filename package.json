@@ -75,7 +75,7 @@
     "ember-moment": "6.1.0",
     "ember-normalize": "0.0.9",
     "ember-noscript": "^2.0.0",
-    "ember-one-way-controls": "0.5.3",
+    "ember-one-way-controls": "0.5.4",
     "ember-pad": "1.1.0",
     "ember-pikaday": "1.1.0",
     "ember-promise-helpers": "1.0.2",
