@@ -18,6 +18,10 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('newVocabularies', []);
+  },
   school: null,
   newVocabularies: [],
   sortedVocabularies: computed('school.vocabularies', function(){
