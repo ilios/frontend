@@ -7,7 +7,7 @@
     {{#if members.isFulfilled}}
       {{#each proxiedMembers as |userProxy|}}
         <div class="form-col-12">
-          <label class="form-label learnergroup-username">
+          <label class="form-label learnergroup-username" title="{{userProxy.email}} {{userProxy.campusId}}">
             {{userProxy.fullName}}
             {{#unless userProxy.enabled}}
               <em>({{t 'general.disabled'}})</em>
