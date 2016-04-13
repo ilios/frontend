@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, inject } = Ember;
+const { Component, inject, isPresent } = Ember;
 const { service } = inject;
 
 const Validations = buildValidations({
@@ -24,7 +25,25 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('selectedYear', this.get('currentYear'));
+
+    //build a list of years to seelct from
+    let thisYear = parseInt(moment().format('YYYY'));
+    let years = [
+      thisYear-2,
+      thisYear-1,
+      thisYear,
+      thisYear+1,
+      thisYear+2
+    ];
+
+    this.set('years', years);
+
+    const currentYear = this.get('currentYear');
+    if (isPresent(currentYear) && years.contains(parseInt(currentYear.get('title')))) {
+      this.set('selectedYear', currentYear.get('title'));
+    } else {
+      this.set('selectedYear', thisYear);
+    }
   },
   tagName: 'section',
   classNames: ['new-course', 'new-result', 'form-container'],
@@ -41,12 +60,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSaving: false,
 
   actions: {
-    setYear(yearTitle) {
-      let selectedYear = this.get('years').find((year) => {
-        return year.get('title') === parseInt(yearTitle);
-      });
-
-      this.set('selectedYear', selectedYear);
+    setYear(year) {
+      this.set('selectedYear', year);
     },
     save() {
       this.set('isSaving', true);
@@ -57,7 +72,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           let course = this.get('store').createRecord('course', {
             title: this.get('title'),
             school: this.get('currentSchool'),
-            year: this.get('selectedYear').get('title'),
+            year: this.get('selectedYear'),
             level: 1,
           });
 

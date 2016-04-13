@@ -26,8 +26,8 @@
     <div class="form-data form-data-select form-input-row new-course-year">
       <select onchange={{action "setYear" value="target.value"}}>
         {{#each years as |year|}}
-          <option value={{year.title}} selected={{is-equal year selectedYear}}>
-            {{year.academicYearTitle}}
+          <option value={{year}} selected={{is-equal year selectedYear}}>
+            {{year}} - {{inc year}}
           </option>
         {{/each}}
       </select>
