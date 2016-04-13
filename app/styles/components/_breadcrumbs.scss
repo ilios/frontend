@@ -11,6 +11,7 @@
 
   display: inline-block;
   margin-bottom: $base-spacing;
+  margin-top: $base-spacing / 2;
   text-align: left;
 
   span {
@@ -35,11 +36,13 @@
       padding-left: $breadcrumb-height / 2;
     }
 
-    &:last-child {
+    &:last-child,
+    &:last-child:hover {
       background-color: $breadcrumb-background;
       border-bottom-right-radius: $base-border-radius;
       border-top-right-radius: $base-border-radius;
       color: $breadcrumb-color-active;
+      cursor: default;
       padding-right: $breadcrumb-height / 2;
     }
 
@@ -71,7 +74,7 @@
       margin-left: 1px;
       z-index: 1;
     }
-    
+
     &:after {
       border-left-color: $breadcrumb-background;
     }
