@@ -3,23 +3,17 @@ import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import moment from 'moment';
 
 import Ember from 'ember';
 
 var application;
-var fixtures = {};
 
 module('Acceptance: Courses' + testgroup, {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    
-    fixtures.schools = [];
-    fixtures.schools.pushObjects(server.createList('school', 2));
-
-    fixtures.academicYears = [];
-    fixtures.academicYears.pushObject(server.create('academicYear', {id: 2013}));
-    fixtures.academicYears.pushObject(server.create('academicYear', {id: 2014}));
+    server.createList('school', 2)
   },
 
   afterEach: function() {
@@ -35,6 +29,7 @@ test('visiting /courses', function(assert) {
 });
 
 test('filters by title', function(assert) {
+  server.create('academicYear', {id: 2014});
   assert.expect(22);
   var firstCourse = server.create('course', {
     title: 'specialfirstcourse',
@@ -111,6 +106,8 @@ test('filters by title', function(assert) {
 });
 
 test('filters by year', function(assert) {
+  server.create('academicYear', {id: 2013});
+  server.create('academicYear', {id: 2014});
   assert.expect(4);
   var firstCourse = server.create('course', {
     year: 2013,
@@ -136,6 +133,8 @@ test('filters by year', function(assert) {
 });
 
 test('initial filter by year', function(assert) {
+  server.create('academicYear', {id: 2013});
+  server.create('academicYear', {id: 2014});
   assert.expect(4);
   var firstCourse = server.create('course', {
     year: 2013,
@@ -159,6 +158,7 @@ test('initial filter by year', function(assert) {
 });
 
 test('filters by mycourses', function(assert) {
+  server.create('academicYear', {id: 2014});
   assert.expect(5);
   var firstCourse = server.create('course', {
     year: 2014,
@@ -183,14 +183,17 @@ test('filters by mycourses', function(assert) {
 });
 
 test('filters options', function(assert) {
+  server.createList('school', 2);
+  server.create('academicYear', {id: 2013});
+  server.create('academicYear', {id: 2014});
   assert.expect(5);
   visit('/courses');
   andThen(function() {
     var filters = find('#courses .filter');
     assert.equal(filters.length, 4);
-    assert.equal(find('#school-selection').eq(0).text().trim(), fixtures.schools[0].title);
+    assert.equal(find('#school-selection').eq(0).text().trim(), 'school 0');
     var yearOptions = find('#yearsfilter select option');
-    assert.equal(yearOptions.length, fixtures.academicYears.length);
+    assert.equal(yearOptions.length, 2);
     assert.equal(getElementText(yearOptions.eq(0)).substring(0,4), 2014);
     assert.equal(getElementText(yearOptions.eq(1)).substring(0,4), 2013);
 
@@ -198,6 +201,7 @@ test('filters options', function(assert) {
 });
 
 test('new course', function(assert) {
+  server.create('academicYear', {id: 2014});
   assert.expect(5);
 
   const url = '/courses?year=2014';
@@ -225,7 +229,9 @@ test('new course', function(assert) {
 });
 
 test('new course in another year does not display in list', function(assert) {
-  assert.expect(2);
+  server.create('academicYear', {id: 2012});
+  server.create('academicYear', {id: 2013});
+  assert.expect(1);
   visit('/courses');
   let newTitle = 'new course title, woohoo';
   andThen(function() {
@@ -233,7 +239,6 @@ test('new course in another year does not display in list', function(assert) {
     click('.resultslist-actions button', container);
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
-      pickOption('.new-course select', '2013 - 2014', assert);
 
       click('.new-course .done', container).then(function(){
         var rows = find('tbody tr', container);
@@ -244,6 +249,7 @@ test('new course in another year does not display in list', function(assert) {
 });
 
 test('new course does not appear twice when navigating back', function(assert) {
+  server.create('academicYear', {id: 2014});
   assert.expect(5);
 
   const url = '/courses?year=2014';
@@ -273,6 +279,7 @@ test('new course does not appear twice when navigating back', function(assert) {
 });
 
 test('locked courses', function(assert) {
+  server.create('academicYear', {id: 2014});
   assert.expect(6);
   server.create('course', {
     year: 2014,
@@ -299,6 +306,32 @@ test('locked courses', function(assert) {
     assert.equal(getContent(1, 0), 'course 1', 'course name is correct');
     assert.equal(getContent(1, 6), 'Not Published', 'status');
     assert.ok(find(`tbody tr:eq(1) td:eq(6) i.fa-lock`).length === 1);
-    
+
+  });
+});
+
+test('no academic years exist', function(assert) {
+  assert.expect(6);
+  const expandButton = '.expand-button';
+  const newAcademicYearsOptions = '.new-course option';
+  const url = '/courses';
+
+  visit(url);
+  click(expandButton);
+  andThen(() => {
+    let thisYear = parseInt(moment().format('YYYY'));
+    let years = [
+      thisYear-2,
+      thisYear-1,
+      thisYear,
+      thisYear+1,
+      thisYear+2
+    ];
+
+    var yearOptions = find(newAcademicYearsOptions);
+    assert.equal(yearOptions.length, years.length);
+    for (let i = 0; i < years.length; i++){
+      assert.equal(getElementText(yearOptions.eq(i)).substring(0,4), years[i]);
+    }
   });
 });

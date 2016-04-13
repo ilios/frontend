@@ -33,11 +33,13 @@ export default Controller.extend({
   newCourses: [],
   courses: computed('selectedSchool', 'selectedYear', function(){
     let defer = RSVP.defer();
-    let schoolId = this.get('selectedSchool').get('id');
-    let yearTitle = this.get('selectedYear').get('title');
-    if(isEmpty(schoolId) || isEmpty(yearTitle)){
+    const selectedSchool = this.get('selectedSchool');
+    const selectedYear = this.get('selectedYear');
+    if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
       defer.resolve([]);
     } else {
+      let schoolId = selectedSchool.get('id');
+      let yearTitle = selectedYear.get('title');
       this.get('store').query('course', {
         filters: {
           school: schoolId,
@@ -58,11 +60,15 @@ export default Controller.extend({
     this.get('courses').then(courses => {
       let all = [];
       all.pushObjects(courses.toArray());
-      let selectedYearTitle = this.get('selectedYear').get('title');
-      let newCourses = this.get('newCourses').filter(course => {
-        return course.get('year') === selectedYearTitle && !all.contains(course);
-      });
-      all.pushObjects(newCourses.toArray());
+      const selectedYear = this.get('selectedYear');
+      if (isPresent(selectedYear)) {
+        let selectedYearTitle = selectedYear.get('title');
+        let newCourses = this.get('newCourses').filter(course => {
+          return course.get('year') === selectedYearTitle && !all.contains(course);
+        });
+        all.pushObjects(newCourses.toArray());
+      }
+      
       defer.resolve(all);
     });
 
