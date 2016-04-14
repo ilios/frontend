@@ -29,7 +29,9 @@ module.exports = function(defaults) {
       useLintTree: false
     }
   });
-  app.import('bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js');
+  app.import('bower_components/froala-wysiwyg-editor/js/plugins/lists.min.js');
+  app.import('bower_components/froala-wysiwyg-editor/js/plugins/code_view.min.js');
+  app.import('bower_components/froala-wysiwyg-editor/js/plugins/link.min.js');
 
   return app.toTree();
 };

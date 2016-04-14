@@ -60,7 +60,7 @@ export default Component.extend({
         this.set('manageDescriptorsObjective', objective);
       });
     },
-    mangeCompetency: function(objective){
+    manageCompetency: function(objective){
       objective.get('competency').then((competency) => {
         scrollTo(".detail-objectives");
         this.set('initialStateForManageCompetencyObjective', competency);
@@ -144,9 +144,9 @@ export default Component.extend({
         scrollTo("#objective-" + objective.get('id'));
       }
     },
-    saveNewObjective: function(){
+    saveNewObjective: function(title){
       let newObjective = this.get('store').createRecord('objective');
-      newObjective.set('title', this.get('newObjectiveTitle'));
+      newObjective.set('title', title);
       if(this.get('isCourse')){
         newObjective.get('courses').addObject(this.get('subject'));
       }
@@ -156,11 +156,8 @@ export default Component.extend({
       if(this.get('isProgramYear')){
         newObjective.get('programYears').addObject(this.get('subject'));
       }
-      newObjective.save().then(savedObjective => {
-        this.get('subject.objectives').then(objectives => {
-          objectives.addObject(savedObjective);
-        });
-        this.send('closeNewObjectiveEditor');
+      return newObjective.save().then(() => {
+        this.set('newObjectiveEditorOn', false);
         this.get('flashMessages').success('courses.newObjectiveSaved');
       });
     },
@@ -168,17 +165,7 @@ export default Component.extend({
       //force expand the objective component
       //otherwise adding the first new objective will cause it to close
       this.attrs.expand();
-      this.set('newObjectiveTitle', null);
       this.set('newObjectiveEditorOn', !this.get('newObjectiveEditorOn'));
-    },
-    closeNewObjectiveEditor() {
-      this.set('newObjectiveTitle', null);
-      this.set('newObjectiveEditorOn', false);
-    },
-    changeNewObjectiveTitle(event, editor){
-      if(editor){
-        this.set('newObjectiveTitle', editor.getHTML());
-      }
     },
     collapse(){
       this.get('objectives').then(objectives => {

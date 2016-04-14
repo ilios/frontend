@@ -190,7 +190,8 @@ test('list learning materials', function(assert) {
 //     fillIn(inputs.eq(1), testAuthor);
 //     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
 //     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-//     find('.froala-box', newLmContainer).editable('setHTML', testDescription);
+//     find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
+//     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
 //     click('.detail-learning-materials .new-learning-material .done');
 //     andThen(function(){
 //         // return pauseTest();
@@ -239,7 +240,8 @@ test('create new link learning material', function(assert) {
     fillIn(inputs.eq(2), testUrl);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    find('.froala-box', newLmContainer).editable('setHTML', testDescription);
+    find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
+    find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
     click('.detail-learning-materials .new-learning-material .done');
     andThen(function(){
       let container = find('.detail-learning-materials');
@@ -287,7 +289,8 @@ test('create new citation learning material', function(assert) {
     fillIn(find('textarea', newLmContainer).eq(0), testCitation);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    find('.froala-box', newLmContainer).editable('setHTML', testDescription);
+    find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
+    find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
     click('.detail-learning-materials .new-learning-material .done');
     andThen(function(){
       let container = find('.detail-learning-materials');
@@ -427,7 +430,8 @@ test('edit learning material', function(assert) {
       click(find('.notes .editable span', container)).then(function(){
         //wait for the editor to load
         Ember.run.later(()=>{
-          find('.notes .froala-box', container).editable('setHTML', newNote);
+          find('.notes .froalaEditor', container).froalaEditor('html.set', newNote);
+          find('.notes .froalaEditor', container).froalaEditor('events.trigger', 'contentChanged');
           click(find('.notes .done', container));
           andThen(function(){
             assert.equal(getElementText(find('.notes', container)), getText(newNote));

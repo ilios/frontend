@@ -290,6 +290,7 @@ export default {
     },
     'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
     'newObjectiveSaved': "Nouvel objective sauvé",
+    'newObjective': 'Nouvel Objectif',
     'chooseCohortTitle': "Choisi objectif mère pour",
     'missingCohortMessage': "S'il vous plait ajouter au moins un cohort à ce cours.",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer ce cours, avec {{publishedOfferingCount}} offres publié? Cela supprimera toutes sessions et offres pour ce cours, et ne peut pas être défait.",

@@ -82,7 +82,7 @@ test('manage terms', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives).then(function(){
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives).then(function(){
       assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
     });
 
@@ -141,7 +141,7 @@ test('save terms', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives);
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
     andThen(function() {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
@@ -166,7 +166,7 @@ test('cancel term changes', function(assert) {
   visit(url);
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(2) a', detailObjectives);
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
     andThen(function() {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
@@ -193,7 +193,7 @@ test('manage competencies', function(assert) {
   andThen(function() {
     let tds = find('.programyear-objective-list tbody tr:eq(0) td');
     assert.equal(tds.length, 3);
-    click('a', tds.eq(1));
+    click('.link', tds.eq(1));
     andThen(function() {
       assert.equal(getElementText(find('.detail-specific-title')), 'SelectObjectiveCompetency');
       let objectiveManager = find('.objective-manage-competency').eq(0);
@@ -220,7 +220,7 @@ test('save competency', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
       click('.parent-picker li:eq(1)', objectiveManager).then(function(){
@@ -237,7 +237,7 @@ test('save no competency', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
       click('.parent-picker li:eq(0)', objectiveManager).then(function(){
@@ -254,7 +254,7 @@ test('cancel competency change', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
       click('.parent-picker li:eq(1)', objectiveManager).then(function(){
@@ -271,7 +271,7 @@ test('cancel remove competency change', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) a');
+    click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
       click('.parent-picker li:eq(0)', objectiveManager).then(function(){

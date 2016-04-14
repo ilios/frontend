@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, Handlebars } = Ember;
+const { Component, computed, Handlebars, typeOf } = Ember;
 const { SafeString } = Handlebars;
 const { collect, sum } = computed;
 
@@ -23,7 +23,13 @@ export default Component.extend({
     }
   }),
   cleanText: computed('text', function(){
-    const text = this.get('text') || '';
+    let text = this.get('text') || '';
+
+    //accounts for SafeString as well a numbers
+    if (typeOf(text) !== 'string'){
+      text = text.toString();
+    }
+
     //strip any possible HTML out of the text
     return text.replace(/(<([^>]+)>)/ig,"");
   }),

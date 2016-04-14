@@ -154,11 +154,12 @@ test('edit objective title', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.froala-box', td);
-        let editorContents = editor.editable('getText');
+        let editor = find('.froalaEditor', td);
+        let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), getText(objective.title));
 
-        editor.editable('setHTML', 'new title');
+        editor.froalaEditor('html.set', 'new title');
+        editor.froalaEditor('events.trigger', 'contentChanged');
         click(find('.actions .done', td));
         andThen(function(){
           assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('new title'));

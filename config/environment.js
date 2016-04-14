@@ -36,22 +36,52 @@ module.exports = function(environment) {
       defaultLocale: 'en'
     },
     froalaEditorDefaults: {
-      inlineMode: false,
-      placeholder: '',
+      toolbarInline: false,
+      placeholderText: '',
       allowHTML: true,
-      autosave: false,
-      plainPaste: true,
+      saveInterval: false,
+      pastePlain: true,
       spellcheck: true,
-      buttons: [
+      toolbarButtons: [
         'bold',
         'italic',
         'subscript',
         'superscript',
-        'insertOrderedList',
-        'insertUnorderedList',
-        'createLink',
-        // 'html' //temporarily disabled due to bug
-      ]
+        'formatOL',
+        'formatUL',
+        'insertLink',
+        'html'
+      ],
+      toolbarButtonsMD: [
+        'bold',
+        'italic',
+        'subscript',
+        'superscript',
+        'formatOL',
+        'formatUL',
+        'insertLink',
+        'html'
+      ],
+      toolbarButtonsSM: [
+        'bold',
+        'italic',
+        'subscript',
+        'superscript',
+        'formatOL',
+        'formatUL',
+        'insertLink',
+        'html'
+      ],
+      toolbarButtonsXS: [
+        'bold',
+        'italic',
+        'subscript',
+        'superscript',
+        'formatOL',
+        'formatUL',
+        'insertLink',
+        'html'
+      ],
     },
     serverVariables: {
       tagPrefix: 'iliosconfig',

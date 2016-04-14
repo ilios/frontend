@@ -5,8 +5,10 @@ const { Component } = Ember;
 export default Component.extend({
   isEditing: false,
   isSaving: false,
+  renderHtml: false,
   classNames: ['editinplace'],
   clickPrompt: null,
+
   actions: {
     edit(){
       this.set('isEditing', true);

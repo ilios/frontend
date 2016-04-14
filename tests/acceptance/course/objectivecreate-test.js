@@ -45,7 +45,8 @@ test('save new objective', function(assert) {
     click('.detail-objectives .detail-actions button');
     //wait for the editor to load
     Ember.run.later(()=>{
-      find('.detail-objectives .newobjective .froala-box').editable('setHTML', newObjectiveTitle);
+      find('.detail-objectives .newobjective .froalaEditor').froalaEditor('html.set', newObjectiveTitle);
+      find('.detail-objectives .newobjective .froalaEditor').froalaEditor('events.trigger', 'contentChanged');
       click('.detail-objectives .newobjective button.done');
       andThen(function(){
         let objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
