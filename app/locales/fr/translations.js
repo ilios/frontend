@@ -254,7 +254,7 @@ export default {
     'noSessions': "Il n'y a aucun des sessions dans ce cours",
     'noCohorts': "Il n'y a aucun des cohortes dans ce cours",
     'educationalYear': "Année scolaire",
-    'externalId': "ID Externe",
+    'externalId': "ID de Cours",
     'startDate': "Date de début",
     'endDate': "Date de fin",
     'level': "Niveau",
