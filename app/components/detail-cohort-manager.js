@@ -18,45 +18,13 @@ export default Component.extend({
   selectedCohorts: [],
   sortBy: ['title'],
   sortedCohorts: sort('selectedCohorts', 'sortBy'),
-  useableCohorts: computed({
-    get() {
-      let defer = RSVP.defer();
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          RSVP.all(schools.mapBy('programs')).then(programsArrays => {
-            //@todo there has to be a better way of doing this [JJ 11/2015]
-            let programs = [];
-            programsArrays.forEach(arr => {
-              arr.forEach(program => {
-                programs.push(program);
-              });
-            });
-            RSVP.all(programs.mapBy('programYears')).then(programYearsArrays => {
-              let programYears = [];
-              programYearsArrays.forEach(arr => {
-                arr.forEach(programYear => {
-                  programYears.push(programYear);
-                });
-              });
-              RSVP.all(programYears.mapBy('cohort')).then(cohorts => {
-                defer.resolve(cohorts);
-              });
-            });
-          });
-        });
-      });
 
-      return PromiseArray.create({
-        promise: defer.promise
-      });
-    }
-  }).readOnly(),
-  availableCohorts: computed('useableCohorts.[]', 'selectedCohorts.[]', {
+  availableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'selectedCohorts.[]', {
     get(){
       let defer = RSVP.defer();
 
-      this.get('useableCohorts').then(useableCohorts => {
-        let availableCohorts = useableCohorts.filter(cohort => {
+      this.get('currentUser.cohortsInAllAssociatedSchools').then(usableCohorts => {
+        let availableCohorts = usableCohorts.filter(cohort => {
           return (
             this.get('selectedCohorts') &&
             !this.get('selectedCohorts').contains(cohort)
@@ -70,6 +38,7 @@ export default Component.extend({
       });
     }
   }).readOnly(),
+
   cohortSorting: [
     'programYear.program.school.title:asc',
     'programYear.program.title:asc',

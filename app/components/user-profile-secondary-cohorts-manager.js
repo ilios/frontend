@@ -22,45 +22,12 @@ export default Component.extend({
     })
   }),
 
-  useableCohorts: computed({
-    get() {
-      let defer = RSVP.defer();
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          RSVP.all(schools.mapBy('programs')).then(programsArrays => {
-            let programs = [];
-            programsArrays.forEach(arr => {
-              arr.forEach(program => {
-                programs.push(program);
-              });
-            });
-            RSVP.all(programs.mapBy('programYears')).then(programYearsArrays => {
-              let programYears = [];
-              programYearsArrays.forEach(arr => {
-                arr.forEach(programYear => {
-                  programYears.push(programYear);
-                });
-              });
-              RSVP.all(programYears.mapBy('cohort')).then(cohorts => {
-                defer.resolve(cohorts);
-              });
-            });
-          });
-        });
-      });
-
-      return PromiseArray.create({
-        promise: defer.promise
-      });
-    }
-  }).readOnly(),
-
-  assignableCohorts: computed('useableCohorts.[]', 'cohorts.[]', {
+  assignableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'cohorts.[]', {
     get(){
       let defer = RSVP.defer();
 
-      this.get('useableCohorts').then(useableCohorts => {
-        let assignableCohorts = useableCohorts.filter(cohort => {
+      this.get('currentUser.cohortsInAllAssociatedSchools').then(usableCohorts => {
+        let assignableCohorts = usableCohorts.filter(cohort => {
           return (
             this.get('cohorts') &&
             !this.get('cohorts').contains(cohort)
