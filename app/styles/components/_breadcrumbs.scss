@@ -10,8 +10,7 @@
   $breadcrumb-color-active: $breadcrumb-color;
 
   display: inline-block;
-  margin-bottom: $base-spacing;
-  margin-top: $base-spacing / 2;
+  margin: $base-spacing / 2;
   text-align: left;
 
   span {
