@@ -608,7 +608,7 @@ test('find and add learning material', function(assert) {
 
     let searchBoxInput = find('input', container);
     fillIn(searchBoxInput, 'doc');
-    triggerEvent(searchBoxInput, 'search');
+    triggerEvent(searchBoxInput, 'keyup');
     andThen(function(){
       later(function(){
         let searchResults = find('.results li', container);

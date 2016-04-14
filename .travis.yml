@@ -1,8 +1,8 @@
 ---
-#really we're using node_js but this works with the osx OS
-language: objective-c
-#we use OSX here because phantomJS2 isn't super stable on Linux
-os: osx
+language: node_js
+node_js:
+  - "5"
+
 sudo: false
 
 env:
@@ -14,22 +14,11 @@ env:
 cache:
   directories:
     - node_modules
-    - travis-phantomjs
 
 matrix:
   fast_finish: true
 
 before_install:
-  - rm -rf ~/.nvm
-  - git clone https://github.com/creationix/nvm.git ~/.nvm
-  - source ~/.nvm/nvm.sh
-  - nvm install v5
-  - PHANTOM_DIR=$PWD/../travis-phantom
-  - if [ ! -d $PHANTOM_DIR ]; then wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-macosx.zip -O phantomjs.zip; fi
-  - if [ ! -d $PHANTOM_DIR ]; then unzip phantomjs.zip; fi
-  - if [ ! -d $PHANTOM_DIR ]; then mv phantomjs-2.0.0-macosx $PHANTOM_DIR; fi
-  - export PATH=$PHANTOM_DIR/bin:$PATH
-  - phantomjs -v
   - npm set progress=false
   - npm config set spin false
   - npm install -g bower
@@ -39,9 +28,15 @@ install:
   - travis_retry npm install --no-optional
   - travis_retry bower install
 
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
 script:
   - scss-lint
-  - npm test
+  - eslint .
+  - ember test --launch=firefox
 
 after_success:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy production
