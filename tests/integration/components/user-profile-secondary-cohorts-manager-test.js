@@ -12,6 +12,7 @@ moduleForComponent('user-profile-secondary-cohorts-manager', 'Integration | Comp
 
 test('it renders', function(assert) {
   assert.expect(4);
+
   let school = Object.create({
     title: 'Medicine',
     id: 1,
@@ -40,40 +41,27 @@ test('it renders', function(assert) {
   let primaryCohort = cohorts[0]; // Class of 2016
 
   // assignable classes: Pharm MD, Class 2022
-  // @todo refactor [ST 2016/04/12]
+  school = Object.create({
+    title: 'Pharmacy',
+    id: 100,
+  });
+  program = Object.create({
+    title: 'Pharm MD',
+    school: school,
+    id: 100,
+  });
+
   let currentUserMock = Service.extend({
-    model: resolve(Object.create({
-      schools: resolve([
-        Object.create({
+    cohortsInAllAssociatedSchools: resolve([
+      Object.create({
+        title: 'Class of 2022',
+        id: 100,
+        programYear: Object.create({
           id: 100,
-          programs: resolve([
-            Object.create({
-              id: 100,
-              programYears: resolve([
-                Object.create({
-                  id: 100,
-                  cohort: resolve(Object.create({
-                    id: 100,
-                    title: 'Class of 2022',
-                    programYear: Object.create({
-                      id: 100,
-                      program: Object.create({
-                        id: 100,
-                        title: 'Pharm MD',
-                        school: Object.create({
-                          id: 100,
-                          title: 'Pharmacy'
-                        })
-                      })
-                    })
-                  }))
-                })
-              ])
-            })
-          ])
+          program: program
         })
-      ])
-    }))
+      })
+    ])
   });
 
   this.set('cohorts', cohorts);
@@ -81,8 +69,8 @@ test('it renders', function(assert) {
   this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{user-profile-secondary-cohorts-manager cohorts=cohorts primaryCohort=primaryCohort}}`);
   return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Medicine\s+\|\s+MD\s+\|\s+Class of 2018/), 0);
-    assert.ok(this.$().text().trim().search(/Medicine\s+\|\s+MD\s+\|\s+Class of 2017/) > 0);
+    assert.equal(this.$().text().trim().search(/Medicine\s+\|\s+MD\s+\|\s+Class of 2018/), 0, 'Class of 2018 shows first.');
+    assert.ok(this.$().text().trim().search(/Medicine\s+\|\s+MD\s+\|\s+Class of 2017/) > 0, 'Class of 2017 shows second, sort order works.');
     assert.equal(this.$().text().trim().search(/Class of 2016/), -1, 'Primary cohort does not show');
     assert.ok(this.$().text().trim().search(/Pharmacy\s+\|\s+Pharm MD\s+\|\s+Class of 2022/) > 0);
   });
