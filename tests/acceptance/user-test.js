@@ -51,9 +51,9 @@ test('can see user profile', function(assert) {
     assert.equal(getUserContent(1), 'user@example.edu', 'email is shown');
     assert.equal(getUserContent(2), '111-111-1111', 'phone is shown');
     assert.equal(getUserContent(3), 'school 0', 'primary school is shown');
-    assert.equal(getUserContent(4), 'program 0 Medicine', 'primary cohort is shown');
-    assert.equal(find(`${secondaryCohorts}:first`).text(), 'program 0 cohort 1', 'secondary cohort is shown');
-    assert.equal(find(`${secondaryCohorts}:last`).text(), 'program 0 cohort 2', 'secondary cohort is shown');
+    assert.equal(getUserContent(4).search(/school 0\s+\|\s+program 0\s+\|\s+Medicine/), 0, 'primary cohort is shown');
+    assert.ok(find(`${secondaryCohorts}:first`).text().search(/school 0\s+\|\s+program 0\s+\|\s+cohort 2/) > 0, 'secondary cohort is shown');
+    assert.ok(find(`${secondaryCohorts}:last`).text().search(/school 0\s+\|\s+program 0\s+\|\s+cohort 1/) > 0, 'secondary cohort is shown');
     assert.equal(find(`${learnerGroups}:first`).text(), 'Group 1', 'learner group is shown');
     assert.equal(find(`${learnerGroups}:last`).text(), 'Group 1', 'learner group is shown');
   });
