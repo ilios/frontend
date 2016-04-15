@@ -104,7 +104,7 @@ module.exports = function(environment) {
     //Hide a feature while it is in development
     IliosFeatures: {
       allowAddNewUser: true,
-      showUnassignedStudents: false,
+      showUnassignedStudents: true,
     }
   };
 
