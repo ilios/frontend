@@ -576,3 +576,38 @@ test('click title takes you to learnergroup route', function(assert) {
     assert.equal(currentURL(), '/learnergroups/1');
   });
 });
+
+test('add new learnergroup with full cohort', function(assert) {
+  assert.expect(2);
+
+  server.create('user', { id: 4136 });
+  server.create('school', { programs: [1] });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.createList('user', 5, {cohort: 1});
+  server.create('cohort', {
+    programYear: 1,
+    users: [2,3,4,5,6]
+  });
+
+  const expandButton = '.expand-button';
+  const input = '.new-learnergroup input[type=text]';
+  const addFullCohort = '.new-learnergroup .clickable:eq(0)';
+  const done = '.new-learnergroup .done';
+
+  visit(url);
+  click(expandButton);
+  fillIn(input, 'A New Test Title');
+  click(addFullCohort);
+  click(done);
+  andThen(() => {
+    assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
+    assert.equal(getCellData(0, 1), 5, 'member count is correct');
+  });
+});

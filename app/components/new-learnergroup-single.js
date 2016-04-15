@@ -16,21 +16,23 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   title: null,
+  fillModeSupported: false,
+  fillWithCohort: false,
   isSaving: false,
 
   actions: {
     save() {
       this.send('addErrorDisplayFor', 'title');
       this.validate().then(({validations}) => {
+        this.set('isSaving', true);
         if (validations.get('isValid')) {
           const title = this.get('title');
-          this.sendAction('save', title)
+          const fillWithCohort = this.get('fillWithCohort');
+          return this.get('save')(title, fillWithCohort);
         }
-      });
-    },
-
-    cancel() {
-      this.sendAction('cancel');
+      }).finally(()=>{
+        this.set('isSaving', false);
+      })
     },
   }
 });

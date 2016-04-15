@@ -19,9 +19,9 @@
           {{else}}
             <section class='resultslist-new'>
               {{new-learnergroup
-                save='saveNewLearnerGroup'
+                save=(action 'saveNewLearnerGroup')
                 generateNewLearnerGroups='generateNewLearnerGroups'
-                cancel='cancel'
+                cancel=(action 'cancel')
                 multiModeSupported=true
               }}
             </section>

@@ -4,6 +4,7 @@ const { Component } = Ember;
 
 export default Component.extend({
   multiModeSupported: false,
+  fillModeSupported: false,
   singleMode: true,
   tagName: 'section',
   classNames: ['new-learnergroup', 'new-result', 'form-container'],
@@ -11,12 +12,6 @@ export default Component.extend({
   actions: {
     setMode(value) {
       this.set('singleMode', value);
-    },
-    cancel(){
-      this.sendAction('cancel');
-    },
-    save(title){
-      this.sendAction('save', title);
     },
     generateNewLearnerGroups(num){
       this.sendAction('generateNewLearnerGroups', num);
