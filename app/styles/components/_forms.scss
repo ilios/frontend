@@ -132,6 +132,21 @@
       min-width: 4em;
     }
   }
+
+  .form-col-radiogroup {
+    @include span-columns(10 of 10);
+
+    .form-label {
+      @include span-columns(6 of 10);
+      @include omega();
+    }
+
+    .form-data {
+      @include span-columns(7 of 10);
+      @include shift(3);
+      @include omega();
+    }
+  }
 }
 
 //put the universal (non parent-dependent) styles below here

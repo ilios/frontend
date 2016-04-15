@@ -195,15 +195,23 @@ export default Controller.extend({
       this.set('showNewLearnerGroupForm', !this.get('showNewLearnerGroupForm'));
     },
 
-    saveNewLearnerGroup(title) {
+    saveNewLearnerGroup(title, fillWithCohort) {
       const { selectedProgramYear, store } = this.getProperties('selectedProgramYear', 'store');
 
       return selectedProgramYear.get('cohort').then((cohort) => {
         const newLearnerGroup = store.createRecord('learner-group', { title, cohort });
-
-        return newLearnerGroup.save().then(() => {
-          this.send('cancel');
-        });
+        if (fillWithCohort) {
+          return cohort.get('users').then(users => {
+            newLearnerGroup.get('users').pushObjects(users);
+            return newLearnerGroup.save().then(() => {
+              this.send('cancel');
+            });
+          });
+        } else {
+          return newLearnerGroup.save().then(() => {
+            this.send('cancel');
+          });
+        }
       });
     },
 

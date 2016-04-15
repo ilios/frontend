@@ -220,6 +220,9 @@ export default {
     'multipleGroups': 'Múltiples grupos',
     'numberOfGroups': 'Número de grupos',
     'numberOfGroupsToGenerate': 'número de grupos para generar.',
+    'populateGroup': '¿Quieres auto-rellenar este grupo?',
+    'yesPopulateGroup': '¡Sí! Añada la cohorte entera a mi nuevo grupo.',
+    'noPopulateGroup': "¡No! Déjelo vacío. Voy a agregar alumnos yo mismo.",
   },
   'schools': {
     'new': 'Nueva Escuela',
