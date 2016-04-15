@@ -154,3 +154,24 @@
     }
   }
 }
+
+.details-list {
+  li {
+    .content {
+      display: inline-block;
+
+      .title {
+        display: block;
+      }
+
+      .details {
+        display: block;
+        font-size: smaller;
+      }
+    }
+
+    .fa {
+      vertical-align: top;
+    }
+  }
+}

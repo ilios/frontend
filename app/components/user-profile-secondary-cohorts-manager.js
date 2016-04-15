@@ -1,36 +1,39 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-import { translationMacro as t } from "ember-i18n";
-
 const { Component, computed, inject, RSVP} = Ember;
 const { service } = inject;
 const { PromiseArray } = DS;
 const { sort } = computed;
 
 export default Component.extend({
-  i18n: service(),
-  currentUser: service(),
-  tagName: 'section',
-  classNames: ['detail-block'],
-  placeholder: t('general.filterPlaceholder'),
-  filter: '',
-  selectedCohorts: [],
-  sortBy: ['title'],
-  sortedCohorts: sort('selectedCohorts', 'sortBy'),
 
-  availableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'selectedCohorts.[]', {
+  classNames: ['secondary-cohorts'],
+
+  currentUser: service(),
+
+  removableCohorts: computed('cohorts.[]', 'primaryCohort', function() {
+    const primaryCohort = this.get('primaryCohort');
+    return this.get('cohorts').filter(function(cohort) {
+      if (! primaryCohort) {
+        return true;
+      }
+      return cohort.get('id') !== primaryCohort.get('id');
+    })
+  }),
+
+  assignableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'cohorts.[]', {
     get(){
       let defer = RSVP.defer();
 
       this.get('currentUser.cohortsInAllAssociatedSchools').then(usableCohorts => {
-        let availableCohorts = usableCohorts.filter(cohort => {
+        let assignableCohorts = usableCohorts.filter(cohort => {
           return (
-            this.get('selectedCohorts') &&
-            !this.get('selectedCohorts').contains(cohort)
+            this.get('cohorts') &&
+            !this.get('cohorts').contains(cohort)
           );
         });
-        defer.resolve(availableCohorts);
+        defer.resolve(assignableCohorts);
       });
 
       return PromiseArray.create({
@@ -44,7 +47,9 @@ export default Component.extend({
     'programYear.program.title:asc',
     'title:desc'
   ],
-  sortedAvailableCohorts: sort('availableCohorts', 'cohortSorting'),
+  sortedAssignableCohorts: sort('assignableCohorts', 'cohortSorting'),
+  sortedRemovableCohorts: sort('removableCohorts', 'cohortSorting'),
+
   actions: {
     add: function(cohort){
       this.sendAction('add', cohort);
@@ -52,5 +57,5 @@ export default Component.extend({
     remove: function(cohort){
       this.sendAction('remove', cohort);
     }
-  }
+  },
 });

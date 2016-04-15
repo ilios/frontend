@@ -1,12 +1,12 @@
 {{#if targetItemTitle}}
   <h2>{{t 'mesh.targetItemTitle' title=targetItemTitle}}</h2>
 {{/if}}
-<ul class='removable-list tag-list selected-mesh-terms'>
+<ul class='removable-list tag-list details-list'>
   {{#each sortedTerms as |term|}}
     <li {{action 'remove' term}}>
       <div class="content">
-        <span class="descriptor-name">{{term.name}}</span>
-        <span class="descriptor-id">
+        <span class="title">{{term.name}}</span>
+        <span class="details">
           {{term.id}}
           {{#if term.trees}}
             - {{term.trees.lastObject.treeNumber}}

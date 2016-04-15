@@ -78,6 +78,47 @@ export default Ember.Service.extend({
       });
     });
   }),
+
+  /**
+   * All cohorts from all schools that the current user is associated with,
+   * via primary school association and the explicit schools permissions.
+   * @property availableCohortsForAllSchools
+   * @type Ember.computed
+   * @readOnly
+   * @public
+   */
+  cohortsInAllAssociatedSchools: computed('model.schools.[]', {
+    get() {
+      let defer = RSVP.defer();
+      this.get('model').then(user => {
+        user.get('schools').then(schools => {
+          RSVP.all(schools.mapBy('programs')).then(programsArrays => {
+            let programs = [];
+            programsArrays.forEach(arr => {
+              arr.forEach(program => {
+                programs.push(program);
+              });
+            });
+            RSVP.all(programs.mapBy('programYears')).then(programYearsArrays => {
+              let programYears = [];
+              programYearsArrays.forEach(arr => {
+                arr.forEach(programYear => {
+                  programYears.push(programYear);
+                });
+              });
+              RSVP.all(programYears.mapBy('cohort')).then(cohorts => {
+                defer.resolve(cohorts);
+              });
+            });
+          });
+        });
+      });
+      return PromiseArray.create({
+        promise: defer.promise
+      });
+    }
+  }).readOnly(),
+
   userRoleTitles: computed('model.roles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('model').then(user => {

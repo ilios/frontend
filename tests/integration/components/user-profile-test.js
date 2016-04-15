@@ -15,7 +15,8 @@ moduleForComponent('user-profile', 'Integration | Component | user profile', {
 });
 
 let currentUserMock = Ember.Service.extend({
-  userIsDeveloper: resolve(true)
+  userIsDeveloper: resolve(true),
+  cohortsInAllAssociatedSchools: resolve([])
 });
 
 test('it renders', function(assert) {
@@ -33,7 +34,7 @@ test('it renders', function(assert) {
   assert.equal(this.$().text().trim().search(/Test Person Name Thing/), 0);
 });
 
-test('does not break when a user has secondry, but no primary cohorts', function(assert) {
+test('does not break when a user has secondary, but no primary cohorts', function(assert) {
   let cohort = Object.create({
     title: "awesome cohort"
   });

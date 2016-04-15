@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 const { computed, Component, inject, RSVP } = Ember;
 const { PromiseObject, PromiseArray } = DS;
 const { service } = inject;
+const { sort } = computed;
 
 const Validations = buildValidations({
   firstName: [
@@ -82,8 +83,27 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   email: null,
   phone: null,
 
-  isEditing: false,
+  editMode: false,
   isSaving: false,
+
+  bufferedCohorts: [],
+
+  isEditing: computed({
+    get() {
+      return this.get('editMode');
+    },
+    set(key, value) {
+      if (! value) {
+        this.set('bufferedCohorts', []);
+      } else {
+        this.get('user.cohorts').then(cohorts => {
+          this.set('bufferedCohorts', cohorts.toArray());
+        });
+      }
+      this.set('editMode', value);
+      return value;
+    }
+  }),
 
   roles: computed({
     get() {
@@ -92,7 +112,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
   }).readOnly(),
 
-  secondaryCohorts: computed('user', {
+  secondaryCohorts: computed('user.primaryCohort', 'user.cohorts.[]', {
     get() {
       const user = this.get('user');
 
@@ -110,6 +130,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return PromiseArray.create({ promise });
     }
   }).readOnly(),
+
+  cohortSorting: [
+    'programYear.program.school.title:asc',
+    'programYear.program.title:asc',
+    'title:desc'
+  ],
+
+  sortedSecondaryCohorts: sort('secondaryCohorts', 'cohortSorting'),
 
   isCourseDirector: computed('user.roles.[]', {
     get() {
@@ -188,6 +216,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'email',
         'phone'
       ));
+      let cohorts = user.get('cohorts');
+      cohorts.clear();
+      cohorts.addObjects(this.get('bufferedCohorts'));
+      this.get('bufferedCohorts').forEach(cohort => {
+        cohort.get('users').addObject(user);
+      });
       yield user.save();
       this.send('clearErrorDisplay');
       this.set('isEditing', false);
@@ -273,5 +307,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         });
       });
     },
+
+    addCohortToBuffer(cohort){
+      this.get('bufferedCohorts').addObject(cohort);
+    },
+
+    removeCohortFromBuffer(cohort){
+      this.get('bufferedCohorts').removeObject(cohort);
+    }
   }
 });

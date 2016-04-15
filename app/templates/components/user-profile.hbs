@@ -168,17 +168,6 @@
             {{/if}}
           </div>
         </div>
-        <div class="form-col-6 form-data-submit">
-          <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedSchool)}}>
-            {{#if isSaving}}
-              {{fa-icon 'spinner' spin=true}}
-            {{else}}
-              {{t 'general.done'}}
-            {{/if}}
-          </button>
-          <button class='cancel text' {{action (toggle 'isEditing' this)}}>{{t 'general.cancel'}}</button>
-        </div>
-
       {{else}}
         <div class="form-col-6 multi-row">
           <div class="user-info-row">
@@ -198,7 +187,6 @@
         </div>
       {{/liquid-if}}
     </div>
-
     <div class="detail-content form-container">
       <div class="form-col-6 multi-row">
         <div class="user-info-row">
@@ -210,23 +198,13 @@
           <div class="form-data">
             {{#liquid-if user.primaryCohort.isFulfilled}}
               {{#if user.primaryCohort.title}}
-                {{user.primaryCohort.programYear.program.title}} {{user.primaryCohort.title}}
-              {{else}}
-                {{t 'general.unassigned'}}
-              {{/if}}
-            {{/liquid-if}}
-          </div>
-        </div>
-
-        <div class="user-info-row">
-          <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
-          <div class="form-data">
-            {{#liquid-if secondaryCohorts.isFulfilled}}
-              {{#if secondaryCohorts.length}}
-                <ul class="secondary-cohorts">
-                  {{#each secondaryCohorts as |cohort|}}
-                    <li class="secondary-cohort">{{cohort.programYear.program.title}} {{cohort.title}}</li>
-                  {{/each}}
+                <ul class="details-list">
+                  <li>
+                    <div class="content">
+                      <span class="title">{{user.primaryCohort.title}}</span>
+                      <span class="details">{{user.primaryCohort.programYear.program.title}}</span>
+                    </div>
+                  </li>
                 </ul>
               {{else}}
                 {{t 'general.unassigned'}}
@@ -234,7 +212,36 @@
             {{/liquid-if}}
           </div>
         </div>
-
+        <div class="user-info-row">
+          <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
+          <div class="form-data">
+            {{#if isEditing}}
+              {{user-profile-secondary-cohorts-manager
+                cohorts=bufferedCohorts
+                primaryCohort=user.primaryCohort
+                add='addCohortToBuffer'
+                remove='removeCohortFromBuffer'
+              }}
+            {{else}}
+              {{#liquid-if secondaryCohorts.isFulfilled}}
+                {{#if secondaryCohorts.length}}
+                  <ul class="secondary-cohorts details-list">
+                    {{#each sortedSecondaryCohorts as |cohort|}}
+                      <li>
+                        <div class="content">
+                          <span class="title">{{cohort.title}}</span>
+                          <span class="details">{{cohort.programYear.program.title}}</span>
+                        </div>
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  {{t 'general.unassigned'}}
+                {{/if}}
+              {{/liquid-if}}
+            {{/if}}
+          </div>
+        </div>
         <div class="user-info-row">
           <label class="form-label">{{t 'general.learnerGroups'}}:</label>
           <div class="form-data">
@@ -250,6 +257,18 @@
           </div>
         </div>
       </div>
+      {{#if isEditing}}
+        <div class="form-col-6 form-data-submit">
+          <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedSchool)}}>
+            {{#if isSaving}}
+              {{fa-icon 'spinner' spin=true}}
+            {{else}}
+              {{t 'general.done'}}
+            {{/if}}
+          </button>
+          <button class='cancel text' {{action (toggle 'isEditing' this)}}>{{t 'general.cancel'}}</button>
+        </div>
+      {{/if}}
     </div>
   </section>
 </div>
