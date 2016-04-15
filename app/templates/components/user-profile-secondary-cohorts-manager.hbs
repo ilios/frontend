@@ -1,10 +1,11 @@
-<ul class='removable-list tag-list'>
+<ul class='removable-list tag-list details-list'>
   {{#if sortedRemovableCohorts.length}}
     {{#each sortedRemovableCohorts as |cohort|}}
       <li {{action 'remove' cohort}}>
-        {{cohort.programYear.program.school.title}} |
-        {{cohort.programYear.program.title}} |
-        {{cohort.title}}
+        <div class="content">
+          <span class="title">{{cohort.title}}</span>
+          <span class="details">{{cohort.programYear.program.title}}</span>
+        </div>
         {{fa-icon 'remove'}}
       </li>
     {{/each}}
@@ -12,14 +13,15 @@
     {{t 'general.unassigned'}}
   {{/if}}
 </ul>
-<div class='selectable-list'>
+<div class='selectable-list details-list'>
   <ul>
     {{#if assignableCohorts.isFulfilled}}
       {{#each sortedAssignableCohorts as |cohort|}}
         <li {{action 'add' cohort}}>
-          {{cohort.programYear.program.school.title}} |
-          {{cohort.programYear.program.title}} |
-          {{cohort.title}}
+          <div class="content">
+            <span class="title">{{cohort.title}}</span>
+            <span class="details">{{cohort.programYear.program.title}}</span>
+          </div>
         </li>
       {{/each}}
     {{else}}

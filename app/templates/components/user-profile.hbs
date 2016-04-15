@@ -198,9 +198,14 @@
           <div class="form-data">
             {{#liquid-if user.primaryCohort.isFulfilled}}
               {{#if user.primaryCohort.title}}
-                {{user.primaryCohort.programYear.program.school.title}} |
-                {{user.primaryCohort.programYear.program.title}} |
-                {{user.primaryCohort.title}}
+                <ul class="details-list">
+                  <li>
+                    <div class="content">
+                      <span class="title">{{user.primaryCohort.title}}</span>
+                      <span class="details">{{user.primaryCohort.programYear.program.title}}</span>
+                    </div>
+                  </li>
+                </ul>
               {{else}}
                 {{t 'general.unassigned'}}
               {{/if}}
@@ -220,12 +225,13 @@
             {{else}}
               {{#liquid-if secondaryCohorts.isFulfilled}}
                 {{#if secondaryCohorts.length}}
-                  <ul class="secondary-cohorts">
+                  <ul class="secondary-cohorts details-list">
                     {{#each sortedSecondaryCohorts as |cohort|}}
-                      <li class="secondary-cohort">
-                        {{cohort.programYear.program.school.title}} |
-                        {{cohort.programYear.program.title}} |
-                        {{cohort.title}}
+                      <li>
+                        <div class="content">
+                          <span class="title">{{cohort.title}}</span>
+                          <span class="details">{{cohort.programYear.program.title}}</span>
+                        </div>
                       </li>
                     {{/each}}
                   </ul>
