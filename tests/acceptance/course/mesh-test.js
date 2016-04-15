@@ -77,20 +77,20 @@ test('manage mesh', function(assert) {
       let removableItems = find('.removable-list li', meshManager);
       assert.equal(removableItems.length, 3);
       assert.equal(
-        getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)),
+        getElementText(find('.content .title', removableItems.eq(0)).eq(0)),
         getText('descriptor 0')
       );
-      assert.equal(getElementText(find('.content .descriptor-id', removableItems.eq(0)).eq(0)), getText('1 - tree number 2'));
+      assert.equal(getElementText(find('.content .details', removableItems.eq(0)).eq(0)), getText('1 - tree number 2'));
       assert.equal(
-        getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)),
+        getElementText(find('.content .title', removableItems.eq(1)).eq(0)),
         getText('descriptor 1')
       );
-      assert.equal(getElementText(find('.content .descriptor-id', removableItems.eq(1)).eq(0)), '2');
+      assert.equal(getElementText(find('.content .details', removableItems.eq(1)).eq(0)), '2');
       assert.equal(
-        getElementText(find('.content .descriptor-name', removableItems.eq(2)).eq(0)),
+        getElementText(find('.content .title', removableItems.eq(2)).eq(0)),
         getText('descriptor 2')
       );
-      assert.equal(getElementText(find('.content .descriptor-id', removableItems.eq(2)).eq(0)), '3');
+      assert.equal(getElementText(find('.content .details', removableItems.eq(2)).eq(0)), '3');
       let searchBox = find('.search-box', meshManager);
       assert.equal(searchBox.length, 1);
       searchBox = searchBox.eq(0);
@@ -130,15 +130,15 @@ test('manage mesh', function(assert) {
           assert.ok($(find('.mesh-search-results > li:eq(3)', meshManager)).hasClass('disabled'));
           let removableItems = find('.removable-list li', meshManager);
           assert.equal(
-            getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)),
+            getElementText(find('.content .title', removableItems.eq(0)).eq(0)),
             getText('descriptor 0')
           );
           assert.equal(
-            getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)),
+            getElementText(find('.content .title', removableItems.eq(1)).eq(0)),
             getText('descriptor 2')
           );
           assert.equal(
-            getElementText(find('.content .descriptor-name', removableItems.eq(2)).eq(0)),
+            getElementText(find('.content .title', removableItems.eq(2)).eq(0)),
             getText('descriptor 3')
           );
         });

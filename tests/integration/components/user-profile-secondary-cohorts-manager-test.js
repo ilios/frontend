@@ -69,10 +69,10 @@ test('it renders', function(assert) {
   this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{user-profile-secondary-cohorts-manager cohorts=cohorts primaryCohort=primaryCohort}}`);
   return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Medicine\s+\|\s+MD\s+\|\s+Class of 2018/), 0, 'Class of 2018 shows first.');
-    assert.ok(this.$().text().trim().search(/Medicine\s+\|\s+MD\s+\|\s+Class of 2017/) > 0, 'Class of 2017 shows second, sort order works.');
+    assert.equal(this.$().text().trim().search(/Class of 2018\s+MD/), 0, 'Class of 2018 shows first.');
+    assert.ok(this.$().text().trim().search(/Class of 2017\s+MD/) > 0, 'Class of 2017 shows second, sort order works.');
     assert.equal(this.$().text().trim().search(/Class of 2016/), -1, 'Primary cohort does not show');
-    assert.ok(this.$().text().trim().search(/Pharmacy\s+\|\s+Pharm MD\s+\|\s+Class of 2022/) > 0);
+    assert.ok(this.$().text().trim().search(/Class of 2022\s+Pharm MD/) > 0);
   });
 });
 

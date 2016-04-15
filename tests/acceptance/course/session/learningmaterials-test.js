@@ -494,7 +494,7 @@ test('manage terms', function(assert) {
       let removableItems = find('.removable-list li', meshManager);
       assert.equal(removableItems.length, material.meshDescriptors.length);
       for (let i = 0; i < material.meshDescriptors.length; i++){
-        let meshDescriptionName = find('.content .descriptor-name', removableItems[i]).eq(0);
+        let meshDescriptionName = find('.content .title', removableItems[i]).eq(0);
         assert.equal(getElementText(meshDescriptionName), getText(fixtures.meshDescriptors[material.meshDescriptors[i] - 1].name));
       }
 
@@ -535,7 +535,7 @@ test('manage terms', function(assert) {
           removableItems = find('.removable-list li', meshManager);
           assert.equal(removableItems.length, 2);
           for (let i = 0; i < 2; i++){
-            let meshDescriptorName = find('.descriptor-name', removableItems[i]).eq(0);
+            let meshDescriptorName = find('.title', removableItems[i]).eq(0);
             assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
           }
         });

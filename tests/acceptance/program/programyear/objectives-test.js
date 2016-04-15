@@ -90,8 +90,8 @@ test('manage terms', function(assert) {
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let removableItems = find('.removable-list li', meshManager);
       assert.equal(removableItems.length, 2);
-      assert.equal(getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)), getText('descriptor 0'));
-      assert.equal(getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)), getText('descriptor 1'));
+      assert.equal(getElementText(find('.content .title', removableItems.eq(0)).eq(0)), getText('descriptor 0'));
+      assert.equal(getElementText(find('.content .title', removableItems.eq(1)).eq(0)), getText('descriptor 1'));
 
       let searchBox = find('.search-box', meshManager);
       assert.equal(searchBox.length, 1);
@@ -123,11 +123,11 @@ test('manage terms', function(assert) {
           removableItems = find('.removable-list li', meshManager);
           assert.equal(removableItems.length, 2);
           assert.equal(
-            getElementText(find('.content .descriptor-name', removableItems.eq(0)).eq(0)),
+            getElementText(find('.content .title', removableItems.eq(0)).eq(0)),
             getText('descriptor 1')
           );
           assert.equal(
-            getElementText(find('.content .descriptor-name', removableItems.eq(1)).eq(0)),
+            getElementText(find('.content .title', removableItems.eq(1)).eq(0)),
             getText('descriptor 2')
           );
         });
