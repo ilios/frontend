@@ -254,7 +254,7 @@ export default {
     'noSessions': 'No hay ningún sesión en este curso',
     'noCohorts': 'No hay ningún clase de la graduación en este curso',
     'educationalYear': 'Año Escolar',
-    'externalId': 'Identificación externo',
+    'externalId': 'Identificación del Curso',
     'startDate': 'Fecha de Inicio',
     'endDate': 'Fecha de Finalización',
     'level': 'Nivel',
