@@ -8,8 +8,6 @@ const { sort } = computed;
 
 export default Component.extend({
 
-  classNames: ['secondary-cohorts'],
-
   currentUser: service(),
 
   removableCohorts: computed('cohorts.[]', 'primaryCohort', function() {
