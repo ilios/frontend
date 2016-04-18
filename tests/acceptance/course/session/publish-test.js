@@ -53,7 +53,6 @@ module('Acceptance: Session - Publish' + testgroup, {
 });
 
 test('check published session', function(assert) {
-
   visit('/courses/1/sessions/' + fixtures.publishedSession.id);
 
   andThen(function() {
