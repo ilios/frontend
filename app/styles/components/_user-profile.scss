@@ -20,7 +20,9 @@
   }
 
   // override for secondary cohorts picker
-  .secondary-cohorts {
+  .form-data.secondary-cohorts {
+    white-space: normal;
+
     // ONE-OFF!
     // give this a bit more room to breathe in non-edit mode, since the list items will likely stack.
     // @todo check if this is generally applicable. if so, pull it out into the generic lists style. [ST 2016/04/15]
@@ -31,14 +33,6 @@
     // see comment above. in edit-mode, we don't want to add extra spacing.
     .details-list.tag-list .content {
       padding-bottom: 0;
-    }
-
-    .removable-list {
-      white-space: normal;
-
-      li {
-        white-space: nowrap;
-      }
     }
 
     .selectable-list {
