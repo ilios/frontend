@@ -17,7 +17,10 @@ module('Acceptance: Session - Publish' + testgroup, {
     setupAuthentication(application);
     server.create('school');
     server.create('course');
-    server.create('offering');
+    server.create('offering', {
+      startDate: moment().format(),
+      endDate: moment().add('6 hours').format()
+    });
     server.create('sessionType');
     server.create('ilmSession', {
       session: 4,
