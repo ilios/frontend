@@ -4,6 +4,7 @@ const { Component } = Ember;
 
 export default Component.extend({
   learnerGroup: null,
+  classNames: ['detail-view-main-title'],
 
   actions: {
     changeTitle(newTitle) {

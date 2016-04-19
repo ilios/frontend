@@ -1,0 +1,30 @@
+{{learnergroup-header learnerGroup=learnerGroup}}
+
+<div class='detail-view-details'>
+  <section class='detail-block members'>
+    {{#if (is-fulfilled learnerGroup.users)}}
+      <div class='detail-content'>
+        {{learnergroup-user-list
+        }}
+      </div>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+  </section>
+
+  {{learnergroup-subgroup-list parentGroup=learnerGroup}}
+
+  <section class='detail-block cohortmembers'>
+    {{#if (is-fulfilled cohortMembersNotInAnyGroup)}}
+      <div class='detail-title'>
+        {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}} ({{get (await cohortMembersNotInAnyGroup) 'length'}})
+      </div>
+      <div class='detail-content'>
+        {{learnergroup-user-list
+        }}
+      </div>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+  </section>
+</div>

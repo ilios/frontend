@@ -206,7 +206,7 @@ export default Controller.extend({
     },
 
     removeLearnerGroup(learnerGroup) {
-      learnerGroup.destroyRecord();
+      return learnerGroup.destroyRecord();
     },
 
     toggleNewLearnerGroupForm() {

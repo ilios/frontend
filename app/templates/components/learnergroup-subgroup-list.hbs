@@ -1,73 +1,41 @@
-<section class='detail-block'>
-  <div class='detail-title'>
-    {{t 'learnerGroups.subgroups'}} ({{learnerGroups.length}})
-  </div>
+{{#liquid-if isSaving class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalGroupsToSave
+    currentProgress=currentGroupsSaved
+  }}
+{{/liquid-if}}
+<div class='detail-title'>
+  {{t 'learnerGroups.subgroups'}} ({{get (await parentGroup.children) 'length'}})
+</div>
 
-  <div class='detail-actions'>
-    {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
-  </div>
+<div class='detail-actions'>
+  {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle 'showNewLearnerGroupForm' this)}}
+</div>
 
-  <div class='detail-content'>
-    <section class='resultslist'>
-        {{#liquid-if showNewLearnerGroupForm class='vertical'}}
-          {{#liquid-if isSaving class='crossFade'}}
-            {{wait-saving
-              showProgress=true
-              totalProgress=totalGroupsToSave
-              currentProgress=currentGroupsSaved
-            }}
-          {{else}}
-            <section class='resultslist-new'>
-              {{new-learnergroup
-                save=(action 'saveNewLearnerGroup')
-                generateNewLearnerGroups='generateNewLearnerGroups'
-                cancel=(action 'cancel')
-                multiModeSupported=true
-              }}
-            </section>
-          {{/liquid-if}}
-        {{/liquid-if}}
-      <div class='resultslist-list'>
-        <table>
-          <thead>
-            <tr>
-              <th class='text-left' colspan=2>{{t 'general.title'}}</th>
-              <th class='text-center' >{{t 'general.members'}}</th>
-              <th class='text-center' >{{t 'general.actions'}}</th>
-            </tr>
-          </thead>
+<div class='detail-content'>
 
-          <tbody>
-            {{#each proxiedLearnerGroups as |learnerGroupProxy|}}
-              <tr class="{{if learnerGroupProxy.showRemoveConfirmation 'confirm-removal'}}">
-                <td class='text-left' colspan=2>
-                  {{#link-to 'learnerGroup' learnerGroupProxy.content}}
-                    {{fa-icon 'external-link-square'}} {{learnerGroupProxy.title}}
-                  {{/link-to}}
-                </td>
-                <td class='text-center'>{{learnerGroupProxy.usersCount}}</td>
-                <td class='text-center'>
-                  <span class='clickable' {{action 'confirmRemove' learnerGroupProxy}}>{{fa-icon 'trash'}}</span>
-                </td>
-              </tr>
-
-              {{#if learnerGroupProxy.showRemoveConfirmation}}
-                <tr class='confirm-removal'><td colspan=4>
-                  <div class='confirm-message'>
-                    {{t 'learnerGroups.confirmRemove' learnerCount=learnerGroupProxy.usersCount subgroupCount=learnerGroupProxy.children.length}} <br />
-                   <div class="confirm-buttons">
-                    <button {{action 'removeLearnerGroup' learnerGroupProxy}} class='remove text'>{{t 'general.yes'}}</button>
-                    <button {{action 'cancelRemove' learnerGroupProxy}} class='done text'>{{t 'general.cancel'}}</button>
-                  </div>
-                  </div>
-                </td></tr>
-              {{/if}}
-            {{else}}
-              <tr><td colspan=4>{{t 'learnerGroups.noSubgroups'}}</td></tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
+  <section class='resultslist'>
+    <section class='resultslist-new'>
+      {{#liquid-if showNewLearnerGroupForm class='vertical'}}
+        {{new-learnergroup
+          save=(action 'saveNewLearnerGroup')
+          cancel=(action (toggle 'showNewLearnerGroupForm' this))
+          generateNewLearnerGroups=(action 'generateNewLearnerGroups')
+          multiModeSupported=true
+        }}
+      {{/liquid-if}}
     </section>
-  </div>
-</section>
+
+    <div class='resultslist-list'>
+      {{#if (is-fulfilled parentGroup.children)}}
+        {{learnergroup-list
+          learnerGroups=(await parentGroup.children)
+          remove=(action 'removeLearnerGroup')
+        }}
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
+    </div>
+  </section>
+</div>

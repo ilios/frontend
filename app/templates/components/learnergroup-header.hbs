@@ -5,7 +5,9 @@
     </h2>
   </span>
   <span class='info'>
-    {{t 'learnerGroups.members'}}: {{learnerGroup.users.length}}
+    {{#if (and (is-fulfilled learnerGroup.users) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))}}
+      {{t 'learnerGroups.members'}}:  {{learnerGroup.users.length}} / {{learnerGroup.cohort.users.length}}
+    {{/if}}
   </span>
 </div>
 {{#if (is-fulfilled learnerGroup.allParents)}}
