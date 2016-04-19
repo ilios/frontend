@@ -6,6 +6,7 @@ const { service } = inject;
 const { PromiseObject } = DS;
 
 const CourseProxy = ObjectProxy.extend({
+  userCoursesOnly: false,
   content: null,
   currentUser: null,
   showRemoveConfirmation: false,

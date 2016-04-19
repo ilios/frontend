@@ -35,7 +35,7 @@
           {{#link-to 'course' course.content class='edit'}}
             {{fa-icon 'edit'}}
           {{/link-to}}
-          {{#if course.userCanDelete}}
+          {{#if (and course.userCanDelete (not userCoursesOnly))}}
             <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>
           {{/if}}
         </td>
