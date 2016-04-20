@@ -157,12 +157,28 @@ test('initial filter by year', function(assert) {
   });
 });
 
+test('action links are present', function(assert) {
+  assert.expect(2);
+  server.create('academicYear', {id: 2013});
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    directors: [4136]
+  });
+
+  visit('/courses');
+  andThen(function() {
+    assert.equal(find('.resultslist-list tbody tr:eq(0) td:eq(7) .edit').length, 1, 'Edit link is present in course list.');
+    assert.equal(find('.resultslist-list tbody tr:eq(0) td:eq(7) .remove').length, 1, 'Remove link is present in course list.');
+  });
+});
+
 test('filters by mycourses', function(assert) {
   server.create('academicYear', {id: 2014});
-  assert.expect(5);
+  assert.expect(7);
   var firstCourse = server.create('course', {
     year: 2014,
-    school: 1
+    school: 1,
   });
   var secondCourse = server.create('course', {
     year: 2014,
@@ -175,9 +191,12 @@ test('filters by mycourses', function(assert) {
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstCourse.title));
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondCourse.title));
     click('#mycoursesfilter label');
+
     andThen(function(){
       assert.equal(find('.resultslist-list tbody tr').length, 1);
       assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondCourse.title));
+      assert.equal(find('.resultslist-list tbody tr:eq(0) td:eq(7) .edit').length, 1, 'Edit link is present in mycourses list.');
+      assert.equal(find('.resultslist-list tbody tr:eq(0) td:eq(7) .remove').length, 0, 'Remove link is not present in mycourses list.');
     });
   });
 });

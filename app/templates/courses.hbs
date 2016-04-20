@@ -67,6 +67,7 @@
     <div class='resultslist-list'>
       {{#if filteredCourses.isFulfilled}}
         {{ilios-course-list
+          userCoursesOnly=userCoursesOnly
           courses=filteredCourses
           edit='editCourse'
           remove='removeCourse'
