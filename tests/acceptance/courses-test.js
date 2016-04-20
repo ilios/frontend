@@ -163,6 +163,7 @@ test('action links are present', function(assert) {
   server.create('course', {
     year: 2013,
     school: 1,
+    directors: [4136]
   });
 
   visit('/courses');
@@ -177,7 +178,7 @@ test('filters by mycourses', function(assert) {
   assert.expect(7);
   var firstCourse = server.create('course', {
     year: 2014,
-    school: 1
+    school: 1,
   });
   var secondCourse = server.create('course', {
     year: 2014,
