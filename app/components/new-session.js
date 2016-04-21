@@ -59,10 +59,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             sessionType: this.get('selectedSessionType')
           });
           this.get('save')(session).finally(()=>{
-            this.get('cancel')();
+            this.sendAction('cancel');
           });
         }
       });
     },
+    cancel: function() {
+      this.sendAction('cancel');
+    }
   }
 });

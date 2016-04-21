@@ -166,11 +166,34 @@ test('new session', function(assert) {
       return find(`tbody tr:last td:eq(${i})`).text().trim();
     }
 
-    assert.equal(find(savedLink).text().trim(), 'session 3', 'link is visisble');
+    assert.equal(find(savedLink).text().trim(), 'session 3', 'link is visible');
     assert.equal(getContent(0), 'session 3', 'session is correct');
     assert.equal(getContent(2), '0', 'number of groups is correct');
   });
 });
+
+test('cancel session', function(assert) {
+  assert.expect(3);
+  const expandButton = '.expand-button';
+  const input = '.new-session input';
+  const cancelButton = '.new-session .cancel';
+
+  visit(url);
+  andThen(() => {
+    let numSessions = find('tbody tr').length;
+    click(expandButton);
+    andThen(() => {
+      assert.equal(find(input).length, 1, 'new session input is visible.');
+      fillIn(input, 'session 3');
+      click(cancelButton);
+      andThen(() => {
+        assert.equal(find('tbody tr').length, numSessions, 'no new sessions were added.');
+        assert.equal(find(input).length, 0, 'new session input is not visible.');
+      });
+    });
+  });
+});
+
 
 test('new session goes away when we navigate #643', function(assert) {
   visit(url);
