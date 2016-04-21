@@ -12,17 +12,21 @@ const CourseProxy = ObjectProxy.extend({
   userCanDelete: computed('content', 'currentUser.model.directedCourses.[]', function(){
     let defer = RSVP.defer();
     const course = this.get('content');
-    this.get('currentUser.userIsDeveloper').then(isDeveloper => {
-      if(isDeveloper){
-        defer.resolve(true);
-      } else {
-        this.get('currentUser.model').then(user => {
-          user.get('directedCourses').then(directedCourses => {
-            defer.resolve(directedCourses.contains(course));
+    if (course.get('isPublishedOrScheduled')) {
+      defer.resolve(false);
+    } else {
+      this.get('currentUser.userIsDeveloper').then(isDeveloper => {
+        if(isDeveloper){
+          defer.resolve(true);
+        } else {
+          this.get('currentUser.model').then(user => {
+            user.get('directedCourses').then(directedCourses => {
+              defer.resolve(directedCourses.contains(course));
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    }
 
     return PromiseObject.create({
       promise: defer.promise

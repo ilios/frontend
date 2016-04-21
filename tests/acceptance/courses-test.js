@@ -196,7 +196,40 @@ test('filters options', function(assert) {
     assert.equal(yearOptions.length, 2);
     assert.equal(getElementText(yearOptions.eq(0)).substring(0,4), 2014);
     assert.equal(getElementText(yearOptions.eq(1)).substring(0,4), 2013);
+  });
+});
 
+test('user can only delete non-published courses with proper privileges', function(assert) {
+  server.create('academicYear', {id: 2014});
+  assert.expect(4);
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: true,
+  });
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: false,
+  });
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: true,
+    directors: [4136],
+  });
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: false,
+    directors: [4136]
+  });
+  visit('/courses');
+  andThen(function() {
+    assert.equal(find('.resultslist-list tbody tr:eq(0) td:eq(7) .remove').length, 0, 'non-privileged user cannot delete published course');
+    assert.equal(find('.resultslist-list tbody tr:eq(1) td:eq(7) .remove').length, 0, 'non-privileged user cannot delete unpublished course');
+    assert.equal(find('.resultslist-list tbody tr:eq(2) td:eq(7) .remove').length, 0, 'privileged user cannot delete published course');
+    assert.equal(find('.resultslist-list tbody tr:eq(3) td:eq(7) .remove').length, 1, 'privileged user can delete published course');
   });
 });
 
