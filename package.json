@@ -65,7 +65,7 @@
     "ember-data": "^2.5.1",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.5",
-    "ember-froala": "2.2.3",
+    "ember-froala": "2.2.4",
     "ember-i18n": "4.2.0",
     "ember-i18n-cp-validations": "2.4.0",
     "ember-inflector": "1.9.4",
