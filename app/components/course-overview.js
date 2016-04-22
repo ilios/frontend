@@ -9,6 +9,7 @@ const { Promise } = RSVP;
 const Validations = buildValidations({
   externalId: [
     validator('length', {
+      allowBlank: true,
       min: 2,
       max: 18
     }),
