@@ -13,7 +13,7 @@
         <div class="form-data courseexternalid">
           {{#if editable}}
             {{#editable-field
-              value=externalId
+              value=(if externalId externalId (t 'general.clickToEdit'))
               save=(action 'changeExternalId')
               close=(action 'revertExternalIdChanges')
               as |isSaving save close|
