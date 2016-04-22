@@ -249,7 +249,7 @@ test('remove offering', function(assert) {
     assert.equal(offerings.length, 3);
     let offering = find('.offering-block-time-offering').eq(0);
     click('.offering-block-time-offering-actions .remove', offering).then(function(){
-      click('.remove', offering).then(function(){
+      click('.confirm-message .remove', offering).then(function(){
         assert.equal(find('.offering-block-time-offering').length, 2);
       });
     });
@@ -274,9 +274,9 @@ test('cancel remove offering', function(assert) {
 test('users can create a new offering or small groups (single and multi-day)', function(assert) {
   assert.expect(23);
 
-  const expandButton = '.expand-button';
-  const multiDayButton = '.single-multi-day .switch-label';
-  const offeringButton = '.second-button';
+  const expandButton = '.session-offerings .expand-button';
+  const multiDayButton = '.session-offerings .single-multi-day .switch-label';
+  const offeringButton = '.session-offerings .second-button';
 
   const startDateInput = '.offering-startdate-picker input';
   const endDateInput = '.offering-enddate input';
@@ -487,7 +487,7 @@ test('users can edit existing offerings (single & multi-day)', function(assert) 
 test('users can create recurring small groups', function(assert) {
   assert.expect(29);
 
-  const expandButton = '.expand-button';
+  const expandButton = '.session-offerings .expand-button';
   const makeRecurringButton = '.make-recurring-slider .switch-label';
   const makeRecurringInput = '.make-recurring-input';
 
@@ -563,7 +563,7 @@ test('users can create recurring small groups', function(assert) {
 test('users can create recurring single offerings', function(assert) {
   assert.expect(29);
 
-  const expandButton = '.expand-button';
+  const expandButton = '.session-offerings .expand-button';
   const makeRecurringButton = '.make-recurring-slider .switch-label';
   const makeRecurringInput = '.make-recurring-input ';
   const offeringButton = '.second-button';
@@ -642,7 +642,7 @@ test('users can create recurring single offerings', function(assert) {
 test('recurring start date is default day and cannot be changes', function(assert) {
   assert.expect(14);
 
-  const expandButton = '.expand-button';
+  const expandButton = '.session-offerings .expand-button';
   const makeRecurringButton = '.make-recurring-slider .switch-label';
   const offeringButton = '.second-button';
 

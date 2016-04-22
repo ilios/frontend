@@ -1,10 +1,9 @@
 {
   "name": "ilios",
   "dependencies": {
-    "ember": "~2.4.3",
-    "ember-cli-shims": "~0.1.1",
+    "ember": "~2.5.0",
+    "ember-cli-shims": "0.1.1",
     "ember-cli-test-loader": "0.2.2",
-    "ember-qunit-notifications": "0.1.0",
     "ember-uploader": "0.3.11",
     "neat": "~1.7.2",
     "normalize.css": "~3.0.3",
@@ -19,6 +18,6 @@
     "moment-timezone": ">= 0.1.0",
     "froala-wysiwyg-editor": "^2.2.3",
     "clipboard": "~1.5.5",
-    "jquery": "1.11.3"
+    "ember-qunit-notifications": "0.1.0"
   }
 }
