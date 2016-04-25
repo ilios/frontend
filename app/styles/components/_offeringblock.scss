@@ -99,3 +99,12 @@
     }
   }
 }
+
+.offering-block.no-site {
+  .offering-block-time-offering {
+    .offering-detail-box {
+      @include span-columns(2 of 8);
+      @include omega(4n);
+    }
+  }
+}
