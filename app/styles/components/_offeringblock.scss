@@ -53,8 +53,8 @@
       }
 
       .offering-detail-box {
-        @include span-columns(2 of 8);
-        @include omega(4n);
+        @include span-columns(2 of 10);
+        @include omega(5n);
         padding: .8em;
       }
     }

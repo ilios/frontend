@@ -281,6 +281,7 @@
                  <tr>
                    <th class='text-left'>{{t 'general.time'}}</th>
                    <th class='text-left'>{{t 'general.location'}}</th>
+                   <th class='text-left'>{{t 'general.site'}}</th>
                    <th class='text-left'>{{t 'general.instructors'}}</th>
                  </tr>
                </thead>
@@ -292,6 +293,7 @@
                        {{moment-format offering.endDate 'MM/DD/YYYY LT'}}
                      </td>
                      <td class='text-left'>{{offering.room}}</td>
+                     <td class='text-left'>{{offering.site}}</td>
                      <td class='text-left'>
                        <ul>
                          {{#each offering.allInstructors as |user|}}

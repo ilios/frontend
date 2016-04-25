@@ -16,6 +16,11 @@ const Validations = buildValidations({
       max: 255
     }),
   ],
+  site: [
+    validator('length', {
+      max: 255
+    }),
+  ],
   numberOfWeeks: {
     dependentKeys: ['makeRecurring'],
     disabled(){
@@ -70,6 +75,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   startTime: null,
   endTime: null,
   room: null,
+  site: null,
 
   instructors: null,
   instructorGroups: null,
@@ -264,7 +270,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     create() {
       const flashMessages = this.get('flashMessages');
-      this.send('addErrorDisplayFor', 'room');
+      this.send('addErrorDisplayFor', 'room')
+      this.send('addErrorDisplayFor', 'site');
       this.send('addErrorDisplayFor', 'numberOfWeeks');
 
 
@@ -303,6 +310,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             }
           } else {
             params.room = this.get('room') || 'TBD';
+            params.site = this.get('site');
             params.instructors = this.get('instructors');
             params.instructorGroups = this.get('instructorGroups');
 

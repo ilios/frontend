@@ -15,7 +15,12 @@ const Validations = buildValidations({
     validator('length', {
       max: 255
     }),
-  ]
+  ],
+  site: [
+    validator('length', {
+      max: 255
+    }),
+  ],
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
@@ -38,6 +43,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   showRemoveConfirmation: false,
   buffer: null,
   room: null,
+  site: null,
   allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', function(){
     var self = this;
     var defer = Ember.RSVP.defer();
@@ -217,6 +223,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   actions: {
     save() {
       this.send('addErrorDisplayFor', 'room');
+      this.send('addErrorDisplayFor', 'site');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           if (this.datesValidated() && this.timesValidated()) {
@@ -260,10 +267,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             let datesHash = this.calculateDateTimes();
 
             const room = this.get('room') || 'TBD';
+            const site = this.get('site');
             const startDate = datesHash.startDate.toDate();
             const endDate = datesHash.endDate.toDate();
 
-            offering.setProperties({ room, startDate, endDate });
+            offering.setProperties({ room, site, startDate, endDate });
 
             promises.pushObject(offering.save());
             Ember.RSVP.all(promises).then(() => {
@@ -288,10 +296,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         const startTime = copy(startDate);
         const endTime = copy(endDate);
         const room = offering.get('room');
+        const site = offering.get('site');
         const isMultiDay = offering.get('isMultiDay');
 
         let buffer = Ember.Object.create({ startDate, endDate, startTime, endTime, isMultiDay });
         this.set('room', room);
+        this.set('site', site);
 
         let collections = ['instructors', 'instructorGroups'];
 

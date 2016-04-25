@@ -59,7 +59,7 @@ $collapse-control-shadow-grey: #e2e2e2;
             height: 42px;
 
             div {
-              @include span-columns (12 / 5);
+              @include span-columns (12 / 6);
               @include pad(10px default default default);
 
               label {

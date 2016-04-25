@@ -161,6 +161,23 @@
       {{/if}}
     </div>
   </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.site'}}:</label>
+    <div class="form-data">
+      <span class='site'>
+        {{one-way-input
+          value=site
+          update=(action (mut site))
+          focusOut=(action 'addErrorDisplayFor' 'site')
+          focusIn=(action 'addErrorDisplayFor' 'site')
+          class=(if (and (v-get this 'site' 'isInvalid') (is-in showErrorsFor 'site')) 'has-error')
+        }}
+      </span>
+      {{#if (and (v-get this 'site' 'isInvalid') (is-in showErrorsFor 'site'))}}
+          <span class="validation-error-message">{{v-get this 'site' 'message'}}</span>
+      {{/if}}
+    </div>
+  </div>
 {{/unless}}
 
 <div class="offering-learnergroups">
