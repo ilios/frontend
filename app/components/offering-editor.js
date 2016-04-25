@@ -13,7 +13,7 @@ const { PromiseArray } = DS;
 const Validations = buildValidations({
   room: [
     validator('length', {
-      max: 60
+      max: 255
     }),
   ],
   numberOfWeeks: {
