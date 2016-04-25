@@ -25,5 +25,9 @@ export default Ember.Service.extend(EventMixin, {
 
   authenticationType: computed('config.type', function(){
     return this.itemFromConfig('type');
-  })
+  }),
+
+  isOfferingSiteEnabled: computed('config.offeringSiteEnabled', function(){
+    return this.itemFromConfig('offeringSiteEnabled');
+  }),
 });
