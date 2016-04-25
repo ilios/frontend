@@ -70,18 +70,15 @@ $collapse-control-shadow-grey: #e2e2e2;
         }
       }
     }
-  }
 
-  .session-offerings.no-site {
-    section {
-
-      &.detail-block {
-
-        .detail-content {
-          .detail-content-header {
-
-            div {
-              @include span-columns (12 / 5);
+    &.no-site {
+      section {
+        &.detail-block {
+          .detail-content {
+            .detail-content-header {
+              div {
+                @include span-columns (12 / 5);
+              }
             }
           }
         }

@@ -31,11 +31,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   },
 
   currentUser: service(),
+  iliosConfig: service(),
   offering: null,
   isEditing: false,
   editable: true,
   sortBy: ['lastName', 'firstName'],
   classNames: ['offering-manager'],
+  classNameBindings: ['isOfferingSiteEnabled::no-site'],
   sortedInstructors: sort('instructors', 'sortBy'),
   isMultiDay: false,
   cohorts: alias('offering.session.course.cohorts'),
@@ -219,6 +221,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       promise: defer.promise
     });
   }),
+
+  /**
+   * A promise that resolves to TRUE if the offering site feature is enabled, otherwise FALSE.
+   * @property isOfferingSiteEnabled
+   * @type {Ember.computed.alias}
+   * @public
+   */
+  isOfferingSiteEnabled: alias('iliosConfig.isOfferingSiteEnabled'),
 
   actions: {
     save() {

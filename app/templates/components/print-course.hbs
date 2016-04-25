@@ -281,7 +281,9 @@
                  <tr>
                    <th class='text-left'>{{t 'general.time'}}</th>
                    <th class='text-left'>{{t 'general.location'}}</th>
-                   <th class='text-left'>{{t 'general.site'}}</th>
+                     {{#if (await isOfferingSiteEnabled)}}
+                       <th class='text-left'>{{t 'general.site'}}</th>
+                     {{/if}}
                    <th class='text-left'>{{t 'general.instructors'}}</th>
                  </tr>
                </thead>
@@ -293,7 +295,9 @@
                        {{moment-format offering.endDate 'MM/DD/YYYY LT'}}
                      </td>
                      <td class='text-left'>{{offering.room}}</td>
-                     <td class='text-left'>{{offering.site}}</td>
+                       {{#if (await isOfferingSiteEnabled)}}
+                         <td class='text-left'>{{offering.site}}</td>
+                       {{/if}}
                      <td class='text-left'>
                        <ul>
                          {{#each offering.allInstructors as |user|}}

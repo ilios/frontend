@@ -39,9 +39,11 @@
         <div>
           <label>{{ t 'general.location' }}</label>
         </div>
-        <div>
-          <label>{{ t 'general.site' }}</label>
-        </div>
+        {{#if (await isOfferingSiteEnabled)}}
+          <div>
+            <label>{{ t 'general.site' }}</label>
+          </div>
+        {{/if}}
         <div>
           <label>{{ t 'general.instructors' }}</label>
         </div>

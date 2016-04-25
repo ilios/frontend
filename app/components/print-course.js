@@ -2,11 +2,13 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { Component, computed, RSVP, ObjectProxy, inject } = Ember;
+const { alias } = computed;
 const { PromiseArray } = DS;
 const { service } = inject;
 
 export default Component.extend({
   store: service(),
+  iliosConfig: service(),
   course: null,
   includeUnpublishedSessions: false,
   tagName: 'section',
@@ -61,4 +63,11 @@ export default Component.extend({
     });
   }),
 
+  /**
+   * A promise that resolves to TRUE if the offering site feature is enabled, otherwise FALSE.
+   * @property isOfferingSiteEnabled
+   * @type {Ember.computed.alias}
+   * @public
+   */
+  isOfferingSiteEnabled: alias('iliosConfig.isOfferingSiteEnabled'),
 });

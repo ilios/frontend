@@ -15,9 +15,13 @@ export default Component.extend({
 
   i18n: service(),
 
+  iliosConfig: service(),
+
   layout,
 
   classNames: ['session-offerings'],
+
+  classNameBindings: ['isOfferingSiteEnabled::no-site'],
 
   session: null,
 
@@ -84,6 +88,14 @@ export default Component.extend({
 
     return offering.save();
   },
+
+  /**
+   * A promise that resolves to TRUE if the offering site feature is enabled, otherwise FALSE.
+   * @property isOfferingSiteEnabled
+   * @type {Ember.computed.alias}
+   * @public
+   */
+  isOfferingSiteEnabled: alias('iliosConfig.isOfferingSiteEnabled'),
 
   actions: {
     addSingleOffering(params) {

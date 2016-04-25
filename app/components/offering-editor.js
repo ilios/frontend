@@ -5,7 +5,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP, inject } = Ember;
-const { notEmpty } = computed;
+const { notEmpty, alias } = computed;
 const { all, Promise } = RSVP;
 const { service } = inject;
 const { PromiseArray } = DS;
@@ -41,6 +41,7 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
+  iliosConfig: service(),
   didReceiveAttrs() {
     this._super(...arguments);
 
@@ -86,6 +87,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   makeRecurring: false,
   recurringDays: null,
   numberOfWeeks: null,
+
+  /**
+   * A promise that resolves to TRUE if the offering site feature is enabled, otherwise FALSE.
+   * @property isOfferingSiteEnabled
+   * @type {Ember.computed.alias}
+   * @public
+   */
+  isOfferingSiteEnabled: alias('iliosConfig.isOfferingSiteEnabled'),
 
   availableLearnerGroups: computed('cohorts.[]', function() {
     let cohortProxy = ObjectProxy.extend({
