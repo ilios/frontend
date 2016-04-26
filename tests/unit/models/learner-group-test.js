@@ -204,3 +204,43 @@ test('check subgroupNumberingOffset', function(assert) {
     });
   });
 });
+
+test('check allinstructors', function(assert) {
+  assert.expect(11);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  return learnerGroup.get('allInstructors').then(users => {
+    assert.equal(users.length, 0);
+
+    let user1 = store.createRecord('user');
+    let user2 = store.createRecord('user');
+    let user3 = store.createRecord('user');
+    learnerGroup.get('instructors').pushObject(user1);
+    let instructorGroup1 = store.createRecord('instructor-group', {users: [user2]});
+    let instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
+    learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
+
+    return learnerGroup.get('allInstructors').then(users => {
+      assert.equal(users.length, 3);
+      assert.ok(users.contains(user1));
+      assert.ok(users.contains(user2));
+      assert.ok(users.contains(user3));
+      let user4 = store.createRecord('user');
+      let user5 = store.createRecord('user');
+      learnerGroup.get('instructors').pushObject(user4);
+      let instructorGroup3 = store.createRecord('instructor-group', {users: [user5]});
+      learnerGroup.get('instructorGroups').pushObject(instructorGroup3);
+
+      return learnerGroup.get('allInstructors').then(users => {
+        assert.equal(users.length, 5);
+        assert.ok(users.contains(user1));
+        assert.ok(users.contains(user2));
+        assert.ok(users.contains(user3));
+        assert.ok(users.contains(user4));
+        assert.ok(users.contains(user5));
+      });
+
+    });
+  });
+});

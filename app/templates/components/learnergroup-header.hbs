@@ -10,9 +10,18 @@
     {{/if}}
   </span>
 </div>
-{{#if (is-fulfilled learnerGroup.allParents)}}
+{{#if (and (is-fulfilled learnerGroup.allParents) (is-fulfilled learnerGroup.cohort.programYear.program.school))}}
   <div class='breadcrumbs'>
-    <span>{{#link-to 'learnerGroups'}}{{t 'general.learnerGroups'}}{{/link-to}}</span>
+    <span>
+      {{#link-to
+        'learnerGroups'
+        (query-params
+          schoolId=(get (await learnerGroup.cohort.programYear.program.school) 'id')
+          programId=(get (await learnerGroup.cohort.programYear.program) 'id')
+          programYearId=(get (await learnerGroup.cohort.programYear) 'id')
+        )
+      }}{{t 'general.learnerGroups'}}{{/link-to}}
+    </span>
     {{#each (await learnerGroup.allParents) as |parent|}}
       <span>
         {{#link-to 'learnerGroup' parent}}

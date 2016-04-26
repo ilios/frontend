@@ -1,16 +1,49 @@
 {{learnergroup-header learnerGroup=learnerGroup}}
 
 <div class='detail-view-details'>
-  <section class='detail-block members'>
-    {{#if (is-fulfilled learnerGroup.users)}}
-      <div class='detail-content'>
+  <section class='detail-block overview'>
+    <div class='detail-content'>
+      {{#if (is-fulfilled learnerGroup.users)}}
         {{learnergroup-user-list
         }}
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
+    </div>
+    <div class='form-container'>
+      <div class='form-col-12'>
+        <label class='form-label'>{{t "learnerGroups.defaultLocation"}}:</label>
+        <div class='form-data'>
+          {{#if learnerGroup.location}}
+            {{learnerGroup.location}}
+          {{else}}
+            {{t 'general.none'}}
+          {{/if}}
+        </div>
+        <label class='form-label'>{{t "learnerGroups.defaultInstructors"}}:</label>
+        <div class='form-data'>
+          {{#if (is-fulfilled learnerGroup.allInstructors)}}
+            {{#if (get (await learnerGroup.allInstructors) 'length')}}
+              {{join '; ' (map-by 'fullName' (sort-by 'lastName' (await learnerGroup.allInstructors)))}}
+            {{else}}
+              {{t 'general.none'}}
+            {{/if}}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/if}}
+        </div>
+        <label class='form-label'>{{t "learnerGroups.associatedCourses"}}:</label>
+        <div class='form-data'>
+          {{#if (is-fulfilled learnerGroup.courses)}}
+            {{join '; ' (map-by 'title' (await learnerGroup.courses))}}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/if}}
+        </div>
       </div>
-    {{else}}
-      {{fa-icon 'spinner' spin=true}}
-    {{/if}}
+    </div>
   </section>
+
 
   {{learnergroup-subgroup-list parentGroup=learnerGroup}}
 

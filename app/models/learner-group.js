@@ -3,8 +3,9 @@ import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 
-const { computed, isEmpty } = Ember;
+const { computed, isEmpty, RSVP } = Ember;
 const { empty, mapBy, sum } = computed;
+const { Promise } = RSVP;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -246,22 +247,20 @@ export default DS.Model.extend({
     });
   }),
   allParents: computed('parent', 'parent.allParents.[]', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('parent').then(parent => {
-      var parents = [];
-      if(!parent){
-        deferred.resolve(parents);
-      } else {
-        parents.pushObject(parent);
-        parent.get('allParents').then(allParents => {
-          parents.pushObjects(allParents);
-          deferred.resolve(parents);
-        });
-      }
+    return new Promise(resolve => {
+      this.get('parent').then(parent => {
+        let parents = [];
+        if(!parent){
+          resolve(parents);
+        } else {
+          parents.pushObject(parent);
+          parent.get('allParents').then(allParents => {
+            parents.pushObjects(allParents);
+            resolve(parents);
+          });
+        }
 
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
+      });
     });
   }),
   topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
@@ -317,4 +316,20 @@ export default DS.Model.extend({
       });
     });
   },
+  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
+    return new Promise(resolve => {
+      let users = [];
+      this.get('instructors').then(instructors => {
+        users.pushObjects(instructors.toArray());
+        this.get('instructorGroups').then(instructorGroups => {
+          RSVP.all(instructorGroups.mapBy('users')).then(arr => {
+            arr.forEach(instructors =>{
+              users.pushObjects(instructors.toArray());
+            });
+            resolve(users.uniq());
+          });
+        });
+      });
+    });
+  }),
 });
