@@ -93,7 +93,6 @@ export default {
     'groupName': 'Nombre De Grupo',
     'dateTime': 'Fecha/Hora',
     'location': 'Ubicación',
-    'site': 'Sitio',
     'instructors': 'Instructores',
     'instructor': 'Instructor',
     'instructorGroups': 'Grupos de Instructores',

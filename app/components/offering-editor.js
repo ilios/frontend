@@ -5,18 +5,13 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, isEmpty, isPresent, ObjectProxy, RSVP, inject } = Ember;
-const { notEmpty, alias } = computed;
+const { notEmpty } = computed;
 const { all, Promise } = RSVP;
 const { service } = inject;
 const { PromiseArray } = DS;
 
 const Validations = buildValidations({
   room: [
-    validator('length', {
-      max: 255
-    }),
-  ],
-  site: [
     validator('length', {
       max: 255
     }),
@@ -41,7 +36,6 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
-  iliosConfig: service(),
   didReceiveAttrs() {
     this._super(...arguments);
 
@@ -76,7 +70,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   startTime: null,
   endTime: null,
   room: null,
-  site: null,
 
   instructors: null,
   instructorGroups: null,
@@ -87,14 +80,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   makeRecurring: false,
   recurringDays: null,
   numberOfWeeks: null,
-
-  /**
-   * A promise that resolves to TRUE if the offering site feature is enabled, otherwise FALSE.
-   * @property isOfferingSiteEnabled
-   * @type {Ember.computed.alias}
-   * @public
-   */
-  isOfferingSiteEnabled: alias('iliosConfig.isOfferingSiteEnabled'),
 
   availableLearnerGroups: computed('cohorts.[]', function() {
     let cohortProxy = ObjectProxy.extend({
@@ -279,8 +264,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     create() {
       const flashMessages = this.get('flashMessages');
-      this.send('addErrorDisplayFor', 'room')
-      this.send('addErrorDisplayFor', 'site');
+      this.send('addErrorDisplayFor', 'room');
       this.send('addErrorDisplayFor', 'numberOfWeeks');
 
 
@@ -319,7 +303,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             }
           } else {
             params.room = this.get('room') || 'TBD';
-            params.site = this.get('site');
             params.instructors = this.get('instructors');
             params.instructorGroups = this.get('instructorGroups');
 

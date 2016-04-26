@@ -53,22 +53,6 @@
         {{/if}}
       </span></div>
     </div>
-    {{#if (await isOfferingSiteEnabled)}}
-      <div class="form-col-12">
-        <label class="form-label">{{t 'general.site'}}:</label>
-        <div class="form-data"><span class='site'>
-          {{one-way-input
-            value=site
-            update=(action (mut site))
-            focusOut=(action 'addErrorDisplayFor' 'site')
-            keyDown=(action 'addErrorDisplayFor' 'site')
-          }}
-          {{#if (and (v-get this 'site' 'isInvalid') (is-in showErrorsFor 'site'))}}
-            <span class="validation-error-message">{{v-get this 'site' 'message'}}</span>
-          {{/if}}
-        </span></div>
-      </div>
-    {{/if}}
     <div class="form-col-12">
       <div class="offering-learnergroups">
         {{#each filteredCohorts as |cohort|}}
@@ -117,9 +101,6 @@
       </ul>
     </span>
     <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
-    {{#if (await isOfferingSiteEnabled)}}
-      <span class='offering-block-time-offering-site offering-detail-box'>{{offering.site}}</span>
-    {{/if}}
     <span class='offering-block-time-offering-instructors offering-detail-box'>
       <ul>
         {{#each offering.allInstructors as |instructor|}}

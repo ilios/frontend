@@ -53,8 +53,8 @@
       }
 
       .offering-detail-box {
-        @include span-columns(2 of 10);
-        @include omega(5n);
+        @include span-columns(2 of 8);
+        @include omega(4n);
         padding: .8em;
       }
     }
@@ -96,15 +96,6 @@
     .multiday-offering-block-time-offerings {
       @include span-columns(10 of 12);
       @include shift(2);
-    }
-  }
-
-  &.no-site {
-    .offering-block-time-offering {
-      .offering-detail-box {
-        @include span-columns(2 of 8);
-        @include omega(4n);
-      }
     }
   }
 }

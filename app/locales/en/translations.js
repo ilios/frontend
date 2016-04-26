@@ -93,7 +93,6 @@ export default {
     'groupName': 'Group Name',
     'dateTime': 'Date/Time',
     'location': 'Location',
-    'site': 'Site',
     'instructors': 'Instructors',
     'instructor': 'Instructor',
     'instructorGroups': 'Instructor Groups',

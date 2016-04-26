@@ -15,13 +15,9 @@ export default Component.extend({
 
   i18n: service(),
 
-  iliosConfig: service(),
-
   layout,
 
   classNames: ['session-offerings'],
-
-  classNameBindings: ['isOfferingSiteEnabled::no-site'],
 
   session: null,
 
@@ -80,22 +76,14 @@ export default Component.extend({
     return schedule;
   },
 
-  returnSingleOfferingPromise({ startDate, endDate, room, site, learnerGroups, instructors, instructorGroups }) {
+  returnSingleOfferingPromise({ startDate, endDate, room, learnerGroups, instructors, instructorGroups }) {
     const store = this.get('store');
     const session = this.get('session');
 
-    let offering = store.createRecord('offering', { session, startDate, endDate, room, site, learnerGroups, instructors, instructorGroups });
+    let offering = store.createRecord('offering', { session, startDate, endDate, room, learnerGroups, instructors, instructorGroups });
 
     return offering.save();
   },
-
-  /**
-   * A promise that resolves to TRUE if the offering site feature is enabled, otherwise FALSE.
-   * @property isOfferingSiteEnabled
-   * @type {Ember.computed.alias}
-   * @public
-   */
-  isOfferingSiteEnabled: alias('iliosConfig.isOfferingSiteEnabled'),
 
   actions: {
     addSingleOffering(params) {
@@ -109,14 +97,13 @@ export default Component.extend({
 
       learnerGroups.forEach((learnerGroup) => {
         const room = learnerGroup.get('location') || 'TBD';
-        const site = null;
         const startDate = copy(sharedStartDateObj);
         const endDate = copy(sharedEndDateObj);
         const learnerGroups = [ learnerGroup ];
         const instructors = learnerGroup.get('instructors');
         const instructorGroups = learnerGroup.get('instructorGroups');
 
-        let promise = hash({ room, site, startDate, endDate, learnerGroups, instructors, instructorGroups });
+        let promise = hash({ room, startDate, endDate, learnerGroups, instructors, instructorGroups });
 
         offeringPromises.pushObject(promise);
       });
@@ -159,14 +146,13 @@ export default Component.extend({
       const offeringPromises = [];
 
       learnerGroups.forEach((learnerGroup) => {
-        const room = learnerGroup.get('location') || 'TBD'
-        const site = null;
+        const room = learnerGroup.get('location') || 'TBD';
         const learnerGroups = [ learnerGroup ];
         const instructors = learnerGroup.get('instructors');
         const instructorGroups = learnerGroup.get('instructorGroups');
 
         schedule.forEach(({ startDate, endDate }) => {
-          let promise = hash({ room, site, startDate, endDate, learnerGroups, instructors, instructorGroups });
+          let promise = hash({ room, startDate, endDate, learnerGroups, instructors, instructorGroups });
 
           offeringPromises.pushObject(promise);
         });
