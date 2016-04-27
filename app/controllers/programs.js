@@ -33,7 +33,7 @@ export default Controller.extend({
     this.set('debouncedFilter', this.get('titleFilter'));
   },
 
-  hasMoreThanOneSchool: gt('schools.length', 1),
+  hasMoreThanOneSchool: gt('model.length', 1),
 
   filteredPrograms: computed('debouncedFilter', 'programs.[]', {
     get() {
