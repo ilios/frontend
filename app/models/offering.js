@@ -8,6 +8,7 @@ const { not } = computed;
 
 export default DS.Model.extend({
   room: DS.attr('string'),
+  site: DS.attr('string'),
   startDate: DS.attr('date'),
   endDate: DS.attr('date'),
   updatedAt: DS.attr('date'),
