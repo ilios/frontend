@@ -2,6 +2,19 @@
 
 <div class='detail-view-details'>
   <section class='detail-block overview'>
+    {{#if (is-fulfilled learnerGroup.usersOnlyAtThisLevel)}}
+      <div class='detail-content'>
+        {{learnergroup-user-list
+          users=(await learnerGroup.usersOnlyAtThisLevel)
+          sortBy=sortUsersBy
+          setSortBy=this.attrs.setSortUsersBy
+          title=(t 'learnerGroups.members')
+        }}
+      </div>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+
     <div class='form-container'>
       <div class='form-col-12'>
         <label class='form-label'>{{t "learnerGroups.defaultLocation"}}:</label>
@@ -38,21 +51,6 @@
         </div>
       </div>
     </div>
-    
-    {{#if (is-fulfilled learnerGroup.usersOnlyAtThisLevel)}}
-      <div class='detail-title'>
-        {{t 'learnerGroups.members'}} ({{get (await learnerGroup.usersOnlyAtThisLevel) 'length'}})
-      </div>
-      <div class='detail-content'>
-        {{learnergroup-user-list
-          users=(await learnerGroup.usersOnlyAtThisLevel)
-          sortBy=sortUsersBy
-          setSortBy=this.attrs.setSortUsersBy
-        }}
-      </div>
-    {{else}}
-      {{fa-icon 'spinner' spin=true}}
-    {{/if}}
   </section>
 
 
@@ -60,11 +58,12 @@
 
   <section class='detail-block cohortmembers'>
     {{#if (is-fulfilled cohortMembersNotInAnyGroup)}}
-      <div class='detail-title'>
-        {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title}} ({{get (await cohortMembersNotInAnyGroup) 'length'}})
-      </div>
       <div class='detail-content'>
         {{learnergroup-user-list
+          users=(await cohortMembersNotInAnyGroup)
+          sortBy=sortUsersBy
+          setSortBy=this.attrs.setSortUsersBy
+          title=(t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title)
         }}
       </div>
     {{else}}
