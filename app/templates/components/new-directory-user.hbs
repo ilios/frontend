@@ -155,7 +155,7 @@
                   <tr>
                     <td class='text-right' colspan=1>
                       {{#if user.user}}
-                        {{fa-icon 'sun-o' class='warning clickable' click=(action attrs.transitionToUser user.user) title=(t 'admin.gotToUser')}}
+                        {{fa-icon 'sun-o' class='warning clickable' click=(action attrs.transitionToUser user.user) title=(t 'admin.goToUser')}}
                       {{else}}
                         {{#if user.addable}}
                           {{fa-icon 'plus' class='yes clickable' click=(action 'pickUser' user) title=(t 'general.addNew')}}
