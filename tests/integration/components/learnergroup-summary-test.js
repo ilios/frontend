@@ -40,7 +40,6 @@ test('renders with data', function(assert) {
     assert.equal(this.$('.overview .form-data:eq(0)').text().trim(), 'test location');
     assert.equal(this.$('.overview .form-data:eq(1)').text().trim(), 'Test Person; Test Person2');
     assert.equal(this.$('.overview .form-data:eq(2)').text().trim(), 'test course 1; test course 2');
-    assert.equal(this.$('.learnergroup-user-list:eq(0)').text().trim(), 'LIST OF USERS');
     assert.equal(this.$('.learnergroup-subgroup-list .detail-title').text().trim(), 'Subgroups (1)');
     assert.equal(this.$('.learnergroup-subgroup-list tbody tr:eq(0) td:eq(0)').text().trim(), 'test sub-group');
     assert.equal(this.$('.learnergroup-subgroup-list tbody tr:eq(0) td:eq(1)').text().trim(), '0');

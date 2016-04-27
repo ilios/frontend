@@ -37,14 +37,14 @@ test('it renders with a list of users', function(assert) {
 
 });
 
-test('empty with no users', function(assert) {
+test('renders with no users', function(assert) {
   let users = [];
 
   this.set('users', users);
   this.on('nothing', parseInt);
-  this.render(hbs`{{learnergroup-user-list users=users setSortBy=(action 'nothing')}}`);
+  this.render(hbs`{{learnergroup-user-list users=users title='test' setSortBy=(action 'nothing')}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'test (0)');
 });
 
 test('sort by first name desc', function(assert) {
@@ -124,8 +124,8 @@ test('filter works on first name', function(assert) {
   this.set('users', users);
   this.on('nothing', parseInt);
   this.render(hbs`{{learnergroup-user-list users=users sortBy='lastName' setSortBy=(action 'nothing')}}`);
-  this.$('.filter input').val('aaaFirst');
-  this.$('.filter input').trigger('change');
+  this.$('.detail-actions input').val('aaaFirst');
+  this.$('.detail-actions input').trigger('change');
 
   assert.equal(this.$('tbody tr').length, 1);
   assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), 'aaaFirst');
@@ -140,8 +140,8 @@ test('filter works on last name', function(assert) {
   this.set('users', users);
   this.on('nothing', parseInt);
   this.render(hbs`{{learnergroup-user-list users=users sortBy='lastName' setSortBy=(action 'nothing')}}`);
-  this.$('.filter input').val('bbbLast');
-  this.$('.filter input').trigger('change');
+  this.$('.detail-actions input').val('bbbLast');
+  this.$('.detail-actions input').trigger('change');
 
   assert.equal(this.$('tbody tr').length, 1);
   assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), 'bbbFirst');
@@ -156,8 +156,8 @@ test('filter works on email', function(assert) {
   this.set('users', users);
   this.on('nothing', parseInt);
   this.render(hbs`{{learnergroup-user-list users=users sortBy='lastName' setSortBy=(action 'nothing')}}`);
-  this.$('.filter input').val('testemail2');
-  this.$('.filter input').trigger('change');
+  this.$('.detail-actions input').val('testemail2');
+  this.$('.detail-actions input').trigger('change');
 
   assert.equal(this.$('tbody tr').length, 1);
   assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), 'bbbFirst');
