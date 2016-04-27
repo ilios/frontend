@@ -6,7 +6,7 @@ const { Component, computed, inject, observer, RSVP, run, ObjectProxy } = Ember;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
-const { sort, not, alias } = computed;
+const { sort, not, alias, collect } = computed;
 const { Promise } = RSVP;
 
 const SessionProxy = ObjectProxy.extend({
@@ -120,22 +120,18 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-
-  sortAscending: true,
-  sortItem: 'title',
-  sortSessionBy: computed('sortAscending', 'sortItem', function(){
-    const direction = this.get('sortAscending')?'asc':'desc';
-    let sortItem = this.get('sortItem');
-
-    return [sortItem + ':' + direction];
+  sortBy: 'title',
+  sortSessionsBy: collect('sortBy'),
+  sortedSessions: sort('filteredContent', 'sortSessionsBy'),
+  sortedAscending: computed('sortBy', function(){
+    const sortBy = this.get('sortBy');
+    return sortBy.search(/desc/) === -1;
   }),
-  sortedSessionList: sort('filteredContent', 'sortSessionBy'),
-
-  displayedSessions: computed('sortedSessionList.[]', 'offset', 'limit', function(){
+  displayedSessions: computed('sortedSessions.[]', 'sortBy', 'offset', 'limit', function(){
     const limit = this.get('limit');
     const offset = this.get('offset');
     const end = limit + offset;
-    let sessions = this.get('sortedSessionList');
+    let sessions = this.get('sortedSessions');
 
     return sessions.slice(offset, end);
   }),
@@ -183,21 +179,12 @@ export default Component.extend({
     cancelRemove(sessionProxy){
       sessionProxy.set('showRemoveConfirmation', false);
     },
-    sortBy(item){
-      this.set('forceFullSessionList', true);
-      if (item === this.get('sortItem')){
-        this.set('sortAscending', !this.get('sortAscending'));
-      } else {
-        this.set('sortAscending', true);
+    sortBy(what){
+      const sortBy = this.get('sortBy');
+      if(sortBy === what){
+        what += ':desc';
       }
-      this.set('sortItem', item);
+      this.get('setSortBy')(what);
     },
-
-    setOffset(offset){
-      this.sendAction('setOffset', offset);
-    },
-    setLimit(limit){
-      this.sendAction('setLimit', limit);
-    }
   }
 });

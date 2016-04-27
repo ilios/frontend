@@ -47,8 +47,8 @@
         offset=offset
         limit=limit
         total=sessionsCount
-        setOffset='setOffset'
-        setLimit='setLimit'
+        setOffset=this.attrs.setOffset
+        setLimit=this.attrs.setLimit
       }}
       <div class='resultslist-list'>
         <table class='active-background'>
@@ -57,33 +57,33 @@
               {{#sortable-th
                 colspan=3
                 click=(action 'sortBy' 'title')
-                sortedBy=(is-equal sortItem 'title')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
+                sortedAscending=sortedAscending
               }}{{t 'general.title'}}{{/sortable-th}}
               {{#sortable-th
                 click=(action 'sortBy' 'sessionType')
-                sortedBy=(is-equal sortItem 'sessionType')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'sessionType') (eq sortBy 'sessionType:desc'))
+                sortedAscending=sortedAscending
               }}{{t 'general.type'}}{{/sortable-th}}
               {{#sortable-th
                 click=(action 'sortBy' 'learnerGroupCount')
-                sortedBy=(is-equal sortItem 'learnerGroupCount')
+                sortedBy=(or (eq sortBy 'learnerGroupCount') (eq sortBy 'learnerGroupCount:desc'))
                 align='center'
                 sortType='numeric'
-                sortedAscending=sortAscending
+                sortedAscending=sortedAscending
               }}{{t 'general.groups'}}{{/sortable-th}}
               {{#sortable-th
                 colspan=2
                 click=(action 'sortBy' 'firstOfferingDate')
-                sortedBy=(is-equal sortItem 'firstOfferingDate')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
+                sortedAscending=sortedAscending
                 sortType='numeric'
               }}{{t 'courses.firstOffering'}}{{/sortable-th}}
               {{#sortable-th
                 align='center'
                 click=(action 'sortBy' 'offeringCount')
-                sortedBy=(is-equal sortItem 'offeringCount')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'offeringCount') (eq sortBy 'offeringCount:desc'))
+                sortedAscending=sortedAscending
                 sortType='numeric'
               }}{{t 'general.offerings'}}{{/sortable-th}}
               <th class='text-center' >{{t 'general.status'}}</th>
@@ -168,8 +168,8 @@
       offset=offset
       limit=limit
       total=sessionsCount
-      setOffset='setOffset'
-      setLimit='setLimit'
+      setOffset=this.attrs.setOffset
+      setLimit=this.attrs.setLimit
     }}
   {{else}}
     <br /><h1>{{fa-icon 'spinner' spin=true}}</h1>
