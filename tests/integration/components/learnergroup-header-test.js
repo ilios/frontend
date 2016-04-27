@@ -52,7 +52,7 @@ test('counts members correctly', function(assert) {
   });
   let learnerGroup = Object.create({
     title: 'test group',
-    users: [1],
+    usersOnlyAtThisLevel: [1],
     cohort,
     children: resolve([subGroup])
   });
