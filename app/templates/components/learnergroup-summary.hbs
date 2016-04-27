@@ -1,15 +1,7 @@
-{{learnergroup-header learnerGroup=learnerGroup}}
+{{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy}}
 
 <div class='detail-view-details'>
   <section class='detail-block overview'>
-    <div class='detail-content'>
-      {{#if (is-fulfilled learnerGroup.users)}}
-        {{learnergroup-user-list
-        }}
-      {{else}}
-        {{fa-icon 'spinner' spin=true}}
-      {{/if}}
-    </div>
     <div class='form-container'>
       <div class='form-col-12'>
         <label class='form-label'>{{t "learnerGroups.defaultLocation"}}:</label>
@@ -35,13 +27,32 @@
         <label class='form-label'>{{t "learnerGroups.associatedCourses"}}:</label>
         <div class='form-data'>
           {{#if (is-fulfilled learnerGroup.courses)}}
-            {{join '; ' (map-by 'title' (await learnerGroup.courses))}}
+            {{#if (get (await learnerGroup.courses) 'length')}}
+              {{join '; ' (map-by 'title' (await learnerGroup.courses))}}
+            {{else}}
+              {{t 'general.none'}}
+            {{/if}}
           {{else}}
             {{fa-icon 'spinner' spin=true}}
           {{/if}}
         </div>
       </div>
     </div>
+    
+    {{#if (is-fulfilled learnerGroup.usersOnlyAtThisLevel)}}
+      <div class='detail-title'>
+        {{t 'learnerGroups.members'}} ({{get (await learnerGroup.usersOnlyAtThisLevel) 'length'}})
+      </div>
+      <div class='detail-content'>
+        {{learnergroup-user-list
+          users=(await learnerGroup.usersOnlyAtThisLevel)
+          sortBy=sortUsersBy
+          setSortBy=this.attrs.setSortUsersBy
+        }}
+      </div>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
   </section>
 
 

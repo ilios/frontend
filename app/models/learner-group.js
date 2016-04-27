@@ -159,29 +159,25 @@ export default DS.Model.extend({
     });
   }),
   usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('users').then(users => {
-      this.get('allDescendants').then(descendants => {
-        var membersAtThisLevel = [];
-        var promises = [];
-        users.forEach(user => {
-          let promise = user.get('learnerGroups').then(userGroups => {
-            var subGroups = userGroups.filter(group => descendants.contains(group));
-            if(subGroups.length === 0){
-              membersAtThisLevel.pushObject(user);
-            }
+    return new Promise(resolve => {
+      this.get('users').then(users => {
+        this.get('allDescendants').then(descendants => {
+          let membersAtThisLevel = [];
+          let promises = [];
+          users.forEach(user => {
+            let promise = user.get('learnerGroups').then(userGroups => {
+              var subGroups = userGroups.filter(group => descendants.contains(group));
+              if(subGroups.length === 0){
+                membersAtThisLevel.pushObject(user);
+              }
+            });
+            promises.pushObject(promise);
           });
-          promises.pushObject(promise);
+          Ember.RSVP.all(promises).then(() => {
+            resolve(membersAtThisLevel);
+          });
         });
-        Ember.RSVP.all(promises).then(() => {
-          deferred.resolve(membersAtThisLevel.sortBy('fullName'));
-        });
-
       });
-
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
   destroyChildren: function(){

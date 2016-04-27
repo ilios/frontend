@@ -10,7 +10,7 @@
     {{/if}}
   </span>
 </div>
-{{#if (and (is-fulfilled learnerGroup.allParents) (is-fulfilled learnerGroup.cohort.programYear.program.school))}}
+{{#if (is-fulfilled learnerGroup.allParents)}}
   <div class='breadcrumbs'>
     <span>
       {{#link-to
@@ -24,7 +24,12 @@
     </span>
     {{#each (await learnerGroup.allParents) as |parent|}}
       <span>
-        {{#link-to 'learnerGroup' parent}}
+        {{#link-to
+          'learnerGroup' parent
+          (query-params
+            sortUsersBy=sortUsersBy
+          )
+        }}
           {{parent.title}}
         {{/link-to}}
       </span>
