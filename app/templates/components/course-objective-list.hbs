@@ -12,6 +12,7 @@
       {{#each sortedObjectives as |objective|}}
         {{course-objective-list-item
           objective=objective
+          editable=editable
           course=course
           showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
           remove=(action 'confirmRemoval')

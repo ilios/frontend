@@ -4,6 +4,7 @@ const { computed, Component } = Ember;
 const { sort } = computed;
 
 export default Component.extend({
+  editable: true,
   course: null,
   objectives: computed('course.objectives.[]', function(){
     return this.get('course').get('objectives');

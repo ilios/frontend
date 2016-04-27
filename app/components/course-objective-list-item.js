@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import ObjectiListItem from 'ilios/mixins/objective-list-item';
+import ObjectiveListItem from 'ilios/mixins/objective-list-item';
 
-export default Ember.Component.extend(ObjectiListItem, {
+export default Ember.Component.extend(ObjectiveListItem, {
   course: null,
   editable: true,
 });

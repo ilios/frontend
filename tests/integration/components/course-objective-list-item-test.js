@@ -134,3 +134,25 @@ test('can trigger removal', function(assert) {
   this.$('td:eq(3) i').click();
 
 });
+
+test('read-only mode', function(assert) {
+  let objective = Object.create({
+    title: 'fake title'
+  });
+  this.set('objective', objective);
+  this.on('nothing', parseInt);
+  this.render(hbs`{{course-objective-list-item
+    objective=objective
+    editable=false
+    remove=(action 'nothing')
+    manageParents=(action 'nothing')
+    manageDescriptors=(action 'nothing')
+  }}`);
+
+  assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
+  assert.equal(this.$('td:eq(0) .editable').length, 0, 'No in-place editor in read-only mode');
+  assert.equal(this.$('td:eq(1) button').length, 0, 'No edit button for parent objectives in read-only mode.');
+  assert.equal(this.$('td:eq(2)').text().trim(), 'None');
+  assert.equal(this.$('td:eq(2) button').length, 0, 'No edit button for MeSH terms in read-only mode.');
+  assert.equal(this.$('td:eq(3)').text().trim(), '', 'No actions available in read-only mode.');
+});
