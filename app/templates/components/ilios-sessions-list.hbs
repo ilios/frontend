@@ -2,7 +2,7 @@
   <div class='sessions detail-title'>
     {{t 'general.sessions'}} ({{sessionsCount}})
   </div>
-  {{#if proxiedSessions.isFulfilled}}
+  {{#if (is-fulfilled proxiedSessions)}}
     <div class="filter-tools">
       <div id='titlefilter' class="filter">
         {{input type='text' value=filter placeholder=placeholderValue}}
@@ -81,8 +81,8 @@
               }}{{t 'courses.firstOffering'}}{{/sortable-th}}
               {{#sortable-th
                 align='center'
-                click=(action 'sortBy' 'offerings')
-                sortedBy=(is-equal sortItem 'offerings')
+                click=(action 'sortBy' 'offeringCount')
+                sortedBy=(is-equal sortItem 'offeringCount')
                 sortedAscending=sortAscending
                 sortType='numeric'
               }}{{t 'general.offerings'}}{{/sortable-th}}
@@ -99,28 +99,20 @@
                   {{/link-to}}
                 </td>
                 <td class='text-left'>
-                  {{#liquid-if sessionProxy.sessionType.isFulfilled class='crossFade'}}
-                    {{sessionProxy.sessionType.title}}
-                  {{else}}
-                    {{fa-icon 'spinner' spin=true}}
-                  {{/liquid-if}}
+                  {{sessionProxy.sessionType}}
                 </td>
                 <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
                 <td class='text-left' colspan=2>
-                  {{#liquid-if sessionProxy.firstOfferingDate.isFulfilled class='crossFade'}}
-                    {{#if sessionProxy.firstOfferingDate}}
-                      {{#if sessionProxy.ilmSession}}
-                        <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY'}}
-                      {{else}}
-                        {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
-                      {{/if}}
+                  {{#if sessionProxy.firstOfferingDate}}
+                    {{#if sessionProxy.ilmSession}}
+                      <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY'}}
+                    {{else}}
+                      {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY h:mma'}}
                     {{/if}}
-                  {{else}}
-                    {{fa-icon 'spinner' spin=true}}
-                  {{/liquid-if}}
+                  {{/if}}
                 </td>
                 <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>
-                  {{sessionProxy.offerings.length}}
+                  {{sessionProxy.offeringCount}}
                   {{#if sessionProxy.expandOfferings}}
                     {{fa-icon 'caret-down'}}
                   {{else}}
