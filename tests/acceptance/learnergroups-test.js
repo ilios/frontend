@@ -609,12 +609,10 @@ test('confirmation of remove message', function(assert) {
   andThen(function() {
     assert.equal(1, find('.resultslist-list tbody tr').length);
     assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        assert.ok(find('.resultslist-list tbody tr:eq(0)').hasClass('confirm-removal'));
-        assert.ok(find('.resultslist-list tbody tr:eq(1)').hasClass('confirm-removal'));
-        assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 5 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
-      });
+    click('.resultslist-list tbody tr:eq(0) td:eq(3) .remove').then(()=>{
+      assert.ok(find('.resultslist-list tbody tr:eq(0)').hasClass('confirm-removal'));
+      assert.ok(find('.resultslist-list tbody tr:eq(1)').hasClass('confirm-removal'));
+      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 5 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
     });
   });
 });
