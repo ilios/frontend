@@ -29,7 +29,7 @@
 
       {{#liquid-if editorOn class='vertical'}}
         {{new-session
-          sessionTypes=course.school.sessionTypes
+          sessionTypes=sessionTypes
           save=(action 'save')
           cancel=(action 'cancel')
         }}

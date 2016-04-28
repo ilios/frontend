@@ -73,7 +73,7 @@ export default Component.extend({
             sessionType: session.get('sessionType'),
             firstOfferingDate: session.get('firstOfferingDate'),
             associatedLearnerGroups: session.get('associatedLearnerGroups'),
-            offerings: session.get('offerings'),
+            offerings: session.hasMany('offerings').ids(),
           }).then(({sessionType, firstOfferingDate, associatedLearnerGroups, offerings})=> {
             return SessionProxy.create({
               content: session,
@@ -141,6 +141,17 @@ export default Component.extend({
   saved: false,
   savedSession: null,
   isSaving: null,
+
+  sessionTypes: computed('course.school.sessionTypes.[]', function(){
+    return new Promise( resolve => {
+      const course = this.get('course');
+      course.get('school').then(school => {
+        school.get('sessionTypes').then(sessionTypes => {
+          resolve(sessionTypes);
+        });
+      });
+    });
+  }),
 
   actions: {
     toggleEditor() {

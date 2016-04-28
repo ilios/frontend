@@ -23,19 +23,17 @@
     <div class="form-label">{{t "sessions.type"}}:</div>
 
     <div class="form-data form-data-select form-input-row">
-    {{#if sortedSessionTypes}}
-      <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
-        {{#each sortedSessionTypes as |sessionType|}}
-          <option value="{{sessionType.id}}" selected={{is-equal sessionType.id selectedSessionType.id}}>
-            {{sessionType.title}}
-          </option>
-        {{/each}}
-      </select>
-    {{else}}
-      <select>
-        <option selected>{{t 'sessions.loadingSessionTypes'}}</option>
-      </select>
-    {{/if}}
+      {{#if (is-fulfilled sessionTypes)}}
+        <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
+          {{#each (sort-by 'title' (await sessionTypes)) as |sessionType|}}
+            <option value="{{sessionType.id}}" selected={{eq sessionType.id (get (await selectedSessionType) 'id')}}>
+              {{sessionType.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
     </div>
   </label>
 
