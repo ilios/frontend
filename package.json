@@ -89,7 +89,7 @@
     "eslint": "^2.6.0",
     "ilios-calendar": "^4.0.0",
     "liquid-fire": "0.23.0",
-    "liquid-tether": "1.1.0",
+    "liquid-tether": "1.1.1",
     "loader.js": "^4.0.1",
     "pluralize": "^1.2.1",
     "ui-select": "firefly-ui/ui-select#v0.0.10",
