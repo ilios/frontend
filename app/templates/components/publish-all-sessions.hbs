@@ -135,13 +135,13 @@
             <tr>
               <td>
                 <ul>
-                  <li class='clickable' {{action 'toggleSession' session}}>
-                    {{boolean-check value=(is-in sessionsToOverride session)}}
-                    {{t 'publish.publishAsIs'}}
+                  <li>
+                    {{one-way-checkbox checked=(is-in sessionsToOverride session) click=(action 'toggleSession' session)}}
+                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'publish.publishAsIs'}}</span>
                   </li>
-                  <li class='clickable' {{action 'toggleSession' session}}>
-                    {{boolean-check value=(not-in sessionsToOverride session)}}
-                    {{t 'publish.markAsScheduled'}}
+                  <li>
+                    {{one-way-checkbox checked=(not-in sessionsToOverride session) click=(action 'toggleSession' session)}}
+                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'publish.markAsScheduled'}}</span>
                   </li>
                 </ul>
               </td>
