@@ -2,7 +2,7 @@
   <div class='sessions detail-title'>
     {{t 'general.sessions'}} ({{sessionsCount}})
   </div>
-  {{#if proxiedSessions.isFulfilled}}
+  {{#if (is-fulfilled proxiedSessions)}}
     <div class="filter-tools">
       <div id='titlefilter' class="filter">
         {{input type='text' value=filter placeholder=placeholderValue}}
@@ -29,7 +29,7 @@
 
       {{#liquid-if editorOn class='vertical'}}
         {{new-session
-          sessionTypes=course.school.sessionTypes
+          sessionTypes=sessionTypes
           save=(action 'save')
           cancel=(action 'cancel')
         }}
@@ -47,8 +47,8 @@
         offset=offset
         limit=limit
         total=sessionsCount
-        setOffset='setOffset'
-        setLimit='setLimit'
+        setOffset=this.attrs.setOffset
+        setLimit=this.attrs.setLimit
       }}
       <div class='resultslist-list'>
         <table class='active-background'>
@@ -57,33 +57,33 @@
               {{#sortable-th
                 colspan=3
                 click=(action 'sortBy' 'title')
-                sortedBy=(is-equal sortItem 'title')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
+                sortedAscending=sortedAscending
               }}{{t 'general.title'}}{{/sortable-th}}
               {{#sortable-th
                 click=(action 'sortBy' 'sessionType')
-                sortedBy=(is-equal sortItem 'sessionType')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'sessionType') (eq sortBy 'sessionType:desc'))
+                sortedAscending=sortedAscending
               }}{{t 'general.type'}}{{/sortable-th}}
               {{#sortable-th
                 click=(action 'sortBy' 'learnerGroupCount')
-                sortedBy=(is-equal sortItem 'learnerGroupCount')
+                sortedBy=(or (eq sortBy 'learnerGroupCount') (eq sortBy 'learnerGroupCount:desc'))
                 align='center'
                 sortType='numeric'
-                sortedAscending=sortAscending
+                sortedAscending=sortedAscending
               }}{{t 'general.groups'}}{{/sortable-th}}
               {{#sortable-th
                 colspan=2
                 click=(action 'sortBy' 'firstOfferingDate')
-                sortedBy=(is-equal sortItem 'firstOfferingDate')
-                sortedAscending=sortAscending
+                sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
+                sortedAscending=sortedAscending
                 sortType='numeric'
               }}{{t 'courses.firstOffering'}}{{/sortable-th}}
               {{#sortable-th
                 align='center'
-                click=(action 'sortBy' 'offerings')
-                sortedBy=(is-equal sortItem 'offerings')
-                sortedAscending=sortAscending
+                click=(action 'sortBy' 'offeringCount')
+                sortedBy=(or (eq sortBy 'offeringCount') (eq sortBy 'offeringCount:desc'))
+                sortedAscending=sortedAscending
                 sortType='numeric'
               }}{{t 'general.offerings'}}{{/sortable-th}}
               <th class='text-center' >{{t 'general.status'}}</th>
@@ -99,28 +99,20 @@
                   {{/link-to}}
                 </td>
                 <td class='text-left'>
-                  {{#liquid-if sessionProxy.sessionType.isFulfilled class='crossFade'}}
-                    {{sessionProxy.sessionType.title}}
-                  {{else}}
-                    {{fa-icon 'spinner' spin=true}}
-                  {{/liquid-if}}
+                  {{sessionProxy.sessionType}}
                 </td>
                 <td class='text-center'>{{sessionProxy.learnerGroupCount}}</td>
                 <td class='text-left' colspan=2>
-                  {{#liquid-if sessionProxy.firstOfferingDate.isFulfilled class='crossFade'}}
-                    {{#if sessionProxy.firstOfferingDate}}
-                      {{#if sessionProxy.ilmSession}}
-                        <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY'}}
-                      {{else}}
-                        {{moment-format sessionProxy.firstOfferingDate.content 'MM/DD/YYYY h:mma'}}
-                      {{/if}}
+                  {{#if sessionProxy.firstOfferingDate}}
+                    {{#if sessionProxy.ilmSession}}
+                      <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY'}}
+                    {{else}}
+                      {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY h:mma'}}
                     {{/if}}
-                  {{else}}
-                    {{fa-icon 'spinner' spin=true}}
-                  {{/liquid-if}}
+                  {{/if}}
                 </td>
                 <td class='text-center clickable editable' {{action 'toggleExpandedOffering' sessionProxy}}>
-                  {{sessionProxy.offerings.length}}
+                  {{sessionProxy.offeringCount}}
                   {{#if sessionProxy.expandOfferings}}
                     {{fa-icon 'caret-down'}}
                   {{else}}
@@ -176,8 +168,8 @@
       offset=offset
       limit=limit
       total=sessionsCount
-      setOffset='setOffset'
-      setLimit='setLimit'
+      setOffset=this.attrs.setOffset
+      setLimit=this.attrs.setLimit
     }}
   {{else}}
     <br /><h1>{{fa-icon 'spinner' spin=true}}</h1>

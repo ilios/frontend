@@ -16,12 +16,15 @@ module('Acceptance: Course - Session List' + testgroup, {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application, {id: 4136, directedCourses: [1]});
-    server.create('school');
+    server.create('school', {
+      sessionTypes: [1]
+    });
     fixtures.sessionTypes = server.createList('sessionType', 1, {
-      sessions: [1,2,3,4]
+      sessions: [1,2,3,4],
     });
     server.create('course', {
-      sessions: [1,2,3,4]
+      sessions: [1,2,3,4],
+      school: 1
     });
     fixtures.sessions = [];
     fixtures.sessions.pushObject(server.create('session', {

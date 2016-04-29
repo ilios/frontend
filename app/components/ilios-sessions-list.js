@@ -2,11 +2,12 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, isEmpty, observer, RSVP, run, ObjectProxy } = Ember;
+const { Component, computed, inject, observer, RSVP, run, ObjectProxy } = Ember;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
 const { debounce } = run;
-const { sort, not, alias } = computed;
+const { sort, not, alias, collect } = computed;
+const { Promise } = RSVP;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -64,25 +65,29 @@ export default Component.extend({
     this.set('debouncedFilter', this.get('filter'));
   },
 
-  proxiedSessions: computed('sessions.@each.firstOfferingDate', function() {
-    let course = this.get('course.id');
-    if(isEmpty(course)){
-      return [];
-    }
-    let defer = RSVP.defer();
-    this.get('sessions').then(sessions => {
-      let proxiedSessions = sessions.map(session => {
-        return SessionProxy.create({
-          content: session,
-          currentUser: this.get('currentUser')
-        });
+  proxiedSessions: computed('sessions.[]', function() {
+    return new Promise( resolve => {
+      this.get('sessions').then(sessions => {
+        return RSVP.map(sessions.toArray(), session => {
+          return RSVP.hash({
+            sessionType: session.get('sessionType'),
+            firstOfferingDate: session.get('firstOfferingDate'),
+            associatedLearnerGroups: session.get('associatedLearnerGroups'),
+            offerings: session.hasMany('offerings').ids(),
+          }).then(({sessionType, firstOfferingDate, associatedLearnerGroups, offerings})=> {
+            return SessionProxy.create({
+              content: session,
+              currentUser: this.get('currentUser'),
+              sessionType: sessionType.get('title'),
+              firstOfferingDate,
+              learnerGroupCount: associatedLearnerGroups.get('length'),
+              offeringCount: offerings.get('length')
+            });
+          });
+        }).then((proxiedSessions => {
+          resolve(proxiedSessions);
+        }));
       });
-
-      defer.resolve(proxiedSessions);
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
@@ -115,30 +120,18 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-
-  sortAscending: true,
-  sortItem: 'title',
-  sortSessionBy: computed('sortAscending', 'sortItem', function(){
-    const direction = this.get('sortAscending')?'asc':'desc';
-    let sortItem = this.get('sortItem');
-    if(sortItem === 'sessionType'){
-      sortItem = 'sessionType.title';
-    }
-    if(sortItem === 'offerings'){
-      sortItem = 'offerings.length';
-    }
-    if(sortItem === 'firstOfferingDate'){
-      sortItem = 'firstOfferingDate.content';
-    }
-    return [sortItem + ':' + direction];
+  sortBy: 'title',
+  sortSessionsBy: collect('sortBy'),
+  sortedSessions: sort('filteredContent', 'sortSessionsBy'),
+  sortedAscending: computed('sortBy', function(){
+    const sortBy = this.get('sortBy');
+    return sortBy.search(/desc/) === -1;
   }),
-  sortedSessionList: sort('filteredContent', 'sortSessionBy'),
-
-  displayedSessions: computed('sortedSessionList.[]', 'offset', 'limit', function(){
+  displayedSessions: computed('sortedSessions.[]', 'sortBy', 'offset', 'limit', function(){
     const limit = this.get('limit');
     const offset = this.get('offset');
     const end = limit + offset;
-    let sessions = this.get('sortedSessionList');
+    let sessions = this.get('sortedSessions');
 
     return sessions.slice(offset, end);
   }),
@@ -148,6 +141,17 @@ export default Component.extend({
   saved: false,
   savedSession: null,
   isSaving: null,
+
+  sessionTypes: computed('course.school.sessionTypes.[]', function(){
+    return new Promise( resolve => {
+      const course = this.get('course');
+      course.get('school').then(school => {
+        school.get('sessionTypes').then(sessionTypes => {
+          resolve(sessionTypes);
+        });
+      });
+    });
+  }),
 
   actions: {
     toggleEditor() {
@@ -186,21 +190,12 @@ export default Component.extend({
     cancelRemove(sessionProxy){
       sessionProxy.set('showRemoveConfirmation', false);
     },
-    sortBy(item){
-      this.set('forceFullSessionList', true);
-      if (item === this.get('sortItem')){
-        this.set('sortAscending', !this.get('sortAscending'));
-      } else {
-        this.set('sortAscending', true);
+    sortBy(what){
+      const sortBy = this.get('sortBy');
+      if(sortBy === what){
+        what += ':desc';
       }
-      this.set('sortItem', item);
+      this.get('setSortBy')(what);
     },
-
-    setOffset(offset){
-      this.sendAction('setOffset', offset);
-    },
-    setLimit(limit){
-      this.sendAction('setLimit', limit);
-    }
   }
 });

@@ -2,6 +2,8 @@
   course=model
   offset=sessionOffset
   limit=sessionLimit
-  setLimit='setSessionLimit'
-  setOffset='setSessionOffset'
+  setLimit=(action (mut sessionLimit))
+  setOffset=(action (mut sessionOffset))
+  sortBy=sortSessionsBy
+  setSortBy=(action (mut sortSessionsBy))
 }}
