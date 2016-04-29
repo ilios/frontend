@@ -7,5 +7,9 @@ export default Component.extend({
 
   tagName: 'span',
 
-  value: false
+  value: false,
+
+  click: function() {
+    return false;
+  }
 });
