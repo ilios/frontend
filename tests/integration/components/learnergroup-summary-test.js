@@ -46,3 +46,29 @@ test('renders with data', function(assert) {
     assert.equal(this.$('.learnergroup-subgroup-list tbody tr:eq(0) td:eq(2)').text().trim(), '0');
   });
 });
+
+test('Update location', function(assert) {
+  assert.expect(3);
+  let learnerGroup = Object.create({
+    title: 'test group',
+    location: 'test location',
+    save(){
+      assert.equal(this.get('location'), 'new location name');
+      return resolve(this);
+    }
+  });
+  this.set('learnerGroup', learnerGroup);
+
+  this.render(hbs`{{learnergroup-summary learnerGroup=learnerGroup}}`);
+
+  return wait().then(()=>{
+    assert.equal(this.$('.overview .form-data:eq(0)').text().trim(), 'test location');
+    this.$('.overview .form-data:eq(0) .editable').click();
+    this.$('.overview .form-data:eq(0) input').val('new location name');
+    this.$('.overview .form-data:eq(0) input').trigger('change');
+    this.$('.overview .form-data:eq(0) .done').click();
+    return wait().then(()=>{
+      assert.equal(this.$('.overview .form-data:eq(0)').text().trim(), 'new location name');
+    });
+  });
+});

@@ -19,11 +19,24 @@
       <div class='form-col-12'>
         <label class='form-label'>{{t "learnerGroups.defaultLocation"}}:</label>
         <div class='form-data'>
-          {{#if learnerGroup.location}}
-            {{learnerGroup.location}}
-          {{else}}
-            {{t 'general.none'}}
-          {{/if}}
+          {{#editable-field
+            value=(if location location (t 'general.clickToEdit'))
+            save=(action 'changeLocation')
+            close=(action 'revertLocationChanges')
+            as |isSaving save close|
+          }}
+            {{one-way-input
+              value=location
+              update=(action (mut location))
+              onenter=save
+              onescape=close
+              disabled=isSaving
+              focusOut=(action 'addErrorDisplayFor' 'location')
+            }}
+            {{#if (and (v-get this 'location' 'isInvalid') (is-in showErrorsFor 'location'))}}
+              <span class="validation-error-message">{{v-get this 'location' 'message'}}</span>
+            {{/if}}
+          {{/editable-field}}
         </div>
         <label class='form-label'>{{t "learnerGroups.defaultInstructors"}}:</label>
         <div class='form-data'>
