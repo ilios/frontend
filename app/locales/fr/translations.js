@@ -462,7 +462,7 @@ export default {
   'language': {
     'select': {
       'en': "English (en_US)",
-      'es': "Español (es_MX)",
+      'es': "Español (es)",
       'fr': "Français (fr)",
     }
   },
