@@ -1,4 +1,11 @@
-{{input enter='search' type="search" value=value placeholder=placeholder}}
-<span class="search-icon" {{action 'search'}}>
+{{one-way-input
+  value=value
+  type='search'
+  update=(action 'update')
+  onenter=(perform searchTask)
+  onescape=(action 'clear')
+  placeholder=placeholder
+}}
+<span class="search-icon" click={{pipe-action (action "focus") (perform searchTask)}}>
   {{fa-icon 'search'}}
 </span>
