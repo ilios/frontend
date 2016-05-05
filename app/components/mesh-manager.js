@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from '../templates/components/mesh-manager';
-import { translationMacro as t } from "ember-i18n";
 
 const { Component, computed } = Ember;
 
@@ -16,7 +15,6 @@ export default Component.extend({
   i18n: Ember.inject.service(),
   layout: layout,
   classNames: ['detail-block', 'mesh-manager'],
-  placeholder: t('courses.meshSearchPlaceholder'),
   terms: [],
   query: '',
   searchResults: [],
