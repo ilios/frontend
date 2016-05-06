@@ -27,6 +27,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   classNames: ['detail-view', 'learnergroup-detail-view'],
   tagName: 'section',
   location: null,
+  manageInstructors: false,
   cohortMembersNotInAnyGroup: computed(
     'learnerGroup.topLevelGroup.allDescendantUsers.[]',
     'learnerGroup.users.[]',
@@ -74,5 +75,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const learnerGroup = this.get('learnerGroup');
       this.set('location', learnerGroup.get('location'));
     },
+    saveInstructors(newInstructors, newInstructorGroups){
+      const learnerGroup = this.get('learnerGroup');
+      learnerGroup.set('instructors', newInstructors.toArray());
+      learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
+      this.set('manageInstructors', false);
+      return learnerGroup.save();
+    }
   }
 });
