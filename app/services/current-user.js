@@ -284,10 +284,29 @@ export default Ember.Service.extend({
   canViewLearnerGroup: computed('model', function(){
     return false;
   }),
+
   //Curriculum Inventory
-  canViewCurriculumInventory: computed('model', function(){
-    return false;
-  }),
+  canViewCurriculumInventory: false,
+  canViewCurriculumInventoryObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canViewCurriculumInventory', hasRole.contains(true));
+      });
+    }
+  )),
+  canEditCurriculumInventory: false,
+  canEditCurriculumInventoryObserver: on('init', observer('privileges',
+    function(){
+      Ember.RSVP.all([
+        this.get('userIsDeveloper')
+      ]).then(hasRole => {
+        this.set('canEditCurriculumInventory', hasRole.contains(true));
+      });
+    }
+  )),
+
   //Report
   canViewReport: computed('model', function(){
     return false;

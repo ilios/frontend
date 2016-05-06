@@ -1,0 +1,82 @@
+<table>
+  <thead>
+    <tr>
+      {{#sortable-th
+        colspan=5
+        click=(action 'sortBy' 'name')
+        sortedBy=(or (eq sortBy 'name') (eq sortBy 'name:desc'))
+        sortedAscending=sortedAscending
+      }}
+        {{t 'curriculumInventory.reportName'}}
+      {{/sortable-th}}
+      <th class='text-center' colspan=2>{{t 'general.program'}}</th>
+      {{#sortable-th
+        colspan=2
+        click=(action 'sortBy' 'year')
+        sortedBy=(or (eq sortBy 'year') (eq sortBy 'year:desc'))
+        sortedAscending=sortedAscending
+        sortType='numeric'
+        align='center'
+      }}
+        {{t 'general.academicYear'}}
+      {{/sortable-th}}
+      <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
+      <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
+      <th class='text-center' colspan=2>{{t 'general.status'}}</th>
+      <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each sortedReports as |report|}}
+    <tr class="{{if report.showRemoveConfirmation 'confirm-removal'}}">
+      <td class='text-left' colspan=5>
+        {{#link-to 'curriculumInventoryReport' report.content}}
+          {{report.name}}
+        {{/link-to}}
+      </td>
+      <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.program.title}}</td>
+      <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.year}}</td>
+      <td class='text-center'
+        colspan=2 {{action 'edit' report}}>{{moment-format report.startDate 'MM/DD/YY'}}</td>
+      <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.endDate 'MM/DD/YY'}}</td>
+      <td class='text-center' colspan=2 {{action 'edit' report}}>
+        {{#if report.isFinalized}}{{fa-icon 'lock'}}{{/if}}
+        {{publication-status
+          publishedLangKey='general.finalized'
+          notPublishedLangKey='general.draft'
+          item=report
+          showIcon=false
+        }}
+      </td>
+      <td class='text-center' colspan=1>
+        {{#if report.isFinalized}}
+          {{#link-to 'curriculumInventoryReport' report.content class='edit'}}
+            {{fa-icon 'eye'}}
+          {{/link-to}}
+        {{else}}
+          {{#link-to 'curriculumInventoryReport' report.content class='edit'}}
+            {{fa-icon 'edit'}}
+          {{/link-to}}
+          <span class='clickable remove' {{action 'confirmRemove' report}}>{{fa-icon 'trash'}}</span>
+        {{/if}}
+        <span>
+          <a href="{{report.content.absoluteFileUri}}" download="report.xml" target="_blank">{{fa-icon 'download'}}</a>
+        </span>
+      </td>
+    </tr>
+    {{#if report.showRemoveConfirmation}}
+      <tr class='confirm-removal'>
+        <td colspan=16>
+          <div class='confirm-message'>
+            {{t 'curriculumInventory.reportConfirmRemove'}} <br/>
+            <div class="confirm-buttons">
+              <button {{action 'remove' report}} class='remove text'>{{t 'general.yes'}}</button>
+              <button {{action 'cancelRemove' report}} class='done text'>{{t 'general.cancel'}}</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    {{/if}}
+  {{/each}}
+  </tbody>
+</table>

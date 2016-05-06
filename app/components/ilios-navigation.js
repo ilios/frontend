@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'ilios/config/environment';
 
 const { Component, inject, computed, RSVP } = Ember;
 const { service } = inject;
@@ -8,6 +9,7 @@ export default Component.extend({
   i18n: service(),
   currentUser: service(),
   isMenuVisible: false,
+  ciEnabled: config.IliosFeatures.curriculumInventory,
   permissions: computed('currentUser.model.roles.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser.model').then(user => {

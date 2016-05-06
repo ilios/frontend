@@ -1,0 +1,94 @@
+<section id='curriculumInventoryReports' class='fullwidth main-border'>
+  <div class="filter-tools">
+    <div id='schoolsfilter' class="filter">
+      <label class="inline-label">
+        {{fa-icon 'university'}}
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if hasMoreThanOneSchool}}
+          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+            {{#each sortedSchools as |school|}}
+              <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{#if selectedSchool}}
+            {{selectedSchool.title}}
+          {{else if schools.isFulfilled}}
+            {{t 'general.none'}}
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+    <div id='programsfilter' class="filter">
+      <label class="inline-label">
+        {{fa-icon 'list-alt'}}
+      </label>
+      <div id="program-selection" class="inline-data">
+        {{#if hasMoreThanOneProgram}}
+          <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+            {{#each sortedPrograms as |program|}}
+              <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
+                {{program.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{#if selectedProgram}}
+            {{selectedProgram.title}}
+          {{else if programs.isFulfilled}}
+            {{t 'general.none'}}
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <section class='resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
+        <h2>{{t 'general.curriculumInventoryReports'}}</h2>
+      </div>
+      {{#if selectedProgram}}
+        <div class='resultslist-actions'>
+          {{expand-collapse-button
+            value=showNewCurriculumInventoryReportForm
+            action="toggleNewCurriculumInventoryReportForm"
+          }}
+        </div>
+      {{/if}}
+    </div>
+    <section class='resultslist-new'>
+      {{#liquid-if showNewCurriculumInventoryReportForm class='vertical'}}
+        {{new-curriculum-inventory-report
+          currentProgram=selectedProgram
+          save=(action 'saveNewCurriculumInventoryReport')
+          cancel=(action 'cancel')
+        }}
+      {{/liquid-if}}
+      {{#if newestReport}}
+        <div class='saved-result'>
+          {{#link-to 'curriculumInventoryReport' newestReport}}
+            {{fa-icon 'external-link-square'}} {{newestReport.name}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/if}}
+    </section>
+    <div class='resultslist-list'>
+      {{#if reports.isFulfilled}}
+        {{curriculum-inventory-report-list
+        reports=reportsAndNewReports
+        edit='editCurriculumInventoryReport'
+        remove='removeCurriculumInventoryReport'
+        sortBy=sortReportsBy
+        setSortBy=(action (mut sortReportsBy))
+        }}
+      {{else}}
+        {{pulse-loader}}
+      {{/if}}
+    </div>
+  </section>
+</section>
