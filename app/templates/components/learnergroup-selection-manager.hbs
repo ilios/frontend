@@ -11,7 +11,7 @@
     </li>
   {{/each}}
 </ul>
-{{search-box value=filter placeholder=placeholder}}
+{{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
 <div class='selectable-list'>
   <h5>{{t 'courses.availableLearnerGroups'}}</h5>
   <ul>
