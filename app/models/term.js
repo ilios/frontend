@@ -15,6 +15,7 @@ export default Model.extend({
   programYears: DS.hasMany('programYear', { async: true }),
   sessions: DS.hasMany('session', { async: true }),
   courses: DS.hasMany('course', { async: true }),
+  aamcResourceTypes: DS.hasMany('term', { async: true }),
   hasChildren: notEmpty('children.content'),
   associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
   totalAssociations: sum('associatedLengths'),
