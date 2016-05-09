@@ -1,14 +1,20 @@
 {{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy}}
-
 <div class='detail-view-details'>
   <section class='detail-block overview'>
+    <div class='detail-actions'>
+      {{#if isEditing}}
+        <button {{action (action toggleEditMode)}}>{{t 'general.close'}}</button>
+      {{else}}
+        <button {{action (action toggleEditMode)}}>{{t 'general.manage'}}</button>
+      {{/if}}
+    </div>
     {{#if (is-fulfilled learnerGroup.usersOnlyAtThisLevel)}}
       <div class='detail-content'>
-        {{learnergroup-user-list
+        {{learnergroup-user-manager
+          learnerGroup=learnerGroup
           users=(await learnerGroup.usersOnlyAtThisLevel)
           sortBy=sortUsersBy
           setSortBy=this.attrs.setSortUsersBy
-          title=(t 'learnerGroups.members')
         }}
       </div>
     {{else}}
@@ -82,11 +88,10 @@
   <section class='detail-block cohortmembers'>
     {{#if (is-fulfilled cohortMembersNotInAnyGroup)}}
       <div class='detail-content'>
-        {{learnergroup-user-list
-          users=(await cohortMembersNotInAnyGroup)
+        {{learnergroup-cohort-user-manager
+          learnerGroup=learnerGroup
           sortBy=sortUsersBy
           setSortBy=this.attrs.setSortUsersBy
-          title=(t 'learnerGroups.cohortMembersNotInGroup' groupTitle=learnerGroup.topLevelGroup.title)
         }}
       </div>
     {{else}}

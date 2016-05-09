@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, RSVP, computed, isPresent } = Ember;
+const { Component, RSVP, isPresent } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -28,28 +28,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
   location: null,
   manageInstructors: false,
-  cohortMembersNotInAnyGroup: computed(
-    'learnerGroup.topLevelGroup.allDescendantUsers.[]',
-    'learnerGroup.users.[]',
-    'learnerGroup.cohort.users.[]',
-    function(){
-      return new Promise(resolve => {
-        this.get('learnerGroup.topLevelGroup').then(topLevelGroup => {
-          topLevelGroup.get('allDescendantUsers').then(currentUsers => {
-            this.get('learnerGroup.cohort').then(cohort => {
-              cohort.get('users').then(users => {
-                let filteredUsers = users.filter(
-                  user => !currentUsers.contains(user)
-                );
-                resolve(filteredUsers.sortBy('fullName'));
-              });
-            });
-          });
-        });
-      });
-
-    }
-  ),
+  isEditing: false,
   actions: {
     changeLocation() {
       const newLocation = this.get('location');

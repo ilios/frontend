@@ -1,10 +1,7 @@
-{{#liquid-if isEditing class='crossFade'}}
-  {{learnergroup-editor toggleEditMode=(toggle 'isEditing' this) learnerGroup=model}}
-{{else}}
-  {{learnergroup-summary
-    toggleEditMode=(toggle 'isEditing' this)
-    sortUsersBy=sortUsersBy
-    setSortUsersBy=(action (mut sortUsersBy))
-    learnerGroup=model
-  }}
-{{/liquid-if}}
+{{learnergroup-summary
+  toggleEditMode=(toggle-action 'isEditing' this)
+  sortUsersBy=sortUsersBy
+  setSortUsersBy=(action (mut sortUsersBy))
+  learnerGroup=model
+  isEditing=isEditing
+}}

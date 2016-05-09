@@ -1,0 +1,52 @@
+<div class='detail-title'>
+  {{t 'learnerGroups.members'}} ({{users.length}})
+</div>
+{{#if users.length}}
+  <div class="detail-actions">
+    {{one-way-input
+      value=filter
+      update=(action (mut filter))
+      placeholder=(t 'groupMembers.filterPlaceholder')
+    }}
+  </div>
+  <div class='resultslist'>
+    <div class='resultslist-list'>
+      <table>
+        <thead>
+          <tr>
+            <th class='text-left' colspan=1></th>
+            {{#sortable-th
+              colspan=2
+              click=(action 'sortBy' 'firstName')
+              sortedBy=(or (eq sortBy 'firstName') (eq sortBy 'firstName:desc'))
+              sortedAscending=sortedAscending
+            }}{{t 'user.firstName'}}{{/sortable-th}}
+            {{#sortable-th
+              colspan=2
+              click=(action 'sortBy' 'lastName')
+              sortedBy=(or (eq sortBy 'lastName') (eq sortBy 'lastName:desc'))
+              sortedAscending=sortedAscending
+            }}{{t 'user.lastName'}}{{/sortable-th}}
+            <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
+            <th class='text-left' colspan=5>{{t 'general.email'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (sort-by sortBy filteredUsers) as |user|}}
+            <tr class="{{unless user.enabled 'disabled-user-account'}}">
+              <td class='text-left' colspan=1>
+                {{#unless user.enabled}}
+                  {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                {{/unless}}
+              </td>
+              <td class='text-left' colspan=2>{{user.firstName}}</td>
+              <td class='text-left' colspan=2>{{user.lastName}}</td>
+              <td class='text-left' colspan=2>{{user.campusId}}</td>
+              <td class='text-left' colspan=5>{{user.email}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{{/if}}

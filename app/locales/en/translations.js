@@ -223,6 +223,7 @@ export default {
     'populateGroup': 'Do you want to auto-populate this group?',
     'yesPopulateGroup': 'Yes!  Add entire cohort to my new group.',
     'noPopulateGroup': "No!  Leave it empty, I'll add students myself.",
+    'moveToGroup': "Move to {{groupTitle}}",
   },
   'schools': {
     'new': 'New School',
