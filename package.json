@@ -91,7 +91,7 @@
     "liquid-fire": "0.23.1",
     "liquid-tether": "1.1.1",
     "loader.js": "^4.0.1",
-    "pluralize": "^1.2.1",
+    "pluralize": "^2.0.0",
     "ui-select": "firefly-ui/ui-select#v0.0.10",
     "validator": "^5.1.0"
   },
