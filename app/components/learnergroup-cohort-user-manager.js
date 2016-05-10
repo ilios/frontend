@@ -67,14 +67,5 @@ export default Component.extend({
       }
       this.get('setSortBy')(what);
     },
-    addUserToGroup(user){
-      this.get('usersBeingMoved').pushObject(user);
-      const learnerGroup = this.get('learnerGroup');
-      learnerGroup.addUserToGroupAndAllParents(user).then((groups) =>{
-        all(groups.invoke('save')).then(()=>{
-          this.get('usersBeingMoved').removeObject(user);
-        });
-      });
-    }
   }
 });

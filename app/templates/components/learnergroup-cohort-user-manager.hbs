@@ -50,10 +50,10 @@
                     {{fa-icon 'spiner' spin=true}}
                   {{else}}
                     {{fa-icon
-                      'send'
+                      'plus'
                       class='yes clickable'
                       title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroup.title)
-                      click=(action 'addUserToGroup' user)
+                      click=(action addUserToGroup user learnerGroup)
                     }}
                   {{/if}}
                 {{/if}}

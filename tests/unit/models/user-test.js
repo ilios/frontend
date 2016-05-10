@@ -2,11 +2,10 @@ import {
   moduleForModel,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('user', 'Unit | Model | User' + testgroup, {
+moduleForModel('user', 'Unit | Model | User', {
   needs: modelList
 });
 
@@ -53,7 +52,7 @@ test('gets all directed courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all learner group courses', function(assert) {
@@ -85,7 +84,7 @@ test('gets all learner group courses', function(assert) {
       offerings: [offering3],
       users: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -94,7 +93,7 @@ test('gets all learner group courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all instructor group courses', function(assert) {
@@ -126,7 +125,7 @@ test('gets all instructor group courses', function(assert) {
       offerings: [offering3],
       users: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -135,7 +134,7 @@ test('gets all instructor group courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all instructed offering courses', function(assert) {
@@ -162,7 +161,7 @@ test('gets all instructed offering courses', function(assert) {
       session: session2,
       instructors: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -171,7 +170,7 @@ test('gets all instructed offering courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all learner offering courses', function(assert) {
@@ -198,7 +197,7 @@ test('gets all learner offering courses', function(assert) {
       session: session2,
       learners: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -207,7 +206,7 @@ test('gets all learner offering courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all learner group ILMSession courses', function(assert) {
@@ -239,7 +238,7 @@ test('gets all learner group ILMSession courses', function(assert) {
       ilmSessions: [ilm3],
       users: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -248,7 +247,7 @@ test('gets all learner group ILMSession courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all instructor group ILMSession courses', function(assert) {
@@ -280,7 +279,7 @@ test('gets all instructor group ILMSession courses', function(assert) {
       ilmSessions: [ilm3],
       users: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -289,7 +288,7 @@ test('gets all instructor group ILMSession courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all learner ilm courses', function(assert) {
@@ -312,7 +311,7 @@ test('gets all learner ilm courses', function(assert) {
       session: session2,
       learners: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -321,7 +320,7 @@ test('gets all learner ilm courses', function(assert) {
       });
     });
   });
-  
+
 });
 
 test('gets all instructor ilm courses', function(assert) {
@@ -344,7 +343,7 @@ test('gets all instructor ilm courses', function(assert) {
       session: session2,
       instructors: [model]
     });
-    
+
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -353,5 +352,78 @@ test('gets all instructor ilm courses', function(assert) {
       });
     });
   });
-  
+
+});
+
+test('find lowest group at top of tree', function(assert) {
+  let model = this.subject();
+  let store = this.store();
+  Ember.run(()=>{
+    let learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [model]});
+    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
+    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
+    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+
+    model.set('learerGroups', [learnerGroup]);
+
+    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
+      assert.ok(lowestGroup);
+      assert.equal(lowestGroup.get('id'), learnerGroup.get('id'));
+    });
+  });
+
+});
+
+test('find lowest group in middle of tree', function(assert) {
+  let model = this.subject();
+  let store = this.store();
+  Ember.run(()=>{
+    let learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [model]});
+    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup, users: [model]});
+    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
+    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+
+    model.set('learerGroups', [learnerGroup, learnerGroup2]);
+
+    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
+      assert.ok(lowestGroup);
+      assert.equal(lowestGroup.get('id'), learnerGroup2.get('id'));
+    });
+  });
+
+});
+
+test('find lowest group in bottom of tree', function(assert) {
+  let model = this.subject();
+  let store = this.store();
+  Ember.run(()=>{
+    let learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [model]});
+    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup, users: [model]});
+    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2, users: [model]});
+    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+
+    model.set('learerGroups', [learnerGroup, learnerGroup2, learnerGroup3]);
+
+    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
+      assert.ok(lowestGroup);
+      assert.equal(lowestGroup.get('id'), learnerGroup3.get('id'));
+    });
+  });
+
+});
+
+test('return null when there is no group in the tree', function(assert) {
+  let model = this.subject();
+  let store = this.store();
+  Ember.run(()=>{
+    let learnerGroup = store.createRecord('learnerGroup', {id: 1});
+    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
+    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
+    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+
+    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
+      assert.ok(lowestGroup == null);
+    });
+  });
+
 });

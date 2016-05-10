@@ -1,7 +1,7 @@
 <div class='detail-title'>
-  {{t 'learnerGroups.members'}} ({{users.length}})
+  {{t 'learnerGroups.members'}} ({{get (await users) 'length'}})
 </div>
-{{#if users.length}}
+{{#if (get (await users) 'length')}}
   <div class="detail-actions">
     {{one-way-input
       value=filter
@@ -29,10 +29,14 @@
             }}{{t 'user.lastName'}}{{/sortable-th}}
             <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
             <th class='text-left' colspan=5>{{t 'general.email'}}</th>
+            {{#if isEditing}}
+              <th class='text-left' colspan=2>{{t 'general.groupName'}}</th>
+              <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+            {{/if}}
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by sortBy filteredUsers) as |user|}}
+          {{#each (sort-by sortBy (await filteredUsers)) as |user|}}
             <tr class="{{unless user.enabled 'disabled-user-account'}}">
               <td class='text-left' colspan=1>
                 {{#unless user.enabled}}
@@ -43,6 +47,29 @@
               <td class='text-left' colspan=2>{{user.lastName}}</td>
               <td class='text-left' colspan=2>{{user.campusId}}</td>
               <td class='text-left' colspan=5>{{user.email}}</td>
+              {{#if isEditing}}
+                <td class='text-left' colspan=2>
+                  {{#liquid-if (is-fulfilled user.lowestGroupInTree)}}
+                    {{get (await user.lowestGroupInTree) 'title'}}
+                  {{else}}
+                    {{fa-icon 'spinner' spin=true}}
+                  {{/liquid-if}}
+                </td>
+                <td>
+                  {{#if (and user.enabled (not-eq (get (await user.lowestGroupInTree) 'id') learnerGroupId))}}
+                    {{#if (contains user.content usersBeingMoved)}}
+                      {{fa-icon 'spinner' spin=true}}
+                    {{else}}
+                      {{fa-icon
+                        'plus'
+                        class='yes clickable'
+                        title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroup.title)
+                        click=(perform addSingleUser user.content)
+                      }}
+                    {{/if}}
+                  {{/if}}
+                </td>
+              {{/if}}
             </tr>
           {{/each}}
         </tbody>

@@ -286,12 +286,10 @@ export default DS.Model.extend({
     let groups = [this];
     return new Ember.RSVP.Promise(resolve => {
       this.get('users').removeObject(user);
-      user.get('learnerGroups').removeObject(this);
       this.get('allDescendants').then(all => {
         all.forEach(group=>{
           groups.pushObject(group);
           group.get('users').removeObject(user);
-          user.get('learnerGroups').removeObject(group);
         });
         resolve(groups);
       });
@@ -299,14 +297,12 @@ export default DS.Model.extend({
   },
   addUserToGroupAndAllParents(user){
     let groups = [this];
-    return new Ember.RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this.get('users').pushObject(user);
-      user.get('learnerGroups').pushObject(this);
       this.get('allParents').then(all => {
         all.forEach(group=>{
           groups.pushObject(group);
           group.get('users').pushObject(user);
-          user.get('learnerGroups').pushObject(group);
         });
         resolve(groups);
       });

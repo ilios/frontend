@@ -5,21 +5,23 @@
       {{#if isEditing}}
         <button {{action (action toggleEditMode)}}>{{t 'general.close'}}</button>
       {{else}}
-        <button {{action (action toggleEditMode)}}>{{t 'general.manage'}}</button>
+        <button {{action (pipe (action toggleEditMode) (toggle 'showUserManagerLoader' this) (perform usersToPassToManager))}}>{{t 'general.manage'}}</button>
       {{/if}}
     </div>
-    {{#if (is-fulfilled learnerGroup.usersOnlyAtThisLevel)}}
+    {{#unless showUserManagerLoader}}
       <div class='detail-content'>
         {{learnergroup-user-manager
-          learnerGroup=learnerGroup
-          users=(await learnerGroup.usersOnlyAtThisLevel)
+          learnerGroupId=learnerGroupId
+          users=usersToPassToManager.lastSuccessful.value
           sortBy=sortUsersBy
           setSortBy=this.attrs.setSortUsersBy
+          isEditing=isEditing
+          addUserToGroup=(perform addUserToGroup)
         }}
       </div>
     {{else}}
       {{fa-icon 'spinner' spin=true}}
-    {{/if}}
+    {{/unless}}
 
     <div class='form-container'>
       <div class='form-col-12'>
@@ -92,6 +94,7 @@
           learnerGroup=learnerGroup
           sortBy=sortUsersBy
           setSortBy=this.attrs.setSortUsersBy
+          addUserToGroup=(perform addUserToGroup)
         }}
       </div>
     {{else}}

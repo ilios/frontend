@@ -4,6 +4,7 @@ import DS from 'ember-data';
 const { computed, PromiseProxyMixin, RSVP } = Ember;
 const { PromiseArray } = DS;
 const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
+const { Promise } = RSVP;
 
 var User = DS.Model.extend({
   lastName: DS.attr('string'),
@@ -202,6 +203,32 @@ var User = DS.Model.extend({
   absoluteIcsUri: computed('icsFeedKey', function(){
     return window.location.protocol + '//' + window.location.hostname + '/ics/' + this.get('icsFeedKey');
   }),
+  /**
+   * Compare a users learner groups to a list of learner groups and find the one
+   * that is the lowest leaf in the learner group tree
+   * @property summary
+   * @param array learnerGroupTree all the groups we want to look into
+   * @type function
+   * @public
+   */
+  getLowestMemberGroupInALearnerGroupTree(learnerGroupTree){
+    const user = this;
+    return new Promise(resolve => {
+      user.get('learnerGroups').then(userGroups => {
+        //all the groups a user is in that are in our current learner groups tree
+        let relevantGroups = userGroups.filter(group => learnerGroupTree.contains(group));
+        let relevantGroupIds = relevantGroups.mapBy('id');
+        let lowestGroup = relevantGroups.find( group => {
+          let childIds = group.hasMany('children').ids();
+          let childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.contains(id));
+          return childGroupsWhoAreUserGroupMembers.length === 0;
+        });
+
+        resolve(lowestGroup?lowestGroup:null);
+      });
+
+    });
+  }
 });
 
 export default User;
