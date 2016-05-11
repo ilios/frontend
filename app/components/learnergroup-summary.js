@@ -31,6 +31,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.get('usersToPassToManager').perform();
     }
   },
+  saveSomeGroups(arr){
+    let chunk = arr.splice(0, 5);
+    return all(chunk.invoke('save')).then(() => {
+      if (arr.length){
+        this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
+        return this.saveSomeGroups(arr);
+      }
+    });
+  },
   addUserToGroup: task(function * (user) {
     const learnerGroup = this.get('learnerGroup');
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
@@ -38,13 +47,53 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     let groups = [].concat(removeGroups).concat(addGroups);
     yield all(groups.invoke('save'));
-    this.get('usersToPassToManager').perform();
+    yield this.get('usersToPassToManager').perform();
   }).enqueue(),
   removeUserFromGroup: task(function * (user) {
     const learnerGroup = this.get('learnerGroup');
     let groups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
-    this.get('usersToPassToManager').perform();
+    yield this.get('usersToPassToManager').perform();
+  }).enqueue(),
+  addUsersToGroup: task(function * (users) {
+    const learnerGroup = this.get('learnerGroup');
+    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
+    let groupsToSave = [];
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+      let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
+      groupsToSave.pushObjects(removeGroups);
+      groupsToSave.pushObjects(addGroups);
+    }
+    this.set('totalGroupsToSave', groupsToSave.uniq().length);
+    this.set('isSaving', true);
+    yield this.saveSomeGroups(groupsToSave.uniq());
+    this.set('isSaving', false);
+    this.set('totalGroupsToSave', 0);
+    this.set('currentGroupsSaved', 0);
+
+    yield this.get('usersToPassToManager').perform();
+    this.set('isSaving', false);
+  }).enqueue(),
+  removeUsersFromGroup: task(function * (users) {
+    const learnerGroup = this.get('learnerGroup');
+    let groupsToSave = [];
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      let removeGroups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
+      groupsToSave.pushObjects(removeGroups);
+    }
+    
+    this.set('totalGroupsToSave', groupsToSave.uniq().length);
+    this.set('isSaving', true);
+    yield this.saveSomeGroups(groupsToSave.uniq());
+    this.set('isSaving', false);
+    this.set('totalGroupsToSave', 0);
+    this.set('currentGroupsSaved', 0);
+
+    yield this.get('usersToPassToManager').perform();
+    this.set('isSaving', false);
   }).enqueue(),
   usersToPassToManager: task(function * () {
     const isEditing = this.get('isEditing');
@@ -79,6 +128,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   location: null,
   manageInstructors: false,
   isEditing: false,
+  isSaving: false,
+  totalGroupsToSave: 0,
+  currentGroupsSaved: 0,
   treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
     const learnerGroup = this.get('learnerGroup');
     return new Promise(resolve => {

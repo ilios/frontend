@@ -20,6 +20,8 @@
           isEditing=isEditing
           addUserToGroup=(perform addUserToGroup)
           removeUserFromGroup=(perform removeUserFromGroup)
+          addUsersToGroup=(perform addUsersToGroup)
+          removeUsersFromGroup=(perform removeUsersFromGroup)
         }}
       </div>
     {{else}}
@@ -105,3 +107,10 @@
     {{/if}}
   </section>
 </div>
+{{#liquid-if isSaving class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalGroupsToSave
+    currentProgress=currentGroupsSaved
+  }}
+{{/liquid-if}}

@@ -39,9 +39,16 @@
           {{#each (sort-by sortBy (await filteredUsers)) as |user|}}
             <tr class="{{unless user.enabled 'disabled-user-account'}}">
               <td class='text-left' colspan=1>
-                {{#unless user.enabled}}
+                {{#if user.enabled}}
+                  {{#if isEditing}}
+                    {{one-way-checkbox
+                      checked=(contains user.content selectedUsers)
+                      update=(action 'toggleUserSelection' user.content)
+                    }}
+                  {{/if}}
+                {{else}}
                   {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
-                {{/unless}}
+                {{/if}}
               </td>
               <td class='text-left' colspan=2>{{user.firstName}}</td>
               <td class='text-left' colspan=2>{{user.lastName}}</td>
@@ -83,4 +90,8 @@
       </table>
     </div>
   </div>
+  {{#if (gt selectedUsers.length 0) class='vertical'}}
+    <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle}}</button>
+    <button class='cancel text' {{action (perform removeSelectedUsers)}}>{{t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle}}</button>
+  {{/if}}
 {{/if}}

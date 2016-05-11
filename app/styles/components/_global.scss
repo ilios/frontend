@@ -48,7 +48,7 @@ button {
   &.cancel {
     background-color: transparent;
     font-weight: bold;
-    width: 1.5em;
+    min-width: 1.5em;
 
     &:enabled:hover {
       color: $white;
@@ -84,7 +84,7 @@ button {
   &.text {
     border-style: solid;
     border-width: 1px;
-    width: 95px;
+    min-width: 95px;
   }
 
   &:disabled {
