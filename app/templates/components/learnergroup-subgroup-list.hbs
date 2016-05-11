@@ -29,10 +29,12 @@
 
     <div class='resultslist-list'>
       {{#if (is-fulfilled parentGroup.children)}}
-        {{learnergroup-list
-          learnerGroups=(await parentGroup.children)
-          remove=(action 'removeLearnerGroup')
-        }}
+        {{#if (get (await parentGroup.children) 'length')}}
+          {{learnergroup-list
+            learnerGroups=(await parentGroup.children)
+            remove=(action 'removeLearnerGroup')
+          }}
+        {{/if}}
       {{else}}
         {{fa-icon 'spinner' spin=true}}
       {{/if}}
