@@ -24,6 +24,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (isPresent(learnerGroup)) {
       this.set('location', learnerGroup.get('location'));
       this.set('learnerGroupId', learnerGroup.get('id'));
+      this.set('learnerGroupTitle', learnerGroup.get('title'));
+      learnerGroup.get('cohort').then(cohort => {
+        this.set('cohortTitle', cohort.get('title'));
+      });
       this.get('usersToPassToManager').perform();
     }
   },
@@ -33,6 +37,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     let groups = [].concat(removeGroups).concat(addGroups);
+    yield all(groups.invoke('save'));
+    this.get('usersToPassToManager').perform();
+  }).enqueue(),
+  removeUserFromGroup: task(function * (user) {
+    const learnerGroup = this.get('learnerGroup');
+    let groups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
     this.get('usersToPassToManager').perform();
   }).enqueue(),
@@ -62,6 +72,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   showUserManagerLoader: false,
   learnerGroup: null,
   learnerGroupId: null,
+  learnerGroupTitle: null,
+  cohortTitle: null,
   classNames: ['detail-view', 'learnergroup-detail-view'],
   tagName: 'section',
   location: null,

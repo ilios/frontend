@@ -9,6 +9,8 @@ export default Component.extend({
     this.set('usersBeingMoved', []);
   },
   learnerGroupId: null,
+  learnerGroupTitle: null,
+  cohortTitle: null,
   users: [],
   classNames: ['learnergroup-user-list'],
   isEditing: false,
@@ -40,6 +42,13 @@ export default Component.extend({
     //timeout gives the spinner time to render
     yield timeout(10);
     yield this.get('addUserToGroup')(user);
+    this.get('usersBeingMoved').removeObject(user);
+  }),
+  removeSingleUser: task(function * (user) {
+    this.get('usersBeingMoved').pushObject(user);
+    //timeout gives the spinner time to render
+    yield timeout(10);
+    yield this.get('removeUserFromGroup')(user);
     this.get('usersBeingMoved').removeObject(user);
   }),
   actions: {

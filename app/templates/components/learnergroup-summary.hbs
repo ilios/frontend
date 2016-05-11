@@ -12,11 +12,14 @@
       <div class='detail-content'>
         {{learnergroup-user-manager
           learnerGroupId=learnerGroupId
+          learnerGroupTitle=learnerGroupTitle
+          cohortTitle=cohortTitle
           users=usersToPassToManager.lastSuccessful.value
           sortBy=sortUsersBy
           setSortBy=this.attrs.setSortUsersBy
           isEditing=isEditing
           addUserToGroup=(perform addUserToGroup)
+          removeUserFromGroup=(perform removeUserFromGroup)
         }}
       </div>
     {{else}}

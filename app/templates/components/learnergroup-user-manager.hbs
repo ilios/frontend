@@ -56,15 +56,22 @@
                   {{/liquid-if}}
                 </td>
                 <td>
-                  {{#if (and user.enabled (not-eq (get (await user.lowestGroupInTree) 'id') learnerGroupId))}}
-                    {{#if (contains user.content usersBeingMoved)}}
-                      {{fa-icon 'spinner' spin=true}}
-                    {{else}}
+                  {{#if (contains user.content usersBeingMoved)}}
+                    {{fa-icon 'spinner' spin=true}}
+                  {{else if user.enabled}}
+                    {{#if (not-eq (get (await user.lowestGroupInTree) 'id') learnerGroupId)}}
                       {{fa-icon
                         'plus'
                         class='yes clickable'
-                        title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroup.title)
+                        title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle)
                         click=(perform addSingleUser user.content)
+                      }}
+                    {{else}}
+                      {{fa-icon
+                        'minus'
+                        class='no clickable'
+                        title=(t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle)
+                        click=(perform removeSingleUser user.content)
                       }}
                     {{/if}}
                   {{/if}}
