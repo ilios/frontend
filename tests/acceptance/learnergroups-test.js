@@ -61,12 +61,128 @@ test('single option filters', function(assert) {
   });
 });
 
+test('multi-option filters', function(assert) {
+  const schoolsFilter = '.filter:eq(0) option';
+  const programsFilter = '.filter:eq(1) option';
+  const yearsFilter = '.filter:eq(2) option';
+  assert.expect(6);
+  server.create('permission', {
+    user: 4136,
+    tableName: 'school',
+    tableRowId: 2,
+    canRead: true
+  });
+  server.create('user', {id: 4136, permissions: [1]});
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('school');
+  server.create('program', {
+    school: 1,
+    programYears: [1, 2]
+  });
+  server.create('program', {
+    school: 1,
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 2
+  });
+  server.create('cohort', {
+    programYear: 1,
+  });
+  server.create('cohort', {
+    programYear: 2,
+  });
+  visit('/learnergroups');
+  andThen(function() {
+    assert.equal(find(schoolsFilter).length, 2);
+    assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
+    assert.equal(find(programsFilter).length, 3);
+    assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
+    assert.equal(find(yearsFilter).length, 2);
+    assert.equal(getElementText(find(yearsFilter)), getText('cohort 1 cohort 0'));
+  });
+});
+
+test('primary school is selected by default', function(assert) {
+  const schoolsFilter = '.filter:eq(0) option:selected';
+  assert.expect(1);
+  server.create('permission', {
+    user: 4136,
+    tableName: 'school',
+    tableRowId: 1,
+    canRead: true
+  });
+  server.create('user', {id: 4136, permissions: [1], school: 2});
+  server.create('school', {users: []});
+  server.create('school', {
+    users: [1]
+  });
+  visit('/learnergroups');
+  andThen(function() {
+    assert.equal(getElementText(find(schoolsFilter)), getText('school 1'));
+  });
+});
+
+test('multi-option filters', function(assert) {
+  const schoolsFilter = '.filter:eq(0) option';
+  const programsFilter = '.filter:eq(1) option';
+  const yearsFilter = '.filter:eq(2) option';
+  assert.expect(6);
+  server.create('permission', {
+    user: 4136,
+    tableName: 'school',
+    tableRowId: 2,
+    canRead: true
+  });
+  server.create('user', {id: 4136, permissions: [1]});
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('school');
+  server.create('program', {
+    school: 1,
+    programYears: [1, 2]
+  });
+  server.create('program', {
+    school: 1,
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 2
+  });
+  server.create('cohort', {
+    programYear: 1,
+  });
+  server.create('cohort', {
+    programYear: 2,
+  });
+  visit('/learnergroups');
+  andThen(function() {
+    assert.equal(find(schoolsFilter).length, 2);
+    assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
+    assert.equal(find(programsFilter).length, 3);
+    assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
+    assert.equal(find(yearsFilter).length, 2);
+    assert.equal(getElementText(find(yearsFilter)), getText('cohort 1 cohort 0'));
+  });
+});
+
 test('multiple programs filter', function(assert) {
   const selectedProgram = '.filter:eq(1) select option:selected';
   const programOptions = '.filter:eq(1) select option';
   const programSelectList = '.filter:eq(1) select';
   const firstListedLearnerGroup = '.resultslist-list tbody tr td:eq(0)';
-  assert.expect(10);
+  assert.expect(8);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1,2]
@@ -103,9 +219,7 @@ test('multiple programs filter', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(getElementText(find(selectedProgram)), getText('Select a Program'));
-    assert.equal(find(firstListedLearnerGroup).length, 0);
-    pickOption(programSelectList, 'program 0', assert);
+    assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
     andThen(function(){
       assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
       var options = find(programOptions);

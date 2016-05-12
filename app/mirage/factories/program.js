@@ -5,5 +5,6 @@ export default Mirage.Factory.extend({
   shortTitle: (i) => `short_${i}`,
   school: (i) => (i+1),
   duration: 4,
-  publishedAsTbd: false
+  published: true,
+  publishedAsTbd: false,
 });

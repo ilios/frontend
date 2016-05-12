@@ -269,7 +269,7 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
     const thisYear = new Date().getFullYear();
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
     const classOfYear = `Class of ${(thisYear + 4).toString()}`;
-    
+
     assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
     assert.equal(getTableDataText(0, 1).text().trim(), classOfYear, 'cohort class year shown');
     assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
@@ -321,6 +321,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     terms: [1,2,3],
     objectives: [1,2,3],
     stewards: [1],
+    published: false
   });
   server.create('cohort', {
     programYear: 1
