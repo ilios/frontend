@@ -61,11 +61,15 @@
               <td class='text-left' colspan=5>{{user.email}}</td>
               {{#if isEditing}}
                 <td class='text-left' colspan=2>
-                  {{#liquid-if (is-fulfilled user.lowestGroupInTree)}}
-                    {{get (await user.lowestGroupInTree) 'title'}}
-                  {{else}}
-                    {{fa-icon 'spinner' spin=true}}
-                  {{/liquid-if}}
+                  {{#link-to
+                    'learnerGroup' user.lowestGroupInTree
+                    (query-params
+                      isEditing=isEditing
+                      sortUsersBy=sortBy
+                    )
+                  }}
+                    {{user.lowestGroupInTree.title}}
+                  {{/link-to}}
                 </td>
                 <td>
                   {{#if (contains user.content usersBeingMoved)}}
