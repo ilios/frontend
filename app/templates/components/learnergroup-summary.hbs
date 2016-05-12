@@ -93,18 +93,21 @@
   {{learnergroup-subgroup-list parentGroup=learnerGroup}}
 
   <section class='detail-block cohortmembers'>
-    {{#if (is-fulfilled cohortMembersNotInAnyGroup)}}
+    {{#unless showCohortManagerLoader}}
       <div class='detail-content'>
         {{learnergroup-cohort-user-manager
-          learnerGroup=learnerGroup
+          users=usersToPassToCohortManager.lastSuccessful.value
+          learnerGroupTitle=learnerGroupTitle
+          topLevelGroupTitle=topLevelGroupTitle
           sortBy=sortUsersBy
           setSortBy=this.attrs.setSortUsersBy
           addUserToGroup=(perform addUserToGroup)
+          addUsersToGroup=(perform addUsersToGroup)
         }}
       </div>
     {{else}}
       {{fa-icon 'spinner' spin=true}}
-    {{/if}}
+    {{/unless}}
   </section>
 </div>
 {{#liquid-if isSaving class='crossFade'}}

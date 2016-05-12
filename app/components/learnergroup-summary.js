@@ -20,6 +20,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('showUserManagerLoader', true);
+    this.set('showCohortManagerLoader', true);
     const learnerGroup = this.get('learnerGroup');
     if (isPresent(learnerGroup)) {
       this.set('location', learnerGroup.get('location'));
@@ -28,7 +29,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       learnerGroup.get('cohort').then(cohort => {
         this.set('cohortTitle', cohort.get('title'));
       });
+      learnerGroup.get('topLevelGroup').then(topLevelGroup => {
+        this.set('topLevelGroupTitle', topLevelGroup.get('title'));
+      });
       this.get('usersToPassToManager').perform();
+      this.get('usersToPassToCohortManager').perform();
     }
   },
   saveSomeGroups(arr){
@@ -48,12 +53,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let groups = [].concat(removeGroups).concat(addGroups);
     yield all(groups.invoke('save'));
     yield this.get('usersToPassToManager').perform();
+    yield this.get('usersToPassToCohortManager').perform();
   }).enqueue(),
   removeUserFromGroup: task(function * (user) {
     const learnerGroup = this.get('learnerGroup');
     let groups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
     yield this.get('usersToPassToManager').perform();
+    yield this.get('usersToPassToCohortManager').perform();
   }).enqueue(),
   addUsersToGroup: task(function * (users) {
     const learnerGroup = this.get('learnerGroup');
@@ -74,6 +81,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('currentGroupsSaved', 0);
 
     yield this.get('usersToPassToManager').perform();
+    yield this.get('usersToPassToCohortManager').perform();
     this.set('isSaving', false);
   }).enqueue(),
   removeUsersFromGroup: task(function * (users) {
@@ -84,7 +92,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       let removeGroups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave.pushObjects(removeGroups);
     }
-    
+
     this.set('totalGroupsToSave', groupsToSave.uniq().length);
     this.set('isSaving', true);
     yield this.saveSomeGroups(groupsToSave.uniq());
@@ -93,6 +101,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('currentGroupsSaved', 0);
 
     yield this.get('usersToPassToManager').perform();
+    yield this.get('usersToPassToCohortManager').perform();
     this.set('isSaving', false);
   }).enqueue(),
   usersToPassToManager: task(function * () {
@@ -118,11 +127,27 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return users;
     }
   }),
+  usersToPassToCohortManager: task(function * () {
+    const learnerGroup = this.get('learnerGroup');
+    const cohort = yield learnerGroup.get('cohort');
+    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
+    const currentUsers = yield topLevelGroup.get('allDescendantUsers');
+    const users = yield cohort.get('users');
+
+    let filteredUsers = users.filter(
+      user => !currentUsers.contains(user)
+    );
+
+    this.set('showCohortManagerLoader', false);
+    return filteredUsers;
+  }),
   showUserManagerLoader: false,
+  showCohortManagerLoader: false,
   learnerGroup: null,
   learnerGroupId: null,
   learnerGroupTitle: null,
   cohortTitle: null,
+  topLevelGroupTitle: null,
   classNames: ['detail-view', 'learnergroup-detail-view'],
   tagName: 'section',
   location: null,
