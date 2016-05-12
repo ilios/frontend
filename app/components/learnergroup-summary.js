@@ -109,14 +109,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const learnerGroup = this.get('learnerGroup');
     if (isEditing) {
       let topLevelGroup = yield learnerGroup.get('topLevelGroup');
-      let users = yield topLevelGroup.get('users');
+      let users = yield topLevelGroup.get('users').toArray();
       let treeGroups = yield this.get('treeGroups');
-      let proxiedUsers = users.map(user => {
-        return ObjectProxy.create({
+
+      let proxiedUsers = [];
+      for (let i = 0; i < users.length; i++){
+        const user = users[i];
+        let lowestGroupInTree = yield user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+        let userProxy = ObjectProxy.create({
           content: user,
-          lowestGroupInTree: user.getLowestMemberGroupInALearnerGroupTree(treeGroups)
+          lowestGroupInTree,
+          //special sorting property
+          lowestGroupInTreeTitle: lowestGroupInTree.get('title')
         });
-      });
+        proxiedUsers.pushObject(userProxy);
+      }
 
       this.set('showUserManagerLoader', false);
       return proxiedUsers;
@@ -126,7 +133,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('showUserManagerLoader', false);
       return users;
     }
-  }),
+  }).restartable(),
   usersToPassToCohortManager: task(function * () {
     const learnerGroup = this.get('learnerGroup');
     const cohort = yield learnerGroup.get('cohort');
@@ -140,7 +147,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     this.set('showCohortManagerLoader', false);
     return filteredUsers;
-  }),
+  }).restartable(),
   showUserManagerLoader: false,
   showCohortManagerLoader: false,
   learnerGroup: null,
