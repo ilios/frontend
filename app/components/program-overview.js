@@ -6,10 +6,10 @@ const { Component, computed, RSVP } = Ember;
 const { Promise } = RSVP;
 const Validations = buildValidations({
   shortTitle: [
-    validator('presence', true),
     validator('length', {
       min: 2,
-      max: 10
+      max: 10,
+      allowBlank: true
     }),
   ],
 });

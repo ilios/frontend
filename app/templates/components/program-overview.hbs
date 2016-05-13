@@ -2,32 +2,37 @@
   <div class='detail-title'>
     {{t 'general.overview'}}
   </div>
-  <div class='detail-content'>
-    <div class="inline-label-data-block programtitleshort">
-      <label>{{t "programs.programTitleShort"}}:</label>
-      {{#editable-field
-         value=shortTitle
-         save=(action 'changeShortTitle')
-         close=(action 'revertShortTitleChanges')
-         as |isSaving save close|
-      }}
-        {{one-way-input
-          value=shortTitle
-          update=(action (mut shortTitle))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'shortTitle')
-          keyPress=(action 'addErrorDisplayFor' 'shortTitle')
+  <div class='detail-content form-container'>
+    <div class="form-col-6 multi-row">
+      <label class="form-label">{{t "programs.programTitleShort"}}:</label>
+      <div class="form-data programtitleshort">
+        {{#editable-field
+           value=shortTitle
+           save=(action 'changeShortTitle')
+           close=(action 'revertShortTitleChanges')
+           clickPrompt=(t 'general.clickToEdit')
+           as |isSaving save close|
         }}
-        {{#if (and (v-get this 'shortTitle' 'isInvalid') (is-in showErrorsFor 'shortTitle'))}}
-          <span class="validation-error-message">{{v-get this 'shortTitle' 'message'}}</span>
-        {{/if}}
-      {{/editable-field}}
-    </div>
-    <div class="inline-label-data-block programduration">
-      <label>{{t "programs.durationInYears"}}:</label>
-      <div>{{inplace-select value=program.duration options=durationOptions save='changeDuration'}}</div>
+          {{one-way-input
+            value=shortTitle
+            update=(action (mut shortTitle))
+            onenter=save
+            onescape=close
+            disabled=isSaving
+            focusOut=(action 'addErrorDisplayFor' 'shortTitle')
+            keyPress=(action 'addErrorDisplayFor' 'shortTitle')
+          }}
+          {{#if (and (v-get this 'shortTitle' 'isInvalid') (is-in showErrorsFor 'shortTitle'))}}
+            <span class="validation-error-message">{{v-get this 'shortTitle' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
+      </div>
+
+      <label class="form-label">{{t "programs.durationInYears"}}:</label>
+      <div class="form-data programduration">
+        <div>{{inplace-select value=program.duration options=durationOptions save='changeDuration'}}</div>
+      </div>
+
     </div>
   </div>
 </section>
