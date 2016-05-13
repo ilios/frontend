@@ -18,17 +18,16 @@ module('Acceptance: Program - Publish' + testgroup, {
     fixtures.published = server.create('program', {
       startYear: 2013,
       school: 1,
-      published: true,
     });
     fixtures.scheduled = server.create('program', {
       startYear: 2013,
       school: 1,
-      published: true,
       publishedAsTbd: true
     });
     fixtures.draft = server.create('program', {
       startYear: 2013,
       school: 1,
+      published: false,
     });
   },
 

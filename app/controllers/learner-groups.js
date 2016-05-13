@@ -44,13 +44,20 @@ export default Controller.extend({
   sortedSchools: sort('schools', 'sortByTitle'),
   hasMoreThanOneSchool: gt('schools.length', 1),
 
-  programs: computed('selectedSchool.programs.[]', function(){
+  programs: computed('selectedSchool', function(){
     let defer = RSVP.defer();
     this.get('selectedSchool').then(school => {
       if(isEmpty(school)){
         defer.resolve([]);
       } else {
-        defer.resolve(school.get('programs'));
+        this.get('store').query('program', {
+          filters: {
+            school: school.get('id'),
+            published: true
+          }
+        }).then(programs => {
+          defer.resolve(programs);
+        });
       }
     });
 
@@ -67,7 +74,14 @@ export default Controller.extend({
       if(isEmpty(program)){
         defer.resolve([]);
       } else {
-        defer.resolve(program.get('programYears'));
+        this.get('store').query('programYear', {
+          filters: {
+            program: program.get('id'),
+            published: true
+          }
+        }).then(programs => {
+          defer.resolve(programs);
+        });
       }
     });
 
@@ -131,7 +145,11 @@ export default Controller.extend({
       }
     }
     return PromiseObject.create({
-      promise: RSVP.resolve(schools.sortBy('title').get('firstObject'))
+      promise: this.get('currentUser').get('model').then(user => {
+        return user.get('school').then(school => {
+          return school
+        });
+      })
     });
   }),
 
