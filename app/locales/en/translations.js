@@ -204,7 +204,10 @@ export default {
     'subgroups': 'Subgroups',
     'defaultInstructors': 'Default Instructors',
     'defaultLocation': 'Default Location',
-    'removeLearnerToCohort': 'Remove learner to {{cohort}}',
+    'removeLearnerToCohort': {
+      'one': 'Remove learner to {{cohort}}',
+      'other': 'Remove {{count}} learners to {{cohort}}'
+    },
     'associatedCourses': 'Associated Courses',
     'noSubgroups': 'There are no subgroups in this learner group',
     'learnerAssignments': '{{groupTitle}} Learner Assignments',

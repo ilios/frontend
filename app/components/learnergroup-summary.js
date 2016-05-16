@@ -55,9 +55,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     yield this.get('usersToPassToManager').perform();
     yield this.get('usersToPassToCohortManager').perform();
   }).enqueue(),
-  removeUserFromGroup: task(function * (user) {
-    const learnerGroup = this.get('learnerGroup');
-    let groups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
+  removeUserToCohort: task(function * (user) {
+    const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
+    let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
     yield this.get('usersToPassToManager').perform();
     yield this.get('usersToPassToCohortManager').perform();
@@ -84,12 +84,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     yield this.get('usersToPassToCohortManager').perform();
     this.set('isSaving', false);
   }).enqueue(),
-  removeUsersFromGroup: task(function * (users) {
-    const learnerGroup = this.get('learnerGroup');
+  removeUsersToCohort: task(function * (users) {
+    const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
     let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
       let user = users[i];
-      let removeGroups = yield learnerGroup.removeUserFromGroupAndAllDescendants(user);
+      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave.pushObjects(removeGroups);
     }
 

@@ -13,11 +13,6 @@
   </div>
   <div class='resultslist'>
     <div class='resultslist-list'>
-      {{#if isEditing}}
-        <div class='detail-title'>
-          {{t 'learnerGroups.groupMembers'}} ({{usersInCurrentGroup.length}})
-        </div>
-      {{/if}}
       <table>
         <thead>
           <tr>
@@ -54,6 +49,13 @@
             {{/if}}
           </tr>
         </thead>
+      </table>
+      {{#if isEditing}}
+        <div class='detail-title'>
+          {{t 'learnerGroups.groupMembers'}} ({{usersInCurrentGroup.length}})
+        </div>
+      {{/if}}
+      <table>
         <tbody>
           {{#each (sort-by sortBy usersInCurrentGroup) as |user|}}
             <tr class="{{unless user.enabled 'disabled-user-account'}}">
@@ -89,21 +91,12 @@
                   {{#if (contains user.content usersBeingMoved)}}
                     {{fa-icon 'spinner' spin=true}}
                   {{else if user.enabled}}
-                    {{#if (not-eq (get user.lowestGroupInTree 'id') learnerGroupId)}}
-                      {{fa-icon
-                        'plus'
-                        class='yes clickable'
-                        title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle)
-                        click=(perform addSingleUser user.content)
-                      }}
-                    {{else}}
-                      {{fa-icon
-                        'minus'
-                        class='no clickable'
-                        title=(t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle)
-                        click=(perform removeSingleUser user.content)
-                      }}
-                    {{/if}}
+                    {{fa-icon
+                      'minus'
+                      class='no clickable'
+                      title=(t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle count=1)
+                      click=(perform removeSingleUser user.content)
+                    }}
                   {{/if}}
                 </td>
               {{/if}}
@@ -152,21 +145,12 @@
                     {{#if (contains user.content usersBeingMoved)}}
                       {{fa-icon 'spinner' spin=true}}
                     {{else if user.enabled}}
-                      {{#if (not-eq (get user.lowestGroupInTree 'id') learnerGroupId)}}
-                        {{fa-icon
-                          'plus'
-                          class='yes clickable'
-                          title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle)
-                          click=(perform addSingleUser user.content)
-                        }}
-                      {{else}}
-                        {{fa-icon
-                          'minus'
-                          class='no clickable'
-                          title=(t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle)
-                          click=(perform removeSingleUser user.content)
-                        }}
-                      {{/if}}
+                      {{fa-icon
+                        'plus'
+                        class='yes clickable'
+                        title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle)
+                        click=(perform addSingleUser user.content)
+                      }}
                     {{/if}}
                   </td>
                 {{/if}}
@@ -181,7 +165,7 @@
   {{#if (gt selectedUsers.length 0) class='vertical'}}
     <p class='fullwidth'>
       <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
-      <button class='cancel text' {{action (perform removeSelectedUsers)}}>{{t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle}}</button>
+      <button class='cancel text' {{action (perform removeSelectedUsers)}}>{{t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle count=selectedUsers.length}}</button>
     </p>
   {{/if}}
 {{/if}}
