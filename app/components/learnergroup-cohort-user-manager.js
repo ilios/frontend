@@ -67,6 +67,15 @@ export default Component.extend({
       } else {
         this.get('selectedUsers').pushObject(user);
       }
-    }
+    },
+    toggleUserSelectionAllOrNone() {
+      const selectedUsers = this.get('selectedUsers');
+      if (selectedUsers.length) {
+        selectedUsers.clear();
+      } else {
+        const users = this.get('users');
+        selectedUsers.pushObjects(users);
+      }
+    },
   }
 });

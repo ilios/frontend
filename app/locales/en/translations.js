@@ -218,7 +218,10 @@ export default {
     'populateGroup': 'Do you want to auto-populate this group?',
     'yesPopulateGroup': 'Yes!  Add entire cohort to my new group.',
     'noPopulateGroup': "No!  Leave it empty, I'll add students myself.",
-    'moveToGroup': "Move to {{groupTitle}}",
+    'moveToGroup': {
+      'one': "Move learner to {{groupTitle}}",
+      'other': "Move {{count}} learners to {{groupTitle}}",
+    },
     'groupMembers': 'Members of current group',
     'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
   },

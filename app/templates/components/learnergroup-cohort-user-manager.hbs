@@ -14,7 +14,12 @@
       <table>
         <thead>
           <tr>
-            <th class='text-left' colspan=1></th>
+            <th class='text-left' colspan=1>
+              {{one-way-checkbox
+                update=(action 'toggleUserSelectionAllOrNone')
+                checked=(gt selectedUsers.length 0)
+              }}
+            </th>
             {{#sortable-th
               colspan=2
               click=(action 'sortBy' 'firstName')
@@ -70,6 +75,6 @@
     </div>
   </div>
   {{#if (gt selectedUsers.length 0) class='vertical'}}
-    <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle}}</button>
+    <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
   {{/if}}
 {{/if}}
