@@ -219,6 +219,8 @@ export default {
     'yesPopulateGroup': 'Yes!  Add entire cohort to my new group.',
     'noPopulateGroup': "No!  Leave it empty, I'll add students myself.",
     'moveToGroup': "Move to {{groupTitle}}",
+    'groupMembers': 'Members of current group',
+    'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
   },
   'schools': {
     'new': 'New School',

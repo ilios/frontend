@@ -39,6 +39,23 @@ export default Component.extend({
     });
   }),
 
+  usersInCurrentGroup: computed('filteredUsers.[]', 'learnerGroupId', function(){
+    const isEditing = this.get('isEditing');
+    const filteredUsers = this.get('filteredUsers');
+    if (!isEditing) {
+      return filteredUsers;
+    }
+    const learnerGroupId = this.get('learnerGroupId');
+    return filteredUsers.filter(user => {
+      return user.get('lowestGroupInTree').get('id') === learnerGroupId;
+    });
+  }),
+
+  usersNotInCurrentGroup: computed('filteredUsers.[]', 'learnerGroupId', function(){
+    const learnerGroupId = this.get('learnerGroupId');
+    return this.get('filteredUsers').filter(user => user.get('lowestGroupInTree').get('id') !== learnerGroupId);
+  }),
+
   addSingleUser: task(function * (user) {
     this.get('usersBeingMoved').pushObject(user);
     //timeout gives the spinner time to render

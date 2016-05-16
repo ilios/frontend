@@ -342,3 +342,7 @@ span {
     margin-right: 7px;
   }
 }
+
+.clear {
+  @include clearfix;
+}

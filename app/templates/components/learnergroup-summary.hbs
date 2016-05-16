@@ -1,6 +1,7 @@
 {{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy}}
 <div class='detail-view-details'>
   <section class='detail-block overview'>
+    <div class='detail-title'></div>
     <div class='detail-actions'>
       {{#if isEditing}}
         <button {{action (action toggleEditMode)}}>{{t 'general.close'}}</button>
@@ -13,6 +14,7 @@
         {{learnergroup-user-manager
           learnerGroupId=learnerGroupId
           learnerGroupTitle=learnerGroupTitle
+          topLevelGroupTitle=topLevelGroupTitle
           cohortTitle=cohortTitle
           users=usersToPassToManager.lastSuccessful.value
           sortBy=sortUsersBy
@@ -25,7 +27,7 @@
         }}
       </div>
     {{else}}
-      {{fa-icon 'spinner' spin=true}}
+      <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
     {{/unless}}
 
     <div class='form-container'>
@@ -106,7 +108,7 @@
         }}
       </div>
     {{else}}
-      {{fa-icon 'spinner' spin=true}}
+      <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
     {{/unless}}
   </section>
 </div>
