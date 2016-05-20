@@ -17,6 +17,23 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
+
+  showUserManagerLoader: false,
+  showCohortManagerLoader: false,
+  learnerGroup: null,
+  learnerGroupId: null,
+  learnerGroupTitle: null,
+  cohortTitle: null,
+  topLevelGroupTitle: null,
+  classNames: ['detail-view', 'learnergroup-detail-view'],
+  tagName: 'section',
+  location: null,
+  manageInstructors: false,
+  isEditing: false,
+  isSaving: false,
+  sortUsersBy: '',
+  totalGroupsToSave: 0,
+  currentGroupsSaved: 0,
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('showUserManagerLoader', true);
@@ -36,6 +53,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.get('usersToPassToCohortManager').perform();
     }
   },
+  treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
+    const learnerGroup = this.get('learnerGroup');
+    return new Promise(resolve => {
+      learnerGroup.get('topLevelGroup').then(topLevelGroup => {
+        let treeGroups = [];
+        treeGroups.pushObject(topLevelGroup);
+        topLevelGroup.get('allDescendants').then((all) => {
+          treeGroups.pushObjects(all);
+          resolve(treeGroups);
+        });
+      });
+    });
+  }),
   saveSomeGroups(arr){
     let chunk = arr.splice(0, 5);
     return all(chunk.invoke('save')).then(() => {
@@ -148,34 +178,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('showCohortManagerLoader', false);
     return filteredUsers;
   }).restartable(),
-  showUserManagerLoader: false,
-  showCohortManagerLoader: false,
-  learnerGroup: null,
-  learnerGroupId: null,
-  learnerGroupTitle: null,
-  cohortTitle: null,
-  topLevelGroupTitle: null,
-  classNames: ['detail-view', 'learnergroup-detail-view'],
-  tagName: 'section',
-  location: null,
-  manageInstructors: false,
-  isEditing: false,
-  isSaving: false,
-  totalGroupsToSave: 0,
-  currentGroupsSaved: 0,
-  treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
-    const learnerGroup = this.get('learnerGroup');
-    return new Promise(resolve => {
-      learnerGroup.get('topLevelGroup').then(topLevelGroup => {
-        let treeGroups = [];
-        treeGroups.pushObject(topLevelGroup);
-        topLevelGroup.get('allDescendants').then((all) => {
-          treeGroups.pushObjects(all);
-          resolve(treeGroups);
-        });
-      });
-    });
-  }),
   actions: {
     changeLocation() {
       const newLocation = this.get('location');
