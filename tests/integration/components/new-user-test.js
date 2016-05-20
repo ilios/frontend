@@ -28,13 +28,22 @@ moduleForComponent('new-user', 'Integration | Component | new users', {
   },
   beforeEach(){
     this.register('service:current-user', currentUserMock);
-    this.inject.service('current-user', { as: 'current-user' });
   }
 });
 
 
 test('it renders', function(assert) {
   this.set('close', () => {});
+
+  let storeMock = Service.extend({
+    query(what, {filters}){
+
+      assert.equal('cohort', what);
+      assert.equal(filters.schools[0], 2);
+      return resolve([]);
+    }
+  });
+  this.register('service:store', storeMock);
 
   this.render(hbs`{{new-user close=(action close)}}`);
 
@@ -52,7 +61,8 @@ test('it renders', function(assert) {
     assert.notEqual(content.search(/Password/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
 
-    let options = this.$('option');
+    const schools = 'select:eq(0) option';
+    let options = this.$(schools);
     assert.equal(options.length, mockSchools.length);
     assert.equal(options.eq(0).text().trim(), 'first');
     assert.equal(options.eq(1).text().trim(), 'second');
@@ -61,6 +71,16 @@ test('it renders', function(assert) {
 });
 
 test('errors do not show up initially', function(assert) {
+
+  let storeMock = Service.extend({
+    query(what, {filters}){
+
+      assert.equal('cohort', what);
+      assert.equal(filters.schools[0], 2);
+      return resolve([]);
+    }
+  });
+  this.register('service:store', storeMock);
   this.set('close', () => {
     assert.ok(false); //shouldn't be called
   });
@@ -73,6 +93,15 @@ test('errors do not show up initially', function(assert) {
 });
 
 test('errors show up', function(assert) {
+  let storeMock = Service.extend({
+    query(what, {filters}){
+
+      assert.equal('cohort', what);
+      assert.equal(filters.schools[0], 2);
+      return resolve([]);
+    }
+  });
+  this.register('service:store', storeMock);
   this.set('close', () => {
     assert.ok(false); //shouldn't be called
   });
@@ -82,11 +111,11 @@ test('errors show up', function(assert) {
     this.$('.done').click();
     return wait().then(() => {
       let boxes = this.$('.item');
-      assert.ok(boxes.eq(1).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(3).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(6).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(0).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(2).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(5).text().search(/blank/) > -1);
+      assert.ok(boxes.eq(7).text().search(/blank/) > -1);
       assert.ok(boxes.eq(8).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(9).text().search(/blank/) > -1);
     });
 
   });

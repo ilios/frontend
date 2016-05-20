@@ -128,9 +128,9 @@
   <div id='new-directory-user-search-tools'>
     {{one-way-input
       value=searchTerms
-      update=(action attrs.setSearchTerms)
+      update=this.attrs.setSearchTerms
       onenter=(action "findUsersInDirectory")
-      onescape=(action attrs.setSearchTerms '')
+      onescape=(action this.attrs.setSearchTerms '')
     }}
     <button type='search' {{action 'findUsersInDirectory'}}>{{t 'user.searchDirectory'}}</button>
   </div>
