@@ -58,5 +58,5 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(NewUser, Validations, {
-
+  classNames: ['new-user'],
 });

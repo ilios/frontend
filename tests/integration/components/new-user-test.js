@@ -67,7 +67,7 @@ test('errors do not show up initially', function(assert) {
   this.render(hbs`{{new-user close=(action close)}}`);
 
   return wait().then(() => {
-    assert.equal(this.$('.validation-error-message').length, 0);
+    assert.equal(this.$('.messagee').length, 0);
 
   });
 });
@@ -81,7 +81,7 @@ test('errors show up', function(assert) {
   return wait().then(() => {
     this.$('.done').click();
     return wait().then(() => {
-      let boxes = this.$('.form-data');
+      let boxes = this.$('.item');
       assert.ok(boxes.eq(1).text().search(/blank/) > -1);
       assert.ok(boxes.eq(3).text().search(/blank/) > -1);
       assert.ok(boxes.eq(6).text().search(/blank/) > -1);
