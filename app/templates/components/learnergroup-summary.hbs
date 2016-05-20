@@ -1,0 +1,121 @@
+{{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy}}
+<div class='detail-view-details'>
+  <section class='detail-block overview'>
+    <div class='detail-title'></div>
+    <div class='detail-actions'>
+      {{#if isEditing}}
+        <button {{action (action toggleEditMode)}}>{{t 'general.close'}}</button>
+      {{else}}
+        <button {{action (pipe (action toggleEditMode) (toggle 'showUserManagerLoader' this) (perform usersToPassToManager))}}>{{t 'general.manage'}}</button>
+      {{/if}}
+    </div>
+    {{#unless showUserManagerLoader}}
+      <div class='detail-content'>
+        {{learnergroup-user-manager
+          learnerGroupId=learnerGroupId
+          learnerGroupTitle=learnerGroupTitle
+          topLevelGroupTitle=topLevelGroupTitle
+          cohortTitle=cohortTitle
+          users=usersToPassToManager.lastSuccessful.value
+          sortBy=sortUsersBy
+          setSortBy=this.attrs.setSortUsersBy
+          isEditing=isEditing
+          addUserToGroup=(perform addUserToGroup)
+          removeUserFromGroup=(perform removeUserToCohort)
+          addUsersToGroup=(perform addUsersToGroup)
+          removeUsersFromGroup=(perform removeUsersToCohort)
+        }}
+      </div>
+    {{else}}
+      <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
+    {{/unless}}
+
+    <div class='form-container'>
+      <div class='form-col-12'>
+        <label class='form-label'>{{t "learnerGroups.defaultLocation"}}:</label>
+        <div class='form-data'>
+          {{#editable-field
+            value=(if location location (t 'general.clickToEdit'))
+            save=(action 'changeLocation')
+            close=(action 'revertLocationChanges')
+            as |isSaving save close|
+          }}
+            {{one-way-input
+              value=location
+              update=(action (mut location))
+              onenter=save
+              onescape=close
+              disabled=isSaving
+              focusOut=(action 'addErrorDisplayFor' 'location')
+            }}
+            {{#if (and (v-get this 'location' 'isInvalid') (is-in showErrorsFor 'location'))}}
+              <span class="validation-error-message">{{v-get this 'location' 'message'}}</span>
+            {{/if}}
+          {{/editable-field}}
+        </div>
+        <label class='form-label'>{{t "learnerGroups.defaultInstructors"}}:</label>
+        <div class='form-data clickable link'>
+          {{#if (is-fulfilled learnerGroup.allInstructors)}}
+            {{#liquid-if manageInstructors class='crossFade'}}
+              {{learnergroup-instructor-manager
+                learnerGroup=learnerGroup
+                save=(action 'saveInstructors')
+                close=(toggle-action 'manageInstructors' this)
+              }}
+            {{else}}
+              <span class='clickable link' {{action (toggle 'manageInstructors' this)}}>
+                {{#if (get (await learnerGroup.allInstructors) 'length')}}
+                  {{join '; ' (map-by 'fullName' (sort-by 'lastName' (await learnerGroup.allInstructors)))}}
+                {{else}}
+                  {{t 'general.none'}}
+                {{/if}}
+              </span>
+            {{/liquid-if}}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/if}}
+        </div>
+        <label class='form-label'>{{t "learnerGroups.associatedCourses"}}:</label>
+        <div class='form-data'>
+          {{#if (is-fulfilled learnerGroup.courses)}}
+            {{#if (get (await learnerGroup.courses) 'length')}}
+              {{join '; ' (map-by 'title' (await learnerGroup.courses))}}
+            {{else}}
+              {{t 'general.none'}}
+            {{/if}}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  {{learnergroup-subgroup-list parentGroup=learnerGroup}}
+
+  <section class='detail-block cohortmembers'>
+    {{#unless showCohortManagerLoader}}
+      <div class='detail-content'>
+        {{learnergroup-cohort-user-manager
+          users=usersToPassToCohortManager.lastSuccessful.value
+          learnerGroupTitle=learnerGroupTitle
+          topLevelGroupTitle=topLevelGroupTitle
+          sortBy=sortUsersBy
+          setSortBy=this.attrs.setSortUsersBy
+          addUserToGroup=(perform addUserToGroup)
+          addUsersToGroup=(perform addUsersToGroup)
+        }}
+      </div>
+    {{else}}
+      <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
+    {{/unless}}
+  </section>
+</div>
+{{#liquid-if isSaving class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalGroupsToSave
+    currentProgress=currentGroupsSaved
+  }}
+{{/liquid-if}}

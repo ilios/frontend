@@ -1,0 +1,78 @@
+<div class='detail-title'>
+  {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
+</div>
+<div class="detail-actions">
+  {{one-way-input
+    value=filter
+    update=(action (mut filter))
+    placeholder=(t 'groupMembers.filterPlaceholder')
+  }}
+</div>
+<div class='resultslist'>
+  <div class='resultslist-list'>
+    <table>
+      <thead>
+        <tr>
+          <th class='text-left' colspan=1>
+            {{one-way-checkbox
+              update=(action 'toggleUserSelectionAllOrNone')
+              checked=(gt selectedUsers.length 0)
+            }}
+          </th>
+          {{#sortable-th
+            colspan=2
+            click=(action 'sortBy' 'firstName')
+            sortedBy=(or (eq sortBy 'firstName') (eq sortBy 'firstName:desc'))
+            sortedAscending=sortedAscending
+          }}{{t 'user.firstName'}}{{/sortable-th}}
+          {{#sortable-th
+            colspan=2
+            click=(action 'sortBy' 'lastName')
+            sortedBy=(or (eq sortBy 'lastName') (eq sortBy 'lastName:desc'))
+            sortedAscending=sortedAscending
+          }}{{t 'user.lastName'}}{{/sortable-th}}
+          <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
+          <th class='text-left' colspan=5>{{t 'general.email'}}</th>
+          <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sort-by sortBy (await filteredUsers)) as |user|}}
+          <tr class="{{unless user.enabled 'disabled-user-account'}}">
+            <td class='text-left' colspan=1>
+              {{#if user.enabled}}
+                {{one-way-checkbox
+                  checked=(contains user selectedUsers)
+                  update=(action 'toggleUserSelection' user)
+                }}
+              {{else}}
+                {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+              {{/if}}
+            </td>
+            <td class='text-left' colspan=2>{{user.firstName}}</td>
+            <td class='text-left' colspan=2>{{user.lastName}}</td>
+            <td class='text-left' colspan=2>{{user.campusId}}</td>
+            <td class='text-left' colspan=5>{{user.email}}</td>
+            <td class='text-left' colspan=1>
+              {{#if user.enabled}}
+                {{#if (contains user usersBeingMoved)}}
+                  {{fa-icon 'spinner' spin=true}}
+                {{else}}
+                  {{fa-icon
+                    'plus'
+                    class='yes clickable'
+                    title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=1)
+                    click=(perform addSingleUser user)
+                  }}
+                {{/if}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+{{#if (gt selectedUsers.length 0) class='vertical'}}
+  <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
+{{/if}}

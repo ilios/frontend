@@ -93,8 +93,7 @@
       {{#if learnerGroups.isFulfilled}}
         {{learnergroup-list
           learnerGroups=filteredLearnerGroups
-          edit='editLearnerGroup'
-          remove='removeLearnerGroup'
+          remove=(action 'removeLearnerGroup')
         }}
       {{else}}
         {{pulse-loader}}

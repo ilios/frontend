@@ -5,15 +5,31 @@
     </h2>
   </span>
   <span class='info'>
-    {{t 'learnerGroups.members'}}: {{learnerGroup.users.length}}
+    {{#if (and (is-fulfilled learnerGroup.usersOnlyAtThisLevel) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))}}
+      {{t 'learnerGroups.members'}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) 'length'}} / {{learnerGroup.cohort.users.length}}
+    {{/if}}
   </span>
 </div>
 {{#if (is-fulfilled learnerGroup.allParents)}}
   <div class='breadcrumbs'>
-    <span>{{#link-to 'learnerGroups'}}{{t 'general.learnerGroups'}}{{/link-to}}</span>
+    <span>
+      {{#link-to
+        'learnerGroups'
+        (query-params
+          schoolId=(get (await learnerGroup.cohort.programYear.program.school) 'id')
+          programId=(get (await learnerGroup.cohort.programYear.program) 'id')
+          programYearId=(get (await learnerGroup.cohort.programYear) 'id')
+        )
+      }}{{t 'general.learnerGroups'}}{{/link-to}}
+    </span>
     {{#each (await learnerGroup.allParents) as |parent|}}
       <span>
-        {{#link-to 'learnerGroup' parent}}
+        {{#link-to
+          'learnerGroup' parent
+          (query-params
+            sortUsersBy=sortUsersBy
+          )
+        }}
           {{parent.title}}
         {{/link-to}}
       </span>

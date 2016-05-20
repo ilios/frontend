@@ -8,12 +8,12 @@ export default Ember.Component.extend({
   sortedAscending: true,
   align: 'left',
   sortType: 'alpha',
-  classNameBindings: ['textDirection', ':sortable'],
+  classNameBindings: ['textDirection', ':sortable', ':clickable'],
   sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
     const sortedBy = this.get('sortedBy');
     const sortedAscending = this.get('sortedAscending');
     const sortType = this.get('sortType');
-    
+
     if(sortedBy){
       if(sortedAscending){
         return sortType === 'numeric'?'sort-numeric-asc':'sort-alpha-asc';
@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     }
   }),
   textDirection: computed('align', function(){
-    return 'text-' + this.get('align'); 
+    return 'text-' + this.get('align');
   }),
   attributeBindings: ['colspan'],
   colspan: 1

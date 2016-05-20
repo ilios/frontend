@@ -7,7 +7,7 @@
 
     .ff-select-field {
       background: $white;
-      border: 2px solid $learner-group-grey;
+      border: 2px solid $header-grey;
       border-radius: 0;
       color: $black;
       height: 35px;
@@ -17,7 +17,7 @@
       width: 230px;
 
       &::after {
-        color: $learner-group-grey;
+        color: $header-grey;
         content: '\f0d7';
         font-family: FontAwesome;
         font-size: 18px;
@@ -33,7 +33,7 @@
 
       .ff-option {
         background: $white;
-        border-bottom: 1px solid $learner-group-grey;
+        border-bottom: 1px solid $header-grey;
         box-sizing: content-box;
         outline: none;
         text-align: center;
@@ -41,7 +41,7 @@
       }
 
       .ff-option:hover {
-        background: $learner-group-grey;
+        background: $header-grey;
       }
     }
   }
@@ -61,7 +61,7 @@
       background: $ilios-green;
 
       &:hover {
-        background: $learner-group-grey;
+        background: $header-grey;
         color: $ilios-green;
       }
     }
@@ -70,7 +70,7 @@
       background: $ilios-red;
 
       &:hover {
-        background: $learner-group-grey;
+        background: $header-grey;
         color: $ilios-red;
       }
     }

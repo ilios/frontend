@@ -204,16 +204,14 @@ export default {
     'subgroups': 'Subgroups',
     'defaultInstructors': 'Default Instructors',
     'defaultLocation': 'Default Location',
-    'removeLearnerToCohort': 'Remove learners to {{cohort}}',
-    'switchLearnerToGroup': 'Switch learners to {{{group}}}',
+    'removeLearnerToCohort': {
+      'one': 'Remove learner to {{cohort}}',
+      'other': 'Remove {{count}} learners to {{cohort}}'
+    },
     'associatedCourses': 'Associated Courses',
     'noSubgroups': 'There are no subgroups in this learner group',
     'learnerAssignments': '{{groupTitle}} Learner Assignments',
     'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
-    'notInThisGroup': 'Not in this group',
-    'selectGroup': 'Select Group',
-    'multiEdit': 'Multi-Edit',
-    'includeAll': 'Check All',
     'message': 'No learner groups available; No cohort is attached to this course.',
     'selectProgram': 'Select a Program',
     'singleGroup': 'Single Group',
@@ -223,6 +221,12 @@ export default {
     'populateGroup': 'Do you want to auto-populate this group?',
     'yesPopulateGroup': 'Yes!  Add entire cohort to my new group.',
     'noPopulateGroup': "No!  Leave it empty, I'll add students myself.",
+    'moveToGroup': {
+      'one': "Move learner to {{groupTitle}}",
+      'other': "Move {{count}} learners to {{groupTitle}}",
+    },
+    'groupMembers': 'Members of current group',
+    'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
   },
   'schools': {
     'new': 'New School',

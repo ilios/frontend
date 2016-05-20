@@ -4,32 +4,29 @@
       <th class='text-left' colspan=2>{{t 'learnerGroups.learnerGroupTitle'}}</th>
       <th class='text-center'>{{t 'learnerGroups.members'}}</th>
       <th class='text-center'>{{t 'learnerGroups.subgroups'}}</th>
-      <th>&nbsp;</th>
+      <th class='text-right'>{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
-    {{#each proxiedLearnerGroups as |learnerGroup|}}
-      <tr class="{{if learnerGroup.showRemoveConfirmation 'confirm-removal'}}">
+    {{#each (sort-by 'title' learnerGroups) as |learnerGroup|}}
+      <tr class="{{if (contains learnerGroup learnerGroupsForRemovalConfirmation) 'confirm-removal'}}">
         <td class='text-left' colspan=2>
-          {{#link-to 'learnerGroup' learnerGroup.content}}
+          {{#link-to 'learnerGroup' learnerGroup}}
             {{learnerGroup.title}}
           {{/link-to}}
         </td>
         <td class='text-center'>{{learnerGroup.users.length}}</td>
         <td class='text-center'>{{learnerGroup.children.length}}</td>
         <td class='text-right'>
-          {{#action-menu classNames='right-edge'}}
-            <li {{action 'edit' learnerGroup}}>{{t 'general.edit'}}</li>
-            <li {{action 'confirmRemove' learnerGroup}}>{{t 'general.remove'}}</li>
-          {{/action-menu}}
+          <span class='clickable remove' {{action 'confirmRemove' learnerGroup}}>{{fa-icon 'trash'}}</span>
         </td>
       </tr>
-      {{#if learnerGroup.showRemoveConfirmation}}
+      {{#if (contains learnerGroup learnerGroupsForRemovalConfirmation)}}
         <tr class='confirm-removal'><td colspan=5>
           <div class='confirm-message'>
             {{t 'learnerGroups.confirmRemove' learnerCount=learnerGroup.usersCount subgroupCount=learnerGroup.children.length}} <br />
            <div class="confirm-buttons">
-            <button {{action 'remove' learnerGroup}} class='remove text'>{{t 'general.yes'}}</button>
+            <button {{action this.attrs.remove learnerGroup}} class='remove text'>{{t 'general.yes'}}</button>
             <button {{action 'cancelRemove' learnerGroup}} class='done text'>{{t 'general.cancel'}}</button>
           </div>
           </div>

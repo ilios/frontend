@@ -1,1 +1,7 @@
-{{learnergroup-details learnerGroup=model}}
+{{learnergroup-summary
+  toggleEditMode=(toggle-action 'isEditing' this)
+  sortUsersBy=sortUsersBy
+  setSortUsersBy=(action (mut sortUsersBy))
+  learnerGroup=model
+  isEditing=isEditing
+}}

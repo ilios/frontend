@@ -3,8 +3,9 @@ import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 
-const { computed, isEmpty } = Ember;
+const { computed, isEmpty, RSVP } = Ember;
 const { empty, mapBy, sum } = computed;
+const { Promise } = RSVP;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -158,29 +159,25 @@ export default DS.Model.extend({
     });
   }),
   usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('users').then(users => {
-      this.get('allDescendants').then(descendants => {
-        var membersAtThisLevel = [];
-        var promises = [];
-        users.forEach(user => {
-          let promise = user.get('learnerGroups').then(userGroups => {
-            var subGroups = userGroups.filter(group => descendants.contains(group));
-            if(subGroups.length === 0){
-              membersAtThisLevel.pushObject(user);
-            }
+    return new Promise(resolve => {
+      this.get('users').then(users => {
+        this.get('allDescendants').then(descendants => {
+          let membersAtThisLevel = [];
+          let promises = [];
+          users.forEach(user => {
+            let promise = user.get('learnerGroups').then(userGroups => {
+              var subGroups = userGroups.filter(group => descendants.contains(group));
+              if(subGroups.length === 0){
+                membersAtThisLevel.pushObject(user);
+              }
+            });
+            promises.pushObject(promise);
           });
-          promises.pushObject(promise);
+          Ember.RSVP.all(promises).then(() => {
+            resolve(membersAtThisLevel);
+          });
         });
-        Ember.RSVP.all(promises).then(() => {
-          deferred.resolve(membersAtThisLevel.sortBy('fullName'));
-        });
-
       });
-
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
   destroyChildren: function(){
@@ -246,22 +243,20 @@ export default DS.Model.extend({
     });
   }),
   allParents: computed('parent', 'parent.allParents.[]', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('parent').then(parent => {
-      var parents = [];
-      if(!parent){
-        deferred.resolve(parents);
-      } else {
-        parents.pushObject(parent);
-        parent.get('allParents').then(allParents => {
-          parents.pushObjects(allParents);
-          deferred.resolve(parents);
-        });
-      }
+    return new Promise(resolve => {
+      this.get('parent').then(parent => {
+        let parents = [];
+        if(!parent){
+          resolve(parents);
+        } else {
+          parents.pushObject(parent);
+          parent.get('allParents').then(allParents => {
+            parents.pushObjects(allParents);
+            resolve(parents);
+          });
+        }
 
-    });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
+      });
     });
   }),
   topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
@@ -291,12 +286,10 @@ export default DS.Model.extend({
     let groups = [this];
     return new Ember.RSVP.Promise(resolve => {
       this.get('users').removeObject(user);
-      user.get('learnerGroups').removeObject(this);
       this.get('allDescendants').then(all => {
         all.forEach(group=>{
           groups.pushObject(group);
           group.get('users').removeObject(user);
-          user.get('learnerGroups').removeObject(group);
         });
         resolve(groups);
       });
@@ -304,17 +297,31 @@ export default DS.Model.extend({
   },
   addUserToGroupAndAllParents(user){
     let groups = [this];
-    return new Ember.RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this.get('users').pushObject(user);
-      user.get('learnerGroups').pushObject(this);
       this.get('allParents').then(all => {
         all.forEach(group=>{
           groups.pushObject(group);
           group.get('users').pushObject(user);
-          user.get('learnerGroups').pushObject(group);
         });
         resolve(groups);
       });
     });
   },
+  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
+    return new Promise(resolve => {
+      let users = [];
+      this.get('instructors').then(instructors => {
+        users.pushObjects(instructors.toArray());
+        this.get('instructorGroups').then(instructorGroups => {
+          RSVP.all(instructorGroups.mapBy('users')).then(arr => {
+            arr.forEach(instructors =>{
+              users.pushObjects(instructors.toArray());
+            });
+            resolve(users.uniq());
+          });
+        });
+      });
+    });
+  }),
 });
