@@ -204,16 +204,14 @@ export default {
     'subgroups': 'Grupos Subordinados',
     'defaultInstructors': 'Instructores Predeterminados',
     'defaultLocation': 'Ubicación Predeterminada',
-    'removeLearnerToCohort': 'Quitar Aprendedores a {{cohort}}',
-    'switchLearnerToGroup': 'Cambiar Aprendedores a {{{group}}}',
+    'removeLearnerToCohort': {
+      'one': 'Quite estudiante a {{cohort}}',
+      'other': 'Quite {{count}} estudiantes a {{cohort}}'
+    },
     'associatedCourses': 'Cursos Associados',
     'noSubgroups': 'No hay ningunos grupos subordinados en este grupo de aprendedores',
     'learnerAssignments': '{{groupTitle}} Asignaciónes de Aprendedores',
     'cohortMembersNotInGroup': 'Miembros de la Clase NO Asignados a {{groupTitle}} ',
-    'notInThisGroup': 'No en este grupo',
-    'selectGroup': 'Seleccione Grupo',
-    'multiEdit': 'Editar múltiples grupos',
-    'includeAll': 'Marque todo',
     'message': 'No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación.',
     'selectProgram': 'Seleccione un Programa',
     'singleGroup': 'Solo grupo',
@@ -223,6 +221,12 @@ export default {
     'populateGroup': '¿Quieres auto-rellenar este grupo?',
     'yesPopulateGroup': '¡Sí! Añada la cohorte entera a mi nuevo grupo.',
     'noPopulateGroup': "¡No! Déjelo vacío. Voy a agregar alumnos yo mismo.",
+    'moveToGroup': {
+      'one': "Mueva estudiante a {{groupTitle}}",
+      'other': "Mueva {{count}} estudiantes a {{groupTitle}}",
+    },
+    'groupMembers': 'Miembros de grupo corriente',
+    'allOtherMembers': 'Todos otros miembros de {{topLevelGroupTitle}}',
   },
   'schools': {
     'new': 'Nueva Escuela',
