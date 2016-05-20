@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 const { Object } = Ember;
 
@@ -124,7 +125,7 @@ test('add multiple users', function(assert) {
 
   this.$(user1CheckBox).click();
   assert.equal(this.$(button).text().trim(), 'Move learner to this group');
-  this.$(button).click();
+  return wait(this.$(button).click());
 
 });
 
@@ -152,7 +153,7 @@ test('add single user', function(assert) {
     addUsersToGroup=(action 'nothing')
   }}`);
 
-  this.$(action).click();
+  return wait(this.$(action).click());
 
 });
 
@@ -191,6 +192,6 @@ test('checkall', function(assert) {
   assert.ok(this.$(user1CheckBox).prop('checked'));
   assert.ok(this.$(user2CheckBox).prop('checked'));
   assert.equal(this.$(button).text().trim(), 'Move 2 learners to this group');
-  this.$(button).click();
+  return wait(this.$(button).click());
 
 });
