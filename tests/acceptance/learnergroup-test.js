@@ -6,7 +6,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 let application;
 
-moduleForAcceptance('Acceptance | learnergroup', {
+moduleForAcceptance('Acceptance: Learnergroup', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
@@ -19,7 +19,9 @@ moduleForAcceptance('Acceptance | learnergroup', {
 
 
 test('generate new subgroups', function(assert) {
-
+  server.create('cohort', {
+    learnerGroups: [1, 2, 3]
+  });
   server.create('learnerGroup', {
     cohort: 1,
     parent: 1,
