@@ -1,0 +1,65 @@
+@mixin profile () {
+  .name {
+    margin: 1.5em 0 0;
+    text-align: center;
+  }
+
+  .is-student {
+    color: $ilios-green;
+    text-align: center;
+  }
+
+  .details {
+    @include fill-parent;
+    margin-top: 2em;
+
+    .permissions {
+      @include span-columns(4);
+      background: $header-grey;
+      border-radius: 1em;
+      min-height: 300px;
+      padding: 1em;
+      text-align: center;
+      vertical-align: top;
+
+      .permissions-header {
+        font-size: 1.5em;
+        margin: 0 0 1em;
+        text-align: center;
+      }
+
+      .permissions-body {
+        display: inline-block;
+        text-align: left;
+      }
+
+      .permissions-row {
+        i {
+          margin-right: 1em;
+        }
+      }
+
+      hr {
+        border: 1px solid $moderate-grey;
+        margin: 1em 0;
+      }
+    }
+
+    .info {
+      @include shift(1);
+      @include span-columns(7);
+
+      .row {
+        @include fill-parent;
+
+        .title {
+          font-weight: bold;
+        }
+
+        ul {
+          padding-left: 1em;
+        }
+      }
+    }
+  }
+}
