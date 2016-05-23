@@ -462,6 +462,7 @@ export default {
     'saved': 'Nouvel utilisateur enregistré avec succès',
     'username': 'Nom d’utilisateur',
     'password': 'Mot de passe',
+    'myProfile': 'Mon profil',
   },
   'language': {
     'select': {

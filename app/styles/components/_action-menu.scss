@@ -48,21 +48,6 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     }
   }
 
-  &.user-menu .button {
-    background-color: transparent;
-    border: 0;
-    border-radius: $base-border-radius;
-    color: $white;
-    font-weight: normal;
-    padding: .5em 2em .5em 1em;
-    vertical-align: middle;
-
-    &:hover {
-      background-color: $white;
-      color: $ilios-orange;
-    }
-  }
-
   .dropdown-menu {
     @include transition (all .2s ease-in-out);
     background-color: $white;

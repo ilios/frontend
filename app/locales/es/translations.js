@@ -462,6 +462,7 @@ export default {
     'saved': 'Nuevo Usuario Salvó con Éxito',
     'username': 'Nombre de Usuario',
     'password': 'Contraseña',
+    'myProfile': 'Mi Perfil',
   },
   'language': {
     'select': {
