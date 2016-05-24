@@ -244,3 +244,24 @@ test('check allinstructors', function(assert) {
     });
   });
 });
+
+test('check allParents', function(assert) {
+  assert.expect(5);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  return learnerGroup.get('allParents').then(groups => {
+    assert.equal(groups.length, 0);
+
+    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup});
+    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1});
+    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2});
+
+    return subGroup3.get('allParents').then(groups => {
+      assert.equal(groups.length, 3);
+      assert.equal(groups[0], subGroup2);
+      assert.equal(groups[1], subGroup1);
+      assert.equal(groups[2], learnerGroup);
+    });
+  });
+});
