@@ -223,10 +223,10 @@
                 remove='removeCohortFromBuffer'
               }}
             {{else}}
-              {{#liquid-if secondaryCohorts.isFulfilled}}
-                {{#if secondaryCohorts.length}}
+              {{#liquid-if (is-fulfilled user.secondaryCohorts)}}
+                {{#if (get (await user.secondaryCohorts) 'length')}}
                   <ul class="secondary-cohorts details-list">
-                    {{#each sortedSecondaryCohorts as |cohort|}}
+                    {{#each (sort-by 'title' (await user.secondaryCohorts)) as |cohort|}}
                       <li>
                         <div class="content">
                           <span class="title">{{cohort.title}}</span>
@@ -238,6 +238,8 @@
                 {{else}}
                   {{t 'general.unassigned'}}
                 {{/if}}
+              {{else}}
+                &nbsp;
               {{/liquid-if}}
             {{/if}}
           </div>
