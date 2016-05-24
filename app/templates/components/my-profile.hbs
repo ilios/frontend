@@ -2,7 +2,7 @@
   {{user.fullName}}
 </h1>
 
-{{#if user.isStudent.content}}
+{{#if (await user.isStudent)}}
   <span class="is-student">{{t 'general.student'}}</span>
 {{/if}}
 
