@@ -319,7 +319,7 @@ test('change description', function(assert) {
     let description = getText('session description 0');
     let container = find('.session-overview .sessiondescription');
     assert.equal(getElementText(find('.content', container)), description);
-    click(find('.editable span', container));
+    click(find('.editable .clickable', container));
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
