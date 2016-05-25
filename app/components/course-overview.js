@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
@@ -36,8 +37,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   didReceiveAttrs(){
     this._super(...arguments);
+    this.get('directorsToPassToManager').perform();
     const course = this.get('course');
     this.set('externalId', course.get('externalId'));
+
     course.get('clerkshipType').then(clerkshipType => {
       if (isEmpty(clerkshipType)) {
         this.set('clerkshipTypeId', null);
@@ -48,14 +51,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   course: null,
   externalId: null,
-  directorsSort: ['lastName', 'firstName'],
-  directorsWithFullName: computed.filterBy('course.directors', 'fullName'),
-  sortedDirectors: computed.sort('directorsWithFullName', 'directorsSort'),
   levelOptions: [],
   classNames: ['course-overview'],
   clerkshipTypeId: null,
   clerkshipTypeOptions: [],
-
+  manageDirectors: false,
+  showDirectorManagerLoader: true,
   selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', function() {
     const id = this.get('clerkshipTypeId');
     if (isEmpty(id)) {
@@ -64,20 +65,23 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     return this.get('clerkshipTypeOptions').findBy('id', id);
   }),
+  directorsToPassToManager: task(function * () {
+    const course = this.get('course');
+
+    let users = yield course.get('directors');
+
+    this.set('showDirectorManagerLoader', false);
+    return users;
+  }).restartable(),
 
   actions: {
-    addDirector: function(user){
-      var course = this.get('course');
-      course.get('directors').addObject(user);
-      user.get('directedCourses').addObject(course);
-      course.save();
-    },
-    removeDirector: function(user){
-      var course = this.get('course');
-      course.get('directors').removeObject(user);
-      user.get('directedCourses').removeObject(course);
-      course.save();
-
+    saveDirectors(newDirectors){
+      const course = this.get('course');
+      course.set('directors', newDirectors.toArray());
+      return course.save().then(()=>{
+        this.get('directorsToPassToManager').perform();
+        return this.set('manageDirectors', false);
+      });
     },
     changeClerkshipType(){
       const course = this.get('course');

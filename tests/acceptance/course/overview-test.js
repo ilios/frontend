@@ -59,7 +59,7 @@ test('check fields', function(assert) {
     assert.equal(getElementText(find('.courseenddate', container)), endDate);
     assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText(clerkshipType.title));
-    assert.equal(getElementText(find('.coursedirectors li', container)), getText('A M. Director'));
+    assert.equal(getElementText(find('.coursedirectors', container)), getText('Directors: A M. Director'));
 
   });
 });
@@ -360,10 +360,10 @@ test('remove director', function(assert) {
     directors: [2]
   });
   visit(url);
-  andThen(function() {
-    click('.coursedirectors li:eq(0)').then(function(){
-      assert.equal(getElementText(find('.coursedirectors li')), '');
-    });
+  click('.coursedirectors .clickable');
+  click('.coursedirectors li:eq(0)');
+  click('.coursedirectors .bigadd').then(()=> {
+    assert.equal(getElementText(find('.coursedirectors')), getText('Directors: None'));
   });
 });
 
@@ -406,6 +406,8 @@ test('manage directors', function(assert) {
     directors: [2]
   });
   visit(url);
+  click('.coursedirectors .clickable');
+
   andThen(function() {
     let directors = find('.coursedirectors');
     let searchBox = find('.search-box', directors);
@@ -425,12 +427,13 @@ test('manage directors', function(assert) {
       assert.equal(getElementText($(searchResults[3])), getText('Disabled M. Guy'));
       assert.ok($(searchResults[3]).hasClass('inactive'));
 
-      click('.removable-list li:eq(0)', directors).then(function(){
+      click('li:eq(0)', directors).then(function(){
         assert.ok(!$(find('.live-search li:eq(2)', directors)).hasClass('inactive'));
         click(searchResults[1]);
+        click('.coursedirectors .bigadd');
       });
       andThen(function(){
-        assert.equal(getElementText(find('.coursedirectors .removable-list')), getText('0 guy M. Mc0son'));
+        assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
       });
     });
   });
@@ -459,6 +462,7 @@ test('search twice and list should be correct', function(assert) {
     directors: [2]
   });
   visit(url);
+  click('.coursedirectors .clickable');
   andThen(function() {
     let directors = find('.coursedirectors');
     let searchBox = find('.search-box', directors);
@@ -488,50 +492,3 @@ test('search twice and list should be correct', function(assert) {
     });
   });
 });
-
-// Test passes in Chrome but not in PhantomJS -- Need to be fixed
-// test('validations work properly', function(assert) {
-//   server.create('user', {
-//     id: 4136
-//   });
-//   assert.expect(5);
-//
-//   server.create('course', {
-//     externalId: 123,
-//   });
-//
-//   const externalId = '.courseexternalid .editable';
-//   const externalIdInput = '.courseexternalid input';
-//   const errorMessage = '.courseexternalid .validation-error-message';
-//   const saveButton = '.courseexternalid .done';
-//   const cancelButton = '.courseexternalid .cancel';
-//
-//   visit(url);
-//   click(externalId);
-//   fillIn(externalIdInput, '11');
-//   andThen(() => {
-//     assert.equal(find(errorMessage).text(), 'is too short (minimum is 3 characters)', 'error message is shown');
-//   });
-//
-//   click(saveButton);
-//   andThen(() => {
-//     assert.ok(isEmpty(find(externalId)), 'saving does not occur, given validation error');
-//   });
-//
-//   click(cancelButton);
-//   andThen(() => {
-//     assert.equal(find(externalId).text(), 123, 'canceling reverts external-id back');
-//   });
-//
-//   click(externalId);
-//   fillIn(externalIdInput, '1324~');
-//   andThen(() => {
-//     assert.equal(find(errorMessage).text(), "must be alphanumeric ('-' and ':' allowed)", 'error message is shown');
-//   });
-//
-//   fillIn(externalIdInput, '12345');
-//   click(saveButton);
-//   andThen(() => {
-//     assert.equal(find(externalId).text().trim(), '12345', 'new id was saved');
-//   });
-// });

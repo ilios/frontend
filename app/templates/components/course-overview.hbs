@@ -90,28 +90,27 @@
         <label class="form-label">{{t 'general.universalLocator'}}:</label>
         <div class="form-data disabled universallocator"><strong>ILIOS{{course.id}}</strong></div>
       </div>
-      <div class="form-col-12 coursedirectors">
-        <label>{{t "general.directors"}}:</label>
-        {{#if editable}}
-          <span>
-            <ul class='removable-list tag-list'>
-              {{#each sortedDirectors as |user|}}
-              <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-              {{/each}}
-            </ul>
-          </span>
-          {{user-search
-            addUser='addDirector'
-            roles='1'
-            currentlyActiveUsers=course.directors
-          }}
+      <div class='coursedirectors'>
+        <label class='form-label'>{{t 'general.directors'}}:</label>
+        {{#unless showDirectorManagerLoader}}
+          {{#if manageDirectors}}
+            {{course-director-manager
+              directors=directorsToPassToManager.lastSuccessful.value
+              save=(action 'saveDirectors')
+              close=(toggle-action 'manageDirectors' this)
+            }}
+          {{else}}
+            <span class={{if editable 'clickable link'}} onclick={{if editable (action (toggle 'manageDirectors' this))}}>
+              {{#if (get (await course.directors) 'length')}}
+                {{join '; ' (map-by 'fullName' (sort-by 'lastName' (await course.directors)))}}
+              {{else}}
+                {{t 'general.none'}}
+              {{/if}}
+            </span>
+          {{/if}}
         {{else}}
-          <ul class='inline-list'>
-            {{#each sortedDirectors as |user|}}
-              <li>{{user.fullName}}</li>
-            {{/each}}
-          </ul>
-        {{/if}}
+          {{fa-icon 'spinner' spin=true}}
+        {{/unless}}
       </div>
   </div>
 </section>
