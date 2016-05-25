@@ -70,6 +70,8 @@
           courses=filteredCourses
           edit='editCourse'
           remove='removeCourse'
+          sortBy=sortCoursesBy
+          setSortBy=(action (mut sortCoursesBy))
         }}
       {{else}}
         {{pulse-loader}}

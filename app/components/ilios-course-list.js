@@ -4,11 +4,23 @@ import DS from 'ember-data';
 const { computed, inject, RSVP, ObjectProxy, Component } = Ember;
 const { service } = inject;
 const { PromiseObject } = DS;
+const { collect, sort } = computed;
 
 const CourseProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
   showRemoveConfirmation: false,
+  status: computed('content.isPublished', 'content.isScheduled', function(){
+    let course = this.get('content');
+    if (course.get('isScheduled')) {
+      return 's';
+    }
+    if (course.get('isPublished')) {
+      return 'p';
+    }
+
+    return 'd';
+  }),
   userCanDelete: computed('content', 'currentUser.model.directedCourses.[]', function(){
     let defer = RSVP.defer();
     const course = this.get('content');
@@ -44,6 +56,13 @@ export default Component.extend({
       });
     });
   }),
+  sortBy: 'title',
+  sortCourseBy: collect('sortBy'),
+  sortedCourses: sort('proxiedCourses', 'sortCourseBy'),
+  sortedAscending: computed('sortBy', function(){
+    const sortBy = this.get('sortBy');
+    return sortBy.search(/desc/) === -1;
+  }),
   actions: {
     edit: function(courseProxy){
       this.sendAction('edit', courseProxy.get('content'));
@@ -56,6 +75,13 @@ export default Component.extend({
     },
     confirmRemove: function(courseProxy){
       courseProxy.set('showRemoveConfirmation', true);
+    },
+    sortBy(what){
+      const sortBy = this.get('sortBy');
+      if(sortBy === what){
+        what += ':desc';
+      }
+      this.get('setSortBy')(what);
     },
   }
 });
