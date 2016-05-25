@@ -53,6 +53,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   externalId: null,
   levelOptions: [],
   classNames: ['course-overview'],
+  tagName: 'section',
   clerkshipTypeId: null,
   clerkshipTypeOptions: [],
   manageDirectors: false,

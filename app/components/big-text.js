@@ -7,6 +7,7 @@ const { collect, sum } = computed;
 export default Component.extend({
   expanded: false,
   classNames: ['big-text'],
+  tagName: 'span',
   length: 200,
   slippage: 25,
   expandIcon: 'info-circle',

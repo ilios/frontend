@@ -1,25 +1,10 @@
 @mixin ilios-form () {
   label {
     @include fill-parent;
-    display: block;
-    font-weight: bold;
-    margin-top: 1em;
+    @include ilios-label;
   }
 
-  input[type=text],
-  input[type=password],
-  select {
-    @include fill-parent;
-    background-position: right 4px bottom .75em;
-    height: 2.5em;
-  }
-
-  input {
-    @include fill-parent;
-    background: $white;
-    border: 1px solid $input-box-grey;
-    border-radius: $base-border-radius;
-  }
+  @include ilios-input;
 }
 
 @mixin ilios-form-item () {
@@ -50,4 +35,26 @@
     margin-right: 1em;
   }
 
+}
+
+@mixin ilios-label () {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+@mixin ilios-input () {
+  input[type=text],
+  input[type=password],
+  select {
+    @include fill-parent;
+    background-position: right 4px bottom .75em;
+    height: 2.5em;
+  }
+
+  input {
+    @include fill-parent;
+    background: $white;
+    border: 1px solid $input-box-grey;
+    border-radius: $base-border-radius;
+  }
 }
