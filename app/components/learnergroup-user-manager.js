@@ -28,7 +28,7 @@ export default Component.extend({
   }),
   filter: '',
   filteredUsers: computed('filter', 'users.[]', function() {
-    let users = this.get('users');
+    let users = this.get('users')?this.get('users'):[];
     const filter = this.get('filter');
 
     if (isEmpty(filter)){
