@@ -14,10 +14,7 @@
       <thead>
         <tr>
           <th class='text-left' colspan=1>
-            {{one-way-checkbox
-              update=(action 'toggleUserSelectionAllOrNone')
-              checked=(gt selectedUsers.length 0)
-            }}
+            <input type='checkbox' onclick={{action 'toggleUserSelectionAllOrNone'}} />
           </th>
           {{#sortable-th
             colspan=2
@@ -37,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by sortBy (await filteredUsers)) as |user|}}
+        {{#each (sort-by sortBy filteredUsers) as |user|}}
           <tr class="{{unless user.enabled 'disabled-user-account'}}">
             <td class='text-left' colspan=1>
               {{#if user.enabled}}

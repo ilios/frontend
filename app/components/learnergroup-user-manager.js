@@ -9,6 +9,10 @@ export default Component.extend({
     this.set('usersBeingMoved', []);
     this.set('selectedUsers', []);
   },
+  didRender(){
+    this._super(...arguments);
+    this.setCheckAllState();
+  },
   learnerGroupId: null,
   learnerGroupTitle: null,
   cohortTitle: null,
@@ -87,6 +91,22 @@ export default Component.extend({
     yield this.get('removeUsersFromGroup')(users);
     this.get('usersBeingMoved').removeObjects(users);
   }),
+
+  setCheckAllState(){
+    const selectedUsers = this.get('selectedUsers').get('length');
+    const filteredUsers = this.get('filteredUsers').get('length');
+    let el = this.$('th:eq(0) input');
+    if (selectedUsers === 0) {
+      el.prop('indeterminate', false);
+      el.prop('checked', false);
+    } else if (selectedUsers < filteredUsers) {
+      el.prop('indeterminate', true);
+      el.prop('checked', false);
+    } else {
+      el.prop('indeterminate', false);
+      el.prop('checked', true);
+    }
+  },
   actions: {
     sortBy(what){
       const sortBy = this.get('sortBy');
@@ -103,13 +123,17 @@ export default Component.extend({
       }
     },
     toggleUserSelectionAllOrNone() {
-      const selectedUsers = this.get('selectedUsers');
-      if (selectedUsers.length) {
-        selectedUsers.clear();
+      const selectedUsers = this.get('selectedUsers').get('length');
+      const filteredUsers = this.get('filteredUsers').get('length');
+
+      if (selectedUsers >= filteredUsers) {
+        this.get('selectedUsers').clear();
       } else {
-        const users = this.get('users').mapBy('content');
-        selectedUsers.pushObjects(users);
+        const users = this.get('filteredUsers');
+        this.get('selectedUsers').pushObjects(users.mapBy('content'));
       }
+
+      this.setCheckAllState();
     },
   }
 });
