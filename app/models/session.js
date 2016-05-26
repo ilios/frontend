@@ -73,7 +73,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   requiredPublicationIssues: computed(
     'title',
     'offerings.length',
-    'ilmSession.isPublishable',
+    'ilmSession.dueDate',
     'isIndependentLearning',
     function(){
       if(!this.get('isIndependentLearning')){
