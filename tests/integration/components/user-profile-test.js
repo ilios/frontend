@@ -41,8 +41,7 @@ test('does not break when a user has secondary, but no primary cohorts', functio
   let user = Object.create({
     fullName: 'Test Person Name Thing',
     roles: resolve([]),
-    cohorts: resolve([cohort]),
-    primaryCohort: resolve(null)
+    secondaryCohorts: resolve([cohort]),
   });
 
   this.set('user', user);

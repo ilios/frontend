@@ -56,6 +56,7 @@ Router.map(function() {
   this.route('schools');
   this.route('school', { path: 'schools/:school_id'});
   this.route('assign-students', {path: '/admin/assignstudents'});
+  this.route('myprofile');
 });
 
 export default Router;

@@ -228,7 +228,16 @@ var User = DS.Model.extend({
       });
 
     });
-  }
+  },
+  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', function(){
+    return new Promise(resolve => {
+      this.get('cohorts').then((cohorts) => {
+        this.get('primaryCohort').then((primaryCohort) => {
+          resolve(cohorts.filter(cohort => cohort !== primaryCohort));
+        });
+      });
+    });
+  })
 });
 
 export default User;

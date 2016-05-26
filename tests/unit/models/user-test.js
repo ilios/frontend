@@ -427,3 +427,29 @@ test('return null when there is no group in the tree', function(assert) {
   });
 
 });
+
+test('gets secondary cohorts (all cohorts not the primary cohort)', function(assert) {
+  let model = this.subject();
+  let store = this.store();
+  Ember.run(()=>{
+    let primaryCohort = store.createRecord('cohort', {
+      users: [model]
+    });
+    let secondaryCohort = store.createRecord('cohort', {
+      users: [model]
+    });
+    let anotherCohort = store.createRecord('cohort', {
+      users: [model]
+    });
+    model.set('primaryCohort', primaryCohort);
+    model.set('cohorts', [primaryCohort, secondaryCohort, anotherCohort]);
+
+    model.get('secondaryCohorts').then(cohorts => {
+      assert.equal(cohorts.length, 2);
+      assert.ok(cohorts.contains(secondaryCohort));
+      assert.ok(cohorts.contains(anotherCohort));
+      assert.notOk(cohorts.contains(primaryCohort));
+    });
+  });
+
+});

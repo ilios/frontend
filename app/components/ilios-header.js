@@ -1,17 +1,14 @@
 import Ember from 'ember';
 
 const { Component, computed, inject } = Ember;
-const { oneWay, equal } = computed;
 const { service } = inject;
 
 export default Component.extend({
   session: service(),
   currentUser: Ember.inject.service(),
   i18n: Ember.inject.service(),
-  userName: oneWay('currentUser.model.fullName'),
-  inEnglish: equal('i18n.locale', 'en'),
-  inSpanish: equal('i18n.locale', 'es'),
-  inFrench: equal('i18n.locale', 'fr'),
+  classNames: ['ilios-header'],
+  tagName: 'header',
   locales: computed('i18n.locales', 'i18n.locale', function() {
     return this.get('i18n.locales').map(locale => {
       return { id: locale, text: this.get('i18n').t('language.select.' + locale) };

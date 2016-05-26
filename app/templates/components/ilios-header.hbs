@@ -1,23 +1,24 @@
-<header class="main">
-  {{#link-to "dashboard" classNames='logo'}}
-    <span class='image' />
-    <span class='visually-hidden'>
-      {{t 'navigation.dashboard'}}
-    </span>
-  {{/link-to}}
-  <div class="tools">
-    {{#if session.isAuthenticated}}
-      <div class='user'>
-        {{#action-menu title=userName icon='user' classNameBindings=':user-menu'}}
-          {{#link-to 'logout'}}
-            <li>{{t "auth.logout"}}</li>
-          {{/link-to}}
-          {{#each locales as |loc|}}
-            <li {{action 'changeLocale' loc.id}}>{{loc.text}}</li>
-          {{/each}}
-        {{/action-menu}}
-      </div>
-    {{/if}}
+{{#link-to "dashboard" classNames='logo'}}
+  <span class='image' />
+  <span class='visually-hidden'>
+    {{t 'navigation.dashboard'}}
+  </span>
+{{/link-to}}
+<div class="tools">
+  <div class='locales'>
+    {{#action-menu title=(t (concat 'language.select.' i18n.locale)) icon='globe'}}
+      {{#each locales as |loc|}}
+        <li {{action 'changeLocale' loc.id}}>{{loc.text}}</li>
+      {{/each}}
+    {{/action-menu}}
   </div>
-  <h1>{{title}}</h1>
-</header>
+  {{#if session.isAuthenticated}}
+    <div class='user'>
+      {{#action-menu title=currentUser.model.fullName icon='user'}}
+        {{#link-to 'myprofile'}}<li>{{t "user.myProfile"}}</li>{{/link-to}}
+        {{#link-to 'logout'}}<li>{{t "auth.logout"}}</li>{{/link-to}}
+      {{/action-menu}}
+    </div>
+  {{/if}}
+</div>
+<h1>{{title}}</h1>

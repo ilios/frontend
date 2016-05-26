@@ -5,9 +5,9 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
 const { computed, Component, inject, RSVP } = Ember;
-const { PromiseObject, PromiseArray } = DS;
+const { PromiseObject } = DS;
 const { service } = inject;
-const { sort } = computed;
+const { sort, reads } = computed;
 
 const Validations = buildValidations({
   firstName: [
@@ -112,24 +112,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
   }).readOnly(),
 
-  secondaryCohorts: computed('user.primaryCohort', 'user.cohorts.[]', {
-    get() {
-      const user = this.get('user');
-
-      let promise = user.get('cohorts').then((cohorts) => {
-        return user.get('primaryCohort').then((primaryCohort) => {
-          if (!primaryCohort) {
-            return cohorts;
-          }
-          return cohorts.filter(cohort => {
-            return cohort.get('id') !== primaryCohort.get('id');
-          });
-        });
-      });
-
-      return PromiseArray.create({ promise });
-    }
-  }).readOnly(),
+  secondaryCohorts: reads('user.secondaryCohorts'),
 
   cohortSorting: [
     'programYear.program.school.title:asc',
