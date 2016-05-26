@@ -10,16 +10,21 @@ const CourseProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
   showRemoveConfirmation: false,
+  i18n: null,
   status: computed('content.isPublished', 'content.isScheduled', function(){
+    const i18n = this.get('i18n');
     let course = this.get('content');
+    let translation = 'general.';
     if (course.get('isScheduled')) {
-      return 's';
-    }
-    if (course.get('isPublished')) {
-      return 'p';
+      translation += 'scheduled';
+    } else if (course.get('isPublished')) {
+      translation += 'published';
+    } else {
+      translation += 'notPublished';
+
     }
 
-    return 'd';
+    return i18n.t(translation).string;
   }),
   userCanDelete: computed('content', 'currentUser.model.directedCourses.[]', function(){
     let defer = RSVP.defer();
@@ -47,11 +52,14 @@ const CourseProxy = ObjectProxy.extend({
 });
 export default Component.extend({
   currentUser: service(),
+  i18n: service(),
   courses: [],
   proxiedCourses: computed('courses.[]', function(){
+    const i18n = this.get('i18n');
     return this.get('courses').map(course => {
       return CourseProxy.create({
         content: course,
+        i18n,
         currentUser: this.get('currentUser')
       });
     });
