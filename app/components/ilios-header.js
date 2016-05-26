@@ -5,8 +5,8 @@ const { service } = inject;
 
 export default Component.extend({
   session: service(),
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  currentUser: service(),
+  i18n: service(),
   classNames: ['ilios-header'],
   tagName: 'header',
   locales: computed('i18n.locales', 'i18n.locale', function() {
