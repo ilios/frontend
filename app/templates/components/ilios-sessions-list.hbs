@@ -5,7 +5,11 @@
   {{#if (is-fulfilled proxiedSessions)}}
     <div class="filter-tools">
       <div id='titlefilter' class="filter">
-        {{input type='text' value=filter placeholder=placeholderValue}}
+        {{one-way-input
+          value=filterBy
+          update=this.attrs.setFilterBy
+          placeholder=(t 'sessions.titleFilterPlaceholder')
+        }}
       </div>
     </div>
     <div class='detail-actions'>

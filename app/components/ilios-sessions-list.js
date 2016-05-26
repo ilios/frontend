@@ -1,11 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, observer, RSVP, run, ObjectProxy } = Ember;
+const { Component, computed, inject, RSVP, ObjectProxy } = Ember;
 const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
-const { debounce } = run;
 const { sort, not, alias, collect } = computed;
 const { Promise } = RSVP;
 
@@ -49,21 +47,8 @@ export default Component.extend({
   offset: 0,
   limit: 25,
 
-  filter: '',
+  filterBy: null,
   course: null,
-
-  placeholderValue: t('sessions.titleFilterPlaceholder'),
-
-  //in order to delay rendering until a user is done typing debounce the title filter
-  debouncedFilter: '',
-
-  watchFilter: observer('filter', function() {
-    debounce(this, this.setFilter, 500);
-  }),
-
-  setFilter() {
-    this.set('debouncedFilter', this.get('filter'));
-  },
 
   proxiedSessions: computed('sessions.[]', function() {
     return new Promise( resolve => {
@@ -91,10 +76,10 @@ export default Component.extend({
     });
   }),
 
-  filteredContent: computed('proxiedSessions.[]', 'debouncedFilter', function(){
+  filteredContent: computed('proxiedSessions.[]', 'filterBy', function(){
     let defer = RSVP.defer();
     this.get('proxiedSessions').then(sessions => {
-      let filter = this.get('debouncedFilter');
+      let filter = this.get('filterBy');
       let filterExpressions = filter.split(' ').map(function(string){
         return new RegExp(string, 'gi');
       });

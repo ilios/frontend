@@ -5,8 +5,10 @@ export default Ember.Controller.extend({
     sessionOffset: 'offset',
     sessionLimit: 'limit',
     sortSessionsBy: 'sortBy',
+    filterSessionsBy: 'filterBy',
   },
   sessionOffset: 0,
   sessionLimit: 25,
   sortSessionsBy: 'title',
+  filterSessionsBy: '',
 });
