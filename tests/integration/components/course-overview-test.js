@@ -24,6 +24,7 @@ test('renders with no course id', function(assert) {
   this.set('course', course);
   this.render(hbs`{{course-overview course=course}}`);
 
-  assert.equal(this.$('.courseexternalid').text().trim(), 'Click to edit');
+  assert.notEqual(this.$('.courseexternalid').text().search(/Course ID:/), -1);
+  assert.notEqual(this.$('.courseexternalid').text().search(/Click to edit/), -1);
 
 });

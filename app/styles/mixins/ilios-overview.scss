@@ -1,0 +1,39 @@
+@mixin ilios-overview () {
+  label {
+    @include ilios-label;
+    margin-right: .5em;
+  }
+}
+
+@mixin ilios-overview-block () {
+  @include fill-parent;
+  display: block;
+  height: 2em;
+
+  @include media($large-screen) {
+    @include span-columns(5);
+  }
+
+}
+
+@mixin ilios-overview-title () {
+  @include span-columns(8 of 12);
+  color: $text-blue;
+  font-size: $base-font-size;
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+@mixin ilios-overview-actions () {
+  @include span-columns(3 of 12);
+  margin-top: 1em;
+  padding-right: .3em;
+  text-align: right;
+  vertical-align: middle;
+}
+
+@mixin ilios-overview-content () {
+  @include fill-parent;
+  clear: both;
+  padding-top: 1em;
+}

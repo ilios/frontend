@@ -1,0 +1,33 @@
+.course-overview {
+  @include ilios-overview;
+  @include fill-parent;
+  display: block;
+
+  .title {
+    @include ilios-overview-title;
+  }
+
+  .print {
+    @include ilios-overview-actions;
+  }
+
+  .block {
+    @include ilios-overview-block;
+  }
+
+  .course-overview-content {
+    @include ilios-overview-content;
+  }
+
+  .courseexternalid {
+    input {
+      max-width: initial;
+      min-width: initial;
+    }
+  }
+
+  .coursedirectors {
+    @include span-columns(10);
+    margin-bottom: 2em;
+  }
+}

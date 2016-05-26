@@ -52,14 +52,14 @@ test('check fields', function(assert) {
     assert.equal(currentPath(), 'course.index');
     var container = find('.course-overview');
     var startDate = moment.utc(course.startDate).format('MM/DD/YY');
-    assert.equal(getElementText(find('.coursestartdate', container)), startDate);
-    assert.equal(getElementText(find('.courseexternalid', container)), 123);
-    assert.equal(getElementText(find('.courselevel', container)), 3);
+    assert.equal(getElementText(find('.coursestartdate', container)), 'Start:' + startDate);
+    assert.equal(getElementText(find('.courseexternalid', container)), 'CourseID:123');
+    assert.equal(getElementText(find('.courselevel', container)), 'Level:3');
     var endDate = moment.utc(course.endDate).format('MM/DD/YY');
-    assert.equal(getElementText(find('.courseenddate', container)), endDate);
+    assert.equal(getElementText(find('.courseenddate', container)), 'End:' + endDate);
     assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
-    assert.equal(getElementText(find('.clerkshiptype', container)), getText(clerkshipType.title));
-    assert.equal(getElementText(find('.coursedirectors li', container)), getText('A M. Director'));
+    assert.equal(getElementText(find('.clerkshiptype', container)), getText('Clerkship Type:' + clerkshipType.title));
+    assert.equal(getElementText(find('.coursedirectors', container)), getText('Directors: A M. Director'));
 
   });
 });
@@ -103,7 +103,7 @@ test('pick clerkship type', function(assert) {
   });
   visit(url);
   andThen(function() {
-    assert.equal(getElementText(find('.course-overview .clerkshiptype')), getText('Not a Clerkship'));
+    assert.equal(getElementText(find('.course-overview .clerkshiptype')), getText('Clerkship Type: Not a Clerkship'));
   });
   visit(url + '?details=true');
   andThen(function() {
@@ -167,18 +167,18 @@ test('open and close details', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var details = find('#course-details .detail-view-details');
-    assert.equal(find('.detail-title', details).length, 1);
+    assert.equal(find('.detail-title', details).length, 0);
     click('.detail-collapsed-control', details).then(function(){
-      assert.equal(find('.detail-title', details).length, 6);
+      assert.equal(find('.detail-title', details).length, 5);
       assert.equal(currentURL(), '/courses/1?details=true');
     });
   });
 
   andThen(function() {
     var details = find('#course-details .detail-view-details');
-    assert.equal(find('.detail-title', details).length, 6);
+    assert.equal(find('.detail-title', details).length, 5);
     click('.detail-collapsed-control', details).then(function(){
-      assert.equal(find('.detail-title', details).length, 1);
+      assert.equal(find('.detail-title', details).length, 0);
       assert.equal(currentURL(), '/courses/1');
     });
   });
@@ -224,12 +224,12 @@ test('change start date', function(assert) {
   var startDate = moment.utc(course.startDate).format('MM/DD/YY');
   visit(url);
   andThen(function() {
-    assert.equal(getElementText(find('.course-overview .coursestartdate')), startDate);
+    assert.equal(getElementText(find('.course-overview .coursestartdate')), getText('Start:' + startDate));
   });
   visit(url + '?details=true');
   andThen(function() {
     var container = find('.course-overview');
-    assert.equal(getElementText(find('.coursestartdate', container)), startDate);
+    assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + startDate));
     click(find('.coursestartdate .editable', container));
     andThen(function(){
       var input = find('.coursestartdate .editinplace input', container);
@@ -240,7 +240,7 @@ test('change start date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.coursestartdate .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.coursestartdate', container)), newDate.format('MM/DD/YY'));
+        assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + newDate.format('MM/DD/YY')));
       });
 
     });
@@ -258,12 +258,12 @@ test('change end date', function(assert) {
   var endDate = moment.utc(course.endDate).format('MM/DD/YY');
   visit(url);
   andThen(function() {
-    assert.equal(getElementText(find('.course-overview .courseenddate')), endDate);
+    assert.equal(getElementText(find('.course-overview .courseenddate')), getText('End:' + endDate));
   });
   visit(url + '?details=true');
   andThen(function() {
     var container = find('.course-overview');
-    assert.equal(getElementText(find('.courseenddate', container)), endDate);
+    assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + endDate));
     click(find('.courseenddate .editable', container));
     andThen(function(){
       var input = find('.courseenddate .editinplace input', container);
@@ -274,7 +274,7 @@ test('change end date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.courseenddate .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.courseenddate', container)), newDate.format('MM/DD/YY'));
+        assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + newDate.format('MM/DD/YY')));
       });
 
     });
@@ -292,12 +292,12 @@ test('change externalId', function(assert) {
   });
   visit(url);
   andThen(function() {
-    assert.equal(getElementText(find('.course-overview .courseexternalid')), getText('abc123'));
+    assert.equal(getElementText(find('.course-overview .courseexternalid')), getText('CourseID: abc123'));
   });
   visit(url + '?details=true');
   andThen(function() {
     var container = find('.course-overview');
-    assert.equal(getElementText(find('.courseexternalid', container)), getText('abc123'));
+    assert.equal(getElementText(find('.courseexternalid', container)), getText('CourseID: abc123'));
     click(find('.courseexternalid .editable', container));
     andThen(function(){
       var input = find('.courseexternalid .editinplace input', container);
@@ -305,7 +305,7 @@ test('change externalId', function(assert) {
       fillIn(input, 'testnewid');
       click(find('.courseexternalid .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.courseexternalid', container)), getText('testnewid'));
+        assert.equal(getElementText(find('.courseexternalid', container)), getText('CourseID: testnewid'));
       });
     });
   });
@@ -322,7 +322,7 @@ test('change level', function(assert) {
   });
   visit(url);
   andThen(function() {
-    assert.equal(getElementText(find('.course-overview .courselevel')), 3);
+    assert.equal(getElementText(find('.course-overview .courselevel')), getText('Level: 3'));
   });
   visit(url + '?details=true');
   andThen(function() {
@@ -337,7 +337,7 @@ test('change level', function(assert) {
       pickOption(find('.courselevel select', container), '1', assert);
       click(find('.courselevel .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.courselevel .editable', container)), 1);
+        assert.equal(getElementText(find('.course-overview .courselevel')), getText('Level: 1'));
       });
     });
   });
@@ -360,10 +360,10 @@ test('remove director', function(assert) {
     directors: [2]
   });
   visit(url);
-  andThen(function() {
-    click('.coursedirectors li:eq(0)').then(function(){
-      assert.equal(getElementText(find('.coursedirectors li')), '');
-    });
+  click('.coursedirectors .clickable');
+  click('.coursedirectors li:eq(0)');
+  click('.coursedirectors .bigadd').then(()=> {
+    assert.equal(getElementText(find('.coursedirectors')), getText('Directors: None'));
   });
 });
 
@@ -406,6 +406,8 @@ test('manage directors', function(assert) {
     directors: [2]
   });
   visit(url);
+  click('.coursedirectors .clickable');
+
   andThen(function() {
     let directors = find('.coursedirectors');
     let searchBox = find('.search-box', directors);
@@ -425,12 +427,13 @@ test('manage directors', function(assert) {
       assert.equal(getElementText($(searchResults[3])), getText('Disabled M. Guy'));
       assert.ok($(searchResults[3]).hasClass('inactive'));
 
-      click('.removable-list li:eq(0)', directors).then(function(){
+      click('li:eq(0)', directors).then(function(){
         assert.ok(!$(find('.live-search li:eq(2)', directors)).hasClass('inactive'));
         click(searchResults[1]);
+        click('.coursedirectors .bigadd');
       });
       andThen(function(){
-        assert.equal(getElementText(find('.coursedirectors .removable-list')), getText('0 guy M. Mc0son'));
+        assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
       });
     });
   });
@@ -459,6 +462,7 @@ test('search twice and list should be correct', function(assert) {
     directors: [2]
   });
   visit(url);
+  click('.coursedirectors .clickable');
   andThen(function() {
     let directors = find('.coursedirectors');
     let searchBox = find('.search-box', directors);
@@ -488,50 +492,3 @@ test('search twice and list should be correct', function(assert) {
     });
   });
 });
-
-// Test passes in Chrome but not in PhantomJS -- Need to be fixed
-// test('validations work properly', function(assert) {
-//   server.create('user', {
-//     id: 4136
-//   });
-//   assert.expect(5);
-//
-//   server.create('course', {
-//     externalId: 123,
-//   });
-//
-//   const externalId = '.courseexternalid .editable';
-//   const externalIdInput = '.courseexternalid input';
-//   const errorMessage = '.courseexternalid .validation-error-message';
-//   const saveButton = '.courseexternalid .done';
-//   const cancelButton = '.courseexternalid .cancel';
-//
-//   visit(url);
-//   click(externalId);
-//   fillIn(externalIdInput, '11');
-//   andThen(() => {
-//     assert.equal(find(errorMessage).text(), 'is too short (minimum is 3 characters)', 'error message is shown');
-//   });
-//
-//   click(saveButton);
-//   andThen(() => {
-//     assert.ok(isEmpty(find(externalId)), 'saving does not occur, given validation error');
-//   });
-//
-//   click(cancelButton);
-//   andThen(() => {
-//     assert.equal(find(externalId).text(), 123, 'canceling reverts external-id back');
-//   });
-//
-//   click(externalId);
-//   fillIn(externalIdInput, '1324~');
-//   andThen(() => {
-//     assert.equal(find(errorMessage).text(), "must be alphanumeric ('-' and ':' allowed)", 'error message is shown');
-//   });
-//
-//   fillIn(externalIdInput, '12345');
-//   click(saveButton);
-//   andThen(() => {
-//     assert.equal(find(externalId).text().trim(), '12345', 'new id was saved');
-//   });
-// });
