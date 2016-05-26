@@ -18,13 +18,16 @@ export default Controller.extend({
     schoolId: 'school',
     yearTitle: 'year',
     titleFilter: 'filter',
-    userCoursesOnly: 'mycourses'
+    userCoursesOnly: 'mycourses',
+    sortCoursesBy: 'sortBy',
+
   },
   placeholderValue: t('courses.titleFilterPlaceholder'),
   schoolId: null,
   yearTitle: null,
   titleFilter: null,
   userCoursesOnly: false,
+  sortCoursesBy: 'title',
   showNewCourseForm: false,
   sortSchoolsBy:['title'],
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
@@ -68,7 +71,7 @@ export default Controller.extend({
         });
         all.pushObjects(newCourses.toArray());
       }
-      
+
       defer.resolve(all);
     });
 
