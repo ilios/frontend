@@ -22,7 +22,7 @@
         )
       }}{{t 'general.learnerGroups'}}{{/link-to}}
     </span>
-    {{#each (await learnerGroup.allParents) as |parent|}}
+    {{#each (reverse (await learnerGroup.allParents)) as |parent|}}
       <span>
         {{#link-to
           'learnerGroup' parent
