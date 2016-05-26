@@ -22,8 +22,8 @@ test('it renders', function(assert) {
     close=(action nothing)
   }}`);
 
-  assert.equal(this.$('li:eq(0)').text().trim(), 'test person 1 |');
-  assert.equal(this.$('li:eq(1)').text().trim(), 'test person 2 |');
+  assert.equal(this.$('li:eq(0)').text().trim(), 'test person 1');
+  assert.equal(this.$('li:eq(1)').text().trim(), 'test person 2');
 });
 
 test('can remove users', function(assert) {
@@ -48,8 +48,8 @@ test('can remove users', function(assert) {
     close=(action nothing)
   }}`);
 
-  assert.equal(this.$(user1).text().trim(), 'test person 1 |');
-  assert.equal(this.$(user2).text().trim(), 'test person 2 |');
+  assert.equal(this.$(user1).text().trim(), 'test person 1');
+  assert.equal(this.$(user2).text().trim(), 'test person 2');
 
   this.$(user1).click();
 
