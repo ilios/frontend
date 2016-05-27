@@ -157,6 +157,33 @@ test('add single user', function(assert) {
 
 });
 
+test('when users are selected single action is disabled', function(assert) {
+  assert.expect(1);
+  const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
+  const action = 'tbody tr:eq(0) td:eq(5) .clickable';
+
+  let user1 = Object.create({
+    enabled: true,
+  });
+
+  this.set('users', [user1]);
+  this.on('nothing', parseInt);
+
+  this.render(hbs`{{learnergroup-cohort-user-manager
+    users=users
+    learnerGroupTitle='this group'
+    topLevelGroupTitle='top level group'
+    sortBy='firstName'
+    setSortBy=(action 'nothing')
+    addUserToGroup=(action 'nothing')
+    addUsersToGroup=(action 'nothing')
+  }}`);
+
+  this.$(user1CheckBox).click();
+  assert.equal(this.$(action).length, 0);
+
+});
+
 test('checkall', function(assert) {
   assert.expect(5);
   const checkAllBox = 'thead tr:eq(0) th:eq(0) input[type=checkbox]';
