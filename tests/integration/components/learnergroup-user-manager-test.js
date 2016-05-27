@@ -335,7 +335,7 @@ test('checkall', function(assert) {
   assert.expect(5);
   const checkAllBox = 'thead tr:eq(0) th:eq(0) input[type=checkbox]';
   const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
-  const user2CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
+  const user2CheckBox = 'tbody tr:eq(1) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
   let user1 = Object.create({
@@ -379,4 +379,50 @@ test('checkall', function(assert) {
   assert.equal(this.$(button).text().trim(), 'Move 2 learners to this group');
   return wait(this.$(button).click());
 
+});
+
+test('checking one puts checkall box into indeterminate state', function(assert) {
+  assert.expect(4);
+  const checkAllBox = 'thead tr:eq(0) th:eq(0) input[type=checkbox]';
+  const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
+  const user2CheckBox = 'tbody tr:eq(1) td:eq(0) input[type=checkbox]';
+
+  let user1 = Object.create({
+    enabled: true,
+    lowestGroupInTree: Object.create({
+      id: 1
+    }),
+  });
+  let user2 = Object.create({
+    enabled: true,
+    lowestGroupInTree: Object.create({
+      id: 1
+    }),
+  });
+
+  this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
+  this.set('nothing', parseInt);
+
+  this.render(hbs`{{learnergroup-user-manager
+    learnerGroupId=1
+    learnerGroupTitle='this group'
+    topLevelGroupTitle='top group'
+    cohortTitle='this cohort'
+    users=users
+    sortBy='lastName'
+    setSortBy=(action nothing)
+    isEditing=true
+    addUserToGroup=(action nothing)
+    removeUserFromGroup=(action nothing)
+    addUsersToGroup=(action nothing)
+    removeUsersFromGroup=(action nothing)
+  }}`);
+
+  this.$(user1CheckBox).click();
+  assert.ok(this.$(checkAllBox).prop('indeterminate'));
+  this.$(user2CheckBox).click();
+  assert.ok(this.$(checkAllBox).prop('checked'));
+  this.$(checkAllBox).click();
+  assert.notOk(this.$(user1CheckBox).prop('checked'));
+  assert.notOk(this.$(user2CheckBox).prop('checked'));
 });
