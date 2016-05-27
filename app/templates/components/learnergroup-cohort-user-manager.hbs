@@ -55,12 +55,14 @@
                 {{#if (contains user usersBeingMoved)}}
                   {{fa-icon 'spinner' spin=true}}
                 {{else}}
-                  {{fa-icon
-                    'plus'
-                    class='yes clickable'
-                    title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=1)
-                    click=(perform addSingleUser user)
-                  }}
+                  {{#if (eq selectedUsers.length 0)}}
+                    {{fa-icon
+                      'plus'
+                      class='yes clickable'
+                      title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=1)
+                      click=(perform addSingleUser user)
+                    }}
+                  {{/if}}
                 {{/if}}
               {{/if}}
             </td>

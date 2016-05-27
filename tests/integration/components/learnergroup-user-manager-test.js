@@ -331,6 +331,50 @@ test('add single user', function(assert) {
 
 });
 
+test('when users are selected single action is disabled', function(assert) {
+  assert.expect(2);
+  const user1CheckBox = 'table:eq(1) tbody tr:eq(0) td:eq(0) input[type=checkbox]';
+  const action1 = 'table:eq(1) tbody tr:eq(0) td:eq(6) .clickable';
+  const action2 = 'table:eq(2) tbody tr:eq(0) td:eq(6) .clickable';
+
+  let user1 = Object.create({
+    enabled: true,
+    lowestGroupInTree: Object.create({
+      id: 1
+    }),
+  });
+
+  let user2 = Object.create({
+    enabled: true,
+    lowestGroupInTree: Object.create({
+      id: 2
+    }),
+  });
+
+  this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
+  this.set('nothing', parseInt);
+
+  this.render(hbs`{{learnergroup-user-manager
+    learnerGroupId=1
+    learnerGroupTitle='this group'
+    topLevelGroupTitle='top group'
+    cohortTitle='this cohort'
+    users=users
+    sortBy='lastName'
+    setSortBy=(action nothing)
+    isEditing=true
+    addUserToGroup=(action nothing)
+    removeUserFromGroup=(action nothing)
+    addUsersToGroup=(action nothing)
+    removeUsersFromGroup=(action nothing)
+  }}`);
+
+  this.$(user1CheckBox).click();
+  assert.equal(this.$(action1).length, 0);
+  assert.equal(this.$(action2).length, 0);
+
+});
+
 test('checkall', function(assert) {
   assert.expect(5);
   const checkAllBox = 'thead tr:eq(0) th:eq(0) input[type=checkbox]';

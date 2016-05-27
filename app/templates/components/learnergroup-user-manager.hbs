@@ -88,12 +88,14 @@
                   {{#if (contains user.content usersBeingMoved)}}
                     {{fa-icon 'spinner' spin=true}}
                   {{else if user.enabled}}
-                    {{fa-icon
-                      'minus'
-                      class='no clickable'
-                      title=(t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle count=1)
-                      click=(perform removeSingleUser user.content)
-                    }}
+                    {{#if (eq selectedUsers.length 0)}}
+                      {{fa-icon
+                        'minus'
+                        class='no clickable'
+                        title=(t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle count=1)
+                        click=(perform removeSingleUser user.content)
+                      }}
+                    {{/if}}
                   {{/if}}
                 </td>
               {{/if}}
@@ -142,12 +144,14 @@
                     {{#if (contains user.content usersBeingMoved)}}
                       {{fa-icon 'spinner' spin=true}}
                     {{else if user.enabled}}
-                      {{fa-icon
-                        'plus'
-                        class='yes clickable'
-                        title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle)
-                        click=(perform addSingleUser user.content)
-                      }}
+                      {{#if (eq selectedUsers.length 0)}}
+                        {{fa-icon
+                          'plus'
+                          class='yes clickable'
+                          title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle)
+                          click=(perform addSingleUser user.content)
+                        }}
+                      {{/if}}
                     {{/if}}
                   </td>
                 {{/if}}
