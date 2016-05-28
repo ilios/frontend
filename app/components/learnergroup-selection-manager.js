@@ -1,17 +1,15 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { Component, computed } = Ember;
-const { alias, notEmpty, sort } = computed;
+const { Component, computed, inject } = Ember;
+const { notEmpty } = computed;
+const { service } = inject;
 
 export default Component.extend({
-  i18n: Ember.inject.service(),
+  i18n: service(),
   filter: '',
   sortBy: ['title'],
-  subject: null,
   cohorts: [],
-  learnerGroups: alias('subject.learnerGroups'),
-  sortedLearnerGroups: sort('learnerGroups', 'sortBy'),
   filteredCohorts: computed('cohorts.[]', 'filter', 'learnerGroups.[]', function(){
     var self = this;
     var cohortProxy = Ember.ObjectProxy.extend({
@@ -70,23 +68,4 @@ export default Component.extend({
       return proxy;
     }).sortBy('title');
   }),
-
-  actions: {
-    add: function(learnerGroup){
-      var subject = this.get('subject');
-      var learnerGroups = subject.get('learnerGroups');
-      learnerGroups.addObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.addObjects(descendants);
-      });
-    },
-    remove: function(learnerGroup){
-      var subject = this.get('subject');
-      var learnerGroups = subject.get('learnerGroups');
-      learnerGroups.removeObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.removeObjects(descendants);
-      });
-    }
-  }
 });

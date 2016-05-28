@@ -8,10 +8,12 @@
     }}
     {{#liquid-if session.isIndependentLearning class='vertical'}}
       {{detail-learnergroups
-        subject=session.ilmSession
-        cohorts=session.course.cohorts
+        subject=(await session.ilmSession)
+        cohorts=(await session.course.cohorts)
         isIlmSession=true
         editable=editable
+        isManaging=isManagingLearnerGroups
+        setIsManaging=(action setIsManagingLearnerGroups)
       }}
       {{detail-instructors
         ilmSession=session.ilmSession

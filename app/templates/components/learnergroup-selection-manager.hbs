@@ -1,6 +1,6 @@
 <ul class='removable-list tag-list'>
-  {{#each sortedLearnerGroups as |learnerGroup|}}
-    <li {{action 'remove' learnerGroup}}>
+  {{#each (sort-by 'title' learnerGroups) as |learnerGroup|}}
+    <li {{action remove learnerGroup}}>
       <em>
         {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
       </em>
@@ -19,7 +19,7 @@
       <li class='static'>{{cohort.displayTitle}}
         <ul>
           {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
-            <li {{action 'add' learnerGroup}}>
+            <li {{action add learnerGroup}}>
               <em>
                 {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
               </em>

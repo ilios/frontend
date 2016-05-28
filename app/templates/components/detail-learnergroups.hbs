@@ -10,17 +10,19 @@
 
   <div class='detail-actions'>
     {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigadd' onclick={{perform save}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=save.isRunning}}</button>
         <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else if editable}}
-      <button {{action 'manage'}}>{{t 'courses.learnerGroupsManageTitle'}}</button>
+      <button {{action setIsManaging true}}>{{t 'courses.learnerGroupsManageTitle'}}</button>
     {{/if}}
   </div>
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
         {{learnergroup-selection-manager
-          subject=subject
+          learnerGroups=learnerGroups
           cohorts=cohorts
+          add=(action 'addLearnerGroup')
+          remove=(action 'removeLearnerGroup')
         }}
     {{else}}
       {{detail-learnergroups-list

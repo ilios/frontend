@@ -1,50 +1,53 @@
 import Ember from 'ember';
+import { task, timeout } from 'ember-concurrency';
 
 const { Component } = Ember;
 
 export default Component.extend({
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.loadLearnerGroups();
+  },
+  loadLearnerGroups(){
+    const subject = this.get('subject');
+    if (subject){
+      subject.get('learnerGroups').then(learnerGroups => {
+        this.set('learnerGroups', learnerGroups.toArray());
+      });
+    }
+  },
   classNames: ['detail-learnergroups'],
   subject: null,
   isIlmSession: false,
   isManaging: false,
-  initialGroups: [],
+  learnerGroups: [],
   cohorts: [],
+  save: task(function * (){
+    yield timeout(10);
+    let subject = this.get('subject');
+    let learnerGroups = this.get('learnerGroups');
+    subject.set('learnerGroups', learnerGroups);
+    yield subject.save();
+    this.get('setIsManaging')(false);
+  }),
   actions: {
-    manage: function(){
-      var self = this;
-      this.get('subject.learnerGroups').then(function(learnerGroups){
-        self.set('initialGroups', learnerGroups.toArray());
-        self.set('isManaging', true);
+    cancel(){
+      this.loadLearnerGroups()
+      this.get('setIsManaging')(false);
+    },
+    addLearnerGroup: function(learnerGroup){
+      let learnerGroups = this.get('learnerGroups');
+      learnerGroups.addObject(learnerGroup);
+      learnerGroup.get('allDescendants').then(function(descendants){
+        learnerGroups.addObjects(descendants);
       });
     },
-    save: function(){
-      var self = this;
-      //we get a proxy here so we use the content
-      let subject = this.get('subject.content');
-      subject.get('learnerGroups').then(function(newLearnerGroups){
-        let oldLearnerGroups = self.get('initialGroups').filter(function(learnerGroup){
-          return !newLearnerGroups.contains(learnerGroup);
-        });
-        oldLearnerGroups.forEach(function(learnerGroup){
-          if(self.get('isIlmSession')){
-            learnerGroup.get('ilmSessions').removeObject(subject);
-          }
-          learnerGroup.save();
-        });
-
-        subject.save().then(function(){
-          newLearnerGroups.save().then(function(){
-            self.set('isManaging', false);
-            self.set('initialGroups', []);
-          });
-        });
+    removeLearnerGroup: function(learnerGroup){
+      let learnerGroups = this.get('learnerGroups');
+      learnerGroups.removeObject(learnerGroup);
+      learnerGroup.get('allDescendants').then(function(descendants){
+        learnerGroups.removeObjects(descendants);
       });
-    },
-    cancel: function(){
-      var learnerGroups = this.get('subject').get('learnerGroups');
-      learnerGroups.clear();
-      learnerGroups.addObjects(this.get('initialGroups'));
-      this.set('isManaging', false);
     }
   }
 });
