@@ -24,6 +24,13 @@
         {{#if learningMaterial.status.title}}
           <span class="learning-material-status">{{learningMaterial.status.title}}</span>
         {{/if}}
+        <ul class="learning-material-properties">
+          <li>{{t 'learningMaterials.owner'}}: {{learningMaterial.owningUser.fullName}}</li>
+          {{#if learningMaterial.originalAuthor}}
+            <li>{{t 'learningMaterials.contentAuthor'}}: {{learningMaterial.originalAuthor}}</li>
+          {{/if}}
+          <li>{{t 'learningMaterials.uploadDate'}}: {{moment-format learningMaterial.uploadDate 'M-D-YYYY'}}</li>
+        </ul>
       </li>
     {{/each}}
   {{/if}}

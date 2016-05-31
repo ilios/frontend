@@ -377,6 +377,7 @@ export default {
     'copyrightRationale':'Justificación para Derechos de Autor',
     'searchPlaceholder': 'encontrar material de aprendizaje',
     'confirmRemoval': '¿Está seguro que desea eliminar este material de aprendizaje?',
+    'uploadDate': 'Fecha de carga',
   },
   'groupMembers': {
     'filterPlaceholder': 'Aplicar un Filtro por nombre o email',

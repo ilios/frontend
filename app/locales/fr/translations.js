@@ -381,6 +381,7 @@ export default {
   'groupMembers': {
     'filterPlaceholder': "Filtre par nom ou email",
     'noSearchResults': "Votre recherche ne retourner pas aucune de resultats",
+    'uploadDate': 'Date de dépôt',
   },
   'relatedCourses': {
     'title': "Cours connexes",
