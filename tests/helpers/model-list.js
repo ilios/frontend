@@ -4,6 +4,7 @@ initialize();
 export default [
   'model:aamc-method',
   'model:aamc-pcrs',
+  'model:aamc-resource-type',
   'model:academic-year',
   'model:alert-change-type',
   'model:alert',
