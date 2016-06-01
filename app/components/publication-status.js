@@ -4,6 +4,10 @@ const { Component, computed } = Ember;
 const { alias } = computed;
 
 export default Component.extend({
+  publishedLangKey: 'general.published',
+  scheduledLangKey: 'general.scheduled',
+  notPublishedLangKey: 'general.notPublished',
+
   showIcon: true,
   tagName: 'span',
   classNameBindings: [
