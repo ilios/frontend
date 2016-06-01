@@ -377,6 +377,7 @@ export default {
     'copyrightRationale': "Raison du droit d'auteur",
     'searchPlaceholder': "Trouver matières d'étude",
     'confirmRemoval': "Êtes-vous sûr vous voulez supprimer cette matière d’étude?",
+    'uploadDate': 'Date de dépôt',
   },
   'groupMembers': {
     'filterPlaceholder': "Filtre par nom ou email",

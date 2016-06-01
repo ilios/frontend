@@ -7,6 +7,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
+import moment from 'moment';
 
 const { isEmpty, isPresent, run } = Ember;
 const { later } = run;
@@ -43,6 +44,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       userRole: 1,
       copyrightPermission: true,
       courseLearningMaterials: [1],
+      uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
@@ -54,6 +56,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
       courseLearningMaterials: [2],
+      uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
@@ -61,6 +64,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       status: 1,
       owningUser: 4136,
       courseLearningMaterials: [3],
+      uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
@@ -68,6 +72,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       status: 1,
       owningUser: 4136,
       courseLearningMaterials: [4],
+      uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       title: 'Letter to Doc Brown',
@@ -77,6 +82,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       userRole: 1,
       copyrightPermission: true,
       courseLearningMaterials: [],
+      uploadDate: new Date(),
     }));
     fixtures.courseLearningMaterials = [];
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
@@ -379,6 +385,8 @@ test('view url file learning material details', function(assert) {
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
+      assert.equal(getElementText(find('.upload-date', container)),
+        moment(fixtures.learningMaterials[1].uploadDate).format('M-D-YYYY'));
       assert.equal(getElementText(find('.downloadurl', container)), getText(fixtures.learningMaterials[1].filename));
       assert.equal(find('.downloadurl a', container).attr('href'), fixtures.learningMaterials[1].absoluteFileUri);
       assert.equal(find('.citation', container).length, 0);
@@ -397,6 +405,8 @@ test('view link learning material details', function(assert) {
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
       assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
+      assert.equal(getElementText(find('.upload-date', container)),
+        moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
       assert.equal(find('.copyrightpermission', container).length, 0);
       assert.equal(find('.copyrightrationale', container).length, 0);
       assert.equal(find('.citation', container).length, 0);
@@ -415,7 +425,8 @@ test('view citation learning material details', function(assert) {
       assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[3].originalAuthor));
       assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[3].description));
       assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
-      assert.equal(find('.copyrightpermission', container).length, 0);
+      assert.equal(getElementText(find('.upload-date', container)),
+        moment(fixtures.learningMaterials[3].uploadDate).format('M-D-YYYY'));
       assert.equal(find('.copyrightrationale', container).length, 0);
       assert.equal(find('.file', container).length, 0);
       assert.equal(find('.copyrightpermission', container).length, 0);
@@ -624,9 +635,17 @@ test('find and add learning material', function(assert) {
     triggerEvent(searchBoxInput, 'keyup');
     andThen(function(){
       later(function(){
-        let searchResults = find('.results li', container);
+        let searchResults = find('.results > li', container);
         assert.equal(searchResults.length, 1);
-        assert.equal(getElementText($('.results li:eq(0) h4')), getText('Letter to Doc Brown'));
+        assert.equal(getElementText($('.results > li:eq(0) h4')), getText('Letter to Doc Brown'));
+        let addlProps = find('.results > li:eq(0) .learning-material-properties li', container);
+        assert.equal(addlProps.length, 3);
+        assert.equal(getElementText($('.results > li:eq(0) .learning-material-properties li:eq(0)')),
+          getText('Owner: 0 guy M. Mc0son'));
+        assert.equal(getElementText($('.results > li:eq(0) .learning-material-properties li:eq(1)')),
+          getText('Content Author: ' + fixtures.learningMaterials[4].originalAuthor));
+        assert.equal(getElementText($('.results > li:eq(0) .learning-material-properties li:eq(2)')),
+          getText('Upload date: ' + moment(fixtures.learningMaterials[4].uploadDate).format('M-D-YYYY')));
         click(searchResults[0]);
 
         andThen(function(){

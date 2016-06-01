@@ -377,6 +377,7 @@ export default {
     'copyrightRationale':'Copyright Rationale',
     'searchPlaceholder': 'Find Learning Material',
     'confirmRemoval': 'Are you sure you want to remove this learning material?',
+    'uploadDate': 'Upload date',
   },
   'groupMembers': {
     'filterPlaceholder': 'Filter by name or email',
