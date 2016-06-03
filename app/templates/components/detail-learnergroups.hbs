@@ -12,12 +12,16 @@
 </div>
 <div class='detail-learnergroups-content'>
   {{#liquid-if isManaging class="horizontal"}}
+    {{#liquid-if loadLearnerGroups.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
       {{learnergroup-selection-manager
         learnerGroups=learnerGroups
         cohorts=cohorts
         add=(action 'addLearnerGroup')
         remove=(action 'removeLearnerGroup')
       }}
+    {{/liquid-if}}
   {{else}}
     {{detail-learnergroups-list
       learnerGroups=subject.learnerGroups

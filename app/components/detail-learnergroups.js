@@ -4,17 +4,13 @@ import { task, timeout } from 'ember-concurrency';
 const { Component } = Ember;
 
 export default Component.extend({
-  didReceiveAttrs(){
+  init(){
     this._super(...arguments);
-    this.loadLearnerGroups();
+    this.get('loadLearnerGroups').perform();
   },
-  loadLearnerGroups(){
-    const subject = this.get('subject');
-    if (subject){
-      subject.get('learnerGroups').then(learnerGroups => {
-        this.set('learnerGroups', learnerGroups.toArray());
-      });
-    }
+  didUpdateAttrs(){
+    this._super(...arguments);
+    this.get('loadLearnerGroups').perform();
   },
   classNames: ['detail-learnergroups'],
   tagName: 'div',
@@ -23,6 +19,15 @@ export default Component.extend({
   isManaging: false,
   learnerGroups: [],
   cohorts: [],
+  loadLearnerGroups: task(function * (){
+    const subject = this.get('subject');
+    if (subject){
+      let learnerGroups = yield subject.get('learnerGroups');
+      this.set('learnerGroups', learnerGroups.toArray());
+    } else {
+      yield timeout(1000);
+    }
+  }).restartable(),
   save: task(function * (){
     yield timeout(10);
     let subject = this.get('subject');
@@ -33,7 +38,7 @@ export default Component.extend({
   }),
   actions: {
     cancel(){
-      this.loadLearnerGroups()
+      this.get('loadLearnerGroups').perform();
       this.get('setIsManaging')(false);
     },
     addLearnerGroup: function(learnerGroup){

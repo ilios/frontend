@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, isEmpty, inject, RSVP } = Ember;
+const { Component, computed, inject, RSVP } = Ember;
 const { service } = inject;
 const { Promise, all } = RSVP;
 
@@ -12,10 +12,7 @@ export default Component.extend({
   learnerGroups: [],
   allLearnerGroups: computed('cohorts.[]', function(){
     return new Promise(resolve => {
-      const cohorts = this.get('cohorts');
-      if (isEmpty(cohorts)) {
-        resolve([]);
-      } else {
+      this.get('cohorts').then(cohorts => {
         all(cohorts.mapBy('topLevelLearnerGroups')).then(allLearnerGroups => {
           let flat = allLearnerGroups.reduce((flattened, arr) => {
             return flattened.pushObjects(arr);
@@ -23,7 +20,7 @@ export default Component.extend({
 
           resolve(flat);
         });
-      }
+      });
 
     });
 

@@ -9,7 +9,7 @@
     {{#liquid-if session.isIndependentLearning class='vertical'}}
       {{detail-learnergroups
         subject=(await session.ilmSession)
-        cohorts=(await session.course.cohorts)
+        cohorts=session.course.cohorts
         isIlmSession=true
         editable=editable
         isManaging=isManagingLearnerGroups

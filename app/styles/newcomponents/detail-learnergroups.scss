@@ -28,23 +28,27 @@
     margin-top: 1em;
 
     h3 {
-      @include span-columns(4);
+      @include span-columns(6);
       margin: 0;
       padding: 0;
     }
 
     .search-box {
       @include span-columns(4);
-      @include shift(4);
+      @include shift(2);
       @include omega();
     }
 
     .cohort-learner-groups {
       @include span-columns(12);
-      @include omega;
 
       border: 1px solid $ilios-blue;
       padding: 1em;
+
+      @include media($large-screen) {
+        @include span-columns(6);
+        @include omega(2n);
+      }
 
       .cohort-title {
         margin: 0;
