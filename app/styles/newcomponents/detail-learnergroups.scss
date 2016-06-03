@@ -51,12 +51,11 @@
         padding: 0;
         text-align: center;
       }
-
-      ul {
-        @include ilios-list-tree();
-      }
     }
 
+    .tree-groups-list {
+      @include ilios-list-tree();
+    }
 
   }
 }

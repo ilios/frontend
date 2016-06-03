@@ -27,17 +27,12 @@
   <h3>{{t 'courses.availableLearnerGroups'}}</h3>
   {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
 
-  {{#each filteredCohorts as |cohort|}}
+  {{#each (sort-by 'title' cohorts) as |cohort|}}
     <div class='cohort-learner-groups'>
       <h5 class='cohort-title'>{{cohort.displayTitle}}</h5>
-      <ul>
-        {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
-            <li class='clickable' {{action add learnerGroup}}>
-              {{join ' > ' learnerGroup.allParentTitles}}
-              <strong>{{learnerGroup.title}}</strong>
-            </li>
-        {{else}}
-          <li class='static'>{{t 'courses.noAvailableLearnerGroups'}}</li>
+      <ul class='tree-groups-list'>
+        {{#each (sort-by 'title' (filter-by 'cohort' (action 'compareCohorts' cohort)(await allLearnerGroups))) as |learnerGroup|}}
+          {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
         {{/each}}
       </ul>
     </div>

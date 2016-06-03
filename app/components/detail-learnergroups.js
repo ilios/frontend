@@ -37,18 +37,22 @@ export default Component.extend({
       this.get('setIsManaging')(false);
     },
     addLearnerGroup: function(learnerGroup){
-      let learnerGroups = this.get('learnerGroups');
+      let learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.addObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.addObjects(descendants);
       });
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('learnerGroups', learnerGroups);
     },
     removeLearnerGroup: function(learnerGroup){
-      let learnerGroups = this.get('learnerGroups');
+      let learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.removeObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.removeObjects(descendants);
       });
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('learnerGroups', learnerGroups);
     }
   }
 });

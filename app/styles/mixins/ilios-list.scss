@@ -56,8 +56,29 @@
   background-color: $white;
   height: 15em;
   overflow-y: scroll;
+
   li {
     color: $base-font-color;
     margin-left: 20px;
+
+    &.strong {
+      font-weight: bold;
+
+      li {
+        font-weight: normal;
+      }
+    }
+
+    &.em {
+      font-style: italic;
+
+      li {
+        font-style: normal;
+      }
+    }
+
+    &.disabled {
+      color: $dark-grey;
+    }
   }
 }

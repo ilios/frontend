@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component } = Ember;
+const { Component, isPresent } = Ember;
 const DEBOUNCE_TIMEOUT = 250;
 
 export default Component.extend({
@@ -9,9 +9,9 @@ export default Component.extend({
   value: '',
   liveSearch: true,
   searchTask: task(function * () {
+    yield timeout(DEBOUNCE_TIMEOUT);
     const value = this.get('value');
     yield this.get('search')(value);
-    yield timeout(DEBOUNCE_TIMEOUT);
   }).restartable(),
   actions: {
     update(value){
@@ -23,7 +23,10 @@ export default Component.extend({
     },
     clear() {
       this.set('value', '');
-      this.get('clear')();
+      const clear = this.get('clear');
+      if (isPresent(clear)) {
+        clear();
+      }
     },
     focus(){
       //place focus into the search box when search icon is clicked
