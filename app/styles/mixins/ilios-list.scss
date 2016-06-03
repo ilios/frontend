@@ -1,0 +1,63 @@
+@mixin ilios-list () {
+
+}
+
+@mixin ilios-list-badges() {
+  $badges-font-size: .8em;
+
+  li {
+    @include span-columns(3);
+    @include omega(4n);
+    background-color: $header-grey;
+    border-radius: 4px;
+    height: $badges-font-size * 5;
+    margin-top: .5em;
+    overflow: hidden;
+    vertical-align: middle;
+
+    .badge {
+      @include fill-parent;
+      @include row();
+      .text {
+        @include span-columns(2 of 3);
+        @include pad();
+
+        .main-text,
+        .sub-text {
+          @include fill-parent;
+        }
+
+        .main-text {
+          font-size: $badges-font-size;
+          font-weight: bold;
+        }
+
+        .sub-text {
+          color: $darker-grey;
+          font-size: .8 * $badges-font-size;
+          font-style: italic;
+        }
+      }
+
+      .action {
+        @include span-columns(1 of 3);
+        font-size: 1em;
+        padding-bottom: $badges-font-size * 2;
+        padding-top: $badges-font-size * 2;
+        text-align: center;
+      }
+    }
+
+  }
+
+}
+
+@mixin ilios-list-tree() {
+  background-color: $white;
+  height: 15em;
+  overflow-y: scroll;
+  li {
+    color: $base-font-color;
+    margin-left: 20px;
+  }
+}

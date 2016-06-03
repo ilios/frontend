@@ -1,0 +1,62 @@
+.detail-learnergroups {
+  @include detail-container;
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .detail-learnergroups-content {
+    @include detail-container-content;
+  }
+
+  .selected-learner-groups {
+    @include span-columns(12);
+
+    ul {
+      @include fill-parent;
+      @include ilios-list-badges();
+
+    }
+  }
+
+  .available-learner-groups {
+    @include span-columns(12);
+    margin-top: 1em;
+
+    h3 {
+      @include span-columns(4);
+      margin: 0;
+      padding: 0;
+    }
+
+    .search-box {
+      @include span-columns(4);
+      @include shift(4);
+      @include omega();
+    }
+
+    .cohort-learner-groups {
+      @include span-columns(12);
+      @include omega;
+
+      border: 1px solid $ilios-blue;
+      padding: 1em;
+
+      .cohort-title {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      ul {
+        @include ilios-list-tree();
+      }
+    }
+
+
+  }
+}

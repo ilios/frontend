@@ -1,38 +1,45 @@
-<ul class='removable-list tag-list'>
-  {{#each (sort-by 'title' learnerGroups) as |learnerGroup|}}
-    <li {{action remove learnerGroup}}>
-      <em>
-        {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
-      </em>
-      <strong>
-        {{learnerGroup.title}}
-      </strong>
-      {{fa-icon 'remove'}}
-    </li>
-  {{/each}}
-</ul>
-{{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
-<div class='selectable-list'>
-  <h5>{{t 'courses.availableLearnerGroups'}}</h5>
+<div class='selected-learner-groups'>
   <ul>
-    {{#each filteredCohorts as |cohort|}}
-      <li class='static'>{{cohort.displayTitle}}
-        <ul>
-          {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
-            <li {{action add learnerGroup}}>
-              <em>
-                {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
-              </em>
-              <strong>
-                {{learnerGroup.title}}
-              </strong>
-            </li>
-
-          {{else}}
-            <li class='static'>{{t 'courses.noAvailableLearnerGroups'}}</li>
-          {{/each}}
-        </ul>
+    {{#each (sort-by 'title' learnerGroups) as |learnerGroup|}}
+      <li class='clickable' {{action remove learnerGroup}}>
+        <div class='badge'>
+          <div class='text'>
+            <div class='sub-text'>
+              {{join ' > ' learnerGroup.allParentTitles}}
+            </div>
+            <div class='main-text'>
+              {{learnerGroup.title}}
+            </div>
+            <div class='sub-text'>
+              {{learnerGroup.cohort.programYear.program.title}}
+              {{learnerGroup.cohort.title}}
+            </div>
+          </div>
+          <div class='action'>{{fa-icon 'remove'}}</div>
+        </div>
       </li>
     {{/each}}
   </ul>
+</div>
+
+<div class='available-learner-groups'>
+
+  <h3>{{t 'courses.availableLearnerGroups'}}</h3>
+  {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
+
+  {{#each filteredCohorts as |cohort|}}
+    <div class='cohort-learner-groups'>
+      <h5 class='cohort-title'>{{cohort.displayTitle}}</h5>
+      <ul>
+        {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
+            <li class='clickable' {{action add learnerGroup}}>
+              {{join ' > ' learnerGroup.allParentTitles}}
+              <strong>{{learnerGroup.title}}</strong>
+            </li>
+        {{else}}
+          <li class='static'>{{t 'courses.noAvailableLearnerGroups'}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/each}}
 </div>
