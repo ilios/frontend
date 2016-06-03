@@ -1,9 +1,7 @@
-@mixin detail-container () {
-  @include fill-parent;
-  border-bottom: 1px dotted $ilios-orange;
+@mixin detail-container ($border-color) {
+  border-bottom: 1px dotted $border-color;
   display: block;
-  margin-left: .8em;
-  margin-right: .8em;
+  margin: 0 .8em;
   min-height: 2em;
   padding: 1em .8em;
 }
@@ -24,7 +22,9 @@
   vertical-align: middle;
 
   @include media($large-screen) {
-    @include span-columns(3 of 12);
+    @include shift(2 of 12);
+    @include span-columns(2 of 12);
+    @include omega();
     text-align: right;
   }
 }

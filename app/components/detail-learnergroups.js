@@ -17,7 +17,7 @@ export default Component.extend({
     }
   },
   classNames: ['detail-learnergroups'],
-  tagName: 'section',
+  tagName: 'div',
   subject: null,
   isIlmSession: false,
   isManaging: false,

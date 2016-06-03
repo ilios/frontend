@@ -1,5 +1,5 @@
 .detail-learnergroups {
-  @include detail-container;
+  @include detail-container($text-blue);
 
   .title {
     @include detail-container-title;
