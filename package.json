@@ -64,7 +64,7 @@
     "ember-cp-validations": "2.9.0",
     "ember-data": "^2.5.1",
     "ember-export-application-global": "^1.0.5",
-    "ember-froala": "2.3.0",
+    "ember-froala": "2.3.1",
     "ember-i18n": "4.2.1",
     "ember-i18n-cp-validations": "2.5.0",
     "ember-inflector": "1.9.4",
