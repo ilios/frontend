@@ -3,8 +3,9 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed, observer } = Ember;
+const { Model, PromiseArray } = DS;
 
-export default DS.Model.extend({
+export default Model.extend({
   i18n: Ember.inject.service(),
   title: DS.attr('string'),
   programYear: DS.belongsTo('program-year', {async: true}),
@@ -38,20 +39,12 @@ export default DS.Model.extend({
   }),
   topLevelLearnerGroups: computed('learnerGroups.[]', function(){
     let defer = Ember.RSVP.defer();
-    this.get('learnerGroups').then(groups => {
-      let topLevelGroups = Ember.A();
-      let promises = [];
-
-      groups.forEach(group => {
-        promises.pushObject(group.get('topLevelGroup').then(topLevelGroup => {
-          topLevelGroups.pushObject(topLevelGroup);
-        }));
-      });
-      Ember.RSVP.all(promises).then(() => {
-        defer.resolve(topLevelGroups.uniq().sortBy('title'));
-      });
+    this.get('learnerGroups').then(learnerGroups => {
+      let topLevelGroups = learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null)
+      defer.resolve(topLevelGroups);
     });
-    return DS.PromiseArray.create({
+
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
