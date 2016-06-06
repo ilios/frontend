@@ -138,6 +138,7 @@ export default {
     'schools': 'Schools',
     'universalLocator': 'Universal Locator',
     'removeAll': 'Remove All',
+    'copiedSuccessfully': 'Copied Successfully',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -466,6 +467,12 @@ export default {
     'username': 'Username',
     'password': 'Password',
     'myProfile': 'My Profile',
+    'manageAPITokens': 'Manage API Tokens',
+    'tokenInfo': 'API Tokens are used to programatically accesss Ilios data.  Your token is like a password - anyone who has it can make changes on your behlaf.  Read more in the documentation at <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>',
+    'validUntil': 'When should this token stop working?',
+    'newToken': 'New Token',
+    'expireTokens': 'Expire All Tokens',
+    'expireTokensConfirmation': 'This will invalidate all existing API tokens and you will need to generate new ones for any applications you have.  Are you sure you want to do this?',
   },
   'language': {
     'select': {

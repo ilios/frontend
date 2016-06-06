@@ -1,1 +1,5 @@
-{{my-profile user=model}}
+{{my-profile
+  user=model
+  showCreateNewToken=createNewToken
+  toggleShowCreateNewToken=(toggle-action 'createNewToken' this)
+}}

@@ -102,3 +102,36 @@
     </div>
   </section>
 </div>
+
+<section class='token-maintenance'>
+  <h2>{{t 'user.manageAPITokens'}}</h2>
+  <p>{{t 'user.tokenInfo' apiDocsUrl=apiDocsUrl}}</p>
+  {{#unless showCreateNewToken}}
+    <button class='new-token' onclick={{action toggleShowCreateNewToken}}>{{t 'general.createNew'}}</button>
+  {{else}}
+      {{#if generatedJwt}}
+        <div class='new-token-result'>
+          <h3>{{t 'user.newToken'}}:</h3>
+          <input readonly value={{generatedJwt}} />
+          {{#copy-button success='tokenCopied' clipboardText=generatedJwt}}
+            {{fa-icon 'copy'}}
+          {{/copy-button}}
+          <button class='bigcancel' {{action (pipe toggleShowCreateNewToken (action 'reset'))}}>{{fa-icon 'times'}}</button>
+        </div>
+      {{else}}
+        <div class='new-token-form'>
+          <label>{{t 'user.validUntil'}}</label>
+          {{pikaday-input size=10 value=expiresAt maxDate=maxDate minDate=minDate format='YYYY-MM-DD'}}
+          <button class='bigadd' {{action (perform createNewToken)}}>
+            {{#if createNewToken.isRunning}}
+              {{fa-icon 'spinner' spin=true}}
+            {{else}}
+              {{fa-icon 'check'}}
+            {{/if}}
+          </button>
+          <button class='bigcancel' {{action (pipe toggleShowCreateNewToken (action 'reset'))}}>{{fa-icon 'times'}}</button>
+        </div>
+      {{/if}}
+
+  {{/unless}}
+</section>

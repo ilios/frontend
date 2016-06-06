@@ -1,8 +1,11 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
+import moment from 'moment';
+import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { Object, RSVP } = Ember;
+const { Object, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('my-profile', 'Integration | Component | my profile', {
@@ -41,8 +44,9 @@ test('it renders all yes', function(assert) {
   });
 
   this.set('user', user);
+  this.set('nothing', parseInt);
 
-  this.render(hbs`{{my-profile user=user}}`);
+  this.render(hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing)}}`);
 
   assert.equal(this.$('.name').text().trim(), 'test name');
   assert.equal(this.$('.is-student').text().trim(), 'Student');
@@ -73,8 +77,9 @@ test('it renders all no', function(assert) {
   });
 
   this.set('user', user);
+  this.set('nothing', parseInt);
 
-  this.render(hbs`{{my-profile user=user}}`);
+  this.render(hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing)}}`);
 
   assert.equal(this.$('.name').text().trim(), 'test name');
   assert.equal(this.$('.is-student').text().trim(), '');
@@ -87,5 +92,111 @@ test('it renders all no', function(assert) {
   assert.equal(this.$('.info .row:eq(1) .content').text().trim(), 'Unassigned');
   assert.equal(this.$('.info .row:eq(2) .content li').length, 0);
   assert.equal(this.$('.info .row:eq(3) .content li').length, 0);
+
+});
+
+test('generates token when asked with good expiration date', function(assert) {
+  assert.expect(5);
+  const go = '.bigadd:eq(0)';
+  const newToken = '.new-token-result input';
+  let ajaxMock = Service.extend({
+    request(url){
+      assert.ok(url.search(/\/auth\/token\?ttl=P14D/) === 0, `URL ${url} matches request pattern.`);
+      let hours = parseInt(url.substring(22, 24), 'too many hours');
+      let minutes = parseInt(url.substring(25, 27), 'too many minutes');
+      let seconds = parseInt(url.substring(28, 30), 'too many seconds');
+
+      assert.ok(hours < 24);
+      assert.ok(minutes < 60);
+      assert.ok(seconds < 60);
+
+      return {
+        jwt: 'new token'
+      };
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+  this.inject.service('ajax', { as: 'ajax' });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true}}`);
+
+  this.$(go).click();
+
+  return wait().then(()=> {
+    assert.equal(this.$(newToken).val().trim(), 'new token');
+  });
+});
+
+test('clear and reset from new token screen', function(assert) {
+  assert.expect(4);
+  const cancel = '.bigcancel:eq(0)';
+  const go = '.bigadd:eq(0)';
+  const newToken = '.new-token-result input';
+  const newTokenButton = 'button.new-token';
+  const newTokenForm = '.new-token-form';
+  let ajaxMock = Service.extend({
+    request(){
+      return {
+        jwt: 'new token'
+      };
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+  this.inject.service('ajax', { as: 'ajax' });
+  this.set('toggle', ()=> {
+    assert.ok(true);
+  });
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) showCreateNewToken=true}}`);
+  this.$(go).click();
+
+  return wait().then(()=> {
+    assert.equal(this.$(newToken).val().trim(), 'new token');
+    assert.equal(this.$(newTokenForm).length, 0);
+    this.$(cancel).click();
+    this.$(newTokenButton).click();
+    assert.equal(this.$(newTokenForm).length, 1);
+
+  });
+});
+
+test('clicking button fires show token event', function(assert) {
+  const newTokenButton = 'button.new-token';
+
+  assert.expect(1);
+  this.set('toggle', ()=> {
+    assert.ok(true);
+  });
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle)}}`);
+
+  this.$(newTokenButton).click();
+});
+
+test('Setting date changes request length', function(assert) {
+  assert.expect(4);
+  const go = '.bigadd:eq(0)';
+  const datePicker = '.new-token-form input:eq(0)';
+  let ajaxMock = Service.extend({
+    request(url){
+      assert.ok(url.search(/\/auth\/token\?ttl=P41D/) === 0, `URL ${url} matches request pattern.`);
+      let hours = parseInt(url.substring(22, 24), 'too many hours');
+      let minutes = parseInt(url.substring(25, 27), 'too many minutes');
+      let seconds = parseInt(url.substring(28, 30), 'too many seconds');
+
+      assert.ok(hours < 24);
+      assert.ok(minutes < 60);
+      assert.ok(seconds < 60);
+      return {
+        jwt: 'new token'
+      };
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+  this.inject.service('ajax', { as: 'ajax' });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true}}`);
+  let m = moment().add(41, 'days');
+  let interactor = openDatepicker(this.$(datePicker));
+  interactor.selectDate(m.toDate());
+  this.$(go).click();
 
 });
