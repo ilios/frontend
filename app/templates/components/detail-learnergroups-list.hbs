@@ -17,7 +17,7 @@
             </div>
           </li>
 
-          {{#each (without tree.topLevelGroup (await tree.groups)) as |learnerGroup|}}
+          {{#each (sort-by 'sortTitle' (without tree.topLevelGroup (await tree.groups))) as |learnerGroup|}}
             <li class={{if isManaging 'clickable'}} onclick={{if isManaging (action remove learnerGroup)}}>
               <div class='badge'>
                 <div class='text'>
