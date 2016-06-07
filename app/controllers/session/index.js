@@ -7,11 +7,13 @@ export default Controller.extend({
   queryParams: [
     'sessionObjectiveDetails',
     'sessionTaxonomyDetails',
-    'isManagingLearnerGroups'
+    'isManagingLearnerGroups',
+    'sessionLearnergroupDetails',
   ],
   sessionObjectiveDetails: false,
   sessionTaxonomyDetails: false,
   isManagingLearnerGroups: false,
+  sessionLearnergroupDetails: false,
 
   sessionController: controller('session'),
   courseController: controller('course'),

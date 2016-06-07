@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
 
 export default Component.extend({
   init(){
@@ -16,6 +16,7 @@ export default Component.extend({
   tagName: 'div',
   subject: null,
   isIlmSession: false,
+  editable: true,
   isManaging: false,
   learnerGroups: [],
   cohorts: [],
@@ -35,6 +36,11 @@ export default Component.extend({
     subject.set('learnerGroups', learnerGroups);
     yield subject.save();
     this.get('setIsManaging')(false);
+  }),
+  collapsible: computed('isManaging', 'learnerGroups.length', function(){
+    const isManaging = this.get('isManaging');
+    const learnerGroups = this.get('learnerGroups');
+    return learnerGroups.get('length') && ! isManaging;
   }),
   actions: {
     cancel(){

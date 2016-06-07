@@ -1,4 +1,4 @@
-<div class='title'>
+<div class='title {{if collapsible "collapsible clickable"}}' onclick={{if collapsible (action collapse)}}>
   {{t 'courses.learnerGroups'}} ({{subject.learnerGroups.length}})
 </div>
 

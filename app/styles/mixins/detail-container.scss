@@ -15,6 +15,12 @@
   @include media($large-screen) {
     @include span-columns(8 of 12);
   }
+
+  &.collapsible {
+    &::after {
+      content: '\25BC';
+    }
+  }
 }
 
 @mixin detail-container-actions () {
@@ -22,8 +28,8 @@
   vertical-align: middle;
 
   @include media($large-screen) {
-    @include shift(2 of 12);
-    @include span-columns(2 of 12);
+    @include shift(1 of 12);
+    @include span-columns(3 of 12);
     @include omega();
     text-align: right;
   }
