@@ -1,4 +1,4 @@
-{{#liquid-if (is-fulfilled trees)}}
+{{#if (is-fulfilled trees)}}
   {{#each (sort-by 'topLevelGroup.title' (await trees)) as |tree|}}
     <fieldset>
       <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
@@ -41,4 +41,4 @@
   {{/each}}
 {{else}}
   {{fa-icon 'spinner' spin=true}}
-{{/liquid-if}}
+{{/if}}
