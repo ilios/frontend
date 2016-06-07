@@ -7,6 +7,7 @@ export default Component.extend({
   tagName: 'ul',
   classNames: ['learnergroups-list'],
   learnerGroups: null,
+  isManaging: false,
   trees: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups');
 

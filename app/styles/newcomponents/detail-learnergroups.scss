@@ -77,5 +77,10 @@
     ul {
       @include ilios-list-badges();
     }
+
+    .remove-all-subgroups {
+      @include fill-parent;
+      text-align: right;
+    }
   }
 }

@@ -11,7 +11,7 @@
   {{/if}}
 </div>
 <div class='detail-learnergroups-content'>
-  {{#liquid-if isManaging class="horizontal"}}
+  {{#if isManaging}}
     {{#liquid-if loadLearnerGroups.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
@@ -26,5 +26,5 @@
     {{detail-learnergroups-list
       learnerGroups=(await subject.learnerGroups)
     }}
-  {{/liquid-if}}
+  {{/if}}
 </div>

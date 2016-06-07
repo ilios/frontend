@@ -1,23 +1,34 @@
-{{#each (sort-by 'topLevelGroup.title' (await trees)) as |tree|}}
-  <fieldset>
-    <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
-    {{#if (is-fulfilled tree.groups)}}
-      <ul>
-        {{#each (await tree.groups) as |learnerGroup|}}
-          <li>
-            <div class='badge'>
-              <div class='text'>
-                <div class='sub-text'>
-                  {{join ' > ' (without tree.topLevelGroup.title learnerGroup.allParentTitles)}}
+{{#liquid-if (is-fulfilled trees)}}
+  {{#each (sort-by 'topLevelGroup.title' (await trees)) as |tree|}}
+    <fieldset>
+      <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
+      {{#if (is-fulfilled tree.groups)}}
+        {{#if isManaging}}
+          <div class='clickable remove remove-all-subgroups' onclick={{action remove tree.topLevelGroup}}>{{t 'general.removeAll'}} ({{fa-icon 'times'}})</div>
+        {{/if}}
+        <ul>
+          {{#each (await tree.groups) as |learnerGroup|}}
+            <li class={{if isManaging 'clickable'}} onclick={{if isManaging (action remove learnerGroup)}}>
+              <div class='badge'>
+                <div class='text'>
+                  <div class='sub-text'>
+                    {{join ' > ' (without tree.topLevelGroup.title learnerGroup.allParentTitles)}}
+                  </div>
+                  <div class='main-text'>
+                    {{learnerGroup.title}}
+                  </div>
                 </div>
-                <div class='main-text'>
-                  {{learnerGroup.title}}
-                </div>
+                {{#if isManaging}}
+                  <div class='action'>{{fa-icon 'remove'}}</div>
+                {{/if}}
               </div>
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-    {{/if}}
-  </fieldset>
-{{/each}}
+
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </fieldset>
+  {{/each}}
+{{else}}
+  {{fa-icon 'spinner' spin=true}}
+{{/liquid-if}}

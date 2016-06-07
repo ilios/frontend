@@ -1,26 +1,4 @@
-<div class='selected-learner-groups'>
-  <ul>
-    {{#each (sort-by 'title' learnerGroups) as |learnerGroup|}}
-      <li class='clickable' {{action remove learnerGroup}}>
-        <div class='badge'>
-          <div class='text'>
-            <div class='sub-text'>
-              {{join ' > ' learnerGroup.allParentTitles}}
-            </div>
-            <div class='main-text'>
-              {{learnerGroup.title}}
-            </div>
-            <div class='sub-text'>
-              {{learnerGroup.cohort.programYear.program.title}}
-              {{learnerGroup.cohort.title}}
-            </div>
-          </div>
-          <div class='action'>{{fa-icon 'remove'}}</div>
-        </div>
-      </li>
-    {{/each}}
-  </ul>
-</div>
+{{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
 
 <div class='available-learner-groups'>
   <h3>
