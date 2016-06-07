@@ -1,6 +1,12 @@
 .detail-learnergroups {
   @include detail-container($text-blue);
 
+  h4 {
+    @include ilios-heading-h3;
+    @include fill-parent;
+    font-weight: bold;
+  }
+
   .title {
     @include detail-container-title;
   }
@@ -27,16 +33,19 @@
     @include span-columns(12);
     margin-top: 1em;
 
-    h3 {
-      @include span-columns(6);
-      margin: 0;
-      padding: 0;
+    .search-box {
+      @include fill-parent;
+      @include media($large-screen) {
+        @include span-columns(4);
+        @include shift(2);
+        @include omega();
+      }
     }
 
-    .search-box {
-      @include span-columns(4);
-      @include shift(2);
-      @include omega();
+    h4 {
+      @include media($large-screen) {
+        @include span-columns(6);
+      }
     }
 
     .cohort-learner-groups {
@@ -76,6 +85,10 @@
 
     ul {
       @include ilios-list-badges();
+      .top-level-group {
+        background-color: $ilios-yellow;
+        color: $black;
+      }
     }
 
     .remove-all-subgroups {

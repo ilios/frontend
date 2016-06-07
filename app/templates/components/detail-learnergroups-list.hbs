@@ -7,7 +7,17 @@
           <div class='clickable remove remove-all-subgroups' onclick={{action remove tree.topLevelGroup}}>{{t 'general.removeAll'}} ({{fa-icon 'times'}})</div>
         {{/if}}
         <ul>
-          {{#each (await tree.groups) as |learnerGroup|}}
+          <li class='top-level-group'>
+            <div class='badge'>
+              <div class='text'>
+                <div class='main-text'>
+                  {{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup 'users'}})
+                </div>
+              </div>
+            </div>
+          </li>
+
+          {{#each (without tree.topLevelGroup (await tree.groups)) as |learnerGroup|}}
             <li class={{if isManaging 'clickable'}} onclick={{if isManaging (action remove learnerGroup)}}>
               <div class='badge'>
                 <div class='text'>

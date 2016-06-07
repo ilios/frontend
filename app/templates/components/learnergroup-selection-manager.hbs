@@ -1,10 +1,13 @@
+<h4>
+  {{t 'courses.selectedLearnerGroups'}}
+</h4>
 {{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
 
 <div class='available-learner-groups'>
-  <h3>
+  <h4>
     {{t 'courses.availableLearnerGroups'}}
     {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{fa-icon 'spinner' spin=true}}{{/unless}}
-  </h3>
+  </h4>
   {{#if (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}
     {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
     {{#each (sort-by 'title' (await cohorts)) as |cohort|}}
