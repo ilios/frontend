@@ -15,7 +15,7 @@
                     {{join ' > ' (without tree.topLevelGroup.title learnerGroup.allParentTitles)}}
                   </div>
                   <div class='main-text'>
-                    {{learnerGroup.title}}
+                    {{learnerGroup.title}} ({{count-related learnerGroup 'users'}})
                   </div>
                 </div>
                 {{#if isManaging}}
