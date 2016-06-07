@@ -6,14 +6,18 @@
   $badges-font-size: .8em;
 
   li {
-    @include span-columns(3);
-    @include omega(4n);
+    @include fill-parent;
     background-color: $header-grey;
     border-radius: 4px;
-    height: $badges-font-size * 5;
+    height: $badges-font-size * 3.5;
     margin-top: .5em;
     overflow: hidden;
     vertical-align: middle;
+
+    @include media($large-screen) {
+      @include span-columns(3);
+      @include omega(4n);
+    }
 
     .badge {
       @include fill-parent;

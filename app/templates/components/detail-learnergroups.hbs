@@ -24,7 +24,7 @@
     {{/liquid-if}}
   {{else}}
     {{detail-learnergroups-list
-      learnerGroups=subject.learnerGroups
+      learnerGroups=(await subject.learnerGroups)
     }}
   {{/liquid-if}}
 </div>

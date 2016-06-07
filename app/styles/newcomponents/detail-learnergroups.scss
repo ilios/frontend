@@ -62,4 +62,20 @@
     }
 
   }
+
+  .learnergroups-list {
+    fieldset {
+      border: 1px solid $ilios-blue;
+      border-radius: 10px;
+      margin-top: 1em;
+
+      legend {
+        font-weight: bold;
+      }
+    }
+
+    ul {
+      @include ilios-list-badges();
+    }
+  }
 }

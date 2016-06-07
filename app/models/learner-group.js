@@ -4,7 +4,7 @@ import escapeRegExp from '../utils/escape-reg-exp';
 
 
 const { computed, isEmpty, RSVP } = Ember;
-const { empty, mapBy, sum } = computed;
+const { mapBy, sum } = computed;
 const { Promise, map, all } = RSVP;
 
 export default DS.Model.extend({
@@ -280,7 +280,7 @@ export default DS.Model.extend({
     });
   }),
   topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
-    let promise = new Ember.RSVP.Promise(
+    return new Ember.RSVP.Promise(
       resolve => {
         this.get('parent').then(
           parent => {
@@ -297,11 +297,10 @@ export default DS.Model.extend({
         );
       }
     );
-    return DS.PromiseObject.create({
-      promise: promise
-    });
   }),
-  isTopLevelGroup: empty('parent.content'),
+  isTopLevelGroup: computed('parent', function(){
+    return isEmpty(this.belongsTo('parent').id());
+  }),
   removeUserFromGroupAndAllDescendants(user){
     let groups = [this];
     return new Ember.RSVP.Promise(resolve => {

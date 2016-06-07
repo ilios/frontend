@@ -82,11 +82,28 @@ let setupModels = function(){
 };
 
 test('initial selected learner groups', function(assert) {
+
+  const set1 = 'fieldset:eq(0)';
+  const set1Legend = set1 + ' legend';
+  const set1Group1 = set1 + ' li:eq(0)';
+  const set2 = 'fieldset:eq(1)';
+  const set2Legend = set2 + ' legend';
+  const set2Group1 = set2 + ' li:eq(0)';
+  const set3 = 'fieldset:eq(2)';
+  const set3Legend = set3 + ' legend';
+  const set3Group1 = set3 + ' li:eq(0)';
+
   visit(url);
-  const groupsList = '.detail-learnergroups-content';
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(groupsList)), getText('learnergroup0 learnergroup1 learnergroup3'));
+    assert.equal(getElementText(find(set1Legend)), getText('learnergroup 0 (program0 cohort0)'));
+    assert.equal(getElementText(find(set2Legend)), getText('learnergroup 1 (program0 cohort0)'));
+    assert.equal(getElementText(find(set3Legend)), getText('learnergroup 3 (program0 cohort0)'));
+
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3'));
+
   });
 });
 
@@ -221,14 +238,29 @@ test('undo learner group change', function(assert) {
   const lg0 = '.detail-learnergroups .selected-learner-groups li:eq(0)';
   const lg7 = '.detail-learnergroups .available-learner-groups li:eq(7) .clickable';
   const cancel = '.detail-learnergroups .bigcancel';
+  const set1 = 'fieldset:eq(0)';
+  const set1Legend = set1 + ' legend';
+  const set1Group1 = set1 + ' li:eq(0)';
+  const set2 = 'fieldset:eq(1)';
+  const set2Legend = set2 + ' legend';
+  const set2Group1 = set2 + ' li:eq(0)';
+  const set3 = 'fieldset:eq(2)';
+  const set3Legend = set3 + ' legend';
+  const set3Group1 = set3 + ' li:eq(0)';
 
   click(lg0);
   click(lg7);
   click(cancel);
-  const groupsList = '.detail-learnergroups-content';
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(groupsList)), getText('learnergroup0 learnergroup1 learnergroup3'));
+
+    assert.equal(getElementText(find(set1Legend)), getText('learnergroup 0 (program0 cohort0)'));
+    assert.equal(getElementText(find(set2Legend)), getText('learnergroup 1 (program0 cohort0)'));
+    assert.equal(getElementText(find(set3Legend)), getText('learnergroup 3 (program0 cohort0)'));
+
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3'));
   });
 });
 
@@ -237,12 +269,28 @@ test('save learner group change', function(assert) {
   const lg0 = '.detail-learnergroups .selected-learner-groups li:eq(0)';
   const lg7 = '.detail-learnergroups .available-learner-groups li:eq(7) .clickable';
   const save = '.detail-learnergroups .bigadd';
+  const set1 = 'fieldset:eq(0)';
+  const set1Legend = set1 + ' legend';
+  const set1Group1 = set1 + ' li:eq(0)';
+  const set2 = 'fieldset:eq(1)';
+  const set2Legend = set2 + ' legend';
+  const set2Group1 = set2 + ' li:eq(0)';
+  const set3 = 'fieldset:eq(2)';
+  const set3Legend = set3 + ' legend';
+  const set3Group1 = set3 + ' li:eq(0)';
+
   click(lg0);
   click(lg7);
   click(save);
-  const groupsList = '.detail-learnergroups-content';
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(groupsList)), getText('learnergroup1 learnergroup3 learnergroup4 learnergroup7'));
+
+    assert.equal(getElementText(find(set1Legend)), getText('learnergroup 1 (program0 cohort0)'));
+    assert.equal(getElementText(find(set2Legend)), getText('learnergroup 3 (program0 cohort0)'));
+    assert.equal(getElementText(find(set3Legend)), getText('learnergroup 4 (program0 cohort0)'));
+
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 1'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 3'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 7'));
   });
 });

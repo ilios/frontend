@@ -1,12 +1,23 @@
-<ul class='inline-list'>
-  {{#each sortedLearnerGroups as |learnerGroup|}}
-    <li>
-      <em>
-        {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
-      </em>
-      <strong>
-        {{learnerGroup.title}}
-      </strong>
-    </li>
-  {{/each}}
-</ul>
+{{#each (sort-by 'topLevelGroup.title' (await trees)) as |tree|}}
+  <fieldset>
+    <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
+    {{#if (is-fulfilled tree.groups)}}
+      <ul>
+        {{#each (await tree.groups) as |learnerGroup|}}
+          <li>
+            <div class='badge'>
+              <div class='text'>
+                <div class='sub-text'>
+                  {{join ' > ' (without tree.topLevelGroup.title learnerGroup.allParentTitles)}}
+                </div>
+                <div class='main-text'>
+                  {{learnerGroup.title}}
+                </div>
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </fieldset>
+{{/each}}
