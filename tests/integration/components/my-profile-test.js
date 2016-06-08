@@ -46,7 +46,7 @@ test('it renders all yes', function(assert) {
   this.set('user', user);
   this.set('nothing', parseInt);
 
-  this.render(hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing)}}`);
+  this.render(hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`);
 
   assert.equal(this.$('.name').text().trim(), 'test name');
   assert.equal(this.$('.is-student').text().trim(), 'Student');
@@ -79,7 +79,7 @@ test('it renders all no', function(assert) {
   this.set('user', user);
   this.set('nothing', parseInt);
 
-  this.render(hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing)}}`);
+  this.render(hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`);
 
   assert.equal(this.$('.name').text().trim(), 'test name');
   assert.equal(this.$('.is-student').text().trim(), '');
@@ -118,7 +118,7 @@ test('generates token when asked with good expiration date', function(assert) {
   this.register('service:ajax', ajaxMock);
   this.inject.service('ajax', { as: 'ajax' });
   this.set('nothing', parseInt);
-  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true}}`);
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`);
 
   this.$(go).click();
 
@@ -166,7 +166,8 @@ test('clicking button fires show token event', function(assert) {
   this.set('toggle', ()=> {
     assert.ok(true);
   });
-  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle)}}`);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) toggleShowInvalidateTokens=(action nothing)}}`);
 
   this.$(newTokenButton).click();
 });
@@ -193,10 +194,61 @@ test('Setting date changes request length', function(assert) {
   this.register('service:ajax', ajaxMock);
   this.inject.service('ajax', { as: 'ajax' });
   this.set('nothing', parseInt);
-  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true}}`);
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`);
   let m = moment().add(41, 'days');
   let interactor = openDatepicker(this.$(datePicker));
   interactor.selectDate(m.toDate());
   this.$(go).click();
 
+  return wait();
+});
+
+test('clicking button fires invalidate tokens event', function(assert) {
+  const invalidateTokensButton = 'button.invalidate-tokens';
+
+  assert.expect(1);
+  this.set('toggle', ()=> {
+    assert.ok(true);
+  });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action toggle)}}`);
+
+  this.$(invalidateTokensButton).click();
+});
+
+test('invalidate tokens when asked', function(assert) {
+  assert.expect(5);
+  const go = '.done:eq(0)';
+  let ajaxMock = Service.extend({
+    request(url){
+      assert.equal(url, '/auth/invalidatetokens');
+      return {
+        jwt: 'new token'
+      };
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+  this.inject.service('ajax', { as: 'ajax' });
+  let sessionMock = Service.extend({
+    authenticate(how, obj){
+      assert.equal(how, 'authenticator:ilios-jwt');
+      assert.ok(obj.jwt);
+      assert.equal(obj.jwt, 'new token');
+    }
+  });
+  this.register('service:session', sessionMock);
+  this.inject.service('session', { as: 'session' });
+
+  let flashMock = Service.extend({
+    success(what){
+      assert.equal(what, 'user.successfullyInvalidatedTokens');
+    }
+  });
+  this.register('service:flashMessages', flashMock);
+  this.inject.service('flashMessages', { as: 'flashMessages' });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{my-profile showInvalidateTokens=true toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`);
+
+  this.$(go).click();
+  return wait();
 });

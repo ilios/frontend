@@ -3,7 +3,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
 
-const { computed, RSVP, inject } = Ember;
+const { computed, RSVP, inject, isPresent } = Ember;
 const { Promise } = RSVP;
 const { service } = inject;
 const { reads } = computed;
@@ -26,6 +26,7 @@ export default Ember.Component.extend({
   serverVariables: service(),
   ajax: service(),
   flashMessages: service(),
+  session: service(),
 
   host: reads('serverVariables.apiHost'),
   namespace: reads('serverVariables.apiNameSpace'),
@@ -69,6 +70,21 @@ export default Ember.Component.extend({
     let data = yield ajax.request(url);
 
     this.set('generatedJwt', data.jwt);
+  }),
+  invalidateTokens: task(function * (){
+    yield timeout(10); //small delay to allow rendering the spinner
+    const ajax = this.get('ajax');
+    let url = '/auth/invalidatetokens';
+    let data = yield ajax.request(url);
+
+    if (isPresent(data.jwt)) {
+      const flashMessages = this.get('flashMessages');
+      const session = this.get('session');
+      let authenticator = 'authenticator:ilios-jwt';
+      session.authenticate(authenticator, {jwt: data.jwt});
+      flashMessages.success('user.successfullyInvalidatedTokens');
+      this.get('toggleShowInvalidateTokens')();
+    }
   }),
   actions: {
     tokenCopied(){

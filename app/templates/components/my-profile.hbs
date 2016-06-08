@@ -106,9 +106,11 @@
 <section class='token-maintenance'>
   <h2>{{t 'user.manageAPITokens'}}</h2>
   <p>{{t 'user.tokenInfo' apiDocsUrl=apiDocsUrl}}</p>
-  {{#unless showCreateNewToken}}
+  {{#unless (or showInvalidateTokens showCreateNewToken)}}
     <button class='new-token' onclick={{action toggleShowCreateNewToken}}>{{t 'general.createNew'}}</button>
+    <button class='invalidate-tokens no' onclick={{action toggleShowInvalidateTokens}}>{{t 'user.invalidateTokens'}}</button>
   {{else}}
+    {{#if showCreateNewToken}}
       {{#if generatedJwt}}
         <div class='new-token-result'>
           <h3>{{t 'user.newToken'}}:</h3>
@@ -132,6 +134,20 @@
           <button class='bigcancel' {{action (pipe toggleShowCreateNewToken (action 'reset'))}}>{{fa-icon 'times'}}</button>
         </div>
       {{/if}}
-
+    {{/if}}
+    {{#if showInvalidateTokens}}
+      <div class='invalidate-tokens-form'>
+        <h3>{{t 'user.invalidateTokens'}}</h3>
+        <p>{{t 'user.invalidateTokensConfirmation'}}</p>
+        <button class='done text' {{action (perform invalidateTokens)}}>
+          {{#if invalidateTokens.isRunning}}
+            {{fa-icon 'spinner' spin=true}}
+          {{else}}
+            {{t 'general.yes'}}
+          {{/if}}
+        </button>
+        <button class='cancel text' {{action toggleShowInvalidateTokens}}>{{t 'general.cancel'}}</button>
+      </div>
+    {{/if}}
   {{/unless}}
 </section>

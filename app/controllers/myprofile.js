@@ -4,7 +4,9 @@ const { Controller } = Ember;
 
 export default Controller.extend({
   queryParams: {
-    createNewToken: 'newtoken',
+    showCreateNewToken: 'newtoken',
+    showInvalidateTokens: 'invalidatetokens'
   },
-  createNewToken: false,
+  showCreateNewToken: false,
+  showInvalidateTokens: false,
 });

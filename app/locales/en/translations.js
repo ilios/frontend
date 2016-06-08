@@ -471,8 +471,9 @@ export default {
     'tokenInfo': 'API Tokens are used to programatically accesss Ilios data.  Your token is like a password - anyone who has it can make changes on your behlaf.  Read more in the documentation at <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>',
     'validUntil': 'When should this token stop working?',
     'newToken': 'New Token',
-    'expireTokens': 'Expire All Tokens',
-    'expireTokensConfirmation': 'This will invalidate all existing API tokens and you will need to generate new ones for any applications you have.  Are you sure you want to do this?',
+    'invalidateTokens': 'Invalidate All Tokens',
+    'invalidateTokensConfirmation': 'This will invalidate all existing API tokens and you will need to generate new ones for any applications you have.  Are you sure you want to do this?',
+    'successfullyInvalidatedTokens': 'All existing tokens were successfully invalidated',
   },
   'language': {
     'select': {
