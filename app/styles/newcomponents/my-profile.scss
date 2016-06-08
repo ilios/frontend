@@ -6,10 +6,11 @@
     @include span-columns(7);
 
     border-top: 1px dotted $ilios-orange;
+    font-size: .8 * $base-font-size;
     margin-top: 1em;
     padding: 1em;
 
-    h2 {
+    h3 {
       margin: 0;
       padding: 0;
     }

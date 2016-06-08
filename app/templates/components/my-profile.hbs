@@ -104,11 +104,11 @@
 </div>
 
 <section class='token-maintenance'>
-  <h2>{{t 'user.manageAPITokens'}}</h2>
+  <h3>{{t 'user.manageAPITokens'}}</h3>
   <p>{{t 'user.tokenInfo' apiDocsUrl=apiDocsUrl}}</p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
-    <button class='new-token' onclick={{action toggleShowCreateNewToken}}>{{t 'general.createNew'}}</button>
-    <button class='invalidate-tokens no' onclick={{action toggleShowInvalidateTokens}}>{{t 'user.invalidateTokens'}}</button>
+    <button class='new-token done text' onclick={{action toggleShowCreateNewToken}}>{{t 'general.createNew'}}</button>
+    <button class='invalidate-tokens cancel text' onclick={{action toggleShowInvalidateTokens}}>{{t 'user.invalidateTokens'}}</button>
   {{else}}
     {{#if showCreateNewToken}}
       {{#if generatedJwt}}
