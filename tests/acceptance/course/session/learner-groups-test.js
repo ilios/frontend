@@ -8,7 +8,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
-var url = '/courses/1/sessions/1';
+var url = '/courses/1/sessions/1?sessionLearnergroupDetails=true';
 module('Acceptance: Session - Learner Groups', {
   beforeEach: function() {
     application = startApp();
@@ -32,10 +32,6 @@ let setupModels = function(){
     school: 1,
     sessions: [1]
   });
-  server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
-  });
   server.create('sessionType', {
     sessions: [1]
   });
@@ -44,7 +40,7 @@ let setupModels = function(){
     school: 1
   });
   server.create('programYear', {
-    cohorts: [1]
+    cohort: 1
   });
   server.create('cohort', {
     learnerGroups: [1, 2, 3, 4, 5, 6, 7, 8],
@@ -82,14 +78,19 @@ let setupModels = function(){
 };
 
 test('initial selected learner groups', function(assert) {
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
 
-  const set1 = 'fieldset:eq(0)';
+  const container = '.detail-learnergroups ';
+  const set1 = container + 'fieldset:eq(0)';
   const set1Legend = set1 + ' legend';
   const set1Group1 = set1 + ' li:eq(0)';
-  const set2 = 'fieldset:eq(1)';
+  const set2 = container + 'fieldset:eq(1)';
   const set2Legend = set2 + ' legend';
   const set2Group1 = set2 + ' li:eq(0)';
-  const set3 = 'fieldset:eq(2)';
+  const set3 = container + 'fieldset:eq(2)';
   const set3Legend = set3 + ' legend';
   const set3Group1 = set3 + ' li:eq(0)';
 
@@ -100,26 +101,52 @@ test('initial selected learner groups', function(assert) {
     assert.equal(getElementText(find(set2Legend)), getText('learnergroup 1 (program0 cohort0)'));
     assert.equal(getElementText(find(set3Legend)), getText('learnergroup 3 (program0 cohort0)'));
 
-    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0'));
-    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1'));
-    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3'));
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0 (0)'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1 (0)'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
 
   });
 });
 
 test('learner group manager display', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const selectedGroupsList = '.detail-learnergroups .selected-learner-groups .main-text';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  const container = '.detail-learnergroups ';
+  const set1 = container + 'fieldset:eq(0)';
+  const set1Legend = set1 + ' legend';
+  const set1Group1 = set1 + ' li:eq(0)';
+  const set2 = container + 'fieldset:eq(1)';
+  const set2Legend = set2 + ' legend';
+  const set2Group1 = set2 + ' li:eq(0)';
+  const set3 = container + 'fieldset:eq(2)';
+  const set3Legend = set3 + ' legend';
+  const set3Group1 = set3 + ' li:eq(0)';
+
+  visit(url + '&isManagingLearnerGroups=true');
   const availableLearnerGroups = '.detail-learnergroups .tree-groups-list';
   andThen(function() {
+
     assert.equal(currentPath(), 'course.session.index');
     assert.equal(getElementText(find(availableLearnerGroups).children(':visible')), getText('learnergroup 2 learnergroup 3 learnergroup 5  learnergroup 6  learnergroup 4  learnergroup 7'));
-    assert.equal(getElementText(find(selectedGroupsList)), getText('learnergroup0 learnergroup1 learnergroup3'));
+
+    assert.equal(getElementText(find(set1Legend)), getText('learnergroup 0 (program0 cohort0)'));
+    assert.equal(getElementText(find(set2Legend)), getText('learnergroup 1 (program0 cohort0)'));
+    assert.equal(getElementText(find(set3Legend)), getText('learnergroup 3 (program0 cohort0)'));
+
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0 (0)'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1 (0)'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
   });
 });
 
 test('filter learner groups by top group should include all subgroups', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  visit(url + '&isManagingLearnerGroups=true');
   fillIn('.search-box input', 3);
   const availableLearnerGroups = '.detail-learnergroups .tree-groups-list';
   andThen(function() {
@@ -129,7 +156,11 @@ test('filter learner groups by top group should include all subgroups', function
 });
 
 test('filter learner groups by subgroup should include top group', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  visit(url + '&isManagingLearnerGroups=true');
   const lg3 = '.detail-learnergroups .tree-groups-list li:eq(3)';
   const lg5 = '.detail-learnergroups .tree-groups-list li:eq(4)';
   const lg6 = '.detail-learnergroups .tree-groups-list li:eq(5)';
@@ -147,8 +178,16 @@ test('filter learner groups by subgroup should include top group', function(asse
 });
 
 test('add learner group', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const selectedGroupsList = '.detail-learnergroups .selected-learner-groups .main-text';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  const container = '.detail-learnergroups ';
+  const set3 = container + 'fieldset:eq(2)';
+  const set3Legend = set3 + ' legend';
+  const set3Group1 = set3 + ' li:eq(0)';
+
+  visit(url + '&isManagingLearnerGroups=true');
   const lg2 = '.detail-learnergroups .tree-groups-list li:eq(2)';
   const lg2Clicker = lg2 + ' .clickable';
   andThen(function() {
@@ -157,31 +196,49 @@ test('add learner group', function(assert) {
   click(lg2Clicker);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(selectedGroupsList)), getText('learnergroup0 learnergroup1 learnergroup2 learnergroup3'));
+    assert.equal(getElementText(find(set3Legend)), getText('learnergroup 2 (program0 cohort0)'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 2 (0)'));
     assert.ok(find(lg2).is(':hidden'));
 
   });
 });
 
 test('add learner sub group', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const selectedGroupsList = '.detail-learnergroups .selected-learner-groups .main-text';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  const container = '.detail-learnergroups ';
+  const set3 = container + 'fieldset:eq(2)';
+  const set3Group1 = set3 + ' li:eq(0)';
+  const set3Group2 = set3 + ' li:eq(1)';
   const lg5 = '.detail-learnergroups .tree-groups-list li:eq(4)';
   const lg5Clicker = lg5 + ' .clickable';
+
+  visit(url + '&isManagingLearnerGroups=true');
   andThen(function() {
     assert.ok(find(lg5).is(':visible'));
   });
   click(lg5Clicker);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(selectedGroupsList)), getText('learnergroup0 learnergroup1 learnergroup3 learnergroup5'));
     assert.ok(find(lg5).is(':hidden'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
+    assert.equal(getElementText(find(set3Group2)), getText('learnergroup 5 (0)'));
   });
 });
 
 test('add learner group with children', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const selectedGroupsList = '.detail-learnergroups .selected-learner-groups .main-text';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  visit(url + '&isManagingLearnerGroups=true');
+  const container = '.detail-learnergroups ';
+  const set3 = container + 'fieldset:eq(2)';
+  const set3Group1 = set3 + ' li:eq(0)';
+  const set3Group2 = set3 + ' li:eq(1)';
+  const set3Group3 = set3 + ' li:eq(2)';
   const lg3 = '.detail-learnergroups .tree-groups-list li:eq(3)';
   const lg5 = '.detail-learnergroups .tree-groups-list li:eq(4)';
   const lg6 = '.detail-learnergroups .tree-groups-list li:eq(5)';
@@ -194,7 +251,9 @@ test('add learner group with children', function(assert) {
   click(lg3Clicker);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(selectedGroupsList)), getText('learnergroup0 learnergroup1 learnergroup3 learnergroup5 learnergroup6'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
+    assert.equal(getElementText(find(set3Group2)), getText('learnergroup 5 (0)'));
+    assert.equal(getElementText(find(set3Group3)), getText('learnergroup 6 (0)'));
     assert.ok(find(lg3).is(':hidden'));
     assert.ok(find(lg5).is(':hidden'));
     assert.ok(find(lg6).is(':hidden'));
@@ -202,13 +261,20 @@ test('add learner group with children', function(assert) {
 });
 
 test('add learner group with children and remove one child', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const selectedGroupsList = '.detail-learnergroups .selected-learner-groups .main-text';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  visit(url + '&isManagingLearnerGroups=true');
+  const container = '.detail-learnergroups ';
+  const set3 = container + 'fieldset:eq(2)';
+  const set3Group1 = set3 + ' li:eq(0)';
+  const set3Group2 = set3 + ' li:eq(1)';
+  const set3Group3 = set3 + ' li:eq(2)';
   const lg3 = '.detail-learnergroups .tree-groups-list li:eq(3)';
   const lg5 = '.detail-learnergroups .tree-groups-list li:eq(4)';
   const lg6 = '.detail-learnergroups .tree-groups-list li:eq(5)';
   const lg3Clicker = lg3 + ' .clickable';
-  const removeLg5 = '.detail-learnergroups .selected-learner-groups li:eq(3)';
   andThen(function() {
     assert.ok(find(lg3).is(':visible'));
     assert.ok(find(lg5).is(':visible'));
@@ -216,16 +282,17 @@ test('add learner group with children and remove one child', function(assert) {
   });
   click(lg3Clicker);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(selectedGroupsList)), getText('learnergroup0 learnergroup1 learnergroup3 learnergroup5 learnergroup6'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
+    assert.equal(getElementText(find(set3Group2)), getText('learnergroup 5 (0)'));
+    assert.equal(getElementText(find(set3Group3)), getText('learnergroup 6 (0)'));
     assert.ok(find(lg3).is(':hidden'));
     assert.ok(find(lg5).is(':hidden'));
     assert.ok(find(lg6).is(':hidden'));
   });
-  click(removeLg5);
+  click(set3Group2);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(getElementText(find(selectedGroupsList)), getText('learnergroup0 learnergroup1 learnergroup3 learnergroup6'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
+    assert.equal(getElementText(find(set3Group2)), getText('learnergroup 6 (0)'));
     assert.ok(find(lg3).is(':visible'));
     assert.ok(find(lg5).is(':visible'));
     assert.ok(find(lg6).is(':hidden'));
@@ -234,21 +301,26 @@ test('add learner group with children and remove one child', function(assert) {
 });
 
 test('undo learner group change', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const lg0 = '.detail-learnergroups .selected-learner-groups li:eq(0)';
-  const lg7 = '.detail-learnergroups .available-learner-groups li:eq(7) .clickable';
-  const cancel = '.detail-learnergroups .bigcancel';
-  const set1 = 'fieldset:eq(0)';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  visit(url + '&isManagingLearnerGroups=true');
+  const container = '.detail-learnergroups ';
+  const lg7 = container + '.available-learner-groups li:eq(7) .clickable';
+  const cancel = container + '.bigcancel';
+  const set1 = container + 'fieldset:eq(0)';
   const set1Legend = set1 + ' legend';
   const set1Group1 = set1 + ' li:eq(0)';
-  const set2 = 'fieldset:eq(1)';
+  const set1RemoveAll = set1 + ' .remove';
+  const set2 = container + 'fieldset:eq(1)';
   const set2Legend = set2 + ' legend';
   const set2Group1 = set2 + ' li:eq(0)';
-  const set3 = 'fieldset:eq(2)';
+  const set3 = container + 'fieldset:eq(2)';
   const set3Legend = set3 + ' legend';
   const set3Group1 = set3 + ' li:eq(0)';
 
-  click(lg0);
+  click(set1RemoveAll);
   click(lg7);
   click(cancel);
   andThen(function() {
@@ -258,39 +330,80 @@ test('undo learner group change', function(assert) {
     assert.equal(getElementText(find(set2Legend)), getText('learnergroup 1 (program0 cohort0)'));
     assert.equal(getElementText(find(set3Legend)), getText('learnergroup 3 (program0 cohort0)'));
 
-    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0'));
-    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1'));
-    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3'));
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 0 (0)'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 1 (0)'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 3 (0)'));
   });
 });
 
 test('save learner group change', function(assert) {
-  visit(url + '?isManagingLearnerGroups=true');
-  const lg0 = '.detail-learnergroups .selected-learner-groups li:eq(0)';
-  const lg7 = '.detail-learnergroups .available-learner-groups li:eq(7) .clickable';
-  const save = '.detail-learnergroups .bigadd';
-  const set1 = 'fieldset:eq(0)';
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4]
+  });
+  visit(url + '&isManagingLearnerGroups=true');
+  const container = '.detail-learnergroups ';
+  const lg7 = container + '.available-learner-groups li:eq(7) .clickable';
+  const save = container +  '.bigadd';
+  const set1 = container +  'fieldset:eq(0)';
   const set1Legend = set1 + ' legend';
   const set1Group1 = set1 + ' li:eq(0)';
-  const set2 = 'fieldset:eq(1)';
+  const set1RemoveAll = set1 + ' .remove';
+  const set2 = container +  'fieldset:eq(1)';
   const set2Legend = set2 + ' legend';
   const set2Group1 = set2 + ' li:eq(0)';
-  const set3 = 'fieldset:eq(2)';
+  const set3 = container +  'fieldset:eq(2)';
   const set3Legend = set3 + ' legend';
   const set3Group1 = set3 + ' li:eq(0)';
+  const set3Group2 = set3 + ' li:eq(1)';
 
-  click(lg0);
+  click(set1RemoveAll);
   click(lg7);
   click(save);
   andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-
     assert.equal(getElementText(find(set1Legend)), getText('learnergroup 1 (program0 cohort0)'));
     assert.equal(getElementText(find(set2Legend)), getText('learnergroup 3 (program0 cohort0)'));
     assert.equal(getElementText(find(set3Legend)), getText('learnergroup 4 (program0 cohort0)'));
 
-    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 1'));
-    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 3'));
-    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 7'));
+    assert.equal(getElementText(find(set1Group1)), getText('learnergroup 1 (0)'));
+    assert.equal(getElementText(find(set2Group1)), getText('learnergroup 3 (0)'));
+    assert.equal(getElementText(find(set3Group1)), getText('learnergroup 4 (0)'));
+    assert.equal(getElementText(find(set3Group2)), getText('learnergroup 7 (0)'));
+  });
+});
+
+test('collapsed learner groups', function(assert) {
+  server.create('programYear', {
+    cohort: 2,
+    program: 1
+  });
+  server.create('cohort', {
+    learnerGroups: [9, 10],
+    courses: [1],
+    programYear: 2
+  });
+  server.createList('learnerGroup', 2, {
+    ilmSessions: [1],
+    cohort: 2
+  });
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: [1, 2, 4, 10, 11]
+  });
+
+  const cohort1Title = 'table tr:eq(1) td:eq(0)';
+  const cohort1Count = 'table tr:eq(1) td:eq(1)';
+  const cohort2Title = 'table tr:eq(2) td:eq(0)';
+  const cohort2Count = 'table tr:eq(2) td:eq(1)';
+
+  visit('/courses/1/sessions/1?sessionLearnergroupDetails=false');
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    assert.equal(getElementText(find(cohort1Title)), getText('program0 cohort0'));
+    assert.equal(getElementText(find(cohort1Count)), getText('3'));
+    assert.equal(getElementText(find(cohort2Title)), getText('program0 cohort1'));
+    assert.equal(getElementText(find(cohort2Count)), getText('2'));
+
   });
 });
