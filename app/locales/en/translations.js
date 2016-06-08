@@ -138,7 +138,6 @@ export default {
     'schools': 'Schools',
     'universalLocator': 'Universal Locator',
     'removeAll': 'Remove All',
-    'addAll': 'Add All',
   },
   'programs': {
     'programTitle': 'Program Title',
