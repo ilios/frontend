@@ -137,6 +137,7 @@ export default {
     'vocabulary': 'Vocabulaire',
     'schools': 'Écoles',
     'universalLocator': 'Localisateur universel',
+    'removeAll': 'Supprimer Tous',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -310,6 +311,7 @@ export default {
     'learnerGroups': "Groupes d’Apprenants",
     'learnerGroupsManageTitle': "Manager groupes d'apprenants",
     'availableLearnerGroups': "Groupes d'apprenants disponsibles",
+    'selectedLearnerGroups': "Groupes d’Étudiants Selectionées",
     'noAvailableLearnerGroups': "Il n'y a aucune groupes d'apprenants disponsibles dans cette cohorte",
     'noSelectedLearnerGroups': "Il n'y a aucune groupes d'apprenants sélectionné",
     'instructors': "Instructeurs",

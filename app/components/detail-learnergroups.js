@@ -1,50 +1,69 @@
 import Ember from 'ember';
+import { task, timeout } from 'ember-concurrency';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
 
 export default Component.extend({
+  init(){
+    this._super(...arguments);
+    this.get('loadLearnerGroups').perform();
+  },
+  didUpdateAttrs(){
+    this._super(...arguments);
+    this.get('loadLearnerGroups').perform();
+  },
   classNames: ['detail-learnergroups'],
+  tagName: 'div',
   subject: null,
   isIlmSession: false,
+  editable: true,
   isManaging: false,
-  initialGroups: [],
+  learnerGroups: [],
   cohorts: [],
+  loadLearnerGroups: task(function * (){
+    const subject = this.get('subject');
+    if (subject){
+      let learnerGroups = yield subject.get('learnerGroups');
+      this.set('learnerGroups', learnerGroups.toArray());
+    } else {
+      yield timeout(1000);
+    }
+  }).restartable(),
+  save: task(function * (){
+    yield timeout(10);
+    let subject = this.get('subject');
+    let learnerGroups = this.get('learnerGroups');
+    subject.set('learnerGroups', learnerGroups);
+    yield subject.save();
+    this.get('setIsManaging')(false);
+  }),
+  collapsible: computed('isManaging', 'learnerGroups.length', function(){
+    const isManaging = this.get('isManaging');
+    const learnerGroups = this.get('learnerGroups');
+    return learnerGroups.get('length') && ! isManaging;
+  }),
   actions: {
-    manage: function(){
-      var self = this;
-      this.get('subject.learnerGroups').then(function(learnerGroups){
-        self.set('initialGroups', learnerGroups.toArray());
-        self.set('isManaging', true);
-      });
+    cancel(){
+      this.get('loadLearnerGroups').perform();
+      this.get('setIsManaging')(false);
     },
-    save: function(){
-      var self = this;
-      //we get a proxy here so we use the content
-      let subject = this.get('subject.content');
-      subject.get('learnerGroups').then(function(newLearnerGroups){
-        let oldLearnerGroups = self.get('initialGroups').filter(function(learnerGroup){
-          return !newLearnerGroups.contains(learnerGroup);
-        });
-        oldLearnerGroups.forEach(function(learnerGroup){
-          if(self.get('isIlmSession')){
-            learnerGroup.get('ilmSessions').removeObject(subject);
-          }
-          learnerGroup.save();
-        });
-
-        subject.save().then(function(){
-          newLearnerGroups.save().then(function(){
-            self.set('isManaging', false);
-            self.set('initialGroups', []);
-          });
-        });
+    addLearnerGroup: function(learnerGroup){
+      let learnerGroups = this.get('learnerGroups').toArray();
+      learnerGroups.addObject(learnerGroup);
+      learnerGroup.get('allDescendants').then(function(descendants){
+        learnerGroups.addObjects(descendants);
       });
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('learnerGroups', learnerGroups);
     },
-    cancel: function(){
-      var learnerGroups = this.get('subject').get('learnerGroups');
-      learnerGroups.clear();
-      learnerGroups.addObjects(this.get('initialGroups'));
-      this.set('isManaging', false);
+    removeLearnerGroup: function(learnerGroup){
+      let learnerGroups = this.get('learnerGroups').toArray();
+      learnerGroups.removeObject(learnerGroup);
+      learnerGroup.get('allDescendants').then(function(descendants){
+        learnerGroups.removeObjects(descendants);
+      });
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('learnerGroups', learnerGroups);
     }
   }
 });

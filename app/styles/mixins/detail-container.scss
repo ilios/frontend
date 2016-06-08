@@ -1,0 +1,42 @@
+@mixin detail-container ($border-color) {
+  border-bottom: 1px dotted $border-color;
+  display: block;
+  margin: 0 .8em;
+  min-height: 2em;
+  padding: 1em .8em;
+}
+
+@mixin detail-container-title () {
+  @include fill-parent;
+  color: $text-blue;
+  font-size: $base-font-size;
+  font-weight: bold;
+
+  @include media($large-screen) {
+    @include span-columns(8 of 12);
+  }
+
+  &.collapsible {
+    &::after {
+      content: '\25BC';
+    }
+  }
+}
+
+@mixin detail-container-actions () {
+  @include fill-parent;
+  vertical-align: middle;
+
+  @include media($large-screen) {
+    @include shift(1 of 12);
+    @include span-columns(3 of 12);
+    @include omega();
+    text-align: right;
+  }
+}
+
+@mixin detail-container-content () {
+  @include fill-parent;
+  clear: both;
+  padding-top: 2em;
+}

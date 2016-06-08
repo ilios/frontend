@@ -137,6 +137,7 @@ export default {
     'vocabulary': 'Vocabulario',
     'schools': 'Escuelas',
     'universalLocator': 'Localizador universal de',
+    'removeAll': 'Quitar Todos',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -310,6 +311,7 @@ export default {
     'learnerGroups': 'Grupos De Aprendedores',
     'learnerGroupsManageTitle': 'Administrar Grupos de Aprendedores',
     'availableLearnerGroups': 'Grupos de Aprendedores Disponibles',
+    'selectedLearnerGroups': 'Grupos de Aprendizaje Seleccionados',
     'noAvailableLearnerGroups': 'No hay grupos de aprendedores no seleccionados en este Clase de La Graduación',
     'noSelectedLearnerGroups': 'No hay grupos de aprendedores seleccionados',
     'instructors': 'Instructores',

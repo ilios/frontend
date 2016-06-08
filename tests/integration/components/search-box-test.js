@@ -2,6 +2,8 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+import wait from 'ember-test-helpers/wait';
+
 const { run } = Ember;
 
 moduleForComponent('search-box', 'Integration | Component | search box', {
@@ -35,6 +37,8 @@ test('typing calls search', function(assert) {
     this.$('input').trigger('change');
     this.$('input').trigger('keypress', {which: 50});
   });
+  //wait for debounce timer in component
+  return wait();
 });
 
 test('escape calls clear', function(assert) {

@@ -2,11 +2,10 @@ import {
   moduleForModel,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
-moduleForModel('learner-group', 'Unit | Model | LearnerGroup' + testgroup, {
+moduleForModel('learner-group', 'Unit | Model | LearnerGroup', {
   needs: modelList
 });
 
@@ -264,4 +263,98 @@ test('check allParents', function(assert) {
       assert.equal(groups[2], learnerGroup);
     });
   });
+});
+
+test('check filterTitle on top group', function(assert) {
+  assert.expect(3);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  Ember.run(() => {
+    learnerGroup.set('title', 'top group');
+    return learnerGroup.get('allDescendants').then(groups => {
+      assert.equal(groups.length, 0);
+
+      let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+      let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
+      let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+
+      return learnerGroup.get('filterTitle').then(filterTitle => {
+        assert.equal(filterTitle, 'subGroup1subGroup2subGroup3top group');
+
+        let subGroup4 = store.createRecord('learner-group', {title: 'subGroup4'});
+        learnerGroup.get('children').pushObject(subGroup4);
+        let subGroup5 = store.createRecord('learner-group', {title: 'subGroup5'});
+        subGroup3.get('children').pushObject(subGroup5);
+
+        return learnerGroup.get('filterTitle').then(filterTitle => {
+          assert.equal(filterTitle, 'subGroup1subGroup4subGroup2subGroup3subGroup5top group');
+        });
+
+      });
+    });
+  });
+
+});
+
+test('check filterTitle on sub group', function(assert) {
+  assert.expect(2);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  Ember.run(() => {
+    learnerGroup.set('title', 'top group');
+    return learnerGroup.get('allDescendants').then(groups => {
+      assert.equal(groups.length, 0);
+
+      let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+      let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
+      store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+
+      return subGroup2.get('filterTitle').then(filterTitle => {
+        assert.equal(filterTitle, 'subGroup3subGroup1top groupsubGroup2');
+      });
+    });
+  });
+
+});
+
+test('check sortTitle on top group', function(assert) {
+  assert.expect(2);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  Ember.run(() => {
+    learnerGroup.set('title', 'top group');
+    return learnerGroup.get('allDescendants').then(groups => {
+      assert.equal(groups.length, 0);
+
+      store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+
+      let sortTitle = learnerGroup.get('sortTitle')
+      assert.equal(sortTitle, 'topgroup');
+    });
+  });
+
+});
+
+test('check sortTitle on sub group', function(assert) {
+  assert.expect(2);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  Ember.run(() => {
+    learnerGroup.set('title', 'top group');
+    return learnerGroup.get('allDescendants').then(groups => {
+      assert.equal(groups.length, 0);
+
+      let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+      let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
+      let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+
+      let sortTitle = subGroup3.get('sortTitle')
+      assert.equal(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');
+    });
+  });
+
 });

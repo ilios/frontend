@@ -1,0 +1,31 @@
+<div class='title clickable' onclick={{action expand}}>
+  {{t 'courses.learnerGroups'}} ({{get (await subject.learnerGroups) 'length'}})
+</div>
+
+<div class='collapsed-learnergroups-content'>
+  {{#if loadCohortSummaries.lastSuccessful.value}}
+    <table>
+      <thead>
+        <tr>
+          <th colspan=4>{{t 'general.cohort'}}</th>
+          <th>{{t 'general.learnerGroups'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{log loadCohortSummaries.lastSuccessful.value}}
+        {{#each (sort-by 'title' loadCohortSummaries.lastSuccessful.value) as |obj|}}
+          <tr>
+            <td colspan=4>
+              {{obj.title}}
+            </td>
+            <td>
+              {{obj.count}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    {{fa-icon 'spinner' spin=true}}
+  {{/if}}
+</div>

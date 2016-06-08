@@ -137,6 +137,7 @@ export default {
     'vocabulary': 'Vocabulary',
     'schools': 'Schools',
     'universalLocator': 'Universal Locator',
+    'removeAll': 'Remove All',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -310,6 +311,7 @@ export default {
     'learnerGroups': 'Learner Groups',
     'learnerGroupsManageTitle': 'Manage Learner Groups',
     'availableLearnerGroups': 'Available Learner Groups',
+    'selectedLearnerGroups': 'Selected Learner Groups',
     'noAvailableLearnerGroups': 'There are no unselected learner groups in this cohort',
     'noSelectedLearnerGroups': 'There are no selected learner groups',
     'instructors': 'Instructors',

@@ -1,31 +1,30 @@
-<section class='detail-block'>
-  <div class='detail-title'>
-    {{t 'courses.learnerGroups'}} ({{subject.learnerGroups.length}})
-    {{#if isManaging}}
-      <span class='detail-specific-title'>
-        {{t 'courses.learnerGroupsManageTitle'}}
-      </span>
-    {{/if}}
-  </div>
+<div class='title {{if collapsible "collapsible clickable"}}' onclick={{if collapsible (action collapse)}}>
+  {{t 'courses.learnerGroups'}} ({{subject.learnerGroups.length}})
+</div>
 
-  <div class='detail-actions'>
-    {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else if editable}}
-      <button {{action 'manage'}}>{{t 'courses.learnerGroupsManageTitle'}}</button>
-    {{/if}}
-  </div>
-  <div class='detail-content'>
-    {{#liquid-if isManaging class="horizontal"}}
-        {{learnergroup-selection-manager
-          subject=subject
-          cohorts=cohorts
-        }}
+<div class='actions'>
+  {{#if isManaging}}
+      <button class='bigadd' onclick={{perform save}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=save.isRunning}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  {{else if editable}}
+    <button {{action setIsManaging true}}>{{t 'courses.learnerGroupsManageTitle'}}</button>
+  {{/if}}
+</div>
+<div class='detail-learnergroups-content'>
+  {{#if isManaging}}
+    {{#liquid-if loadLearnerGroups.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
     {{else}}
-      {{detail-learnergroups-list
-        learnerGroups=subject.learnerGroups
+      {{learnergroup-selection-manager
+        learnerGroups=learnerGroups
+        cohorts=cohorts
+        add=(action 'addLearnerGroup')
+        remove=(action 'removeLearnerGroup')
       }}
     {{/liquid-if}}
-  </div>
-</section>
+  {{else}}
+    {{detail-learnergroups-list
+      learnerGroups=(await subject.learnerGroups)
+    }}
+  {{/if}}
+</div>

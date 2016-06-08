@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 const { Service, RSVP, Object } = Ember;
 const { resolve } = RSVP;
@@ -19,7 +20,9 @@ test('less than 3 charecters triggers warning', function(assert) {
   this.render(hbs`{{user-search}}`);
 
   this.$('input').val('ab').trigger('change');
-  assert.equal(this.$('ul').text().trim(), 'keep typing...');
+  return wait().then(()=>{
+    assert.equal(this.$('ul').text().trim(), 'keep typing...');
+  });
 });
 
 test('input triggers search', function(assert) {
@@ -36,8 +39,11 @@ test('input triggers search', function(assert) {
   this.render(hbs`{{user-search}}`);
 
   this.$('input').val('search words').trigger('change');
-  assert.equal(this.$('li:eq(0)').text().trim(), '1 Results');
-  assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+
+  return wait().then(()=>{
+    assert.equal(this.$('li:eq(0)').text().trim(), '1 Results');
+    assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+  });
 });
 
 test('no results displayes messages', function(assert) {
@@ -54,7 +60,11 @@ test('no results displayes messages', function(assert) {
   this.render(hbs`{{user-search}}`);
 
   this.$('input').val('search words').trigger('change');
-  assert.equal(this.$('li:eq(0)').text().trim(), 'no results');
+
+
+  return wait().then(()=>{
+    assert.equal(this.$('li:eq(0)').text().trim(), 'no results');
+  });
 });
 
 test('search for groups', function(assert) {
@@ -74,9 +84,12 @@ test('search for groups', function(assert) {
   this.render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups}}`);
 
   this.$('input').val('test').trigger('change');
-  assert.equal(this.$('li:eq(0)').text().trim(), '2 Results');
-  assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
-  assert.equal(this.$('li:eq(2)').text().trim(), 'test2');
+
+  return wait().then(()=>{
+    assert.equal(this.$('li:eq(0)').text().trim(), '2 Results');
+    assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
+    assert.equal(this.$('li:eq(2)').text().trim(), 'test2');
+  });
 });
 
 test('click user fires add user', function(assert) {
@@ -97,8 +110,11 @@ test('click user fires add user', function(assert) {
   this.render(hbs`{{user-search addUser=(action 'action')}}`);
 
   this.$('input').val('test').trigger('change');
-  assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
-  this.$('li:eq(1)').click();
+
+  return wait().then(()=>{
+    assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+    this.$('li:eq(1)').click();
+  });
 });
 
 test('click group fires add group', function(assert) {
@@ -119,6 +135,9 @@ test('click group fires add group', function(assert) {
   this.render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups addInstructorGroup=(action 'action')}}`);
 
   this.$('input').val('test').trigger('change');
-  assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
-  this.$('li:eq(1)').click();
+
+  return wait().then(()=>{
+    assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
+    this.$('li:eq(1)').click();
+  });
 });
