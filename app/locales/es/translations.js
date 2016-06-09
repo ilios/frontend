@@ -468,7 +468,7 @@ export default {
     'password': 'Contraseña',
     'myProfile': 'Mi Perfil',
     'manageAPITokens': 'Maneje Tokens de la API',
-    'tokenInfo': 'Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>',
+    'tokenInfo': 'Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>.',
     'validUntil': '¿Cuándo debe este símbolo (token) deje de funcionar??',
     'newToken': 'Nuevo Símbolo (Token)',
     'invalidateTokens': 'Invalida Todos los Tokens',

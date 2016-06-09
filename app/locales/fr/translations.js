@@ -468,7 +468,7 @@ export default {
     'password': 'Mot de passe',
     'myProfile': 'Mon profil',
     'manageAPITokens': "Gérer des jetons de l’API",
-    'tokenInfo': "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{{apiDocsUrl}}\">{{apiDocsUrl}}</a>",
+    'tokenInfo': "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{{apiDocsUrl}}\">{{apiDocsUrl}}</a>.",
     'validUntil': "Quand ce jeton devrais arrêter de travailler?",
     'newToken': 'Nouveau jeton',
     'invalidateTokens': 'Invalider tous les jetons',
