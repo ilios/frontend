@@ -138,6 +138,7 @@ export default {
     'schools': 'Escuelas',
     'universalLocator': 'Localizador universal de',
     'removeAll': 'Quitar Todos',
+    'copiedSuccessfully': 'Copiado con Éxito',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -466,6 +467,13 @@ export default {
     'username': 'Nombre de Usuario',
     'password': 'Contraseña',
     'myProfile': 'Mi Perfil',
+    'manageAPITokens': 'Maneje Tokens de la API',
+    'tokenInfo': 'Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>.',
+    'validUntil': '¿Cuándo debe este símbolo (token) deje de funcionar??',
+    'newToken': 'Nuevo Símbolo (Token)',
+    'invalidateTokens': 'Invalida Todos los Tokens',
+    'invalidateTokensConfirmation': 'Esto invalidará todas los tokens de API existentes y ustedes tendrán que generar nuevos tokens para cualquier aplicación que tengan. ¿Está seguro que desea hacer esto?',
+    'successfullyInvalidatedTokens': 'Todas los tokens existentes fueron con éxito invalidadas',
   },
   'language': {
     'select': {

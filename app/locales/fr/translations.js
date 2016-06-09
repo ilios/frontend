@@ -138,6 +138,7 @@ export default {
     'schools': 'Écoles',
     'universalLocator': 'Localisateur universel',
     'removeAll': 'Supprimer Tous',
+    'copiedSuccessfully': 'Copied Successfully',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -466,6 +467,13 @@ export default {
     'username': 'Nom d’utilisateur',
     'password': 'Mot de passe',
     'myProfile': 'Mon profil',
+    'manageAPITokens': "Gérer des jetons de l’API",
+    'tokenInfo': "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{{apiDocsUrl}}\">{{apiDocsUrl}}</a>.",
+    'validUntil': "Quand ce jeton devrais arrêter de travailler?",
+    'newToken': 'Nouveau jeton',
+    'invalidateTokens': 'Invalider tous les jetons',
+    'invalidateTokensConfirmation': "Cette action va effacer tous les jetons de l’API. Vouz devrez générer nouveaux jetons pour toutes des vos applications.  Êtes vous sûr de vouloir le faire?",
+    'successfullyInvalidatedTokens': 'Tous les jetons existant ont été invalidés avec succès.',
   },
   'language': {
     'select': {
