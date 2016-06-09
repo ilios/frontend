@@ -8,7 +8,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
   ajax: service(),
-  
+
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   beforeModel(transition){
@@ -26,7 +26,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
         defer.resolve();
         return;
       }
-      
+
       if(config.type === 'shibboleth'){
         this.get('ajax').request(loginUrl).then(response => {
           if(response.status === 'redirect'){
@@ -39,7 +39,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
           }
           if(response.status === 'noAccountExists'){
             this.set('noAccountExistsError', true);
-            this.set('noAccountExistsAccount', response.eppn);
+            this.set('noAccountExistsAccount', response.userId);
             defer.resolve();
             return;
           }
