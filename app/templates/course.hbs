@@ -1,16 +1,12 @@
-<div class="backtolink">{{#link-to 'courses'}}{{t 'courses.backToCourses'}}{{/link-to}}</div>
-
-<section id='course-details' class='full-width course-details'>
-  {{ilios-course-details
-    course=model
-    showDetails=details
-    setShowDetails=(action (mut details))
-    courseObjectiveDetails=courseObjectiveDetails
-    courseTaxonomyDetails=courseTaxonomyDetails
-    courseCompetencyDetails=courseCompetencyDetails
-    setCourseObjectiveDetails=(action (mut courseObjectiveDetails))
-    setCourseTaxonomyDetails=(action (mut courseTaxonomyDetails))
-    setCourseCompetencyDetails=(action (mut courseCompetencyDetails))
-  }}
-  {{liquid-outlet}}
-</section>
+{{ilios-course-details
+  course=model
+  showDetails=details
+  setShowDetails=(action (mut details))
+  courseObjectiveDetails=courseObjectiveDetails
+  courseTaxonomyDetails=courseTaxonomyDetails
+  courseCompetencyDetails=courseCompetencyDetails
+  setCourseObjectiveDetails=(action (mut courseObjectiveDetails))
+  setCourseTaxonomyDetails=(action (mut courseTaxonomyDetails))
+  setCourseCompetencyDetails=(action (mut courseCompetencyDetails))
+}}
+{{liquid-outlet}}

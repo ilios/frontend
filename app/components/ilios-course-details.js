@@ -4,6 +4,8 @@ import scrollTo from '../utils/scroll-to';
 const { Component } = Ember;
 
 export default Component.extend({
+  tagName: 'section',
+  classNames: ['course-details'],
   course: null,
   showDetails: null,
   courseObjectiveDetails: null,
