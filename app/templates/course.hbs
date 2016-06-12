@@ -3,8 +3,8 @@
 <section id='course-details' class='full-width course-details'>
   {{ilios-course-details
     course=model
-    collapsed=collapsed
-    collapsedState='collapsedState'
+    showDetails=details
+    setShowDetails=(action (mut details))
     courseObjectiveDetails=courseObjectiveDetails
     courseTaxonomyDetails=courseTaxonomyDetails
     courseCompetencyDetails=courseCompetencyDetails

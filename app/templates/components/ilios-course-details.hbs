@@ -4,8 +4,8 @@
     </div>
     <div class='detail-view-details'>
       {{course-overview course=course}}
-      {{#if collapsed}}
-        <div {{action 'expand'}} class='detail-collapsed-control'><span>{{t 'courses.expandDetail'}}{{fa-icon "fa-plus-square"}}</span></div>
+      {{#if (not showDetails)}}
+        <div {{action setShowDetails true}} class='detail-collapsed-control'><span>{{t 'courses.expandDetail'}}{{fa-icon "fa-plus-square"}}</span></div>
       {{else}}
         {{course-editing
           course=course
