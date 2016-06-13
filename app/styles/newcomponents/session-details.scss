@@ -1,4 +1,4 @@
-$session-background-color: #effbff;
+$session-background-color: $active-background-color;
 
 .session-details {
   background-color: $session-background-color;
@@ -8,16 +8,18 @@ $session-background-color: #effbff;
   border-width: 0 2px 2px;
   font-size: $base-font-size;
 
+  .detail-learnergroups,
+  .detail-instructors,
   .detail-objectives,
   .detail-learningmaterials,
   .detail-taxonomies,
-  .detail-mesh {
-    @include detail-container($text-blue);
-  }
-
-  .collapse-objectives,
-  .collapse-taxonomies {
-    @include collapsed-container($text-blue);
+  .detail-mesh,
+  .collapsed-objectives,
+  .collapsed-taxonomies,
+  .collapsed-learnergroups,
+  .session-offerings {
+    background-color: $session-background-color;
+    border-bottom: 1px dotted $text-blue;
   }
 
   table thead {
