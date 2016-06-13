@@ -17,28 +17,28 @@
         {{/if}}
     </div>
 {{else}}
-  <div class='title {{if objectives.length "clickable"}}' {{action 'collapse'}}>
+  <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
     {{t 'general.objectives'}} ({{subject.objectives.length}})
   </div>
 {{/if}}
 <div class='actions'>
-  {{#liquid-if isManaging class='horizontal'}}
+  {{#if isManaging class='horizontal'}}
     <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
     <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else}}
     {{#if editable}}
       {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
     {{/if}}
-  {{/liquid-if}}
+  {{/if}}
 </div>
-<div class='content'>
-  {{#liquid-if newObjectiveEditorOn class='vertical'}}
+<div class='detail-objectives-content'>
+  {{#if newObjectiveEditorOn class='vertical'}}
     {{new-objective
       save=(action 'saveNewObjective')
       cancel=(action 'toggleNewObjectiveEditor')
     }}
-  {{/liquid-if}}
-  {{#liquid-unless isManaging class="horizontal"}}
+  {{/if}}
+  {{#unless isManaging class="horizontal"}}
     {{#if isCourse}}
       {{course-objective-list
         course=subject
@@ -81,5 +81,5 @@
     {{#if isManagingCompetency}}
       {{objective-manage-competency objective=manageCompetencyObjective}}
     {{/if}}
-  {{/liquid-unless}}
+  {{/unless}}
 </div>

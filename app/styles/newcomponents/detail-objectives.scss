@@ -9,7 +9,13 @@
     @include detail-container-actions;
   }
 
-  .detail-learnergroups-content {
+  .detail-objectives-content {
     @include detail-container-content;
+  }
+
+  .new-objective-title {
+    font-weight: bold;
+    margin-left: 3em;
+    text-align: left;
   }
 }
