@@ -17,7 +17,7 @@
   {{/if}}
 </div>
 <div class='content'>
-  {{#liquid-if isManaging class="horizontal"}}
+  {{#if isManaging}}
       {{mesh-manager
         terms=bufferTerms
         add='addTermToBuffer'
@@ -29,5 +29,5 @@
       <li>{{term.name}}</li>
     {{/each}}
   </ul>
-  {{/liquid-if}}
+  {{/if}}
 </div>
