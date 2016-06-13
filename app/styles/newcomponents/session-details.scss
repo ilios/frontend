@@ -1,26 +1,16 @@
 $session-background-color: $active-background-color;
 
 .session-details {
+  @include fill-parent;
+  @include clearfix;
+
   background-color: $session-background-color;
   border-color: $header-grey;
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
   font-size: $base-font-size;
-
-  .detail-learnergroups,
-  .detail-instructors,
-  .detail-objectives,
-  .detail-learningmaterials,
-  .detail-taxonomies,
-  .detail-mesh,
-  .collapsed-objectives,
-  .collapsed-taxonomies,
-  .collapsed-learnergroups,
-  .session-offerings {
-    background-color: $session-background-color;
-    border-bottom: 1px dotted $text-blue;
-  }
+  padding: .8em;
 
   table thead {
     background-color: $text-blue;

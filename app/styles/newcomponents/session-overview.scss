@@ -1,6 +1,7 @@
 .session-overview {
   @include ilios-overview($text-blue);
   @include fill-parent;
+  border-bottom: 1px dotted $text-blue;
 
   .title {
     @include ilios-overview-title;

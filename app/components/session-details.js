@@ -5,6 +5,8 @@ const { Component, computed } = Ember;
 const { not } = computed;
 
 export default Component.extend({
+  tagName: 'section',
+  classNames: ['session-details'],
   sessionTypes: [],
   session: null,
   editable: not('course.locked'),
@@ -12,7 +14,9 @@ export default Component.extend({
   sessionTaxonomyDetails: null,
 
   didInsertElement: function(){
-    scrollTo("#session-" + this.get('session.id'));
+    const id = this.$().attr('id');
+
+    scrollTo(`#${id}`);
   },
   actions: {
     save: function(){
