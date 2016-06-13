@@ -18,7 +18,7 @@
     {{/if}}
 </div>
 <div class='content'>
-    {{#liquid-if isManaging class="horizontal"}}
+    {{#if isManaging}}
         {{taxonomy-manager
         subject=subject
         selectedTerms=bufferedTerms
@@ -28,5 +28,5 @@
         {{#each subject.associatedVocabularies as |vocab| }}
             {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
         {{/each}}
-    {{/liquid-if}}
+    {{/if}}
 </div>

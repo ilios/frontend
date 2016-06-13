@@ -9,7 +9,13 @@
     @include detail-container-actions;
   }
 
-  .detail-learnergroups-content {
+  .content {
     @include detail-container-content;
+
+    .selected-taxonomy-terms {
+      .muted {
+        color: lighten($default-text-color, 50%);
+      }
+    }
   }
 }
