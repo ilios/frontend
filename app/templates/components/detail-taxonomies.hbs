@@ -3,7 +3,7 @@
         <span class='detail-specific-title'>{{t 'taxonomies.termsManageTitle'}}</span>
     </div>
 {{else}}
-    <div class='title {{if subject.terms.length "clickable"}}' {{action 'collapse'}}>
+    <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
         {{t 'general.terms'}} ({{subject.terms.length}})
     </div>
 {{/if}}
