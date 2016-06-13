@@ -28,6 +28,34 @@
     }
   }
 
+  .independentlearningcontrol {
+    clear: both;
+  }
+
+  .sessionilmhours,
+  .sessionilmduedate {
+    @include media($large-screen) {
+      @include span-columns(3);
+
+      label {
+        @include span-columns(2 of 3);
+        margin: 0 1em 0 0;
+        text-align: right;
+      }
+    }
+  }
+
+  hr {
+    @include fill-parent;
+    background: 0;
+    height: 0;
+    margin: 1em;
+  }
+
+  .sessionilmduedate {
+    @include omega;
+  }
+
   .sessiontype {
     @include fill-parent;
     display: block;
