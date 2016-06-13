@@ -18,8 +18,8 @@
     <button {{action 'manage'}}>{{t 'courses.cohortsManageTitle'}}</button>
   {{/if}}
 </div>
-<div class='content'>
-  {{#liquid-if isManaging class="horizontal"}}
+<div class='detail-cohorts-content'>
+  {{#if isManaging class="horizontal"}}
       {{detail-cohort-manager
         selectedCohorts=bufferedCohorts
         add='addCohortToBuffer'
@@ -29,5 +29,5 @@
     {{detail-cohort-list
       cohorts=course.cohorts
     }}
-  {{/liquid-if}}
+  {{/if}}
 </div>
