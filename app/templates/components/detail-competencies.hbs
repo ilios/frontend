@@ -1,7 +1,7 @@
 <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
   {{t 'general.competencies'}} ({{course.competencies.length}})
 </div>
-<div class='content'>
+<div class='detail-competencies-content'>
   <ul class='static-list'>
     {{#each course.domains as |domain|}}
       <li>{{domain.title}}
