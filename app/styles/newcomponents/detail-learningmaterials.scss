@@ -19,7 +19,16 @@
     @include media($large-screen) {
       @include span-columns(2 of 12);
       @include omega();
+      @include shift(7);
       text-align: right;
+    }
+  }
+
+  &.display-search-box {
+    .actions {
+      @include media($large-screen) {
+        @include shift(0);
+      }
     }
   }
 

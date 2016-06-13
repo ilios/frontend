@@ -12,7 +12,7 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   tagName: 'section',
-  classNames: ['detail-learningmaterials'],
+  classNameBindings: [':detail-learningmaterials', 'displaySearchBox'],
   subject: null,
   isCourse: false,
   editable: true,
