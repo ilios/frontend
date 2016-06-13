@@ -5,6 +5,8 @@ const { Component, computed } = Ember;
 export default Component.extend({
   course: null,
   editable: true,
+  tagName: 'section',
+  classNameBindings: [':detail-competencies', 'showCollapsible:collapsible'],
 
   showCollapsible: computed('course.competencies.[]', function () {
     const competencies = this.get('course.competencies');

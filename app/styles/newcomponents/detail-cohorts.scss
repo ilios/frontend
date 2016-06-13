@@ -1,0 +1,15 @@
+.detail-cohorts {
+  @include detail-container($text-blue);
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .detail-learnergroups-content {
+    @include detail-container-content;
+  }
+}

@@ -11,6 +11,8 @@ export default Component.extend({
   currentUser: service(),
   store: service(),
   i18n: service(),
+  tagName: 'section',
+  classNames: ['detail-learningmaterials'],
   subject: null,
   isCourse: false,
   editable: true,
@@ -20,15 +22,12 @@ export default Component.extend({
   managingMaterial: null,
   meshMaterial: null,
   isSession: not('isCourse'),
-  classNames: ['detail-learning-materials'],
   newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
 
   isEditing: false,
   type: null,
-
-  insertPadding: not('displaySearchBox'),
 
   displaySearchBox: computed('isManaging', 'isEditing', {
     get() {

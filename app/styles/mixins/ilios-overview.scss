@@ -1,4 +1,8 @@
 @mixin ilios-overview () {
+  padding: .8em;
+
+  @include row();
+
   label {
     @include ilios-label;
     margin-right: .5em;

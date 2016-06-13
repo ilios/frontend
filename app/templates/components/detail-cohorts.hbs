@@ -1,35 +1,33 @@
-<section class='detail-block'>
-  <div class='detail-title'>
-    {{#if isManaging}}
-      <span class='detail-specific-title'>
-        {{t 'courses.cohortsManageTitle'}}
-      </span>
-    {{else}}
-      {{t 'courses.cohorts'}} ({{course.cohorts.length}})
-    {{/if}}
-  </div>
+<div class='title'>
+  {{#if isManaging}}
+    <span class='specific-title'>
+      {{t 'courses.cohortsManageTitle'}}
+    </span>
+  {{else}}
+    {{t 'courses.cohorts'}} ({{course.cohorts.length}})
+  {{/if}}
+</div>
 
-  <div class='detail-actions'>
-    {{#if isManaging}}
-      <button class='bigadd' {{action 'save'}}>
-        {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
-      </button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else if editable}}
-      <button {{action 'manage'}}>{{t 'courses.cohortsManageTitle'}}</button>
-    {{/if}}
-  </div>
-  <div class='detail-content'>
-    {{#liquid-if isManaging class="horizontal"}}
-        {{detail-cohort-manager
-          selectedCohorts=bufferedCohorts
-          add='addCohortToBuffer'
-          remove='removeCohortFromBuffer'
-        }}
-    {{else}}
-      {{detail-cohort-list
-        cohorts=course.cohorts
+<div class='actions'>
+  {{#if isManaging}}
+    <button class='bigadd' {{action 'save'}}>
+      {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+    </button>
+    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  {{else if editable}}
+    <button {{action 'manage'}}>{{t 'courses.cohortsManageTitle'}}</button>
+  {{/if}}
+</div>
+<div class='content'>
+  {{#liquid-if isManaging class="horizontal"}}
+      {{detail-cohort-manager
+        selectedCohorts=bufferedCohorts
+        add='addCohortToBuffer'
+        remove='removeCohortFromBuffer'
       }}
-    {{/liquid-if}}
-  </div>
-</section>
+  {{else}}
+    {{detail-cohort-list
+      cohorts=course.cohorts
+    }}
+  {{/liquid-if}}
+</div>

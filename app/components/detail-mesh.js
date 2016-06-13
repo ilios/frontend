@@ -7,6 +7,7 @@ export default Component.extend({
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
   classNames: ['detail-mesh'],
+  tagName: 'section',
   placeholder: t('courses.meshSearchPlaceholder'),
   subject: null,
   terms: computed.oneWay('subject.meshDescriptors'),

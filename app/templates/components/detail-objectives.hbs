@@ -1,87 +1,85 @@
-<section class='detail-block {{if showCollapsible "collapsible"}}'>
-  {{#if isManaging}}
-      <div class='detail-title'>
-          {{#if isManagingParents}}
-              <span class='detail-specific-title'>
-                  {{objectiveParentTitle}}
-              </span>
-          {{/if}}
-          {{#if isManagingDescriptors}}
-              <span class='detail-specific-title'>
-                  {{t 'courses.objectiveDescriptorTitle'}}
-              </span>
-          {{/if}}
-          {{#if isManagingCompetency}}
-              <span class='detail-specific-title'>
-                  {{t 'programs.objectiveCompetencyManagerTitle'}}
-              </span>
-          {{/if}}
-      </div>
-  {{else}}
-    <div class='detail-title {{if objectives.length "clickable"}}' {{action 'collapse'}}>
-      {{t 'general.objectives'}} ({{subject.objectives.length}})
+{{#if isManaging}}
+    <div class='title'>
+        {{#if isManagingParents}}
+            <span class='detail-specific-title'>
+                {{objectiveParentTitle}}
+            </span>
+        {{/if}}
+        {{#if isManagingDescriptors}}
+            <span class='specific-title'>
+                {{t 'courses.objectiveDescriptorTitle'}}
+            </span>
+        {{/if}}
+        {{#if isManagingCompetency}}
+            <span class='specific-title'>
+                {{t 'programs.objectiveCompetencyManagerTitle'}}
+            </span>
+        {{/if}}
     </div>
-  {{/if}}
-  <div class='detail-actions'>
-    {{#liquid-if isManaging class='horizontal'}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else}}
-      {{#if editable}}
-        {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
-      {{/if}}
-    {{/liquid-if}}
+{{else}}
+  <div class='title {{if objectives.length "clickable"}}' {{action 'collapse'}}>
+    {{t 'general.objectives'}} ({{subject.objectives.length}})
   </div>
-  <div class='detail-content'>
-    {{#liquid-if newObjectiveEditorOn class='vertical'}}
-      {{new-objective
-        save=(action 'saveNewObjective')
-        cancel=(action 'toggleNewObjectiveEditor')
+{{/if}}
+<div class='actions'>
+  {{#liquid-if isManaging class='horizontal'}}
+    <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  {{else}}
+    {{#if editable}}
+      {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
+    {{/if}}
+  {{/liquid-if}}
+</div>
+<div class='content'>
+  {{#liquid-if newObjectiveEditorOn class='vertical'}}
+    {{new-objective
+      save=(action 'saveNewObjective')
+      cancel=(action 'toggleNewObjectiveEditor')
+    }}
+  {{/liquid-if}}
+  {{#liquid-unless isManaging class="horizontal"}}
+    {{#if isCourse}}
+      {{course-objective-list
+        course=subject
+        editable=editable
+        manageParents=(action "manageParents")
+        manageDescriptors=(action "manageDescriptors")
       }}
-    {{/liquid-if}}
-    {{#liquid-unless isManaging class="horizontal"}}
+    {{/if}}
+    {{#if isSession}}
+      {{session-objective-list
+        session=subject
+        editable=editable
+        manageParents=(action "manageParents")
+        manageDescriptors=(action "manageDescriptors")
+      }}
+    {{/if}}
+    {{#if isProgramYear}}
+      {{programyear-objective-list
+        programYear=subject
+        manageDescriptors=(action "manageDescriptors")
+        manageCompetency=(action "manageCompetency")
+      }}
+    {{/if}}
+  {{else}}
+    {{#if isManagingParents}}
       {{#if isCourse}}
-        {{course-objective-list
-          course=subject
-          editable=editable
-          manageParents=(action "manageParents")
-          manageDescriptors=(action "manageDescriptors")
+        {{course-objective-manager
+          courseObjective=mangeParentsObjective
         }}
       {{/if}}
       {{#if isSession}}
-        {{session-objective-list
-          session=subject
-          editable=editable
-          manageParents=(action "manageParents")
-          manageDescriptors=(action "manageDescriptors")
+        {{session-objective-manager
+          sessionObjective=mangeParentsObjective
         }}
       {{/if}}
-      {{#if isProgramYear}}
-        {{programyear-objective-list
-          programYear=subject
-          manageDescriptors=(action "manageDescriptors")
-          manageCompetency=(action "manageCompetency")
-        }}
-      {{/if}}
-    {{else}}
-      {{#if isManagingParents}}
-        {{#if isCourse}}
-          {{course-objective-manager
-            courseObjective=mangeParentsObjective
-          }}
-        {{/if}}
-        {{#if isSession}}
-          {{session-objective-manager
-            sessionObjective=mangeParentsObjective
-          }}
-        {{/if}}
-      {{/if}}
-      {{#if isManagingDescriptors}}
-        {{objective-manage-descriptors objective=manageDescriptorsObjective}}
-      {{/if}}
-      {{#if isManagingCompetency}}
-        {{objective-manage-competency objective=manageCompetencyObjective}}
-      {{/if}}
-    {{/liquid-unless}}
-  </div>
-</section>
+    {{/if}}
+    {{#if isManagingDescriptors}}
+      {{objective-manage-descriptors objective=manageDescriptorsObjective}}
+    {{/if}}
+    {{#if isManagingCompetency}}
+      {{objective-manage-competency objective=manageCompetencyObjective}}
+    {{/if}}
+  {{/liquid-unless}}
+</div>

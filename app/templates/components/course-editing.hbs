@@ -1,4 +1,4 @@
-{{#liquid-if (or (eq course.objectives.length 0) courseObjectiveDetails)}}
+{{#if (or (eq course.objectives.length 0) courseObjectiveDetails)}}
   {{detail-objectives
     subject=course
     isCourse=true
@@ -8,11 +8,11 @@
   }}
 {{else}}
   {{collapsed-objectives subject=course expand=(action this.attrs.setCourseObjectiveDetails true)}}
-{{/liquid-if}}
+{{/if}}
 
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
 
-{{#liquid-if (or (eq course.competencies.length 0) courseCompetencyDetails)}}
+{{#if (or (eq course.competencies.length 0) courseCompetencyDetails)}}
   {{detail-competencies
     course=course
     editable=editable
@@ -21,9 +21,9 @@
   }}
 {{else}}
   {{collapsed-competencies subject=course expand=(action this.attrs.setCourseCompetencyDetails true)}}
-{{/liquid-if}}
+{{/if}}
 
-{{#liquid-if (or (eq course.terms.length 0) courseTaxonomyDetails)}}
+{{#if (or (eq course.terms.length 0) courseTaxonomyDetails)}}
   {{detail-taxonomies
     subject=course
     isCourse=true
@@ -33,7 +33,7 @@
   }}
 {{else}}
   {{collapsed-taxonomies subject=course expand=(action this.attrs.setCourseTaxonomyDetails true)}}
-{{/liquid-if}}
+{{/if}}
 
 {{detail-mesh
   subject=course

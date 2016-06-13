@@ -3,6 +3,7 @@ import Ember from 'ember';
 const { Component, RSVP } = Ember;
 
 export default Component.extend({
+  tagName: 'section',
   classNames: ['detail-cohorts'],
   subject: null,
   isManaging: false,
