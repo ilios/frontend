@@ -84,7 +84,7 @@ test('manage cohorts', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-cohorts');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       assert.equal(find('.removable-list li', container).length, 1);
       assert.equal(getElementText(find('.selectable-list ul li', container)), getText('school 0 | program 0 | cohort 1'));
@@ -97,7 +97,7 @@ test('save cohort chages', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-cohorts');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-list ul li:eq(0)', container)).then(function(){
@@ -118,7 +118,7 @@ test('cancel cohort changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.detail-cohorts');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-list ul li:eq(0)', container)).then(function(){
@@ -140,7 +140,7 @@ test('removing a cohort remove course objectives parents linked to that cohort',
   andThen(function() {
     let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
     assert.equal(parents.length, 2);
-    click('.detail-cohorts .detail-actions button');
+    click('.detail-cohorts .actions button');
     andThen(function(){
       click('.detail-cohorts .removable-list li:eq(0)');
       click('.detail-cohorts button.bigadd');

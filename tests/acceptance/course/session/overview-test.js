@@ -112,7 +112,7 @@ test('change ilm hours', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     assert.equal(find('.sessionilmhours', container).length, 1);
-    var container = find('#session-details .sessionilmhours');
+    var container = find('.sessionilmhours');
     assert.equal(getElementText(find('.content', container)), ilmSession.hours);
     click(find('.editable', container));
     andThen(function(){
@@ -137,7 +137,7 @@ test('change ilm due date', function(assert) {
   });
   visit(url);
   andThen(function() {
-    var container = find('#session-details .sessionilmduedate');
+    var container = find('.sessionilmduedate');
     var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
     assert.equal(getElementText(find('.editable', container)), dueDate);
     click(find('.editable', container));
@@ -163,7 +163,7 @@ test('change title', function(assert) {
   });
   visit(url);
   andThen(function() {
-    var container = find('#session-details .detail-header .title');
+    var container = find('.session-header .title');
     assert.equal(getElementText(container), getText('session 0'));
     click(find('.editable', container));
     andThen(function(){
@@ -260,9 +260,9 @@ test('change description', function(assert) {
   visit(url);
   andThen(function() {
     var description = getText(fixtures.sessionDescription.description);
-    var container = find('#session-details .sessiondescription');
+    var container = find('.sessiondescription');
     assert.equal(getElementText(find('.content', container)), description);
-    click(find('.editable .clickable', container));
+    click(find('.editable', container));
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
@@ -287,9 +287,9 @@ test('add description', function(assert) {
   });
   visit(url);
   andThen(function() {
-    var container = find('#session-details .sessiondescription');
+    var container = find('.sessiondescription');
     assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
-    click(find('.editable span', container));
+    click(find('.editable', container));
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{

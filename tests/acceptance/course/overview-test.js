@@ -166,19 +166,17 @@ test('open and close details', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
-    var details = find('#course-details .detail-view-details');
-    assert.equal(find('.detail-title', details).length, 0);
-    click('.detail-collapsed-control', details).then(function(){
-      assert.equal(find('.detail-title', details).length, 5);
+    assert.equal(find('.course-details .title').length, 2);
+    click('.detail-collapsed-control').then(function(){
+      assert.ok(find('.title').length > 2);
       assert.equal(currentURL(), '/courses/1?details=true');
     });
   });
 
   andThen(function() {
-    var details = find('#course-details .detail-view-details');
-    assert.equal(find('.detail-title', details).length, 5);
-    click('.detail-collapsed-control', details).then(function(){
-      assert.equal(find('.detail-title', details).length, 0);
+    assert.ok(find('.course-details .title').length > 2);
+    click('.detail-collapsed-control').then(function(){
+      assert.equal(find('.course-details .title').length, 2);
       assert.equal(currentURL(), '/courses/1');
     });
   });
@@ -194,20 +192,20 @@ test('change title', function(assert) {
   });
   visit(url);
   andThen(function() {
-    assert.equal(getElementText(find('.detail-header .title h2')), getText('course 0'));
+    assert.equal(getElementText(find('.course-header .title')), getText('course 0 2013-2014'));
   });
   visit(url + '?details=true');
   andThen(function() {
-    var container = find('.detail-header');
-    assert.equal(getElementText(find('.title h2', container)), getText('course 0'));
-    click(find('.title h2 .editable', container));
+    let container = find('.course-header .title');
+    assert.equal(getElementText(find('.editable', container)), getText('course 0'));
+    click(find('.editable', container));
     andThen(function(){
-      var input = find('.title .editinplace input', container);
+      let input = find('input', container);
       assert.equal(getText(input.val()), getText('course 0'));
       fillIn(input, 'test new title');
-      click(find('.title .editinplace .actions .done', container));
+      click(find('.done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.title h2', container)), getText('test new title'));
+        assert.equal(getElementText(container), getText('test new title 2013-2014'));
       });
     });
   });

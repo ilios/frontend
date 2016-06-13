@@ -208,7 +208,7 @@ test('new session goes away when we navigate #643', function(assert) {
       click('.new-session .done', container).then(()=>{
         click('.saved-result a', container).then(()=> {
           assert.equal(currentPath(), 'course.session.index');
-          click('#session-details .backtolink a');
+          click('.backtosessionlink a');
         });
       });
     });
@@ -239,7 +239,7 @@ test('first offering is updated when offering is updated #1276', function(assert
         let startDateInteractor = openDatepicker(find(startDateInput, container));
         startDateInteractor.selectDate(newStartDate);
         return click(doneButton).then(() => {
-          return click('#session-details .backtolink a');
+          return click('.backtosessionlink a');
         });
       });
 

@@ -132,7 +132,7 @@ test('basics', function(assert) {
   andThen(function() {
     let container = find('.session-offerings');
     let offeringTitle = 'Offerings (' + fixtures.offerings.length + ')';
-    assert.equal(getElementText(find('.detail-title', container)), getText(offeringTitle));
+    assert.equal(getElementText(find('.title', container)), getText(offeringTitle));
     let dateBlocks = find('.offering-block', container);
 
     assert.equal(dateBlocks.length, fixtures.offerings.length, 'Date blocks count equals offerings fixtures count');

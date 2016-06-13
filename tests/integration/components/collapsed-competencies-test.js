@@ -62,6 +62,6 @@ test('clicking the header expands the list', function(assert) {
   this.render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
   return wait().then(() => {
     assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
-    this.$('.detail-title').click();
+    this.$('.title').click();
   });
 });

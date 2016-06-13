@@ -96,7 +96,7 @@ test('manage terms', function(assert) {
     let detailObjectives = find('.detail-objectives').eq(0);
     click('.session-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives);
     andThen(function() {
-      assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
+      assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
       let meshManager = find('.mesh-manager', detailObjectives).eq(0);
       let objective = fixtures.sessionObjectives[1];
       let removableItems = find('.removable-list li', meshManager);

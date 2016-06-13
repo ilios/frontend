@@ -124,8 +124,8 @@ test('list learning materials', function(assert) {
     const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
     const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
     assert.equal(currentPath(), 'course.index');
-    let container = find('.detail-learning-materials');
-    let rows = find('.detail-content tbody tr', container);
+    let container = find('.detail-learningmaterials');
+    let rows = find('.detail-learningmaterials-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
     for (let i = 0; i < fixtures.course.learningMaterials.length; i++){
       let row = rows.eq(i);
@@ -163,25 +163,25 @@ test('list learning materials', function(assert) {
 //
 //   visit(url);
 //   andThen(function() {
-//     let container = find('.detail-learning-materials');
-//     let rows = find('.detail-content tbody tr', container);
+//     let container = find('.detail-learningmaterials');
+//     let rows = find('.detail-learningmaterials-content tbody tr', container);
 //
 //     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
 //     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-//     click('.detail-actions-absolute .button', container).then(function(){
+//     click('.actions .button', container).then(function(){
 //       //pick the file type
-//       click('.detail-actions-absolute ul li:eq(0)');
+//       click('.actions ul li:eq(0)');
 //     });
 //   });
 //   andThen(function(){
 //     assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
 //     //check that we got the right form
-//     let labels = find('.detail-learning-materials .new-learning-material label');
+//     let labels = find('.detail-learningmaterials .new-learning-material label');
 //     assert.equal(labels.length, 9);
 //     const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
 //     const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
-//     assert.equal(getElementText(find('.detail-learning-materials .new-learning-material .owninguser')), getText(userName));
-//     let newLmContainer = find('.detail-learning-materials .new-learning-material');
+//     assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName));
+//     let newLmContainer = find('.detail-learningmaterials .new-learning-material');
 //     let inputs = find('input', newLmContainer);
 //     let selectBoxes = find('select', newLmContainer);
 //     fillIn(inputs.eq(0), testTitle);
@@ -191,10 +191,10 @@ test('list learning materials', function(assert) {
 //     find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
 //     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
 //     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-//     click('.detail-learning-materials .new-learning-material .done');
+//     click('.detail-learningmaterials .new-learning-material .done');
 //     andThen(function(){
-//       let container = find('.detail-learning-materials');
-//       let rows = find('.detail-content tbody tr', container);
+//       let container = find('.detail-learningmaterials');
+//       let rows = find('.detail-learningmaterials-content tbody tr', container);
 //
 //       assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
 //       let row = rows.eq(fixtures.course.learningMaterials.length);
@@ -213,25 +213,25 @@ test('create new link learning material', function(assert) {
 
   visit(url);
   andThen(function() {
-    let container = find('.detail-learning-materials');
-    let rows = find('.detail-content tbody tr', container);
+    let container = find('.detail-learningmaterials');
+    let rows = find('.detail-learningmaterials-content tbody tr', container);
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions-absolute .button', container).then(function(){
+    click('.actions .button', container).then(function(){
       //pick the link type
-      click('.detail-actions-absolute ul li:eq(1)');
+      click('.actions ul li:eq(1)');
     });
   });
   andThen(function(){
     assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
-    let labels = find('.detail-learning-materials .new-learning-material label');
+    let labels = find('.detail-learningmaterials .new-learning-material label');
     assert.equal(labels.length, 7);
     const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
     const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
-    assert.equal(getElementText(find('.detail-learning-materials .new-learning-material .owninguser')), getText(userName));
-    let newLmContainer = find('.detail-learning-materials .new-learning-material');
+    assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName));
+    let newLmContainer = find('.detail-learningmaterials .new-learning-material');
     let inputs = find('input', newLmContainer);
     let selectBoxes = find('select', newLmContainer);
     fillIn(inputs.eq(0), testTitle);
@@ -241,10 +241,10 @@ test('create new link learning material', function(assert) {
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
     find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-    click('.detail-learning-materials .new-learning-material .done');
+    click('.detail-learningmaterials .new-learning-material .done');
     andThen(function(){
-      let container = find('.detail-learning-materials');
-      let rows = find('.detail-content tbody tr', container);
+      let container = find('.detail-learningmaterials');
+      let rows = find('.detail-learningmaterials-content tbody tr', container);
       assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
       let row = rows.eq(fixtures.course.learningMaterials.length);
       assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
@@ -263,25 +263,25 @@ test('create new citation learning material', function(assert) {
 
   visit(url);
   andThen(function() {
-    let container = find('.detail-learning-materials');
-    let rows = find('.detail-content tbody tr', container);
+    let container = find('.detail-learningmaterials');
+    let rows = find('.detail-learningmaterials-content tbody tr', container);
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions-absolute .button', container).then(function(){
+    click('.actions .button', container).then(function(){
       //pick the citation type
-      click('.detail-actions-absolute ul li:eq(2)');
+      click('.actions ul li:eq(2)');
     });
   });
   andThen(function(){
     assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
-    let labels = find('.detail-learning-materials .new-learning-material label');
+    let labels = find('.detail-learningmaterials .new-learning-material label');
     assert.equal(labels.length, 7);
     const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
     const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
-    assert.equal(getElementText(find('.detail-learning-materials .new-learning-material .owninguser')), getText(userName));
-    let newLmContainer = find('.detail-learning-materials .new-learning-material');
+    assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName));
+    let newLmContainer = find('.detail-learningmaterials .new-learning-material');
     let inputs = find('input', newLmContainer);
     let selectBoxes = find('select', newLmContainer);
     fillIn(inputs.eq(0), testTitle);
@@ -291,10 +291,10 @@ test('create new citation learning material', function(assert) {
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
     find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-    click('.detail-learning-materials .new-learning-material .done');
+    click('.detail-learningmaterials .new-learning-material .done');
     andThen(function(){
-      let container = find('.detail-learning-materials');
-      let rows = find('.detail-content tbody tr', container);
+      let container = find('.detail-learningmaterials');
+      let rows = find('.detail-learningmaterials-content tbody tr', container);
       assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
       let row = rows.eq(fixtures.course.learningMaterials.length);
       assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
@@ -304,8 +304,8 @@ test('create new citation learning material', function(assert) {
 });
 
 test('can only add one learning-material at a time', function(assert) {
-  const addButton = '.detail-actions-absolute .button';
-  const fileButton = '.detail-actions-absolute ul li:eq(0)';
+  const addButton = '.actions .button';
+  const fileButton = '.actions ul li:eq(0)';
   const collapseButton = '.collapse-button';
   const component = '.new-learning-material';
 
@@ -329,17 +329,17 @@ test('can only add one learning-material at a time', function(assert) {
 test('cancel new learning material', function(assert) {
   visit(url);
   andThen(function() {
-    let container = find('.detail-learning-materials');
-    let rows = find('.detail-content tbody tr', container);
+    let container = find('.detail-learningmaterials');
+    let rows = find('.detail-learningmaterials-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.detail-actions-absolute .button', container);
-    click('.detail-actions-absolute ul li:eq(0)');
+    click('.actions .button', container);
+    click('.actions ul li:eq(0)');
   });
   andThen(function(){
-    click('.detail-learning-materials .new-learning-material .cancel');
+    click('.detail-learningmaterials .new-learning-material .cancel');
   });
   andThen(function(){
-    let rows = find('.detail-learning-materials .detail-content tbody tr');
+    let rows = find('.detail-learningmaterials .detail-learningmaterials-content tbody tr');
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
   });
 
@@ -348,7 +348,7 @@ test('cancel new learning material', function(assert) {
 test('view copyright file learning material details', function(assert) {
   visit(url);
   andThen(function() {
-    click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[0].title));
@@ -363,7 +363,7 @@ test('view copyright file learning material details', function(assert) {
 test('view rationale file learning material details', function(assert) {
   visit(url);
   andThen(function() {
-    click('.detail-learning-materials .detail-content tbody tr:eq(1) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(1) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
@@ -379,7 +379,7 @@ test('view rationale file learning material details', function(assert) {
 test('view url file learning material details', function(assert) {
   visit(url);
   andThen(function() {
-    click('.detail-learning-materials .detail-content tbody tr:eq(1) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(1) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
@@ -398,7 +398,7 @@ test('view url file learning material details', function(assert) {
 test('view link learning material details', function(assert) {
   visit(url);
   andThen(function() {
-    click('.detail-learning-materials .detail-content tbody tr:eq(2) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(2) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[2].title));
@@ -418,7 +418,7 @@ test('view link learning material details', function(assert) {
 test('view citation learning material details', function(assert) {
   visit(url);
   andThen(function() {
-    click('.detail-learning-materials .detail-content tbody tr:eq(3) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(3) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
       assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[3].title));
@@ -440,7 +440,7 @@ test('edit learning material', function(assert) {
   visit(url);
   andThen(function() {
     assert.ok(isPresent(find(searchBox)), 'learner-gorup search box is visible');
-    click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       let container = $('.learningmaterial-manager');
       assert.ok(isEmpty(find(searchBox)), 'learner-gorup search box is hidden while in edit mode');
@@ -460,14 +460,14 @@ test('edit learning material', function(assert) {
           andThen(function(){
             assert.equal(getElementText(find('.notes', container)), getText(newNote));
           });
-          click('.detail-learning-materials button.bigadd');
+          click('.detail-learningmaterials button.bigadd');
           andThen(function(){
-            assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
-            assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('Yes'), 'there is content in notes');
-            assert.ok(isEmpty(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4) i')), 'publicNotes is false and `eye` icon is not visible');
-            assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
+            assert.equal(getElementText(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(3)')), getText('Yes'));
+            assert.equal(getElementText(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(4)')), getText('Yes'), 'there is content in notes');
+            assert.ok(isEmpty(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(4) i')), 'publicNotes is false and `eye` icon is not visible');
+            assert.equal(getElementText(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[2].title));
 
-            click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+            click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(0)');
             andThen(function(){
               let container = $('.learningmaterial-manager');
               assert.equal(getElementText(find('.notes', container)), getText(newNote));
@@ -483,7 +483,7 @@ test('edit learning material', function(assert) {
 test('cancel editing learning material', function(assert) {
   visit(url);
   andThen(function() {
-    click('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(0)');
+    click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(0)');
     andThen(function(){
       var container = $('.learningmaterial-manager');
       click(find('.required .switch-handle', container));
@@ -492,12 +492,12 @@ test('cancel editing learning material', function(assert) {
         pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
         click(find('.status .done', container));
       });
-      click('.detail-learning-materials button.bigcancel');
+      click('.detail-learningmaterials button.bigcancel');
       andThen(function(){
-        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(3)')), getText('No'));
-        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4)')), getText('No'), 'no content is available under notes');
-        assert.ok(isEmpty(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(4) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
-        assert.equal(getElementText(find('.detail-learning-materials .detail-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[0].title));
+        assert.equal(getElementText(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(3)')), getText('No'));
+        assert.equal(getElementText(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(4)')), getText('No'), 'no content is available under notes');
+        assert.ok(isEmpty(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(4) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
+        assert.equal(getElementText(find('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(6)')), getText(fixtures.statuses[0].title));
       });
     });
   });
@@ -507,9 +507,9 @@ test('manage terms', function(assert) {
   assert.expect(24);
   visit(url);
   andThen(function() {
-    let container = find('.detail-learning-materials').eq(0);
-    click('.detail-content tbody tr:eq(0) td:eq(5) .link', container).then(function(){
-      assert.equal(getElementText(find('.detail-specific-title', container)), 'SelectMeSHDescriptorsforLearningMaterials');
+    let container = find('.detail-learningmaterials').eq(0);
+    click('.detail-learningmaterials-content tbody tr:eq(0) td:eq(5) .link', container).then(function(){
+      assert.equal(getElementText(find('.specific-title', container)), 'SelectMeSHDescriptorsforLearningMaterials');
     });
 
     andThen(function() {
@@ -572,8 +572,8 @@ test('save terms', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    let container = find('.detail-learning-materials').eq(0);
-    click('.detail-content tbody tr:eq(0) td:eq(5) .link', container);
+    let container = find('.detail-learningmaterials').eq(0);
+    click('.detail-learningmaterials-content tbody tr:eq(0) td:eq(5) .link', container);
     andThen(function() {
       let meshManager = find('.mesh-manager', container).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
@@ -586,7 +586,7 @@ test('save terms', function(assert) {
         click('button.bigadd', container);
         andThen(function(){
           let expectedMesh = fixtures.meshDescriptors[0].name + fixtures.meshDescriptors[2].name;
-          let tds = find('.detail-content tbody tr:eq(0) td');
+          let tds = find('.detail-learningmaterials-content tbody tr:eq(0) td');
           assert.equal(getElementText(tds.eq(5)), getText(expectedMesh));
         });
       });
@@ -598,8 +598,8 @@ test('cancel term changes', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    let container = find('.detail-learning-materials').eq(0);
-    click('.detail-content tbody tr:eq(0) td:eq(5) .link', container);
+    let container = find('.detail-learningmaterials').eq(0);
+    click('.detail-learningmaterials-content tbody tr:eq(0) td:eq(5) .link', container);
     andThen(function() {
       let meshManager = find('.mesh-manager', container).eq(0);
       let searchBoxInput = find('.search-box input', meshManager);
@@ -613,7 +613,7 @@ test('cancel term changes', function(assert) {
         click(searchResults[4]);
         click('button.bigcancel', container);
         andThen(function(){
-          let tds = find('.detail-content tbody tr:eq(0) td');
+          let tds = find('.detail-learningmaterials-content tbody tr:eq(0) td');
           let expectedMesh = fixtures.meshDescriptors[1].name + fixtures.meshDescriptors[2].name;
           assert.equal(getElementText(tds.eq(5)), getText(expectedMesh));
         });
@@ -626,8 +626,8 @@ test('find and add learning material', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
-    let container = find('.detail-learning-materials');
-    let rows = find('.detail-content tbody tr', container);
+    let container = find('.detail-learningmaterials');
+    let rows = find('.detail-learningmaterials-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
 
     let searchBoxInput = find('input', container);
@@ -649,7 +649,7 @@ test('find and add learning material', function(assert) {
         click(searchResults[0]);
 
         andThen(function(){
-          let rows = find('.detail-content tbody tr', container);
+          let rows = find('.detail-learningmaterials-content tbody tr', container);
           assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
         });
       }, 1000);

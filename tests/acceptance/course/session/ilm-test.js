@@ -61,7 +61,7 @@ test('initial selected instructors', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    assert.equal(getElementText(find('.detail-title', container)), getText('Instructors(6)'));
+    assert.equal(getElementText(find('.title', container)), getText('Instructors(6)'));
     var selectedGroups = find('.columnar-list:eq(0) li', container);
     assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
     for(let i = 0; i < fixtures.ilmSession.instructorGroups.length; i++){
@@ -81,7 +81,7 @@ test('manage instructors lists', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container);
+    click('.actions button', container);
     andThen(function(){
       var selectedGroups = find('.removable-list:eq(0) li', container);
       assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
@@ -99,7 +99,7 @@ test('manage instructors search users', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container);
+    click('.actions button', container);
     andThen(function(){
       let searchBox = find('.search-box', container);
       assert.equal(searchBox.length, 1);
@@ -129,7 +129,7 @@ test('manage instructors search groups', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container);
+    click('.actions button', container);
     andThen(function(){
       let searchBox = find('.search-box', container);
       assert.equal(searchBox.length, 1);
@@ -158,7 +158,7 @@ test('add instructor group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container).then(function(){
+    click('.actions button', container).then(function(){
       let input = find('.search-box input', container);
       fillIn(input, 'group');
       click('span.search-icon', container).then(()=>{
@@ -192,7 +192,7 @@ test('add instructor', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container).then(function(){
+    click('.actions button', container).then(function(){
       let input = find('.search-box input', container);
       fillIn(input, 'guy');
       click('span.search-icon', container).then(()=>{
@@ -226,7 +226,7 @@ test('remove instructor group', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container).then(function(){
+    click('.actions button', container).then(function(){
       click('.removable-list:eq(0) li:eq(0)', container);
     });
     andThen(function(){
@@ -256,7 +256,7 @@ test('remove instructor', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container).then(function(){
+    click('.actions button', container).then(function(){
       click('.removable-list:eq(1) li:eq(0)', container);
     });
     andThen(function(){
@@ -286,7 +286,7 @@ test('undo instructor/group changes', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
-    click('.detail-actions button', container).then(function(){
+    click('.actions button', container).then(function(){
       click('.removable-list:eq(0) li:eq(0)', container);
       click('.removable-list:eq(1) li:eq(0)', container);
     });
