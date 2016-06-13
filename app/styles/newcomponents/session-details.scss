@@ -7,4 +7,21 @@ $session-background-color: #effbff;
   border-top: 0;
   border-width: 0 2px 2px;
   font-size: $base-font-size;
+
+  .detail-objectives,
+  .detail-learningmaterials,
+  .detail-taxonomies,
+  .detail-mesh {
+    @include detail-container($text-blue);
+  }
+
+  .collapse-objectives,
+  .collapse-taxonomies {
+    @include collapsed-container($text-blue);
+  }
+
+  table thead {
+    background-color: $text-blue;
+    color: $white;
+  }
 }
