@@ -1,7 +1,8 @@
-@mixin ilios-overview () {
-  padding: .8em;
-
+@mixin ilios-overview ($bottom-border-color) {
   @include row();
+
+  border-bottom: 1px dotted $bottom-border-color;
+  padding: .8em;
 
   label {
     @include ilios-label;

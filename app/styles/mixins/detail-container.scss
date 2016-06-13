@@ -1,11 +1,11 @@
-@mixin detail-container ($border-color) {
+@mixin detail-container ($bottom-border-color) {
   @include fill-parent;
   @include row;
-  border-bottom: 1px dotted $border-color;
+  border-bottom: 1px dotted $bottom-border-color;
   display: block;
-  margin: 0 .8em;
+  margin: 0;
   min-height: 2em;
-  padding: 1em .8em;
+  padding: .8em;
 
   @include media($large-screen) {
     @include span-columns(12);
