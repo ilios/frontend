@@ -14,11 +14,14 @@ $switch-grey: #eee;
 $switch-handle-grey: #f9f9f9;
 $calendar-switch-grey: #ddd;
 $offering-switch-blue: #009ccc;
+$barely-visible-black: rgba(0, 0, 0, .05);
+$almost-visible-black: rgba(0, 0, 0, .15);
+$more-visible-black: rgba(0, 0, 0, .2);
 
 .switch {
   @include background-image(linear-gradient(top bottom, $switch-grey, $white 25px));
   border-radius: 18px;
-  box-shadow: inset 0 -1px $white, inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 -1px $white, inset 0 1px 1px $barely-visible-black;
   cursor: pointer;
   display: inline-block;
   height: 20px;
@@ -42,7 +45,7 @@ $offering-switch-blue: #009ccc;
   @include transition-timing-function(ease-out);
   background: $switch-label-blue;
   border-radius: inherit;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12), inset 0 0 2px rgba(0, 0, 0, .15);
+  box-shadow: inset 0 1px 2px $almost-visible-black, inset 0 0 2px $almost-visible-black;
   display: block;
   font-size: 10px;
   font-weight: bold;
@@ -51,8 +54,8 @@ $offering-switch-blue: #009ccc;
   text-transform: uppercase;
 }
 
-.switch-label:before,
-.switch-label:after {
+.switch-label::before,
+.switch-label::after {
   @include transition(inherit);
   line-height: 1;
   margin-top: -.5em;
@@ -60,31 +63,31 @@ $offering-switch-blue: #009ccc;
   top: 50%;
 }
 
-.switch-label:before {
+.switch-label::before {
   color: $white;
   content: attr(data-off);
   right: 7px;
-  text-shadow: 0 1px rgba(0, 0, 0, .2);
+  text-shadow: 0 1px $more-visible-black;
 }
 
-.switch-label:after {
+.switch-label::after {
   color: $white;
   content: attr(data-on);
   left: 9px;
   opacity: 0;
-  text-shadow: 0 1px rgba(0, 0, 0, .2);
+  text-shadow: 0 1px $more-visible-black;
 }
 
 .switch-input:checked ~ .switch-label {
   background: $switch-blue;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .15), inset 0 0 3px rgba(0, 0, 0, .2);
+  box-shadow: inset 0 1px 2px $almost-visible-black, inset 0 0 3px $more-visible-black;
 }
 
-.switch-input:checked ~ .switch-label:before {
+.switch-input:checked ~ .switch-label::before {
   opacity: 0;
 }
 
-.switch-input:checked ~ .switch-label:after {
+.switch-input:checked ~ .switch-label::after {
   opacity: 1;
 }
 
@@ -93,7 +96,7 @@ $offering-switch-blue: #009ccc;
   @include transition(left .15s ease-out);
   background: $white;
   border-radius: 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, .2);
+  box-shadow: 1px 1px 5px $more-visible-black;
   height: 18px;
   left: 4px;
   position: absolute;
@@ -101,11 +104,11 @@ $offering-switch-blue: #009ccc;
   width: 18px;
 }
 
-.switch-handle:before {
+.switch-handle::before {
   @include background-image(linear-gradient(top , $switch-grey, $white));
   background: $switch-handle-grey;
   border-radius: 6px;
-  box-shadow: inset 0 1px rgba(0, 0, 0, .02);
+  box-shadow: inset 0 1px $barely-visible-black;
   content: '';
   height: 12px;
   left: 50%;
@@ -116,7 +119,7 @@ $offering-switch-blue: #009ccc;
 }
 
 .switch-input:checked ~ .switch-handle {
-  box-shadow: -1px 1px 5px rgba(0, 0, 0, .2);
+  box-shadow: -1px 1px 5px $more-visible-black;
   left: 40px;
 }
 
@@ -134,12 +137,12 @@ $offering-switch-blue: #009ccc;
   }
 
   //the no/off selection
-  .switch-label:before {
+  .switch-label::before {
     right: 10px;
   }
 
   //the yes/on selection
-  .switch-label:after {
+  .switch-label::after {
     left: 7px;
   }
 
@@ -150,7 +153,7 @@ $offering-switch-blue: #009ccc;
   @include background-image(linear-gradient(top , $switch-grey, $white 25px));
   background-color: $white;
   border-radius: 18px;
-  box-shadow: inset 0 -1px $white, inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 -1px $white, inset 0 1px 1px $barely-visible-black;
   cursor: pointer;
   display: inline-block;
   height: 20px;
@@ -160,7 +163,7 @@ $offering-switch-blue: #009ccc;
   width: 120px;
 
   > .switch-input:checked ~ .switch-handle {
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, .2);
+    box-shadow: -1px 1px 5px $more-visible-black;
     left: 98px;
   }
 }
@@ -173,7 +176,7 @@ $offering-switch-blue: #009ccc;
   @include background-image(linear-gradient(top , $switch-grey, $white 25px));
   background-color: $white;
   border-radius: 18px;
-  box-shadow: inset 0 -1px $white, inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 -1px $white, inset 0 1px 1px $barely-visible-black;
   cursor: pointer;
   display: inline-block;
   height: 20px;
@@ -187,7 +190,7 @@ $offering-switch-blue: #009ccc;
   }
 
   > .switch-input:checked ~ .switch-handle {
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, .2);
+    box-shadow: -1px 1px 5px $more-visible-black;
     left: 106px;
   }
 }
@@ -210,12 +213,12 @@ $offering-switch-blue: #009ccc;
   }
 
   //the no/off selection
-  .switch-label:before {
+  .switch-label::before {
     right: 12px;
   }
 
   //the yes/on selection
-  .switch-label:after {
+  .switch-label::after {
     left: 12px;
   }
 
@@ -226,7 +229,7 @@ $offering-switch-blue: #009ccc;
   @include background-image(linear-gradient(top , $switch-grey, $white 25px));
   background-color: $white;
   border-radius: 18px;
-  box-shadow: inset 0 -1px $white, inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 -1px $white, inset 0 1px 1px $barely-visible-black;
   cursor: pointer;
   display: inline-block;
   height: 20px;
@@ -240,7 +243,7 @@ $offering-switch-blue: #009ccc;
   }
 
   > .switch-input:checked ~ .switch-handle {
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, .2);
+    box-shadow: -1px 1px 5px $more-visible-black;
     left: 174px;
   }
 }

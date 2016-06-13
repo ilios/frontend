@@ -31,8 +31,8 @@
 
     @for $i from 0 to 8 {
       $delay: $i * 2 / 10 + s;
-      
-      .widget span:nth-child(#{$i+1}) {
+
+      .widget span:nth-child(#{$i + 1}) {
         @include animation-delay($delay);
         left: $i * 11px;
       }

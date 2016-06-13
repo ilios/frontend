@@ -1,4 +1,4 @@
-.progress-bar {  
+.progress-bar {
   $progress-border-color: $base-border-color;
   $progress-border: 1px solid $progress-border-color;
   $progress-meter-border-color: $ilios-orange;
@@ -22,7 +22,7 @@
     background-size: 40px 40px;
     border: $progress-meter-border;
     border-bottom-right-radius: 0;
-    border-radius: $base-border-radius /1.5;
+    border-radius: $base-border-radius / 1.5;
     border-top-right-radius: 0;
     display: block;
     height: 100%;
@@ -30,7 +30,7 @@
   }
 
   p {
-    color: $progress-color;    
+    color: $progress-color;
     line-height: $base-line-height;
     margin: 0;
     padding: .1em .5em;
