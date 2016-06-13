@@ -5,6 +5,8 @@ const { Component, computed, RSVP } = Ember;
 const { PromiseArray } = DS;
 
 export default Component.extend({
+  tagName: 'section',
+  classNames: ['collapsed-competencies'],
   /**
    * The model object with assigned competencies.
    * Can be either a course or program-year.
