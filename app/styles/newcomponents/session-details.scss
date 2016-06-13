@@ -1,0 +1,10 @@
+$session-background-color: #effbff;
+
+.session-details {
+  background-color: $session-background-color;
+  border-color: $header-grey;
+  border-style: solid;
+  border-top: 0;
+  border-width: 0 2px 2px;
+  font-size: $base-font-size;
+}

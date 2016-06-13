@@ -1,4 +1,4 @@
-<div class='detail-header'>
+<div class='session-header'>
   <span class='title'>
     {{#if editable}}
       {{#editable-field
@@ -23,7 +23,7 @@
       <h2>{{session.title}}</h2>
     {{/if}}
   </span>
-  <span class ='header-actions'>
+  <span class ='session-publication'>
     {{#if editable}}
       {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
         {{#if showAsIs}}
@@ -49,135 +49,157 @@
     {{/if}}
   </span>
 </div>
-<section class='detail-overview detail-block form-container'>
-  <div class='detail-title'>
+
+<section class='session-overview'>
+  <div class='title'>
     {{t 'general.overview'}}
   </div>
-  <div class='detail-content'>
-    <div class="form-col-12 sessiontype">
-      <label class="form-label">{{t "sessions.type"}}:</label>
-      <div class="form-data">
-        {{#if editable}}
-          {{inplace-select
-            value=session.sessionType.id
-            options=sortedSessionTypes
-            save='changeSessionType'
-          }}
-        {{else}}
-          {{session.sessionType.title}}&nbsp;
-        {{/if}}
-      </div>
-    </div>
-    <div class="form-col-12 sessionsupplemental">
-      <label class="form-label">{{t "sessions.supplementalCurriculum"}}:</label>
-      <div class="form-data">
-        {{#if editable}}
-          {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
-        {{else}}
-          {{#if session.supplemental}}
-            <span class='add'>{{t 'general.yes'}}</span>
-          {{else}}
-            <span class='remove'>{{t 'general.no'}}</span>
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-    <div class="form-col-6 sessionspecialattire">
-      <label class="form-label">{{t "sessions.specialAttireRequired"}}:</label>
-      <div class="form-data">
-        {{#if editable}}
-          {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
-        {{else}}
-          {{#if session.attireRequired}}
-            <span class='add'>{{t 'general.yes'}}</span>
-          {{else}}
-            <span class='remove'>{{t 'general.no'}}</span>
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-    <div class="form-col-6 sessionspecialequipment">
-      <label class="form-label">{{t "sessions.specialEquipmentRequired"}}:</label>
-      <div class="form-data">
-        {{#if editable}}
-          {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
-        {{else}}
-          {{#if session.equipmentRequired}}
-            <span class='add'>{{t 'general.yes'}}</span>
-          {{else}}
-            <span class='remove'>{{t 'general.no'}}</span>
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-    <div class="form-col-4-left independentlearningcontrol">
-      <label class="form-label">{{t "sessions.independentLearning"}}:</label>
-      <div class="form-data">
-        {{#if editable}}
-          {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
-        {{else}}
-          {{#if session.isIndependentLearning}}
-            <span class='add'>{{t 'general.yes'}}</span>
-          {{else}}
-            <span class='remove'>{{t 'general.no'}}</span>
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-    {{#if session.isIndependentLearning}}
-      <div class="form-col-4 form-col-4-middle sessionilmhours">
-        <label class="form-label">{{t "sessions.hours"}}:</label>
-        <div class="form-data">
+  <div class='session-overview-content'>
+    <div class='session-overview-options'>
+
+      <div class="sessiontype">
+        <label>{{t "sessions.type"}}:</label>
+        <span>
           {{#if editable}}
-            {{#editable-field
-              value=hours
-              save=(action 'changeIlmHours')
-              close=(action 'revertIlmHoursChanges')
-              as |isSaving save close|
+            {{inplace-select
+              value=session.sessionType.id
+              options=sortedSessionTypes
+              save='changeSessionType'
             }}
-              {{one-way-input
-                value=hours
-                update=(action (mut hours))
-                onenter=save
-                onescape=close
-                disabled=isSaving
-                focusOut=(action 'addErrorDisplayFor' 'hours')
-                keyDown=(action 'addErrorDisplayFor' 'hours')
-              }}
-              {{#if (and (v-get this 'hours' 'isInvalid') (is-in showErrorsFor 'hours'))}}
-                <span class="validation-error-message">{{v-get this 'hours' 'message'}}</span>
-              {{/if}}
-            {{/editable-field}}
           {{else}}
-            {{session.ilmSession.hours}}&nbsp;
+            {{session.sessionType.title}}&nbsp;
           {{/if}}
-          </div>
+        </span>
       </div>
-      <div class="form-col-4 form-col-4-right sessionilmduedate">
-        <label class="form-label">{{t "sessions.dueBy"}}:</label>
-        <div class="form-data">
+      <div class="sessionsupplemental switch-block">
+        <label>{{t "sessions.supplementalCurriculum"}}:</label>
+        <span>
           {{#if editable}}
-            {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}
+            {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
           {{else}}
-            {{moment-format session.ilmSession.dueDate 'MM/DD/YY'}}
+            {{#if session.supplemental}}
+              <span class='add'>{{t 'general.yes'}}</span>
+            {{else}}
+              <span class='remove'>{{t 'general.no'}}</span>
+            {{/if}}
           {{/if}}
+        </span>
+      </div>
+      <div class="sessionspecialattire switch-block">
+        <label>{{t "sessions.specialAttireRequired"}}:</label>
+        <span>
+          {{#if editable}}
+            {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
+          {{else}}
+            {{#if session.attireRequired}}
+              <span class='add'>{{t 'general.yes'}}</span>
+            {{else}}
+              <span class='remove'>{{t 'general.no'}}</span>
+            {{/if}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="sessionspecialequipment switch-block">
+        <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+        <span>
+          {{#if editable}}
+            {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
+          {{else}}
+            {{#if session.equipmentRequired}}
+              <span class='add'>{{t 'general.yes'}}</span>
+            {{else}}
+              <span class='remove'>{{t 'general.no'}}</span>
+            {{/if}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="independentlearningcontrol switch-block">
+        <label>{{t "sessions.independentLearning"}}:</label>
+        <span>
+          {{#if editable}}
+            {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
+          {{else}}
+            {{#if session.isIndependentLearning}}
+              <span class='add'>{{t 'general.yes'}}</span>
+            {{else}}
+              <span class='remove'>{{t 'general.no'}}</span>
+            {{/if}}
+          {{/if}}
+        </span>
+      </div>
+      {{#if session.isIndependentLearning}}
+        <div class="sessionilmhours block">
+          <label>{{t "sessions.hours"}}:</label>
+          <span>
+            {{#if editable}}
+              {{#editable-field
+                value=hours
+                save=(action 'changeIlmHours')
+                close=(action 'revertIlmHoursChanges')
+                as |isSaving save close|
+              }}
+                {{one-way-input
+                  value=hours
+                  update=(action (mut hours))
+                  onenter=save
+                  onescape=close
+                  disabled=isSaving
+                  focusOut=(action 'addErrorDisplayFor' 'hours')
+                  keyDown=(action 'addErrorDisplayFor' 'hours')
+                }}
+                {{#if (and (v-get this 'hours' 'isInvalid') (is-in showErrorsFor 'hours'))}}
+                  <span class="validation-error-message">{{v-get this 'hours' 'message'}}</span>
+                {{/if}}
+              {{/editable-field}}
+            {{else}}
+              {{session.ilmSession.hours}}&nbsp;
+            {{/if}}
+          </span>
         </div>
-      </div>
-    {{/if}}
-    <div class="form-col-12 sessiondescription">
-      <label class="form-label">{{t "general.description"}}:</label>
-      <div class="form-data">
+        <div class="sessionilmduedate block">
+          <label>{{t "sessions.dueBy"}}:</label>
+          <span>
+            {{#if editable}}
+              {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}
+            {{else}}
+              {{moment-format session.ilmSession.dueDate 'MM/DD/YY'}}
+            {{/if}}
+          </span>
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="sessiondescription">
+      <label>{{t "general.description"}}:</label>
+      <span class='list-reset'>
         {{#if editable}}
-          {{inplace-html value=session.sessionDescription.description save='changeDescription'}}
+          {{#editable-field
+            value=description
+            save=(action 'saveDescription')
+            close=(action 'revertDescriptionChanges')
+            renderHtml=true
+            clickPrompt=(t 'general.clickToEdit')
+            as |isSaving save close|
+          }}
+            {{froala-editor
+              params=editorParams
+              value=description
+              contentChanged=(action "changeDescription")
+            }}
+            {{#if (and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))}}
+              <span class="validation-error-message">{{v-get this 'description' 'message'}}</span>
+            {{/if}}
+          {{/editable-field}}
         {{else}}
-          <span class='list-reset'>{{{session.sessionDescription.description}}}</span>
+          {{description}}
         {{/if}}
-      </div>
+      </span>
     </div>
     {{#unless session.isIndependentLearning}}
-      <div class="form-col-12 sessionassociatedgroups">
+      <br />
+      <div class="sessionassociatedgroups">
         <label>{{t "general.associatedGroups"}}:</label>
-        <div>
+        <span>
         {{#if session.associatedLearnerGroups.isFulfilled}}
           <span>
             {{#each session.associatedLearnerGroups as |group|}}
@@ -189,7 +211,7 @@
         {{else}}
           {{loading-part}}
         {{/if}}
-        </div>
+      </span>
       </div>
     {{/unless}}
   </div>
