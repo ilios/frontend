@@ -12,7 +12,7 @@
     }
   }
 
-  .actions {
+  .detail-learningmaterials-actions {
     @include fill-parent;
     vertical-align: middle;
 
@@ -25,7 +25,7 @@
   }
 
   &.display-search-box {
-    .actions {
+    .detail-learningmaterials-actions {
       @include media($large-screen) {
         @include shift(0);
       }
