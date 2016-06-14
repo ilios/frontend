@@ -168,9 +168,9 @@ test('list learning materials', function(assert) {
 //
 //     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
 //     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-//     click('.actions .button', container).then(function(){
+//     click('.detail-learningmaterials-actions .button', container).then(function(){
 //       //pick the file type
-//       click('.actions ul li:eq(0)');
+//       click('.detail-learningmaterials-actions ul li:eq(0)');
 //     });
 //   });
 //   andThen(function(){
@@ -218,9 +218,9 @@ test('create new link learning material', function(assert) {
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.actions .button', container).then(function(){
+    click('.detail-learningmaterials-actions .button', container).then(function(){
       //pick the link type
-      click('.actions ul li:eq(1)');
+      click('.detail-learningmaterials-actions ul li:eq(1)');
     });
   });
   andThen(function(){
@@ -268,9 +268,9 @@ test('create new citation learning material', function(assert) {
 
     assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.actions .button', container).then(function(){
+    click('.detail-learningmaterials-actions .button', container).then(function(){
       //pick the citation type
-      click('.actions ul li:eq(2)');
+      click('.detail-learningmaterials-actions ul li:eq(2)');
     });
   });
   andThen(function(){
@@ -304,8 +304,8 @@ test('create new citation learning material', function(assert) {
 });
 
 test('can only add one learning-material at a time', function(assert) {
-  const addButton = '.actions .button';
-  const fileButton = '.actions ul li:eq(0)';
+  const addButton = '.detail-learningmaterials-actions .button';
+  const fileButton = '.detail-learningmaterials-actions ul li:eq(0)';
   const collapseButton = '.collapse-button';
   const component = '.new-learning-material';
 
@@ -332,8 +332,8 @@ test('cancel new learning material', function(assert) {
     let container = find('.detail-learningmaterials');
     let rows = find('.detail-learningmaterials-content tbody tr', container);
     assert.equal(rows.length, fixtures.course.learningMaterials.length);
-    click('.actions .button', container);
-    click('.actions ul li:eq(0)');
+    click('.detail-learningmaterials-actions .button', container);
+    click('.detail-learningmaterials-actions ul li:eq(0)');
   });
   andThen(function(){
     click('.detail-learningmaterials .new-learning-material .cancel');
