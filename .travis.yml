@@ -22,7 +22,7 @@ before_install:
   - npm set progress=false
   - npm config set spin false
   - npm install -g bower
-  - travis_retry gem install scss-lint --no-ri --no-rdoc
+  - travis_retry gem install scss_lint --no-ri --no-rdoc
 
 install:
   - travis_retry npm install --no-optional

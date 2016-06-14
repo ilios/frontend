@@ -25,7 +25,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
       background-color: $dropdown-background-hover;
     }
 
-    &:after {
+    &::after {
       content: '\25BE';
       display: block;
       position: absolute;

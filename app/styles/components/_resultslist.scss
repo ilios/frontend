@@ -1,3 +1,5 @@
+$active-list-tr-background: rgba(239, 251, 255, .8);
+
 // scss-lint:disable SelectorDepth NestingDepth
 .resultslist {
   @include span-columns(12 of 12);
@@ -61,7 +63,7 @@
 
     .active-background {
       tbody tr {
-        background-color: rgba(239, 251, 255, .8);
+        background-color: $active-list-tr-background;
       }
 
       thead tr {
