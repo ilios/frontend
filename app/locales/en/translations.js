@@ -139,6 +139,7 @@ export default {
     'universalLocator': 'Universal Locator',
     'removeAll': 'Remove All',
     'copiedSuccessfully': 'Copied Successfully',
+    'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an update browser.',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -474,6 +475,10 @@ export default {
     'invalidateTokens': 'Invalidate All Tokens',
     'invalidateTokensConfirmation': 'This will invalidate all existing API tokens and you will need to generate new ones for any applications you have.  Are you sure you want to do this?',
     'successfullyInvalidatedTokens': 'All existing tokens were successfully invalidated',
+    'uploadUsers': 'CSV File with new user data',
+    'sampleFile': 'Sample File',
+    'newUsersCreatedSuccessfully': 'New users created successfully',
+    'newUsersCreatedWarning': 'Some users were created, but there were errors.  Please verify which accounts are already present before attempting to created new users again.',
   },
   'language': {
     'select': {
