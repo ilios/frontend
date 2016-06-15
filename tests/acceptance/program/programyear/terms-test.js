@@ -58,7 +58,7 @@ test('manage terms', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.taxonomy-manager');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
       assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
@@ -72,7 +72,7 @@ test('save term changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.taxonomy-manager');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-terms-list li:eq(1) > div', container)).then(function(){
@@ -91,7 +91,7 @@ test('cancel term changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.taxonomy-manager');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-terms-list li:eq(1) > div', container)).then(function(){

@@ -2,53 +2,51 @@
   {{wait-saving}}
 {{/liquid-if}}
 
-<section class='detail-block'>
-  <div class="offering-section-top">
-    <div class='detail-title'>
-      {{t 'general.offerings'}} ({{offerings.length}})
-    </div>
-
-    <div class='detail-actions'>
-      {{#if editable}}
-        {{expand-collapse-button value=offeringEditorOn action="toggleEditor"}}
-      {{/if}}
-    </div>
+<div class="offering-section-top">
+  <div class='title'>
+    {{t 'general.offerings'}} ({{offerings.length}})
   </div>
 
-  {{#liquid-if offeringEditorOn class='vertical'}}
-    {{offering-editor
-      cohorts=cohorts
-      addSingleOffering='addSingleOffering'
-      addMultipleOfferings='addMultipleOfferings'
-      addSingleOfferingRecurring='addSingleOfferingRecurring'
-      addMultipleOfferingsRecurring='addMultipleOfferingsRecurring'
-      closeEditor='closeEditor'
-      class="form-container"
-    }}
-  {{/liquid-if}}
-
-  <div class='detail-content'>
-    {{#if offerings.length}}
-      <div class='detail-content-header'>
-        <div>
-          <label>{{ t 'general.dateTime' }}</label>
-        </div>
-        <div>
-          <label>{{ t 'general.groupName' }}</label>
-        </div>
-        <div>
-          <label>{{ t 'general.location' }}</label>
-        </div>
-        <div>
-          <label>{{ t 'general.instructors' }}</label>
-        </div>
-        <div>
-          <label>{{ t 'general.actions' }}</label>
-        </div>
-      </div>
-      {{session-offerings-list session=session editable=editable}}
-    {{else}}
-      <p>{{t 'sessions.noOfferings'}}</p>
+  <div class='actions'>
+    {{#if editable}}
+      {{expand-collapse-button value=offeringEditorOn action="toggleEditor"}}
     {{/if}}
   </div>
-</section>
+</div>
+
+{{#if offeringEditorOn class='vertical'}}
+  {{offering-editor
+    cohorts=cohorts
+    addSingleOffering='addSingleOffering'
+    addMultipleOfferings='addMultipleOfferings'
+    addSingleOfferingRecurring='addSingleOfferingRecurring'
+    addMultipleOfferingsRecurring='addMultipleOfferingsRecurring'
+    closeEditor='closeEditor'
+    class="form-container"
+  }}
+{{/if}}
+
+<div class='session-offerings-content'>
+  {{#if offerings.length}}
+    <div class='session-offerings-header'>
+      <div>
+        <label>{{ t 'general.dateTime' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.groupName' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.location' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.instructors' }}</label>
+      </div>
+      <div>
+        <label>{{ t 'general.actions' }}</label>
+      </div>
+    </div>
+    {{session-offerings-list session=session editable=editable}}
+  {{else}}
+    <p>{{t 'sessions.noOfferings'}}</p>
+  {{/if}}
+</div>

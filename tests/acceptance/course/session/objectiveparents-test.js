@@ -64,7 +64,7 @@ test('list session objectives', function(assert) {
     assert.equal(tds.length, 4);
     click('.link', tds.eq(1));
     andThen(function() {
-      assert.equal(getElementText(find('.detail-specific-title')), 'SelectParentObjectives');
+      assert.equal(getElementText(find('.specific-title')), 'SelectParentObjectives');
       let objectiveManager = find('.objective-manager').eq(0);
       let objective = fixtures.sessionObjectives[0];
       assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));

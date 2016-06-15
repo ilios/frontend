@@ -1,35 +1,33 @@
-<section class='detail-block'>
-  <div class='detail-title'>
-    {{#if isManaging}}
-      <span class='detail-specific-title'>
-        {{t 'courses.meshManageTitle'}}
-      </span>
-    {{else}}
-      {{t 'general.mesh'}} ({{terms.length}})
-    {{/if}}
-  </div>
+<div class='title'>
+  {{#if isManaging}}
+    <span class='detail-specific-title'>
+      {{t 'courses.meshManageTitle'}}
+    </span>
+  {{else}}
+    {{t 'general.mesh'}} ({{terms.length}})
+  {{/if}}
+</div>
 
-  <div class='detail-actions'>
-    {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else if editable}}
-      <button {{action 'manage'}}>{{t 'courses.meshManageTitle'}}</button>
-    {{/if}}
-  </div>
-  <div class='detail-content'>
-    {{#liquid-if isManaging class="horizontal"}}
-        {{mesh-manager
-          terms=bufferTerms
-          add='addTermToBuffer'
-          remove='removeTermFromBuffer'
-        }}
-    {{else}}
-    <ul class='columnar-list'>
-      {{#each sortedTerms as |term|}}
-        <li>{{term.name}}</li>
-      {{/each}}
-    </ul>
-    {{/liquid-if}}
-  </div>
-</section>
+<div class='actions'>
+  {{#if isManaging}}
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  {{else if editable}}
+    <button {{action 'manage'}}>{{t 'courses.meshManageTitle'}}</button>
+  {{/if}}
+</div>
+<div class='content'>
+  {{#if isManaging}}
+      {{mesh-manager
+        terms=bufferTerms
+        add='addTermToBuffer'
+        remove='removeTermFromBuffer'
+      }}
+  {{else}}
+  <ul class='columnar-list'>
+    {{#each sortedTerms as |term|}}
+      <li>{{term.name}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</div>

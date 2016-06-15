@@ -42,7 +42,7 @@ test('save new objective', function(assert) {
   andThen(function() {
     let objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
     assert.equal(objectiveRows.length, fixtures.course.objectives.length);
-    click('.detail-objectives .detail-actions button');
+    click('.detail-objectives .detail-objectives-actions button');
     //wait for the editor to load
     Ember.run.later(()=>{
       find('.detail-objectives .newobjective .froalaEditor').froalaEditor('html.set', newObjectiveTitle);
@@ -71,7 +71,7 @@ test('cancel new objective', function(assert) {
   andThen(function() {
     let objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
     assert.equal(objectiveRows.length, fixtures.course.objectives.length);
-    click('.detail-objectives .detail-actions button');
+    click('.detail-objectives .detail-objectives-actions button');
     click('.detail-objectives .newobjective button.cancel');
   });
   andThen(function(){

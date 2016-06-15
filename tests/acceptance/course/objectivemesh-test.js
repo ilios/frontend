@@ -63,7 +63,7 @@ test('manage terms', function(assert) {
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
     click('.course-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives).then(function(){
-      assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
+      assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
     });
 
     andThen(function() {

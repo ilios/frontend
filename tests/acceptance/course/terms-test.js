@@ -50,7 +50,7 @@ test('taxonomy summary', function(assert) {
   visit('/courses/1?details=true');
   andThen(function() {
     var container = find('.collapsed-taxonomies');
-    var title = find('.detail-title', container);
+    var title = find('.title', container);
     assert.equal(title.text().trim(), 'Terms (' + fixtures.course.terms.length + ')');
     assert.equal(find('tr:eq(0) th:eq(0)', container).text().trim(), 'Vocabulary');
     assert.equal(find('tr:eq(0) th:eq(1)', container).text().trim(), 'School');
@@ -78,7 +78,7 @@ test('manage terms', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.taxonomy-manager');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
       assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
@@ -92,7 +92,7 @@ test('save term changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.taxonomy-manager');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-terms-list li:eq(1) > div', container)).then(function(){
@@ -111,7 +111,7 @@ test('cancel term changes', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.taxonomy-manager');
-    click(find('.detail-actions button', container));
+    click(find('.actions button', container));
     andThen(function(){
       click(find('.removable-list li:eq(0)', container)).then(function(){
         click(find('.selectable-terms-list li:eq(1) > div', container)).then(function(){

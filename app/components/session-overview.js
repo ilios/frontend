@@ -3,8 +3,9 @@ import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import config from 'ilios/config/environment';
 
-const { Component, computed, RSVP } = Ember;
+const { Component, computed, RSVP, isEmpty } = Ember;
 const { oneWay, sort } = computed;
 const { Promise } = RSVP;
 
@@ -23,6 +24,12 @@ const Validations = buildValidations({
       positive: true,
     }),
   ],
+  description: [
+    validator('length', {
+      min: 3,
+      max: 65000
+    }),
+  ],
 });
 
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
@@ -33,14 +40,20 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       if (ilmSession){
         this.set('hours', ilmSession.get('hours'));
       }
-    })
+    });
+    this.get('session.sessionDescription').then(sessionDescription => {
+      if (sessionDescription){
+        this.set('description', sessionDescription.get('description'));
+      }
+    });
   },
+  editorParams: config.froalaEditorDefaults,
   session: null,
   title: null,
   hours: null,
+  description: null,
   publishTarget: oneWay('session'),
   editable: true,
-  classNames: ['session-overview'],
   sortTypes: ['title'],
   sessionTypes: [],
   sortedSessionTypes: sort('sessionTypes', 'sortTypes'),
@@ -153,21 +166,56 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         }
       });
     },
-    changeDescription: function(value){
-      this.get('session.sessionDescription').then(sessionDescription => {
-        if(!value && sessionDescription){
-          sessionDescription.deleteRecord();
-          sessionDescription.save();
-        } else {
-          if(!sessionDescription){
-            sessionDescription = this.get('store').createRecord('session-description');
-            sessionDescription.set('session', this.get('session'));
+    saveDescription: function(){
+      const session = this.get('session');
+      const store = this.get('store');
+      const newDescription = this.get('description');
+
+      this.send('addErrorDisplayFor', 'description');
+      return new Promise((resolve, reject) => {
+        this.validate({ on: ['description'] }).then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'description');
+            session.get('sessionDescription').then(sessionDescription => {
+              if(isEmpty(newDescription) && sessionDescription){
+                sessionDescription.deleteRecord();
+              } else {
+                if(!sessionDescription){
+                  sessionDescription = store.createRecord('session-description');
+                  sessionDescription.set('session', session);
+                }
+                sessionDescription.set('description', newDescription);
+              }
+              this.set('sessionDescription', newDescription);
+              if (sessionDescription) {
+                resolve(sessionDescription.save());
+              } else {
+                resolve();
+              }
+            });
+          } else {
+            reject();
           }
-          sessionDescription.set('description', value);
-          sessionDescription.save().then(returnedDescription => {
-            this.get('session').set('sessionDescription', returnedDescription);
-            this.get('session').save();
-          });
+        });
+      });
+
+
+    },
+    changeDescription(event, editor){
+      this.send('addErrorDisplayFor', 'description');
+      let html = editor.html.get();
+      let plainText = html.replace(/(<([^>]+)>)/ig,"");
+      //if all we have is empty html then save null
+      if(plainText.length === 0){
+        html = null;
+      }
+
+      this.set('description', html);
+    },
+    revertDescriptionChanges(){
+      this.get('session').get('sessionDescription').then(sessionDescription => {
+        if (sessionDescription) {
+          this.set('description', sessionDescription.get('description'));
         }
       });
     },

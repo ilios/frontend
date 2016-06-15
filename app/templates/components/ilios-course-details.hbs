@@ -1,22 +1,16 @@
-<div class='detail-view course-detail-view'>
-    <div class='detail-view-main-title'>
-        {{course-header course=course}}
-    </div>
-    <div class='detail-view-details'>
-      {{course-overview course=course}}
-      {{#if collapsed}}
-        <div {{action 'expand'}} class='detail-collapsed-control'><span>{{t 'courses.expandDetail'}}{{fa-icon "fa-plus-square"}}</span></div>
-      {{else}}
-        {{course-editing
-          course=course
-          courseObjectiveDetails=courseObjectiveDetails
-          courseTaxonomyDetails = courseTaxonomyDetails
-          courseCompetencyDetails = courseCompetencyDetails
-          setCourseObjectiveDetails=(action this.attrs.setCourseObjectiveDetails)
-          setCourseTaxonomyDetails=(action this.attrs.setCourseTaxonomyDetails)
-          setCourseCompetencyDetails=(action this.attrs.setCourseCompetencyDetails)
-        }}
-        <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'courses.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
-      {{/if}}
-    </div>
-</div>
+{{course-header course=course}}
+{{course-overview course=course}}
+{{#if (not showDetails)}}
+  <div {{action setShowDetails true}} class='detail-collapsed-control'><span>{{t 'courses.expandDetail'}}{{fa-icon "fa-plus-square"}}</span></div>
+{{else}}
+  {{course-editing
+    course=course
+    courseObjectiveDetails=courseObjectiveDetails
+    courseTaxonomyDetails = courseTaxonomyDetails
+    courseCompetencyDetails = courseCompetencyDetails
+    setCourseObjectiveDetails=(action this.attrs.setCourseObjectiveDetails)
+    setCourseTaxonomyDetails=(action this.attrs.setCourseTaxonomyDetails)
+    setCourseCompetencyDetails=(action this.attrs.setCourseCompetencyDetails)
+  }}
+  <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'courses.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
+{{/if}}

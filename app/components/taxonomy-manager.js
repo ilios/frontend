@@ -9,7 +9,7 @@ export default Component.extend({
   i18n: service(),
   flashMessages: service(),
   subject: null,
-  classNames: ['detail-taxonomies'],
+  classNames: ['taxonomy-manager'],
   tagName: 'section',
 
   /**

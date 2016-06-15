@@ -1,40 +1,36 @@
-<section class='detail-block'>
-  <div class='detail-title'>
+<div class='title'>
+  {{#if isManaging}}
+    <span class='detail-specific-title'>
+      {{t 'courses.instructorsManageTitle'}}
+    </span>
+  {{else}}
+    {{t 'courses.instructors'}} ({{titleCount}})
+  {{/if}}
+</div>
 
-    {{#if isManaging}}
-      <span class='detail-specific-title'>
-        {{t 'courses.instructorsManageTitle'}}
-      </span>
-    {{else}}
-      {{t 'courses.instructors'}} ({{titleCount}})
-    {{/if}}
-
-  </div>
-
-  <div class='detail-actions'>
-    {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else if editable}}
-      <button {{action 'manage'}}>{{t 'courses.instructorsManageTitle'}}</button>
-    {{/if}}
-  </div>
-  <div class='detail-content'>
-    {{#liquid-if isManaging class="horizontal"}}
-        {{instructor-selection-manager
-          addInstructor='addInstructorToBuffer'
-          addInstructorGroup='addInstructorGroupToBuffer'
-          removeInstructor='removeInstructorFromBuffer'
-          removeInstructorGroup='removeInstructorGroupFromBuffer'
-          availableInstructorGroups=currentUser.model.school.instructorGroups
-          instructorGroups=instructorGroupBuffer
-          instructors=instructorBuffer
-        }}
-    {{else}}
-      {{detail-instructors-list
-        instructorGroups=ilmSession.instructorGroups
-        instructors=ilmSession.instructors
+<div class='actions'>
+  {{#if isManaging}}
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  {{else if editable}}
+    <button {{action 'manage'}}>{{t 'courses.instructorsManageTitle'}}</button>
+  {{/if}}
+</div>
+<div class='detail-instructors-content'>
+  {{#if isManaging class="horizontal"}}
+      {{instructor-selection-manager
+        addInstructor='addInstructorToBuffer'
+        addInstructorGroup='addInstructorGroupToBuffer'
+        removeInstructor='removeInstructorFromBuffer'
+        removeInstructorGroup='removeInstructorGroupFromBuffer'
+        availableInstructorGroups=currentUser.model.school.instructorGroups
+        instructorGroups=instructorGroupBuffer
+        instructors=instructorBuffer
       }}
-    {{/liquid-if}}
-  </div>
-</section>
+  {{else}}
+    {{detail-instructors-list
+      instructorGroups=ilmSession.instructorGroups
+      instructors=ilmSession.instructors
+    }}
+  {{/if}}
+</div>

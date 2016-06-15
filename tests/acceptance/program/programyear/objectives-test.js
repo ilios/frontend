@@ -83,7 +83,7 @@ test('manage terms', function(assert) {
   andThen(function() {
     let detailObjectives = find('.detail-objectives').eq(0);
     click('.programyear-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives).then(function(){
-      assert.equal(getElementText(find('.detail-specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
+      assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
     });
 
     andThen(function() {
@@ -195,7 +195,7 @@ test('manage competencies', function(assert) {
     assert.equal(tds.length, 3);
     click('.link', tds.eq(1));
     andThen(function() {
-      assert.equal(getElementText(find('.detail-specific-title')), 'SelectObjectiveCompetency');
+      assert.equal(getElementText(find('.specific-title')), 'SelectObjectiveCompetency');
       let objectiveManager = find('.objective-manage-competency').eq(0);
       assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText('objective 0'));
       assert.equal(getElementText(find('.parent-picker', objectiveManager)), getText('competency0 competency1 competency2'));

@@ -1,34 +1,32 @@
-<section class='detail-block {{if showCollapsible "collapsible"}}'>
+{{#if isManaging}}
+    <div class='title'>
+        <span class='detail-specific-title'>{{t 'taxonomies.termsManageTitle'}}</span>
+    </div>
+{{else}}
+    <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
+        {{t 'general.terms'}} ({{subject.terms.length}})
+    </div>
+{{/if}}
+<div class='actions'>
     {{#if isManaging}}
-        <div class='detail-title'>
-            <span class='detail-specific-title'>{{t 'taxonomies.termsManageTitle'}}</span>
-        </div>
-    {{else}}
-        <div class='detail-title {{if subject.terms.length "clickable"}}' {{action 'collapse'}}>
-            {{t 'general.terms'}} ({{subject.terms.length}})
-        </div>
+        <button class='bigadd' {{action 'save'}}>
+          {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+        </button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else if editable}}
+        <button {{action 'manage'}}>{{t 'taxonomies.termsManageTitle'}}</button>
     {{/if}}
-    <div class='detail-actions'>
-        {{#if isManaging}}
-            <button class='bigadd' {{action 'save'}}>
-              {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
-            </button>
-            <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-        {{else if editable}}
-            <button {{action 'manage'}}>{{t 'taxonomies.termsManageTitle'}}</button>
-        {{/if}}
-    </div>
-    <div class='detail-content'>
-        {{#liquid-if isManaging class="horizontal"}}
-            {{taxonomy-manager
-            subject=subject
-            selectedTerms=bufferedTerms
-            add='addTermToBuffer'
-            remove='removeTermFromBuffer'}}
-        {{else}}
-            {{#each subject.associatedVocabularies as |vocab| }}
-                {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
-            {{/each}}
-        {{/liquid-if}}
-    </div>
-</section>
+</div>
+<div class='content'>
+    {{#if isManaging}}
+        {{taxonomy-manager
+        subject=subject
+        selectedTerms=bufferedTerms
+        add='addTermToBuffer'
+        remove='removeTermFromBuffer'}}
+    {{else}}
+        {{#each subject.associatedVocabularies as |vocab| }}
+            {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
+        {{/each}}
+    {{/if}}
+</div>

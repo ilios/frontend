@@ -7,6 +7,7 @@
   color: $text-blue;
   font-size: $base-font-size;
   font-weight: bold;
+  cursor: pointer;
 
   &::after {
     content: '\25BA';

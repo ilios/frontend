@@ -221,14 +221,14 @@ test('change title', function(assert) {
   });
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
-    var container = find('.session-overview .detail-header .title');
+    let container = find('.session-header .title');
     assert.equal(getElementText(container), getText('session 0'));
     click(find('.editable', container));
     andThen(function(){
-      var input = find('.editinplace input', container);
+      let input = find('.editinplace input', container);
       assert.equal(getText(input.val()), getText('session 0'));
       fillIn(input, 'test new title');
-      click(find('.editinplace .actions .done', container));
+      click(find('.done', container));
       andThen(function(){
         assert.equal(getElementText(container), getText('test new title'));
       });
@@ -345,8 +345,8 @@ test('add description', function(assert) {
   visit('/courses/1/sessions/1/publicationcheck');
   andThen(function() {
     let container = find('.session-overview .sessiondescription');
-    assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
-    click(find('.editable span', container));
+    assert.equal(getElementText(container), getText('Description: Click to edit'));
+    click(find('.editable', container));
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
@@ -357,7 +357,7 @@ test('add description', function(assert) {
         editor.froalaEditor('events.trigger', 'contentChanged');
         click(find('.editinplace .actions .done', container));
         andThen(function(){
-          assert.equal(getElementText(find('.content', container)), getText('test new description'));
+          assert.equal(getElementText(container), getText('Description: test new description'));
         });
       }, 100);
     });

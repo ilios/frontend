@@ -10,27 +10,17 @@ const { all, hash } = RSVP;
 
 export default Component.extend({
   saving: false,
-
   store: service(),
-
   i18n: service(),
-
   layout,
-
+  tagName: 'section',
   classNames: ['session-offerings'],
-
   session: null,
-
   placeholderValue: t('sessions.titleFilterPlaceholder'),
-
   offerings: oneWay('session.offerings'),
-
   newButtonTitle: t('general.add'),
-
   offeringEditorOn: false,
-
   cohorts: alias('session.course.cohorts'),
-
   createSchedule(startDate, endDate, { days, numberOfWeeks }) {
     // First datetime picked by user:
     const schedule = [{ startDate, endDate }];

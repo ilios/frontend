@@ -4,6 +4,7 @@ const { Component, computed } = Ember;
 
 export default Component.extend({
   currentUser: Ember.inject.service(),
+  tagName: 'section',
   classNames: ['detail-instructors'],
   ilmSession: null,
   isManaging: false,

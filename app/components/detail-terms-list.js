@@ -8,7 +8,7 @@ const { Component, computed } = Ember;
  */
 export default Component.extend({
 
-  classNames: ['detail-taxonomies'],
+  classNames: ['detail-terms'],
 
   /**
    * Flag indicating whether terms can be removed from the list or not.

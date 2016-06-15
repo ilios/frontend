@@ -1,62 +1,59 @@
-<div class='detail-header'>
-  <span class='title'>
-    {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
-    {{#if editable}}
-      {{#if course}}
-        {{#editable-field
-          tagName='h2'
+<span class='title'>
+  {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
+  {{#if editable}}
+    {{#if course}}
+      {{#editable-field
+        value=courseTitle
+        save=(action 'changeTitle')
+        close=(action 'revertTitleChanges')
+        as |isSaving save close|
+      }}
+        {{one-way-input
           value=courseTitle
-          save=(action 'changeTitle')
-          close=(action 'revertTitleChanges')
-          as |isSaving save close|
+          update=(action (mut courseTitle))
+          onenter=save
+          onescape=close
+          disabled=isSaving
+          focusOut=(action 'addErrorDisplayFor' 'courseTitle')
+          keyPress=(action 'addErrorDisplayFor' 'courseTitle')
         }}
-          {{one-way-input
-            value=courseTitle
-            update=(action (mut courseTitle))
-            onenter=save
-            onescape=close
-            disabled=isSaving
-            focusOut=(action 'addErrorDisplayFor' 'courseTitle')
-            keyPress=(action 'addErrorDisplayFor' 'courseTitle')
-          }}
-          {{#if (and (v-get this 'courseTitle' 'isInvalid') (is-in showErrorsFor 'courseTitle'))}}
-            <span class="validation-error-message">{{v-get this 'courseTitle' 'message'}}</span>
-          {{/if}}
-        {{/editable-field}}
-      {{/if}}
-    {{else}}
-      {{#if course}}
-        <h2>{{course.title}}</h2>
-      {{/if}}
+        {{#if (and (v-get this 'courseTitle' 'isInvalid') (is-in showErrorsFor 'courseTitle'))}}
+          <span class="validation-error-message">{{v-get this 'courseTitle' 'message'}}</span>
+        {{/if}}
+      {{/editable-field}}
     {{/if}}
-    <h4>{{course.academicYear}}</h4>
-  </span>
-  <span class ='header-actions'>
-    {{#if editable}}
-
-      {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
-        {{#if showAsIs}}
-          <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
-        {{/if}}
-        {{#if showPublish}}
-          <li class='good' {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
-        {{/if}}
-        {{#if showReview}}
-          {{#link-to 'course.publicationCheck' course}}
-            <li class='good' >{{t 'publish.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
-          {{/link-to}}
-        {{/if}}
-        {{#if showTbd}}
-          <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
-        {{/if}}
-        {{#if showUnPublish}}
-          <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishCourse'}}</li>
-        {{/if}}
-
-      {{/action-menu}}
-
-    {{else}}
-      {{publication-status item=course}}
+  {{else}}
+    {{#if course}}
+      <h2>{{course.title}}</h2>
     {{/if}}
-  </span>
-</div>
+  {{/if}}
+  <h4>{{course.academicYear}}</h4>
+</span>
+<span class ='course-publication'>
+  {{#if editable}}
+
+    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
+      {{#if showAsIs}}
+        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+      {{/if}}
+      {{#if showPublish}}
+        <li class='good' {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
+      {{/if}}
+      {{#if showReview}}
+        {{#link-to 'course.publicationCheck' course}}
+          <li class='good' >{{t 'publish.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
+        {{/link-to}}
+      {{/if}}
+      {{#if showTbd}}
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+      {{/if}}
+      {{#if showUnPublish}}
+        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishCourse'}}</li>
+      {{/if}}
+
+    {{/action-menu}}
+
+  {{else}}
+    {{publication-status item=course}}
+  {{/if}}
+</span>
