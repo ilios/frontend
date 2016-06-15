@@ -68,7 +68,7 @@
     "ember-i18n": "4.2.1",
     "ember-i18n-cp-validations": "2.5.0",
     "ember-inflector": "1.9.4",
-    "ember-load": "0.0.8",
+    "ember-load": "0.0.9",
     "ember-load-initializers": "^0.5.1",
     "ember-modal-dialog": "0.8.4",
     "ember-moment": "6.1.0",
