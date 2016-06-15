@@ -17,7 +17,7 @@
     <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}} />
   </div>
   {{#if (gte proposedUsers.length 1)}}
-    <table>
+    <table class='proposed-new-users'>
       <thead>
         <tr>
           <th></th>
@@ -37,17 +37,18 @@
           <tr>
             <td>
               {{one-way-checkbox
-                checked=(contains obj selectedUsers)
+                checked=(and (v-get obj 'isValid') (contains obj selectedUsers))
                 update=(action 'toggleUserSelection' obj)
+                disabled=(v-get obj 'isInvalid')
               }}
             </td>
-            <td>{{obj.firstName}}</td>
-            <td>{{obj.lastName}}</td>
-            <td>{{obj.middleName}}</td>
+            <td class="{{if (v-get obj 'firstName' 'isInvalid') 'error'}}">{{obj.firstName}}</td>
+            <td class="{{if (v-get obj 'lastName' 'isInvalid') 'error'}}">{{obj.lastName}}</td>
+            <td class="{{if (v-get obj 'middleName' 'isInvalid') 'error'}}">{{obj.middleName}}</td>
             <td>{{obj.phone}}</td>
-            <td>{{obj.email}}</td>
-            <td>{{obj.campusId}}</td>
-            <td>{{obj.otherId}}</td>
+            <td class="{{if (v-get obj 'email' 'isInvalid') 'error'}}">{{obj.email}}</td>
+            <td class="{{if (v-get obj 'campusId' 'isInvalid') 'error'}}">{{obj.campusId}}</td>
+            <td class="{{if (v-get obj 'otherId' 'isInvalid') 'error'}}">{{obj.otherId}}</td>
             <td>{{obj.username}}</td>
             <td>{{obj.password}}</td>
           </tr>

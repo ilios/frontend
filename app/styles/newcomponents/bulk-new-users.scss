@@ -25,5 +25,12 @@
     .buttons {
       @include ilios-form-buttons;
     }
+
+    .proposed-new-users {
+      .error {
+        border: 1px solid $alert-color;
+        color: $alert-color;
+      }
+    }
   }
 }

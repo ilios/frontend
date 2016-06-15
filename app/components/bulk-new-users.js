@@ -4,18 +4,65 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
 import PapaParse from 'papaparse';
 
-const { Component, RSVP, inject, isPresent, computed } = Ember;
+const { Component, RSVP, inject, isPresent, computed, getOwner } = Ember;
 const { service } = inject;
-const { Promise } = RSVP;
+const { Promise, filter } = RSVP;
 const { reads } = computed;
 
-const Validations = buildValidations({
-  schoolId: [
+const UserValidations = buildValidations({
+  firstName: [
     validator('presence', true),
+    validator('length', {
+      max: 20
+    }),
   ],
+  middleName: [
+    validator('length', {
+      max: 20
+    }),
+  ],
+  lastName: [
+    validator('presence', true),
+    validator('length', {
+      max: 20
+    }),
+  ],
+  username: [
+    validator('presence', true),
+    validator('length', {
+      max: 100
+    }),
+  ],
+  password: [
+    validator('presence', true)
+  ],
+  campusId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+  otherId: [
+    validator('length', {
+      max: 16
+    }),
+  ],
+  email: [
+    validator('presence', true),
+    validator('length', {
+      max: 100
+    }),
+    validator('format', {
+      type: 'email'
+    }),
+  ],
+  phone: [
+    validator('length', {
+      max: 20
+    }),
+  ]
 });
 
-export default Component.extend(NewUser, Validations, {
+export default Component.extend(NewUser, {
   init(){
     this._super(...arguments);
     this.set('selectedUsers', []);
@@ -41,9 +88,12 @@ export default Component.extend(NewUser, Validations, {
    **/
   getFileContents(file){
     return new Promise(resolve => {
+      let ProposedUser = Ember.Object.extend(getOwner(this).ownerInjection(), UserValidations, {
+        email: null
+      });
       let complete = ({data}) => {
         let proposedUsers = data.map(arr => {
-          return {
+          return ProposedUser.create({
             firstName: isPresent(arr[0])?arr[0]:null,
             lastName: isPresent(arr[1])?arr[1]:null,
             middleName: isPresent(arr[2])?arr[2]:null,
@@ -53,7 +103,7 @@ export default Component.extend(NewUser, Validations, {
             otherId: isPresent(arr[6])?arr[6]:null,
             username: isPresent(arr[7])?arr[7]:null,
             password: isPresent(arr[8])?arr[8]:null
-          };
+          });
         });
 
         resolve(proposedUsers);
@@ -82,12 +132,26 @@ export default Component.extend(NewUser, Validations, {
 
     let proposedUsers = this.get('selectedUsers');
     proposedUsers.setEach('school', selectedSchool.get('id'));
-    let cleanUsers = proposedUsers.map(obj => {
-      delete obj.username;
-      delete obj.password;
 
-      return obj;
-    })
+    let validUsers = yield filter(proposedUsers, obj => {
+      return obj.validate().then(({validations}) => {
+        return validations.get('isValid');
+      });
+    });
+    let cleanUsers = validUsers.map(obj => {
+      return obj.getProperties(
+        'firstName',
+        'lastName',
+        'middleName',
+        'phone',
+        'email',
+        'campusId',
+        'otherId',
+        'school',
+        'addedViaIlios',
+        'enabled'
+      );
+    });
 
     const ajax = this.get('ajax');
 
