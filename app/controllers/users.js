@@ -1,13 +1,12 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import config from '../config/environment';
 import { cleanQuery } from '../utils/query-utils';
 
-const { computed, Controller, inject, run } = Ember;
+const { computed, Controller, inject, run, RSVP } = Ember;
 const { service } = inject;
 const { debounce } = run;
 const { IliosFeatures: { allowAddNewUser } } = config;
-const { PromiseObject } = DS;
+const { Promise } = RSVP;
 
 export default Controller.extend({
   store: service(),
@@ -17,6 +16,7 @@ export default Controller.extend({
     limit: 'limit',
     query: 'filter',
     showNewUserForm: 'addUser',
+    showBulkNewUserForm: 'addUsers',
     searchTerms: 'search'
   },
   offset: 0,
@@ -24,6 +24,7 @@ export default Controller.extend({
   query: '',
   allowAddNewUser: allowAddNewUser,
   showNewUserForm: false,
+  showBulkNewUserForm: false,
   searchTerms: null,
 
   delay: 500,
@@ -41,10 +42,20 @@ export default Controller.extend({
   }).readOnly(),
 
   newUserComponent: computed('iliosConfig.userSearchType', function(){
-    return PromiseObject.create({
-      promise: this.get('iliosConfig.userSearchType').then(userSearchType => {
-        return userSearchType === 'ldap'?'new-directory-user':'new-user';
-      })
+    return new Promise(resolve => {
+      this.get('iliosConfig.userSearchType').then(userSearchType => {
+        let component = userSearchType === 'ldap'?'new-directory-user':'new-user';
+        resolve(component);
+      });
+    });
+  }),
+
+  newBulkUserComponent: computed('iliosConfig.userSearchType', function(){
+    return new Promise(resolve => {
+      this.get('iliosConfig.userSearchType').then(userSearchType => {
+        let component = userSearchType === 'ldap'?'bulk-new-directory-users':'bulk-new-users';
+        resolve(component);
+      });
     });
   }),
 
@@ -58,9 +69,6 @@ export default Controller.extend({
   actions: {
     changeQuery(value) {
       debounce(this, this._updateQuery, value, this.get('delay'));
-    },
-    toggleNewUserForm(){
-      this.set('showNewUserForm', !this.get('showNewUserForm'));
     },
     transitionToUser(userId){
       this.transitionToRoute('user', userId);

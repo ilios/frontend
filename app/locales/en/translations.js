@@ -464,6 +464,8 @@ export default {
     'disableUser': 'Disable User',
     'excludeFromSync': 'Exclude From Sync',
     'new': 'New User',
+    'create': 'Create New User',
+    'createBulk': 'Upload Multiple Users',
     'saved': 'New User Saved Successfully',
     'username': 'Username',
     'password': 'Password',
