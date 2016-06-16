@@ -1,3 +1,8 @@
+{{#if term.description.length}}
+  {{#tooltip-on-component}}
+    {{term.description}}
+  {{/tooltip-on-component}}
+{{/if}}
 {{term.title}}
 <span class="actions">
   {{#if isSelected}}

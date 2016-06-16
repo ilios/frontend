@@ -14,10 +14,6 @@ export default Component.extend({
     return selectedTerms.contains(term);
   }),
 
-  tooltipContent: computed('term.description', function() {
-    return this.get('term.description');
-  }),
-
   click: function() {
     let term = this.get('term');
     if (this.get('isSelected')) {

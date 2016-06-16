@@ -1,3 +1,8 @@
+{{#if term.description.length}}
+  {{#tooltip-on-component}}
+    {{term.description}}
+  {{/tooltip-on-component}}
+{{/if}}
 {{#if term.isTopLevel}}
   {{term.title}}
 {{else}}
