@@ -15,7 +15,9 @@
       {{#if allowAddNewUser}}
         <div class='resultslist-actions'>
           <button {{action (toggle 'showNewUserForm' this)}}>{{t 'user.create'}}</button>
-          <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'user.createBulk'}}</button>
+          {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+            <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'user.createBulk'}}</button>
+          {{/if}}
         </div>
       {{/if}}
     </div>
@@ -34,7 +36,7 @@
         {{/liquid-if}}
         {{#liquid-if (and showBulkNewUserForm allowAddNewUser) class='vertical'}}
           {{#liquid-if (is-fulfilled newBulkUserComponent)}}
-            {{component (await newBulkUserComponent)
+            {{bulk-new-users
               close=(action (mut showBulkNewUserForm false))
             }}
           {{else}}

@@ -50,15 +50,6 @@ export default Controller.extend({
     });
   }),
 
-  newBulkUserComponent: computed('iliosConfig.userSearchType', function(){
-    return new Promise(resolve => {
-      this.get('iliosConfig.userSearchType').then(userSearchType => {
-        let component = userSearchType === 'ldap'?'bulk-new-directory-users':'bulk-new-users';
-        resolve(component);
-      });
-    });
-  }),
-
   _updateQuery(value) {
     if(value !== this.get('query')){
       this.set('offset', 0);
