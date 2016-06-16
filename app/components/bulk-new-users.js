@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
 import PapaParse from 'papaparse';
@@ -67,6 +67,7 @@ export default Component.extend(NewUser, {
     this._super(...arguments);
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
+    this.set('savedUserIds', []);
   },
   i18n: service(),
   ajax: service(),
@@ -77,6 +78,7 @@ export default Component.extend(NewUser, {
   file: null,
   selectedUsers: null,
   proposedUsers: null,
+  savedUserIds: null,
   host: reads('serverVariables.apiHost'),
   namespace: reads('serverVariables.apiNameSpace'),
 
@@ -122,24 +124,30 @@ export default Component.extend(NewUser, {
 
       return obj;
     });
-    this.get('selectedUsers').pushObjects(filledOutUsers);
+    let validUsers = yield filter(filledOutUsers, obj => {
+      return obj.validate().then(({validations}) => {
+        return validations.get('isValid');
+      });
+    });
+
+    this.get('selectedUsers').pushObjects(validUsers);
     this.get('proposedUsers').pushObjects(filledOutUsers);
   }).restartable(),
 
   save: task(function * () {
-    yield timeout(10); //timeout to allow spinner to render
+    this.set('savedUserIds', []);
     const selectedSchool = yield this.get('bestSelectedSchool');
 
     let proposedUsers = this.get('selectedUsers');
-    proposedUsers.setEach('school', selectedSchool.get('id'));
 
     let validUsers = yield filter(proposedUsers, obj => {
       return obj.validate().then(({validations}) => {
         return validations.get('isValid');
       });
     });
-    let cleanUsers = validUsers.map(obj => {
-      return obj.getProperties(
+    const store = this.get('store');
+    let records = validUsers.map(obj => {
+      let user = store.createRecord('user', obj.getProperties(
         'firstName',
         'lastName',
         'middleName',
@@ -147,27 +155,29 @@ export default Component.extend(NewUser, {
         'email',
         'campusId',
         'otherId',
-        'school',
         'addedViaIlios',
         'enabled'
-      );
+      ));
+      user.set('school', selectedSchool);
+
+      let authentication = store.createRecord('authentication', obj.getProperties(
+        'username',
+        'password'
+      ));
+      authentication.set('user', user);
+
+      return {user, authentication};
     });
 
-    const ajax = this.get('ajax');
-
-    let response = yield ajax.request(this.get('namespace') + '/users', {
-      method: 'POST',
-      data: {
-        users: cleanUsers
-      }
-    });
-
-    let newUsers = response.users;
-    if (newUsers.length === proposedUsers.length) {
-      this.get('flashMessages').success('user.newUsersCreatedSuccessfully')
-    } else {
-      this.get('flashMessages').success('user.newUsersCreatedWarning')
+    while (records.get('length') > 0){
+      let parts = records.splice(0, 5);
+      let users = parts.mapBy('user');
+      yield RSVP.all(users.invoke('save'));
+      let authentications = parts.mapBy('authentication');
+      yield RSVP.all(authentications.invoke('save'));
+      this.get('savedUserIds').pushObjects(users.mapBy('id'));
     }
+
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
 

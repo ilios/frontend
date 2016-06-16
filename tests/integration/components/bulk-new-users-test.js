@@ -23,6 +23,9 @@ const currentUserMock = Service.extend({
 let storeMock = Service.extend({
   query(){
     return resolve([]);
+  },
+  createRecord(){
+    throw new Error('Create record called in untested context');
   }
 });
 
@@ -71,12 +74,16 @@ let triggerUpload = function(users){
 };
 
 test('it renders', function(assert) {
+  assert.expect(8);
   this.set('nothing', parseInt);
-  storeMock.query = function(what, {filters}){
-    assert.equal('cohort', what);
-    assert.equal(filters.schools[0], 2);
-    return resolve([]);
-  }
+
+  storeMock.reopen({
+    query(what, {filters}){
+      assert.equal('cohort', what);
+      assert.equal(filters.schools[0], 2);
+      return resolve([]);
+    }
+  });
 
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -134,42 +141,77 @@ test('parses file into table', function(assert) {
 });
 
 test('saves valid users', function(assert) {
-  let ajaxMock = Service.extend({
-    request(url, {data}){
-      assert.equal(url, 'api/users');
-      assert.equal(data.users.length, 2);
-      let user1 = data.users[0];
-      assert.equal(window.Object.keys(user1).length, 10);
-      assert.equal(user1.firstName, 'jasper');
-      assert.equal(user1.lastName, 'johnson');
-      assert.equal(user1.middleName, null);
-      assert.equal(user1.phone, '1234567890');
-      assert.equal(user1.email, 'jasper.johnson@example.com');
-      assert.equal(user1.campusId, '123Campus');
-      assert.equal(user1.otherId, '123Other');
-      assert.equal(user1.school, 2);
-      assert.equal(user1.addedViaIlios, true);
-      assert.equal(user1.enabled, true);
+  assert.expect(32);
+  let called = 0;
+  storeMock.reopen({
+    createRecord(what, obj) {
+      let rhett = Object.create(obj);
+      switch (called) {
+      case 0:
+        assert.equal(what, 'user');
+        assert.equal(window.Object.keys(obj).length, 9);
+        rhett.reopen({
+          save(){
+            assert.equal(this.get('firstName'), 'jasper');
+            assert.equal(this.get('lastName'), 'johnson');
+            assert.equal(this.get('middleName'), null);
+            assert.equal(this.get('phone'), '1234567890');
+            assert.equal(this.get('email'), 'jasper.johnson@example.com');
+            assert.equal(this.get('campusId'), '123Campus');
+            assert.equal(this.get('otherId'), '123Other');
+            assert.equal(this.get('addedViaIlios'), true);
+            assert.equal(this.get('enabled'), true);
+          }
+        });
+        break;
+      case 1:
+        assert.equal(what, 'authentication');
+        assert.equal(window.Object.keys(obj).length, 2);
+        rhett.reopen({
+          save(){
+            assert.equal(this.get('username'), 'jasper');
+            assert.equal(this.get('password'), '123Test');
+            assert.equal(this.get('user').get('firstName'), 'jasper');
+          }
+        });
+        break;
+      case 2:
+        assert.equal(what, 'user');
+        assert.equal(window.Object.keys(obj).length, 9);
+        rhett.reopen({
+          save(){
+            assert.equal(this.get('firstName'), 'jackson');
+            assert.equal(this.get('lastName'), 'johnson');
+            assert.equal(this.get('middleName'), 'middle');
+            assert.equal(this.get('phone'), '12345');
+            assert.equal(this.get('email'), 'jj@example.com');
+            assert.equal(this.get('campusId'), '1234Campus');
+            assert.equal(this.get('otherId'), '1234Other');
+            assert.equal(this.get('addedViaIlios'), true);
+            assert.equal(this.get('enabled'), true);
+          }
+        });
 
+        break;
+      case 3:
+        assert.equal(what, 'authentication');
+        assert.equal(window.Object.keys(obj).length, 2);
+        rhett.reopen({
+          save(){
+            assert.equal(this.get('username'), 'jck');
+            assert.equal(this.get('password'), '1234Test');
+            assert.equal(this.get('user').get('firstName'), 'jackson');
+          }
+        });
+        break;
+      default:
+        assert.ok(false, 'Extra createRecord called when it shoul not have been');
+      }
 
-      let user2 = data.users[1];
-      assert.equal(window.Object.keys(user2).length, 10);
-      assert.equal(user2.firstName, 'jackson');
-      assert.equal(user2.lastName, 'johnson');
-      assert.equal(user2.middleName, 'middle');
-      assert.equal(user2.phone, '12345');
-      assert.equal(user2.email, 'jj@example.com');
-      assert.equal(user2.campusId, '1234Campus');
-      assert.equal(user2.otherId, '1234Other');
-      assert.equal(user2.school, 2);
-      assert.equal(user2.addedViaIlios, true);
-      assert.equal(user2.enabled, true);
-
-      return {users: [1,2]};
-
+      called++;
+      return rhett;
     }
   });
-  this.register('service:ajax', ajaxMock);
 
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);

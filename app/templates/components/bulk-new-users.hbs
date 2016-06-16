@@ -98,3 +98,11 @@
     <button class='cancel text' {{action (action close)}}>{{t 'general.cancel'}}</button>
   </div>
 </div>
+
+{{#liquid-if save.isRunning class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=selectedUsers.length
+    currentProgress=savedUserIds.length
+  }}
+{{/liquid-if}}
