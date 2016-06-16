@@ -136,7 +136,12 @@ export default Component.extend(NewUser, {
 
   save: task(function * () {
     this.set('savedUserIds', []);
+    const store = this.get('store');
     const selectedSchool = yield this.get('bestSelectedSchool');
+    const selectedCohort = yield this.get('bestSelectedCohort');
+    const roles = yield store.findAll('user-role');
+    const facultyRole = roles.findBy('id', '3');
+    const studentRole = roles.findBy('id', '4');
 
     let proposedUsers = this.get('selectedUsers');
 
@@ -145,7 +150,6 @@ export default Component.extend(NewUser, {
         return validations.get('isValid');
       });
     });
-    const store = this.get('store');
     let records = validUsers.map(obj => {
       let user = store.createRecord('user', obj.getProperties(
         'firstName',
@@ -159,6 +163,13 @@ export default Component.extend(NewUser, {
         'enabled'
       ));
       user.set('school', selectedSchool);
+
+      if (this.get('nonStudentMode')) {
+        user.set('roles', [facultyRole]);
+      } else {
+        user.set('primaryCohort', selectedCohort);
+        user.set('roles', [studentRole]);
+      }
 
       let authentication = store.createRecord('authentication', obj.getProperties(
         'username',
