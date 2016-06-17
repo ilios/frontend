@@ -52,46 +52,46 @@ test('filters by title', function(assert) {
   });
   visit('/courses');
   andThen(function() {
-    assert.equal(4, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')), getText(firstCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')), getText(secondCourse.title));
+    assert.equal(4, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')), getText(firstCourse.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')), getText(secondCourse.title));
 
     //put these in nested later blocks because there is a 500ms debounce on the title filter
-    fillIn('#titlefilter input', 'first');
+    fillIn('.titlefilter input', 'first');
     Ember.run.later(function(){
-      assert.equal(1, find('.resultslist-list tbody tr').length);
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
-      fillIn('#titlefilter input', 'second');
+      assert.equal(1, find('.list tbody tr').length);
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
+      fillIn('.titlefilter input', 'second');
       andThen(function(){
         Ember.run.later(function(){
-          assert.equal(1, find('.resultslist-list tbody tr').length);
-          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
-          fillIn('#titlefilter input', 'special');
+          assert.equal(1, find('.list tbody tr').length);
+          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
+          fillIn('.titlefilter input', 'special');
           andThen(function(){
             Ember.run.later(function(){
-              assert.equal(2, find('.resultslist-list tbody tr').length);
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')), getText(secondCourse.title));
+              assert.equal(2, find('.list tbody tr').length);
+              assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
+              assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(secondCourse.title));
 
-              fillIn('#titlefilter input', 'course');
+              fillIn('.titlefilter input', 'course');
               andThen(function(){
                 Ember.run.later(function(){
-                  assert.equal(4, find('.resultslist-list tbody tr').length);
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')), getText(firstCourse.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')), getText(secondCourse.title));
+                  assert.equal(4, find('.list tbody tr').length);
+                  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')), getText(firstCourse.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')), getText(secondCourse.title));
 
-                  fillIn('#titlefilter input', '');
+                  fillIn('.titlefilter input', '');
                   andThen(function(){
                     Ember.run.later(function(){
-                      assert.equal(4, find('.resultslist-list tbody tr').length);
-                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
-                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
-                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')), getText(firstCourse.title));
-                      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(3) td:eq(0)')), getText(secondCourse.title));
+                      assert.equal(4, find('.list tbody tr').length);
+                      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
+                      assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
+                      assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')), getText(firstCourse.title));
+                      assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')), getText(secondCourse.title));
                     }, 750);
                   });
                 }, 750);
@@ -118,15 +118,15 @@ test('filters by year', function(assert) {
   });
   visit('/courses');
   andThen(function() {
-    pickOption('#yearsfilter select', '2013 - 2014', assert);
+    pickOption('.yearsfilter select', '2013 - 2014', assert);
     andThen(function(){
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
     });
   });
   andThen(function() {
-    pickOption('#yearsfilter select', '2014 - 2015', assert);
+    pickOption('.yearsfilter select', '2014 - 2015', assert);
     andThen(function(){
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
     });
   });
 });
@@ -145,14 +145,14 @@ test('initial filter by year', function(assert) {
   });
   visit('/courses?year=2014');
   andThen(function() {
-    assert.equal(find('.resultslist-list tbody tr').length, 1);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
+    assert.equal(find('.list tbody tr').length, 1);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
   });
 
   visit('/courses?year=2013');
   andThen(function() {
-    assert.equal(find('.resultslist-list tbody tr').length, 1);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
+    assert.equal(find('.list tbody tr').length, 1);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
   });
 });
 
@@ -170,13 +170,13 @@ test('filters by mycourses', function(assert) {
   });
   visit('/courses');
   andThen(function() {
-    assert.equal(find('.resultslist-list tbody tr').length, 2);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')), getText(secondCourse.title));
-    click('#mycoursesfilter label');
+    assert.equal(find('.list tbody tr').length, 2);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(secondCourse.title));
+    click('.toggle-mycourses label');
     andThen(function(){
-      assert.equal(find('.resultslist-list tbody tr').length, 1);
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
+      assert.equal(find('.list tbody tr').length, 1);
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
     });
   });
 });
@@ -185,13 +185,11 @@ test('filters options', function(assert) {
   server.createList('school', 2);
   server.create('academicYear', {id: 2013});
   server.create('academicYear', {id: 2014});
-  assert.expect(5);
+  assert.expect(4);
   visit('/courses');
   andThen(function() {
-    var filters = find('.filter');
-    assert.equal(filters.length, 4);
-    assert.equal(find('#school-selection').eq(0).text().trim(), 'school 0');
-    var yearOptions = find('#yearsfilter select option');
+    assert.equal(find('.schoolsfilter').eq(0).text().trim(), 'school 0');
+    var yearOptions = find('.yearsfilter select option');
     assert.equal(yearOptions.length, 2);
     assert.equal(getElementText(yearOptions.eq(0)).substring(0,4), 2014);
     assert.equal(getElementText(yearOptions.eq(1)).substring(0,4), 2013);
@@ -225,10 +223,10 @@ test('user can only delete non-published courses with proper privileges', functi
   });
   visit('/courses');
   andThen(function() {
-    assert.equal(find('.resultslist-list tbody tr:eq(0) td:eq(7) .remove').length, 0, 'non-privileged user cannot delete published course');
-    assert.equal(find('.resultslist-list tbody tr:eq(1) td:eq(7) .remove').length, 0, 'non-privileged user cannot delete unpublished course');
-    assert.equal(find('.resultslist-list tbody tr:eq(2) td:eq(7) .remove').length, 0, 'privileged user cannot delete published course');
-    assert.equal(find('.resultslist-list tbody tr:eq(3) td:eq(7) .remove').length, 1, 'privileged user can delete published course');
+    assert.equal(find('.list tbody tr:eq(0) td:eq(7) .remove').length, 0, 'non-privileged user cannot delete published course');
+    assert.equal(find('.list tbody tr:eq(1) td:eq(7) .remove').length, 0, 'non-privileged user cannot delete unpublished course');
+    assert.equal(find('.list tbody tr:eq(2) td:eq(7) .remove').length, 0, 'privileged user cannot delete published course');
+    assert.equal(find('.list tbody tr:eq(3) td:eq(7) .remove').length, 1, 'privileged user can delete published course');
   });
 });
 
@@ -241,7 +239,7 @@ test('new course', function(assert) {
   const input = '.new-course input';
   const selectField = '.new-course select';
   const saveButton = '.done';
-  const savedLink = '.saved-result a';
+  const savedLink = '.savedcourse a';
 
   visit(url);
   click(expandButton);
@@ -267,8 +265,8 @@ test('new course in another year does not display in list', function(assert) {
   visit('/courses');
   let newTitle = 'new course title, woohoo';
   andThen(function() {
-    let container = find('.resultslist');
-    click('.resultslist-actions button', container);
+    let container = find('.courses');
+    click('.actions button', container);
     andThen(function(){
       fillIn('.new-course input:eq(0)', newTitle);
 
@@ -289,7 +287,7 @@ test('new course does not appear twice when navigating back', function(assert) {
   const input = '.new-course input';
   const selectField = '.new-course select';
   const saveButton = '.done';
-  const savedLink = '.saved-result a';
+  const savedLink = '.savedcourse a';
   const courseTitle = "Course 1";
   const course1InList = `tbody tr:contains("${courseTitle}")`;
 
@@ -369,8 +367,8 @@ test('no academic years exist', function(assert) {
 });
 
 test('sort by title', function(assert) {
-  const firstCourseTitle = '.resultslist-list tbody tr:eq(0) td:eq(0)';
-  const secondCourseTitle = '.resultslist-list tbody tr:eq(1) td:eq(0)';
+  const firstCourseTitle = '.list tbody tr:eq(0) td:eq(0)';
+  const secondCourseTitle = '.list tbody tr:eq(1) td:eq(0)';
   server.create('academicYear', {id: 2014});
   assert.expect(4);
   let firstCourse = server.create('course', {
@@ -393,8 +391,8 @@ test('sort by title', function(assert) {
 });
 
 test('sort by level', function(assert) {
-  const firstCourseTitle = '.resultslist-list tbody tr:eq(0) td:eq(0)';
-  const secondCourseTitle = '.resultslist-list tbody tr:eq(1) td:eq(0)';
+  const firstCourseTitle = '.list tbody tr:eq(0) td:eq(0)';
+  const secondCourseTitle = '.list tbody tr:eq(1) td:eq(0)';
   const sortingHeader = 'th:eq(3)';
   server.create('academicYear', {id: 2014});
   assert.expect(4);
@@ -421,8 +419,8 @@ test('sort by level', function(assert) {
 });
 
 test('sort by startDate', function(assert) {
-  const firstCourseTitle = '.resultslist-list tbody tr:eq(0) td:eq(0)';
-  const secondCourseTitle = '.resultslist-list tbody tr:eq(1) td:eq(0)';
+  const firstCourseTitle = '.list tbody tr:eq(0) td:eq(0)';
+  const secondCourseTitle = '.list tbody tr:eq(1) td:eq(0)';
   const sortingHeader = 'th:eq(4)';
   server.create('academicYear', {id: 2014});
   assert.expect(4);
@@ -449,8 +447,8 @@ test('sort by startDate', function(assert) {
 });
 
 test('sort by endDate', function(assert) {
-  const firstCourseTitle = '.resultslist-list tbody tr:eq(0) td:eq(0)';
-  const secondCourseTitle = '.resultslist-list tbody tr:eq(1) td:eq(0)';
+  const firstCourseTitle = '.list tbody tr:eq(0) td:eq(0)';
+  const secondCourseTitle = '.list tbody tr:eq(1) td:eq(0)';
   const sortingHeader = 'th:eq(5)';
   server.create('academicYear', {id: 2014});
   assert.expect(4);
@@ -477,9 +475,9 @@ test('sort by endDate', function(assert) {
 });
 
 test('sort by status', function(assert) {
-  const firstCourseTitle = '.resultslist-list tbody tr:eq(0) td:eq(0)';
-  const secondCourseTitle = '.resultslist-list tbody tr:eq(1) td:eq(0)';
-  const thirdCourseTitle = '.resultslist-list tbody tr:eq(2) td:eq(0)';
+  const firstCourseTitle = '.list tbody tr:eq(0) td:eq(0)';
+  const secondCourseTitle = '.list tbody tr:eq(1) td:eq(0)';
+  const thirdCourseTitle = '.list tbody tr:eq(2) td:eq(0)';
   const sortingHeader = 'th:eq(6)';
   server.create('academicYear', {id: 2014});
   assert.expect(6);

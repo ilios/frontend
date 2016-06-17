@@ -40,14 +40,14 @@
       </div>
     </div>
     <section class='new'>
-      {{#liquid-if showNewCourseForm class='vertical'}}
+      {{#if showNewCourseForm}}
         {{new-course
           currentSchool=selectedSchool
           currentYear=selectedYear
           save=(action 'saveNewCourse')
           cancel='toggleNewCourseForm'
         }}
-      {{/liquid-if}}
+      {{/if}}
 
       {{#each newCourses as |course|}}
         <div class='savedcourse'>
