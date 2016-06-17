@@ -1,5 +1,7 @@
 @mixin main-list () {
   @include fill-parent;
+  padding: 0 1em;
+
   @include media($large-screen) {
     @include span-columns(12);
   }
