@@ -60,23 +60,17 @@ export default Controller.extend({
       });
     }
   }),
-
-  selectedSchool: computed('model.[]', 'schoolId', {
-    get() {
-      let schools = this.get('model');
-
-      if(isPresent(this.get('schoolId'))) {
-        let school =  schools.find(school => {
-          return school.get('id') === this.get('schoolId');
-        });
-
-        if(school) {
-          return school;
-        }
+  selectedSchool: computed('model.[]', 'schoolId', function(){
+    let schools = this.get('model');
+    if(isPresent(this.get('schoolId'))){
+      let school =  schools.find(school => {
+        return school.get('id') === this.get('schoolId');
+      });
+      if(school){
+        return school;
       }
-
-      return schools.get('firstObject');
     }
+    return schools.get('firstObject');
   }),
 
   programs: computed('selectedSchool', 'saved', {
@@ -143,10 +137,8 @@ export default Controller.extend({
       this.set('editorOn', false);
     },
 
-    changeSelectedSchool(school) {
-      const schoolId = school.get('id');
-
-      this.setProperties({ schoolId, selectedSchool: school });
-    }
+    changeSelectedSchool: function(schoolId){
+      this.set('schoolId', schoolId);
+    },
   }
 });
