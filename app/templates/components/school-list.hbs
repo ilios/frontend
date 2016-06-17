@@ -8,7 +8,7 @@
     </div>
   </div>
   <section class='new'>
-    {{#liquid-if showNewSchoolForm class='vertical'}}
+    {{#if showNewSchoolForm class='vertical'}}
       <div class="new-result-title">{{t 'schools.new'}}</div>
 
       <div class="detail-content form-container">
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-    {{/liquid-if}}
+    {{/if}}
 
     {{#each newSchools as |school|}}
       <div class='savedschool'>

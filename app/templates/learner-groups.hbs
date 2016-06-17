@@ -72,9 +72,9 @@
     </div>
 
     <section class='new'>
-      {{#liquid-if showNewLearnerGroupForm class='vertical'}}
+      {{#if showNewLearnerGroupForm class='vertical'}}
         {{new-learnergroup save=(action 'saveNewLearnerGroup') cancel=(action 'cancel') fillModeSupported=true}}
-      {{/liquid-if}}
+      {{/if}}
     </section>
 
     <div class='list'>

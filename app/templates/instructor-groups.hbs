@@ -28,13 +28,13 @@
       </div>
     </div>
     <section class='new'>
-      {{#liquid-if showNewInstructorGroupForm class='vertical'}}
+      {{#if showNewInstructorGroupForm class='vertical'}}
         {{new-instructorgroup
           currentSchool=selectedSchool
           save=(action 'saveNewInstructorGroup')
           cancel='toggleNewInstructorGroupForm'
         }}
-      {{/liquid-if}}
+      {{/if}}
       {{#each newInstructorGroups as |instructorGroup|}}
         <div class='savedinstructorgroup'>
           {{#link-to 'instructorGroup' instructorGroup}}
