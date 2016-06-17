@@ -34,8 +34,12 @@ export default Component.extend({
     let subject = this.get('subject');
     let learnerGroups = this.get('learnerGroups');
     subject.set('learnerGroups', learnerGroups);
-    yield subject.save();
-    this.get('setIsManaging')(false);
+    try {
+      yield subject.save();
+    } finally {
+      this.get('setIsManaging')(false);
+      this.get('expand')();
+    }
   }),
   collapsible: computed('isManaging', 'learnerGroups.length', function(){
     const isManaging = this.get('isManaging');
