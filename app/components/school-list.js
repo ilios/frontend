@@ -27,6 +27,8 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
+  classNames: ['school-list'],
+  tagName: 'section',
   schools: [],
   newSchools: [],
   title: null,
