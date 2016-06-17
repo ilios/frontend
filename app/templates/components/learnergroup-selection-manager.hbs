@@ -1,8 +1,13 @@
-<h4>
-  {{t 'courses.selectedLearnerGroups'}}
-</h4>
-{{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
-
+<div class='selected-learner-groups'>
+  <h4>
+    {{t 'courses.selectedLearnerGroups'}}
+  </h4>
+  {{#if learnerGroups.length}}
+    {{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
+  {{else}}
+    {{t 'general.none'}}
+  {{/if}}
+</div>
 <div class='available-learner-groups'>
   <h4>
     {{t 'courses.availableLearnerGroups'}}

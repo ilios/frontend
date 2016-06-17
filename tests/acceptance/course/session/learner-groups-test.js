@@ -143,6 +143,22 @@ test('learner group manager display', function(assert) {
   });
 });
 
+test('learner group manager display with no selected groups', function(assert) {
+  setupModels();
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: []
+  });
+  const container = '.detail-learnergroups ';
+  const selectedLearnerGroups = container + ' .selected-learner-groups';
+
+  visit(url + '&isManagingLearnerGroups=true');
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    assert.equal(getElementText(find(selectedLearnerGroups)), getText('Selected Learner Groups None'));
+  });
+});
+
 test('filter learner groups by top group should include all subgroups', function(assert) {
   setupModels();
   server.create('ilmSession', {
