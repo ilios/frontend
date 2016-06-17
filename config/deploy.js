@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 module.exports = function(deployTarget) {
+  const API_VERSION = 'v1.6';
   var ENV = {
     build: {},
     exclude: ['.DS_Store', '*-test.js']
@@ -25,12 +26,12 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'stage-v1.5';
+    ENV['s3-index'].prefix = 'stage-' + API_VERSION;
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'prod-v1.5';
+    ENV['s3-index'].prefix = 'prod-' + API_VERSION;
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
