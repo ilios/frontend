@@ -1,28 +1,22 @@
-<section id='courses' class='fullwidth main-border'>
-  <div class="filter-tools">
+<section class='courses-list'>
+  <div class="filters">
     {{toggle-mycourses isChecked=userCoursesOnly toggleMyCourses='toggleMyCourses'}}
-    <div id='schoolsfilter' class="filter">
-      <label class="inline-label">
-        {{fa-icon 'university'}}
-      </label>
-      <div id="school-selection" class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-            {{#each sortedSchools as |school|}}
-              <option value={{school.id}} selected={{is-equal school selectedSchool}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{selectedSchool.title}}
-        {{/if}}
-      </div>
+    <div id='schoolsfilter' class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each sortedSchools as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
     </div>
-    <div id='yearsfilter' class="filter">
-      <label class="inline-label">
-        {{fa-icon 'calendar'}}
-      </label>
+    <div class="yearsfilter">
+      {{fa-icon 'calendar' fixedWidth=true}}
       <select onchange={{action "changeSelectedYear" value="target.value"}}>
         {{#each sortedYears as |year|}}
           <option value={{year.year}} selected={{is-equal year selectedYear}}>
@@ -32,20 +26,20 @@
       </select>
     </div>
 
-    <div id='titlefilter' class="filter">
+    <div class="titlefilter">
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
-  <section class='resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='courses'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.courses'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{expand-collapse-button value=showNewCourseForm action="toggleNewCourseForm"}}
       </div>
     </div>
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if showNewCourseForm class='vertical'}}
         {{new-course
           currentSchool=selectedSchool
@@ -56,7 +50,7 @@
       {{/liquid-if}}
 
       {{#each newCourses as |course|}}
-        <div class='savedcourse saved-result'>
+        <div class='savedcourse'>
           {{#link-to 'course' course}}
             {{fa-icon 'external-link-square'}} {{course.title}}
           {{/link-to}}
@@ -64,11 +58,10 @@
         </div>
       {{/each}}
     </section>
-    <div class='resultslist-list'>
+    <div class='list'>
       {{#if filteredCourses.isFulfilled}}
         {{ilios-course-list
           courses=filteredCourses
-          edit='editCourse'
           remove='removeCourse'
           sortBy=sortCoursesBy
           setSortBy=(action (mut sortCoursesBy))

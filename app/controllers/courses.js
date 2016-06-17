@@ -170,9 +170,6 @@ export default Controller.extend({
     return defaultYear;
   }),
   actions: {
-    editCourse: function(course){
-      this.transitionToRoute('course', course);
-    },
     removeCourse: function(course){
       course.deleteRecord();
       course.save();

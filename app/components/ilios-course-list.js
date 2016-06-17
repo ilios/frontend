@@ -72,9 +72,6 @@ export default Component.extend({
     return sortBy.search(/desc/) === -1;
   }),
   actions: {
-    edit: function(courseProxy){
-      this.sendAction('edit', courseProxy.get('content'));
-    },
     remove: function(courseProxy){
       this.sendAction('remove', courseProxy.get('content'));
     },

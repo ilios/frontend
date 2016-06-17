@@ -188,7 +188,7 @@ test('filters options', function(assert) {
   assert.expect(5);
   visit('/courses');
   andThen(function() {
-    var filters = find('#courses .filter');
+    var filters = find('.filter');
     assert.equal(filters.length, 4);
     assert.equal(find('#school-selection').eq(0).text().trim(), 'school 0');
     var yearOptions = find('#yearsfilter select option');
