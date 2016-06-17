@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th class='text-left' colspan=2>{{t 'instructorGroups.instructorGroupTitle'}}</th>
-      <th class='text-center'>{{t 'instructorGroups.members'}}</th>
-      <th class='text-center'>{{t 'instructorGroups.associatedCourses'}}</th>
+      <th class='text-center hide-from-small-screen'>{{t 'instructorGroups.members'}}</th>
+      <th class='text-center hide-from-small-screen'>{{t 'instructorGroups.associatedCourses'}}</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -15,17 +15,13 @@
             {{instructorGroup.title}}
           {{/link-to}}
         </td>
-        <td class='text-center'>{{instructorGroup.users.length}}</td>
-        <td class='text-center'>{{instructorGroup.courses.length}}</td>
+        <td class='text-center hide-from-small-screen'>{{instructorGroup.users.length}}</td>
+        <td class='text-center hide-from-small-screen'>{{instructorGroup.courses.length}}</td>
         <td class='text-right'>
-          {{#action-menu}}
-            <li>
-              {{#link-to 'instructorGroup' instructorGroup}}
-                {{t 'general.edit'}}
-              {{/link-to}}
-            </li>
-            <li {{action 'confirmRemove' instructorGroup}}>{{t 'general.remove'}}</li>
-          {{/action-menu}}
+          {{#link-to 'instructorGroup' instructorGroup class='edit'}}
+            {{fa-icon 'edit'}}
+          {{/link-to}}
+          <span class='clickable remove' {{action 'confirmRemove' instructorGroup}}>{{fa-icon 'trash'}}</span>
         </td>
       </tr>
       {{#if instructorGroup.showRemoveConfirmation}}

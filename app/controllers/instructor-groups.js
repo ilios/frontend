@@ -96,8 +96,8 @@ export default Controller.extend({
         this.set('showNewInstructorGroupForm', false);
       });
     },
-    changeSelectedSchool: function(school){
-      this.set('schoolId', school.get('id'));
+    changeSelectedSchool: function(schoolId){
+      this.set('schoolId', schoolId);
     },
     toggleNewInstructorGroupForm: function(){
       this.set('showNewInstructorGroupForm', !this.get('showNewInstructorGroupForm'));

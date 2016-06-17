@@ -34,6 +34,14 @@
     }
   }
 
+  input {
+    width: 200px;
+
+    @include media($large-screen) {
+      width: 100%;
+    }
+  }
+
 }
 
 @mixin main-list-box () {

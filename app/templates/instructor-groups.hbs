@@ -1,38 +1,33 @@
-<section id='instructorGroups' class='fullwidth main-border'>
-  <div class="filter-tools">
-    <div id='schoolsfilter' class="filter">
-      <label class="inline-label">
-        {{t 'general.school'}}:
-      </label>
-      <div id="school-selection" class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each model as |school|}}
-              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
-            {{/each}}
-          {{/action-menu}}
-        {{else}}
-          {{selectedSchool.title}}
-        {{/if}}
-      </div>
+<section class='instructorgroups-list'>
+  <div class="filters">
+    <div class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each (sort-by 'title' model) as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
     </div>
-    <!--  some empty filters to move title all the way to the right-->
-    <div class="filter"></div>
-    <div class="filter"></div>
-    <div id='titlefilter' class="filter">
+    <div class="titlefilter">
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
-  <section class='resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='instructorgroups'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.instructorGroups'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
       </div>
     </div>
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if showNewInstructorGroupForm class='vertical'}}
         {{new-instructorgroup
           currentSchool=selectedSchool
@@ -41,7 +36,7 @@
         }}
       {{/liquid-if}}
       {{#each newInstructorGroups as |instructorGroup|}}
-        <div class='savedinstructorgroup saved-result'>
+        <div class='savedinstructorgroup'>
           {{#link-to 'instructorGroup' instructorGroup}}
             {{fa-icon 'external-link-square'}} {{instructorGroup.title}}
           {{/link-to}}
@@ -49,7 +44,7 @@
         </div>
       {{/each}}
     </section>
-    <div class='resultslist-list'>
+    <div class='list'>
       {{#if filteredInstructorGroups.isFulfilled}}
         {{instructorgroup-list
           instructorGroups=filteredInstructorGroups

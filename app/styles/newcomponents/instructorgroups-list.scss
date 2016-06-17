@@ -1,19 +1,22 @@
-.learnergroups-list {
+.instructorgroups-list {
   @include main-list;
 
   .filters {
     @include main-list-filters;
 
     .schoolsfilter,
-    .programsfilter,
-    .programyearsfilter,
     .titlefilter {
       @include main-list-filter;
     }
 
+    .titlefilter {
+      @include media($large-screen) {
+        @include shift(6);
+      }
+    }
   }
 
-  .learnergroups {
+  .instructorgroups {
     @include main-list-box;
 
     .header {
