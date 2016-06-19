@@ -1,3 +1,29 @@
+{{#if savingUserErrors}}
+  <div class='saving-user-errors'>
+    <p>{{t 'user.errorSavingUser'}}</p>
+    <ul>
+      {{#each (sort-by 'lastName' (map-by 'userInput' savingUserErrors)) as |obj|}}
+        <li>{{obj.lastName}}, {{obj.firstName}} ({{obj.email}})</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
+
+{{#if savingAuthenticationErrors}}
+  <div class='saving-authentication-errors'>
+    <p>{{t 'user.errorSavingAuthentication'}}</p>
+    <ul>
+      {{#each (sort-by 'lastName' (map-by 'user' savingAuthenticationErrors)) as |user|}}
+        <li>
+          {{#link-to 'user' user}}
+            {{user.lastName}}, {{user.firstName}} ({{user.email}})
+          {{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
+
 <div class="new-result-title">{{t 'user.new'}}</div>
 
 <div class='new-user-form'>
@@ -49,7 +75,7 @@
             <td class="{{if (v-get obj 'email' 'isInvalid') 'error'}}">{{obj.email}}</td>
             <td class="{{if (v-get obj 'campusId' 'isInvalid') 'error'}}">{{obj.campusId}}</td>
             <td class="{{if (v-get obj 'otherId' 'isInvalid') 'error'}}">{{obj.otherId}}</td>
-            <td>{{obj.username}}</td>
+            <td class="{{if (v-get obj 'username' 'isInvalid') 'error'}}">{{obj.username}}</td>
             <td>{{obj.password}}</td>
           </tr>
         {{/each}}

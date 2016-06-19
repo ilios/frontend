@@ -31,7 +31,11 @@ const currentUserMock = Service.extend({
 });
 
 let storeMock = Service.extend({
-  query(){
+  query(what){
+    if (what === 'authentication') {
+      return resolve([{user: 199, username: 'existingName'}]);
+    }
+
     return resolve([]);
   },
   createRecord(){
@@ -89,6 +93,9 @@ test('it renders', function(assert) {
 
   storeMock.reopen({
     query(what, {filters}){
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
       assert.equal('cohort', what);
       assert.equal(filters.schools[0], 2);
       return resolve([]);
@@ -119,6 +126,9 @@ test('select student mode display cohort', function(assert) {
 
   storeMock.reopen({
     query(what, {filters}){
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
       assert.equal('cohort', what);
       assert.equal(filters.schools[0], 2);
 
@@ -531,5 +541,131 @@ test('validate otherId', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
+  });
+});
+
+test('validate username', function(assert) {
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
+    ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'existingName', '1234Test'],
+  ];
+  triggerUpload(users);
+
+  const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
+  const goodBox = 'tbody tr:eq(0) td:eq(8)';
+  const badCheck = 'tbody tr:eq(1) td:eq(0) input';
+  const BadBox = 'tbody tr:eq(1) td:eq(8)';
+  return wait().then(() => {
+    assert.notOk(this.$(goodCheck).prop('disabled'));
+    assert.notOk(this.$(goodBox).hasClass('error'));
+    assert.ok(this.$(badCheck).prop('disabled'));
+    assert.ok(this.$(BadBox).hasClass('error'));
+  });
+});
+
+test('duplicate username errors on save', function(assert) {
+  let called = 0;
+  storeMock.reopen({
+    findAll(what){
+      let facultyRole = {id: '3'};
+      let studentRole = {id: '4'};
+      assert.equal(what, 'user-role');
+      return [facultyRole, studentRole];
+    },
+    createRecord(what, obj) {
+      let rhett = Object.create(obj);
+      switch (called) {
+      case 0:
+        assert.equal(what, 'user');
+        assert.equal(window.Object.keys(obj).length, 9);
+        rhett.reopen({
+          save(){
+
+          }
+        });
+        break;
+      case 1:
+        assert.equal(what, 'authentication');
+        assert.equal(window.Object.keys(obj).length, 2);
+        rhett.reopen({
+          save(){
+            this.isError = true;
+            throw new Error();
+          }
+        });
+        break;
+      default:
+        assert.ok(false, 'Extra createRecord called when it shoul not have been');
+      }
+
+      called++;
+      return rhett;
+    }
+  });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
+  ];
+  triggerUpload(users);
+  return wait().then(() => {
+    this.$('.done').click();
+    assert.ok(this.$('.saving-authentication-errors').length, 1);
+    assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
+  });
+});
+
+test('error saving user', function(assert) {
+  let called = 0;
+  storeMock.reopen({
+    findAll(what){
+      let facultyRole = {id: '3'};
+      let studentRole = {id: '4'};
+      assert.equal(what, 'user-role');
+      return [facultyRole, studentRole];
+    },
+    createRecord(what, obj) {
+      let rhett = Object.create(obj);
+      switch (called) {
+      case 0:
+        assert.equal(what, 'user');
+        assert.equal(window.Object.keys(obj).length, 9);
+        rhett.reopen({
+          save(){
+            this.isError = true;
+            throw new Error();
+          }
+        });
+        break;
+      case 1:
+        assert.equal(what, 'authentication');
+        assert.equal(window.Object.keys(obj).length, 2);
+        rhett.reopen({
+          save(){}
+        });
+        break;
+      default:
+        assert.ok(false, 'Extra createRecord called when it shoul not have been');
+      }
+
+      called++;
+      return rhett;
+    }
+  });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
+  ];
+  triggerUpload(users);
+  return wait().then(() => {
+    this.$('.done').click();
+    assert.ok(this.$('.saving-user-errors').length, 1);
+    assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
   });
 });

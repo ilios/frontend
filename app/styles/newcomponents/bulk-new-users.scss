@@ -35,4 +35,22 @@
       }
     }
   }
+
+  .saving-user-errors,
+  .saving-authentication-errors {
+    border: 1px solid $alert-color;
+    border-top: 10px solid $alert-color;
+    margin: 1em 4em;
+    padding: 0 1em 1em;
+
+    p {
+      color: $alert-color;
+    }
+
+    li {
+      list-style-type: disc;
+      margin-left: 2em;
+    }
+
+  }
 }

@@ -32,6 +32,12 @@ const UserValidations = buildValidations({
     validator('length', {
       max: 100
     }),
+    validator('exclusion', {
+      dependentKeys: ['existingUsernames.[]'],
+      in(){
+        return this.get('model.existingUsernames');
+      }
+    })
   ],
   password: [
     validator('presence', true)
@@ -68,6 +74,8 @@ export default Component.extend(NewUser, {
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
     this.set('savedUserIds', []);
+    this.set('savingUserErrors', []);
+    this.set('savingAuthenticationErrors', []);
   },
   i18n: service(),
   ajax: service(),
@@ -79,8 +87,19 @@ export default Component.extend(NewUser, {
   selectedUsers: null,
   proposedUsers: null,
   savedUserIds: null,
+  savingUserErrors: null,
+  savingAuthenticationErrors: null,
   host: reads('serverVariables.apiHost'),
   namespace: reads('serverVariables.apiNameSpace'),
+
+  existingUsernames(){
+    const store = this.get('store');
+    return new Promise(resolve => {
+      store.query('authentication', {limit: 10000000}).then(authentications => {
+        resolve(authentications.mapBy('username'));
+      });
+    });
+  },
 
   /**
    * Extract the contents of a file into an array of user like objects
@@ -118,9 +137,11 @@ export default Component.extend(NewUser, {
   },
   parseFile: task(function * (file) {
     let proposedUsers = yield this.getFileContents(file);
+    let existingUsernames = yield this.existingUsernames();
     let filledOutUsers = proposedUsers.map(obj => {
       obj.addedViaIlios = true;
       obj.enabled = true;
+      obj.existingUsernames = existingUsernames;
 
       return obj;
     });
@@ -130,8 +151,8 @@ export default Component.extend(NewUser, {
       });
     });
 
-    this.get('selectedUsers').pushObjects(validUsers);
-    this.get('proposedUsers').pushObjects(filledOutUsers);
+    this.set('selectedUsers', validUsers);
+    this.set('proposedUsers', filledOutUsers);
   }).restartable(),
 
   save: task(function * () {
@@ -150,8 +171,8 @@ export default Component.extend(NewUser, {
         return validations.get('isValid');
       });
     });
-    let records = validUsers.map(obj => {
-      let user = store.createRecord('user', obj.getProperties(
+    let records = validUsers.map(userInput => {
+      let user = store.createRecord('user', userInput.getProperties(
         'firstName',
         'lastName',
         'middleName',
@@ -171,22 +192,31 @@ export default Component.extend(NewUser, {
         user.set('roles', [studentRole]);
       }
 
-      let authentication = store.createRecord('authentication', obj.getProperties(
+      let authentication = store.createRecord('authentication', userInput.getProperties(
         'username',
         'password'
       ));
       authentication.set('user', user);
 
-      return {user, authentication};
+      return {user, authentication, userInput};
     });
-
+    let parts;
     while (records.get('length') > 0){
-      let parts = records.splice(0, 5);
-      let users = parts.mapBy('user');
-      yield RSVP.all(users.invoke('save'));
-      let authentications = parts.mapBy('authentication');
-      yield RSVP.all(authentications.invoke('save'));
-      this.get('savedUserIds').pushObjects(users.mapBy('id'));
+      try {
+        parts = records.splice(0, 10);
+        let users = parts.mapBy('user');
+        yield RSVP.all(users.invoke('save'));
+        let authentications = parts.mapBy('authentication');
+        yield RSVP.all(authentications.invoke('save'));
+      } catch (e) {
+        let userErrors = parts.filter(obj => obj.user.get('isError'));
+        let authenticationErrors = parts.filter(obj => !userErrors.contains(obj) && obj.authentication.get('isError'));
+        this.get('savingUserErrors').pushObjects(userErrors);
+        this.get('savingAuthenticationErrors').pushObjects(authenticationErrors);
+      } finally {
+        this.get('savedUserIds').pushObjects(parts.mapBy('user').mapBy('id'));
+      }
+
     }
 
     this.set('selectedUsers', []);

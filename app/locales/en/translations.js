@@ -480,7 +480,9 @@ export default {
     'uploadUsers': 'CSV File with new user data',
     'sampleFile': 'Sample File',
     'newUsersCreatedSuccessfully': 'New users created successfully',
-    'newUsersCreatedWarning': 'Some users were created, but there were errors.  Please verify which accounts are already present before attempting to created new users again.',
+    'newUsersCreatedWarning': 'Some users were created, but there were errors.',
+    'errorSavingUser': 'These users were unable to be saved.  Please verify that they do not already exist.',
+    'errorSavingAuthentication': 'Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user and create a username and passowrd for them.',
   },
   'language': {
     'select': {
