@@ -14,10 +14,16 @@
       <span class='resultslist-title'>{{t 'general.users'}}</span>
       {{#if allowAddNewUser}}
         <div class='resultslist-actions'>
-          <button {{action (toggle 'showNewUserForm' this)}}>{{t 'user.create'}}</button>
-          {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
-            <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'user.createBulk'}}</button>
-          {{/if}}
+          {{#unless (or showNewUserForm showBulkNewUserForm)}}
+            <button {{action (toggle 'showNewUserForm' this)}}>{{t 'user.create'}}</button>
+            {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+              <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'user.createBulk'}}</button>
+            {{/if}}
+          {{else}}
+            <button {{action (if showNewUserForm (toggle 'showNewUserForm' this) (toggle 'showBulkNewUserForm' this))}}>
+              {{fa-icon 'minus'}}
+            </button>
+          {{/unless}}
         </div>
       {{/if}}
     </div>
