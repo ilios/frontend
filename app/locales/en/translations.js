@@ -139,7 +139,7 @@ export default {
     'universalLocator': 'Universal Locator',
     'removeAll': 'Remove All',
     'copiedSuccessfully': 'Copied Successfully',
-    'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up to date browser.',
+    'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up-to-date browser.',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -477,13 +477,13 @@ export default {
     'invalidateTokens': 'Invalidate All Tokens',
     'invalidateTokensConfirmation': 'This will invalidate all existing API tokens and you will need to generate new ones for any applications you have.  Are you sure you want to do this?',
     'successfullyInvalidatedTokens': 'All existing tokens were successfully invalidated',
-    'uploadUsers': 'CSV File with new user data',
+    'uploadUsers': 'File with new user data (csv, tsv, txt)',
     'sampleFile': 'Sample File',
     'newUsersCreatedSuccessfully': 'New users created successfully',
     'newUsersCreatedWarning': 'Some users were created, but there were errors.',
     'errorSavingUser': 'These users were unable to be saved.  Please verify that they do not already exist.',
-    'errorSavingAuthentication': 'Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user and create a username and passowrd for them.',
-    'fileTypeError': 'Bad file uploaded: {{fileType}} does not appear to be a valid tab seperated file.',
+    'errorSavingAuthentication': 'Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user in the list and create a username and password for them.',
+    'fileTypeError': 'Bad file type: {{fileType}} does not appear to be a properly delimited file.',
   },
   'language': {
     'select': {
