@@ -5,6 +5,7 @@ const { Component } = Ember;
 
 export default Component.extend({
   layout: layout,
+  classNames: ['toggle-mycourses'],
   actions: {
     toggleMyCourses: function(){
       this.sendAction('toggleMyCourses');

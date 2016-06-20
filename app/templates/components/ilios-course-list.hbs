@@ -7,8 +7,8 @@
         sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
         sortedAscending=sortedAscending
       }}{{t 'courses.courseTitle'}}{{/sortable-th}}
-      <th class='text-center' colspan=2>{{t 'general.school'}}</th>
-      <th class='text-center' colspan=2>{{t 'general.year'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.school'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.year'}}</th>
       {{#sortable-th
         colspan=1
         click=(action 'sortBy' 'level')
@@ -16,6 +16,7 @@
         sortedAscending=sortedAscending
         sortType='numeric'
         align='center'
+        hideFromSmallScreen=true
       }}{{t 'courses.level'}}{{/sortable-th}}
       {{#sortable-th
         colspan=2
@@ -24,6 +25,7 @@
         sortedAscending=sortedAscending
         sortType='numeric'
         align='center'
+        hideFromSmallScreen=true
       }}{{t 'courses.startDate'}}{{/sortable-th}}
       {{#sortable-th
         colspan=2
@@ -32,12 +34,14 @@
         sortedAscending=sortedAscending
         sortType='numeric'
         align='center'
+        hideFromSmallScreen=true
       }}{{t 'courses.endDate'}}{{/sortable-th}}
       {{#sortable-th
         colspan=2
         click=(action 'sortBy' 'status')
         sortedBy=(or (eq sortBy 'status') (eq sortBy 'status:desc'))
         sortedAscending=sortedAscending
+        hideFromSmallScreen=true
       }}{{t 'general.status'}}{{/sortable-th}}
       <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
     </tr>
@@ -53,12 +57,12 @@
             {{/if}}
           {{/link-to}}
         </td>
-        <td class='text-center' colspan=2 {{action 'edit' course}}>{{course.school.title}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' course}}>{{course.academicYear}}</td>
-        <td class='text-center' colspan=1 {{action 'edit' course}}>{{course.level}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment-format course.startDate 'MM/DD/YY'}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' course}}>{{moment-format course.endDate 'MM/DD/YY'}}</td>
-        <td class='text-left' colspan=2 {{action 'edit' course}}>
+        <td class='text-center hide-from-small-screen' colspan=2>{{course.school.title}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2>{{course.academicYear}}</td>
+        <td class='text-center hide-from-small-screen' colspan=1>{{course.level}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.startDate 'MM/DD/YY'}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.endDate 'MM/DD/YY'}}</td>
+        <td class='text-left hide-from-small-screen' colspan=2>
           {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
           {{publication-status item=course showIcon=false}}
         </td>

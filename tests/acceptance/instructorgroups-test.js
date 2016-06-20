@@ -71,8 +71,8 @@ test('list groups', function(assert) {
   assert.expect(7);
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(2, find('.resultslist-list tbody tr').length);
-    var rows = find('.resultslist-list tbody tr');
+    assert.equal(2, find('.list tbody tr').length);
+    var rows = find('.list tbody tr');
     assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstInstructorgroup.title));
     assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 5);
     assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
@@ -103,35 +103,35 @@ test('filters by title', function(assert) {
   assert.expect(15);
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(3, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+    assert.equal(3, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
 
     //put these in nested later blocks because there is a 500ms debounce on the title filter
-    fillIn('#titlefilter input', 'first');
+    fillIn('.titlefilter input', 'first');
     Ember.run.later(function(){
-      assert.equal(1, find('.resultslist-list tbody tr').length);
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-      fillIn('#titlefilter input', 'second');
+      assert.equal(1, find('.list tbody tr').length);
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+      fillIn('.titlefilter input', 'second');
       andThen(function(){
         Ember.run.later(function(){
-          assert.equal(1, find('.resultslist-list tbody tr').length);
-          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondInstructorgroup.title));
-          fillIn('#titlefilter input', 'special');
+          assert.equal(1, find('.list tbody tr').length);
+          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondInstructorgroup.title));
+          fillIn('.titlefilter input', 'special');
           andThen(function(){
             Ember.run.later(function(){
-              assert.equal(2, find('.resultslist-list tbody tr').length);
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
+              assert.equal(2, find('.list tbody tr').length);
+              assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+              assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
 
-              fillIn('#titlefilter input', '');
+              fillIn('.titlefilter input', '');
               andThen(function(){
                 Ember.run.later(function(){
-                  assert.equal(3, find('.resultslist-list tbody tr').length);
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+                  assert.equal(3, find('.list tbody tr').length);
+                  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
                 }, 750);
               });
             }, 750);
@@ -149,7 +149,7 @@ test('add new instructorgroup', function(assert) {
   visit('/instructorgroups');
   let newTitle = 'new test tile';
   andThen(function() {
-    click('.resultslist-actions button');
+    click('.actions button');
     fillIn('.newinstructorgroup-title input', newTitle);
     click('.newinstructorgroup .done');
   });
@@ -169,17 +169,17 @@ test('cancel adding new instructorgroup', function(assert) {
   });
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-actions button').then(function(){
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.actions button').then(function(){
       assert.equal(find('.newinstructorgroup').length, 1);
       click('.newinstructorgroup .cancel');
     });
   });
   andThen(function(){
     assert.equal(find('.newinstructorgroup').length, 0);
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
   });
 });
 
@@ -194,16 +194,14 @@ test('remove instructorgroup', function(assert) {
   });
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        click('.confirm-buttons .remove');
-      });
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
+      click('.confirm-buttons .remove');
     });
   });
   andThen(function(){
-    assert.equal(0, find('.resultslist-list tbody tr').length);
+    assert.equal(0, find('.list tbody tr').length);
   });
 });
 
@@ -218,17 +216,15 @@ test('cancel remove instructorgroup', function(assert) {
   });
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        click('.confirm-buttons .done');
-      });
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
+      click('.confirm-buttons .done');
     });
   });
   andThen(function(){
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(find('.list tbody tr').length, 1);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
   });
 });
 
@@ -270,20 +266,18 @@ test('confirmation of remove message', function(assert) {
   assert.expect(5);
   visit('/instructorgroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        assert.ok(find('.resultslist-list tbody tr:eq(0)').hasClass('confirm-removal'));
-        assert.ok(find('.resultslist-list tbody tr:eq(1)').hasClass('confirm-removal'));
-        assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
-      });
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
+      assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
+      assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
+      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
     });
   });
 });
 
 test('click edit takes you to instructorgroup route', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
   server.create('user', {id: 4136});
   server.create('school', {
     instructorGroups: [1]
@@ -293,11 +287,8 @@ test('click edit takes you to instructorgroup route', function(assert) {
   });
   visit('/instructorgroups');
   andThen(function() {
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0) a');
-      assert.equal(getElementText(edit), 'Edit');
-      click(edit);
-    });
+    let edit = find('.list tbody tr:eq(0) td:eq(3) .edit');
+    click(edit);
   });
   andThen(function(){
     assert.equal(currentURL(), '/instructorgroups/1');
@@ -315,7 +306,7 @@ test('click title takes you to instructorgroup route', function(assert) {
   });
   visit('/instructorgroups');
   andThen(function() {
-    click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
+    click('.list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
     assert.equal(currentURL(), '/instructorgroups/1');

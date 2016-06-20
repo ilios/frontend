@@ -34,9 +34,9 @@ test('visiting /learnergroups', function(assert) {
 });
 
 test('single option filters', function(assert) {
-  const schoolsFilter = '.filter:eq(0)';
-  const programsFilter = '.filter:eq(1)';
-  const yearsFilter = '.filter:eq(2)';
+  const schoolsFilter = '.schoolsfilter';
+  const programsFilter = '.programsfilter';
+  const programyearsfilter = '.programyearsfilter';
   assert.expect(3);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -57,14 +57,14 @@ test('single option filters', function(assert) {
   andThen(function() {
     assert.equal(getElementText(find(schoolsFilter)), getText('school 0'));
     assert.equal(getElementText(find(programsFilter)), getText('program 0'));
-    assert.equal(getElementText(find(yearsFilter)), getText('cohort 0'));
+    assert.equal(getElementText(find(programyearsfilter)), getText('cohort 0'));
   });
 });
 
 test('multi-option filters', function(assert) {
-  const schoolsFilter = '.filter:eq(0) option';
-  const programsFilter = '.filter:eq(1) option';
-  const yearsFilter = '.filter:eq(2) option';
+  const schoolsFilter = '.schoolsfilter option';
+  const programsFilter = '.programsfilter option';
+  const programyearsfilter = '.programyearsfilter option';
   assert.expect(6);
   server.create('permission', {
     user: 4136,
@@ -104,13 +104,13 @@ test('multi-option filters', function(assert) {
     assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
     assert.equal(find(programsFilter).length, 3);
     assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
-    assert.equal(find(yearsFilter).length, 2);
-    assert.equal(getElementText(find(yearsFilter)), getText('cohort 1 cohort 0'));
+    assert.equal(find(programyearsfilter).length, 2);
+    assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
   });
 });
 
 test('primary school is selected by default', function(assert) {
-  const schoolsFilter = '.filter:eq(0) option:selected';
+  const schoolsFilter = '.schoolsfilter option:selected';
   assert.expect(1);
   server.create('permission', {
     user: 4136,
@@ -130,9 +130,9 @@ test('primary school is selected by default', function(assert) {
 });
 
 test('multi-option filters', function(assert) {
-  const schoolsFilter = '.filter:eq(0) option';
-  const programsFilter = '.filter:eq(1) option';
-  const yearsFilter = '.filter:eq(2) option';
+  const schoolsFilter = '.schoolsfilter option';
+  const programsFilter = '.programsfilter option';
+  const programyearsfilter = '.programyearsfilter option';
   assert.expect(6);
   server.create('permission', {
     user: 4136,
@@ -172,16 +172,16 @@ test('multi-option filters', function(assert) {
     assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
     assert.equal(find(programsFilter).length, 3);
     assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
-    assert.equal(find(yearsFilter).length, 2);
-    assert.equal(getElementText(find(yearsFilter)), getText('cohort 1 cohort 0'));
+    assert.equal(find(programyearsfilter).length, 2);
+    assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
   });
 });
 
 test('multiple programs filter', function(assert) {
-  const selectedProgram = '.filter:eq(1) select option:selected';
-  const programOptions = '.filter:eq(1) select option';
-  const programSelectList = '.filter:eq(1) select';
-  const firstListedLearnerGroup = '.resultslist-list tbody tr td:eq(0)';
+  const selectedProgram = '.programsfilter select option:selected';
+  const programOptions = '.programsfilter select option';
+  const programSelectList = '.programsfilter select';
+  const firstListedLearnerGroup = '.list tbody tr td:eq(0)';
   assert.expect(8);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -236,10 +236,10 @@ test('multiple programs filter', function(assert) {
 });
 
 test('multiple program years filter', function(assert) {
-  const selectedProgramYear = '.filter:eq(2) select option:selected';
-  const programYearOptions = '.filter:eq(2) select option';
-  const programYearSelectList = '.filter:eq(2) select';
-  const firstListedLearnerGroup = '.resultslist-list tbody tr td:eq(0)';
+  const selectedProgramYear = '.programyearsfilter select option:selected';
+  const programYearOptions = '.programyearsfilter select option';
+  const programYearSelectList = '.programyearsfilter select';
+  const firstListedLearnerGroup = '.list tbody tr td:eq(0)';
   assert.expect(7);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -340,8 +340,8 @@ test('list groups', function(assert) {
 
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(2, find('.resultslist-list tbody tr').length);
-    var rows = find('.resultslist-list tbody tr');
+    assert.equal(2, find('.list tbody tr').length);
+    var rows = find('.list tbody tr');
     assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstLearnergroup.title));
     // Assertion below needs to be fixed (issue #1157)
     // assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 11);
@@ -385,35 +385,35 @@ test('filters by title', function(assert) {
   assert.expect(15);
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(find('.resultslist-list tbody tr').length, 3);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
+    assert.equal(find('.list tbody tr').length, 3);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
 
     //put these in nested later blocks because there is a 500ms debounce on the title filter
-    fillIn('#titlefilter input', 'first');
+    fillIn('.titlefilter input', 'first');
     Ember.run.later(function(){
-      assert.equal(1, find('.resultslist-list tbody tr').length);
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-      fillIn('#titlefilter input', 'second');
+      assert.equal(1, find('.list tbody tr').length);
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
+      fillIn('.titlefilter input', 'second');
       andThen(function(){
         Ember.run.later(function(){
-          assert.equal(1, find('.resultslist-list tbody tr').length);
-          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
-          fillIn('#titlefilter input', 'special');
+          assert.equal(1, find('.list tbody tr').length);
+          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
+          fillIn('.titlefilter input', 'special');
           andThen(function(){
             Ember.run.later(function(){
-              assert.equal(2, find('.resultslist-list tbody tr').length);
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
+              assert.equal(2, find('.list tbody tr').length);
+              assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
+              assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
 
-              fillIn('#titlefilter input', '');
+              fillIn('.titlefilter input', '');
               andThen(function(){
                 Ember.run.later(function(){
-                  assert.equal(3, find('.resultslist-list tbody tr').length);
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
+                  assert.equal(3, find('.list tbody tr').length);
+                  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
                 }, 750);
               });
             }, 750);
@@ -425,7 +425,7 @@ test('filters by title', function(assert) {
 });
 
 function getCellData(row, cell) {
-  return find(`.resultslist-list tbody tr:eq(${row}) td:eq(${cell})`).text().trim();
+  return find(`.list tbody tr:eq(${row}) td:eq(${cell})`).text().trim();
 }
 
 test('add new learnergroup', function(assert) {
@@ -533,11 +533,11 @@ test('remove learnergroup', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) .remove');
-    click('.resultslist-list tbody tr:eq(1) .remove').then(()=>{
-      assert.equal(0, find('.resultslist-list tbody tr').length);
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove');
+    click('.list tbody tr:eq(1) .remove').then(()=>{
+      assert.equal(0, find('.list tbody tr').length);
     });
   });
 });
@@ -565,12 +565,12 @@ test('cancel remove learnergroup', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) .remove');
-    click('.resultslist-list tbody tr:eq(1) .done').then(()=>{
-      assert.equal(1, find('.resultslist-list tbody tr').length);
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove');
+    click('.list tbody tr:eq(1) .done').then(()=>{
+      assert.equal(1, find('.list tbody tr').length);
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
     });
   });
 });
@@ -607,12 +607,12 @@ test('confirmation of remove message', function(assert) {
   assert.expect(5);
   visit('/learnergroups');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) .remove').then(()=>{
-      assert.ok(find('.resultslist-list tbody tr:eq(0)').hasClass('confirm-removal'));
-      assert.ok(find('.resultslist-list tbody tr:eq(1)').hasClass('confirm-removal'));
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 5 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove').then(()=>{
+      assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
+      assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
+      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 5 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
     });
   });
 });
@@ -640,7 +640,7 @@ test('click title takes you to learnergroup route', function(assert) {
   });
   visit('/learnergroups');
   andThen(function() {
-    click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
+    click('.list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
     assert.equal(currentURL(), '/learnergroups/1');

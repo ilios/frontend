@@ -1,95 +1,83 @@
-<section id='learnerGroups' class='fullwidth main-border'>
-  <div class="filter-tools">
-    <div class="filter">
-      <label class="inline-label">
-        {{fa-icon 'university'}}
-      </label>
-      <div class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-            {{#each sortedSchools as |school|}}
-              <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{#if selectedSchool}}
-            {{selectedSchool.title}}
-          {{else if schools.isFulfilled}}
-            {{t 'general.none'}}
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-    <div class="filter">
-      <label class="inline-label">
-        {{fa-icon 'users'}}
-      </label>
-      <div class="inline-data">
-        {{#if hasMoreThanOneProgram}}
-          <select onchange={{action "changeSelectedProgram" value="target.value"}}>
-            <option value=null selected={{is-equal null selectedProgram.content}}>
-              {{t 'learnerGroups.selectProgram'}}
+<section class='learnergroups-list'>
+  <div class="filters">
+    <div class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each sortedSchools as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
+              {{school.title}}
             </option>
-            {{#each sortedPrograms as |program|}}
-              <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
-                {{program.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{#if selectedProgram}}
-            {{selectedProgram.title}}
-          {{else if programs.isFulfilled}}
-            {{t 'general.none'}}
-          {{/if}}
+          {{/each}}
+        </select>
+      {{else}}
+        {{#if selectedSchool}}
+          {{selectedSchool.title}}
+        {{else if schools.isFulfilled}}
+          {{t 'general.none'}}
         {{/if}}
-      </div>
+      {{/if}}
     </div>
-    <div id='programyearsfilter' class="filter">
-      <label class="inline-label">
-        {{fa-icon 'calendar'}}
-      </label>
-      <div id="programyear-selection" class="inline-data">
-        {{#if hasMoreThanOneProgramYear}}
-          <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
-            {{#each sortedProgramYears as |programYear|}}
-              <option value={{programYear.id}} selected={{is-equal programYear selectedProgramYear.content}}>
-                {{programYear.cohort.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{#if selectedProgramYear}}
-            {{selectedProgramYear.cohort.title}}
-          {{else if programYears.isFulfilled}}
-            {{t 'general.none'}}
-          {{/if}}
+    <div class="programsfilter">
+      {{fa-icon 'users' fixedWidth=true}}
+      {{#if hasMoreThanOneProgram}}
+        <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+          <option value=null selected={{is-equal null selectedProgram.content}}>
+            {{t 'learnerGroups.selectProgram'}}
+          </option>
+          {{#each sortedPrograms as |program|}}
+            <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
+              {{program.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{#if selectedProgram}}
+          {{selectedProgram.title}}
+        {{else if programs.isFulfilled}}
+          {{t 'general.none'}}
         {{/if}}
-      </div>
+      {{/if}}
     </div>
-    <div id='titlefilter' class="filter string-filter">
+    <div class="programyearsfilter">
+      {{fa-icon 'calendar' fixedWidth=true}}
+      {{#if hasMoreThanOneProgramYear}}
+        <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
+          {{#each sortedProgramYears as |programYear|}}
+            <option value={{programYear.id}} selected={{is-equal programYear selectedProgramYear.content}}>
+              {{programYear.cohort.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{#if selectedProgramYear}}
+          {{selectedProgramYear.cohort.title}}
+        {{else if programYears.isFulfilled}}
+          {{t 'general.none'}}
+        {{/if}}
+      {{/if}}
+    </div>
+    <div class="titlefilter">
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
-  <section class='resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='learnergroups'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.learnerGroups'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
       </div>
     </div>
 
-    <section class='resultslist-new'>
-      {{#liquid-if showNewLearnerGroupForm class='vertical'}}
+    <section class='new'>
+      {{#if showNewLearnerGroupForm class='vertical'}}
         {{new-learnergroup save=(action 'saveNewLearnerGroup') cancel=(action 'cancel') fillModeSupported=true}}
-      {{/liquid-if}}
+      {{/if}}
     </section>
 
-    <div class='resultslist-list'>
+    <div class='list'>
       {{#if learnerGroups.isFulfilled}}
         {{learnergroup-list
           learnerGroups=filteredLearnerGroups

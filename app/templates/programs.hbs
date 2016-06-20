@@ -1,35 +1,30 @@
-<section id='programs' class='fullwidth main-border'>
-  <div class="filter-tools">
-    <div id='schoolsfilter' class="filter">
-      <label class="inline-label">
-        {{t 'general.school'}}:
-      </label>
-      <div id="school-selection" class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          {{#action-menu title=selectedSchool.title icon=false}}
-            {{#each model as |school|}}
-              <li {{action 'changeSelectedSchool' school}}>{{school.title}}</li>
-            {{/each}}
-          {{/action-menu}}
-        {{else}}
-          {{selectedSchool.title}}
-        {{/if}}
-      </div>
+<section class='programs-list'>
+  <div class="filters">
+    <div class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each (sort-by 'title' model) as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
     </div>
-    <!--  some empty filters to move title all the way to the right-->
-    <div class="filter"></div>
-    <div class="filter"></div>
-    <div id='titlefilter' class="filter">
+    <div class="titlefilter">
       {{input type='text' value=titleFilter placeholder=placeholderValue}}
     </div>
   </div>
 
-  <section class='resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='programs'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.programs'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{expand-collapse-button value=editorOn action="toggleEditor"}}
       </div>
     </div>
@@ -39,7 +34,7 @@
     {{/if}}
 
     {{#if saved}}
-      <div class='saved-result'>
+      <div class='saved-program'>
         {{#link-to 'program' savedProgram}}
           {{fa-icon 'external-link-square'}} {{savedProgram.title}}
         {{/link-to}}
@@ -47,7 +42,7 @@
       </div>
     {{/if}}
 
-    <div class='resultslist-list'>
+    <div class='list'>
       {{#if filteredPrograms.isFulfilled}}
         {{program-list
           programs=filteredPrograms

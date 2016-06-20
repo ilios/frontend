@@ -4,13 +4,12 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 
 var application;
 
-module('Acceptance: Programs' + testgroup, {
+module('Acceptance: Programs', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application, false);
@@ -50,35 +49,35 @@ test('filters by title', function(assert) {
   assert.expect(15);
   visit('/programs');
   andThen(function() {
-    assert.equal(3, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularProgram.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstProgram.title));
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondProgram.title));
+    assert.equal(3, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularProgram.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstProgram.title));
+    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondProgram.title));
 
     //put these in nested later blocks because there is a 500ms debounce on the title filter
-    fillIn('#titlefilter input', 'first');
+    fillIn('.titlefilter input', 'first');
     Ember.run.later(function(){
-      assert.equal(1, find('.resultslist-list tbody tr').length);
-      assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
-      fillIn('#titlefilter input', 'second');
+      assert.equal(1, find('.list tbody tr').length);
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
+      fillIn('.titlefilter input', 'second');
       andThen(function(){
         Ember.run.later(function(){
-          assert.equal(1, find('.resultslist-list tbody tr').length);
-          assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(secondProgram.title));
-          fillIn('#titlefilter input', 'special');
+          assert.equal(1, find('.list tbody tr').length);
+          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondProgram.title));
+          fillIn('.titlefilter input', 'special');
           andThen(function(){
             Ember.run.later(function(){
-              assert.equal(2, find('.resultslist-list tbody tr').length);
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
-              assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(secondProgram.title));
+              assert.equal(2, find('.list tbody tr').length);
+              assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
+              assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondProgram.title));
 
-              fillIn('#titlefilter input', '');
+              fillIn('.titlefilter input', '');
               andThen(function(){
                 Ember.run.later(function(){
-                  assert.equal(3, find('.resultslist-list tbody tr').length);
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText(regularProgram.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(1) td:eq(0)')),getText(firstProgram.title));
-                  assert.equal(getElementText(find('.resultslist-list tbody tr:eq(2) td:eq(0)')),getText(secondProgram.title));
+                  assert.equal(3, find('.list tbody tr').length);
+                  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularProgram.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstProgram.title));
+                  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondProgram.title));
                 }, 750);
               });
             }, 750);
@@ -99,7 +98,7 @@ test('add new program', function(assert) {
   const expandButton = '.expand-button';
   const input = '.new-program input';
   const saveButton = '.new-program .done';
-  const savedLink = '.saved-result a';
+  const savedLink = '.saved-program a';
 
   visit(url);
   click(expandButton);
@@ -127,16 +126,14 @@ test('remove program', function(assert) {
   });
   visit('/programs');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        click('.confirm-buttons .remove');
-      });
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
+      click('.confirm-buttons .remove');
     });
   });
   andThen(function(){
-    assert.equal(0, find('.resultslist-list tbody tr').length);
+    assert.equal(0, find('.list tbody tr').length);
   });
 });
 
@@ -151,22 +148,20 @@ test('cancel remove program', function(assert) {
   });
   visit('/programs');
   andThen(function() {
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      click('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(1)').then(function(){
-        click('.confirm-buttons .done');
-      });
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
+      click('.confirm-buttons .done');
     });
   });
   andThen(function(){
-    assert.equal(1, find('.resultslist-list tbody tr').length);
-    assert.equal(getElementText(find('.resultslist-list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
   });
 });
 
 test('click edit takes you to program route', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
@@ -176,11 +171,8 @@ test('click edit takes you to program route', function(assert) {
   });
   visit('/programs');
   andThen(function() {
-    click('.resultslist-list tbody tr:eq(0) td:eq(3) button').then(function(){
-      var edit = find('.resultslist-list tbody tr:eq(0) td:eq(3) li:eq(0) a');
-      assert.equal(getElementText(edit), 'Edit');
-      click(edit);
-    });
+    var edit = find('.list tbody tr:eq(0) td:eq(3) .edit');
+    click(edit);
   });
   andThen(function(){
     assert.equal(currentURL(), '/programs/1');
@@ -198,7 +190,7 @@ test('click title takes you to program route', function(assert) {
   });
   visit('/programs');
   andThen(function() {
-    click('.resultslist-list tbody tr:eq(0) td:eq(0) a');
+    click('.list tbody tr:eq(0) td:eq(0) a');
   });
   andThen(function(){
     assert.equal(currentURL(), '/programs/1');

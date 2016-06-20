@@ -8,7 +8,8 @@ export default Ember.Component.extend({
   sortedAscending: true,
   align: 'left',
   sortType: 'alpha',
-  classNameBindings: ['textDirection', ':sortable', ':clickable'],
+  classNameBindings: ['textDirection', ':sortable', ':clickable', 'hideFromSmallScreen'],
+  hideFromSmallScreen: false,
   sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
     const sortedBy = this.get('sortedBy');
     const sortedAscending = this.get('sortedAscending');

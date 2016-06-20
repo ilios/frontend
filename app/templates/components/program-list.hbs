@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th class='text-left' colspan=3>{{t 'programs.programTitle'}}</th>
-      <th class='text-center' colspan=2>{{t 'general.school'}}</th>
-      <th class='text-center' colspan=2>{{t 'general.status'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.school'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.status'}}</th>
       <th class='text-center' colspan=2>{{t 'general.actions'}}</th>
     </tr>
   </thead>
@@ -15,17 +15,13 @@
             {{program.title}}
           {{/link-to}}
         </td>
-        <td class='text-center' colspan=2 {{action 'edit' program}}>{{program.school.title}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' program}}>{{publication-status item=program showIcon=false}}</td>
-        <td class='text-center' colspan=2>
-          {{#action-menu}}
-            <li>
-              {{#link-to 'program' program.content}}
-                {{t 'general.edit'}}
-              {{/link-to}}
-            </li>
-            <li {{action 'confirmRemove' program}}>{{t 'general.remove'}}</li>
-          {{/action-menu}}
+        <td class='text-center hide-from-small-screen' colspan=2 {{action 'edit' program}}>{{program.school.title}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2 {{action 'edit' program}}>{{publication-status item=program showIcon=false}}</td>
+        <td class='text-right'>
+          {{#link-to 'program' program class='edit'}}
+            {{fa-icon 'edit'}}
+          {{/link-to}}
+          <span class='clickable remove' {{action 'confirmRemove' program}}>{{fa-icon 'trash'}}</span>
         </td>
       </tr>
       {{#if program.showRemoveConfirmation}}
