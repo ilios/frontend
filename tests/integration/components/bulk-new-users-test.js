@@ -740,3 +740,19 @@ test('dont create authentication if username is not set', function(assert) {
     this.$('.done').click();
   });
 });
+
+test('ignore header row', function(assert) {
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['First', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
+    ['Test Person', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
+  ];
+  triggerUpload(users);
+
+  const rows = 'tbody tr';
+  return wait().then(() => {
+    assert.equal(this.$(rows).length, 1);
+  });
+});
