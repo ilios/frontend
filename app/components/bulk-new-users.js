@@ -28,9 +28,10 @@ const UserValidations = buildValidations({
     }),
   ],
   username: [
-    validator('presence', true),
     validator('length', {
-      max: 100
+      max: 100,
+      min: 1,
+      ignoreBlank: true,
     }),
     validator('exclusion', {
       dependentKeys: ['existingUsernames.[]'],
@@ -40,7 +41,11 @@ const UserValidations = buildValidations({
     })
   ],
   password: [
-    validator('presence', true)
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['username'],
+      disabled(model) { return !isPresent(model.get('username')) }
+    })
   ],
   campusId: [
     validator('length', {
@@ -192,13 +197,21 @@ export default Component.extend(NewUser, {
         user.set('roles', [studentRole]);
       }
 
-      let authentication = store.createRecord('authentication', userInput.getProperties(
-        'username',
-        'password'
-      ));
-      authentication.set('user', user);
+      let authentication = false;
+      if (isPresent(userInput.get('username'))) {
+        authentication = store.createRecord('authentication', userInput.getProperties(
+          'username',
+          'password'
+        ));
+        authentication.set('user', user);
+      }
 
-      return {user, authentication, userInput};
+      let rhett =  {user, userInput};
+      if (authentication) {
+        rhett.authentication = authentication;
+      }
+
+      return rhett;
     });
     let parts;
     while (records.get('length') > 0){
@@ -210,7 +223,7 @@ export default Component.extend(NewUser, {
         yield RSVP.all(authentications.invoke('save'));
       } catch (e) {
         let userErrors = parts.filter(obj => obj.user.get('isError'));
-        let authenticationErrors = parts.filter(obj => !userErrors.contains(obj) && obj.authentication.get('isError'));
+        let authenticationErrors = parts.filter(obj => !userErrors.contains(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
         this.get('savingUserErrors').pushObjects(userErrors);
         this.get('savingAuthenticationErrors').pushObjects(authenticationErrors);
       } finally {

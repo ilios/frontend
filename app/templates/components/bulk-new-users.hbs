@@ -1,4 +1,4 @@
-{{#if savingUserErrors}}
+{{#if savingUserErrors.length}}
   <div class='saving-user-errors'>
     <p>{{t 'user.errorSavingUser'}}</p>
     <ul>
@@ -9,7 +9,7 @@
   </div>
 {{/if}}
 
-{{#if savingAuthenticationErrors}}
+{{#if savingAuthenticationErrors.length}}
   <div class='saving-authentication-errors'>
     <p>{{t 'user.errorSavingAuthentication'}}</p>
     <ul>

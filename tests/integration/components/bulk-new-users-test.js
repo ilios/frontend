@@ -669,3 +669,74 @@ test('error saving user', function(assert) {
     assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
   });
 });
+
+test('username not required', function(assert) {
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', '1234Test'],
+  ];
+  triggerUpload(users);
+
+  const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
+  const goodBox = 'tbody tr:eq(0) td:eq(8)';
+  return wait().then(() => {
+    assert.notOk(this.$(goodCheck).prop('disabled'));
+    assert.notOk(this.$(goodBox).hasClass('error'));
+  });
+});
+
+test('password not required if username is blank', function(assert) {
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
+  ];
+  triggerUpload(users);
+
+  const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
+  const goodBox = 'tbody tr:eq(0) td:eq(8)';
+  return wait().then(() => {
+    assert.notOk(this.$(goodCheck).prop('disabled'));
+    assert.notOk(this.$(goodBox).hasClass('error'));
+  });
+});
+
+test('dont create authentication if username is not set', function(assert) {
+  assert.expect(1);
+  let called = 0;
+  storeMock.reopen({
+    findAll(){
+      return [{id: '3'}, {id: '4'}];
+    },
+    createRecord(what, obj) {
+      let rhett = Object.create(obj);
+      switch (called) {
+      case 0:
+        rhett.reopen({
+          save(){
+            assert.ok(true);
+          }
+        });
+        break;
+      default:
+        assert.ok(false, 'Should not have called create record since there was no username sent');
+      }
+
+      called++;
+      return rhett;
+    }
+  });
+  this.set('nothing', parseInt);
+  this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
+
+  let users = [
+    ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
+  ];
+  triggerUpload(users);
+  return wait().then(() => {
+    this.$('.done').click();
+  });
+});
