@@ -249,8 +249,14 @@ export default Component.extend(NewUser, {
   }).drop(),
   actions: {
     updateSelectedFile(files){
-      if (files.length > 0) {
-        this.get('parseFile').perform(files[0]);
+      // Check for the various File API support.
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        if (files.length > 0) {
+          this.get('parseFile').perform(files[0]);
+        }
+      } else {
+        const i18n = this.get('i18n');
+        throw new Error(i18n.t('general.unsupportedBrowserFailure'));
       }
     },
     toggleUserSelection(obj){
