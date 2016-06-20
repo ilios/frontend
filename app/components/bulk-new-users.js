@@ -140,7 +140,7 @@ export default Component.extend(NewUser, {
             password: isPresent(arr[8])?arr[8]:null
           });
         });
-        let notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first');
+        let notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
 
 
         resolve(notHeaderRow);
