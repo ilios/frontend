@@ -243,6 +243,13 @@ export default Component.extend(NewUser, {
 
     }
 
+    const flashMessages = this.get('flashMessages');
+    if (this.get('savingUserErrors').get('length') || this.get('savingAuthenticationErrors').get('length')) {
+      flashMessages.warning('user.newUsersCreatedWarning');
+    } else {
+      flashMessages.success('user.newUsersCreatedSuccessfully');
+    }
+
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
 

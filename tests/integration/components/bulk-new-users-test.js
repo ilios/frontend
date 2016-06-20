@@ -47,7 +47,7 @@ moduleForComponent('bulk-new-users', 'Integration | Component | bulk new users',
   integration: true,
   beforeEach(){
     this.register('service:current-user', currentUserMock);
-    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(['success', 'warning']);
     this.register('service:store', storeMock);
   }
 });
@@ -436,7 +436,7 @@ test('validate firstName', function(assert) {
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
   }, 100);
-  
+
   return wait();
 });
 
