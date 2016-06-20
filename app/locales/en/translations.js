@@ -139,7 +139,7 @@ export default {
     'universalLocator': 'Universal Locator',
     'removeAll': 'Remove All',
     'copiedSuccessfully': 'Copied Successfully',
-    'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an update browser.',
+    'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up to date browser.',
   },
   'programs': {
     'programTitle': 'Program Title',
