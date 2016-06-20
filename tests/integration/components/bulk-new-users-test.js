@@ -175,7 +175,7 @@ test('parses file into table', function(assert) {
   ];
   triggerUpload(users);
 
-  return wait().then(() => {
+  run.later(() => {
     let userRows = this.$('table tbody tr');
     assert.equal(userRows.length, 2);
     assert.ok(this.$('tr:eq(1) td:eq(0) input').prop('checked'));
@@ -199,7 +199,9 @@ test('parses file into table', function(assert) {
     assert.equal(this.$('tr:eq(2) td:eq(7)').text().trim(), '1234Other');
     assert.equal(this.$('tr:eq(2) td:eq(8)').text().trim(), 'jck');
     assert.equal(this.$('tr:eq(2) td:eq(9)').text().trim(), '1234Test');
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('saves valid faculty users', function(assert) {
@@ -293,10 +295,11 @@ test('saves valid faculty users', function(assert) {
     ['invaliduser'],
   ];
   triggerUpload(users);
-
-  return wait().then(() => {
+  run.later(()=>{
     this.$('.done').click();
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('saves valid student users', function(assert) {
@@ -396,10 +399,11 @@ test('saves valid student users', function(assert) {
     ['invaliduser'],
   ];
   triggerUpload(users);
-
-  return wait().then(() => {
+  run.later(()=>{
     this.$('.done').click();
-  });
+  }, 100);
+
+  return wait();
 });
 
 
@@ -426,12 +430,14 @@ test('validate firstName', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(1)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(1)';
-  return wait().then(() => {
+  run.later(() => {
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+  
+  return wait();
 });
 
 test('validate lastName', function(assert) {
@@ -448,12 +454,13 @@ test('validate lastName', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(2)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(2)';
-  return wait().then(() => {
-    assert.notOk(this.$(goodCheck).prop('disabled'));
+  run.later(()=>{assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('validate middleName', function(assert) {
@@ -470,12 +477,14 @@ test('validate middleName', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(3)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(3)';
-  return wait().then(() => {
+  run.later(()=>{assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('validate email address', function(assert) {
@@ -492,12 +501,14 @@ test('validate email address', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(5)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(5)';
-  return wait().then(() => {
+  run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('validate campusId', function(assert) {
@@ -514,12 +525,14 @@ test('validate campusId', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(6)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(6)';
-  return wait().then(() => {
+  run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('validate otherId', function(assert) {
@@ -536,12 +549,14 @@ test('validate otherId', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(7)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(7)';
-  return wait().then(() => {
+  run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('validate username', function(assert) {
@@ -558,12 +573,14 @@ test('validate username', function(assert) {
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(8)';
-  return wait().then(() => {
+  run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('duplicate username errors on save', function(assert) {
@@ -612,11 +629,13 @@ test('duplicate username errors on save', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
   triggerUpload(users);
-  return wait().then(() => {
+  run.later(()=>{
     this.$('.done').click();
     assert.ok(this.$('.saving-authentication-errors').length, 1);
     assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('error saving user', function(assert) {
@@ -663,11 +682,13 @@ test('error saving user', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
   triggerUpload(users);
-  return wait().then(() => {
+  run.later(()=>{
     this.$('.done').click();
     assert.ok(this.$('.saving-user-errors').length, 1);
     assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('username not required', function(assert) {
@@ -681,10 +702,12 @@ test('username not required', function(assert) {
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
-  return wait().then(() => {
+  run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('password not required if username is blank', function(assert) {
@@ -698,10 +721,12 @@ test('password not required if username is blank', function(assert) {
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
-  return wait().then(() => {
+  run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('dont create authentication if username is not set', function(assert) {
@@ -736,9 +761,11 @@ test('dont create authentication if username is not set', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
   ];
   triggerUpload(users);
-  return wait().then(() => {
+  run.later(()=>{
     this.$('.done').click();
-  });
+  }, 100);
+
+  return wait();
 });
 
 test('ignore header row', function(assert) {
@@ -752,7 +779,9 @@ test('ignore header row', function(assert) {
   triggerUpload(users);
 
   const rows = 'tbody tr';
-  return wait().then(() => {
+  run.later(()=>{
     assert.equal(this.$(rows).length, 1);
-  });
+  }, 100);
+
+  return wait();
 });
