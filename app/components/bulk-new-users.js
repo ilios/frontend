@@ -94,6 +94,7 @@ export default Component.extend(NewUser, {
   savedUserIds: null,
   savingUserErrors: null,
   savingAuthenticationErrors: null,
+  fileUploadError: false,
   host: reads('serverVariables.apiHost'),
   namespace: reads('serverVariables.apiNameSpace'),
 
@@ -113,7 +114,15 @@ export default Component.extend(NewUser, {
    * @return array
    **/
   getFileContents(file){
+    this.set('fileUploadError', false);
     return new Promise(resolve => {
+      let allowedFileTypes = ['text/plain', 'text/csv'];
+      if (!allowedFileTypes.contains(file.type)) {
+        const i18n = this.get('i18n');
+        this.set('fileUploadError', true);
+        throw new Error(i18n.t('user.fileTypeError', {fileType: file.type}));
+      }
+
       let ProposedUser = Ember.Object.extend(getOwner(this).ownerInjection(), UserValidations, {
         email: null
       });

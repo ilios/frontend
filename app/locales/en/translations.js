@@ -483,6 +483,7 @@ export default {
     'newUsersCreatedWarning': 'Some users were created, but there were errors.',
     'errorSavingUser': 'These users were unable to be saved.  Please verify that they do not already exist.',
     'errorSavingAuthentication': 'Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user and create a username and passowrd for them.',
+    'fileTypeError': 'Bad file uploaded: {{fileType}} does not appear to be a valid tab seperated file.',
   },
   'language': {
     'select': {
