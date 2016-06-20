@@ -42,45 +42,49 @@
     </label>
     <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}} />
   </div>
-  {{#if (gte proposedUsers.length 1)}}
-    <table class='proposed-new-users'>
-      <thead>
-        <tr>
-          <th></th>
-          <th>{{t 'user.firstName'}}</th>
-          <th>{{t 'user.lastName'}}</th>
-          <th>{{t 'user.middleName'}}</th>
-          <th>{{t 'general.phone'}}</th>
-          <th>{{t 'general.email'}}</th>
-          <th>{{t 'general.campusId'}}</th>
-          <th>{{t 'user.otherId'}}</th>
-          <th>{{t 'user.username'}}</th>
-          <th>{{t 'user.password'}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each proposedUsers as |obj|}}
+  {{#if parseFile.isRunning}}
+    <div class='file-is-loading'>{{fa-icon 'spinner' spin=true}}</div>
+  {{else if (gte proposedUsers.length 1)}}
+    <div  class='proposed-new-users'>
+      <table>
+        <thead>
           <tr>
-            <td>
-              {{one-way-checkbox
-                checked=(and (v-get obj 'isValid') (contains obj selectedUsers))
-                update=(action 'toggleUserSelection' obj)
-                disabled=(v-get obj 'isInvalid')
-              }}
-            </td>
-            <td class="{{if (v-get obj 'firstName' 'isInvalid') 'error'}}">{{obj.firstName}}</td>
-            <td class="{{if (v-get obj 'lastName' 'isInvalid') 'error'}}">{{obj.lastName}}</td>
-            <td class="{{if (v-get obj 'middleName' 'isInvalid') 'error'}}">{{obj.middleName}}</td>
-            <td>{{obj.phone}}</td>
-            <td class="{{if (v-get obj 'email' 'isInvalid') 'error'}}">{{obj.email}}</td>
-            <td class="{{if (v-get obj 'campusId' 'isInvalid') 'error'}}">{{obj.campusId}}</td>
-            <td class="{{if (v-get obj 'otherId' 'isInvalid') 'error'}}">{{obj.otherId}}</td>
-            <td class="{{if (v-get obj 'username' 'isInvalid') 'error'}}">{{obj.username}}</td>
-            <td>{{obj.password}}</td>
+            <th></th>
+            <th>{{t 'user.firstName'}}</th>
+            <th>{{t 'user.lastName'}}</th>
+            <th>{{t 'user.middleName'}}</th>
+            <th>{{t 'general.phone'}}</th>
+            <th>{{t 'general.email'}}</th>
+            <th>{{t 'general.campusId'}}</th>
+            <th>{{t 'user.otherId'}}</th>
+            <th>{{t 'user.username'}}</th>
+            <th>{{t 'user.password'}}</th>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {{#each proposedUsers as |obj|}}
+            <tr>
+              <td>
+                {{one-way-checkbox
+                  checked=(and (v-get obj 'isValid') (contains obj selectedUsers))
+                  update=(action 'toggleUserSelection' obj)
+                  disabled=(v-get obj 'isInvalid')
+                }}
+              </td>
+              <td class="{{if (v-get obj 'firstName' 'isInvalid') 'error'}}">{{obj.firstName}}</td>
+              <td class="{{if (v-get obj 'lastName' 'isInvalid') 'error'}}">{{obj.lastName}}</td>
+              <td class="{{if (v-get obj 'middleName' 'isInvalid') 'error'}}">{{obj.middleName}}</td>
+              <td>{{obj.phone}}</td>
+              <td class="{{if (v-get obj 'email' 'isInvalid') 'error'}}">{{obj.email}}</td>
+              <td class="{{if (v-get obj 'campusId' 'isInvalid') 'error'}}">{{obj.campusId}}</td>
+              <td class="{{if (v-get obj 'otherId' 'isInvalid') 'error'}}">{{obj.otherId}}</td>
+              <td class="{{if (v-get obj 'username' 'isInvalid') 'error'}}">{{obj.username}}</td>
+              <td>{{obj.password}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   {{/if}}
   <div class='item'>
     <label>{{t "general.primarySchool"}}:</label>

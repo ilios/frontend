@@ -29,11 +29,22 @@
     }
 
     .proposed-new-users {
+      max-height: 25em;
+      overflow-y: scroll;
+
       .error {
         border: 1px solid $alert-color;
         color: $alert-color;
       }
     }
+  }
+
+  .file-is-loading {
+    @include fill-parent;
+    display: block;
+    font-size: 3 * $base-font-size;
+    font-weight: bold;
+    text-align: center;
   }
 
   .saving-user-errors,
