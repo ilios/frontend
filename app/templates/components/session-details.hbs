@@ -14,6 +14,7 @@
       isManaging=isManagingLearnerGroups
       setIsManaging=(action setIsManagingLearnerGroups)
       collapse=(action setSessionLearnergroupDetails false)
+      expand=(action setSessionLearnergroupDetails true)
     }}
   {{else}}
     {{collapsed-learnergroups subject=(await session.ilmSession) expand=(action setSessionLearnergroupDetails true)}}

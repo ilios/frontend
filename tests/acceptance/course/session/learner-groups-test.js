@@ -16,7 +16,6 @@ module('Acceptance: Session - Learner Groups', {
       id: 4136,
       school: 1
     });
-    setupModels();
   },
 
   afterEach: function() {
@@ -30,7 +29,8 @@ let setupModels = function(){
   });
   server.create('course', {
     school: 1,
-    sessions: [1]
+    sessions: [1],
+    cohorts: [1],
   });
   server.create('sessionType', {
     sessions: [1]
@@ -78,6 +78,7 @@ let setupModels = function(){
 };
 
 test('initial selected learner groups', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -109,6 +110,7 @@ test('initial selected learner groups', function(assert) {
 });
 
 test('learner group manager display', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -141,7 +143,24 @@ test('learner group manager display', function(assert) {
   });
 });
 
+test('learner group manager display with no selected groups', function(assert) {
+  setupModels();
+  server.create('ilmSession', {
+    session: 1,
+    learnerGroups: []
+  });
+  const container = '.detail-learnergroups ';
+  const selectedLearnerGroups = container + ' .selected-learner-groups';
+
+  visit(url + '&isManagingLearnerGroups=true');
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    assert.equal(getElementText(find(selectedLearnerGroups)), getText('Selected Learner Groups None'));
+  });
+});
+
 test('filter learner groups by top group should include all subgroups', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -156,6 +175,7 @@ test('filter learner groups by top group should include all subgroups', function
 });
 
 test('filter learner groups by subgroup should include top group', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -178,6 +198,7 @@ test('filter learner groups by subgroup should include top group', function(asse
 });
 
 test('add learner group', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -204,6 +225,7 @@ test('add learner group', function(assert) {
 });
 
 test('add learner sub group', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -229,6 +251,7 @@ test('add learner sub group', function(assert) {
 });
 
 test('add learner group with children', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -261,6 +284,7 @@ test('add learner group with children', function(assert) {
 });
 
 test('add learner group with children and remove one child', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -301,6 +325,7 @@ test('add learner group with children and remove one child', function(assert) {
 });
 
 test('undo learner group change', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -337,6 +362,7 @@ test('undo learner group change', function(assert) {
 });
 
 test('save learner group change', function(assert) {
+  setupModels();
   server.create('ilmSession', {
     session: 1,
     learnerGroups: [1, 2, 4]
@@ -373,6 +399,7 @@ test('save learner group change', function(assert) {
 });
 
 test('collapsed learner groups', function(assert) {
+  setupModels();
   server.create('programYear', {
     cohort: 2,
     program: 1
@@ -405,5 +432,56 @@ test('collapsed learner groups', function(assert) {
     assert.equal(getElementText(find(cohort2Title)), getText('program0 cohort1'));
     assert.equal(getElementText(find(cohort2Count)), getText('2'));
 
+  });
+});
+
+test('initial state with save works as expected #1773', function(assert) {
+  server.create('school', {
+    courses: [1]
+  });
+  server.create('course', {
+    school: 1,
+    sessions: [1],
+    cohorts: [1],
+  });
+  server.create('sessionType', {
+    sessions: [1]
+  });
+  server.create('program', {
+    programYears: [1],
+    school: 1
+  });
+  server.create('programYear', {
+    cohort: 1
+  });
+  server.create('cohort', {
+    learnerGroups: [1, 2],
+    courses: [1],
+    programYear: 1
+  });
+  server.createList('learnerGroup', 2, {
+    cohort: 1
+  });
+  server.create('ilmSession', {
+    session: 1,
+  });
+  server.create('session', {
+    course: 1,
+    ilmSession: 1,
+  });
+  const container = '.detail-learnergroups ';
+  const manageButton = container + ' .actions button';
+  const lg1 = container + '.available-learner-groups li:eq(0) .clickable';
+  const save = container +  '.bigadd';
+
+  visit('/courses/1/sessions/1');
+  andThen(function() {
+    assert.equal(find(manageButton).length, 1, 'We are not in a collapsed state');
+  });
+  click(manageButton);
+  click(lg1);
+  click(save);
+  andThen(function() {
+    assert.equal(find(manageButton).length, 1, 'We are not in a collapsed state');
   });
 });
