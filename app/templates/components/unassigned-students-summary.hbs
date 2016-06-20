@@ -28,9 +28,11 @@
 {{#if (is-fulfilled unassignedStudents)}}
   <p>{{t 'admin.unassignedStudentsSummary' count=(get (await unassignedStudents) 'length')}}</p>
   {{#if (gt (get (await unassignedStudents) 'length') 0)}}
-    {{#link-to 'assign-students' (query-params school=(get (await selectedSchool) 'id'))}}
-      <button>{{t 'general.manage'}}</button>
-    {{/link-to}}
+    <div class='actions'>
+      {{#link-to 'assign-students' (query-params school=(get (await selectedSchool) 'id'))}}
+        <button>{{t 'general.manage'}}</button>
+      {{/link-to}}
+    </div>
   {{/if}}
 {{else}}
   {{fa-icon 'spinner' spin = true}}

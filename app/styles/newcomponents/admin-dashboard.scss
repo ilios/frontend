@@ -1,0 +1,104 @@
+.admin-dashboard {
+  min-height: 45em;
+  padding: 1em;
+
+  .small-component,
+  .large-component {
+    @include fill-parent;
+    background-color: $grey;
+    border: 1px solid $black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    min-height: 10em;
+    padding: 0 2em .75em;
+
+    &.alert {
+      background-color: $white;
+      border: 3px solid $ilios-yellow;
+    }
+
+    .actions {
+      @include fill-parent;
+      margin-top: 1em;
+      text-align: right;
+    }
+
+    h2 {
+      @include ilios-heading;
+      font-size: 1.25 * $base-font-size;
+      margin-bottom: 1em;
+    }
+  }
+
+  .small-component {
+    @include media($large-screen) {
+      @include span-columns(6 of 12);
+    }
+  }
+
+  .user-search {
+    margin: auto;
+    width: 90%;
+
+    .live-search {
+      position: relative;
+      width: 100%;
+
+      .search-box {
+        margin-bottom: 0;
+      }
+
+      .results {
+        max-height: 23em;
+        overflow-y: scroll;
+        position: absolute;
+        width: 100%;
+      }
+    }
+
+    .search-icon {
+      font-size: 1.25em;
+    }
+
+    input {
+      height: 2em;
+      width: 100%;
+    }
+  }
+
+  .manage-users-summary {
+    font-size: $base-font-size;
+    margin-bottom: 3em;
+    min-height: 6em;
+
+    .title {
+      @include fill-parent;
+      text-align: center;
+
+      @include media($large-screen) {
+        @include span-columns(5 of 12);
+        text-align: left;
+      }
+
+      h2 {
+        font-size: $base-font-size;
+      }
+    }
+
+    .actions {
+      @include fill-parent;
+      margin: 1em 0;
+      text-align: center;
+
+      @include media($large-screen) {
+        @include shift(1);
+        @include span-columns(6 of 12);
+        @include omega;
+        margin: 0;
+        text-align: right;
+      }
+    }
+  }
+
+}

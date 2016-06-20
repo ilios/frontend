@@ -1,0 +1,14 @@
+<h2 class='title'>
+  {{t 'admin.manageUsersSummaryTitle'}} ({{#link-to 'users'}}{{t 'general.viewAll'}}{{/link-to}})
+</h2>
+<div class='actions'>
+  {{#link-to 'users' (query-params showNewUserForm=true)}}
+    <button>{{t 'user.create'}}</button>
+  {{/link-to}}
+  {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+    {{#link-to 'users' (query-params showBulkNewUserForm=true)}}
+      <button>{{t 'user.createBulk'}}</button>
+    {{/link-to}}
+  {{/if}}
+</div>
+{{user-search placeholder=(t 'admin.searchForIliosUsers')}}

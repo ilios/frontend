@@ -9,7 +9,7 @@ export default Component.extend({
   store: service(),
   currentUser: service(),
   tagName: 'div',
-  classNameBindings: [':unassigned-students-summary', ':summary-block', 'alert'],
+  classNameBindings: [':unassigned-students-summary', ':small-component', 'alert'],
   alert: computed.gt('unassignedStudentsProxy.length', 0),
   schoolId: null,
   schools: computed('currentUser.model.schools.[]', function(){

@@ -104,7 +104,6 @@ module.exports = function(environment) {
     //Hide a feature while it is in development
     IliosFeatures: {
       allowAddNewUser: true,
-      showUnassignedStudents: true,
     }
   };
 
@@ -116,7 +115,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.redirectAfterShibLogin = false;
-    ENV.IliosFeatures.showUnassignedStudents = true;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
   }
 
@@ -133,7 +131,6 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
-    ENV.IliosFeatures.showUnassignedStudents = true;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
   }
 
@@ -150,7 +147,6 @@ module.exports = function(environment) {
       enabled: false
     };
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
-    ENV.IliosFeatures.showUnassignedStudents = true;
   }
 
 /*
