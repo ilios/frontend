@@ -106,7 +106,7 @@ test('it renders', function(assert) {
 
   return wait().then(() => {
     let content = this.$().text().trim();
-    assert.notEqual(content.search(/CSV File with new user data/), -1);
+    assert.notEqual(content.search(/File with new user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
 
     const schools = 'select:eq(0) option';
@@ -144,7 +144,7 @@ test('select student mode display cohort', function(assert) {
 
   return wait().then(() => {
     let content = this.$().text().trim();
-    assert.notEqual(content.search(/CSV File with new user data/), -1);
+    assert.notEqual(content.search(/File with new user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
     assert.notEqual(content.search(/Primary Cohort/), -1);
 
@@ -773,7 +773,7 @@ test('ignore header row', function(assert) {
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
   let users = [
-    ['First', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
+    ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
     ['Test Person', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
   ];
   triggerUpload(users);
