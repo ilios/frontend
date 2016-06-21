@@ -17,6 +17,7 @@
     "moment-timezone": ">= 0.1.0",
     "froala-wysiwyg-editor": "^2.2.3",
     "clipboard": "~1.5.5",
+    "papaparse": "~4.1.2",
     "ember-qunit-notifications": "0.1.0"
   }
 }

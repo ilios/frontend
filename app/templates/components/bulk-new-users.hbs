@@ -1,0 +1,138 @@
+{{#if savingUserErrors.length}}
+  <div class='saving-user-errors'>
+    <p>{{t 'user.errorSavingUser'}}</p>
+    <ul>
+      {{#each (sort-by 'lastName' (map-by 'userInput' savingUserErrors)) as |obj|}}
+        <li>{{obj.lastName}}, {{obj.firstName}} ({{obj.email}})</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
+
+{{#if savingAuthenticationErrors.length}}
+  <div class='saving-authentication-errors'>
+    <p>{{t 'user.errorSavingAuthentication'}}</p>
+    <ul>
+      {{#each (sort-by 'lastName' (map-by 'user' savingAuthenticationErrors)) as |user|}}
+        <li>
+          {{#link-to 'user' user}}
+            {{user.lastName}}, {{user.firstName}} ({{user.email}})
+          {{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
+
+<div class="new-result-title">{{t 'user.new'}}</div>
+
+<div class='new-user-form'>
+  <div class='choose-form-type'>
+    <label>{{t 'general.createNew'}}:</label>
+    {{click-choice-buttons
+      buttonContent1=(t 'general.nonStudent')
+      buttonContent2=(t 'general.student')
+      firstChoicePicked=nonStudentMode
+      action='setNonStudentMode'
+    }}
+  </div>
+  <div class='upload-users'>
+    <label>
+      {{t "user.uploadUsers"}} (<a target='_blank' href='/assets/files/SampleUserUpload.txt'>{{t 'user.sampleFile'}}</a>):
+    </label>
+    <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}} />
+  </div>
+  {{#if parseFile.isRunning}}
+    <div class='file-is-loading'>{{fa-icon 'spinner' spin=true}}</div>
+  {{else if (gte proposedUsers.length 1)}}
+    <div  class='proposed-new-users'>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{t 'user.firstName'}}</th>
+            <th>{{t 'user.lastName'}}</th>
+            <th>{{t 'user.middleName'}}</th>
+            <th>{{t 'general.phone'}}</th>
+            <th>{{t 'general.email'}}</th>
+            <th>{{t 'general.campusId'}}</th>
+            <th>{{t 'user.otherId'}}</th>
+            <th>{{t 'user.username'}}</th>
+            <th>{{t 'user.password'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each proposedUsers as |obj|}}
+            <tr>
+              <td>
+                {{one-way-checkbox
+                  checked=(and (v-get obj 'isValid') (contains obj selectedUsers))
+                  update=(action 'toggleUserSelection' obj)
+                  disabled=(v-get obj 'isInvalid')
+                }}
+              </td>
+              <td class="{{if (v-get obj 'firstName' 'isInvalid') 'error'}}">{{obj.firstName}}</td>
+              <td class="{{if (v-get obj 'lastName' 'isInvalid') 'error'}}">{{obj.lastName}}</td>
+              <td class="{{if (v-get obj 'middleName' 'isInvalid') 'error'}}">{{obj.middleName}}</td>
+              <td>{{obj.phone}}</td>
+              <td class="{{if (v-get obj 'email' 'isInvalid') 'error'}}">{{obj.email}}</td>
+              <td class="{{if (v-get obj 'campusId' 'isInvalid') 'error'}}">{{obj.campusId}}</td>
+              <td class="{{if (v-get obj 'otherId' 'isInvalid') 'error'}}">{{obj.otherId}}</td>
+              <td class="{{if (v-get obj 'username' 'isInvalid') 'error'}}">{{obj.username}}</td>
+              <td>{{obj.password}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+  <div class='item'>
+    <label>{{t "general.primarySchool"}}:</label>
+    {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
+      <select onchange={{action "setSchool" value="target.value"}}>
+        {{#each (sort-by 'title' (await schools)) as |school|}}
+          <option value={{school.id}} selected={{eq school (await bestSelectedSchool)}}>
+            {{school.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+  </div>
+  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
+    <div class='item last'>
+      <label>{{t "general.primaryCohort"}}:</label>
+      {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
+        <select onchange={{action "setPrimaryCohort" value="target.value"}}>
+          {{#each (sort-by 'title' cohorts) as |cohort|}}
+            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+              {{cohort.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
+    </div>
+  {{/if}}
+
+  <div class='buttons'>
+    <button class='done text' {{action (perform save)}} disabled={{or (lt selectedUsers.length 1) isSaving (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    <button class='cancel text' {{action (action close)}}>{{t 'general.cancel'}}</button>
+  </div>
+</div>
+
+{{#liquid-if save.isRunning class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=selectedUsers.length
+    currentProgress=savedUserIds.length
+  }}
+{{/liquid-if}}

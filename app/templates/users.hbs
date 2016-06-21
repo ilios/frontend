@@ -11,21 +11,39 @@
 
   <section class='resultslist'>
     <div class="resultslist-header">
-      <h2 class="user-title">{{t 'general.users'}}</h2>
+      <span class='resultslist-title'>{{t 'general.users'}}</span>
       {{#if allowAddNewUser}}
         <div class='resultslist-actions'>
-          {{expand-collapse-button value=showNewUserForm  action="toggleNewUserForm"}}
+          {{#unless (or showNewUserForm showBulkNewUserForm)}}
+            <button {{action (toggle 'showNewUserForm' this)}}>{{t 'user.create'}}</button>
+            {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+              <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'user.createBulk'}}</button>
+            {{/if}}
+          {{else}}
+            <button {{action (if showNewUserForm (toggle 'showNewUserForm' this) (toggle 'showBulkNewUserForm' this))}}>
+              {{fa-icon 'minus'}}
+            </button>
+          {{/unless}}
         </div>
       {{/if}}
     </div>
       <section class='resultslist-new'>
         {{#liquid-if (and showNewUserForm allowAddNewUser) class='vertical'}}
-          {{#liquid-if newUserComponent.isFulfilled}}
-            {{component newUserComponent.content
+          {{#liquid-if (is-fulfilled newUserComponent)}}
+            {{component (await newUserComponent)
               close=(action (mut showNewUserForm false))
               transitionToUser=(action 'transitionToUser')
               searchTerms=searchTerms
               setSearchTerms=(action (mut searchTerms))
+            }}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/liquid-if}}
+        {{/liquid-if}}
+        {{#liquid-if (and showBulkNewUserForm allowAddNewUser) class='vertical'}}
+          {{#liquid-if (is-fulfilled newBulkUserComponent)}}
+            {{bulk-new-users
+              close=(action (mut showBulkNewUserForm false))
             }}
           {{else}}
             {{fa-icon 'spinner' spin=true}}

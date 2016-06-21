@@ -139,6 +139,7 @@ export default {
     'universalLocator': 'Localisateur universel',
     'removeAll': 'Supprimer Tous',
     'copiedSuccessfully': 'Copied Successfully',
+    'unsupportedBrowserFailure': "Votre navigateur n'est pas officiellement soutenu par Ilios et ne peut pas compléter cette action. Essayez S'il vous plaît d'utiliser de nouveau un navigateur à jour.",
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -463,6 +464,8 @@ export default {
     'disableUser': 'Désactiver compte d’utilisateur',
     'excludeFromSync': 'Exclure de Sync',
     'new': 'Nouvel utilisateur',
+    'create': 'Créez un nouvel utilisateur',
+    'createBulk': 'Envoyez utilisateurs multiples',
     'saved': 'Nouvel utilisateur enregistré avec succès',
     'username': 'Nom d’utilisateur',
     'password': 'Mot de passe',
@@ -474,6 +477,13 @@ export default {
     'invalidateTokens': 'Invalider tous les jetons',
     'invalidateTokensConfirmation': "Cette action va effacer tous les jetons de l’API. Vouz devrez générer nouveaux jetons pour toutes des vos applications.  Êtes vous sûr de vouloir le faire?",
     'successfullyInvalidatedTokens': 'Tous les jetons existant ont été invalidés avec succès.',
+    'uploadUsers': 'Fichier avec utilisateurs nouveaux',
+    'sampleFile': 'Fichier échantillon',
+    'newUsersCreatedSuccessfully': 'Nouveaux utilisateurs crées avec succès',
+    'newUsersCreatedWarning': 'Certains utilisateurs ont été créés, mais il y avait des erreurs.',
+    'errorSavingUser': "Ces utilisateurs n'avait pas été sauvé. Vérifiez qu'ils n'existent pas déjà.",
+    'errorSavingAuthentication': "Les comptes ont été créés pour ces utilisateurs, mais ils ne pourront pas à la connexion. Ceci arrive d'habitude quand le nom d'utilisateur existe déjà, mais appartient à un autre utilisateur. Cliquez S'il vous plaît sur chaque utilisateur et créez un nom d'utilisateur et un mot de passe pour eux.",
+    'fileTypeError': 'Mal fichier téléchargé : {{fileType}} ne semble pas être un fichier correctement délimité.',
   },
   'language': {
     'select': {
