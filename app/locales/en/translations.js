@@ -78,6 +78,10 @@ export default {
     'moreInputRequiredPrompt': 'keep typing...',
     'noSearchResultsPrompt': 'no results',
     'currentlySearchingPrompt': 'searching...',
+    'resultsCount': {
+      'one': '1 result',
+      'other': '{{count}} results'
+    },
     'printSummary': 'Print Summary',
     'type': 'Type',
     'groups': 'Groups',

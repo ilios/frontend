@@ -39,31 +39,16 @@
 
   .user-search {
     margin: auto;
+    position: relative;
     width: 90%;
-
-    .live-search {
-      position: relative;
-      width: 100%;
-
-      .search-box {
-        margin-bottom: 0;
-      }
-
-      .results {
-        max-height: 23em;
-        overflow-y: scroll;
-        position: absolute;
-        width: 100%;
-      }
-    }
-
-    .search-icon {
-      font-size: 1.25em;
-    }
 
     input {
       height: 2em;
       width: 100%;
+    }
+
+    .results {
+      @include user-search-results;
     }
   }
 
