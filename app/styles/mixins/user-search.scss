@@ -12,6 +12,10 @@
   width: 100%;
   z-index: 100;
 
+  &.hidden {
+    display: none;
+  }
+
   li {
     border-bottom: 1px solid $base-border-color;
     padding-left: 1em;
