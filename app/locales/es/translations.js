@@ -139,6 +139,7 @@ export default {
     'universalLocator': 'Localizador universal de',
     'removeAll': 'Quitar Todos',
     'copiedSuccessfully': 'Copiado con Éxito',
+    'unsupportedBrowserFailure': 'Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado.',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -463,6 +464,8 @@ export default {
     'disableUser': 'Desactivar el usuario',
     'excludeFromSync': 'Excluir de la sincronización',
     'new': 'Nuevo Usuario',
+    'create': 'Crear Nuevo Usuario',
+    'createBulk': 'Subir Múltiples Usuarios.',
     'saved': 'Nuevo Usuario Salvó con Éxito',
     'username': 'Nombre de Usuario',
     'password': 'Contraseña',
@@ -474,6 +477,13 @@ export default {
     'invalidateTokens': 'Invalida Todos los Tokens',
     'invalidateTokensConfirmation': 'Esto invalidará todas los tokens de API existentes y ustedes tendrán que generar nuevos tokens para cualquier aplicación que tengan. ¿Está seguro que desea hacer esto?',
     'successfullyInvalidatedTokens': 'Todas los tokens existentes fueron con éxito invalidadas',
+    'uploadUsers': 'Archivo CSV con los datos de usuario nuevos.',
+    'sampleFile': 'Archivo de Ejemplo',
+    'newUsersCreatedSuccessfully': 'Nuevos usuarios creados con éxito',
+    'newUsersCreatedWarning': 'Algunos usuarios fueron creados, pero hubo errores.',
+    'errorSavingUser': 'Estos usuarios fueron incapaces de salvarse. Por favor, compruebe que no existen.',
+    'errorSavingAuthentication': 'Las cuentas fueron creadas para estos usuarios, pero no podrán iniciar sesión.  Esto generalmente sucede cuando el nombre de usuario ya existe, pero pertenece a otro usuario.  Por favor seleccione cada usuario y crear un nombre de usuario y contraseña.',
+    'fileTypeError': 'Archivo mal subido: {{fileType}} no parece ser válido ficha separado archivo.',
   },
   'language': {
     'select': {
