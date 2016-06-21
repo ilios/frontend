@@ -78,6 +78,10 @@ export default {
     'moreInputRequiredPrompt': "Continuez à taper...",
     'noSearchResultsPrompt': "Aucun Résultat",
     'currentlySearchingPrompt': "Recherchent...",
+    'resultsCount': {
+      'one': '1 résultat',
+      'other': '{{count}} résultats'
+    },
     'printSummary': "Empreinte Résumé",
     'type': "Type",
     'groups': "Groupes",
@@ -140,6 +144,7 @@ export default {
     'removeAll': 'Supprimer Tous',
     'copiedSuccessfully': 'Copied Successfully',
     'unsupportedBrowserFailure': "Votre navigateur n'est pas officiellement soutenu par Ilios et ne peut pas compléter cette action. Essayez S'il vous plaît d'utiliser de nouveau un navigateur à jour.",
+    'viewAll': 'Voir Tous',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -577,6 +582,9 @@ export default {
       'one': "Attribuez l’utilisateur sélectionné à",
       'other': "Attribuez {{count}} utilisateurs sélectionnés à",
     },
+    'manageUsersSummaryTitle': "utilisateurs d'Ilios",
+    'searchForIliosUsers': 'Trouver des utilisateurs...',
+    'backToAdminDashboard': 'Rétour au Page Admin',
   },
   'taxonomies' : {
     'assignedTerms': 'Termes assignées',
