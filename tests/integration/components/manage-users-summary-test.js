@@ -16,9 +16,9 @@ test('it renders', function(assert) {
   assert.equal(this.$('h2').text().trim(), 'Ilios Users (View All)');
   assert.equal(this.$('a:eq(0)').text().trim(), 'View All');
   assert.notEqual(this.$('a:eq(0)').prop('href').search(/\/users$/), -1, `${this.$('a:eq(0)').prop('href')} links to /users`);
-  assert.equal(this.$('a:eq(1)').text().trim(), 'Add User');
+  assert.equal(this.$('a:eq(1)').text().trim(), 'Create New User');
   assert.notEqual(this.$('a:eq(1)').prop('href').search(/\/users\?addUser=true$/), -1, `${this.$('a:eq(1)').prop('href')} links to /users?addUser=true`);
-  assert.equal(this.$('a:eq(2)').text().trim(), 'Add Multiple Users');
+  assert.equal(this.$('a:eq(2)').text().trim(), 'Upload Multiple Users');
   assert.notEqual(this.$('a:eq(2)').prop('href').search(/\/users\?addUsers=true$/), -1, `${this.$('a:eq(2)').prop('href')} links to /users?addUsers=true`);
 });
 
