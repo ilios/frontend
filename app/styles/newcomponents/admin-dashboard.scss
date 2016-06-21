@@ -32,8 +32,14 @@
   }
 
   .small-component {
+    font-size: .75 * $base-font-size;
+
     @include media($large-screen) {
       @include span-columns(6 of 12);
+    }
+
+    button {
+      font-size: $base-font-size;
     }
   }
 
@@ -43,7 +49,10 @@
     position: relative;
     width: 90%;
 
-    input {
+    input[type='search'] {
+      background-color: $white;
+      border: 1px solid $text-blue;
+      border-radius: 3px;
       height: 2em;
       width: 100%;
     }
