@@ -1,0 +1,50 @@
+<h2 class='title'>
+  {{t 'admin.manageUsersSummaryTitle'}} ({{#link-to 'users'}}{{t 'general.viewAll'}}{{/link-to}})
+</h2>
+<div class='actions'>
+  {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
+    <button>{{t 'user.create'}}</button>
+  {{/link-to}}
+  {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+    {{#link-to 'users' (query-params showBulkNewUserForm=true showNewUserForm=false)}}
+      <button>{{t 'user.createBulk'}}</button>
+    {{/link-to}}
+  {{/if}}
+</div>
+<div class='user-search'>
+  {{one-way-input
+    type='search'
+    placeholder=(t 'admin.searchForIliosUsers')
+    incremental=true
+    onsearch=(perform searchForUsers value="target.value")
+    onkeyup=(perform searchForUsers value="target.value")
+  }}
+  <ul class="results {{unless (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length) 'hidden'}}">
+    {{#if searchForUsers.isRunning}}
+      <li>{{t 'general.currentlySearchingPrompt'}}</li>
+    {{else}}
+      {{#each searchForUsers.lastSuccessful.value as |result|}}
+        {{#if (eq result.type 'text')}}
+          <li>{{result.text}}</li>
+        {{/if}}
+        {{#if (eq result.type 'summary')}}
+          <li class='summary'>{{result.text}}</li>
+        {{/if}}
+        {{#if (eq result.type 'user')}}
+          <li class='user'>
+            {{#link-to 'user' result.user}}
+              <span class='name'>
+                {{result.user.fullName}}
+                {{#unless result.user.enabled}}
+                  {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                {{/unless}}
+              </span>
+              <span class='email'>{{result.user.email}}</span>
+            {{/link-to}}
+          </li>
+        {{/if}}
+
+      {{/each}}
+    {{/if}}
+  </ul>
+</div>

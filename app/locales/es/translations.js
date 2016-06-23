@@ -78,6 +78,10 @@ export default {
     'moreInputRequiredPrompt': 'sigue marcando...',
     'noSearchResultsPrompt': 'no resultados',
     'currentlySearchingPrompt': 'buscando...',
+    'resultsCount': {
+      'one': '1 resultado',
+      'other': '{{count}} resultados'
+    },
     'printSummary': 'Sumario Printado',
     'type': 'Tipo',
     'groups': 'Grupos',
@@ -140,6 +144,7 @@ export default {
     'removeAll': 'Quitar Todos',
     'copiedSuccessfully': 'Copiado con Éxito',
     'unsupportedBrowserFailure': 'Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado.',
+    'viewAll': 'View All',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -577,6 +582,9 @@ export default {
       'one': 'Asignar el usuario seleccionado a',
       'other': 'Asignar {{count}} usuarios seleccionados a',
     },
+    'manageUsersSummaryTitle': 'Usuarios de Ilios',
+    'searchForIliosUsers': 'Encuentre Usuarios de Ilios...',
+    'backToAdminDashboard': 'Atrás a Panel de Control',
   },
   'taxonomies' : {
     'assignedTerms': 'Términos asignados',

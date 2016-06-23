@@ -1,20 +1,5 @@
-<div class="admin-container">
-  {{global-search}}
-
-  <section class='admin-dashboard fullwidth'>
-    <div class='admin-dashboard-toolbar'>
-      <div class='admin-dashboard-manage-users'>
-        {{#link-to 'users'}}
-          <button class="manage-users">{{t 'user.manageUsers'}}</button>
-        {{/link-to}}
-      </div>
-    </div>
-
-    <div class='summaries'>
-      {{pending-updates-summary}}
-      {{#if showUnassignedStudents}}
-        {{unassigned-students-summary}}
-      {{/if}}
-    </div>
-  </section>
+<div class="admin-dashboard">
+  {{manage-users-summary}}
+  {{pending-updates-summary}}
+  {{unassigned-students-summary}}
 </div>

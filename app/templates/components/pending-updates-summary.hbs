@@ -27,9 +27,11 @@
 {{#if updates.isFulfilled}}
   <p>{{t 'admin.pendingUpdatesSummary' count=updates.length}}</p>
   {{#if updates.length}}
-    {{#link-to 'pending-user-updates' (query-params school=selectedSchool.id)}}
-      <button>{{t 'general.manage'}}</button>
-    {{/link-to}}
+    <div class='actions'>
+      {{#link-to 'pending-user-updates' (query-params school=selectedSchool.id)}}
+        <button>{{t 'general.manage'}}</button>
+      {{/link-to}}
+    </div>
   {{/if}}
 {{else}}
   {{fa-icon 'spinner' spin = true}}
