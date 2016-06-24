@@ -102,7 +102,7 @@ test('rollover course', function(assert) {
 });
 
 test('disable years when title already exists', function(assert) {
-  assert.expect(13);
+  assert.expect(8);
   const thisYear = parseInt(moment().format('YYYY'));
 
   let storeMock = Service.extend({
