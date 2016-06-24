@@ -32,4 +32,8 @@
     @include span-columns(10);
     margin-bottom: 2em;
   }
+
+  .universallocator {
+    color: $dark-grey;
+  }
 }
