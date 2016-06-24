@@ -16,7 +16,7 @@ export default Component.extend({
     this.get('loadUnavailableYears').perform();
     let thisYear = parseInt(moment().format('YYYY'));
     let years = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       years.push(thisYear + i);
     }
     this.set('years', years);

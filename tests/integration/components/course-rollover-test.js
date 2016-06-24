@@ -29,7 +29,7 @@ test('it renders', function(assert) {
 
   let thisYear = parseInt(moment().format('YYYY'));
 
-  for (let i=0; i<6; i++){
+  for (let i=0; i<5; i++){
     assert.equal(this.$(`select:eq(0) option:eq(${i})`).text().trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
   }
 });
@@ -139,11 +139,6 @@ test('disable years when title already exists', function(assert) {
   assert.ok(options.eq(2).prop('disabled'));
   assert.notOk(options.eq(3).prop('disabled'));
   assert.notOk(options.eq(4).prop('disabled'));
-  assert.notOk(options.eq(5).prop('disabled'));
-  assert.notOk(options.eq(6).prop('disabled'));
-  assert.notOk(options.eq(7).prop('disabled'));
-  assert.notOk(options.eq(8).prop('disabled'));
-  assert.notOk(options.eq(9).prop('disabled'));
 });
 
 test('rollover course with new start date', function(assert) {
