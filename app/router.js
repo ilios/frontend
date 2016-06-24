@@ -16,6 +16,7 @@ Router.map(function() {
   }, function(){
     this.route('publicationCheck', { path: '/publicationcheck'});
     this.route('publishall', { path: '/publishall'});
+    this.route('rollover', { path: '/rollover'});
     this.route("session", {
       path: '/sessions/:session_id',
       resetNamespace: true
@@ -57,6 +58,7 @@ Router.map(function() {
   this.route('school', { path: 'schools/:school_id'});
   this.route('assign-students', {path: '/admin/assignstudents'});
   this.route('myprofile');
+  this.route('course-rollover');
 });
 
 export default Router;

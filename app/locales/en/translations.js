@@ -145,6 +145,8 @@ export default {
     'copiedSuccessfully': 'Copied Successfully',
     'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up-to-date browser.',
     'viewAll': 'View All',
+    'advancedOptions': 'Advanced Options',
+    'include': 'Include',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -326,6 +328,10 @@ export default {
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
     'confirmSessionRemoval': 'Are you sure you want to delete this session?',
     'noPrintDraft': 'Courses which are in draft status cannot be printed',
+    'rollover': 'Rollover Course',
+    'rolloverSuccess': 'Rollover Completed Successfully',
+    'rolloverYearUnavailable': 'Course Already Exists',
+    'rolloverSummary': 'You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “done”. To return to your current course, click “cancel”',
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',

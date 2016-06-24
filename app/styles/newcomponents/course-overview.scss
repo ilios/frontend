@@ -7,10 +7,25 @@
 
   .title {
     @include ilios-overview-title;
+    @include span-columns(5 of 12);
   }
 
-  .print {
+  .course-overview-actions {
     @include ilios-overview-actions;
+    @include span-columns(6 of 12);
+    @include shift(1);
+    @include omega;
+    text-align: right;
+
+    a {
+      color: $header-blue;
+      font-size: 1.2 * $base-font-size;
+      margin-right: .5em;
+
+      &.print {
+        margin-right: 1em;
+      }
+    }
   }
 
   .block {

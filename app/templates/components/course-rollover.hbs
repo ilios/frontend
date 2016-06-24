@@ -1,0 +1,61 @@
+{{#link-to 'course' course}}{{t 'general.backToTitle' title=course.title}}{{/link-to}}
+
+
+<div class='rollover-form'>
+  <h3 class="title">{{t 'courses.rollover'}}</h3>
+
+  <p class='rollover-summary'>{{t 'courses.rolloverSummary'}}</p>
+
+  <div class='item'>
+    <label>{{t "general.year"}}:</label>
+    {{#if loadAvailableYears.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
+        {{#each years as |year|}}
+          <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
+            {{year}} - {{inc year}}
+            {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
+              ({{t 'courses.rolloverYearUnavailable'}})
+            {{/if}}
+          </option>
+        {{/each}}
+      </select>
+    {{/if}}
+
+  </div>
+
+  <span onclick={{toggle-action 'expandAdvancedOptions' this}} class="advanced-options-title {{if expandAdvancedOptions 'expanded' 'collapsed'}}">{{t 'general.advancedOptions'}}</span>
+  <div class='advanced-options'>
+    {{#liquid-if expandAdvancedOptions class='vertical'}}
+      <div class='item'>
+        <label>{{t "general.startDate"}}:</label>
+        {{pikaday-input size=10 value=startDate maxDate=maxDate minDate=minDate format='YYYY-MM-DD'}}
+      </div>
+
+      <div class='included'>
+        <span class='title'>{{t 'general.include'}}:</span>
+        <div class='include'>
+          {{one-way-checkbox
+            checked=(not skipOfferings)
+            update=(toggle 'skipOfferings' this)
+          }}
+          <span>{{t 'general.offerings'}}</span>
+        </div>
+      </div>
+    {{/liquid-if}}
+  </div>
+
+  <div class='buttons'>
+    <button disabled={{if (or save.isRunning (not selectedYear) (contains selectedYear loadUnavailableYears.lastSuccessful.value)) true}} class='done text' {{action (perform save)}}>
+      {{#if save.isRunning}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    {{#link-to 'course' course}}
+      <button class='cancel text'>{{t 'general.cancel'}}</button>
+    {{/link-to}}
+  </div>
+</div>

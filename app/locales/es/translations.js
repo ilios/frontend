@@ -145,6 +145,8 @@ export default {
     'copiedSuccessfully': 'Copiado con Éxito',
     'unsupportedBrowserFailure': 'Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado.',
     'viewAll': 'View All',
+    'advancedOptions': 'Opciones Avanzadas',
+    'include': 'Incluir',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
@@ -326,6 +328,10 @@ export default {
     'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
     'confirmSessionRemoval': "¿Está seguro que desea eliminar este sessión?",
     'noPrintDraft': 'Cursos que se encuentran en estado borrador no se puede imprimir',
+    'rollover': 'Copiar Curso',
+    'rolloverSuccess': 'Curso Copiado con Éxito',
+    'rolloverYearUnavailable': 'El Curso Ya Existe',
+    'rolloverSummary': 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en "done". Para volver a su curso corriente, haga clic en "cancel"',
   },
   'sessions': {
     'specialAttireRequired': 'Vestimenta Especial Requerido',

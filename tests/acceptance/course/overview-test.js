@@ -28,7 +28,12 @@ module('Acceptance: Course - Overview' + testgroup, {
 
 test('check fields', function(assert) {
   server.create('user', {
-    id: 4136
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
   });
   server.create('user', {
     directedCourses: [1],
@@ -60,6 +65,7 @@ test('check fields', function(assert) {
     assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText('Clerkship Type:' + clerkshipType.title));
     assert.equal(getElementText(find('.coursedirectors', container)), getText('Directors: A M. Director'));
+    assert.ok(find('a.rollover', container).prop('href').search(/courses\/1\/rollover/) > -1);
 
   });
 });
@@ -488,5 +494,119 @@ test('search twice and list should be correct', function(assert) {
         });
       });
     });
+  });
+});
+
+test('click rollover', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+  const rollover = '.course-overview a.rollover';
+  visit(url);
+  click(rollover);
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.rollover');
+  });
+});
+
+test('rollover hidden from instructors', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'instructor'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+  visit(url);
+  const container = '.course-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.index');
+    assert.equal(find(rollover).length, 0)
+  });
+});
+
+test('rollover visible to developers', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'developer'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+  visit(url);
+  const container = '.course-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.index');
+    assert.equal(find(rollover).length, 1)
+  });
+});
+
+test('rollover visible to course directors', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+  visit(url);
+  const container = '.course-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.index');
+    assert.equal(find(rollover).length, 1)
+  });
+});
+
+test('rollover hidden on rollover route', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('course', {
+    year: 2013,
+    school: 1,
+  });
+  visit(`${url}/rollover`);
+  const container = '.course-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.rollover');
+    assert.equal(find(rollover).length, 0)
   });
 });
