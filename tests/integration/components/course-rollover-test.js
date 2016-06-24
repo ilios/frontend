@@ -97,6 +97,8 @@ test('rollover course', function(assert) {
   });
   this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
   this.$('.done').click();
+
+  return wait();
 });
 
 test('disable years when title already exists', function(assert) {
