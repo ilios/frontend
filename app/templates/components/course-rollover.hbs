@@ -8,7 +8,7 @@
     {{#if loadAvailableYears.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
-      <select onchange={{action (mut selectedYear) value="target.value"}}>
+      <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
         {{#each years as |year|}}
           <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
             {{year}} - {{inc year}}
@@ -20,6 +20,16 @@
       </select>
     {{/if}}
 
+  </div>
+
+  <div class='advanced-options'>
+    <span onclick={{toggle-action 'expandAdvancedOptions' this}} class="title {{if expandAdvancedOptions 'expanded' 'collapsed'}}">{{t 'general.advancedOptions'}}</span>
+    {{#liquid-if expandAdvancedOptions class='vertical'}}
+      <div class='item'>
+        <label>{{t "general.startDate"}}:</label>
+        {{pikaday-input size=10 value=startDate maxDate=maxDate minDate=minDate format='YYYY-MM-DD'}}
+      </div>
+    {{/liquid-if}}
   </div>
 
   <div class='buttons'>

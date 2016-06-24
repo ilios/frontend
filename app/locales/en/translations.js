@@ -145,6 +145,7 @@ export default {
     'copiedSuccessfully': 'Copied Successfully',
     'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up-to-date browser.',
     'viewAll': 'View All',
+    'advancedOptions': 'Advanced Options',
   },
   'programs': {
     'programTitle': 'Program Title',
