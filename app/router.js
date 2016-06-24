@@ -58,7 +58,6 @@ Router.map(function() {
   this.route('school', { path: 'schools/:school_id'});
   this.route('assign-students', {path: '/admin/assignstudents'});
   this.route('myprofile');
-  this.route('course-rollover');
 });
 
 export default Router;
