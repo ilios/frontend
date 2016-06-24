@@ -331,6 +331,7 @@ export default {
     'rollover': 'Roulement Cours',
     'rolloverSuccess': 'Roulement achevée avec succès',
     'rolloverYearUnavailable': 'Cours déja existant',
+    'rolloverSummary': "Vous êtes sur le point le roulement ce cours dans l'année universitaire choisie, avec toutes les options choisies. Continuer, cliquer \"done\". Pour retourner à votre cours actuel, le clic \"annul\"",
   },
   'sessions': {
     'specialAttireRequired': "Vêtements particuliers requis",
