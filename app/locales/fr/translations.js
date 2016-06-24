@@ -145,6 +145,8 @@ export default {
     'copiedSuccessfully': 'Copied Successfully',
     'unsupportedBrowserFailure': "Votre navigateur n'est pas officiellement soutenu par Ilios et ne peut pas compléter cette action. Essayez S'il vous plaît d'utiliser de nouveau un navigateur à jour.",
     'viewAll': 'Voir Tous',
+    'advancedOptions': 'Options avancées',
+    'include': 'Inclure',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -326,6 +328,9 @@ export default {
     'confirmObjectiveRemoval': "Êtes vous sûr de vouloir supprimer cet objectif?",
     'confirmSessionRemoval': "Êtes vous sûr de vouloir supprimer cette séance?",
     'noPrintDraft': "Cours qui sont au stade de projet ne peuvent pas étre imprimés",
+    'rollover': 'Roulement Cours',
+    'rolloverSuccess': 'Roulement achevée avec succès',
+    'rolloverYearUnavailable': 'Cours déja existant',
   },
   'sessions': {
     'specialAttireRequired': "Vêtements particuliers requis",
