@@ -1,0 +1,37 @@
+{{#link-to 'course' course}}{{t 'general.backToTitle' title=course.title}}{{/link-to}}
+
+
+<div class='rollover-form'>
+  <h3 class="title">{{t 'courses.rollover'}}</h3>
+  <div class='item'>
+    <label>{{t "general.year"}}:</label>
+    {{#if loadAvailableYears.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      <select onchange={{action (mut selectedYear) value="target.value"}}>
+        {{#each years as |year|}}
+          <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
+            {{year}} - {{inc year}}
+            {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
+              ({{t 'courses.rolloverYearUnavailable'}})
+            {{/if}}
+          </option>
+        {{/each}}
+      </select>
+    {{/if}}
+
+  </div>
+
+  <div class='buttons'>
+    <button disabled={{if (or save.isRunning (not selectedYear) (contains selectedYear loadUnavailableYears.lastSuccessful.value)) true}} class='done text' {{action (perform save)}}>
+      {{#if save.isRunning}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    {{#link-to 'course' course}}
+      <button class='cancel text'>{{t 'general.cancel'}}</button>
+    {{/link-to}}
+  </div>
+</div>

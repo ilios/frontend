@@ -3,9 +3,10 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, RSVP, isEmpty } = Ember;
+const { Component, computed, RSVP, isEmpty, inject } = Ember;
 const { not } = computed;
-const { Promise } = RSVP;
+const { Promise, all } = RSVP;
+const { service } = inject;
 
 const Validations = buildValidations({
   externalId: [
@@ -18,7 +19,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
+  routing: service('-routing'),
   editable: not('course.locked'),
   init(){
     this._super(...arguments);
@@ -58,6 +61,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   clerkshipTypeOptions: [],
   manageDirectors: false,
   showDirectorManagerLoader: true,
+  currentRoute: '',
   selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', function() {
     const id = this.get('clerkshipTypeId');
     if (isEmpty(id)) {
@@ -74,6 +78,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('showDirectorManagerLoader', false);
     return users;
   }).restartable(),
+
+  showRollover: computed('currentUser', 'routing.currentRouteName', function(){
+    return new Promise(resolve => {
+      const routing = this.get('routing');
+      if (routing.get('currentRouteName') === 'course.rollover') {
+        resolve(false);
+      } else {
+        const currentUser = this.get('currentUser');
+        all([
+          currentUser.get('userIsCourseDirector'),
+          currentUser.get('userIsDeveloper')
+        ]).then(hasRole => {
+          resolve(hasRole.contains(true));
+        });
+      }
+
+    })
+  }),
 
   actions: {
     saveDirectors(newDirectors){

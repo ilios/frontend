@@ -326,6 +326,9 @@ export default {
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
     'confirmSessionRemoval': 'Are you sure you want to delete this session?',
     'noPrintDraft': 'Courses which are in draft status cannot be printed',
+    'rollover': 'Rollover Course',
+    'rolloverSuccess': 'Rollover Completed Successfully',
+    'rolloverYearUnavailable': 'Course Already Exists'
   },
   'sessions': {
     'specialAttireRequired': 'Special Attire Required',
