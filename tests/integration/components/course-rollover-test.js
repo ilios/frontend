@@ -35,7 +35,7 @@ test('it renders', function(assert) {
 });
 
 test('rollover course', function(assert) {
-  assert.expect(13);
+  assert.expect(15);
   let course = Object.create({
     id: 1,
     startDate: moment().hour(0).minute(0).second(0).toDate()
@@ -48,8 +48,10 @@ test('rollover course', function(assert) {
       assert.equal(method, 'POST');
       assert.ok('year' in data);
       assert.equal(data.year, thisYear);
-      assert.ok('startDate' in data);
-      assert.equal(data.startDate, null);
+      assert.ok('newStartDate' in data);
+      assert.equal(data.newStartDate, null);
+      assert.ok('skipOfferings' in data);
+      assert.equal(data.skipOfferings, false);
 
       return resolve({
         courses: [
@@ -143,21 +145,17 @@ test('disable years when title already exists', function(assert) {
 });
 
 test('rollover course with new start date', function(assert) {
-  assert.expect(8);
+  assert.expect(4);
   let course = Object.create({
     id: 1
   });
   let thisYear = parseInt(moment().format('YYYY'));
   let ajaxMock = Service.extend({
-    request(url, {method, data}){
-      assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
-      assert.equal(method, 'POST');
-      assert.ok('year' in data);
-      assert.equal(data.year, thisYear);
-      assert.ok('startDate' in data);
-      let startDate = moment(data.startDate);
-      assert.equal(startDate.year(), thisYear+1);
-      assert.equal(startDate.dayOfYear(), 1);
+    request(url, {data}){
+      assert.ok('newStartDate' in data);
+      let newStartDate = moment(data.newStartDate);
+      assert.equal(newStartDate.year(), thisYear+1);
+      assert.equal(newStartDate.dayOfYear(), 1);
 
       return resolve({
         courses: [
@@ -182,7 +180,7 @@ test('rollover course with new start date', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
   const advancedOptions = '.advanced-options';
-  const title = `${advancedOptions} span:eq(0)`;
+  const title = `.advanced-options-title`;
   const startDate = `${advancedOptions} input:eq(0)`;
 
   return new Promise(resolve => {
@@ -193,6 +191,57 @@ test('rollover course with new start date', function(assert) {
         assert.equal(interactor.selectedYear(), thisYear);
         let newDate = moment().year(thisYear+1).dayOfYear(1);
         interactor.selectDate(newDate.toDate());
+
+        this.$('.done').click();
+        resolve();
+      });
+    });
+  });
+});
+
+test('rollover course with no offerings', function(assert) {
+  assert.expect(3);
+  let course = Object.create({
+    id: 1
+  });
+  let ajaxMock = Service.extend({
+    request(url, {data}){
+      assert.ok('skipOfferings' in data);
+      assert.equal(data.skipOfferings, true);
+
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+
+  let storeMock = Service.extend({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  this.register('service:store', storeMock);
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const offerings = `${advancedOptions} input:eq(1)`;
+
+  return new Promise(resolve => {
+    run(()=>{
+      this.$(title).click();
+      wait().then(()=>{
+        assert.ok(this.$(offerings).is(':checked'));
+        this.$(offerings).click();
+        this.$(offerings).trigger('update');
 
         this.$('.done').click();
         resolve();

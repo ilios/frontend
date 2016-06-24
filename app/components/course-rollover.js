@@ -31,6 +31,7 @@ export default Component.extend({
   course: null,
   expandAdvancedOptions: false,
   startDate: null,
+  skipOfferings: false,
 
   save: task(function * (){
     yield timeout(10);
@@ -39,9 +40,11 @@ export default Component.extend({
     const expandAdvancedOptions = this.get('expandAdvancedOptions');
     const selectedYear = this.get('selectedYear');
     let newStartDate = null;
+    let skipOfferings = false;
 
     if (expandAdvancedOptions) {
       newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
+      skipOfferings = this.get('skipOfferings');
     }
     const host = this.get('host')?this.get('host'):'/';
     const namespace = this.get('namespace');
@@ -51,7 +54,8 @@ export default Component.extend({
       method: 'POST',
       data: {
         year: selectedYear,
-        newStartDate
+        newStartDate,
+        skipOfferings,
       }
     });
 

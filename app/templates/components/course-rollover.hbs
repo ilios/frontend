@@ -22,12 +22,23 @@
 
   </div>
 
+  <span onclick={{toggle-action 'expandAdvancedOptions' this}} class="advanced-options-title {{if expandAdvancedOptions 'expanded' 'collapsed'}}">{{t 'general.advancedOptions'}}</span>
   <div class='advanced-options'>
-    <span onclick={{toggle-action 'expandAdvancedOptions' this}} class="title {{if expandAdvancedOptions 'expanded' 'collapsed'}}">{{t 'general.advancedOptions'}}</span>
     {{#liquid-if expandAdvancedOptions class='vertical'}}
       <div class='item'>
         <label>{{t "general.startDate"}}:</label>
         {{pikaday-input size=10 value=startDate maxDate=maxDate minDate=minDate format='YYYY-MM-DD'}}
+      </div>
+
+      <div class='included'>
+        <span class='title'>{{t 'general.include'}}:</span>
+        <div class='include'>
+          {{one-way-checkbox
+            checked=(not skipOfferings)
+            update=(toggle 'skipOfferings' this)
+          }}
+          <span>{{t 'general.offerings'}}</span>
+        </div>
       </div>
     {{/liquid-if}}
   </div>

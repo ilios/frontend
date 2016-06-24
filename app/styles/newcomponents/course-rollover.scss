@@ -21,20 +21,42 @@
     }
   }
 
+  .advanced-options-title {
+    @include fill-parent;
+    cursor: pointer;
+
+    &.collapsed::after {
+      content: ' \25BA';
+    }
+
+    &.expanded::after {
+      content: ' \25BC';
+    }
+  }
+
   .advanced-options {
     @include fill-parent;
     clear: both;
+    padding-left: 1em;
+  }
+
+  .included {
 
     .title {
       @include fill-parent;
-      cursor: pointer;
+      display: block;
+      font-weight: bold;
+      margin-bottom: .5em;
+    }
 
-      &.collapsed::after {
-        content: ' \25BA';
-      }
+    .include {
+      line-height: 1em;
+      margin-left: 1em;
 
-      &.expanded::after {
-        content: ' \25BC';
+      input {
+        display: inline;
+        margin: 0;
+        width: 1em;
       }
     }
   }

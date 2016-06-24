@@ -146,6 +146,7 @@ export default {
     'unsupportedBrowserFailure': 'Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up-to-date browser.',
     'viewAll': 'View All',
     'advancedOptions': 'Advanced Options',
+    'include': 'Include',
   },
   'programs': {
     'programTitle': 'Program Title',
