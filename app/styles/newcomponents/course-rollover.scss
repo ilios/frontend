@@ -23,7 +23,9 @@
 
   .advanced-options-title {
     @include fill-parent;
+    clear: both;
     cursor: pointer;
+    display: block;
 
     &.collapsed::after {
       content: ' \25BA';
