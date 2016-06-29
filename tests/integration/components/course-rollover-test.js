@@ -35,7 +35,7 @@ test('it renders', function(assert) {
 });
 
 test('rollover course', function(assert) {
-  assert.expect(15);
+  assert.expect(13);
   let course = Object.create({
     id: 1,
     startDate: moment().hour(0).minute(0).second(0).toDate()
@@ -48,10 +48,8 @@ test('rollover course', function(assert) {
       assert.equal(method, 'POST');
       assert.ok('year' in data);
       assert.equal(data.year, thisYear);
-      assert.ok('newStartDate' in data);
-      assert.equal(data.newStartDate, null);
-      assert.ok('skipOfferings' in data);
-      assert.equal(data.skipOfferings, false);
+      assert.notOk('newStartDate' in data);
+      assert.notOk('skipOfferings' in data);
 
       return resolve({
         courses: [

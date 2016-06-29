@@ -38,13 +38,18 @@ export default Component.extend({
     const ajax = this.get('ajax');
     const courseId = this.get('course.id');
     const expandAdvancedOptions = this.get('expandAdvancedOptions');
-    const selectedYear = this.get('selectedYear');
-    let newStartDate = null;
-    let skipOfferings = false;
+    const year = this.get('selectedYear');
+    let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
+    let skipOfferings = this.get('skipOfferings');
 
-    if (expandAdvancedOptions) {
-      newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
-      skipOfferings = this.get('skipOfferings');
+    let data = {
+      year
+    };
+    if (expandAdvancedOptions && newStartDate) {
+      data.newStartDate = newStartDate;
+    }
+    if (expandAdvancedOptions && skipOfferings) {
+      data.skipOfferings = true;
     }
     const host = this.get('host')?this.get('host'):'/';
     const namespace = this.get('namespace');
@@ -52,11 +57,7 @@ export default Component.extend({
     let url = host + namespace + `/courses/${courseId}/rollover`;
     const newCoursesObj = yield ajax.request(url, {
       method: 'POST',
-      data: {
-        year: selectedYear,
-        newStartDate,
-        skipOfferings,
-      }
+      data
     });
 
     const flashMessages = this.get('flashMessages');
