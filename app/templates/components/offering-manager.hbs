@@ -3,7 +3,7 @@
     <div class="form-col-12">
       <label class="form-label">{{t 'general.startDate'}}:</label>
       <div class="form-data startdate">
-        {{pikaday-input value=buffer.startDate format='MM/DD/YYYY'}}
+        {{pikaday-input value=buffer.startDate format='MM/DD/YYYY' onSelection=(action 'selectStartDate')}}
       </div>
     </div>
     <div class="form-col-12">
@@ -18,7 +18,7 @@
       <div class="form-col-12">
         <label class="form-label">{{t 'general.endDate'}}:</label>
         <div class="form-data enddate">
-          {{pikaday-input value=buffer.endDate format='MM/DD/YYYY'}}
+          {{pikaday-input value=buffer.endDate format='MM/DD/YYYY' onSelection=(action 'selectEndDate')}}
         </div>
       </div>
     {{/if}}

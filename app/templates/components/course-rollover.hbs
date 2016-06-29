@@ -30,7 +30,14 @@
     {{#liquid-if expandAdvancedOptions class='vertical'}}
       <div class='item'>
         <label>{{t "general.startDate"}}:</label>
-        {{pikaday-input size=10 value=startDate maxDate=maxDate minDate=minDate format='YYYY-MM-DD'}}
+        {{pikaday-input
+          size=10
+          value=startDate
+          maxDate=maxDate
+          minDate=minDate
+          format='YYYY-MM-DD'
+          onSelection=(action 'selectStartDate')
+        }}
       </div>
 
       <div class='included'>

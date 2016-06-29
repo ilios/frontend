@@ -107,4 +107,10 @@ export default Component.extend({
     }
     return today.dayOfYear(365).toDate();
   }),
+
+  actions: {
+    selectStartDate(selectedDate) {
+      this.set('startDate', selectedDate);
+    },
+  }
 });
