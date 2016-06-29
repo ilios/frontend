@@ -123,7 +123,14 @@
       {{else}}
         <div class='new-token-form'>
           <label>{{t 'user.validUntil'}}</label>
-          {{pikaday-input size=10 value=expiresAt maxDate=maxDate minDate=minDate format='YYYY-MM-DD'}}
+          {{pikaday-input
+            size=10
+            value=expiresAt
+            maxDate=maxDate
+            minDate=minDate
+            format='YYYY-MM-DD'
+            onSelection=(action 'selectExpiresAtDate')
+          }}
           <button class='bigadd' {{action (perform createNewToken)}}>
             {{#if createNewToken.isRunning}}
               {{fa-icon 'spinner' spin=true}}
