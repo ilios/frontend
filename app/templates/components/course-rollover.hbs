@@ -6,9 +6,25 @@
 
   <p class='rollover-summary'>{{t 'courses.rolloverSummary'}}</p>
 
-  <div class='item'>
+  <div class='item title'>
+    <label>{{t "general.title"}}:</label>
+    {{one-way-input
+      value=title
+      update=(action 'changeTitle')
+      onenter=(perform save)
+      disabled=save.isRunning
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      keyDown=(action 'addErrorDisplayFor' 'title')
+      placeholder=(t 'courses.courseTitlePlaceholder')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  </div>
+
+  <div class='item year-select'>
     <label>{{t "general.year"}}:</label>
-    {{#if loadAvailableYears.isRunning}}
+    {{#if loadUnavailableYears.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
       <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
@@ -22,7 +38,9 @@
         {{/each}}
       </select>
     {{/if}}
-
+    {{#if (and (v-get this 'selectedYear' 'isInvalid') (is-in showErrorsFor 'selectedYear'))}}
+      <span class="validation-error-message">{{v-get this 'selectedYear' 'message'}}</span>
+    {{/if}}
   </div>
 
   <span onclick={{toggle-action 'expandAdvancedOptions' this}} class="advanced-options-title {{if expandAdvancedOptions 'expanded' 'collapsed'}}">{{t 'general.advancedOptions'}}</span>

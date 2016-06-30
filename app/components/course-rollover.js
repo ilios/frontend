@@ -1,26 +1,45 @@
 import Ember from 'ember';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, inject, computed, isPresent } = Ember;
 const { service } = inject;
 const { reads } = computed;
 
-export default Component.extend({
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 3,
+      max: 200
+    }),
+  ],
+  selectedYear: [
+    validator('presence', true)
+  ],
+});
+
+export default Component.extend(ValidationErrorDisplay, Validations, {
   ajax: service(),
   store: service(),
   flashMessages: service(),
   serverVariables: service(),
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('loadUnavailableYears').perform();
     let thisYear = parseInt(moment().format('YYYY'));
     let years = [];
     for (let i = 0; i < 5; i++) {
       years.push(thisYear + i);
     }
     this.set('years', years);
+    const course = this.get('course');
+    if (isPresent(course)) {
+      this.set('title', course.get('title'));
+    }
 
+    this.get('loadUnavailableYears').perform();
     this.get('changeSelectedYear').perform(thisYear);
   },
   host: reads('serverVariables.apiHost'),
@@ -32,9 +51,16 @@ export default Component.extend({
   expandAdvancedOptions: false,
   startDate: null,
   skipOfferings: false,
+  title: null,
 
   save: task(function * (){
     yield timeout(10);
+    this.send('addErrorDisplaysFor', ['title', 'selectedYear']);
+    let {validations} = yield this.validate();
+
+    if (validations.get('isInvalid')) {
+      return;
+    }
     const ajax = this.get('ajax');
     const courseId = this.get('course.id');
     const expandAdvancedOptions = this.get('expandAdvancedOptions');
@@ -70,14 +96,15 @@ export default Component.extend({
   }).drop(),
 
   loadUnavailableYears: task(function * (){
-    const course = this.get('course');
+    yield timeout(250); //debounce title changes
+    const title = this.get('title');
     const store = this.get('store');
     let existingCoursesWithTitle = yield store.query('course', {
-      filters: {title: course.get('title')}
+      filters: {title}
     });
 
     return existingCoursesWithTitle.mapBy('year');
-  }).drop(),
+  }).restartable(),
 
   changeSelectedYear: task(function * (selectedYear){
     this.setProperties({selectedYear});
@@ -132,5 +159,9 @@ export default Component.extend({
     selectStartDate(selectedDate) {
       this.set('startDate', selectedDate);
     },
+    changeTitle(newTitle){
+      this.set('title', newTitle);
+      this.get('loadUnavailableYears').perform();
+    }
   }
 });
