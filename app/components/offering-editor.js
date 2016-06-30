@@ -204,6 +204,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isMultiDay', !this.get('isMultiDay'));
     },
 
+    selectStartDate(selectedDate) {
+      this.set('startDate', selectedDate);
+    },
+
+    selectEndDate(selectedDate) {
+      this.set('endDate', selectedDate);
+    },
+
     changeStartTime(value, type) {
       let startTime = moment(this.get('startTime'));
 

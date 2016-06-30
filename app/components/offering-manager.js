@@ -353,6 +353,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('showRemoveConfirmation', true);
     },
 
+    selectStartDate(selectedDate) {
+      this.set('buffer.startDate', selectedDate);
+    },
+
+    selectEndDate(selectedDate) {
+      this.set('buffer.endDate', selectedDate);
+    },
+
     changeStartTime(value, type) {
       let startTime = moment(this.get('buffer.startTime'));
 

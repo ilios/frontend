@@ -14,7 +14,7 @@
   <label class="form-label">{{t 'general.startDate'}}:</label>
   <div class="form-data offering-startdate">
     <div class="offering-startdate-picker">
-      {{pikaday-input value=startDate format='MM/DD/YYYY'}}
+      {{pikaday-input value=startDate format='MM/DD/YYYY' onSelection=(action 'selectStartDate')}}
     </div>
 
     <div class="single-multi-day center">
@@ -40,7 +40,7 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'general.endDate'}}:</label>
     <div class="form-data offering-enddate">
-      {{pikaday-input value=endDate format='MM/DD/YYYY'}}
+      {{pikaday-input value=endDate format='MM/DD/YYYY' onSelection=(action 'selectEndDate')}}
     </div>
   </div>
 {{/if}}

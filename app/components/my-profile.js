@@ -93,6 +93,9 @@ export default Ember.Component.extend({
     },
     reset(){
       this.reset();
+    },
+    selectExpiresAtDate(selectedDate){
+      this.set('expiresAt', selectedDate);
     }
   }
 });
