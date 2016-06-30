@@ -413,14 +413,13 @@ test('errors show up', function(assert) {
 
   this.render(hbs`{{course-rollover course=course}}`);
 
-  return wait().then(() => {
-    this.$('.done').click();
-    return wait().then(() => {
-      let boxes = this.$('.item');
-      assert.ok(boxes.eq(1).text().search(/blank/) > -1);
-    });
+  const title = '.title';
+  const input = `${title} input`;
+  this.$(input).val('');
+  this.$(input).trigger('change');
+  assert.ok(this.$(title).text().search(/blank/) > -1);
 
-  });
+  return wait();
 });
 
 test('changing the title looks for new matching courses', function(assert) {

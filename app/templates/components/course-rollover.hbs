@@ -10,7 +10,7 @@
     <label>{{t "general.title"}}:</label>
     {{one-way-input
       value=title
-      update=(action 'changeTitle')
+      update=(pipe (action 'changeTitle') (action 'addErrorDisplayFor' 'title'))
       onenter=(perform save)
       disabled=save.isRunning
       focusOut=(action 'addErrorDisplayFor' 'title')
