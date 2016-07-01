@@ -140,18 +140,24 @@ test('disable years when title already exists', function(assert) {
 });
 
 test('rollover course with new start date', function(assert) {
-  assert.expect(4);
+  assert.expect(8);
+  // ensure that rollover date and course start date fall on the same day of the week.
+  const courseStartDate = moment().subtract(1, 'week').day(1);
+  const rolloverDate = moment(courseStartDate).add(1, 'week');
+
   let course = Object.create({
-    id: 1
+    id: 1,
+    startDate: courseStartDate.toDate()
   });
-  let thisYear = parseInt(moment().format('YYYY'));
   let ajaxMock = Service.extend({
     request(url, {data}){
-      assert.ok('newStartDate' in data);
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
       let newStartDate = moment(data.newStartDate);
-      assert.equal(newStartDate.year(), thisYear+1);
-      assert.equal(newStartDate.dayOfYear(), 1);
-
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        rolloverDate.format('YYYY-MM-DD'),
+        'New start date is rollover date.'
+      );
       return resolve({
         courses: [
           {
@@ -183,10 +189,125 @@ test('rollover course with new start date', function(assert) {
       this.$(title).click();
       wait().then(()=>{
         let interactor = openDatepicker(this.$(startDate));
-        assert.equal(interactor.selectedYear(), thisYear);
-        let newDate = moment().year(thisYear+1).dayOfYear(1);
-        interactor.selectDate(newDate.toDate());
+        assert.equal(
+          interactor.selectedYear(),
+          courseStartDate.year(),
+          'Selected year initialized to course start date year.'
+        );
+        assert.equal(
+          interactor.selectedMonth(),
+          courseStartDate.month(),
+          'Selected month initialized to course start date month.'
+        );
+        assert.equal(
+          interactor.selectedDay(),
+          courseStartDate.date(),
+          'Selected day initialized to course start date day.'
+        );
+        interactor.selectDate(rolloverDate.toDate());
+        assert.equal(
+          interactor.selectedYear(),
+          rolloverDate.year(),
+          'Selected year changed to rollover date year.'
+        );
+        assert.equal(
+          interactor.selectedMonth(),
+          rolloverDate.month(),
+          'Selected month changed to rollover date month.'
+        );
+        assert.equal(
+          interactor.selectedDay(),
+          rolloverDate.date(),
+          'Selected day changed to rollover date day.'
+        );
+        this.$('.done').click();
+        resolve();
+      });
+    });
+  });
+});
 
+test('rollover course prohibit non-matching day-of-week date selection', function(assert) {
+  assert.expect(8);
+  // rollover date and course start date don't fall on the same day of the week.
+  const courseStartDate = moment().subtract(1, 'week').day(1);
+  const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
+
+  let course = Object.create({
+    id: 1,
+    startDate: courseStartDate.toDate()
+  });
+  let ajaxMock = Service.extend({
+    request(url, {data}){
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      let newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        courseStartDate.format('YYYY-MM-DD'),
+        'New start date is course start date.'
+      );
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+
+  let storeMock = Service.extend({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  this.register('service:store', storeMock);
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const startDate = `${advancedOptions} input:eq(0)`;
+
+  return new Promise(resolve => {
+    run(()=>{
+      this.$(title).click();
+      wait().then(()=>{
+        let interactor = openDatepicker(this.$(startDate));
+        assert.equal(
+          interactor.selectedYear(),
+          courseStartDate.year(),
+          'Selected year initialized to course start date year.'
+        );
+        assert.equal(
+          interactor.selectedMonth(),
+          courseStartDate.month(),
+          'Selected month initialized to course start date month.'
+        );
+        assert.equal(
+          interactor.selectedDay(),
+          courseStartDate.date(),
+          'Selected day initialized to course start date day.'
+        );
+        interactor.selectDate(rolloverDate.toDate());
+        assert.equal(
+          interactor.selectedYear(),
+          courseStartDate.year(),
+          'Selected year is still to course start date year.'
+        );
+        assert.equal(
+          interactor.selectedMonth(),
+          courseStartDate.month(),
+          'Selected month is still to course start date month.'
+        );
+        assert.equal(
+          interactor.selectedDay(),
+          courseStartDate.date(),
+          'Selected day is still to course start date day.'
+        );
         this.$('.done').click();
         resolve();
       });
