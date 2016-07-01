@@ -9,20 +9,17 @@
 
   <div class='actions'>
     {{#if editable}}
-      {{expand-collapse-button value=offeringEditorOn action="toggleEditor"}}
+      {{expand-collapse-button value=showNewOfferingForm action=toggleShowNewOfferingForm}}
     {{/if}}
   </div>
 </div>
 
-{{#if offeringEditorOn class='vertical'}}
-  {{offering-editor
-    cohorts=cohorts
-    addSingleOffering='addSingleOffering'
-    addMultipleOfferings='addMultipleOfferings'
-    addSingleOfferingRecurring='addSingleOfferingRecurring'
-    addMultipleOfferingsRecurring='addMultipleOfferingsRecurring'
-    closeEditor='closeEditor'
-    class="form-container"
+{{#if showNewOfferingForm}}
+  {{new-offering
+    cohorts=(await session.course.cohorts)
+    courseStartDate=(await session.course.startDate)
+    courseEndDate=(await session.course.endDate)
+    close=(action (mut showNewOfferingForm false))
   }}
 {{/if}}
 

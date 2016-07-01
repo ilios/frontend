@@ -1,0 +1,20 @@
+<div class="title">{{t 'offerings.new'}}</div>
+
+<div class='choose-offering-type'>
+  {{click-choice-buttons
+    buttonContent1=(t 'offerings.smallGroups')
+    buttonContent2=(t 'offerings.offering')
+    firstChoicePicked=smallGroupMode
+    action=(action (mut smallGroupMode))
+  }}
+</div>
+
+{{offering-form
+  showRoom=(not smallGroupMode)
+  showMakeRecurring=true
+  showInstructors=(not smallGroupMode)
+  cohorts=cohorts
+  courseStartDate=courseStartDate
+  courseEndDate=courseEndDate
+  close=close
+}}

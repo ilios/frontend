@@ -6,22 +6,21 @@ const { Promise, all } = RSVP;
 
 export default Component.extend({
   i18n: service(),
+  classNames: ['learnergroup-selection-manager'],
   filter: '',
   sortBy: ['title'],
   cohorts: [],
   learnerGroups: [],
   allLearnerGroups: computed('cohorts.[]', function(){
     return new Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        all(cohorts.mapBy('topLevelLearnerGroups')).then(allLearnerGroups => {
-          let flat = allLearnerGroups.reduce((flattened, arr) => {
-            return flattened.pushObjects(arr);
-          }, []);
+      let cohorts = this.get('cohorts');
+      all(cohorts.mapBy('topLevelLearnerGroups')).then(allLearnerGroups => {
+        let flat = allLearnerGroups.reduce((flattened, arr) => {
+          return flattened.pushObjects(arr);
+        }, []);
 
-          resolve(flat);
-        });
+        resolve(flat);
       });
-
     });
 
   }),
