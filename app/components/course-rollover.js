@@ -109,6 +109,25 @@ export default Component.extend({
     return today.dayOfYear(365).toDate();
   }),
 
+  /**
+   * "disableDayFn" callback function pikaday.
+   * @link https://github.com/dbushell/Pikaday#configuration
+   * @param {Date} date
+   * @returns {boolean}
+   */
+  disableDayFn(date) {
+    // KLUDGE!
+    // We're sneaking the course into pikaday via the options hash.
+    // See https://github.com/edgycircle/ember-pikaday#using-pikaday-specific-options
+    // If ember-pikaday ever locks down this backdoor, then we're hosed.
+    // @todo Find a better way. [ST 2016/06/30]
+    if (this.course) {
+      // ensure that only dates that fall on the same weekday as the course's start date can be selected.
+      return this.course.get('startDate').getUTCDay() !== date.getUTCDay();
+    }
+    return false; // don't disable anything if we don't have a course to compare to.
+  },
+
   actions: {
     selectStartDate(selectedDate) {
       this.set('startDate', selectedDate);
