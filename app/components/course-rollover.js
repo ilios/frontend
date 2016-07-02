@@ -156,9 +156,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   },
 
   actions: {
-    selectStartDate(selectedDate) {
-      this.set('startDate', selectedDate);
-    },
     changeTitle(newTitle){
       this.set('title', newTitle);
       this.get('loadUnavailableYears').perform();

@@ -248,6 +248,7 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
 
   let course = Object.create({
     id: 1,
+    title: 'test title',
     startDate: courseStartDate.toDate()
   });
   let ajaxMock = Service.extend({
