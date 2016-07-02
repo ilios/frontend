@@ -21,23 +21,32 @@ test('it renders', function(assert) {
   this.register('service:store', storeMock);
 
   let course = Object.create({
-    id: 1
+    id: 1,
+    title: 'old course'
   });
   this.set('course', course);
 
   this.render(hbs`{{course-rollover course=course}}`);
 
-  let thisYear = parseInt(moment().format('YYYY'));
+  const thisYear = parseInt(moment().format('YYYY'));
+  const yearSelect = '.year-select select';
+  const title = '.title input';
 
-  for (let i=0; i<5; i++){
-    assert.equal(this.$(`select:eq(0) option:eq(${i})`).text().trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
-  }
+  return wait().then(()=>{
+    for (let i=0; i<5; i++){
+      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
+    }
+    assert.equal(this.$(title).length, 1);
+    assert.equal(this.$(title).val().trim(), course.get('title'));
+  })
+
 });
 
 test('rollover course', function(assert) {
   assert.expect(13);
   let course = Object.create({
     id: 1,
+    title: 'old title',
     startDate: moment().hour(0).minute(0).second(0).toDate()
   });
 
@@ -94,9 +103,10 @@ test('rollover course', function(assert) {
     assert.equal(newCourse.id, 14);
   });
   this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
-  this.$('.done').click();
 
-  return wait();
+  return wait().then(()=>{
+    this.$('.done').click();
+  });
 });
 
 test('disable years when title already exists', function(assert) {
@@ -131,12 +141,14 @@ test('disable years when title already exists', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
 
-  let options = this.$('select:eq(0) option');
-  assert.ok(options.eq(0).prop('disabled'));
-  assert.notOk(options.eq(1).prop('disabled'));
-  assert.ok(options.eq(2).prop('disabled'));
-  assert.notOk(options.eq(3).prop('disabled'));
-  assert.notOk(options.eq(4).prop('disabled'));
+  return wait().then(()=>{
+    let options = this.$('select:eq(0) option');
+    assert.ok(options.eq(0).prop('disabled'));
+    assert.notOk(options.eq(1).prop('disabled'));
+    assert.ok(options.eq(2).prop('disabled'));
+    assert.notOk(options.eq(3).prop('disabled'));
+    assert.notOk(options.eq(4).prop('disabled'));
+  });
 });
 
 test('rollover course with new start date', function(assert) {
@@ -147,7 +159,8 @@ test('rollover course with new start date', function(assert) {
 
   let course = Object.create({
     id: 1,
-    startDate: courseStartDate.toDate()
+    startDate: courseStartDate.toDate(),
+    title: 'old course'
   });
   let ajaxMock = Service.extend({
     request(url, {data}){
@@ -235,6 +248,7 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
 
   let course = Object.create({
     id: 1,
+    title: 'test title',
     startDate: courseStartDate.toDate()
   });
   let ajaxMock = Service.extend({
@@ -318,7 +332,8 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
 test('rollover course with no offerings', function(assert) {
   assert.expect(3);
   let course = Object.create({
-    id: 1
+    id: 1,
+    title: 'old course'
   });
   let ajaxMock = Service.extend({
     request(url, {data}){
@@ -364,4 +379,83 @@ test('rollover course with no offerings', function(assert) {
       });
     });
   });
+});
+
+test('errors do not show up initially', function(assert) {
+  let storeMock = Service.extend({
+    query(){
+      return [];
+    }
+  });
+  this.register('service:store', storeMock);
+  let course = Object.create({
+    id: 1
+  });
+  this.set('course', course);
+
+  this.render(hbs`{{course-rollover course=course}}`);
+
+  return wait().then(() => {
+    assert.equal(this.$('.messagee').length, 0);
+  });
+});
+
+test('errors show up', function(assert) {
+  let storeMock = Service.extend({
+    query(){
+      return [];
+    }
+  });
+  this.register('service:store', storeMock);
+  let course = Object.create({
+    id: 1
+  });
+  this.set('course', course);
+
+  this.render(hbs`{{course-rollover course=course}}`);
+
+  const title = '.title';
+  const input = `${title} input`;
+  this.$(input).val('');
+  this.$(input).trigger('change');
+  assert.ok(this.$(title).text().search(/blank/) > -1);
+
+  return wait();
+});
+
+test('changing the title looks for new matching courses', function(assert) {
+  assert.expect(6);
+  let count = 0;
+  let storeMock = Service.extend({
+    query(what, {filters}){
+      assert.equal(what, 'course');
+      assert.ok('title' in filters);
+      if (count === 0){
+        assert.equal(filters.title, 'to be rolled');
+      } else {
+        assert.equal(filters.title, 'to be rolled again');
+      }
+      count++;
+
+      return [];
+    }
+  });
+  this.register('service:store', storeMock);
+
+  let course = Object.create({
+    id: 1,
+    title: 'to be rolled',
+  });
+  this.set('course', course);
+  this.render(hbs`{{course-rollover course=course}}`);
+  const title = '.title input';
+
+  run.later(()=>{
+    this.$(title).val('to be rolled again');
+    this.$(title).trigger('change');
+  }, 500);
+
+  return wait();
+
+
 });
