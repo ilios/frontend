@@ -2,9 +2,8 @@ import {
   moduleFor,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleFor('adapter:application', 'ApplicationAdapter' + testgroup, {
+moduleFor('adapter:application', 'ApplicationAdapter', {
   // Specify the other units that are required for this test.
   // needs: ['serializer:foo']
 });

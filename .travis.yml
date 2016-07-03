@@ -33,8 +33,9 @@ before_install:
   - mv node_modules/.bin/which node_modules/.bin/which.backup
   - rvm install 2.2.0 && rvm use 2.2.0
   - mv node_modules/.bin/which.backup node_modules/.bin/which
-  - test $LINT && travis_retry gem install scss_lint --no-ri --no-rdoc
-
+  - if [ "$LINT" = true ];
+    then travis_retry gem install scss_lint --no-ri --no-rdoc;
+    fi
 
 install:
   - travis_retry npm install --no-optional
@@ -46,8 +47,12 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - test $LINT && scss-lint
-  - test $LINT && eslint .
+  - if [ "$LINT" = true ];
+    then scss-lint;
+    fi
+  - if [ "$LINT" = true ];
+    then eslint .;
+    fi
   - ember exam --split=$SPLIT --partition=$PARTITION --launch=firefox --filter=$FILTER --parallel=$PARALLEL
 
 after_success:

@@ -2,10 +2,9 @@ import {
   moduleForModel,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('curriculum-inventory-academic-level', 'Unit | Model | CurriculumInventoryAcademicLevel' + testgroup, {
+moduleForModel('curriculum-inventory-academic-level', 'Unit | Model | CurriculumInventoryAcademicLevel', {
   needs: modelList
 });
 

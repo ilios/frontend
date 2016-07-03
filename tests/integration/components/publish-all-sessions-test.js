@@ -1,12 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 const {RSVP} = Ember;
 
-moduleForComponent('publish-all-sessions', 'Integration | Component | publish all sessions' + testgroup, {
+moduleForComponent('publish-all-sessions', 'Integration | Component | publish all sessions', {
   integration: true,
 
   beforeEach() {

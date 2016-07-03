@@ -5,14 +5,13 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
 var url = '/courses/1';
-module('Acceptance: Course - Overview' + testgroup, {
+module('Acceptance: Course - Overview', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application, false);

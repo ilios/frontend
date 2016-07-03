@@ -3,7 +3,6 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
 const { computed } = Ember;
 const { PromiseArray } = DS;
@@ -41,7 +40,7 @@ let currentUserMockUnprivileged = Ember.Service.extend({
   canEditCourses: false
 });
 
-moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses' + testgroup, {
+moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses', {
   integration: true,
   beforeEach: function() {
     this.container.lookup('service:i18n').set('locale', 'en');

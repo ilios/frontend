@@ -4,12 +4,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 var url = '/programs/1';
-module('Acceptance: Program - Overview' + testgroup, {
+module('Acceptance: Program - Overview', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);

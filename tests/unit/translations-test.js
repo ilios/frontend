@@ -1,10 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import {default as en} from 'ilios/locales/en/translations';
 import {default as es} from 'ilios/locales/es/translations';
 import {default as fr} from 'ilios/locales/fr/translations';
 
-moduleForComponent('ilios-header', 'Unit | Translations' + testgroup, {
+moduleForComponent('ilios-header', 'Unit | Translations', {
   integration: true
 });
 

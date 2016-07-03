@@ -1,8 +1,7 @@
 import { isIn } from '../../../helpers/is-in';
 import { module, test } from 'qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-module('Unit | Helper | is in' + testgroup);
+module('Unit | Helper | is in');
 
 test('correctly calculates if a value is in an array', function(assert) {
   var result = isIn([[42], 42]);

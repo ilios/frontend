@@ -6,12 +6,11 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var fixtures = {};
 
-module('Acceptance: Session - Publish' + testgroup, {
+module('Acceptance: Session - Publish', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);

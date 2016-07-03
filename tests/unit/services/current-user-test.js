@@ -2,9 +2,8 @@ import {
   moduleFor,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleFor('service:current-user', 'CurrentUserService' + testgroup, {
+moduleFor('service:current-user', 'CurrentUserService', {
   needs: ['model:user']
 });
 

@@ -4,14 +4,13 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 
 var application;
 var fixtures = {};
 var url = '/courses/1?details=true&courseObjectiveDetails=true';
-module('Acceptance: Course - Objective Create' + testgroup, {
+module('Acceptance: Course - Objective Create', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);

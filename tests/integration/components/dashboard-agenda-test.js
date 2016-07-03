@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
@@ -22,7 +21,7 @@ let blankEventsMock = Ember.Service.extend({
   }
 });
 
-moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agenda' + testgroup, {
+moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agenda', {
   integration: true,
   setup(){
     initializer.initialize(this);

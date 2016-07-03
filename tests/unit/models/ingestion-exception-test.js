@@ -1,8 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('ingestion-exception' , 'Unit | Model | ingestion exception ' + testgroup, {
+moduleForModel('ingestion-exception' , 'Unit | Model | ingestion exception ', {
   needs: modelList
 });
 

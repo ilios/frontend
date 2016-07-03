@@ -1,8 +1,7 @@
 import { isEqual } from '../../../helpers/is-equal';
 import { module, test } from 'qunit';
-import { a as testgroup } from 'ilios/tests/helpers/test-groups';
 
-module('Unit | Helper | is equal' + testgroup);
+module('Unit | Helper | is equal');
 
 test('correctly compares values', function(assert) {
   let result = isEqual([ 42, 42 ]);

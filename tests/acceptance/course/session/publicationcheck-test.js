@@ -5,13 +5,12 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import Ember from 'ember';
 
 var application;
-module('Acceptance: Session - Publication Check' + testgroup, {
+module('Acceptance: Session - Publication Check', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);

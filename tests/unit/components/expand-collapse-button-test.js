@@ -1,10 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 const { run } = Ember;
 
-moduleForComponent('expand-collapse-button', 'Unit | Component | expand collapse button ' + testgroup, {
+moduleForComponent('expand-collapse-button', 'Unit | Component | expand collapse button ', {
   unit: true
 });
 

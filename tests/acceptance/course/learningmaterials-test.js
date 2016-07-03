@@ -4,7 +4,6 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
 import moment from 'moment';
@@ -15,7 +14,7 @@ const { later } = run;
 var application;
 var fixtures = {};
 var url = '/courses/1?details=true';
-module('Acceptance: Course - Learning Materials' + testgroup, {
+module('Acceptance: Course - Learning Materials', {
   beforeEach: function() {
     application = startApp();
     fixtures.user = setupAuthentication(application);

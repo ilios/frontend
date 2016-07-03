@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
 import initializer from "ilios/instance-initializers/ember-i18n";
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
 let today = moment();
@@ -16,7 +15,7 @@ let userEventsMock = Ember.Service.extend({
   }
 });
 
-moduleForComponent('dashboard-calendar', 'Integration | Component | dashboard calendar' + testgroup, {
+moduleForComponent('dashboard-calendar', 'Integration | Component | dashboard calendar', {
   integration: true,
   setup(){
     initializer.initialize(this);

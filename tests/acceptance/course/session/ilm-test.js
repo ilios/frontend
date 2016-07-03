@@ -5,12 +5,11 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 
 var application;
 var fixtures = {};
 var url = '/courses/1/sessions/1';
-module('Acceptance: Session - Independent Learning' + testgroup, {
+module('Acceptance: Session - Independent Learning', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application, {
