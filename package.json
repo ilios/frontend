@@ -88,7 +88,7 @@
     "ember-uploader": "1.1.0",
     "ember-watson": "^0.8.0",
     "emberx-select": "2.1.2",
-    "eslint": "^2.6.0",
+    "eslint": "^3.0.1",
     "ilios-calendar": "^5.0.0",
     "liquid-fire": "0.23.1",
     "liquid-tether": "1.1.1",
