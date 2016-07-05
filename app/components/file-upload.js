@@ -7,13 +7,12 @@ const { service } = inject;
 
 let IliosUploader = Uploader.extend({
   iliosHeaders: [],
-  ajaxSettings: function() {
-    let settings = this._super(...arguments);
-    settings.headers = this.get('iliosHeaders');
-    
-    return settings;
-  }
-  
+  ajaxSettings: computed('iliosHeaders.[]', function() {
+    return {
+      headers: this.get('iliosHeaders')
+    };
+  }),
+
 });
 
 export default FileField.extend({
@@ -24,7 +23,7 @@ export default FileField.extend({
     this.get('session').authorize('authorizer:token', (headerName, headerValue) => {
       headers[headerName] = headerValue;
     });
-    
+
     return headers;
   }),
 
@@ -34,13 +33,13 @@ export default FileField.extend({
       url: uploadUrl,
       iliosHeaders: this.get('headers')
     });
-    
+
     this.sendAction('startUploading');
-    
+
     uploader.on('didUpload', (e) => {
       this.sendAction('finishedUploading', e);
     });
-    
+
     uploader.on('progress', (e) => {
       this.sendAction('setUploadPercentage', e.percent);
     });
@@ -49,5 +48,5 @@ export default FileField.extend({
       uploader.upload(files[0]);
     }
   }
-  
+
 });
