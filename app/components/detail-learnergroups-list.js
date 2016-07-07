@@ -41,4 +41,18 @@ export default Component.extend({
 
     });
   }),
+  lowestLeaves: computed('learnerGroups.[]', function(){
+    const learnerGroups = this.get('learnerGroups');
+    const ids = learnerGroups.mapBy('id');
+    return new Promise(resolve => {
+      filter(learnerGroups, group => {
+        return new Promise(resolve => {
+          group.get('allDescendants').then(children => {
+            let selectedChildren = children.filter(child => ids.contains(child.get('id')));
+            resolve(selectedChildren.length === 0);
+          });
+        });
+      }).then(lowestLeaves => resolve(lowestLeaves));
+    });
+  }),
 });

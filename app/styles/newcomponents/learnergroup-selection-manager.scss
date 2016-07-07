@@ -21,6 +21,11 @@
       @include fill-parent;
       @include ilios-list-badges();
     }
+
+    .lowest-leaf {
+      background: $ilios-green;
+      border: 1px solid $ilios-green;
+    }
   }
 
   .available-learner-groups {

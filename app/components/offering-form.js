@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 
 const { Component, inject, computed, RSVP, isPresent, isEmpty } = Ember;
 const { service } = inject;
-const { Promise, map } = RSVP;
+const { Promise, map, filter } = RSVP;
 
 const Validations = buildValidations({
   room: [
@@ -98,6 +98,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   instructorGroups: null,
   courseStartDate: null,
   courseEndDate: null,
+  smallGroupMode: false,
   offeringsToSave: 0,
   savedOfferings: 0,
   recurringDayOptions: [
@@ -170,18 +171,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     return diffInMinutes;
   }),
-  makeRecurringOfferingObjects(){
+  makeRecurringOfferingObjects: task(function * () {
     const {
       startDate,
       endDate,
       room,
-      learnerGroups,
       instructorGroups,
       instructors,
       numberOfWeeks,
       recurringDays
-    } = this.getProperties('startDate', 'endDate', 'room', 'learnerGroups', 'instructorGroups', 'instructors', 'numberOfWeeks', 'recurringDays');
+    } = this.getProperties('startDate', 'endDate', 'room', 'instructorGroups', 'instructors', 'numberOfWeeks', 'recurringDays');
     const makeRecurring = this.get('makeRecurring');
+    const learnerGroups = yield this.get('lowestLearnerGroupLeaves');
     let offerings = [];
     offerings.push({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
     if (!makeRecurring) {
@@ -214,6 +215,25 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     return offerings;
+  }),
+  makeSmallGroupOfferingObjects(offerings){
+    const smallGroupMode = this.get('smallGroupMode');
+    if (!smallGroupMode) {
+      return offerings;
+    }
+
+    let smallGroupOfferings = [];
+
+    offerings.forEach(({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
+      learnerGroups.forEach(learnerGroup => {
+        let offering = {startDate, endDate, room, instructorGroups, instructors};
+        offering.learnerGroups = [learnerGroup];
+
+        smallGroupOfferings.pushObject(offering);
+      });
+    });
+
+    return smallGroupOfferings;
   },
   saveOffering: task(function * () {
     this.set('offeringsToSave', 0);
@@ -225,7 +245,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (validations.get('isInvalid')) {
       return;
     }
-    let offerings = this.makeRecurringOfferingObjects();
+    let offerings = yield this.get('makeRecurringOfferingObjects').perform();
+    offerings = this.makeSmallGroupOfferingObjects(offerings);
+
     this.set('offeringsToSave', offerings.length);
     //save offerings in sets of 5
     let parts;
@@ -239,6 +261,20 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.send('clearErrorDisplay');
     this.get('close')();
 
+  }),
+  lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
+    const learnerGroups = this.get('learnerGroups');
+    const ids = learnerGroups.mapBy('id');
+    return new Promise(resolve => {
+      filter(learnerGroups, group => {
+        return new Promise(resolve => {
+          group.get('allDescendants').then(children => {
+            let selectedChildren = children.filter(child => ids.contains(child.get('id')));
+            resolve(selectedChildren.length === 0);
+          });
+        });
+      }).then(lowestLeaves => resolve(lowestLeaves));
+    });
   }),
   actions: {
     addLearnerGroup: function(learnerGroup){

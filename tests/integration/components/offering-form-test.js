@@ -417,3 +417,11 @@ test('changing duration changes end date', function(assert) {
 
   assert.equal(moment().hour(10).minute(15).format(format), this.$(endDate).text().trim());
 });
+
+test('send only lowest leaf for single offering save', function(assert) {
+  assert.ok(false);
+});
+
+test('send only lowest leaf for small gropu save', function(assert) {
+  assert.ok(false);
+});
