@@ -112,6 +112,9 @@
   {{else}}
     <p>{{t 'learnerGroups.noAvailableCohorts'}}</p>
   {{/if}}
+  {{#if (and (v-get this 'learnerGroups' 'isInvalid') (is-in showErrorsFor 'learnerGroups'))}}
+    <p class="validation-error-message">{{v-get this 'learnerGroups' 'message'}}</p>
+  {{/if}}
 </div>
 
 {{#if showInstructors}}

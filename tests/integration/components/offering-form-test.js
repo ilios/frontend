@@ -418,6 +418,30 @@ test('changing duration changes end date', function(assert) {
   assert.equal(moment().hour(10).minute(15).format(format), this.$(endDate).text().trim());
 });
 
+test('learnerGroup validation errors do not show up initially', function(assert) {
+  this.set('nothing', nothing);
+  this.render(hbs`{{offering-form close=(action nothing) smallGroupMode=true}}`);
+
+  const item = '.learner-groups';
+  const error = `${item} .validation-error-message`;
+
+  return wait().then(()=>{
+    assert.equal(this.$(error).length, 0);
+  });
+});
+
+test('learnerGroup validation errors show up when saving', function(assert) {
+  this.set('nothing', nothing);
+  this.render(hbs`{{offering-form close=(action nothing) smallGroupMode=true}}`);
+
+  const item = '.learner-groups';
+  const error = `${item} .validation-error-message`;
+
+  return wait().then(()=>{
+    assert.equal(this.$(error).length, 1);
+  });
+});
+
 test('send only lowest leaf for single offering save', function(assert) {
   assert.ok(false);
 });

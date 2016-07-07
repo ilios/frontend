@@ -48,6 +48,18 @@ const Validations = buildValidations({
       let: 60
     })
   ],
+  learnerGroups: {
+    dependentKeys: ['smallGroupMode'],
+    disabled(){
+      return !this.get('model.smallGroupMode');
+    },
+    validators: [
+      validator('length', {
+        min: 1,
+        messageKey: 'offerings.smallGroupMessage'
+      })
+    ]
+  },
 
 });
 
@@ -238,7 +250,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   saveOffering: task(function * () {
     this.set('offeringsToSave', 0);
     this.set('savedOfferings', 0);
-    this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes']);
+    this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
     yield timeout(10);
     let {validations} = yield this.validate();
 
