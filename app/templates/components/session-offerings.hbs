@@ -16,10 +16,11 @@
 
 {{#if showNewOfferingForm}}
   {{new-offering
+    session=session
     cohorts=(await session.course.cohorts)
     courseStartDate=(await session.course.startDate)
     courseEndDate=(await session.course.endDate)
-    close=(action (mut showNewOfferingForm false))
+    close=toggleShowNewOfferingForm
   }}
 {{/if}}
 

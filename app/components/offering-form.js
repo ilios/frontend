@@ -10,6 +10,9 @@ const { Promise, map } = RSVP;
 
 const Validations = buildValidations({
   room: [
+    validator('presence', {
+      presence: true
+    }),
     validator('length', {
       max: 255
     }),
@@ -82,7 +85,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   classNames: ['offering-form'],
   startDate: null,
   endDate: null,
-  room: null,
+  room: 'TBD',
   cohorts: null,
   learnerGroups: null,
   showRoom: false,
@@ -95,6 +98,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   instructorGroups: null,
   courseStartDate: null,
   courseEndDate: null,
+  offeringsToSave: 0,
+  savedOfferings: 0,
   recurringDayOptions: [
     {day: '0', t: 'offerings.sunday'},
     {day: '1', t: 'offerings.monday'},
@@ -211,6 +216,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return offerings;
   },
   saveOffering: task(function * () {
+    this.set('offeringsToSave', 0);
+    this.set('savedOfferings', 0);
     this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes']);
     yield timeout(10);
     let {validations} = yield this.validate();
@@ -219,15 +226,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return;
     }
     let offerings = this.makeRecurringOfferingObjects();
+    this.set('offeringsToSave', offerings.length);
     //save offerings in sets of 5
     let parts;
     while (offerings.length > 0){
       parts = offerings.splice(0, 5);
-      yield map(parts, (({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
+      yield map(parts, ({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
         return this.get('save')(startDate, endDate, room, learnerGroups, instructorGroups, instructors);
-      }));
+      });
+      this.set('savedOfferings', this.get('savedOfferings') + parts.length);
     }
     this.send('clearErrorDisplay');
+    this.get('close')();
 
   }),
   actions: {

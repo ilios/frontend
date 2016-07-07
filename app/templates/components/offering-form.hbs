@@ -130,8 +130,8 @@
 {{/if}}
 
 <div class='buttons'>
-  <button class='done text' {{action (perform saveOffering)}} disabled={{save.isRunning}}>
-    {{#if save.isRunning}}
+  <button class='done text' {{action (perform saveOffering)}} disabled={{saveOffering.isRunning}}>
+    {{#if saveOffering.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
       {{t 'general.done'}}
@@ -139,3 +139,11 @@
   </button>
   <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
 </div>
+
+{{#if saveOffering.isRunning}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=offeringsToSave
+    currentProgress=savedOfferings
+  }}
+{{/if}}
