@@ -13,7 +13,7 @@
 @mixin ilios-overview-block () {
   @include fill-parent;
   display: block;
-  height: 2em;
+  min-height: 2em;
 
   @include media($large-screen) {
     @include span-columns(5);
