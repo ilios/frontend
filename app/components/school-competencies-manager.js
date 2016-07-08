@@ -7,7 +7,6 @@ export default Component.extend({
   competencies: [],
   sortCompetenciesBy: ['title'],
   sortedCompetencies: sort('competencies', 'sortCompetenciesBy'),
-  newDomainValue: null,
 
   domains: computed('competencies.[]', function(){
     let competencies = this.get('competencies');
@@ -26,13 +25,6 @@ export default Component.extend({
     return objs.sortBy('domain.title');
   }),
   actions: {
-    createNewDomain(){
-      let value = this.get('newDomainValue');
-      if (isPresent(value)) {
-        this.attrs.add(value);
-        this.set('newDomainValue', null);
-      }
-    },
     createNewCompetencyFromButton(e){
       let domainId = parseInt(e.target.value);
       let value = this.$(e.target).parent().find('input').val();

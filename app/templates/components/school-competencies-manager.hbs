@@ -25,12 +25,4 @@
   </div>
 {{/each}}
 
-<div>
-  <label>{{t 'schools.newDomain'}}</label>
-  {{one-way-input
-    value=newDomainValue
-    update=(action (mut newDomainValue))
-    onenter=(action 'createNewDomain')
-  }}
-  <button class='save text' {{action 'createNewDomain'}}>{{t 'general.add'}}</button>
-</div>
+{{new-domain add=add}}
