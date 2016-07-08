@@ -117,25 +117,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     let startDate = moment().year(selectedYear).isoWeek(week).day(day).toDate();
     this.setProperties({startDate});
   }).restartable(),
-
-  minDate: computed('selectedYear', function(){
-    const selectedYear = this.get('selectedYear');
-    let today = moment();
-    if (isPresent(selectedYear)) {
-      today.year(selectedYear);
-    }
-    return today.dayOfYear(1).toDate();
-  }),
-
-  maxDate: computed('selectedYear', function(){
-    const selectedYear = this.get('selectedYear');
-    let today = moment();
-    if (isPresent(selectedYear)) {
-      today.year(selectedYear+1);
-    }
-    return today.dayOfYear(365).toDate();
-  }),
-
+  
   /**
    * "disableDayFn" callback function pikaday.
    * @link https://github.com/dbushell/Pikaday#configuration
