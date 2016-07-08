@@ -1,12 +1,9 @@
 import Ember from 'ember';
 
-const { Component, computed, isPresent, isEmpty } = Ember;
-const { sort } = computed;
+const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   competencies: [],
-  sortCompetenciesBy: ['title'],
-  sortedCompetencies: sort('competencies', 'sortCompetenciesBy'),
 
   domains: computed('competencies.[]', function(){
     let competencies = this.get('competencies');
@@ -27,7 +24,6 @@ export default Component.extend({
   actions: {
     changeCompetencyTitle(value, competency){
       competency.set('title', value);
-      competency.save();
     }
   }
 });

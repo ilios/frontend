@@ -9,12 +9,11 @@ moduleForComponent('new-competency', 'Integration | Component | new competency',
 test('it renders', function(assert) {
   this.render(hbs`{{new-competency}}`);
 
-  assert.equal(this.$('label').text().trim(), 'New Domain');
   assert.equal(this.$('input').length, 1);
   assert.equal(this.$('button').text().trim(), 'Add');
 });
 
-test('add new co', function(assert) {
+test('save', function(assert) {
   assert.expect(1);
   this.set('add', (value) => {
     assert.equal(value, 'new co');

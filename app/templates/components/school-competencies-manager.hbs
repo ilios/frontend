@@ -1,13 +1,13 @@
 {{#each domains as |obj|}}
   <div class='hierarchical-list-manager'>
-    {{inplace-text tagName='h4' value=obj.domain.title save='changeCompetencyTitle' condition=obj.domain}}
+    {{competency-title-editor competency=obj.domain}}
     {{#if (eq obj.competencies.length 0)}}
        {{fa-icon 'trash' class='remove clickable' click=(action this.attrs.remove obj.domain)}}
     {{/if}}
     <ul>
       {{#each obj.competencies as |competency|}}
         <li>
-          {{inplace-text value=competency.title save='changeCompetencyTitle' condition=competency}}
+          {{competency-title-editor competency=competency}}
           {{#if (eq competency.objectives.length 0)}}
              {{fa-icon 'trash' class='remove clickable' click=(action this.attrs.remove competency)}}
           {{else}}
