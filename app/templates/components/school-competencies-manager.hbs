@@ -16,13 +16,11 @@
         </li>
       {{/each}}
       {{#if obj.domain.id}}
-        <div>
-          <input onkeyup={{action (action 'createNewCompetencyFromInput')}} />
-          <button class='save text' value={{obj.domain.id}} onclick={{action (action 'createNewCompetencyFromButton')}}>{{t 'general.add'}}</button>
-        </div>
+        {{new-competency add=(action add obj.domain)}}
       {{/if}}
     </ul>
   </div>
 {{/each}}
 
-{{new-domain add=add}}
+<h5>{{t 'schools.newDomain'}}</h5>
+{{new-competency add=(action add null)}}

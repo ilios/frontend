@@ -30,7 +30,7 @@ export default Component.extend({
         }
       });
     },
-    addCompetencyToBuffer(title, domain){
+    addCompetencyToBuffer(domain, title){
       let competency = this.get('store').createRecord('competency', {title});
       if (isPresent(domain)) {
         competency.set('parent', domain);

@@ -25,31 +25,6 @@ export default Component.extend({
     return objs.sortBy('domain.title');
   }),
   actions: {
-    createNewCompetencyFromButton(e){
-      let domainId = parseInt(e.target.value);
-      let value = this.$(e.target).parent().find('input').val();
-      let objs = this.get('domains');
-      let obj = objs.find(obj => parseInt(obj.domain.get('id')) === domainId);
-      let domain = obj.domain;
-      if (isPresent(value) && isPresent(domain)) {
-        this.attrs.add(value, domain);
-      }
-
-    },
-    createNewCompetencyFromInput(e){
-      if (e.keyCode === 13) {
-        let value = e.target.value;
-        let domainId = parseInt(this.$(e.target).parent().find('button').val());
-
-        let objs = this.get('domains');
-        let obj = objs.find(obj => parseInt(obj.domain.get('id')) === domainId);
-        let domain = obj.domain;
-        if (isPresent(value) && isPresent(domain)) {
-          this.attrs.add(value, domain);
-        }
-      }
-
-    },
     changeCompetencyTitle(value, competency){
       competency.set('title', value);
       competency.save();
