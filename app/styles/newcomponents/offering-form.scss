@@ -31,7 +31,9 @@
 
   .end-date-time .text {
     color: $darker-grey;
+    font-size: 1.2 * $base-font-size;
     font-style: italic;
+    font-weight: bold;
   }
 
   .make-recurring {
