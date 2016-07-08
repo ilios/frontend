@@ -681,3 +681,15 @@ test('add new learnergroup with full cohort', function(assert) {
     assert.equal(getCellData(0, 1), 5, 'member count is correct');
   });
 });
+
+test('no add button when there is no cohort', function(assert) {
+  server.create('user', {id: 4136});
+  server.create('school');
+  visit('/learnergroups');
+  const expandNewButton = '.actions .expand-button';
+
+  andThen(function() {
+    assert.equal(currentPath(), 'learnerGroups');
+    assert.equal(find(expandNewButton).length, 0);
+  });
+});
