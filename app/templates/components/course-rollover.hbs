@@ -51,7 +51,7 @@
         {{pikaday-input
           size=10
           value=startDate
-          minDate=startDate
+          minDate=course.startDate
           format='YYYY-MM-DD'
           onSelection=(action (mut startDate))
           options=(hash disableDayFn=disableDayFn course=course)
