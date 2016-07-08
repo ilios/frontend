@@ -13,7 +13,7 @@
   <div class='hours'>
     {{one-way-input
       value=durationHours
-      update=(action 'updateDurationHours')
+      update=(perform updateDurationHours)
       focusOut=(action 'addErrorDisplayFor' 'durationHours')
       keyUp=(action 'addErrorDisplayFor' 'durationHours')
       class=(if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours')) 'has-error')
@@ -26,7 +26,7 @@
   <div class='minutes'>
     {{one-way-input
       value=durationMinutes
-      update=(action 'updateDurationMinutes')
+      update=(perform updateDurationMinutes)
       focusOut=(action 'addErrorDisplayFor' 'durationMinutes')
       keyUp=(action 'addErrorDisplayFor' 'durationMinutes')
       class=(if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes')) 'has-error')

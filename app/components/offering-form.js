@@ -175,13 +175,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return diffInHours;
   }),
   durationMinutes: computed('startDate', 'endDate', function(){
-    const startDate = moment(this.get('startDate'));
-    let endDate = moment(this.get('endDate'));
-    //remove any different in hours
-    endDate.hour(startDate.hour());
-    let diffInMinutes = endDate.diff(startDate, 'minutes');
+    let startDate = moment(this.get('startDate'));
+    const endDate = moment(this.get('endDate'));
+    const endHour = endDate.hour();
+    const endMinute = endDate.minute();
 
-    return diffInMinutes;
+    startDate.hour(endHour);
+    const startMinute = startDate.minute();
+
+    return endMinute - startMinute;
   }),
   makeRecurringOfferingObjects: task(function * () {
     const {
@@ -288,6 +290,32 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }).then(lowestLeaves => resolve(lowestLeaves));
     });
   }),
+  updateDurationMinutes: task(function * (minutes) {
+    let {validations} = yield this.validate();
+    this.send('addErrorDisplayFor', 'durationMinutes');
+
+    if (validations.get('durationMinutes.isInvalid')) {
+      return;
+    }
+    const hours = this.get('durationHours');
+    const startDate = moment(this.get('startDate'));
+    let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
+    yield timeout(250);
+    this.set('endDate', endDate);
+  }).restartable(),
+  updateDurationHours: task(function * (hours) {
+    let {validations} = yield this.validate();
+    this.send('addErrorDisplayFor', 'durationHours');
+
+    if (validations.get('durationHours.isInvalid')) {
+      return;
+    }
+    const minutes = this.get('durationMinutes');
+    const startDate = moment(this.get('startDate'));
+    let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
+    yield timeout(250);
+    this.set('endDate', endDate);
+  }).restartable(),
   actions: {
     addLearnerGroup: function(learnerGroup){
       let learnerGroups = this.get('learnerGroups').toArray();
@@ -350,18 +378,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       let endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
 
       this.setProperties({startDate, endDate});
-    },
-    updateDurationHours(hours){
-      const minutes = this.get('durationMinutes');
-      const startDate = moment(this.get('startDate'));
-      let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
-      this.set('endDate', endDate);
-    },
-    updateDurationMinutes(minutes){
-      const hours = this.get('durationHours');
-      const startDate = moment(this.get('startDate'));
-      let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
-      this.set('endDate', endDate);
     },
   }
 });
