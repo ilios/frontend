@@ -16,15 +16,13 @@ test('it renders', function(assert) {
   assert.equal(this.$('input[type=search]').length, 1);
 });
 
-test('clicking search focus input and calls search', function(assert) {
+test('clicking search calls search', function(assert) {
   this.on('search', function(value){
     assert.equal(value, '');
   });
   this.render(hbs`{{search-box search=(action 'search')}}`);
-  run(() => {
-    this.$('span').click();
-    assert.ok(this.$('input').is(":focus"));
-  });
+  const searchBoxIcon = '.search-icon';
+  this.$(searchBoxIcon).click();
 });
 
 test('typing calls search', function(assert) {
