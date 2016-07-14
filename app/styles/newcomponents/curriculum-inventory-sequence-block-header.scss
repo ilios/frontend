@@ -11,22 +11,9 @@
   .title {
     @include fill-parent;
 
-    @include media($large-screen) {
-      @include span-columns(12 of 12);
-    }
-
     .editable,
     h4 {
-      display: block;
-      font-size: 1.5 * $base-font-size;
-
-      @include media($large-screen) {
-        display: inline;
-      }
-    }
-
-    h4 {
-      @include ilios-heading;
+      @include ilios-heading-h4;
     }
   }
 }
