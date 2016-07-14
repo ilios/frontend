@@ -12,7 +12,7 @@ export default Component.extend({
     }
     let domains = competencies.filterBy('isDomain');
     let objs = domains.uniq().map(domain => {
-      let domainCompetencies = competencies.filter(competency => competency.get('parent.id') === domain.get('id'));
+      let domainCompetencies = competencies.filter(competency => competency.belongsTo('parent').id() === domain.get('id'));
       return {
         domain,
         competencies: domainCompetencies.sortBy('title')
