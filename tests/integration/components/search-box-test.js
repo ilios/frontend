@@ -23,6 +23,8 @@ test('clicking search calls search', function(assert) {
   this.render(hbs`{{search-box search=(action 'search')}}`);
   const searchBoxIcon = '.search-icon';
   this.$(searchBoxIcon).click();
+  
+  return wait();
 });
 
 test('typing calls search', function(assert) {
