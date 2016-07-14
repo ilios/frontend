@@ -30,7 +30,7 @@ export default Component.extend({
         }
       });
     },
-    addCompetencyToBuffer(title, domain){
+    addCompetencyToBuffer(domain, title){
       let competency = this.get('store').createRecord('competency', {title});
       if (isPresent(domain)) {
         competency.set('parent', domain);
@@ -68,8 +68,8 @@ export default Component.extend({
         });
         bufferedCompetencies.filterBy('isNew').forEach(competency => {
           competency.set('school', school);
-          promises.pushObject(competency.save());
         });
+        promises.pushObjects(bufferedCompetencies.filterBy('hasDirtyAttributes').invoke('save'));
         schoolCompetencies.clear();
         bufferedCompetencies.forEach(competency=>{
           schoolCompetencies.pushObject(competency);
