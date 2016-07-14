@@ -1,0 +1,31 @@
+.curriculum-inventory-sequence-block-overview {
+  @include ilios-overview($ilios-orange);
+  @include fill-parent;
+  border-bottom: 1px dotted $ilios-orange;
+  display: block;
+
+  .title {
+    @include ilios-overview-title;
+  }
+
+  .block {
+    @include ilios-overview-block;
+  }
+
+  .curriculum-inventory-sequence-block-overview-content {
+    @include ilios-overview-content;
+  }
+
+  .course {
+    @include span-columns(10);
+    .details {
+      font-size: smaller;
+      padding-left: 1em;
+    }
+  }
+
+  .description {
+    @include span-columns(10);
+    margin-bottom: 2em;
+  }
+}

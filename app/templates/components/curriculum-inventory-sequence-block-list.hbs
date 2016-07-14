@@ -1,0 +1,91 @@
+<section class='detail-block'>
+  <div class='detail-title'>
+    {{t 'curriculumInventory.sequenceBlocks'}} ({{sortedBlocks.length}})
+  </div>
+
+  <div class='detail-actions'>
+    <!-- commented out until this button is backed by functionality. [ST 2016/07/07]
+    {{expand-collapse-button value=editorOn action="toggleEditor"}}
+    -->
+  </div>
+  <section class='resultslist'>
+    {{#liquid-if editorOn class='vertical'}}
+      {{new-curriculum-inventory-sequence-block parent=parent save='save' cancel='cancel'}}
+    {{/liquid-if}}
+
+    {{#if saved}}
+      <div class='saved-result'>
+        {{#link-to 'curriculumInventorySequenceBlock' savedBlocks}}
+          {{fa-icon 'external-link-square'}} {{savedBlocks.title}}
+        {{/link-to}}
+        {{t 'general.savedSuccessfully'}}
+      </div>
+    {{/if}}
+    {{#if (is-fulfilled sortedBlocks)}}
+      {{#if sortedBlocks.length}}
+        <div class='resultslist-list'>
+          <table>
+            <thead>
+            <tr>
+              <th class='text-center' colspan=5>{{t 'curriculumInventory.sequenceBlock'}}</th>
+              <th class='text-center' colspan=2>{{t 'curriculumInventory.academicLevel'}}</th>
+              <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
+              <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
+              <th class='text-center' colspan=2>{{t 'general.course'}}</th>
+              <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each sortedBlocks as |block|}}
+              <tr class="{{if block.showRemoveConfirmation 'confirm-removal'}}">
+                <td class='text-left' colspan=5>
+                  {{#link-to 'curriculumInventorySequenceBlock' block}}
+                    {{block.title}}
+                  {{/link-to}}
+                </td>
+                <td class='text-center' colspan=2>{{block.academicLevel.level}}</td>
+                <td class='text-center' colspan=2>{{moment-format block.startDate 'MM/DD/YY'}}</td>
+                <td class='text-center' colspan=2>{{moment-format block.endDate 'MM/DD/YY'}}</td>
+                <td class='text-center' colspan=2>{{block.course.title}}</td>
+                <td class='text-center' colspan=1>
+                  {{#if block.isFinalized}}
+                    {{#link-to 'curriculumInventorySequenceBlock' block class='edit'}}
+                      {{fa-icon 'eye'}}
+                    {{/link-to}}
+                  {{ else }}
+                    {{#link-to 'curriculumInventorySequenceBlock' block class='edit'}}
+                      {{fa-icon 'edit'}}
+                    {{/link-to}}
+                    <span class='clickable remove' {{action 'confirmRemove' block.content}}>{{fa-icon 'trash'}}</span>
+                  {{/if}}
+                </td>
+              </tr>
+              {{#if block.showRemoveConfirmation}}
+                <tr class='confirm-removal'>
+                  <td colspan=16>
+                    <div class='confirm-message'>
+                      {{t 'curriculumInventory.reportConfirmRemove'}} <br/>
+                      <div class="confirm-buttons">
+                        <button {{action 'remove' block.content}} class='remove text'>{{t 'general.yes'}}</button>
+                        <button {{action 'cancelRemove' block.content}} class='done text'>{{t 'general.cancel'}}</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              {{/if}}
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{else}}
+        {{#if parent}}
+          <span class="default-message">{{t 'curriculumInventory.noSubSequenceBlocks'}}</span>
+        {{else}}
+          <span class="default-message">{{t 'curriculumInventory.noSequenceBlocks'}}</span>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <div>{{fa-icon 'spinner' spin=true}}</div>
+    {{/if}}
+  </section>
+</section>

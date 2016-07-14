@@ -1,0 +1,27 @@
+<div class='title'>
+  {{#if isFinalized}}
+    <h2>{{fa-icon "lock"}} {{sequenceBlock.title}}</h2>
+  {{else}}
+    {{#editable-field
+      tagName='h2'
+      value=blockTitle
+      save=(action 'changeTitle')
+      close=(action 'revertTitleChanges')
+      as |isSaving save close|
+    }}
+      {{one-way-input
+        value=blockTitle
+        update=(action (mut blockTitle))
+        onenter=save
+        onescape=close
+        disabled=isSaving
+        focusOut=(action 'addErrorDisplayFor' 'blockTitle')
+        keyPress=(action 'addErrorDisplayFor' 'blockTitle')
+      }}
+      {{#if (and (v-get this 'blockTitle' 'isInvalid') (is-in showErrorsFor 'blockTitle'))}}
+        <span class="validation-error-message">{{v-get this 'blockTitle' 'message'}}</span>
+      {{/if}}
+    {{/editable-field}}
+  {{/if}}
+</div>
+
