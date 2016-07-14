@@ -28,7 +28,7 @@ export default DS.Model.extend({
     });
   }),
 
-  isFinalized: computed('report.export', function(){
+  isFinalized: computed('export', function(){
     return !! this.belongsTo('export').id();
   }),
 });
