@@ -6,19 +6,16 @@ moduleForComponent('new-offering', 'Integration | Component | new offering', {
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  this.set('nothing', parseInt);
+  this.set('today', new Date());
+  this.set('cohorts', []);
+  this.render(hbs`{{new-offering
+    session=session
+    cohorts=cohorts
+    courseStartDate=today
+    courseEndDate=today
+    close=(action nothing)
+  }}`);
 
-  this.render(hbs`{{new-offering}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#new-offering}}
-      template block text
-    {{/new-offering}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.title').text().trim(), 'New Offering');
 });

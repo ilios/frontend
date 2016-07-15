@@ -42,9 +42,12 @@ export default Component.extend({
     });
   }),
   lowestLeaves: computed('learnerGroups.[]', function(){
-    const learnerGroups = this.get('learnerGroups');
+    const learnerGroups = this.get('learnerGroups').toArray();
     const ids = learnerGroups.mapBy('id');
     return new Promise(resolve => {
+      if (isEmpty(learnerGroups)) {
+        return resolve([]);
+      }
       filter(learnerGroups, group => {
         return new Promise(resolve => {
           group.get('allDescendants').then(children => {

@@ -82,6 +82,13 @@ test('it renders', function(assert) {
     }
   });
 
+  tlg1.set('allDescendants', resolve([subGroup1, subSubGroup1]));
+  subGroup1.set('allDescendants', resolve([subSubGroup1]));
+  subSubGroup1.set('allDescendants', resolve([]));
+  tlg2.set('allDescendants', resolve([subGroup2]));
+  subGroup2.set('allDescendants', resolve([]));
+
+
   this.set('learnerGroups', [tlg1, subGroup1, subSubGroup1, subGroup2]);
 
   this.render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups}}`);
