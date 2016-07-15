@@ -41,7 +41,9 @@
 
   <div class='item end-date-time'>
     <label>{{t "general.end"}}:</label>
-    <div class='text'>{{moment-format endDate 'M/D/YYYY h:mm a'}}</div>
+    {{#if endDate}}
+      <div class='text'>{{moment-format endDate 'M/D/YYYY h:mm a'}}</div>
+    {{/if}}
   </div>
 
   {{#if showRoom}}
