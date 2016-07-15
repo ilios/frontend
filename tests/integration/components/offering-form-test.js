@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, test, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { RSVP } = Ember;
+const { RSVP, Object } = Ember;
 const { resolve } = RSVP;
 
 const nothing = ()=>{};
@@ -452,6 +452,47 @@ test('learnerGroup validation errors show up when saving', function(assert) {
   });
 });
 
-test('renders when an offering is send', function(assert) {
+test('renders when an offering is provided', function(assert) {
+  let offering = Object.create({
+    room: 'emerald bay',
+    startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
+    endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
+    learnerGroups: resolve([]),
+    instructors: resolve([]),
+    instructorGroups: resolve([]),
+  });
+
+  this.set('nothing', nothing);
+  this.set('offering', offering);
+  this.render(hbs`{{offering-form offering=offering close=(action nothing) showRoom=true showMakeRecurring=true showInstructors=true}}`);
+  const startDate = '.start-date input';
+  const room = '.room input';
+  const durationHours = '.offering-duration .hours input';
+  const durationMinutes = '.offering-duration .minutes input';
+
+  assert.equal(this.$(room).val(), 'emerald bay');
+  assert.equal(this.$(durationHours).val(), '1');
+  assert.equal(this.$(durationMinutes).val(), '0');
+
+  let interactor = openDatepicker(this.$(startDate));
+  assert.equal(
+    interactor.selectedYear(),
+    2005,
+    'Selected year initialized to offering start date year.'
+  );
+  assert.equal(
+    interactor.selectedMonth(),
+    '5',
+    'Selected month initialized to offering start date month.'
+  );
+  assert.equal(
+    interactor.selectedDay(),
+    '24',
+    'Selected day initialized to offering start date day.'
+  );
+});
+
+skip('renders when an offering is provided groups', function(assert) {
+  //we should check learnerGroups, instructorGroups, and instructors work with a passed offering
   assert.ok(false);
 });
