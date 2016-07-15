@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { moduleForComponent, test, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
 import wait from 'ember-test-helpers/wait';
@@ -490,9 +490,4 @@ test('renders when an offering is provided', function(assert) {
     '24',
     'Selected day initialized to offering start date day.'
   );
-});
-
-skip('renders when an offering is provided groups', function(assert) {
-  //we should check learnerGroups, instructorGroups, and instructors work with a passed offering
-  assert.ok(false);
 });
