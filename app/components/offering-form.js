@@ -65,7 +65,7 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
-  didUpdateAttrs(){
+  didReceiveAttrs(){
     this._super(...arguments);
     const offering = this.get('offering');
     if (isPresent(offering)) {
