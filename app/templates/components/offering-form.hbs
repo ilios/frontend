@@ -133,7 +133,7 @@
 {{/if}}
 
 <div class='buttons'>
-  <button class='done text' {{action (perform saveOffering)}} disabled={{saveOffering.isRunning}}>
+  <button class='done text' {{action (perform validateThenSaveOffering)}} disabled={{or saveOffering.isRunning}}>
     {{#if saveOffering.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}

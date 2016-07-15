@@ -25,8 +25,8 @@ export default Component.extend({
 
   }),
   actions: {
-    compareCohorts(cohort, cohortPromise){
-      return cohort === cohortPromise.get('content');
+    compareCohorts(cohort1, cohort2){
+      return cohort1.get('id') === cohort2.get('id');
     }
   }
 });

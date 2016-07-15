@@ -271,20 +271,23 @@ test('cancel remove offering', function(assert) {
   });
 });
 
-test('users can create a new offering or small groups (single and multi-day)', function(assert) {
-  assert.expect(23);
+test('users can create a new offering single day', function(assert) {
+  assert.expect(10);
 
+  const form = '.offering-form';
   const expandButton = '.session-offerings .expand-button';
-  const multiDayButton = '.session-offerings .single-multi-day .switch-label';
-  const offeringButton = '.session-offerings .second-button';
+  const offeringButton = '.session-offerings .click-choice-buttons button:eq(1)';
 
-  const startDateInput = '.offering-startdate-picker input';
-  const endDateInput = '.offering-enddate input';
-  const startTimes = '.starttime select';
-  const endTimes = '.endtime select';
+  const startDateInput = `${form} .start-date input`;
+  const startTimes = '.start-time select';
+  const durationHours = '.offering-duration .hours input';
+  const durationMinutes = '.offering-duration .minutes input';
   const location = '.room input';
-  const learnerGroupOne = '.selectable li:first';
-  const learnerGroupTwo = '.selectable li:last';
+
+  const availableLearnerGroups = '.available-learner-groups .tree-groups-list';
+  const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
+  const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+
   const searchBox = '.search-box:last input';
   const searchBoxOption = '.livesearch-user-name:first';
   const createButton = '.done';
@@ -295,8 +298,66 @@ test('users can create a new offering or small groups (single and multi-day)', f
   const endTime = '.offering-block-time-time-endtime:first';
   const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
   const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
-  const learnerGroup3 = '.offering-block-time-offering-learner_groups ul li:eq(2)';
-  const learnerGroup4 = '.offering-block-time-offering-learner_groups ul li:eq(3)';
+  const room = '.offering-block-time-offering-location:first';
+  const instructor = '.offering-block-time-offering-instructors ul li:eq(0)';
+
+  visit(url);
+  click(expandButton);
+  click(offeringButton);
+  andThen(() => {
+    let startDateInteractor = openDatepicker(find(startDateInput));
+    startDateInteractor.selectDate(new Date(2011, 8, 11));
+
+    let startBoxes = find(startTimes);
+    pickOption(startBoxes[0], '2', assert);
+    pickOption(startBoxes[1], '15', assert);
+
+  });
+
+  fillIn(durationHours, 15);
+  fillIn(durationMinutes, 15);
+  fillIn(location, 'Rm. 111');
+  click(learnerGroupOne);
+  click(learnerGroupTwo);
+  fillIn(searchBox, 'guy');
+  click(searchBoxOption);
+  click(createButton);
+  andThen(() => {
+    assert.equal(find(dayOfWeek).text(), 'Sunday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
+    assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
+    assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
+    assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
+  });
+});
+
+
+test('users can create a new offering multi-day', function(assert) {
+  assert.expect(9);
+
+  const form = '.offering-form';
+  const expandButton = '.session-offerings .expand-button';
+  const offeringButton = '.session-offerings .click-choice-buttons button:eq(1)';
+
+  const startDateInput = `${form} .start-date input`;
+  const startTimes = '.start-time select';
+  const durationHours = '.offering-duration .hours input';
+  const durationMinutes = '.offering-duration .minutes input';
+  const location = '.room input';
+
+  const availableLearnerGroups = '.available-learner-groups .tree-groups-list';
+  const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
+  const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+
+  const searchBox = '.search-box:last input';
+  const searchBoxOption = '.livesearch-user-name:first';
+  const createButton = '.done';
+
+  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
   const room = '.offering-block-time-offering-location:first';
   const instructor = '.offering-block-time-offering-instructors ul li:eq(0)';
 
@@ -308,22 +369,17 @@ test('users can create a new offering or small groups (single and multi-day)', f
   click(expandButton);
   click(offeringButton);
   andThen(() => {
-    let container = find('.session-offerings');
-
-    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    let startDateInteractor = openDatepicker(find(startDateInput));
     startDateInteractor.selectDate(new Date(2011, 8, 11));
 
-    let startBoxes = find(startTimes, container);
+    let startBoxes = find(startTimes);
     pickOption(startBoxes[0], '2', assert);
     pickOption(startBoxes[1], '15', assert);
 
-    let endBoxes = find(endTimes, container);
-    pickOption(endBoxes[0], '3', assert);
-    pickOption(endBoxes[1], '23', assert);
-    pickOption(endBoxes[2], 'pm', assert);
-
   });
 
+  fillIn(durationHours, 39);
+  fillIn(durationMinutes, 15);
   fillIn(location, 'Rm. 111');
   click(learnerGroupOne);
   click(learnerGroupTwo);
@@ -331,48 +387,67 @@ test('users can create a new offering or small groups (single and multi-day)', f
   click(searchBoxOption);
   click(createButton);
   andThen(() => {
-    assert.equal(find(dayOfWeek).text(), 'Sunday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
-    assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
-    assert.equal(find(endTime).text().trim(), 'Ends: 3:23 PM', 'end time is correct');
+    assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
+    assert.equal(find(multiDayStarts).text().trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
+    assert.equal(find(multiDayEnds).text().trim(), 'Ends Monday September 12th @ 5:30 PM', 'multi-day statement is correct');
     assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
     assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
     assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
     assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
   });
+});
 
+test('users can create a new small group offering', function(assert) {
+  assert.expect(8);
+
+  const form = '.offering-form';
+  const expandButton = '.session-offerings .expand-button';
+
+  const startDateInput = `${form} .start-date input`;
+  const startTimes = '.start-time select';
+  const durationHours = '.offering-duration .hours input';
+  const durationMinutes = '.offering-duration .minutes input';
+
+  const availableLearnerGroups = '.available-learner-groups .tree-groups-list';
+  const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
+  const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+
+  const createButton = '.done';
+
+  const dayOfWeek = '.offering-block-date-dayofweek:first';
+  const dayOfMonth = '.offering-block-date-dayofmonth:first';
+  const startTime = '.offering-block-time-time-starttime:first';
+  const endTime = '.offering-block-time-time-endtime:first';
+  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
+
+  visit(url);
   click(expandButton);
-  click(multiDayButton);
   andThen(() => {
-    let container = find('.session-offerings');
-
-    let startDateInteractor = openDatepicker(find(startDateInput, container));
+    let startDateInteractor = openDatepicker(find(startDateInput));
     startDateInteractor.selectDate(new Date(2011, 8, 11));
 
-    let endDateInteractor = openDatepicker(find(endDateInput, container));
-    endDateInteractor.selectDate(new Date(2011, 10, 11));
-
-    let startBoxes = find(startTimes, container);
+    let startBoxes = find(startTimes);
     pickOption(startBoxes[0], '2', assert);
     pickOption(startBoxes[1], '15', assert);
 
-    let endBoxes = find(endTimes, container);
-    pickOption(endBoxes[0], '3', assert);
-    pickOption(endBoxes[1], '23', assert);
-    pickOption(endBoxes[2], 'pm', assert);
   });
 
+  fillIn(durationHours, 15);
+  fillIn(durationMinutes, 15);
   click(learnerGroupOne);
   click(learnerGroupTwo);
   click(createButton);
   andThen(() => {
-    assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
-    assert.equal(find(multiDayStarts).text().trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
-    assert.equal(find(multiDayEnds).text().trim(), 'Ends Friday November 11th @ 3:23 PM', 'multi-day statement is correct');
-    assert.equal(find(learnerGroup3).text(), 'learner group 0', 'learner group is correct');
-    assert.equal(find(learnerGroup4).text(), 'learner group 1', 'learner group is correct');
+    assert.equal(find(dayOfWeek).text(), 'Sunday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
+    assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
+    assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
   });
 });
+
 
 test('users can edit existing offerings (single & multi-day)', function(assert) {
   assert.expect(27);

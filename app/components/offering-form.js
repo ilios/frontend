@@ -67,7 +67,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
   init(){
     this._super(...arguments);
-    this.set('cohorts', []);
     this.set('learnerGroups', []);
     this.set('recurringDays', []);
     this.set('instructors', []);
@@ -275,6 +274,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.send('clearErrorDisplay');
     this.get('close')();
 
+  }),
+  validateThenSaveOffering: task(function * () {
+    this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
+    let {validations} = yield this.validate();
+
+    if (validations.get('isInvalid')) {
+      return;
+    }
+
+    yield this.get('saveOffering').perform();
   }),
   lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups');

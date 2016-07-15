@@ -12,7 +12,11 @@ const { resolve } = RSVP;
 const nothing = ()=>{};
 
 moduleForComponent('offering-form', 'Integration | Component | offering form', {
-  integration: true
+  integration: true,
+  beforeEach(){
+    let modalDialogService = this.container.lookup('service:modal-dialog');
+    modalDialogService.destinationElementId = 'ember-testing';
+  }
 });
 
 test('room input does not show by default', function(assert) {
@@ -266,7 +270,7 @@ test('save not recurring', function(assert) {
   this.set('save', (startDate, endDate, room, learnerGroups, instructorGroups, instructors)=>{
     assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
     assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-    assert.equal(room, null);
+    assert.equal(room, 'TBD');
     assert.equal(learnerGroups.length, 0);
     assert.equal(instructorGroups.length, 0);
     assert.equal(instructors.length, 0);
@@ -413,9 +417,12 @@ test('changing duration changes end date', function(assert) {
   const format = 'M/D/YYYY h:mm a';
   assert.equal(moment().hour(9).minute(0).format(format), this.$(endDate).text().trim());
   this.$(durationHour).val('2').change();
-  this.$(durationMinute).val('15').change();
-
-  assert.equal(moment().hour(10).minute(15).format(format), this.$(endDate).text().trim());
+  return wait().then(()=>{
+    this.$(durationMinute).val('15').change();
+    return wait().then(()=>{
+      assert.equal(moment().hour(10).minute(15).format(format), this.$(endDate).text().trim());
+    });
+  });
 });
 
 test('learnerGroup validation errors do not show up initially', function(assert) {
@@ -436,16 +443,11 @@ test('learnerGroup validation errors show up when saving', function(assert) {
 
   const item = '.learner-groups';
   const error = `${item} .validation-error-message`;
+  const save = '.buttons .done';
+
+  this.$(save).click();
 
   return wait().then(()=>{
     assert.equal(this.$(error).length, 1);
   });
-});
-
-test('send only lowest leaf for single offering save', function(assert) {
-  assert.ok(false);
-});
-
-test('send only lowest leaf for small gropu save', function(assert) {
-  assert.ok(false);
 });
