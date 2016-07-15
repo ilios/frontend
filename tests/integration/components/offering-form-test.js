@@ -451,3 +451,7 @@ test('learnerGroup validation errors show up when saving', function(assert) {
     assert.equal(this.$(error).length, 1);
   });
 });
+
+test('renders when an offering is send', function(assert) {
+  assert.ok(false);
+});

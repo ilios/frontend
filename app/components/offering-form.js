@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 
 const { Component, inject, computed, RSVP, isPresent, isEmpty } = Ember;
 const { service } = inject;
-const { Promise, map, filter } = RSVP;
+const { Promise, map, filter, hash } = RSVP;
 
 const Validations = buildValidations({
   room: [
@@ -65,33 +65,14 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
-  init(){
-    this._super(...arguments);
-    this.set('learnerGroups', []);
-    this.set('recurringDays', []);
-    this.set('instructors', []);
-    this.set('instructorGroups', []);
-  },
-  didReceiveAttrs(){
+  didUpdateAttrs(){
     this._super(...arguments);
     const offering = this.get('offering');
-    let startDate = moment(this.get('defaultStartDate'));
-    let endDate = moment(this.get('defaultStartDate'));
     if (isPresent(offering)) {
-      const offeringStartDate = offering.get('startDate');
-      if (isPresent(offeringStartDate)) {
-        startDate = moment(offeringStartDate);
-      }
-      const offeringEndDate = offering.get('endDate');
-      if (isPresent(offeringEndDate)) {
-        endDate = moment(offeringEndDate);
-      }
+      this.get('loadAttrsFromOffering').perform(offering);
+    } else {
+      this.loadDefaultAttrs();
     }
-    startDate.hour(8).minute(0).second(0);
-    endDate.hour(9).minute(0).second(0);
-    startDate = startDate.toDate();
-    endDate = endDate.toDate();
-    this.setProperties({startDate, endDate});
   },
   classNames: ['offering-form'],
   startDate: null,
@@ -167,20 +148,33 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return defaultStartDate.toDate();
   }),
   durationHours: computed('startDate', 'endDate', function(){
-    const startDate = moment(this.get('startDate'));
-    const endDate = moment(this.get('endDate'));
-    let diffInHours = endDate.diff(startDate, 'hours');
+    const startDate = this.get('startDate');
+    const endDate = this.get('endDate');
+
+    if (isEmpty(startDate) || isEmpty(endDate)) {
+      return 1;
+    }
+    let mStart = moment(startDate);
+    let mEnd = moment(endDate);
+    let diffInHours = mEnd.diff(mStart, 'hours');
 
     return diffInHours;
   }),
   durationMinutes: computed('startDate', 'endDate', function(){
-    let startDate = moment(this.get('startDate'));
-    const endDate = moment(this.get('endDate'));
-    const endHour = endDate.hour();
-    const endMinute = endDate.minute();
+    const startDate = this.get('startDate');
+    const endDate = this.get('endDate');
 
-    startDate.hour(endHour);
-    const startMinute = startDate.minute();
+    if (isEmpty(startDate) || isEmpty(endDate)) {
+      return 0;
+    }
+    let mStart = moment(startDate);
+    let mEnd = moment(endDate);
+
+    const endHour = mEnd.hour();
+    const endMinute = mEnd.minute();
+
+    mStart.hour(endHour);
+    const startMinute = mStart.minute();
 
     return endMinute - startMinute;
   }),
@@ -211,9 +205,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     //only days AFTER the initial day are considered
     recurringDayInts.forEach(day => {
       if (day > userPickedDay) {
-        let startDate = moment(startDate).day(day).toDate();
-        let endDate = moment(endDate).day(day).toDate();
-        offerings.push({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+        let obj = {room, learnerGroups, instructorGroups, instructors};
+        obj.startDate = moment(startDate).day(day).toDate();
+        obj.endDate = moment(endDate).day(day).toDate();
+
+        offerings.push(obj);
       }
     });
     recurringDayInts.pushObject(userPickedDay);
@@ -221,9 +217,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     for (let i = 1; i < numberOfWeeks; i++) {
       recurringDayInts.forEach(day => {
-        let startDate = moment(startDate).day(day).add(i, 'weeks').toDate();
-        let endDate = moment(endDate).day(day).add(i, 'weeks').toDate();
-        offerings.push({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+        let obj = {room, learnerGroups, instructorGroups, instructors};
+        obj.startDate = moment(startDate).day(day).add(i, 'weeks').toDate();
+        obj.endDate = moment(endDate).day(day).add(i, 'weeks').toDate();
+
+        offerings.push(obj);
       });
     }
 
@@ -248,6 +246,36 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     return smallGroupOfferings;
   },
+
+
+  loadDefaultAttrs(){
+    let startDate = moment(this.get('defaultStartDate')).hour(8).minute(0).second(0).toDate();
+    let endDate = moment(this.get('defaultStartDate')).hour(9).minute(0).second(0).toDate();
+    const room = 'TBD';
+    const learnerGroups = [];
+    const recurringDays = [];
+    const instructors = [];
+    const instructorGroups = [];
+
+    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups});
+  },
+
+  loadAttrsFromOffering: task(function * (offering) {
+    const startDate = offering.get('startDate');
+    const endDate = offering.get('endDate');
+    const room = offering.get('room');
+    const recurringDays = [];
+    let obj = yield hash({
+      learnerGroups : offering.get('learnerGroups'),
+      instructors : offering.get('instructors'),
+      instructorGroups : offering.get('instructorGroups'),
+    });
+    const learnerGroups = obj.learnerGroups.toArray();
+    const instructors = obj.instructors.toArray();
+    const instructorGroups = obj.instructorGroups.toArray();
+
+    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups});
+  }),
   saveOffering: task(function * () {
     this.set('offeringsToSave', 0);
     this.set('savedOfferings', 0);
@@ -353,16 +381,28 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }
     },
     addInstructor(user){
-      let instructors = this.get('instructors');
-      if (!instructors.contains(user)) {
-        instructors.pushObject(user);
-      }
+      let instructors = this.get('instructors').toArray();
+      instructors.addObject(user);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructors', instructors);
     },
     addInstructorGroup(group){
-      let instructorGroups = this.get('instructorGroups');
-      if (!instructorGroups.contains(group)) {
-        instructorGroups.pushObject(group);
-      }
+      let instructorGroups = this.get('instructorGroups').toArray();
+      instructorGroups.addObject(group);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructorGroups', instructorGroups);
+    },
+    removeInstructor(user){
+      let instructors = this.get('instructors').toArray();
+      instructors.removeObject(user);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructors', instructors);
+    },
+    removeInstructorGroup(group){
+      let instructorGroups = this.get('instructorGroups').toArray();
+      instructorGroups.removeObject(group);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructorGroups', instructorGroups);
     },
     updateStartTime(value, type) {
       let startDate = moment(this.get('startDate'));
