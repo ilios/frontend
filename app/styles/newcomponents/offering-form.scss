@@ -26,6 +26,7 @@
     .hours,
     .minutes {
       display: inline-block;
+      padding-right: 1em;
     }
   }
 
@@ -60,10 +61,19 @@
 
     .make-recurring-input-container {
       @include fill-parent;
+      clear: left;
+      padding-top: .5em;
+
       input {
         float: left;
         min-width: 3em;
         width: 3em;
+      }
+
+      label {
+        display: inline-block;
+        margin: .5em 0 0 .5em;
+        width: 5em;
       }
     }
   }
