@@ -288,7 +288,7 @@ test('users can create a new offering single day', function(assert) {
   const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
   const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
 
-  const searchBox = '.search-box:last input';
+  const searchBox = '.instructors input';
   const searchBoxOption = '.livesearch-user-name:first';
   const createButton = '.done';
 
@@ -352,7 +352,7 @@ test('users can create a new offering multi-day', function(assert) {
   const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
   const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
 
-  const searchBox = `${form} .search-box:last input`;
+  const searchBox = `${form} .instructors input`;
   const searchBoxOption = `${form} .livesearch-user-name:first`;
   const createButton = `${form} .done`;
 
