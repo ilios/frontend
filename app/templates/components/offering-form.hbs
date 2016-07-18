@@ -46,21 +46,6 @@
     {{/if}}
   </div>
 
-  {{#if showRoom}}
-    <div class='item room'>
-      <label>{{t "general.location"}}:</label>
-      {{one-way-input
-        value=room
-        update=(action (mut room))
-        keyUp=(action 'addErrorDisplayFor' 'room')
-        focusOut=(action 'addErrorDisplayFor' 'room')
-      }}
-      {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
-        <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
-      {{/if}}
-    </div>
-  {{/if}}
-
   {{#if showMakeRecurring}}
     <div class='item make-recurring'>
       {{toggle-onoff
@@ -102,6 +87,21 @@
     </div>
   {{/if}}
 
+  {{#if showRoom}}
+    <div class='item room'>
+      <label>{{t "general.location"}}:</label>
+      {{one-way-input
+        value=room
+        update=(action (mut room))
+        keyUp=(action 'addErrorDisplayFor' 'room')
+        focusOut=(action 'addErrorDisplayFor' 'room')
+      }}
+      {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
+        <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
+      {{/if}}
+    </div>
+  {{/if}}
+  
   <div class='learner-groups'>
     <label>{{t 'general.learnerGroups'}}:</label>
     {{#if cohorts.length}}
