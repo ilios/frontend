@@ -3,6 +3,7 @@
   {{curriculum-inventory-sequence-block-list
     report=(await model.report)
     parent=model
+    remove='removeChildSequenceBlock'
     sequenceBlocks=(await model.children)
   }}
 {{/if}}

@@ -7,6 +7,7 @@
     {{#if (is-fulfilled model.topLevelSequenceBlocks)}}
       {{curriculum-inventory-sequence-block-list
         report=model
+        remove='removeSequenceBlock'
         sequenceBlocks=(await model.topLevelSequenceBlocks)
       }}
     {{/if}}
