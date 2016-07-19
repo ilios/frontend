@@ -56,18 +56,18 @@
                     {{#link-to 'curriculumInventorySequenceBlock' block class='edit'}}
                       {{fa-icon 'edit'}}
                     {{/link-to}}
-                    <span class='clickable remove' {{action 'confirmRemove' block.content}}>{{fa-icon 'trash'}}</span>
+                    <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
                   {{/if}}
                 </td>
               </tr>
               {{#if block.showRemoveConfirmation}}
                 <tr class='confirm-removal'>
-                  <td colspan=16>
+                  <td colspan=14>
                     <div class='confirm-message'>
-                      {{t 'curriculumInventory.reportConfirmRemove'}} <br/>
+                      {{t 'curriculumInventory.sequenceBlockConfirmRemove'}} <br/>
                       <div class="confirm-buttons">
-                        <button {{action 'remove' block.content}} class='remove text'>{{t 'general.yes'}}</button>
-                        <button {{action 'cancelRemove' block.content}} class='done text'>{{t 'general.cancel'}}</button>
+                        <button {{action 'remove' block}} class='remove text'>{{t 'general.yes'}}</button>
+                        <button {{action 'cancelRemove' block}} class='done text'>{{t 'general.cancel'}}</button>
                       </div>
                     </div>
                   </td>
