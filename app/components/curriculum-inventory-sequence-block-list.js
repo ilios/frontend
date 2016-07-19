@@ -55,7 +55,6 @@ export default Component.extend({
             let sortedProxies = blockProxies.sortBy('level', 'startDate', 'title', 'id');
             let sortedBlocks = [];
             sortedProxies.forEach(sortedProxy => {
-              console.log(sortedProxy.get('content'));
               sortedBlocks.pushObject(SequenceBlockProxy.create({
                 content: sortedProxy.get('content')
               }));
