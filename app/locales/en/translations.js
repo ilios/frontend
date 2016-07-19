@@ -638,5 +638,6 @@ export default {
     'required': 'Required',
     'optional': 'Optional',
     'requiredInTrack': 'Required In Track',
+    'sequenceBlockConfirmRemove': 'Are you sure you want to delete this sequence block? This action cannot be undone.',
   }
 };
