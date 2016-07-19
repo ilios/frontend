@@ -28,7 +28,13 @@ export default Component.extend({
     const sequenceBlocks = this.get('sequenceBlocks');
     let defer = RSVP.defer();
     if (isPresent(parent) && 1 === parent.get('childSequenceOrder')) {
-      defer.resolve(sequenceBlocks.sortBy('orderInSequence', 'title', 'id'));
+      let sortedBlocks = [];
+      sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
+        sortedBlocks.pushObject(SequenceBlockProxy.create({
+          content: block
+        }));
+      });
+      defer.resolve(sortedBlocks);
     } else {
       let promises = [];
       let blockProxies = [];
@@ -49,6 +55,7 @@ export default Component.extend({
             let sortedProxies = blockProxies.sortBy('level', 'startDate', 'title', 'id');
             let sortedBlocks = [];
             sortedProxies.forEach(sortedProxy => {
+              console.log(sortedProxy.get('content'));
               sortedBlocks.pushObject(SequenceBlockProxy.create({
                 content: sortedProxy.get('content')
               }));
@@ -61,5 +68,17 @@ export default Component.extend({
     return PromiseArray.create({
       promise: defer.promise
     });
-  })
+  }),
+
+  actions: {
+    remove: function(proxy){
+      this.sendAction('remove', proxy.get('content'));
+    },
+    cancelRemove: function(proxy){
+      proxy.set('showRemoveConfirmation', false);
+    },
+    confirmRemove: function(proxy){
+      proxy.set('showRemoveConfirmation', true);
+    },
+  }
 });
