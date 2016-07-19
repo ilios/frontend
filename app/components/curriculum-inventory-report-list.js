@@ -10,7 +10,7 @@ const ReportProxy = ObjectProxy.extend({
   showRemoveConfirmation: false,
   i18n: null,
   isPublished: alias('isFinalized'),
-  isSchedules: false,
+  isScheduled: false,
   isNotPublished: not('isPublished'),
 });
 
