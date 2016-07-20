@@ -5,7 +5,10 @@ const { Controller } = Ember;
 export default Controller.extend({
   actions: {
     removeChildSequenceBlock(block) {
-      return block.destroyRecord();
+      let parent = this.get('model');
+      block.destroyRecord().then(() => {
+        parent.reload();
+      });
     },
   }
 });
