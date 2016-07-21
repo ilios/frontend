@@ -10,18 +10,30 @@
     <label>{{t "general.required"}}:</label>
     <span>
       {{if
-        sequenceBlock.isRequired (t 'curriculumInventory.required')
-        (if sequenceBlock.isOptional (t 'curriculumInventory.optional') (t 'curriculumInventory.requiredInTrack'))
+        sequenceBlock.isRequired (t 'general.yes')
+        (if sequenceBlock.isOptional (t 'general.no') (t 'curriculumInventory.requiredInTrack'))
       }}
     </span>
   </div>
   <div class="block">
     <label>{{t "general.start"}}:</label>
-    <span>{{moment-format sequenceBlock.startDate 'MM/DD/YY'}}</span>
+    <span>
+      {{#if sequenceBlock.startDate}}
+        {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+      {{else}}
+        {{t 'general.notApplicableAbbr'}}
+      {{/if}}
+    </span>
   </div>
   <div class="block">
     <label>{{t "general.end"}}:</label>
-    <span>{{moment-format sequenceBlock.endDate 'MM/DD/YY'}}</span>
+    <span>
+      {{#if sequenceBlock.endDate}}
+        {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+      {{else}}
+        {{t 'general.notApplicableAbbr'}}
+      {{/if}}
+    </span>
   </div>
   <div class="block">
     <label>{{t "curriculumInventory.durationInDays"}}:</label>
@@ -33,7 +45,13 @@
   </div>
   <div class="block">
     <label>{{t "curriculumInventory.orderInSequence"}}:</label>
-    <span>{{#if sequenceBlock.parent.isOrdered}}{{sequenceBlock.orderInSequence}}{{/if}}</span>
+      <span>
+        {{#if sequenceBlock.parent.isOrdered}}
+          {{sequenceBlock.orderInSequence}}
+        {{else}}
+          {{t 'general.notApplicableAbbr'}}
+        {{/if}}
+      </span>
   </div>
   <div class="block">
     <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
@@ -57,6 +75,8 @@
              {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
           {{/if}}
         </span>
+      {{else}}
+        {{t 'general.notApplicableAbbr'}}
       {{/if}}
     </span>
   </div>

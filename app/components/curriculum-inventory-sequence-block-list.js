@@ -16,6 +16,12 @@ export default Component.extend({
   report: null,
   sequenceBlocks: null,
 
+  editorOn: false,
+
+  saved: false,
+  savedBlock: null,
+  isSaving: null,
+
   init() {
     this._super(...arguments);
     this.set('sequenceBlocks', []);
@@ -78,6 +84,34 @@ export default Component.extend({
     },
     confirmRemove: function(proxy){
       proxy.set('showRemoveConfirmation', true);
+    },
+    toggleEditor() {
+      if (this.get('editorOn')) {
+        this.set('editorOn', false);
+      } else {
+        this.setProperties({ editorOn: true, saved: false });
+      }
+    },
+    cancel() {
+      this.set('editorOn', false);
+    },
+    save(block) {
+      this.set('isSaving', true);
+      const report = this.get('report');
+      const parent = this.get('parent');
+      block.set('report', report);
+      return block.save().then((savedBlock) => {
+        if (! this.get('isDestroyed')) {
+          this.setProperties({saved: true, savedBlock, isSaving: false});
+        }
+        report.reload().then(() => {
+          if (isPresent(parent)) {
+            parent.get('children').then(children => {
+              children.invoke('reload');
+            });
+          }
+        });
+      });
     },
   }
 });

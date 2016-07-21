@@ -4,23 +4,27 @@
   </div>
 
   <div class='detail-actions'>
-    <!-- commented out until this button is backed by functionality. [ST 2016/07/07]
     {{expand-collapse-button value=editorOn action="toggleEditor"}}
-    -->
   </div>
   <section class='resultslist'>
-    {{#liquid-if editorOn class='vertical'}}
-      {{new-curriculum-inventory-sequence-block parent=parent save='save' cancel='cancel'}}
-    {{/liquid-if}}
-
-    {{#if saved}}
-      <div class='saved-result'>
-        {{#link-to 'curriculumInventorySequenceBlock' savedBlocks}}
-          {{fa-icon 'external-link-square'}} {{savedBlocks.title}}
-        {{/link-to}}
-        {{t 'general.savedSuccessfully'}}
-      </div>
-    {{/if}}
+      <section class='resultslist-new'>
+        {{#liquid-if editorOn class='vertical'}}
+          {{new-curriculum-inventory-sequence-block
+            parent=parent
+            report=report
+            save=(action 'save')
+            cancel=(action 'cancel')
+          }}
+        {{/liquid-if}}
+        {{#if saved}}
+          <div class='saved-result'>
+            {{#link-to 'curriculumInventorySequenceBlock' savedBlocks}}
+              {{fa-icon 'external-link-square'}} {{savedBlocks.title}}
+            {{/link-to}}
+            {{t 'general.savedSuccessfully'}}
+          </div>
+        {{/if}}
+      </section>
     {{#if (is-fulfilled sortedBlocks)}}
       {{#if sortedBlocks.length}}
         <div class='resultslist-list'>
@@ -44,9 +48,27 @@
                   {{/link-to}}
                 </td>
                 <td class='text-center' colspan=2>{{block.academicLevel.level}}</td>
-                <td class='text-center' colspan=2>{{moment-format block.startDate 'MM/DD/YY'}}</td>
-                <td class='text-center' colspan=2>{{moment-format block.endDate 'MM/DD/YY'}}</td>
-                <td class='text-center' colspan=2>{{block.course.title}}</td>
+                <td class='text-center' colspan=2>
+                  {{#if block.startDate}}
+                    {{moment-format block.startDate 'MM/DD/YY'}}
+                  {{else}}
+                      {{t 'general.notApplicableAbbr'}}
+                  {{/if}}
+                </td>
+                <td class='text-center' colspan=2>
+                  {{#if block.endDate}}
+                    {{moment-format block.endDate 'MM/DD/YY'}}
+                  {{else}}
+                    {{t 'general.notApplicableAbbr'}}
+                  {{/if}}
+                </td>
+                <td class='text-center' colspan=2>
+                  {{#if block.course}}
+                    {{block.course.title}}
+                  {{else}}
+                      {{t 'general.notApplicableAbbr'}}
+                  {{/if}}
+                </td>
                 <td class='text-center' colspan=1>
                   {{#if block.isFinalized}}
                     {{#link-to 'curriculumInventorySequenceBlock' block class='edit'}}

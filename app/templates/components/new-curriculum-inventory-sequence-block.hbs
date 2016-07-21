@@ -1,0 +1,101 @@
+<div class="new-result-title">{{t 'curriculumInventory.newSequenceBlock'}}</div>
+{{#unless loadAttr.isRunning}}
+  <div class="item title">
+    <label>{{t 'general.title'}}:</label>
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=(action 'save')
+      onescape=(action 'cancel')
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      keyDown=(action 'addErrorDisplayFor' 'title')
+      placeholder=(t 'curriculumInventory.sequenceBlockTitlePlaceholder')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  </div>
+    
+  <div class="item description">
+    <label>{{t 'general.description'}}:</label>
+    {{one-way-textarea
+      value=description
+      update=(action (mut description))
+      disabled=isSaving
+      placeholder=(t 'curriculumInventory.sequenceBlockDescriptionPlaceholder')
+    
+    }}
+  </div>
+    
+  <div class="item required">
+      <label>{{t "general.required"}} ?</label>
+      {{inplace-boolean value=required save='changeRequired'}}
+  </div>
+    
+  <div class="item track">
+      <label>{{t "curriculumInventory.isTrack"}} ?</label>
+      {{inplace-boolean value=track save='changeTrack'}}
+  </div>
+    
+  <div class='item start-date'>
+      <label>{{t "general.startDate"}}:</label>
+      {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
+  </div>
+    
+  <div class='item end-date'>
+      <label>{{t "general.endDate"}}:</label>
+      {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
+  </div>
+    
+  <div class="item clear-dates">
+      <button {{action 'clearDates'}}>{{t 'curriculumInventory.clearDates'}}</button>
+  </div>
+    
+  <div class="item duration">
+      <label>{{t 'general.duration'}}:</label>
+      {{one-way-input
+      value=duration
+      update=(action (mut duration))
+      onenter=(action 'save')
+      onescape=(action 'cancel')
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'duration')
+      keyDown=(action 'addErrorDisplayFor' 'duration')
+      }}
+      {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
+          <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
+      {{/if}}
+  </div>
+
+  <div class="item academic-level">
+      <label>{{t "curriculumInventory.academicLevels"}}:</label>
+      {{one-way-select
+      value=academicLevel
+      options=(sort-by 'level' (await academicLevels))
+      optionValuePath='id'
+      optionLabelPath='name'
+      update=(action (mut academicLevel))
+      }}
+  </div>
+  {{#if isInOrderedSequence}}
+    <div class="item academic-level">
+      <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+      {{one-way-select
+        value=orderInSequence
+        options=orderInSequenceOptions
+        update=(action (mut orderInSequence))
+      }}
+    </div>
+  {{/if}}
+  <div class='buttons'>
+    <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  </div>
+{{/unless}}

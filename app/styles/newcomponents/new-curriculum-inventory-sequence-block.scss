@@ -1,0 +1,32 @@
+.new-curriculum-inventory-sequence-block {
+  @include ilios-form;
+  @include fill-parent;
+  @include clearfix;
+  clear: both;
+  display: block;
+  margin-top: 2em;
+
+  .item {
+    @include ilios-form-item;
+
+    &.last {
+      @include ilios-form-last-item;
+    }
+  }
+
+  .description {
+    @include fill-parent;
+    min-height: 10em;
+  }
+
+  .academic-level {
+    clear: both;
+    select {
+      width: 5em;
+    }
+  }
+
+  .buttons {
+    @include ilios-form-buttons;
+  }
+}
