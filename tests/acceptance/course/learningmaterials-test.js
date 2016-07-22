@@ -44,7 +44,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       userRole: 1,
       copyrightPermission: true,
       courseLearningMaterials: [1],
-      uploadDate: new Date(),
+      uploadDate: new Date('2015-02-12'),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
@@ -56,7 +56,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
       courseLearningMaterials: [2],
-      uploadDate: new Date(),
+      uploadDate: new Date('2011-03-14'),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
@@ -72,7 +72,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       status: 1,
       owningUser: 4136,
       courseLearningMaterials: [4],
-      uploadDate: new Date(),
+      uploadDate: new Date('2016-12-12'),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       title: 'Letter to Doc Brown',
@@ -82,7 +82,7 @@ module('Acceptance: Course - Learning Materials' + testgroup, {
       userRole: 1,
       copyrightPermission: true,
       courseLearningMaterials: [],
-      uploadDate: new Date(),
+      uploadDate: new Date('2016-03-03'),
     }));
     fixtures.courseLearningMaterials = [];
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
