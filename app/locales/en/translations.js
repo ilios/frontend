@@ -211,6 +211,7 @@ export default {
     'confirmRemove': 'Are you sure you want to delete this instructor group, with {{instructorCount}} instructors and {{courseCount}} courses? This action cannot be undone.',
     'members': 'Members',
     'associatedCourses': 'Associated Courses',
+    'actions': 'Actions',
     'backToInstructorGroups': 'Back to Instructor Groups List',
   },
   'learnerGroups': {
