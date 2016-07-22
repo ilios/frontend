@@ -211,6 +211,7 @@ export default {
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer cette groupe des instructeurs, avec {{instructorCount}} membres et {{courseCount}} cours? Ça action ne peut pas être défait.",
     'members': "Membres",
     'associatedCourses': "Cours Associés",
+    'actions': "Actions",
     'backToInstructorGroups': "Retourner à liste des groupes des instructeurs",
   },
   'learnerGroups': {
