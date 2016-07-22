@@ -49,15 +49,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     add(title){
       let self = this;
       this.set('isSavingNewVocabulary', true);
-      const school = this.get('school');
-      let vocabulary = this.get('store').createRecord('vocabulary', {title, school});
-      vocabulary.save().then(vocabulary => {
-        if (!self.get('isDestroyed')) {
-          self.send('removeErrorDisplayFor', 'newVocabularyTitle');
-          self.get('newVocabularies').pushObject(vocabulary);
-          self.set('showNewVocabularyForm', false);
-          self.set('isSavingNewVocabulary', false);
-          self.set('newVocabularyTitle', null);
+      this.send('addErrorDisplayFor', 'newVocabularyTitle');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const school = this.get('school');
+          let vocabulary = this.get('store').createRecord('vocabulary', {title, school});
+          vocabulary.save().then(vocabulary => {
+            this.get('newVocabularies').pushObject(vocabulary);
+          }).finally(() => {
+            if (!self.get('isDestroyed')) {
+              self.send('removeErrorDisplayFor', 'newVocabularyTitle');
+              self.set('showNewVocabularyForm', false);
+              self.set('isSavingNewVocabulary', false);
+              self.set('newVocabularyTitle', null);
+            }
+          });
         }
       });
     },
