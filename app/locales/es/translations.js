@@ -211,7 +211,7 @@ export default {
     'confirmRemove': '¿Estás seguro que quieres remover este grupo de instructores, con {{instructorCount}} instructores y {{courseCount}} cursos? Esta acción no se puede deshacer.',
     'members': 'Miembros',
     'associatedCourses': 'Cursos Asociados',
-    'actions': 'Acciones'
+    'actions': 'Acciones',
     'backToInstructorGroups': 'Atrás a la Lista de Grupos de Instructores',
   },
   'learnerGroups': {
