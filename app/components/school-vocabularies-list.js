@@ -47,15 +47,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('showNewVocabularyForm', !this.get('showNewVocabularyForm'));
     },
     add(title){
+      let self = this;
       this.set('isSavingNewVocabulary', true);
-      const school = this.get('school');
-      let vocabulary = this.get('store').createRecord('vocabulary', {title, school});
-      vocabulary.save().then(vocabulary => {
-        this.send('removeErrorDisplayFor', 'newVocabularyTitle');
-        this.get('newVocabularies').pushObject(vocabulary);
-        this.set('showNewVocabularyForm', false);
-        this.set('isSavingNewVocabulary', false);
-        this.set('newVocabularyTitle', null);
+      this.send('addErrorDisplayFor', 'newVocabularyTitle');
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const school = this.get('school');
+          let vocabulary = this.get('store').createRecord('vocabulary', {title, school});
+          vocabulary.save().then(vocabulary => {
+            this.get('newVocabularies').pushObject(vocabulary);
+          }).finally(() => {
+            if (!self.get('isDestroyed')) {
+              self.send('removeErrorDisplayFor', 'newVocabularyTitle');
+              self.set('showNewVocabularyForm', false);
+              self.set('isSavingNewVocabulary', false);
+              self.set('newVocabularyTitle', null);
+            }
+          });
+        }
       });
     },
     confirmRemoval(vocabulary){
