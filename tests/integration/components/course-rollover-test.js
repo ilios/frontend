@@ -111,7 +111,7 @@ test('rollover course', function(assert) {
 });
 
 test('rollover course with new title', function(assert) {
-  assert.expect(1);
+  assert.expect(5);
   let course = Object.create({
     id: 1,
     title: 'old title',
@@ -122,8 +122,9 @@ test('rollover course with new title', function(assert) {
 
   let ajaxMock = Service.extend({
     request(url, {method, data}){
+      assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
+      assert.equal(method, 'POST');
       assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
-
       return resolve({
         courses: [
           {
@@ -136,8 +137,10 @@ test('rollover course with new title', function(assert) {
   this.register('service:ajax', ajaxMock);
 
   let storeMock = Service.extend({
-    pushPayload(obj){},
+    pushPayload(){},
     peekRecord(what, id){
+      assert.equal(what, 'course');
+      assert.equal(id, 14);
       return Object.create({
         id: 14
       });
@@ -148,12 +151,12 @@ test('rollover course with new title', function(assert) {
   });
   this.register('service:store', storeMock);
   let flashmessagesMock = Ember.Service.extend({
-    success(message){}
+    success(){}
   });
   this.register('service:flashMessages', flashmessagesMock);
 
   this.set('course', course);
-  this.set('visit', (newCourse) => {});
+  this.set('visit', () => {});
 
   this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
   const title = '.title';
