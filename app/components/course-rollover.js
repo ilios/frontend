@@ -65,11 +65,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const courseId = this.get('course.id');
     const expandAdvancedOptions = this.get('expandAdvancedOptions');
     const year = this.get('selectedYear');
+    const newCourseTitle = this.get('title');
     let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
     let skipOfferings = this.get('skipOfferings');
 
     let data = {
-      year
+      year,
+      newCourseTitle
     };
     if (expandAdvancedOptions && newStartDate) {
       data.newStartDate = newStartDate;

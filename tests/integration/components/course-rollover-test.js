@@ -43,7 +43,7 @@ test('it renders', function(assert) {
 });
 
 test('rollover course', function(assert) {
-  assert.expect(13);
+  assert.expect(14);
   let course = Object.create({
     id: 1,
     title: 'old title',
@@ -57,6 +57,7 @@ test('rollover course', function(assert) {
       assert.equal(method, 'POST');
       assert.ok('year' in data);
       assert.equal(data.year, thisYear);
+      assert.equal(data.newCourseTitle, course.get('title'));
       assert.notOk('newStartDate' in data);
       assert.notOk('skipOfferings' in data);
 
@@ -108,6 +109,62 @@ test('rollover course', function(assert) {
     this.$('.done').click();
   });
 });
+
+test('rollover course with new title', function(assert) {
+  assert.expect(1);
+  let course = Object.create({
+    id: 1,
+    title: 'old title',
+    startDate: moment().hour(0).minute(0).second(0).toDate()
+  });
+
+  const newTitle = course.get('title') + '2';
+
+  let ajaxMock = Service.extend({
+    request(url, {method, data}){
+      assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
+
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+
+  let storeMock = Service.extend({
+    pushPayload(obj){},
+    peekRecord(what, id){
+      return Object.create({
+        id: 14
+      });
+    },
+    query(){
+      return [];
+    }
+  });
+  this.register('service:store', storeMock);
+  let flashmessagesMock = Ember.Service.extend({
+    success(message){}
+  });
+  this.register('service:flashMessages', flashmessagesMock);
+
+  this.set('course', course);
+  this.set('visit', (newCourse) => {});
+
+  this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
+  const title = '.title';
+  const input = `${title} input`;
+  this.$(input).val(newTitle);
+  this.$(input).trigger('change');
+  return wait().then(()=>{
+    this.$('.done').click();
+  });
+});
+
 
 test('disable years when title already exists', function(assert) {
   assert.expect(8);
