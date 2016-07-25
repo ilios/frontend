@@ -1,16 +1,14 @@
 {{#if sortedInstructorGroups.length}}
-  <h3>{{t 'general.instructorGroups'}}</h3>
   <ul class='removable-list tag-list'>
     {{#each sortedInstructorGroups as |instructorGroup|}}
       <li {{action 'removeInstructorGroup' instructorGroup}}>
-        {{instructorGroup.title}} {{fa-icon 'times'}}
+        {{fa-icon 'group'}} {{instructorGroup.title}} {{fa-icon 'times'}}
       </li>
     {{/each}}
   </ul>
 {{/if}}
 
 {{#if sortedInstructors.length}}
-  <h3>{{t 'general.instructors'}}</h3>
   <ul class='removable-list tag-list'>
     {{#each sortedInstructors as |user|}}
       <li {{action 'removeInstructor' user}}>

@@ -5,7 +5,7 @@
   {{#if learnerGroups.length}}
     {{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
   {{else}}
-    {{t 'general.none'}}
+    <p>{{t 'general.none'}}</p>
   {{/if}}
 </div>
 <div class='available-learner-groups'>
@@ -20,7 +20,7 @@
           {{#if (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program))}}
             <h5 class='cohort-title'>{{cohort.programYear.program.title}} {{cohort.title}}</h5>
             <ul class='tree-groups-list'>
-              {{#each (sort-by 'title' (filter-by 'cohort' (action 'compareCohorts' cohort) (await allLearnerGroups))) as |learnerGroup|}}
+              {{#each (sort-by 'title' (filter-by 'cohort' (await (action 'compareCohorts' cohort)) (await allLearnerGroups))) as |learnerGroup|}}
                 {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
               {{/each}}
             </ul>

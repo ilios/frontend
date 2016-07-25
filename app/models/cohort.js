@@ -2,8 +2,9 @@ import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, observer } = Ember;
+const { computed, observer, RSVP } = Ember;
 const { Model, PromiseArray } = DS;
+const { Promise } = RSVP;
 
 export default Model.extend({
   i18n: Ember.inject.service(),
@@ -67,5 +68,16 @@ export default Model.extend({
       return Math.abs(moment().year(startYear).diff(moment(), 'years'));
     }
     return '';
-  })
+  }),
+  school: computed('programYear.program.school', function(){
+    return new Promise(resolve => {
+      this.get('programYear').then(programYear => {
+        programYear.get('program').then(program => {
+          program.get('school').then(school => {
+            resolve(school);
+          });
+        });
+      });
+    });
+  }),
 });

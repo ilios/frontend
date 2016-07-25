@@ -1,99 +1,20 @@
-{{#liquid-if isEditing class='horizontal'}}
-  <div class="form-container">
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.startDate'}}:</label>
-      <div class="form-data startdate">
-        {{pikaday-input value=buffer.startDate format='MM/DD/YYYY' onSelection=(action 'selectStartDate')}}
-      </div>
-    </div>
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.startTime'}}:</label>
-      <div class="form-data">
-        <span class='starttime'>
-          {{time-picker date=buffer.startTime action='changeStartTime'}}
-        </span>
-      </div>
-    </div>
-    {{#if buffer.isMultiDay}}
-      <div class="form-col-12">
-        <label class="form-label">{{t 'general.endDate'}}:</label>
-        <div class="form-data enddate">
-          {{pikaday-input value=buffer.endDate format='MM/DD/YYYY' onSelection=(action 'selectEndDate')}}
-        </div>
-      </div>
-    {{/if}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.endTime'}}:</label>
-      <div class="form-data">
-        <span class='endtime'>
-          {{time-picker date=buffer.endTime action='changeEndTime'}}
-        </span>
-      </div>
-    </div>
-    <div class="form-col-12">
-      <div class="form-data ismultiday">
-        <label class='switch switch-green switch-wide' {{action 'toggleMultiDay'}}>
-          <input class='switch-input' checked={{buffer.isMultiDay}} type='checkbox' />
-          <span class="switch-label" data-on='{{t 'general.multiDay'}}' data-off='{{t 'general.singleDay'}}'></span>
-          <span class="switch-handle"></span>
-        </label>
-      </div>
-    </div>
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.location'}}:</label>
-      <div class="form-data"><span class='room'>
-        {{one-way-input
-          value=room
-          update=(action (mut room))
-          focusOut=(action 'addErrorDisplayFor' 'room')
-          keyDown=(action 'addErrorDisplayFor' 'room')
-        }}
-        {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
-          <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
-        {{/if}}
-      </span></div>
-    </div>
-    <div class="form-col-12">
-      <div class="offering-learnergroups">
-        {{#each filteredCohorts as |cohort|}}
-          <div class="cohort-container">
-            <header class="cohort-title center">{{cohort.programYear.program.title}} {{cohort.displayTitle}}</header>
-
-            {{offering-editor-learnergroups
-              cohort=cohort
-              learnerGroups=learnerGroups
-              addLearnerGroup='addLearnerGroup'
-              removeLearnerGroup='removeLearnerGroup'
-            }}
-          </div>
-        {{/each}}
-      </div>
-    </div>
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.instructors'}}:</label>
-      <div class="form-data instructor-groups">
-        {{instructor-selection-manager
-          addInstructor='addInstructorToBuffer'
-          addInstructorGroup='addInstructorGroupToBuffer'
-          removeInstructor='removeInstructorFromBuffer'
-          removeInstructorGroup='removeInstructorGroupFromBuffer'
-          availableInstructorGroups=currentUser.model.school.instructorGroups
-          instructorGroups=buffer.instructorGroups
-          instructors=buffer.instructors
-        }}
-      </div>
-    </div>
-    <div class="form-col-6 form-data-submit">
-      <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-    </div>
-
-  </div>
+{{#liquid-if (and isEditing (is-fulfilled offering.session.course.cohorts)) class='horizontal'}}
+  {{offering-form
+    showRoom=true
+    showInstructors=true
+    cohorts=(await offering.session.course.cohorts)
+    courseStartDate=(await offering.session.course.startDate)
+    courseEndDate=(await offering.session.course.startDate)
+    close=(toggle 'isEditing' this)
+    save=(action 'save')
+    smallGroupMode=false
+    offering=offering
+  }}
 {{else}}
   <div class='offering-block-time-offering  {{if showRemoveConfirmation "offering-confirm-removal"}}'>
     <span class='offering-block-time-offering-learner_groups offering-detail-box'>
       <ul>
-        {{#each offering.learnerGroups as |learnerGroup|}}
+        {{#each (await offering.learnerGroups) as |learnerGroup|}}
           <li>{{learnerGroup.title}}</li>
         {{else}}
           <li>{{fa-icon 'group'}}</li>
@@ -103,7 +24,7 @@
     <span class='offering-block-time-offering-location offering-detail-box'>{{offering.room}}</span>
     <span class='offering-block-time-offering-instructors offering-detail-box'>
       <ul>
-        {{#each offering.allInstructors as |instructor|}}
+        {{#each (await offering.allInstructors) as |instructor|}}
           <li>{{instructor.fullName}}</li>
         {{else}}
           <li>{{fa-icon 'user-plus'}}</li>
@@ -112,7 +33,7 @@
     </span>
     {{#if editable}}
       <span class='offering-block-time-offering-actions offering-detail-box'>
-        <span class='clickable edit' {{action 'edit'}}>{{fa-icon 'edit'}}</span>
+        <span class='clickable edit' {{action (toggle 'isEditing' this)}}>{{fa-icon 'edit'}}</span>
         {{#if userCanDelete}}
           <span class='clickable remove' {{action 'confirmRemove'}}>{{fa-icon 'trash'}}</span>
         {{/if}}

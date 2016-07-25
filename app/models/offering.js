@@ -3,8 +3,8 @@ import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
 const { computed, RSVP } = Ember;
-const { PromiseArray } = DS;
 const { not } = computed;
+const { Promise, all } = RSVP;
 
 export default DS.Model.extend({
   room: DS.attr('string'),
@@ -62,21 +62,19 @@ export default DS.Model.extend({
       return key;
     }
   ),
-  allInstructors: computed('instructors.[]', 'instructorsGroups.@each.users', function(){
-    var defer = Ember.RSVP.defer();
-    this.get('instructorGroups').then(instructorGroups => {
-      var promises = instructorGroups.getEach('users');
-      promises.pushObject(this.get('instructors'));
-      RSVP.all(promises).then(trees => {
-        var instructors = trees.reduce((array, set) => {
-          return array.pushObjects(set.toArray());
-        }, []);
-        instructors = instructors.uniq().sortBy('lastName', 'firstName');
-        defer.resolve(instructors);
+  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
+    return new Promise(resolve => {
+      this.get('instructorGroups').then(instructorGroups => {
+        let promises = instructorGroups.getEach('users');
+        promises.pushObject(this.get('instructors'));
+        all(promises).then(trees => {
+          let instructors = trees.reduce((array, set) => {
+            return array.pushObjects(set.toArray());
+          }, []);
+          instructors = instructors.uniq().sortBy('lastName', 'firstName');
+          resolve(instructors);
+        });
       });
-    });
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 });

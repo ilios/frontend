@@ -8,7 +8,7 @@
   {{#if (or (eq (get (await session.ilmSession.learnerGroups) 'length') 0) sessionLearnergroupDetails)}}
     {{detail-learnergroups
       subject=(await session.ilmSession)
-      cohorts=session.course.cohorts
+      cohorts=(await session.course.cohorts)
       isIlmSession=true
       editable=editable
       isManaging=isManagingLearnerGroups
@@ -51,4 +51,9 @@
   isSession=true
   editable=editable
 }}
-{{session-offerings session=session editable=editable}}
+{{session-offerings
+  session=session
+  editable=editable
+  showNewOfferingForm=showNewOfferingForm
+  toggleShowNewOfferingForm=toggleShowNewOfferingForm
+}}

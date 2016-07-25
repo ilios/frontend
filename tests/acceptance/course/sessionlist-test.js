@@ -234,7 +234,7 @@ test('first offering is updated when offering is updated #1276', function(assert
       let offering = find('.offering-block-time-offering').eq(0);
       return click('.offering-block-time-offering-actions .edit', offering).then(function(){
         let container = find('.offering-manager');
-        const startDateInput = '.startdate input';
+        const startDateInput = '.start-date input';
         const doneButton = '.done';
         let startDateInteractor = openDatepicker(find(startDateInput, container));
         startDateInteractor.selectDate(newStartDate);

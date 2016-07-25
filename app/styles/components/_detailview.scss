@@ -11,66 +11,9 @@ $collapse-control-shadow-black: rgba(0, 0, 0, .34);
   font-size: $base-font-size;
   margin-top: -4px;
 
-
-  // Because certain sections are styled differently from others (ie, some headers have toggles and others do not,
-  // put the non-default, detail-view type-specific styling here, put the defaults below
-
-  //sessions
-  &.session-detail-view {
-    background-color: $active-background-color;
-
-    .detail-block {
-      border-bottom: 1px dotted $text-blue;
-
-      table thead {
-        background-color: $text-blue;
-        color: $white;
-      }
-    }
-  }
-
-
-
   //for the entire sessions section, we want to distinguish it with a different bg-color
   &.sessions-list {
     background-color: $active-background-color;
-  }
-
-  // session-offerings section
-  .session-offerings {
-
-    section {
-
-      &.detail-block {
-
-        .detail-title {
-          @include span-columns(2 of 12);
-        }
-
-        .detail-actions {
-          @include shift(8 of 12);
-          @include span-columns(2 of 12);
-          @include omega();
-        }
-
-        .detail-content {
-          .detail-content-header {
-
-            background-color: $header-grey;
-            height: 42px;
-
-            div {
-              @include span-columns (12 / 5);
-              @include pad(10px default default default);
-
-              label {
-                font-weight: bold;
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   // detail view defaults should go below here

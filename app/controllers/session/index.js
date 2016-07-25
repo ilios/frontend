@@ -4,16 +4,18 @@ const { Controller, inject } = Ember;
 const { controller } = inject;
 
 export default Controller.extend({
-  queryParams: [
-    'sessionObjectiveDetails',
-    'sessionTaxonomyDetails',
-    'isManagingLearnerGroups',
-    'sessionLearnergroupDetails',
-  ],
+  queryParams: {
+    sessionObjectiveDetails: 'sessionObjectiveDetails',
+    sessionTaxonomyDetails: 'sessionTaxonomyDetails',
+    isManagingLearnerGroups: 'isManagingLearnerGroups',
+    sessionLearnergroupDetails: 'sessionLearnergroupDetails',
+    showNewOfferingForm: 'addOffering',
+  },
   sessionObjectiveDetails: false,
   sessionTaxonomyDetails: false,
   isManagingLearnerGroups: false,
   sessionLearnergroupDetails: false,
+  showNewOfferingForm: false,
 
   sessionController: controller('session'),
   courseController: controller('course'),

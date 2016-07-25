@@ -6,28 +6,27 @@ const { Promise, all } = RSVP;
 
 export default Component.extend({
   i18n: service(),
+  classNames: ['learnergroup-selection-manager'],
   filter: '',
   sortBy: ['title'],
   cohorts: [],
   learnerGroups: [],
   allLearnerGroups: computed('cohorts.[]', function(){
     return new Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        all(cohorts.mapBy('topLevelLearnerGroups')).then(allLearnerGroups => {
-          let flat = allLearnerGroups.reduce((flattened, arr) => {
-            return flattened.pushObjects(arr);
-          }, []);
+      let cohorts = this.get('cohorts');
+      all(cohorts.mapBy('topLevelLearnerGroups')).then(allLearnerGroups => {
+        let flat = allLearnerGroups.reduce((flattened, arr) => {
+          return flattened.pushObjects(arr);
+        }, []);
 
-          resolve(flat);
-        });
+        resolve(flat);
       });
-
     });
 
   }),
   actions: {
-    compareCohorts(cohort, cohortPromise){
-      return cohort === cohortPromise.get('content');
+    compareCohorts(cohort1, cohort2){
+      return cohort1.get('id') === cohort2.get('id');
     }
   }
 });
