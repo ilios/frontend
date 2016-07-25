@@ -8,8 +8,8 @@ const { service } = inject;
 export default Ember.Route.extend(ApplicationRouteMixin, {
   flashMessages: service(),
   ajax: service(),
-  
-  //Override the default session invalidator so we can do shibboleth stuff
+
+  //Override the default session invalidator so we can do auth stuff
   sessionInvalidated() {
     if (!Ember.testing) {
       let logoutUrl = '/auth/logout';
