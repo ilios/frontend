@@ -5,6 +5,21 @@
 
   .title {
     @include ilios-overview-title;
+    @include span-columns(6 of 12);
+  }
+
+  .session-overview-actions {
+    @include ilios-overview-actions;
+    @include span-columns(2 of 12);
+    @include shift(4);
+    @include omega;
+    text-align: right;
+
+    a {
+      color: $header-blue;
+      font-size: 1.2 * $base-font-size;
+      margin-right: .5em;
+    }
   }
 
   .session-overview-content {

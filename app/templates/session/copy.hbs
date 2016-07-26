@@ -1,0 +1,9 @@
+<div class='session-details'>
+  {{session-overview
+    course=model.course
+    session=model
+    showCheckLink=false
+    sessionTypes=model.sessionTypes
+  }}
+  {{session-copy session=model visit=(action 'loadSession')}}
+</div>

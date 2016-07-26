@@ -368,6 +368,10 @@ export default {
     'independentLearning': 'Aprendizaje Independiente',
     'dueBy': 'Debido Por',
     'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
+    'copy': 'Copiar una Sesión',
+    'copySummary': 'Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en "cumplido".  Para regresar a su sesión corriente, haga click en "cancelar".',
+    'targetCourse': 'Curso de Destino',
+    'copySuccess': 'La Copia se ha Completado con Éxito'
   },
   'offerings': {
     'calendarOn': 'Calendario en Uso',
