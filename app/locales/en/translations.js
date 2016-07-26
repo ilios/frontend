@@ -397,7 +397,7 @@ export default {
     'userRole': 'User Role',
     'status': 'Status',
     'copyrightPermission': 'Copyright Permission',
-    'copyrightAgreement': "The file I am attempting to upload is my own or I have express permission to reproduce and/or distribute this item and does not contain any protected health information. My use of this file is in compliance with Government and University policies on copyright and information security and my educational program's guidelines for professional conduct. This file also adheres to the Terms and Conditions for this application.",
+    'copyrightAgreement': "The file I am uploading is my own or I have express permission to reproduce and/or distribute this item, or use of it here has been assessed as allowable by the legal doctrine of Fair Use. This file does not contain protected health information, and use of it here is in compliance with Government and University policies on copyright and information security and my institution’s guidelines for professional conduct.",
     'copyrightRationale':'Copyright Rationale',
     'searchPlaceholder': 'Find Learning Material',
     'confirmRemoval': 'Are you sure you want to remove this learning material?',
