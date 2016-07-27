@@ -18,8 +18,8 @@ moduleForComponent('school-competencies-expanded', 'Integration | Component | sc
 test('it renders', function(assert) {
   assert.expect(4);
   let domain = server.create('competency', {school: 1, isDomain: true});
-  let competency1 = server.create('competency', {school: 1, parent: 1});
-  let competency2 = server.create('competency', {school: 1, parent: 1});
+  let competency1 = server.create('competency', {school: 1, parent: 1, isNotDomain: true});
+  let competency2 = server.create('competency', {school: 1, parent: 1, isNotDomain: true});
   domain.children = [competency1, competency2];
 
   let competencies = [domain, competency1, competency2].map(obj => Object.create(obj));
@@ -34,7 +34,7 @@ test('it renders', function(assert) {
   this.on('expand', parseInt);
   this.render(hbs`{{school-competencies-expanded school=school expand=(action 'expand') collapse=(action 'expand')}}`);
   return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Competencies \(3\)/), 0);
+    assert.equal(this.$().text().trim().search(/Competencies \(1\/2\)/), 0);
     assert.ok(this.$().text().trim().search(/competency 0/) > 0);
     assert.ok(this.$().text().trim().search(/competency 1/) > 0);
     assert.ok(this.$().text().trim().search(/competency 2/) > 0);

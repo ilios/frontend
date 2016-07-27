@@ -18,7 +18,7 @@ moduleForComponent('school-competencies-collapsed', 'Integration | Component | s
 test('it renders', function(assert) {
   assert.expect(3);
   let domain = server.create('competency', {school: 1, isDomain: true, children: [2]});
-  let competency = server.create('competency', {school: 1, parent: 1});
+  let competency = server.create('competency', {school: 1, isNotDomain: true, parent: 1});
 
   let competencies = [domain, competency].map(obj => Object.create(obj));
 
@@ -32,7 +32,7 @@ test('it renders', function(assert) {
   this.render(hbs`{{school-competencies-collapsed school=school expand=(action 'click')}}`);
 
   return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
+    assert.equal(this.$().text().trim().search(/Competencies \(1\/1\)/), 0);
     assert.ok(this.$().text().trim().search(/competency 0/) > 0);
     assert.ok(this.$().text().trim().search(/There is 1 competency/) > 0);
   });
