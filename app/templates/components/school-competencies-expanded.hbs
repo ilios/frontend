@@ -4,7 +4,7 @@
       </div>
   {{else}}
     <div class='detail-title {{if showCollapsible "clickable"}}' {{action 'collapse'}}>
-      {{t 'general.competencies'}} ({{school.competencies.length}})
+      {{t 'general.competencies'}} ({{allDomains.length}}/{{allCompetencies.length}})
     </div>
   {{/if}}
   <div class='detail-actions'>

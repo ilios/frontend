@@ -1,6 +1,6 @@
 <section class='detail-block collapsed'>
   <div class='detail-title clickable'  {{action (action this.attrs.expand)}}>
-    {{t 'general.competencies'}} ({{school.competencies.length}})
+    {{t 'general.competencies'}} ({{allDomains.length}}/{{allCompetencies.length}})
   </div>
   {{#if competencies.isPending}}
     <h3>{{fa-icon 'spinner' spin=true}}</h3>

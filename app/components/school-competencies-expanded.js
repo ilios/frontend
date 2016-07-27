@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const { Component, computed, inject, RSVP, isPresent, isEmpty } = Ember;
+const { filterBy } = computed;
 const { service } = inject;
 
 export default Component.extend({
@@ -8,6 +9,8 @@ export default Component.extend({
   school: null,
   isManaging: false,
   bufferedCompetencies: null,
+  allDomains: filterBy('school.competencies', 'isDomain'),
+  allCompetencies: filterBy('school.competencies', 'isNotDomain'),
   showCollapsible: computed('isManaging', 'school.competencies.length', function(){
     const isManaging = this.get('isManaging');
     const competencies = this.get('school.competencies');
