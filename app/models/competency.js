@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 const { computed } = Ember;
-const { empty } = computed;
+const { empty, not } = computed;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -13,6 +13,7 @@ export default DS.Model.extend({
   aamcPcrses: DS.hasMany('aamc-pcrs', {async: true}),
   programYears: DS.hasMany('program-year', {async: true}),
   isDomain: empty('parent.content'),
+  isNotDomain: not('isDomain'),
   domain: computed('parent', 'parent.domain', function(){
     let promise = new Ember.RSVP.Promise(
       resolve => {
