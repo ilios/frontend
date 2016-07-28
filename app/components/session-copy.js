@@ -122,7 +122,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       filters: {
         year,
         school
-      }
+      },
+      limit: 10000
     });
 
     if (isEmpty(this.get('selectedCourse'))) {
