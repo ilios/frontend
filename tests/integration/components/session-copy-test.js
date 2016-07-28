@@ -48,7 +48,7 @@ test('it renders', function(assert) {
       return [course1, course2];
     },
     findAll(what){
-      assert.ok(what === 'academicYear');
+      assert.equal(what, 'academicYear');
 
       return [lastYear, thisYear, nextYear].map(year => {
         return Object.create({
@@ -264,14 +264,14 @@ test('changing the year looks for new matching courses', function(assert) {
   let storeMock = Service.extend({
     query(what, {filters}){
 
-      assert.ok(what === 'course');
-      assert.ok(filters.school, 1);
+      assert.equal(what, 'course');
+      assert.equal(filters.school, 1);
       switch(count){
       case 0:
-        assert.ok(filters.year, thisYear);
+        assert.equal(filters.year, thisYear);
         break;
       case 1:
-        assert.ok(filters.year, nextYear);
+        assert.equal(filters.year, nextYear);
         break;
       default:
         assert.ok(false, 'should not be called again');
