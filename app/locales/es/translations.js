@@ -400,7 +400,7 @@ export default {
     'userRole': 'Función de Usuario',
     'status': 'Estado',
     'copyrightPermission': 'Permisos de Derechos de Autor',
-    'copyrightAgreement': "El archivo yo estoy tratando a subir es mi pripio o yo la tengo la autorización expresa a reproducir y/o distribuir esta información y que no contiene ninguna información de la salud protegida. Mi uso de este archivo conforme a Políticas del gobierno y a la Universidad según a la seguridad de copyright e información y las reglas de mi program de estudio a cerca de conducto profesional. Este archivo también adhiere a los Terminos y Condiciones para esta aplicación.",
+    'copyrightAgreement': "El archivo que estoy subiendo es mío o tengo permiso expreso para reproducir y / o distribuir este artículo, o su uso aquí ha sido evaluado como permisible por la doctrina del uso justo. Este archivo no contiene ninguna información protegida de la salud, y su utilización aquí está en conformidad con las políticas del gobierno y Universidad sobre derechos de autor y de seguridad de la información y las directrices de mi institución para la conducta profesional.",
     'copyrightRationale':'Justificación para Derechos de Autor',
     'searchPlaceholder': 'encontrar material de aprendizaje',
     'confirmRemoval': '¿Está seguro que desea eliminar este material de aprendizaje?',

@@ -400,7 +400,7 @@ export default {
     'userRole': "Rôle d'utilisateur",
     'status': "Statut",
     'copyrightPermission': "Droit d’Auteur",
-    'copyrightAgreement': "Le fichier que je tente de télécharger est ma propre ou je avoir la permission expresse à reproduire et / ou distribuer cet article et ne contient pas d'informations de santé protégées. Mon utilisation de ce fichier est en conformité avec les politiques gouvernementales et universitaires sur le droit d'auteur et de la sécurité de l'information et les directives de mon programme d'enseignement de conduite professionnelle. Ce fichier respecte également les Termes et Conditions pour cette application.",
+    'copyrightAgreement': "Le fichier J'envoie est ma propre ou j'avoir la permission expresse de reproduire et / ou distribuer cet article, ou l'utilisation de celui-ci ici a été jugée admissible par la doctrine juridique de l'utilisation équitable. Ce fichier ne contient pas protégé information sur la santé, et l'utilisation de celui-ci ici est en conformité avec le gouvernement et l'Université des politiques sur le droit d'auteur et à la sécurité de l'information et les directives de mon institution pour la conduite professionnelle.",
     'copyrightRationale': "Raison du droit d'auteur",
     'searchPlaceholder': "Trouver matières d'étude",
     'confirmRemoval': "Êtes-vous sûr vous voulez supprimer cette matière d’étude?",
