@@ -43,7 +43,7 @@
             {{#each sortedBlocks as |block|}}
               <tr class="{{if block.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left' colspan=5>
-                  {{#link-to 'curriculumInventorySequenceBlock' block}}
+                  {{#link-to 'curriculumInventorySequenceBlock' block.content}}
                     {{block.title}}
                   {{/link-to}}
                 </td>
@@ -71,11 +71,11 @@
                 </td>
                 <td class='text-center' colspan=1>
                   {{#if block.isFinalized}}
-                    {{#link-to 'curriculumInventorySequenceBlock' block class='edit'}}
+                    {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
                       {{fa-icon 'eye'}}
                     {{/link-to}}
                   {{ else }}
-                    {{#link-to 'curriculumInventorySequenceBlock' block class='edit'}}
+                    {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
                       {{fa-icon 'edit'}}
                     {{/link-to}}
                     <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
