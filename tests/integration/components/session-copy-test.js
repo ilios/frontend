@@ -84,7 +84,7 @@ test('it renders', function(assert) {
 });
 
 test('copy session', function(assert) {
-  assert.expect(16);
+  assert.expect(18);
 
   let thisYear = parseInt(moment().format('YYYY'));
 
@@ -104,7 +104,11 @@ test('copy session', function(assert) {
     publicNotes: true,
     learningMaterial: resolve(lm),
   });
-  let objectives = [Object.create()];
+  let objective = Object.create({
+    title: 'session objective title',
+    parents: [Object.create()]
+  });
+  let objectives = [objective];
   let meshDescriptors = [Object.create()];
   let terms = [Object.create()];
 
@@ -148,7 +152,6 @@ test('copy session', function(assert) {
         return Object.create({
           id: 14,
           save(){
-            assert.equal(objectives, this.get('objectives'));
             assert.equal(meshDescriptors, this.get('meshDescriptors'));
             assert.equal(terms, this.get('terms'));
           }
@@ -172,6 +175,18 @@ test('copy session', function(assert) {
         return Object.create({
           save(){
             assert.equal(this.get('session.id'), 14);
+          }
+        });
+      }
+      if (what === 'objective') {
+        assert.equal(objective.title, props.title);
+
+        return Object.create({
+          save(){
+            let sessions = this.get('sessions');
+            assert.equal(sessions.length, 1);
+
+            assert.equal(sessions[0].get('id'), 14);
           }
         });
       }

@@ -54,7 +54,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       sessionToCopy.getProperties('title', 'attireRequired', 'equipmentRequired', 'supplemental')
     );
     session.set('course', newCourse);
-    let props = yield hash(sessionToCopy.getProperties('objectives', 'meshDescriptors', 'terms', 'sessionType'));
+    let props = yield hash(sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType'));
     session.setProperties(props);
 
     let ilmToCopy = yield sessionToCopy.get('ilmSession');
@@ -86,6 +86,21 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     // save the session first to fill out relationships with the session id
     yield session.save();
+
+    //parse objectives last because it is a many2many relationship
+    //and ember data tries to save it too soon
+    let objectivesToCopy = yield sessionToCopy.get('objectives');
+    for (let i = 0; i < objectivesToCopy.length; i++){
+      let objectiveToCopy = objectivesToCopy.toArray()[i];
+      let meshDescriptors = yield objectiveToCopy.get('meshDescriptors');
+      let objective = store.createRecord(
+        'objective',
+        objectiveToCopy.getProperties('title')
+      );
+      objective.set('meshDescriptors', meshDescriptors);
+      objective.set('sessions', [session]);
+      toSave.pushObject(objective);
+    }
     yield all(toSave.invoke('save'));
     flashMessages.success('sessions.copySuccess');
     return this.get('visit')(session);
