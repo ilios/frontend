@@ -33,6 +33,7 @@
             <tr>
               <th class='text-center' colspan=5>{{t 'curriculumInventory.sequenceBlock'}}</th>
               <th class='text-center' colspan=2>{{t 'curriculumInventory.academicLevel'}}</th>
+              <th class='text-center' colspan=2>{{t 'curriculumInventory.orderInSequence'}}</th>
               <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
               <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
               <th class='text-center' colspan=2>{{t 'general.course'}}</th>
@@ -48,6 +49,13 @@
                   {{/link-to}}
                 </td>
                 <td class='text-center' colspan=2>{{block.academicLevel.level}}</td>
+                <td class='text-center' colspan=2>
+                  {{#if isInOrderedSequence}}
+                      {{block.orderInSequence}}
+                  {{else}}
+                      {{t 'general.notApplicableAbbr'}}
+                  {{/if}}
+                 </td>
                 <td class='text-center' colspan=2>
                   {{#if block.startDate}}
                     {{moment-format block.startDate 'MM/DD/YY'}}
@@ -84,7 +92,7 @@
               </tr>
               {{#if block.showRemoveConfirmation}}
                 <tr class='confirm-removal'>
-                  <td colspan=14>
+                  <td colspan=16>
                     <div class='confirm-message'>
                       {{t 'curriculumInventory.sequenceBlockConfirmRemove'}} <br/>
                       <div class="confirm-buttons">

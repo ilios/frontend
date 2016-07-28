@@ -29,6 +29,11 @@ export default Component.extend({
 
   isEditable: alias('report.isFinalized'),
 
+  isInOrderedSequence: computed('parent', function () {
+    const parent = this.get('parent');
+    return isPresent(parent) && parent.get('isOrdered');
+  }),
+
   sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', function() {
     const parent = this.get('parent');
     const sequenceBlocks = this.get('sequenceBlocks');
