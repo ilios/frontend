@@ -40,8 +40,7 @@ export default Controller.extend({
         const exp = new RegExp(filter, 'gi');
         let displayed = students.filter(user => {
           return (isEmpty(user.get('fullName')) || user.get('fullName').match(exp));
-        })
-        .sortBy('lastName', 'firstName');
+        }).sortBy('lastName', 'firstName');
 
         resolve(displayed);
       });
