@@ -2,9 +2,10 @@ import Ember from 'ember';
 import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-const { service }  = Ember.inject;
+const { Route, inject, isPresent }  = Ember;
+const { service } = inject;
 
-export default Ember.Route.extend(UnauthenticatedRouteMixin, {
+export default Route.extend(UnauthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
   ajax: service(),
@@ -36,6 +37,39 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
               shibbolethLoginUrl += '?target=' + attemptedRoute;
             }
             window.location.replace(shibbolethLoginUrl);
+          }
+          if(response.status === 'noAccountExists'){
+            this.set('noAccountExistsError', true);
+            this.set('noAccountExistsAccount', response.userId);
+            defer.resolve();
+            return;
+          }
+          if(response.status === 'success'){
+            let authenticator = 'authenticator:ilios-jwt';
+            this.get('session').authenticate(authenticator, {jwt: response.jwt});
+          }
+        });
+      }
+
+      if(config.type === 'cas'){
+        let location = window.location;
+        let currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
+        let queryParams = {};
+        if (location.search.length > 1) {
+          location.search.substr(1).split('&').forEach(str => {
+            let arr = str.split('=');
+            queryParams[arr[0]] = arr[1];
+          });
+        }
+
+        loginUrl += `?service=${currentUrl}`;
+        if (isPresent(queryParams.ticket)) {
+          loginUrl += `&ticket=${queryParams.ticket}`;
+        }
+        this.get('ajax').request(loginUrl).then(response => {
+          if(response.status === 'redirect'){
+            let casLoginUrl = config.casLoginUrl + `?service=${currentUrl}`;
+            return window.location.replace(casLoginUrl);
           }
           if(response.status === 'noAccountExists'){
             this.set('noAccountExistsError', true);
