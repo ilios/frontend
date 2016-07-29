@@ -111,6 +111,11 @@ $sliding-menu-color-hover: #fff;
       }
     }
   }
+
+  .stability-indicator {
+    vertical-align: super;
+    font-size: x-small;
+  }
 }
 
 // modals go above navigation menu
