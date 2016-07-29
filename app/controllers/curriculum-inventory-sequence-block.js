@@ -7,7 +7,11 @@ export default Controller.extend({
     removeChildSequenceBlock(block) {
       let parent = this.get('model');
       block.destroyRecord().then(() => {
-        parent.reload();
+        parent.reload().then(parent => {
+          parent.get('children').then(children => {
+            children.invoke('reload');
+          });
+        });
       });
     },
   }
