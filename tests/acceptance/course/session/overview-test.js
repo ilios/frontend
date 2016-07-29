@@ -16,7 +16,7 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Overview' + testgroup, {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
+    setupAuthentication(application, false);
     server.create('school', {
       sessionTypes: [1,2]
     });
@@ -34,7 +34,14 @@ module('Acceptance: Session - Overview' + testgroup, {
 });
 
 test('check fields', function(assert) {
-
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
   server.create('session', {
     course: 1,
     sessionType: 1,
@@ -52,6 +59,9 @@ test('check fields', function(assert) {
 });
 
 test('check remove ilm', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   var ilmSession = server.create('ilmSession', {
     session: 1
   });
@@ -78,6 +88,9 @@ test('check remove ilm', function(assert) {
 });
 
 test('check add ilm', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
 
   server.create('session', {
     course: 1,
@@ -100,6 +113,9 @@ test('check add ilm', function(assert) {
 });
 
 test('change ilm hours', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   var ilmSession = server.create('ilmSession', {
     session: 1
   });
@@ -128,6 +144,9 @@ test('change ilm hours', function(assert) {
 });
 
 test('change ilm due date', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   var ilmSession = server.create('ilmSession', {
     session: 1
   });
@@ -157,6 +176,9 @@ test('change ilm due date', function(assert) {
 });
 
 test('change title', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 1
@@ -179,6 +201,9 @@ test('change title', function(assert) {
 });
 
 test('change type', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 1
@@ -204,6 +229,9 @@ test('change type', function(assert) {
 });
 
 test('change suplimental', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 2
@@ -220,6 +248,9 @@ test('change suplimental', function(assert) {
 });
 
 test('change special attire', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 2
@@ -236,6 +267,9 @@ test('change special attire', function(assert) {
 });
 
 test('change special equipment', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 2
@@ -252,6 +286,9 @@ test('change special equipment', function(assert) {
 });
 
 test('change description', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 1,
@@ -281,6 +318,9 @@ test('change description', function(assert) {
 });
 
 test('add description', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 1
@@ -304,5 +344,120 @@ test('add description', function(assert) {
         });
       }, 100);
     });
+  });
+});
+
+test('click copy', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1
+  });
+
+  const copy = '.session-overview a.copy';
+  visit(url);
+  click(copy);
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.copy');
+  });
+});
+
+test('copy hidden from instructors', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'instructor'
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1
+  });
+  visit(url);
+  const container = '.session-overview';
+  const copy = `${container} a.copy`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    assert.equal(find(copy).length, 0)
+  });
+});
+
+test('copy visible to developers', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'developer'
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1
+  });
+  visit(url);
+  const container = '.session-overview';
+  const copy = `${container} a.copy`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    assert.equal(find(copy).length, 1)
+  });
+});
+
+test('copy visible to course directors', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1
+  });
+  visit(url);
+  const container = '.session-overview';
+  const copy = `${container} a.copy`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.index');
+    assert.equal(find(copy).length, 1)
+  });
+});
+
+test('copy hidden on copy route', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1
+  });
+  visit(`${url}/copy`);
+  const container = '.session-overview';
+  const copy = `${container} a.copy`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'course.session.copy');
+    assert.equal(find(copy).length, 0)
   });
 });

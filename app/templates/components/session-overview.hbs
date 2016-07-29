@@ -54,6 +54,13 @@
   <div class='title'>
     {{t 'general.overview'}}
   </div>
+  <div class='session-overview-actions'>
+    {{#if (and (is-fulfilled showCopy) (await showCopy))}}
+      {{#link-to 'session.copy' session class='copy'}}
+        {{fa-icon 'copy' title=(t 'sessions.copy') fixedWidth=true}}
+      {{/link-to}}
+    {{/if}}
+  </div>
   <div class='session-overview-content'>
     <div class='session-overview-options'>
 

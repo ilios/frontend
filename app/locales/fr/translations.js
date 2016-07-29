@@ -368,6 +368,10 @@ export default {
     'independentLearning': "Apprentissage autonome",
     'dueBy': "Avant",
     'confirmObjectiveRemoval': "Êtes vous sûr de vouloir supprimer cet objectif?",
+    'copy': 'Copier Séance',
+    'copySummary': "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matiéres d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\".",
+    'targetCourse': 'Cours Cible',
+    'copySuccess': 'Copie achevée avec succès'
   },
   'offerings': {
     'calendarOn': "Calendrier Allumé",

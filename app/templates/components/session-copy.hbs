@@ -1,0 +1,60 @@
+{{#link-to 'session' session}}{{t 'general.backToTitle' title=session.title}}{{/link-to}}
+
+
+<div class='rollover-form'>
+  <h3 class="title">{{t 'sessions.copy'}}</h3>
+
+  <p class='rollover-summary'>{{t 'sessions.copySummary'}}</p>
+
+  <div class='item year-select'>
+    <label>{{t "general.year"}}:</label>
+    {{#if loadYears.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      <select onchange={{action 'changeSelectedYear' value="target.value"}}>
+        {{#each loadYears.lastSuccessful.value as |year|}}
+          <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
+            {{year}} - {{inc year}}
+            {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
+              ({{t 'courses.rolloverYearUnavailable'}})
+            {{/if}}
+          </option>
+        {{/each}}
+      </select>
+    {{/if}}
+    {{#if (and (v-get this 'selectedYear' 'isInvalid') (is-in showErrorsFor 'selectedYear'))}}
+      <span class="validation-error-message">{{v-get this 'selectedYear' 'message'}}</span>
+    {{/if}}
+  </div>
+
+  <div class='item course-select'>
+    <label>{{t "sessions.targetCourse"}}:</label>
+    {{#if loadCourses.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      <select onchange={{action 'changeSelectedCourse' value="target.value"}}>
+        {{#each (sort-by 'title' loadCourses.lastSuccessful.value) as |course|}}
+          <option value={{course.id}} selected={{is-equal course selectedCourse}}>
+            {{course.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{/if}}
+    {{#if (and (v-get this 'selectedCourse' 'isInvalid') (is-in showErrorsFor 'selectedCourse'))}}
+      <span class="validation-error-message">{{v-get this 'selectedCourse' 'message'}}</span>
+    {{/if}}
+  </div>
+
+  <div class='buttons'>
+    <button disabled={{if (or save.isRunning (not selectedYear) (not selectedCourse)) true}} class='done text' {{action (perform save)}}>
+      {{#if save.isRunning}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    {{#link-to 'session' session}}
+      <button class='cancel text'>{{t 'general.cancel'}}</button>
+    {{/link-to}}
+  </div>
+</div>

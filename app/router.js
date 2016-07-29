@@ -22,6 +22,7 @@ Router.map(function() {
       resetNamespace: true
     }, function(){
       this.route('publicationCheck', {path: '/publicationcheck'});
+      this.route('copy');
     });
   });
   this.route('printCourse', { path: 'course/:course_id/print'});

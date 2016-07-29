@@ -368,6 +368,10 @@ export default {
     'independentLearning': 'Independent Learning',
     'dueBy': 'Due By',
     'confirmObjectiveRemoval': 'Are you sure you want to delete this objective?',
+    'copy': 'Copy Session',
+    'copySummary': 'You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click "done".  To return to your current session click "cancel".',
+    'targetCourse': 'Target Course',
+    'copySuccess': 'Copy Completed Successfully',
   },
   'offerings': {
     'calendarOn': 'Calendar On',

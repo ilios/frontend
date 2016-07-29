@@ -5,9 +5,10 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import config from 'ilios/config/environment';
 
-const { Component, computed, RSVP, isEmpty } = Ember;
+const { Component, computed, RSVP, isEmpty, inject } = Ember;
 const { oneWay, sort } = computed;
-const { Promise } = RSVP;
+const { Promise, all } = RSVP;
+const { service } = inject;
 
 const Validations = buildValidations({
   title: [
@@ -33,6 +34,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
+  currentUser: service(),
+  routing: service('-routing'),
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('title', this.get('session.title'));
@@ -59,6 +62,24 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   sortedSessionTypes: sort('sessionTypes', 'sortTypes'),
   showCheckLink: true,
   isSaving: false,
+
+  showCopy: computed('currentUser', 'routing.currentRouteName', function(){
+    return new Promise(resolve => {
+      const routing = this.get('routing');
+      if (routing.get('currentRouteName') === 'session.copy') {
+        resolve(false);
+      } else {
+        const currentUser = this.get('currentUser');
+        all([
+          currentUser.get('userIsCourseDirector'),
+          currentUser.get('userIsDeveloper')
+        ]).then(hasRole => {
+          resolve(hasRole.contains(true));
+        });
+      }
+
+    })
+  }),
 
   actions: {
     saveIndependentLearning: function(value){
