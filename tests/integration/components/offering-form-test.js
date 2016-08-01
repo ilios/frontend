@@ -425,6 +425,31 @@ test('changing duration changes end date', function(assert) {
   });
 });
 
+// @see https://github.com/ilios/frontend/issues/1903
+test('changing duration and start time changes end date', function(assert) {
+  this.set('nothing', nothing);
+  this.render(hbs`{{offering-form close=(action nothing)}}`);
+
+  const startHour = '.start-time select:eq(0)';
+  const startMinute = '.start-time select:eq(1)';
+  const startAmPm = '.start-time select:eq(2)';
+  const durationHour = '.offering-duration .hours input';
+  const durationMinute = '.offering-duration .minutes input';
+  const endDate = '.end-date-time .text';
+  const format = 'M/D/YYYY h:mm a';
+  assert.equal(moment().hour(9).minute(0).format(format), this.$(endDate).text().trim());
+  this.$(startHour).val('2').change();
+  this.$(startMinute).val('10').change();
+  this.$(startAmPm).val('pm').change();
+  this.$(durationHour).val('2').change();
+  return wait().then(()=>{
+    this.$(durationMinute).val('50').change();
+    return wait().then(()=>{
+      assert.equal(moment().hour(17).minute(0).format(format), this.$(endDate).text().trim());
+    });
+  });
+});
+
 test('learnerGroup validation errors do not show up initially', function(assert) {
   this.set('nothing', nothing);
   this.render(hbs`{{offering-form close=(action nothing) smallGroupMode=true}}`);
