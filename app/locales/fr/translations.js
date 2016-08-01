@@ -461,6 +461,7 @@ export default {
     'sessionObjectives': "Objectifs de la Séance",
     'sessionLearningMaterials': "Matières d’Étude de la Séance",
     'noAssociatedCompetencies': "Nul compétences associées",
+    'noAssociatedCompetency': "Nul compétence associée",
     'dueThisDay': "Dû ce jour-là",
     'icsInstructions': "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!",
   },

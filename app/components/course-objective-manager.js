@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { Component, computed, observer, on } = Ember;
+const { Component, computed, isEmpty, observer, on } = Ember;
+const { none } = computed;
 
 var competencyGroup = Ember.Object.extend({
   title: '',
@@ -11,6 +12,7 @@ var competencyGroup = Ember.Object.extend({
   objectives: computed.sort('uniqueObjectives', 'objectiveSorting'),
   selectedObjectives: computed.filterBy('uniqueObjectives', 'selected', true),
   selected: computed.gt('selectedObjectives.length', 0),
+  noTitle: none('title')
 });
 
 var objectiveProxy = Ember.ObjectProxy.extend({
@@ -55,7 +57,23 @@ var cohortProxy = Ember.Object.extend({
           originalObjectives: ourObjectives
         });
       });
-      deferred.resolve(groups.sortBy('title'));
+
+      groups = groups.sortBy('title');
+
+      // finally, add all program objectives that are not linked to a competency
+      // in a group and add it to the end of the list.
+      // @see https://github.com/ilios/frontend/issues/1905
+      let ourObjectives = objectives.filter(objective => {
+        return isEmpty(objective.get('competency').get('content'));
+      });
+      if (!isEmpty(ourObjectives)) {
+        let specialGroup = competencyGroup.create({
+          title: null,
+          originalObjectives: ourObjectives,
+        });
+        groups.pushObject(specialGroup);
+      }
+      deferred.resolve(groups);
     });
     return DS.PromiseArray.create({
       promise: deferred.promise
