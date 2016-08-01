@@ -45,7 +45,7 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gte: 0,
-      let: 60
+      lte: 60
     })
   ],
   learnerGroups: {
@@ -176,7 +176,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     mStart.hour(endHour);
     const startMinute = mStart.minute();
 
-    return endMinute - startMinute;
+    let diff = 0;
+    if (endMinute > startMinute) {
+      diff = endMinute - startMinute;
+    } else if (endMinute < startMinute) {
+      diff = (60 - startMinute) + endMinute;
+    }
+    return diff;
   }),
   makeRecurringOfferingObjects: task(function * () {
     const {
