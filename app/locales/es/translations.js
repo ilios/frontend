@@ -461,6 +461,7 @@ export default {
     'sessionObjectives': 'Objetivos de la Sesión',
     'sessionLearningMaterials': 'Materiales de Aprendizaje de la Sesión',
     'noAssociatedCompetencies': 'No Competencias Asociadas',
+    'noAssociatedCompetency': 'No Competencia Asociada',
     'dueThisDay': 'Debido por esta fecha',
     'icsInstructions': 'Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!',
   },
