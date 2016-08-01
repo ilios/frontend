@@ -45,7 +45,7 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gte: 0,
-      let: 60
+      lte: 60
     })
   ],
   learnerGroups: {
