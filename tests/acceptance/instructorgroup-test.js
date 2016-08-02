@@ -70,8 +70,10 @@ test('check fields', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'instructorGroup');
-    assert.equal(getElementText(find('.detail-header .title h2')),getText('school 0 > instructor group 0'));
-    assert.equal(getElementText(find('.detail-header .info')),getText('Members: 2'));
+    var container = find('.instructorgroup-header');
+    assert.equal(getElementText(find('.title .school-title', container)), getText('school 0 > '));
+    assert.equal(getElementText(find('.title .editable', container)), getText('instructor group 0'));
+    assert.equal(getElementText(find('.info')), getText('Members:2'));
     assert.equal(getElementText(find('.detail-overview .detail-title')), getText('instructor group 0 Members (2)'));
 
     var items = find('.detail-overview .removable-list li');
@@ -87,16 +89,16 @@ test('check fields', function(assert) {
 test('change title', function(assert) {
   visit(url);
   andThen(function() {
-    var container = find('.detail-header');
-    assert.equal(getElementText(find('.title h2', container)), getText('school 0 > instructor group 0'));
-    click(find('.title h2 .editable', container));
+    var container = find('.instructorgroup-header');
+    assert.equal(getElementText(find('.title .editable', container)), getText('instructor group 0'));
+    click(find('.title .editable', container));
     andThen(function(){
       var input = find('.title .editinplace input', container);
       assert.equal(getText(input.val()), getText('instructor group 0'));
       fillIn(input, 'test new title');
       click(find('.title .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.title h2', container)), getText('school 0 > test new title'));
+        assert.equal(getElementText(find('.title .editable', container)), getText('test new title'));
       });
     });
   });
@@ -173,7 +175,8 @@ test('follow link to course', function(assert) {
 test('no associated courses', function(assert) {
   visit('/instructorgroups/3');
   andThen(function() {
-    assert.equal(getElementText(find('.detail-header .title h2')),getText('school 0 > instructorgroup 2'));
+    assert.equal(getElementText(find('.instructorgroup-header .title .school-title')),getText('school 0 >'));
+    assert.equal(getElementText(find('.instructorgroup-header .title .editable')),getText('instructorgroup 2'));
     assert.equal(getElementText(find('.detail-overview .instructorgroupcourses')), getText('Associated Courses: None'));
   });
 });
