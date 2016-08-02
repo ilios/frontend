@@ -11,10 +11,6 @@ export default Component.extend({
   courseSort: ['title'],
   sortedCourses: sort('instructorGroup.courses', 'courseSort'),
   actions: {
-    changeTitle: function(newTitle){
-      this.get('instructorGroup').set('title', newTitle);
-      this.get('instructorGroup').save();
-    },
     addUser: function(user){
       var instructorGroup = this.get('instructorGroup');
       instructorGroup.get('users').addObject(user);
