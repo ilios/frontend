@@ -125,9 +125,11 @@ test('Update location', function(assert) {
     this.$(editLocation).click();
     this.$(input).val('new location name');
     this.$(input).trigger('change');
-    this.$(save).click();
-    return wait().then(()=>{
-      assert.equal(this.$(location).text().trim(), 'new location name');
+    return wait().then(()=> {
+      this.$(save).click();
+      return wait().then(()=> {
+        assert.equal(this.$(location).text().trim(), 'new location name');
+      });
     });
   });
 });
