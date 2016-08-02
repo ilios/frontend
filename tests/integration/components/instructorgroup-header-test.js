@@ -1,24 +1,50 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
+
+const { Object, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('instructorgroup-header', 'Integration | Component | instructorgroup header', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  assert.expect(3);
+  let instructorGroup = Object.create({
+    title: 'lorem ipsum',
+    school: {title: 'medicine'},
+    users: [{}, {}, {}],
+  });
 
-  this.render(hbs`{{instructorgroup-header}}`);
+  this.set('instructorGroup', instructorGroup);
+  this.render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('.school-title').text().trim(), 'medicine >');
+  assert.equal(this.$('.editinplace').text().trim(), 'lorem ipsum');
+  assert.equal(this.$('.info').text().replace(/\s/g,''), 'Members:3');
+});
 
-  // Template block usage:
-  this.render(hbs`
-    {{#instructorgroup-header}}
-      template block text
-    {{/instructorgroup-header}}
-  `);
+test('can change title', function(assert) {
+  assert.expect(3);
+  let instructorGroup = Object.create({
+    title: 'lorem ipsum',
+    save(){
+      assert.equal(this.get('title'), 'new title');
+      return resolve(this);
+    }
+  });
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  this.set('instructorGroup', instructorGroup);
+  this.render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
+
+  assert.equal(this.$('.editinplace').text().trim(), 'lorem ipsum');
+  this.$('.editable').click();
+  this.$('.editinplace input').val('new title');
+  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace .done').click();
+  return wait().then(() => {
+    assert.equal(this.$('.editinplace').text().trim(), 'new title');
+  });
 });
