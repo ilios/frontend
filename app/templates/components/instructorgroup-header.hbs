@@ -1,0 +1,25 @@
+<div class='title'>
+  <h4 class="school-title">{{instructorGroup.school.title}} &gt; </h4>
+  {{#editable-field
+     value=title
+     save=(action 'changeTitle')
+     close=(action 'revertTitleChanges')
+     as |isSaving save close|
+  }}
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=save
+      onescape=close
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      keyPress=(action 'addErrorDisplayFor' 'title')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  {{/editable-field}}
+</div>
+<span class='info'>
+  {{t 'instructorGroups.members'}}: {{instructorGroup.users.length}}
+</span>
