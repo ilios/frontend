@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { translationMacro as t } from "ember-i18n";
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
+
 
 const { inject, Component, isPresent } = Ember;
 const { service } = inject;
@@ -26,6 +28,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
+  i18n: service(),
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,
@@ -39,6 +42,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   orderInSequence: 0,
   childSequenceOrder: 1,
   isInOrderedSequence: false,
+  linkableCourses: [],
   startDate: null,
   endDate: null,
   course: null,
@@ -77,7 +81,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       orderInSequence = 1;
     }
     const academicLevel = academicLevels[0];
-    this.setProperties({academicLevel, academicLevels, isInOrderedSequence, orderInSequence, orderInSequenceOptions});
+    const linkableCourses = yield report.get('linkableCourses');
+    const selectOnePlaceholder = t('general.selectOnePlaceholder').toString();
+    this.setProperties({
+      academicLevel,
+      academicLevels,
+      isInOrderedSequence,
+      orderInSequence,
+      orderInSequenceOptions,
+      linkableCourses,
+    });
   }),
 
   actions: {
@@ -100,6 +113,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             course: this.get('course'),
             minimum: this.get('minimum'),
             maximum: this.get('maximum'),
+            course: this.get('course'),
             duration: this.get('duration') || 0,
           });
           this.get('save')(block).finally(()=> {

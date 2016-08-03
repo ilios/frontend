@@ -29,23 +29,23 @@
   </div>
     
   <div class="item required">
-      <label>{{t "general.required"}} ?</label>
-      {{inplace-boolean value=required save='changeRequired'}}
+    <label>{{t "general.required"}} ?</label>
+    {{inplace-boolean value=required save='changeRequired'}}
   </div>
     
   <div class="item track">
-      <label>{{t "curriculumInventory.isTrack"}} ?</label>
-      {{inplace-boolean value=track save='changeTrack'}}
+    <label>{{t "curriculumInventory.isTrack"}} ?</label>
+    {{inplace-boolean value=track save='changeTrack'}}
   </div>
     
   <div class='item start-date'>
-      <label>{{t "general.startDate"}}:</label>
-      {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
+    <label>{{t "general.startDate"}}:</label>
+    {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
   </div>
     
   <div class='item end-date'>
-      <label>{{t "general.endDate"}}:</label>
-      {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
+    <label>{{t "general.endDate"}}:</label>
+    {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
   </div>
     
   <div class="item clear-dates">
@@ -53,8 +53,8 @@
   </div>
     
   <div class="item duration">
-      <label>{{t 'general.duration'}}:</label>
-      {{one-way-input
+    <label>{{t 'general.duration'}}:</label>
+    {{one-way-input
       value=duration
       update=(action (mut duration))
       onenter=(action 'save')
@@ -62,21 +62,21 @@
       disabled=isSaving
       focusOut=(action 'addErrorDisplayFor' 'duration')
       keyDown=(action 'addErrorDisplayFor' 'duration')
-      }}
-      {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
-          <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
-      {{/if}}
+    }}
+    {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
+      <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
+    {{/if}}
   </div>
 
   <div class="item academic-level">
-      <label>{{t "curriculumInventory.academicLevels"}}:</label>
-      {{one-way-select
+    <label>{{t "curriculumInventory.academicLevels"}}:</label>
+    {{one-way-select
       value=academicLevel
       options=(sort-by 'level' (await academicLevels))
       optionValuePath='id'
       optionLabelPath='name'
       update=(action (mut academicLevel))
-      }}
+    }}
   </div>
   {{#if isInOrderedSequence}}
     <div class="item academic-level">
@@ -88,6 +88,18 @@
       }}
     </div>
   {{/if}}
+
+  <div class="item course">
+    <label>{{t "general.course"}}:</label>
+    {{one-way-select
+      value=course
+      options=(sort-by 'title' (await linkableCourses))
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut course))
+      includeBlank=true
+    }}
+  </div>
   <div class='buttons'>
     <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
       {{#if isSaving}}
