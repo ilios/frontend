@@ -24,7 +24,6 @@
       update=(action (mut description))
       disabled=isSaving
       placeholder=(t 'curriculumInventory.sequenceBlockDescriptionPlaceholder')
-    
     }}
   </div>
     
@@ -41,11 +40,17 @@
   <div class='item start-date'>
     <label>{{t "general.startDate"}}:</label>
     {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
+  {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
+      <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
+  {{/if}}
   </div>
     
   <div class='item end-date'>
     <label>{{t "general.endDate"}}:</label>
     {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
+  {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
+      <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+  {{/if}}
   </div>
     
   <div class="item clear-dates">

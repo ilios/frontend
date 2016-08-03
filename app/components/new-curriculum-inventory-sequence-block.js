@@ -23,7 +23,27 @@ const Validations = buildValidations({
       integer: true,
       gte: 0
     }),
-  ]
+  ],
+  startDate: [
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['duration'],
+      disabled(){
+        return this.get('model.duration') > 0;
+      }
+    }),
+  ],
+  endDate: [
+    validator('date', {
+      dependentKeys: ['startDate'],
+      after: function () {
+        return this.get('model.startDate');
+      },
+      disabled(){
+        return this.get('model.duration') > 0 && !this.get('model.startDate');
+      }
+    })
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -42,7 +62,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   orderInSequence: 0,
   childSequenceOrder: 1,
   isInOrderedSequence: false,
-  linkableCourses: [],
+  linkableCourse: [],
   startDate: null,
   endDate: null,
   course: null,
@@ -96,7 +116,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     save: function(){
       this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['title', 'duration']);
+      this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate']);
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           let block = this.get('store').createRecord('curriculumInventorySequenceBlock', {
@@ -110,7 +130,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             childSequenceOrder: this.get('childSequenceOrder'),
             startDate: this.get('startDate'),
             endDate: this.get('endDate'),
-            course: this.get('course'),
             minimum: this.get('minimum'),
             maximum: this.get('maximum'),
             course: this.get('course'),
