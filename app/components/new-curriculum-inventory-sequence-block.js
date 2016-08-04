@@ -44,6 +44,25 @@ const Validations = buildValidations({
       }
     })
   ],
+  minimum: [
+    validator('number', {
+      allowString: true,
+      integer: true,
+      gte: 0
+    }),
+  ],
+  maximum: [
+    validator('number', {
+      dependentKeys: ['minimum'],
+      allowString: true,
+      integer: true,
+      gte: function() {
+        const min = this.get('model.minimum') || 0;
+        console.log(min);
+        return Math.max(0, min);
+      }
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -116,7 +135,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     save: function(){
       this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate']);
+      this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           let block = this.get('store').createRecord('curriculumInventorySequenceBlock', {

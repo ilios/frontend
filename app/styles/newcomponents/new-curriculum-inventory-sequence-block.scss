@@ -14,13 +14,41 @@
     }
   }
 
-  .description {
-    @include fill-parent;
-    min-height: 10em;
+  .course {
+    @include media($large-screen) {
+      @include span-columns(8);
+    }
+    .details {
+      font-size: smaller;
+    }
   }
 
-  .academic-level, .duration, .order-in-sequence {
-    @include fill-parent;
+  .description {
+    @include media($large-screen) {
+      @include span-columns(8);
+    }
+    min-height: 10em;
+  }
+  .required, .track {
+    height: 4em;
+    @include media($large-screen) {
+      @include span-columns(4);
+    }
+  }
+
+  .duration {
+    @include media($large-screen) {
+      @include span-columns(3);
+    }
+  }
+
+  .start-date, .end-date {
+    @include media($large-screen) {
+      @include span-columns(4);
+    }
+  }
+
+  .academic-level, .order-in-sequence {
     label {
       display: block;
     }
@@ -31,9 +59,25 @@
 
   .clear-dates {
     @include fill-parent;
+    height: 4em;
+  }
+
+  .title {
+    @include media($large-screen) {
+      @include span-columns(8);
+    }
   }
 
   .buttons {
     @include ilios-form-buttons;
+  }
+
+  .selective {
+    @include fill-parent;
+    height: 2em;
+
+    label {
+      font-style: italic;
+    };
   }
 }

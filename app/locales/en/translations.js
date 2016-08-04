@@ -160,6 +160,8 @@ export default {
     'hours': 'Hours',
     'minutes': 'Minutes',
     'notApplicableAbbr': 'n/a',
+    'minimum': 'Minimum',
+    'maximum': 'Maximum',
   },
   'programs': {
     'programTitle': 'Program Title',
@@ -645,5 +647,6 @@ export default {
     'sequenceBlockDescriptionPlaceholder': 'Please enter a description for this sequence block.',
     'sequenceBlockTitlePlaceholder': 'Please enter a title for this sequence block.',
     'clearDates': 'Clear Dates',
+    'isSelective': 'Is Selective',
   }
 };
