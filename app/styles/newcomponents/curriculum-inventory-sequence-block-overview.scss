@@ -19,13 +19,17 @@
   .course {
     @include span-columns(10);
     .details {
+      display: block;
       font-size: smaller;
-      padding-left: 1em;
     }
   }
 
   .description {
     @include span-columns(10);
     margin-bottom: 2em;
+  }
+
+  .duration {
+    @include span-columns(10);
   }
 }
