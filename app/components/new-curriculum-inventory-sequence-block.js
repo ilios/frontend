@@ -1,9 +1,7 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
-import { translationMacro as t } from "ember-i18n";
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
-
 
 const { inject, Component, isPresent } = Ember;
 const { service } = inject;
@@ -67,7 +65,6 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  i18n: service(),
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,
@@ -121,7 +118,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     const academicLevel = academicLevels[0];
     const linkableCourses = yield report.get('linkableCourses');
-    const selectOnePlaceholder = t('general.selectOnePlaceholder').toString();
     this.setProperties({
       academicLevel,
       academicLevels,
