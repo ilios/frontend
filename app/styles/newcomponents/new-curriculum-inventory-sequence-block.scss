@@ -19,11 +19,18 @@
     min-height: 10em;
   }
 
-  .academic-level {
-    clear: both;
-    select {
+  .academic-level, .duration, .order-in-sequence {
+    @include fill-parent;
+    label {
+      display: block;
+    }
+    input, select {
       width: 5em;
     }
+  }
+
+  .clear-dates {
+    @include fill-parent;
   }
 
   .buttons {
