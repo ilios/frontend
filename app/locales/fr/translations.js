@@ -648,5 +648,6 @@ export default {
     'sequenceBlockTitlePlaceholder': 'Please enter a title for this sequence block.',
     'clearDates': 'Clear Dates',
     'isSelective': 'Est sélectif',
+    'clickToAddDescription':  'Cliquez pour ajouter une description',
   }
 };

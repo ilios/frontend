@@ -1,96 +1,114 @@
-<div class='title'>
-  {{t 'general.overview'}}
-</div>
-<div class='curriculum-inventory-sequence-block-overview-content'>
-  <div class="block description">
-    <label>{{t "general.description"}}:</label>
-    <span>{{sequenceBlock.description}}</span>
-  </div>
-  <div class="block required">
-    <label>{{t "general.required"}}:</label>
-    <span>
-      {{if sequenceBlock.isRequired
-        (t 'general.yes')
-        (if sequenceBlock.isOptional (t 'general.no') (t 'curriculumInventory.requiredInTrack'))
-      }}
-    </span>
-  </div>
-  <div class="block track">
-    <label>{{t "curriculumInventory.isTrack"}}:</label>
-    <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
-  </div>
-  <div class="block start-date">
-    <label>{{t "general.start"}}:</label>
-    <span>
-      {{#if sequenceBlock.startDate}}
-        {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+<div class='title'>{{t 'general.overview'}}</div>
+{{#unless loadAttr.isRunning}}
+  <div class='curriculum-inventory-sequence-block-overview-content'>
+    <div class="block description">
+      <label>{{t "general.description"}}:</label>
+      {{#if isFinalized}}
+        <span>{{sequenceBlock.description}}</span>
       {{else}}
-        {{t 'general.notApplicableAbbr'}}
+        {{inplace-textarea
+          value=sequenceBlock.description
+          save='changeDescription'
+          clickPromptTranslation='curriculumInventory.clickToAddDescription'
+        }}
       {{/if}}
-    </span>
-  </div>
-  <div class="block end-date">
-    <label>{{t "general.end"}}:</label>
-    <span>
-      {{#if sequenceBlock.endDate}}
-        {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+    </div>
+    <div class="block required">
+      <label>{{t "general.required"}}:</label>
+      {{#if isFinalized}}
+        <span>
+          {{if sequenceBlock.isRequired
+          (t 'general.yes')
+          (if sequenceBlock.isOptional (t 'general.no') (t 'curriculumInventory.requiredInTrack'))
+          }}
+        </span>
       {{else}}
-        {{t 'general.notApplicableAbbr'}}
+        {{inplace-select value=sequenceBlock.required options=requiredOptions save='changeRequired'}}
       {{/if}}
-    </span>
-  </div>
-  <div class="block duration">
-    <label>{{t "curriculumInventory.durationInDays"}}:</label>
-    <span>{{sequenceBlock.duration}}</span>
-  </div>
-
-  <div class="block order-in-sequence">
-    <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+    </div>
+    <div class="block track">
+      <label>{{t "curriculumInventory.isTrack"}}:</label>
+      {{#if isFinalized}}
+        <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
+      {{else}}
+        {{inplace-boolean value=sequenceBlock.track save='changeTrack'}}
+      {{/if}}
+    </div>
+    <div class="block start-date">
+      <label>{{t "general.start"}}:</label>
       <span>
-        {{#if sequenceBlock.parent.isOrdered}}
-          {{sequenceBlock.orderInSequence}}
+        {{#if sequenceBlock.startDate}}
+          {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
         {{else}}
           {{t 'general.notApplicableAbbr'}}
         {{/if}}
       </span>
-  </div>
-  <div class="block child-sequence-order">
-    <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
-    <span>
-      {{if
-        sequenceBlock.isOrdered (t 'curriculumInventory.ordered')
-        (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
-      }}
-    </span>
-  </div>
-  <div class="block minimum">
-    <label>{{t 'general.minimum'}}:</label>
-    <span>{{sequenceBlock.minimum}}</span>
-  </div>
-  <div class="block maximum">
-      <label>{{t 'general.maximum'}}:</label>
-      <span>{{sequenceBlock.maximum}}</span>
-  </div>
-  <div class="block academic-level">
-    <label>{{t "curriculumInventory.academicLevel"}}:</label>
-    <span>{{sequenceBlock.academicLevel.level}}</span>
-  </div>
-  <div class="block course">
-    <label>{{t 'general.course'}}:</label>
-    <span>
-      {{#if sequenceBlock.course}}
-        {{sequenceBlock.course.title}}
-        <span class="details">
-          {{t 'general.level'}}: {{sequenceBlock.course.level}},
-          {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
-          {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}},
-          {{#if sequenceBlock.course.clerkshipType}}
-             {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+    </div>
+    <div class="block end-date">
+      <label>{{t "general.end"}}:</label>
+      <span>
+        {{#if sequenceBlock.endDate}}
+          {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+        {{else}}
+          {{t 'general.notApplicableAbbr'}}
+        {{/if}}
+      </span>
+    </div>
+    <div class="block duration">
+      <label>{{t "curriculumInventory.durationInDays"}}:</label>
+      <span>{{sequenceBlock.duration}}</span>
+    </div>
+
+    <div class="block child-sequence-order">
+      <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
+      <span>
+        {{if
+          sequenceBlock.isOrdered (t 'curriculumInventory.ordered')
+          (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
+        }}
+      </span>
+    </div>
+
+    <div class="block order-in-sequence">
+      <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+        <span>
+          {{#if sequenceBlock.parent.isOrdered}}
+            {{sequenceBlock.orderInSequence}}
+          {{else}}
+            {{t 'general.notApplicableAbbr'}}
           {{/if}}
         </span>
-      {{else}}
-        {{t 'general.notApplicableAbbr'}}
-      {{/if}}
-    </span>
+    </div>
+
+    <div class="block minimum">
+      <label>{{t 'general.minimum'}}:</label>
+      <span>{{sequenceBlock.minimum}}</span>
+    </div>
+    <div class="block maximum">
+        <label>{{t 'general.maximum'}}:</label>
+        <span>{{sequenceBlock.maximum}}</span>
+    </div>
+    <div class="block academic-level">
+      <label>{{t "curriculumInventory.academicLevel"}}:</label>
+      <span>{{sequenceBlock.academicLevel.level}}</span>
+    </div>
+    <div class="block course">
+      <label>{{t 'general.course'}}:</label>
+      <span>
+        {{#if sequenceBlock.course}}
+          {{sequenceBlock.course.title}}
+          <span class="details">
+            {{t 'general.level'}}: {{sequenceBlock.course.level}},
+            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
+            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}},
+            {{#if sequenceBlock.course.clerkshipType}}
+               {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+            {{/if}}
+          </span>
+        {{else}}
+          {{t 'general.notApplicableAbbr'}}
+        {{/if}}
+      </span>
+    </div>
   </div>
-</div>
+{{/unless}}

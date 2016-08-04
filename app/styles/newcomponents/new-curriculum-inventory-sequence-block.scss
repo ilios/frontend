@@ -29,31 +29,10 @@
     }
     min-height: 10em;
   }
-  .required, .track {
-    height: 4em;
-    @include media($large-screen) {
-      @include span-columns(4);
-    }
-  }
 
-  .duration {
+  .duration, .order-in-sequence {
     @include media($large-screen) {
       @include span-columns(3);
-    }
-  }
-
-  .start-date, .end-date {
-    @include media($large-screen) {
-      @include span-columns(4);
-    }
-  }
-
-  .academic-level, .order-in-sequence {
-    label {
-      display: block;
-    }
-    input, select {
-      width: 5em;
     }
   }
 

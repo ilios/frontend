@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { translationMacro as t } from "ember-i18n";
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
@@ -56,7 +57,6 @@ const Validations = buildValidations({
       integer: true,
       gte: function() {
         const min = this.get('model.minimum') || 0;
-        console.log(min);
         return Math.max(0, min);
       }
     }),
@@ -65,6 +65,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
+  i18n: service(),
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,
@@ -72,11 +73,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   parent: null,
   report: null,
   academicLevel: null,
-  required: false,
+  required: null,
   track: false,
   duration: 0,
   orderInSequence: 0,
-  childSequenceOrder: 1,
+  childSequenceOrder: null,
   isInOrderedSequence: false,
   linkableCourse: [],
   startDate: null,
@@ -85,14 +86,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   minimum: 0,
   maximum: 0,
   orderInSequenceOptions: [],
-
   isSaving: false,
   academicLevels: [],
-  childSequenceOrderOptions: [
-    { 'id' : 1, t: 'curriculumInventory.ordered'},
-    { 'id' : 2, t: 'curriculumInventory.unordered'},
-    { 'id' : 3, t: 'curriculumInventory.parallel'}
-  ],
+  childSequenceOrderOptions: [],
+  requiredOptions: [],
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -118,6 +115,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     const academicLevel = academicLevels[0];
     const linkableCourses = yield report.get('linkableCourses');
+    const i18n = this.get('i18n');
+    const childSequenceOrderOptions = [
+      Ember.Object.create({ 'id' : 1, 'title': i18n.t('curriculumInventory.ordered') }),
+      Ember.Object.create({ 'id' : 2, 'title': i18n.t('curriculumInventory.unordered') }),
+      Ember.Object.create({ 'id' : 3, 'title': i18n.t('curriculumInventory.parallel') })
+    ];
+    const requiredOptions = [
+      Ember.Object.create({ 'id' : 1, 'title': i18n.t('curriculumInventory.required') }),
+      Ember.Object.create({ 'id' : 2, 'title': i18n.t('curriculumInventory.optional') }),
+      Ember.Object.create({ 'id' : 3, 'title': i18n.t('curriculumInventory.requiredInTrack') })
+    ];
+    const required = requiredOptions[0];
+    const childSequenceOrder = childSequenceOrderOptions[0];
+
     this.setProperties({
       academicLevel,
       academicLevels,
@@ -125,6 +136,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       orderInSequence,
       orderInSequenceOptions,
       linkableCourses,
+      requiredOptions,
+      childSequenceOrderOptions,
+      required,
+      childSequenceOrder,
     });
   }),
 
@@ -139,10 +154,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             description: this.get('description'),
             parent: this.get('parent'),
             academicLevel: this.get('academicLevel'),
-            required: this.get('required'),
+            required: this.get('required').get('id'),
             track: this.get('track'),
             orderInSequence: this.get('orderInSequence'),
-            childSequenceOrder: this.get('childSequenceOrder'),
+            childSequenceOrder: this.get('childSequenceOrder').get('id'),
             startDate: this.get('startDate'),
             endDate: this.get('endDate'),
             minimum: this.get('minimum'),

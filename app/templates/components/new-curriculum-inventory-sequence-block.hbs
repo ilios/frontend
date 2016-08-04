@@ -26,14 +26,20 @@
       placeholder=(t 'curriculumInventory.sequenceBlockDescriptionPlaceholder')
     }}
   </div>
-    
+
   <div class="item required">
-    <label>{{t "general.required"}} ?</label>
-    {{inplace-boolean value=required save='changeRequired'}}
+    <label>{{t "general.required"}}:</label>
+    {{one-way-select
+      value=required
+      options=requiredOptions
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut required))
+    }}
   </div>
-    
+
   <div class="item track">
-    <label>{{t "curriculumInventory.isTrack"}} ?</label>
+    <label>{{t "curriculumInventory.isTrack"}}?</label>
     {{inplace-boolean value=track save='changeTrack'}}
   </div>
 
@@ -74,7 +80,7 @@
   </div>
 
   <div class="item selective">
-      <label>{{t 'curriculumInventory.isSelective'}}?</label>
+      <label>{{t 'curriculumInventory.isSelective'}} ?</label>
   </div>
 
   <div class="item minimum">
@@ -108,7 +114,6 @@
       <span class="validation-error-message">{{v-get this 'maximum' 'message'}}</span>
     {{/if}}
   </div>
-
   <div class="item academic-level">
     <label>{{t "curriculumInventory.academicLevel"}}:</label>
     {{one-way-select
@@ -119,7 +124,16 @@
       update=(action (mut academicLevel))
     }}
   </div>
-
+  <div class="item child-sequence-order">
+    <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
+    {{one-way-select
+      value=childSequenceOrder
+      options=childSequenceOrderOptions
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut childSequenceOrder))
+    }}
+  </div>
   {{#if isInOrderedSequence}}
     <div class="item order-in-sequence">
       <label>{{t "curriculumInventory.orderInSequence"}}:</label>
@@ -130,7 +144,6 @@
       }}
     </div>
   {{/if}}
-
   <div class="item course">
     <label>{{t "general.course"}}:</label>
     {{one-way-select
@@ -142,14 +155,14 @@
       includeBlank=true
     }}
     {{#if course}}
-     <span class="details">
-        {{t 'general.level'}}: {{course.level}},
-        {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
-        {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}},
-        {{#if course.clerkshipType}}
-          {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
-        {{/if}}
-     </span>
+       <span class="details">
+         {{t 'general.level'}}: {{course.level}},
+         {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
+         {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}},
+         {{#if course.clerkshipType}}
+           {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+         {{/if}}
+       </span>
     {{/if}}
   </div>
 
