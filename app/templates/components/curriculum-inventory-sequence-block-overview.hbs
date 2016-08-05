@@ -102,7 +102,7 @@
         <span>{{sequenceBlock.academicLevel.name}}</span>
       {{else}}
         {{inplace-select
-          displayValueOverride=sequenceBlock.academicLevel.name
+          displayValueOverride=(await sequenceBlock.academicLevel.name)
           value=(await sequenceBlock.academicLevel.id)
           options=(sort-by 'level' academicLevels)
           optionLabelPath='name'
@@ -112,21 +112,26 @@
     </div>
     <div class="block course">
       <label>{{t 'general.course'}}:</label>
-      <span>
-        {{#if sequenceBlock.course}}
-          {{sequenceBlock.course.title}}
-          <span class="details">
-            {{t 'general.level'}}: {{sequenceBlock.course.level}},
-            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
-            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}},
-            {{#if sequenceBlock.course.clerkshipType}}
-               {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
-            {{/if}}
-          </span>
-        {{else}}
-          {{t 'general.notApplicableAbbr'}}
-        {{/if}}
-      </span>
+      {{#if isFinalized}}
+        <span>{{if sequenceBlock.course sequenceBlock.course.title (t 'general.notApplicableAbbr')}}</span>
+      {{else}}
+        {{inplace-select
+          displayValueOverride=(await sequenceBlock.course.title)
+          value=(await sequenceBlock.course.id)
+          options=(sort-by 'title' linkableCourses)
+          save='changeCourse'
+        }}
+      {{/if}}
+      {{#if sequenceBlock.course}}
+        <span class="details">
+          {{t 'general.level'}}: {{sequenceBlock.course.level}},
+          {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
+          {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}},
+          {{#if sequenceBlock.course.clerkshipType}}
+             {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+          {{/if}}
+        </span>
+    {{/if}}
     </div>
   </div>
 {{/unless}}

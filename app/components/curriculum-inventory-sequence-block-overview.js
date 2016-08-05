@@ -71,8 +71,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   sequenceBlock: null,
   parent: null,
   report: null,
-  linkableCourse: [],
-  course: null,
+  linkableCourses: [],
   minimum: 0,
   maximum: 0,
   orderInSequenceOptions: [],
@@ -109,8 +108,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         orderInSequenceOptions.push(i + 1);
       }
     }
-    const linkableCourses = yield report.get('linkableCourses');
+
+    let linkableCourses = yield report.get('linkableCourses');
+    linkableCourses = linkableCourses.toArray();
     const course = yield sequenceBlock.get('course');
+    if (course) {
+      linkableCourses.pushObject(course);
+    }
+
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
@@ -180,5 +185,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       block.set('academicLevel', academicYear);
       block.save();
     },
+
+    changeCourse(value) {
+      let linkableCourses = this.get('linkableCourses');
+      let course = linkableCourses.findBy('id', value);
+      let block = this.get('sequenceBlock');
+      block.set('course', course);
+      block.save();
+    }
   }
 });
