@@ -104,8 +104,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (isPresent(parent) && parent.get('isOrdered')) {
       isInOrderedSequence = true;
       const siblings = yield parent.get('children');
-      for (let i = 0, n = (siblings.toArray().length + 1); i < n; i++) {
-        orderInSequenceOptions.push(i + 1);
+      for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
+        let num = i + 1;
+        orderInSequenceOptions.pushObject(Ember.Object.create({ 'id': num, 'title': num }));
       }
     }
 
@@ -192,6 +193,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       let block = this.get('sequenceBlock');
       block.set('course', course);
       block.save();
+    },
+
+    changeOrderInSequence(value) {
+      let block = this.get('sequenceBlock');
+      block.set('orderInSequence', value);
+      block.save().then(block => {
+        block.get('parent').then(parent => {
+          parent.get('children').then(children => {
+            children.invoke('reload');
+          });
+        })
+      });
     }
   }
 });

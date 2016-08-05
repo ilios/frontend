@@ -81,7 +81,15 @@
       <label>{{t "curriculumInventory.orderInSequence"}}:</label>
         <span>
           {{#if sequenceBlock.parent.isOrdered}}
-            {{sequenceBlock.orderInSequence}}
+            {{#if isFinalized}}
+              {{sequenceBlock.orderInSequence}}
+            {{else}}
+              {{inplace-select
+                value=sequenceBlock.orderInSequence
+                options=orderInSequenceOptions
+                save="changeOrderInSequence"
+              }}
+            {{/if}}
           {{else}}
             {{t 'general.notApplicableAbbr'}}
           {{/if}}
