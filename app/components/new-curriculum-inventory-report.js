@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import { task, timeout } from 'ember-concurrency';
 
 const { inject, Component } = Ember;
 const { service } = inject;
@@ -17,21 +18,31 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-
-  init() {
-    this._super(...arguments);
-    let years = [];
-    for (let i = this.currentYear - 5, n = this.currentYear + 5; i <= n; i++) {
-      years.push(i);
-    }
-    this.years = years;
-  },
-
   title: null,
   currentProgram: null,
   isSaving: false,
-  currentYear: new Date().getFullYear(),
   selectedYear: null,
+  years: [],
+
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.get('loadAttr').perform();
+  },
+
+  loadAttr: task(function * () {
+      let years = [];
+      const currentYear = new Date().getFullYear();
+      for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
+        let title = i + ' - ' + (i + 1);
+        let year = Ember.Object.create({ 'id': i, 'title': title });
+        years.pushObject(year);
+      }
+      const selectedYear = years.findBy('id', currentYear);
+      this.setProperties({
+        years,
+        selectedYear,
+      });
+  }),
 
   actions: {
     save: function(){
@@ -39,7 +50,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplayFor', 'name');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let year = parseInt(this.get('selectedYear') || this.get('currentYear'), 10);
+          let year = parseInt(this.get('selectedYear').get('id'), 10);
           let report = this.get('store').createRecord('curriculumInventoryReport', {
             name: this.get('name'),
             program: this.get('currentProgram'),
@@ -58,6 +69,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     cancel: function(){
       this.sendAction('cancel');
-    }
+    },
   }
 });
