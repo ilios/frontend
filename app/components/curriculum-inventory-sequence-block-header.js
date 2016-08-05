@@ -31,7 +31,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     changeTitle(){
       const block = this.get('sequenceBlock');
-      console.log(block);
       const newTitle = this.get('blockTitle');
       this.send('addErrorDisplayFor', 'blockTitle');
       return new Promise((resolve, reject) => {
