@@ -71,7 +71,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   sequenceBlock: null,
   parent: null,
   report: null,
-  academicLevel: null,
   linkableCourse: [],
   course: null,
   minimum: 0,
@@ -110,7 +109,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         orderInSequenceOptions.push(i + 1);
       }
     }
-    const academicLevel = yield sequenceBlock.get('academicLevel');
     const linkableCourses = yield report.get('linkableCourses');
     const course = yield sequenceBlock.get('course');
     const duration = sequenceBlock.get('duration');
@@ -133,7 +131,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.setProperties({
       parent,
       report,
-      academicLevel,
       academicLevels,
       isInOrderedSequence,
       orderInSequenceOptions,
@@ -150,33 +147,38 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   actions: {
-    changeAcademicLevel: function(value){
-      this.get('sequenceBlock').set('academicLevel', value);
-      this.get('sequenceBlock').save();
-    },
-
     changeRequired: function(value){
-      this.get('sequenceBlock').set('required', value);
-      this.get('sequenceBlock').save();
+      let block = this.get('sequenceBlock');
+      block.set('required', value);
+      block.save();
     },
 
     changeTrack: function(value){
-      this.get('sequenceBlock').set('track', value);
-      this.get('sequenceBlock').save();
+      let block = this.get('sequenceBlock');
+      block.set('track', value);
+      block.save();
     },
 
     changeDescription(value) {
-      this.get('sequenceBlock').set('description', value);
-      this.get('sequenceBlock').save();
+      let block = this.get('sequenceBlock');
+      block.set('description', value);
+      block.save();
     },
 
     changeChildSequenceOrder(value) {
-      this.get('sequenceBlock').set('childSequenceOrder', value);
-      this.get('sequenceBlock').save().then(block => {
+      let block = this.get('sequenceBlock');
+      block.set('childSequenceOrder', value);
+      block.save().then(block => {
         block.get('children').then(children => {
           children.invoke('reload');
         });
       });
-    }
+    },
+    changeAcademicLevel(value){
+      let academicYear = this.get('academicLevels').findBy('id', value);
+      let block = this.get('sequenceBlock');
+      block.set('academicLevel', academicYear);
+      block.save();
+    },
   }
 });
