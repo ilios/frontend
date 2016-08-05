@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
-import { translationMacro as t } from "ember-i18n"
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 

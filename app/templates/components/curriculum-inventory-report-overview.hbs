@@ -1,63 +1,67 @@
-<div class='title'>
-  {{t 'general.overview'}}
-</div>
-<div class='curriculum-inventory-report-overview-content'>
-  <div class="block">
-    <label>{{t "general.start"}}:</label>
-    <span>
-      {{#if isFinalized}}
-        {{moment-format report.startDate 'MM/DD/YY'}}
+<div class='title'>{{t 'general.overview'}}</div>
+{{#unless loadAttr.isRunning}}
+  <div class='curriculum-inventory-report-overview-content'>
+    <div class="block">
+      <label>{{t "general.start"}}:</label>
+      <span>
+        {{#if isFinalized}}
+          {{moment-format report.startDate 'MM/DD/YY'}}
+        {{else}}
+          {{inplace-date value=report.startDate save='changeStartDate'}}
+        {{/if}}
+      </span>
+    </div>
+    <div class="block">
+      <label>{{t "general.end"}}:</label>
+      <span>
+        {{#if isFinalized}}
+          {{moment-format report.endDate 'MM/DD/YY'}}
+        {{else}}
+          {{inplace-date value=report.endDate save='changeEndDate'}}
+        {{/if}}
+      </span>
+    </div>
+    <div class="block">
+      <label>{{t "general.academicYear"}}:</label>
+      {{#if (or isFinalized (await report.hasLinkedCourses))}}
+        <span>{{report.yearLabel}}</span>
       {{else}}
-        {{inplace-date value=report.startDate save='changeStartDate'}}
+        {{inplace-select value=report.year displayValueOverride=report.yearLabel options=yearOptions save="changeYear"}}
       {{/if}}
-    </span>
-  </div>
-  <div class="block">
-    <label>{{t "general.end"}}:</label>
-    <span>
-      {{#if isFinalized}}
-        {{moment-format report.endDate 'MM/DD/YY'}}
-      {{else}}
-        {{inplace-date value=report.endDate save='changeEndDate'}}
-      {{/if}}
-    </span>
-  </div>
-  <div class="block">
-    <label>{{t "general.academicYear"}}:</label>
-    <span>{{report.year}}</span>
-  </div>
-
-  <div class="block">
-    <label>{{t "general.program"}}:</label>
-    <span>{{report.program.title}} ({{report.program.shortTitle}})</span>
-  </div>
-  <div class="description">
-    <label>{{t "general.description"}}:</label>
-    <span>
-      {{#if isFinalized}}
-        {{report.description}}
-      {{else}}
-        {{#editable-field
-        value=shortTitle
-        save=(action 'changeDescription')
-        close=(action 'revertDescriptionChanges')
-        clickPrompt=(if report.description report.description (t 'general.clickToEdit'))
-        as |isSaving save close|
-        }}
-          {{one-way-textarea
-          value=description
-          update=(action (mut description))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'description')
-          keyPress=(action 'addErrorDisplayFor' 'description')
+    </div>
+    
+    <div class="block">
+      <label>{{t "general.program"}}:</label>
+      <span>{{report.program.title}} ({{report.program.shortTitle}})</span>
+    </div>
+    <div class="description">
+      <label>{{t "general.description"}}:</label>
+      <span>
+        {{#if isFinalized}}
+          {{report.description}}
+        {{else}}
+          {{#editable-field
+          value=shortTitle
+          save=(action 'changeDescription')
+          close=(action 'revertDescriptionChanges')
+          clickPrompt=(if report.description report.description (t 'general.clickToEdit'))
+          as |isSaving save close|
           }}
-          {{#if (and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))}}
-            <span class="validation-error-message">{{v-get this 'description' 'message'}}</span>
-          {{/if}}
-        {{/editable-field}}
-      {{/if}}
-    </span>
+            {{one-way-textarea
+              value=description
+              update=(action (mut description))
+              onenter=save
+              onescape=close
+              disabled=isSaving
+              focusOut=(action 'addErrorDisplayFor' 'description')
+              keyPress=(action 'addErrorDisplayFor' 'description')
+            }}
+            {{#if (and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))}}
+              <span class="validation-error-message">{{v-get this 'description' 'message'}}</span>
+            {{/if}}
+          {{/editable-field}}
+        {{/if}}
+      </span>
+    </div>
   </div>
-</div>
+{{/unless}}
