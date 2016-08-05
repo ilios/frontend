@@ -32,6 +32,11 @@ export default DS.Model.extend({
     return !! this.belongsTo('export').id();
   }),
 
+  yearLabel: computed('year', function() {
+    const year = this.get('year');
+    return year + ' - ' + (parseInt(year, 10) + 1);
+  }),
+
   linkedCourses: computed('sequenceBlocks.@each.course', function() {
     return new Promise(resolve => {
       this.get('sequenceBlocks').then(sequenceBlocks => {
@@ -49,6 +54,15 @@ export default DS.Model.extend({
         });
       });
     })
+  }),
+
+  hasLinkedCourses: computed('linkedCourses.[]', function(){
+    return new Promise(resolve => {
+      this.get('linkedCourses').then(linkedCourses => {
+        let hasCourses = ! Ember.isEmpty(linkedCourses);
+        resolve(hasCourses);
+      })
+    });
   }),
 
   linkableCourses: computed('year', 'linkedCourses.[]', function(){
