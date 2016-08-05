@@ -61,12 +61,20 @@
 
     <div class="block child-sequence-order">
       <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
-      <span>
-        {{if
-          sequenceBlock.isOrdered (t 'curriculumInventory.ordered')
-          (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
-        }}
-      </span>
+        {{#if isFinalized}}
+          <span>
+            {{if sequenceBlock.isOrdered
+              (t 'curriculumInventory.ordered')
+              (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
+            }}
+          </span>
+        {{else}}
+           {{inplace-select
+             value=sequenceBlock.childSequenceOrder
+             options=childSequenceOrderOptions
+             save='changeChildSequenceOrder'
+           }}
+        {{/if}}
     </div>
 
     <div class="block order-in-sequence">

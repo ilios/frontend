@@ -168,6 +168,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     changeDescription(value) {
       this.get('sequenceBlock').set('description', value);
       this.get('sequenceBlock').save();
+    },
+
+    changeChildSequenceOrder(value) {
+      this.get('sequenceBlock').set('childSequenceOrder', value);
+      this.get('sequenceBlock').save().then(block => {
+        block.get('children').then(children => {
+          children.invoke('reload');
+        });
+      });
     }
   }
 });
