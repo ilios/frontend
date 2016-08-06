@@ -92,7 +92,7 @@
     "ilios-calendar": "^5.0.0",
     "liquid-fire": "0.24.1",
     "liquid-tether": "1.1.1",
-    "loader.js": "^4.0.1",
+    "loader.js": "^4.0.11",
     "pluralize": "^3.0.0",
     "ui-select": "firefly-ui/ui-select#v0.0.10",
     "validator": "^5.1.0"
