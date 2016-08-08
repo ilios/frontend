@@ -458,7 +458,7 @@ test('validate lastName', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -482,7 +482,7 @@ test('validate middleName', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -506,7 +506,7 @@ test('validate email address', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -530,7 +530,7 @@ test('validate campusId', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -554,7 +554,7 @@ test('validate otherId', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -578,7 +578,7 @@ test('validate username', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -633,7 +633,7 @@ test('duplicate username errors on save', function(assert) {
     this.$('.done').click();
     assert.ok(this.$('.saving-authentication-errors').length, 1);
     assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -686,7 +686,7 @@ test('error saving user', function(assert) {
     this.$('.done').click();
     assert.ok(this.$('.saving-user-errors').length, 1);
     assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -705,7 +705,7 @@ test('username not required', function(assert) {
   run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -724,7 +724,7 @@ test('password not required if username is blank', function(assert) {
   run.later(()=>{
     assert.notOk(this.$(goodCheck).prop('disabled'));
     assert.notOk(this.$(goodBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -763,7 +763,7 @@ test('dont create authentication if username is not set', function(assert) {
   triggerUpload(users);
   run.later(()=>{
     this.$('.done').click();
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -781,7 +781,7 @@ test('ignore header row', function(assert) {
   const rows = 'tbody tr';
   run.later(()=>{
     assert.equal(this.$(rows).length, 1);
-  }, 100);
+  }, 1000);
 
   return wait();
 });
