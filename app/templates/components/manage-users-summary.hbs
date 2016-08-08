@@ -12,8 +12,9 @@
   {{/if}}
 </div>
 <div class='user-search'>
-  {{one-way-input
-    type='search'
+  {{one-way-search
+    value=searchValue
+    update=(action (mut searchValue))
     placeholder=(t 'admin.searchForIliosUsers')
     incremental=true
     onsearch=(perform searchForUsers value="target.value")
