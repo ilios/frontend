@@ -22,7 +22,9 @@ before_install:
   - npm set progress=false
   - npm config set spin false
   - npm install -g bower
+  - rvm install 2.2.0
   - travis_retry gem install scss_lint --no-ri --no-rdoc
+
 
 install:
   - travis_retry npm install --no-optional
