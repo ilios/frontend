@@ -12,6 +12,7 @@ export default Component.extend({
   store: service(),
   tagName: 'section',
   classNames: ['manage-users-summary', 'large-component'],
+  searchValue: null,
   searchForUsers: task(function * (query) {
     const i18n = this.get('i18n');
     const store = this.get('store');
