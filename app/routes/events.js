@@ -1,8 +1,13 @@
-import Ember from 'ember';
+import Ember from "ember";
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
-  userEvents: Ember.inject.service(),
-  schoolEvents: Ember.inject.service(),
+const { Route, inject } = Ember;
+const { service } = inject;
+
+export default Route.extend(AuthenticatedRouteMixin, {
+
+  userEvents: service(),
+  schoolEvents: service(),
   model(params){
     let slug = params.slug;
     let container = slug.substring(0, 1);
