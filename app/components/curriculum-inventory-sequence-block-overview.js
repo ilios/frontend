@@ -82,6 +82,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   isSaving: false,
   isFinalized: false,
+  isEditingDatesAndDuration: false,
   academicLevels: [],
   childSequenceOrderOptions: [],
   requiredOptions: [],
@@ -204,6 +205,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           });
         })
       });
+    },
+    changeDatesAndDuration(start, end, duration) {
+      let block = this.get('sequenceBlock');
+      block.set('startDate', start);
+      block.set('endDate', end);
+      block.set('duration', duration);
+      block.save().finally(() => {
+        this.set('isEditingDatesAndDuration', false);
+      });
+    },
+    editDatesAndDuration() {
+      this.set('isEditingDatesAndDuration', true);
+    },
+    cancelDateAndDurationEditing() {
+      this.set('isEditingDatesAndDuration', false);
     }
   }
 });
