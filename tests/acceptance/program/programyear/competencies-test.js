@@ -7,8 +7,8 @@ import startApp from 'ilios/tests/helpers/start-app';
 import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var url = '/programs/1/programyears/1?pyCompetencyDetails=true';
+let application;
+let url = '/programs/1/programyears/1?pyCompetencyDetails=true';
 module('Acceptance: Program Year - Competencies' + testgroup, {
   beforeEach: function() {
     application = startApp();
@@ -54,33 +54,35 @@ test('list', function(assert) {
 
   visit(url);
   andThen(function() {
-    var container = find('.programyear-competencies');
-    assert.equal(getElementText(find('.detail-title', container)), getText('Competencies (2)'));
-    var competencies = 'competency 0 competency 1 competency 2';
-    assert.equal(getElementText(find('.static-list', container)), getText(competencies));
+    let container = find('.programyear-competencies');
+    assert.equal(getElementText(find('.title', container)), getText('Competencies (2)'));
+    let competencies = 'competency 0 competency 1 competency 2';
+    assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
   });
 });
 
 test('manager', function(assert) {
   visit(url);
   andThen(function() {
-    var container = find('.programyear-competencies');
-    click('.detail-actions button', container).then(function(){
-      assert.equal(getElementText(find('.tree-list.selectable', container)), getText('competency3competency4competency5'));
-      assert.equal(getElementText(find('.tree-list.removable', container)), getText('competency0competency1competency2'));
+    let container = find('.programyear-competencies');
+    click('.programyear-competencies-actions button', container).then(function(){
+      let checkboxes = find('input[type=checkbox]', container);
+      assert.equal(checkboxes.length, 6);
+      assert.ok(checkboxes.eq(0).prop('indeterminate'));
+      assert.ok(!checkboxes.eq(0).prop('checked'));
+      assert.ok(checkboxes.eq(1).prop('checked'));
+      assert.ok(checkboxes.eq(2).prop('checked'));
+      assert.ok(!checkboxes.eq(3).prop('checked'));
+      assert.ok(!checkboxes.eq(4).prop('checked'));
+      assert.ok(!checkboxes.eq(5).prop('checked'));
 
-      click('.tree-list.selectable li:eq(0) ul li:eq(0)', container);
-      click('.tree-list.removable li:eq(0) ul li:eq(0)', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.tree-list.selectable', container)), getText('competency0competency1competency3competency5'));
-        assert.equal(getElementText(find('.tree-list.removable', container)), getText('competency0competency2competency3competency4'));
-      });
-
+      click('input[type=checkbox]:eq(1)', container);
+      click('input[type=checkbox]:eq(4)', container);
       click('.bigadd', container);
 
       andThen(function(){
-        var competencies = 'competency 0 competency 2 competency 3 competency 4';
-        assert.equal(getElementText(find('.static-list', container)), getText(competencies));
+        let competencies = 'competency 0 competency 2 competency 3 competency 4';
+        assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
       });
     });
   });
