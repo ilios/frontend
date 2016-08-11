@@ -5,8 +5,10 @@
     {{#each (sort-by 'title' (await domains)) as |domain|}}
       {{#if (contains domain.id (map-by 'id' (await domainsWithNoChildren)))}}
         <li {{action (if (eq domain.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') domain}} class="competency-title clickable {{if (eq domain.id objective.competency.id) 'selected'}}">
-          {{input type='checkbox' checked=(eq domain.id objective.competency.id)}}
-          {{domain.title}}
+          <h5>
+            {{input type='checkbox' checked=(eq domain.id objective.competency.id)}}
+            {{domain.title}}
+          </h5>
         </li>
       {{else}}
         <li>
