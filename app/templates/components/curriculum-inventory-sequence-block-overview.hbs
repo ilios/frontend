@@ -82,31 +82,30 @@
         {{else}}
            <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
         {{/if}}
-    </div>
-
+      </div>
     {{else}}
-        {{curriculum-inventory-sequence-block-dates-duration-editor
+      {{curriculum-inventory-sequence-block-dates-duration-editor
         sequenceBlock=sequenceBlock
         save="changeDatesAndDuration"
         cancel="cancelDateAndDurationEditing"
-        }}
+      }}
     {{/unless}}
     <div class="block child-sequence-order">
       <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
-        {{#if isFinalized}}
-          <span>
-            {{if sequenceBlock.isOrdered
-              (t 'curriculumInventory.ordered')
-              (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
-            }}
-          </span>
-        {{else}}
-           {{inplace-select
-             value=sequenceBlock.childSequenceOrder
-             options=childSequenceOrderOptions
-             save='changeChildSequenceOrder'
-           }}
-        {{/if}}
+      {{#if isFinalized}}
+        <span>
+          {{if sequenceBlock.isOrdered
+            (t 'curriculumInventory.ordered')
+            (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
+          }}
+        </span>
+      {{else}}
+        {{inplace-select
+          value=sequenceBlock.childSequenceOrder
+          options=childSequenceOrderOptions
+          save='changeChildSequenceOrder'
+        }}
+      {{/if}}
     </div>
 
     <div class="block order-in-sequence">
@@ -127,15 +126,30 @@
           {{/if}}
         </span>
     </div>
-
-    <div class="block minimum">
-      <label>{{t 'general.minimum'}}:</label>
-      <span>{{sequenceBlock.minimum}}</span>
-    </div>
-    <div class="block maximum">
+    {{#unless isEditingMinMax}}
+      <div class="block minimum">
+        <label>{{t 'general.minimum'}}:</label>
+          {{#if isFinalized}}
+            <span>{{sequenceBlock.minimum}}</span>
+          {{else}}
+            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
+          {{/if}}
+      </div>
+      <div class="block maximum">
         <label>{{t 'general.maximum'}}:</label>
-        <span>{{sequenceBlock.maximum}}</span>
-    </div>
+        {{#if isFinalized}}
+          <span>{{sequenceBlock.maximum}}</span>
+        {{else}}
+          <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
+        {{/if}}
+      </div>
+    {{else}}
+      {{curriculum-inventory-sequence-block-min-max-editor
+        sequenceBlock=sequenceBlock
+        save="changeMinMax"
+        cancel="cancelMinMaxEditing"
+      }}
+    {{/unless}}
     <div class="block academic-level">
       <label>{{t "curriculumInventory.academicLevel"}}:</label>
       {{#if isFinalized}}

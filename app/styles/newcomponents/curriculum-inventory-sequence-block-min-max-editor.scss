@@ -1,0 +1,21 @@
+.curriculum-inventory-sequence-block-min-max-editor {
+  @include ilios-form;
+  @include fill-parent;
+  @include clearfix;
+  clear: both;
+  display: block;
+  padding: 2em 0;
+  margin-top: 2em;
+
+  .item {
+    @include ilios-form-item;
+
+    &.last {
+      @include ilios-form-last-item;
+    }
+  }
+
+  .buttons {
+    @include ilios-form-buttons;
+  }
+}

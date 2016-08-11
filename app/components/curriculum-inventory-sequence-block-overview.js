@@ -83,6 +83,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSaving: false,
   isFinalized: false,
   isEditingDatesAndDuration: false,
+  isEditingMinMax: false,
   academicLevels: [],
   childSequenceOrderOptions: [],
   requiredOptions: [],
@@ -220,6 +221,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     cancelDateAndDurationEditing() {
       this.set('isEditingDatesAndDuration', false);
+    },
+    changeMinMax(minimum, maximum) {
+      let block = this.get('sequenceBlock');
+      block.set('minimum', minimum);
+      block.set('maximum', maximum);
+      block.save().finally(() => {
+        this.set('isEditingMinMax', false);
+      });
+    },
+    editMinMax() {
+      this.set('isEditingMinMax', true);
+    },
+    cancelMinMaxEditing() {
+      this.set('isEditingMinMax', false);
     }
   }
 });
