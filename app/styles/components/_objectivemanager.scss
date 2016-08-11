@@ -19,10 +19,11 @@
 
     li {
       list-style-position: outside;
-      margin-left: 1.5em;
-      margin-right: 1.5em;
       padding: .2em 0 .3em 1.5em;
-      text-indent: -1.2em;
+
+      ul {
+        margin-left: 1.5em;
+      }
     }
   }
 

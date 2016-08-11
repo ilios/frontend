@@ -15,8 +15,8 @@ module('Acceptance: Program Year - Objectives' + testgroup, {
     setupAuthentication(application);
     server.create('school', {
       school: 1,
-      programYears: [1],
-      competencies: [1,2]
+      programs: [1],
+      competencies: [1,2,3,4,5]
     });
     server.create('program', {
       school: 1,
@@ -24,8 +24,8 @@ module('Acceptance: Program Year - Objectives' + testgroup, {
     });
     server.create('programYear', {
       program: 1,
-      competencies: [2,3],
-      objectives: [1,2]
+      competencies: [2,3,4,5],
+      objectives: [1,2,3]
     });
     server.create('competency', {
       school: 1,
@@ -42,6 +42,15 @@ module('Acceptance: Program Year - Objectives' + testgroup, {
       school: 1,
       programYears: [1],
     });
+    server.create('competency', {
+      school: 1,
+      programYears: [1],
+      objectives: [2]
+    });
+    server.create('competency', {
+      school: 1,
+      programYears: [1],
+    });
     server.createList('meshDescriptor', 2, {
       objectives: [1]
     });
@@ -51,6 +60,10 @@ module('Acceptance: Program Year - Objectives' + testgroup, {
       programYears: [1],
       competency: 2,
       meshDescriptors: [1,2]
+    });
+    server.create('objective', {
+      programYears: [1],
+      competency: 4
     });
     server.create('objective', {
       programYears: [1]
@@ -66,14 +79,18 @@ test('list', function(assert) {
   visit(url);
   andThen(function() {
     let objectiveRows = find('.programyear-objective-list tbody tr');
-    assert.equal(objectiveRows.length, 2);
+    assert.equal(objectiveRows.length, 3);
     assert.equal(getElementText(find('td:eq(0)', objectiveRows.eq(0))), getText('objective 0'));
     assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(0))), getText('competency 1 (competency 0)'));
     assert.equal(getElementText(find('td:eq(2)', objectiveRows.eq(0))), getText('descriptor 0 descriptor 1'));
 
     assert.equal(getElementText(find('td:eq(0)', objectiveRows.eq(1))), getText('objective 1'));
-    assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(1))), getText('Add New'));
+    assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(1))), getText('competency 3'));
     assert.equal(getElementText(find('td:eq(2)', objectiveRows.eq(1))), getText('Add New'));
+
+    assert.equal(getElementText(find('td:eq(0)', objectiveRows.eq(2))), getText('objective 2'));
+    assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(2))), getText('Add New'));
+    assert.equal(getElementText(find('td:eq(2)', objectiveRows.eq(2))), getText('Add New'));
   });
 });
 
@@ -188,7 +205,7 @@ test('cancel term changes', function(assert) {
 });
 
 test('manage competencies', function(assert) {
-  assert.expect(10);
+  assert.expect(14);
   visit(url);
   andThen(function() {
     let tds = find('.programyear-objective-list tbody tr:eq(0) td');
@@ -198,18 +215,22 @@ test('manage competencies', function(assert) {
       assert.equal(getElementText(find('.specific-title')), 'SelectObjectiveCompetency');
       let objectiveManager = find('.objective-manage-competency').eq(0);
       assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText('objective 0'));
-      assert.equal(getElementText(find('.parent-picker', objectiveManager)), getText('competency0 competency1 competency2'));
-      let items = find('.parent-picker li.clickable');
-      assert.equal(items.length, 2);
-      assert.ok(find('.parent-picker h5').hasClass('selected'));
+      assert.equal(getElementText(find('.parent-picker', objectiveManager)), getText('competency0 competency1 competency2 competency3 competency4'));
+      let items = find('.parent-picker .clickable');
+      assert.equal(items.length, 4);
+      assert.ok(find('.parent-picker h5:eq(0)').hasClass('selected'));
       assert.ok($(items[0]).hasClass('selected'));
       assert.ok(!$(items[1]).hasClass('selected'));
+      assert.ok(!find('.parent-picker h5:eq(1)').hasClass('selected'));
+      assert.ok(!find('.parent-picker h5:eq(2)').hasClass('selected'));
 
       andThen(function(){
-        click('.parent-picker li:eq(1)', objectiveManager).then(function(){
-          let items = find('.parent-picker li.clickable');
+        click('.parent-picker .clickable:eq(2)', objectiveManager).then(function(){
+          let items = find('.parent-picker .clickable');
           assert.ok(!$(items[0]).hasClass('selected'));
-          assert.ok($(items[1]).hasClass('selected'));
+          assert.ok(!$(items[1]).hasClass('selected'));
+          assert.ok($(items[2]).hasClass('selected'));
+          assert.ok(!$(items[3]).hasClass('selected'));
         });
       });
     });
@@ -223,7 +244,7 @@ test('save competency', function(assert) {
     click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
-      click('.parent-picker li:eq(1)', objectiveManager).then(function(){
+      click('.parent-picker .clickable:eq(1)', objectiveManager).then(function(){
         click('.detail-objectives button.bigadd');
       });
       andThen(function(){
@@ -240,7 +261,7 @@ test('save no competency', function(assert) {
     click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
-      click('.parent-picker li:eq(0)', objectiveManager).then(function(){
+      click('.parent-picker .clickable:eq(0)', objectiveManager).then(function(){
         click('.detail-objectives button.bigadd');
       });
       andThen(function(){
@@ -288,14 +309,14 @@ test('add competency', function(assert) {
   assert.expect(1);
   visit(url);
   andThen(function() {
-    click('.programyear-objective-list tbody tr:eq(1) td:eq(1) button');
+    click('.programyear-objective-list tbody tr:eq(2) td:eq(1) button');
     andThen(function() {
       let objectiveManager = find('.objective-manage-competency').eq(0);
-      click('.parent-picker li:eq(1)', objectiveManager).then(function(){
+      click('.parent-picker .clickable:eq(1)', objectiveManager).then(function(){
         click('.detail-objectives button.bigadd');
       });
       andThen(function(){
-        assert.equal(getElementText(find('.programyear-objective-list tbody tr:eq(1) td:eq(1)')), getText('competency 2 (competency 0)'));
+        assert.equal(getElementText(find('.programyear-objective-list tbody tr:eq(2) td:eq(1)')), getText('competency 2 (competency 0)'));
       });
     });
   });

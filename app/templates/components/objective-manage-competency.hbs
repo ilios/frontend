@@ -1,26 +1,30 @@
 <div class='list-reset objectivetitle'>{{{objective.title}}}</div>
 
-{{#if showCompetencyList}}
-  <div class='parent-picker'>
-    {{#each domains as |domain|}}
-      <h5 class="competency-title {{if domain.selected 'selected'}}">{{domain.title}}</h5>
-        <ul>
-          {{#each domain.subCompetencies as |competencyProxy|}}
-            {{#if competencyProxy.selected}}
-              <li class='selected clickable' {{action 'removeCurrentCompetency' competencyProxy.content}}>
-                {{input type='checkbox' checked=true}}
-                {{competencyProxy.title}}
+{{#if (gt (get (await competencies) 'length') 0)}}
+  <ul class='parent-picker'>
+    {{#each (sort-by 'title' (await domains)) as |domain|}}
+      {{#if (contains domain.id (map-by 'id' (await domainsWithNoChildren)))}}
+        <li {{action (if (eq domain.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') domain}} class="competency-title clickable {{if (eq domain.id objective.competency.id) 'selected'}}">
+          {{input type='checkbox' checked=(eq domain.id objective.competency.id)}}
+          {{domain.title}}
+        </li>
+      {{else}}
+        <li>
+          <h5 class="competency-title {{if (contains domain.id (map-by 'id' (await competenciesWithSelectedChildren))) 'selected'}}">
+            {{domain.title}}
+          </h5>
+          <ul>
+            {{#each (sort-by 'title' (await domain.children)) as |competency|}}
+              <li {{action (if (eq competency.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') competency}} class="competency-title clickable {{if (eq competency.id objective.competency.id) 'selected'}}">
+                {{input type='checkbox' checked=(eq competency.id objective.competency.id)}}
+                {{competency.title}}
               </li>
-            {{else}}
-              <li class='clickable' {{action 'changeCompetency' competencyProxy.content}}>
-                {{input type='checkbox' checked=false}}
-                {{competencyProxy.title}}
-              </li>
-            {{/if}}
-          {{/each}}
-        </ul>
+            {{/each}}
+          </ul>
+        </li>
+      {{/if}}
     {{/each}}
-  </div>
+  </ul>
 {{else}}
   <div class='no-group'>
     <p>
