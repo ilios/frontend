@@ -4,7 +4,9 @@
   </div>
 
   <div class='detail-actions'>
-    {{expand-collapse-button value=editorOn action="toggleEditor"}}
+    {{#unless report.isFinalized}}
+      {{expand-collapse-button value=editorOn action="toggleEditor"}}
+    {{/unless}}
   </div>
   <section class='resultslist'>
       <section class='resultslist-new'>
