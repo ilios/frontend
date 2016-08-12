@@ -6,7 +6,11 @@
       {{#if (contains domain.id (map-by 'id' (await domainsWithNoChildren)))}}
         <li {{action (if (eq domain.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') domain}} class="competency-title clickable {{if (eq domain.id objective.competency.id) 'selected'}}">
           <h5>
-            {{input type='checkbox' checked=(eq domain.id objective.competency.id)}}
+            {{#if (eq domain.id objective.competency.id)}}
+              <input type='checkbox' checked />
+            {{else}}
+              <input type='checkbox' />
+            {{/if}}
             {{domain.title}}
           </h5>
         </li>
@@ -19,7 +23,11 @@
             {{#each (sort-by 'title' (await domain.children)) as |competency|}}
               {{#if (contains competency.id (map-by 'id' (await competencies)))}}
                 <li {{action (if (eq competency.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') competency}} class="competency-title clickable {{if (eq competency.id objective.competency.id) 'selected'}}">
-                  {{input type='checkbox' checked=(eq competency.id objective.competency.id)}}
+                  {{#if (eq competency.id objective.competency.id)}}
+                    <input type='checkbox' checked />
+                  {{else}}
+                    <input type='checkbox' />
+                  {{/if}}
                   {{competency.title}}
                 </li>
               {{/if}}
