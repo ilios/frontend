@@ -4,9 +4,9 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
-const { inject, Component, isPresent, ObjectProxy, computed, RSVP } = Ember;
-const { service } = inject;
+const { inject, Component, isPresent, computed, RSVP, isEmpty } = Ember;
 const { PromiseArray } = DS;
+const { service } = inject;
 
 const Validations = buildValidations({
   title: [
@@ -152,6 +152,29 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       requiredOptions,
       childSequenceOrderOptions,
       isFinalized
+    });
+  }),
+
+  linkableSessions: computed('sequenceBlock.course', 'sequenceBlock.sessions.[]', function(){
+    let defer = RSVP.defer();
+    this.get('sequenceBlock').get('course').then(course => {
+      this.get('store').query('session', {
+        filters: {
+          course: course.get('id'),
+          published: true
+        },
+        limit: 10000,
+      }).then(sessions => {
+        // filter out ILM sessions
+        let filteredSessions = sessions.toArray().filter(function(session) {
+          return isEmpty(session.belongsTo('ilmSession').id());
+
+        })
+        defer.resolve(filteredSessions);
+      });
+    });
+    return PromiseArray.create({
+      promise: defer.promise
     });
   }),
 
