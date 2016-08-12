@@ -176,16 +176,51 @@
           save='changeCourse'
         }}
       {{/if}}
-      {{#if sequenceBlock.course}}
-        <span class="details">
-          {{t 'general.level'}}: {{sequenceBlock.course.level}},
-          {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
-          {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}},
-          {{#if sequenceBlock.course.clerkshipType}}
-             {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
-          {{/if}}
-        </span>
-    {{/if}}
+      {{#if (is-fulfilled sequenceBlock.course)}}
+        {{#if sequenceBlock.course}}
+          <span class="details">
+            {{t 'general.level'}}: {{sequenceBlock.course.level}},
+            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'MM/DD/YY'}},
+            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'MM/DD/YY'}}
+            {{#if sequenceBlock.course.clerkshipType}}
+              - {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+            {{/if}}
+          </span>
+        {{/if}}
+      {{/if}}
     </div>
+    {{#if (is-fulfilled sequenceBlock.sessions)}}
+      {{#if sequenceBlock.sessions.length}}
+        <div class="block sessions">
+          <label>{{t 'general.sessions'}} ({{sequenceBlock.course.sessions.length}}):</label>
+        </div>
+        <section class="resultslist">
+          <div class='resultslist-list'>
+            <table>
+              <thead>
+                <tr>
+                  <th class='text-center' colspan=2>{{t 'sessions.title'}}</th>
+                  <th class='text-center' colspan=2>{{t 'curriculumInventory.countAsOneOffering'}}</th>
+                  <th class='text-center' colspan=2>{{t 'general.sessionType'}}</th>
+                  <th class='text-center' colspan=2>{{t 'curriculumInventory.totalTime'}}</th>
+                  <th class='text-center' colspan=2># {{t 'general.offerings'}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each sequenceBlock.sessions as |session|}}
+                  <tr>
+                    <td class='text-center' colspan=2>{{session.session.title}}</td>
+                    <td class='text-center' colspan=2>{{if session.countOfferingsOnce (t 'general.yes') (t 'general.no')}}</td>
+                    <td class='text-center' colspan=2>{{session.session.sessionType.title}}</td>
+                    <td class='text-center' colspan=2>{{await session.session.maxSingleOfferingDuration}}</td>
+                    <td class='text-center' colspan=2>{{session.session.offerings.length}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      {{/if}}
+    {{/if}}
   </div>
 {{/unless}}

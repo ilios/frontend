@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
-const { inject, Component, isPresent } = Ember;
+const { inject, Component, isPresent, ObjectProxy, computed, RSVP } = Ember;
 const { service } = inject;
+const { PromiseArray } = DS;
 
 const Validations = buildValidations({
   title: [

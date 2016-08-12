@@ -649,5 +649,7 @@ export default {
     'clearDates': 'Clear Dates',
     'isSelective': 'Es selectivo',
     'clickToAddDescription':  'Haga clic para añadir una descripción',
+    'countAsOneOffering': 'Count as one offering',
+    'totalTime': 'Total time',
   }
 };
