@@ -93,7 +93,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
         });
         const offering = sortedOfferings[0];
         const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-        deferred.resolve(duration);
+        deferred.resolve(duration.toFixed(2));
       }
     });
 
@@ -119,7 +119,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
         offerings.forEach(offering => {
           total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
         });
-        deferred.resolve(total);
+        deferred.resolve(total.toFixed(2));
       }
     });
 

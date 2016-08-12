@@ -189,10 +189,10 @@
         {{/if}}
       {{/if}}
     </div>
-    {{#if (is-fulfilled sequenceBlock.sessions)}}
-      {{#if sequenceBlock.sessions.length}}
+    {{#if (and (is-fulfilled linkableSessions) (is-fulfilled linkedSessions))}}
+      {{#if linkableSessions.length}}
         <div class="block sessions">
-          <label>{{t 'general.sessions'}} ({{sequenceBlock.course.sessions.length}}):</label>
+          <label>{{t 'general.sessions'}} ({{linkableSessions.length}}):</label>
         </div>
         <section class="resultslist">
           <div class='resultslist-list'>
@@ -207,13 +207,13 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each sequenceBlock.sessions as |session|}}
+                {{#each linkableSessions as |session|}}
                   <tr>
-                    <td class='text-center' colspan=2>{{session.session.title}}</td>
-                    <td class='text-center' colspan=2>{{if session.countOfferingsOnce (t 'general.yes') (t 'general.no')}}</td>
-                    <td class='text-center' colspan=2>{{session.session.sessionType.title}}</td>
-                    <td class='text-center' colspan=2>{{await session.session.maxSingleOfferingDuration}}</td>
-                    <td class='text-center' colspan=2>{{session.session.offerings.length}}</td>
+                    <td class='text-center' colspan=2>{{session.title}}</td>
+                    <td class='text-center' colspan=2>{{if (is-in (await linkedSessions) session) (t 'general.yes') (t 'general.no')}}</td>
+                    <td class='text-center' colspan=2>{{session.sessionType.title}}</td>
+                    <td class='text-center' colspan=2>{{if (is-in (await linkedSessions) session) (await session.maxSingleOfferingDuration) (await session.totalSumOfferingsDuration)}}</td>
+                    <td class='text-center' colspan=2>{{session.offerings.length}}</td>
                   </tr>
                 {{/each}}
               </tbody>

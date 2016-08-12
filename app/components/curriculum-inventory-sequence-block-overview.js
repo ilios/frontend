@@ -155,6 +155,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
 
+  linkedSessions: computed('sequenceBlock.sessions.[]', function() {
+    let defer = RSVP.defer();
+    this.get('sequenceBlock').get('sessions').then(sessions => {
+      defer.resolve(sessions.toArray());
+
+    });
+    return PromiseArray.create({
+      promise: defer.promise
+    });
+  }),
+
   linkableSessions: computed('sequenceBlock.course', 'sequenceBlock.sessions.[]', function(){
     let defer = RSVP.defer();
     this.get('sequenceBlock').get('course').then(course => {
