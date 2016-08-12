@@ -17,10 +17,12 @@
           </h5>
           <ul>
             {{#each (sort-by 'title' (await domain.children)) as |competency|}}
-              <li {{action (if (eq competency.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') competency}} class="competency-title clickable {{if (eq competency.id objective.competency.id) 'selected'}}">
-                {{input type='checkbox' checked=(eq competency.id objective.competency.id)}}
-                {{competency.title}}
-              </li>
+              {{#if (contains competency.id (map-by 'id' (await competencies)))}}
+                <li {{action (if (eq competency.id objective.competency.id) 'removeCurrentCompetency' 'changeCompetency') competency}} class="competency-title clickable {{if (eq competency.id objective.competency.id) 'selected'}}">
+                  {{input type='checkbox' checked=(eq competency.id objective.competency.id)}}
+                  {{competency.title}}
+                </li>
+              {{/if}}
             {{/each}}
           </ul>
         </li>
