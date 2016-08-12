@@ -166,7 +166,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
 
-  linkableSessions: computed('sequenceBlock.course', 'sequenceBlock.sessions.[]', function(){
+  linkableSessions: computed('sequenceBlock.course', 'linkedSessions', function(){
     let defer = RSVP.defer();
     this.get('sequenceBlock').get('course').then(course => {
       this.get('store').query('session', {

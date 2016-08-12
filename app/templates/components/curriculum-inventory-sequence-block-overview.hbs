@@ -189,7 +189,9 @@
         {{/if}}
       {{/if}}
     </div>
-    {{#if (and (is-fulfilled linkableSessions) (is-fulfilled linkedSessions))}}
+    {{#unless (and (is-fulfilled linkableSessions) (is-fulfilled linkedSessions))}}
+        <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
+    {{else}}
       {{#if linkableSessions.length}}
         <div class="block sessions">
           <label>{{t 'general.sessions'}} ({{linkableSessions.length}}):</label>
@@ -212,7 +214,21 @@
                     <td class='text-center' colspan=2>{{session.title}}</td>
                     <td class='text-center' colspan=2>{{if (is-in (await linkedSessions) session) (t 'general.yes') (t 'general.no')}}</td>
                     <td class='text-center' colspan=2>{{session.sessionType.title}}</td>
-                    <td class='text-center' colspan=2>{{if (is-in (await linkedSessions) session) (await session.maxSingleOfferingDuration) (await session.totalSumOfferingsDuration)}}</td>
+                    <td class='text-center' colspan=2>
+                      {{#if (is-in (await linkedSessions) session)}}
+                        {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
+                            {{fa-icon 'spinner' spin=true}}
+                        {{else}}
+                            {{await session.maxSingleOfferingDuration}}
+                        {{/unless}}
+                      {{else}}
+                        {{#unless (is-fulfilled session.totalSumOfferingsDuration)}}
+                          {{fa-icon 'spinner' spin=true}}
+                        {{else}}
+                          {{await session.totalSumOfferingsDuration}}
+                        {{/unless}}
+                      {{/if}}
+                    </td>
                     <td class='text-center' colspan=2>{{session.offerings.length}}</td>
                   </tr>
                 {{/each}}
@@ -221,6 +237,6 @@
           </div>
         </section>
       {{/if}}
-    {{/if}}
+    {{/unless}}
   </div>
 {{/unless}}
