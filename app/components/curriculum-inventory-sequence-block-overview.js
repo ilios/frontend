@@ -180,7 +180,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         let filteredSessions = sessions.toArray().filter(function(session) {
           return isEmpty(session.belongsTo('ilmSession').id());
 
-        })
+        });
         defer.resolve(filteredSessions);
       });
     });
@@ -271,6 +271,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     cancelMinMaxEditing() {
       this.set('isEditingMinMax', false);
-    }
+    },
+    changeSession(session) {
+      let block = this.get('sequenceBlock');
+      let sessions = block.get('sessions');
+      if (sessions.contains(session)) {
+        sessions.removeObject(session);
+      } else {
+        sessions.addObject(session);
+      }
+      block.save();
+    },
   }
 });

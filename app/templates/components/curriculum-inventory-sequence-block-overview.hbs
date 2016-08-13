@@ -212,7 +212,16 @@
                 {{#each linkableSessions as |session|}}
                   <tr>
                     <td class='text-center' colspan=2>{{session.title}}</td>
-                    <td class='text-center' colspan=2>{{if (is-in (await linkedSessions) session) (t 'general.yes') (t 'general.no')}}</td>
+                    <td class='text-center' colspan=2>
+                      {{#if isFinalized}}
+                         {{if (is-in (await linkedSessions) session) (t 'general.yes') (t 'general.no')}}
+                      {{else}}
+                         {{input
+                           type='checkbox'
+                           checked=(is-in (await linkedSessions) session)
+                           change=(action 'changeSession' session)}}
+                      {{/if}}
+                    </td>
                     <td class='text-center' colspan=2>{{session.sessionType.title}}</td>
                     <td class='text-center' colspan=2>
                       {{#if (is-in (await linkedSessions) session)}}
