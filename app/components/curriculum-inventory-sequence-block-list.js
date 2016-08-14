@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import { task, timeout } from 'ember-concurrency';
 
 const { Component, computed, RSVP, isPresent, ObjectProxy } = Ember;
-const { alias } = computed;
 const { PromiseArray } = DS;
 
 const SequenceBlockProxy = ObjectProxy.extend({
@@ -12,22 +12,40 @@ const SequenceBlockProxy = ObjectProxy.extend({
 
 export default Component.extend({
   classNames: ['detail-view', 'curriculum-inventory-sequence-block-list'],
-  parentBlock: null,
+  parent: null,
   report: null,
-  sequenceBlocks: null,
-
+  sequenceBlocks: [],
   editorOn: false,
-
   saved: false,
   savedBlock: null,
   isSaving: null,
 
-  init() {
+  didReceiveAttrs(){
     this._super(...arguments);
-    this.set('sequenceBlocks', []);
+    const parent = this.get('parent');
+    const report = this.get('report');
+    this.get('loadAttr').perform(parent, report);
   },
 
-  isEditable: alias('report.isFinalized'),
+  loadAttr: task(function * (parent, report) {
+    if (isPresent(parent)) {
+      let sequenceBlocks = yield parent.get('children');
+      let report = yield parent.get('report');
+      this.setProperties({
+        sequenceBlocks,
+        report,
+        savedBlock: null,
+        saved: false,
+      });
+    } else {
+      let sequenceBlocks = yield report.get('topLevelSequenceBlocks');
+      this.setProperties({
+        sequenceBlocks,
+        savedBlock: null,
+        saved: false,
+      })
+    }
+  }),
 
   isInOrderedSequence: computed('parent', function () {
     const parent = this.get('parent');
@@ -35,9 +53,10 @@ export default Component.extend({
   }),
 
   sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', function() {
+    let defer = RSVP.defer();
     const parent = this.get('parent');
     const sequenceBlocks = this.get('sequenceBlocks');
-    let defer = RSVP.defer();
+
     if (isPresent(parent) && 1 === parent.get('childSequenceOrder')) {
       let sortedBlocks = [];
       sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
@@ -107,7 +126,7 @@ export default Component.extend({
       block.set('report', report);
       return block.save().then((savedBlock) => {
         if (! this.get('isDestroyed')) {
-          this.setProperties({saved: true, savedBlock, isSaving: false});
+          this.setProperties({saved: true, savedBlock, isSaving: false, editorOn: false});
         }
         report.reload().then(() => {
           if (isPresent(parent)) {

@@ -162,6 +162,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   linkableSessions: computed('sequenceBlock.course', function(){
     let defer = RSVP.defer();
     this.get('sequenceBlock').get('course').then(course => {
+      if (! isPresent(course)) {
+        defer.resolve([]);
+        return;
+      }
       this.get('store').query('session', {
         filters: {
           course: course.get('id'),

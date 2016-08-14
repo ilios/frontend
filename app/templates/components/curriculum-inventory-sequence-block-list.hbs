@@ -1,3 +1,4 @@
+{{#unless loadAttr.running}}
 <section class='detail-block'>
   <div class='detail-title'>
     {{t 'curriculumInventory.sequenceBlocks'}} ({{sortedBlocks.length}})
@@ -20,8 +21,8 @@
         {{/liquid-if}}
         {{#if saved}}
           <div class='saved-result'>
-            {{#link-to 'curriculumInventorySequenceBlock' savedBlocks}}
-              {{fa-icon 'external-link-square'}} {{savedBlocks.title}}
+            {{#link-to 'curriculumInventorySequenceBlock' savedBlock}}
+              {{fa-icon 'external-link-square'}} {{savedBlock.title}}
             {{/link-to}}
             {{t 'general.savedSuccessfully'}}
           </div>
@@ -121,3 +122,4 @@
     {{/if}}
   </section>
 </section>
+{{/unless}}
