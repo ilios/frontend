@@ -1,6 +1,6 @@
 <div class='title'>{{t 'general.overview'}}</div>
-{{#unless loadAttr.isRunning}}
-  <div class='curriculum-inventory-sequence-block-overview-content'>
+<div class='curriculum-inventory-sequence-block-overview-content'>
+  {{#unless loadAttr.isRunning}}
     <div class="block description">
       <label>{{t "general.description"}}:</label>
       {{#if isFinalized}}
@@ -248,5 +248,7 @@
         </section>
       {{/if}}
     {{/unless}}
-  </div>
-{{/unless}}
+  {{else}}
+    <div class="block">{{fa-icon 'spinner' spin=true}}</div>
+  {{/unless}}
+</div>
