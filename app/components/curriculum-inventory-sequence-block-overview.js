@@ -73,6 +73,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   parent: null,
   report: null,
   linkableCourses: [],
+  linkedSessions: [],
   minimum: 0,
   maximum: 0,
   orderInSequenceOptions: [],
@@ -120,6 +121,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       linkableCourses.pushObject(course);
     }
 
+    const linkedSessions = yield sequenceBlock.get('sessions');
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
@@ -151,22 +153,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       orderInSequence,
       requiredOptions,
       childSequenceOrderOptions,
-      isFinalized
+      isFinalized,
+      linkedSessions
     });
   }),
 
-  linkedSessions: computed('sequenceBlock.sessions.[]', function() {
-    let defer = RSVP.defer();
-    this.get('sequenceBlock').get('sessions').then(sessions => {
-      defer.resolve(sessions.toArray());
 
-    });
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
-
-  linkableSessions: computed('sequenceBlock.course', 'linkedSessions', function(){
+  linkableSessions: computed('sequenceBlock.course', function(){
     let defer = RSVP.defer();
     this.get('sequenceBlock').get('course').then(course => {
       this.get('store').query('session', {
@@ -274,11 +267,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     changeSession(session) {
       let block = this.get('sequenceBlock');
-      let sessions = block.get('sessions');
+      let sessions = this.get('linkedSessions');
       if (sessions.contains(session)) {
         sessions.removeObject(session);
+        block.get('sessions').removeObject(sessions);
       } else {
         sessions.addObject(session);
+        block.get('sessions').addObject(session);
       }
       block.save();
     },

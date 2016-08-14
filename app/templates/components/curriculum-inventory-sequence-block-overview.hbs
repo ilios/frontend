@@ -189,7 +189,7 @@
         {{/if}}
       {{/if}}
     </div>
-    {{#unless (and (is-fulfilled linkableSessions) (is-fulfilled linkedSessions))}}
+    {{#unless (is-fulfilled linkableSessions)}}
         <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
     {{else}}
       {{#if linkableSessions.length}}
