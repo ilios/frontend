@@ -15,9 +15,7 @@
         {{/if}}
         {{#if (get (await permissions) 'isAdmin')}}
           <li id='slidingnavmenu-admindashboard'>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'navigation.admin'}}{{/link-to}}</li>
-          {{#if ciEnabled}}
-            <li id='slidingnavmenu-curriculuminventory'>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart'}} {{t 'general.curriculumInventory'}}<span class="stability-indicator">beta</span>{{/link-to}}</li>
-          {{/if}}
+          <li id='slidingnavmenu-curriculuminventory'>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart'}} {{t 'general.curriculumInventory'}}<span class="stability-indicator">beta</span>{{/link-to}}</li>
         {{/if}}
       </ul>
     {{else}}

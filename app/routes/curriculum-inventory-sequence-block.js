@@ -1,18 +1,10 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import config from 'ilios/config/environment';
 
 const { RSVP, Route } = Ember;
 const { all } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-
-  beforeModel(transition) {
-    if (! config.IliosFeatures.curriculumInventory) {
-      return this.transitionTo('index');
-    }
-    this._super(transition);
-  },
 
   afterModel(model){
     //preload data to speed up rendering later

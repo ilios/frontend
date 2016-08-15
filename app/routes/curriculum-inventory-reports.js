@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import config from 'ilios/config/environment';
 
 const { RSVP, inject, Route } = Ember;
 const { service } = inject;
@@ -8,13 +7,6 @@ const { service } = inject;
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   store: service(),
-
-  beforeModel(transition) {
-    if (! config.IliosFeatures.curriculumInventory) {
-      return this.transitionTo('index');
-    }
-    this._super(transition);
-  },
 
   model() {
     let defer = RSVP.defer();
