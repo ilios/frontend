@@ -640,7 +640,7 @@ export default {
     'unordered': 'Unordered',
     'parallel': 'Parallel',
     'required': 'Required',
-    'optional': 'Optional',
+    'optional': 'Optional (elective)',
     'requiredInTrack': 'Required In Track',
     'sequenceBlockConfirmRemove': 'Are you sure you want to delete this sequence block? This action cannot be undone.',
     'newSequenceBlock': 'New Sequence Block',
