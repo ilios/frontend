@@ -1,14 +1,12 @@
 {
   "name": "ilios",
   "dependencies": {
-    "ember": "~2.6.0",
+    "ember": "~2.7.0",
     "ember-cli-shims": "0.1.1",
-    "ember-cli-test-loader": "0.2.2",
     "ember-uploader": "0.3.11",
     "neat": "~1.7.2",
     "normalize.css": "~3.0.3",
     "pretender": "0.10.1",
-    "blanket": "~1.1.7",
     "lodash": "~4.0.0",
     "Faker": "~3.0.1",
     "font-awesome": "~4.5.0",

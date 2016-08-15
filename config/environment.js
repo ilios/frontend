@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ilios',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'auto',
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
@@ -127,7 +127,6 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter
