@@ -110,7 +110,6 @@ module.exports = function(environment) {
     //Hide a feature while it is in development
     IliosFeatures: {
       allowAddNewUser: true,
-      curriculumInventory: false,
     }
   };
 
