@@ -1,70 +1,12 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
 const { inject, Component, isPresent, computed, RSVP, isEmpty } = Ember;
 const { PromiseArray } = DS;
 const { service } = inject;
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      max: 200,
-      descriptionKey: 'general.title'
-    })
-  ],
-  duration: [
-    validator('number', {
-      allowString: true,
-      allowBlank: true,
-      integer: true,
-      gte: 0
-    }),
-  ],
-  startDate: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['duration'],
-      disabled(){
-        return this.get('model.duration') > 0;
-      }
-    }),
-  ],
-  endDate: [
-    validator('date', {
-      dependentKeys: ['startDate'],
-      after: function () {
-        return this.get('model.startDate');
-      },
-      disabled(){
-        return this.get('model.duration') > 0 && !this.get('model.startDate');
-      }
-    })
-  ],
-  minimum: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0
-    }),
-  ],
-  maximum: [
-    validator('number', {
-      dependentKeys: ['minimum'],
-      allowString: true,
-      integer: true,
-      gte: function() {
-        const min = this.get('model.minimum') || 0;
-        return Math.max(0, min);
-      }
-    }),
-  ],
-});
-
-export default Component.extend(Validations, ValidationErrorDisplay, {
+export default Component.extend({
   i18n: service(),
   store: service(),
   classNames: ['curriculum-inventory-sequence-block-overview'],
