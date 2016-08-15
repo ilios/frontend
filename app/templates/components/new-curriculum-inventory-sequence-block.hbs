@@ -16,7 +16,28 @@
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
   </div>
-    
+  <div class="item course">
+    <label>{{t "general.course"}}:</label>
+    {{one-way-select
+      value=course
+      options=(sort-by 'title' (await linkableCourses))
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut course))
+      prompt='Select a Course'
+      promptIsSelectable=true
+    }}
+    {{#if course}}
+      <span class="details">
+        {{t 'general.level'}}: {{course.level}},
+          {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
+          {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
+          {{#if course.clerkshipType}}
+            - {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+          {{/if}}
+      </span>
+    {{/if}}
+  </div>
   <div class="item description">
     <label>{{t 'general.description'}}:</label>
     {{one-way-textarea
@@ -144,29 +165,6 @@
       }}
     </div>
   {{/if}}
-  <div class="item course">
-    <label>{{t "general.course"}}:</label>
-    {{one-way-select
-      value=course
-      options=(sort-by 'title' (await linkableCourses))
-      optionValuePath='id'
-      optionLabelPath='title'
-      update=(action (mut course))
-      prompt='Select a Course'
-      promptIsSelectable=true
-    }}
-    {{#if course}}
-       <span class="details">
-         {{t 'general.level'}}: {{course.level}},
-         {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
-         {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}},
-         {{#if course.clerkshipType}}
-           {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
-         {{/if}}
-       </span>
-    {{/if}}
-  </div>
-
   <div class='buttons'>
     <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
       {{#if isSaving}}

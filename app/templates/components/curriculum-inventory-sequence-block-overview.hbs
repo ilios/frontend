@@ -1,6 +1,33 @@
 <div class='title'>{{t 'general.overview'}}</div>
 <div class='curriculum-inventory-sequence-block-overview-content'>
   {{#unless loadAttr.isRunning}}
+    <div class="block course">
+      <label>{{t 'general.course'}}:</label>
+      {{#if isFinalized}}
+        <span>{{if sequenceBlock.course sequenceBlock.course.title (t 'general.notApplicableAbbr')}}</span>
+      {{else}}
+        {{inplace-select
+          displayValueOverride=(await sequenceBlock.course.title)
+          value=(await sequenceBlock.course.id)
+          options=(sort-by 'title' linkableCourses)
+          showSelectPrompt=true
+          selectPromptTranslation='general.selectCourse'
+          save='changeCourse'
+        }}
+      {{/if}}
+      {{#if (is-fulfilled sequenceBlock.course)}}
+        {{#if sequenceBlock.course}}
+          <span class="details">
+            {{t 'general.level'}}: {{sequenceBlock.course.level}},
+            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
+            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}}
+            {{#if sequenceBlock.course.clerkshipType}}
+              - {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+            {{/if}}
+          </span>
+        {{/if}}
+      {{/if}}
+    </div>
     <div class="block description">
       <label>{{t "general.description"}}:</label>
       {{#if isFinalized}}
@@ -165,33 +192,6 @@
           optionLabelPath='name'
           save='changeAcademicLevel'
         }}
-      {{/if}}
-    </div>
-    <div class="block course">
-      <label>{{t 'general.course'}}:</label>
-      {{#if isFinalized}}
-        <span>{{if sequenceBlock.course sequenceBlock.course.title (t 'general.notApplicableAbbr')}}</span>
-      {{else}}
-        {{inplace-select
-          displayValueOverride=(await sequenceBlock.course.title)
-          value=(await sequenceBlock.course.id)
-          options=(sort-by 'title' linkableCourses)
-          showSelectPrompt=true
-          selectPromptTranslation='general.selectCourse'
-          save='changeCourse'
-        }}
-      {{/if}}
-      {{#if (is-fulfilled sequenceBlock.course)}}
-        {{#if sequenceBlock.course}}
-          <span class="details">
-            {{t 'general.level'}}: {{sequenceBlock.course.level}},
-            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'MM/DD/YY'}},
-            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'MM/DD/YY'}}
-            {{#if sequenceBlock.course.clerkshipType}}
-              - {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
-            {{/if}}
-          </span>
-        {{/if}}
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}
