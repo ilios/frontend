@@ -9,7 +9,6 @@ const Validations = buildValidations({
   duration: [
     validator('number', {
       allowString: true,
-      allowBlank: true,
       integer: true,
       gte: 0
     }),
