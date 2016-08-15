@@ -21,7 +21,9 @@
     <span class='clickable link' {{action this.attrs.manageCompetency objective}}>
       {{objective.competency.title}}
     </span>
-    ({{objective.competency.domain.title}})
+    {{#if (not-eq (await objective.competency.id) (await objective.competency.domain.id))}}
+      ({{objective.competency.domain.title}})
+    {{/if}}
   {{else}}
     <button {{action this.attrs.manageCompetency objective}}>{{t 'general.addNew'}}</button>
   {{/if}}

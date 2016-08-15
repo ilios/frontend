@@ -1,79 +1,97 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
-const { Component, computed } = Ember;
-const { notEmpty, oneWay } = computed;
+const { Component, RSVP, computed } = Ember;
+const { Promise, all, filter} = RSVP;
 
 export default Component.extend({
   objective: null,
-  programYear: oneWay('objective.programYear'),
-  showCompetencyList: notEmpty('programYear.competencies'),
   classNames: ['objective-manager', 'objective-manage-competency'],
-  competencies: computed('programYear.competencies.[]', 'objective.competency', function(){
-    if(!this.get('programYear')){
-      return [];
-    }
 
-    return DS.PromiseArray.create({
-      promise: this.get('programYear.competencies')
+  schoolCompetencies: computed('programYear.program.school.competencies.[]', function(){
+    return new Promise(resolve => {
+      this.get('programYear').then(programYear => {
+        programYear.get('program').then(program => {
+          program.get('school').then(school => {
+            school.get('competencies').then(competencies => {
+              resolve(competencies);
+            });
+          });
+        });
+      });
     });
   }),
-  domains: computed('competencies.@each.domain', 'objective.competency', function(){
-    var defer = Ember.RSVP.defer();
-    var domainContainer = {};
-    var domainIds = [];
-    var promises = [];
-    let domainProxy = Ember.ObjectProxy.extend({
-      selectedCompetency: null,
-      subCompetencies: [],
-      selected: computed('subCompetencies.[]', 'selectedCompetency', function(){
-        let selectedSubCompetencies = this.get('subCompetencies').filter(competencyProxy => {
-          return competencyProxy.get('id') === this.get('selectedCompetency.id');
-        });
-        return selectedSubCompetencies.length > 0;
-      }),
-    });
-    let competencyProxy = Ember.ObjectProxy.extend({
-      selectedCompetency: null,
-      selected: computed('content', 'selectedCompetency', function(){
-        return this.get('content.id') === this.get('selectedCompetency.id');
-      }),
-    });
-    this.get('competencies').forEach((competency) =>{
-      promises.pushObject(competency.get('domain').then(
-        domain => {
-          if(!domainContainer.hasOwnProperty(domain.get('id'))){
-            domainIds.pushObject(domain.get('id'));
-            domainContainer[domain.get('id')] = domainProxy.create({
-              content: domain,
-              selectedCompetency: this.get('objective.competency'),
-              subCompetencies: [],
-            });
-          }
-          if(competency.get('id') !== domain.get('id')){
-            var subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-            if(!subCompetencies.contains(competency)){
-              subCompetencies.pushObject(competencyProxy.create({
-                content: competency,
-                selectedCompetency: this.get('objective.competency')
-              }));
-              subCompetencies.sortBy('title');
-            }
-          }
-        }
-      ));
-    });
-    Ember.RSVP.all(promises).then(function(){
-      var domains = domainIds.map(function(id){
-        return domainContainer[id];
-      }).filter(
-        domain => domain.get('subCompetencies').length > 0
-      ).sortBy('title');
-      defer.resolve(domains);
-    });
 
-    return DS.PromiseArray.create({
-      promise: defer.promise
+  programYear: computed('objective.programYears.[]', function(){
+    return new Promise(resolve => {
+      const objective = this.get('objective');
+      objective.get('programYears').then(programYears => {
+        if (programYears.length) {
+          let programYear = programYears.get('firstObject');
+          resolve(programYear);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }),
+
+  competencies: computed('programYear.competencies.[]', function(){
+    return new Promise(resolve => {
+      this.get('programYear').then(programYear => {
+        programYear.get('competencies').then(competencies => {
+          resolve(competencies);
+        });
+      });
+    });
+  }),
+
+  competenciesWithSelectedChildren: computed('schoolCompetencies.[]', 'objective.competency', function(){
+    return new Promise(resolve => {
+      const objective = this.get('objective');
+      objective.get('competency').then(selectedCompetency => {
+        if (selectedCompetency) {
+          this.get('schoolCompetencies').then(competencies => {
+            filter(competencies.toArray(), (competency => {
+              return new Promise(resolve => {
+                competency.get('treeChildren').then(children => {
+                  let selectedChildren = children.filter(competency => selectedCompetency.get('id') === competency.get('id'));
+                  resolve(selectedChildren.length > 0);
+                });
+              });
+            })).then(competenciesWithSelectedChildren => {
+              resolve(competenciesWithSelectedChildren);
+            });
+          });
+        } else {
+          resolve([]);
+        }
+      });
+    });
+  }),
+
+  domains: computed('competencies.[]', function(){
+    return new Promise(resolve => {
+      this.get('competencies').then(competencies => {
+        all(competencies.mapBy('domain')).then(domains => {
+          resolve(domains.uniq());
+        });
+      });
+    });
+  }),
+
+  domainsWithNoChildren: computed('domains.[]', function(){
+    return new Promise(resolve => {
+      this.get('domains').then(domains => {
+        filter(domains.toArray(), (competency => {
+          return new Promise(resolve => {
+            competency.get('children').then(children => {
+              resolve(children.length === 0);
+            });
+          });
+        })).then(domainsWithNoChildren => {
+          resolve(domainsWithNoChildren);
+        });
+      });
     });
   }),
   actions: {

@@ -1,11 +1,13 @@
 {{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
   {{programyear-competencies
     programYear=programYear
-    collapse=(action this.attrs.setPyCompetencyDetails false)
-    expand=(action this.attrs.setPyCompetencyDetails true)
+    isManaging=managePyCompetencies
+    collapse=(action setPyCompetencyDetails false)
+    expand=(action setPyCompetencyDetails true)
+    setIsManaging=(action setManagePyCompetencies)
   }}
 {{else}}
-  {{collapsed-competencies subject=programYear expand=(action this.attrs.setPyCompetencyDetails true)}}
+  {{collapsed-competencies subject=programYear expand=(action setPyCompetencyDetails true)}}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
@@ -13,22 +15,22 @@
   subject=programYear
   isProgramYear=true
   editable=editable
-  collapse=(action this.attrs.setPyObjectiveDetails false)
-  expand=(action this.attrs.setPyObjectiveDetails true)
+  collapse=(action setPyObjectiveDetails false)
+  expand=(action setPyObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives subject=programYear editable=editable expand=(action this.attrs.setPyObjectiveDetails true)}}
+  {{collapsed-objectives subject=programYear editable=editable expand=(action setPyObjectiveDetails true)}}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
   {{detail-taxonomies
   subject=programYear
   editable=editable
-  collapse=(action this.attrs.setPyTaxonomyDetails false)
-  expand=(action this.attrs.setPyTaxonomyDetails true)
+  collapse=(action setPyTaxonomyDetails false)
+  expand=(action setPyTaxonomyDetails true)
   }}
 {{else}}
-  {{collapsed-taxonomies subject=programYear expand=(action this.attrs.setPyTaxonomyDetails true)}}
+  {{collapsed-taxonomies subject=programYear expand=(action setPyTaxonomyDetails true)}}
 {{/liquid-if}}
 
 {{detail-stewards programYear=programYear}}
