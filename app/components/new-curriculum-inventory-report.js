@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
 
 const { inject, Component } = Ember;
 const { service } = inject;
@@ -26,23 +25,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('loadAttr').perform();
+    let years = [];
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
+      let title = i + ' - ' + (i + 1);
+      let year = Ember.Object.create({ 'id': i, 'title': title });
+      years.pushObject(year);
+    }
+    const selectedYear = years.findBy('id', currentYear);
+    this.setProperties({
+      years,
+      selectedYear,
+      isSaving: false,
+    });
   },
-
-  loadAttr: task(function * () {
-      let years = [];
-      const currentYear = new Date().getFullYear();
-      for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
-        let title = i + ' - ' + (i + 1);
-        let year = Ember.Object.create({ 'id': i, 'title': title });
-        years.pushObject(year);
-      }
-      const selectedYear = years.findBy('id', currentYear);
-      this.setProperties({
-        years,
-        selectedYear,
-      });
-  }),
 
   actions: {
     save: function(){

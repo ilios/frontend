@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 const { Component, computed, RSVP, isPresent, ObjectProxy } = Ember;
 const { PromiseArray } = DS;

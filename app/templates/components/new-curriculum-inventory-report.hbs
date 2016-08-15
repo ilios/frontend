@@ -6,7 +6,7 @@
         <label class="form-label">{{t 'general.name'}}:</label>
         <div class="form-data form-data-text form-input-row">
           {{one-way-input
-            value=title
+            value=name
             update=(action (mut name))
             onenter=(action 'save')
             onescape=(action 'cancel')
@@ -25,7 +25,7 @@
         <label class="form-label">{{t 'general.description'}}:</label>
         <div class="form-data form-data-text form-input-row">
           {{one-way-textarea
-            value=title
+            value=description
             update=(action (mut description))
             disabled=isSaving
             placeholder=(t 'curriculumInventory.reportDescriptionPlaceholder')

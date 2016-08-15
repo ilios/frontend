@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
 
 const { Component, RSVP, computed } = Ember;
 const { alias } = computed;
@@ -19,19 +18,17 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('loadAttr').perform(this.get('report'));
-  },
 
-  loadAttr: task(function * (report) {
+    const report = this.get('report');
     const description = report.get('description');
     const currentYear = new Date().getFullYear();
     const year = report.get('year');
     const yearLabel = report.get('yearLabel');
 
     let yearOptions = [];
-    yearOptions.pushObject(Ember.Object.create({ 'id': year, 'title': yearLabel }));
+    yearOptions.pushObject(Ember.Object.create({'id': year, 'title': yearLabel}));
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
-      yearOptions.pushObject(Ember.Object.create({ 'id': i, 'title': i + ' -  ' + (i + 1) }));
+      yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' -  ' + (i + 1)}));
     }
     yearOptions = yearOptions.uniq().sortBy('title');
 
@@ -39,7 +36,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       description,
       yearOptions,
     });
-  }),
+  },
 
   classNames: ['curriculum-inventory-report-overview'],
   tagName: 'section',
