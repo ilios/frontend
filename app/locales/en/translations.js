@@ -651,5 +651,6 @@ export default {
     'clickToAddDescription': 'Click to add a description.',
     'countAsOneOffering': 'Count as one offering',
     'totalTime': 'Total time',
+    'finalizeReportConfirmation': 'By finalizing this report, you will be saving it in its current state to the Ilios database as a permanent reference object, and no further edits will be possible.',
   }
 };
