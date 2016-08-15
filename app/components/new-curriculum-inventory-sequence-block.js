@@ -32,14 +32,21 @@ const Validations = buildValidations({
   ],
   endDate: [
     validator('date', {
-      dependentKeys: ['startDate'],
+      dependentKeys: ['startDate', 'duration'],
       after: function () {
         return this.get('model.startDate');
       },
       disabled(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
       }
-    })
+    }),
+    validator('presence', {
+      presence: true,
+      dependentKeys: ['startDate', 'duration'],
+      disabled(){
+        return this.get('model.duration') > 0 && !this.get('model.startDate');
+      }
+    }),
   ],
   minimum: [
     validator('number', {
