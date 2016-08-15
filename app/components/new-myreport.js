@@ -66,12 +66,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const type = this.get('currentPrepositionalObject');
 
     let defer = RSVP.defer();
-    if(isEmpty(type) || type === 'instructor'){
+    if(isEmpty(type) || type === 'instructor' || type === 'mesh term'){
       defer.resolve([]);
       return PromiseArray.create({
         promise: defer.promise
       });
     }
+
 
     let model = type.dasherize();
     const store = this.get('store');
@@ -199,6 +200,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           const store = this.get('store');
           const subject = this.get('currentSubject');
           let object = this.get('currentPrepositionalObject');
+          const prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
           if (isPresent(subject) && isEmpty(object)) {
             if (subject === 'instructor') {
               flashMessages.alert('dashboard.reportMissingObjectForInstructor');
@@ -210,7 +212,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             }
           }
           if (
-              object && !this.get('currentPrepositionalObjectId')
+              object && isEmpty(prepositionalObjectTableRowId)
           ) {
             if (object === 'instructor') {
               flashMessages.alert('dashboard.reportMissingInstructor');
@@ -222,11 +224,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           }
           this.get('currentUser.model').then(user => {
 
-            let title = this.get('title');
-            let subject = this.get('currentSubject');
-            let prepositionalObject = this.get('currentPrepositionalObject');
-            let prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
-            let school = this.get('currentSchool');
+            const title = this.get('title');
+            const subject = this.get('currentSubject');
+            const prepositionalObject = this.get('currentPrepositionalObject');
+            const school = this.get('currentSchool');
             let report = store.createRecord('report', {
               title,
               user,
@@ -236,12 +237,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
               school
             });
             report.save().then(() => {
-              this.set('isSaving', false);
               this.send('clearErrorDisplay', 'title');
               this.get('close')();
             });
           });
         }
+      }).finally(()=>{
+        this.set('isSaving', false);
       });
     }
   }
