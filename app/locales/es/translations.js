@@ -389,6 +389,8 @@ export default {
     'friday': 'Viernes',
     'saturday': 'Sábado',
     'new': 'Nueva Oferta',
+    'defaultInstructorsNotLoaded': '(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)',
+    'defaultLocationNotLoaded': '(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)',
   },
   'learningMaterials': {
     'displayName': 'Nombre de Mostrar',

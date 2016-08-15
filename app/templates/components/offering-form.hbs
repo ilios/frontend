@@ -89,7 +89,12 @@
 
   {{#if showRoom}}
     <div class='item room'>
-      <label>{{t "general.location"}}:</label>
+      <label>
+        {{t 'general.location'}}:
+        {{#unless offering}}
+          {{t "offerings.defaultLocationNotLoaded"}}
+        {{/unless}}
+      </label>
       {{one-way-input
         value=room
         update=(action (mut room))
@@ -99,12 +104,18 @@
       {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
         <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
       {{/if}}
+
     </div>
   {{/if}}
 
   {{#if showInstructors}}
     <div class="instructors">
-      <label>{{t 'general.instructors'}}:</label>
+      <label>
+        {{t 'general.instructors'}}:
+        {{#unless offering}}
+          {{t "offerings.defaultInstructorsNotLoaded"}}
+        {{/unless}}
+      </label>
       {{instructor-selection-manager
         addInstructor='addInstructor'
         addInstructorGroup='addInstructorGroup'

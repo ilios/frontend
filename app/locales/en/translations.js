@@ -389,6 +389,8 @@ export default {
     'friday': 'Friday',
     'saturday': 'Saturday',
     'new': 'New Offering',
+    'defaultInstructorsNotLoaded': '(Default Instructors will not be loaded: please enter desired value.)',
+    'defaultLocationNotLoaded': '(Default Location will not be loaded: please enter desired value.)',
   },
   'learningMaterials': {
     'displayName': 'Display Name',
