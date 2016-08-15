@@ -206,8 +206,9 @@ test('can delete a program-year', function(assert) {
     program: 1,
   });
 
-  const deleteButton = '.program-year-link';
-  const listRows = '.resultslist-list tbody tr';
+  const deleteButton = '.remove';
+  const confirmRemovalButton = '.confirm-message button.remove';
+  const listRows = '.list tbody tr';
 
   visit(url);
   andThen(() => {
@@ -215,6 +216,7 @@ test('can delete a program-year', function(assert) {
   });
 
   click(deleteButton);
+  click(confirmRemovalButton);
   andThen(() => {
     assert.ok(isEmpty(find(listRows)), 'program was removed');
   });
@@ -226,8 +228,8 @@ test('canceling adding new program-year collapses select menu', function(assert)
   });
 
   const expandButton = '.expand-collapse-button';
-  const cancelButton = '.programyear-cancel';
-  const selectField = '.ff-select-field';
+  const cancelButton = '.new-programyear .cancel';
+  const selectField = '.startyear-select select';
 
   visit(url);
   click(expandButton);
@@ -242,7 +244,7 @@ test('canceling adding new program-year collapses select menu', function(assert)
 });
 
 function getTableDataText(n, i, element = '') {
-  return find(`.resultslist-list tbody tr:eq(${n}) td:eq(${i}) ${element}`);
+  return find(`.programyears .list tbody tr:eq(${n}) td:eq(${i}) ${element}`);
 }
 
 test('can add a program-year (with no pre-existing program-years)', function(assert) {
@@ -250,11 +252,10 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
     school: 1,
   });
 
-  const listRows = '.resultslist-list tbody tr';
+  const listRows = '.programyears .list tbody tr';
   const expandButton = '.expand-collapse-button';
-  const selectField = '.ff-select-field';
-  const option = '.ff-option:eq(5)';
-  const saveButton = '.programyear-save';
+  const selectField = '.startyear-select select';
+  const saveButton = '.new-programyear .done';
 
   visit(url);
   andThen(() => {
@@ -262,21 +263,22 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
   });
 
   click(expandButton);
-  click(selectField);
-  click(option);
-  click(saveButton);
   andThen(() => {
     const thisYear = new Date().getFullYear();
+    find(selectField).eq(0).val(thisYear).change();
+    click(saveButton);
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
     const classOfYear = `Class of ${(thisYear + 4).toString()}`;
 
-    assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
-    assert.equal(getTableDataText(0, 1).text().trim(), classOfYear, 'cohort class year shown');
-    assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
-    assert.ok(getTableDataText(0, 3, 'i').hasClass('fa-warning'), 'warning label shown');
-    assert.ok(getTableDataText(0, 4, 'i').hasClass('fa-warning'), 'warning label shown');
-    assert.ok(getTableDataText(0, 5, 'i').hasClass('fa-warning'), 'warning label shown');
-    assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
+    andThen(() => {
+      assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
+      assert.equal(getTableDataText(0, 1).text().trim(), classOfYear, 'cohort class year shown');
+      assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
+      assert.ok(getTableDataText(0, 3, 'i').hasClass('fa-warning'), 'warning label shown');
+      assert.ok(getTableDataText(0, 4, 'i').hasClass('fa-warning'), 'warning label shown');
+      assert.ok(getTableDataText(0, 5, 'i').hasClass('fa-warning'), 'warning label shown');
+      assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
+    });
   });
 });
 
@@ -328,9 +330,8 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
   });
 
   const expandButton = '.expand-collapse-button';
-  const selectField = '.ff-select-field';
-  const option = '.ff-option:eq(5)';
-  const saveButton = '.programyear-save';
+  const selectField = '.startyear-select select';
+  const saveButton = '.new-programyear .done';
   const thisYear = new Date().getFullYear();
 
   visit(url);
@@ -347,19 +348,20 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
   });
 
   click(expandButton);
-  click(selectField);
-  click(option);
-  click(saveButton);
   andThen(() => {
-    const academicYear = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
-    const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
+    find(selectField).eq(0).val(thisYear + 1).change();
+    click(saveButton);
+    andThen(() => {
+      const academicYear = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
+      const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
 
-    assert.equal(getTableDataText(1, 0).text().trim(), academicYear, 'academic year shown');
-    assert.equal(getTableDataText(1, 1).text(), cohortClassYear, 'cohort class year shown');
-    assert.equal(getTableDataText(1, 2).text().trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 3).text().trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
+      assert.equal(getTableDataText(1, 0).text().trim(), academicYear, 'academic year shown');
+      assert.equal(getTableDataText(1, 1).text(), cohortClassYear, 'cohort class year shown');
+      assert.equal(getTableDataText(1, 2).text().trim(), '3', 'copied correctly from latest program-year');
+      assert.equal(getTableDataText(1, 3).text().trim(), '3', 'copied correctly from latest program-year');
+      assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
+      assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
+      assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
+    })
   });
 });

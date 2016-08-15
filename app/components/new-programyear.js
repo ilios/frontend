@@ -1,40 +1,32 @@
 import Ember from 'ember';
 
-const { Component, computed, inject, isBlank } = Ember;
-const { service } = inject;
+const { Component, isEmpty } = Ember;
 
 export default Component.extend({
-  classNames: ['resultslist-new'],
+  classNames: ['new-programyear'],
 
-  i18n: service(),
-  placeholder: computed('i18n.locale', function() {
-    return this.get('i18n').t('programYears.selectAcademicYear');
-  }),
-
-  selection: null,
-
-  selectionCheck() {
-    const selection = this.get('selection');
-
-    return isBlank(selection) ? true : false;
-  },
+  selectedYear: null,
+  availableAcademicYears: null,
 
   actions: {
-    changeSelection(value) {
-      this.set('selection', value);
+    setYear(year) {
+      this.set('selectedYear', year);
     },
-
     save() {
-      if (this.selectionCheck()) {
-        return;
+      this.set('isSaving', true);
+      let startYear = this.get('selectedYear');
+      if (isEmpty(startYear)) {
+        const availableAcademicYears = this.get('availableAcademicYears');
+        startYear = availableAcademicYears.get('firstObject.value');
       }
 
-      const startYear = this.get('selection.value');
-      this.sendAction('save', startYear);
-    },
+      if (isEmpty(startYear)) {
+        return false;
+      }
 
-    cancel() {
-      this.sendAction('cancel');
-    }
+      this.get('save')(parseInt(startYear)).finally(() =>{
+        this.set('isSaving', false);
+      });
+    },
   }
 });

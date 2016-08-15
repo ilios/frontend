@@ -10,6 +10,10 @@ moduleForComponent('assign-students', 'Integration | Component | assign students
   integration: true
 });
 
+test('nothing', function(assert){
+  assert.ok(true);
+});
+
 test('it renders', function(assert) {
   let program = Object.create({
     duration: 20,

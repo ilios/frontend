@@ -7,7 +7,7 @@ const { mapBy, sort } = computed;
 const { all } = RSVP;
 
 export default Component.extend({
-  classNames: ['detail-view', 'programyear-list'],
+  classNames: ['programyear-list'],
 
   store: service(),
   i18n: service(),
@@ -94,8 +94,8 @@ export default Component.extend({
         }));
       }
 
-      all(promises).then(() => {
-        newProgramYear.save().then((savedProgramYear) => {
+      return all(promises).then(() => {
+        return newProgramYear.save().then((savedProgramYear) => {
           const store = component.get('store');
           let promises = [];
 
@@ -110,7 +110,7 @@ export default Component.extend({
 
           promises.pushObject(cohort.save());
 
-          all(promises).then(() => {
+          return all(promises).then(() => {
             component.setProperties({ saved: true, savedProgramYear: newProgramYear });
             component.send('cancel');
           });
