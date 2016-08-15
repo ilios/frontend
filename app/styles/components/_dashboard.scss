@@ -34,8 +34,13 @@ $updated-color: #945c58;
       }
     }
 
-    .event-date {
+    .event-date i {
       color: $ilios-orange;
+    }
+
+    .ilm-due {
+      color: $ilios-orange;
+      font-weight: bold;
     }
   }
 
