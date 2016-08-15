@@ -18,16 +18,32 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('description', this.get('report.description'));
-  },
 
+    const report = this.get('report');
+    const description = report.get('description');
+    const currentYear = new Date().getFullYear();
+    const year = report.get('year');
+    const yearLabel = report.get('yearLabel');
+
+    let yearOptions = [];
+    yearOptions.pushObject(Ember.Object.create({'id': year, 'title': yearLabel}));
+    for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
+      yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' -  ' + (i + 1)}));
+    }
+    yearOptions = yearOptions.uniq().sortBy('title');
+
+    this.setProperties({
+      description,
+      yearOptions,
+    });
+  },
 
   classNames: ['curriculum-inventory-report-overview'],
   tagName: 'section',
   description: null,
   report: null,
+  yearOptions: [],
   isFinalized: alias('report.isFinalized'),
-
   actions: {
     changeStartDate: function(newDate){
       this.get('report').set('startDate', newDate);
@@ -35,6 +51,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     changeEndDate: function(newDate){
       this.get('report').set('endDate', newDate);
+      this.get('report').save();
+    },
+    changeYear(year) {
+      this.get('report').set('year', year);
       this.get('report').save();
     },
     changeDescription() {

@@ -4,28 +4,44 @@
   border-bottom: 1px dotted $ilios-orange;
   display: block;
 
-  .title {
-    @include ilios-overview-title;
+  .academic-level {
+    padding-top: .5em;
   }
 
   .block {
     @include ilios-overview-block;
   }
 
-  .curriculum-inventory-sequence-block-overview-content {
-    @include ilios-overview-content;
-  }
-
   .course {
     @include span-columns(10);
     .details {
+      display: block;
       font-size: smaller;
-      padding-left: 1em;
+      padding-bottom: 2em;
     }
+  }
+
+  .curriculum-inventory-sequence-block-overview-content {
+    @include ilios-overview-content;
   }
 
   .description {
     @include span-columns(10);
     margin-bottom: 2em;
+  }
+
+  .duration {
+    @include span-columns(10);
+  }
+
+  .selective {
+    @include span-columns(10);
+    font-style: italic;
+    padding-top: .5em;
+
+  }
+
+  .title {
+    @include ilios-overview-title;
   }
 }

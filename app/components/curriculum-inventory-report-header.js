@@ -2,10 +2,9 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { inject, Component, computed, RSVP } = Ember;
+const { Component, computed, RSVP } = Ember;
 const { alias } = computed;
 const { Promise } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   reportName: [
@@ -23,12 +22,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('reportName', this.get('report.name'));
     this.set('isFinalized', this.get('report.isFinalized'));
   },
-  store: service(),
   classNames: ['curriculum-inventory-report-header'],
   report: null,
   reportName: null,
   publishTarget: alias('report'),
-  isFinalizing: false,
   isFinalized: false,
   actions: {
     changeName(){
@@ -58,17 +55,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     finalize() {
-      this.set('isFinalizing', true);
-      const report = this.get('report');
-      let repExport = this.get('store').createRecord('curriculumInventoryExport', {
-        report: report,
-      });
-      repExport.save().then((savedExport) => {
-        report.set('export', savedExport);
-        this.set('isFinalized', true);
-      }).finally(()=>{
-        this.set('isFinalizing', false);
-      });
+      this.sendAction('finalize');
     }
   }
 });

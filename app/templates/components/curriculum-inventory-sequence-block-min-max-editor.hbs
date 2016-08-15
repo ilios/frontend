@@ -1,0 +1,41 @@
+<div class="item minimum">
+  <label>{{t "general.minimum"}}:</label>
+  {{one-way-input
+    value=minimum
+    update=(action (mut minimum))
+    onenter=(action 'save')
+    onescape=(action 'cancel')
+    disabled=isSaving
+    focusOut=(action 'addErrorDisplayFor' 'minimum')
+    keyDown=(action 'addErrorDisplayFor' 'minimum')
+  }}
+  {{#if (and (v-get this 'minimum' 'isInvalid') (is-in showErrorsFor 'minimum'))}}
+    <span class="validation-error-message">{{v-get this 'minimum' 'message'}}</span>
+  {{/if}}
+</div>
+
+<div class="item maximum">
+  <label>{{t "general.maximum"}}:</label>
+  {{one-way-input
+    value=maximum
+    update=(action (mut maximum))
+    onenter=(action 'save')
+    onescape=(action 'cancel')
+    disabled=isSaving
+    focusOut=(action 'addErrorDisplayFor' 'maximum')
+    keyDown=(action 'addErrorDisplayFor' 'maximum')
+  }}
+  {{#if (and (v-get this 'maximum' 'isInvalid') (is-in showErrorsFor 'maximum'))}}
+    <span class="validation-error-message">{{v-get this 'maximum' 'message'}}</span>
+  {{/if}}
+</div>
+<div class='buttons'>
+  <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
+    {{#if isSaving}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      {{t 'general.done'}}
+    {{/if}}
+  </button>
+  <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+</div>

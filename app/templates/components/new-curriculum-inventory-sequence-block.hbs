@@ -1,0 +1,178 @@
+<div class="new-result-title">{{t 'curriculumInventory.newSequenceBlock'}}</div>
+{{#unless loadAttr.isRunning}}
+  <div class="item title">
+    <label>{{t 'general.title'}}:</label>
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=(action 'save')
+      onescape=(action 'cancel')
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      keyDown=(action 'addErrorDisplayFor' 'title')
+      placeholder=(t 'curriculumInventory.sequenceBlockTitlePlaceholder')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  </div>
+  <div class="item course">
+    <label>{{t "general.course"}}:</label>
+    {{one-way-select
+      value=course
+      options=(sort-by 'title' (await linkableCourses))
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut course))
+      prompt='Select a Course'
+      promptIsSelectable=true
+    }}
+    {{#if course}}
+      <span class="details">
+        {{t 'general.level'}}: {{course.level}},
+          {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
+          {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
+          {{#if course.clerkshipType}}
+            - {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+          {{/if}}
+      </span>
+    {{/if}}
+  </div>
+  <div class="item description">
+    <label>{{t 'general.description'}}:</label>
+    {{one-way-textarea
+      value=description
+      update=(action (mut description))
+      disabled=isSaving
+      placeholder=(t 'curriculumInventory.sequenceBlockDescriptionPlaceholder')
+    }}
+  </div>
+
+  <div class="item required">
+    <label>{{t "general.required"}}:</label>
+    {{one-way-select
+      value=required
+      options=requiredOptions
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut required))
+    }}
+  </div>
+
+  <div class="item track">
+    <label>{{t "curriculumInventory.isTrack"}}?</label>
+    {{inplace-boolean value=track save='changeTrack'}}
+  </div>
+
+  <div class='item start-date'>
+    <label>{{t "general.startDate"}}:</label>
+    {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
+  {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
+      <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
+  {{/if}}
+  </div>
+    
+  <div class='item end-date'>
+    <label>{{t "general.endDate"}}:</label>
+    {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
+  {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
+      <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+  {{/if}}
+  </div>
+
+  <div class="item duration">
+    <label>{{t 'general.duration'}}:</label>
+    {{one-way-input
+      value=duration
+      update=(action (mut duration))
+      onenter=(action 'save')
+      onescape=(action 'cancel')
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'duration')
+      keyDown=(action 'addErrorDisplayFor' 'duration')
+    }}
+    {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
+      <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
+    {{/if}}
+  </div>
+
+  <div class="item clear-dates">
+      <button {{action 'clearDates'}}>{{t 'curriculumInventory.clearDates'}}</button>
+  </div>
+
+  <div class="item selective">
+      <label>{{t 'curriculumInventory.isSelective'}} ?</label>
+  </div>
+
+  <div class="item minimum">
+    <label>{{t "general.minimum"}}:</label>
+    {{one-way-input
+      value=minimum
+      update=(action (mut minimum))
+      onenter=(action 'save')
+      onescape=(action 'cancel')
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'minimum')
+      keyDown=(action 'addErrorDisplayFor' 'minimum')
+    }}
+    {{#if (and (v-get this 'minimum' 'isInvalid') (is-in showErrorsFor 'minimum'))}}
+      <span class="validation-error-message">{{v-get this 'minimum' 'message'}}</span>
+    {{/if}}
+  </div>
+
+  <div class="item maximum">
+    <label>{{t "general.maximum"}}:</label>
+    {{one-way-input
+      value=maximum
+      update=(action (mut maximum))
+      onenter=(action 'save')
+      onescape=(action 'cancel')
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'maximum')
+      keyDown=(action 'addErrorDisplayFor' 'maximum')
+    }}
+    {{#if (and (v-get this 'maximum' 'isInvalid') (is-in showErrorsFor 'maximum'))}}
+      <span class="validation-error-message">{{v-get this 'maximum' 'message'}}</span>
+    {{/if}}
+  </div>
+  <div class="item academic-level">
+    <label>{{t "curriculumInventory.academicLevel"}}:</label>
+    {{one-way-select
+      value=academicLevel
+      options=(sort-by 'level' (await academicLevels))
+      optionValuePath='id'
+      optionLabelPath='name'
+      update=(action (mut academicLevel))
+    }}
+  </div>
+  <div class="item child-sequence-order">
+    <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
+    {{one-way-select
+      value=childSequenceOrder
+      options=childSequenceOrderOptions
+      optionValuePath='id'
+      optionLabelPath='title'
+      update=(action (mut childSequenceOrder))
+    }}
+  </div>
+  {{#if isInOrderedSequence}}
+    <div class="item order-in-sequence">
+      <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+      {{one-way-select
+        value=orderInSequence
+        options=orderInSequenceOptions
+        update=(action (mut orderInSequence))
+      }}
+    </div>
+  {{/if}}
+  <div class='buttons'>
+    <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
+      {{#if isSaving}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.done'}}
+      {{/if}}
+    </button>
+    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  </div>
+{{/unless}}

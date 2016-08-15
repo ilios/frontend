@@ -159,6 +159,10 @@ export default {
     'duration': 'Durée',
     'hours': 'Heures',
     'minutes': 'Minutes',
+    'notApplicableAbbr': 'n.d.',
+    'minimum': 'Minimum',
+    'maximum': 'Maximum',
+    'selectCourse': 'Choisi cours'
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -626,6 +630,7 @@ export default {
     'sequenceBlock': 'Sequence Block',
     'sequenceBlocks': 'Sequence Blocks',
     'academicLevel': 'Academic Level',
+    'academicLevels': 'Academic Levels',
     'noSequenceBlocks': 'There are no sequence blocks in this report.',
     'noSubSequenceBlocks': 'This sequence block has no nested sequence blocks.',
     'childSequenceOrder': 'Child Sequence Order',
@@ -636,7 +641,17 @@ export default {
     'unordered': 'Unordered',
     'parallel': 'Parallel',
     'required': 'Required',
-    'optional': 'Optional',
+    'optional': 'Optional (elective)',
     'requiredInTrack': 'Required In Track',
+    'sequenceBlockConfirmRemove': 'Are you sure you want to delete this sequence block? This action cannot be undone.',
+    'newSequenceBlock': 'New Sequence Block',
+    'sequenceBlockDescriptionPlaceholder': 'Please enter a description for this sequence block.',
+    'sequenceBlockTitlePlaceholder': 'Please enter a title for this sequence block.',
+    'clearDates': 'Clear Dates',
+    'isSelective': 'Est sélectif',
+    'clickToAddDescription':  'Cliquez pour ajouter une description',
+    'countAsOneOffering': 'Count as one offering',
+    'totalTime': 'Total time',
+    'finalizeReportConfirmation': 'By finalizing this report, you will be saving it in its current state to the Ilios database as a permanent reference object, and no further edits will be possible.',
   }
 };

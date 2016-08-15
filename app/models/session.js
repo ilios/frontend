@@ -47,6 +47,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       });
     }
   }).readOnly(),
+
   firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
     var deferred = Ember.RSVP.defer();
     this.get('ilmSession').then(ilmSession => {
@@ -66,6 +67,67 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       promise: deferred.promise
     });
   }),
+
+  /**
+   * The maximum duration in hours (incl. fractions) of any session offerings.
+   * @property sortedTerms
+   * @type {Ember.computed}
+   * @readonly
+   * @public
+   */
+  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function(){
+    let deferred = RSVP.defer();
+    this.get('offerings').then(offerings => {
+      if (! offerings.length) {
+        deferred.resolve(0);
+      } else {
+        const sortedOfferings = offerings.toArray().sort(function (a, b) {
+          const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
+          const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
+          if (diffA > diffB) {
+            return 1;
+          } else if (diffA < diffB) {
+            return -1;
+          }
+          return 0;
+        });
+        const offering = sortedOfferings[0];
+        const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+        deferred.resolve(duration.toFixed(2));
+      }
+    });
+
+    return PromiseObject.create({
+      promise: deferred.promise
+    });
+  }).readOnly(),
+
+  /**
+   * The total duration in hours (incl. fractions) of all session offerings.
+   * @property sortedTerms
+   * @type {Ember.computed}
+   * @readonly
+   * @public
+   */
+  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function() {
+    let deferred = RSVP.defer();
+    this.get('offerings').then(offerings => {
+      if (!offerings.length) {
+        deferred.resolve(0);
+      } else {
+        let total = 0;
+        offerings.forEach(offering => {
+          total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+        });
+        deferred.resolve(total.toFixed(2));
+      }
+    });
+
+    return PromiseObject.create({
+      promise: deferred.promise
+    });
+  }).readOnly(),
+
   searchString: computed('title', 'sessionType.title', 'status', function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
   }),

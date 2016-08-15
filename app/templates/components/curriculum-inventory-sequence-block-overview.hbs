@@ -1,67 +1,259 @@
-<div class='title'>
-  {{t 'general.overview'}}
-</div>
+<div class='title'>{{t 'general.overview'}}</div>
 <div class='curriculum-inventory-sequence-block-overview-content'>
-  <div class="block">
-    <label>{{t "curriculumInventory.academicLevel"}}:</label>
-    <span>{{sequenceBlock.academicLevel.level}}</span>
-  </div>
-  <div class="block">
-    <label>{{t "general.required"}}:</label>
-    <span>
-      {{if
-        sequenceBlock.isRequired (t 'curriculumInventory.required')
-        (if sequenceBlock.isOptional (t 'curriculumInventory.optional') (t 'curriculumInventory.requiredInTrack'))
+  {{#unless loadAttr.isRunning}}
+    <div class="block course">
+      <label>{{t 'general.course'}}:</label>
+      {{#if isFinalized}}
+        <span>{{if sequenceBlock.course sequenceBlock.course.title (t 'general.notApplicableAbbr')}}</span>
+      {{else}}
+        {{inplace-select
+          displayValueOverride=(await sequenceBlock.course.title)
+          value=(await sequenceBlock.course.id)
+          options=(sort-by 'title' linkableCourses)
+          showSelectPrompt=true
+          selectPromptTranslation='general.selectCourse'
+          save='changeCourse'
+        }}
+      {{/if}}
+      {{#if (is-fulfilled sequenceBlock.course)}}
+        {{#if sequenceBlock.course}}
+          <span class="details">
+            {{t 'general.level'}}: {{sequenceBlock.course.level}},
+            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
+            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}}
+            {{#if sequenceBlock.course.clerkshipType}}
+              - {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+            {{/if}}
+          </span>
+        {{/if}}
+      {{/if}}
+    </div>
+    <div class="block description">
+      <label>{{t "general.description"}}:</label>
+      {{#if isFinalized}}
+        <span>{{sequenceBlock.description}}</span>
+      {{else}}
+        {{inplace-textarea
+          value=sequenceBlock.description
+          save='changeDescription'
+          clickPromptTranslation='curriculumInventory.clickToAddDescription'
+        }}
+      {{/if}}
+    </div>
+    <div class="block required">
+      <label>{{t "general.required"}}:</label>
+      {{#if isFinalized}}
+        <span>
+          {{if sequenceBlock.isRequired
+          (t 'general.yes')
+          (if sequenceBlock.isOptional (t 'general.no') (t 'curriculumInventory.requiredInTrack'))
+          }}
+        </span>
+      {{else}}
+        {{inplace-select value=sequenceBlock.required options=requiredOptions save='changeRequired'}}
+      {{/if}}
+    </div>
+    <div class="block track">
+      <label>{{t "curriculumInventory.isTrack"}}:</label>
+      {{#if isFinalized}}
+        <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
+      {{else}}
+        {{inplace-boolean value=sequenceBlock.track save='changeTrack'}}
+      {{/if}}
+    </div>
+    {{#unless isEditingDatesAndDuration}}
+      <div class="block start-date">
+        <label>{{t "general.start"}}:</label>
+        {{#if isFinalized}}
+          <span>
+            {{#if sequenceBlock.startDate}}
+              {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+            {{else}}
+              {{t 'general.notApplicableAbbr'}}
+            {{/if}}
+          </span>
+        {{else}}
+          <span {{action "editDatesAndDuration"}} class="editable">
+            {{#if sequenceBlock.startDate}}
+              {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+            {{else}}
+              {{t 'general.clickToEdit'}}
+            {{/if}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="block end-date">
+        <label>{{t "general.end"}}:</label>
+        {{#if isFinalized}}
+          <span>
+            {{#if sequenceBlock.endDate}}
+              {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+            {{else}}
+              {{t 'general.notApplicableAbbr'}}
+            {{/if}}
+          </span>
+        {{else}}
+          <span {{action "editDatesAndDuration"}} class="editable">
+            {{#if sequenceBlock.endDate}}
+              {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+            {{else}}
+              {{t 'general.clickToEdit'}}
+            {{/if}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="block duration">
+        <label>{{t "curriculumInventory.durationInDays"}}:</label>
+        {{#if isFinalized}}
+           <span>{{sequenceBlock.duration}}</span>
+        {{else}}
+           <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
+        {{/if}}
+      </div>
+    {{else}}
+      {{curriculum-inventory-sequence-block-dates-duration-editor
+        sequenceBlock=sequenceBlock
+        save="changeDatesAndDuration"
+        cancel="cancelDateAndDurationEditing"
       }}
-    </span>
-  </div>
-  <div class="block">
-    <label>{{t "general.start"}}:</label>
-    <span>{{moment-format sequenceBlock.startDate 'MM/DD/YY'}}</span>
-  </div>
-  <div class="block">
-    <label>{{t "general.end"}}:</label>
-    <span>{{moment-format sequenceBlock.endDate 'MM/DD/YY'}}</span>
-  </div>
-  <div class="block">
-    <label>{{t "curriculumInventory.durationInDays"}}:</label>
-    <span>{{sequenceBlock.duration}}</span>
-  </div>
-  <div class="block">
-    <label>{{t "curriculumInventory.isTrack"}}:</label>
-    <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
-  </div>
-  <div class="block">
-    <label>{{t "curriculumInventory.orderInSequence"}}:</label>
-    <span>{{#if sequenceBlock.parent.isOrdered}}{{sequenceBlock.orderInSequence}}{{/if}}</span>
-  </div>
-  <div class="block">
-    <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
-    <span>
-      {{if
-        sequenceBlock.isOrdered (t 'curriculumInventory.ordered')
-        (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
-      }}
-    </span>
-  </div>
-  <div class="block course">
-    <label>{{t 'general.course'}}:</label>
-    <span>
-      {{#if sequenceBlock.course}}
-        {{sequenceBlock.course.title}}
-        <span class="details">
-          {{t 'general.level'}}: {{sequenceBlock.course.level}},
-          {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
-          {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}},
-          {{#if sequenceBlock.course.clerkshipType}}
-             {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
+    {{/unless}}
+    <div class="block child-sequence-order">
+      <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
+      {{#if isFinalized}}
+        <span>
+          {{if sequenceBlock.isOrdered
+            (t 'curriculumInventory.ordered')
+            (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
+          }}
+        </span>
+      {{else}}
+        {{inplace-select
+          value=sequenceBlock.childSequenceOrder
+          options=childSequenceOrderOptions
+          save='changeChildSequenceOrder'
+        }}
+      {{/if}}
+    </div>
+
+    <div class="block order-in-sequence">
+      <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+        <span>
+          {{#if sequenceBlock.parent.isOrdered}}
+            {{#if isFinalized}}
+              {{sequenceBlock.orderInSequence}}
+            {{else}}
+              {{inplace-select
+                value=sequenceBlock.orderInSequence
+                options=orderInSequenceOptions
+                save="changeOrderInSequence"
+              }}
+            {{/if}}
+          {{else}}
+            {{t 'general.notApplicableAbbr'}}
           {{/if}}
         </span>
+    </div>
+    <div class="block selective">
+      <label>{{t 'curriculumInventory.isSelective'}} ?</label>
+    </div>
+    {{#unless isEditingMinMax}}
+      <div class="block minimum">
+        <label>{{t 'general.minimum'}}:</label>
+          {{#if isFinalized}}
+            <span>{{sequenceBlock.minimum}}</span>
+          {{else}}
+            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
+          {{/if}}
+      </div>
+      <div class="block maximum">
+        <label>{{t 'general.maximum'}}:</label>
+        {{#if isFinalized}}
+          <span>{{sequenceBlock.maximum}}</span>
+        {{else}}
+          <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
+        {{/if}}
+      </div>
+    {{else}}
+      {{curriculum-inventory-sequence-block-min-max-editor
+        sequenceBlock=sequenceBlock
+        save="changeMinMax"
+        cancel="cancelMinMaxEditing"
+      }}
+    {{/unless}}
+    <div class="block academic-level">
+      <label>{{t "curriculumInventory.academicLevel"}}:</label>
+      {{#if isFinalized}}
+        <span>{{sequenceBlock.academicLevel.name}}</span>
+      {{else}}
+        {{inplace-select
+          displayValueOverride=(await sequenceBlock.academicLevel.name)
+          value=(await sequenceBlock.academicLevel.id)
+          options=(sort-by 'level' academicLevels)
+          optionLabelPath='name'
+          save='changeAcademicLevel'
+        }}
       {{/if}}
-    </span>
-  </div>
-  <div class="block description">
-    <label>{{t "general.description"}}:</label>
-    <span>{{sequenceBlock.description}}</span>
-  </div>
+    </div>
+    {{#unless (is-fulfilled linkableSessions)}}
+        <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
+    {{else}}
+      {{#if linkableSessions.length}}
+        <div class="block sessions">
+          <label>{{t 'general.sessions'}} ({{linkableSessions.length}}):</label>
+        </div>
+        <section class="resultslist">
+          <div class='resultslist-list'>
+            <table>
+              <thead>
+                <tr>
+                  <th class='text-center' colspan=2>{{t 'curriculumInventory.countAsOneOffering'}}</th>
+                  <th class='text-left' colspan=3>{{t 'sessions.title'}}</th>
+                  <th class='text-left' colspan=3>{{t 'general.sessionType'}}</th>
+                  <th class='text-center' colspan=1>{{t 'curriculumInventory.totalTime'}}</th>
+                  <th class='text-center' colspan=1># {{t 'general.offerings'}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each (sort-by 'title' linkableSessions) as |session|}}
+                  <tr>
+                    <td class='text-center' colspan=2>
+                      {{#if isFinalized}}
+                        {{if (is-in (await linkedSessions) session) (t 'general.yes') (t 'general.no')}}
+                      {{else}}
+                        {{input
+                          type='checkbox'
+                          checked=(is-in (await linkedSessions) session)
+                          change=(action 'changeSession' session)
+                        }}
+                      {{/if}}
+                    </td>
+                    <td class='text-left' colspan=3>{{session.title}}</td>
+                    <td class='text-left' colspan=3>{{session.sessionType.title}}</td>
+                    <td class='text-center' colspan=1>
+                      {{#if (is-in (await linkedSessions) session)}}
+                        {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
+                            {{fa-icon 'spinner' spin=true}}
+                        {{else}}
+                            {{await session.maxSingleOfferingDuration}}
+                        {{/unless}}
+                      {{else}}
+                        {{#unless (is-fulfilled session.totalSumOfferingsDuration)}}
+                          {{fa-icon 'spinner' spin=true}}
+                        {{else}}
+                          {{await session.totalSumOfferingsDuration}}
+                        {{/unless}}
+                      {{/if}}
+                    </td>
+                    <td class='text-center' colspan=1>{{session.offerings.length}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      {{/if}}
+    {{/unless}}
+  {{else}}
+    <div class="block">{{fa-icon 'spinner' spin=true}}</div>
+  {{/unless}}
 </div>

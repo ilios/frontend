@@ -1,0 +1,11 @@
+.curriculum-inventory-reports {
+  @include main-list;
+  .filter-tools {
+    @include main-list-filters;
+
+    .schoolsfilter,
+    .programsfilter {
+      @include main-list-filter;
+    }
+  }
+}

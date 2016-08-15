@@ -20,7 +20,7 @@ export default DS.Model.extend({
   parent: DS.belongsTo('curriculum-inventory-sequence-block', {async: true, inverse: 'children'}),
   children: DS.hasMany('curriculum-inventory-sequence-block', {async: true, inverse: 'parent'}),
   report: DS.belongsTo('curriculum-inventory-report', {async: true}),
-  sessions: DS.hasMany('curriculum-inventory-sequence-block-session', {async: true}),
+  sessions: DS.hasMany('session', {async: true}),
   course: DS.belongsTo('course', {async: true}),
 
   isFinalized: alias('report.isFinalized'),

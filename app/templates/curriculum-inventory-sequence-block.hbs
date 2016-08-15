@@ -1,13 +1,7 @@
 {{curriculum-inventory-sequence-block-details sequenceBlock=model}}
-{{#if (is-fulfilled model.children)}}
-  {{curriculum-inventory-sequence-block-list
-    report=(await model.report)
-    parent=model
-    sequenceBlocks=(await model.children)
-  }}
-{{/if}}
-
-
-
+{{curriculum-inventory-sequence-block-list
+  parent=model
+  remove='removeChildSequenceBlock'
+}}
 
 
