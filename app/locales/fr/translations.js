@@ -162,6 +162,7 @@ export default {
     'notApplicableAbbr': 'n.d.',
     'minimum': 'Minimum',
     'maximum': 'Maximum',
+    'selectCourse': 'Choisi cours'
   },
   'programs': {
     'programTitle': "Titre de Diplôme",

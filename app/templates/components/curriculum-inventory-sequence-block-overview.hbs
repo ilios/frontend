@@ -176,6 +176,8 @@
           displayValueOverride=(await sequenceBlock.course.title)
           value=(await sequenceBlock.course.id)
           options=(sort-by 'title' linkableCourses)
+          showSelectPrompt=true
+          selectPromptTranslation='general.selectCourse'
           save='changeCourse'
         }}
       {{/if}}

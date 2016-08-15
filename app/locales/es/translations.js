@@ -162,6 +162,7 @@ export default {
     'notApplicableAbbr': 'n/d',
     'minimum': 'Mínimo',
     'maximum': 'Máximo',
+    'selectCourse': 'Seleccionar un curso',
   },
   'programs': {
     'programTitle': 'Titulo de Programa',
