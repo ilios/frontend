@@ -372,7 +372,7 @@ test('show school events', function(assert) {
 });
 
 let showFilters = function(){
-  andThen(function(){
+  return andThen(function(){
     return click(find('.showfilters span'));
   });
 };
