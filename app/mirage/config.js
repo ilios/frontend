@@ -1,10 +1,47 @@
 import moment from 'moment';
 import getAll from './helpers/get-all';
 import Mirage from 'ember-cli-mirage';
+import Server from 'ember-cli-mirage/server';
+
+/*
+  Builds a full path for Pretender to monitor based on the `path` and
+  configured options (`urlPrefix` and `namespace`).
+*/
+Server.prototype._getFullPath = function(path) {
+  path = path[0] === '/' ? path.slice(1) : path;
+  let fullPath = '';
+  let urlPrefix = this.urlPrefix ? this.urlPrefix.trim() : '';
+  let namespace = this.namespace ? this.namespace.trim() : '';
+
+  // check to see if path is a FQDN. if so, ignore any urlPrefix/namespace that was set
+  if (/^https?:\/\//.test(path)) {
+    fullPath += path;
+  } else {
+
+    // otherwise, if there is a urlPrefix, use that as the beginning of the path
+    if (urlPrefix.length > 0) {
+      fullPath += urlPrefix[urlPrefix.length - 1] === '/' ? urlPrefix : `${urlPrefix}/`;
+    }
+
+    // add the namespace to the path
+    fullPath += namespace;
+
+    // add a trailing slash to the path if it doesn't already contain one
+    if (fullPath[fullPath.length - 1] !== '/') {
+      fullPath += '/';
+    }
+
+    // finally add the configured path
+    fullPath += path;
+  }
+
+  return fullPath;
+};
 
 export default function() {
   this.timing = 100;
   this.namespace = '/';
+
 
   this.get('api/aamcmethods', getAll);
   this.get('api/aamcmethods/:id', 'aamcMethod');
