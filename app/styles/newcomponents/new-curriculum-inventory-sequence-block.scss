@@ -18,19 +18,23 @@
     @include media($large-screen) {
       @include span-columns(8);
     }
+
     .details {
       font-size: smaller;
     }
   }
 
   .description {
+    min-height: 10em;
+
     @include media($large-screen) {
       @include span-columns(8);
     }
-    min-height: 10em;
+
   }
 
-  .duration, .order-in-sequence {
+  .duration,
+  .order-in-sequence {
     @include media($large-screen) {
       @include span-columns(3);
     }
