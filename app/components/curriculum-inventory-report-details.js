@@ -10,6 +10,7 @@ export default Component.extend({
   isFinalized: alias('report.isFinalized'),
   showFinalizeConfirmation: false,
   isFinalizing: false,
+  classNames: ['curriculum-inventory-report-details'],
 
   actions: {
     cancelFinalization(){

@@ -6,11 +6,11 @@
     }}
   </div>
   {{#if showFinalizeConfirmation}}
-    <div class='confirm-removal'>
+    <div class='confirm-finalize'>
       <div class='confirm-message'>
         {{t 'curriculumInventory.finalizeReportConfirmation'}} <br/>
         <div class="confirm-buttons">
-          <button {{action 'finalize'}} class='remove text'>{{t 'general.yes'}}</button>
+          <button {{action 'finalize'}} class='finalize text'>{{t 'general.yes'}}</button>
           <button {{action 'cancelFinalization'}} class='done text'>{{t 'general.cancel'}}</button>
         </div>
       </div>
