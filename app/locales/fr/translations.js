@@ -393,6 +393,8 @@ export default {
     'friday': 'Vendredi',
     'saturday': 'Samedi',
     'new': 'Nouvelle Offre',
+    'defaultInstructorsNotLoaded': "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)",
+    'defaultLocationNotLoaded': "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)",
   },
   'learningMaterials': {
     'displayName': "Nom d’Affichage",
