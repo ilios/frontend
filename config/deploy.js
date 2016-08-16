@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 module.exports = function(deployTarget) {
-  const API_VERSION = 'v1.7';
+  const API_VERSION = 'v1.8';
   var ENV = {
     build: {},
     exclude: ['.DS_Store', '*-test.js']
