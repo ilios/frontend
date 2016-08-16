@@ -70,7 +70,8 @@ module('Acceptance: Session - Offerings' + testgroup, {
     fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
       users: [2,3,6,7],
       offerings: [1],
-      school: 1
+      school: 1,
+      learnerGroups: [2]
     }));
     fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
       users: [4,5],
@@ -82,11 +83,15 @@ module('Acceptance: Session - Offerings' + testgroup, {
       users: [2,3],
       offerings: [1],
       cohort: 1,
+      location: 'default 1',
+      instructors: [4136],
     }));
     fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
       users: [4,5],
       offerings: [1, 2, 3],
       cohort: 1,
+      location: 'default 2',
+      instructorGroups: [1],
     }));
     fixtures.offerings = [];
     let today = moment().hour(9);
@@ -398,7 +403,7 @@ test('users can create a new offering multi-day', function(assert) {
 });
 
 test('users can create a new small group offering', function(assert) {
-  assert.expect(8);
+  assert.expect(12);
 
   const form = '.offering-form';
   const expandButton = '.session-offerings .expand-button';
@@ -420,6 +425,10 @@ test('users can create a new small group offering', function(assert) {
   const endTime = '.offering-block-time-time-endtime:first';
   const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
   const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
+  const location1 = '.offering-block-time-offering-location:eq(0)';
+  const location2 = '.offering-block-time-offering-location:eq(1)';
+  const instructors1 = '.offering-block-time-offering-instructors:eq(0) li';
+  const instructors2 = '.offering-block-time-offering-instructors:eq(1) li';
 
   visit(url);
   click(expandButton);
@@ -445,6 +454,10 @@ test('users can create a new small group offering', function(assert) {
     assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
     assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
     assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(location1).text(), 'default 1', 'correct default location is added');
+    assert.equal(find(location2).text(), 'default 2', 'correct default location is added');
+    assert.equal(getElementText(instructors1), '0guyM.Mc0son', 'correct default instructors are added');
+    assert.equal(getElementText(instructors2), '1guyM.Mc1son2guyM.Mc2son5guyM.Mc5son6guyM.Mc6son', 'correct default instructors are added');
   });
 });
 
@@ -509,7 +522,7 @@ test('users can edit existing offerings', function(assert) {
 });
 
 test('users can create recurring small groups', function(assert) {
-  assert.expect(26);
+  assert.expect(42);
 
   const form = '.offering-form';
   const expandButton = '.session-offerings .expand-button';
@@ -533,6 +546,8 @@ test('users can create recurring small groups', function(assert) {
   const startsTime = '.offering-block-time-time-starttime';
   const endsTime = '.offering-block-time-time-endtime';
   const learnerGroups = '.offering-block-time-offering-learner_groups ul li';
+  const locations = '.offering-block-time-offering-location';
+  const instructors = '.offering-block-time-offering-instructors';
 
   visit(url);
   click(expandButton);
@@ -582,6 +597,25 @@ test('users can create recurring small groups', function(assert) {
     assert.equal(find(learnerGroups).eq(5).text(), 'learner group 1', 'third correct learner group is picked');
     assert.equal(find(learnerGroups).eq(6).text(), 'learner group 0', 'fourth correct learner group is picked');
     assert.equal(find(learnerGroups).eq(7).text(), 'learner group 1', 'fourth correct learner group is picked');
+
+    assert.equal(find(locations).eq(0).text(), 'default 1', 'first correct default location is picked');
+    assert.equal(find(locations).eq(1).text(), 'default 2', 'first correct default location is picked');
+    assert.equal(find(locations).eq(2).text(), 'default 1', 'second correct default location is picked');
+    assert.equal(find(locations).eq(3).text(), 'default 2', 'second correct default location is picked');
+    assert.equal(find(locations).eq(4).text(), 'default 1', 'third correct default location is picked');
+    assert.equal(find(locations).eq(5).text(), 'default 2', 'third correct default location is picked');
+    assert.equal(find(locations).eq(6).text(), 'default 1', 'fourth correct default location is picked');
+    assert.equal(find(locations).eq(7).text(), 'default 2', 'fourth correct default location is picked');
+
+    assert.equal(getElementText(find(instructors).eq(0)), getText('0 guy M. Mc0son'), 'first correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(1)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'first correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(2)), getText('0 guy M. Mc0son'), 'second correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(3)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'second correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(4)), getText('0 guy M. Mc0son'), 'third correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(5)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'third correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(6)), getText('0 guy M. Mc0son'), 'fourth correct default instructor is picked');
+    assert.equal(getElementText(find(instructors).eq(7)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'fourth correct default instructor is picked');
+
   });
 });
 

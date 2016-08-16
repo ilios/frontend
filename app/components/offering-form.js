@@ -233,7 +233,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     return offerings;
   }),
-  makeSmallGroupOfferingObjects(offerings){
+  makeSmallGroupOfferingObjects: task(function * (offerings){
     const smallGroupMode = this.get('smallGroupMode');
     if (!smallGroupMode) {
       return offerings;
@@ -241,17 +241,25 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     let smallGroupOfferings = [];
 
-    offerings.forEach(({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
-      learnerGroups.forEach(learnerGroup => {
+    for (let i = 0; i < offerings.length; i++) {
+      let {startDate, endDate, room, learnerGroups} = offerings[i];
+      for (let j = 0; j < learnerGroups.length; j++) {
+        let learnerGroup = learnerGroups[j];
+        let defaultLocation = learnerGroup.get('location');
+        if (isPresent(defaultLocation)) {
+          room = defaultLocation;
+        }
+        let instructors = yield learnerGroup.get('instructors');
+        let instructorGroups = yield learnerGroup.get('instructorGroups');
         let offering = {startDate, endDate, room, instructorGroups, instructors};
         offering.learnerGroups = [learnerGroup];
 
         smallGroupOfferings.pushObject(offering);
-      });
-    });
+      }
+    }
 
     return smallGroupOfferings;
-  },
+  }),
 
 
   loadDefaultAttrs(){
@@ -293,7 +301,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return;
     }
     let offerings = yield this.get('makeRecurringOfferingObjects').perform();
-    offerings = this.makeSmallGroupOfferingObjects(offerings);
+    offerings = yield this.get('makeSmallGroupOfferingObjects').perform(offerings);
 
     this.set('offeringsToSave', offerings.length);
     //save offerings in sets of 5
