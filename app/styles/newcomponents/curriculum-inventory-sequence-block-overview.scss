@@ -17,7 +17,7 @@
     .details {
       display: block;
       font-size: smaller;
-      padding-bottom: 2em;
+      padding-bottom: 1em;
     }
   }
 
@@ -27,7 +27,7 @@
 
   .description {
     @include span-columns(10);
-    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
 
   .duration {
@@ -39,6 +39,11 @@
     font-style: italic;
     padding-top: .5em;
 
+  }
+
+  .sessions {
+    @include span-columns(10);
+    padding-top: 1em;
   }
 
   .title {
