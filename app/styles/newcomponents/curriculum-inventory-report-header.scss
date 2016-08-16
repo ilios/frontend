@@ -21,7 +21,7 @@
     }
   }
 
-  .actions {
+  .header-actions {
     @include fill-parent;
 
     @include media($large-screen) {
