@@ -111,7 +111,12 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.link'}}:</label>
     <div class="form-data weblink">
-      <span class='link'><a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a></span>
+      <span class='link'>
+        <a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a>
+        {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
+          {{fa-icon 'copy'}}
+        {{/copy-button}}
+      </span>
     </div>
   </div>
   {{/if}}
@@ -119,7 +124,12 @@
   <div class="form-col-12">
     <label class="form-label">{{t 'learningMaterials.file'}}:</label>
     <div class="form-data filename">
-      <span class='downloadurl'><a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank">{{learningMaterial.learningMaterial.filename}}</a></span>
+      <span class='downloadurl'>
+        <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank">{{learningMaterial.learningMaterial.filename}}</a>
+        {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
+          {{fa-icon 'copy'}}
+        {{/copy-button}}
+      </span>
     </div>
   </div>
   {{/if}}
