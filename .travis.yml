@@ -22,7 +22,10 @@ before_install:
   - npm set progress=false
   - npm config set spin false
   - npm install -g bower
-  - rvm install 2.2.0
+  # workaround for npm which rvm issue https://github.com/travis-ci/travis-ci/issues/5092#issuecomment-235542942
+  - mv node_modules/.bin/which node_modules/.bin/which.backup
+  - rvm install 2.2.0 && rvm use 2.2.0
+  - mv node_modules/.bin/which.backup node_modules/.bin/which
   - travis_retry gem install scss_lint --no-ri --no-rdoc
 
 
