@@ -14,6 +14,7 @@ export default Component.extend({
   sequenceBlock: null,
   parent: null,
   report: null,
+  sortBy: 'title',
   linkableCourses: [],
   linkedSessions: [],
   minimum: 0,
@@ -32,6 +33,7 @@ export default Component.extend({
   academicLevels: [],
   childSequenceOrderOptions: [],
   requiredOptions: [],
+
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -128,6 +130,11 @@ export default Component.extend({
     });
   }),
 
+  sortedAscending: computed('sortBy', function(){
+    const sortBy = this.get('sortBy');
+    return sortBy.search(/desc/) === -1;
+  }),
+
   actions: {
     changeRequired: function(value){
       let block = this.get('sequenceBlock');
@@ -222,6 +229,13 @@ export default Component.extend({
         block.get('sessions').addObject(session);
       }
       block.save();
+    },
+    sortBy(what){
+      const sortBy = this.get('sortBy');
+      if(sortBy === what){
+        what += ':desc';
+      }
+      this.get('setSortBy')(what);
     },
   }
 });
