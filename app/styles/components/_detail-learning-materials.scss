@@ -21,3 +21,16 @@
     top: 0;
   }
 }
+
+.learningmaterial-manager {
+  .downloadurl,
+  .weblink {
+    button {
+      background: 0;
+      color: $ilios-blue;
+      font-size: .8 * $base-font-size;
+      margin: 0 .5em;
+      padding: 0;
+    }
+  }
+}
