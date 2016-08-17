@@ -81,15 +81,18 @@ export default Component.extend({
 
   domainsWithNoChildren: computed('domains.[]', function(){
     return new Promise(resolve => {
-      this.get('domains').then(domains => {
-        filter(domains.toArray(), (competency => {
-          return new Promise(resolve => {
-            competency.get('children').then(children => {
-              resolve(children.length === 0);
+      this.get('competencies').then(competencies => {
+        this.get('domains').then(domains => {
+          filter(domains.toArray(), (domain => {
+            return new Promise(resolve => {
+              domain.get('children').then(children => {
+                let availableChildren = children.filter(child => competencies.contains(child));
+                resolve(availableChildren.length === 0);
+              });
             });
+          })).then(domainsWithNoChildren => {
+            resolve(domainsWithNoChildren);
           });
-        })).then(domainsWithNoChildren => {
-          resolve(domainsWithNoChildren);
         });
       });
     });
