@@ -49,16 +49,12 @@
         }}
       </td>
       <td class='text-center' colspan=1>
-        {{#if report.isFinalized}}
-          {{#link-to 'curriculumInventoryReport' report.content class='edit'}}
-            {{fa-icon 'eye'}}
-          {{/link-to}}
-        {{else}}
-          {{#link-to 'curriculumInventoryReport' report.content class='edit'}}
-            {{fa-icon 'edit'}}
-          {{/link-to}}
+        {{#link-to 'curriculumInventoryReport' report.content class='edit'}}
+          {{fa-icon 'edit'}}
+        {{/link-to}}
+        {{#unless report.isFinalized}}
           <span class='clickable remove' {{action 'confirmRemove' report}}>{{fa-icon 'trash'}}</span>
-        {{/if}}
+        {{/unless}}
         <span>
           <a href="{{report.content.absoluteFileUri}}" download="report.xml" target="_blank">{{fa-icon 'download'}}</a>
         </span>

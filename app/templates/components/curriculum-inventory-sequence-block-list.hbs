@@ -81,16 +81,12 @@
                   {{/if}}
                 </td>
                 <td class='text-center' colspan=1>
-                  {{#if block.isFinalized}}
-                    {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
-                      {{fa-icon 'eye'}}
-                    {{/link-to}}
-                  {{ else }}
-                    {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
-                      {{fa-icon 'edit'}}
-                    {{/link-to}}
+                  {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
+                    {{fa-icon 'edit'}}
+                  {{/link-to}}
+                  {{#unless report.isFinalized}}
                     <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
-                  {{/if}}
+                  {{/unless}}
                 </td>
               </tr>
               {{#if block.showRemoveConfirmation}}
