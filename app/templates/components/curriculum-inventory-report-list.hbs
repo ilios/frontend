@@ -2,7 +2,7 @@
   <thead>
     <tr>
       {{#sortable-th
-        colspan=5
+        colspan=4
         click=(action 'sortBy' 'name')
         sortedBy=(or (eq sortBy 'name') (eq sortBy 'name:desc'))
         sortedAscending=sortedAscending
@@ -23,13 +23,13 @@
       <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
       <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
       <th class='text-center' colspan=2>{{t 'general.status'}}</th>
-      <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+      <th class='text-left' colspan=2>{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
   {{#each sortedReports as |report|}}
     <tr class="{{if report.showRemoveConfirmation 'confirm-removal'}}">
-      <td class='text-left' colspan=5>
+      <td class='text-left' colspan=4>
         {{#link-to 'curriculumInventoryReport' report.content}}
           {{report.name}}
         {{/link-to}}
@@ -48,7 +48,7 @@
           showIcon=false
         }}
       </td>
-      <td class='text-center' colspan=1>
+      <td class='text-center' colspan=2>
         {{#if report.isFinalized}}
           {{#link-to 'curriculumInventoryReport' report.content class='edit'}}
             {{fa-icon 'eye'}}
