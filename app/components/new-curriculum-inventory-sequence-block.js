@@ -18,7 +18,8 @@ const Validations = buildValidations({
     validator('number', {
       allowString: true,
       integer: true,
-      gte: 0
+      gte: 0,
+      lte: 1200
     }),
   ],
   startDate: [
