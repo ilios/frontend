@@ -30,9 +30,13 @@ before_install:
   - npm config set spin false
   - npm install -g bower
   # workaround for npm which rvm issue https://github.com/travis-ci/travis-ci/issues/5092#issuecomment-235542942
-  - mv node_modules/.bin/which node_modules/.bin/which.backup
+  - if [ -f "node_modules/.bin/which" ];
+    then mv node_modules/.bin/which node_modules/.bin/which.backup;
+    fi
   - rvm install 2.2.0 && rvm use 2.2.0
-  - mv node_modules/.bin/which.backup node_modules/.bin/which
+  - if [ -f "node_modules/.bin/which.backup" ];
+    then mv node_modules/.bin/which.backup node_modules/.bin/which;
+    fi
   - if [ "$LINT" = true ];
     then travis_retry gem install scss_lint --no-ri --no-rdoc;
     fi
