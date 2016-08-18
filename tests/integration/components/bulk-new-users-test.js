@@ -401,7 +401,7 @@ test('saves valid student users', function(assert) {
   triggerUpload(users);
   run.later(()=>{
     this.$('.done').click();
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -435,7 +435,7 @@ test('validate firstName', function(assert) {
     assert.notOk(this.$(goodBox).hasClass('error'));
     assert.ok(this.$(badCheck).prop('disabled'));
     assert.ok(this.$(BadBox).hasClass('error'));
-  }, 100);
+  }, 1000);
 
   return wait();
 });
