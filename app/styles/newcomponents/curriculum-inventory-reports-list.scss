@@ -8,4 +8,12 @@
       @include main-list-filter;
     }
   }
+
+  .report-actions {
+    text-align: left;
+
+    i {
+      margin-left: .25em;
+    }
+  }
 }
