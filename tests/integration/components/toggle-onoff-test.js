@@ -1,9 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('toggle-onoff', 'Integration | Component | toggle onoff' + testgroup, {
+moduleForComponent('toggle-onoff', 'Integration | Component | toggle onoff', {
   integration: true,
   beforeEach() {
     this.container.lookup('service:i18n').set('locale', 'en');

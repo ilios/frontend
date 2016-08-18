@@ -2,9 +2,8 @@ import {
   moduleFor,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleFor('route:session/publicationCheck', 'Unit | Route | Session/PublicationCheck ' + testgroup, {
+moduleFor('route:session/publicationCheck', 'Unit | Route | Session/PublicationCheck ', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

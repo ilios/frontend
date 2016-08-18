@@ -1,9 +1,8 @@
 import EventMixin from '../../../mixins/events';
 import { module, test } from 'qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
-module('Unit | Mixin | events' + testgroup);
+module('Unit | Mixin | events');
 
 // Replace this with your real tests.
 test('it works', function(assert) {

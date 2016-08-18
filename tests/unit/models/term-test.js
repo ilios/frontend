@@ -1,8 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('term', 'Unit | Model | term' + testgroup, {
+moduleForModel('term', 'Unit | Model | term', {
   // Specify the other units that are required for this test.
   needs: modelList
 });

@@ -5,7 +5,6 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {c as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
@@ -13,7 +12,7 @@ var application;
 var fixtures = {};
 var url = '/courses/1/sessions/1';
 
-module('Acceptance: Session - Offerings' + testgroup, {
+module('Acceptance: Session - Offerings', {
   beforeEach: function() {
     application = startApp();
     fixtures.users =  [];

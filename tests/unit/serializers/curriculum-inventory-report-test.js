@@ -1,8 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
-moduleForModel('curriculum-inventory-report', 'Unit | Serializer | curriculum inventory report' + testgroup, {
+moduleForModel('curriculum-inventory-report', 'Unit | Serializer | curriculum inventory report', {
   // Specify the other units that are required for this test.
   needs: [
     'model:curriculum-inventory-academic-level',

@@ -1,9 +1,8 @@
 import LiveSearchItemMixin from 'ilios/mixins/live-search-item';
 import { module, test } from 'qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 
-module('LiveSearchItemMixin' + testgroup);
+module('LiveSearchItemMixin');
 
 // Replace this with your real tests.
 test('it works', function(assert) {

@@ -1,8 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 import modelList from '../../helpers/model-list';
 
-moduleForModel('permission', 'Unit | Model | permission ' + testgroup, {
+moduleForModel('permission', 'Unit | Model | permission ', {
   needs: modelList
 });
 

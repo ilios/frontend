@@ -1,7 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleForComponent('click-choice-buttons', 'Unit | Component | click choice buttons ' + testgroup, {
+moduleForComponent('click-choice-buttons', 'Unit | Component | click choice buttons ', {
   unit: true
 });
 

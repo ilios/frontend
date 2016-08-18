@@ -10,10 +10,17 @@ env:
     #AWS credentials for ilios travis-deploy user
   - secure: kLY+xxJKxi/srSsyjphkaF8y2dagUTBBzBWjkO+uEtR5K5OxURHCFmCL9cuM4VbSBkvRaoPuzxNeeRP4Np3x1/Xiv1so60ZBo+XPW02W84HZWpSc2QxwlSLaU6KD/K7K7HZ+dh3ky91nQFTqlGPJcoWHy+aCJkLDlgWLYZwxc0Q=
   - secure: ITd6yf8q7kimvTFERMEXkGIWjI8g/SWgt6kP7iiTB+7IqBKY0pG2IdU3I/I8HifTnophUsZJEYbZ6Dj+OnAgWjTo1HSYoltlwXlO0qigw0exI9G8lmpJ1Ww8lSuGhUAop3YpUwrIVmE0PRPaEduTRJTCzUt6yKq4FjGHC3SSHFU=
+  matrix:
+    - PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true LINT=true
+    - PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false LINT=false
+    - PARTITION=2 FILTER='acceptance' SPLIT=4 PARALLEL=false LINT=false
+    - PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false LINT=false
+    - PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false LINT=false
 
 cache:
   directories:
     - node_modules
+    - bower_components
 
 matrix:
   fast_finish: true
@@ -23,11 +30,16 @@ before_install:
   - npm config set spin false
   - npm install -g bower
   # workaround for npm which rvm issue https://github.com/travis-ci/travis-ci/issues/5092#issuecomment-235542942
-  - mv node_modules/.bin/which node_modules/.bin/which.backup
+  - if [ -f "node_modules/.bin/which" ];
+    then mv node_modules/.bin/which node_modules/.bin/which.backup;
+    fi
   - rvm install 2.2.0 && rvm use 2.2.0
-  - mv node_modules/.bin/which.backup node_modules/.bin/which
-  - travis_retry gem install scss_lint --no-ri --no-rdoc
-
+  - if [ -f "node_modules/.bin/which.backup" ];
+    then mv node_modules/.bin/which.backup node_modules/.bin/which;
+    fi
+  - if [ "$LINT" = true ];
+    then travis_retry gem install scss_lint --no-ri --no-rdoc;
+    fi
 
 install:
   - travis_retry npm install --no-optional
@@ -39,9 +51,13 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - scss-lint
-  - eslint .
-  - ember test --launch=firefox
+  - if [ "$LINT" = true ];
+    then scss-lint;
+    fi
+  - if [ "$LINT" = true ];
+    then eslint .;
+    fi
+  - ember exam --split=$SPLIT --partition=$PARTITION --launch=firefox --filter=$FILTER --parallel=$PARALLEL
 
 after_success:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy production

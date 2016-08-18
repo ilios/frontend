@@ -4,13 +4,12 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import Ember from 'ember';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 
-module('Acceptance: Instructor Groups' + testgroup, {
+module('Acceptance: Instructor Groups', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application, false);

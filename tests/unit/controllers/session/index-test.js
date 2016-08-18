@@ -2,9 +2,8 @@ import {
   moduleFor,
   test
 } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleFor('controller:session/index', 'Unit | Controller | Session / Index ' + testgroup, {
+moduleFor('controller:session/index', 'Unit | Controller | Session / Index ', {
   // Specify the other units that are required for this test.
   needs: ['controller:course', 'controller:session']
 });

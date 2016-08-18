@@ -1,7 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
-import {a as testgroup} from 'ilios/tests/helpers/test-groups';
 
-moduleFor('service:school-events', 'Unit | Service | school events' + testgroup, {
+moduleFor('service:school-events', 'Unit | Service | school events', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

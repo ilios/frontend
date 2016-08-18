@@ -4,12 +4,11 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import {b as testgroup} from 'ilios/tests/helpers/test-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 let application;
 let url = '/programs/1/programyears/1?pyCompetencyDetails=true';
-module('Acceptance: Program Year - Competencies' + testgroup, {
+module('Acceptance: Program Year - Competencies', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
