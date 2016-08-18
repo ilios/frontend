@@ -78,8 +78,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertDescriptionChanges(){
-      const program = this.get('report');
-      this.set('report', program.get('description'));
+      const report = this.get('report');
+      this.set('description', report.get('description'));
     },
   }
 });
