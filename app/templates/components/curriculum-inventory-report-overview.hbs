@@ -29,7 +29,7 @@
         {{inplace-select value=report.year displayValueOverride=report.yearLabel options=yearOptions save="changeYear"}}
       {{/if}}
     </div>
-    
+
     <div class="block">
       <label>{{t "general.program"}}:</label>
       <span>{{report.program.title}} ({{report.program.shortTitle}})</span>
@@ -41,21 +41,18 @@
           {{report.description}}
         {{else}}
           {{#editable-field
-          value=shortTitle
+          value=description
           save=(action 'changeDescription')
           close=(action 'revertDescriptionChanges')
           clickPrompt=(if report.description report.description (t 'general.clickToEdit'))
           as |isSaving save close|
           }}
-            {{one-way-textarea
-              value=description
-              update=(action (mut description))
-              onenter=save
-              onescape=close
-              disabled=isSaving
-              focusOut=(action 'addErrorDisplayFor' 'description')
-              keyPress=(action 'addErrorDisplayFor' 'description')
-            }}
+            <textarea
+              onchange={{action (mut description) value="target.value"}}
+              value={{description}}
+              disabled={{isSaving}}
+              onkeypress={{action 'addErrorDisplayFor' 'description'}}
+            >{{description}}</textarea>
             {{#if (and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))}}
               <span class="validation-error-message">{{v-get this 'description' 'message'}}</span>
             {{/if}}
