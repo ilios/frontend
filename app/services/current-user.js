@@ -208,8 +208,10 @@ export default Ember.Service.extend({
       Ember.RSVP.all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewSchools', hasRole.contains(true));
-        this.set('canEditSchools', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewSchools', hasRole.contains(true));
+          this.set('canEditSchools', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -225,8 +227,10 @@ export default Ember.Service.extend({
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewPrograms', hasRole.contains(true));
-        this.set('canEditPrograms', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewPrograms', hasRole.contains(true));
+          this.set('canEditPrograms', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -244,9 +248,11 @@ export default Ember.Service.extend({
         this.get('userIsFaculty'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewCourses', hasRole.contains(true));
-        this.set('canEditCourses', hasRole.contains(true));
-        this.set('canPrintUnpublishedCourse', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewCourses', hasRole.contains(true));
+          this.set('canEditCourses', hasRole.contains(true));
+          this.set('canPrintUnpublishedCourse', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -258,8 +264,10 @@ export default Ember.Service.extend({
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewInstructorGroups', hasRole.contains(true));
-        this.set('canEditInstructorGroups', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewInstructorGroups', hasRole.contains(true));
+          this.set('canEditInstructorGroups', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -275,8 +283,10 @@ export default Ember.Service.extend({
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewLearnerGroups', hasRole.contains(true));
-        this.set('canEditLearnerGroups', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewLearnerGroups', hasRole.contains(true));
+          this.set('canEditLearnerGroups', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -292,7 +302,9 @@ export default Ember.Service.extend({
       Ember.RSVP.all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewCurriculumInventory', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewCurriculumInventory', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -302,7 +314,9 @@ export default Ember.Service.extend({
       Ember.RSVP.all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canEditCurriculumInventory', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canEditCurriculumInventory', hasRole.contains(true));
+        }
       });
     }
   )),
@@ -321,7 +335,9 @@ export default Ember.Service.extend({
       Ember.RSVP.all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
-        this.set('canViewAdminDashboard', hasRole.contains(true));
+        if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+          this.set('canViewAdminDashboard', hasRole.contains(true));
+        }
       });
     }
   )),
