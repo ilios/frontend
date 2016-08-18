@@ -14,9 +14,7 @@ export default Component.extend({
   sequenceBlock: null,
   parent: null,
   report: null,
-  sortBy: 'title',
   linkableCourses: [],
-  linkedSessions: [],
   minimum: 0,
   maximum: 0,
   orderInSequenceOptions: [],
@@ -28,6 +26,7 @@ export default Component.extend({
 
   isSaving: false,
   isFinalized: false,
+  isManagingSessions: false,
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
   academicLevels: [],
@@ -98,7 +97,8 @@ export default Component.extend({
       requiredOptions,
       childSequenceOrderOptions,
       isFinalized,
-      linkedSessions
+      linkedSessions,
+      isManagingSessions: false,
     });
   }),
 
@@ -130,10 +130,7 @@ export default Component.extend({
     });
   }),
 
-  sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
-    return sortBy.search(/desc/) === -1;
-  }),
+
 
   actions: {
     changeRequired: function(value){
@@ -230,12 +227,11 @@ export default Component.extend({
       }
       block.save();
     },
-    sortBy(what){
-      const sortBy = this.get('sortBy');
-      if(sortBy === what){
-        what += ':desc';
-      }
-      this.get('setSortBy')(what);
+    toggleManagingSessions() {
+      this.set('isManagingSessions', ! this.get('isManagingSessions'));
     },
+    cancelManagingSessions(){
+      this.set('isManagingSessions', false);
+    }
   }
 });

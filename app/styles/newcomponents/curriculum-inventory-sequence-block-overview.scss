@@ -42,8 +42,17 @@
   }
 
   .sessions {
-    @include span-columns(10);
+    @include fill-parent;
     padding-top: 1em;
+
+    .actions {
+      float:right;
+      padding-right: 1em;
+    }
+  }
+
+  .sessions-list {
+    @include fill-parent;
   }
 
   .title {
