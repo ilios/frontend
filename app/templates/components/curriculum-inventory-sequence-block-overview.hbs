@@ -198,75 +198,31 @@
         <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
     {{else}}
       {{#if linkableSessions.length}}
-        <div class="block sessions">
-          <label>{{t 'general.sessions'}} ({{linkableSessions.length}}):</label>
-        </div>
-        <section class="resultslist">
-          <div class='resultslist-list'>
-            <table>
-              <thead>
-                <tr>
-                  <th class='text-center' colspan=2>{{t 'curriculumInventory.countAsOneOffering'}}</th>
-                  {{#sortable-th
-                    colspan=3
-                    click=(action 'sortBy' 'title')
-                    sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
-                    sortedAscending=sortedAscending
-                  }}{{t 'sessions.title'}}{{/sortable-th}}
-                  {{#sortable-th
-                    colspan=3
-                    click=(action 'sortBy' 'sessionType.title')
-                    sortedBy=(or (eq sortBy 'sessionType.title') (eq sortBy 'sessionType.title:desc'))
-                    sortedAscending=sortedAscending
-                  }}{{t 'general.sessionType'}}{{/sortable-th}}
-                  <th class='text-center' colspan=1>{{t 'curriculumInventory.totalTime'}}</th>
-                  {{#sortable-th
-                    colspan=1
-                    click=(action 'sortBy' 'offerings.length')
-                    sortedBy=(or (eq sortBy 'offerings.length') (eq sortBy 'offerings.length:desc'))
-                    sortedAscending=sortedAscending
-                    sortType='numeric'
-                  }}{{t 'general.offerings'}}{{/sortable-th}}
-                </tr>
-              </thead>
-              <tbody>
-                {{#each (sort-by sortBy linkableSessions) as |session|}}
-                  <tr>
-                    <td class='text-center' colspan=2>
-                      {{#if isFinalized}}
-                        {{if (is-in (await linkedSessions) session) (t 'general.yes') (t 'general.no')}}
-                      {{else}}
-                        {{input
-                          type='checkbox'
-                          checked=(is-in (await linkedSessions) session)
-                          change=(action 'changeSession' session)
-                        }}
-                      {{/if}}
-                    </td>
-                    <td class='text-left' colspan=3>{{session.title}}</td>
-                    <td class='text-left' colspan=3>{{session.sessionType.title}}</td>
-                    <td class='text-center' colspan=1>
-                      {{#if (is-in (await linkedSessions) session)}}
-                        {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
-                            {{fa-icon 'spinner' spin=true}}
-                        {{else}}
-                            {{await session.maxSingleOfferingDuration}}
-                        {{/unless}}
-                      {{else}}
-                        {{#unless (is-fulfilled session.totalSumOfferingsDuration)}}
-                          {{fa-icon 'spinner' spin=true}}
-                        {{else}}
-                          {{await session.totalSumOfferingsDuration}}
-                        {{/unless}}
-                      {{/if}}
-                    </td>
-                    <td class='text-center' colspan=1>{{session.offerings.length}}</td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
+        {{#liquid-if isManagingSessions class='horizontal sessions-list'}}
+          {{curriculum-inventory-sequence-block-session-manager
+            sequenceBlock=sequenceBlock
+            linkableSessions=(await linkableSessions)
+            cancel=(action 'cancelManagingSessions')
+            save=(action 'changeSessions')
+            sortBy=sortBy
+            setSortBy=setSortBy
+          }}
+        {{else}}
+          <div class="block sessions">
+            <label>{{t "general.sessions"}} ({{linkableSessions.length}})</label>
+            {{#unless (or isManagingSessions isFinalized)}}
+              <div class="actions">
+                <button {{action 'toggleManagingSessions'}}>{{t 'general.manage'}}</button>
+              </div>
+            {{/unless}}
           </div>
-        </section>
+          {{curriculum-inventory-sequence-block-session-list
+            sequenceBlock=sequenceBlock
+            linkableSessions=(await linkableSessions)
+            sortBy=sortBy
+            setSortBy=setSortBy
+          }}
+        {{/liquid-if}}
       {{/if}}
     {{/unless}}
   {{else}}

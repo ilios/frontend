@@ -14,9 +14,7 @@ export default Component.extend({
   sequenceBlock: null,
   parent: null,
   report: null,
-  sortBy: 'title',
   linkableCourses: [],
-  linkedSessions: [],
   minimum: 0,
   maximum: 0,
   orderInSequenceOptions: [],
@@ -28,6 +26,7 @@ export default Component.extend({
 
   isSaving: false,
   isFinalized: false,
+  isManagingSessions: false,
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
   academicLevels: [],
@@ -130,11 +129,6 @@ export default Component.extend({
     });
   }),
 
-  sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
-    return sortBy.search(/desc/) === -1;
-  }),
-
   actions: {
     changeRequired: function(value){
       let block = this.get('sequenceBlock');
@@ -218,24 +212,18 @@ export default Component.extend({
     cancelMinMaxEditing() {
       this.set('isEditingMinMax', false);
     },
-    changeSession(session) {
-      let block = this.get('sequenceBlock');
-      let sessions = this.get('linkedSessions');
-      if (sessions.contains(session)) {
-        sessions.removeObject(session);
-        block.get('sessions').removeObject(sessions);
-      } else {
-        sessions.addObject(session);
-        block.get('sessions').addObject(session);
-      }
-      block.save();
+    toggleManagingSessions() {
+      this.set('isManagingSessions', ! this.get('isManagingSessions'));
     },
-    sortBy(what){
-      const sortBy = this.get('sortBy');
-      if(sortBy === what){
-        what += ':desc';
-      }
-      this.get('setSortBy')(what);
+    cancelManagingSessions(){
+      this.set('isManagingSessions', false);
+    },
+    changeSessions(sessions) {
+      let block = this.get('sequenceBlock');
+      block.set('sessions', sessions);
+      return block.save().then(() => {
+        this.set('isManagingSessions', false);
+      });
     },
   }
 });
