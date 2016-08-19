@@ -1,11 +1,11 @@
 {{#unless loadAttrsFromOffering.isRunning}}
   <div class='item start-date'>
-    <label>{{t "general.startDate"}}:</label>
+    <label>{{t 'general.startDate'}}:</label>
     {{pikaday-input value=startDate onSelection=(action 'updateStartDate') format='M/D/YYYY'}}
   </div>
 
   <div class='item start-time'>
-    <label>{{t "general.startTime"}}:</label>
+    <label>{{t 'general.startTime'}}:</label>
     {{time-picker date=startDate action='updateStartTime'}}
   </div>
 
@@ -22,7 +22,7 @@
       {{#if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours'))}}
         <span class="validation-error-message">{{v-get this 'durationHours' 'message'}}</span>
       {{/if}}
-      <label>{{t "general.hours"}}</label>
+      <label>{{t 'general.hours'}}</label>
     </div>
     <div class='minutes'>
       {{one-way-input
@@ -35,12 +35,12 @@
       {{#if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes'))}}
         <span class="validation-error-message">{{v-get this 'durationMinutes' 'message'}}</span>
       {{/if}}
-      <label>{{t "general.minutes"}}</label>
+      <label>{{t 'general.minutes'}}</label>
     </div>
   </div>
 
   <div class='item end-date-time'>
-    <label>{{t "general.end"}}:</label>
+    <label>{{t 'general.end'}}:</label>
     {{#if endDate}}
       <div class='text'>{{moment-format endDate 'M/D/YYYY h:mm a'}}</div>
     {{/if}}
@@ -92,7 +92,7 @@
       <label>
         {{t 'general.location'}}:
         {{#unless offering}}
-          {{t "offerings.defaultLocationNotLoaded"}}
+          {{t 'offerings.defaultLocationNotLoaded'}}
         {{/unless}}
       </label>
       {{one-way-input
@@ -113,7 +113,7 @@
       <label>
         {{t 'general.instructors'}}:
         {{#unless offering}}
-          {{t "offerings.defaultInstructorsNotLoaded"}}
+          {{t 'offerings.defaultInstructorsNotLoaded'}}
         {{/unless}}
       </label>
       {{instructor-selection-manager

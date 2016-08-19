@@ -7,7 +7,7 @@
   <p class='rollover-summary'>{{t 'courses.rolloverSummary'}}</p>
 
   <div class='item title'>
-    <label>{{t "general.title"}}:</label>
+    <label>{{t 'general.title'}}:</label>
     {{one-way-input
       value=title
       update=(pipe (action 'changeTitle') (action 'addErrorDisplayFor' 'title'))
@@ -23,7 +23,7 @@
   </div>
 
   <div class='item year-select'>
-    <label>{{t "general.year"}}:</label>
+    <label>{{t 'general.year'}}:</label>
     {{#if loadUnavailableYears.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
@@ -47,7 +47,7 @@
   <div class='advanced-options'>
     {{#liquid-if expandAdvancedOptions class='vertical'}}
       <div class='item'>
-        <label>{{t "general.startDate"}}:</label>
+        <label>{{t 'general.startDate'}}:</label>
         {{pikaday-input
           size=10
           value=startDate

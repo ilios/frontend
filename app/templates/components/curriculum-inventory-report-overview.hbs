@@ -2,7 +2,7 @@
 {{#unless loadAttr.isRunning}}
   <div class='curriculum-inventory-report-overview-content'>
     <div class="block">
-      <label>{{t "general.start"}}:</label>
+      <label>{{t 'general.start'}}:</label>
       <span>
         {{#if isFinalized}}
           {{moment-format report.startDate 'MM/DD/YY'}}
@@ -12,7 +12,7 @@
       </span>
     </div>
     <div class="block">
-      <label>{{t "general.end"}}:</label>
+      <label>{{t 'general.end'}}:</label>
       <span>
         {{#if isFinalized}}
           {{moment-format report.endDate 'MM/DD/YY'}}
@@ -22,7 +22,7 @@
       </span>
     </div>
     <div class="block">
-      <label>{{t "general.academicYear"}}:</label>
+      <label>{{t 'general.academicYear'}}:</label>
       {{#if (or isFinalized (await report.hasLinkedCourses))}}
         <span>{{report.yearLabel}}</span>
       {{else}}
@@ -31,11 +31,11 @@
     </div>
 
     <div class="block">
-      <label>{{t "general.program"}}:</label>
+      <label>{{t 'general.program'}}:</label>
       <span>{{report.program.title}} ({{report.program.shortTitle}})</span>
     </div>
     <div class="description">
-      <label>{{t "general.description"}}:</label>
+      <label>{{t 'general.description'}}:</label>
       <span>
         {{#if isFinalized}}
           {{report.description}}

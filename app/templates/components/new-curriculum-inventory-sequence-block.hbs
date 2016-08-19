@@ -17,7 +17,7 @@
     {{/if}}
   </div>
   <div class="item course">
-    <label>{{t "general.course"}}:</label>
+    <label>{{t 'general.course'}}:</label>
     {{one-way-select
       value=course
       options=(sort-by 'title' (await linkableCourses))
@@ -49,7 +49,7 @@
   </div>
 
   <div class="item required">
-    <label>{{t "general.required"}}:</label>
+    <label>{{t 'general.required'}}:</label>
     {{one-way-select
       value=required
       options=requiredOptions
@@ -60,12 +60,12 @@
   </div>
 
   <div class="item track">
-    <label>{{t "curriculumInventory.isTrack"}}?</label>
+    <label>{{t 'curriculumInventory.isTrack'}}?</label>
     {{inplace-boolean value=track save='changeTrack'}}
   </div>
 
   <div class='item start-date'>
-    <label>{{t "general.startDate"}}:</label>
+    <label>{{t 'general.startDate'}}:</label>
     {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
   {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
       <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
@@ -73,7 +73,7 @@
   </div>
 
   <div class='item end-date'>
-    <label>{{t "general.endDate"}}:</label>
+    <label>{{t 'general.endDate'}}:</label>
     {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
   {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
       <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
@@ -105,7 +105,7 @@
   </div>
 
   <div class="item minimum">
-    <label>{{t "general.minimum"}}:</label>
+    <label>{{t 'general.minimum'}}:</label>
     {{one-way-input
       value=minimum
       update=(action (mut minimum))
@@ -121,7 +121,7 @@
   </div>
 
   <div class="item maximum">
-    <label>{{t "general.maximum"}}:</label>
+    <label>{{t 'general.maximum'}}:</label>
     {{one-way-input
       value=maximum
       update=(action (mut maximum))
@@ -136,7 +136,7 @@
     {{/if}}
   </div>
   <div class="item academic-level">
-    <label>{{t "curriculumInventory.academicLevel"}}:</label>
+    <label>{{t 'curriculumInventory.academicLevel'}}:</label>
     {{one-way-select
       value=academicLevel
       options=(sort-by 'level' (await academicLevels))
@@ -146,7 +146,7 @@
     }}
   </div>
   <div class="item child-sequence-order">
-    <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
+    <label>{{t 'curriculumInventory.childSequenceOrder'}}:</label>
     {{one-way-select
       value=childSequenceOrder
       options=childSequenceOrderOptions
@@ -157,7 +157,7 @@
   </div>
   {{#if isInOrderedSequence}}
     <div class="item order-in-sequence">
-      <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+      <label>{{t 'curriculumInventory.orderInSequence'}}:</label>
       {{one-way-select
         value=orderInSequence
         options=orderInSequenceOptions

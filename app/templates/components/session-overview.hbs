@@ -65,7 +65,7 @@
     <div class='session-overview-options'>
 
       <div class="sessiontype">
-        <label>{{t "sessions.type"}}:</label>
+        <label>{{t 'sessions.type'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-select
@@ -79,7 +79,7 @@
         </span>
       </div>
       <div class="sessionsupplemental switch-block">
-        <label>{{t "sessions.supplementalCurriculum"}}:</label>
+        <label>{{t 'sessions.supplementalCurriculum'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
@@ -93,7 +93,7 @@
         </span>
       </div>
       <div class="sessionspecialattire switch-block">
-        <label>{{t "sessions.specialAttireRequired"}}:</label>
+        <label>{{t 'sessions.specialAttireRequired'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
@@ -107,7 +107,7 @@
         </span>
       </div>
       <div class="sessionspecialequipment switch-block">
-        <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+        <label>{{t 'sessions.specialEquipmentRequired'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
@@ -122,7 +122,7 @@
       </div>
       <hr />
       <div class="independentlearningcontrol switch-block">
-        <label>{{t "sessions.independentLearning"}}:</label>
+        <label>{{t 'sessions.independentLearning'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
@@ -137,7 +137,7 @@
       </div>
       {{#if session.isIndependentLearning}}
         <div class="sessionilmhours block">
-          <label>{{t "general.hours"}}:</label>
+          <label>{{t 'general.hours'}}:</label>
           <span>
             {{#if editable}}
               {{#editable-field
@@ -165,7 +165,7 @@
           </span>
         </div>
         <div class="sessionilmduedate block">
-          <label>{{t "sessions.dueBy"}}:</label>
+          <label>{{t 'sessions.dueBy'}}:</label>
           <span>
             {{#if editable}}
               {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}
@@ -178,7 +178,7 @@
     </div>
 
     <div class="sessiondescription">
-      <label>{{t "general.description"}}:</label>
+      <label>{{t 'general.description'}}:</label>
       <span class='list-reset'>
         {{#if editable}}
           {{#editable-field
@@ -206,7 +206,7 @@
     {{#unless session.isIndependentLearning}}
       <br />
       <div class="sessionassociatedgroups">
-        <label>{{t "general.associatedGroups"}}:</label>
+        <label>{{t 'general.associatedGroups'}}:</label>
         <span>
         {{#if session.associatedLearnerGroups.isFulfilled}}
           <span>

@@ -29,7 +29,7 @@
       {{/if}}
     </div>
     <div class="block description">
-      <label>{{t "general.description"}}:</label>
+      <label>{{t 'general.description'}}:</label>
       {{#if isFinalized}}
         <span>{{sequenceBlock.description}}</span>
       {{else}}
@@ -41,7 +41,7 @@
       {{/if}}
     </div>
     <div class="block required">
-      <label>{{t "general.required"}}:</label>
+      <label>{{t 'general.required'}}:</label>
       {{#if isFinalized}}
         <span>
           {{if sequenceBlock.isRequired
@@ -54,7 +54,7 @@
       {{/if}}
     </div>
     <div class="block track">
-      <label>{{t "curriculumInventory.isTrack"}}:</label>
+      <label>{{t 'curriculumInventory.isTrack'}}:</label>
       {{#if isFinalized}}
         <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
       {{else}}
@@ -63,7 +63,7 @@
     </div>
     {{#unless isEditingDatesAndDuration}}
       <div class="block start-date">
-        <label>{{t "general.start"}}:</label>
+        <label>{{t 'general.start'}}:</label>
         {{#if isFinalized}}
           <span>
             {{#if sequenceBlock.startDate}}
@@ -83,7 +83,7 @@
         {{/if}}
       </div>
       <div class="block end-date">
-        <label>{{t "general.end"}}:</label>
+        <label>{{t 'general.end'}}:</label>
         {{#if isFinalized}}
           <span>
             {{#if sequenceBlock.endDate}}
@@ -103,7 +103,7 @@
         {{/if}}
       </div>
       <div class="block duration">
-        <label>{{t "curriculumInventory.durationInDays"}}:</label>
+        <label>{{t 'curriculumInventory.durationInDays'}}:</label>
         {{#if isFinalized}}
            <span>{{sequenceBlock.duration}}</span>
         {{else}}
@@ -118,7 +118,7 @@
       }}
     {{/unless}}
     <div class="block child-sequence-order">
-      <label>{{t "curriculumInventory.childSequenceOrder"}}:</label>
+      <label>{{t 'curriculumInventory.childSequenceOrder'}}:</label>
       {{#if isFinalized}}
         <span>
           {{if sequenceBlock.isOrdered
@@ -136,7 +136,7 @@
     </div>
 
     <div class="block order-in-sequence">
-      <label>{{t "curriculumInventory.orderInSequence"}}:</label>
+      <label>{{t 'curriculumInventory.orderInSequence'}}:</label>
         <span>
           {{#if sequenceBlock.parent.isOrdered}}
             {{#if isFinalized}}
@@ -181,7 +181,7 @@
       }}
     {{/unless}}
     <div class="block academic-level">
-      <label>{{t "curriculumInventory.academicLevel"}}:</label>
+      <label>{{t 'curriculumInventory.academicLevel'}}:</label>
       {{#if isFinalized}}
         <span>{{sequenceBlock.academicLevel.name}}</span>
       {{else}}
@@ -209,7 +209,7 @@
           }}
         {{else}}
           <div class="block sessions">
-            <label>{{t "general.sessions"}} ({{linkableSessions.length}})</label>
+            <label>{{t 'general.sessions'}} ({{linkableSessions.length}})</label>
             {{#unless (or isManagingSessions isFinalized)}}
               <div class="actions">
                 <button {{action 'toggleManagingSessions'}}>{{t 'general.manage'}}</button>

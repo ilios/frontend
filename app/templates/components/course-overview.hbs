@@ -13,7 +13,7 @@
 </div>
 <div class='course-overview-content'>
   <div class="block courseexternalid">
-    <label>{{t "courses.externalId"}}:</label>
+    <label>{{t 'courses.externalId'}}:</label>
     <span>
       {{#if editable}}
         {{#editable-field
@@ -40,7 +40,7 @@
     </span>
   </div>
   <div class="block clerkshiptype">
-    <label>{{t "courses.clerkshipType"}}:</label>
+    <label>{{t 'courses.clerkshipType'}}:</label>
     <span>
       {{#if editable}}
         {{#editable-field
@@ -68,7 +68,7 @@
     </span>
   </div>
   <div class="block coursestartdate">
-    <label>{{t "general.start"}}:</label>
+    <label>{{t 'general.start'}}:</label>
     <span>
       {{#if editable}}
         {{inplace-date value=course.startDate save='changeStartDate'}}
@@ -78,7 +78,7 @@
     </span>
   </div>
   <div class="block courseenddate">
-    <label>{{t "general.end"}}:</label>
+    <label>{{t 'general.end'}}:</label>
     <span>
       {{#if editable}}
         {{inplace-date value=course.endDate save='changeEndDate'}}
@@ -88,7 +88,7 @@
     </span>
   </div>
   <div class="block courselevel">
-    <label>{{t "courses.level"}}:</label>
+    <label>{{t 'courses.level'}}:</label>
     <span>
       {{#if editable}}
         {{inplace-select value=course.level options=levelOptions save='changeLevel'}}

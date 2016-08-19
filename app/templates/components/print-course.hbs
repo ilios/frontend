@@ -17,26 +17,26 @@
         </div>
         <div class='detail-content'>
             <div class="inline-label-data-block">
-              <label>{{t "general.start"}}:</label>
+              <label>{{t 'general.start'}}:</label>
               <div>{{moment-format course.startDate 'MM/DD/YYYY'}}</div>
             </div>
             <div class="inline-label-data-block">
-              <label>{{t "courses.externalId"}}:</label>
+              <label>{{t 'courses.externalId'}}:</label>
               <div>{{course.externalId}}</div>
             </div>
             <div class="inline-label-data-block">
-              <label>{{t "courses.level"}}:</label>
+              <label>{{t 'courses.level'}}:</label>
               <div>{{course.level}}</div>
             </div>
             <div class="inline-label-data-block">
-              <label>{{t "general.end"}}:</label>
+              <label>{{t 'general.end'}}:</label>
               <div>{{moment-format course.endDate 'MM/DD/YYYY'}}</div>
             </div>
             <br />
             <br />
 
             <div class="inline-label-data-block">
-              <label>{{t "general.directors"}}:</label>
+              <label>{{t 'general.directors'}}:</label>
               <div>
                 <span>
                   {{#each sortedDirectors as |user|}}
@@ -168,25 +168,25 @@
         </div>
         <div class='detail-content'>
           <div class="inline-label-data-block">
-            <label>{{t "sessions.type"}}:</label>
+            <label>{{t 'sessions.type'}}:</label>
             <div>{{session.sessionType.title}}</div>
           </div>
           <br />
           <div class="inline-label-data-block">
-            <label>{{t "sessions.supplementalCurriculum"}}:</label>
+            <label>{{t 'sessions.supplementalCurriculum'}}:</label>
             <div>{{boolean-check value=session.supplemental}}</div>
           </div>
           <div class="inline-label-data-block">
-            <label>{{t "sessions.specialAttireRequired"}}:</label>
+            <label>{{t 'sessions.specialAttireRequired'}}:</label>
             <div>{{boolean-check value=session.attireRequired}}</div>
           </div>
           <div class="inline-label-data-block">
-            <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+            <label>{{t 'sessions.specialEquipmentRequired'}}:</label>
             <div>{{boolean-check value=session.equipmentRequired}}</div>
           </div>
           <br />
           <div class="inline-label-data-block">
-            <label>{{t "general.description"}}:</label>
+            <label>{{t 'general.description'}}:</label>
             <div>{{session.sessionDescription.textDescription}}</div>
           </div>
         </div>
