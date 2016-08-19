@@ -40,14 +40,14 @@
           <td class='text-center' colspan=2>
             {{input
               type='checkbox'
-              checked=(is-in linkedSessions session)
+              checked=(is-in linkedSessionsBuffer session)
               change=(action 'changeSession' session)
             }}
           </td>
           <td class='text-left' colspan=3>{{session.title}}</td>
           <td class='text-left' colspan=3>{{session.sessionType.title}}</td>
           <td class='text-center' colspan=1>
-            {{#if (is-in linkedSessions session)}}
+            {{#if (is-in linkedSessionsBuffer session)}}
               {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
                 {{fa-icon 'spinner' spin=true}}
               {{else}}

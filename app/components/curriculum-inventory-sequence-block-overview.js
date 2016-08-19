@@ -221,8 +221,10 @@ export default Component.extend({
     cancelManagingSessions(){
       this.set('isManagingSessions', false);
     },
-    changeSessions() {
+    changeSessions(sessions) {
       let block = this.get('sequenceBlock');
+      console.log(sessions);
+      block.set('sessions', sessions);
       return block.save().then(() => {
         this.set('isManagingSessions', false);
       });

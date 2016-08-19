@@ -8,7 +8,7 @@ const { service } = inject;
 
 export default Component.extend({
   store: service(),
-  linkedSessions: [],
+  linkedSessionsBuffer: [],
   linkableSessionsBuffer: [],
   classNames: ['curriculum-inventory-sequence-block-session-editor', 'resultslist'],
   tagName: 'section',
@@ -24,15 +24,17 @@ export default Component.extend({
 
   loadAttr: task(function * (sequenceBlock, linkableSessions) {
     const linkedSessions = yield sequenceBlock.get('sessions');
+    const linkedSessionsBuffer = linkedSessions.toArray();
     const linkableSessionsBuffer = yield linkableSessions;
     this.setProperties({
-      linkedSessions,
+      linkedSessionsBuffer,
       linkableSessionsBuffer
     });
   }),
 
   saveChanges: task(function * () {
-    yield this.sendAction('save');
+    let sessions = this.get('linkedSessionsBuffer');
+    yield this.sendAction('save', sessions);
 
   }),
 
@@ -43,7 +45,7 @@ export default Component.extend({
 
   actions: {
     changeSession(session) {
-      let sessions = this.get('linkedSessions');
+      let sessions = this.get('linkedSessionsBuffer');
       if (sessions.contains(session)) {
         sessions.removeObject(session);
       } else {
