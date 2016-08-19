@@ -97,8 +97,7 @@ export default Component.extend({
       requiredOptions,
       childSequenceOrderOptions,
       isFinalized,
-      linkedSessions,
-      isManagingSessions: false,
+      linkedSessions
     });
   }),
 
@@ -129,8 +128,6 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
-
-
 
   actions: {
     changeRequired: function(value){
