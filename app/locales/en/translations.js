@@ -160,8 +160,6 @@ export default {
     'minimum': 'Minimum',
     'maximum': 'Maximum',
     'selectCourse': 'Select a Course',
-  },
-  'programs': {
     'programTitle': 'Program Title',
     'titleFilterPlaceholder': 'Filter by Program Title',
     'programTitlePlaceholder': 'Enter a title for this program',

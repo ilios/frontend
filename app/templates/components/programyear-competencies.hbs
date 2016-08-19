@@ -1,7 +1,7 @@
 {{#if isManaging}}
   <div class='title'>
     <span class='specific-title'>
-      {{t 'programs.competenciesManageTitle'}}
+      {{t 'general.competenciesManageTitle'}}
     </span>
   </div>
 {{else}}
@@ -16,7 +16,7 @@
       </button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else}}
-    <button {{action setIsManaging true}}>{{t 'programs.competenciesManageTitle'}}</button>
+    <button {{action setIsManaging true}}>{{t 'general.competenciesManageTitle'}}</button>
   {{/if}}
 </div>
 <div class='programyear-competencies-content'>

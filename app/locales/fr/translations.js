@@ -160,8 +160,6 @@ export default {
     'minimum': 'Minimum',
     'maximum': 'Maximum',
     'selectCourse': 'Choisi cours',
-  },
-  'programs': {
     'programTitle': "Titre de Diplôme",
     'titleFilterPlaceholder': "Filtre par Titre de Diplôme",
     'programTitlePlaceholder': "Ajoutez un titre pour ce Diplôme",
@@ -557,7 +555,7 @@ export default {
     'phone': "{{description}} doit être une téléphone valide",
     'url': "{{description}} doit être une URL valide",
   },
-  'admin': {
+  '_admin': {
     'pendingUpdatesSummaryTitle': 'Mises du répertoire de Campus',
     'pendingUpdatesSummary': { 'one': 'Il y a un utilisateur nécessitant une attention particulière', 'other': 'Il y a des {{count}} utilisateurs nécessitants une attention particulière', },
     'pendingUserUpdates': { 'filterBy': 'Filtre par nom d’utilisateur', 'missingFromDirectory': 'Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization.', 'emailMismatch': 'L’address email dans le répertoire ({{update.value}}) ne correspond pas à ce email dans ilios ({{update.user.email}}).', 'updateIlios': 'Mettre à jour Ilios', },
