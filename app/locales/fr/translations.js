@@ -189,16 +189,12 @@ export default {
     'menu': "Ilios Menu",
     'admin': "Admin",
     'selectMeshFor': "Sélectionnez MeSH pour: {{title}}",
-  },
-  'instructorGroups': {
     'instructorGroupTitle': "Titre de Groupe des Instructeurs",
-    'titleFilterPlaceholder': "Filtre par Titre de Groupe des Instructeurs",
+    'instructorGroupTitleFilterPlaceholder': "Filtre par Titre de Groupe des Instructeurs",
     'instructorGroupTitlePlaceholder': "Ajoutez une titre pour cette groupe des instructeurs",
-    'new': "Groupe des Instructeurs nouveau",
+    'newInstructorGroup': "Groupe des Instructeurs nouveau",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer cette groupe des instructeurs, avec {{instructorCount}} membres et {{courseCount}} cours? Ça action ne peut pas être défait.",
-    'members': "Membres",
     'associatedCourses': "Cours Associés",
-    'actions': "Actions",
     'backToInstructorGroups': "Retourner à liste des groupes des instructeurs",
   },
   'learnerGroups': {
@@ -540,7 +536,7 @@ export default {
     'phone': "{{description}} doit être une téléphone valide",
     'url': "{{description}} doit être une URL valide",
   },
-  '_admin': {
+  'admin': {
     'pendingUpdatesSummaryTitle': 'Mises du répertoire de Campus',
     'pendingUpdatesSummary': { 'one': 'Il y a un utilisateur nécessitant une attention particulière', 'other': 'Il y a des {{count}} utilisateurs nécessitants une attention particulière', },
     'pendingUserUpdates': { 'filterBy': 'Filtre par nom d’utilisateur', 'missingFromDirectory': 'Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization.', 'emailMismatch': 'L’address email dans le répertoire ({{update.value}}) ne correspond pas à ce email dans ilios ({{update.user.email}}).', 'updateIlios': 'Mettre à jour Ilios', },

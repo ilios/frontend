@@ -1,4 +1,4 @@
-<div class="backtolink">{{#link-to 'instructorGroups'}}{{t 'instructorGroups.backToInstructorGroups'}}{{/link-to}}</div>
+<div class="backtolink">{{#link-to 'instructorGroups'}}{{t 'general.backToInstructorGroups'}}{{/link-to}}</div>
 <div class='detail-view instructorgroups-detail-view'>
   <div class='detail-view-main-title'>
       {{instructorgroup-header instructorGroup=instructorGroup}}
@@ -6,7 +6,7 @@
   <div class='detail-view-details instructorgroup-overview'>
     <section class='detail-overview detail-block'>
       <div class='detail-title'>
-        {{instructorGroup.title}} {{t 'instructorGroups.members'}} ({{instructorGroup.users.length}})
+        {{instructorGroup.title}} {{t 'general.members'}} ({{instructorGroup.users.length}})
       </div>
       <div class='detail-content'>
         <label>{{t 'general.instructors'}}:</label>
@@ -24,7 +24,7 @@
       </div>
 
       <div class="inline-label-data-block instructorgroupcourses">
-        <label>{{t 'instructorGroups.associatedCourses'}}:</label>
+        <label>{{t 'general.associatedCourses'}}:</label>
         <div>
           <ul>
             {{#each sortedCourses as |course|}}

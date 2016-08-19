@@ -189,16 +189,12 @@ export default {
     'menu': 'Ilios Menu',
     'admin': 'Admin',
     'selectMeshFor': 'Select MeSH for: {{title}}',
-  },
-  'instructorGroups': {
     'instructorGroupTitle': 'Instructor Group Title',
-    'titleFilterPlaceholder': 'Filter by Instructor Group Title',
+    'instructorGroupTitleFilterPlaceholder': 'Filter by Instructor Group Title',
     'instructorGroupTitlePlaceholder': 'Enter a title for this instructor group',
-    'new': 'New Instructor Group',
+    'newInstructorGroup': 'New Instructor Group',
     'confirmRemove': 'Are you sure you want to delete this instructor group, with {{instructorCount}} instructors and {{courseCount}} courses? This action cannot be undone.',
-    'members': 'Members',
     'associatedCourses': 'Associated Courses',
-    'actions': 'Actions',
     'backToInstructorGroups': 'Back to Instructor Groups List',
   },
   'learnerGroups': {
