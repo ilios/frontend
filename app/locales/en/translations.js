@@ -195,7 +195,7 @@ export default {
     'selected': 'Selected MeSH Terms',
     'available': 'Available MeSH Terms',
     'search': 'Search MeSH Terms',
-    'noResults': 'Your seach returned no results.',
+    'noResults': 'Your search returned no results.',
     'targetItemTitle': 'Select MeSH for: {{title}}',
   },
   'instructorGroups': {
