@@ -1,9 +1,7 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { task } from 'ember-concurrency';
 
-const { inject, Component, isPresent, computed, RSVP, isEmpty} = Ember;
-const { PromiseArray } = DS;
+const { inject, Component, computed, isEmpty} = Ember;
 const { service } = inject;
 
 export default Component.extend({
