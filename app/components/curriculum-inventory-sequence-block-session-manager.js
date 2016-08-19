@@ -46,8 +46,7 @@ export default Component.extend({
   someSelected: computed('allSelected', 'noneSelected', function(){
     const allSelected = this.get('allSelected');
     const noneSelected = this.get('noneSelected');
-    const someSelected = (!allSelected && !noneSelected);
-    return someSelected;
+    return (!allSelected && !noneSelected);
   }),
 
   noneSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
@@ -91,7 +90,7 @@ export default Component.extend({
       if (allSelected) {
         this.set('linkedSessionsBuffer', []);
       } else {
-        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer'));
+        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer').toArray());
       }
     },
     sortBy(what){
