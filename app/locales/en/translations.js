@@ -220,9 +220,7 @@ export default {
     'moveToGroup': { 'one': "Move learner to {{groupTitle}}", 'other': "Move {{count}} learners to {{groupTitle}}", },
     'groupMembers': 'Members of current group',
     'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
-  },
-  'schools': {
-    'new': 'New School',
+    'newSchool': 'New School',
     'administratorEmail': 'Administrator Email',
     'backToSchools': 'Back to Schools List',
     'competencyCount': { 'one': 'There is 1 competency', 'other': 'There are {{count}} competencies', },

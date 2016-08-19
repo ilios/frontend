@@ -9,7 +9,7 @@
   </div>
   <section class='new'>
     {{#if showNewSchoolForm class='vertical'}}
-      <div class="new-result-title">{{t 'schools.new'}}</div>
+      <div class="new-result-title">{{t 'general.newSchool'}}</div>
 
       <div class="detail-content form-container">
         <div class="form-col-6 multi-row">
@@ -27,7 +27,7 @@
               <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
             {{/if}}
           </div>
-          <label class="form-label">{{t 'schools.administratorEmail'}}:</label>
+          <label class="form-label">{{t 'general.administratorEmail'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=iliosAdministratorEmail

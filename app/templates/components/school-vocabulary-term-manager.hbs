@@ -1,6 +1,6 @@
 {{#if (is-fulfilled allParents)}}
   <div class='breadcrumbs'>
-    <span {{action 'clearVocabAndTerm'}}>{{t 'schools.allVocabularies'}}</span>
+    <span {{action 'clearVocabAndTerm'}}>{{t 'general.allVocabularies'}}</span>
     <span {{action this.attrs.manageTerm null}}>{{vocabulary.title}}</span>
     {{#each (await allParents) as |parent|}}
       <span {{action this.attrs.manageTerm parent.id}}>{{parent.title}}</span>
@@ -28,7 +28,7 @@
     {{t 'general.savedSuccessfully'}}
   </div>
 {{/each}}
-<h5 class='selectable-list-header'>{{t 'schools.subTerms'}}:</h5>
+<h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
 <div class='selectable-list'>
   <div class='selectable-list-form'>
     {{one-way-input

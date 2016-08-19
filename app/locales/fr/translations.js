@@ -220,9 +220,7 @@ export default {
     'moveToGroup': { 'one': "Placer l’étudiant à {{groupTitle}}", 'other': "Placer {{count}} étudiants à {{groupTitle}}", },
     'groupMembers': 'Membres du groupe courant',
     'allOtherMembers': 'Tous les autres membres du {{topLevelGroupTitle}}',
-  },
-  'schools': {
-    'new': 'École nouvelle',
+    'newSchool': 'École nouvelle',
     'administratorEmail': "Courriel d'administrateur",
     'backToSchools': "Retour à liste d'écoles",
     'competencyCount': { 'one': 'Il y a 1 compétence', 'other': 'Il y a de {{count}} compétences', },

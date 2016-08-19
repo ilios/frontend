@@ -220,9 +220,7 @@ export default {
     'moveToGroup': { 'one': "Mueva estudiante a {{groupTitle}}", 'other': "Mueva {{count}} estudiantes a {{groupTitle}}", },
     'groupMembers': 'Miembros de grupo corriente',
     'allOtherMembers': 'Todos otros miembros de {{topLevelGroupTitle}}',
-  },
-  'schools': {
-    'new': 'Nueva Escuela',
+    'newSchool': 'Nueva Escuela',
     'administratorEmail': 'Correo Eelectrónico del Administrador',
     'backToSchools': 'Atrás a la Lista de Escuelas',
     'competencyCount': { 'one': 'Hay 1 competencia', 'other': 'Hay {{count}} competencias', },
