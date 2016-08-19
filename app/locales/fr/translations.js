@@ -78,10 +78,7 @@ export default {
     'moreInputRequiredPrompt': "Continuez à taper...",
     'noSearchResultsPrompt': "Aucun Résultat",
     'currentlySearchingPrompt': "Recherchent...",
-    'resultsCount': {
-      'one': '1 résultat',
-      'other': '{{count}} résultats'
-    },
+    'resultsCount': { 'one': '1 résultat', 'other': '{{count}} résultats', },
     'printSummary': "Empreinte Résumé",
     'type': "Type",
     'groups': "Groupes",
@@ -162,7 +159,7 @@ export default {
     'notApplicableAbbr': 'n.d.',
     'minimum': 'Minimum',
     'maximum': 'Maximum',
-    'selectCourse': 'Choisi cours'
+    'selectCourse': 'Choisi cours',
   },
   'programs': {
     'programTitle': "Titre de Diplôme",
@@ -231,10 +228,7 @@ export default {
     'subgroups': "Sous-groupes",
     'defaultInstructors': "Instructeurs par Défaut",
     'defaultLocation': "Localisation par Défaut",
-    'removeLearnerToCohort': {
-      'one': 'Renvoyer l’étudiant à {{cohort}}',
-      'other': 'Renvoyer {{count}} étudiants à {{cohort}}'
-    },
+    'removeLearnerToCohort': { 'one': 'Renvoyer l’étudiant à {{cohort}}', 'other': 'Renvoyer {{count}} étudiants à {{cohort}}', },
     'associatedCourses': "Cours Associés",
     'noSubgroups': "Il n'éxiste aucune des sous-groupes en cette groupe d'apprenants",
     'learnerAssignments': "{{groupTitle}} affectations d'étudiant",
@@ -248,10 +242,7 @@ export default {
     'populateGroup': 'Voulez-vous remplir cette groupe?',
     'yesPopulateGroup': 'Oui!  Ajoutez la cohorte entière à mon nouveau groupe',
     'noPopulateGroup': "Non!  Laissez-la vide, j'ajouterai des étudiants moi-même",
-    'moveToGroup': {
-      'one': "Placer l’étudiant à {{groupTitle}}",
-      'other': "Placer {{count}} étudiants à {{groupTitle}}",
-    },
+    'moveToGroup': { 'one': "Placer l’étudiant à {{groupTitle}}", 'other': "Placer {{count}} étudiants à {{groupTitle}}", },
     'groupMembers': 'Membres du groupe courant',
     'allOtherMembers': 'Tous les autres membres du {{topLevelGroupTitle}}',
   },
@@ -259,16 +250,10 @@ export default {
     'new': 'École nouvelle',
     'administratorEmail': "Courriel d'administrateur",
     'backToSchools': "Retour à liste d'écoles",
-    'competencyCount': {
-      'one': 'Il y a 1 compétence',
-      'other': 'Il y a de {{count}} compétences'
-    },
+    'competencyCount': { 'one': 'Il y a 1 compétence', 'other': 'Il y a de {{count}} compétences', },
     'manageCompetencies': "Manager des Compétences",
     'newDomain': 'Domaine nouvelle',
-    'termCount': {
-      'one': 'Il y a 1 terme',
-      'other': 'Il y a {{count}} termes'
-    },
+    'termCount': { 'one': 'Il y a 1 terme', 'other': 'Il y a {{count}} termes', },
     'manageVocabularies': 'Manager vocabulaires',
     'allVocabularies': 'Touts vocabulaires',
     'confirmVocabularyRemoval': 'Êtes vous sûr de vouloir supprimer cette vocabulaire?',
@@ -310,18 +295,9 @@ export default {
     'objectiveParentTitle': "Choisi Objectifs mères",
     'objectiveParentTitleSingular': "Choisi Objectif mère",
     'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
-    'objectiveCount': {
-      'one': 'Il y a 1 objectif',
-      'other': 'Il y a {{count}} objectifs'
-    },
-    'parentCount': {
-      'one': '1 a un objectif mère',
-      'other': '{{count}} ont des objectifs mères'
-    },
-    'meshCount': {
-      'one': '1 a des MeSH',
-      'other': '{{count}} ont MeSH'
-    },
+    'objectiveCount': { 'one': 'Il y a 1 objectif', 'other': 'Il y a {{count}} objectifs', },
+    'parentCount': { 'one': '1 a un objectif mère', 'other': '{{count}} ont des objectifs mères', },
+    'meshCount': { 'one': '1 a des MeSH', 'other': '{{count}} ont MeSH', },
     'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
     'newObjectiveSaved': "Nouvel objective sauvé",
     'newObjective': 'Nouvel Objectif',
@@ -375,7 +351,7 @@ export default {
     'copy': 'Copier Séance',
     'copySummary': "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matiéres d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\".",
     'targetCourse': 'Cours Cible',
-    'copySuccess': 'Copie achevée avec succès'
+    'copySuccess': 'Copie achevée avec succès',
   },
   'offerings': {
     'calendarOn': "Calendrier Allumé",
@@ -444,11 +420,7 @@ export default {
     'reviewSessions': "Séances à faire réviser",
     'all': "Publier {{count}} des séances",
     'publishAllConfirmation': "Publier {{publishCount}}, réserver {{scheduleCount}}, et ignorer des {{ignoreCount}} séances",
-    'message': {
-      'publish': "Publier réussi",
-      'schedule': "Faire à prévu réussi",
-      'unPublish': "Faire à Dépublier réussi",
-    }
+    'message': { 'publish': "Publier réussi", 'schedule': "Faire à prévu réussi", 'unPublish': "Faire à Dépublier réussi", },
   },
   'calendar': {
     'weekOf': "Semaine de {{date}}",
@@ -521,11 +493,7 @@ export default {
     'fileTypeError': 'Mal fichier téléchargé : {{fileType}} ne semble pas être un fichier correctement délimité.',
   },
   'language': {
-    'select': {
-      'en': "English (en)",
-      'es': "Español (es)",
-      'fr': "Français (fr)",
-    }
+    'select': { 'en': "English (en)", 'es': "Español (es)", 'fr': "Français (fr)", },
   },
   'dashboard': {
     'showFilters': "Montrez les Filtres",
@@ -591,27 +559,13 @@ export default {
   },
   'admin': {
     'pendingUpdatesSummaryTitle': 'Mises du répertoire de Campus',
-    'pendingUpdatesSummary': {
-      'one': 'Il y a un utilisateur nécessitant une attention particulière',
-      'other': 'Il y a des {{count}} utilisateurs nécessitants une attention particulière'
-    },
-    'pendingUserUpdates': {
-      'filterBy': 'Filtre par nom d’utilisateur',
-      'missingFromDirectory': 'Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization.',
-      'emailMismatch': 'L’address email dans le répertoire ({{update.value}}) ne correspond pas à ce email dans ilios ({{update.user.email}}).',
-      'updateIlios': 'Mettre à jour Ilios'
-    },
+    'pendingUpdatesSummary': { 'one': 'Il y a un utilisateur nécessitant une attention particulière', 'other': 'Il y a des {{count}} utilisateurs nécessitants une attention particulière', },
+    'pendingUserUpdates': { 'filterBy': 'Filtre par nom d’utilisateur', 'missingFromDirectory': 'Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization.', 'emailMismatch': 'L’address email dans le répertoire ({{update.value}}) ne correspond pas à ce email dans ilios ({{update.user.email}}).', 'updateIlios': 'Mettre à jour Ilios', },
     'userNotAddableFromDirectory': "Cette utilisateur manque les informations requises, et ne peut pas être ajouté",
     'goToUser': "Présentant enregistrement d'utilisateur en Ilios",
     'unassignedStudentsSummaryTitle': "Étudiants qui ont besoin affectation à une cohorte",
-    'unassignedStudentsSummary': {
-      'one': "Il y a un étudiant qui a besoin affectation à une cohorte",
-      'other': "Il y a {{count}} étudiants qui ont besoin affectation à une cohorte"
-    },
-    'unassignedStudentsConfirmation': {
-      'one': "Attribuez l’utilisateur sélectionné à",
-      'other': "Attribuez {{count}} utilisateurs sélectionnés à",
-    },
+    'unassignedStudentsSummary': { 'one': "Il y a un étudiant qui a besoin affectation à une cohorte", 'other': "Il y a {{count}} étudiants qui ont besoin affectation à une cohorte", },
+    'unassignedStudentsConfirmation': { 'one': "Attribuez l’utilisateur sélectionné à", 'other': "Attribuez {{count}} utilisateurs sélectionnés à", },
     'manageUsersSummaryTitle': "utilisateurs d'Ilios",
     'searchForIliosUsers': 'Trouver des utilisateurs...',
     'backToAdminDashboard': 'Rétour au Page Admin',
@@ -656,5 +610,5 @@ export default {
     'totalTime': 'Total time',
     'finalizeReportConfirmation': 'By finalizing this report, you will be saving it in its current state to the Ilios database as a permanent reference object, and no further edits will be possible.',
     'sequenceNumber': 'No. de séquence',
-  }
+  },
 };

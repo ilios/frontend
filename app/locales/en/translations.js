@@ -78,10 +78,7 @@ export default {
     'moreInputRequiredPrompt': 'keep typing...',
     'noSearchResultsPrompt': 'no results',
     'currentlySearchingPrompt': 'searching...',
-    'resultsCount': {
-      'one': '1 result',
-      'other': '{{count}} results'
-    },
+    'resultsCount': { 'one': '1 result', 'other': '{{count}} results' },
     'printSummary': 'Print Summary',
     'type': 'Type',
     'groups': 'Groups',
@@ -184,12 +181,12 @@ export default {
     'stewardingSchoolsAndDepartments': 'Stewarding Schools and Departments',
     'stewardsManageTitle': 'Manage Stewards',
     'noUnselectedCompetencies': 'There are no unselected competencies',
-    'noSelectedCompetencies': 'There are no selected competencies'
+    'noSelectedCompetencies': 'There are no selected competencies',
   },
   'programYears': {
     'selectAcademicYear': 'Select Academic Year',
     'confirmRemove': 'Are you sure you want to delete this program year? Doing so will also remove its associated student cohort and groups, and associations with {{courseCount}} course(s), and cannot be undone.',
-    'new': 'New Program Year'
+    'new': 'New Program Year',
   },
   'navigation': {
     'dashboard': 'Dashboard',
@@ -231,10 +228,7 @@ export default {
     'subgroups': 'Subgroups',
     'defaultInstructors': 'Default Instructors',
     'defaultLocation': 'Default Location',
-    'removeLearnerToCohort': {
-      'one': 'Remove learner to {{cohort}}',
-      'other': 'Remove {{count}} learners to {{cohort}}'
-    },
+    'removeLearnerToCohort': { 'one': 'Remove learner to {{cohort}}', 'other': 'Remove {{count}} learners to {{cohort}}', },
     'associatedCourses': 'Associated Courses',
     'noSubgroups': 'There are no subgroups in this learner group',
     'learnerAssignments': '{{groupTitle}} Learner Assignments',
@@ -248,10 +242,7 @@ export default {
     'populateGroup': 'Do you want to auto-populate this group?',
     'yesPopulateGroup': 'Yes!  Add entire cohort to my new group.',
     'noPopulateGroup': "No!  Leave it empty, I'll add students myself.",
-    'moveToGroup': {
-      'one': "Move learner to {{groupTitle}}",
-      'other': "Move {{count}} learners to {{groupTitle}}",
-    },
+    'moveToGroup': { 'one': "Move learner to {{groupTitle}}", 'other': "Move {{count}} learners to {{groupTitle}}", },
     'groupMembers': 'Members of current group',
     'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
   },
@@ -259,16 +250,10 @@ export default {
     'new': 'New School',
     'administratorEmail': 'Administrator Email',
     'backToSchools': 'Back to Schools List',
-    'competencyCount': {
-      'one': 'There is 1 competency',
-      'other': 'There are {{count}} competencies'
-    },
+    'competencyCount': { 'one': 'There is 1 competency', 'other': 'There are {{count}} competencies', },
     'manageCompetencies': 'Manage Competencies',
     'newDomain': 'New Domain',
-    'termCount': {
-      'one': 'There is 1 term',
-      'other': 'There are {{count}} terms'
-    },
+    'termCount': { 'one': 'There is 1 term', 'other': 'There are {{count}} terms', },
     'manageVocabularies': 'Manage Vocabularies',
     'allVocabularies': 'All Vocabularies',
     'confirmVocabularyRemoval': 'Are you sure you want to delete this vocabulary?',
@@ -310,18 +295,9 @@ export default {
     'objectiveParentTitle': 'Select Parent Objectives',
     'objectiveParentTitleSingular': 'Select Parent Objective',
     'objectiveDescriptorTitle': 'Select MeSH Descriptors for Objective',
-    'objectiveCount': {
-      'one': 'There is 1 objective',
-      'other': 'There are {{count}} objectives'
-    },
-    'parentCount': {
-      'one': '1 has a parent',
-      'other': '{{count}} have parents'
-    },
-    'meshCount': {
-      'one': '1 has MeSH',
-      'other': '{{count}} have MeSH'
-    },
+    'objectiveCount': { 'one': 'There is 1 objective', 'other': 'There are {{count}} objectives', },
+    'parentCount': { 'one': '1 has a parent', 'other': '{{count}} have parents', },
+    'meshCount': { 'one': '1 has MeSH', 'other': '{{count}} have MeSH', },
     'lmDescriptorTitle': 'Select MeSH Descriptors for Learning Materials',
     'newObjectiveSaved': 'New Objective Saved',
     'newObjective': 'New Objective',
@@ -418,13 +394,13 @@ export default {
   },
   'groupMembers': {
     'filterPlaceholder': 'Filter by name or email',
-    'noSearchResults': 'Your search did not return any results'
+    'noSearchResults': 'Your search did not return any results',
   },
   'relatedCourses': {
     'title': 'Related Courses',
     'filterPlaceholder': 'Filter by name',
     'noCourses': 'There are no related courses',
-    'noCoursesMatchFilter': 'No courses match your filter'
+    'noCoursesMatchFilter': 'No courses match your filter',
   },
   'publish': {
     'markAsScheduled': 'Mark as Scheduled',
@@ -444,11 +420,7 @@ export default {
     'reviewSessions': 'Sessions Requiring Review',
     'all': 'Publish {{sessionCount}} sessions',
     'publishAllConfirmation': 'Publish {{publishCount}}, schedule {{scheduleCount}}, and ignore {{ignoreCount}} sessions',
-    'message': {
-      'publish': 'Published Successfully',
-      'schedule': 'Scheduled Successfully',
-      'unPublish': 'UnPublished Successfully',
-    }
+    'message': { 'publish': 'Published Successfully', 'schedule': 'Scheduled Successfully', 'unPublish': 'UnPublished Successfully', },
   },
   'calendar': {
     'weekOf': 'Week of {{date}}',
@@ -469,7 +441,7 @@ export default {
     'noAssociatedCompetencies': 'No Associated Competencies',
     'noAssociatedCompetency': 'No Associated Competency',
     'dueThisDay': 'Due this day',
-    'icsInstructions': 'To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!'
+    'icsInstructions': 'To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!',
   },
   'auth': {
     'username': 'Username',
@@ -521,11 +493,7 @@ export default {
     'fileTypeError': 'Bad file type: {{fileType}} does not appear to be a properly delimited file.',
   },
   'language': {
-    'select': {
-      'en': 'English (en)',
-      'es': 'Español (es)',
-      'fr': 'Français (fr)'
-    }
+    'select': { 'en': 'English (en)', 'es': 'Español (es)', 'fr': 'Français (fr)', },
   },
   'dashboard': {
     'showFilters': 'Show Filters',
@@ -587,31 +555,17 @@ export default {
     'date': '{{description}} must be a valid date',
     'email': '{{description}} must be a valid email address',
     'phone': '{{description}} must be a valid phone number',
-    'url': '{{description}} must be a valid url'
+    'url': '{{description}} must be a valid url',
   },
   'admin': {
     'pendingUpdatesSummaryTitle': 'Updates from the Campus Directory',
-    'pendingUpdatesSummary': {
-      'one': 'There is one user needing attention',
-      'other': 'There are {{count}} users needing attention',
-    },
-    'pendingUserUpdates': {
-      'filterBy': 'Filter by user name',
-      'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization.',
-      'emailMismatch': 'The email address in the directory ({{update.value}}) does not match the email in ilios ({{update.user.email}}).',
-      'updateIlios': 'Update Ilios',
-    },
+    'pendingUpdatesSummary': { 'one': 'There is one user needing attention', 'other': 'There are {{count}} users needing attention', },
+    'pendingUserUpdates': { 'filterBy': 'Filter by user name', 'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization.', 'emailMismatch': 'The email address in the directory ({{update.value}}) does not match the email in ilios ({{update.user.email}}).', 'updateIlios': 'Update Ilios', },
     'userNotAddableFromDirectory': "This user is missing required information and cannot be added",
     'goToUser': "Show user record in ilios",
     'unassignedStudentsSummaryTitle': 'Students Requiring Cohort Assignment',
-    'unassignedStudentsSummary': {
-      'one': 'There is one student needing assignment to a cohort',
-      'other': 'There are {{count}} students needing assignment to a cohort',
-    },
-    'unassignedStudentsConfirmation': {
-      'one': 'Assign selected user to',
-      'other': 'Assign {{count}} selected users to',
-    },
+    'unassignedStudentsSummary': { 'one': 'There is one student needing assignment to a cohort', 'other': 'There are {{count}} students needing assignment to a cohort', },
+    'unassignedStudentsConfirmation': { 'one': 'Assign selected user to', 'other': 'Assign {{count}} selected users to', },
     'manageUsersSummaryTitle': 'Ilios Users',
     'searchForIliosUsers': 'Find Ilios Users...',
     'backToAdminDashboard': 'Back to Admin Dashboard',
@@ -656,5 +610,5 @@ export default {
     'totalTime': 'Total time',
     'finalizeReportConfirmation': 'By finalizing this report, you will be saving it in its current state to the Ilios database as a permanent reference object, and no further edits will be possible.',
     'sequenceNumber': 'Sequence #',
-  }
+  },
 };
