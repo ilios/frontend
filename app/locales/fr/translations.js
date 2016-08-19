@@ -188,15 +188,7 @@ export default {
     'logo': "Ilios Logo",
     'menu': "Ilios Menu",
     'admin': "Admin",
-  },
-  'mesh': {
-    'buttonTitle': "Sélectionner MeSH ({{count}})",
-    'pickerTitle': "Choisir termes de MeSH",
-    'selected': "Sélectionné des termes de MeSH",
-    'available': "Termes de MeSH disponsible",
-    'search': "Rechercher termes de MeSH",
-    'noResults': "Votre recherche a retournée aucun des résultats.",
-    'targetItemTitle': "Sélectionnez MeSH pour: {{title}}",
+    'selectMeshFor': "Sélectionnez MeSH pour: {{title}}",
   },
   'instructorGroups': {
     'instructorGroupTitle': "Titre de Groupe des Instructeurs",
