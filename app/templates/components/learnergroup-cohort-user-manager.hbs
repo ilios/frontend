@@ -1,5 +1,5 @@
 <div class='detail-title'>
-  {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
+  {{t 'general.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
 </div>
 <div class="detail-actions">
   {{one-way-input
@@ -73,5 +73,5 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0) class='vertical'}}
-  <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
+  <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'general.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
 {{/if}}

@@ -32,7 +32,7 @@
 
     <div class='form-container'>
       <div class='form-col-12'>
-        <label class='form-label'>{{t 'learnerGroups.defaultLocation'}}:</label>
+        <label class='form-label'>{{t 'general.defaultLocation'}}:</label>
         <div class='form-data'>
           {{#editable-field
             value=(if location location (t 'general.clickToEdit'))
@@ -53,7 +53,7 @@
             {{/if}}
           {{/editable-field}}
         </div>
-        <label class='form-label'>{{t 'learnerGroups.defaultInstructors'}}:</label>
+        <label class='form-label'>{{t 'general.defaultInstructors'}}:</label>
         <div class='form-data clickable link'>
           {{#if (is-fulfilled learnerGroup.allInstructors)}}
             {{#liquid-if manageInstructors class='crossFade'}}
@@ -75,7 +75,7 @@
             {{fa-icon 'spinner' spin=true}}
           {{/if}}
         </div>
-        <label class='form-label'>{{t 'learnerGroups.associatedCourses'}}:</label>
+        <label class='form-label'>{{t 'general.associatedCourses'}}:</label>
         <div class='form-data'>
           {{#if (is-fulfilled learnerGroup.courses)}}
             {{#if (get (await learnerGroup.courses) 'length')}}

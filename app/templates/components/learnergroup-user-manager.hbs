@@ -1,6 +1,6 @@
 <div class='detail-title'>
   {{#unless isEditing}}
-    {{t 'learnerGroups.members'}} ({{users.length}})
+    {{t 'general.members'}} ({{users.length}})
   {{/unless}}
 </div>
 {{#if users.length}}
@@ -49,7 +49,7 @@
       </table>
       {{#if isEditing}}
         <div class='detail-title'>
-          {{t 'learnerGroups.groupMembers'}} ({{usersInCurrentGroup.length}})
+          {{t 'general.groupMembers'}} ({{usersInCurrentGroup.length}})
         </div>
       {{/if}}
       <table>
@@ -106,7 +106,7 @@
 
       {{#if isEditing}}
         <div class='detail-title'>
-          {{t 'learnerGroups.allOtherMembers' topLevelGroupTitle=topLevelGroupTitle}} ({{usersNotInCurrentGroup.length}})
+          {{t 'general.allOtherMembers' topLevelGroupTitle=topLevelGroupTitle}} ({{usersNotInCurrentGroup.length}})
         </div>
         <table>
           <tbody>
@@ -165,8 +165,8 @@
 
   {{#if (gt selectedUsers.length 0) class='vertical'}}
     <p class='fullwidth'>
-      <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
-      <button class='cancel text' {{action (perform removeSelectedUsers)}}>{{t 'learnerGroups.removeLearnerToCohort' cohort=cohortTitle count=selectedUsers.length}}</button>
+      <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'general.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
+      <button class='cancel text' {{action (perform removeSelectedUsers)}}>{{t 'general.removeLearnerToCohort' cohort=cohortTitle count=selectedUsers.length}}</button>
     </p>
   {{/if}}
 {{/if}}

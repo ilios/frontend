@@ -20,7 +20,7 @@ export default Controller.extend({
     titleFilter: 'filter',
   },
 
-  placeholderValue: t('learnerGroups.titleFilterPlaceholder'),
+  placeholderValue: t('general.learnerGroupTitleFilterPlaceholder'),
 
   schoolId: null,
   programId: null,
