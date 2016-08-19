@@ -10,7 +10,7 @@ export default Component.extend({
   store: service(),
   linkedSessionsBuffer: [],
   linkableSessionsBuffer: [],
-  classNames: ['curriculum-inventory-sequence-block-session-editor', 'resultslist'],
+  classNames: ['curriculum-inventory-sequence-block-session-manager', 'resultslist'],
   tagName: 'section',
   sortBy: 'title',
 
