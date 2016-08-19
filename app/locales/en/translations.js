@@ -180,11 +180,9 @@ export default {
     'stewardsManageTitle': 'Manage Stewards',
     'noUnselectedCompetencies': 'There are no unselected competencies',
     'noSelectedCompetencies': 'There are no selected competencies',
-  },
-  'programYears': {
     'selectAcademicYear': 'Select Academic Year',
-    'confirmRemove': 'Are you sure you want to delete this program year? Doing so will also remove its associated student cohort and groups, and associations with {{courseCount}} course(s), and cannot be undone.',
-    'new': 'New Program Year',
+    'confirmRemoveProgramYear': 'Are you sure you want to delete this program year? Doing so will also remove its associated student cohort and groups, and associations with {{courseCount}} course(s), and cannot be undone.',
+    'newProgramYear': 'New Program Year',
   },
   'navigation': {
     'dashboard': 'Dashboard',
