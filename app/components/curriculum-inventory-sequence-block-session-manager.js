@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { task } from 'ember-concurrency';
 
-const { inject, Component, isPresent, computed, RSVP, isEmpty } = Ember;
+const { inject, Component, isPresent, computed, RSVP, isEmpty} = Ember;
 const { PromiseArray } = DS;
 const { service } = inject;
 
@@ -19,17 +19,53 @@ export default Component.extend({
     const sequenceBlock = this.get('sequenceBlock');
     const linkableSessions = this.get('linkableSessions');
     this.get('loadAttr').perform(sequenceBlock, linkableSessions);
-    console.log('gee');
   },
 
   loadAttr: task(function * (sequenceBlock, linkableSessions) {
-    const linkedSessions = yield sequenceBlock.get('sessions');
-    const linkedSessionsBuffer = linkedSessions.toArray();
-    const linkableSessionsBuffer = yield linkableSessions;
+    let linkedSessionsBuffer = yield sequenceBlock.get('sessions');
+    linkedSessionsBuffer = linkedSessionsBuffer.toArray();
+    let linkableSessionsBuffer = yield linkableSessions;
     this.setProperties({
       linkedSessionsBuffer,
       linkableSessionsBuffer
     });
+  }),
+
+  allSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionBuffer.[]', function(){
+    const linkedSessions = this.get('linkedSessionsBuffer');
+    const linkableSessions = this.get('linkableSessionsBuffer');
+    if (isEmpty(linkedSessions) || isEmpty(linkableSessions) || linkedSessions.length < linkableSessions.length) {
+      return false;
+    }
+    linkableSessions.forEach(linkableSession => {
+      if (! linkedSessions.contains(linkableSession)) {
+        return false;
+      }
+    });
+    return true;
+  }),
+
+  someSelected: computed('allSelected', 'noneSelected', function(){
+    const allSelected = this.get('allSelected');
+    const noneSelected = this.get('noneSelected');
+    const someSelected = (!allSelected && !noneSelected);
+    return someSelected;
+  }),
+
+  noneSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
+    const linkedSessions = this.get('linkedSessionsBuffer');
+    const linkableSessions = this.get('linkableSessionsBuffer');
+    if (isEmpty(linkedSessions) || isEmpty(linkableSessions)) {
+      return true;
+    }
+
+    let isSelected = false;
+    linkedSessions.forEach(linkedSession => {
+      if (linkableSessions.contains(linkedSession)) {
+        isSelected = true;
+      }
+    });
+    return !isSelected;
   }),
 
   saveChanges: task(function * () {
@@ -52,12 +88,20 @@ export default Component.extend({
         sessions.addObject(session);
       }
     },
+    toggleSelectAll() {
+      const allSelected = this.get('allSelected');
+      if (allSelected) {
+        this.set('linkedSessionsBuffer', []);
+      } else {
+        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer'));
+      }
+    },
     sortBy(what){
       const sortBy = this.get('sortBy');
       if(sortBy === what){
         what += ':desc';
       }
-      this.set('sortBy', what);
+      this.get('setSortBy')(what);
     },
     close() {
       this.sendAction('cancel')
