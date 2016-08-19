@@ -215,23 +215,17 @@ export default Component.extend({
     cancelMinMaxEditing() {
       this.set('isEditingMinMax', false);
     },
-    changeSession(session) {
-      let block = this.get('sequenceBlock');
-      let sessions = this.get('linkedSessions');
-      if (sessions.contains(session)) {
-        sessions.removeObject(session);
-        block.get('sessions').removeObject(sessions);
-      } else {
-        sessions.addObject(session);
-        block.get('sessions').addObject(session);
-      }
-      block.save();
-    },
     toggleManagingSessions() {
       this.set('isManagingSessions', ! this.get('isManagingSessions'));
     },
     cancelManagingSessions(){
       this.set('isManagingSessions', false);
-    }
+    },
+    changeSessions() {
+      let block = this.get('sequenceBlock');
+      return block.save().then(() => {
+        this.set('isManagingSessions', false);
+      });
+    },
   }
 });

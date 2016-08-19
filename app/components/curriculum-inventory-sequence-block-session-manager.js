@@ -32,7 +32,7 @@ export default Component.extend({
   }),
 
   saveChanges: task(function * () {
-    "use strict";
+    yield this.sendAction('save');
 
   }),
 
