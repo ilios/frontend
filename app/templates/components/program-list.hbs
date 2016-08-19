@@ -29,7 +29,7 @@
           <td colspan=9>
             <div class='confirm-message'>
             {{#if (is-fulfilled program.courses)}}
-              {{t 'general.confirmRemove' programYearCount=program.programYears.length courseCount=program.courses.length}} <br />
+              {{t 'general.confirmRemoveProgram' programYearCount=program.programYears.length courseCount=program.courses.length}} <br />
               <div class="confirm-buttons">
                 <button {{action 'remove' program}} class='remove text'>{{t 'general.yes'}}</button>
                 <button {{action 'cancelRemove' program}} class='done text'>{{t 'general.cancel'}}</button>

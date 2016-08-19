@@ -17,7 +17,7 @@ export default Controller.extend({
     titleFilter: 'filter'
   },
 
-  placeholderValue: t('general.titleFilterPlaceholder'),
+  placeholderValue: t('general.programTitleFilterPlaceholder'),
 
   schoolId: null,
   titleFilter: null,
