@@ -8,7 +8,7 @@
       onescape=(action this.attrs.cancel)
       disabled=isSaving
       focusOut=(action 'addErrorDisplayFor' 'title')
-      placeholder=(t 'learnerGroups.learnerGroupTitlePlaceholder')
+      placeholder=(t 'general.learnerGroupTitlePlaceholder')
     }}
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>

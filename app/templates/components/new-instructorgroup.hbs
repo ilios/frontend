@@ -12,7 +12,7 @@
           disabled=isSaving
           focusOut=(action 'addErrorDisplayFor' 'title')
           keyDown=(action 'addErrorDisplayFor' 'title')
-          placeholder=(t 'instructorGroups.instructorGroupTitlePlaceholder')
+          placeholder=(t 'general.instructorGroupTitlePlaceholder')
         }}
         {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>

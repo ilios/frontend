@@ -13,7 +13,7 @@
         onescape=(action this.attrs.cancel)
         disabled=isSaving
         focusOut=(action 'addErrorDisplayFor' 'numSubGroups')
-        placeholder=(t 'learnerGroups.numberOfGroupsToGenerate')
+        placeholder=(t 'general.numberOfGroupsToGenerate')
       }}
       {{#if (and (v-get this 'numSubGroups' 'isInvalid') (is-in showErrorsFor 'numSubGroups'))}}
         <span class="validation-error-message">{{v-get this 'numSubGroups' 'message'}}</span>
