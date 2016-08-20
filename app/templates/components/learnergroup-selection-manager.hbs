@@ -1,6 +1,6 @@
 <div class='selected-learner-groups'>
   <h4>
-    {{t 'courses.selectedLearnerGroups'}}
+    {{t 'general.selectedLearnerGroups'}}
   </h4>
   {{#if learnerGroups.length}}
     {{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
@@ -10,7 +10,7 @@
 </div>
 <div class='available-learner-groups'>
   <h4>
-    {{t 'courses.availableLearnerGroups'}}
+    {{t 'general.availableLearnerGroups'}}
     {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{fa-icon 'spinner' spin=true}}{{/unless}}
   </h4>
   {{#if (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}

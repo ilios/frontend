@@ -7,13 +7,13 @@
   {{/link-to}}
   {{#if (and (is-fulfilled showRollover) (await showRollover))}}
     {{#link-to 'course.rollover' course class='rollover'}}
-      {{fa-icon 'random' title=(t 'courses.rollover') fixedWidth=true}}
+      {{fa-icon 'random' title=(t 'general.rollover') fixedWidth=true}}
     {{/link-to}}
   {{/if}}
 </div>
 <div class='course-overview-content'>
   <div class="block courseexternalid">
-    <label>{{t 'courses.externalId'}}:</label>
+    <label>{{t 'general.externalId'}}:</label>
     <span>
       {{#if editable}}
         {{#editable-field
@@ -40,17 +40,17 @@
     </span>
   </div>
   <div class="block clerkshiptype">
-    <label>{{t 'courses.clerkshipType'}}:</label>
+    <label>{{t 'general.clerkshipType'}}:</label>
     <span>
       {{#if editable}}
         {{#editable-field
-          value=(if course.clerkshipType course.clerkshipType.title (t 'courses.notAClerkship'))
+          value=(if course.clerkshipType course.clerkshipType.title (t 'general.notAClerkship'))
           save=(action 'changeClerkshipType')
           close=(action 'revertClerkshipTypeChanges')
           as |isSaving save close|
         }}
           <select onchange={{action "setCourseClerkshipType" value="target.value"}}>
-            <option value=null selected={{is-empty selectedClerkshipType}}>{{t 'courses.notAClerkship'}}</option>
+            <option value=null selected={{is-empty selectedClerkshipType}}>{{t 'general.notAClerkship'}}</option>
             {{#each clerkshipTypeOptions as |clerkshipType|}}
               <option value={{clerkshipType.id}} selected={{is-equal clerkshipType selectedClerkshipType}}>
                 {{clerkshipType.title}}
@@ -62,7 +62,7 @@
         {{#if course.clerkshipType}}
           {{course.clerkshipType.title}}
         {{else}}
-          {{t 'courses.notAClerkship'}}
+          {{t 'general.notAClerkship'}}
         {{/if}}
       {{/if}}
     </span>
@@ -88,7 +88,7 @@
     </span>
   </div>
   <div class="block courselevel">
-    <label>{{t 'courses.level'}}:</label>
+    <label>{{t 'general.level'}}:</label>
     <span>
       {{#if editable}}
         {{inplace-select value=course.level options=levelOptions save='changeLevel'}}

@@ -16,7 +16,7 @@
           <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
             {{year}} - {{inc year}}
             {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
-              ({{t 'courses.rolloverYearUnavailable'}})
+              ({{t 'general.rolloverYearUnavailable'}})
             {{/if}}
           </option>
         {{/each}}

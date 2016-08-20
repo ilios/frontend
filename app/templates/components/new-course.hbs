@@ -1,4 +1,4 @@
-<div class="new-result-title">{{t 'courses.new'}}</div>
+<div class="new-result-title">{{t 'general.new'}}</div>
 
 <div class="detail-content">
   <label class="form-col form-col-12">
@@ -13,7 +13,7 @@
         disabled=isSaving
         focusOut=(action 'addErrorDisplayFor' 'title')
         keyDown=(action 'addErrorDisplayFor' 'title')
-        placeholder=(t 'courses.courseTitlePlaceholder')
+        placeholder=(t 'general.courseTitlePlaceholder')
       }}
       {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
         <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>

@@ -85,7 +85,7 @@ export default Component.extend({
     return this.get('i18n').t('general.none');
   }),
   coursePhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('courses.courseTitle');
+    return this.get('i18n').t('general.courseTitle');
   }),
   courseObjectivesPhrase: computed('i18n.locale', function(){
     return this.get('i18n').t('calendar.courseObjectives');

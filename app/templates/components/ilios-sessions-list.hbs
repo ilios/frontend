@@ -82,7 +82,7 @@
                 sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
                 sortedAscending=sortedAscending
                 sortType='numeric'
-              }}{{t 'courses.firstOffering'}}{{/sortable-th}}
+              }}{{t 'general.firstOffering'}}{{/sortable-th}}
               {{#sortable-th
                 align='center'
                 click=(action 'sortBy' 'offeringCount')
@@ -136,7 +136,7 @@
               {{#if sessionProxy.showRemoveConfirmation}}
                 <tr class='confirm-removal'><td colspan=10>
                   <div class='confirm-message'>
-                    {{t 'courses.confirmSessionRemoval'}}<br />
+                    {{t 'general.confirmSessionRemoval'}}<br />
                     <div class="confirm-buttons">
                       <button {{action 'remove' sessionProxy}} class='remove text'>{{t 'general.yes'}}</button>
                       <button {{action 'cancelRemove' sessionProxy}} class='done text'>{{t 'general.cancel'}}</button>
@@ -162,7 +162,7 @@
                   </tr>
                 {{/if}}
               {{else}}
-                <tr><td colspan=10>{{t 'courses.noSessions'}}</td></tr>
+                <tr><td colspan=10>{{t 'general.noSessions'}}</td></tr>
               {{/each}}
           </tbody>
         </table>

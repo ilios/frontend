@@ -1,10 +1,10 @@
 <div class='title'>
   {{#if isManaging}}
     <span class='detail-specific-title'>
-      {{t 'courses.instructorsManageTitle'}}
+      {{t 'general.instructorsManageTitle'}}
     </span>
   {{else}}
-    {{t 'courses.instructors'}} ({{titleCount}})
+    {{t 'general.instructors'}} ({{titleCount}})
   {{/if}}
 </div>
 
@@ -13,7 +13,7 @@
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if editable}}
-    <button {{action 'manage'}}>{{t 'courses.instructorsManageTitle'}}</button>
+    <button {{action 'manage'}}>{{t 'general.instructorsManageTitle'}}</button>
   {{/if}}
 </div>
 <div class='detail-instructors-content'>

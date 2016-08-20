@@ -1,7 +1,7 @@
 <div class='list-reset objectivetitle course-objective-title'>{{{courseObjective.title}}}</div>
 {{#liquid-if showCohortList class="horizontal"}}
   <label class='group-picker'>
-    <span class="choose-cohort-title">{{t 'courses.chooseCohortTitle'}}:</span>
+    <span class="choose-cohort-title">{{t 'general.chooseCohortTitle'}}:</span>
     {{#if multipleCohorts}}
       {{#x-select value=selectedCohortId action="changeSelectedCohort"}}
         {{#each availableCohorts as |cohort|}}
@@ -39,7 +39,7 @@
 {{else}}
   <div class='no-group'>
     <p>
-      {{t 'courses.missingCohortMessage'}}
+      {{t 'general.missingCohortMessage'}}
     </p>
   </div>
 {{/liquid-if}}
