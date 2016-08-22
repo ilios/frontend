@@ -10,11 +10,11 @@
           action='setNonStudentMode'
         }}
       </div>
-      <label class="form-label">{{t 'user.firstName'}}:</label>
+      <label class="form-label">{{t 'general.firstName'}}:</label>
       <div class="form-data">
         {{firstName}}
       </div>
-      <label class="form-label">{{t 'user.lastName'}}:</label>
+      <label class="form-label">{{t 'general.lastName'}}:</label>
       <div class="form-data">
         {{lastName}}
       </div>
@@ -34,7 +34,7 @@
           &nbsp;
         {{/if}}
       </div>
-      <label class="form-label">{{t 'user.otherId'}}:</label>
+      <label class="form-label">{{t 'general.otherId'}}:</label>
       <div class="form-data">
         {{one-way-input
           value=otherId
@@ -47,7 +47,7 @@
           <span class="validation-error-message">{{v-get this 'otherId' 'message'}}</span>
         {{/if}}
       </div>
-      <label class="form-label">{{t 'user.username'}}:</label>
+      <label class="form-label">{{t 'general.username'}}:</label>
       <div class="form-data">
         {{#if (await allowCustomUserName)}}
             {{one-way-input
@@ -66,7 +66,7 @@
       </div>
 
       {{#if (await allowCustomUserName)}}
-        <label class="form-label">{{t 'user.password'}}:</label>
+        <label class="form-label">{{t 'general.password'}}:</label>
         <div class="form-data">
           {{one-way-input
             value=password
@@ -124,7 +124,7 @@
     </div>
   </div>
 {{else}}
-  <div class="new-result-title">{{t 'user.new'}}</div>
+  <div class="new-result-title">{{t 'general.newUser'}}</div>
   <div id='new-directory-user-search-tools'>
     {{one-way-input
       value=searchTerms
@@ -132,7 +132,7 @@
       onenter=(action "findUsersInDirectory")
       onescape=(action this.attrs.setSearchTerms '')
     }}
-    <button type='search' {{action 'findUsersInDirectory'}}>{{t 'user.searchDirectory'}}</button>
+    <button type='search' {{action 'findUsersInDirectory'}}>{{t 'general.searchDirectory'}}</button>
   </div>
   {{#liquid-if isSearching class='crossFade'}}
     {{fa-icon 'spinner' spin=true}} {{t 'general.currentlySearchingPrompt'}}
@@ -145,7 +145,7 @@
               <thead>
                 <tr>
                   <th class='text-right' colspan=1></th>
-                  <th class='text-left' colspan=3>{{t 'user.fullName'}}</th>
+                  <th class='text-left' colspan=3>{{t 'general.fullName'}}</th>
                   <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
                   <th class='text-left' colspan=5>{{t 'general.email'}}</th>
                 </tr>

@@ -8,32 +8,32 @@
 
 <div class="details">
   <section class="permissions">
-    <h4 class="header">{{t 'user.userRoles'}}</h4>
+    <h4 class="header">{{t 'general.userRoles'}}</h4>
 
     <div class="permissions-body">
       {{#if (is-fulfilled roles)}}
         <div class="permissions-row">
           <span>
             {{fa-icon (if (contains 'Course Director' (await roles)) 'check' 'ban') class=(if (contains 'Course Director' (await roles)) 'yes' 'no')}}
-            {{t 'user.courseDirector'}}
+            {{t 'general.courseDirector'}}
           </span>
         </div>
         <div class="permissions-row">
           <span>
             {{fa-icon (if (contains 'Faculty' (await roles)) 'check' 'ban') class=(if (contains 'Faculty' (await roles)) 'yes' 'no')}}
-            {{t 'user.instructor'}}
+            {{t 'general.instructor'}}
           </span>
         </div>
         <div class="permissions-row">
           <span>
             {{fa-icon (if (contains 'Developer' (await roles)) 'check' 'ban') class=(if (contains 'Developer' (await roles)) 'yes' 'no')}}
-            {{t 'user.developer'}}
+            {{t 'general.developer'}}
           </span>
         </div>
         <div class="permissions-row">
           <span>
             {{fa-icon (if (contains 'Former Student' (await roles)) 'check' 'ban') class=(if (contains 'Former Student' (await roles)) 'yes' 'no')}}
-            {{t 'user.formerStudent'}}
+            {{t 'general.formerStudent'}}
           </span>
         </div>
         <hr>
@@ -41,7 +41,7 @@
         <div class="permissions-row">
           <span>
             {{fa-icon (if user.syncIgnore 'check' 'ban') class=(if user.syncIgnore 'yes' 'no')}}
-            {{t 'user.excludeFromSync'}}
+            {{t 'general.excludeFromSync'}}
           </span>
         </div>
     {{/if}}
@@ -104,16 +104,16 @@
 </div>
 
 <section class='token-maintenance'>
-  <h3>{{t 'user.manageAPITokens'}}</h3>
-  <p>{{t 'user.tokenInfo' apiDocsUrl=apiDocsUrl}}</p>
+  <h3>{{t 'general.manageAPITokens'}}</h3>
+  <p>{{t 'general.tokenInfo' apiDocsUrl=apiDocsUrl}}</p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
     <button class='new-token done text' onclick={{action toggleShowCreateNewToken}}>{{t 'general.createNew'}}</button>
-    <button class='invalidate-tokens cancel text' onclick={{action toggleShowInvalidateTokens}}>{{t 'user.invalidateTokens'}}</button>
+    <button class='invalidate-tokens cancel text' onclick={{action toggleShowInvalidateTokens}}>{{t 'general.invalidateTokens'}}</button>
   {{else}}
     {{#if showCreateNewToken}}
       {{#if generatedJwt}}
         <div class='new-token-result'>
-          <h3>{{t 'user.newToken'}}:</h3>
+          <h3>{{t 'general.newToken'}}:</h3>
           <input readonly value={{generatedJwt}} />
           {{#copy-button success='tokenCopied' clipboardText=generatedJwt}}
             {{fa-icon 'copy'}}
@@ -122,7 +122,7 @@
         </div>
       {{else}}
         <div class='new-token-form'>
-          <label>{{t 'user.validUntil'}}</label>
+          <label>{{t 'general.validUntil'}}</label>
           {{pikaday-input
             size=10
             value=expiresAt
@@ -144,8 +144,8 @@
     {{/if}}
     {{#if showInvalidateTokens}}
       <div class='invalidate-tokens-form'>
-        <h3>{{t 'user.invalidateTokens'}}</h3>
-        <p>{{t 'user.invalidateTokensConfirmation'}}</p>
+        <h3>{{t 'general.invalidateTokens'}}</h3>
+        <p>{{t 'general.invalidateTokensConfirmation'}}</p>
         <button class='done text' {{action (perform invalidateTokens)}}>
           {{#if invalidateTokens.isRunning}}
             {{fa-icon 'spinner' spin=true}}

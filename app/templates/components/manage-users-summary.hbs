@@ -3,11 +3,11 @@
 </h2>
 <div class='actions'>
   {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
-    <button>{{t 'user.create'}}</button>
+    <button>{{t 'general.create'}}</button>
   {{/link-to}}
   {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
     {{#link-to 'users' (query-params showBulkNewUserForm=true showNewUserForm=false)}}
-      <button>{{t 'user.createBulk'}}</button>
+      <button>{{t 'general.createBulk'}}</button>
     {{/link-to}}
   {{/if}}
 </div>

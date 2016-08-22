@@ -82,7 +82,7 @@ export default Ember.Component.extend({
       const session = this.get('session');
       let authenticator = 'authenticator:ilios-jwt';
       session.authenticate(authenticator, {jwt: data.jwt});
-      flashMessages.success('user.successfullyInvalidatedTokens');
+      flashMessages.success('general.successfullyInvalidatedTokens');
       this.get('toggleShowInvalidateTokens')();
     }
   }),

@@ -1,4 +1,4 @@
-<div class="new-result-title">{{t 'user.new'}}</div>
+<div class="new-result-title">{{t 'general.newUser'}}</div>
 
 <div class='new-user-form'>
   <div class='choose-form-type'>
@@ -11,7 +11,7 @@
     }}
   </div>
   <div class='item'>
-    <label>{{t 'user.firstName'}}:</label>
+    <label>{{t 'general.firstName'}}:</label>
     {{one-way-input
       value=firstName
       update=(action (mut firstName))
@@ -24,7 +24,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t 'user.middleName'}}:</label>
+    <label>{{t 'general.middleName'}}:</label>
     {{one-way-input
       value=middleName
       update=(action (mut middleName))
@@ -37,7 +37,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t 'user.lastName'}}:</label>
+    <label>{{t 'general.lastName'}}:</label>
     {{one-way-input
       value=lastName
       update=(action (mut lastName))
@@ -63,7 +63,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t 'user.otherId'}}:</label>
+    <label>{{t 'general.otherId'}}:</label>
     {{one-way-input
       value=otherId
       update=(action (mut otherId))
@@ -102,7 +102,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t 'user.username'}}:</label>
+    <label>{{t 'general.username'}}:</label>
     {{one-way-input
       value=username
       update=(action (mut username))
@@ -115,7 +115,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t 'user.password'}}:</label>
+    <label>{{t 'general.password'}}:</label>
     {{one-way-input
       value=password
       update=(action (mut password))

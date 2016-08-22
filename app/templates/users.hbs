@@ -5,7 +5,7 @@
       {{one-way-input
         value=query
         update=(action 'changeQuery')
-        placeholder=(t 'user.searchUsers')
+        placeholder=(t 'general.searchUsers')
       }}
     </div>
   </div>
@@ -16,9 +16,9 @@
       {{#if allowAddNewUser}}
         <div class='resultslist-actions'>
           {{#unless (or showNewUserForm showBulkNewUserForm)}}
-            <button {{action (toggle 'showNewUserForm' this)}}>{{t 'user.create'}}</button>
+            <button {{action (toggle 'showNewUserForm' this)}}>{{t 'general.create'}}</button>
             {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
-              <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'user.createBulk'}}</button>
+              <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'general.createBulk'}}</button>
             {{/if}}
           {{else}}
             <button {{action (if showNewUserForm (toggle 'showNewUserForm' this) (toggle 'showBulkNewUserForm' this))}}>

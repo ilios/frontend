@@ -120,7 +120,7 @@ export default Component.extend(NewUser, {
       if (!allowedFileTypes.contains(file.type)) {
         const i18n = this.get('i18n');
         this.set('fileUploadError', true);
-        throw new Error(i18n.t('user.fileTypeError', {fileType: file.type}));
+        throw new Error(i18n.t('general.fileTypeError', {fileType: file.type}));
       }
 
       let ProposedUser = Ember.Object.extend(getOwner(this).ownerInjection(), UserValidations, {
@@ -245,9 +245,9 @@ export default Component.extend(NewUser, {
 
     const flashMessages = this.get('flashMessages');
     if (this.get('savingUserErrors').get('length') || this.get('savingAuthenticationErrors').get('length')) {
-      flashMessages.warning('user.newUsersCreatedWarning');
+      flashMessages.warning('general.newUsersCreatedWarning');
     } else {
-      flashMessages.success('user.newUsersCreatedSuccessfully');
+      flashMessages.success('general.newUsersCreatedSuccessfully');
     }
 
     this.set('selectedUsers', []);

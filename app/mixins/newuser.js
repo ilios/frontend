@@ -176,7 +176,7 @@ export default Mixin.create(ValidationErrorDisplay, {
                     password
                   });
                   return authentication.save().then(()=>{
-                    this.get('flashMessages').success('user.saved');
+                    this.get('flashMessages').success('general.saved');
                     this.attrs.transitionToUser(newUser.get('id'));
                   });
                 }).finally(() => {

@@ -26,13 +26,13 @@
               click=(action 'sortBy' 'firstName')
               sortedBy=(or (eq sortBy 'firstName') (eq sortBy 'firstName:desc'))
               sortedAscending=sortedAscending
-            }}{{t 'user.firstName'}}{{/sortable-th}}
+            }}{{t 'general.firstName'}}{{/sortable-th}}
             {{#sortable-th
               colspan=2
               click=(action 'sortBy' 'lastName')
               sortedBy=(or (eq sortBy 'lastName') (eq sortBy 'lastName:desc'))
               sortedAscending=sortedAscending
-            }}{{t 'user.lastName'}}{{/sortable-th}}
+            }}{{t 'general.lastName'}}{{/sortable-th}}
             <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
             <th class='text-left' colspan=5>{{t 'general.email'}}</th>
             {{#if isEditing}}
