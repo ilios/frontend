@@ -288,6 +288,8 @@ export default {
     'rolloverSuccess': 'Rollover Completed Successfully',
     'rolloverYearUnavailable': 'Course Already Exists',
     'rolloverSummary': 'You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “done”. To return to your current course, click “cancel”',
+  },
+  'sessions': {
     'specialAttireRequired': 'Special Attire Required',
     'specialEquipmentRequired': 'Special Equipment Required',
     'supplementalCurriculum': 'Supplemental Curriculum',
