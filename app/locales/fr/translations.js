@@ -310,8 +310,6 @@ export default {
     'copySessionSummary': "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matiéres d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\".",
     'targetCourse': 'Cours Cible',
     'copySuccess': 'Copie achevée avec succès',
-  },
-  'offerings': {
     'calendarOn': "Calendrier Allumé",
     'calendarOff': "Calendrier Éteindé",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer cette offre avec {{learnerGroupCount}} groupes d'apprenants?  Ça action ne peut pas être défait.",
@@ -326,7 +324,7 @@ export default {
     'thursday': 'Jeudi',
     'friday': 'Vendredi',
     'saturday': 'Samedi',
-    'new': 'Nouvelle Offre',
+    'newOfferings': 'Nouvelle Offre',
     'defaultInstructorsNotLoaded': "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)",
     'defaultLocationNotLoaded': "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)",
   },

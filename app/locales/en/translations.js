@@ -310,8 +310,6 @@ export default {
     'copySessionSummary': 'You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click "done".  To return to your current session click "cancel".',
     'targetCourse': 'Target Course',
     'copySuccess': 'Copy Completed Successfully',
-  },
-  'offerings': {
     'calendarOn': 'Calendar On',
     'calendarOff': 'Calendar Off',
     'confirmRemove': 'Are you sure you want to delete this offering with {{learnerGroupCount}} learner groups? This action cannot be undone.',
@@ -326,7 +324,7 @@ export default {
     'thursday': 'Thursday',
     'friday': 'Friday',
     'saturday': 'Saturday',
-    'new': 'New Offering',
+    'newOffering': 'New Offering',
     'defaultInstructorsNotLoaded': '(Default Instructors will not be loaded: please enter desired value.)',
     'defaultLocationNotLoaded': '(Default Location will not be loaded: please enter desired value.)',
   },

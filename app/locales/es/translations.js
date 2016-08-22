@@ -310,8 +310,6 @@ export default {
     'copySessionSummary': 'Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en "cumplido".  Para regresar a su sesión corriente, haga click en "cancelar".',
     'targetCourse': 'Curso de Destino',
     'copySuccess': 'La Copia se ha Completado con Éxito',
-  },
-  'offerings': {
     'calendarOn': 'Calendario en Uso',
     'calendarOff': 'Calendario Apagado',
     'confirmRemove': '¿Estás seguro que quieres borrar este ofrecimiento con {{learnerGroupCount}} grupos de aprendedores? Esta acción no se puede deshacer.',
@@ -326,7 +324,7 @@ export default {
     'thursday': 'Jueves',
     'friday': 'Viernes',
     'saturday': 'Sábado',
-    'new': 'Nueva Oferta',
+    'newOffering': 'Nueva Oferta',
     'defaultInstructorsNotLoaded': '(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)',
     'defaultLocationNotLoaded': '(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)',
   },

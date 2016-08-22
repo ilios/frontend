@@ -49,7 +49,7 @@
   {{#if showMakeRecurring}}
     <div class='item make-recurring'>
       {{toggle-onoff
-        label='offerings.makeRecurring'
+        label='general.makeRecurring'
         on=makeRecurring
         action=(toggle-action 'makeRecurring' this)
       }}
@@ -92,7 +92,7 @@
       <label>
         {{t 'general.location'}}:
         {{#unless offering}}
-          {{t 'offerings.defaultLocationNotLoaded'}}
+          {{t 'general.defaultLocationNotLoaded'}}
         {{/unless}}
       </label>
       {{one-way-input
@@ -113,7 +113,7 @@
       <label>
         {{t 'general.instructors'}}:
         {{#unless offering}}
-          {{t 'offerings.defaultInstructorsNotLoaded'}}
+          {{t 'general.defaultInstructorsNotLoaded'}}
         {{/unless}}
       </label>
       {{instructor-selection-manager

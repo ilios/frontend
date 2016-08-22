@@ -56,7 +56,7 @@ const Validations = buildValidations({
     validators: [
       validator('length', {
         min: 1,
-        messageKey: 'offerings.smallGroupMessage'
+        messageKey: 'general.smallGroupMessage'
       })
     ]
   },
@@ -94,13 +94,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   offeringsToSave: 0,
   savedOfferings: 0,
   recurringDayOptions: [
-    {day: '0', t: 'offerings.sunday'},
-    {day: '1', t: 'offerings.monday'},
-    {day: '2', t: 'offerings.tuesday'},
-    {day: '3', t: 'offerings.wednesday'},
-    {day: '4', t: 'offerings.thursday'},
-    {day: '5', t: 'offerings.friday'},
-    {day: '6', t: 'offerings.saturday'},
+    {day: '0', t: 'general.sunday'},
+    {day: '1', t: 'general.monday'},
+    {day: '2', t: 'general.tuesday'},
+    {day: '3', t: 'general.wednesday'},
+    {day: '4', t: 'general.thursday'},
+    {day: '5', t: 'general.friday'},
+    {day: '6', t: 'general.saturday'},
   ],
   associatedSchools: computed('cohorts.[]', function(){
     return new Promise(resolve => {
