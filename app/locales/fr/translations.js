@@ -324,7 +324,7 @@ export default {
     'thursday': 'Jeudi',
     'friday': 'Vendredi',
     'saturday': 'Samedi',
-    'newOfferings': 'Nouvelle Offre',
+    'newOffering': 'Nouvelle Offre',
     'defaultInstructorsNotLoaded': "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)",
     'defaultLocationNotLoaded': "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)",
     'displayName': "Nom d’Affichage",
