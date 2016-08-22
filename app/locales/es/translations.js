@@ -278,7 +278,7 @@ export default {
     'learnerGroupsManageTitle': 'Administrar Grupos de Aprendedores',
     'availableLearnerGroups': 'Grupos de Aprendedores Disponibles',
     'selectedLearnerGroups': 'Grupos de Aprendizaje Seleccionados',
-    'noAvailableLearnerGroupsInCohort': 'No hay grupos de aprendedores no seleccionados en este Clase de La Graduación',
+    'noUnselectedLearnerGroupsInCohort': 'No hay grupos de aprendedores no seleccionados en este Clase de La Graduación',
     'noSelectedLearnerGroups': 'No hay grupos de aprendedores seleccionados',
     'instructorsManageTitle': 'Administrar Instructores',
     'confirmObjectiveRemoval': "¿Está seguro que desea eliminar este objetivo?",
