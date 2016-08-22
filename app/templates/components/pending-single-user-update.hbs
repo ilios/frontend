@@ -7,7 +7,7 @@
         <div class='explanation'>
           <h2>{{fa-icon 'exclamation-triangle' class='no'}}</h2>
           {{t
-            (concat 'admin.pendingUserUpdates.' update.type)
+            (concat 'general.pendingUserUpdates.' update.type)
             update=update
           }}
         </div>
@@ -16,7 +16,7 @@
           {{#if (eq update.type 'emailMismatch')}}
             <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
             {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
-            {{t 'admin.pendingUserUpdates.updateIlios'}}
+            {{t 'general.pendingUserUpdates.updateIlios'}}
           </span>
           {{/if}}
           <span class='clickable link' onclick={{action 'excludeFromSync' update}}>

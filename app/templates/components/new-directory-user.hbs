@@ -155,12 +155,12 @@
                   <tr>
                     <td class='text-right' colspan=1>
                       {{#if user.user}}
-                        {{fa-icon 'sun-o' class='warning clickable' click=(action attrs.transitionToUser user.user) title=(t 'admin.goToUser')}}
+                        {{fa-icon 'sun-o' class='warning clickable' click=(action attrs.transitionToUser user.user) title=(t 'general.goToUser')}}
                       {{else}}
                         {{#if user.addable}}
                           {{fa-icon 'plus' class='yes clickable' click=(action 'pickUser' user) title=(t 'general.addNew')}}
                         {{else}}
-                          {{fa-icon 'ambulance' class='no' title=(t 'admin.userNotAddableFromDirectory')}}
+                          {{fa-icon 'ambulance' class='no' title=(t 'general.userNotAddableFromDirectory')}}
                         {{/if}}
                       {{/if}}
                     </td>

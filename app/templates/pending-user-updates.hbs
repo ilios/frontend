@@ -1,4 +1,4 @@
-{{#link-to 'admin-dashboard'}}{{t 'admin.backToAdminDashboard'}}{{/link-to}}
+{{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
 <section class='fullwidth main-border'>
   <div class="filter-tools">
     <div id='schoolsfilter' class="filter">
@@ -21,7 +21,7 @@
     </div>
 
     <div id='titlefilter' class="filter">
-      <input type='text' value={{filter}} placeholder={{t 'admin.pendingUserUpdates.filterBy'}} oninput={{action (mut filter) value="target.value"}} />
+      <input type='text' value={{filter}} placeholder={{t 'general.pendingUserUpdates.filterBy'}} oninput={{action (mut filter) value="target.value"}} />
     </div>
   </div>
 
@@ -54,7 +54,7 @@
 
                 <td class='text-left' colspan="6">
                   {{t
-                    (concat 'admin.pendingUserUpdates.' update.type)
+                    (concat 'general.pendingUserUpdates.' update.type)
                     update=update
                   }}
                 </td>
@@ -66,7 +66,7 @@
                     {{#if (eq update.type 'emailMismatch')}}
                       <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
                       {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
-                      {{t 'admin.pendingUserUpdates.updateIlios'}}
+                      {{t 'general.pendingUserUpdates.updateIlios'}}
                     </span><br />
                     {{/if}}
                     <span class='clickable link' onclick={{action 'excludeFromSync' update}}>

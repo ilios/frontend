@@ -453,8 +453,6 @@ export default {
     'myCalendar': 'My Calendar',
     'allSchools': 'All Schools',
     'activeFilters': 'Active Filters',
-  },
-  'admin': {
     'pendingUpdatesSummaryTitle': 'Updates from the Campus Directory',
     'pendingUpdatesSummary': { 'one': 'There is one user needing attention', 'other': 'There are {{count}} users needing attention' },
     'pendingUserUpdates': { 'filterBy': 'Filter by user name', 'missingFromDirectory': 'Unable to find user in the directory, please update, disable, or exclude their account from syncronization.', 'emailMismatch': 'The email address in the directory ({{update.value}}) does not match the email in ilios ({{update.user.email}}).', 'updateIlios': 'Update Ilios' },

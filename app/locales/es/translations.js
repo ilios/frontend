@@ -453,8 +453,6 @@ export default {
     'myCalendar': 'Mi Calendario',
     'allSchools': 'Todas las Escuelas',
     'activeFilters': 'Filtros Activos',
-  },
-  'admin': {
     'pendingUpdatesSummaryTitle': 'Actualizaciones del Directorio del Campus',
     'pendingUpdatesSummary': { 'one': 'Hay un usuario que necesita atención', 'other': 'Hay {{count}} usuarios que necesitan atención' },
     'pendingUserUpdates': { 'filterBy': 'Filtro por nombre de uauario', 'missingFromDirectory': 'No se puede encontrar el usuario en el directorio, por favor actualice, desactive, o excluya su cuenta de la sincronización.', 'emailMismatch': 'La dirección de correo electrónico en el directorio ({{update.value}}) does not match the email in Ilios ({{update.user.email}}).', 'updateIlios': 'Actualice Ilios' },
