@@ -347,12 +347,6 @@ export default {
     'filterByNameOrEmail': 'Filter by name or email',
     'noSearchResults': 'Your search did not return any results',
   },
-  'relatedCourses': {
-    'title': 'Related Courses',
-    'filterPlaceholder': 'Filter by name',
-    'noCourses': 'There are no related courses',
-    'noCoursesMatchFilter': 'No courses match your filter',
-  },
   'publish': {
     'markAsScheduled': 'Mark as Scheduled',
     'publishAsIs': 'Publish As-is',

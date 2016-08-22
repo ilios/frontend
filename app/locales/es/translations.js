@@ -347,12 +347,6 @@ export default {
     'filterByNameOrEmail': 'Aplicar un Filtro por nombre o email',
     'noSearchResults': 'Su búsqueda no regresó ningunos resultados',
   },
-  'relatedCourses': {
-    'title': 'Cursos Relacionados',
-    'filterPlaceholder': 'Aplicar Filtro por nombre',
-    'noCourses': 'No hay cursos relacionados',
-    'noCoursesMatchFilter': 'Ningunos cursos corresponden a su filtro',
-  },
   'publish': {
     'markAsScheduled': 'Marque Como Programado',
     'publishAsIs': 'Publique Como Es',
