@@ -1,6 +1,6 @@
 <div class="form-container">
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
+    <label class="form-label">{{t 'general.displayName'}}:</label>
     <div class="form-data">
       {{one-way-input
         value=title
@@ -15,7 +15,7 @@
   </div>
 
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.status'}}:</label>
+    <label class="form-label">{{t 'general.status'}}:</label>
     <div class="form-data">
       <select  onchange={{action "changeStatus" value="target.value"}}>
         {{#each learningMaterialStatuses as |lmStatus|}}
@@ -28,12 +28,12 @@
   </div>
 
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.owner'}}:</label>
+    <label class="form-label">{{t 'general.owner'}}:</label>
     <div class="form-data"><span class='owninguser'>{{owner.fullName}}</span></div>
   </div>
 
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
+    <label class="form-label">{{t 'general.contentAuthor'}}:</label>
     <div class="form-data">
       {{one-way-input
         value=originalAuthor
@@ -48,7 +48,7 @@
   </div>
 
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
+    <label class="form-label">{{t 'general.userRole'}}:</label>
     <div class="form-data">
       <select  onchange={{action "changeUserRole" value="target.value"}}>
         {{#each learningMaterialUserRoles as |role|}}
@@ -62,7 +62,7 @@
 
   {{#if isLink}}
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.url'}}:</label>
+      <label class="form-label">{{t 'general.url'}}:</label>
       <div class="form-data">
         {{one-way-input
           value=link
@@ -80,7 +80,7 @@
 
   {{#if isCitation}}
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+      <label class="form-label">{{t 'general.citation'}}:</label>
       <div class="form-data citation">
         {{textarea value=citation focus-out=(action 'addErrorDisplayFor' 'citation') key-press=(action 'addErrorDisplayFor' 'citation') }}
         {{#if (and (v-get this 'citation' 'isInvalid') (is-in showErrorsFor 'citation'))}}
@@ -103,21 +103,21 @@
 
   {{#if isFile}}
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
+      <label class="form-label">{{t 'general.copyrightPermission'}}:</label>
       <div class="form-data">
         <p id="lm-copyright-agreement-text">
           {{one-way-checkbox
               checked=copyrightPermission
               update=(action (mut copyrightPermission))
           }}
-          {{t 'learningMaterials.copyrightAgreement'}}
+          {{t 'general.copyrightAgreement'}}
         </p>
       </div>
     </div>
 
     {{#unless copyrightPermission}}
       <div class="form-col-12">
-        <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
+        <label class="form-label">{{t 'general.copyrightRationale'}}:</label>
         <div class="form-data">
           {{textarea value=copyrightRationale focus-out=(action 'addErrorDisplayFor' 'copyrightRationale') key-press=(action 'addErrorDisplayFor' 'copyrightRationale') }}
           {{#if (and (v-get this 'copyrightRationale' 'isInvalid') (is-in showErrorsFor 'copyrightRationale'))}}
@@ -128,7 +128,7 @@
     {{/unless}}
 
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.file'}}:</label>
+      <label class="form-label">{{t 'general.file'}}:</label>
       <div class="form-data">
         {{file-upload
           finishedUploading='setFile'

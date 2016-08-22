@@ -327,8 +327,6 @@ export default {
     'newOffering': 'Nueva Oferta',
     'defaultInstructorsNotLoaded': '(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)',
     'defaultLocationNotLoaded': '(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)',
-  },
-  'learningMaterials': {
     'displayName': 'Nombre de Mostrar',
     'owner': 'Dueño',
     'contentAuthor': 'Autor del Contenido',
@@ -340,7 +338,6 @@ export default {
     'url': 'URL',
     'citation': 'Citación',
     'userRole': 'Función de Usuario',
-    'status': 'Estado',
     'copyrightPermission': 'Permisos de Derechos de Autor',
     'copyrightAgreement': "El archivo que estoy subiendo es mío o tengo permiso expreso para reproducir y / o distribuir este artículo, o su uso aquí ha sido evaluado como permisible por la doctrina del uso justo. Este archivo no contiene ninguna información protegida de la salud, y su utilización aquí está en conformidad con las políticas del gobierno y Universidad sobre derechos de autor y de seguridad de la información y las directrices de mi institución para la conducta profesional.",
     'copyrightRationale':'Justificación para Derechos de Autor',

@@ -29,9 +29,9 @@
       <button class="collapse-button" {{action 'cancelNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
     {{else if editable}}
       {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
-        <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'learningMaterials.file'}}</li>
-        <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'learningMaterials.link'}}</li>
-        <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'learningMaterials.citation'}}</li>
+        <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'general.file'}}</li>
+        <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'general.link'}}</li>
+        <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'general.citation'}}</li>
       {{/action-menu}}
     {{/if}}
   {{/if}}
@@ -76,11 +76,11 @@
       <table>
         <thead>
           <tr>
-            <th class='text-left' colspan=3>{{t 'learningMaterials.displayName'}}</th>
+            <th class='text-left' colspan=3>{{t 'general.displayName'}}</th>
             <th class='text-center' colspan=2>{{t 'general.type'}}</th>
-            <th class='text-center' colspan=2>{{t 'learningMaterials.owner'}}</th>
+            <th class='text-center' colspan=2>{{t 'general.owner'}}</th>
             <th class='text-center' colspan=2>{{t 'general.required'}}</th>
-            <th class='text-center' colspan=2>{{t 'learningMaterials.notes'}}</th>
+            <th class='text-center' colspan=2>{{t 'general.notes'}}</th>
             <th class='text-center' colspan=2>{{t 'general.mesh'}}</th>
             <th class='text-center' colspan=2>{{t 'general.status'}}</th>
             <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
@@ -144,7 +144,7 @@
             {{#if lmProxy.showRemoveConfirmation}}
               <tr class='confirm-removal'><td colspan=16>
                 <div class='confirm-message'>
-                  {{t 'learningMaterials.confirmRemoval'}}<br />
+                  {{t 'general.confirmRemoval'}}<br />
                   <div class="confirm-buttons">
                     <button {{action 'remove' lmProxy}} class='remove text'>{{t 'general.yes'}}</button>
                     <button {{action 'cancelRemove' lmProxy}} class='done text'>{{t 'general.cancel'}}</button>

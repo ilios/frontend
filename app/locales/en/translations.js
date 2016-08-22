@@ -327,8 +327,6 @@ export default {
     'newOffering': 'New Offering',
     'defaultInstructorsNotLoaded': '(Default Instructors will not be loaded: please enter desired value.)',
     'defaultLocationNotLoaded': '(Default Location will not be loaded: please enter desired value.)',
-  },
-  'learningMaterials': {
     'displayName': 'Display Name',
     'owner': 'Owner',
     'contentAuthor': 'Content Author',
@@ -340,7 +338,6 @@ export default {
     'url': 'URL',
     'citation': 'Citation',
     'userRole': 'User Role',
-    'status': 'Status',
     'copyrightPermission': 'Copyright Permission',
     'copyrightAgreement': "The file I am uploading is my own or I have express permission to reproduce and/or distribute this item, or use of it here has been assessed as allowable by the legal doctrine of Fair Use. This file does not contain protected health information, and use of it here is in compliance with Government and University policies on copyright and information security and my institution’s guidelines for professional conduct.",
     'copyrightRationale':'Copyright Rationale',
