@@ -57,7 +57,7 @@
   <div class='session-overview-actions'>
     {{#if (and (is-fulfilled showCopy) (await showCopy))}}
       {{#link-to 'session.copy' session class='copy'}}
-        {{fa-icon 'copy' title=(t 'sessions.copy') fixedWidth=true}}
+        {{fa-icon 'copy' title=(t 'general.copySession') fixedWidth=true}}
       {{/link-to}}
     {{/if}}
   </div>
@@ -65,7 +65,7 @@
     <div class='session-overview-options'>
 
       <div class="sessiontype">
-        <label>{{t 'sessions.type'}}:</label>
+        <label>{{t 'general.sessionType'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-select
@@ -79,7 +79,7 @@
         </span>
       </div>
       <div class="sessionsupplemental switch-block">
-        <label>{{t 'sessions.supplementalCurriculum'}}:</label>
+        <label>{{t 'general.supplementalCurriculum'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
@@ -93,7 +93,7 @@
         </span>
       </div>
       <div class="sessionspecialattire switch-block">
-        <label>{{t 'sessions.specialAttireRequired'}}:</label>
+        <label>{{t 'general.specialAttireRequired'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
@@ -107,7 +107,7 @@
         </span>
       </div>
       <div class="sessionspecialequipment switch-block">
-        <label>{{t 'sessions.specialEquipmentRequired'}}:</label>
+        <label>{{t 'general.specialEquipmentRequired'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
@@ -122,7 +122,7 @@
       </div>
       <hr />
       <div class="independentlearningcontrol switch-block">
-        <label>{{t 'sessions.independentLearning'}}:</label>
+        <label>{{t 'general.independentLearning'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
@@ -165,7 +165,7 @@
           </span>
         </div>
         <div class="sessionilmduedate block">
-          <label>{{t 'sessions.dueBy'}}:</label>
+          <label>{{t 'general.dueBy'}}:</label>
           <span>
             {{#if editable}}
               {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}

@@ -168,20 +168,20 @@
         </div>
         <div class='detail-content'>
           <div class="inline-label-data-block">
-            <label>{{t 'sessions.type'}}:</label>
+            <label>{{t 'general.sessionType'}}:</label>
             <div>{{session.sessionType.title}}</div>
           </div>
           <br />
           <div class="inline-label-data-block">
-            <label>{{t 'sessions.supplementalCurriculum'}}:</label>
+            <label>{{t 'general.supplementalCurriculum'}}:</label>
             <div>{{boolean-check value=session.supplemental}}</div>
           </div>
           <div class="inline-label-data-block">
-            <label>{{t 'sessions.specialAttireRequired'}}:</label>
+            <label>{{t 'general.specialAttireRequired'}}:</label>
             <div>{{boolean-check value=session.attireRequired}}</div>
           </div>
           <div class="inline-label-data-block">
-            <label>{{t 'sessions.specialEquipmentRequired'}}:</label>
+            <label>{{t 'general.specialEquipmentRequired'}}:</label>
             <div>{{boolean-check value=session.equipmentRequired}}</div>
           </div>
           <br />
@@ -304,7 +304,7 @@
                </tbody>
              </table>
           {{else}}
-            <p>{{t 'sessions.noOfferings'}}</p>
+            <p>{{t 'general.noOfferings'}}</p>
           {{/if}}
         </div>
       </section>

@@ -7,7 +7,7 @@
             <tr>
               <td class='event-date'>
                 {{#if event.ilmSession}}
-                  <span class='ilm-due'>{{t 'sessions.dueBy'}}</span>
+                  <span class='ilm-due'>{{t 'general.dueBy'}}</span>
                 {{/if}}
                 {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}
               </td>
@@ -27,7 +27,7 @@
                   {{#link-to 'events' event.slug}}
                     {{fa-icon 'external-link-square'}}
                     {{#if event.ilmSession}}
-                      <span class='ilm-due'>{{t 'sessions.dueBy'}}: </span>
+                      <span class='ilm-due'>{{t 'general.dueBy'}}: </span>
                     {{/if}}
                     {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}
                   {{/link-to}}
