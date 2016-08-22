@@ -344,9 +344,7 @@ export default {
     'searchPlaceholder': 'encontrar material de aprendizaje',
     'confirmRemoval': '¿Está seguro que desea eliminar este material de aprendizaje?',
     'uploadDate': 'Fecha de carga',
-  },
-  'groupMembers': {
-    'filterPlaceholder': 'Aplicar un Filtro por nombre o email',
+    'filterByNameOrEmail': 'Aplicar un Filtro por nombre o email',
     'noSearchResults': 'Su búsqueda no regresó ningunos resultados',
   },
   'relatedCourses': {

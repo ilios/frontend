@@ -344,9 +344,7 @@ export default {
     'searchPlaceholder': "Trouver matières d'étude",
     'confirmRemoval': "Êtes-vous sûr vous voulez supprimer cette matière d’étude?",
     'uploadDate': 'Date de dépôt',
-  },
-  'groupMembers': {
-    'filterPlaceholder': "Filtre par nom ou email",
+    'filterByNameOrEmail': "Filtre par nom ou email",
     'noSearchResults': "Votre recherche ne retourner pas aucune de resultats",
   },
   'relatedCourses': {
