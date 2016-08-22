@@ -198,7 +198,7 @@ test('copy session', function(assert) {
   this.register('service:store', storeMock);
   let flashmessagesMock = Ember.Service.extend({
     success(message){
-      assert.equal(message, 'sessions.copySuccess');
+      assert.equal(message, 'general.copySuccess');
     }
   });
   this.register('service:flashMessages', flashmessagesMock);
