@@ -346,8 +346,6 @@ export default {
     'uploadDate': 'Upload date',
     'filterByNameOrEmail': 'Filter by name or email',
     'noSearchResults': 'Your search did not return any results',
-  },
-  'publish': {
     'markAsScheduled': 'Mark as Scheduled',
     'publishAsIs': 'Publish As-is',
     'reviewMissingItems': 'Review {{count}} Missing Items',
@@ -363,9 +361,11 @@ export default {
     'incompleteSessions': 'Sessions Incomplete: cannot publish',
     'completeSessions': 'Sessions Complete: ready to publish',
     'reviewSessions': 'Sessions Requiring Review',
-    'all': 'Publish {{sessionCount}} sessions',
+    'publishAllSessions': 'Publish {{sessionCount}} sessions',
     'publishAllConfirmation': 'Publish {{publishCount}}, schedule {{scheduleCount}}, and ignore {{ignoreCount}} sessions',
-    'message': { 'publish': 'Published Successfully', 'schedule': 'Scheduled Successfully', 'unPublish': 'UnPublished Successfully' },
+    'publishedSuccessfully': 'Published Successfully',
+    'scheduledSuccessfully': 'Scheduled Successfully',
+    'unPublishedSuccessfully': 'UnPublished Successfully',
   },
   'calendar': {
     'weekOf': 'Week of {{date}}',

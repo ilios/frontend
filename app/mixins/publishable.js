@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', false);
       publishTarget.save().then(()=>{
-        this.get('flashMessages').success('publish.message.unPublish');
+        this.get('flashMessages').success('general.unPublishedSuccessfully');
       });
     },
     publishAsTbd: function(){
@@ -71,7 +71,7 @@ export default Ember.Mixin.create({
       publishTarget.set('publishedAsTbd', true);
       publishTarget.set('published', true);
       publishTarget.save().then(()=>{
-        this.get('flashMessages').success('publish.message.schedule');
+        this.get('flashMessages').success('general.scheduledSuccessfully');
       });
     },
     publish: function(){
@@ -79,7 +79,7 @@ export default Ember.Mixin.create({
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', true);
       publishTarget.save().then(()=>{
-        this.get('flashMessages').success('publish.message.publish');
+        this.get('flashMessages').success('general.publishedSuccessfully');
       });
     },
   }

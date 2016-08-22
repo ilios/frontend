@@ -34,21 +34,21 @@
 
     {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
       {{#if showAsIs}}
-        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+        <li class='danger' {{action 'publish'}}>{{t 'general.publishAsIs'}}</li>
       {{/if}}
       {{#if showPublish}}
-        <li class='good' {{action 'publish'}}>{{t 'publish.publishCourse'}}</li>
+        <li class='good' {{action 'publish'}}>{{t 'general.publishCourse'}}</li>
       {{/if}}
       {{#if showReview}}
         {{#link-to 'course.publicationCheck' course}}
-          <li class='good' >{{t 'publish.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
+          <li class='good' >{{t 'general.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
         {{/link-to}}
       {{/if}}
       {{#if showTbd}}
-        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'general.markAsScheduled'}}</li>
       {{/if}}
       {{#if showUnPublish}}
-        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishCourse'}}</li>
+        <li class='danger' {{action 'unpublish'}}>{{t 'general.unPublishCourse'}}</li>
       {{/if}}
 
     {{/action-menu}}

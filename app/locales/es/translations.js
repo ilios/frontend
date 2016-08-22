@@ -346,8 +346,6 @@ export default {
     'uploadDate': 'Fecha de carga',
     'filterByNameOrEmail': 'Aplicar un Filtro por nombre o email',
     'noSearchResults': 'Su búsqueda no regresó ningunos resultados',
-  },
-  'publish': {
     'markAsScheduled': 'Marque Como Programado',
     'publishAsIs': 'Publique Como Es',
     'reviewMissingItems': 'Revisar {{count}} Artículos Faltantes',
@@ -363,9 +361,11 @@ export default {
     'incompleteSessions': 'Sesiónes Incompletas: No se pueden publicar',
     'completeSessions': '"Sesiónes Completas: Listo a Publicar',
     'reviewSessions': 'Sesiónes a Revisar',
-    'all': 'Publique {{sessionCount}} sesiónes',
+    'publishAllSessions': 'Publique {{sessionCount}} sesiónes',
     'publishAllConfirmation': 'Publique {{publishCount}}, Programe {{scheduleCount}}, y ignore {{ignoreCount}} sesiónes',
-    'message': { 'publish': 'Publicado con Éxito', 'schedule': 'Programdo con Éxito', 'unPublish': 'No Publicado con Éxito' },
+    'publishedSuccessfully': 'Publicado con Éxito',
+    'scheduledSuccessfully': 'Programdo con Éxito',
+    'unPublishedSuccessfully': 'No Publicado con Éxito',
   },
   'calendar': {
     'weekOf': 'Semana de {{date}}',

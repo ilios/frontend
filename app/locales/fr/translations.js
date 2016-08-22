@@ -346,8 +346,6 @@ export default {
     'uploadDate': 'Date de dépôt',
     'filterByNameOrEmail': "Filtre par nom ou email",
     'noSearchResults': "Votre recherche ne retourner pas aucune de resultats",
-  },
-  'publish': {
     'markAsScheduled': "Faire à prévu",
     'publishAsIs': "Publier 'as-is'",
     'reviewMissingItems': "Examiner {{count}} objets manquants",
@@ -363,9 +361,11 @@ export default {
     'incompleteSessions': "Séances incomplète: ne peut être pas publiée",
     'completeSessions': "Séances complète: prêt à publier",
     'reviewSessions': "Séances à faire réviser",
-    'all': "Publier {{count}} des séances",
+    'publishAllSessions': "Publier {{count}} des séances",
     'publishAllConfirmation': "Publier {{publishCount}}, réserver {{scheduleCount}}, et ignorer des {{ignoreCount}} séances",
-    'message': { 'publish': "Publier réussi", 'schedule': "Faire à prévu réussi", 'unPublish': "Faire à Dépublier réussi" },
+    'publishedSuccessfully': "Publier réussi",
+    'scheduledSuccessfully': "Faire à prévu réussi",
+    'unPublishedSuccessfully': "Faire à Dépublier réussi",
   },
   'calendar': {
     'weekOf': "Semaine de {{date}}",

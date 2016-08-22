@@ -8,21 +8,21 @@
   <span class ='actions'>
     {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :programyear-publication-menu :right-edge'}}
       {{#if showAsIs}}
-        <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+        <li class='danger' {{action 'publish'}}>{{t 'general.publishAsIs'}}</li>
       {{/if}}
       {{#if showPublish}}
-        <li class='good' {{action 'publish'}}>{{t 'publish.publishProgramYear'}}</li>
+        <li class='good' {{action 'publish'}}>{{t 'general.publishProgramYear'}}</li>
       {{/if}}
       {{#if showReview}}
         {{#link-to 'programYear.publicationCheck' programYear}}
-          <li class='good' >{{t 'publish.reviewMissingItems' count=programYear.allPublicationIssuesLength}}</li>
+          <li class='good' >{{t 'general.reviewMissingItems' count=programYear.allPublicationIssuesLength}}</li>
         {{/link-to}}
       {{/if}}
       {{#if showTbd}}
-        <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+        <li class='good' {{action 'publishAsTbd'}}>{{t 'general.markAsScheduled'}}</li>
       {{/if}}
       {{#if showUnPublish}}
-        <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishProgramYear'}}</li>
+        <li class='danger' {{action 'unpublish'}}>{{t 'general.unPublishProgramYear'}}</li>
       {{/if}}
 
     {{/action-menu}}

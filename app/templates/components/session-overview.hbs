@@ -27,21 +27,21 @@
     {{#if editable}}
       {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
         {{#if showAsIs}}
-          <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+          <li class='danger' {{action 'publish'}}>{{t 'general.publishAsIs'}}</li>
         {{/if}}
         {{#if showPublish}}
-          <li class='good' {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
+          <li class='good' {{action 'publish'}}>{{t 'general.publishSession'}}</li>
         {{/if}}
         {{#if showReview}}
           {{#link-to 'session.publicationCheck' course session}}
-            <li class='good' >{{t 'publish.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
+            <li class='good' >{{t 'general.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
           {{/link-to}}
         {{/if}}
         {{#if showTbd}}
-          <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+          <li class='good' {{action 'publishAsTbd'}}>{{t 'general.markAsScheduled'}}</li>
         {{/if}}
         {{#if showUnPublish}}
-          <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishSession'}}</li>
+          <li class='danger' {{action 'unpublish'}}>{{t 'general.unPublishSession'}}</li>
         {{/if}}
       {{/action-menu}}
     {{else}}
