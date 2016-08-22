@@ -18,7 +18,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   setupController: function(controller, schools){
     controller.set('model', schools);
-    this.controllerFor('application').set('pageTitleTranslation', 'navigation.programs');
+    this.controllerFor('application').set('pageTitleTranslation', 'general.programs');
   },
   queryParams: {
     titleFilter: {

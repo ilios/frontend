@@ -7,6 +7,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   setupController() {
     this._super(...arguments);
 
-    this.controllerFor('application').set('pageTitleTranslation', 'navigation.admin');
+    this.controllerFor('application').set('pageTitleTranslation', 'general.admin');
   }
 });

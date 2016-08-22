@@ -5,6 +5,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   i18n: Ember.inject.service(),
   setupController: function(controller, model){
     controller.set('model', model);
-    this.controllerFor('application').set('pageTitleTranslation', 'navigation.programs');
+    this.controllerFor('application').set('pageTitleTranslation', 'general.programs');
   }
 });

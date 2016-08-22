@@ -24,6 +24,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   setupController() {
     this._super.apply(this, arguments);
-    this.controllerFor('application').set('pageTitleTranslation', 'navigation.dashboard');
+    this.controllerFor('application').set('pageTitleTranslation', 'general.dashboard');
   }
 });

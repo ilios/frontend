@@ -4,7 +4,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   setupController: function(controller, model){
     controller.set('model', model);
-    this.controllerFor('application').set('pageTitleTranslation', 'navigation.courses');
+    this.controllerFor('application').set('pageTitleTranslation', 'general.coursesAndSessions');
     this.controllerFor('course').set('showBackToCourseListLink', true);
   }
 });
