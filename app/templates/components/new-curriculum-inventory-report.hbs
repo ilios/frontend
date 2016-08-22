@@ -1,6 +1,6 @@
 {{#unless loadAttr.isRunning}}
   <section class='new-result form-container'>
-    <div class="new-result-title">{{t 'curriculumInventory.newReport'}}</div>
+    <div class="new-result-title">{{t 'general.newCurriculumInventoryReport'}}</div>
     <div class="detail-content">
       <div class="form-col form-col-12">
         <label class="form-label">{{t 'general.name'}}:</label>
@@ -13,7 +13,7 @@
             disabled=isSaving
             focusOut=(action 'addErrorDisplayFor' 'name')
             keyDown=(action 'addErrorDisplayFor' 'name')
-            placeholder=(t 'curriculumInventory.reportNamePlaceholder')
+            placeholder=(t 'general.reportNamePlaceholder')
           }}
           {{#if (and (v-get this 'name' 'isInvalid') (is-in showErrorsFor 'name'))}}
             <span class="validation-error-message">{{v-get this 'name' 'message'}}</span>
@@ -28,7 +28,7 @@
             value=description
             update=(action (mut description))
             disabled=isSaving
-            placeholder=(t 'curriculumInventory.reportDescriptionPlaceholder')
+            placeholder=(t 'general.reportDescriptionPlaceholder')
           }}
         </div>
       </div>

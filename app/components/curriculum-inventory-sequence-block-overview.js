@@ -72,14 +72,14 @@ export default Component.extend({
     const orderInSequence = sequenceBlock.get('orderInSequence');
     const i18n = this.get('i18n');
     const childSequenceOrderOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('curriculumInventory.ordered') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('curriculumInventory.unordered')}),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('curriculumInventory.parallel')})
+      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
+      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.unordered')}),
+      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.parallel')})
     ];
     const requiredOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('curriculumInventory.required') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('curriculumInventory.optional')}),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('curriculumInventory.requiredInTrack')})
+      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.required') }),
+      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.optionalElective')}),
+      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack')})
     ];
     const isFinalized = yield report.get('isFinalized');
     this.setProperties({

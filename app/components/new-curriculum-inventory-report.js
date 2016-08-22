@@ -10,7 +10,7 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       max: 60,
-      descriptionKey: 'curriculumInventory.reportName'
+      descriptionKey: 'general.reportName'
     })
   ]
 });

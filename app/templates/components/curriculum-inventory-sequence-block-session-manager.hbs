@@ -15,7 +15,7 @@
             checked=allSelected
             change=(action 'toggleSelectAll')
             indeterminate=someSelected
-            }}{{t 'curriculumInventory.countAsOneOffering'}}
+            }}{{t 'general.countAsOneOffering'}}
         </th>
         {{#sortable-th
           colspan=3
@@ -29,7 +29,7 @@
           sortedBy=(or (eq sortBy 'sessionType.title') (eq sortBy 'sessionType.title:desc'))
           sortedAscending=sortedAscending
         }}{{t 'general.sessionType'}}{{/sortable-th}}
-        <th class='text-center' colspan=1>{{t 'curriculumInventory.totalTime'}}</th>
+        <th class='text-center' colspan=1>{{t 'general.totalTime'}}</th>
         {{#sortable-th
           colspan=1
           click=(action 'sortBy' 'offerings.length')

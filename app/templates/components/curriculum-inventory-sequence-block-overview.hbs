@@ -36,7 +36,7 @@
         {{inplace-textarea
           value=sequenceBlock.description
           save='changeDescription'
-          clickPromptTranslation='curriculumInventory.clickToAddDescription'
+          clickPromptTranslation='general.clickToAddDescription'
         }}
       {{/if}}
     </div>
@@ -46,7 +46,7 @@
         <span>
           {{if sequenceBlock.isRequired
           (t 'general.yes')
-          (if sequenceBlock.isOptional (t 'general.no') (t 'curriculumInventory.requiredInTrack'))
+          (if sequenceBlock.isOptional (t 'general.no') (t 'general.requiredInTrack'))
           }}
         </span>
       {{else}}
@@ -54,7 +54,7 @@
       {{/if}}
     </div>
     <div class="block track">
-      <label>{{t 'curriculumInventory.isTrack'}}:</label>
+      <label>{{t 'general.isTrack'}}:</label>
       {{#if isFinalized}}
         <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
       {{else}}
@@ -103,7 +103,7 @@
         {{/if}}
       </div>
       <div class="block duration">
-        <label>{{t 'curriculumInventory.durationInDays'}}:</label>
+        <label>{{t 'general.durationInDays'}}:</label>
         {{#if isFinalized}}
            <span>{{sequenceBlock.duration}}</span>
         {{else}}
@@ -118,12 +118,12 @@
       }}
     {{/unless}}
     <div class="block child-sequence-order">
-      <label>{{t 'curriculumInventory.childSequenceOrder'}}:</label>
+      <label>{{t 'general.childSequenceOrder'}}:</label>
       {{#if isFinalized}}
         <span>
           {{if sequenceBlock.isOrdered
-            (t 'curriculumInventory.ordered')
-            (if sequenceBlock.isUnordered (t 'curriculumInventory.unordered') (t 'curriculumInventory.parallel'))
+            (t 'general.ordered')
+            (if sequenceBlock.isUnordered (t 'general.unordered') (t 'general.parallel'))
           }}
         </span>
       {{else}}
@@ -136,7 +136,7 @@
     </div>
 
     <div class="block order-in-sequence">
-      <label>{{t 'curriculumInventory.orderInSequence'}}:</label>
+      <label>{{t 'general.orderInSequence'}}:</label>
         <span>
           {{#if sequenceBlock.parent.isOrdered}}
             {{#if isFinalized}}
@@ -154,7 +154,7 @@
         </span>
     </div>
     <div class="block selective">
-      <label>{{t 'curriculumInventory.isSelective'}}?</label>
+      <label>{{t 'general.isSelective'}}?</label>
     </div>
     {{#unless isEditingMinMax}}
       <div class="block minimum">
@@ -181,7 +181,7 @@
       }}
     {{/unless}}
     <div class="block academic-level">
-      <label>{{t 'curriculumInventory.academicLevel'}}:</label>
+      <label>{{t 'general.academicLevel'}}:</label>
       {{#if isFinalized}}
         <span>{{sequenceBlock.academicLevel.name}}</span>
       {{else}}

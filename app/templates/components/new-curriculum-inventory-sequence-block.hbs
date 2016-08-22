@@ -1,4 +1,4 @@
-<div class="new-result-title">{{t 'curriculumInventory.newSequenceBlock'}}</div>
+<div class="new-result-title">{{t 'general.newSequenceBlock'}}</div>
 {{#unless loadAttr.isRunning}}
   <div class="item title">
     <label>{{t 'general.title'}}:</label>
@@ -10,7 +10,7 @@
       disabled=isSaving
       focusOut=(action 'addErrorDisplayFor' 'title')
       keyDown=(action 'addErrorDisplayFor' 'title')
-      placeholder=(t 'curriculumInventory.sequenceBlockTitlePlaceholder')
+      placeholder=(t 'general.sequenceBlockTitlePlaceholder')
     }}
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
@@ -44,7 +44,7 @@
       value=description
       update=(action (mut description))
       disabled=isSaving
-      placeholder=(t 'curriculumInventory.sequenceBlockDescriptionPlaceholder')
+      placeholder=(t 'general.sequenceBlockDescriptionPlaceholder')
     }}
   </div>
 
@@ -60,7 +60,7 @@
   </div>
 
   <div class="item track">
-    <label>{{t 'curriculumInventory.isTrack'}}?</label>
+    <label>{{t 'general.isTrack'}}?</label>
     {{inplace-boolean value=track save='changeTrack'}}
   </div>
 
@@ -97,11 +97,11 @@
   </div>
 
   <div class="item clear-dates">
-      <button {{action 'clearDates'}}>{{t 'curriculumInventory.clearDates'}}</button>
+      <button {{action 'clearDates'}}>{{t 'general.clearDates'}}</button>
   </div>
 
   <div class="item selective">
-      <label>{{t 'curriculumInventory.isSelective'}}?</label>
+      <label>{{t 'general.isSelective'}}?</label>
   </div>
 
   <div class="item minimum">
@@ -136,7 +136,7 @@
     {{/if}}
   </div>
   <div class="item academic-level">
-    <label>{{t 'curriculumInventory.academicLevel'}}:</label>
+    <label>{{t 'general.academicLevel'}}:</label>
     {{one-way-select
       value=academicLevel
       options=(sort-by 'level' (await academicLevels))
@@ -146,7 +146,7 @@
     }}
   </div>
   <div class="item child-sequence-order">
-    <label>{{t 'curriculumInventory.childSequenceOrder'}}:</label>
+    <label>{{t 'general.childSequenceOrder'}}:</label>
     {{one-way-select
       value=childSequenceOrder
       options=childSequenceOrderOptions
@@ -157,7 +157,7 @@
   </div>
   {{#if isInOrderedSequence}}
     <div class="item order-in-sequence">
-      <label>{{t 'curriculumInventory.orderInSequence'}}:</label>
+      <label>{{t 'general.orderInSequence'}}:</label>
       {{one-way-select
         value=orderInSequence
         options=orderInSequenceOptions
