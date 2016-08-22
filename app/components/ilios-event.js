@@ -30,7 +30,7 @@ export default Component.extend({
   isOffering: notEmpty('event.offering'),
   niceStartTime: momentFormat('event.startDate', 'dddd, MMMM Do YYYY, h:mm a'),
   offeredAt: computed('niceStartTime', function(){
-    return this.get('i18n').t('calendar.offeredAt', {date: this.get('niceStartTime')});
+    return this.get('i18n').t('general.offeredAt', {date: this.get('niceStartTime')});
   }),
   instructorList: computed('event.instructors.[]', function(){
     return RSVP.resolve(this.get('event.instructors'));
@@ -42,7 +42,7 @@ export default Component.extend({
       if (isEmpty(instructors)) {
         defer.resolve('');
       } else {
-        defer.resolve(this.get('i18n').t('calendar.taughtBy', {instructors}));
+        defer.resolve(this.get('i18n').t('general.taughtBy', {instructors}));
       }
     });
 
@@ -55,7 +55,7 @@ export default Component.extend({
 
     this.get('thesession').then(session => {
       session.get('sessionType').then(sessionType => {
-        defer.resolve(this.get('i18n').t('calendar.sessionIs', {type: sessionType.get('title')}));
+        defer.resolve(this.get('i18n').t('general.sessionIs', {type: sessionType.get('title')}));
       });
     });
 
@@ -88,10 +88,10 @@ export default Component.extend({
     return this.get('i18n').t('general.courseTitle');
   }),
   courseObjectivesPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.courseObjectives');
+    return this.get('i18n').t('general.courseObjectives');
   }),
   courseLearningMaterialsPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.courseLearningMaterials');
+    return this.get('i18n').t('general.courseLearningMaterials');
   }),
   courseObjectives: computed('i18n.locale', 'thesession.course.objectives.[]', function(){
     let defer = RSVP.defer();
@@ -110,7 +110,7 @@ export default Component.extend({
                 if(isEmpty(competency)){
                   mappedObjectives.pushObject({
                     title,
-                    domain: this.get('i18n').t('calendar.noAssociatedCompetencies')
+                    domain: this.get('i18n').t('general.noAssociatedCompetencies')
                   });
                 } else {
                   promises.pushObject(competency.get('domain').then(domain => {
@@ -183,10 +183,10 @@ export default Component.extend({
     return this.get('i18n').t('general.session');
   }),
   sessionObjectivesPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.sessionObjectives');
+    return this.get('i18n').t('general.sessionObjectives');
   }),
   sessionLearningMaterialsPhrase: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.sessionLearningMaterials');
+    return this.get('i18n').t('general.sessionLearningMaterials');
   }),
   sessionObjectives: computed('i18n.locale', 'offering.session.objectives.@each.topParents', function(){
     let defer = RSVP.defer();
@@ -204,7 +204,7 @@ export default Component.extend({
               if(isEmpty(competency)){
                 mappedObjectives.pushObject({
                   title,
-                  domain: this.get('i18n').t('calendar.noAssociatedCompetencies')
+                  domain: this.get('i18n').t('general.noAssociatedCompetencies')
                 });
               } else {
                 promises.pushObject(competency.get('domain').then(domain => {

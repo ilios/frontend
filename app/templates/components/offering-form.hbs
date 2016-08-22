@@ -77,7 +77,7 @@
               keyUp=(action 'addErrorDisplayFor' 'numberOfWeeks')
               class=(concat 'make-recurring-input ' (if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
             }}
-            <label class="make-recurring-input-label">{{t 'calendar.weeks'}}</label>
+            <label class="make-recurring-input-label">{{t 'general.weeks'}}</label>
             {{#if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks'))}}
               <span class="validation-error-message">{{v-get this 'numberOfWeeks' 'message'}}</span>
             {{/if}}

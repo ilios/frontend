@@ -366,8 +366,6 @@ export default {
     'publishedSuccessfully': "Publier réussi",
     'scheduledSuccessfully': "Faire à prévu réussi",
     'unPublishedSuccessfully': "Faire à Dépublier réussi",
-  },
-  'calendar': {
     'weekOf': "Semaine de {{date}}",
     'day': "Jour",
     'week': "Semaine",

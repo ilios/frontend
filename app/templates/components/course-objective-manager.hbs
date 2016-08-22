@@ -16,7 +16,7 @@
     {{#liquid-if showCohortList class='vertical'}}
       {{#each currentCohort.objectivesByCompetency as |competency|}}
         <h5 class="competency-title {{if competency.selected 'selected'}}">
-            {{if competency.noTitle (t 'calendar.noAssociatedCompetency') competency.title}}
+            {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
         </h5>
         <ul>
           {{#each competency.objectives as |objective|}}
