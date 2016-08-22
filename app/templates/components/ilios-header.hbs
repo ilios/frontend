@@ -6,7 +6,7 @@
 {{/link-to}}
 <div class="tools">
   <div class='locales'>
-    {{#action-menu title=(t (concat 'language.select.' i18n.locale)) icon='globe'}}
+    {{#action-menu title=(t (concat 'general.language.' i18n.locale)) icon='globe'}}
       {{#each locales as |loc|}}
         <li {{action 'changeLocale' loc.id}}>{{loc.text}}</li>
       {{/each}}

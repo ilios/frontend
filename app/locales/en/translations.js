@@ -427,9 +427,7 @@ export default {
     'errorSavingUser': 'These users were unable to be saved.  Please verify that they do not already exist.',
     'errorSavingAuthentication': 'Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user in the list and create a username and password for them.',
     'fileTypeError': 'Bad file type: {{fileType}} does not appear to be a properly delimited file.',
-  },
-  'language': {
-    'select': { 'en': 'English (en)', 'es': 'Español (es)', 'fr': 'Français (fr)' },
+    'language': { 'en': 'English (en)', 'es': 'Español (es)', 'fr': 'Français (fr)' },
   },
   'dashboard': {
     'showFilters': 'Show Filters',

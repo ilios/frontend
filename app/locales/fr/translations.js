@@ -427,9 +427,7 @@ export default {
     'errorSavingUser': "Ces utilisateurs n'avait pas été sauvé. Vérifiez qu'ils n'existent pas déjà.",
     'errorSavingAuthentication': "Les comptes ont été créés pour ces utilisateurs, mais ils ne pourront pas à la connexion. Ceci arrive d'habitude quand le nom d'utilisateur existe déjà, mais appartient à un autre utilisateur. Cliquez S'il vous plaît sur chaque utilisateur et créez un nom d'utilisateur et un mot de passe pour eux.",
     'fileTypeError': 'Mal fichier téléchargé : {{fileType}} ne semble pas être un fichier correctement délimité.',
-  },
-  'language': {
-    'select': { 'en': "English (en)", 'es': "Español (es)", 'fr': "Français (fr)" },
+    'language': { 'en': "English (en)", 'es': "Español (es)", 'fr': "Français (fr)" },
   },
   'dashboard': {
     'showFilters': "Montrez les Filtres",
