@@ -385,8 +385,6 @@ export default {
     'noAssociatedCompetency': "Nul compétence associée",
     'dueThisDay': "Dû ce jour-là",
     'icsInstructions': "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!",
-  },
-  'auth': {
     'username': "Nom d'utilisateur",
     'password': "Mot de passe",
     'login': "Login",

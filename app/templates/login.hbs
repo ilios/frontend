@@ -1,6 +1,6 @@
 <div class='login-form'>
   {{#unless noAccountExistsError}}
-    <h2>{{t 'auth.login'}}</h2>
+    <h2>{{t 'general.login'}}</h2>
     {{#each errors as |errorKey|}}
       <div class='error'>{{t errorKey}}</div>
     {{/each}}
@@ -8,26 +8,26 @@
       <div class='form-container'>
         <div class="detail-content">
           <label class="form-col form-col-6 multi-row">
-            <div class="form-label">{{t 'auth.username'}}:</div>
+            <div class="form-label">{{t 'general.username'}}:</div>
             <div class="form-data">
               {{input value=identification elementId='user-login-username' autocorrect="off" autocapitalize="off"}}
             </div>
           </label>
           <br />
           <label class="form-col form-col-6 multi-row">
-            <div class="form-label">{{t 'auth.password'}}:</div>
+            <div class="form-label">{{t 'general.password'}}:</div>
             <div class="form-data">
               {{input type='password' value=password elementId='user-login-password'}}
             </div>
           </label>
 
           <div class="form-col-6 form-data-submit">
-            <button id='user-login-submit' type='submit' class='done text'>{{t 'auth.login'}}</button>
+            <button id='user-login-submit' type='submit' class='done text'>{{t 'general.login'}}</button>
           </div>
         </div>
       </div>
     </form>
   {{else}}
-    <div class='error'>{{t 'auth.noAccountExists' accountName=noAccountExistsAccount}}</div>
+    <div class='error'>{{t 'general.noAccountExists' accountName=noAccountExistsAccount}}</div>
   {{/unless}}
 </div>

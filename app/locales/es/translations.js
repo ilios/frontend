@@ -385,8 +385,6 @@ export default {
     'noAssociatedCompetency': 'No Competencia Asociada',
     'dueThisDay': 'Debido por esta fecha',
     'icsInstructions': 'Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!',
-  },
-  'auth': {
     'username': 'Nombre de Usuario',
     'password': 'Contraseña',
     'login': 'Inicio',
