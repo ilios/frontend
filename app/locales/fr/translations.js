@@ -464,8 +464,6 @@ export default {
     'manageUsersSummaryTitle': "utilisateurs d'Ilios",
     'searchForIliosUsers': 'Trouver des utilisateurs...',
     'backToAdminDashboard': 'Rétour au Page Admin',
-  },
-  'taxonomies' : {
     'assignedTerms': 'Termes assignées',
     'selectVocabulary': 'Choisi Vocabulaire',
     'termsManageTitle': 'Manager des Termes',
