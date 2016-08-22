@@ -1,6 +1,6 @@
-<div class="form-title">{{t 'dashboard.newReport'}}</div>
+<div class="form-title">{{t 'general.newReport'}}</div>
 <div class="detail-content">
-    <label class="form-label">{{t 'dashboard.reportTitle'}}:</label>
+    <label class="form-label">{{t 'general.reportTitle'}}:</label>
     <div class="form-data">
       {{one-way-input
         value=title
@@ -18,7 +18,7 @@
       {{t 'general.for'}}
       <select onchange={{action "changeSchool" value="target.value"}}>
         <option value=null selected={{is-equal null currentSchool}}>
-          {{t 'dashboard.allSchools'}}
+          {{t 'general.allSchools'}}
         </option>
         {{#each schoolList as |school|}}
           <option value={{school.id}} selected={{is-equal school currentSchool}}>
@@ -38,7 +38,7 @@
       </select>
     </p>
     <p>
-      {{t 'dashboard.associatedWith'}}
+      {{t 'general.associatedWith'}}
       <select onchange={{action "changePrepositionalObject" value="target.value"}}>
         <option value='' selected={{is-equal null currentPrepositionalObject}}>
           {{t 'general.anything'}}
@@ -52,7 +52,7 @@
     </p>
     {{#liquid-if currentPrepositionalObject class='crossFade'}}
       <p>
-        {{t 'dashboard.whichIs'}}
+        {{t 'general.whichIs'}}
         {{#if (is-equal currentPrepositionalObject 'instructor')}}
           {{#if selectedUser}}
             <ul class='removable-list tag-list'>

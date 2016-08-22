@@ -428,11 +428,8 @@ export default {
     'errorSavingAuthentication': 'Las cuentas fueron creadas para estos usuarios, pero no podrán iniciar sesión.  Esto generalmente sucede cuando el nombre de usuario ya existe, pero pertenece a otro usuario.  Por favor seleccione cada usuario y crear un nombre de usuario y contraseña.',
     'fileTypeError': 'Archivo mal subido: {{fileType}} no parece ser válido ficha separado archivo.',
     'language': { 'en': 'English (en)', 'es': 'Español (es)', 'fr': 'Français (fr)' },
-  },
-  'dashboard': {
     'showFilters': 'Enseñe Filtros',
     'hideFilters': 'Esconde Filtros',
-    'sessionTypes': 'Tipos de Sesiónes',
     'courseLevels': 'Niveles de Curso',
     'programAndCohort': 'Programa/Clase de La Graduación',
     'mySchedule': 'Mi Horario',
