@@ -1,48 +1,44 @@
-<section id='curriculumInventoryReports' class='curriculum-inventory-reports fullwidth main-border'>
+<section id='curriculumInventoryReports' class='curriculum-inventory-reports'>
   <div class="filter-tools">
     <div id='schoolsfilter' class="schoolsfilter">
       <label class="inline-label">
         {{fa-icon 'university'}}
       </label>
-      <div id="school-selection" class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-            {{#each sortedSchools as |school|}}
-              <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{#if selectedSchool}}
-            {{selectedSchool.title}}
-          {{else if schools.isFulfilled}}
-            {{t 'general.none'}}
-          {{/if}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each sortedSchools as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{#if selectedSchool}}
+          {{selectedSchool.title}}
+        {{else if schools.isFulfilled}}
+          {{t 'general.none'}}
         {{/if}}
-      </div>
+      {{/if}}
     </div>
     <div id='programsfilter' class="programsfilter">
       <label class="inline-label">
         {{fa-icon 'list-alt'}}
       </label>
-      <div id="program-selection" class="inline-data">
-        {{#if hasMoreThanOneProgram}}
-          <select onchange={{action "changeSelectedProgram" value="target.value"}}>
-            {{#each sortedPrograms as |program|}}
-              <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
-                {{program.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{#if selectedProgram}}
-            {{selectedProgram.title}}
-          {{else if programs.isFulfilled}}
-            {{t 'general.none'}}
-          {{/if}}
+      {{#if hasMoreThanOneProgram}}
+        <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+          {{#each sortedPrograms as |program|}}
+            <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
+              {{program.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{#if selectedProgram}}
+          {{selectedProgram.title}}
+        {{else if programs.isFulfilled}}
+          {{t 'general.none'}}
         {{/if}}
-      </div>
+      {{/if}}
     </div>
   </div>
 
