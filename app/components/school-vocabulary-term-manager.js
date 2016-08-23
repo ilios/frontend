@@ -107,7 +107,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         this.attrs.manageTerm(goTo);
         term.deleteRecord();
         term.save().then(() => {
-          this.get('flashMessages').success('schools.successfullyRemovedTerm');
+          this.get('flashMessages').success('general.successfullyRemovedTerm');
         });
       });
 

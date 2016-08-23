@@ -6,7 +6,7 @@
         click=(action 'sortBy' 'title')
         sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
         sortedAscending=sortedAscending
-      }}{{t 'courses.courseTitle'}}{{/sortable-th}}
+      }}{{t 'general.courseTitle'}}{{/sortable-th}}
       <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.school'}}</th>
       <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.year'}}</th>
       {{#sortable-th
@@ -17,7 +17,7 @@
         sortType='numeric'
         align='center'
         hideFromSmallScreen=true
-      }}{{t 'courses.level'}}{{/sortable-th}}
+      }}{{t 'general.level'}}{{/sortable-th}}
       {{#sortable-th
         colspan=2
         click=(action 'sortBy' 'startDate')
@@ -26,7 +26,7 @@
         sortType='numeric'
         align='center'
         hideFromSmallScreen=true
-      }}{{t 'courses.startDate'}}{{/sortable-th}}
+      }}{{t 'general.startDate'}}{{/sortable-th}}
       {{#sortable-th
         colspan=2
         click=(action 'sortBy' 'endDate')
@@ -35,7 +35,7 @@
         sortType='numeric'
         align='center'
         hideFromSmallScreen=true
-      }}{{t 'courses.endDate'}}{{/sortable-th}}
+      }}{{t 'general.endDate'}}{{/sortable-th}}
       {{#sortable-th
         colspan=2
         click=(action 'sortBy' 'status')
@@ -78,7 +78,7 @@
       {{#if course.showRemoveConfirmation}}
         <tr class='confirm-removal'><td colspan=15>
           <div class='confirm-message'>
-            {{t 'courses.confirmRemove' publishedOfferingcount=course.publishedOfferingCount}} <br />
+            {{t 'general.confirmRemoveCourse' publishedOfferingcount=course.publishedOfferingCount}} <br />
            <div class="confirm-buttons">
             <button {{action 'remove' course}} class='remove text'>{{t 'general.yes'}}</button>
             <button {{action 'cancelRemove' course}} class='done text'>{{t 'general.cancel'}}</button>

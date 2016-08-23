@@ -14,7 +14,7 @@ export default Controller.extend({
     schoolId: 'school',
     titleFilter: 'filter'
   },
-  placeholderValue: t('instructorGroups.titleFilterPlaceholder'),
+  placeholderValue: t('general.instructorGroupTitleFilterPlaceholder'),
   schoolId: null,
   titleFilter: null,
   showNewInstructorGroupForm: false,

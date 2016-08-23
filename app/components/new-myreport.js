@@ -203,11 +203,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           const prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
           if (isPresent(subject) && isEmpty(object)) {
             if (subject === 'instructor') {
-              flashMessages.alert('dashboard.reportMissingObjectForInstructor');
+              flashMessages.alert('general.reportMissingObjectForInstructor');
               return;
             }
             if (subject === 'mesh term') {
-              flashMessages.alert('dashboard.reportMissingObjectForMeshTerm');
+              flashMessages.alert('general.reportMissingObjectForMeshTerm');
               return;
             }
           }
@@ -215,10 +215,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
               object && isEmpty(prepositionalObjectTableRowId)
           ) {
             if (object === 'instructor') {
-              flashMessages.alert('dashboard.reportMissingInstructor');
+              flashMessages.alert('general.reportMissingInstructor');
             }
             if (object === 'mesh term') {
-              flashMessages.alert('dashboard.reportMissingMeshTerm');
+              flashMessages.alert('general.reportMissingMeshTerm');
             }
             return;
           }

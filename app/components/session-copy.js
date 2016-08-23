@@ -102,7 +102,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       toSave.pushObject(objective);
     }
     yield all(toSave.invoke('save'));
-    flashMessages.success('sessions.copySuccess');
+    flashMessages.success('general.copySuccess');
     return this.get('visit')(session);
   }).drop(),
 

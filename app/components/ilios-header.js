@@ -11,7 +11,7 @@ export default Component.extend({
   tagName: 'header',
   locales: computed('i18n.locales', 'i18n.locale', function() {
     return this.get('i18n.locales').map(locale => {
-      return { id: locale, text: this.get('i18n').t('language.select.' + locale) };
+      return { id: locale, text: this.get('i18n').t('general.language.' + locale) };
     }).filter(locale => locale.id !== this.get('i18n.locale'));
   }),
   actions: {

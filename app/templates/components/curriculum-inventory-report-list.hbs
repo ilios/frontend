@@ -7,7 +7,7 @@
         sortedBy=(or (eq sortBy 'name') (eq sortBy 'name:desc'))
         sortedAscending=sortedAscending
       }}
-        {{t 'curriculumInventory.reportName'}}
+        {{t 'general.reportName'}}
       {{/sortable-th}}
       <th class='text-center' colspan=2>{{t 'general.program'}}</th>
       {{#sortable-th
@@ -64,7 +64,7 @@
       <tr class='confirm-removal'>
         <td colspan=16>
           <div class='confirm-message'>
-            {{t 'curriculumInventory.reportConfirmRemove'}} <br/>
+            {{t 'general.reportConfirmRemove'}} <br/>
             <div class="confirm-buttons">
               <button {{action 'remove' report}} class='remove text'>{{t 'general.yes'}}</button>
               <button {{action 'cancelRemove' report}} class='done text'>{{t 'general.cancel'}}</button>

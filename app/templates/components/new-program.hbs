@@ -1,4 +1,4 @@
-<div class="new-result-title">{{t 'programs.new'}}</div>
+<div class="new-result-title">{{t 'general.newProgram'}}</div>
 <div class="detail-content">
   <div class="form-col-12">
     <label class="form-label">{{t 'general.title'}}</label>
@@ -10,7 +10,7 @@
         onescape=(action this.attrs.cancel)
         disabled=isSaving
         focusOut=(action 'addErrorDisplayFor' 'title')
-        placeholder=(t 'programs.programTitlePlaceholder')
+        placeholder=(t 'general.programTitlePlaceholder')
       }}
       {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
         <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>

@@ -2,12 +2,12 @@
 
 
 <div class='rollover-form'>
-  <h3 class="title">{{t 'sessions.copy'}}</h3>
+  <h3 class="title">{{t 'general.copySession'}}</h3>
 
-  <p class='rollover-summary'>{{t 'sessions.copySummary'}}</p>
+  <p class='rollover-summary'>{{t 'general.copySessionSummary'}}</p>
 
   <div class='item year-select'>
-    <label>{{t "general.year"}}:</label>
+    <label>{{t 'general.year'}}:</label>
     {{#if loadYears.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
@@ -16,7 +16,7 @@
           <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
             {{year}} - {{inc year}}
             {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
-              ({{t 'courses.rolloverYearUnavailable'}})
+              ({{t 'general.rolloverYearUnavailable'}})
             {{/if}}
           </option>
         {{/each}}
@@ -28,7 +28,7 @@
   </div>
 
   <div class='item course-select'>
-    <label>{{t "sessions.targetCourse"}}:</label>
+    <label>{{t 'general.targetCourse'}}:</label>
     {{#if loadCourses.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}

@@ -1,13 +1,13 @@
 <section class='resultslist'>
   <div class="resultslist-header">
     <div class="resultslist-title">
-      <h2>{{t 'admin.unassignedStudentsSummaryTitle'}}</h2>
+      <h2>{{t 'general.unassignedStudentsSummaryTitle'}}</h2>
     </div>
   </div>
   <section class='resultslist-save'>
     <div class='form-container'>
       <div class='form-col-12'>
-        <label class='form-label'>{{t 'admin.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
+        <label class='form-label'>{{t 'general.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
         {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
           <div class="form-data">
             <select onchange={{action "setPrimaryCohort" value="target.value"}}>
@@ -48,7 +48,7 @@
             <input type='checkbox' checked={{gt selectedUserIds.length 0}} />
             {{t 'general.all'}}
           </th>
-          <th class='text-left' colspan="4">{{t 'user.fullName'}}</th>
+          <th class='text-left' colspan="4">{{t 'general.fullName'}}</th>
           <th class='text-left' colspan="4">{{t 'general.email'}}</th>
           <th class='text-left' colspan="2">{{t 'general.campusId'}}</th>
         </tr>

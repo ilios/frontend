@@ -1,4 +1,4 @@
-<div class="new-result-title">{{t 'user.new'}}</div>
+<div class="new-result-title">{{t 'general.newUser'}}</div>
 
 <div class='new-user-form'>
   <div class='choose-form-type'>
@@ -11,7 +11,7 @@
     }}
   </div>
   <div class='item'>
-    <label>{{t "user.firstName"}}:</label>
+    <label>{{t 'general.firstName'}}:</label>
     {{one-way-input
       value=firstName
       update=(action (mut firstName))
@@ -24,7 +24,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "user.middleName"}}:</label>
+    <label>{{t 'general.middleName'}}:</label>
     {{one-way-input
       value=middleName
       update=(action (mut middleName))
@@ -37,7 +37,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "user.lastName"}}:</label>
+    <label>{{t 'general.lastName'}}:</label>
     {{one-way-input
       value=lastName
       update=(action (mut lastName))
@@ -50,7 +50,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "general.campusId"}}:</label>
+    <label>{{t 'general.campusId'}}:</label>
     {{one-way-input
       value=campusId
       update=(action (mut campusId))
@@ -63,7 +63,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "user.otherId"}}:</label>
+    <label>{{t 'general.otherId'}}:</label>
     {{one-way-input
       value=otherId
       update=(action (mut otherId))
@@ -76,7 +76,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "general.email"}}:</label>
+    <label>{{t 'general.email'}}:</label>
     {{one-way-input
       value=email
       update=(action (mut email))
@@ -89,7 +89,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "general.phone"}}:</label>
+    <label>{{t 'general.phone'}}:</label>
     {{one-way-input
       value=phone
       update=(action (mut phone))
@@ -102,7 +102,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "user.username"}}:</label>
+    <label>{{t 'general.username'}}:</label>
     {{one-way-input
       value=username
       update=(action (mut username))
@@ -115,7 +115,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "user.password"}}:</label>
+    <label>{{t 'general.password'}}:</label>
     {{one-way-input
       value=password
       update=(action (mut password))
@@ -128,7 +128,7 @@
     {{/if}}
   </div>
   <div class='item'>
-    <label>{{t "general.primarySchool"}}:</label>
+    <label>{{t 'general.primarySchool'}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
         {{#each (sort-by 'title' (await schools)) as |school|}}
@@ -143,7 +143,7 @@
   </div>
   {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
     <div class='item last'>
-      <label>{{t "general.primaryCohort"}}:</label>
+      <label>{{t 'general.primaryCohort'}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>
           {{#each (sort-by 'title' cohorts) as |cohort|}}

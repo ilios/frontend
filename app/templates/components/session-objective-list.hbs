@@ -21,7 +21,7 @@
         {{#if (is-in objectivesForRemovalConfirmation objective.id)}}
           <tr class='confirm-removal'><td colspan=8>
             <div class='confirm-message'>
-              {{t 'sessions.confirmObjectiveRemoval'}}<br />
+              {{t 'general.confirmObjectiveRemoval'}}<br />
               <div class="confirm-buttons">
                 <button {{action 'remove' objective}} class='remove text'>{{t 'general.yes'}}</button>
                 <button {{action 'cancelRemove' objective}} class='done text'>{{t 'general.cancel'}}</button>

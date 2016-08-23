@@ -1,8 +1,8 @@
 <div class='dashboard-block-header'>
-  {{t 'dashboard.myReports'}}
+  {{t 'general.myReports'}}
   <div class="dashboard-block-actions">
     {{#liquid-if selectedReport class='crossFade'}}
-      <button {{action 'selectReport' null}}>{{t 'dashboard.allReports'}}</button>
+      <button {{action 'selectReport' null}}>{{t 'general.allReports'}}</button>
     {{else}}
       {{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}
     {{/liquid-if}}

@@ -1,11 +1,11 @@
 <div class='detail-title'>
-  {{t 'learnerGroups.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
+  {{t 'general.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
 </div>
 <div class="detail-actions">
   {{one-way-input
     value=filter
     update=(action (mut filter))
-    placeholder=(t 'groupMembers.filterPlaceholder')
+    placeholder=(t 'general.filterByNameOrEmail')
   }}
 </div>
 <div class='resultslist'>
@@ -21,13 +21,13 @@
             click=(action 'sortBy' 'firstName')
             sortedBy=(or (eq sortBy 'firstName') (eq sortBy 'firstName:desc'))
             sortedAscending=sortedAscending
-          }}{{t 'user.firstName'}}{{/sortable-th}}
+          }}{{t 'general.firstName'}}{{/sortable-th}}
           {{#sortable-th
             colspan=2
             click=(action 'sortBy' 'lastName')
             sortedBy=(or (eq sortBy 'lastName') (eq sortBy 'lastName:desc'))
             sortedAscending=sortedAscending
-          }}{{t 'user.lastName'}}{{/sortable-th}}
+          }}{{t 'general.lastName'}}{{/sortable-th}}
           <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
           <th class='text-left' colspan=5>{{t 'general.email'}}</th>
           <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
@@ -59,7 +59,7 @@
                     {{fa-icon
                       'plus'
                       class='yes clickable'
-                      title=(t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=1)
+                      title=(t 'general.moveToGroup' groupTitle=learnerGroupTitle count=1)
                       click=(perform addSingleUser user)
                     }}
                   {{/if}}
@@ -73,5 +73,5 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0) class='vertical'}}
-  <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'learnerGroups.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
+  <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'general.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
 {{/if}}

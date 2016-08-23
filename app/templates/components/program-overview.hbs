@@ -4,7 +4,7 @@
   </div>
   <div class='detail-content form-container'>
     <div class="form-col-6 multi-row">
-      <label class="form-label">{{t "programs.programTitleShort"}}:</label>
+      <label class="form-label">{{t 'general.programTitleShort'}}:</label>
       <div class="form-data programtitleshort">
         {{#editable-field
            value=shortTitle
@@ -28,7 +28,7 @@
         {{/editable-field}}
       </div>
 
-      <label class="form-label">{{t "programs.durationInYears"}}:</label>
+      <label class="form-label">{{t 'general.durationInYears'}}:</label>
       <div class="form-data programduration">
         <div>{{inplace-select value=program.duration options=durationOptions save='changeDuration'}}</div>
       </div>

@@ -8,7 +8,7 @@
     {{#liquid-if showNewVocabularyForm class='vertical'}}
     <div class="detail-content form-container">
       <div class="form-col-6 multi-row">
-        <label class="form-label">{{t "general.title"}}:</label>
+        <label class="form-label">{{t 'general.title'}}:</label>
         <div class="form-data">
           {{one-way-input
             value=newVocabularyTitle
@@ -75,7 +75,7 @@
           {{#if (is-in showRemovalConfirmationFor vocabulary)}}
             <tr class='confirm-removal'><td colspan=5>
               <div class='confirm-message'>
-                {{t 'schools.confirmVocabularyRemoval'}}<br />
+                {{t 'general.confirmVocabularyRemoval'}}<br />
                 <div class="confirm-buttons">
                   <button {{action 'remove' vocabulary}} class='remove text'>{{t 'general.yes'}}</button>
                   <button {{action 'cancelRemove' vocabulary}} class='done text'>{{t 'general.cancel'}}</button>

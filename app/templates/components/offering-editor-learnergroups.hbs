@@ -9,13 +9,13 @@
         </div>
       </li>
     {{else}}
-      <li>{{t 'courses.noSelectedLearnerGroups'}}</li>
+      <li>{{t 'general.noUnselectedLearnerGroupsInCohort'}}</li>
     {{/each}}
   </ul>
 </section>
 
 <section class='half-grouping'>
-  <header class="title-available-groups center">{{t 'courses.availableLearnerGroups'}}</header>
+  <header class="title-available-groups center">{{t 'general.availableLearnerGroups'}}</header>
 
   <ul class='tree-list selectable'>
     {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
@@ -30,7 +30,7 @@
         {{/if}}
       </li>
     {{else}}
-      <li>{{t 'courses.noAvailableLearnerGroups'}}</li>
+      <li>{{t 'general.noAvailableLearnerGroups'}}</li>
     {{/each}}
   </ul>
 </section>

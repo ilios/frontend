@@ -43,7 +43,7 @@ export default Component.extend({
       const i18n = this.get('i18n');
       const isCourse = this.get('isCourse');
 
-      return isCourse ? i18n.t('courses.objectiveParentTitleSingular') : i18n.t('courses.objectiveParentTitle');
+      return isCourse ? i18n.t('general.objectiveParentTitleSingular') : i18n.t('general.objectiveParentTitle');
     }
   }),
 
@@ -159,7 +159,7 @@ export default Component.extend({
       }
       return newObjective.save().then(() => {
         this.set('newObjectiveEditorOn', false);
-        this.get('flashMessages').success('courses.newObjectiveSaved');
+        this.get('flashMessages').success('general.newObjectiveSaved');
       });
     },
     toggleNewObjectiveEditor() {

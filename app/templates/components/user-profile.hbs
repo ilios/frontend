@@ -14,7 +14,7 @@
 
 <div class="user-profile-details">
   <section class="user-permissions">
-    <h4 class="user-permissions-header">{{t 'user.userRoles'}}</h4>
+    <h4 class="user-permissions-header">{{t 'general.userRoles'}}</h4>
 
     <div class="user-permissions-body {{if inProgress 'disable-actions'}}">
       <div class="user-permissions-row">
@@ -23,7 +23,7 @@
         {{else}}
           <input type="checkbox" {{action 'addRole' 'Course Director'}}>
         {{/if}}
-        <span>{{t 'user.courseDirector'}}</span>
+        <span>{{t 'general.courseDirector'}}</span>
       </div>
       <div class="user-permissions-row">
         {{#if isInstructor.content}}
@@ -31,7 +31,7 @@
         {{else}}
           <input type="checkbox" {{action 'addRole' 'Faculty'}}>
         {{/if}}
-        <span>{{t 'user.instructor'}}</span>
+        <span>{{t 'general.instructor'}}</span>
       </div>
       <div class="user-permissions-row">
         {{#if isDeveloper.content}}
@@ -39,7 +39,7 @@
         {{else}}
           <input type="checkbox" {{action 'addRole' 'Developer'}}>
         {{/if}}
-        <span>{{t 'user.developer'}}</span>
+        <span>{{t 'general.developer'}}</span>
       </div>
       <div class="user-permissions-row">
         {{#if isFormerStudent.content}}
@@ -47,7 +47,7 @@
         {{else}}
           <input type="checkbox" {{action 'addRole' 'Former Student'}}>
         {{/if}}
-        <span>{{t 'user.formerStudent'}}</span>
+        <span>{{t 'general.formerStudent'}}</span>
       </div>
 
       <hr>
@@ -58,7 +58,7 @@
         {{else}}
           <input type="checkbox" {{action 'disableUser'}}>
         {{/if}}
-        <span>{{t 'user.disableUser'}}</span>
+        <span>{{t 'general.disableUser'}}</span>
       </div>
       <div class="user-permissions-row">
         {{#if removeFromSync}}
@@ -66,7 +66,7 @@
         {{else}}
           <input type="checkbox" {{action 'excludeFromSync'}}>
         {{/if}}
-        <span>{{t 'user.excludeFromSync'}}</span>
+        <span>{{t 'general.excludeFromSync'}}</span>
       </div>
     </div>
   </section>
@@ -75,7 +75,7 @@
     <div class="detail-content form-container">
       {{#liquid-if isEditing}}
         <div class="form-col-6 multi-row">
-          <label class="form-label">{{t "user.firstName"}}:</label>
+          <label class="form-label">{{t 'general.firstName'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=firstName
@@ -88,7 +88,7 @@
               <span class="validation-error-message">{{v-get this 'firstName' 'message'}}</span>
             {{/if}}
           </div>
-          <label class="form-label">{{t "user.middleName"}}:</label>
+          <label class="form-label">{{t 'general.middleName'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=middleName
@@ -102,7 +102,7 @@
             {{/if}}
           </div>
 
-          <label class="form-label">{{t "user.lastName"}}:</label>
+          <label class="form-label">{{t 'general.lastName'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=lastName
@@ -115,7 +115,7 @@
               <span class="validation-error-message">{{v-get this 'lastName' 'message'}}</span>
             {{/if}}
           </div>
-          <label class="form-label">{{t "general.campusId"}}:</label>
+          <label class="form-label">{{t 'general.campusId'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=campusId
@@ -128,7 +128,7 @@
               <span class="validation-error-message">{{v-get this 'campusId' 'message'}}</span>
             {{/if}}
           </div>
-          <label class="form-label">{{t "user.otherId"}}:</label>
+          <label class="form-label">{{t 'general.otherId'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=otherId
@@ -141,7 +141,7 @@
               <span class="validation-error-message">{{v-get this 'otherId' 'message'}}</span>
             {{/if}}
           </div>
-          <label class="form-label">{{t "general.email"}}:</label>
+          <label class="form-label">{{t 'general.email'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=email
@@ -154,7 +154,7 @@
               <span class="validation-error-message">{{v-get this 'email' 'message'}}</span>
             {{/if}}
           </div>
-          <label class="form-label">{{t "general.phone"}}:</label>
+          <label class="form-label">{{t 'general.phone'}}:</label>
           <div class="form-data">
             {{one-way-input
               value=phone

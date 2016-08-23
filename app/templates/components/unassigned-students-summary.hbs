@@ -2,7 +2,7 @@
   {{#if (gt (get (await unassignedStudents) 'length') 1)}}
     {{fa-icon 'warning'  class='no'}}
   {{/if}}
-  {{t 'admin.unassignedStudentsSummaryTitle'}}
+  {{t 'general.unassignedStudentsSummaryTitle'}}
 </h2>
 {{#if (is-fulfilled schools)}}
   <div id='schoolsfilter' class="filter">
@@ -26,7 +26,7 @@
 {{/if}}
 
 {{#if (is-fulfilled unassignedStudents)}}
-  <p>{{t 'admin.unassignedStudentsSummary' count=(get (await unassignedStudents) 'length')}}</p>
+  <p>{{t 'general.unassignedStudentsSummary' count=(get (await unassignedStudents) 'length')}}</p>
   {{#if (gt (get (await unassignedStudents) 'length') 0)}}
     <div class='actions'>
       {{#link-to 'assign-students' (query-params school=(get (await selectedSchool) 'id'))}}

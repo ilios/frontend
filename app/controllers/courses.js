@@ -22,7 +22,7 @@ export default Controller.extend({
     sortCoursesBy: 'sortBy',
 
   },
-  placeholderValue: t('courses.titleFilterPlaceholder'),
+  placeholderValue: t('general.courseTitleFilterPlaceholder'),
   schoolId: null,
   yearTitle: null,
   titleFilter: null,

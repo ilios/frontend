@@ -17,7 +17,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         if(response.status === 'redirect'){
           window.location.replace(response.logoutUrl);
         } else {
-          this.get('flashMessages').success('auth.confirmLogout');
+          this.get('flashMessages').success('general.confirmLogout');
           window.location.replace(config.rootURL);
         }
       });

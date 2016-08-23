@@ -1,13 +1,13 @@
 <h2 class='title'>
-  {{t 'admin.manageUsersSummaryTitle'}} ({{#link-to 'users'}}{{t 'general.viewAll'}}{{/link-to}})
+  {{t 'general.manageUsersSummaryTitle'}} ({{#link-to 'users'}}{{t 'general.viewAll'}}{{/link-to}})
 </h2>
 <div class='actions'>
   {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
-    <button>{{t 'user.create'}}</button>
+    <button>{{t 'general.create'}}</button>
   {{/link-to}}
   {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
     {{#link-to 'users' (query-params showBulkNewUserForm=true showNewUserForm=false)}}
-      <button>{{t 'user.createBulk'}}</button>
+      <button>{{t 'general.createBulk'}}</button>
     {{/link-to}}
   {{/if}}
 </div>
@@ -15,7 +15,7 @@
   {{one-way-search
     value=searchValue
     update=(action (mut searchValue))
-    placeholder=(t 'admin.searchForIliosUsers')
+    placeholder=(t 'general.searchForIliosUsers')
     incremental=true
     onsearch=(perform searchForUsers value="target.value")
     onkeyup=(perform searchForUsers value="target.value")

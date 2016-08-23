@@ -241,7 +241,7 @@ test('invalidate tokens when asked', function(assert) {
 
   let flashMock = Service.extend({
     success(what){
-      assert.equal(what, 'user.successfullyInvalidatedTokens');
+      assert.equal(what, 'general.successfullyInvalidatedTokens');
     }
   });
   this.register('service:flashMessages', flashMock);

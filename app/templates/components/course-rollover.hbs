@@ -2,12 +2,12 @@
 
 
 <div class='rollover-form'>
-  <h3 class="title">{{t 'courses.rollover'}}</h3>
+  <h3 class="title">{{t 'general.rollover'}}</h3>
 
-  <p class='rollover-summary'>{{t 'courses.rolloverSummary'}}</p>
+  <p class='rollover-summary'>{{t 'general.rolloverSummary'}}</p>
 
   <div class='item title'>
-    <label>{{t "general.title"}}:</label>
+    <label>{{t 'general.title'}}:</label>
     {{one-way-input
       value=title
       update=(pipe (action 'changeTitle') (action 'addErrorDisplayFor' 'title'))
@@ -15,7 +15,7 @@
       disabled=save.isRunning
       focusOut=(action 'addErrorDisplayFor' 'title')
       keyDown=(action 'addErrorDisplayFor' 'title')
-      placeholder=(t 'courses.courseTitlePlaceholder')
+      placeholder=(t 'general.courseTitlePlaceholder')
     }}
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
@@ -23,7 +23,7 @@
   </div>
 
   <div class='item year-select'>
-    <label>{{t "general.year"}}:</label>
+    <label>{{t 'general.year'}}:</label>
     {{#if loadUnavailableYears.isRunning}}
       {{fa-icon 'spinner' spin=true}}
     {{else}}
@@ -32,7 +32,7 @@
           <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
             {{year}} - {{inc year}}
             {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
-              ({{t 'courses.rolloverYearUnavailable'}})
+              ({{t 'general.rolloverYearUnavailable'}})
             {{/if}}
           </option>
         {{/each}}
@@ -47,7 +47,7 @@
   <div class='advanced-options'>
     {{#liquid-if expandAdvancedOptions class='vertical'}}
       <div class='item'>
-        <label>{{t "general.startDate"}}:</label>
+        <label>{{t 'general.startDate'}}:</label>
         {{pikaday-input
           size=10
           value=startDate

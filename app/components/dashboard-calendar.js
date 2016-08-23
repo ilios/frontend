@@ -26,22 +26,22 @@ export default Component.extend({
   selectedView: null,
 
   dueTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.dueThisDay');
+    return this.get('i18n').t('general.dueThisDay');
   }),
   dayTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.day');
+    return this.get('i18n').t('general.day');
   }),
   weekTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.week');
+    return this.get('i18n').t('general.week');
   }),
   monthTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.month');
+    return this.get('i18n').t('general.month');
   }),
   loadingEventsTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.loadingEvents');
+    return this.get('i18n').t('general.loadingEvents');
   }),
   icsInstructionsTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('calendar.icsInstructions');
+    return this.get('i18n').t('general.icsInstructions');
   }),
   fromTimeStamp: computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).startOf(this.get('selectedView')).subtract(this.get('skew'), 'days').unix();

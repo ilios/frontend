@@ -2,7 +2,7 @@
   {{#if (gt (get (await updates) 'length') 1)}}
     {{fa-icon 'warning'  class='no'}}
   {{/if}}
-  {{t 'admin.pendingUpdatesSummaryTitle'}}
+  {{t 'general.pendingUpdatesSummaryTitle'}}
 </h2>
 {{#if schools.isFulfilled}}
   <div id='schoolsfilter' class="filter">
@@ -25,7 +25,7 @@
   </div>
 {{/if}}
 {{#if updates.isFulfilled}}
-  <p>{{t 'admin.pendingUpdatesSummary' count=updates.length}}</p>
+  <p>{{t 'general.pendingUpdatesSummary' count=updates.length}}</p>
   {{#if updates.length}}
     <div class='actions'>
       {{#link-to 'pending-user-updates' (query-params school=selectedSchool.id)}}

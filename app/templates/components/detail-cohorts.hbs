@@ -1,10 +1,10 @@
 <div class='title'>
   {{#if isManaging}}
     <span class='specific-title'>
-      {{t 'courses.cohortsManageTitle'}}
+      {{t 'general.cohortsManageTitle'}}
     </span>
   {{else}}
-    {{t 'courses.cohorts'}} ({{course.cohorts.length}})
+    {{t 'general.programCohorts'}} ({{course.cohorts.length}})
   {{/if}}
 </div>
 
@@ -15,7 +15,7 @@
     </button>
     <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if editable}}
-    <button {{action 'manage'}}>{{t 'courses.cohortsManageTitle'}}</button>
+    <button {{action 'manage'}}>{{t 'general.cohortsManageTitle'}}</button>
   {{/if}}
 </div>
 <div class='detail-cohorts-content'>

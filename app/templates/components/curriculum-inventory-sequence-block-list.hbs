@@ -1,7 +1,7 @@
 {{#unless loadAttr.running}}
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'curriculumInventory.sequenceBlocks'}} ({{sortedBlocks.length}})
+    {{t 'general.sequenceBlocks'}} ({{sortedBlocks.length}})
   </div>
 
   <div class='detail-actions'>
@@ -34,9 +34,9 @@
           <table>
             <thead>
             <tr>
-              <th class='text-center' colspan=5>{{t 'curriculumInventory.sequenceBlock'}}</th>
+              <th class='text-center' colspan=5>{{t 'general.sequenceBlock'}}</th>
               <th class='text-center' colspan=1>{{t 'general.level'}}</th>
-              <th class='text-center' colspan=2>{{t 'curriculumInventory.sequenceNumber'}}</th>
+              <th class='text-center' colspan=2>{{t 'general.sequenceNumber'}}</th>
               <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
               <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
               <th class='text-center' colspan=2>{{t 'general.course'}}</th>
@@ -93,7 +93,7 @@
                 <tr class='confirm-removal'>
                   <td colspan=15>
                     <div class='confirm-message'>
-                      {{t 'curriculumInventory.sequenceBlockConfirmRemove'}} <br/>
+                      {{t 'general.sequenceBlockConfirmRemove'}} <br/>
                       <div class="confirm-buttons">
                         <button {{action 'remove' block}} class='remove text'>{{t 'general.yes'}}</button>
                         <button {{action 'cancelRemove' block}} class='done text'>{{t 'general.cancel'}}</button>
@@ -108,9 +108,9 @@
         </div>
       {{else}}
         {{#if parent}}
-          <span class="default-message">{{t 'curriculumInventory.noSubSequenceBlocks'}}</span>
+          <span class="default-message">{{t 'general.noSubSequenceBlocks'}}</span>
         {{else}}
-          <span class="default-message">{{t 'curriculumInventory.noSequenceBlocks'}}</span>
+          <span class="default-message">{{t 'general.noSequenceBlocks'}}</span>
         {{/if}}
       {{/if}}
     {{else}}

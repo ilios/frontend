@@ -18,7 +18,7 @@ export default Controller.extend({
 
       }, response => {
         let mappedErrors = response.errors.map(str => {
-          return 'auth.' + str;
+          return 'general.' + str;
         });
         this.set('errors', mappedErrors);
       });

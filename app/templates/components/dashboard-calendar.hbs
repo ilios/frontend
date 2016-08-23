@@ -2,8 +2,8 @@
   <div class='calendar-options-control togglemyschedule'>
     {{toggle-wide
       value=mySchedule
-      onLabel='dashboard.mySchedule'
-      offLabel='dashboard.allEvents'
+      onLabel='general.mySchedule'
+      offLabel='general.allEvents'
       action='toggleMySchedule'
       cssId='togglemyschedule'
     }}
@@ -12,8 +12,8 @@
   <div class='calendar-options-control showfilters'>
     {{toggle-wide
       value=showFilters
-      onLabel='dashboard.showFilters'
-      offLabel='dashboard.hideFilters'
+      onLabel='general.showFilters'
+      offLabel='general.hideFilters'
       action='toggleShowFilters'
       cssId='showfilters'
     }}
@@ -23,8 +23,8 @@
     <div class='calendar-options-control togglecoursefilters'>
       {{toggle-wide
         value=courseFilters
-        onLabel='dashboard.courseOrType'
-        offLabel='dashboard.detail'
+        onLabel='general.courseOrType'
+        offLabel='general.detail'
         action='toggleCourseFilters'
         cssId='togglecoursefilters'
       }}
@@ -83,7 +83,7 @@
         </div>
 
         <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
-          {{t 'dashboard.sessionTypes'}}
+          {{t 'general.sessionTypes'}}
           {{#if sessionTypes.isFulfilled}}
             <ul>
               {{#each sessionTypes as |type|}}
@@ -99,7 +99,7 @@
         </div>
       {{else}}
         <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
-          {{t 'dashboard.sessionTypes'}}
+          {{t 'general.sessionTypes'}}
           {{#if sessionTypes.isFulfilled}}
             <ul>
               {{#each sessionTypes as |type|}}
@@ -114,7 +114,7 @@
           {{/if}}
         </div>
         <div id='calendar-courselevelfilter' class='calendar-filter-list small-filter-list courselevelfilter'>
-          {{t 'dashboard.courseLevels'}}
+          {{t 'general.courseLevels'}}
           <ul>
             {{#each courseLevels as |level|}}
               <li class='clickable'>
@@ -125,7 +125,7 @@
           </ul>
         </div>
         <div id='calendar-cohortfilter' class='calendar-filter-list large-filter-list cohortfilter'>
-          {{selectedAcademicYear.academicYearTitle}} {{t 'dashboard.programAndCohort'}}
+          {{selectedAcademicYear.academicYearTitle}} {{t 'general.programAndCohort'}}
           {{#if cohorts.isFulfilled}}
             <ul>
               {{#each cohorts as |cohort|}}
@@ -146,7 +146,7 @@
 
 {{#if showClearFilters}}
   <section class="filters-list">
-    <header class="filters-header">{{t 'dashboard.activeFilters'}}:</header>
+    <header class="filters-header">{{t 'general.activeFilters'}}:</header>
 
     <div class="filter-tags">
       {{#each filterTags as |tag|}}

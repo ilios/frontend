@@ -14,7 +14,7 @@ export default Component.extend({
   tagName: 'section',
   classNames: ['session-offerings'],
   session: null,
-  placeholderValue: t('sessions.titleFilterPlaceholder'),
+  placeholderValue: t('general.sessionTitleFilterPlaceholder'),
   offerings: oneWay('session.offerings'),
   newButtonTitle: t('general.add'),
   offeringEditorOn: false,

@@ -8,7 +8,7 @@
         {{one-way-input
           value=filterBy
           update=this.attrs.setFilterBy
-          placeholder=(t 'sessions.titleFilterPlaceholder')
+          placeholder=(t 'general.sessionTitleFilterPlaceholder')
         }}
       </div>
     </div>
@@ -21,7 +21,7 @@
 
       {{#if (and sessions.length editable)}}
         {{#link-to 'course.publishall' course}}
-          <button>{{t 'publish.all' sessionCount=sessionsCount}}</button>
+          <button>{{t 'general.publishAllSessions' sessionCount=sessionsCount}}</button>
         {{/link-to}}
       {{/if}}
     </div>
@@ -82,7 +82,7 @@
                 sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
                 sortedAscending=sortedAscending
                 sortType='numeric'
-              }}{{t 'courses.firstOffering'}}{{/sortable-th}}
+              }}{{t 'general.firstOffering'}}{{/sortable-th}}
               {{#sortable-th
                 align='center'
                 click=(action 'sortBy' 'offeringCount')
@@ -109,7 +109,7 @@
                 <td class='text-left' colspan=2>
                   {{#if sessionProxy.firstOfferingDate}}
                     {{#if sessionProxy.ilmSession}}
-                      <strong>ILM: {{t 'sessions.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY'}}
+                      <strong>ILM: {{t 'general.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY'}}
                     {{else}}
                       {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY h:mma'}}
                     {{/if}}
@@ -136,7 +136,7 @@
               {{#if sessionProxy.showRemoveConfirmation}}
                 <tr class='confirm-removal'><td colspan=10>
                   <div class='confirm-message'>
-                    {{t 'courses.confirmSessionRemoval'}}<br />
+                    {{t 'general.confirmSessionRemoval'}}<br />
                     <div class="confirm-buttons">
                       <button {{action 'remove' sessionProxy}} class='remove text'>{{t 'general.yes'}}</button>
                       <button {{action 'cancelRemove' sessionProxy}} class='done text'>{{t 'general.cancel'}}</button>
@@ -156,13 +156,13 @@
                     {{#if sessionProxy.offerings.length}}
                       {{session-offerings-list session=sessionProxy.content editable=false}}
                     {{else}}
-                      <p>{{t 'sessions.noOfferings'}}</p>
+                      <p>{{t 'general.noOfferings'}}</p>
                     {{/if}}
                     </td>
                   </tr>
                 {{/if}}
               {{else}}
-                <tr><td colspan=10>{{t 'courses.noSessions'}}</td></tr>
+                <tr><td colspan=10>{{t 'general.noSessions'}}</td></tr>
               {{/each}}
           </tbody>
         </table>

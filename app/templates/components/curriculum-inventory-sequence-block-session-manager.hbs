@@ -15,21 +15,21 @@
             checked=allSelected
             change=(action 'toggleSelectAll')
             indeterminate=someSelected
-            }}{{t 'curriculumInventory.countAsOneOffering'}}
+            }}{{t 'general.countAsOneOffering'}}
         </th>
         {{#sortable-th
           colspan=3
           click=(action 'sortBy' 'title')
           sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
           sortedAscending=sortedAscending
-        }}{{t 'sessions.title'}}{{/sortable-th}}
+        }}{{t 'general.sessionTitle'}}{{/sortable-th}}
         {{#sortable-th
           colspan=3
           click=(action 'sortBy' 'sessionType.title')
           sortedBy=(or (eq sortBy 'sessionType.title') (eq sortBy 'sessionType.title:desc'))
           sortedAscending=sortedAscending
         }}{{t 'general.sessionType'}}{{/sortable-th}}
-        <th class='text-center' colspan=1>{{t 'curriculumInventory.totalTime'}}</th>
+        <th class='text-center' colspan=1>{{t 'general.totalTime'}}</th>
         {{#sortable-th
           colspan=1
           click=(action 'sortBy' 'offerings.length')

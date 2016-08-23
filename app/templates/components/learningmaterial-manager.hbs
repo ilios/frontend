@@ -1,10 +1,10 @@
 <div class="form-container">
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
+    <label class="form-label">{{t 'general.displayName'}}:</label>
     <div class="form-data"><span class='displayname'>{{learningMaterial.learningMaterial.title}}</span></div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.status'}}:</label>
+    <label class="form-label">{{t 'general.status'}}:</label>
     <div class="form-data status">
       {{#if editable}}
         {{inplace-select
@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.instructionalNotes'}}:</label>
+    <label class="form-label">{{t 'general.instructionalNotes'}}:</label>
     <div class="form-data notes">
       {{#if editable}}
         {{inplace-html value=valueBuffer.notes save='changeNotes'}}
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.showNotesToStudents'}}:</label>
+    <label class="form-label">{{t 'general.showNotesToStudents'}}:</label>
     <div class="form-data publicnotes">
       {{#if editable}}
         {{inplace-boolean value=valueBuffer.publicNotes save='changePublicNotes'}}
@@ -56,19 +56,19 @@
     </div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.owner'}}:</label>
+    <label class="form-label">{{t 'general.owner'}}:</label>
     <div class="form-data">
       <span class='owninguser'>{{learningMaterial.learningMaterial.owningUser.fullName}}</span>
     </div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
+    <label class="form-label">{{t 'general.contentAuthor'}}:</label>
     <div class="form-data">
       <span class='originalauthor'>{{learningMaterial.learningMaterial.originalAuthor}}</span>
     </div>
   </div>
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
+    <label class="form-label">{{t 'general.userRole'}}:</label>
     <div class="form-data">
       <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
     </div>
@@ -81,7 +81,7 @@
   </div>
   {{#if learningMaterial.learningMaterial.copyrightPermission}}
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
+      <label class="form-label">{{t 'general.copyrightPermission'}}:</label>
       <div class="form-data">
       {{#if learningMaterial.learningMaterial.copyrightPermission}}
         <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
@@ -93,7 +93,7 @@
   {{/if}}
   {{#if learningMaterial.learningMaterial.copyrightRationale}}
     <div class="form-col-12">
-      <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
+      <label class="form-label">{{t 'general.copyrightRationale'}}:</label>
       <div class="form-data">
         <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
       </div>
@@ -101,7 +101,7 @@
   {{/if}}
   {{#if learningMaterial.learningMaterial.isCitation}}
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+    <label class="form-label">{{t 'general.citation'}}:</label>
     <div class="form-data">
       <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
     </div>
@@ -109,7 +109,7 @@
   {{/if}}
   {{#if learningMaterial.learningMaterial.isLink}}
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.link'}}:</label>
+    <label class="form-label">{{t 'general.link'}}:</label>
     <div class="form-data weblink">
       <span class='link'>
         <a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a>
@@ -122,7 +122,7 @@
   {{/if}}
   {{#if learningMaterial.learningMaterial.isFile}}
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.file'}}:</label>
+    <label class="form-label">{{t 'general.file'}}:</label>
     <div class="form-data filename">
       <span class='downloadurl'>
         <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank">{{learningMaterial.learningMaterial.filename}}</a>
@@ -134,7 +134,7 @@
   </div>
   {{/if}}
   <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.uploadDate'}}:</label>
+    <label class="form-label">{{t 'general.uploadDate'}}:</label>
     <div class="form-data">
       <span class='upload-date'>{{moment-format learningMaterial.learningMaterial.uploadDate 'M-D-YYYY'}}</span>
     </div>

@@ -1,7 +1,7 @@
 <table>
   <thead>
     <tr>
-      <th class='text-left' colspan=3>{{t 'programs.programTitle'}}</th>
+      <th class='text-left' colspan=3>{{t 'general.programTitle'}}</th>
       <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.school'}}</th>
       <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.status'}}</th>
       <th class='text-center' colspan=2>{{t 'general.actions'}}</th>
@@ -29,7 +29,7 @@
           <td colspan=9>
             <div class='confirm-message'>
             {{#if (is-fulfilled program.courses)}}
-              {{t 'programs.confirmRemove' programYearCount=program.programYears.length courseCount=program.courses.length}} <br />
+              {{t 'general.confirmRemoveProgram' programYearCount=program.programYears.length courseCount=program.courses.length}} <br />
               <div class="confirm-buttons">
                 <button {{action 'remove' program}} class='remove text'>{{t 'general.yes'}}</button>
                 <button {{action 'cancelRemove' program}} class='done text'>{{t 'general.cancel'}}</button>

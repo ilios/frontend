@@ -1,5 +1,5 @@
 {{#if targetItemTitle}}
-  <h2>{{t 'mesh.targetItemTitle' title=targetItemTitle}}</h2>
+  <h2>{{t 'selectMeshFor' title=targetItemTitle}}</h2>
 {{/if}}
 <ul class='removable-list tag-list details-list'>
   {{#each sortedTerms as |term|}}
@@ -17,7 +17,7 @@
       </li>
   {{/each}}
 </ul>
-{{search-box placeholder=(t 'courses.meshSearchPlaceholder') liveSearch=false search=(action 'search') clear=(action 'clear')}}
+{{search-box placeholder=(t 'general.meshSearchPlaceholder') liveSearch=false search=(action 'search') clear=(action 'clear')}}
 
 {{#if searching}}
   <ul class='results'>

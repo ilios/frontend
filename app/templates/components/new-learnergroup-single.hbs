@@ -8,7 +8,7 @@
       onescape=(action this.attrs.cancel)
       disabled=isSaving
       focusOut=(action 'addErrorDisplayFor' 'title')
-      placeholder=(t 'learnerGroups.learnerGroupTitlePlaceholder')
+      placeholder=(t 'general.learnerGroupTitlePlaceholder')
     }}
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
@@ -17,12 +17,12 @@
 </div>
 {{#if fillModeSupported}}
   <div class="form-col form-col-radiogroup">
-    <div class="form-label">{{t 'learnerGroups.populateGroup'}}:</div>
+    <div class="form-label">{{t 'general.populateGroup'}}:</div>
     <div class="form-data form-data-text form-input-row clickable" onclick={{toggle 'fillWithCohort' this}}>
-      <input checked={{fillWithCohort}} type='radio' /> {{t 'learnerGroups.yesPopulateGroup'}}
+      <input checked={{fillWithCohort}} type='radio' /> {{t 'general.yesPopulateGroup'}}
     </div>
     <div class="form-data form-data-text form-input-row clickable" onclick={{toggle 'fillWithCohort' this}}>
-      <input checked={{not fillWithCohort}} type='radio' /> {{t 'learnerGroups.noPopulateGroup'}}
+      <input checked={{not fillWithCohort}} type='radio' /> {{t 'general.noPopulateGroup'}}
     </div>
   </div>
 {{/if}}

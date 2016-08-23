@@ -1,9 +1,9 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'programs.stewardingSchoolsAndDepartments'}} ({{programYear.stewards.length}})
+    {{t 'general.stewardingSchoolsAndDepartments'}} ({{programYear.stewards.length}})
     {{#if isManaging}}
       <span class='detail-specific-title'>
-        {{t 'programs.stewardsManageTitle'}}
+        {{t 'general.stewardsManageTitle'}}
       </span>
     {{/if}}
   </div>
@@ -13,7 +13,7 @@
         <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
         <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      <button {{action 'manage'}}>{{t 'programs.stewardsManageTitle'}}</button>
+      <button {{action 'manage'}}>{{t 'general.stewardsManageTitle'}}</button>
     {{/if}}
   </div>
   <div class='detail-content'>

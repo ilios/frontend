@@ -6,7 +6,7 @@
   </span>
   <span class='info'>
     {{#if (and (is-fulfilled learnerGroup.usersOnlyAtThisLevel) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))}}
-      {{t 'learnerGroups.members'}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) 'length'}} / {{learnerGroup.cohort.users.length}}
+      {{t 'general.members'}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) 'length'}} / {{learnerGroup.cohort.users.length}}
     {{/if}}
   </span>
 </div>

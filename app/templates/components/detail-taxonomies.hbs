@@ -1,6 +1,6 @@
 {{#if isManaging}}
     <div class='title'>
-        <span class='detail-specific-title'>{{t 'taxonomies.termsManageTitle'}}</span>
+        <span class='detail-specific-title'>{{t 'general.termsManageTitle'}}</span>
     </div>
 {{else}}
     <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
@@ -14,7 +14,7 @@
         </button>
         <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else if editable}}
-        <button {{action 'manage'}}>{{t 'taxonomies.termsManageTitle'}}</button>
+        <button {{action 'manage'}}>{{t 'general.termsManageTitle'}}</button>
     {{/if}}
 </div>
 <div class='content'>

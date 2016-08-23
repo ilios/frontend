@@ -1,5 +1,5 @@
 <div class='title {{if collapsible "collapsible clickable"}}' onclick={{if collapsible (action collapse)}}>
-  {{t 'courses.learnerGroups'}} ({{subject.learnerGroups.length}})
+  {{t 'general.learnerGroups'}} ({{subject.learnerGroups.length}})
 </div>
 
 <div class='actions'>
@@ -7,7 +7,7 @@
       <button class='bigadd' onclick={{perform save}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=save.isRunning}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if editable}}
-    <button {{action setIsManaging true}}>{{t 'courses.learnerGroupsManageTitle'}}</button>
+    <button {{action setIsManaging true}}>{{t 'general.learnerGroupsManageTitle'}}</button>
   {{/if}}
 </div>
 <div class='detail-learnergroups-content'>

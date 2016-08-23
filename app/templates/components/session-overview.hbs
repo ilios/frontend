@@ -27,21 +27,21 @@
     {{#if editable}}
       {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
         {{#if showAsIs}}
-          <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
+          <li class='danger' {{action 'publish'}}>{{t 'general.publishAsIs'}}</li>
         {{/if}}
         {{#if showPublish}}
-          <li class='good' {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
+          <li class='good' {{action 'publish'}}>{{t 'general.publishSession'}}</li>
         {{/if}}
         {{#if showReview}}
           {{#link-to 'session.publicationCheck' course session}}
-            <li class='good' >{{t 'publish.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
+            <li class='good' >{{t 'general.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
           {{/link-to}}
         {{/if}}
         {{#if showTbd}}
-          <li class='good' {{action 'publishAsTbd'}}>{{t 'publish.markAsScheduled'}}</li>
+          <li class='good' {{action 'publishAsTbd'}}>{{t 'general.markAsScheduled'}}</li>
         {{/if}}
         {{#if showUnPublish}}
-          <li class='danger' {{action 'unpublish'}}>{{t 'publish.unPublishSession'}}</li>
+          <li class='danger' {{action 'unpublish'}}>{{t 'general.unPublishSession'}}</li>
         {{/if}}
       {{/action-menu}}
     {{else}}
@@ -57,7 +57,7 @@
   <div class='session-overview-actions'>
     {{#if (and (is-fulfilled showCopy) (await showCopy))}}
       {{#link-to 'session.copy' session class='copy'}}
-        {{fa-icon 'copy' title=(t 'sessions.copy') fixedWidth=true}}
+        {{fa-icon 'copy' title=(t 'general.copySession') fixedWidth=true}}
       {{/link-to}}
     {{/if}}
   </div>
@@ -65,7 +65,7 @@
     <div class='session-overview-options'>
 
       <div class="sessiontype">
-        <label>{{t "sessions.type"}}:</label>
+        <label>{{t 'general.sessionType'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-select
@@ -79,7 +79,7 @@
         </span>
       </div>
       <div class="sessionsupplemental switch-block">
-        <label>{{t "sessions.supplementalCurriculum"}}:</label>
+        <label>{{t 'general.supplementalCurriculum'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
@@ -93,7 +93,7 @@
         </span>
       </div>
       <div class="sessionspecialattire switch-block">
-        <label>{{t "sessions.specialAttireRequired"}}:</label>
+        <label>{{t 'general.specialAttireRequired'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
@@ -107,7 +107,7 @@
         </span>
       </div>
       <div class="sessionspecialequipment switch-block">
-        <label>{{t "sessions.specialEquipmentRequired"}}:</label>
+        <label>{{t 'general.specialEquipmentRequired'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
@@ -122,7 +122,7 @@
       </div>
       <hr />
       <div class="independentlearningcontrol switch-block">
-        <label>{{t "sessions.independentLearning"}}:</label>
+        <label>{{t 'general.independentLearning'}}:</label>
         <span>
           {{#if editable}}
             {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
@@ -137,7 +137,7 @@
       </div>
       {{#if session.isIndependentLearning}}
         <div class="sessionilmhours block">
-          <label>{{t "general.hours"}}:</label>
+          <label>{{t 'general.hours'}}:</label>
           <span>
             {{#if editable}}
               {{#editable-field
@@ -165,7 +165,7 @@
           </span>
         </div>
         <div class="sessionilmduedate block">
-          <label>{{t "sessions.dueBy"}}:</label>
+          <label>{{t 'general.dueBy'}}:</label>
           <span>
             {{#if editable}}
               {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}
@@ -178,7 +178,7 @@
     </div>
 
     <div class="sessiondescription">
-      <label>{{t "general.description"}}:</label>
+      <label>{{t 'general.description'}}:</label>
       <span class='list-reset'>
         {{#if editable}}
           {{#editable-field
@@ -206,7 +206,7 @@
     {{#unless session.isIndependentLearning}}
       <br />
       <div class="sessionassociatedgroups">
-        <label>{{t "general.associatedGroups"}}:</label>
+        <label>{{t 'general.associatedGroups'}}:</label>
         <span>
         {{#if session.associatedLearnerGroups.isFulfilled}}
           <span>

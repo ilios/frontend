@@ -9,14 +9,14 @@
 <div class='publish-all-sessions-unpublishable'>
   <section class='detail-block {{if unPublishableCollapsed 'collapsed' 'collapsible'}}'>
     <div class='detail-title clickable' {{action 'toggleUnPublishableCollapsed'}}>
-      {{t 'publish.incompleteSessions'}} ({{unPublishableSessions.length}})
+      {{t 'general.incompleteSessions'}} ({{unPublishableSessions.length}})
     </div>
     {{#unless unPublishableCollapsed}}
       <div class='detail-content'>
         <table>
           <thead>
             <tr>
-                <th>{{t 'sessions.title'}}</th>
+                <th>{{t 'general.sessionTitle'}}</th>
                 <th>{{t 'general.offerings'}}</th>
                 <th>{{t 'general.terms'}}</th>
                 <th>{{t 'general.objectives'}}</th>
@@ -60,14 +60,14 @@
 
   <section class="detail-block {{if publishableCollapsed 'collapsed' 'collapsible'}}">
     <div class='detail-title clickable' {{action 'togglePublishableCollapsed'}}>
-      {{t 'publish.completeSessions'}} ({{publishableSessions.length}})
+      {{t 'general.completeSessions'}} ({{publishableSessions.length}})
     </div>
     {{#unless publishableCollapsed}}
       <div class='detail-content'>
         <table>
           <thead>
             <tr>
-                <th>{{t 'sessions.title'}}</th>
+                <th>{{t 'general.sessionTitle'}}</th>
                 <th>{{t 'general.offerings'}}</th>
                 <th>{{t 'general.terms'}}</th>
                 <th>{{t 'general.objectives'}}</th>
@@ -110,20 +110,20 @@
 <div class='publish-all-sessions-overridable'>
   <section class='detail-block'>
     <div class='detail-title'>
-      {{t 'publish.reviewSessions'}} ({{overridableSessions.length}})
+      {{t 'general.reviewSessions'}} ({{overridableSessions.length}})
     </div>
     <div class='detail-content'>
       <button disabled={{allSessionsAsIs}} {{action 'publishAllAsIs'}}>
-        {{t 'publish.publishAsIs'}}
+        {{t 'general.publishAsIs'}}
       </button>
       <button disabled={{noSessionsAsIs}} {{action 'publishNoneAsIs'}}>
-        {{t 'publish.markAsScheduled'}}
+        {{t 'general.markAsScheduled'}}
       </button>
       <table>
         <thead>
           <tr>
               <th>{{t 'general.actions'}}</th>
-              <th>{{t 'sessions.title'}}</th>
+              <th>{{t 'general.sessionTitle'}}</th>
               <th>{{t 'general.offerings'}}</th>
               <th>{{t 'general.terms'}}</th>
               <th>{{t 'general.objectives'}}</th>
@@ -137,11 +137,11 @@
                 <ul>
                   <li>
                     {{one-way-checkbox checked=(is-in sessionsToOverride session) click=(action 'toggleSession' session)}}
-                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'publish.publishAsIs'}}</span>
+                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.publishAsIs'}}</span>
                   </li>
                   <li>
                     {{one-way-checkbox checked=(not-in sessionsToOverride session) click=(action 'toggleSession' session)}}
-                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'publish.markAsScheduled'}}</span>
+                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.markAsScheduled'}}</span>
                   </li>
                 </ul>
               </td>
@@ -175,7 +175,7 @@
   
   <div class='publish-all-sessions-review'>
     <p>
-      {{t 'publish.publishAllConfirmation' 
+      {{t 'general.publishAllConfirmation'
         publishCount=publishCount
         scheduleCount=scheduleCount
         ignoreCount=ignoreCount

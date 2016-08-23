@@ -1,6 +1,6 @@
 {{#if savingUserErrors.length}}
   <div class='saving-user-errors'>
-    <p>{{t 'user.errorSavingUser'}}</p>
+    <p>{{t 'general.errorSavingUser'}}</p>
     <ul>
       {{#each (sort-by 'lastName' (map-by 'userInput' savingUserErrors)) as |obj|}}
         <li>{{obj.lastName}}, {{obj.firstName}} ({{obj.email}})</li>
@@ -11,7 +11,7 @@
 
 {{#if savingAuthenticationErrors.length}}
   <div class='saving-authentication-errors'>
-    <p>{{t 'user.errorSavingAuthentication'}}</p>
+    <p>{{t 'general.errorSavingAuthentication'}}</p>
     <ul>
       {{#each (sort-by 'lastName' (map-by 'user' savingAuthenticationErrors)) as |user|}}
         <li>
@@ -24,7 +24,7 @@
   </div>
 {{/if}}
 
-<div class="new-result-title">{{t 'user.new'}}</div>
+<div class="new-result-title">{{t 'general.newUser'}}</div>
 
 <div class='new-user-form'>
   <div class='choose-form-type'>
@@ -38,7 +38,7 @@
   </div>
   <div class='upload-users'>
     <label>
-      {{t "user.uploadUsers"}} (<a target='_blank' href='/assets/files/SampleUserUpload.txt'>{{t 'user.sampleFile'}}</a>):
+      {{t 'general.uploadUsers'}} (<a target='_blank' href='/assets/files/SampleUserUpload.txt'>{{t 'general.sampleFile'}}</a>):
     </label>
     <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}} />
   </div>
@@ -50,15 +50,15 @@
         <thead>
           <tr>
             <th></th>
-            <th>{{t 'user.firstName'}}</th>
-            <th>{{t 'user.lastName'}}</th>
-            <th>{{t 'user.middleName'}}</th>
+            <th>{{t 'general.firstName'}}</th>
+            <th>{{t 'general.lastName'}}</th>
+            <th>{{t 'general.middleName'}}</th>
             <th>{{t 'general.phone'}}</th>
             <th>{{t 'general.email'}}</th>
             <th>{{t 'general.campusId'}}</th>
-            <th>{{t 'user.otherId'}}</th>
-            <th>{{t 'user.username'}}</th>
-            <th>{{t 'user.password'}}</th>
+            <th>{{t 'general.otherId'}}</th>
+            <th>{{t 'general.username'}}</th>
+            <th>{{t 'general.password'}}</th>
           </tr>
         </thead>
         <tbody>
@@ -87,7 +87,7 @@
     </div>
   {{/if}}
   <div class='item'>
-    <label>{{t "general.primarySchool"}}:</label>
+    <label>{{t 'general.primarySchool'}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
         {{#each (sort-by 'title' (await schools)) as |school|}}
@@ -102,7 +102,7 @@
   </div>
   {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
     <div class='item last'>
-      <label>{{t "general.primaryCohort"}}:</label>
+      <label>{{t 'general.primaryCohort'}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>
           {{#each (sort-by 'title' cohorts) as |cohort|}}

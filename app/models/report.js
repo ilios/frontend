@@ -27,7 +27,7 @@ export default DS.Model.extend({
       if(schoolObj){
         school = schoolObj.get('title');
       } else {
-        school = this.get('i18n').t('dashboard.allSchools');
+        school = this.get('i18n').t('general.allSchools');
       }
       if(isPresent(prepositionalObject)){
         let model = prepositionalObject.dasherize();
@@ -46,7 +46,7 @@ export default DS.Model.extend({
           } else {
             object = record.get('title');
           }
-          let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithObject', {
+          let displayTitle = this.get('i18n').t('general.reportDisplayTitleWithObject', {
             subject,
             object,
             school
@@ -55,7 +55,7 @@ export default DS.Model.extend({
           defer.resolve(displayTitle);
         });
       } else {
-        let displayTitle = this.get('i18n').t('dashboard.reportDisplayTitleWithoutObject', {
+        let displayTitle = this.get('i18n').t('general.reportDisplayTitleWithoutObject', {
           subject,
           school
         });

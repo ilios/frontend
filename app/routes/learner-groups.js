@@ -21,7 +21,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
   setupController: function(controller, hash){
     controller.set('model', hash);
-    this.controllerFor('application').set('pageTitleTranslation', 'navigation.learnerGroups');
+    this.controllerFor('application').set('pageTitleTranslation', 'general.learnerGroups');
   },
   queryParams: {
     titleFilter: {

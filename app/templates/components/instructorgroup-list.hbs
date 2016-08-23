@@ -1,10 +1,10 @@
 <table>
   <thead>
     <tr>
-      <th class='text-left' colspan=2>{{t 'instructorGroups.instructorGroupTitle'}}</th>
-      <th class='text-center hide-from-small-screen'>{{t 'instructorGroups.members'}}</th>
-      <th class='text-center hide-from-small-screen'>{{t 'instructorGroups.associatedCourses'}}</th>
-      <th class='text-right hide-from-small-screen'>{{t 'instructorGroups.actions'}}</th>
+      <th class='text-left' colspan=2>{{t 'general.instructorGroupTitle'}}</th>
+      <th class='text-center hide-from-small-screen'>{{t 'general.members'}}</th>
+      <th class='text-center hide-from-small-screen'>{{t 'general.associatedCourses'}}</th>
+      <th class='text-right hide-from-small-screen'>{{t 'general.actions'}}</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -28,7 +28,7 @@
       {{#if instructorGroup.showRemoveConfirmation}}
         <tr class='confirm-removal'><td colspan=5>
           <div class='confirm-message'>
-            {{t 'instructorGroups.confirmRemove' instructorCount=instructorGroup.users.length courseCount=instructorGroup.courses.length}} <br />
+            {{t 'general.confirmRemoveInstructorGroup' instructorCount=instructorGroup.users.length courseCount=instructorGroup.courses.length}} <br />
            <div class="confirm-buttons">
             <button {{action 'remove' instructorGroup}} class='remove text'>{{t 'general.yes'}}</button>
             <button {{action 'cancelRemove' instructorGroup}} class='done text'>{{t 'general.cancel'}}</button>

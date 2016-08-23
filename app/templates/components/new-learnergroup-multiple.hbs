@@ -4,7 +4,7 @@
   </h3>
 {{else}}
   <label class="form-col form-col-12">
-    <div class="form-label">{{t 'learnerGroups.numberOfGroups'}}:</div>
+    <div class="form-label">{{t 'general.numberOfGroups'}}:</div>
     <div class="form-data form-data-text form-input-row">
       {{one-way-input
         value=numSubGroups
@@ -13,7 +13,7 @@
         onescape=(action this.attrs.cancel)
         disabled=isSaving
         focusOut=(action 'addErrorDisplayFor' 'numSubGroups')
-        placeholder=(t 'learnerGroups.numberOfGroupsToGenerate')
+        placeholder=(t 'general.numberOfGroupsToGenerate')
       }}
       {{#if (and (v-get this 'numSubGroups' 'isInvalid') (is-in showErrorsFor 'numSubGroups'))}}
         <span class="validation-error-message">{{v-get this 'numSubGroups' 'message'}}</span>

@@ -1,11 +1,11 @@
 {{#unless loadAttrsFromOffering.isRunning}}
   <div class='item start-date'>
-    <label>{{t "general.startDate"}}:</label>
+    <label>{{t 'general.startDate'}}:</label>
     {{pikaday-input value=startDate onSelection=(action 'updateStartDate') format='M/D/YYYY'}}
   </div>
 
   <div class='item start-time'>
-    <label>{{t "general.startTime"}}:</label>
+    <label>{{t 'general.startTime'}}:</label>
     {{time-picker date=startDate action='updateStartTime'}}
   </div>
 
@@ -22,7 +22,7 @@
       {{#if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours'))}}
         <span class="validation-error-message">{{v-get this 'durationHours' 'message'}}</span>
       {{/if}}
-      <label>{{t "general.hours"}}</label>
+      <label>{{t 'general.hours'}}</label>
     </div>
     <div class='minutes'>
       {{one-way-input
@@ -35,12 +35,12 @@
       {{#if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes'))}}
         <span class="validation-error-message">{{v-get this 'durationMinutes' 'message'}}</span>
       {{/if}}
-      <label>{{t "general.minutes"}}</label>
+      <label>{{t 'general.minutes'}}</label>
     </div>
   </div>
 
   <div class='item end-date-time'>
-    <label>{{t "general.end"}}:</label>
+    <label>{{t 'general.end'}}:</label>
     {{#if endDate}}
       <div class='text'>{{moment-format endDate 'M/D/YYYY h:mm a'}}</div>
     {{/if}}
@@ -49,7 +49,7 @@
   {{#if showMakeRecurring}}
     <div class='item make-recurring'>
       {{toggle-onoff
-        label='offerings.makeRecurring'
+        label='general.makeRecurring'
         on=makeRecurring
         action=(toggle-action 'makeRecurring' this)
       }}
@@ -77,7 +77,7 @@
               keyUp=(action 'addErrorDisplayFor' 'numberOfWeeks')
               class=(concat 'make-recurring-input ' (if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
             }}
-            <label class="make-recurring-input-label">{{t 'calendar.weeks'}}</label>
+            <label class="make-recurring-input-label">{{t 'general.weeks'}}</label>
             {{#if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks'))}}
               <span class="validation-error-message">{{v-get this 'numberOfWeeks' 'message'}}</span>
             {{/if}}
@@ -92,7 +92,7 @@
       <label>
         {{t 'general.location'}}:
         {{#unless offering}}
-          {{t "offerings.defaultLocationNotLoaded"}}
+          {{t 'general.defaultLocationNotLoaded'}}
         {{/unless}}
       </label>
       {{one-way-input
@@ -113,7 +113,7 @@
       <label>
         {{t 'general.instructors'}}:
         {{#unless offering}}
-          {{t "offerings.defaultInstructorsNotLoaded"}}
+          {{t 'general.defaultInstructorsNotLoaded'}}
         {{/unless}}
       </label>
       {{instructor-selection-manager
@@ -139,7 +139,7 @@
         remove=(action 'removeLearnerGroup')
       }}
     {{else}}
-      <p>{{t 'learnerGroups.noAvailableCohorts'}}</p>
+      <p>{{t 'general.noAvailableLearnerGroups'}}</p>
     {{/if}}
     {{#if (and (v-get this 'learnerGroups' 'isInvalid') (is-in showErrorsFor 'learnerGroups'))}}
       <p class="validation-error-message">{{v-get this 'learnerGroups' 'message'}}</p>
