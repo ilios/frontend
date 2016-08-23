@@ -73,12 +73,14 @@
             {{/if}}
           </span>
         {{else}}
-          <span {{action "editDatesAndDuration"}} class="editable">
-            {{#if sequenceBlock.startDate}}
-              {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
-            {{else}}
-              {{t 'general.clickToEdit'}}
-            {{/if}}
+          <span class="editinplace">
+            <span {{action "editDatesAndDuration"}} class="editable">
+              {{#if sequenceBlock.startDate}}
+                {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+              {{else}}
+                {{t 'general.clickToEdit'}}
+              {{/if}}
+            </span>
           </span>
         {{/if}}
       </div>
@@ -93,12 +95,14 @@
             {{/if}}
           </span>
         {{else}}
-          <span {{action "editDatesAndDuration"}} class="editable">
-            {{#if sequenceBlock.endDate}}
-              {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
-            {{else}}
-              {{t 'general.clickToEdit'}}
-            {{/if}}
+          <span class="editinplace">
+            <span {{action "editDatesAndDuration"}} class="editable">
+              {{#if sequenceBlock.endDate}}
+                {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+              {{else}}
+                {{t 'general.clickToEdit'}}
+              {{/if}}
+            </span>
           </span>
         {{/if}}
       </div>
@@ -107,7 +111,9 @@
         {{#if isFinalized}}
            <span>{{sequenceBlock.duration}}</span>
         {{else}}
-           <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
+          <span class="editinplace">
+            <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
+          </span>
         {{/if}}
       </div>
     {{else}}
@@ -162,7 +168,9 @@
           {{#if isFinalized}}
             <span>{{sequenceBlock.minimum}}</span>
           {{else}}
-            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
+            <span class="editinplace">
+              <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
+            </span>
           {{/if}}
       </div>
       <div class="block maximum">
@@ -170,7 +178,9 @@
         {{#if isFinalized}}
           <span>{{sequenceBlock.maximum}}</span>
         {{else}}
-          <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
+          <span class="editinplace">
+            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
+          </span>
         {{/if}}
       </div>
     {{else}}
