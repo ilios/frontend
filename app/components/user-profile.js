@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
 const { computed, Component, inject, RSVP } = Ember;
@@ -9,82 +7,9 @@ const { PromiseObject } = DS;
 const { service } = inject;
 const { sort, reads } = computed;
 
-const Validations = buildValidations({
-  firstName: [
-    validator('presence', true),
-    validator('length', {
-      max: 20
-    }),
-  ],
-  middleName: [
-    validator('length', {
-      max: 20
-    }),
-  ],
-  lastName: [
-    validator('presence', true),
-    validator('length', {
-      max: 20
-    }),
-  ],
-  campusId: [
-    validator('length', {
-      max: 16
-    }),
-  ],
-  otherId: [
-    validator('length', {
-      max: 16
-    }),
-  ],
-  email: [
-    validator('presence', true),
-    validator('length', {
-      max: 100
-    }),
-    validator('format', {
-      type: 'email'
-    }),
-  ],
-  phone: [
-    validator('length', {
-      max: 20
-    }),
-  ]
-});
-
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
+export default Component.extend({
   currentUser: service(),
-  flashMessages: service(),
-
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const user = this.get('user');
-    this.setProperties(user.getProperties(
-      'firstName',
-      'middleName',
-      'lastName',
-      'campusId',
-      'otherId',
-      'email',
-      'phone'
-    ));
-  },
-
   classNames: ['user-profile'],
-
-  firstName: null,
-  middleName: null,
-  lastName: null,
-  campusId: null,
-  otherId: null,
-  email: null,
-  phone: null,
-
-  editMode: false,
-  isSaving: false,
 
   bufferedCohorts: [],
 
