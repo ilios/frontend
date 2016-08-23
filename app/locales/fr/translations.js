@@ -124,7 +124,7 @@ export default {
     'domain': 'Domaine',
     'done': "Fini",
     'download': 'Télécharger',
-    'draft': 'Esquisse',
+    'draft': 'Provisoire',
     'dueBy': "Avant",
     'dueThisDay': "Dû ce jour-là",
     'duration': 'Durée',
