@@ -35,8 +35,8 @@ test('can search for users', function(assert) {
 
   const userSearch = '.user-search input';
   const secondResult = '.user-search .results li:eq(2)';
-  const secondResultUsername = `${secondResult} a .name`;
-  const secondResultEmail = `${secondResult} a .email`;
+  const secondResultUsername = `${secondResult} .name`;
+  const secondResultEmail = `${secondResult} .email`;
   const name = '.user-display-name';
 
   visit(url);

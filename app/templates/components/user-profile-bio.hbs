@@ -3,7 +3,7 @@
     <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
     <button disabled={{save.isRunning}} class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
   {{else if isManagable}}
-    <button {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+    <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
   {{/if}}
 </div>
 <div class='item'>
