@@ -71,6 +71,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   user: null,
   isManaging: false,
+  isManagable: false,
   firstName: null,
   middleName: null,
   lastName: null,

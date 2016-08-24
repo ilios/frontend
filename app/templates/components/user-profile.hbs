@@ -8,4 +8,9 @@
 </div>
 {{pending-single-user-update user=user}}
 
-{{user-profile-bio user=user isManaging=isManagingBio setIsManaging=setIsManagingBio}}
+{{user-profile-bio
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingBio
+  setIsManaging=setIsManagingBio
+}}
