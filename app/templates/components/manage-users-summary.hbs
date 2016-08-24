@@ -32,16 +32,14 @@
           <li class='summary'>{{result.text}}</li>
         {{/if}}
         {{#if (eq result.type 'user')}}
-          <li class='user'>
-            {{#link-to 'user' result.user}}
-              <span class='name'>
-                {{result.user.fullName}}
-                {{#unless result.user.enabled}}
-                  {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
-                {{/unless}}
-              </span>
-              <span class='email'>{{result.user.email}}</span>
-            {{/link-to}}
+          <li class='user clickable' {{action 'clickUser' result.user}}>
+            <span class='name'>
+              {{result.user.fullName}}
+              {{#unless result.user.enabled}}
+                {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+              {{/unless}}
+            </span>
+            <span class='email'>{{result.user.email}}</span>
           </li>
         {{/if}}
 
