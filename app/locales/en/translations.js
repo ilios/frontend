@@ -18,7 +18,7 @@ export default {
     'allSchools': 'All Schools',
     'allVocabularies': 'All Vocabularies',
     'anything': 'Anything',
-    'assignedTerms': 'Assigned terms',
+    'assignedTerms': 'Assigned Terms',
     'associatedCourses': 'Associated Courses',
     'associatedGroups': 'Associated Groups',
     'associatedWith': 'Associated with',
