@@ -27,24 +27,20 @@ export default Component.extend({
   savedUserIds: [],
   isSaving: false,
 
-  bestSelectedCohort: computed('school.cohorts.[]', 'primaryCohortId', {
-    get(){
-      return new Promise(resolve => {
-        const primaryCohortId = this.get('primaryCohortId');
-        let school = this.get('school');
-        school.get('cohorts').then(cohorts => {
-          if (primaryCohortId) {
-            let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
-            if (currentCohort) {
-              resolve(currentCohort);
-              return;
-            }
-          }
-          resolve(cohorts.get('lastObject'));
-        });
-      });
-    }
-  }).readOnly(),
+  bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function(){
+    return new Promise(resolve => {
+      const primaryCohortId = this.get('primaryCohortId');
+      const cohorts = this.get('cohorts');
+      if (primaryCohortId) {
+        let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
+        if (currentCohort) {
+          resolve(currentCohort);
+          return;
+        }
+      }
+      resolve(cohorts.get('lastObject'));
+    });
+  }),
 
   filteredStudents: computed('savedUserIds.[]', 'students.[]', 'offset', 'limit', function(){
     const limit = this.get('limit');
@@ -110,6 +106,9 @@ export default Component.extend({
     let studentsToModify = students.filter(user => {
       return ids.contains(user.get('id'));
     });
+    if (!cohort || studentsToModify.length < 1) {
+      return;
+    }
     studentsToModify.setEach('primaryCohort', cohort);
 
     while (studentsToModify.get('length') > 0){

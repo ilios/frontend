@@ -147,6 +147,7 @@ test('save sets primary cohort', function(assert) {
     startYear: 2020
   });
   let cohort = Object.create({
+    id: 1,
     title: 'test cohort',
     programYear
   });
@@ -162,7 +163,7 @@ test('save sets primary cohort', function(assert) {
       email: 'tstemail',
       campusId: 'id123',
       save(){
-        assert.equal(this.get('primaryCohort'), cohort);
+        assert.equal(this.get('primaryCohort.id'), cohort.get('id'));
       }
     })
   ];
