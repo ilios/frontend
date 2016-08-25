@@ -336,10 +336,10 @@ export default function() {
   this.delete('api/users/:id', 'user');
   this.post('api/users', 'user');
 
-  this.get('api/userevents/:userid', function(db, requst) {
-    let from = moment.unix(requst.queryParams.from);
-    let to = moment.unix(requst.queryParams.to);
-    let userid = parseInt(requst.params.userid);
+  this.get('api/userevents/:userid', function(db, request) {
+    let from = moment.unix(request.queryParams.from);
+    let to = moment.unix(request.queryParams.to);
+    let userid = parseInt(request.params.userid);
     let userEvents = db.userevents.filter(event => {
       return (
         event.user === userid &&
@@ -352,10 +352,10 @@ export default function() {
     };
   });
 
-  this.get('api/schoolevents/:schoolid', function(db, requst) {
-    let from = moment.unix(requst.queryParams.from);
-    let to = moment.unix(requst.queryParams.to);
-    let schoolId = parseInt(requst.params.schoolid);
+  this.get('api/schoolevents/:schoolid', function(db, request) {
+    let from = moment.unix(request.queryParams.from);
+    let to = moment.unix(request.queryParams.to);
+    let schoolId = parseInt(request.params.schoolid);
     let schoolEvents = db.schoolevents.filter(event => {
       return (
         event.school === schoolId &&
