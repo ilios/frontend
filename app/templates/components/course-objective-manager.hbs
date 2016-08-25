@@ -23,12 +23,12 @@
             {{#if objective.selected}}
               <li class='selected clickable' {{action 'removeParent' objective}}>
                 <input type='radio' checked="checked" />
-                {{objective.title}}
+                {{objective.textTitle}}
               </li>
             {{else}}
               <li class='clickable' {{action 'addParent' objective}}>
                 <input type='radio' />
-                {{objective.title}}
+                {{objective.textTitle}}
               </li>
             {{/if}}
           {{/each}}
