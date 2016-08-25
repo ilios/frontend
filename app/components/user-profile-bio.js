@@ -101,7 +101,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.send('clearErrorDisplay');
       this.get('setIsManaging')(false);
       this.set('hasSavedRecently', true);
-      yield timeout(1000);
+      yield timeout(500);
       this.set('hasSavedRecently', false);
     }
 

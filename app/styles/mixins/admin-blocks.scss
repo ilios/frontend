@@ -71,12 +71,12 @@
   }
 
   .has-saved {
-    background: lighten($ilios-green, 30%);
-    transition: background-color .25s ease-out;
+    background-color: lighten($ilios-green, 30%);
+    transition: background-color .5s ease-out;
   }
 
   .has-not-saved {
-    background: 0;
+    background-color: transparent;
     transition: background-color 1s ease-in;
   }
 }

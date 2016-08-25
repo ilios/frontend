@@ -14,3 +14,10 @@
   isManaging=isManagingBio
   setIsManaging=setIsManagingBio
 }}
+
+{{user-profile-roles
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingRoles
+  setIsManaging=setIsManagingRoles
+}}

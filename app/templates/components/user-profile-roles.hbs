@@ -1,0 +1,115 @@
+{{#if finishedSetup}}
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+      <button disabled={{save.isRunning}} class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
+    {{else if isManagable}}
+      <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+    {{/if}}
+  </div>
+  <div class='item'>
+    <label>{{t 'general.courseDirector'}}:</label>
+    {{#unless isManaging}}
+      <span class='value {{if isCourseDirector "yes" "no"}}'>
+        {{#if isCourseDirector}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{else}}
+      {{one-way-checkbox
+        checked=isCourseDirector
+        update=(action (mut isCourseDirector))
+      }}
+    {{/unless}}
+  </div>
+  <div class='item'>
+    <label>{{t 'general.instructor'}}:</label>
+    {{#unless isManaging}}
+      <span class='value {{if isFaculty "yes" "no"}}'>
+        {{#if isFaculty}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{else}}
+      {{one-way-checkbox
+        checked=isFaculty
+        update=(action (mut isFaculty))
+      }}
+    {{/unless}}
+  </div>
+  <div class='item'>
+    <label>{{t 'general.developer'}}:</label>
+    {{#unless isManaging}}
+      <span class='value {{if isDeveloper "yes" "no"}}'>
+        {{#if isDeveloper}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{else}}
+      {{one-way-checkbox
+        checked=isDeveloper
+        update=(action (mut isDeveloper))
+      }}
+    {{/unless}}
+  </div>
+  <div class='item'>
+    <label>{{t 'general.formerStudent'}}:</label>
+    {{#unless isManaging}}
+      <span class='value {{if isFormerStudent "yes" "no"}}'>
+        {{#if isFormerStudent}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{else}}
+      {{one-way-checkbox
+        checked=isFormerStudent
+        update=(action (mut isFormerStudent))
+      }}
+    {{/unless}}
+  </div>
+
+  <hr />
+
+  <div class='item'>
+    <label>{{t 'general.disableUser'}}:</label>
+    {{#unless isManaging}}
+      <span class='value {{if isDisabled "yes" "no"}}'>
+        {{#if isDisabled}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{else}}
+      {{one-way-checkbox
+        checked=isDisabled
+        update=(action (mut isDisabled))
+      }}
+    {{/unless}}
+  </div>
+  <div class='item'>
+    <label>{{t 'general.excludeFromSync'}}:</label>
+    {{#unless isManaging}}
+      <span class='value {{if isExcludedFromSync "yes" "no"}}'>
+        {{#if isExcludedFromSync}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{else}}
+      {{one-way-checkbox
+        checked=isExcludedFromSync
+        update=(action (mut isExcludedFromSync))
+      }}
+    {{/unless}}
+  </div>
+{{/if}}

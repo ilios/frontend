@@ -1,9 +1,17 @@
 .user-profile {
+  @include fill-parent;
   @include admin-blocks;
+
+  padding: 1em;
 
   h1 {
     @include ilios-heading-h1;
     text-align: center;
+  }
+
+  .small-component,
+  .large-component {
+    font-size: $base-font-size;
   }
 
   .user-roles {
@@ -21,4 +29,12 @@
 
 .user-profile-bio {
   @include ilios-form;
+}
+
+.user-profile-roles {
+  @include ilios-form;
+
+  hr {
+    border-top: .5px solid $text-grey;
+  }
 }
