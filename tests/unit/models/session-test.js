@@ -125,7 +125,46 @@ test('check associatedIlmLearnerGroups', function(assert) {
   });
 });
 
+test('check associatedLearnerGroups', function(assert) {
+  assert.expect(11);
+  let session = this.subject();
+  let store = this.store();
 
+  return session.get('associatedLearnerGroups').then(groups => {
+    assert.equal(groups.length, 0);
+
+    let learnerGroup1 = store.createRecord('learner-group');
+    let learnerGroup2 = store.createRecord('learner-group');
+    let learnerGroup3 = store.createRecord('learner-group');
+    let ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3 ] });
+    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
+    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+
+    session.set('ilmSession', ilm);
+    session.get('offerings').pushObjects([offering1, offering2]);
+
+    return session.get('associatedLearnerGroups').then(groups => {
+      assert.equal(groups.length, 3);
+      assert.ok(groups.contains(learnerGroup1));
+      assert.ok(groups.contains(learnerGroup2));
+      assert.ok(groups.contains(learnerGroup3));
+
+      let learnerGroup4 = store.createRecord('learner-group');
+      session.get('ilmSession').get('learnerGroups').pushObject(learnerGroup4);
+      let learnerGroup5 = store.createRecord('learner-group');
+      offering1.get('learnerGroups').pushObject(learnerGroup5);
+
+      return session.get('associatedLearnerGroups').then(groups => {
+        assert.equal(groups.length, 5);
+        assert.ok(groups.contains(learnerGroup1));
+        assert.ok(groups.contains(learnerGroup2));
+        assert.ok(groups.contains(learnerGroup3));
+        assert.ok(groups.contains(learnerGroup4));
+        assert.ok(groups.contains(learnerGroup5));
+      });
+    });
+  });
+});
 
 test('check learner groups count', function(assert) {
   assert.expect(2);
@@ -150,7 +189,5 @@ test('check learner groups count', function(assert) {
     offering1.get('learnerGroups').pushObject(learnerGroup5);
 
     assert.equal(session.get('learnerGroupCount'), 5);
-
-
   });
 });
