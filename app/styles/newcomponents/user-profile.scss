@@ -33,8 +33,41 @@
 
 .user-profile-roles {
   @include ilios-form;
+  @include omega(2n);
 
   hr {
     border-top: .5px solid $text-grey;
+  }
+}
+
+.user-profile-cohorts {
+  p {
+    margin-bottom: 2em;
+  }
+
+  h4 {
+    @include ilios-heading;
+    font-size: 1.1 * $base-font-size;
+    font-weight: bold;
+  }
+
+  .select-available-cohort {
+    h4 {
+      float: left;
+    }
+
+    ul {
+      clear: both;
+      padding-top: .75em;
+    }
+
+    .schoolsfilter {
+      float: left;
+      margin-left: 3em;
+    }
+  }
+
+  ul {
+    @include fill-parent;
   }
 }

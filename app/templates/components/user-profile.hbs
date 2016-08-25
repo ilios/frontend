@@ -21,3 +21,10 @@
   isManaging=isManagingRoles
   setIsManaging=setIsManagingRoles
 }}
+
+{{user-profile-cohorts
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingCohorts
+  setIsManaging=setIsManagingCohorts
+}}

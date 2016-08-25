@@ -69,13 +69,20 @@ export default Model.extend({
     }
     return '';
   }),
-  school: computed('programYear.program.school', function(){
+  program: computed('programYear.program', function(){
     return new Promise(resolve => {
       this.get('programYear').then(programYear => {
         programYear.get('program').then(program => {
-          program.get('school').then(school => {
-            resolve(school);
-          });
+          resolve(program);
+        });
+      });
+    });
+  }),
+  school: computed('program.school', function(){
+    return new Promise(resolve => {
+      this.get('program').then(program => {
+        program.get('school').then(school => {
+          resolve(school);
         });
       });
     });

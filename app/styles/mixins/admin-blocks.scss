@@ -17,7 +17,6 @@
 
     .actions {
       @include fill-parent;
-      margin-top: 1em;
       text-align: right;
     }
 
@@ -25,6 +24,16 @@
       @include ilios-heading;
       font-size: 1.25 * $base-font-size;
       margin-bottom: 1em;
+    }
+
+    p {
+      @include fill-parent;
+      clear: both;
+      margin-top: 1em;
+    }
+
+    button {
+      font-size: $base-font-size;
     }
   }
 
@@ -34,25 +43,19 @@
     @include media($large-screen) {
       @include span-columns(6 of 12);
     }
-
-    button {
-      font-size: $base-font-size;
-    }
   }
 
   .large-component {
+    @include omega;
+    clear: both;
 
     .title {
       @include fill-parent;
       text-align: center;
 
       @include media($large-screen) {
-        @include span-columns(5 of 12);
+        @include span-columns(6 of 12);
         text-align: left;
-      }
-
-      h2 {
-        font-size: $base-font-size;
       }
     }
 
@@ -61,7 +64,6 @@
       text-align: center;
 
       @include media($large-screen) {
-        @include shift(1);
         @include span-columns(6 of 12);
         @include omega;
         margin: 0;
