@@ -156,7 +156,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
-  associatedLearnerGroups: computed('offerings.@each.learnerGroups', function(){
+  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
       Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
@@ -175,6 +175,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       promise: deferred.promise
     });
   }),
+
   assignableVocabularies: alias('course.assignableVocabularies'),
 });
 

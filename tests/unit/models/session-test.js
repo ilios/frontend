@@ -49,12 +49,12 @@ test('check optional publication items', function(assert) {
   assert.equal(model.get('optionalPublicationIssues').length, 0);
 });
 
-test('check associatedLearnerGroups', function(assert) {
+test('check associatedOfferingLearnerGroups', function(assert) {
   assert.expect(11);
   let session = this.subject();
   let store = this.store();
 
-  return session.get('associatedLearnerGroups').then(groups => {
+  return session.get('associatedOfferingLearnerGroups').then(groups => {
     assert.equal(groups.length, 0);
 
     let learnerGroup1 = store.createRecord('learner-group');
@@ -65,7 +65,7 @@ test('check associatedLearnerGroups', function(assert) {
 
     session.get('offerings').pushObjects([offering1, offering2]);
 
-    return session.get('associatedLearnerGroups').then(groups => {
+    return session.get('associatedOfferingLearnerGroups').then(groups => {
       assert.equal(groups.length, 3);
       assert.ok(groups.contains(learnerGroup1));
       assert.ok(groups.contains(learnerGroup2));
@@ -77,7 +77,7 @@ test('check associatedLearnerGroups', function(assert) {
       let learnerGroup5 = store.createRecord('learner-group');
       offering1.get('learnerGroups').pushObject(learnerGroup5);
 
-      return session.get('associatedLearnerGroups').then(groups => {
+      return session.get('associatedOfferingLearnerGroups').then(groups => {
         assert.equal(groups.length, 5);
         assert.ok(groups.contains(learnerGroup1));
         assert.ok(groups.contains(learnerGroup2));

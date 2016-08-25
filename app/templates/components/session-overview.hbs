@@ -208,9 +208,9 @@
       <div class="sessionassociatedgroups">
         <label>{{t 'general.associatedGroups'}}:</label>
         <span>
-        {{#if session.associatedLearnerGroups.isFulfilled}}
+        {{#if session.associatedOfferingLearnerGroups.isFulfilled}}
           <span>
-            {{#each session.associatedLearnerGroups as |group|}}
+            {{#each session.associatedOfferingLearnerGroups as |group|}}
               {{group.title}},
             {{else}}
               {{t 'general.none'}}

@@ -57,15 +57,15 @@ export default Component.extend({
           return RSVP.hash({
             sessionType: session.get('sessionType'),
             firstOfferingDate: session.get('firstOfferingDate'),
-            associatedLearnerGroups: session.get('associatedLearnerGroups'),
+            associatedOfferingLearnerGroups: session.get('associatedOfferingLearnerGroups'),
             offerings: session.hasMany('offerings').ids(),
-          }).then(({sessionType, firstOfferingDate, associatedLearnerGroups, offerings})=> {
+          }).then(({sessionType, firstOfferingDate, associatedOfferingLearnerGroups, offerings})=> {
             return SessionProxy.create({
               content: session,
               currentUser: this.get('currentUser'),
               sessionType: sessionType.get('title'),
               firstOfferingDate,
-              learnerGroupCount: associatedLearnerGroups.get('length'),
+              learnerGroupCount: associatedOfferingLearnerGroups.get('length'),
               offeringCount: offerings.get('length')
             });
           });
