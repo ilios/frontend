@@ -8,7 +8,7 @@
     <div class='form-container'>
       <div class='form-col-12'>
         <label class='form-label'>{{t 'general.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
-        {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
+        {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))}}
           <div class="form-data">
             <select onchange={{action "setPrimaryCohort" value="target.value"}}>
               {{#each (sort-by 'title' cohorts) as |cohort|}}
@@ -17,7 +17,7 @@
                 </option>
               {{/each}}
             </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedCohort) (eq selectedUserIds.length 0)}}>
+            <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedCohort) (lt cohorts.length 1) (eq selectedUserIds.length 0)}}>
               {{#if isSaving}}
                 {{fa-icon 'spinner' spin=true}}
               {{else}}
