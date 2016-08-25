@@ -183,6 +183,31 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
     });
   }),
 
+  /**
+   * Learner-groups associated with this session via its ILM.
+   * @property associatedIlmLearnerGroups
+   * @type {Ember.computed}
+   * @public
+   */
+  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
+    var deferred = Ember.RSVP.defer();
+    this.get('ilmSession').then(function(ilmSession){
+      if (! isPresent(ilmSession)) {
+        deferred.resolve([]);
+        return;
+      }
+
+      ilmSession.get('learnerGroups').then(learnerGroups => {
+        let sortedGroups = learnerGroups.sortBy('title');
+        deferred.resolve(sortedGroups);
+      });
+    });
+
+    return DS.PromiseArray.create({
+      promise: deferred.promise
+    });
+  }),
+
   assignableVocabularies: alias('course.assignableVocabularies'),
 });
 

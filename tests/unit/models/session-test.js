@@ -90,6 +90,43 @@ test('check associatedOfferingLearnerGroups', function(assert) {
   });
 });
 
+test('check associatedIlmLearnerGroups', function(assert) {
+  assert.expect(10);
+  let session = this.subject();
+  let store = this.store();
+
+  return session.get('associatedIlmLearnerGroups').then(groups => {
+    assert.equal(groups.length, 0);
+
+    let learnerGroup1 = store.createRecord('learner-group');
+    let learnerGroup2 = store.createRecord('learner-group');
+    let learnerGroup3 = store.createRecord('learner-group');
+    let ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3 ] });
+
+    session.set('ilmSession', ilm);
+
+    return session.get('associatedIlmLearnerGroups').then(groups => {
+      assert.equal(groups.length, 3);
+      assert.ok(groups.contains(learnerGroup1));
+      assert.ok(groups.contains(learnerGroup2));
+      assert.ok(groups.contains(learnerGroup3));
+
+      let learnerGroup4 = store.createRecord('learner-group');
+      session.get('ilmSession').get('learnerGroups').pushObject(learnerGroup4);
+
+      return session.get('associatedIlmLearnerGroups').then(groups => {
+        assert.equal(groups.length, 4);
+        assert.ok(groups.contains(learnerGroup1));
+        assert.ok(groups.contains(learnerGroup2));
+        assert.ok(groups.contains(learnerGroup3));
+        assert.ok(groups.contains(learnerGroup4));
+      });
+    });
+  });
+});
+
+
+
 test('check learner groups count', function(assert) {
   assert.expect(2);
   let session = this.subject();
