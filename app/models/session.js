@@ -156,6 +156,13 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
+
+  /**
+   * Learner-groups associated with this session via its offerings.
+   * @property associatedOfferingLearnerGroups
+   * @type {Ember.computed}
+   * @public
+   */
   associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
     var deferred = Ember.RSVP.defer();
     this.get('offerings').then(function(offerings){
