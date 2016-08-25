@@ -90,7 +90,7 @@ test('check associatedOfferingLearnerGroups', function(assert) {
   });
 });
 
-test('check learer groups count', function(assert) {
+test('check learner groups count', function(assert) {
   assert.expect(2);
   let session = this.subject();
   let store = this.store();
