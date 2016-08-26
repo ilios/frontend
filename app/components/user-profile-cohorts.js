@@ -6,7 +6,6 @@ const { service } = inject;
 const { Promise, filter } = RSVP;
 
 export default Component.extend({
-  store: service(),
   currentUser: service(),
 
   didReceiveAttrs(){

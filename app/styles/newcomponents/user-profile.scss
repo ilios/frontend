@@ -51,6 +51,10 @@
     font-weight: bold;
   }
 
+  ul {
+    @include fill-parent;
+  }
+
   .select-available-cohort {
     h4 {
       float: left;
@@ -65,6 +69,18 @@
       float: left;
       margin-left: 3em;
     }
+  }
+}
+
+.user-profile-learnergroups {
+  p {
+    margin-bottom: 2em;
+  }
+
+  h4 {
+    @include ilios-heading;
+    font-size: 1.1 * $base-font-size;
+    font-weight: bold;
   }
 
   ul {
