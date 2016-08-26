@@ -240,7 +240,6 @@ export default Component.extend({
     let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      console.log(event);
       if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
           if (selectedCourses.contains(courseId)) {
