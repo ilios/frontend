@@ -160,7 +160,7 @@ export default Component.extend({
     let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      if (event.ilmEvent || event.offering) {
+      if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then(id => {
           if (selectedSessionTypes.contains(id)) {
             matchingEvents.pushObject(event);
@@ -186,7 +186,7 @@ export default Component.extend({
     let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      if (event.ilmEvent || event.offering) {
+      if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then(level => {
           if (selectedCourseLevels.contains(level)) {
             matchingEvents.pushObject(event);
@@ -212,7 +212,7 @@ export default Component.extend({
     let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      if (event.ilmEvent || event.offering) {
+      if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
           if (cohorts.any(cohortId => {
             return selectedCohorts.contains(cohortId);
@@ -240,7 +240,7 @@ export default Component.extend({
     let defer = RSVP.defer();
     let promises = [];
     events.forEach(event => {
-      if (event.ilmEvent || event.offering) {
+      if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
           if (selectedCourses.contains(courseId)) {
             matchingEvents.pushObject(event);
