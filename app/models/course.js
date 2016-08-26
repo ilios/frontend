@@ -112,20 +112,6 @@ export default Model.extend(PublishableModel, CategorizableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
-  associatedLearnerGroups: computed('sessions.[].associatedLearnerGroups.[]', function(){
-    let deferred = Ember.RSVP.defer();
-    this.get('sessions').then(function(sessions){
-      RSVP.all(sessions.mapBy('associatedLearnerGroups')).then(function(sessionLearnerGroups){
-        let allGroups = [].concat.apply([],sessionLearnerGroups);
-        let groups = allGroups?allGroups.uniq().sortBy('title'):[];
-        deferred.resolve(groups);
-      });
-    });
-
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
-  }),
 
   /**
    * All schools associated with this course.
