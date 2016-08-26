@@ -235,6 +235,7 @@ export default {
     'missingPassword': "Nécessite un mot de passe",
     'missingUsername': "Nécessite un nom d'utilisateur",
     'monday': 'Lundi',
+    'modifyUserPassword': 'Cliquez ici pour remettre à zéro votre mot de passe.',
     'month': "Mois",
     'moreInputRequiredPrompt': "Continuez à taper...",
     'moveToGroup': { 'one': "Placer l’étudiant à {{groupTitle}}", 'other': "Placer {{count}} étudiants à {{groupTitle}}" },
