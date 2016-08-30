@@ -153,3 +153,13 @@
     @include fill-parent;
   }
 }
+
+.user-profile-ics {
+  p {
+    margin-bottom: 2em;
+  }
+
+  .refresh-key {
+    background-color: $ilios-green;
+  }
+}

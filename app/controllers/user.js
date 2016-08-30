@@ -5,9 +5,11 @@ export default Ember.Controller.extend({
     'isManagingBio',
     'isManagingRoles',
     'isManagingCohorts',
+    'isManagingIcs',
   ],
   isManagingBio: false,
   isManagingRoles: false,
   isManagingCohorts: false,
+  isManagingIcs: false,
 
 });

@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import EventMixin from 'ilios/mixins/events';
 
 const { inject, computed } = Ember;
 const { service } = inject;
 
-export default Ember.Service.extend(EventMixin, {
+export default Ember.Service.extend({
   ajax: service(),
 
   config: computed(function(){
