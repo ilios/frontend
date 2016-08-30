@@ -135,6 +135,7 @@ export default {
     'edit': 'Edit',
     'educationalYear': 'Educational Year',
     'email': 'Email',
+    'enabled': 'Enabled',
     'end': 'End',
     'endDate': 'End Date',
     'endTime': 'End Time',
