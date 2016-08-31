@@ -5,7 +5,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 import strength from 'password-strength';
 
-const { Component, inject, computed, isPresent, isEmpty } = Ember;
+const { Component, inject, computed, isEmpty } = Ember;
 const { service } = inject;
 
 const Validations = buildValidations({
@@ -91,8 +91,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   didReceiveAttrs(){
     this._super(...arguments);
     const user = this.get('user');
-    if (isPresent(user)) {
-      this.get('setup').perform(user);
+    const isManaging = this.get('isManaging');
+    const manageTask = this.get('manage');
+    if (user && isManaging && !manageTask.get('lastSuccessfull')){
+      manageTask.perform();
     }
   },
 
@@ -101,6 +103,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   user: null,
   isManaging: false,
   isManagable: false,
+
   firstName: null,
   middleName: null,
   lastName: null,
@@ -109,13 +112,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   email: null,
   phone: null,
   username: null,
-  password: '',
+  password: null,
+
   hasSavedRecently: false,
   changeUserPassword: false,
   updatedFieldsFromSync: null,
 
-  setup: task(function * (user){
-    this.set('finishedSetup', false);
+  manage: task(function * (){
+    const user = this.get('user');
     this.setProperties(user.getProperties(
       'firstName',
       'middleName',
@@ -133,8 +137,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('username', auth.get('username'));
       this.set('password', '');
     }
+    this.get('setIsManaging')(true);
 
-    this.set('finishedSetup', true);
+    return true;
   }),
 
   save: task(function * (){
@@ -143,6 +148,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     let {validations} = yield this.validate();
     if (validations.get('isValid')) {
       const user = this.get('user');
+
       user.setProperties(this.getProperties(
         'firstName',
         'middleName',
@@ -168,8 +174,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }
 
       this.send('clearErrorDisplay');
-      this.get('setIsManaging')(false);
-      this.send('cancelChangeUserPassword');
+      this.get('cancel').perform();
       this.set('hasSavedRecently', true);
       yield timeout(500);
       this.set('hasSavedRecently', false);
@@ -223,6 +228,24 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   }).drop(),
 
+  cancel: task(function * (){
+    yield timeout(1);
+    this.set('hasSavedRecently', false);
+    this.set('updatedFieldsFromSync', []);
+    this.get('setIsManaging')(false);
+    this.set('changeUserPassword', false);
+
+    this.set('firstName', null);
+    this.set('lastName', null);
+    this.set('middleName', null);
+    this.set('campusId', null);
+    this.set('otherId', null);
+    this.set('email', null);
+    this.set('phone', null);
+    this.set('username', null);
+    this.set('password', null);
+  }).drop(),
+
   canEditUsernameAndPassword: computed('iliosConfig.userSearchType', function(){
     return new Promise(resolve => {
       this.get('iliosConfig.userSearchType').then(userSearchType => {
@@ -244,16 +267,21 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return strength(password);
   }),
 
+  authentication: computed('user.id', function(){
+    return new Promise(resolve => {
+      const store = this.get('store');
+      const user = this.get('user');
+      store.find('authentication', user.get('id')).then(authentication => {
+        resolve(authentication);
+      });
+    });
+  }),
+
   actions: {
     cancelChangeUserPassword(){
       this.set('changeUserPassword', false);
       this.set('password', null);
       this.send('removeErrorDisplayFor', 'password');
-    },
-    cancel(){
-      this.set('hasSavedRecently', false);
-      this.set('updatedFieldsFromSync', []);
-      this.get('setIsManaging')(false);
     }
   }
 });

@@ -1,190 +1,186 @@
-{{#if finishedSetup}}
-  <div class='actions'>
-    {{#if isManaging}}
-      <button class='directory-sync' title={{t 'updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
-      <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
-      <button disabled={{save.isRunning}} class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else if isManagable}}
-      <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
-    {{/if}}
-  </div>
-  <div class='item {{if (contains "firstName" updatedFieldsFromSync) "synced-from-directory"}}'>
-    <label>{{t 'general.firstName'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{firstName}}</span>
-    {{else}}
-      {{one-way-input
-        value=firstName
-        update=(action (mut firstName))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'firstName')
-      }}
-      {{#if (and (v-get this 'firstName' 'isInvalid') (is-in showErrorsFor 'firstName'))}}
-        <span class="message error">{{v-get this 'firstName' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  <div class='item'>
-    <label>{{t 'general.middleName'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{middleName}}</span>
-    {{else}}
-      {{one-way-input
-        value=middleName
-        update=(action (mut middleName))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'middleName')
-      }}
-      {{#if (and (v-get this 'middleName' 'isInvalid') (is-in showErrorsFor 'middleName'))}}
-        <span class="message error">{{v-get this 'middleName' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  <div class='item {{if (contains "lastName" updatedFieldsFromSync) "synced-from-directory"}}'>
-    <label>{{t 'general.lastName'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{lastName}}</span>
-    {{else}}
-      {{one-way-input
-        value=lastName
-        update=(action (mut lastName))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'lastName')
-      }}
-      {{#if (and (v-get this 'lastName' 'isInvalid') (is-in showErrorsFor 'lastName'))}}
-        <span class="message error">{{v-get this 'lastName' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  <div class='item {{if (contains "campusId" updatedFieldsFromSync) "synced-from-directory"}}'>
-    <label>{{t 'general.campusId'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{campusId}}</span>
-    {{else}}
-      {{one-way-input
-        value=campusId
-        update=(action (mut campusId))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'campusId')
-      }}
-      {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
-        <span class="message error">{{v-get this 'campusId' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  <div class='item'>
-    <label>{{t 'general.otherId'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{otherId}}</span>
-    {{else}}
-      {{one-way-input
-        value=otherId
-        update=(action (mut otherId))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'otherId')
-      }}
-      {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
-        <span class="message error">{{v-get this 'otherId' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  <div class='item {{if (contains "email" updatedFieldsFromSync) "synced-from-directory"}}'>
-    <label>{{t 'general.email'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{email}}</span>
-    {{else}}
-      {{one-way-input
-        value=email
-        update=(action (mut email))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'email')
-      }}
-      {{#if (and (v-get this 'email' 'isInvalid') (is-in showErrorsFor 'email'))}}
-        <span class="message error">{{v-get this 'email' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  <div class='item {{if (contains "phone" updatedFieldsFromSync) "synced-from-directory"}}'>
-    <label>{{t 'general.phone'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{phone}}</span>
-    {{else}}
-      {{one-way-input
-        value=phone
-        update=(action (mut phone))
-        onenter=(perform save)
-        onescape=(action setIsManaging false)
-        focusOut=(action 'addErrorDisplayFor' 'phone')
-      }}
-      {{#if (and (v-get this 'phone' 'isInvalid') (is-in showErrorsFor 'phone'))}}
-        <span class="message error">{{v-get this 'phone' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
-  {{#if (await canEditUsernameAndPassword)}}
-    <div class='item {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"}}'>
-      <label>{{t 'general.username'}}:</label>
-      {{#unless isManaging}}
-        <span class='value'>{{username}}</span>
-      {{else}}
-        {{one-way-input
-          value=username
-          update=(action (mut username))
-          onenter=(perform save)
-          onescape=(action setIsManaging false)
-          focusOut=(action 'addErrorDisplayFor' 'username')
-        }}
-        {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
-          <span class="message error">{{v-get this 'username' 'message'}}</span>
-        {{/if}}
-      {{/unless}}
-    </div>
-    <div class='item password'>
-      <label>{{t 'general.password'}}:</label>
-      {{#unless isManaging}}
-        <span class='value'>&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;</span>
-      {{else}}
-        {{#if changeUserPassword}}
-          {{one-way-password
-            value=password
-            update=(action (mut password))
-            onenter=(perform save)
-            onescape=(action (mut changeUserPassword) false)
-            onkeypress=(action 'addErrorDisplayFor' 'password')
-            focusOut=(action 'addErrorDisplayFor' 'password')
-          }}
-          {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
-            <span class="message error">{{v-get this 'password' 'message'}}</span>
-          {{else if (gt password.length 0)}}
-            <span class='password-strength {{concat "strength-" passwordStrength.score}}'>
-              {{#if (eq passwordStrength.score 0)}}
-                {{t 'general.tryHarder'}}
-              {{else if (eq passwordStrength.score 1)}}
-                {{t 'general.bad'}}
-              {{else if (eq passwordStrength.score 2)}}
-                {{t 'general.weak'}}
-              {{else if (eq passwordStrength.score 3)}}
-                {{t 'general.good'}}
-              {{else if (eq passwordStrength.score 4)}}
-                {{t 'general.strong'}}
-              {{/if}}
-            </span>
-            <meter max="4" value={{passwordStrength.score}}></meter>
-          {{/if}}
-          <span class='cancel-password-field clickable link' onclick={{action 'cancelChangeUserPassword'}}>{{t 'general.cancel'}}</span>
-
-        {{else}}
-          <span class='clickable link activate-password-field' onclick={{action (mut changeUserPassword) true}}>{{t 'general.modifyUserPassword'}}</span>
-        {{/if}}
-      {{/unless}}
-    </div>
+<div class='actions'>
+  {{#if isManaging}}
+    <button class='directory-sync' title={{t 'updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
+    <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+    <button disabled={{save.isRunning}} class='bigcancel' {{action (perform cancel)}}>{{fa-icon 'undo'}}</button>
+  {{else if isManagable}}
+    <button class='manage' {{action (perform manage)}}>{{fa-icon 'edit'}}</button>
   {{/if}}
-{{else}}
-  <p>{{fa-icon 'spinner' spin=true}}</p>
+</div>
+<div class='item {{if (contains "firstName" updatedFieldsFromSync) "synced-from-directory"}}'>
+  <label>{{t 'general.firstName'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.firstName}}</span>
+  {{else}}
+    {{one-way-input
+      value=firstName
+      update=(action (mut firstName))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'firstName')
+    }}
+    {{#if (and (v-get this 'firstName' 'isInvalid') (is-in showErrorsFor 'firstName'))}}
+      <span class="message error">{{v-get this 'firstName' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+<div class='item'>
+  <label>{{t 'general.middleName'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.middleName}}</span>
+  {{else}}
+    {{one-way-input
+      value=middleName
+      update=(action (mut middleName))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'middleName')
+    }}
+    {{#if (and (v-get this 'middleName' 'isInvalid') (is-in showErrorsFor 'middleName'))}}
+      <span class="message error">{{v-get this 'middleName' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+<div class='item {{if (contains "lastName" updatedFieldsFromSync) "synced-from-directory"}}'>
+  <label>{{t 'general.lastName'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.lastName}}</span>
+  {{else}}
+    {{one-way-input
+      value=lastName
+      update=(action (mut lastName))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'lastName')
+    }}
+    {{#if (and (v-get this 'lastName' 'isInvalid') (is-in showErrorsFor 'lastName'))}}
+      <span class="message error">{{v-get this 'lastName' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+<div class='item {{if (contains "campusId" updatedFieldsFromSync) "synced-from-directory"}}'>
+  <label>{{t 'general.campusId'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.campusId}}</span>
+  {{else}}
+    {{one-way-input
+      value=campusId
+      update=(action (mut campusId))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'campusId')
+    }}
+    {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
+      <span class="message error">{{v-get this 'campusId' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+<div class='item'>
+  <label>{{t 'general.otherId'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.otherId}}</span>
+  {{else}}
+    {{one-way-input
+      value=otherId
+      update=(action (mut otherId))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'otherId')
+    }}
+    {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
+      <span class="message error">{{v-get this 'otherId' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+<div class='item {{if (contains "email" updatedFieldsFromSync) "synced-from-directory"}}'>
+  <label>{{t 'general.email'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.email}}</span>
+  {{else}}
+    {{one-way-input
+      value=email
+      update=(action (mut email))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'email')
+    }}
+    {{#if (and (v-get this 'email' 'isInvalid') (is-in showErrorsFor 'email'))}}
+      <span class="message error">{{v-get this 'email' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+<div class='item {{if (contains "phone" updatedFieldsFromSync) "synced-from-directory"}}'>
+  <label>{{t 'general.phone'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{user.phone}}</span>
+  {{else}}
+    {{one-way-input
+      value=phone
+      update=(action (mut phone))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'phone')
+    }}
+    {{#if (and (v-get this 'phone' 'isInvalid') (is-in showErrorsFor 'phone'))}}
+      <span class="message error">{{v-get this 'phone' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
+{{#if (await canEditUsernameAndPassword)}}
+  <div class='item {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"}}'>
+    <label>{{t 'general.username'}}:</label>
+    {{#unless isManaging}}
+      <span class='value'>{{get (await authentication) 'username'}}</span>
+    {{else}}
+      {{one-way-input
+        value=username
+        update=(action (mut username))
+        onenter=(perform save)
+        onescape=(perform cancel)
+        focusOut=(action 'addErrorDisplayFor' 'username')
+      }}
+      {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
+        <span class="message error">{{v-get this 'username' 'message'}}</span>
+      {{/if}}
+    {{/unless}}
+  </div>
+  <div class='item password'>
+    <label>{{t 'general.password'}}:</label>
+    {{#unless isManaging}}
+      <span class='value'>&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;</span>
+    {{else}}
+      {{#if changeUserPassword}}
+        {{one-way-password
+          value=password
+          update=(action (mut password))
+          onenter=(perform save)
+          onescape=(action 'cancelChangeUserPassword')
+          onkeypress=(action 'addErrorDisplayFor' 'password')
+          focusOut=(action 'addErrorDisplayFor' 'password')
+        }}
+        {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
+          <span class="message error">{{v-get this 'password' 'message'}}</span>
+        {{else if (gt password.length 0)}}
+          <span class='password-strength {{concat "strength-" passwordStrength.score}}'>
+            {{#if (eq passwordStrength.score 0)}}
+              {{t 'general.tryHarder'}}
+            {{else if (eq passwordStrength.score 1)}}
+              {{t 'general.bad'}}
+            {{else if (eq passwordStrength.score 2)}}
+              {{t 'general.weak'}}
+            {{else if (eq passwordStrength.score 3)}}
+              {{t 'general.good'}}
+            {{else if (eq passwordStrength.score 4)}}
+              {{t 'general.strong'}}
+            {{/if}}
+          </span>
+          <meter max="4" value={{passwordStrength.score}}></meter>
+        {{/if}}
+        <span class='cancel-password-field clickable link' onclick={{action 'cancelChangeUserPassword'}}>{{t 'general.cancel'}}</span>
+
+      {{else}}
+        <span class='clickable link activate-password-field' onclick={{action (mut changeUserPassword) true}}>{{t 'general.modifyUserPassword'}}</span>
+      {{/if}}
+    {{/unless}}
+  </div>
 {{/if}}

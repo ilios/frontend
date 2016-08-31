@@ -478,7 +478,7 @@ export default {
     'tryHarder': 'Try Harder',
     'tuesday': 'Tuesday',
     'type': 'Type',
-    'unableToSyncUser': 'Unable to sync user from directory, please ensure the campusId is correct.',
+    'unableToSyncUser': 'Unable to sync user from directory, please ensure the Campus ID is correct.',
     'unPublishCourse': 'UnPublish Course',
     'unPublishProgram': 'UnPublish Program',
     'unPublishProgramYear': 'UnPublish Program Year',
