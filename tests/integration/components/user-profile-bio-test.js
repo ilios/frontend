@@ -498,3 +498,77 @@ test('password strength 4 display', function(assert) {
     });
   });
 });
+
+
+test('sync user from directory', function(assert) {
+  assert.expect(21);
+  const iliosConfigMock = Service.extend({
+    userSearchType: resolve('ldap')
+  });
+  this.register('service:iliosConfig', iliosConfigMock);
+  const ajaxMock = Service.extend({
+    request(url){
+      assert.equal(url, '/application/directory/find/13', 'ajax request url is correct');
+      return resolve({result: {
+        firstName: 'new-first-name',
+        lastName: 'new-last-name',
+        email: 'new-email',
+        phone: 'new-phone',
+        campusId: 'new-campus-id',
+      }});
+    }
+  });
+  this.register('service:ajax', ajaxMock);
+  this.set('user', user);
+  this.set('nothing', parseInt);
+
+  this.render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+  const items = '.item';
+  const firstName = `${items}:eq(0)`;
+  const middleName = `${items}:eq(1)`;
+  const lastName = `${items}:eq(2)`;
+  const campusId = `${items}:eq(3)`;
+  const otherId = `${items}:eq(4)`;
+  const email = `${items}:eq(5)`;
+  const phone = `${items}:eq(6)`;
+
+  const firstNameInput = `${firstName} input:eq(0)`;
+  const middleNameInput = `${middleName} input:eq(0)`;
+  const lastNameInput = `${lastName} input:eq(0)`;
+  const campusIdInput = `${campusId} input:eq(0)`;
+  const otherIdInput = `${otherId} input:eq(0)`;
+  const emailInput = `${email} input:eq(0)`;
+  const phoneInput = `${phone} input:eq(0)`;
+
+  const syncBUtton = 'button.directory-sync';
+
+  return wait().then(()=>{
+    assert.equal(this.$(items).length, 7, 'correct number of inputs');
+    assert.equal(this.$(firstNameInput).val().trim(), 'Test Person', 'firstname is set');
+    assert.equal(this.$(middleNameInput).val().trim(), 'Name', 'middlename is set');
+    assert.equal(this.$(lastNameInput).val().trim(), 'Thing', 'lastname is set');
+    assert.equal(this.$(campusIdInput).val().trim(), 'idC', 'campuId is set');
+    assert.equal(this.$(otherIdInput).val().trim(), 'idO', 'otherId is set');
+    assert.equal(this.$(emailInput).val().trim(), 'test@test.com', 'email is set');
+    assert.equal(this.$(phoneInput).val().trim(), 'x1234', 'phone is set');
+    this.$(syncBUtton).click();
+
+    return wait().then(()=>{
+      assert.equal(this.$(firstNameInput).val().trim(), 'new-first-name', 'firstname is updated');
+      assert.equal(this.$(middleNameInput).val().trim(), 'Name', 'middlename is set');
+      assert.equal(this.$(lastNameInput).val().trim(), 'new-last-name', 'lastname is updated');
+      assert.equal(this.$(campusIdInput).val().trim(), 'new-campus-id', 'campuId is updated');
+      assert.equal(this.$(otherIdInput).val().trim(), 'idO', 'otherId is set');
+      assert.equal(this.$(emailInput).val().trim(), 'new-email', 'email is updated');
+      assert.equal(this.$(phoneInput).val().trim(), 'new-phone', 'phone is updated');
+
+      assert.ok(this.$(firstName).hasClass('synced-from-directory'), 'firstName has updated class applied');
+      assert.ok(this.$(lastName).hasClass('synced-from-directory'), 'lastName has updated class applied');
+      assert.ok(this.$(phone).hasClass('synced-from-directory'), 'phone has updated class applied');
+      assert.ok(this.$(email).hasClass('synced-from-directory'), 'email has updated class applied');
+      assert.ok(this.$(campusId).hasClass('synced-from-directory'), 'campusId has updated class applied');
+
+      return wait();
+    });
+  });
+});

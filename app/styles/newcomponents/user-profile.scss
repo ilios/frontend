@@ -30,6 +30,16 @@
 .user-profile-bio {
   @include ilios-form;
 
+  .directory-sync {
+    background-color: $ilios-blue;
+  }
+
+  .item {
+    &.synced-from-directory input {
+      background-color: lighten($ilios-green, 40%);
+    }
+  }
+
   .cancel-password-field {
     display: inline-block;
     text-align: left;

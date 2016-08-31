@@ -1,13 +1,14 @@
 {{#if finishedSetup}}
   <div class='actions'>
     {{#if isManaging}}
+      <button class='directory-sync' title={{t 'updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
       <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
-      <button disabled={{save.isRunning}} class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
+      <button disabled={{save.isRunning}} class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else if isManagable}}
       <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
     {{/if}}
   </div>
-  <div class='item'>
+  <div class='item {{if (contains "firstName" updatedFieldsFromSync) "synced-from-directory"}}'>
     <label>{{t 'general.firstName'}}:</label>
     {{#unless isManaging}}
       <span class='value'>{{firstName}}</span>
@@ -41,7 +42,7 @@
       {{/if}}
     {{/unless}}
   </div>
-  <div class='item'>
+  <div class='item {{if (contains "lastName" updatedFieldsFromSync) "synced-from-directory"}}'>
     <label>{{t 'general.lastName'}}:</label>
     {{#unless isManaging}}
       <span class='value'>{{lastName}}</span>
@@ -58,7 +59,7 @@
       {{/if}}
     {{/unless}}
   </div>
-  <div class='item'>
+  <div class='item {{if (contains "campusId" updatedFieldsFromSync) "synced-from-directory"}}'>
     <label>{{t 'general.campusId'}}:</label>
     {{#unless isManaging}}
       <span class='value'>{{campusId}}</span>
@@ -92,7 +93,7 @@
       {{/if}}
     {{/unless}}
   </div>
-  <div class='item'>
+  <div class='item {{if (contains "email" updatedFieldsFromSync) "synced-from-directory"}}'>
     <label>{{t 'general.email'}}:</label>
     {{#unless isManaging}}
       <span class='value'>{{email}}</span>
@@ -109,7 +110,7 @@
       {{/if}}
     {{/unless}}
   </div>
-  <div class='item'>
+  <div class='item {{if (contains "phone" updatedFieldsFromSync) "synced-from-directory"}}'>
     <label>{{t 'general.phone'}}:</label>
     {{#unless isManaging}}
       <span class='value'>{{phone}}</span>
@@ -127,7 +128,7 @@
     {{/unless}}
   </div>
   {{#if (await canEditUsernameAndPassword)}}
-    <div class='item'>
+    <div class='item {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"}}'>
       <label>{{t 'general.username'}}:</label>
       {{#unless isManaging}}
         <span class='value'>{{username}}</span>
