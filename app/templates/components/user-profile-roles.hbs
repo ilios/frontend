@@ -79,7 +79,7 @@
 <hr />
 
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'enabled')}}>{{t 'general.enabled'}}:</label>
+  <label onclick={{if isManaging (action 'toggleFlippedRole' 'enabled')}}>{{t 'general.accountEnabled'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isEnabled) "yes" "no"}}'>
       {{#if (await isEnabled)}}

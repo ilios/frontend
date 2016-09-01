@@ -3,6 +3,7 @@ export default {
     'academicLevel': 'Academic Level',
     'academicLevels': 'Academic Levels',
     'academicYear': 'Academic Year',
+    'accountEnabled': 'Account Enabled',
     'actions': 'Actions',
     'activeFilters': 'Active Filters',
     'add': 'Add',
