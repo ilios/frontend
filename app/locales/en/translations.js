@@ -173,7 +173,7 @@ export default {
     'home': 'Home',
     'hours': 'Hours',
     'icsInstructions': 'To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!',
-    'icsAdminInstructions': 'To add a users Ilios calendar to another application or service, they will need to use this URL.  This URL is like a password. Anyone who knows it can view this users calendar!',
+    'icsAdminInstructions': "To add a user's Ilios calendar to another application or service, they will need to use this URL.  This URL is like a password. Anyone who knows it can view this user's calendar!",
     'icsFeed': 'ICS Feed',
     'include': 'Include',
     'incompleteSessions': 'Sessions Incomplete: cannot publish',
