@@ -81,7 +81,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
   iliosConfig: service(),
   ajax: service(),
-  flashMessages: service(),
 
   init(){
     this._super(...arguments);
@@ -117,6 +116,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   hasSavedRecently: false,
   changeUserPassword: false,
   updatedFieldsFromSync: null,
+  showSyncErrorMessage: false,
 
   manage: task(function * (){
     const user = this.get('user');
@@ -185,6 +185,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   directorySync: task(function * (){
     yield timeout(10);
     this.set('updatedFieldsFromSync', []);
+    this.set('showSyncErrorMessage', false);
+    this.set('syncComplete', false);
     const userId = this.get('user.id');
     let url = `/application/directory/find/${userId}`;
     const ajax = this.get('ajax');
@@ -222,8 +224,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         this.get('updatedFieldsFromSync').pushObject('username');
       }
     } catch (e) {
-      const flashMessages = this.get('flashMessages');
-      flashMessages.alert('general.unableToSyncUser');
+      this.set('showSyncErrorMessage', true);
+    } finally {
+      this.set('syncComplete', true);
+      yield timeout(2000);
+      this.set('syncComplete', false);
+
     }
 
   }).drop(),

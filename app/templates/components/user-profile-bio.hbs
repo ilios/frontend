@@ -70,9 +70,12 @@
       onescape=(perform cancel)
       focusOut=(action 'addErrorDisplayFor' 'campusId')
     }}
-    <button class='directory-sync' title={{t 'general.updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
+    <button class='directory-sync {{if syncComplete "directory-sync-complete"}}' title={{t 'general.updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if (and (not syncComplete) directorySync.isRunning) 'spinner' 'refresh') spin=(if (and (not syncComplete) directorySync.isRunning) true false)}}</button>
     {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
       <span class="message error">{{v-get this 'campusId' 'message'}}</span>
+    {{/if}}
+    {{#if showSyncErrorMessage}}
+      <span class='message error'>{{t 'general.unableToSyncUser'}}</span>
     {{/if}}
   {{/unless}}
 </div>

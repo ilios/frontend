@@ -44,6 +44,13 @@
     background-color: $ilios-blue;
   }
 
+  .directory-sync-complete {
+    background-color: transparent;
+    border: 1px solid $ilios-green;
+    color: $ilios-green;
+    outline: 1px solid $ilios-green;
+  }
+
   .item {
     &.synced-from-directory input {
       background-color: lighten($ilios-green, 40%);
