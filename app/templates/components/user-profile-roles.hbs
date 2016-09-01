@@ -92,6 +92,7 @@
     {{one-way-checkbox
       checked=(await isEnabled)
       update=(action 'toggleFlippedRole' 'enabled')
+      disabled=(eq user.id currentUser.model.id)
     }}
   {{/unless}}
 </div>
