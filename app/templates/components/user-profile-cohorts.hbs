@@ -62,14 +62,18 @@
         {{/if}}
       </div>
       {{#if (is-fulfilled assignableCohortsForSelectedSchool)}}
-        <ul>
-          {{#each (sort-by 'programYear.program.school.title' 'programYear.program.title' 'title' (await assignableCohortsForSelectedSchool)) as |cohort|}}
-            <li>
-              {{fa-icon 'plus' class='clickable add' title=(t 'general.addCohort') click=(action 'addSelectedCohort' cohort)}}
-              <strong>{{get (await cohort.program) 'title'}}</strong> {{cohort.title}}
-            </li>
-          {{/each}}
-        </ul>
+        {{#if (gt (get (await assignableCohortsForSelectedSchool) 'length') 0)}}
+          <ul>
+            {{#each (sort-by 'programYear.program.school.title' 'programYear.program.title' 'title' (await assignableCohortsForSelectedSchool)) as |cohort|}}
+              <li>
+                {{fa-icon 'plus' class='clickable add' title=(t 'general.addCohort') click=(action 'addSelectedCohort' cohort)}}
+                <strong>{{get (await cohort.program) 'title'}}</strong> {{cohort.title}}
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p>{{t 'general.none'}}</p>
+        {{/if}}
       {{else}}
         {{fa-icon 'spinner' spin=true}}
       {{/if}}
