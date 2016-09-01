@@ -13,7 +13,7 @@ export default Component.extend({
     this.set('flippedRoles', []);
   },
 
-  classNameBindings: [':user-profile-roles', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+  classNameBindings: [':user-profile-roles', ':small-component', ':last', 'hasSavedRecently:has-saved:has-not-saved'],
 
   user: null,
   isManaging: false,

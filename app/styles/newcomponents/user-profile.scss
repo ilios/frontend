@@ -9,6 +9,10 @@
     text-align: center;
   }
 
+  h2 {
+    @include ilios-heading-h2;
+  }
+
   .small-component,
   .large-component {
     font-size: $base-font-size;
@@ -109,7 +113,6 @@
 
 .user-profile-roles {
   @include ilios-form;
-  @include omega(2n);
 
   hr {
     border-top: .5px solid $text-grey;
@@ -171,5 +174,15 @@
 
   .refresh-key {
     background-color: $ilios-green;
+  }
+}
+
+.user-profile-schools {
+  .primary-school {
+    font-size: $h4-font-size;
+  }
+
+  h4 {
+    @include ilios-heading-h4;
   }
 }

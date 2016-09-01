@@ -1,4 +1,10 @@
 @mixin admin-blocks () {
+  @include outer-container;
+
+  @include media($large-screen) {
+    @include span-columns(12);
+  }
+
   .small-component,
   .large-component {
     @include fill-parent;
@@ -13,11 +19,6 @@
     &.alert {
       background-color: $white;
       border: 3px solid $ilios-yellow;
-    }
-
-    .actions {
-      @include fill-parent;
-      text-align: right;
     }
 
     h2 {
@@ -35,6 +36,26 @@
     button {
       font-size: $base-font-size;
     }
+
+    .title {
+      @include fill-parent;
+      text-align: center;
+
+      @include media($large-screen) {
+        text-align: left;
+      }
+    }
+
+    .actions {
+      margin: 1em 0;
+      text-align: center;
+
+      @include media($large-screen) {
+        @include omega();
+        margin: 0;
+        text-align: right;
+      }
+    }
   }
 
   .small-component {
@@ -42,6 +63,23 @@
 
     @include media($large-screen) {
       @include span-columns(6 of 12);
+    }
+
+    &.last {
+      @include omega();
+    }
+
+    .title {
+      @include media($large-screen) {
+        @include span-columns(3 of 6);
+      }
+    }
+
+    .actions {
+      @include media($large-screen) {
+        @include span-columns(3 of 6);
+        @include omega();
+      }
     }
   }
 
@@ -65,7 +103,7 @@
 
       @include media($large-screen) {
         @include span-columns(6 of 12);
-        @include omega;
+        @include omega();
         margin: 0;
         text-align: right;
       }

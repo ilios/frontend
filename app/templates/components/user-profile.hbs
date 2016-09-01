@@ -41,4 +41,11 @@
   setIsManaging=setIsManagingIcs
 }}
 
+{{user-profile-schools
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingSchools
+  setIsManaging=setIsManagingSchools
+}}
+
 {{user-profile-learnergroups user=user}}

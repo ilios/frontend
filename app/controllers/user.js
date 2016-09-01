@@ -6,10 +6,12 @@ export default Ember.Controller.extend({
     'isManagingRoles',
     'isManagingCohorts',
     'isManagingIcs',
+    'isManagingSchools',
   ],
   isManagingBio: false,
   isManagingRoles: false,
   isManagingCohorts: false,
   isManagingIcs: false,
+  isManagingSchools: false,
 
 });

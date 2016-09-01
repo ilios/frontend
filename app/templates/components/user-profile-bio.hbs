@@ -1,3 +1,4 @@
+<h2 class='title'></h2>
 <div class='actions'>
   {{#if isManaging}}
     <button class='directory-sync' title={{t 'updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
