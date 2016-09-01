@@ -32,6 +32,7 @@ test('can transition to `users` route', function(assert) {
 
 test('can search for users', function(assert) {
   server.createList('user', 20, { email: 'user@example.edu' });
+  server.createList('authentication', 20);
 
   const userSearch = '.user-search input';
   const secondResult = '.user-search .results li:eq(2)';

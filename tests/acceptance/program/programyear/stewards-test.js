@@ -65,6 +65,7 @@ module('Acceptance: Program Year - Stewards', {
       program: 1,
       stewards: [1,2,3]
     });
+    server.create('cohort');
   },
 
   afterEach: function() {

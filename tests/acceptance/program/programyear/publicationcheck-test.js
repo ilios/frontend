@@ -8,12 +8,14 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 var fixtures = {};
-module('Acceptance: Program - Publication Check', {
+module('Acceptance: Program Year - Publication Check', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
+    server.logging = true;
     server.create('programYear');
+    server.create('cohort');
     fixtures.fullProgram = server.create('program', {
       startYear: 2013,
       school: 1,

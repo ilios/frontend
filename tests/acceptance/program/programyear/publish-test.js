@@ -29,6 +29,7 @@ module('Acceptance: Program Year - Publish', {
       published: false,
       publishedAsTbd: false
     });
+    server.createList('cohort', 3);
   },
 
   afterEach: function() {

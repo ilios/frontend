@@ -15,6 +15,7 @@ module('Acceptance: Users', {
 
     server.create('school');
     server.createList('user', 90, { school: 1, campusId: '555', email: 'user@example.edu' });
+    server.createList('authentication', 90);
   },
 
   afterEach() {

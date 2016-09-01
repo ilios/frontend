@@ -25,6 +25,7 @@ module('Acceptance: Program Year - Competencies', {
       program: 1,
       competencies: [2,3]
     });
+    server.create('cohort');
     server.create('competency', {
       school: 1,
       children: [2,3]

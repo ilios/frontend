@@ -73,6 +73,12 @@ export default function() {
   this.delete('api/alerts/:id', 'alert');
   this.post('api/alerts', 'alert');
 
+  this.get('api/authentications', getAll);
+  this.get('api/authentications/:id', 'authentication');
+  this.put('api/authentications/:id', 'authentication');
+  this.delete('api/authentications/:id', 'authentication');
+  this.post('api/authentications', 'authentication');
+
   this.get('api/cohorts', getAll);
   this.get('api/cohorts/:id', 'cohort');
   this.put('api/cohorts/:id', 'cohort');

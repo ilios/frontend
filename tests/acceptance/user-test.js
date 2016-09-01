@@ -25,9 +25,9 @@ module('Acceptance: User', {
     server.create('school', { programs: [1]});
     server.create('program', {programYears: [1, 2, 3]});
     server.createList('programYear', 3, { program: 1});
-    server.create('cohort', { title: 'Medicine', users: [ 4136 ] });
+    server.create('cohort', { title: 'Medicine', users: [ 4136 ], learnerGroups: [1, 2, 3, 4, 5] });
     server.createList('cohort', 2, {  users: [ 4136 ] });
-    server.createList('learnerGroup', 5, { title: 'Group 1', users: [ 4136 ] });
+    server.createList('learnerGroup', 5, { title: 'Group 1', users: [ 4136 ], cohort: 1 });
   },
 
   afterEach() {
@@ -37,6 +37,7 @@ module('Acceptance: User', {
 
 test('can search for users', function(assert) {
   server.createList('user', 20, { email: 'user@example.edu' });
+  server.createList('authentication', 20);
 
   const userSearch = '.user-search input';
   const secondResult = '.user-search .results li:eq(2)';

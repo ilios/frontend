@@ -6,10 +6,11 @@ export default function(application, userObject = {id: 4136}) {
     jwt: encodedData
   };
   authenticateSession(application, token);
-  
+
   if(userObject){
+    server.create('authentication', {id: userObject.id, user: userObject.id})
     return server.create('user', userObject);
   }
-  
+
   return null;
 }

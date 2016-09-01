@@ -24,6 +24,7 @@ module('Acceptance: Program Year - Overview', {
       program: 1,
       directors: [2,3,4]
     });
+    server.create('cohort');
   },
 
   afterEach: function() {
