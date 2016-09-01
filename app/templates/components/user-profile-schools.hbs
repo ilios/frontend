@@ -55,6 +55,7 @@
       {{/each}}
     </tbody>
   </table>
-{{else}}
-  <p>{{t 'general.noPermissionsInOtherSchools'}}</p>
+{{/if}}
+{{#if (and (is-fulfilled displaySchools) isManaging)}}
+  <p class='more-permissions-notice'>{{t 'general.noPermissionsInOtherSchools'}}</p>
 {{/if}}

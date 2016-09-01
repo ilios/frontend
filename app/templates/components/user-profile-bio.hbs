@@ -1,7 +1,6 @@
 <h2 class='title'></h2>
 <div class='actions'>
   {{#if isManaging}}
-    <button class='directory-sync' title={{t 'updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
     <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
     <button disabled={{save.isRunning}} class='bigcancel' {{action (perform cancel)}}>{{fa-icon 'undo'}}</button>
   {{else if isManagable}}
@@ -59,7 +58,7 @@
     {{/if}}
   {{/unless}}
 </div>
-<div class='item {{if (contains "campusId" updatedFieldsFromSync) "synced-from-directory"}}'>
+<div class='item {{if (contains "campusId" updatedFieldsFromSync) "synced-from-directory"}} campus-id'>
   <label>{{t 'general.campusId'}}:</label>
   {{#unless isManaging}}
     <span class='value'>{{user.campusId}}</span>
@@ -71,6 +70,7 @@
       onescape=(perform cancel)
       focusOut=(action 'addErrorDisplayFor' 'campusId')
     }}
+    <button class='directory-sync' title={{t 'general.updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if directorySync.isRunning 'spinner' 'refresh') spin=(if directorySync.isRunning true false)}}</button>
     {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
       <span class="message error">{{v-get this 'campusId' 'message'}}</span>
     {{/if}}

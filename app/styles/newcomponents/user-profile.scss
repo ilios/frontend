@@ -34,6 +34,12 @@
 .user-profile-bio {
   @include ilios-form;
 
+  label {
+    @include ilios-label;
+    display: block;
+    margin-top: 0;
+  }
+
   .directory-sync {
     background-color: $ilios-blue;
   }
@@ -41,6 +47,19 @@
   .item {
     &.synced-from-directory input {
       background-color: lighten($ilios-green, 40%);
+    }
+  }
+
+  .campus-id {
+    input {
+      clear: left;
+      width: 80%;
+    }
+
+    button {
+      height: 2.5em;
+      margin-bottom: .25em;
+      margin-left: .5em;
     }
   }
 
@@ -188,5 +207,12 @@
 
   h4 {
     @include ilios-heading-h4;
+  }
+
+  .more-permissions-notice {
+    color: $text-grey;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
   }
 }
