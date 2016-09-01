@@ -4,6 +4,9 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 const { Route } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  setupController(controller){
+    controller.get('searchForUsers').perform();
+  },
   queryParams: {
     query: {
       replace: true
