@@ -8,7 +8,7 @@
   {{/if}}
 </div>
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'course director')}}>{{t 'general.courseDirector'}}:</label>
+  <label onclick={{if isManaging (action (mut isCourseDirectorFlipped) (not isCourseDirectorFlipped))}}>{{t 'general.courseDirector'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isCourseDirector) "yes" "no"}}'>
       {{#if (await isCourseDirector)}}
@@ -20,12 +20,12 @@
   {{else}}
     {{one-way-checkbox
       checked=(await isCourseDirector)
-      update=(action 'toggleFlippedRole' 'course director')
+      update=(action (mut isCourseDirectorFlipped) (not isCourseDirectorFlipped))
     }}
   {{/unless}}
 </div>
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'faculty')}}>{{t 'general.instructor'}}:</label>
+  <label onclick={{if isManaging (action (mut isFacultyFlipped) (not isFacultyFlipped))}}>{{t 'general.instructor'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isFaculty) "yes" "no"}}'>
       {{#if (await isFaculty)}}
@@ -37,12 +37,12 @@
   {{else}}
     {{one-way-checkbox
       checked=(await isFaculty)
-      update=(action 'toggleFlippedRole' 'faculty')
+      update=(action (mut isFacultyFlipped) (not isFacultyFlipped))
     }}
   {{/unless}}
 </div>
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'developer')}}>{{t 'general.developer'}}:</label>
+  <label onclick={{if isManaging (action (mut isDeveloperFlipped) (not isDeveloperFlipped))}}>{{t 'general.developer'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isDeveloper) "yes" "no"}}'>
       {{#if (await isDeveloper)}}
@@ -54,12 +54,12 @@
   {{else}}
     {{one-way-checkbox
       checked=(await isDeveloper)
-      update=(action 'toggleFlippedRole' 'developer')
+      update=(action (mut isDeveloperFlipped) (not isDeveloperFlipped))
     }}
   {{/unless}}
 </div>
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'former student')}}>{{t 'general.formerStudent'}}:</label>
+  <label onclick={{if isManaging (action (mut isFormerStudentFlipped) (not isFormerStudentFlipped))}}>{{t 'general.formerStudent'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isFormerStudent) "yes" "no"}}'>
       {{#if (await isFormerStudent)}}
@@ -71,7 +71,7 @@
   {{else}}
     {{one-way-checkbox
       checked=(await isFormerStudent)
-      update=(action 'toggleFlippedRole' 'former student')
+      update=(action (mut isFormerStudentFlipped) (not isFormerStudentFlipped))
     }}
   {{/unless}}
 </div>
@@ -79,7 +79,7 @@
 <hr />
 
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'enabled')}}>{{t 'general.accountEnabled'}}:</label>
+  <label onclick={{if isManaging (action (mut isEnabledFlipped) (not isEnabledFlipped))}}>{{t 'general.accountEnabled'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isEnabled) "yes" "no"}}'>
       {{#if (await isEnabled)}}
@@ -91,13 +91,13 @@
   {{else}}
     {{one-way-checkbox
       checked=(await isEnabled)
-      update=(action 'toggleFlippedRole' 'enabled')
+      update=(action (mut isEnabledFlipped) (not isEnabledFlipped))
       disabled=(eq user.id currentUser.model.id)
     }}
   {{/unless}}
 </div>
 <div class='item'>
-  <label onclick={{if isManaging (action 'toggleFlippedRole' 'userSyncIgnore')}}>{{t 'general.excludeFromSync'}}:</label>
+  <label onclick={{if isManaging (action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped))}}>{{t 'general.excludeFromSync'}}:</label>
   {{#unless isManaging}}
     <span class='value {{if (await isUserSyncIgnored) "yes" "no"}}'>
       {{#if (await isUserSyncIgnored)}}
@@ -109,7 +109,7 @@
   {{else}}
     {{one-way-checkbox
       checked=(await isUserSyncIgnored)
-      update=(action 'toggleFlippedRole' 'userSyncIgnore')
+      update=(action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped))
     }}
   {{/unless}}
 </div>

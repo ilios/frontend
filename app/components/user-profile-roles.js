@@ -8,11 +8,6 @@ export default Component.extend({
   store: service(),
   currentUser: service(),
 
-  init(){
-    this._super(...arguments);
-    this.set('flippedRoles', []);
-  },
-
   classNameBindings: [':user-profile-roles', ':small-component', ':last', 'hasSavedRecently:has-saved:has-not-saved'],
 
   user: null,
@@ -20,7 +15,13 @@ export default Component.extend({
   isManagable: false,
   hasSavedRecently: false,
   finishedSetup: false,
-  flippedRoles: null,
+  isCourseDirectorFlipped: false,
+  isFacultyFlipped: false,
+  isDeveloperFlipped: false,
+  isStudentFlipped: false,
+  isFormerStudentFlipped: false,
+  isEnabledFlipped: false,
+  isUserSyncIgnoredFlipped: false,
 
   save: task(function * (){
     const store = this.get('store');
@@ -42,7 +43,13 @@ export default Component.extend({
     const formerStudentRole = roles.findBy('title', 'Former Student');
 
     //reset flippedRoles here to prevent CP changes when we update the roles
-    this.set('flippedRoles', []);
+    this.set('isCourseDirectorFlipped', false);
+    this.set('isFacultyFlipped', false);
+    this.set('isDeveloperFlipped', false);
+    this.set('isStudentFlipped', false);
+    this.set('isFormerStudentFlipped', false);
+    this.set('isEnabledFlipped', false);
+    this.set('isUserSyncIgnoredFlipped', false);
     user.set('enabled', isEnabled);
     user.set('userSyncIgnore', isUserSyncIgnored);
     let userRoles = yield user.get('roles');
@@ -86,68 +93,63 @@ export default Component.extend({
     })
   }),
 
-  isCourseDirector: computed('roleTitles.[]', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isCourseDirector: computed('roleTitles.[]', 'isCourseDirectorFlipped', function(){
+    const flipped = this.get('isCourseDirectorFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
         const originallyYes = roleTitles.contains('course director');
-        const flipped = flippedRoles.contains('course director');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
     });
   }),
 
-  isFaculty: computed('roleTitles.[]', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isFaculty: computed('roleTitles.[]', 'isFacultyFlipped', function(){
+    const flipped = this.get('isFacultyFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
         const originallyYes = roleTitles.contains('faculty');
-        const flipped = flippedRoles.contains('faculty');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
     });
   }),
 
-  isDeveloper: computed('roleTitles.[]', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isDeveloper: computed('roleTitles.[]', 'isDeveloperFlipped', function(){
+    const flipped = this.get('isDeveloperFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
         const originallyYes = roleTitles.contains('developer');
-        const flipped = flippedRoles.contains('developer');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
     });
   }),
 
-  isStudent: computed('roleTitles.[]', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isStudent: computed('roleTitles.[]', 'isStudentFlipped', function(){
+    const flipped = this.get('isStudentFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
         const originallyYes = roleTitles.contains('student');
-        const flipped = flippedRoles.contains('student');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
     });
   }),
 
-  isFormerStudent: computed('roleTitles.[]', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isFormerStudent: computed('roleTitles.[]', 'isFormerStudentFlipped', function(){
+    const flipped = this.get('isFormerStudentFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
         const originallyYes = roleTitles.contains('former student');
-        const flipped = flippedRoles.contains('former student');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
     });
   }),
 
-  isEnabled: computed('user.enabled', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isEnabled: computed('user.enabled', 'isEnabledFlipped', function(){
+    const flipped = this.get('isEnabledFlipped');
     const user = this.get('user');
     return new Promise(resolve => {
       if (isEmpty(user)) {
@@ -155,14 +157,13 @@ export default Component.extend({
         return;
       }
       const originallyYes = user.get('enabled');
-      const flipped = flippedRoles.contains('enabled');
 
       resolve((originallyYes && !flipped) || (!originallyYes && flipped));
     });
   }),
 
-  isUserSyncIgnored: computed('user.userSyncIgnore', 'flippedRoles.[]', function(){
-    const flippedRoles = this.get('flippedRoles');
+  isUserSyncIgnored: computed('user.userSyncIgnore', 'isUserSyncIgnoredFlipped', function(){
+    const flipped = this.get('isUserSyncIgnoredFlipped');
     const user = this.get('user');
     return new Promise(resolve => {
       if (isEmpty(user)) {
@@ -170,7 +171,6 @@ export default Component.extend({
         return;
       }
       const originallyYes = user.get('userSyncIgnore');
-      const flipped = flippedRoles.contains('userSyncIgnore');
 
       resolve((originallyYes && !flipped) || (!originallyYes && flipped));
     });
@@ -178,15 +178,14 @@ export default Component.extend({
 
   actions: {
     cancel(){
-      this.set('flippedRoles', []);
+      this.set('isCourseDirectorFlipped', false);
+      this.set('isFacultyFlipped', false);
+      this.set('isDeveloperFlipped', false);
+      this.set('isStudentFlipped', false);
+      this.set('isFormerStudentFlipped', false);
+      this.set('isEnabledFlipped', false);
+      this.set('isUserSyncIgnoredFlipped', false);
       this.get('setIsManaging')(false);
-    },
-    toggleFlippedRole(roleTitle){
-      if (this.get('flippedRoles').contains(roleTitle)) {
-        this.get('flippedRoles').removeObject(roleTitle);
-      } else {
-        this.get('flippedRoles').pushObject(roleTitle);
-      }
     }
   }
 
