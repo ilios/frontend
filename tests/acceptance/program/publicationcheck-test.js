@@ -8,7 +8,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 var fixtures = {};
-module('Acceptance: Program Year - Publication Check', {
+module('Acceptance: Program - Publication Check', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
@@ -33,6 +33,7 @@ module('Acceptance: Program Year - Publication Check', {
       school: 1,
       program: 1
     });
+    server.createList('cohort', 2);
   },
 
   afterEach: function() {

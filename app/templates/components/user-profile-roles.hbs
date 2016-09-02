@@ -1,0 +1,115 @@
+<h2 class='title'></h2>
+<div class='actions'>
+  {{#if isManaging}}
+    <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+    <button disabled={{save.isRunning}} class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  {{else if isManagable}}
+    <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+  {{/if}}
+</div>
+<div class='item'>
+  <label onclick={{if isManaging (action (mut isCourseDirectorFlipped) (not isCourseDirectorFlipped))}}>{{t 'general.courseDirector'}}:</label>
+  {{#unless isManaging}}
+    <span class='value {{if (await isCourseDirector) "yes" "no"}}'>
+      {{#if (await isCourseDirector)}}
+        {{t 'general.yes'}}
+      {{else}}
+        {{t 'general.no'}}
+      {{/if}}
+    </span>
+  {{else}}
+    {{one-way-checkbox
+      checked=(await isCourseDirector)
+      update=(action (mut isCourseDirectorFlipped) (not isCourseDirectorFlipped))
+    }}
+  {{/unless}}
+</div>
+<div class='item'>
+  <label onclick={{if isManaging (action (mut isFacultyFlipped) (not isFacultyFlipped))}}>{{t 'general.instructor'}}:</label>
+  {{#unless isManaging}}
+    <span class='value {{if (await isFaculty) "yes" "no"}}'>
+      {{#if (await isFaculty)}}
+        {{t 'general.yes'}}
+      {{else}}
+        {{t 'general.no'}}
+      {{/if}}
+    </span>
+  {{else}}
+    {{one-way-checkbox
+      checked=(await isFaculty)
+      update=(action (mut isFacultyFlipped) (not isFacultyFlipped))
+    }}
+  {{/unless}}
+</div>
+<div class='item'>
+  <label onclick={{if isManaging (action (mut isDeveloperFlipped) (not isDeveloperFlipped))}}>{{t 'general.developer'}}:</label>
+  {{#unless isManaging}}
+    <span class='value {{if (await isDeveloper) "yes" "no"}}'>
+      {{#if (await isDeveloper)}}
+        {{t 'general.yes'}}
+      {{else}}
+        {{t 'general.no'}}
+      {{/if}}
+    </span>
+  {{else}}
+    {{one-way-checkbox
+      checked=(await isDeveloper)
+      update=(action (mut isDeveloperFlipped) (not isDeveloperFlipped))
+    }}
+  {{/unless}}
+</div>
+<div class='item'>
+  <label onclick={{if isManaging (action (mut isFormerStudentFlipped) (not isFormerStudentFlipped))}}>{{t 'general.formerStudent'}}:</label>
+  {{#unless isManaging}}
+    <span class='value {{if (await isFormerStudent) "yes" "no"}}'>
+      {{#if (await isFormerStudent)}}
+        {{t 'general.yes'}}
+      {{else}}
+        {{t 'general.no'}}
+      {{/if}}
+    </span>
+  {{else}}
+    {{one-way-checkbox
+      checked=(await isFormerStudent)
+      update=(action (mut isFormerStudentFlipped) (not isFormerStudentFlipped))
+    }}
+  {{/unless}}
+</div>
+
+<hr />
+
+<div class='item'>
+  <label onclick={{if isManaging (action (mut isEnabledFlipped) (not isEnabledFlipped))}}>{{t 'general.accountEnabled'}}:</label>
+  {{#unless isManaging}}
+    <span class='value {{if (await isEnabled) "yes" "no"}}'>
+      {{#if (await isEnabled)}}
+        {{t 'general.yes'}}
+      {{else}}
+        {{t 'general.no'}}
+      {{/if}}
+    </span>
+  {{else}}
+    {{one-way-checkbox
+      checked=(await isEnabled)
+      update=(action (mut isEnabledFlipped) (not isEnabledFlipped))
+      disabled=(eq user.id currentUser.model.id)
+    }}
+  {{/unless}}
+</div>
+<div class='item'>
+  <label onclick={{if isManaging (action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped))}}>{{t 'general.excludeFromSync'}}:</label>
+  {{#unless isManaging}}
+    <span class='value {{if (await isUserSyncIgnored) "yes" "no"}}'>
+      {{#if (await isUserSyncIgnored)}}
+        {{t 'general.yes'}}
+      {{else}}
+        {{t 'general.no'}}
+      {{/if}}
+    </span>
+  {{else}}
+    {{one-way-checkbox
+      checked=(await isUserSyncIgnored)
+      update=(action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped))
+    }}
+  {{/unless}}
+</div>

@@ -29,7 +29,8 @@
       color: $ilios-green;
     }
 
-    a {
+    a,
+    &.clickable {
       display: block;
       padding: $base-font-size * .1;
       width: 100%;
@@ -41,6 +42,7 @@
 
     .name,
     .email {
+      color: $ilios-blue;
       display: block;
       width: 100%;
 

@@ -43,18 +43,23 @@
 }
 
 @mixin ilios-input () {
-  input[type=text],
-  input[type=password],
-  select {
-    @include fill-parent;
-    background-position: right 4px bottom .75em;
-    height: 2.5em;
-  }
-
   input {
     @include fill-parent;
     background: $white;
     border: 1px solid $input-box-grey;
     border-radius: $base-border-radius;
+  }
+
+  input[type=text],
+  input[type=password],
+  select {
+    background-position: right 4px bottom .75em;
+    height: 2.5em;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    display: inline;
+    width: 2.5em;
   }
 }

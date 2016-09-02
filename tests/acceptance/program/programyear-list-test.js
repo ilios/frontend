@@ -49,6 +49,7 @@ test('check list', function(assert) {
     startYear: 2011,
     cohort: 3,
   });
+  server.createList('cohort', 3);
   visit(url);
   andThen(function() {
     var container = find('.programyear-list');
@@ -75,6 +76,7 @@ test('check competencies', function(assert) {
     program: 1,
     competencies: [1,2,3,4,5]
   });
+  server.create('cohort');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(2)')), 5);
@@ -93,6 +95,7 @@ test('check objectives', function(assert) {
     program: 1,
     objectives: [1,2,3,4,5]
   });
+  server.create('cohort');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(3)')), 5);
@@ -111,6 +114,7 @@ test('check directors', function(assert) {
     program: 1,
     directors: [1,2,3,4,5]
   });
+  server.create('cohort');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(4)')), 5);
@@ -137,6 +141,7 @@ test('check terms', function(assert) {
     program: 1,
     terms: [1,2,3,4,5]
   });
+  server.create('cohort');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(5)')), 5);
@@ -151,6 +156,7 @@ test('check warnings', function(assert) {
   server.create('programYear', {
     program: 1,
   });
+  server.create('cohort');
   visit(url);
   andThen(function() {
     var tds = find('.programyear-list tbody tr:eq(0) td');
@@ -170,6 +176,7 @@ test('check link', function(assert) {
   server.create('programYear', {
     program: 1,
   });
+  server.create('cohort');
   visit(url);
   andThen(function() {
     click('.programyear-list tbody tr:eq(0) td:eq(0) a').then(function(){
@@ -186,6 +193,7 @@ test('can edit a program-year', function(assert) {
   server.create('programYear', {
     program: 1,
   });
+  server.create('cohort');
 
   const editButton = '.program-year-link';
 
@@ -204,6 +212,7 @@ test('can delete a program-year', function(assert) {
   server.create('programYear', {
     program: 1,
   });
+  server.create('cohort');
 
   const deleteButton = '.remove';
   const confirmRemovalButton = '.confirm-message button.remove';

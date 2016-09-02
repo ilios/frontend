@@ -27,6 +27,7 @@ module('Acceptance: Program Year - Terms', {
       program: 1,
       terms: [1]
     });
+    server.create('cohort');
     server.create('term', {
       programYears: [1],
       vocabulary: 1

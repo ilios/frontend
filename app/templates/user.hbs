@@ -1,1 +1,13 @@
-{{user-profile user=model}}
+{{user-profile
+  user=model
+  isManagingBio=isManagingBio
+  setIsManagingBio=(action (mut isManagingBio))
+  isManagingRoles=isManagingRoles
+  setIsManagingRoles=(action (mut isManagingRoles))
+  isManagingCohorts=isManagingCohorts
+  setIsManagingCohorts=(action (mut isManagingCohorts))
+  isManagingIcs=isManagingIcs
+  setIsManagingIcs=(action (mut isManagingIcs))
+  isManagingSchools=isManagingSchools
+  setIsManagingSchools=(action (mut isManagingSchools))
+}}

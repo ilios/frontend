@@ -10,6 +10,7 @@ export default Component.extend({
   iliosConfig: service(),
   i18n: service(),
   store: service(),
+  routing: service('-routing'),
   tagName: 'section',
   classNames: ['manage-users-summary', 'large-component'],
   searchValue: null,
@@ -56,4 +57,15 @@ export default Component.extend({
 
     return results;
   }).restartable(),
+  actions: {
+    //Use an action for this route change instead of a link-to so we can close the search results
+    clickUser(user){
+      const routing = this.get('routing');
+      this.set('searchValue', null);
+      this.get('searchForUsers').perform(null);
+      //private routing API requires putting the model we are passing inside of an array
+      //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
+      routing.transitionTo('user', [user]);
+    }
+  }
 });

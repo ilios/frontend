@@ -1,276 +1,51 @@
-{{global-search}}
+{{manage-users-summary}}
+
 <h1 class="user-display-name">
+  {{#unless user.enabled}}
+    {{fa-icon 'ban' class='no' title=(t 'general.disabled')}}
+  {{/unless}}
   {{user.fullName}}
-  {{#if (await currentUser.userIsDeveloper)}}
-    {{fa-icon 'pencil' class='clickable link' click=(action (toggle "isEditing" this))}}
-  {{/if}}
 </h1>
-
-{{#if user.isStudent.content}}
-  <span class="user-is-student">{{t 'general.student'}}</span>
-{{/if}}
-
+<div class='user-roles'>
+  {{#if (await user.isStudent)}}
+    <span class="user-is-student">{{t 'general.student'}}</span>
+  {{/if}}
+</div>
 {{pending-single-user-update user=user}}
 
-<div class="user-profile-details">
-  <section class="user-permissions">
-    <h4 class="user-permissions-header">{{t 'general.userRoles'}}</h4>
+{{user-profile-bio
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingBio
+  setIsManaging=setIsManagingBio
+}}
 
-    <div class="user-permissions-body {{if inProgress 'disable-actions'}}">
-      <div class="user-permissions-row">
-        {{#if isCourseDirector.content}}
-          <input type="checkbox" checked {{action 'removeRole' 'Course Director'}}>
-        {{else}}
-          <input type="checkbox" {{action 'addRole' 'Course Director'}}>
-        {{/if}}
-        <span>{{t 'general.courseDirector'}}</span>
-      </div>
-      <div class="user-permissions-row">
-        {{#if isInstructor.content}}
-          <input type="checkbox" checked {{action 'removeRole' 'Faculty'}}>
-        {{else}}
-          <input type="checkbox" {{action 'addRole' 'Faculty'}}>
-        {{/if}}
-        <span>{{t 'general.instructor'}}</span>
-      </div>
-      <div class="user-permissions-row">
-        {{#if isDeveloper.content}}
-          <input type="checkbox" checked {{action 'removeRole' 'Developer'}}>
-        {{else}}
-          <input type="checkbox" {{action 'addRole' 'Developer'}}>
-        {{/if}}
-        <span>{{t 'general.developer'}}</span>
-      </div>
-      <div class="user-permissions-row">
-        {{#if isFormerStudent.content}}
-          <input type="checkbox" checked {{action 'removeRole' 'Former Student'}}>
-        {{else}}
-          <input type="checkbox" {{action 'addRole' 'Former Student'}}>
-        {{/if}}
-        <span>{{t 'general.formerStudent'}}</span>
-      </div>
+{{user-profile-roles
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingRoles
+  setIsManaging=setIsManagingRoles
+}}
 
-      <hr>
+{{user-profile-cohorts
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingCohorts
+  setIsManaging=setIsManagingCohorts
+}}
 
-      <div class="user-permissions-row">
-        {{#if isDisabled}}
-          <input type="checkbox" checked {{action 'enableUser'}}>
-        {{else}}
-          <input type="checkbox" {{action 'disableUser'}}>
-        {{/if}}
-        <span>{{t 'general.disableUser'}}</span>
-      </div>
-      <div class="user-permissions-row">
-        {{#if removeFromSync}}
-          <input type="checkbox" checked {{action 'includeToSync'}}>
-        {{else}}
-          <input type="checkbox" {{action 'excludeFromSync'}}>
-        {{/if}}
-        <span>{{t 'general.excludeFromSync'}}</span>
-      </div>
-    </div>
-  </section>
+{{user-profile-ics
+  user=user
+  isManagable=(eq (await currentUser.model.id) user.id)
+  isManaging=isManagingIcs
+  setIsManaging=setIsManagingIcs
+}}
 
-  <section class="user-info">
-    <div class="detail-content form-container">
-      {{#liquid-if isEditing}}
-        <div class="form-col-6 multi-row">
-          <label class="form-label">{{t 'general.firstName'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=firstName
-              update=(action (mut firstName))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'firstName')
-            }}
-            {{#if (and (v-get this 'firstName' 'isInvalid') (is-in showErrorsFor 'firstName'))}}
-              <span class="validation-error-message">{{v-get this 'firstName' 'message'}}</span>
-            {{/if}}
-          </div>
-          <label class="form-label">{{t 'general.middleName'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=middleName
-              update=(action (mut middleName))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'middleName')
-            }}
-            {{#if (and (v-get this 'middleName' 'isInvalid') (is-in showErrorsFor 'middleName'))}}
-              <span class="validation-error-message">{{v-get this 'middleName' 'message'}}</span>
-            {{/if}}
-          </div>
+{{user-profile-schools
+  user=user
+  isManagable=(await currentUser.userIsDeveloper)
+  isManaging=isManagingSchools
+  setIsManaging=setIsManagingSchools
+}}
 
-          <label class="form-label">{{t 'general.lastName'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=lastName
-              update=(action (mut lastName))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'lastName')
-            }}
-            {{#if (and (v-get this 'lastName' 'isInvalid') (is-in showErrorsFor 'lastName'))}}
-              <span class="validation-error-message">{{v-get this 'lastName' 'message'}}</span>
-            {{/if}}
-          </div>
-          <label class="form-label">{{t 'general.campusId'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=campusId
-              update=(action (mut campusId))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'campusId')
-            }}
-            {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
-              <span class="validation-error-message">{{v-get this 'campusId' 'message'}}</span>
-            {{/if}}
-          </div>
-          <label class="form-label">{{t 'general.otherId'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=otherId
-              update=(action (mut otherId))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'otherId')
-            }}
-            {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
-              <span class="validation-error-message">{{v-get this 'otherId' 'message'}}</span>
-            {{/if}}
-          </div>
-          <label class="form-label">{{t 'general.email'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=email
-              update=(action (mut email))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'email')
-            }}
-            {{#if (and (v-get this 'email' 'isInvalid') (is-in showErrorsFor 'email'))}}
-              <span class="validation-error-message">{{v-get this 'email' 'message'}}</span>
-            {{/if}}
-          </div>
-          <label class="form-label">{{t 'general.phone'}}:</label>
-          <div class="form-data">
-            {{one-way-input
-              value=phone
-              update=(action (mut phone))
-              onenter=(perform save)
-              onescape=(action (toggle 'isEditing' this))
-              focusOut=(action 'addErrorDisplayFor' 'phone')
-            }}
-            {{#if (and (v-get this 'phone' 'isInvalid') (is-in showErrorsFor 'phone'))}}
-              <span class="validation-error-message">{{v-get this 'phone' 'message'}}</span>
-            {{/if}}
-          </div>
-        </div>
-      {{else}}
-        <div class="form-col-6 multi-row">
-          <div class="user-info-row">
-            <label class="form-label">{{t 'general.campusId'}}:</label>
-            <div class="form-data">{{user.campusId}}</div>
-          </div>
-
-          <div class="user-info-row">
-            <label class="form-label">{{t 'general.email'}}:</label>
-            <div class="form-data">{{user.email}}</div>
-          </div>
-
-          <div class="user-info-row">
-            <label class="form-label">{{t 'general.phone'}}:</label>
-            <div class="form-data">{{user.phone}}</div>
-          </div>
-        </div>
-      {{/liquid-if}}
-    </div>
-    <div class="detail-content form-container">
-      <div class="form-col-6 multi-row">
-        <div class="user-info-row">
-          <label class="form-label">{{t 'general.primarySchool'}}:</label>
-          <div class="form-data">{{get (await user.school) 'title'}}&nbsp;</div>
-        </div>
-        <div class="user-info-row">
-          <label class="form-label">{{t 'general.primaryCohort'}}:</label>
-          <div class="form-data">
-            {{#liquid-if user.primaryCohort.isFulfilled}}
-              {{#if user.primaryCohort.title}}
-                <ul class="details-list">
-                  <li>
-                    <div class="content">
-                      <span class="title">{{user.primaryCohort.title}}</span>
-                      <span class="details">{{user.primaryCohort.programYear.program.title}}</span>
-                    </div>
-                  </li>
-                </ul>
-              {{else}}
-                {{t 'general.unassigned'}}
-              {{/if}}
-            {{/liquid-if}}
-          </div>
-        </div>
-        <div class="user-info-row">
-          <label class="form-label">{{t 'general.secondaryCohorts'}}:</label>
-          <div class="form-data secondary-cohorts">
-            {{#if isEditing}}
-              {{user-profile-secondary-cohorts-manager
-                cohorts=bufferedCohorts
-                primaryCohort=user.primaryCohort
-                add='addCohortToBuffer'
-                remove='removeCohortFromBuffer'
-              }}
-            {{else}}
-              {{#liquid-if (is-fulfilled user.secondaryCohorts)}}
-                {{#if (get (await user.secondaryCohorts) 'length')}}
-                  <ul class="secondary-cohorts details-list">
-                    {{#each (sort-by 'title' (await user.secondaryCohorts)) as |cohort|}}
-                      <li>
-                        <div class="content">
-                          <span class="title">{{cohort.title}}</span>
-                          <span class="details">{{cohort.programYear.program.title}}</span>
-                        </div>
-                      </li>
-                    {{/each}}
-                  </ul>
-                {{else}}
-                  {{t 'general.unassigned'}}
-                {{/if}}
-              {{else}}
-                &nbsp;
-              {{/liquid-if}}
-            {{/if}}
-          </div>
-        </div>
-        <div class="user-info-row">
-          <label class="form-label">{{t 'general.learnerGroups'}}:</label>
-          <div class="form-data">
-            {{#if user.learnerGroups}}
-              <ul class="learner-groups">
-                {{#each user.learnerGroups as |group|}}
-                  <li class="learner-group">{{group.title}}</li>
-                {{/each}}
-              </ul>
-            {{else}}
-              {{t 'general.noLearnerGroups'}}
-            {{/if}}
-          </div>
-        </div>
-      </div>
-      {{#if isEditing}}
-        <div class="form-col-6 form-data-submit">
-          <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedSchool)}}>
-            {{#if isSaving}}
-              {{fa-icon 'spinner' spin=true}}
-            {{else}}
-              {{t 'general.done'}}
-            {{/if}}
-          </button>
-          <button class='cancel text' {{action (toggle 'isEditing' this)}}>{{t 'general.cancel'}}</button>
-        </div>
-      {{/if}}
-    </div>
-  </section>
-</div>
+{{user-profile-learnergroups user=user}}

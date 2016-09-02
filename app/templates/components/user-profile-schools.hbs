@@ -1,0 +1,61 @@
+<h2 class='title'>{{t 'general.permissions'}}</h2>
+
+<div class='actions'>
+  {{#if isManaging}}
+    <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+    <button disabled={{save.isRunning}} class='bigcancel' {{action (perform cancel)}}>{{fa-icon 'undo'}}</button>
+  {{else if isManagable}}
+    <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+  {{/if}}
+</div>
+<p class='primary-school'><strong>{{t 'general.primarySchool'}}:</strong> {{get (await user.school) 'title'}}</p>
+
+<h4>{{t 'general.permissionsInOtherSchools'}}</h4>
+{{#if (gt (get (await displaySchools) 'length') 0)}}
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">{{t 'general.school'}}</th>
+        <th>{{t 'general.read'}}</th>
+        <th>{{t 'general.write'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each (sort-by 'title' (await displaySchools)) as |school|}}
+        <tr>
+          <td colspan="3">{{school.title}}</td>
+          <td>
+            {{#if isManaging}}
+              {{one-way-checkbox
+                checked=(or (contains school.id (map-by 'id' (await readSchools))) (contains school.id (map-by 'id' (await writeSchools))))
+                update=(action 'toggleReadSchool' school)
+                disabled=(contains school.id (map-by 'id' (await writeSchools)))
+              }}
+            {{else}}
+              {{fa-icon
+                (if (or (contains school.id (map-by 'id' (await readSchools))) (contains school.id (map-by 'id' (await writeSchools)))) 'check' 'ban')
+                class=(if (or (contains school.id (map-by 'id' (await readSchools))) (contains school.id (map-by 'id' (await writeSchools)))) 'yes' 'no')
+              }}
+            {{/if}}
+          </td>
+          <td>
+            {{#if isManaging}}
+              {{one-way-checkbox
+                checked=(contains school.id (map-by 'id' (await writeSchools)))
+                update=(action 'toggleWriteSchool' school)
+              }}
+            {{else}}
+              {{fa-icon
+                (if (contains school.id (map-by 'id' (await writeSchools))) 'check' 'ban')
+                class=(if (contains school.id (map-by 'id' (await writeSchools))) 'yes' 'no')
+              }}
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+{{#if (and (is-fulfilled displaySchools) isManaging)}}
+  <p class='more-permissions-notice'>{{t 'general.noPermissionsInOtherSchools'}}</p>
+{{/if}}
