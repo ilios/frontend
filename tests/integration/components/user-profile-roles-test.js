@@ -11,6 +11,7 @@ moduleForComponent('user-profile-roles', 'Integration | Component | user profile
   integration: true,
   beforeEach(){
     user = Object.create({
+      id: 6,
       enabled: true,
       userSyncIgnore: false,
       roles: resolve(userRoles),
