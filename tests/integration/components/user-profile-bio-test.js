@@ -6,6 +6,8 @@ import wait from 'ember-test-helpers/wait';
 const { RSVP, Object, Service } = Ember;
 const { resolve } = RSVP;
 let user;
+let authentication;
+let storeMock;
 moduleForComponent('user-profile-bio', 'Integration | Component | user profile bio', {
   integration: true,
   beforeEach(){
@@ -23,6 +25,18 @@ moduleForComponent('user-profile-bio', 'Integration | Component | user profile b
       cohorts: resolve([]),
       primaryCohort: resolve(null),
     });
+    authentication = Object.create({
+      username: 'test-username',
+      user: 13,
+      password: null
+    });
+
+    storeMock = Service.extend({
+      find(){
+        return resolve(authentication);
+      }
+    });
+    this.register('service:store', storeMock);
   }
 });
 
@@ -42,9 +56,10 @@ test('it renders for ldap user search', function(assert) {
   const otherId = `${fields}:eq(4) span`;
   const email = `${fields}:eq(5) span`;
   const phone = `${fields}:eq(6) span`;
+  const username = `${fields}:eq(7) span`;
 
   return wait().then(()=>{
-    assert.equal(this.$(fields).length, 7);
+    assert.equal(this.$(fields).length, 8);
     assert.equal(this.$(firstName).text().trim(), 'Test Person', 'first name is displayed');
     assert.equal(this.$(middleName).text().trim(), 'Name', 'middle name is displayed');
     assert.equal(this.$(lastName).text().trim(), 'Thing', 'last name is displayed');
@@ -52,6 +67,7 @@ test('it renders for ldap user search', function(assert) {
     assert.equal(this.$(otherId).text().trim(), 'idO', 'other id is displayed');
     assert.equal(this.$(email).text().trim(), 'test@test.com', 'email is displayed');
     assert.equal(this.$(phone).text().trim(), 'x1234', 'phone is displayed');
+    assert.equal(this.$(username).text().trim(), 'test-username', 'username is displayed');
   });
 });
 
@@ -60,17 +76,6 @@ test('it renders for non ldap user search', function(assert) {
     userSearchType: resolve('local')
   });
   this.register('service:iliosConfig', iliosConfigMock);
-  const storeMock = Service.extend({
-    find(what, id){
-      assert.equal(what, 'authentication');
-      assert.equal(id, 13);
-
-      return resolve(Object.create({
-        username: 'test-user'
-      }));
-    }
-  });
-  this.register('service:store', storeMock);
   this.set('user', user);
   this.render(hbs`{{user-profile-bio user=user}}`);
 
@@ -94,7 +99,7 @@ test('it renders for non ldap user search', function(assert) {
     assert.equal(this.$(otherId).text().trim(), 'idO', 'other id is displayed');
     assert.equal(this.$(email).text().trim(), 'test@test.com', 'email is displayed');
     assert.equal(this.$(phone).text().trim(), 'x1234', 'phone is displayed');
-    assert.equal(this.$(username).text().trim(), 'test-user', 'username is displayed');
+    assert.equal(this.$(username).text().trim(), 'test-username', 'username is displayed');
     assert.equal(this.$(password).text().trim(), '*********', 'password placeholder is displayed');
   });
 });
@@ -117,11 +122,11 @@ test('clicking manage sends the action', function(assert) {
 });
 
 test('can edit user bio for ldap config', function(assert) {
+  assert.expect(19);
   const iliosConfigMock = Service.extend({
     userSearchType: resolve('ldap')
   });
   this.register('service:iliosConfig', iliosConfigMock);
-  assert.expect(15);
   this.set('user', user);
   this.set('nothing', parseInt);
 
@@ -137,6 +142,11 @@ test('can edit user bio for ldap config', function(assert) {
     return resolve(user);
   });
 
+  authentication.set('save', () => {
+    assert.equal(authentication.get('username'), 'test-username', 'username is not changed');
+    assert.equal(authentication.get('password'), undefined, 'password is saved');
+  });
+
   this.render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
   const inputs = 'input';
   const firstName = `${inputs}:eq(0)`;
@@ -146,9 +156,10 @@ test('can edit user bio for ldap config', function(assert) {
   const otherId = `${inputs}:eq(4)`;
   const email = `${inputs}:eq(5)`;
   const phone = `${inputs}:eq(6)`;
+  const username = `${inputs}:eq(7)`;
 
   return wait().then(()=>{
-    assert.equal(this.$(inputs).length, 7, 'correct number of inputs');
+    assert.equal(this.$(inputs).length, 8, 'correct number of inputs');
     assert.equal(this.$(firstName).val().trim(), 'Test Person', 'firstname is set');
     assert.equal(this.$(middleName).val().trim(), 'Name', 'middlename is set');
     assert.equal(this.$(lastName).val().trim(), 'Thing', 'lastname is set');
@@ -156,6 +167,8 @@ test('can edit user bio for ldap config', function(assert) {
     assert.equal(this.$(otherId).val().trim(), 'idO', 'otherId is set');
     assert.equal(this.$(email).val().trim(), 'test@test.com', 'email is set');
     assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
+    assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
+    assert.ok(this.$(username).is(':disabled'), 'username is disabled');
     this.$(firstName).val('new first').change();
     this.$(middleName).val('new middle').change();
     this.$(lastName).val('new last').change();
@@ -163,6 +176,7 @@ test('can edit user bio for ldap config', function(assert) {
     this.$(otherId).val('new otherId').change();
     this.$(email).val('e@e.com').change();
     this.$(phone).val('12345x').change();
+
     this.$('.bigadd').click();
 
     return wait();
@@ -170,27 +184,15 @@ test('can edit user bio for ldap config', function(assert) {
 });
 
 test('can edit non-ldap without setting a password', function(assert) {
-  assert.expect(23);
+  assert.expect(19);
   const iliosConfigMock = Service.extend({
     userSearchType: resolve('local')
   });
   this.register('service:iliosConfig', iliosConfigMock);
-  let authentication = Object.create({
-    username: 'test-user',
-    save(){
-      assert.equal(this.get('username'), 'new-test-user', 'username is saved');
-      assert.equal(this.get('password'), undefined, 'password is saved');
-    }
-  })
-  const storeMock = Service.extend({
-    find(what, id){
-      assert.equal(what, 'authentication');
-      assert.equal(id, 13);
-
-      return resolve(authentication);
-    }
+  authentication.set('save', () => {
+    assert.equal(authentication.get('username'), 'new-test-user', 'username is saved');
+    assert.equal(authentication.get('password'), undefined, 'password is saved');
   });
-  this.register('service:store', storeMock);
   this.set('user', user);
   this.set('nothing', parseInt);
 
@@ -227,7 +229,7 @@ test('can edit non-ldap without setting a password', function(assert) {
     assert.equal(this.$(otherId).val().trim(), 'idO', 'otherId is set');
     assert.equal(this.$(email).val().trim(), 'test@test.com', 'email is set');
     assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
-    assert.equal(this.$(username).val().trim(), 'test-user', 'username is set');
+    assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
     assert.equal(this.$(activatePasswordField).text().trim(), 'Click here to reset password.');
     this.$(firstName).val('new first').change();
     this.$(middleName).val('new middle').change();
@@ -244,27 +246,15 @@ test('can edit non-ldap without setting a password', function(assert) {
 });
 
 test('can edit user bio for non-ldap config', function(assert) {
-  assert.expect(24);
+  assert.expect(20);
   const iliosConfigMock = Service.extend({
     userSearchType: resolve('local')
   });
   this.register('service:iliosConfig', iliosConfigMock);
-  let authentication = Object.create({
-    username: 'test-user',
-    save(){
-      assert.equal(this.get('username'), 'new-test-user', 'username is saved');
-      assert.equal(this.get('password'), 'new-password', 'password is saved');
-    }
-  })
-  const storeMock = Service.extend({
-    find(what, id){
-      assert.equal(what, 'authentication');
-      assert.equal(id, 13);
-
-      return resolve(authentication);
-    }
+  authentication.set('save', () => {
+    assert.equal(authentication.get('username'), 'new-test-user', 'username is saved');
+    assert.equal(authentication.get('password'), 'new-password', 'password is saved');
   });
-  this.register('service:store', storeMock);
   this.set('user', user);
   this.set('nothing', parseInt);
 
@@ -302,7 +292,7 @@ test('can edit user bio for non-ldap config', function(assert) {
     assert.equal(this.$(otherId).val().trim(), 'idO', 'otherId is set');
     assert.equal(this.$(email).val().trim(), 'test@test.com', 'email is set');
     assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
-    assert.equal(this.$(username).val().trim(), 'test-user', 'username is set');
+    assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
     this.$(activatePasswordField).click();
 
     return wait().then(()=>{
@@ -329,15 +319,6 @@ let setupConfigAndAuth = function(context){
     userSearchType: resolve('local')
   });
   context.register('service:iliosConfig', iliosConfigMock);
-  let authentication = Object.create({
-    username: 'test-user'
-  });
-  const storeMock = Service.extend({
-    find(){
-      return resolve(authentication);
-    }
-  });
-  context.register('service:store', storeMock);
 };
 
 test('closing password box clears input', function(assert) {
@@ -501,7 +482,7 @@ test('password strength 4 display', function(assert) {
 
 
 test('sync user from directory', function(assert) {
-  assert.expect(21);
+  assert.expect(24);
   const iliosConfigMock = Service.extend({
     userSearchType: resolve('ldap')
   });
@@ -515,6 +496,7 @@ test('sync user from directory', function(assert) {
         email: 'new-email',
         phone: 'new-phone',
         campusId: 'new-campus-id',
+        username: 'new-username',
       }});
     }
   });
@@ -531,6 +513,7 @@ test('sync user from directory', function(assert) {
   const otherId = `${items}:eq(4)`;
   const email = `${items}:eq(5)`;
   const phone = `${items}:eq(6)`;
+  const username = `${items}:eq(7)`;
 
   const firstNameInput = `${firstName} input:eq(0)`;
   const middleNameInput = `${middleName} input:eq(0)`;
@@ -539,11 +522,12 @@ test('sync user from directory', function(assert) {
   const otherIdInput = `${otherId} input:eq(0)`;
   const emailInput = `${email} input:eq(0)`;
   const phoneInput = `${phone} input:eq(0)`;
+  const usernameInput = `${username} input:eq(0)`;
 
   const syncBUtton = 'button.directory-sync';
 
   return wait().then(()=>{
-    assert.equal(this.$(items).length, 7, 'correct number of inputs');
+    assert.equal(this.$(items).length, 8, 'correct number of inputs');
     assert.equal(this.$(firstNameInput).val().trim(), 'Test Person', 'firstname is set');
     assert.equal(this.$(middleNameInput).val().trim(), 'Name', 'middlename is set');
     assert.equal(this.$(lastNameInput).val().trim(), 'Thing', 'lastname is set');
@@ -551,6 +535,7 @@ test('sync user from directory', function(assert) {
     assert.equal(this.$(otherIdInput).val().trim(), 'idO', 'otherId is set');
     assert.equal(this.$(emailInput).val().trim(), 'test@test.com', 'email is set');
     assert.equal(this.$(phoneInput).val().trim(), 'x1234', 'phone is set');
+    assert.equal(this.$(usernameInput).val().trim(), 'test-username', 'username is set');
     this.$(syncBUtton).click();
 
     return wait().then(()=>{
@@ -561,12 +546,14 @@ test('sync user from directory', function(assert) {
       assert.equal(this.$(otherIdInput).val().trim(), 'idO', 'otherId is set');
       assert.equal(this.$(emailInput).val().trim(), 'new-email', 'email is updated');
       assert.equal(this.$(phoneInput).val().trim(), 'new-phone', 'phone is updated');
+      assert.equal(this.$(usernameInput).val().trim(), 'new-username', 'username is updated');
 
       assert.ok(this.$(firstName).hasClass('synced-from-directory'), 'firstName has updated class applied');
       assert.ok(this.$(lastName).hasClass('synced-from-directory'), 'lastName has updated class applied');
       assert.ok(this.$(phone).hasClass('synced-from-directory'), 'phone has updated class applied');
       assert.ok(this.$(email).hasClass('synced-from-directory'), 'email has updated class applied');
       assert.ok(this.$(campusId).hasClass('synced-from-directory'), 'campusId has updated class applied');
+      assert.ok(this.$(username).hasClass('synced-from-directory'), 'username has updated class applied');
 
       return wait();
     });

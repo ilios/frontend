@@ -130,24 +130,25 @@
     {{/if}}
   {{/unless}}
 </div>
+<div class='item {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"}}'>
+  <label>{{t 'general.username'}}:</label>
+  {{#unless isManaging}}
+    <span class='value'>{{get (await authentication) 'username'}}</span>
+  {{else}}
+    {{one-way-input
+      value=username
+      update=(action (mut username))
+      onenter=(perform save)
+      onescape=(perform cancel)
+      focusOut=(action 'addErrorDisplayFor' 'username')
+      disabled=(not (await canEditUsernameAndPassword))
+    }}
+    {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
+      <span class="message error">{{v-get this 'username' 'message'}}</span>
+    {{/if}}
+  {{/unless}}
+</div>
 {{#if (await canEditUsernameAndPassword)}}
-  <div class='item {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"}}'>
-    <label>{{t 'general.username'}}:</label>
-    {{#unless isManaging}}
-      <span class='value'>{{get (await authentication) 'username'}}</span>
-    {{else}}
-      {{one-way-input
-        value=username
-        update=(action (mut username))
-        onenter=(perform save)
-        onescape=(perform cancel)
-        focusOut=(action 'addErrorDisplayFor' 'username')
-      }}
-      {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
-        <span class="message error">{{v-get this 'username' 'message'}}</span>
-      {{/if}}
-    {{/unless}}
-  </div>
   <div class='item password'>
     <label>{{t 'general.password'}}:</label>
     {{#unless isManaging}}

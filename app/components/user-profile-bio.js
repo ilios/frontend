@@ -1,4 +1,3 @@
-
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -120,6 +119,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   manage: task(function * (){
     const user = this.get('user');
+    const store = this.get('store');
     this.setProperties(user.getProperties(
       'firstName',
       'middleName',
@@ -130,13 +130,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'phone'
     ));
 
-    let canEditUsernameAndPassword = yield this.get('canEditUsernameAndPassword');
-    if (canEditUsernameAndPassword) {
-      const store = this.get('store');
-      let auth = yield store.find('authentication', user.get('id'));
-      this.set('username', auth.get('username'));
-      this.set('password', '');
-    }
+    let auth = yield store.find('authentication', user.get('id'));
+    this.set('username', auth.get('username'));
+    this.set('password', '');
     this.get('setIsManaging')(true);
 
     return true;
@@ -144,6 +140,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   save: task(function * (){
     yield timeout(10);
+    const store = this.get('store');
+    const canEditUsernameAndPassword = yield this.get('canEditUsernameAndPassword');
+    const changeUserPassword = yield this.get('changeUserPassword');
     this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
     let {validations} = yield this.validate();
     if (validations.get('isValid')) {
@@ -158,20 +157,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'email',
         'phone'
       ));
-
-      yield user.save();
-
-      const canEditUsernameAndPassword = yield this.get('canEditUsernameAndPassword');
-      const changeUserPassword = yield this.get('changeUserPassword');
+      let auth = yield store.find('authentication', user.get('id'));
+      auth.set('username', this.get('username'));
       if (canEditUsernameAndPassword) {
-        const store = this.get('store');
-        let auth = yield store.find('authentication', user.get('id'));
-        auth.set('username', this.get('username'));
         if (changeUserPassword) {
           auth.set('password', this.get('password'));
         }
-        yield auth.save();
       }
+      yield user.save();
+      yield auth.save();
 
       this.send('clearErrorDisplay');
       this.get('cancel').perform();
