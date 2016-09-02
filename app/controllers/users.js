@@ -1,12 +1,14 @@
 import Ember from 'ember';
 import config from '../config/environment';
 import { cleanQuery } from '../utils/query-utils';
+import { task, timeout } from 'ember-concurrency';
 
-const { computed, Controller, inject, run, RSVP } = Ember;
+const { computed, Controller, inject, RSVP } = Ember;
 const { service } = inject;
-const { debounce } = run;
 const { IliosFeatures: { allowAddNewUser } } = config;
 const { Promise } = RSVP;
+
+const DEBOUNCE_TIMEOUT = 250;
 
 export default Controller.extend({
   store: service(),
@@ -21,25 +23,24 @@ export default Controller.extend({
   },
   offset: 0,
   limit: 25,
-  query: '',
+  query: null,
   allowAddNewUser: allowAddNewUser,
   showNewUserForm: false,
   showBulkNewUserForm: false,
   searchTerms: null,
 
-  delay: 500,
+  searchForUsers: task(function * (){
+    const query = this.get('query');
+    const q = cleanQuery(query);
+    yield timeout(DEBOUNCE_TIMEOUT);
+    const { school, offset, limit } = this.getProperties('school', 'offset', 'limit');
+    return yield this.get('store').query('user', {
+      school, limit, q, offset,
+      'order_by[lastName]': 'ASC',
+      'order_by[firstName]': 'ASC'
+    });
 
-  users: computed('query', 'offset', 'limit', {
-    get() {
-      const q = cleanQuery(this.get('query'));
-      const { school, offset, limit } = this.getProperties('school', 'offset', 'limit');
-      return this.get('store').query('user', {
-        school, limit, q, offset,
-        'order_by[lastName]': 'ASC',
-        'order_by[firstName]': 'ASC'
-      })
-    }
-  }).readOnly(),
+  }).cancelOn('deactivate').restartable(),
 
   newUserComponent: computed('iliosConfig.userSearchType', function(){
     return new Promise(resolve => {
@@ -50,19 +51,24 @@ export default Controller.extend({
     });
   }),
 
-  _updateQuery(value) {
-    if(value !== this.get('query')){
-      this.set('offset', 0);
-    }
-    this.set('query', value);
-  },
-
   actions: {
-    changeQuery(value) {
-      debounce(this, this._updateQuery, value, this.get('delay'));
-    },
     transitionToUser(userId){
       this.transitionToRoute('user', userId);
+    },
+    setOffset(offset){
+      if (offset < 0) {
+        offset = 0;
+      }
+      this.set('offset', offset);
+      this.get('searchForUsers').perform();
+    },
+    setLimit(limit){
+      this.set('limit', limit);
+      this.get('searchForUsers').perform();
+    },
+    setQuery(query){
+      this.set('query', query);
+      this.get('searchForUsers').perform();
     }
   }
 });

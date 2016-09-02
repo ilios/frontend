@@ -2,9 +2,9 @@
 <section id='users' class='fullwidth main-border users'>
   <div class="filter-tools">
     <div class="filter user-search">
-      {{one-way-input
+      {{one-way-search
         value=query
-        update=(action 'changeQuery')
+        update=(action 'setQuery')
         placeholder=(t 'general.searchUsers')
       }}
     </div>
@@ -51,20 +51,20 @@
           {{/liquid-if}}
         {{/liquid-if}}
       </section>
-    {{#if users.isFulfilled}}
+    {{#if searchForUsers.lastSuccessful}}
       {{pagedlist-controls
         offset=offset
         limit=limit
         limitless=true
-        setOffset=(action (mut offset))
-        setLimit=(action (mut limit))
+        setOffset=(action 'setOffset')
+        setLimit=(action 'setLimit')
       }}
 
       <div class='resultslist-list'>
-        {{#if users.length}}
-          {{user-list users=users}}
+        {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
+          {{user-list users=searchForUsers.lastSuccessful.value}}
         {{else}}
-          <span class="no-results">{{general.noResultsFound}}</span>
+          <span class="no-results">{{t 'general.noResultsFound'}}</span>
         {{/if}}
       </div>
 
@@ -72,8 +72,8 @@
         offset=offset
         limit=limit
         limitless=true
-        setOffset=(action (mut offset))
-        setLimit=(action (mut limit))
+        setOffset=(action 'setOffset')
+        setLimit=(action 'setLimit')
       }}
 
     {{else}}

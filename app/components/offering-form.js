@@ -45,7 +45,7 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gte: 0,
-      lte: 60
+      lte: 59
     })
   ],
   learnerGroups: {
@@ -351,7 +351,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const hours = this.get('durationHours');
     const startDate = moment(this.get('startDate'));
     let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
-    yield timeout(250);
     this.set('endDate', endDate);
   }).restartable(),
   updateDurationHours: task(function * (hours) {
@@ -364,7 +363,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const minutes = this.get('durationMinutes');
     const startDate = moment(this.get('startDate'));
     let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
-    yield timeout(250);
     this.set('endDate', endDate);
   }).restartable(),
   actions: {
