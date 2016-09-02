@@ -2,14 +2,25 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const { Route, RSVP } = Ember;
-const { all } = RSVP;
+const { Promise, hash, all } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  /**
+  * Prefetch user relationship data to smooth loading
+  **/
   afterModel(user){
-    return all([
-      user.get('cohorts'),
-      user.get('learnerGroups'),
-      user.get('roles')
-    ]);
+    return new Promise(resolve => {
+      hash({
+        cohorts: user.get('cohorts'),
+        learnerGroups: user.get('learnerGroups'),
+        roles: user.get('roles'),
+        schools: user.get('schools'),
+      }).then(obj => {
+        all([all(obj.cohorts.mapBy('school')), all(obj.learnerGroups.mapBy('school'))]).then( ()=>{
+          resolve();
+        });
+      });
+    });
+
   }
 });
