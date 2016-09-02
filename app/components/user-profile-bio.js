@@ -158,11 +158,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'phone'
       ));
       let auth = yield store.find('authentication', user.get('id'));
+      //always set and send the username in case it was updated in the sync
       auth.set('username', this.get('username'));
-      if (canEditUsernameAndPassword) {
-        if (changeUserPassword) {
-          auth.set('password', this.get('password'));
-        }
+      if (canEditUsernameAndPassword && changeUserPassword) {
+        auth.set('password', this.get('password'));
       }
       yield user.save();
       yield auth.save();
