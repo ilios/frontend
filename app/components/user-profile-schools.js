@@ -91,14 +91,9 @@ export default Component.extend({
     return new Promise(resolve => {
       currentUser.get('model').then(authUser => {
         authUser.get('schools').then(schools => {
-          authUser.get('school').then(primarySchool => {
-            user.get('school').then(userPrimarySchool => {
-              let allSchools = schools.toArray();
-              allSchools.pushObject(primarySchool);
-              allSchools.uniq();
-              let editableSchools = allSchools.filter(school => school.get('id') !== userPrimarySchool.get('id'));
-              resolve(editableSchools);
-            });
+          user.get('school').then(userPrimarySchool => {
+            let editableSchools = schools.filter(school => school.get('id') !== userPrimarySchool.get('id'));
+            resolve(editableSchools);
           });
         });
       });
@@ -107,14 +102,12 @@ export default Component.extend({
 
   secondarySchools: computed('currentUser.model.school', function(){
     const store = this.get('store');
-    const currentUser = this.get('currentUser');
+    const user = this.get('user');
     return new Promise(resolve => {
       store.findAll('school').then(schools => {
-        currentUser.get('model').then(user => {
-          user.get('school').then(primarySchool => {
-            let secondarySchools = schools.filter(school => school.get('id') !== primarySchool.get('id'));
-            resolve(secondarySchools);
-          });
+        user.get('school').then(primarySchool => {
+          let secondarySchools = schools.filter(school => school.get('id') !== primarySchool.get('id'));
+          resolve(secondarySchools);
         });
       });
     });
