@@ -28,7 +28,7 @@ moduleForComponent('user-profile-schools', 'Integration | Component | user profi
 
     let currentUser = Service.extend({
       model: resolve(Object.create({
-        school: resolve(som),
+        school: resolve(sod),
         schools: resolve([som, sod, sop])
       }))
     });
