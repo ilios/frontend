@@ -10,7 +10,7 @@
         <label class='form-label'>{{t 'general.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
         {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))}}
           <div class="form-data">
-            <select onchange={{action "setPrimaryCohort" value="target.value"}}>
+            <select onchange={{action (mut primaryCohortId) value="target.value"}}>
               {{#each (sort-by 'title' cohorts) as |cohort|}}
                 <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
                   {{cohort.title}}

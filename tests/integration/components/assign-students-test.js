@@ -163,7 +163,7 @@ test('save sets primary cohort', function(assert) {
       email: 'tstemail',
       campusId: 'id123',
       save(){
-        assert.equal(this.get('primaryCohort.id'), cohort.get('id'));
+        assert.equal(this.get('primaryCohort'), cohort);
       }
     })
   ];

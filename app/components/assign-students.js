@@ -32,7 +32,7 @@ export default Component.extend({
       const primaryCohortId = this.get('primaryCohortId');
       const cohorts = this.get('cohorts');
       if (primaryCohortId) {
-        let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
+        let currentCohort = cohorts.find(cohort => cohort.id === primaryCohortId);
         if (currentCohort) {
           resolve(currentCohort);
           return;
@@ -77,7 +77,8 @@ export default Component.extend({
     for(let i = 0; i < cohorts.length; i++){
       let cohort = cohorts[i];
       let obj = {
-        id: cohort.get('id')
+        id: cohort.get('id'),
+        model: cohort
       };
       let programYear = yield cohort.get('programYear');
       let program = yield programYear.get('program');
@@ -109,7 +110,7 @@ export default Component.extend({
     if (!cohort || studentsToModify.length < 1) {
       return;
     }
-    studentsToModify.setEach('primaryCohort', cohort);
+    studentsToModify.setEach('primaryCohort', cohort.model);
 
     while (studentsToModify.get('length') > 0){
       let parts = studentsToModify.splice(0, 3);
@@ -131,9 +132,6 @@ export default Component.extend({
       } else {
         this.set('selectedUserIds', []);
       }
-    },
-    setPrimaryCohort(id){
-      this.set('primaryCohortId', id);
     },
     toggleUserSelection(userId){
       if (this.get('selectedUserIds').contains(userId)) {
