@@ -32,7 +32,7 @@ export default Component.extend({
       const primaryCohortId = this.get('primaryCohortId');
       const cohorts = this.get('cohorts');
       if (primaryCohortId) {
-        let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
+        let currentCohort = cohorts.find(cohort => cohort.id === primaryCohortId);
         if (currentCohort) {
           resolve(currentCohort);
           return;
@@ -132,9 +132,6 @@ export default Component.extend({
       } else {
         this.set('selectedUserIds', []);
       }
-    },
-    setPrimaryCohort(id){
-      this.set('primaryCohortId', id);
     },
     toggleUserSelection(userId){
       if (this.get('selectedUserIds').contains(userId)) {
