@@ -1,16 +1,16 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { computed, inject, RSVP, ObjectProxy, Component } = Ember;
 const { service } = inject;
-const { PromiseObject } = DS;
 const { collect, sort } = computed;
+const { Promise }= RSVP;
 
 const CourseProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
   showRemoveConfirmation: false,
   i18n: null,
+  isSaving: false,
   status: computed('content.isPublished', 'content.isScheduled', function(){
     const i18n = this.get('i18n');
     let course = this.get('content');
@@ -27,28 +27,43 @@ const CourseProxy = ObjectProxy.extend({
     return i18n.t(translation).string;
   }),
   userCanDelete: computed('content', 'currentUser.model.directedCourses.[]', function(){
-    let defer = RSVP.defer();
-    const course = this.get('content');
-    if (course.get('isPublishedOrScheduled')) {
-      defer.resolve(false);
-    } else {
-      this.get('currentUser.userIsDeveloper').then(isDeveloper => {
-        if(isDeveloper){
-          defer.resolve(true);
+    return new Promise(resolve => {
+      const course = this.get('content');
+      const currentUser = this.get('currentUser');
+      if (course.get('isPublishedOrScheduled')) {
+        resolve(false);
+      } else {
+        currentUser.get('userIsDeveloper').then(isDeveloper => {
+          if (isDeveloper) {
+            resolve(true);
+          } else {
+            currentUser.get('model').then(user => {
+              user.get('directedCourses').then(directedCourses => {
+                resolve(directedCourses.contains(course));
+              });
+            });
+          }
+        });
+      }
+    });
+  }),
+  userCanLock: computed('content', 'currentUser.model.directedCourses.[]', function(){
+    return new Promise(resolve => {
+      const course = this.get('content');
+      const currentUser = this.get('currentUser');
+      currentUser.get('userIsDeveloper').then(isDeveloper => {
+        if (isDeveloper) {
+          resolve(true);
         } else {
-          this.get('currentUser.model').then(user => {
+          currentUser.get('model').then(user => {
             user.get('directedCourses').then(directedCourses => {
-              defer.resolve(directedCourses.contains(course));
+              resolve(directedCourses.contains(course));
             });
           });
         }
       });
-    }
-
-    return PromiseObject.create({
-      promise: defer.promise
     });
-  })
+  }),
 });
 export default Component.extend({
   currentUser: service(),
@@ -80,6 +95,26 @@ export default Component.extend({
     },
     confirmRemove: function(courseProxy){
       courseProxy.set('showRemoveConfirmation', true);
+    },
+    unlockCourse(courseProxy){
+      courseProxy.get('userCanLock').then(permission => {
+        if (permission) {
+          courseProxy.set('isSaving', true);
+          this.get('unlock')(courseProxy.get('content')).then(()=>{
+            courseProxy.set('isSaving', false);
+          });
+        }
+      });
+    },
+    lockCourse(courseProxy){
+      courseProxy.get('userCanLock').then(permission => {
+        if (permission) {
+          courseProxy.set('isSaving', true);
+          this.get('lock')(courseProxy.get('content')).then(()=>{
+            courseProxy.set('isSaving', false);
+          });
+        }
+      });
     },
     sortBy(what){
       const sortBy = this.get('sortBy');

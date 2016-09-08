@@ -37,13 +37,11 @@
         hideFromSmallScreen=true
       }}{{t 'general.endDate'}}{{/sortable-th}}
       {{#sortable-th
-        colspan=2
+        colspan=3
         click=(action 'sortBy' 'status')
         sortedBy=(or (eq sortBy 'status') (eq sortBy 'status:desc'))
         sortedAscending=sortedAscending
-        hideFromSmallScreen=true
       }}{{t 'general.status'}}{{/sortable-th}}
-      <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
     </tr>
   </thead>
   <tbody>
@@ -62,16 +60,19 @@
         <td class='text-center hide-from-small-screen' colspan=1>{{course.level}}</td>
         <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.startDate 'MM/DD/YY'}}</td>
         <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.endDate 'MM/DD/YY'}}</td>
-        <td class='text-left hide-from-small-screen' colspan=2>
-          {{#if course.locked}}{{fa-icon 'lock'}}{{/if}}
-          {{publication-status item=course showIcon=false}}
-        </td>
-        <td class='text-left' colspan=1>
-          {{#link-to 'course' course.content class='edit'}}
-            {{fa-icon 'edit'}}
-          {{/link-to}}
-          {{#if course.userCanDelete}}
-            <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>
+        <td class='text-left' colspan=3>
+          {{#if course.isSaving}}
+            {{fa-icon 'spinner' spin=true}}
+          {{else}}
+            {{publication-status item=course showIcon=false}}
+            {{#if course.locked}}
+              <span class={{if (await course.userCanLock) 'clickable'}} {{action 'unlockCourse' course}}>{{fa-icon 'lock'}}</span>
+            {{else}}
+              <span class={{if (await course.userCanLock) 'clickable'}} {{action 'lockCourse' course}}>{{fa-icon 'unlock'}}</span>
+            {{/if}}
+            {{#if (await course.userCanDelete)}}
+              <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>
+            {{/if}}
           {{/if}}
         </td>
       </tr>

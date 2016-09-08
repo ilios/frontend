@@ -65,6 +65,8 @@
           remove='removeCourse'
           sortBy=sortCoursesBy
           setSortBy=(action (mut sortCoursesBy))
+          lock=(action 'lockCourse')
+          unlock=(action 'unlockCourse')
         }}
       {{else}}
         {{pulse-loader}}
