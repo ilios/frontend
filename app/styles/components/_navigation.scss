@@ -14,7 +14,7 @@ $sliding-menu-color-hover: #fff;
 .sliding-navigation {
   .sliding-menu-button {
     @include transform(rotate(90deg));
-    @include position(fixed, 105px 200px 200px -45px);
+    @include position(fixed, 105px 0 0 -45px);
     @include transition(all .25s linear);
 
     background-color: $sliding-menu-background;
