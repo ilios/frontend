@@ -6,4 +6,5 @@ export default Mirage.Factory.extend({
   published: true,
   publishedAsTbd: false,
   cohort: (i) => (i+1),
+  archived: false,
 });

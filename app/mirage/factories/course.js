@@ -7,5 +7,5 @@ export default Mirage.Factory.extend({
   school: 1,
   startDate: () => moment().format(),
   endDate: () => moment().add(7, 'weeks').format(),
-
+  archived: false,
 });

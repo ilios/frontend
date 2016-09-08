@@ -46,7 +46,8 @@ export default Controller.extend({
       this.get('store').query('course', {
         filters: {
           school: schoolId,
-          year: yearTitle
+          year: yearTitle,
+          archived: false
         },
         limit: 500
       }).then(courses => {
