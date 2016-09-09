@@ -50,6 +50,12 @@ test('filters by title', function(assert) {
     year: 2014,
     school: 1
   });
+  server.create('course', {
+    title: 'archivedCourse',
+    year: 2014,
+    school: 1,
+    archived: true
+  });
   visit('/courses');
   andThen(function() {
     assert.equal(4, find('.list tbody tr').length);

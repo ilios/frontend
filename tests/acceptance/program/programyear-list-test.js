@@ -27,13 +27,8 @@ module('Acceptance: Program - ProgramYear List', {
 test('check list', function(assert) {
   server.create('program', {
     school: 1,
-    programYears: [1,2,3]
+    programYears: [1,2,3,4]
   });
-  for(let i = 1; i <= 3; i++){
-    server.create('cohort', {
-      programYear: i
-    });
-  }
   server.create('programYear', {
     program: 1,
     startYear: 2012,
@@ -49,7 +44,13 @@ test('check list', function(assert) {
     startYear: 2011,
     cohort: 3,
   });
-  server.createList('cohort', 3);
+  server.create('programYear', {
+    program: 1,
+    startYear: 2009,
+    cohort: 4,
+    archived: true
+  });
+  server.createList('cohort', 4);
   visit(url);
   andThen(function() {
     var container = find('.programyear-list');
