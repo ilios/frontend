@@ -7,5 +7,7 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-application.app-instance-container"},
     { handler: "silence", matchId: "ember-views.render-double-modify"},
     { handler: "silence", matchId: "ember-metal.merge"},
+    { handler: "silence", matchId: "ember-htmlbars.ember-handlebars-safestring"},
+    { handler: "silence", matchId: "ember-runtime.enumerable-contains"},
   ]
 };
