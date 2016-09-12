@@ -72,9 +72,8 @@ let createFile = function(users){
   return file;
 };
 
-let triggerUpload = function(users){
+let triggerUpload = function(users, inputElement){
   let file = createFile(users);
-  let inputElement = this.$('input[type=file]');
   inputElement.triggerHandler({
     type: 'change',
     target: {
@@ -173,7 +172,7 @@ test('parses file into table', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   run.later(() => {
     let userRows = this.$('table tbody tr');
@@ -294,7 +293,7 @@ test('saves valid faculty users', function(assert) {
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
     ['invaliduser'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
   run.later(()=>{
     this.$('.done').click();
   }, 100);
@@ -398,7 +397,7 @@ test('saves valid student users', function(assert) {
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
     ['invaliduser'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
   run.later(()=>{
     this.$('.done').click();
   }, 1000);
@@ -424,7 +423,7 @@ test('validate firstName', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(1)';
@@ -448,7 +447,7 @@ test('validate lastName', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', '', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(2)';
@@ -471,7 +470,7 @@ test('validate middleName', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middlenamewhchiswaytoolongforilios', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(3)';
@@ -495,7 +494,7 @@ test('validate email address', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(5)';
@@ -519,7 +518,7 @@ test('validate campusId', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus123456TOOLONGJACK', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(6)';
@@ -543,7 +542,7 @@ test('validate otherId', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234OtherWAYTOOLONGFORANID', 'jck', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(7)';
@@ -567,7 +566,7 @@ test('validate username', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'existingName', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
@@ -628,7 +627,7 @@ test('duplicate username errors on save', function(assert) {
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
   run.later(()=>{
     this.$('.done').click();
     assert.ok(this.$('.saving-authentication-errors').length, 1);
@@ -681,7 +680,7 @@ test('error saving user', function(assert) {
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
   run.later(()=>{
     this.$('.done').click();
     assert.ok(this.$('.saving-user-errors').length, 1);
@@ -698,7 +697,7 @@ test('username not required', function(assert) {
   let users = [
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', '1234Test'],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
@@ -717,7 +716,7 @@ test('password not required if username is blank', function(assert) {
   let users = [
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
@@ -760,7 +759,7 @@ test('dont create authentication if username is not set', function(assert) {
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
   run.later(()=>{
     this.$('.done').click();
   }, 1000);
@@ -776,7 +775,7 @@ test('ignore header row', function(assert) {
     ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
     ['Test Person', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
   ];
-  triggerUpload(users);
+  triggerUpload(users, this.$('input[type=file]'));
 
   const rows = 'tbody tr';
   run.later(()=>{
