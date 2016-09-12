@@ -1,10 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Ember from 'ember';
-
-const { run } = Ember;
-const { next } = run;
+import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('recently-updated-display', 'Integration | Component | recently updated display', {
   integration: true
@@ -16,7 +13,9 @@ test('it renders', function(assert) {
   this.set('lastModified', lastModified);
   this.render(hbs`{{recently-updated-display lastModified=lastModified}}`);
 
-  assert.ok(this.$().find('.fa-exclamation-circle').length === 1, 'it renders');
+  return wait().then(()=>{
+    assert.equal(this.$('.fa-exclamation-circle').length, 1, 'it renders');
+  });
 });
 
 test('it does not render', function(assert) {
@@ -25,7 +24,7 @@ test('it does not render', function(assert) {
   this.set('lastModified', lastModified);
   this.render(hbs`{{recently-updated-display}}`);
 
-  next(function() {
-    assert.ok(this.$().find('.fa-exclamation-circle').length === 0, 'it does not render');
+  return wait().then(()=>{
+    assert.equal(this.$('.fa-exclamation-circle').length, 0, 'it does not renders');
   });
 });
