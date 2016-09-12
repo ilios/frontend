@@ -32,7 +32,7 @@
           <li class='summary'>{{result.text}}</li>
         {{/if}}
         {{#if (eq result.type 'user')}}
-          <li class='user clickable' {{action 'clickUser' result.user}}>
+          <li class='user clickable' {{action (perform clickUser) result.user}}>
             <span class='name'>
               {{result.user.fullName}}
               {{#unless result.user.enabled}}
