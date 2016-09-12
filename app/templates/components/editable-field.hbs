@@ -1,6 +1,6 @@
 <span class='content'>
   {{#unless isEditing}}
-    <span {{action 'edit'}} class='editable'>
+    <span onclick={{action (mut isEditing) true}} class='editable'>
       {{#if value}}
         {{big-text text=value renderHtml=renderHtml}}
       {{else}}
@@ -9,12 +9,12 @@
     </span>
   {{else}}
     <span class='editor'>
-      {{yield isSaving (action 'save') (action 'close')}}
+      {{yield saveData.isRunning (perform saveData) (perform closeEditor)}}
       <span class='actions'>
-        <button class='done icon' title='{{t 'general.save'}}' {{action 'save'}}>
-          {{fa-icon (if isSaving 'spinner' 'check') spin=isSaving}}
+        <button class='done icon' title='{{t 'general.save'}}' {{action (perform saveData)}}>
+          {{fa-icon (if saveData.isRunning 'spinner' 'check') spin=saveData.isRunning}}
         </button>
-        <button class='cancel icon' title='{{t 'general.cancel'}}' {{action 'close'}}>{{fa-icon 'times'}}</button>
+        <button class='cancel icon' title='{{t 'general.cancel'}}' {{action (perform closeEditor)}}>{{fa-icon 'times'}}</button>
       </span>
     </span>
   {{/unless}}

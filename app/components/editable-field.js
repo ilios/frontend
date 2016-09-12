@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { timeout, task } from 'ember-concurrency';
 
 const { Component } = Ember;
 
@@ -9,21 +10,15 @@ export default Component.extend({
   classNames: ['editinplace'],
   clickPrompt: null,
 
-  actions: {
-    edit(){
-      this.set('isEditing', true);
-    },
-    save(){
-      this.set('isSaving', true);
-      this.get('save')().then(() => {
-        this.set('isEditing', false);
-      }).finally(() => {
-        this.set('isSaving', false);
-      });
-    },
-    close(){
-      this.get('close')();
-      this.set('isEditing', false);
-    },
-  }
+  saveData: task(function * () {
+    yield timeout(1);
+    yield this.get('save')();
+    this.set('isEditing', false);
+  }).drop(),
+
+  closeEditor: task(function * () {
+    yield timeout(1);
+    yield this.get('close')();
+    this.set('isEditing', false);
+  }).drop(),
 });
