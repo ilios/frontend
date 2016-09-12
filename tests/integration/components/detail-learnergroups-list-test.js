@@ -90,8 +90,9 @@ test('it renders', function(assert) {
 
 
   this.set('learnerGroups', [tlg1, subGroup1, subSubGroup1, subGroup2]);
+  this.set('nothing', parseInt)
 
-  this.render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups}}`);
+  this.render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups remove=(action nothing)}}`);
 
   assert.equal(this.$(set1Legend).text().trim(), 'tlg1 ( )');
   assert.equal(this.$(set1Group1).text().trim(), 'tlg1 (2)');
