@@ -103,6 +103,10 @@
     {{/if}}
   </div>
   {{#liquid-if save.isRunning class='crossFade'}}
-    {{wait-saving}}
+    {{wait-saving
+      showProgress=true
+      totalProgress=itemsToSave
+      currentProgress=savedItems
+    }}
   {{/liquid-if}}
 </section>

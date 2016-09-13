@@ -54,20 +54,42 @@ export default Component.extend({
 
   saved: false,
   savedProgramYear: null,
+  itemsToSave: null,
+  savedItems: null,
+
+  resetSaveItems(){
+    this.set('itemsToSave', 100);
+    this.set('savedItems', 0);
+  },
+
+  incrementSavedItems(){
+    this.set('savedItems', this.get('savedItems') + 1);
+  },
 
   save: task(function * (startYear){
     const latestProgramYear = this.get('sortedContent').get('lastObject');
     const program = this.get('program');
     const store = this.get('store');
     const i18n = this.get('i18n');
+    let itemsToSave = 0;
+    this.resetSaveItems();
 
     let newProgramYear = store.createRecord('program-year', { program, startYear });
+    this.incrementSavedItems();
 
     if (latestProgramYear) {
       const directors = yield latestProgramYear.get('directors');
+      itemsToSave++;
+      this.incrementSavedItems();
       const competencies = yield latestProgramYear.get('competencies');
+      itemsToSave++;
+      this.incrementSavedItems();
       const terms = yield latestProgramYear.get('terms');
+      itemsToSave++;
+      this.incrementSavedItems();
       const stewards = yield latestProgramYear.get('stewards');
+      itemsToSave++;
+      this.incrementSavedItems();
 
       newProgramYear.get('directors').pushObjects(directors.toArray());
       newProgramYear.get('competencies').pushObjects(competencies.toArray());
@@ -75,10 +97,23 @@ export default Component.extend({
       newProgramYear.get('stewards').pushObjects(stewards.toArray());
     }
     let savedProgramYear = yield newProgramYear.save();
+    itemsToSave++;
+    this.incrementSavedItems();
+
+    const classOfYear = savedProgramYear.get('classOfYear');
+    const title = i18n.t('general.classOf', { year: classOfYear });
+
+    let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
+    yield cohort.save();
+    itemsToSave++;
+    this.incrementSavedItems();
 
     if (latestProgramYear) {
       const relatedObjectives = yield latestProgramYear.get('objectives');
       const objectives = relatedObjectives.sortBy('id').toArray();
+      itemsToSave += objectives.length;
+      this.set('itemsToSave', itemsToSave);
+
       for (let i = 0; i < objectives.length; i++) {
         let objectiveToCopy = objectives[i];
         let newObjective = store.createRecord(
@@ -89,14 +124,10 @@ export default Component.extend({
         newObjective.setProperties(props);
         newObjective.set('programYears', [savedProgramYear]);
         yield newObjective.save();
+        this.incrementSavedItems();
       }
     }
-
-    const classOfYear = savedProgramYear.get('classOfYear');
-    const title = i18n.t('general.classOf', { year: classOfYear });
-
-    let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
-    yield cohort.save();
+    this.set('itemsToSave', itemsToSave);
     this.setProperties({ saved: true, savedProgramYear: newProgramYear });
     this.send('cancel');
   }).drop(),
