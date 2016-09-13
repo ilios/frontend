@@ -198,7 +198,7 @@ test('parses file into table', function(assert) {
     assert.equal(this.$('tr:eq(2) td:eq(7)').text().trim(), '1234Other');
     assert.equal(this.$('tr:eq(2) td:eq(8)').text().trim(), 'jck');
     assert.equal(this.$('tr:eq(2) td:eq(9)').text().trim(), '1234Test');
-  }, 100);
+  }, 1000);
 
   return wait();
 });
@@ -296,7 +296,7 @@ test('saves valid faculty users', function(assert) {
   triggerUpload(users, this.$('input[type=file]'));
   run.later(()=>{
     this.$('.done').click();
-  }, 100);
+  }, 1000);
 
   return wait();
 });
