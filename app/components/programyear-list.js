@@ -1,10 +1,11 @@
 import moment from 'moment';
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Component, computed, inject, ObjectProxy, RSVP } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
-const { all } = RSVP;
+const { hash } = RSVP;
 
 export default Component.extend({
   classNames: ['programyear-list'],
@@ -54,6 +55,52 @@ export default Component.extend({
   saved: false,
   savedProgramYear: null,
 
+  save: task(function * (startYear){
+    const latestProgramYear = this.get('sortedContent').get('lastObject');
+    const program = this.get('program');
+    const store = this.get('store');
+    const i18n = this.get('i18n');
+
+    let newProgramYear = store.createRecord('program-year', { program, startYear });
+    let newObjectives = [];
+
+    if (latestProgramYear) {
+      const directors = yield latestProgramYear.get('directors');
+      const competencies = yield latestProgramYear.get('competencies');
+      const terms = yield latestProgramYear.get('terms');
+      const stewards = yield latestProgramYear.get('stewards');
+
+      newProgramYear.get('directors').pushObjects(directors.toArray());
+      newProgramYear.get('competencies').pushObjects(competencies.toArray());
+      newProgramYear.get('terms').pushObjects(terms.toArray());
+      newProgramYear.get('stewards').pushObjects(stewards.toArray());
+
+      const relatedObjectives = yield latestProgramYear.get('objectives');
+      const objectives = relatedObjectives.toArray();
+      for (let i = 0; i < objectives.length; i++) {
+        let objectiveToCopy = objectives[i];
+        let newObjective = store.createRecord(
+          'objective',
+          objectiveToCopy.getProperties('title')
+        );
+        let props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
+        newObjective.setProperties(props);
+        newObjectives.pushObject(newObjective);
+      }
+    }
+    let savedProgramYear = yield newProgramYear.save();
+    newObjectives.setEach('programYears', [savedProgramYear]);
+    yield newObjectives.invoke('save');
+
+    const classOfYear = savedProgramYear.get('classOfYear');
+    const title = i18n.t('general.classOf', { year: classOfYear });
+
+    let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
+    yield cohort.save();
+    this.setProperties({ saved: true, savedProgramYear: newProgramYear });
+    this.send('cancel');
+  }).drop(),
+
   actions: {
     toggleEditor() {
       if (this.get('editorOn')) {
@@ -65,57 +112,6 @@ export default Component.extend({
 
     cancel() {
       this.set('editorOn', false);
-    },
-
-    save(startYear) {
-      const component = this;
-      const latestProgramYear = this.get('sortedContent').get('lastObject');
-      const program = this.get('program');
-      const store = this.get('store');
-
-      let newProgramYear = store.createRecord('program-year', { program, startYear });
-      let promises = [];
-
-      if (latestProgramYear) {
-        promises.pushObject(latestProgramYear.get('directors').then((directors) => {
-          newProgramYear.get('directors').pushObjects(directors.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('competencies').then((competencies) => {
-          newProgramYear.get('competencies').pushObjects(competencies.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('terms').then((terms) => {
-          newProgramYear.get('terms').pushObjects(terms.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('objectives').then((objectives) => {
-          newProgramYear.get('objectives').pushObjects(objectives.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('stewards').then((stewards) => {
-          newProgramYear.get('stewards').pushObjects(stewards.toArray());
-        }));
-      }
-
-      return all(promises).then(() => {
-        return newProgramYear.save().then((savedProgramYear) => {
-          const store = component.get('store');
-          let promises = [];
-
-          promises.pushObject(program.get('programYears').then((programYears) => {
-            programYears.addObject(savedProgramYear);
-          }));
-
-          const classOfYear = savedProgramYear.get('classOfYear');
-          const title = component.get('i18n').t('general.classOf', { year: classOfYear });
-
-          let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
-
-          promises.pushObject(cohort.save());
-
-          return all(promises).then(() => {
-            component.setProperties({ saved: true, savedProgramYear: newProgramYear });
-            component.send('cancel');
-          });
-        });
-      });
     },
 
     remove(programYearProxy) {

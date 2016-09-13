@@ -7,7 +7,7 @@
   </div>
   <section class='new'>
     {{#if editorOn}}
-      {{new-programyear availableAcademicYears=availableAcademicYears save=(action 'save') cancel=(action 'cancel')}}
+      {{new-programyear availableAcademicYears=availableAcademicYears save=(perform save) cancel=(action 'cancel')}}
     {{/if}}
 
     {{#if saved}}
