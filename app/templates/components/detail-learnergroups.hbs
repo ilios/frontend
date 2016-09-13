@@ -25,6 +25,7 @@
   {{else}}
     {{detail-learnergroups-list
       learnerGroups=(await subject.learnerGroups)
+      remove=(action 'removeLearnerGroup')
     }}
   {{/if}}
 </div>

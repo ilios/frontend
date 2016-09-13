@@ -118,14 +118,13 @@ test('Update location', function(assert) {
 
   const location = '.overview .form-data:eq(0)';
   const editLocation = location + ' .editable';
-  const input = location + ' input';
-  const save = location + ' .done';
+  const input =  `${location} input`;
+  const save =  `${location} .done`;
   return wait().then(()=>{
     assert.equal(this.$(location).text().trim(), 'test location');
     this.$(editLocation).click();
-    this.$(input).val('new location name');
-    this.$(input).trigger('change');
     return wait().then(()=> {
+      this.$(input).val('new location name').change();
       this.$(save).click();
       return wait().then(()=> {
         assert.equal(this.$(location).text().trim(), 'new location name');

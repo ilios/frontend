@@ -19,7 +19,10 @@ export default Component.extend({
     const store = this.get('store');
 
     let q = cleanQuery(query);
-    if (isBlank(q)) { return []; }
+    if (isBlank(q)) {
+      yield timeout(1);
+      return [];
+    }
     yield timeout(DEBOUNCE_MS);
 
     if (q.length < MIN_INPUT) {
@@ -57,15 +60,13 @@ export default Component.extend({
 
     return results;
   }).restartable(),
-  actions: {
-    //Use an action for this route change instead of a link-to so we can close the search results
-    clickUser(user){
-      const routing = this.get('routing');
-      this.set('searchValue', null);
-      this.get('searchForUsers').perform(null);
-      //private routing API requires putting the model we are passing inside of an array
-      //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
-      routing.transitionTo('user', [user]);
-    }
-  }
+
+  clickUser: task(function * (user) {
+    const routing = this.get('routing');
+    this.set('searchValue', null);
+    yield this.get('searchForUsers').perform(null);
+    //private routing API requires putting the model we are passing inside of an array
+    //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
+    routing.transitionTo('user', [user]);
+  }).drop(),
 });
