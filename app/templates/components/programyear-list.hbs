@@ -102,4 +102,7 @@
       <span class="default-message">{{t 'general.noProgramYears'}}</span>
     {{/if}}
   </div>
+  {{#liquid-if save.isRunning class='crossFade'}}
+    {{wait-saving}}
+  {{/liquid-if}}
 </section>

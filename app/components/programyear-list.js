@@ -62,7 +62,6 @@ export default Component.extend({
     const i18n = this.get('i18n');
 
     let newProgramYear = store.createRecord('program-year', { program, startYear });
-    let newObjectives = [];
 
     if (latestProgramYear) {
       const directors = yield latestProgramYear.get('directors');
@@ -74,9 +73,12 @@ export default Component.extend({
       newProgramYear.get('competencies').pushObjects(competencies.toArray());
       newProgramYear.get('terms').pushObjects(terms.toArray());
       newProgramYear.get('stewards').pushObjects(stewards.toArray());
+    }
+    let savedProgramYear = yield newProgramYear.save();
 
+    if (latestProgramYear) {
       const relatedObjectives = yield latestProgramYear.get('objectives');
-      const objectives = relatedObjectives.toArray();
+      const objectives = relatedObjectives.sortBy('id').toArray();
       for (let i = 0; i < objectives.length; i++) {
         let objectiveToCopy = objectives[i];
         let newObjective = store.createRecord(
@@ -85,12 +87,10 @@ export default Component.extend({
         );
         let props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
         newObjective.setProperties(props);
-        newObjectives.pushObject(newObjective);
+        newObjective.set('programYears', [savedProgramYear]);
+        yield newObjective.save();
       }
     }
-    let savedProgramYear = yield newProgramYear.save();
-    newObjectives.setEach('programYears', [savedProgramYear]);
-    yield newObjectives.invoke('save');
 
     const classOfYear = savedProgramYear.get('classOfYear');
     const title = i18n.t('general.classOf', { year: classOfYear });
