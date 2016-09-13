@@ -12,6 +12,7 @@ module('Acceptance: Courses', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
+
     server.createList('school', 2)
   },
 
@@ -312,6 +313,47 @@ test('new course does not appear twice when navigating back', function(assert) {
     assert.equal(find(savedLink).length, 1, 'one copy of the save link');
     assert.equal(find(course1InList).length, 1, 'one copy of the course in the list');
   });
+});
+
+test('new course can be deleted', function(assert) {
+  server.create('academicYear', {id: 2014});
+  server.create('userRole', {
+    title: 'Developer'
+  });
+  server.db.users.update(4136, {roles: [1]})
+
+  assert.expect(7);
+
+  const url = '/courses?year=2014';
+  const expandButton = '.expand-button';
+  const input = '.new-course input';
+  const selectField = '.new-course select';
+  const saveButton = '.done';
+  const courses = '.list tbody tr';
+  const deleteCourse = `${courses} .remove`;
+  const deleteConfirm = `.confirm-buttons .remove`;
+  const savedCourse = '.savedcourse';
+
+  visit(url);
+  andThen(() => {
+    assert.equal(find(courses).length, 0, 'there are initiall no courses');
+    assert.equal(find(savedCourse).length, 0, 'there are intially no saved courses');
+    click(expandButton);
+    fillIn(input, 'Course 1');
+    pickOption(selectField, '2014 - 2015', assert);
+    click(saveButton);
+    andThen(() => {
+      assert.equal(find(courses).length, 1, 'there is one new course');
+      assert.equal(find(savedCourse).length, 1, 'there is one new saved course');
+      click(deleteCourse);
+      click(deleteConfirm);
+      andThen(()=>{
+        assert.equal(find(courses).length, 0, 'the new course has been deleted');
+        assert.equal(find(savedCourse).length, 0, 'the saved course has been deleted');
+      });
+    });
+  });
+
 });
 
 test('locked courses', function(assert) {
