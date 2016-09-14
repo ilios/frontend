@@ -173,7 +173,11 @@ export default Controller.extend({
   actions: {
     removeCourse: function(course){
       course.deleteRecord();
-      course.save();
+      course.save().then(()=>{
+        if (this.get('newCourses').includes(course)) {
+          this.get('newCourses').removeObject(course);
+        }
+      });
     },
     saveNewCourse: function(newCourse){
       newCourse.setDatesBasedOnYear();
@@ -181,12 +185,6 @@ export default Controller.extend({
         this.set('showNewCourseForm', false);
         this.get('newCourses').pushObject(savedCourse);
       });
-    },
-    removeNewCourse: function(newCourse){
-      let courseProxy = this.get('newCourses').find(proxy => {
-        return proxy.get('content') === newCourse;
-      });
-      this.get('newCourses').removeObject(courseProxy);
     },
     changeSelectedYear: function(yearTitle){
       this.set('yearTitle', yearTitle);
