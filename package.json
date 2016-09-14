@@ -47,7 +47,7 @@
     "ember-cli-htmlbars": "^1.0.11",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.4.0",
-    "ember-cli-mirage": "0.1.13",
+    "ember-cli-mirage": "0.2.1",
     "ember-cli-moment-shim": "2.0.0",
     "ember-cli-neat": "0.0.5",
     "ember-cli-password-strength": "0.2.1",
