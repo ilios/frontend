@@ -3,7 +3,7 @@
 <div class='form'>
   <div class="startyear-select">
     <label>{{t 'general.academicYear'}}:</label>
-    <select onchange={{action "setYear" value="target.value"}}>
+    <select onchange={{action (mut selectedYear) value="target.value"}}>
       {{#each (sort-by 'value' availableAcademicYears) as |obj|}}
         <option value={{obj.value}} selected={{eq obj.value selectedYear}}>
           {{obj.label}}
@@ -13,8 +13,8 @@
   </div>
 
   <div class='buttons'>
-    <button class='done text' {{action 'save'}}>
-      {{#if isSaving}}
+    <button class='done text' {{action (perform saveNewYear)}}>
+      {{#if saveNewYear.isRunning}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
         {{t 'general.done'}}

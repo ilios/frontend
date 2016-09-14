@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Component, isEmpty } = Ember;
 
@@ -8,25 +9,15 @@ export default Component.extend({
   selectedYear: null,
   availableAcademicYears: null,
 
-  actions: {
-    setYear(year) {
-      this.set('selectedYear', year);
-    },
-    save() {
-      this.set('isSaving', true);
-      let startYear = this.get('selectedYear');
-      if (isEmpty(startYear)) {
-        const availableAcademicYears = this.get('availableAcademicYears');
-        startYear = availableAcademicYears.get('firstObject.value');
-      }
-
-      if (isEmpty(startYear)) {
-        return false;
-      }
-
-      this.get('save')(parseInt(startYear)).finally(() =>{
-        this.set('isSaving', false);
-      });
-    },
-  }
+  saveNewYear: task(function * (){
+    let startYear = this.get('selectedYear');
+    if (isEmpty(startYear)) {
+      const availableAcademicYears = this.get('availableAcademicYears');
+      startYear = availableAcademicYears.get('firstObject.value');
+    }
+    if (isEmpty(startYear)) {
+      return false;
+    }
+    yield this.get('save')(parseInt(startYear));
+  }).drop(),
 });

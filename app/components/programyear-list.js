@@ -1,10 +1,11 @@
 import moment from 'moment';
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Component, computed, inject, ObjectProxy, RSVP } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
-const { all } = RSVP;
+const { hash } = RSVP;
 
 export default Component.extend({
   classNames: ['programyear-list'],
@@ -53,6 +54,83 @@ export default Component.extend({
 
   saved: false,
   savedProgramYear: null,
+  itemsToSave: null,
+  savedItems: null,
+
+  resetSaveItems(){
+    this.set('itemsToSave', 100);
+    this.set('savedItems', 0);
+  },
+
+  incrementSavedItems(){
+    this.set('savedItems', this.get('savedItems') + 1);
+  },
+
+  save: task(function * (startYear){
+    const latestProgramYear = this.get('sortedContent').get('lastObject');
+    const program = this.get('program');
+    const store = this.get('store');
+    const i18n = this.get('i18n');
+    let itemsToSave = 0;
+    this.resetSaveItems();
+
+    let newProgramYear = store.createRecord('program-year', { program, startYear });
+    this.incrementSavedItems();
+
+    if (latestProgramYear) {
+      const directors = yield latestProgramYear.get('directors');
+      itemsToSave++;
+      this.incrementSavedItems();
+      const competencies = yield latestProgramYear.get('competencies');
+      itemsToSave++;
+      this.incrementSavedItems();
+      const terms = yield latestProgramYear.get('terms');
+      itemsToSave++;
+      this.incrementSavedItems();
+      const stewards = yield latestProgramYear.get('stewards');
+      itemsToSave++;
+      this.incrementSavedItems();
+
+      newProgramYear.get('directors').pushObjects(directors.toArray());
+      newProgramYear.get('competencies').pushObjects(competencies.toArray());
+      newProgramYear.get('terms').pushObjects(terms.toArray());
+      newProgramYear.get('stewards').pushObjects(stewards.toArray());
+    }
+    let savedProgramYear = yield newProgramYear.save();
+    itemsToSave++;
+    this.incrementSavedItems();
+
+    const classOfYear = savedProgramYear.get('classOfYear');
+    const title = i18n.t('general.classOf', { year: classOfYear });
+
+    let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
+    yield cohort.save();
+    itemsToSave++;
+    this.incrementSavedItems();
+
+    if (latestProgramYear) {
+      const relatedObjectives = yield latestProgramYear.get('objectives');
+      const objectives = relatedObjectives.sortBy('id').toArray();
+      itemsToSave += objectives.length;
+      this.set('itemsToSave', itemsToSave);
+
+      for (let i = 0; i < objectives.length; i++) {
+        let objectiveToCopy = objectives[i];
+        let newObjective = store.createRecord(
+          'objective',
+          objectiveToCopy.getProperties('title')
+        );
+        let props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
+        newObjective.setProperties(props);
+        newObjective.set('programYears', [savedProgramYear]);
+        yield newObjective.save();
+        this.incrementSavedItems();
+      }
+    }
+    this.set('itemsToSave', itemsToSave);
+    this.setProperties({ saved: true, savedProgramYear: newProgramYear });
+    this.send('cancel');
+  }).drop(),
 
   actions: {
     toggleEditor() {
@@ -65,57 +143,6 @@ export default Component.extend({
 
     cancel() {
       this.set('editorOn', false);
-    },
-
-    save(startYear) {
-      const component = this;
-      const latestProgramYear = this.get('sortedContent').get('lastObject');
-      const program = this.get('program');
-      const store = this.get('store');
-
-      let newProgramYear = store.createRecord('program-year', { program, startYear });
-      let promises = [];
-
-      if (latestProgramYear) {
-        promises.pushObject(latestProgramYear.get('directors').then((directors) => {
-          newProgramYear.get('directors').pushObjects(directors.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('competencies').then((competencies) => {
-          newProgramYear.get('competencies').pushObjects(competencies.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('terms').then((terms) => {
-          newProgramYear.get('terms').pushObjects(terms.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('objectives').then((objectives) => {
-          newProgramYear.get('objectives').pushObjects(objectives.toArray());
-        }));
-        promises.pushObject(latestProgramYear.get('stewards').then((stewards) => {
-          newProgramYear.get('stewards').pushObjects(stewards.toArray());
-        }));
-      }
-
-      return all(promises).then(() => {
-        return newProgramYear.save().then((savedProgramYear) => {
-          const store = component.get('store');
-          let promises = [];
-
-          promises.pushObject(program.get('programYears').then((programYears) => {
-            programYears.addObject(savedProgramYear);
-          }));
-
-          const classOfYear = savedProgramYear.get('classOfYear');
-          const title = component.get('i18n').t('general.classOf', { year: classOfYear });
-
-          let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
-
-          promises.pushObject(cohort.save());
-
-          return all(promises).then(() => {
-            component.setProperties({ saved: true, savedProgramYear: newProgramYear });
-            component.send('cancel');
-          });
-        });
-      });
     },
 
     remove(programYearProxy) {

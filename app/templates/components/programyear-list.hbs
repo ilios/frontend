@@ -7,7 +7,7 @@
   </div>
   <section class='new'>
     {{#if editorOn}}
-      {{new-programyear availableAcademicYears=availableAcademicYears save=(action 'save') cancel=(action 'cancel')}}
+      {{new-programyear availableAcademicYears=availableAcademicYears save=(perform save) cancel=(action 'cancel')}}
     {{/if}}
 
     {{#if saved}}
@@ -102,4 +102,11 @@
       <span class="default-message">{{t 'general.noProgramYears'}}</span>
     {{/if}}
   </div>
+  {{#liquid-if save.isRunning class='crossFade'}}
+    {{wait-saving
+      showProgress=true
+      totalProgress=itemsToSave
+      currentProgress=savedItems
+    }}
+  {{/liquid-if}}
 </section>
