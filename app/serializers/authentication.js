@@ -14,7 +14,12 @@ export default RESTSerializer.extend({
     if (isEmpty(json.password)) {
       delete json.password;
     }
-    
+
+    //don't persist empty usernames
+    if (isEmpty(json.username)) {
+      delete json.username;
+    }
+
     return json;
   }
 });

@@ -7,10 +7,14 @@ const { RSVP, Object, Service } = Ember;
 const { resolve } = RSVP;
 let user;
 let authentication;
-let storeMock;
 moduleForComponent('user-profile-bio', 'Integration | Component | user profile bio', {
   integration: true,
   beforeEach(){
+    authentication = Object.create({
+      username: 'test-username',
+      user: 13,
+      password: null
+    });
     user = Object.create({
       id: 13,
       fullName: 'Test Person Name Thing',
@@ -24,19 +28,8 @@ moduleForComponent('user-profile-bio', 'Integration | Component | user profile b
       roles: resolve([]),
       cohorts: resolve([]),
       primaryCohort: resolve(null),
+      authentication: resolve(authentication),
     });
-    authentication = Object.create({
-      username: 'test-username',
-      user: 13,
-      password: null
-    });
-
-    storeMock = Service.extend({
-      find(){
-        return resolve(authentication);
-      }
-    });
-    this.register('service:store', storeMock);
   }
 });
 

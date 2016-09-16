@@ -240,6 +240,7 @@ export default {
     'missingCourseObjectivesMessage': "S'il vous plait ajouter au  moins d'objectif au cours.",
     'missingItems': "Objets Manquants",
     'missingPassword': "Nécessite un mot de passe",
+    'missingRequiredUsername': "'Nom d'Utilisateur' est requis pour login; Cet utilisateur ne pourra pas login jusqu'à qu'un Nom d'Utilisateur s'affiche.",
     'missingUsername': "Nécessite un nom d'utilisateur",
     'modifyUserPassword': 'Cliquez ici pour remettre à zéro votre mot de passe.',
     'monday': 'Lundi',

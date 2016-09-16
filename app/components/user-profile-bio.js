@@ -50,12 +50,7 @@ const Validations = buildValidations({
     }),
   ],
   username: {
-    dependentKeys: ['canEditUsernameAndPassword'],
-    disabled(){
-      return this.get('model.canEditUsernameAndPassword');
-    },
     validators: [
-      validator('presence', true),
       validator('length', {
         max: 100
       }),
@@ -119,7 +114,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   manage: task(function * (){
     const user = this.get('user');
-    const store = this.get('store');
     this.setProperties(user.getProperties(
       'firstName',
       'middleName',
@@ -129,10 +123,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'email',
       'phone'
     ));
+    let auth = yield user.get('authentication');
+    if (auth) {
+      this.set('username', auth.get('username'));
+      this.set('password', '');
+    }
 
-    let auth = yield store.find('authentication', user.get('id'));
-    this.set('username', auth.get('username'));
-    this.set('password', '');
     this.get('setIsManaging')(true);
 
     return true;
@@ -157,14 +153,23 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'email',
         'phone'
       ));
-      let auth = yield store.find('authentication', user.get('id'));
+      let auth = yield user.get('authentication');
+      if (!auth) {
+        auth = store.createRecord('authentication', {
+          user
+        });
+      }
       //always set and send the username in case it was updated in the sync
-      auth.set('username', this.get('username'));
+      let username = this.get('username');
+      if (isEmpty(username)) {
+        username = null;
+      }
+      auth.set('username', username);
       if (canEditUsernameAndPassword && changeUserPassword) {
         auth.set('password', this.get('password'));
       }
-      yield user.save();
       yield auth.save();
+      yield user.save();
 
       this.send('clearErrorDisplay');
       this.get('cancel').perform();
@@ -266,12 +271,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return strength(password);
   }),
 
-  authentication: computed('user.id', function(){
+  usernameMissing: computed('user.authentication', function(){
+    const user = this.get('user');
     return new Promise(resolve => {
-      const store = this.get('store');
-      const user = this.get('user');
-      store.find('authentication', user.get('id')).then(authentication => {
-        resolve(authentication);
+      user.get('authentication').then(authentication => {
+        resolve(isEmpty(authentication) || isEmpty(authentication.get('username')));
       });
     });
   }),

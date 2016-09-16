@@ -240,6 +240,7 @@ export default {
     'missingCourseObjectivesMessage': 'Favor de agregar por lo menos un objetivo al Curso.',
     'missingItems': 'Artículos Faltantes',
     'missingPassword': 'Contraseña requirida',
+    'missingRequiredUsername': "'Nombre de Usuario' se requiere para la entrada al sistema; este usuario será incapaz a la entrada al sistema hasta que un username sea entrado",
     'missingUsername': 'Nombre de usaurio requirido',
     'modifyUserPassword': 'Haga clic aquí para restablecer la contraseña.',
     'monday': 'Lunes',
