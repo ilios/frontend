@@ -22,6 +22,7 @@ var User = DS.Model.extend({
   reminders: DS.hasMany('user-made-reminder', {async: true}),
   reports: DS.hasMany('report', {async: true}),
   school: DS.belongsTo('school', {async: true}),
+  authentication: DS.belongsTo('authentication', {async: true}),
   directedCourses: DS.hasMany('course', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {
     async: true,
