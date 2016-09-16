@@ -7,6 +7,11 @@
     <button class='manage' {{action (perform manage)}}>{{fa-icon 'edit'}}</button>
   {{/if}}
 </div>
+{{#if (await usernameMissing)}}
+  <span class='error'>
+    {{t 'general.missingRequiredUsername'}}
+  </span>
+{{/if}}
 <div class='item {{if (contains "firstName" updatedFieldsFromSync) "synced-from-directory"}}'>
   <label>{{t 'general.firstName'}}:</label>
   {{#unless isManaging}}
@@ -133,7 +138,7 @@
 <div class='item {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"}}'>
   <label>{{t 'general.username'}}:</label>
   {{#unless isManaging}}
-    <span class='value'>{{get (await authentication) 'username'}}</span>
+    <span class='value'>{{get (await user.authentication) 'username'}}</span>
   {{else}}
     {{one-way-input
       value=username
@@ -152,7 +157,7 @@
   <div class='item password'>
     <label>{{t 'general.password'}}:</label>
     {{#unless isManaging}}
-      <span class='value'>&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;</span>
+      <span class='value'>{{#unless (await usernameMissing)}} &#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;{{/unless}}</span>
     {{else}}
       {{#if changeUserPassword}}
         {{one-way-password

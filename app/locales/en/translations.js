@@ -240,6 +240,7 @@ export default {
     'missingCourseObjectivesMessage': 'Please add at least one objective to the course.',
     'missingItems': 'Missing Items',
     'missingPassword': 'Password required',
+    'missingRequiredUsername': "'Username' is required for login; this user will be unable to login until a username is entered.",
     'missingUsername': 'Username required',
     'modifyUserPassword': 'Click here to reset password.',
     'monday': 'Monday',
