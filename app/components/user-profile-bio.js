@@ -50,9 +50,13 @@ const Validations = buildValidations({
     }),
   ],
   username: {
+    descriptionKey: 'general.username',
     validators: [
       validator('length', {
-        max: 100
+        max: 100,
+      }),
+      validator('format', {
+        regex: /^[a-z0-9_\-()]*$/i,
       }),
     ]
   },
