@@ -9,6 +9,7 @@ export default [
   'model:alert-change-type',
   'model:alert',
   'model:assessment-option',
+  'model:authentication',
   'model:cohort',
   'model:competency',
   'model:course-learning-material',

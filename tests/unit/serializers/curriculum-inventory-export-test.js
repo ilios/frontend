@@ -4,6 +4,7 @@ import Ember from 'ember';
 moduleForModel('curriculum-inventory-export', 'Unit | Serializer | curriculum inventory export', {
   // Specify the other units that are required for this test.
   needs: [
+    'model:authentication',
     'model:curriculum-inventory-export',
     'model:curriculum-inventory-report',
     'model:user',
