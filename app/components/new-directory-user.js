@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task } from 'ember-concurrency';
 import NewUser from 'ilios/mixins/newuser';
 
 const { inject, computed, isEmpty, isPresent, RSVP } = Ember;
@@ -43,8 +44,9 @@ export default Ember.Component.extend(NewUser, Validations, {
   init(){
     this._super(...arguments);
     this.set('searchResults', []);
-    if (isPresent(this.get('searchTerms'))) {
-      this.send('findUsersInDirectory');
+    const searchTerms = this.get('searchTerms');
+    if (isPresent(searchTerms)) {
+      this.get('findUsersInDirectory').perform(searchTerms);
     }
   },
   classNames: ['new-directory-user'],
@@ -64,27 +66,26 @@ export default Ember.Component.extend(NewUser, Validations, {
     });
   }),
 
+  findUsersInDirectory: task(function * (searchTerms){
+    this.set('searchResultsReturned', false);
+    this.set('tooManyResults', false);
+    if (!isEmpty(searchTerms)) {
+      this.set('isSearching', true);
+      let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
+      const ajax = this.get('ajax');
+      let data = yield ajax.request(url);
+      let mappedResults = data.results.map(result => {
+        result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
+        return result;
+      });
+      this.set('tooManyResults', mappedResults.length > 50);
+      this.set('searchResults', mappedResults);
+      this.set('isSearching', false);
+      this.set('searchResultsReturned', true);
+    }
+  }).restartable(),
+
   actions: {
-    findUsersInDirectory(){
-      let searchTerms = this.get('searchTerms');
-      this.set('searchResultsReturned', false);
-      this.set('tooManyResults', false);
-      if (!isEmpty(searchTerms)) {
-        this.set('isSearching', true);
-        var url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-        const ajax = this.get('ajax');
-        ajax.request(url).then(data => {
-          let mappedResults = data.results.map(result => {
-            result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
-            return result;
-          });
-          this.set('tooManyResults', mappedResults.length > 50);
-          this.set('searchResults', mappedResults);
-          this.set('isSearching', false);
-          this.set('searchResultsReturned', true);
-        });
-      }
-    },
     pickUser(user){
       this.set('selectedUser', true);
       this.set('firstName', user.firstName);

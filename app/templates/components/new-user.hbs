@@ -15,7 +15,7 @@
     {{one-way-input
       value=firstName
       update=(action (mut firstName))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'firstName')
     }}
@@ -28,7 +28,7 @@
     {{one-way-input
       value=middleName
       update=(action (mut middleName))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'middleName')
     }}
@@ -41,7 +41,7 @@
     {{one-way-input
       value=lastName
       update=(action (mut lastName))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'lastName')
     }}
@@ -54,7 +54,7 @@
     {{one-way-input
       value=campusId
       update=(action (mut campusId))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'campusId')
     }}
@@ -67,7 +67,7 @@
     {{one-way-input
       value=otherId
       update=(action (mut otherId))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'otherId')
     }}
@@ -80,7 +80,7 @@
     {{one-way-input
       value=email
       update=(action (mut email))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'email')
     }}
@@ -93,7 +93,7 @@
     {{one-way-input
       value=phone
       update=(action (mut phone))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'phone')
     }}
@@ -106,7 +106,7 @@
     {{one-way-input
       value=username
       update=(action (mut username))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'username')
     }}
@@ -119,7 +119,7 @@
     {{one-way-input
       value=password
       update=(action (mut password))
-      onenter=(action "save")
+      onenter=(perform save)
       onescape=(action this.attrs.close)
       focusOut=(action 'addErrorDisplayFor' 'password')
     }}
@@ -159,8 +159,8 @@
   {{/if}}
 
   <div class='buttons'>
-    <button class='done text' {{action 'save'}} disabled={{or isSaving (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
-      {{#if isSaving}}
+    <button class='done text' {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+      {{#if save.isRunning}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
         {{t 'general.done'}}
