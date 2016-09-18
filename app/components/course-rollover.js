@@ -113,13 +113,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     yield timeout(100); //let max/min cp's recalculate
 
     const date = moment(this.get('course.startDate'));
-    const day = date.day();
+    const day = date.isoWeekday();
     const week = date.isoWeek();
 
-    let startDate = moment().year(selectedYear).isoWeek(week).day(day).toDate();
+    let startDate = moment().year(selectedYear).isoWeek(week).isoWeekday(day).toDate();
     this.setProperties({startDate});
   }).restartable(),
-  
+
   /**
    * "disableDayFn" callback function pikaday.
    * @link https://github.com/dbushell/Pikaday#configuration
