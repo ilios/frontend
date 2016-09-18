@@ -286,35 +286,43 @@ test('save not recurring', function(assert) {
 test('save recurring one week with days selected before initial date', function(assert) {
   assert.expect(2);
   this.set('nothing', nothing);
+
+  const inputs = '.make-recurring-days input';
+  const wednesday = moment().add(1, 'week').day(3);
+  const thursday = wednesday.clone().add(1, 'day').day();
+  const tuesday = wednesday.clone().subtract(1, 'day').day();
+  const toggle = '.make-recurring .toggle-onoff';
+  const startDateInput = '.start-date input';
+  const newStartDate = wednesday.toDate();
+
   let savedCount = 0;
   this.set('save', (startDate)=>{
     let expectedStartDate;
     if (savedCount === 0) {
-      expectedStartDate = moment();
+      expectedStartDate = wednesday.clone();
     } else if (savedCount === 1) {
-      expectedStartDate = moment().add(1, 'day');
+      expectedStartDate = wednesday.clone().day(thursday);
     } else {
       assert.ok(false, 'should only get two saved offerings, we got ' + (savedCount + 1));
     }
-    assert.equal(moment(startDate).format('YYYY-MM-DD'), expectedStartDate.format('YYYY-MM-DD'));
+    if (expectedStartDate) {
+      assert.equal(moment(startDate).format('YYYY-MM-DD'), expectedStartDate.format('YYYY-MM-DD'));
+    }
 
     savedCount++;
 
     return resolve();
   });
-  const inputs = '.make-recurring-days input';
-  const dayTomorrow = moment().add(1, 'day').day();
-  const dayYesterday = moment().subtract(1, 'day').day();
-  const toggle = '.make-recurring .toggle-onoff';
 
   const save = '.buttons .done';
   this.render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true save=(action save)}}`);
 
   this.$(toggle).click();
-  this.$(inputs).eq(dayTomorrow).click();
-  this.$(inputs).eq(dayTomorrow).trigger('update');
-  this.$(inputs).eq(dayYesterday).click();
-  this.$(inputs).eq(dayYesterday).trigger('update');
+  let interactor = openDatepicker(this.$(startDateInput));
+  interactor.selectDate(newStartDate);
+
+  this.$(inputs).eq(thursday).click().change();
+  this.$(inputs).eq(tuesday).click().change();
 
   this.$(save).click();
 
@@ -324,50 +332,56 @@ test('save recurring one week with days selected before initial date', function(
 test('save recurring 3 weeks should get lots of days', function(assert) {
   assert.expect(8);
   this.set('nothing', nothing);
+
+  const inputs = '.make-recurring-days input';
+  const wednesday = moment().add(1, 'week').day(3);
+  const thursday = wednesday.clone().add(1, 'day').day();
+  const tuesday = wednesday.clone().subtract(1, 'day').day();
+  const weeks = '.make-recurring-input-container input';
+  const toggle = '.make-recurring .toggle-onoff';
+  const startDateInput = '.start-date input';
+  const newStartDate = wednesday.toDate();
+
   let savedCount = 0;
   this.set('save', (startDate)=>{
     let expectedStartDate;
     if (savedCount === 0) {
-      expectedStartDate = moment();
+      expectedStartDate = wednesday.clone();
     } else if (savedCount === 1) {
-      expectedStartDate = moment().add(1, 'day');
+      expectedStartDate = wednesday.clone().add(1, 'day');
     } else if (savedCount === 2) {
-      expectedStartDate = moment().subtract(1, 'day').add(1, 'weeks');
+      expectedStartDate = wednesday.clone().subtract(1, 'day').add(1, 'weeks');
     } else if (savedCount === 3) {
-      expectedStartDate = moment().add(1, 'weeks');
+      expectedStartDate = wednesday.clone().add(1, 'weeks');
     } else if (savedCount === 4) {
-      expectedStartDate = moment().add(1, 'day').add(1, 'weeks');
+      expectedStartDate = wednesday.clone().add(1, 'day').add(1, 'weeks');
     } else if (savedCount === 5) {
-      expectedStartDate = moment().subtract(1, 'day').add(2, 'weeks');
+      expectedStartDate = wednesday.clone().subtract(1, 'day').add(2, 'weeks');
     } else if (savedCount === 6) {
-      expectedStartDate = moment().add(2, 'weeks');
+      expectedStartDate = wednesday.clone().add(2, 'weeks');
     } else if (savedCount === 7) {
-      expectedStartDate = moment().add(1, 'day').add(2, 'weeks');
+      expectedStartDate = wednesday.clone().add(1, 'day').add(2, 'weeks');
     } else {
       assert.ok(false, 'should only get eight saved offerings, we got ' + (savedCount + 1) + ' with startDate ' + moment(startDate).format('YYYY-MM-DD'));
     }
-    assert.equal(expectedStartDate.format('YYYY-MM-DD'), moment(startDate).format('YYYY-MM-DD'));
+    if (expectedStartDate) {
+      assert.equal(expectedStartDate.format('YYYY-MM-DD'), moment(startDate).format('YYYY-MM-DD'));
+    }
 
     savedCount++;
 
     return resolve();
   });
-  const inputs = '.make-recurring-days input';
-  const weeks = '.make-recurring-input-container input';
-  const dayTomorrow = moment().add(1, 'day').day();
-  const dayYesterday = moment().subtract(1, 'day').day();
-  const toggle = '.make-recurring .toggle-onoff';
 
   const save = '.buttons .done';
   this.render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true save=(action save)}}`);
 
   this.$(toggle).click();
   this.$(weeks).val(3).trigger('change');
-  this.$(inputs).eq(dayTomorrow).click();
-  this.$(inputs).eq(dayTomorrow).trigger('update');
-  this.$(inputs).eq(dayYesterday).click();
-  this.$(inputs).eq(dayYesterday).trigger('update');
-
+  let interactor = openDatepicker(this.$(startDateInput));
+  interactor.selectDate(newStartDate);
+  this.$(inputs).eq(thursday).click().change();
+  this.$(inputs).eq(tuesday).click().change();
 
   this.$(save).click();
 
