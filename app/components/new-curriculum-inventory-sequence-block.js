@@ -93,6 +93,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   maximum: 0,
   orderInSequenceOptions: [],
   isSaving: false,
+  isLoaded: false,
   academicLevels: [],
   childSequenceOrderOptions: [],
   requiredOptions: [],
@@ -105,6 +106,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   loadAttr: task(function * (report, parent) {
+    this.set('isLoaded', false);
     let academicLevels = yield report.get('academicLevels');
     academicLevels = academicLevels.toArray();
 
@@ -147,7 +149,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       required,
       childSequenceOrder,
     });
-  }),
+
+    this.set('isLoaded', true);
+  }).restartable(),
 
   actions: {
     save: function(){
