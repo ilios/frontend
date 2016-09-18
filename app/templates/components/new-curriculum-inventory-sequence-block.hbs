@@ -1,5 +1,5 @@
 <div class="new-result-title">{{t 'general.newSequenceBlock'}}</div>
-{{#unless loadAttr.isRunning}}
+{{#if isLoaded}}
   <div class="item title">
     <label>{{t 'general.title'}}:</label>
     {{one-way-input
@@ -175,4 +175,4 @@
     </button>
     <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
   </div>
-{{/unless}}
+{{/if}}
