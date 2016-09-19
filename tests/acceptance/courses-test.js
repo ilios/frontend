@@ -567,7 +567,7 @@ test('sort by status', function(assert) {
 });
 
 test('privileged users can lock and unlock course', function(assert) {
-  assert.expect(4);
+  assert.expect(6);
   const firstCourseRow = '.list tbody tr:eq(0)';
   const secondCourseRow = '.list tbody tr:eq(1)';
   const firstCourseLockedIcon = `${firstCourseRow} td:eq(6) i:eq(0)`;
@@ -592,7 +592,9 @@ test('privileged users can lock and unlock course', function(assert) {
   visit('/courses');
   andThen(function() {
     assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
+    assert.ok(find(firstCourseLockedIcon).hasClass('clickable'), 'first course is clickable');
     assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
+    assert.ok(find(secondCourseLockedIcon).hasClass('clickable'), 'second course is clickable');
     click(find(firstCourseLockedIcon));
     click(find(secondCourseLockedIcon));
     andThen(()=>{
@@ -603,7 +605,7 @@ test('privileged users can lock and unlock course', function(assert) {
 });
 
 test('non-privileged users cannot lock and unlock course but can see the icon', function(assert) {
-  assert.expect(4);
+  assert.expect(6);
   const firstCourseRow = '.list tbody tr:eq(0)';
   const secondCourseRow = '.list tbody tr:eq(1)';
   const firstCourseLockedIcon = `${firstCourseRow} td:eq(6) i:eq(0)`;
@@ -626,7 +628,9 @@ test('non-privileged users cannot lock and unlock course but can see the icon', 
   visit('/courses');
   andThen(function() {
     assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
+    assert.notOk(find(firstCourseLockedIcon).hasClass('clickable'), 'first course is clickable');
     assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
+    assert.notOk(find(secondCourseLockedIcon).hasClass('clickable'), 'second course is clickable');
     click(find(firstCourseLockedIcon));
     click(find(secondCourseLockedIcon));
     andThen(()=>{

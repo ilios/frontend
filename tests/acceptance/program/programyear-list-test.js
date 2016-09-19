@@ -179,28 +179,8 @@ test('check link', function(assert) {
   });
   server.create('cohort');
   visit(url);
+  click('.programyear-list tbody tr:eq(0) td:eq(0) a');
   andThen(function() {
-    click('.programyear-list tbody tr:eq(0) td:eq(0) a').then(function(){
-      assert.equal(currentPath(), 'program.programYear.index');
-    });
-  });
-});
-
-test('can edit a program-year', function(assert) {
-  server.create('program', {
-    school: 1,
-    programYears: [1]
-  });
-  server.create('programYear', {
-    program: 1,
-  });
-  server.create('cohort');
-
-  const editButton = '.program-year-link';
-
-  visit(url);
-  click(editButton);
-  andThen(() => {
     assert.equal(currentPath(), 'program.programYear.index');
   });
 });
@@ -212,8 +192,13 @@ test('can delete a program-year', function(assert) {
   });
   server.create('programYear', {
     program: 1,
+    published: false,
   });
   server.create('cohort');
+  server.create('userRole', {
+    title: 'Developer',
+  });
+  server.db.users.update(4136, {roles: [1]})
 
   const deleteButton = '.remove';
   const confirmRemovalButton = '.confirm-message button.remove';
@@ -372,5 +357,87 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
       assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
       assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
     })
+  });
+});
+
+test('privileged users can lock and unlock program-year', function(assert) {
+  assert.expect(6);
+  const firstProgramYearRow = '.list tbody tr:eq(0)';
+  const secondProgramYearRow = '.list tbody tr:eq(1)';
+  const firstProgramYearLockedIcon = `${firstProgramYearRow} td:eq(6) i:eq(0)`;
+  const secondProgramYearLockedIcon = `${secondProgramYearRow} td:eq(6) i:eq(0)`;
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('program',  {
+    programYears: [1,2],
+    school: 1
+  });
+  server.create('programYear', {
+    program: 1,
+    startYear: 2014,
+    cohort: 1,
+    locked: true,
+    directors: [4136],
+  });
+  server.create('programYear', {
+    program: 1,
+    startYear: 2015,
+    cohort: 2,
+    locked: false,
+    directors: [4136],
+  });
+  server.createList('cohort', 2);
+  server.create('userRole', {
+    title: 'Developer'
+  });
+  server.db.users.update(4136, {roles: [1]})
+
+  visit(url);
+  andThen(function() {
+    assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-lock'), 'first program year is locked');
+    assert.ok(find(firstProgramYearLockedIcon).hasClass('clickable'), 'first program year is clickable');
+    assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-unlock'), 'second program year is unlocked');
+    assert.ok(find(secondProgramYearLockedIcon).hasClass('clickable'), 'second program year is clickable');
+    click(firstProgramYearLockedIcon);
+    click(secondProgramYearLockedIcon);
+    andThen(()=>{
+      assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-unlock'), 'first program year is now unlocked');
+      assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-lock'), 'second program year is now locked');
+    });
+  });
+});
+
+test('non-privileged users cannot lock and unlock course but can see the icon', function(assert) {
+  assert.expect(4);
+  const firstCourseRow = '.list tbody tr:eq(0)';
+  const secondCourseRow = '.list tbody tr:eq(1)';
+  const firstCourseLockedIcon = `${firstCourseRow} td:eq(6) i:eq(0)`;
+  const secondCourseLockedIcon = `${secondCourseRow} td:eq(6) i:eq(0)`;
+  server.create('academicYear', {id: 2014});
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: true,
+    publishedAsTbd: false,
+    locked: true,
+  });
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: true,
+    publishedAsTbd: true,
+    locked: false,
+  });
+  visit('/courses');
+  andThen(function() {
+    assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
+    assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
+    click(find(firstCourseLockedIcon));
+    click(find(secondCourseLockedIcon));
+    andThen(()=>{
+      assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is still locked');
+      assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is still unlocked');
+    });
   });
 });

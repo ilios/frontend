@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, ObjectProxy, RSVP } = Ember;
+const { Component, computed, inject, ObjectProxy, RSVP, run } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
 const { hash } = RSVP;
@@ -12,23 +12,21 @@ export default Component.extend({
 
   store: service(),
   i18n: service(),
+  currentUser: service(),
 
   program: null,
   programYears: [],
 
   sortBy: ['academicYear'],
   sortedContent: sort('programYears', 'sortBy'),
-  proxiedProgramYears: computed('sortedContent.[]', {
-    get() {
-      const content = this.get('sortedContent');
-
-      return content.map((programYear) => {
-        return ObjectProxy.create({
-          content: programYear,
-          showRemoveConfirmation: false
-        });
+  proxiedProgramYears: computed('sortedContent.[]', function(){
+    const currentUser = this.get('currentUser');
+    return this.get('sortedContent').map(programYear => {
+      return ProgramYearProxy.create({
+        content: programYear,
+        currentUser
       });
-    }
+    });
   }),
 
   existingStartYears: mapBy('programYears', 'startYear'),
@@ -157,6 +155,59 @@ export default Component.extend({
 
     cancelRemove(programYearProxy) {
       programYearProxy.set('showRemoveConfirmation', false);
-    }
+    },
+    unlockProgramYear(programYearProxy){
+      programYearProxy.get('userCanLock').then(permission => {
+        if (permission) {
+          run(()=>{
+            programYearProxy.set('isSaving', true);
+          });
+          this.get('unlock')(programYearProxy.get('content')).then(()=>{
+            programYearProxy.set('isSaving', false);
+          });
+        }
+      });
+    },
+    lockProgramYear(programYearProxy){
+      programYearProxy.get('userCanLock').then(permission => {
+        if (permission) {
+          run(()=>{
+            programYearProxy.set('isSaving', true);
+          });
+          this.get('lock')(programYearProxy.get('content')).then(()=>{
+            programYearProxy.set('isSaving', false);
+          });
+        }
+      });
+    },
   }
+});
+
+
+const ProgramYearProxy = ObjectProxy.extend({
+  content: null,
+  currentUser: null,
+  showRemoveConfirmation: false,
+  isSaving: false,
+  userCanDelete: computed('content', 'currentUser.model.programYears.[]', function(){
+    return new Promise(resolve => {
+      const programYear = this.get('content');
+      const currentUser = this.get('currentUser');
+      if (programYear.get('isPublishedOrScheduled')) {
+        resolve(false);
+      } else {
+        currentUser.get('userIsDeveloper').then(isDeveloper => {
+          resolve(isDeveloper);
+        });
+      }
+    });
+  }),
+  userCanLock: computed('content', 'currentUser.model.programYears.[]', function(){
+    return new Promise(resolve => {
+      const currentUser = this.get('currentUser');
+      currentUser.get('userIsDeveloper').then(isDeveloper => {
+        resolve(isDeveloper);
+      });
+    });
+  }),
 });
