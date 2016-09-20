@@ -17,7 +17,7 @@
   </label>
 
   <div class="form-col-6 form-data-submit">
-    <button class='done text' {{action 'save'}}>
+    <button disabled={{or isSaving (v-get this 'title' 'isInvalid')}} class='done text' {{action 'save'}}>
       {{#if isSaving}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
