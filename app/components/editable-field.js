@@ -6,6 +6,7 @@ const { Component } = Ember;
 export default Component.extend({
   isEditing: false,
   isSaving: false,
+  isSaveDisabled: true,
   renderHtml: false,
   classNames: ['editinplace'],
   clickPrompt: null,

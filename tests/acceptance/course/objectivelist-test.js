@@ -167,3 +167,44 @@ test('edit objective title', function(assert) {
     });
   });
 });
+
+test('empty objective title can not be saved', function(assert) {
+  assert.expect(4);
+  server.create('objective', {
+    courses: [1],
+  });
+
+  server.create('course', {
+    year: 2013,
+    school: 1,
+    objectives: [1]
+  });
+  visit(url);
+  const container = '.course-objective-list';
+  const title = `${container} tbody tr:eq(0) td:eq(0)`;
+  const edit = `${title} .editable span`;
+  const editor = `${title} .froalaEditor`;
+  const initialObjectiveTitle = 'objective 0';
+  const save = `${title} .done`;
+  const errorMessage = `${title} .validation-error-message`;
+
+  andThen(function() {
+    assert.equal(getElementText(title), getText(initialObjectiveTitle));
+    click(edit);
+    andThen(function(){
+      //wait for the editor to load
+      Ember.run.later(()=>{
+
+        let editorContents = find(editor).data('froala.editor').$el.text();
+        assert.equal(getText(editorContents), getText(initialObjectiveTitle));
+
+        find(editor).froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
+        find(editor).froalaEditor('events.trigger', 'contentChanged');
+        Ember.run.later(()=>{
+          assert.equal(getElementText(errorMessage), getText('This field cannot be blank'));
+          assert.ok(find(save).is(':disabled'));
+        }, 100);
+      }, 100);
+    });
+  });
+});
