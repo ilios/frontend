@@ -7,7 +7,7 @@ export default Component.extend({
   value: null,
   isEditing: false,
   isSaving: false,
-  isSaveDisabled: true,
+  isSaveDisabled: false,
   renderHtml: false,
   classNames: ['editinplace'],
   clickPrompt: null,
