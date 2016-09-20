@@ -86,10 +86,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     // save the session first to fill out relationships with the session id
     yield session.save();
+    yield all(toSave.invoke('save'));
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
-    let objectivesToCopy = yield sessionToCopy.get('objectives');
+    let relatedObjectives = yield sessionToCopy.get('objectives');
+    let objectivesToCopy = relatedObjectives.sortBy('id');
     for (let i = 0; i < objectivesToCopy.length; i++){
       let objectiveToCopy = objectivesToCopy.toArray()[i];
       let meshDescriptors = yield objectiveToCopy.get('meshDescriptors');
@@ -99,9 +101,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       );
       objective.set('meshDescriptors', meshDescriptors);
       objective.set('sessions', [session]);
-      toSave.pushObject(objective);
+      //save each objective as it is created to preserve to sequence order of objectives by id
+      yield objective.save();
     }
-    yield all(toSave.invoke('save'));
     flashMessages.success('general.copySuccess');
     return this.get('visit')(session);
   }).drop(),
