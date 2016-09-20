@@ -18,9 +18,11 @@ export default Component.extend(InPlace, {
         let value;
         if(editor){
           let html = editor.froalaEditor('html.get', true);
-          let plainText = html.replace(/(<([^>]+)>)/ig,"");
+          let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+          let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+
           //if all we have is empty html then save null
-          if(plainText.length === 0){
+          if(strippedText.length === 0){
             html = null;
           }
           value = html;
