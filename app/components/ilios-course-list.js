@@ -26,7 +26,7 @@ const CourseProxy = ObjectProxy.extend({
 
     return i18n.t(translation).string;
   }),
-  userCanDelete: computed('content', 'currentUser.model.directedCourses.[]', function(){
+  userCanDelete: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.directedCourses.[]', function(){
     return new Promise(resolve => {
       const course = this.get('content');
       const currentUser = this.get('currentUser');
@@ -47,7 +47,7 @@ const CourseProxy = ObjectProxy.extend({
       }
     });
   }),
-  userCanLock: computed('content', 'currentUser.model.directedCourses.[]', function(){
+  userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.directedCourses.[]', function(){
     return new Promise(resolve => {
       const course = this.get('content');
       const currentUser = this.get('currentUser');
@@ -61,6 +61,14 @@ const CourseProxy = ObjectProxy.extend({
             });
           });
         }
+      });
+    });
+  }),
+  userCanUnLock: computed('content', 'currentUser.userIsDeveloper', function(){
+    return new Promise(resolve => {
+      const currentUser = this.get('currentUser');
+      currentUser.get('userIsDeveloper').then(isDeveloper => {
+        resolve(isDeveloper);
       });
     });
   }),
@@ -97,7 +105,7 @@ export default Component.extend({
       courseProxy.set('showRemoveConfirmation', true);
     },
     unlockCourse(courseProxy){
-      courseProxy.get('userCanLock').then(permission => {
+      courseProxy.get('userCanUnLock').then(permission => {
         if (permission) {
           courseProxy.set('isSaving', true);
           this.get('unlock')(courseProxy.get('content')).then(()=>{

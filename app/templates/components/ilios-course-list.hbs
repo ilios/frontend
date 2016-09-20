@@ -66,7 +66,7 @@
           {{else}}
             {{publication-status item=course showIcon=false}}
             {{#if course.locked}}
-               {{fa-icon 'lock' class=(if (await course.userCanLock) 'clickable') click=(action 'unlockCourse' course)}}
+               {{fa-icon 'lock' class=(if (await course.userCanUnLock) 'clickable') click=(action 'unlockCourse' course)}}
              {{else}}
               {{fa-icon 'unlock' class=(if (await course.userCanLock) 'clickable') click=(action 'lockCourse' course)}}
              {{/if}}

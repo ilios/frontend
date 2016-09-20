@@ -566,7 +566,47 @@ test('sort by status', function(assert) {
   });
 });
 
-test('privileged users can lock and unlock course', function(assert) {
+test('developer users can lock and unlock course', function(assert) {
+  assert.expect(6);
+  const firstCourseRow = '.list tbody tr:eq(0)';
+  const secondCourseRow = '.list tbody tr:eq(1)';
+  const firstCourseLockedIcon = `${firstCourseRow} td:eq(6) i:eq(0)`;
+  const secondCourseLockedIcon = `${secondCourseRow} td:eq(6) i:eq(0)`;
+  server.create('academicYear', {id: 2014});
+  server.create('userRole', {
+    title: 'Developer'
+  });
+  server.db.users.update(4136, {roles: [1]})
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: true,
+    publishedAsTbd: false,
+    locked: true,
+  });
+  server.create('course', {
+    year: 2014,
+    school: 1,
+    published: true,
+    publishedAsTbd: true,
+    locked: false,
+  });
+  visit('/courses');
+  andThen(function() {
+    assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
+    assert.ok(find(firstCourseLockedIcon).hasClass('clickable'), 'first course is clickable');
+    assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
+    assert.ok(find(secondCourseLockedIcon).hasClass('clickable'), 'second course is clickable');
+    click(find(firstCourseLockedIcon));
+    click(find(secondCourseLockedIcon));
+    andThen(()=>{
+      assert.ok(find(firstCourseLockedIcon).hasClass('fa-unlock'), 'first course is now unlocked');
+      assert.ok(find(secondCourseLockedIcon).hasClass('fa-lock'), 'second course is now locked');
+    });
+  });
+});
+
+test('course directors users can lock but not unlock course', function(assert) {
   assert.expect(6);
   const firstCourseRow = '.list tbody tr:eq(0)';
   const secondCourseRow = '.list tbody tr:eq(1)';
@@ -592,13 +632,13 @@ test('privileged users can lock and unlock course', function(assert) {
   visit('/courses');
   andThen(function() {
     assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
-    assert.ok(find(firstCourseLockedIcon).hasClass('clickable'), 'first course is clickable');
+    assert.notOk(find(firstCourseLockedIcon).hasClass('clickable'), 'first course is not clickable');
     assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
     assert.ok(find(secondCourseLockedIcon).hasClass('clickable'), 'second course is clickable');
     click(find(firstCourseLockedIcon));
     click(find(secondCourseLockedIcon));
     andThen(()=>{
-      assert.ok(find(firstCourseLockedIcon).hasClass('fa-unlock'), 'first course is now unlocked');
+      assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is still locked');
       assert.ok(find(secondCourseLockedIcon).hasClass('fa-lock'), 'second course is now locked');
     });
   });

@@ -157,7 +157,7 @@ export default Component.extend({
       programYearProxy.set('showRemoveConfirmation', false);
     },
     unlockProgramYear(programYearProxy){
-      programYearProxy.get('userCanLock').then(permission => {
+      programYearProxy.get('userCanUnLock').then(permission => {
         if (permission) {
           run(()=>{
             programYearProxy.set('isSaving', true);
@@ -189,7 +189,7 @@ const ProgramYearProxy = ObjectProxy.extend({
   currentUser: null,
   showRemoveConfirmation: false,
   isSaving: false,
-  userCanDelete: computed('content', 'currentUser.model.programYears.[]', function(){
+  userCanDelete: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
     return new Promise(resolve => {
       const programYear = this.get('content');
       const currentUser = this.get('currentUser');
@@ -202,7 +202,15 @@ const ProgramYearProxy = ObjectProxy.extend({
       }
     });
   }),
-  userCanLock: computed('content', 'currentUser.model.programYears.[]', function(){
+  userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
+    return new Promise(resolve => {
+      const currentUser = this.get('currentUser');
+      currentUser.get('userIsDeveloper').then(isDeveloper => {
+        resolve(isDeveloper);
+      });
+    });
+  }),
+  userCanUnLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
     return new Promise(resolve => {
       const currentUser = this.get('currentUser');
       currentUser.get('userIsDeveloper').then(isDeveloper => {
