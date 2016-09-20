@@ -186,7 +186,7 @@
             save=(action 'saveDescription')
             close=(action 'revertDescriptionChanges')
             renderHtml=true
-            isSaveDisabled=(v-get this 'description' 'isInvalid')
+            isSaveDisabled=(and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))
             clickPrompt=(t 'general.clickToEdit')
             as |isSaving save close|
           }}
