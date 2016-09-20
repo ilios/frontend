@@ -2,6 +2,7 @@
   {{#editable-field
     value=title
     renderHtml=true
+    isSavingDisabled=(v-get this 'title' 'isInvalid')
     save=(action 'saveTitleChanges' )
     close=(action 'revertTitleChanges')
     as |isSaving save close|
