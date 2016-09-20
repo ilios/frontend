@@ -2,7 +2,11 @@
   {{#unless isEditing}}
     <span onclick={{action (mut isEditing) true}} class='editable'>
       {{#if value}}
-        {{big-text text=value renderHtml=renderHtml}}
+        {{#if looksEmpty}}
+          {{fa-icon 'edit'}}
+        {{else}}
+          {{big-text text=value renderHtml=renderHtml}}
+        {{/if}}
       {{else}}
         {{clickPrompt}}
       {{/if}}
