@@ -66,10 +66,10 @@
           {{else}}
             {{publication-status item=course showIcon=false}}
             {{#if course.locked}}
-              <span class={{if (await course.userCanLock) 'clickable'}} {{action 'unlockCourse' course}}>{{fa-icon 'lock'}}</span>
-            {{else}}
-              <span class={{if (await course.userCanLock) 'clickable'}} {{action 'lockCourse' course}}>{{fa-icon 'unlock'}}</span>
-            {{/if}}
+               {{fa-icon 'lock' class=(if (await course.userCanLock) 'clickable') click=(action 'unlockCourse' course)}}
+             {{else}}
+              {{fa-icon 'unlock' class=(if (await course.userCanLock) 'clickable') click=(action 'lockCourse' course)}}
+             {{/if}}
             {{#if (await course.userCanDelete)}}
               <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>
             {{/if}}
