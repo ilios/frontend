@@ -225,9 +225,11 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     changeDescription(event, editor){
       this.send('addErrorDisplayFor', 'description');
       let html = editor.html.get();
-      let plainText = html.replace(/(<([^>]+)>)/ig,"");
+      let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+      let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+
       //if all we have is empty html then save null
-      if(plainText.length === 0){
+      if(strippedText.length === 0){
         html = null;
       }
 

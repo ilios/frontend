@@ -8,7 +8,7 @@ const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
-    validator('presence', true),
+    validator('html-presence', true),
     validator('length', {
       min: 3,
       max: 65000

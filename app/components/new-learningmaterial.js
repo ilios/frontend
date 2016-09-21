@@ -200,7 +200,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     changeDescription(event, editor) {
       if (editor) {
-        this.set('description', editor.html.get());
+        let html = editor.html.get();
+        let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+        let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+
+        //if all we have is empty html then save null
+        if(strippedText.length === 0){
+          html = null;
+        }
+        this.set('description', html);
       }
     },
 

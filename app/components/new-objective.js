@@ -7,7 +7,7 @@ const { Component } = Ember;
 
 const Validations = buildValidations({
   title: [
-    validator('presence', true),
+    validator('html-presence', true),
     validator('length', {
       min: 3,
       max: 65000
@@ -39,6 +39,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     changeTitle(event, editor){
+      this.send('addErrorDisplayFor', 'title');
       if(editor){
         const contents = editor.html.get();
         this.set('title', contents);

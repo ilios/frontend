@@ -346,6 +346,77 @@ test('add description', function(assert) {
   });
 });
 
+test('empty description removes description', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1
+  });
+  const container = '.sessiondescription';
+  const description = `${container} .content`;
+  const editorElement = `${container} .froalaEditor`;
+  const edit = `${container} .editable`;
+  const save = `${container} .done`;
+
+  visit(url);
+  andThen(function() {
+    assert.equal(getElementText(description), getText('Click to edit'));
+    click(edit);
+    andThen(function(){
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find(editorElement);
+        assert.equal(editor.data('froala.editor').$el.text(), '');
+        editor.froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
+        editor.froalaEditor('events.trigger', 'contentChanged');
+        click(save);
+        andThen(function(){
+          assert.equal(getElementText(description), getText('Click to edit'));
+        });
+      }, 100);
+    });
+  });
+});
+
+test('remove description', function(assert) {
+  server.create('user', {
+    id: 4136
+  });
+  server.create('session', {
+    course: 1,
+    sessionType: 1,
+    sessionDescription: 1
+  });
+  const container = '.sessiondescription';
+  const description = `${container} .content`;
+  const editorElement = `${container} .froalaEditor`;
+  const edit = `${container} .editable`;
+  const save = `${container} .done`;
+
+  visit(url);
+  andThen(function() {
+    assert.equal(getElementText(description), 'sessiondescription0');
+    click(edit);
+    andThen(function(){
+      //wait for the editor to load
+      Ember.run.later(()=>{
+        let editor = find(editorElement);
+        let editorContents = editor.data('froala.editor').$el.text();
+        assert.equal(getText(editorContents), 'sessiondescription0');
+        editor.froalaEditor('html.set', '');
+        editor.froalaEditor('events.trigger', 'contentChanged');
+        click(save);
+        andThen(function(){
+          assert.equal(getElementText(description), getText('Click to edit'));
+        });
+      }, 100);
+    });
+  });
+});
+
+
 test('click copy', function(assert) {
   server.create('user', {
     id: 4136,
