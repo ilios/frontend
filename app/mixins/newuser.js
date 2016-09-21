@@ -125,72 +125,59 @@ export default Mixin.create(ValidationErrorDisplay, {
 
   }).restartable(),
 
+  save: task(function * (){
+    this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
+    let {validations} = yield this.validate();
+    if (validations.get('isInvalid')) {
+      return;
+    }
+    const {
+      firstName,
+      middleName,
+      lastName,
+      campusId,
+      otherId,
+      email,
+      phone,
+      username,
+      password,
+      store
+    } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password', 'store');
+    const roles = yield store.findAll('user-role');
+    const school = yield this.get('bestSelectedSchool');
+    const primaryCohort = yield this.get('bestSelectedCohort');
+    let user = this.get('store').createRecord('user', {
+      firstName,
+      middleName,
+      lastName,
+      campusId,
+      otherId,
+      email,
+      phone,
+      school,
+      enabled: true
+    });
+    if (this.get('nonStudentMode')) {
+      let facultyRole = roles.findBy('title', 'Faculty');
+      user.set('roles', [facultyRole]);
+    } else {
+      user.set('primaryCohort', primaryCohort);
+      let studentRole = roles.findBy('title', 'Student');
+      user.set('roles', [studentRole]);
+    }
+    user = yield user.save();
+    let authentication = this.get('store').createRecord('authentication', {
+      user,
+      username,
+      password
+    });
+    yield authentication.save();
+    this.get('flashMessages').success('general.saved');
+    this.get('transitionToUser')(user.get('id'));
+    this.send('clearErrorDisplay');
+  }).drop(),
+
   actions: {
-    save: function(){
-      if(this.get('isSaving')){
-        return;
-      }
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const {
-            firstName,
-            middleName,
-            lastName,
-            campusId,
-            otherId,
-            email,
-            phone,
-            username,
-            password,
-            store
-          } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password', 'store');
-          store.findAll('user-role').then(roles => {
-            this.get('bestSelectedSchool').then(school => {
-              let user = this.get('store').createRecord('user', {
-                firstName,
-                middleName,
-                lastName,
-                campusId,
-                otherId,
-                email,
-                phone,
-                school,
-                enabled: true
-              });
-
-              this.get('bestSelectedCohort').then(primaryCohort => {
-                if (this.get('nonStudentMode')) {
-                  let facultyRole = roles.findBy('id', '3');
-                  user.set('roles', [facultyRole]);
-                } else {
-                  user.set('primaryCohort', primaryCohort);
-                  let studentRole = roles.findBy('id', '4');
-                  user.set('roles', [studentRole]);
-                }
-                user.save().then(newUser => {
-                  let authentication = this.get('store').createRecord('authentication', {
-                    user: newUser,
-                    username,
-                    password
-                  });
-                  return authentication.save().then(()=>{
-                    this.get('flashMessages').success('general.saved');
-                    this.attrs.transitionToUser(newUser.get('id'));
-                  });
-                }).finally(() => {
-                  this.send('clearErrorDisplay');
-                });
-              });
-
-            });
-          });
-        }
-      }).finally(() => {
-        this.set('isSaving', false);
-      });
-    },
     setSchool(id){
       this.set('schoolId', id);
       this.get('loadCohorts').perform();
