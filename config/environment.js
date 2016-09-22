@@ -152,5 +152,9 @@ module.exports = function(environment) {
   }
 */
 
+  //add our API host to the list of acceptable data sources
+  ENV.contentSecurityPolicy['connect-src'].push(ENV.serverVariables.defaults['api-host']);
+
+
   return ENV;
 };
