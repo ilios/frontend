@@ -1,15 +1,16 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import AjaxServiceSupport from 'ember-ajax/mixins/ajax-support';
+import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 
 const { inject, computed } = Ember;
 const { service } = inject;
 const { reads } = computed;
 const { RESTAdapter } = DS;
 
-export default RESTAdapter.extend(AjaxServiceSupport, {
+export default RESTAdapter.extend(DataAdapterMixin, {
   serverVariables: service(),
 
+  host: reads('serverVariables.apiHost'),
   namespace: reads('serverVariables.apiNameSpace'),
 
   coalesceFindRequests: true,
