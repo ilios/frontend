@@ -1,5 +1,5 @@
 <h2 class='title'>
-  {{t 'general.manageUsersSummaryTitle'}} ({{#link-to 'users'}}{{t 'general.viewAll'}}{{/link-to}})
+  {{t 'general.manageUsersSummaryTitle'}} ({{#link-to 'users' (query-params showBulkNewUserForm=false showNewUserForm=false)}}{{t 'general.viewAll'}}{{/link-to}})
 </h2>
 <div class='actions'>
   {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
