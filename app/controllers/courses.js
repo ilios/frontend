@@ -201,6 +201,14 @@ export default Controller.extend({
     },
     toggleNewCourseForm: function(){
       this.set('showNewCourseForm', !this.get('showNewCourseForm'));
-    }
+    },
+    lockCourse: function(course){
+      course.set('locked', true);
+      return course.save();
+    },
+    unlockCourse: function(course){
+      course.set('locked', false);
+      return course.save();
+    },
   },
 });

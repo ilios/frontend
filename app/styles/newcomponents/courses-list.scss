@@ -41,5 +41,9 @@
 
   .list {
     @include main-list-box-table;
+
+    i {
+      margin-left: .5em;
+    }
   }
 }
