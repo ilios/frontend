@@ -7,6 +7,7 @@ import { task, timeout } from 'ember-concurrency';
 const { Component, inject, computed, RSVP, isPresent, isEmpty } = Ember;
 const { service } = inject;
 const { Promise, map, filter, hash } = RSVP;
+const { not } = computed;
 
 const Validations = buildValidations({
   room: [
@@ -18,10 +19,8 @@ const Validations = buildValidations({
     }),
   ],
   numberOfWeeks: {
-    dependentKeys: ['makeRecurring'],
-    disabled(){
-      return !this.get('model.makeRecurring');
-    },
+    dependentKeys: ['model.makeRecurring'],
+    disabled: not('model.makeRecurring'),
     validators: [
       validator('presence', {
         presence: true
@@ -49,10 +48,8 @@ const Validations = buildValidations({
     })
   ],
   learnerGroups: {
-    dependentKeys: ['smallGroupMode'],
-    disabled(){
-      return !this.get('model.smallGroupMode');
-    },
+    dependentKeys: ['model.smallGroupMode'],
+    disabled: not('model.smallGroupMode'),
     validators: [
       validator('length', {
         min: 1,

@@ -2,7 +2,8 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
+const { gt, reads } = computed;
 
 const Validations = buildValidations({
 
@@ -17,28 +18,24 @@ const Validations = buildValidations({
   startDate: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['duration'],
-      disabled(){
-        return this.get('model.duration') > 0;
-      }
+      dependentKeys: ['model.duration'],
+      disabled: gt('model.duration', 0)
     }),
   ],
   endDate: [
     validator('date', {
-      dependentKeys: ['startDate', 'duration'],
-      after: function () {
-        return this.get('model.startDate');
-      },
-      disabled(){
+      dependentKeys: ['model.startDate', 'model.duration'],
+      after: reads('model.startDate'),
+      disabled: computed('model.duration', 'model.startDate', function(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
-      }
+      })
     }),
     validator('presence', {
       presence: true,
-      dependentKeys: ['startDate', 'duration'],
-      disabled(){
+      dependentKeys: ['model.startDate', 'model.duration'],
+      disabled: computed('model.duration', 'model.startDate', function(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
-      }
+      })
     }),
   ]
 });

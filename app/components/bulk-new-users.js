@@ -7,7 +7,7 @@ import PapaParse from 'papaparse';
 const { Component, RSVP, inject, isPresent, computed, getOwner } = Ember;
 const { service } = inject;
 const { Promise, filter } = RSVP;
-const { reads } = computed;
+const { reads, not } = computed;
 
 const UserValidations = buildValidations({
   firstName: [
@@ -34,17 +34,15 @@ const UserValidations = buildValidations({
       ignoreBlank: true,
     }),
     validator('exclusion', {
-      dependentKeys: ['existingUsernames.[]'],
-      in(){
-        return this.get('model.existingUsernames');
-      }
+      dependentKeys: ['model.existingUsernames.[]'],
+      in: reads('model.existingUsernames')
     })
   ],
   password: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['username'],
-      disabled(model) { return !isPresent(model.get('username')) }
+      dependentKeys: ['model.username'],
+      disabled: not('model.username'),
     })
   ],
   campusId: [

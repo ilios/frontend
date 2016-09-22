@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
 
 const Validations = buildValidations({
   minimum: [
@@ -14,13 +14,13 @@ const Validations = buildValidations({
   ],
   maximum: [
     validator('number', {
-      dependentKeys: ['minimum'],
+      dependentKeys: ['model.minimum'],
       allowString: true,
       integer: true,
-      gte: function() {
+      gte: computed('model.minimum', function() {
         const min = this.get('model.minimum') || 0;
         return Math.max(0, min);
-      }
+      })
     }),
   ],
 });

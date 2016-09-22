@@ -3,8 +3,9 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { inject, Component, isPresent } = Ember;
+const { inject, Component, isPresent, computed } = Ember;
 const { service } = inject;
+const { gt, reads } = computed;
 
 const Validations = buildValidations({
   title: [
@@ -25,28 +26,25 @@ const Validations = buildValidations({
   startDate: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['duration'],
-      disabled(){
-        return this.get('model.duration') > 0;
-      }
+      dependentKeys: ['model.duration'],
+      disabled: gt('model.duration', 0)
     }),
   ],
   endDate: [
     validator('date', {
-      dependentKeys: ['startDate', 'duration'],
-      after: function () {
-        return this.get('model.startDate');
-      },
-      disabled(){
+      dependentKeys: ['model.startDate', 'model.duration'],
+      after: reads('model.startDate'),
+      disabled: computed('model.duration', 'model.startDate', function(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
-      }
+      })
     }),
     validator('presence', {
       presence: true,
-      dependentKeys: ['startDate', 'duration'],
-      disabled(){
+      dependentKeys: ['model.startDate', 'model.duration'],
+      after: reads('model.startDate'),
+      disabled: computed('model.duration', 'model.startDate', function(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
-      }
+      })
     }),
   ],
   minimum: [
@@ -61,10 +59,10 @@ const Validations = buildValidations({
       dependentKeys: ['minimum'],
       allowString: true,
       integer: true,
-      gte: function() {
+      gte: computed('model.minimum', function() {
         const min = this.get('model.minimum') || 0;
         return Math.max(0, min);
-      }
+      })
     }),
   ],
 });

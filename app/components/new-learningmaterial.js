@@ -4,7 +4,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, inject, set } = Ember;
-const { equal } = computed;
+const { equal, not } = computed;
 const { service } = inject;
 
 const Validations = buildValidations({
@@ -25,46 +25,38 @@ const Validations = buildValidations({
   fileHash: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['isFile'],
-      disabled(){
-        return !this.get('model.isFile');
-      }
+      dependentKeys: ['model.isFile'],
+      disabled: not('model.isFile')
     }),
   ],
   filename: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['isFile'],
-      disabled(){
-        return !this.get('model.isFile');
-      }
+      dependentKeys: ['model.isFile'],
+      disabled: not('model.isFile')
     }),
   ],
   link: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['isLink'],
-      disabled(){
-        return !this.get('model.isLink');
-      }
+      dependentKeys: ['model.isLink'],
+      disabled: not('model.isLink')
     }),
   ],
   citation: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['isCitation'],
-      disabled(){
-        return !this.get('model.isCitation');
-      }
+      dependentKeys: ['model.isCitation'],
+      disabled: not('model.isCitation')
     }),
   ],
   copyrightRationale: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['copyrightPermission'],
-      disabled(){
+      dependentKeys: ['model.copyrightPermission'],
+      disabled: computed('model.isFile', 'model.copyrightPermission', function(){
         return !this.get('model.isFile') || this.get('model.copyrightPermission');
-      }
+      })
     }),
     validator('length', {
       min: 2,

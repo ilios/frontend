@@ -14,8 +14,8 @@ const Validations = buildValidations({
       max: 200
     }),
     validator('async-exclusion', {
-      dependentKeys: ['vocabulary.topLevelTerms.@each.title'],
-      in(){
+      dependentKeys: ['model.vocabulary.terms.@each.title'],
+      in: computed('model.vocabulary.terms.@each.title', function(){
         return new Promise(resolve => {
           const vocabulary = this.get('model.vocabulary');
           if (isPresent(vocabulary)) {
@@ -23,11 +23,10 @@ const Validations = buildValidations({
               resolve(terms.filterBy('isTopLevel', true).mapBy('title'));
             });
           }
-
           resolve([]);
         });
 
-      },
+      }),
       descriptionKey: 'general.term',
     })
   ],

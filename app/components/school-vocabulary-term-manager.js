@@ -14,8 +14,8 @@ const Validations = buildValidations({
       max: 200
     }),
     validator('async-exclusion', {
-      dependentKeys: ['term.children.@each.title'],
-      in(){
+      dependentKeys: ['model.term.children.@each.title'],
+      in: computed('model.term.@each.title', function(){
         return new Promise(resolve => {
           const term = this.get('model.term');
           if (isPresent(term)) {
@@ -26,8 +26,7 @@ const Validations = buildValidations({
             resolve([]);
           }
         });
-
-      },
+      }),
       descriptionKey: 'general.term',
     })
   ],
