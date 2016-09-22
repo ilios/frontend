@@ -87,7 +87,8 @@ module.exports = function(environment) {
       tagPrefix: 'iliosconfig',
       vars: ['api-host', 'api-name-space'],
       defaults: {
-        'api-name-space': 'api/v1'
+        'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v1',
+        'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
       }
     },
     EmberENV: {
@@ -121,7 +122,11 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.redirectAfterShibLogin = false;
-    ENV.serverVariables.defaults['api-name-space'] = 'api';
+
+    //Remove mirage in developemnt, we only use it in testing
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    };
   }
 
   if (environment === 'test') {
@@ -137,21 +142,6 @@ module.exports = function(environment) {
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
-  }
-
-  if (environment === 'heroku') {
-    ENV['ember-cli-mirage'] = {
-      enabled: true
-    };
-  }
-
-  //Just like dev except we can use proxy to get data from the API
-  // Example for vagrant ember serve --env=proxy --proxy='http://10.10.10.10'
-  if (environment === 'proxy') {
-    ENV['ember-cli-mirage'] = {
-      enabled: false
-    };
-    ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
   }
 
 /*
