@@ -152,6 +152,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   actions: {
     changeSelectedYear(newYear){
+      this.set('selectedCourse', null);
       this.set('selectedYear', newYear);
       this.get('loadCourses').perform();
     },

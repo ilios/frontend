@@ -84,7 +84,7 @@ test('it renders', function(assert) {
 });
 
 test('copy session', function(assert) {
-  assert.expect(18);
+  assert.expect(19);
 
   let thisYear = parseInt(moment().format('YYYY'));
 
@@ -152,6 +152,7 @@ test('copy session', function(assert) {
         return Object.create({
           id: 14,
           save(){
+            assert.equal(course, this.get('course'));
             assert.equal(meshDescriptors, this.get('meshDescriptors'));
             assert.equal(terms, this.get('terms'));
           }
@@ -312,5 +313,115 @@ test('changing the year looks for new matching courses', function(assert) {
 
   return wait().then(()=>{
     this.$(yearSelect).val(nextYear).change();
+  });
+});
+
+test('copy session into the first course in a different year year #2130', function(assert) {
+  assert.expect(9);
+
+  let thisYear = parseInt(moment().format('YYYY'));
+  let nextYear = parseInt(moment().add(1, 'year').format('YYYY'));
+
+  let school = Object.create({
+    id: 1
+  });
+
+  let course = Object.create({
+    id: 1,
+    title: 'old course',
+    school: school,
+    year: thisYear
+  });
+
+  let firstCourse = Object.create({
+    id: 2,
+    title: 'old course',
+    school: school,
+    year: nextYear
+  });
+
+  let targetCourse = Object.create({
+    id: 3,
+    title: 'alpha first',
+    school: school,
+    year: nextYear
+  });
+
+
+  let session = Object.create({
+    id: 1,
+    title: 'old session',
+    course,
+    attireRequired: true,
+    equipmentRequired: false,
+    supplemental: true,
+    sessionType: resolve(Object.create()),
+    sessionDescription: resolve(Object.create()),
+    objectives: resolve([]),
+    meshDescriptors: resolve([]),
+    terms: resolve([]),
+    learningMaterials: resolve([]),
+  });
+
+  let storeMock = Service.extend({
+    query(what, {filters}){
+      assert.equal(what, 'course', 'we are searchign for courses');
+      assert.ok('school' in filters, 'filtered by school');
+      assert.ok('year' in filters, 'filtered by year');
+
+      const year = parseInt(filters.year);
+      return [course, firstCourse, targetCourse].filter(course => course.get('year') === year);
+    },
+    findAll(){
+      return [thisYear, nextYear].map(year => {
+        return Object.create({
+          id: year,
+          title: year
+        });
+      });
+    },
+    createRecord(what){
+      if (what === 'session') {
+        return Object.create({
+          id: 14,
+          save(){
+            assert.equal(targetCourse.get('id'), this.get('course.id'), 'the correct course was selected');
+          }
+        });
+      }
+
+      if (what === 'sessionDescription') {
+        return Object.create({
+          save(){
+          }
+        });
+      }
+
+      assert.ok(false, 'Unexpected call to createdRecord for a ' + what);
+
+    }
+  });
+  this.register('service:store', storeMock);
+  let flashmessagesMock = Ember.Service.extend({
+    success(){
+    }
+  });
+  this.register('service:flashMessages', flashmessagesMock);
+
+
+  this.set('session', session);
+  this.set('visit', (newSession) => {
+    assert.equal(newSession.id, 14);
+  });
+  this.render(hbs`{{session-copy session=session visit=(action visit)}}`);
+  const yearSelect = '.year-select select';
+  const courseSelect = '.course-select select';
+  return wait().then(()=>{
+    this.$(yearSelect).val(nextYear).change();
+
+    return wait().then(()=>{
+      assert.equal($(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
+      this.$('.done').click();
+    });
   });
 });
