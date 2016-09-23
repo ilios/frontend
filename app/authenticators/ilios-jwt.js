@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
+const { inject } = Ember;
+const { service } = inject;
+
 export default JwtTokenAuthenticator.extend({
+  ajax: service(),
   /**
     Extend the JwtTokenAuthenticator to accept a token in liu of credentials
     This allows authentication of an already existing session.
@@ -17,9 +21,9 @@ export default JwtTokenAuthenticator.extend({
         const token = Ember.get(credentials, this.tokenPropertyName);
         const tokenData = this.getTokenData(token);
         const expiresAt = Ember.get(tokenData, this.tokenExpireName);
-        
+
         this.scheduleAccessTokenRefresh(expiresAt, token);
-        
+
         let response  = {};
         response[this.tokenPropertyName] = token;
         response[this.tokenExpireName] = expiresAt;
@@ -50,5 +54,26 @@ export default JwtTokenAuthenticator.extend({
         });
       }
     });
-  }
+  },
+
+  /**
+    Extend the default make request in order to user our own ajax service
+    Using our service allows us to use a custom hostname instead of just '/'
+  */
+  makeRequest(url, data, providedHeaders) {
+    const ajax = this.get('ajax');
+    let headers = this.headers;
+    if (providedHeaders) {
+      Object.keys(headers).forEach((key) => {
+        headers[key] = providedHeaders[key];
+      });
+    }
+
+    return ajax.post(url, {
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json',
+      headers,
+    });
+  },
 });

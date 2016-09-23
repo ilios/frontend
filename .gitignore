@@ -17,3 +17,4 @@ npm-debug.log
 testem.log
 lcov.dat
 sauce-example.log
+.env

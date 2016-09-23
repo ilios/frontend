@@ -10,8 +10,8 @@ const { RESTAdapter } = DS;
 export default RESTAdapter.extend(DataAdapterMixin, {
   serverVariables: service(),
 
-  namespace: reads('serverVariables.apiNameSpace'),
   host: reads('serverVariables.apiHost'),
+  namespace: reads('serverVariables.apiNameSpace'),
 
   coalesceFindRequests: true,
 
