@@ -14,8 +14,8 @@
   },
   "repository": "https://github.com/ilios/frontend",
   "engines": {
-    "node": "^5.1",
-    "npm": "^3.3"
+    "node": "^6",
+    "npm": "^3.10"
   },
   "author": "",
   "license": "MIT",
