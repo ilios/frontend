@@ -154,11 +154,9 @@ export default Controller.extend({
   selectedYear: computed('model.years.[]', 'yearTitle', function(){
     let years = this.get('model.years');
     if(isPresent(this.get('yearTitle'))){
-      return years.find(year => {
-        return year.get('title') === parseInt(this.get('yearTitle'));
-      });
+      return years.find(year => year.get('title') === parseInt(this.get('yearTitle')));
     }
-    let currentYear = moment().format('YYYY');
+    let currentYear = parseInt(moment().format('YYYY'));
     const currentMonth = parseInt(moment().format('M'));
     if(currentMonth < 6){
       currentYear--;
