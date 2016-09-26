@@ -13,10 +13,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this.get('currentUser.model').then(currentUser=>{
       currentUser.get('schools').then(schools => {
         model.schools = schools;
-        this.get('store').findAll('academic-year').then(years => {
-          model.years = years.toArray();
+        currentUser.get('school').then(primarySchool => {
+          model.primarySchool = primarySchool;
+          this.get('store').findAll('academic-year').then(years => {
+            model.years = years.toArray();
 
-          defer.resolve(model);
+            defer.resolve(model);
+          });
         });
       });
     });

@@ -139,8 +139,9 @@ export default Controller.extend({
       });
     }
   ),
-  selectedSchool: computed('model.schools.[]', 'schoolId', function(){
-    let schools = this.get('model.schools');
+  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
+    const schools = this.get('model.schools');
+    const primarySchool = this.get('model.primarySchool');
     if(isPresent(this.get('schoolId'))){
       let school =  schools.find(school => {
         return school.get('id') === this.get('schoolId');
@@ -149,7 +150,8 @@ export default Controller.extend({
         return school;
       }
     }
-    return schools.get('firstObject');
+
+    return primarySchool;
   }),
   selectedYear: computed('model.years.[]', 'yearTitle', function(){
     let years = this.get('model.years');
