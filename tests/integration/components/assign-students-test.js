@@ -120,15 +120,132 @@ test('check all checks all', function(assert) {
     setOffset=(action 'setOffset')
     setLimit=(action 'setLimit')
   }}`);
+  const checkAll = 'thead tr:eq(0) input';
+  const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
 
   return wait().then(() => {
-    assert.notOk(this.$('tbody tr:eq(0) input').prop('checked'));
-    this.$('thead th:eq(0)').click();
+    assert.notOk(this.$(firstStudent).prop('checked'));
+    this.$(checkAll).click();
     return wait().then(() => {
-      assert.ok(this.$('tbody tr:eq(0) input').prop('checked'));
+      assert.ok(this.$(firstStudent).prop('checked'));
     });
   });
 
+});
+
+test('check some sets indeterminate state', function(assert) {
+  let school = Object.create({
+    id: 1,
+    cohorts: resolve([])
+  });
+  let students = [
+    Object.create({
+      id: 1,
+      fullName: 'test person',
+      email: 'tstemail',
+      campusId: 'id123'
+    }),
+    Object.create({
+      id: 2,
+      fullName: 'test person2',
+      email: 'tstemail2',
+      campusId: 'id1232'
+    }),
+  ];
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    }
+  });
+  this.register('service:store', storeMock);
+
+  this.set('school', school);
+  this.set('students', students);
+  this.on('setOffset', parseInt);
+  this.on('setLimit', parseInt);
+
+  this.render(hbs`{{assign-students
+    students=students
+    school=school
+    offset=0
+    limit=10
+    setOffset=(action 'setOffset')
+    setLimit=(action 'setLimit')
+  }}`);
+  const checkAll = 'thead tr:eq(0) input';
+  const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
+  const secondStudent = 'tbody tr:eq(1) td:eq(0) input';
+
+  return wait().then(() => {
+    assert.notOk(this.$(checkAll).prop('checked'), 'check all is not initially checked');
+    assert.notOk(this.$(checkAll).prop('indeterminate'), 'check all is not initially indeterminate');
+    assert.notOk(this.$(firstStudent).prop('checked'), 'first student is not initiall checked');
+    assert.notOk(this.$(secondStudent).prop('checked'), 'second student is not initiall checked');
+
+    this.$(firstStudent).click();
+    assert.ok(this.$(checkAll).prop('indeterminate'), 'check all is indeterminate with one student checked');
+    this.$(secondStudent).click();
+    assert.ok(this.$(checkAll).prop('checked'), 'check all is checked with both students checked');
+  });
+});
+
+test('when some are selected check all checks all', function(assert) {
+  let school = Object.create({
+    id: 1,
+    cohorts: resolve([])
+  });
+  let students = [
+    Object.create({
+      id: 1,
+      fullName: 'test person',
+      email: 'tstemail',
+      campusId: 'id123'
+    }),
+    Object.create({
+      id: 2,
+      fullName: 'test person2',
+      email: 'tstemail2',
+      campusId: 'id1232'
+    }),
+  ];
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    }
+  });
+  this.register('service:store', storeMock);
+
+  this.set('school', school);
+  this.set('students', students);
+  this.on('setOffset', parseInt);
+  this.on('setLimit', parseInt);
+
+  this.render(hbs`{{assign-students
+    students=students
+    school=school
+    offset=0
+    limit=10
+    setOffset=(action 'setOffset')
+    setLimit=(action 'setLimit')
+  }}`);
+  const checkAll = 'thead tr:eq(0) input';
+  const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
+  const secondStudent = 'tbody tr:eq(1) td:eq(0) input';
+
+  return wait().then(() => {
+    assert.notOk(this.$(checkAll).prop('checked'), 'check all is not initially checked');
+    assert.notOk(this.$(firstStudent).prop('checked'), 'first student is not initiall checked');
+    assert.notOk(this.$(secondStudent).prop('checked'), 'second student is not initiall checked');
+
+    this.$(firstStudent).click();
+    this.$(checkAll).click();
+    return wait().then(()=>{
+      assert.ok(this.$(firstStudent).prop('checked'), 'first student still checked after checkall clicked');
+      assert.ok(this.$(secondStudent).prop('checked'), 'second student checked after checkall clicked');
+    });
+  });
 });
 
 test('save sets primary cohort', function(assert) {

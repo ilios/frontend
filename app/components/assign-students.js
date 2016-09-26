@@ -126,7 +126,9 @@ export default Component.extend({
 
   actions: {
     toggleCheck(){
-      if (isEmpty(this.get('selectedUserIds'))) {
+      const currentlySelected = this.get('selectedUserIds.length');
+      const totalDisplayed = this.get('filteredStudents.length');
+      if (currentlySelected < totalDisplayed) {
         let users = this.get('filteredStudents');
         this.set('selectedUserIds', users.mapBy('id'));
       } else {
