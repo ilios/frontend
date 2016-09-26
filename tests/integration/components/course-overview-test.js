@@ -84,7 +84,7 @@ test('course external id validation fails if value is too long', function(assert
   this.$(open).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-    this.$(input).val('this exernal id is longer than eighteen characters').change();
+    this.$(input).val('tooLong'.repeat(50)).change();
     this.$(save).click();
     wait().then(() => {
       assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
