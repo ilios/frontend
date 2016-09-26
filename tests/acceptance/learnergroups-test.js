@@ -61,10 +61,11 @@ test('single option filters', function(assert) {
 });
 
 test('multi-option filters', function(assert) {
-  const schoolsFilter = '.schoolsfilter option';
+  const schoolSelect = '.schoolsfilter select';
+  const schoolsFilter = `${schoolSelect} option`;
   const programsFilter = '.programsfilter option';
   const programyearsfilter = '.programyearsfilter option';
-  assert.expect(6);
+  assert.expect(7);
   server.create('permission', {
     user: 4136,
     tableName: 'school',
@@ -101,6 +102,7 @@ test('multi-option filters', function(assert) {
   andThen(function() {
     assert.equal(find(schoolsFilter).length, 2);
     assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
+    assert.equal(find(schoolSelect).val(), '1', 'default school is selected');
     assert.equal(find(programsFilter).length, 3);
     assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
     assert.equal(find(programyearsfilter).length, 2);
