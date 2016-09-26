@@ -13,7 +13,7 @@ const Validations = buildValidations({
     validator('length', {
       allowBlank: true,
       min: 2,
-      max: 18
+      max: 255
     }),
   ],
 });
