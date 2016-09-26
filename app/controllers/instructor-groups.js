@@ -47,7 +47,7 @@ export default Controller.extend({
   setFilter: function(){
     this.set('debouncedFilter', this.get('titleFilter'));
   },
-  hasMoreThanOneSchool: gt('model.length', 1),
+  hasMoreThanOneSchool: gt('model.schools.length', 1),
   filteredInstructorGroups: computed(
     'debouncedFilter',
     'instructorGroups.[]',
@@ -73,17 +73,17 @@ export default Controller.extend({
       });
     }
   ),
-  selectedSchool: computed('model.[]', 'schoolId', function(){
-    let schools = this.get('model');
+  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
+    const schools = this.get('model.schools');
+    const primarySchool = this.get('model.primarySchool');
     if(isPresent(this.get('schoolId'))){
-      let school =  schools.find(school => {
-        return school.get('id') === this.get('schoolId');
-      });
+      let school =  schools.find(school => school.get('id') === this.get('schoolId'));
       if(school){
         return school;
       }
     }
-    return schools.get('firstObject');
+
+    return primarySchool;
   }),
   actions: {
     removeInstructorGroup: function(instructorGroup){
