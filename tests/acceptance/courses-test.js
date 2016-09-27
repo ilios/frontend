@@ -188,17 +188,38 @@ test('filters by mycourses', function(assert) {
 });
 
 test('filters options', function(assert) {
+  assert.expect(8);
   server.createList('school', 2);
+  server.create('permission', {
+    tableName: 'school',
+    tableRowId: 1,
+    user: 4136
+  });
+  server.db.users.update(4136, {permissions: [1], school: 2});
+
   server.create('academicYear', {id: 2013});
   server.create('academicYear', {id: 2014});
-  assert.expect(4);
+
+  const yearSelect = '.yearsfilter select';
+  const schoolSelect = '.schoolsfilter select';
+  const years = `${yearSelect} option`;
+  const schools = `${schoolSelect} option`;
+
   visit('/courses');
   andThen(function() {
-    assert.equal(find('.schoolsfilter').eq(0).text().trim(), 'school 0');
-    var yearOptions = find('.yearsfilter select option');
+    let yearOptions = find(years);
     assert.equal(yearOptions.length, 2);
     assert.equal(getElementText(yearOptions.eq(0)).substring(0,4), 2014);
     assert.equal(getElementText(yearOptions.eq(1)).substring(0,4), 2013);
+    assert.equal(find(yearSelect).val(), '2014 - 2015');
+
+    let schoolOptions = find(schools);
+    assert.equal(schoolOptions.length, 2);
+    assert.equal(getElementText(schoolOptions.eq(0)), 'school0');
+    assert.equal(getElementText(schoolOptions.eq(1)), 'school1');
+    assert.equal(find(schoolSelect).val(), '2');
+
+
   });
 });
 

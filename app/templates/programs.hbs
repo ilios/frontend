@@ -4,7 +4,7 @@
       {{fa-icon 'university' fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' model) as |school|}}
+          {{#each (sort-by 'title' model.schools) as |school|}}
             <option value={{school.id}} selected={{is-equal school selectedSchool}}>
               {{school.title}}
             </option>

@@ -88,6 +88,29 @@ test('filters by title', function(assert) {
   });
 });
 
+test('filters options', function(assert) {
+  assert.expect(4);
+  server.create('user', {id: 4136, permissions: [1], school: 2});
+  server.createList('school', 2);
+  server.create('permission', {
+    tableName: 'school',
+    tableRowId: 1,
+    user: 4136
+  });
+
+  const schoolSelect = '.schoolsfilter select';
+  const schools = `${schoolSelect} option`;
+
+  visit('/programs');
+  andThen(function() {
+    let schoolOptions = find(schools);
+    assert.equal(schoolOptions.length, 2);
+    assert.equal(getElementText(schoolOptions.eq(0)), 'school0');
+    assert.equal(getElementText(schoolOptions.eq(1)), 'school1');
+    assert.equal(find(schoolSelect).val(), '2');
+  });
+});
+
 test('add new program', function(assert) {
   assert.expect(3);
 

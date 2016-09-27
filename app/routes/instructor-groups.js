@@ -9,16 +9,21 @@ export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   model() {
     let defer = RSVP.defer();
+    let model = {};
     this.get('currentUser.model').then(currentUser=>{
       currentUser.get('schools').then(schools => {
-        defer.resolve(schools);
+        model.schools = schools;
+        currentUser.get('school').then(primarySchool => {
+          model.primarySchool = primarySchool;
+          defer.resolve(model);
+        });
       });
     });
 
     return defer.promise;
   },
-  setupController: function(controller, schools){
-    controller.set('model', schools);
+  setupController: function(controller, hash){
+    controller.set('model', hash);
     this.controllerFor('application').set('pageTitleTranslation', 'general.instructorGroups');
   },
   queryParams: {
