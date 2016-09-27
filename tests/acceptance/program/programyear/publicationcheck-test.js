@@ -13,7 +13,6 @@ module('Acceptance: Program Year - Publication Check', {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
-    server.logging = true;
     server.create('programYear');
     server.create('cohort');
     fixtures.fullProgram = server.create('program', {
