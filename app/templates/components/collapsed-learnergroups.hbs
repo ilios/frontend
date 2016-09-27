@@ -12,7 +12,6 @@
         </tr>
       </thead>
       <tbody>
-        {{log loadCohortSummaries.lastSuccessful.value}}
         {{#each (sort-by 'title' loadCohortSummaries.lastSuccessful.value) as |obj|}}
           <tr>
             <td colspan=4>
