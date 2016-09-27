@@ -1,7 +1,7 @@
 .waveloader {
   &.is-full-size {
     @include align-items(center);
-    @include display(flex);
+    display: flex;
     min-height: 100px;
   }
 
