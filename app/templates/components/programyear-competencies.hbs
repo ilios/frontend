@@ -10,13 +10,15 @@
   </div>
 {{/if}}
 <div class='programyear-competencies-actions'>
-  {{#if isManaging}}
-      <button class='bigadd' onclick={{perform save}}>
-        {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}
-      </button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else}}
-    <button {{action setIsManaging true}}>{{t 'general.competenciesManageTitle'}}</button>
+  {{#if editable}}
+    {{#if isManaging}}
+        <button class='bigadd' onclick={{perform save}}>
+          {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}
+        </button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button {{action setIsManaging true}}>{{t 'general.competenciesManageTitle'}}</button>
+    {{/if}}
   {{/if}}
 </div>
 <div class='programyear-competencies-content'>
