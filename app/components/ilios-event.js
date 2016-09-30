@@ -308,4 +308,10 @@ export default Component.extend({
       promise: defer.promise
     });
   }),
+  attireRequiredPhrase: computed('i18n.locale', function(){
+    return this.get('i18n').t('general.specialAttireIsRequired');
+  }),
+  equipmentRequiredPhrase: computed('i18n.locale', function(){
+    return this.get('i18n').t('general.specialEquipmentIsRequired');
+  }),
 });
