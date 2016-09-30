@@ -11,10 +11,12 @@ const Validations = buildValidations({
   username: [
     validator('presence', {
       presence: true,
-      dependentKeys: 'allowCustomUserName.content',
-      disabled(){
-        return !this.get('model.allowCustomUserName.content');
-      }
+      dependentKeys: ['model.allowCustomUserName'],
+      disabled: computed('model.allowCustomUserName', function(){
+        return this.get('model.allowCustomUserName').then(allowCustomUserName => {
+          return allowCustomUserName;
+        });
+      })
     }),
     validator('length', {
       max: 100
@@ -23,10 +25,12 @@ const Validations = buildValidations({
   password: [
     validator('presence', {
       presence: true,
-      dependentKeys: 'allowCustomUserName.content',
-      disabled(){
-        return !this.get('model.allowCustomUserName.content');
-      }
+      dependentKeys: ['model.allowCustomUserName'],
+      disabled: computed('model.allowCustomUserName', function(){
+        return this.get('model.allowCustomUserName').then(allowCustomUserName => {
+          return allowCustomUserName;
+        });
+      })
     })
   ],
   otherId: [

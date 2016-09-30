@@ -61,10 +61,10 @@ const Validations = buildValidations({
     ]
   },
   password: {
-    dependentKeys: ['canEditUsernameAndPassword', 'changeUserPassword'],
-    disabled(){
+    dependentKeys: ['model.canEditUsernameAndPassword', 'model.changeUserPassword'],
+    disabled: computed('model.canEditUsernameAndPassword', 'model.changeUserPassword', function(){
       return this.get('model.canEditUsernameAndPassword') && !this.get('model.changeUserPassword');
-    },
+    }),
     validators: [
       validator('presence', true),
       validator('length', {
