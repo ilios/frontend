@@ -12,6 +12,7 @@
       {{#each sortedObjectives as |objective|}}
         {{session-objective-list-item
           objective=objective
+          editable=editable
           session=session
           showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
           remove=(action 'confirmRemoval')
