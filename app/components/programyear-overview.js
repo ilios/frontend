@@ -1,11 +1,12 @@
 import Ember from 'ember';
 
 const { Component, computed } = Ember;
-const { filterBy, sort } = computed;
+const { filterBy, sort, not } = computed;
 
 export default Component.extend({
   classNames: ['programyear-overview'],
   programYear: null,
+  editable: not('programYear.locked'),
   directorsSort: ['lastName', 'firstName'],
   directorsWithFullName: filterBy('programYear.directors', 'fullName'),
   sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
