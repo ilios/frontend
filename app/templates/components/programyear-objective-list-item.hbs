@@ -1,42 +1,62 @@
 <td id='objective-{{objective.id}}' class='text-left text-top' colspan=3>
-  {{#editable-field
-    value=title
-    renderHtml=true
-    isSaveDisabled=(and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))
-    save=(action 'saveTitleChanges' )
-    close=(action 'revertTitleChanges')
-    as |isSaving save close|
-  }}
-    {{froala-editor
-      params=editorParams
+  {{#if editable}}
+    {{#editable-field
       value=title
-      contentChanged=(action "changeTitle")
+      renderHtml=true
+      isSaveDisabled=(and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))
+      save=(action 'saveTitleChanges' )
+      close=(action 'revertTitleChanges')
+      as |isSaving save close|
     }}
-    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-    {{/if}}
-  {{/editable-field}}
+      {{froala-editor
+        params=editorParams
+        value=title
+        contentChanged=(action "changeTitle")
+      }}
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{/if}}
+    {{/editable-field}}
+  {{else}}
+    {{{title}}}
+  {{/if}}
 </td>
 <td class='text-left text-top' colspan=2>
   {{#if objective.competency}}
-    <span class='clickable link' {{action this.attrs.manageCompetency objective}}>
+    {{#if editable}}
+      <span class='clickable link' {{action this.attrs.manageCompetency objective}}>
+        {{objective.competency.title}}
+      </span>
+    {{else}}
       {{objective.competency.title}}
-    </span>
+    {{/if}}
     {{#if (not-eq (await objective.competency.id) (await objective.competency.domain.id))}}
       ({{objective.competency.domain.title}})
     {{/if}}
   {{else}}
-    <button {{action this.attrs.manageCompetency objective}}>{{t 'general.addNew'}}</button>
+    {{#if editable}}
+      <button {{action this.attrs.manageCompetency objective}}>{{t 'general.addNew'}}</button>
+    {{else}}
+      {{t 'general.none'}}
+    {{/if}}
   {{/if}}
 </td>
 <td class='text-left text-top' colspan=2>
   {{#if objective.meshDescriptors.length}}
     <ul>
       {{#each objective.meshDescriptors as |descriptor|}}
-        <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
+        {{#if editable}}
+          <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
+        {{else}}
+          <li>{{descriptor.name}}</li>
+        {{/if}}
       {{/each}}
     </ul>
   {{else}}
-    <button {{action this.attrs.manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+    {{#if editable}}
+      <button {{action this.attrs.manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+    {{else}}
+      {{t 'general.none'}}
+    {{/if}}
   {{/if}}
 </td>
