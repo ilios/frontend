@@ -20,6 +20,7 @@ test('it renders', function(assert) {
     objective=objective
     manageDescriptors=(action 'nothing')
     manageCompetency=(action 'nothing')
+    editable=true
   }}`);
 
   assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
@@ -44,6 +45,7 @@ test('can change title', function(assert) {
     remove=(action 'nothing')
     manageDescriptors=(action 'nothing')
     manageCompetency=(action 'nothing')
+    editable=true
   }}`);
 
   this.$('td:eq(0) .editable').click();
@@ -68,6 +70,7 @@ test('can manage competency', function(assert) {
     remove=(action 'nothing')
     manageDescriptors=(action 'nothing')
     manageCompetency=(action 'something')
+    editable=true
   }}`);
 
   this.$('td:eq(1) button').click();
@@ -89,6 +92,7 @@ test('can manage descriptors', function(assert) {
     remove=(action 'nothing')
     manageDescriptors=(action 'something')
     manageCompetency=(action 'nothing')
+    editable=true
   }}`);
 
   this.$('td:eq(2) button').click();

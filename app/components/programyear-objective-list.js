@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
 const { computed, Component } = Ember;
-const { sort } = computed;
+const { sort, not } = computed;
 
 export default Component.extend({
   programYear: null,
+  editable: not('programYear.locked'),
   objectives: computed('programYear.objectives.[]', function(){
     return this.get('programYear').get('objectives');
   }),

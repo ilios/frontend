@@ -5,17 +5,27 @@
   <div class='detail-content'>
     <label>{{t 'general.directors'}}:</label>
       <span>
-        <ul class='removable-list tag-list'>
-          {{#each sortedDirectors as |user|}}
-          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-          {{/each}}
-        </ul>
+          {{#if editable}}
+            <ul class='removable-list tag-list'>
+              {{#each sortedDirectors as |user|}}
+                <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <ul class='tag-list'>
+              {{#each sortedDirectors as |user|}}
+                <li>{{user.fullName}}</li>
+              {{/each}}
+            </ul>
+          {{/if}}
       </span>
-      {{user-search
-        addUser='addDirector'
-        currentlyActiveUsers=programYear.directors
-      }}
-    <br />
-    <br />
+      {{#if editable}}
+        {{user-search
+          addUser='addDirector'
+          currentlyActiveUsers=programYear.directors
+        }}
+        <br />
+        <br />
+      {{/if}}
   </div>
 </section>

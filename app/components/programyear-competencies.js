@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
 const { Component, RSVP, computed } = Ember;
+const { not } = computed;
 const { Promise, all, filter } = RSVP;
 
 export default Component.extend({
@@ -17,6 +18,7 @@ export default Component.extend({
   isManaging: null,
   classNames: ['programyear-competencies'],
   isSaving: false,
+  editable: not('programYear.locked'),
   selectedCompetencies: [],
 
   loadSelectedCompetencies: task(function * (){

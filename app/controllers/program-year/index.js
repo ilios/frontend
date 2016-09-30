@@ -19,5 +19,5 @@ export default Controller.extend({
   programYearController: controller('programYear'),
   programController: controller('program'),
   program: alias('programController.model'),
-  editable: not('program.locked'),
+  editable: not('model.locked'),
 });
