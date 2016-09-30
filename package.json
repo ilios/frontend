@@ -93,7 +93,7 @@
     "ember-watson": "^0.8.0",
     "emberx-select": "2.2.2",
     "eslint": "^3.4.0",
-    "ilios-calendar": "^5.0.0",
+    "ilios-calendar": "^6.0.0",
     "liquid-fire": "0.26.1",
     "liquid-tether": "1.1.1",
     "loader.js": "^4.0.11",
