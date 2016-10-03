@@ -128,22 +128,24 @@ export default Controller.extend({
     });
   }),
 
-  reports: computed('selectedSchool', 'selectedProgram', function(){
+  reports: computed('selectedProgram', function(){
     let defer = RSVP.defer();
     const selectedSchool = this.get('selectedSchool');
-    this.get('selectedProgram').then(selectedProgram => {
-      if(isEmpty(selectedSchool) || isEmpty(selectedProgram)){
-        defer.resolve([]);
-      } else {
-        this.get('store').query('curriculum-inventory-report', {
-          filters: {
-            program: selectedProgram.get('id')
-          },
-          limit: 500
-        }).then(reports => {
-          defer.resolve(reports);
-        });
-      }
+    this.get('selectedSchool').then(selectedSchool => {
+      this.get('selectedProgram').then(selectedProgram => {
+        if(isEmpty(selectedSchool) || isEmpty(selectedProgram)){
+          defer.resolve([]);
+        } else {
+          this.get('store').query('curriculum-inventory-report', {
+            filters: {
+              program: selectedProgram.get('id')
+            },
+            limit: 500
+          }).then(reports => {
+            defer.resolve(reports);
+          });
+        }
+      });
     });
     return PromiseArray.create({
       promise: defer.promise
