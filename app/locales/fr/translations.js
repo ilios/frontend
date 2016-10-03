@@ -250,6 +250,7 @@ export default {
     'multiDay': "de Plusieurs Jours",
     'multiday': "Plusieurs Jours",
     'multipleGroups': 'Plusieurs groupes',
+    'mustBeSameDayOfWeekAsCurrentStartDate': 'Doit être le même jour de la semaine que le courant date de début',
     'myCalendar': "Mon Calendrier",
     'myCourses': "Mes Cours",
     'myProfile': 'Mon profil',
