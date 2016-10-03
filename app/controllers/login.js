@@ -16,9 +16,9 @@ export default Controller.extend({
       this.set('errors', []);
       this.get('session').authenticate(authenticator, credentials).then(() => {
 
-      }, response => {
-        let mappedErrors = response.errors.map(str => {
-          return 'general.' + str;
+      }, errors => {
+        let mappedErrors = errors.map(e => {
+          return 'general.' + e.title;
         });
         this.set('errors', mappedErrors);
       });
