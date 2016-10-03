@@ -33,32 +33,31 @@ export default JwtTokenAuthenticator.extend({
         var data = this.getAuthenticateData(credentials);
 
         this.makeRequest(this.serverTokenEndpoint, data, headers).then(response => {
-          Ember.run(() => {
             const token = Ember.get(response, this.tokenPropertyName);
             const tokenData = this.getTokenData(token);
             const expiresAt = Ember.get(tokenData, this.tokenExpireName);
             const tokenExpireData = {};
-
             this.scheduleAccessTokenRefresh(expiresAt, token);
-
             tokenExpireData[this.tokenExpireName] = expiresAt;
-
             response = Ember.merge(response, tokenExpireData);
-
             resolve(this.getResponseData(response));
-          });
-        }, function(xhr) {
-          Ember.run(function() {
-            reject(xhr.responseJSON || xhr.responseText);
-          });
+        }, e => {
+          const errors = e.errors || [];
+          reject(errors);
         });
       }
     });
   },
 
   /**
-    Extend the default make request in order to user our own ajax service
-    Using our service allows us to use a custom hostname instead of just '/'
+   * Extend the default make request in order to user our own ajax service
+   * Using our service allows us to use a custom hostname instead of just '/'
+   *
+   * @method makeRequest
+   * @param {string} url The URL to post to.
+   * @param {Object} data The POST data.
+   * @param {Object} providedHeaders Request headers.
+   * @return {Ember.RSVP.Promise} The result of the request.
   */
   makeRequest(url, data, providedHeaders) {
     const ajax = this.get('ajax');
