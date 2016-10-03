@@ -33,14 +33,14 @@ export default JwtTokenAuthenticator.extend({
         var data = this.getAuthenticateData(credentials);
 
         this.makeRequest(this.serverTokenEndpoint, data, headers).then(response => {
-            const token = Ember.get(response, this.tokenPropertyName);
-            const tokenData = this.getTokenData(token);
-            const expiresAt = Ember.get(tokenData, this.tokenExpireName);
-            const tokenExpireData = {};
-            this.scheduleAccessTokenRefresh(expiresAt, token);
-            tokenExpireData[this.tokenExpireName] = expiresAt;
-            response = Ember.merge(response, tokenExpireData);
-            resolve(this.getResponseData(response));
+          const token = Ember.get(response, this.tokenPropertyName);
+          const tokenData = this.getTokenData(token);
+          const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+          const tokenExpireData = {};
+          this.scheduleAccessTokenRefresh(expiresAt, token);
+          tokenExpireData[this.tokenExpireName] = expiresAt;
+          response = Ember.merge(response, tokenExpireData);
+          resolve(this.getResponseData(response));
         }, e => {
           const errors = e.errors || [];
           reject(errors);
