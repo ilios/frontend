@@ -10,7 +10,8 @@ export default JwtTokenAuthenticator.extend({
     Extend the JwtTokenAuthenticator to accept a token in liu of credentials
     This allows authentication of an already existing session.
     @method authenticate
-    @param {Object} options The credentials to authenticate the session with
+    @param {Object} credentials The credentials to authenticate the session with
+    @param {Object} headers Request headers.
     @return {Ember.RSVP.Promise} A promise that resolves when an auth token is
                                  successfully acquired from the server and rejects
                                  otherwise
