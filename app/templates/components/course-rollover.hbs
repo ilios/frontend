@@ -47,7 +47,10 @@
   <div class='advanced-options'>
     {{#liquid-if expandAdvancedOptions class='vertical'}}
       <div class='item'>
-        <label>{{t 'general.startDate'}}:</label>
+        <label>
+          {{t 'general.startDate'}}:<br>
+          <small>({{t 'general.mustBeSameDayOfWeekAsCurrentStartDate'}})</small>
+        </label>
         {{pikaday-input
           size=10
           value=startDate
@@ -56,6 +59,7 @@
           onSelection=(action (mut startDate))
           options=(hash disableDayFn=disableDayFn course=course)
         }}
+
       </div>
 
       <div class='included'>
