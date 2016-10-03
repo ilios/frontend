@@ -79,6 +79,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           this.get('save')(course).finally(() =>{
             this.set('isSaving', true);
           });
+        } else {
+          this.set('isSaving', false);
         }
       });
     },
