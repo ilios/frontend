@@ -130,7 +130,6 @@ export default Controller.extend({
 
   reports: computed('selectedProgram', function(){
     let defer = RSVP.defer();
-    const selectedSchool = this.get('selectedSchool');
     this.get('selectedSchool').then(selectedSchool => {
       this.get('selectedProgram').then(selectedProgram => {
         if(isEmpty(selectedSchool) || isEmpty(selectedProgram)){
