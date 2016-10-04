@@ -1,99 +1,95 @@
 import Ember from 'ember';
 
-const { Component, computed, inject, run } = Ember;
+const { Component, computed, inject } = Ember;
 const { service } = inject;
-const { debounce } = run;
-const { notEmpty, or } = computed;
+
+var ProxiedMaterials = Ember.ObjectProxy.extend({
+  materials: [],
+  isActive: computed('content', 'materials.[]', function(){
+    return !this.get('materials').contains(this.get('content'));
+  })
+});
 
 export default Component.extend({
-  classNames: ['learningmaterial-search'],
-
   store: service(),
   i18n: service(),
-
-  results: [],
+  classNames: ['learningmaterial-search'],
   currentMaterials: [],
+  query: '',
+  searchResults: [],
+  searchPage: 0,
+  searchResultsPerPage: 50,
+  hasMoreSearchResults: false,
+  targetItemTitle: '',
   searching: false,
-  showMoreInputPrompt: false,
-  showNoResultsMessage: false,
-  currentlySearchingForTerm: false,
-
-  hasResults: notEmpty('results'),
-
-  showList: or('searching', 'showMoreInputPrompt', 'showNoResultsMessage', 'hasResults'),
+  searchReturned: false,
 
   actions: {
-    clear() {
-      let input = this.$('input')[0];
-      input.value = '';
-
-      this.setProperties({
-        searchTerms: '',
-        showMoreInputPrompt: false,
-        showNoResultsMessage: false,
-        searching: false,
-        results: [],
-        showClearButton: false,
-      });
-    },
-
-    inputValueChanged() {
-      let input = this.$('input')[0];
-      let searchTerms = input.value;
-
-      if (this.get('currentlySearchingForTerm') === searchTerms) {
-        return;
-      }
-
-      this.setProperties({
-        currentlySearchingForTerm: searchTerms,
-        showMoreInputPrompt: false,
-        showNoResultsMessage: false,
-        searching: false,
-      });
-
-      let noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
-
-      if (noWhiteSpaceTerm.length === 0){
-        this.send('clear');
-        return;
-      } else if (noWhiteSpaceTerm.length < 3) {
-        this.setProperties({
-          results: [],
-          showMoreInputPrompt: true,
-        });
-
-        return;
-      }
-
+    search: function(query){
+      var self = this;
+      this.set('searchReturned', false);
       this.set('searching', true);
-
-      debounce(this, function() {
-        this.send('search', searchTerms);
-      }, 300);
-    },
-
-    search(searchTerms) {
-      const store = this.get('store');
-
-      this.set('searching', true);
-      store.query('learningMaterial', { q: searchTerms }).then((learningMaterials) => {
-        let results = learningMaterials.filter((learningMaterial) => {
-          return !this.get('currentMaterials').contains(learningMaterial);
+      this.set('query', query);
+      var currentMaterials = this.get('currentMaterials');
+      this.get('store').query('learningMaterial', {
+        q: query,
+        limit: this.get('searchResultsPerPage') + 1,
+        'order_by[title]': 'ASC',
+      }).then(function(lms){
+        let results = lms.map(function(lm){
+          return ProxiedMaterials.create({
+            content: lm,
+            materials: currentMaterials
+          });
         });
-
-        this.set('searching', false);
-
-        if (results.get('length') === 0) {
-          this.set('showNoResultsMessage', true);
+        self.set('searchReturned', true);
+        self.set('searching', false);
+        self.set('searchPage', 1);
+        self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
+        if (self.get('hasMoreSearchResults')) {
+          results.pop();
         }
-
-        this.set('results', results.sortBy('title'));
+        self.set('searchResults', results);
       });
     },
+    searchMore: function() {
+      var self = this;
+      var currentMaterials = this.get('currentMaterials');
+      var query = this.get('query');
+      this.get('store').query('learningMaterial', {
+        q: query,
+        limit: this.get('searchResultsPerPage') + 1,
+        offset: this.get('searchPage') * this.get('searchResultsPerPage'),
+        'order_by[title]': 'ASC',
+      }).then(function(lms){
+        let results = lms.map(function(lm){
+          return ProxiedMaterials.create({
+            content: lm,
+            materials: currentMaterials
+          });
+        });
+        self.set('searchPage', self.get('searchPage') + 1);
+        self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
+        if (self.get('hasMoreSearchResults')) {
+          results.pop();
+        }
+        self.get('searchResults').pushObjects(results);
+      });
+    },
+    clear: function(){
+      this.set('searchResults', []);
+      this.set('searchReturned', false);
+      this.set('searching', false);
+      this.set('searchPage', 0);
+      this.set('hasMoreSearchResults', false);
+      this.set('query', '');
+    },
 
-    add(lm) {
-      this.sendAction('add', lm);
+    add(proxy) {
+      let lm = proxy.content;
+      if (! this.get('currentMaterials').contains(lm)) {
+        this.sendAction('add', lm);
+      }
     }
   }
 });
