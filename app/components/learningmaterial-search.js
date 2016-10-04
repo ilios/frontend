@@ -4,10 +4,7 @@ const { Component, computed, inject } = Ember;
 const { service } = inject;
 
 var ProxiedMaterials = Ember.ObjectProxy.extend({
-  materials: [],
-  isActive: computed('content', 'materials.[]', function(){
-    return !this.get('materials').contains(this.get('content'));
-  })
+  isActive: false
 });
 
 export default Component.extend({
@@ -47,7 +44,7 @@ export default Component.extend({
         let results = lms.map(function(lm){
           return ProxiedMaterials.create({
             content: lm,
-            materials: currentMaterials
+            isActive: ! currentMaterials.contains(lm)
           });
         });
         self.set('searchReturned', true);
@@ -73,7 +70,7 @@ export default Component.extend({
         let results = lms.map(function(lm){
           return ProxiedMaterials.create({
             content: lm,
-            materials: currentMaterials
+            isActive: ! currentMaterials.contains(lm)
           });
         });
         self.set('searchPage', self.get('searchPage') + 1);
@@ -96,6 +93,7 @@ export default Component.extend({
     add(proxy) {
       let lm = proxy.content;
       if (! this.get('currentMaterials').contains(lm)) {
+        proxy.set('isActive', false);
         this.sendAction('add', lm);
       }
     }
