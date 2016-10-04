@@ -1,37 +1,40 @@
-<input
-  class="search-input"
-  type="search"
-  placeholder={{t 'general.searchPlaceholder'}}
-  incremental=true
-  onsearch={{action "inputValueChanged"}}
-  onkeyup={{action "inputValueChanged"}}
-  results=5
-  autosave='ilios-global-search'
-/>
+{{search-box placeholder=(t 'general.searchPlaceholder') liveSearch=true search=(action 'search') clear=(action 'clear')}}
 
-<ul class="results {{unless showList 'hidden'}}" {{action 'clear'}}>
-  {{#if searching}}
+{{#if searching}}
+  <ul class='results'>
     <li>{{t 'general.currentlySearchingPrompt'}}</li>
-  {{else if showMoreInputPrompt}}
-    <li>{{t 'general.moreInputRequiredPrompt'}}</li>
-  {{else if showNoResultsMessage}}
-    <li>{{t 'general.noSearchResultsPrompt'}}</li>
+  </ul>
+{{else}}
+  {{#if searchResults.length}}
+    <div class="selectable-list">
+      <ul class="lm-search-results">
+        {{#each searchResults as |learningMaterial|}}
+          <li class="{{unless learningMaterial.isActive 'disabled'}}" {{action 'add' learningMaterial}}>
+            <h4 class="learning-material-title">{{learningMaterial.title}}</h4>
+            <span class="learning-material-description">{{{learningMaterial.description}}}</span>
+            {{#if learningMaterial.status.title}}
+              <span class="learning-material-status">{{learningMaterial.status.title}}</span>
+            {{/if}}
+            <ul class="learning-material-properties">
+              <li>{{t 'general.owner'}}: {{learningMaterial.owningUser.fullName}}</li>
+              {{#if learningMaterial.originalAuthor}}
+                <li>{{t 'general.contentAuthor'}}: {{learningMaterial.originalAuthor}}</li>
+              {{/if}}
+              <li>{{t 'general.uploadDate'}}: {{moment-format learningMaterial.uploadDate 'M-D-YYYY'}}</li>
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+      {{#if hasMoreSearchResults }}
+        <button {{action 'searchMore'}}>{{t 'general.showMore' }}</button>
+      {{/if}}
+    </div>
   {{else}}
-    {{#each results as |learningMaterial|}}
-      <li {{action 'add' learningMaterial}}>
-        <h4 class="learning-material-title">{{learningMaterial.title}}</h4>
-        <span class="learning-material-description">{{{learningMaterial.description}}}</span>
-        {{#if learningMaterial.status.title}}
-          <span class="learning-material-status">{{learningMaterial.status.title}}</span>
-        {{/if}}
-        <ul class="learning-material-properties">
-          <li>{{t 'general.owner'}}: {{learningMaterial.owningUser.fullName}}</li>
-          {{#if learningMaterial.originalAuthor}}
-            <li>{{t 'general.contentAuthor'}}: {{learningMaterial.originalAuthor}}</li>
-          {{/if}}
-          <li>{{t 'general.uploadDate'}}: {{moment-format learningMaterial.uploadDate 'M-D-YYYY'}}</li>
-        </ul>
-      </li>
-    {{/each}}
+    {{#if searchReturned}}
+      <ul class='results'>
+        <li>{{t 'general.noSearchResultsPrompt'}}</li>
+      </ul>
+    {{/if}}
   {{/if}}
-</ul>
+{{/if}}
+
