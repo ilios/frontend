@@ -27,6 +27,14 @@ export default Component.extend({
   actions: {
     search: function(query){
       var self = this;
+      if (Ember.$.trim(query) === '') {
+        self.set('searchReturned', false);
+        self.set('searching', false);
+        self.set('searchPage', 1);
+        self.set('hasMoreSearchResults', false);
+        self.set('searchResults', []);
+        return;
+      }
       this.set('searchReturned', false);
       this.set('searching', true);
       this.set('query', query);
