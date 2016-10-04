@@ -43,30 +43,33 @@
     }
 
 
-    .search-input {
+    input[type=search] {
       @include span-columns(7 of 7);
 
     }
 
-    .results {
+    .selectable-list {
       @include span-columns(7 of 7);
-      background: $white;
-      cursor: pointer;
-      max-height: 14em;
-      overflow-y: scroll;
+    }
+
+    .lm-search-results {
+      @include span-columns(7 of 7);
 
       li {
         border-bottom: 1px solid $header-grey;
         min-height: 3.25em;
-        padding: .25em 1em;
         position: relative;
+
+        &.disabled {
+          cursor:default;
+        }
 
         &:hover {
           background: $super-light-grey;
         }
 
         .learning-material-title {
-          color: $black;
+          color: inherit;
           display: block;
           margin: 0;
         }
@@ -91,6 +94,7 @@
         li {
           border: 0;
           color: $darker-grey;
+          cursor: inherit;
           display: list-item;
           font-size: .75em;
           margin: 0;
