@@ -19,7 +19,7 @@ export default Component.extend({
   searchReturned: false,
 
   addLearningMaterial: task(function * (lm) {
-      yield this.sendAction('add', lm);
+    yield this.sendAction('add', lm);
   }).enqueue(),
 
   actions: {
