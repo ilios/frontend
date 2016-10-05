@@ -1,5 +1,7 @@
 {{#if targetItemTitle}}
-  <h2>{{t 'selectMeshFor' title=targetItemTitle}}</h2>
+ <span class='specific-title'>
+   {{t 'general.selectMeshFor' title=targetItemTitle}}
+ </span>
 {{/if}}
 <ul class='removable-list tag-list details-list'>
   {{#each sortedTerms as |term|}}
