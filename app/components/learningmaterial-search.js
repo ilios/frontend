@@ -4,10 +4,6 @@ import { task } from 'ember-concurrency';
 const { Component, inject } = Ember;
 const { service } = inject;
 
-var ProxiedMaterials = Ember.ObjectProxy.extend({
-  isActive: false
-});
-
 export default Component.extend({
   store: service(),
   i18n: service(),
@@ -22,10 +18,8 @@ export default Component.extend({
   searching: false,
   searchReturned: false,
 
-  addLearningMaterial: task(function * (proxy) {
-    let lm = proxy.content;
+  addLearningMaterial: task(function * (lm) {
     if (! this.get('currentMaterials').contains(lm)) {
-      proxy.set('isActive', false);
       this.sendAction('add', lm);
     }
   }).enqueue(),
@@ -48,13 +42,7 @@ export default Component.extend({
         q: query,
         limit: this.get('searchResultsPerPage') + 1,
         'order_by[title]': 'ASC',
-      }).then(lms => {
-        let results = lms.map(lm => {
-          return ProxiedMaterials.create({
-            content: lm,
-            isActive: ! currentMaterials.contains(lm)
-          });
-        });
+      }).then(results => {
         this.set('searchReturned', true);
         this.set('searching', false);
         this.set('searchPage', 1);
@@ -73,13 +61,7 @@ export default Component.extend({
         limit: this.get('searchResultsPerPage') + 1,
         offset: this.get('searchPage') * this.get('searchResultsPerPage'),
         'order_by[title]': 'ASC',
-      }).then(lms => {
-        let results = lms.map(lm => {
-          return ProxiedMaterials.create({
-            content: lm,
-            isActive: ! currentMaterials.contains(lm)
-          });
-        });
+      }).then(results => {
         this.set('searchPage', this.get('searchPage') + 1);
         this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
         if (this.get('hasMoreSearchResults')) {
