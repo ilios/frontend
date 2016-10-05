@@ -19,10 +19,7 @@ export default Component.extend({
   searchReturned: false,
 
   addLearningMaterial: task(function * (lm) {
-    if (! this.get('currentMaterials').contains(lm)) {
-      this.sendAction('add', lm);
-    }
-    yield;
+      yield this.sendAction('add', lm);
   }).enqueue(),
 
   actions: {

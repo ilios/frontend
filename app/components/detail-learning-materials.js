@@ -208,6 +208,7 @@ export default Component.extend({
       this.get('bufferMaterial').set('notes', value);
     },
     addLearningMaterial(parentLearningMaterial){
+      let defer = RSVP.defer();
       let newLearningMaterial;
       let lmCollectionType;
       if(this.get('isCourse')){
@@ -227,8 +228,10 @@ export default Component.extend({
       newLearningMaterial.save().then(savedLearningMaterial => {
         parentLearningMaterial.get(lmCollectionType).then(children => {
           children.pushObject(savedLearningMaterial);
+          defer.resolve(savedLearningMaterial);
         });
       });
+      return defer.promise;
     },
     confirmRemoval(lmProxy){
       lmProxy.set('showRemoveConfirmation', true);
