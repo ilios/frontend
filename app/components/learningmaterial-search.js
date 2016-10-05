@@ -35,7 +35,6 @@ export default Component.extend({
       this.set('searchReturned', false);
       this.set('searching', true);
       this.set('query', query);
-      const currentMaterials = this.get('currentMaterials');
       this.get('store').query('learningMaterial', {
         q: query,
         limit: this.get('searchResultsPerPage') + 1,
@@ -52,7 +51,6 @@ export default Component.extend({
       });
     },
     searchMore() {
-      const currentMaterials = this.get('currentMaterials');
       const query = this.get('query');
       this.get('store').query('learningMaterial', {
         q: query,
