@@ -9,7 +9,7 @@
     <div class="selectable-list">
       <ul class="lm-search-results">
         {{#each searchResults as |learningMaterial|}}
-          <li class="{{unless learningMaterial.isActive 'disabled'}}" {{action 'add' learningMaterial}}>
+          <li class="{{unless learningMaterial.isActive 'disabled'}}" {{action (perform addLearningMaterial learningMaterial)}}>
             <h4 class="learning-material-title">{{learningMaterial.title}}</h4>
             <span class="learning-material-description">{{{learningMaterial.description}}}</span>
             {{#if learningMaterial.status.title}}
