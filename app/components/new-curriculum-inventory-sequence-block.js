@@ -119,7 +119,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
       orderInSequence = 1;
     }
-    const academicLevel = academicLevels[0];
+    let academicLevel = academicLevels[0];
+    if (isPresent(parent)) {
+      academicLevel = yield parent.get('academicLevel');
+    }
     const linkableCourses = yield report.get('linkableCourses');
     const i18n = this.get('i18n');
     const childSequenceOrderOptions = [
