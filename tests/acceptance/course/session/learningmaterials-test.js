@@ -215,7 +215,7 @@ test('create new link learning material', function(assert) {
   const testAuthor = 'testsome author';
   const testDescription = 'testsome description';
   const testUrl = 'http://www.ucsf.edu/';
-  const searchBox = '.search-input';
+  const searchBox = '.search-box';
 
   visit(url);
   andThen(function() {
@@ -264,7 +264,7 @@ test('create new citation learning material', function(assert) {
   const testAuthor = 'testsome author';
   const testDescription = 'testsome description';
   const testCitation = 'testsome citation';
-  const searchBox = '.search-input';
+  const searchBox = '.search-box';
 
   visit(url);
   andThen(function() {
@@ -420,7 +420,7 @@ test('view citation learning material details', function(assert) {
 });
 
 test('edit learning material', function(assert) {
-  const searchBox = '.search-input';
+  const searchBox = '.search-box';
 
   visit(url);
   andThen(function() {
@@ -620,16 +620,16 @@ test('find and add learning material', function(assert) {
     triggerEvent(searchBoxInput, 'keyup');
     andThen(function(){
       later(function(){
-        let searchResults = find('.results > li', container);
+        let searchResults = find('.lm-search-results > li', container);
         assert.equal(searchResults.length, 1);
-        assert.equal(getElementText($('.results > li:eq(0) h4')), getText('Letter to Doc Brown'));
-        let addlProps = find('.results > li:eq(0) .learning-material-properties li', container);
+        assert.equal(getElementText($('.lm-search-results > li:eq(0) h4')), getText('Letter to Doc Brown'));
+        let addlProps = find('.lm-search-results > li:eq(0) .learning-material-properties li', container);
         assert.equal(addlProps.length, 3);
-        assert.equal(getElementText($('.results > li:eq(0) .learning-material-properties li:eq(0)')),
+        assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)')),
           getText('Owner: 0 guy M. Mc0son'));
-        assert.equal(getElementText($('.results > li:eq(0) .learning-material-properties li:eq(1)')),
+        assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(1)')),
           getText('Content Author: ' + fixtures.learningMaterials[4].originalAuthor));
-        assert.equal(getElementText($('.results > li:eq(0) .learning-material-properties li:eq(2)')),
+        assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(2)')),
           getText('Upload date: ' + moment(fixtures.learningMaterials[4].uploadDate).format('M-D-YYYY')));
         click(searchResults[0]);
 
