@@ -40,14 +40,17 @@ export default Component.extend({
         limit: this.get('searchResultsPerPage') + 1,
         'order_by[title]': 'ASC',
       }).then(results => {
+        let lms = results.map(lm => {
+          return lm;
+        });
         this.set('searchReturned', true);
         this.set('searching', false);
         this.set('searchPage', 1);
-        this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
+        this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
         if (this.get('hasMoreSearchResults')) {
-          results.pop();
+          lms.pop();
         }
-        this.set('searchResults', results);
+        this.set('searchResults', lms);
       });
     },
     searchMore() {
@@ -58,12 +61,15 @@ export default Component.extend({
         offset: this.get('searchPage') * this.get('searchResultsPerPage'),
         'order_by[title]': 'ASC',
       }).then(results => {
+        let lms = results.map(lm => {
+          return lm;
+        });
         this.set('searchPage', this.get('searchPage') + 1);
-        this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
+        this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
         if (this.get('hasMoreSearchResults')) {
-          results.pop();
+          lms.pop();
         }
-        this.get('searchResults').pushObjects(results);
+        this.get('searchResults').pushObjects(lms);
       });
     },
     clear(){
