@@ -154,6 +154,7 @@ export default {
     'finalize': 'Finaliser',
     'finalized': 'Finalisé',
     'finalizeReportConfirmation': 'En finalisant ce rapport, vous le sauverez dans son état actuel à la base de données Ilios comme un objet de référence permanent et éditez pas plus loin sera possible.',
+    'finalizingReport': 'Finalisation rapport, cela peut prendre un certain temps ...',
     'findDirector': "Découvrir Directeur",
     'findInstructorOrGroup': "Trouver Instructeur ou Groupe",
     'firstName': "Prénom",
