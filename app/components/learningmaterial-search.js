@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, inject } = Ember;
+const { Component, inject } = Ember;
 const { service } = inject;
 
 var ProxiedMaterials = Ember.ObjectProxy.extend({
