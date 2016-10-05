@@ -22,6 +22,7 @@ export default Component.extend({
     if (! this.get('currentMaterials').contains(lm)) {
       this.sendAction('add', lm);
     }
+    yield;
   }).enqueue(),
 
   actions: {
