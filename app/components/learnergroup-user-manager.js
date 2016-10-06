@@ -4,7 +4,7 @@ import { task, timeout } from 'ember-concurrency';
 const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
-  didReceiveAttrs(){
+  init(){
     this._super(...arguments);
     this.set('usersBeingMoved', []);
     this.set('selectedUsers', []);
