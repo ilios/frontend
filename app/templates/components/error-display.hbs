@@ -1,28 +1,29 @@
 <div class="error-main">
-  <h2>{{t 'general.errorDisplayMessage'}}</h2>
-
-  {{#if showDetails}}
-    <span class="error-detail-action" {{action 'toggleDetails'}}>{{t 'general.collapseDetail'}}</span>
+  {{#if is404}}
+    {{not-found}}
   {{else}}
-    <span class="error-detail-action" {{action 'toggleDetails'}}>{{t 'general.expandDetail'}}</span>
+    <h2>{{t 'general.errorDisplayMessage'}}</h2>
+    <p class='clear-errors'><button {{action clearErrors}}>{{t 'general.clearErrors'}}</button></p>
+    <span class="error-detail-action" {{action 'toggleDetails'}}>
+      {{t (if showDetails 'general.collapseDetail' 'general.expandDetail' )}}
+    </span>
+    {{#if showDetails}}
+      <div class="error-detail">
+        <h3 class="error-total">{{t 'general.totalErrors' count=(get errors 'length')}}</h3>
+
+        {{#each errors as |error|}}
+          <div class="error-details">
+            <h5 class="error-main-message">{{error.mainMessage}}</h5>
+            {{#if error.statusCode}}
+              <span class="error-status-code">Status Code: {{error.statusCode}}</span>
+            {{/if}}
+            {{#if error.message}}
+              <span class="error-message">Message: {{error.message}}</span>
+            {{/if}}
+            <pre class="error-stack">{{error.stack}}</pre>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
   {{/if}}
 </div>
-
-{{#if showDetails}}
-  <div class="error-detail">
-    <h3 class="error-total">{{totalErrors}}</h3>
-
-    {{#each content as |error|}}
-      <div class="error-details">
-        <h5 class="error-main-message">{{error.mainMessage}}</h5>
-        {{#if error.statusCode}}
-          <span class="error-status-code">Status Code: {{error.statusCode}}</span>
-        {{/if}}
-        {{#if error.message}}
-          <span class="error-message">Message: {{error.message}}</span>
-        {{/if}}
-        <pre class="error-stack">{{error.stack}}</pre>
-      </div>
-    {{/each}}
-  </div>
-{{/if}}

@@ -39,5 +39,11 @@ export default Controller.extend({
   addError(error) {
     this.get('errors').pushObject(error);
     this.set('showErrorDisplay', true);
+  },
+  actions: {
+    clearErrors(){
+      this.set('errors', []);
+      this.set('showErrorDisplay', false);
+    }
   }
 });

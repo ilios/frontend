@@ -8,14 +8,14 @@ test('properties have default values', function(assert) {
   assert.expect(1);
 
   const expected = {
-    content:     null,
-    showDetails: false
+    errors:     null,
+    showDetails: true
   };
 
   const component = this.subject();
 
   const actual = {
-    content:     component.get('content'),
+    errors:     component.get('errors'),
     showDetails: component.get('showDetails'),
   };
 
@@ -29,19 +29,5 @@ test('`toggleDetails` action changes `showDetails` property', function(assert) {
 
   component.send('toggleDetails');
 
-  assert.equal(component.get('showDetails'), true);
-});
-
-test('`totalErrors` computed property works', function(assert) {
-  assert.expect(2);
-
-  const component = this.subject({
-    content: [1]
-  });
-
-  assert.equal(component.get('totalErrors'), 'There is 1 error');
-
-  component.get('content').pushObject(2);
-
-  assert.equal(component.get('totalErrors'), 'There are 2 errors');
+  assert.equal(component.get('showDetails'), false);
 });

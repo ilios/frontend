@@ -59,7 +59,7 @@ var OfferingBlock = Ember.Object.extend({
   //we have to init the offerins array because otherwise it gets passed by reference
   //and shared among isntances
   init: function(){
-    this._super();
+    this._super(...arguments);
     this.set('offerings', []);
   },
   offerings: null,

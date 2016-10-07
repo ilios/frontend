@@ -1,21 +1,25 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, isPresent } = Ember;
 
 export default Component.extend({
   classNames: ['error-display'],
 
-  content: null,
+  errors: null,
 
-  showDetails: false,
+  showDetails: true,
 
-  totalErrors: computed('content.[]', {
-    get() {
-      const contentLength = this.get('content').length;
-
-      return contentLength > 1 ? `There are ${contentLength} errors` : 'There is 1 error';
+  is404: computed('errors.[]', function(){
+    const errors = this.get('errors');
+    if (isPresent(errors)) {
+      const firstError = errors.get('firstObject');
+      if (isPresent(firstError)) {
+        return firstError.statusCode === '404';
+      }
     }
-  }).readOnly(),
+
+    return false;
+  }),
 
   actions: {
     toggleDetails() {
