@@ -163,7 +163,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('showUserManagerLoader', false);
       return users;
     }
-  }).restartable(),
+  }).enqueue(),
   usersToPassToCohortManager: task(function * () {
     const learnerGroup = this.get('learnerGroup');
     const cohort = yield learnerGroup.get('cohort');
@@ -177,7 +177,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     this.set('showCohortManagerLoader', false);
     return filteredUsers;
-  }).restartable(),
+  }).enqueue(),
   actions: {
     changeLocation() {
       const newLocation = this.get('location');
