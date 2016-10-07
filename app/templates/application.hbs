@@ -17,7 +17,7 @@
   </div>
 
   {{#if showErrorDisplay}}
-    {{error-display content=errors}}
+    {{error-display errors=errors clearErrors=(action 'clearErrors')}}
   {{else}}
     {{liquid-outlet}}
   {{/if}}

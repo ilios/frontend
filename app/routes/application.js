@@ -23,15 +23,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       });
     }
   },
+
   actions: {
-    error(error, transition) {
-      transition.abort();
-
-      this.get('flashMessages').alert('general.transitionErrorMessage');
-
-      // Future Reference:
-      // Uncommented code below would render substate (error.hbs)
-      // return true;
+    willTransition: function() {
+      let controller = this.controllerFor('application');
+      controller.set('errors', []);
+      controller.set('showErrorDisplay', false);
     }
   }
 });

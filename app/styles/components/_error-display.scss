@@ -1,9 +1,18 @@
 .error-main {
   margin-bottom: 25px;
+  margin-left: 1em;
 
   .error-detail-action {
     color: $text-blue;
     cursor: pointer;
+  }
+
+  .clear-errors {
+    margin: 2em;
+
+    button {
+      font-weight: bold;
+    }
   }
 }
 

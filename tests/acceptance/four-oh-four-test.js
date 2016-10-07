@@ -28,7 +28,7 @@ test('visiting /four-oh-four', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'fourOhFour');
-    assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again."));
+    assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
   });
 });
 
