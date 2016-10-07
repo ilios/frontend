@@ -23,13 +23,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this._super(...arguments);
     this.set('reportName', this.get('report.name'));
     this.set('isFinalized', this.get('report.isFinalized'));
+
+    // check if the d/l link points at the same domain as the current page is on.
+    let parser = document.createElement('a');
+    parser.href = this.get('report.absoluteFileUri');
+    let backendDomain = parser.hostname;
+    let frontendDomain = window.location.hostname;
+    this.set('downloadFromSameDomain', (backendDomain === frontendDomain));
   },
   classNames: ['curriculum-inventory-report-header'],
   report: null,
   reportName: null,
   publishTarget: alias('report'),
   isFinalized: false,
-  isDownloading:false,
+  isDownloading: false,
+  downloadFromSameDomain: false,
 
   downloadReport: task(function * (report){
     let anchor = document.createElement('a');
