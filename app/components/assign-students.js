@@ -11,11 +11,15 @@ export default Component.extend({
   store: service(),
   flashMessages: service(),
 
+  init(){
+    this._super(...arguments);
+    this.set('selectedUserIds', []);
+    this.set('savedUserIds', []);
+  },
+
   didReceiveAttrs(){
     this._super(...arguments);
     this.get('loadCohorts').perform();
-    this.set('selectedUserIds', []);
-    this.set('savedUserIds', []);
   },
   students: [],
   school: null,
@@ -123,6 +127,13 @@ export default Component.extend({
     this.get('flashMessages').success('general.savedSuccessfully');
 
   }).drop(),
+
+  totalUnassignedStudents: computed('students.length', 'savedUserIds.length', function(){
+    const students = this.get('students.length');
+    const saved = this.get('savedUserIds.length');
+
+    return students - saved;
+  }),
 
   actions: {
     toggleCheck(){
