@@ -104,5 +104,8 @@
     "paths": [
       "lib/ilios-prerender"
     ]
+  },
+  "dependencies": {
+    "ember-cli-js-cookie": "0.0.1"
   }
 }
