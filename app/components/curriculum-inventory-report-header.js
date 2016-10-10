@@ -4,8 +4,9 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, computed, RSVP } = Ember;
+const { Component, computed, inject, RSVP } = Ember;
 const { alias } = computed;
+const { service } = inject;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -19,6 +20,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
+  flashMessages: service(),
+
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('reportName', this.get('report.name'));
@@ -45,19 +48,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     anchor.target = '_blank';
     anchor.download = 'report.xml';
     anchor.click();
-    this.set('isDownloading', true);
-    let downloadHasStarted = false;
-    if (! Ember.testing) {
-      let cookieName = 'report-download-' + report.get('id');
-      while (! downloadHasStarted) {
-        yield timeout(1000);
-        if (Cookies.get(cookieName)) {
-          downloadHasStarted = true;
-          Cookies.remove(cookieName);
+    if (this.get('downloadFromSameDomain')) {
+      this.set('isDownloading', true);
+      let downloadHasStarted = false;
+      if (!Ember.testing) {
+        let cookieName = 'report-download-' + report.get('id');
+        while (!downloadHasStarted) {
+          yield timeout(1000);
+          if (Cookies.get(cookieName)) {
+            downloadHasStarted = true;
+            Cookies.remove(cookieName);
+          }
         }
       }
+      this.set('isDownloading', false);
+    } else {
+      this.get('flashMessages').success('general.downloadingCurriculumInventoryReport');
+      yield timeout(1000);
     }
-    this.set('isDownloading', false);
   }).drop(),
 
   actions: {

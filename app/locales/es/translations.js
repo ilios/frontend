@@ -128,6 +128,7 @@ export default {
     'domain': 'Dominio',
     'done': 'Acabado',
     'download': 'Descargar',
+    'downloadingCurriculumInventoryReport': 'Informe descarga ha comenzado. Esto puede tardar un rato...',
     'draft': 'Borrador',
     'dueBy': 'Debido Por',
     'dueThisDay': 'Debido por esta fecha',

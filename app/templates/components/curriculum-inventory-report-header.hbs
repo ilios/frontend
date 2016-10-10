@@ -25,18 +25,16 @@
   {{/if}}
 </div>
 <div class ='header-actions'>
-  {{#if downloadFromSameDomain}}
-    <a class="button" {{action (perform downloadReport report)}}>
-      <button>
+  <a class="button" {{action (perform downloadReport report)}}>
+    <button>
+      {{#if downloadFromSameDomain}}
         {{fa-icon (if downloadReport.isRunning 'spinner' 'download') spin=(if downloadReport.isRunning true false)}}
+      {{else}}
+        {{fa-icon 'download'}}
+      {{/if}}
         {{t 'general.download'}}
-      </button>
-    </a>
-  {{else}}
-    <a href="{{report.absoluteFileUri}}" class="button" download="report.xml" target="_blank">
-      <button>{{fa-icon 'download'}} {{t 'general.download'}}</button>
-    </a>
-  {{/if}}
+    </button>
+  </a>
   {{#unless isFinalized}}
     <button {{action 'finalize'}} >{{t 'general.finalize'}}</button>
   {{/unless}}
