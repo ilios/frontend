@@ -94,7 +94,7 @@ export default {
     'courseLearningMaterials': 'Materiales de Aprendizaje del Curso',
     'courseLevels': 'Niveles de Curso',
     'courseObjectives': 'Objetivo del Curso',
-    'courseOrType': 'Curso/Tipo',
+    'courseOrType': 'Curso / Tipo',
     'courses': 'Cursos',
     'coursesAndSessions': 'Cursos y Sessiones',
     'courseTitle': 'Titulo de Curso',

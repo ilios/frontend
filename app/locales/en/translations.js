@@ -94,7 +94,7 @@ export default {
     'courseLearningMaterials': 'Course Learning Materials',
     'courseLevels': 'Course Levels',
     'courseObjectives': 'Course Objectives',
-    'courseOrType': 'Course/Type',
+    'courseOrType': 'Course / Type',
     'courses': 'Courses',
     'coursesAndSessions': 'Courses and Sessions',
     'courseTitle': 'Course Title',
