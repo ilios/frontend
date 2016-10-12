@@ -94,7 +94,7 @@ export default {
     'courseLearningMaterials': "Matières d’Étude du Cours",
     'courseLevels':  "Niveaux de Cours",
     'courseObjectives': "Objectifs du Cours",
-    'courseOrType': "Cours/Type",
+    'courseOrType': "Cours / Type",
     'courses': "Les Cours",
     'coursesAndSessions': "Des Cours et Séances",
     'courseTitle': "Titre de Cours",
