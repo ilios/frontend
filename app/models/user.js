@@ -54,6 +54,10 @@ var User = DS.Model.extend({
   }),
   programYears: DS.hasMany('program-year', {async: true}),
   roles: DS.hasMany('user-role', {async: true}),
+  directedSchools: DS.hasMany('school', {
+    async: true,
+    inverse: 'directors'
+  }),
 
   isStudent: computed('roles', {
     get() {

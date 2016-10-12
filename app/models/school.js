@@ -17,6 +17,10 @@ export default DS.Model.extend({
   curriculumInventoryInstitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: DS.hasMany('session-type', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
+  directors: DS.hasMany('user', {
+    async: true,
+    inverse: 'directedSchools'
+  }),
   cohorts: computed('programs.@each.programYears', {
     get(){
       return this.get('store').query('cohort', {
