@@ -318,7 +318,7 @@ export default {
     'numberOfGroups': 'Número de grupos',
     'numberOfGroupsToGenerate': 'número de grupos para generar.',
     'objective': 'Objetivo',
-    'objectiveCompetencyManagerTitle': 'Seleccionar Objetivo para esta Competencia',
+    'objectiveCompetencyManagerTitle': 'Seleccione Competencia Principal para Objetivo',
     'objectiveCount': { 'one': 'Hay 1 objetivo', 'other': 'Hay {{count}} objetivos' },
     'objectiveDescriptorTitle': 'Seleccione Descriptores de MeSH para Objetivo',
     'objectiveParentsTitle': 'Seleccione Objetivos Matrices',
