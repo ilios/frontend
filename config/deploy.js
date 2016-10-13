@@ -23,8 +23,8 @@ module.exports = function(deployTarget) {
   };
 
   ENV.gzip = {
-    //dont gzip JSON files
-    filePattern: '**/*.{js,css,ico,map,xml,txt,svg,eot,ttf,woff,woff2}'
+    //dont gzip the json index file
+    ignorePattern: '**/index.json'
   };
 
   if (deployTarget === 'staging') {
