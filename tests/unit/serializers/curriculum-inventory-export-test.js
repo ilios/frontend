@@ -21,6 +21,7 @@ moduleForModel('curriculum-inventory-export', 'Unit | Serializer | curriculum in
     'model:cohort',
     'model:pending-user-update',
     'model:permission',
+    'model:session',
     'serializer:curriculum-inventory-export',
   ]
 });

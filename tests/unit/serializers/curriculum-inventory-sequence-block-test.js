@@ -8,6 +8,7 @@ moduleForModel('curriculum-inventory-sequence-block', 'Unit | Serializer | curri
     'model:curriculum-inventory-academic-level',
     'model:course',
     'model:session',
+    'model:user',
   ],
 });
 

@@ -22,6 +22,10 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   sessionDescription: DS.belongsTo('session-description', {async: true}),
   learningMaterials: DS.hasMany('session-learning-material', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
+  administrators: DS.hasMany('user', {
+    async: true,
+    inverse: 'administeredSessions'
+  }),
   isIndependentLearning: notEmpty('ilmSession.content'),
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),

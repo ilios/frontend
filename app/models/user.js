@@ -69,6 +69,10 @@ var User = DS.Model.extend({
     async: true,
     inverse: 'administrators'
   }),
+  administeredSessions: DS.hasMany('session', {
+    async: true,
+    inverse: 'administrators'
+  }),
 
   isStudent: computed('roles', {
     get() {
