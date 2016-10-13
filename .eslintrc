@@ -2,16 +2,16 @@
   "env": {
     "browser": true,
     "es6": true,
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "sourceType": "module",
-      },
-      "rules": {
-        /* Possible Errors http://eslint.org/docs/rules/#possible-errors */
-        "comma-dangle": [2, "only-multiline"],
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "sourceType": "module",
+  },
+  "rules": {
+    /* Possible Errors http://eslint.org/docs/rules/#possible-errors */
+    "comma-dangle": [2, "only-multiline"],
 
-        /* Stylistic Issues http://eslint.org/docs/rules/#stylistic-issues */
-        "indent": [2, 2], /* two-space indentation */
-        },
-      }
+    /* Stylistic Issues http://eslint.org/docs/rules/#stylistic-issues */
+    "indent": [2, 2], /* two-space indentation */
+  },
+}
