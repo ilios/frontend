@@ -21,6 +21,10 @@ export default DS.Model.extend({
     async: true,
     inverse: 'directedSchools'
   }),
+  administrators: DS.hasMany('user', {
+    async: true,
+    inverse: 'administeredSchools'
+  }),
   cohorts: computed('programs.@each.programYears', {
     get(){
       return this.get('store').query('cohort', {
