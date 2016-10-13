@@ -5,26 +5,23 @@ module.exports = function(deployTarget) {
   var ENV = {
     build: {},
     exclude: ['.DS_Store', '*-test.js'],
+    s3: {
+      acl: 'public-read',
+      region: 'us-west-2',
+      bucket: 'ilios-frontend-assets'
+    },
+    's3-index': {
+      region: 'us-west-2',
+      filePattern: 'index.json',
+      bucket: 'frontend-json-config',
+    },
     'revision-data': {
       type: 'git-commit',
+    },
+    gzip: {
+      //dont gzip the json index file
+      ignorePattern: '**/index.json'
     }
-  };
-
-  ENV.s3 = {
-    acl: 'public-read',
-    region: 'us-west-2',
-    bucket: 'ilios-frontend-assets'
-  };
-
-  ENV['s3-index'] = {
-    region: 'us-west-2',
-    filePattern: 'index.json',
-    bucket: 'frontend-json-config',
-  };
-
-  ENV.gzip = {
-    //dont gzip the json index file
-    ignorePattern: '**/index.json'
   };
 
   if (deployTarget === 'staging') {
