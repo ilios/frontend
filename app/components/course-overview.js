@@ -23,6 +23,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
   editable: not('course.locked'),
+  universalLocator: 'ILIOS',
   init(){
     this._super(...arguments);
     this.get('store').findAll('course-clerkship-type').then(clerkshipTypes => {

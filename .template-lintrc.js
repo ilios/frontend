@@ -1,11 +1,12 @@
 /* eslint-env node */
 'use strict';
 
+var defaultAllowedBaseStrings = ['(', ')', ',', '.', '&', '+', '-', '=', '*', '/', '#', '%', '!', '?', ':', '[', ']', '{', '}', '<', '>', '•', '—', ' ', '|'];
+
 module.exports = {
   extends: 'recommended',
-
   rules: {
-    'bare-strings': false,
+    'bare-strings': ['?', '»', '&mdash;'].concat(defaultAllowedBaseStrings),
     'block-indentation': false,
     'html-comments': false,
     'nested-interactive': false,
