@@ -4,7 +4,10 @@ module.exports = function(deployTarget) {
   const API_VERSION = 'v1.12';
   var ENV = {
     build: {},
-    exclude: ['.DS_Store', '*-test.js']
+    exclude: ['.DS_Store', '*-test.js'],
+    'revision-data': {
+      type: 'git-commit',
+    }
   };
 
   ENV.s3 = {
