@@ -213,7 +213,7 @@ test('manage competencies', function(assert) {
     assert.equal(tds.length, 3);
     click('.link', tds.eq(1));
     andThen(function() {
-      assert.equal(getElementText(find('.specific-title')), 'SelectObjectiveCompetency');
+      assert.equal(getElementText(find('.specific-title')), 'SelectParentCompetencyforObjective');
       let objectiveManager = find('.objective-manage-competency').eq(0);
       assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText('objective 0'));
       assert.equal(getElementText(find('.parent-picker', objectiveManager)), getText('competency0 competency1 competency2 competency3 competency4'));
