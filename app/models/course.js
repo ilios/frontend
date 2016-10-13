@@ -20,7 +20,14 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   archived: DS.attr('boolean'),
   clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
   school: DS.belongsTo('school', {async: true}),
-  directors: DS.hasMany('user', {async: true}),
+  directors: DS.hasMany('user', {
+    async: true,
+    inverse: 'directedCourses'
+  }),
+  administrators: DS.hasMany('user', {
+    async: true,
+    inverse: 'administeredCourses'
+  }),
   cohorts: DS.hasMany('cohort', {async: true}),
   objectives: DS.hasMany('objective', {async: true}),
   meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),

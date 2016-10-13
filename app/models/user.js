@@ -23,7 +23,14 @@ var User = DS.Model.extend({
   reports: DS.hasMany('report', {async: true}),
   school: DS.belongsTo('school', {async: true}),
   authentication: DS.belongsTo('authentication', {async: true}),
-  directedCourses: DS.hasMany('course', {async: true}),
+  directedCourses: DS.hasMany('course', {
+    async: true,
+    inverse: 'directors'
+  }),
+  administeredCourses: DS.hasMany('course', {
+    async: true,
+    inverse: 'administrators'
+  }),
   learnerGroups: DS.hasMany('learner-group', {
     async: true,
     inverse: 'users'
