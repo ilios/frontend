@@ -10,6 +10,8 @@ export default Component.extend({
   currentUser: service(),
   isMenuVisible: false,
   ciEnabled: config.IliosFeatures.curriculumInventory,
+  //untranslated temporary string
+  beta: 'beta',
   permissions: computed('currentUser.model.roles.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser.model').then(user => {
