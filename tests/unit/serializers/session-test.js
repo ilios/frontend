@@ -13,6 +13,7 @@ moduleForModel('session', 'Unit | Serializer | Session ', {
     'model:session-description',
     'model:session-learning-material',
     'model:offering',
+    'model:user',
   ]
 });
 
