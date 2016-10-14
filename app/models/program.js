@@ -13,6 +13,10 @@ export default DS.Model.extend(PublishableModel,{
     async: true,
     inverse: 'program'
   }),
+  directors: DS.hasMany('user', {
+    async: true,
+    inverse: 'directedPrograms'
+  }),
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
 
   cohorts: computed('programYears.[]', function() {

@@ -22,6 +22,7 @@ moduleForModel('curriculum-inventory-export', 'Unit | Serializer | curriculum in
     'model:pending-user-update',
     'model:permission',
     'model:session',
+    'model:program',
     'serializer:curriculum-inventory-export',
   ]
 });
