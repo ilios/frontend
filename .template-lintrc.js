@@ -7,7 +7,7 @@ module.exports = {
   extends: 'recommended',
   rules: {
     'bare-strings': ['?', '»', '&mdash;'].concat(defaultAllowedBaseStrings),
-    'block-indentation': false,
+    'block-indentation': true,
     'html-comments': false,
     'nested-interactive': false,
     'self-closing-void-elements': false,

@@ -1,14 +1,14 @@
 <div class='detail-header'>
   <span class='title'>
     {{#if program}}
-        {{#editable-field
+      {{#editable-field
         tagName='h2'
         value=programTitle
         save=(action 'changeTitle')
         close=(action 'revertTitleChanges')
         as |isSaving save close|
-        }}
-          {{one-way-input
+      }}
+        {{one-way-input
           value=programTitle
           update=(action (mut programTitle))
           onenter=save
@@ -16,11 +16,11 @@
           disabled=isSaving
           focusOut=(action 'addErrorDisplayFor' 'programTitle')
           keyPress=(action 'addErrorDisplayFor' 'programTitle')
-          }}
-          {{#if (and (v-get this 'programTitle' 'isInvalid') (is-in showErrorsFor 'programTitle'))}}
-              <span class="validation-error-message">{{v-get this 'programTitle' 'message'}}</span>
-          {{/if}}
-        {{/editable-field}}
+        }}
+        {{#if (and (v-get this 'programTitle' 'isInvalid') (is-in showErrorsFor 'programTitle'))}}
+          <span class="validation-error-message">{{v-get this 'programTitle' 'message'}}</span>
+        {{/if}}
+      {{/editable-field}}
     {{/if}}
   </span>
   <span class ='actions'>

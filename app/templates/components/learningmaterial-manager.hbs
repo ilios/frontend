@@ -83,11 +83,11 @@
     <div class="form-col-12">
       <label class="form-label">{{t 'general.copyrightPermission'}}:</label>
       <div class="form-data">
-      {{#if learningMaterial.learningMaterial.copyrightPermission}}
-        <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
-      {{else}}
-        <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
-      {{/if}}
+        {{#if learningMaterial.learningMaterial.copyrightPermission}}
+          <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
+        {{else}}
+          <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
+        {{/if}}
       </div>
     </div>
   {{/if}}
@@ -100,38 +100,38 @@
     </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.isCitation}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.citation'}}:</label>
-    <div class="form-data">
-      <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.citation'}}:</label>
+      <div class="form-data">
+        <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
+      </div>
     </div>
-  </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.isLink}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.link'}}:</label>
-    <div class="form-data weblink">
-      <span class='link'>
-        <a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a>
-        {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
-          {{fa-icon 'copy'}}
-        {{/copy-button}}
-      </span>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.link'}}:</label>
+      <div class="form-data weblink">
+        <span class='link'>
+          <a href="{{learningMaterial.learningMaterial.link}}" target="_blank">{{learningMaterial.learningMaterial.link}}</a>
+          {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
+            {{fa-icon 'copy'}}
+          {{/copy-button}}
+        </span>
+      </div>
     </div>
-  </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.isFile}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.file'}}:</label>
-    <div class="form-data filename">
-      <span class='downloadurl'>
-        <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank">{{learningMaterial.learningMaterial.filename}}</a>
-        {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
-          {{fa-icon 'copy'}}
-        {{/copy-button}}
-      </span>
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.file'}}:</label>
+      <div class="form-data filename">
+        <span class='downloadurl'>
+          <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank">{{learningMaterial.learningMaterial.filename}}</a>
+          {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
+            {{fa-icon 'copy'}}
+          {{/copy-button}}
+        </span>
+      </div>
     </div>
-  </div>
   {{/if}}
   <div class="form-col-12">
     <label class="form-label">{{t 'general.uploadDate'}}:</label>

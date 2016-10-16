@@ -1,5 +1,5 @@
 {{#if targetItemTitle}}
- <h2>{{t 'general.selectMeshFor' title=targetItemTitle}}</h2>
+  <h2>{{t 'general.selectMeshFor' title=targetItemTitle}}</h2>
 {{/if}}
 <ul class='removable-list tag-list details-list'>
   {{#each sortedTerms as |term|}}
@@ -14,7 +14,7 @@
         </span>
       </div>
       {{fa-icon 'remove'}}
-      </li>
+    </li>
   {{/each}}
 </ul>
 {{search-box placeholder=(t 'general.meshSearchPlaceholder') liveSearch=false search=(action 'search') clear=(action 'clear')}}
@@ -47,7 +47,7 @@
         {{/each}}
       </ul>
       {{#if hasMoreSearchResults }}
-          <button {{action 'searchMore'}}>{{t 'general.showMore' }}</button>
+        <button {{action 'searchMore'}}>{{t 'general.showMore' }}</button>
       {{/if}}
     </div>
   {{else}}

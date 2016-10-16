@@ -91,22 +91,21 @@
               <td class='text-center' colspan=2>{{lmProxy.learningMaterial.type}}</td>
               <td class='text-center' colspan=2>{{lmProxy.learningMaterial.owningUser.fullName}}</td>
               <td class='text-center' colspan=2>
-      	        {{#if lmProxy.required}}
-      	          <span class='add'>{{t 'general.yes'}}</span>
-      	        {{else}}
+                {{#if lmProxy.required}}
+                  <span class='add'>{{t 'general.yes'}}</span>
+                {{else}}
                   <span class='remove'>{{t 'general.no'}}</span>
                 {{/if}}
               </td>
               <td class='text-center' colspan=2>
                 {{#if lmProxy.notes}}
-      	          <span class='add'>{{t 'general.yes'}}</span>
-
+                  <span class='add'>{{t 'general.yes'}}</span>
                   {{#if lmProxy.publicNotes}}
                     {{fa-icon 'eye'}}
                   {{/if}}
-      	        {{else}}
-      	          <span class='remove'>{{t 'general.no'}}</span>
-      	        {{/if}}
+                {{else}}
+                  <span class='remove'>{{t 'general.no'}}</span>
+                {{/if}}
               </td>
               <td class='text-center' colspan=2>
                 {{#if lmProxy.sortedDescriptors.length}}
@@ -138,15 +137,17 @@
             </tr>
 
             {{#if lmProxy.showRemoveConfirmation}}
-              <tr class='confirm-removal'><td colspan=16>
-                <div class='confirm-message'>
-                  {{t 'general.confirmRemoval'}}<br />
-                  <div class="confirm-buttons">
-                    <button {{action 'remove' lmProxy}} class='remove text'>{{t 'general.yes'}}</button>
-                    <button {{action 'cancelRemove' lmProxy}} class='done text'>{{t 'general.cancel'}}</button>
+              <tr class='confirm-removal'>
+                <td colspan=16>
+                  <div class='confirm-message'>
+                    {{t 'general.confirmRemoval'}}<br />
+                    <div class="confirm-buttons">
+                      <button {{action 'remove' lmProxy}} class='remove text'>{{t 'general.yes'}}</button>
+                      <button {{action 'cancelRemove' lmProxy}} class='done text'>{{t 'general.cancel'}}</button>
+                    </div>
                   </div>
-                </div>
-              </td></tr>
+                </td>
+              </tr>
             {{/if}}
           {{/each}}
         </tbody>

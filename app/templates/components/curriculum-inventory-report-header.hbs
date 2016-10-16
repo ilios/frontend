@@ -32,11 +32,10 @@
       {{else}}
         {{fa-icon 'download'}}
       {{/if}}
-        {{t 'general.download'}}
+      {{t 'general.download'}}
     </button>
   </a>
   {{#unless isFinalized}}
     <button {{action 'finalize'}} >{{t 'general.finalize'}}</button>
   {{/unless}}
 </div>
-

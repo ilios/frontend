@@ -1,9 +1,9 @@
 <section class='newinstructorgroup new-instructor-group new-result form-container'>
-    <div class="new-result-title">{{t 'general.newInstructorGroup'}}</div>
-    <div class="detail-content">
-	  <div class="form-col-12">
-	    <label class="form-label">{{t 'general.title'}}</label>
-	    <div class="form-data newinstructorgroup-title">
+  <div class="new-result-title">{{t 'general.newInstructorGroup'}}</div>
+  <div class="detail-content">
+    <div class="form-col-12">
+      <label class="form-label">{{t 'general.title'}}</label>
+      <div class="form-data newinstructorgroup-title">
         {{one-way-input
           value=title
           update=(action (mut title))
@@ -18,8 +18,8 @@
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
         {{/if}}
       </div>
-	  </div>
-	  <div class="form-col-6 form-data-submit">
+    </div>
+    <div class="form-col-6 form-data-submit">
       <button class='done text' {{action 'save'}}>
         {{#if isSaving}}
           {{fa-icon 'spinner' spin=true}}
@@ -27,7 +27,7 @@
           {{t 'general.done'}}
         {{/if}}
       </button>
-	    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-	  </div>
+      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
     </div>
+  </div>
 </section>

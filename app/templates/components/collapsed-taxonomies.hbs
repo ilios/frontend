@@ -1,28 +1,28 @@
 <div class='title' {{action (action this.attrs.expand)}}>
-    {{t 'general.terms'}} ({{subject.terms.length}})
+  {{t 'general.terms'}} ({{subject.terms.length}})
 </div>
 {{#if subject.associatedVocabularies.isPending}}
-    <h3>{{fa-icon 'spinner' spin=true}}</h3>
+  <h3>{{fa-icon 'spinner' spin=true}}</h3>
 {{/if}}
 {{#unless subject.associatedVocabularies.isPending}}
-    <div class='content'>
-        <table class='condensed'>
-            <thead>
-                <tr>
-                    <th class='text-left'>{{t 'general.vocabulary'}}</th>
-                    <th class='text-center'>{{t 'general.school'}}</th>
-                    <th class='text-center'>{{t 'general.assignedTerms'}}</th>
-                </tr>
-            </thead>
-            <tbody>
-            {{#each subject.associatedVocabularies as |vocab| }}
-                <tr>
-                    <td class='text-left'>{{vocab.title}}</td>
-                    <td class='text-center'>{{vocab.school.title}}</td>
-                    <td class='text-center'>{{intersection-count subject.terms vocab.terms}}</td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    </div>
+  <div class='content'>
+    <table class='condensed'>
+      <thead>
+        <tr>
+          <th class='text-left'>{{t 'general.vocabulary'}}</th>
+          <th class='text-center'>{{t 'general.school'}}</th>
+          <th class='text-center'>{{t 'general.assignedTerms'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each subject.associatedVocabularies as |vocab| }}
+          <tr>
+            <td class='text-left'>{{vocab.title}}</td>
+            <td class='text-center'>{{vocab.school.title}}</td>
+            <td class='text-center'>{{intersection-count subject.terms vocab.terms}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 {{/unless}}

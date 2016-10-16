@@ -14,7 +14,9 @@
           type='text'
           onChange={{action "changeValue" value="target.value"}}
           oninput={{action "changeValue" value="target.value"}}
-          class="{{if topErrorMessage 'has-error'}}">{{value}}</textarea>
+          class="{{if topErrorMessage 'has-error'}}">
+          {{value}}
+        </textarea>
       </span>
       <span class='actions'>
         <button class='done icon' title='{{t 'general.save'}}' {{action 'save'}}>{{fa-icon 'check'}}</button>

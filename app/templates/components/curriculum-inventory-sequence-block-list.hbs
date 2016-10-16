@@ -1,15 +1,15 @@
 {{#unless loadAttr.running}}
-<section class='detail-block'>
-  <div class='detail-title'>
-    {{t 'general.sequenceBlocks'}} ({{sortedBlocks.length}})
-  </div>
+  <section class='detail-block'>
+    <div class='detail-title'>
+      {{t 'general.sequenceBlocks'}} ({{sortedBlocks.length}})
+    </div>
 
-  <div class='detail-actions'>
-    {{#unless report.isFinalized}}
-      {{expand-collapse-button value=editorOn action="toggleEditor"}}
-    {{/unless}}
-  </div>
-  <section class='resultslist'>
+    <div class='detail-actions'>
+      {{#unless report.isFinalized}}
+        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+      {{/unless}}
+    </div>
+    <section class='resultslist'>
       <section class='resultslist-new'>
         {{#liquid-if editorOn class='vertical'}}
           {{new-curriculum-inventory-sequence-block
@@ -28,94 +28,94 @@
           </div>
         {{/if}}
       </section>
-    {{#if (is-fulfilled sortedBlocks)}}
-      {{#if sortedBlocks.length}}
-        <div class='resultslist-list'>
-          <table>
-            <thead>
-            <tr>
-              <th class='text-center' colspan=5>{{t 'general.sequenceBlock'}}</th>
-              <th class='text-center' colspan=1>{{t 'general.level'}}</th>
-              <th class='text-center' colspan=2>{{t 'general.sequenceNumber'}}</th>
-              <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
-              <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
-              <th class='text-center' colspan=2>{{t 'general.course'}}</th>
-              <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each sortedBlocks as |block|}}
-              <tr class="{{if block.showRemoveConfirmation 'confirm-removal'}}">
-                <td class='text-left' colspan=5>
-                  {{#link-to 'curriculumInventorySequenceBlock' block.content}}
-                    {{block.title}}
-                  {{/link-to}}
-                </td>
-                <td class='text-center' colspan=1>{{block.academicLevel.level}}</td>
-                <td class='text-center' colspan=2>
-                  {{#if isInOrderedSequence}}
-                      {{block.orderInSequence}}
-                  {{else}}
-                      {{t 'general.notApplicableAbbr'}}
-                  {{/if}}
-                 </td>
-                <td class='text-center' colspan=2>
-                  {{#if block.startDate}}
-                    {{moment-format block.startDate 'MM/DD/YY'}}
-                  {{else}}
-                      {{t 'general.notApplicableAbbr'}}
-                  {{/if}}
-                </td>
-                <td class='text-center' colspan=2>
-                  {{#if block.endDate}}
-                    {{moment-format block.endDate 'MM/DD/YY'}}
-                  {{else}}
-                    {{t 'general.notApplicableAbbr'}}
-                  {{/if}}
-                </td>
-                <td class='text-center' colspan=2>
-                  {{#if block.course}}
-                    {{block.course.title}}
-                  {{else}}
-                      {{t 'general.notApplicableAbbr'}}
-                  {{/if}}
-                </td>
-                <td class='text-center' colspan=1>
-                  {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
-                    {{fa-icon 'edit'}}
-                  {{/link-to}}
-                  {{#unless report.isFinalized}}
-                    <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
-                  {{/unless}}
-                </td>
-              </tr>
-              {{#if block.showRemoveConfirmation}}
-                <tr class='confirm-removal'>
-                  <td colspan=15>
-                    <div class='confirm-message'>
-                      {{t 'general.sequenceBlockConfirmRemove'}} <br/>
-                      <div class="confirm-buttons">
-                        <button {{action 'remove' block}} class='remove text'>{{t 'general.yes'}}</button>
-                        <button {{action 'cancelRemove' block}} class='done text'>{{t 'general.cancel'}}</button>
-                      </div>
-                    </div>
-                  </td>
+      {{#if (is-fulfilled sortedBlocks)}}
+        {{#if sortedBlocks.length}}
+          <div class='resultslist-list'>
+            <table>
+              <thead>
+                <tr>
+                  <th class='text-center' colspan=5>{{t 'general.sequenceBlock'}}</th>
+                  <th class='text-center' colspan=1>{{t 'general.level'}}</th>
+                  <th class='text-center' colspan=2>{{t 'general.sequenceNumber'}}</th>
+                  <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
+                  <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
+                  <th class='text-center' colspan=2>{{t 'general.course'}}</th>
+                  <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
                 </tr>
-              {{/if}}
-            {{/each}}
-            </tbody>
-          </table>
-        </div>
-      {{else}}
-        {{#if parent}}
-          <span class="default-message">{{t 'general.noSubSequenceBlocks'}}</span>
+              </thead>
+              <tbody>
+                {{#each sortedBlocks as |block|}}
+                  <tr class="{{if block.showRemoveConfirmation 'confirm-removal'}}">
+                    <td class='text-left' colspan=5>
+                      {{#link-to 'curriculumInventorySequenceBlock' block.content}}
+                        {{block.title}}
+                      {{/link-to}}
+                    </td>
+                    <td class='text-center' colspan=1>{{block.academicLevel.level}}</td>
+                    <td class='text-center' colspan=2>
+                      {{#if isInOrderedSequence}}
+                        {{block.orderInSequence}}
+                      {{else}}
+                        {{t 'general.notApplicableAbbr'}}
+                      {{/if}}
+                    </td>
+                    <td class='text-center' colspan=2>
+                      {{#if block.startDate}}
+                        {{moment-format block.startDate 'MM/DD/YY'}}
+                      {{else}}
+                        {{t 'general.notApplicableAbbr'}}
+                      {{/if}}
+                    </td>
+                    <td class='text-center' colspan=2>
+                      {{#if block.endDate}}
+                        {{moment-format block.endDate 'MM/DD/YY'}}
+                      {{else}}
+                        {{t 'general.notApplicableAbbr'}}
+                      {{/if}}
+                    </td>
+                    <td class='text-center' colspan=2>
+                      {{#if block.course}}
+                        {{block.course.title}}
+                      {{else}}
+                        {{t 'general.notApplicableAbbr'}}
+                      {{/if}}
+                    </td>
+                    <td class='text-center' colspan=1>
+                      {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
+                        {{fa-icon 'edit'}}
+                      {{/link-to}}
+                      {{#unless report.isFinalized}}
+                        <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
+                      {{/unless}}
+                    </td>
+                  </tr>
+                  {{#if block.showRemoveConfirmation}}
+                    <tr class='confirm-removal'>
+                      <td colspan=15>
+                        <div class='confirm-message'>
+                          {{t 'general.sequenceBlockConfirmRemove'}} <br/>
+                          <div class="confirm-buttons">
+                            <button {{action 'remove' block}} class='remove text'>{{t 'general.yes'}}</button>
+                            <button {{action 'cancelRemove' block}} class='done text'>{{t 'general.cancel'}}</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  {{/if}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
         {{else}}
-          <span class="default-message">{{t 'general.noSequenceBlocks'}}</span>
+          {{#if parent}}
+            <span class="default-message">{{t 'general.noSubSequenceBlocks'}}</span>
+          {{else}}
+            <span class="default-message">{{t 'general.noSequenceBlocks'}}</span>
+          {{/if}}
         {{/if}}
+      {{else}}
+        <div>{{fa-icon 'spinner' spin=true}}</div>
       {{/if}}
-    {{else}}
-      <div>{{fa-icon 'spinner' spin=true}}</div>
-    {{/if}}
+    </section>
   </section>
-</section>
 {{/unless}}

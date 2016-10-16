@@ -20,11 +20,11 @@
 </div>
 <div class='detail-cohorts-content'>
   {{#if isManaging class="horizontal"}}
-      {{detail-cohort-manager
-        selectedCohorts=bufferedCohorts
-        add='addCohortToBuffer'
-        remove='removeCohortFromBuffer'
-      }}
+    {{detail-cohort-manager
+      selectedCohorts=bufferedCohorts
+      add='addCohortToBuffer'
+      remove='removeCohortFromBuffer'
+    }}
   {{else}}
     {{detail-cohort-list
       cohorts=course.cohorts

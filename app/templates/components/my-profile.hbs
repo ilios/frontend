@@ -44,7 +44,7 @@
             {{t 'general.excludeFromSync'}}
           </span>
         </div>
-    {{/if}}
+      {{/if}}
     </div>
   </section>
 
@@ -90,11 +90,11 @@
       <span class='title'>{{t 'general.learnerGroups'}}:</span>
       <span class='content'>
         {{#if (await user.learnerGroups)}}
-        <ul class="secondary-cohorts details-list">
-          {{#each (sort-by 'title' (await user.learnerGroups)) as |group|}}
-            <li>{{group.title}} ({{group.cohort.title}} {{group.cohort.programYear.program.title}})</li>
-          {{/each}}
-        </ul>
+          <ul class="secondary-cohorts details-list">
+            {{#each (sort-by 'title' (await user.learnerGroups)) as |group|}}
+              <li>{{group.title}} ({{group.cohort.title}} {{group.cohort.programYear.program.title}})</li>
+            {{/each}}
+          </ul>
         {{else}}
           {{t 'general.unassigned'}}
         {{/if}}

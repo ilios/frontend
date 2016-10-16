@@ -27,52 +27,51 @@
     </tr>
   </thead>
   <tbody>
-  {{#each sortedReports as |report|}}
-    <tr class="{{if report.showRemoveConfirmation 'confirm-removal'}}">
-      <td class='text-left' colspan=4>
-        {{#link-to 'curriculumInventoryReport' report.content}}
-          {{report.name}}
-        {{/link-to}}
-      </td>
-      <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.program.title}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.yearLabel}}</td>
-      <td class='text-center'
-        colspan=2 {{action 'edit' report}}>{{moment-format report.startDate 'MM/DD/YY'}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.endDate 'MM/DD/YY'}}</td>
-      <td class='text-center' colspan=2 {{action 'edit' report}}>
-        {{#if report.isFinalized}}{{fa-icon 'lock'}}{{/if}}
-        {{publication-status
-          publishedLangKey='general.finalized'
-          notPublishedLangKey='general.draft'
-          item=report
-          showIcon=false
-        }}
-      </td>
-      <td class='text-center report-actions' colspan=2>
-        {{#link-to 'curriculumInventoryReport' report.content}}
-          {{fa-icon 'edit'}}
-        {{/link-to}}
-        <span>
-          <a href="{{report.content.absoluteFileUri}}" download="report.xml" target="_blank">{{fa-icon 'download'}}</a>
-        </span>
-        {{#unless report.isFinalized}}
-          <span class='clickable remove' {{action 'confirmRemove' report}}>{{fa-icon 'trash'}}</span>
-        {{/unless}}
-      </td>
-    </tr>
-    {{#if report.showRemoveConfirmation}}
-      <tr class='confirm-removal'>
-        <td colspan=16>
-          <div class='confirm-message'>
-            {{t 'general.reportConfirmRemove'}} <br/>
-            <div class="confirm-buttons">
-              <button {{action 'remove' report}} class='remove text'>{{t 'general.yes'}}</button>
-              <button {{action 'cancelRemove' report}} class='done text'>{{t 'general.cancel'}}</button>
-            </div>
-          </div>
+    {{#each sortedReports as |report|}}
+      <tr class="{{if report.showRemoveConfirmation 'confirm-removal'}}">
+        <td class='text-left' colspan=4>
+          {{#link-to 'curriculumInventoryReport' report.content}}
+            {{report.name}}
+          {{/link-to}}
+        </td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.program.title}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.yearLabel}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.startDate 'MM/DD/YY'}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.endDate 'MM/DD/YY'}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>
+          {{#if report.isFinalized}}{{fa-icon 'lock'}}{{/if}}
+          {{publication-status
+            publishedLangKey='general.finalized'
+            notPublishedLangKey='general.draft'
+            item=report
+            showIcon=false
+          }}
+        </td>
+        <td class='text-center report-actions' colspan=2>
+          {{#link-to 'curriculumInventoryReport' report.content}}
+            {{fa-icon 'edit'}}
+          {{/link-to}}
+          <span>
+            <a href="{{report.content.absoluteFileUri}}" download="report.xml" target="_blank">{{fa-icon 'download'}}</a>
+          </span>
+          {{#unless report.isFinalized}}
+            <span class='clickable remove' {{action 'confirmRemove' report}}>{{fa-icon 'trash'}}</span>
+          {{/unless}}
         </td>
       </tr>
-    {{/if}}
-  {{/each}}
+      {{#if report.showRemoveConfirmation}}
+        <tr class='confirm-removal'>
+          <td colspan=16>
+            <div class='confirm-message'>
+              {{t 'general.reportConfirmRemove'}} <br/>
+              <div class="confirm-buttons">
+                <button {{action 'remove' report}} class='remove text'>{{t 'general.yes'}}</button>
+                <button {{action 'cancelRemove' report}} class='done text'>{{t 'general.cancel'}}</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      {{/if}}
+    {{/each}}
   </tbody>
 </table>

@@ -15,9 +15,9 @@
         <div class='actions'>
           {{#if (eq update.type 'emailMismatch')}}
             <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
-            {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
-            {{t 'general.pendingUserUpdates.updateIlios'}}
-          </span>
+              {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
+              {{t 'general.pendingUserUpdates.updateIlios'}}
+            </span>
           {{/if}}
           <span class='clickable link' onclick={{action 'excludeFromSync' update}}>
             {{fa-icon 'ban' class='no' title=(t 'general.excludeFromSync')}}

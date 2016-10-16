@@ -158,19 +158,19 @@
 {{/if}}
 
 <section class='fullwidth ilios-calendar-container'>
-    {{ilios-calendar
-      calendarEventsPromise=filteredEvents
-      selectedDate=calendarDate
-      selectedView=selectedView
-      changeDate='changeDate'
-      changeView='changeView'
-      selectEvent='selectEvent'
-      day=dayTranslation
-      week=weekTranslation
-      month=monthTranslation
-      dueThisDay=dueTranslation
-      loadingMessage=loadingEventsTranslation
-      icsFeedUrl=currentUser.model.absoluteIcsUri
-      icsInstructions=icsInstructionsTranslation
-    }}
+  {{ilios-calendar
+    calendarEventsPromise=filteredEvents
+    selectedDate=calendarDate
+    selectedView=selectedView
+    changeDate='changeDate'
+    changeView='changeView'
+    selectEvent='selectEvent'
+    day=dayTranslation
+    week=weekTranslation
+    month=monthTranslation
+    dueThisDay=dueTranslation
+    loadingMessage=loadingEventsTranslation
+    icsFeedUrl=currentUser.model.absoluteIcsUri
+    icsInstructions=icsInstructionsTranslation
+  }}
 </section>

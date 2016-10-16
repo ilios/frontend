@@ -11,8 +11,8 @@
   <div class='detail-actions'>
     {{#if editable}}
       {{#if isManaging}}
-          <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-          <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+        <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
       {{else}}
         <button {{action 'manage'}}>{{t 'general.stewardsManageTitle'}}</button>
       {{/if}}
@@ -20,15 +20,16 @@
   </div>
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
-        {{detail-steward-manager
-          stewards=bufferStewards
-          add='addStewardToBuffer'
-          remove='removeStewardFromBuffer'
-        }}
+      {{detail-steward-manager
+        stewards=bufferStewards
+        add='addStewardToBuffer'
+        remove='removeStewardFromBuffer'
+      }}
     {{else}}
       <ul class='static-list'>
         {{#each stewardsBySchool as |schoolProxy|}}
-          <li>{{schoolProxy.title}}
+          <li>
+            {{schoolProxy.title}}
             {{#if schoolProxy.stewardingDepartments.length}}
               <ul>
                 {{#each schoolProxy.stewardingDepartments as |department|}}
