@@ -11,18 +11,18 @@
       </thead>
       <tbody>
         {{#each sortedCohorts as |cohort|}}
-        <tr>
-          <td class='text-left'>{{cohort.programYear.program.school.title}}</td>
-          <td class='text-left'>{{cohort.programYear.program.title}}</td>
-          <td class='text-center'>
-            {{#if cohort.title}}
-              {{cohort.title}}
-            {{else}}
-              {{t 'general.classOf' year = cohort.programYear.classOfYear}}
-            {{/if}}
-          </td>
-          <td class='text-center'>{{cohort.currentLevel}}</td>
-        </tr>
+          <tr>
+            <td class='text-left'>{{cohort.programYear.program.school.title}}</td>
+            <td class='text-left'>{{cohort.programYear.program.title}}</td>
+            <td class='text-center'>
+              {{#if cohort.title}}
+                {{cohort.title}}
+              {{else}}
+                {{t 'general.classOf' year = cohort.programYear.classOfYear}}
+              {{/if}}
+            </td>
+            <td class='text-center'>{{cohort.currentLevel}}</td>
+          </tr>
         {{/each}}
       </tbody>
     </table>

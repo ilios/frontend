@@ -18,7 +18,7 @@
     <div id="vocabulary-selection" class="inline-data">
       <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
         {{#each subject.assignableVocabularies as |vocab|}}
-            <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
+          <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
         {{/each}}
       </select>
     </div>
@@ -27,5 +27,3 @@
     {{selectable-terms-list selectedTerms=selectedTerms terms=selectedVocabulary.topLevelTerms add='add' remove='remove'}}
   </div>
 {{/if}}
-
-

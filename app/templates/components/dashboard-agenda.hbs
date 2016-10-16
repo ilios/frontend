@@ -22,25 +22,25 @@
             </tr>
           {{/if}}
           {{#unless event.isBlanked}}
-              <tr>
-                <td class='event-date'>
-                  {{#link-to 'events' event.slug}}
-                    {{fa-icon 'external-link-square'}}
-                    {{#if event.ilmSession}}
-                      <span class='ilm-due'>{{t 'general.dueBy'}}: </span>
-                    {{/if}}
-                    {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}
-                  {{/link-to}}
-                </td>
-                <td>
+            <tr>
+              <td class='event-date'>
+                {{#link-to 'events' event.slug}}
+                  {{fa-icon 'external-link-square'}}
                   {{#if event.ilmSession}}
-                    <strong>{{t 'general.ilm'}}: </strong>
+                    <span class='ilm-due'>{{t 'general.dueBy'}}: </span>
                   {{/if}}
-                  {{event.name}}
-                </td>
-                <td>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
-                <td>{{recently-updated-display lastModified=event.lastModified}}</td>
-              </tr>
+                  {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}
+                {{/link-to}}
+              </td>
+              <td>
+                {{#if event.ilmSession}}
+                  <strong>{{t 'general.ilm'}}: </strong>
+                {{/if}}
+                {{event.name}}
+              </td>
+              <td>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
+              <td>{{recently-updated-display lastModified=event.lastModified}}</td>
+            </tr>
           {{/unless}}
         {{/each}}
       </tbody>

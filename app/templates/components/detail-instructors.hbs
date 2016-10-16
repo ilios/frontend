@@ -10,23 +10,23 @@
 
 <div class='actions'>
   {{#if isManaging}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if editable}}
     <button {{action 'manage'}}>{{t 'general.instructorsManageTitle'}}</button>
   {{/if}}
 </div>
 <div class='detail-instructors-content'>
   {{#if isManaging class="horizontal"}}
-      {{instructor-selection-manager
-        addInstructor='addInstructorToBuffer'
-        addInstructorGroup='addInstructorGroupToBuffer'
-        removeInstructor='removeInstructorFromBuffer'
-        removeInstructorGroup='removeInstructorGroupFromBuffer'
-        availableInstructorGroups=currentUser.model.school.instructorGroups
-        instructorGroups=instructorGroupBuffer
-        instructors=instructorBuffer
-      }}
+    {{instructor-selection-manager
+      addInstructor='addInstructorToBuffer'
+      addInstructorGroup='addInstructorGroupToBuffer'
+      removeInstructor='removeInstructorFromBuffer'
+      removeInstructorGroup='removeInstructorGroupFromBuffer'
+      availableInstructorGroups=currentUser.model.school.instructorGroups
+      instructorGroups=instructorGroupBuffer
+      instructors=instructorBuffer
+    }}
   {{else}}
     {{detail-instructors-list
       instructorGroups=ilmSession.instructorGroups

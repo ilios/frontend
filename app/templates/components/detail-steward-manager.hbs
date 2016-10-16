@@ -21,7 +21,8 @@
 <section class='halfwidth'>
   <ul class='tree-list selectable'>
     {{#each availableSchools as |schoolProxy|}}
-      <li {{action 'addSchool' schoolProxy}}>{{schoolProxy.title}}
+      <li {{action 'addSchool' schoolProxy}}>
+        {{schoolProxy.title}}
         <ul>
           {{#each schoolProxy.departments as |department|}}
             <li {{action 'addDepartment' schoolProxy department}}>{{department.title}}</li>

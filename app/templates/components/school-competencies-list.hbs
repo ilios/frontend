@@ -1,6 +1,7 @@
 <ul class='static-list'>
   {{#each domains as |domain|}}
-    <li>{{domain.title}}
+    <li>
+      {{domain.title}}
       <ul>
         {{#each domain.children as |competency|}}
           <li>{{competency.title}}</li>

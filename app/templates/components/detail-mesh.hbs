@@ -10,19 +10,19 @@
 
 <div class='actions'>
   {{#if isManaging}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if editable}}
     <button {{action 'manage'}}>{{t 'general.meshManageTitle'}}</button>
   {{/if}}
 </div>
 <div class='content'>
   {{#if isManaging}}
-      {{mesh-manager
-        terms=bufferTerms
-        add='addTermToBuffer'
-        remove='removeTermFromBuffer'
-      }}
+    {{mesh-manager
+      terms=bufferTerms
+      add='addTermToBuffer'
+      remove='removeTermFromBuffer'
+    }}
   {{else}}
   <ul class='columnar-list'>
     {{#each sortedTerms as |term|}}

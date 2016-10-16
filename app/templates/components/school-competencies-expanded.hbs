@@ -1,7 +1,6 @@
 <section class='detail-block {{if showCollapsible "collapsible"}}'>
   {{#if isManaging}}
-      <div class='detail-title'>
-      </div>
+    <div class='detail-title'></div>
   {{else}}
     <div class='detail-title {{if showCollapsible "clickable"}}' {{action 'collapse'}}>
       {{t 'general.competencies'}} ({{allDomains.length}}/{{allCompetencies.length}})
@@ -9,21 +8,21 @@
   {{/if}}
   <div class='detail-actions'>
     {{#if isManaging}}
-        <button class='bigadd' {{action 'save'}}>
-          {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
-        </button>
-        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+      <button class='bigadd' {{action 'save'}}>
+        {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+      </button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       <button {{action 'manage'}}>{{t 'general.manageCompetencies'}}</button>
     {{/if}}
   </div>
   <div class='detail-content'>
     {{#liquid-if isManaging class="horizontal"}}
-        {{school-competencies-manager
-          competencies=bufferedCompetencies
-          add=(action 'addCompetencyToBuffer')
-          remove=(action 'removeCompetencyFromBuffer')
-        }}
+      {{school-competencies-manager
+        competencies=bufferedCompetencies
+        add=(action 'addCompetencyToBuffer')
+        remove=(action 'removeCompetencyFromBuffer')
+      }}
     {{else}}
       {{school-competencies-list
         competencies=school.competencies

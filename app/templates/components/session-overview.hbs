@@ -209,18 +209,18 @@
       <div class="sessionassociatedgroups">
         <label>{{t 'general.associatedGroups'}}:</label>
         <span>
-        {{#if session.associatedOfferingLearnerGroups.isFulfilled}}
-          <span>
-            {{#each session.associatedOfferingLearnerGroups as |group|}}
-              {{group.title}},
-            {{else}}
-              {{t 'general.none'}}
-            {{/each}}
-          </span>
-        {{else}}
-          {{loading-part}}
-        {{/if}}
-      </span>
+          {{#if session.associatedOfferingLearnerGroups.isFulfilled}}
+            <span>
+              {{#each session.associatedOfferingLearnerGroups as |group|}}
+                {{group.title}},
+              {{else}}
+                {{t 'general.none'}}
+              {{/each}}
+            </span>
+          {{else}}
+            {{loading-part}}
+          {{/if}}
+        </span>
       </div>
     {{/unless}}
   </div>

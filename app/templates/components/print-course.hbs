@@ -16,35 +16,35 @@
           {{t 'general.overview'}}
         </div>
         <div class='detail-content'>
-            <div class="inline-label-data-block">
-              <label>{{t 'general.start'}}:</label>
-              <div>{{moment-format course.startDate 'MM/DD/YYYY'}}</div>
-            </div>
-            <div class="inline-label-data-block">
-              <label>{{t 'general.externalId'}}:</label>
-              <div>{{course.externalId}}</div>
-            </div>
-            <div class="inline-label-data-block">
-              <label>{{t 'general.level'}}:</label>
-              <div>{{course.level}}</div>
-            </div>
-            <div class="inline-label-data-block">
-              <label>{{t 'general.end'}}:</label>
-              <div>{{moment-format course.endDate 'MM/DD/YYYY'}}</div>
-            </div>
-            <br />
-            <br />
+          <div class="inline-label-data-block">
+            <label>{{t 'general.start'}}:</label>
+            <div>{{moment-format course.startDate 'MM/DD/YYYY'}}</div>
+          </div>
+          <div class="inline-label-data-block">
+            <label>{{t 'general.externalId'}}:</label>
+            <div>{{course.externalId}}</div>
+          </div>
+          <div class="inline-label-data-block">
+            <label>{{t 'general.level'}}:</label>
+            <div>{{course.level}}</div>
+          </div>
+          <div class="inline-label-data-block">
+            <label>{{t 'general.end'}}:</label>
+            <div>{{moment-format course.endDate 'MM/DD/YYYY'}}</div>
+          </div>
+          <br />
+          <br />
 
-            <div class="inline-label-data-block">
-              <label>{{t 'general.directors'}}:</label>
-              <div>
-                <span>
-                  {{#each sortedDirectors as |user|}}
-                    {{user.fullName}},
-                  {{/each}}
-                </span>
-              </div>
+          <div class="inline-label-data-block">
+            <label>{{t 'general.directors'}}:</label>
+            <div>
+              <span>
+                {{#each sortedDirectors as |user|}}
+                  {{user.fullName}},
+                {{/each}}
+              </span>
             </div>
+          </div>
         </div>
       </section>
 
@@ -54,17 +54,18 @@
         </div>
         <div class='detail-content'>
           {{#if course.competencies.isFulfilled}}
-          <ul class='static-list'>
-            {{#each course.domains as |domain|}}
-              <li>{{domain.title}}
-                <ul>
-                  {{#each domain.subCompetencies as |competency|}}
-                    <li>{{competency.title}}</li>
-                  {{/each}}
-                </ul>
-              </li>
-            {{/each}}
-          </ul>
+            <ul class='static-list'>
+              {{#each course.domains as |domain|}}
+                <li>
+                  {{domain.title}}
+                  <ul>
+                    {{#each domain.subCompetencies as |competency|}}
+                      <li>{{competency.title}}</li>
+                    {{/each}}
+                  </ul>
+                </li>
+              {{/each}}
+            </ul>
           {{else}}
             {{loading-part}}
           {{/if}}
@@ -77,9 +78,9 @@
         </div>
 
         <div class='detail-content'>
-            {{#each course.associatedVocabularies as |vocab|}}
-              {{detail-terms-list vocabulary=vocab terms=course.terms canEdit=false}}
-            {{/each}}
+          {{#each course.associatedVocabularies as |vocab|}}
+            {{detail-terms-list vocabulary=vocab terms=course.terms canEdit=false}}
+          {{/each}}
         </div>
       </section>
 
@@ -102,36 +103,36 @@
           {{t 'general.learningMaterials'}} ({{courseLearningMaterials.length}})
         </div>
         <div class='detail-content'>
-         {{#if courseLearningMaterials.length}}
-         <table>
-            <thead>
-              <tr>
-                <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
-                <th class='text-center'>{{t 'general.type'}}</th>
-                <th class='text-center'>{{t 'general.required'}}</th>
-                <th class='text-left'>{{t 'general.notes'}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each courseLearningMaterials as |lm|}}
+          {{#if courseLearningMaterials.length}}
+            <table>
+              <thead>
                 <tr>
-                  <td class='text-left' colspan=2>
-                    {{lm.learningMaterial.title}}
-                  </td>
-                  <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                  <td class='text-center'>
-        	        {{#if lm.required}}
-        	          <span class='add'>{{t 'general.yes'}}</span>
-        	        {{else}}
-        	          <span class='remove'>{{t 'general.no'}}</span>
-        	        {{/if}}
-      	        </td>
-                  <td class='text-left'>{{lm.learningMaterial.notes}}</td>
+                  <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
+                  <th class='text-center'>{{t 'general.type'}}</th>
+                  <th class='text-center'>{{t 'general.required'}}</th>
+                  <th class='text-left'>{{t 'general.notes'}}</th>
                 </tr>
-              {{/each}}
-            </tbody>
-          </table>
-         {{/if}}
+              </thead>
+              <tbody>
+                {{#each courseLearningMaterials as |lm|}}
+                  <tr>
+                    <td class='text-left' colspan=2>
+                      {{lm.learningMaterial.title}}
+                    </td>
+                    <td class='text-center'>{{lm.learningMaterial.type}}</td>
+                    <td class='text-center'>
+                      {{#if lm.required}}
+                        <span class='add'>{{t 'general.yes'}}</span>
+                      {{else}}
+                        <span class='remove'>{{t 'general.no'}}</span>
+                      {{/if}}
+                    </td>
+                    <td class='text-left'>{{lm.learningMaterial.notes}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{/if}}
         </div>
       </section>
 
@@ -210,36 +211,36 @@
           {{t 'general.learningMaterials'}} ({{session.sessionLearningMaterials.length}})
         </div>
         <div class='detail-content'>
-         {{#if session.sessionLearningMaterials.length}}
-         <table>
-            <thead>
-              <tr>
-                <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
-                <th class='text-center'>{{t 'general.type'}}</th>
-                <th class='text-center'>{{t 'general.required'}}</th>
-                <th class='text-left'>{{t 'general.notes'}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each session.sessionLearningMaterials as |lm|}}
+          {{#if session.sessionLearningMaterials.length}}
+            <table>
+              <thead>
                 <tr>
-                  <td class='text-left' colspan=2>
-                    {{lm.learningMaterial.title}}
-                  </td>
-                  <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                  <td class='text-center'>
-                  {{#if lm.required}}
-                    <span class='add'>{{t 'general.yes'}}</span>
-                  {{else}}
-                    <span class='remove'>{{t 'general.no'}}</span>
-                  {{/if}}
-                </td>
-                  <td class='text-left'>{{lm.learningMaterial.notes}}</td>
+                  <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
+                  <th class='text-center'>{{t 'general.type'}}</th>
+                  <th class='text-center'>{{t 'general.required'}}</th>
+                  <th class='text-left'>{{t 'general.notes'}}</th>
                 </tr>
-              {{/each}}
-            </tbody>
-          </table>
-         {{/if}}
+              </thead>
+              <tbody>
+                {{#each session.sessionLearningMaterials as |lm|}}
+                  <tr>
+                    <td class='text-left' colspan=2>
+                      {{lm.learningMaterial.title}}
+                    </td>
+                    <td class='text-center'>{{lm.learningMaterial.type}}</td>
+                    <td class='text-center'>
+                      {{#if lm.required}}
+                        <span class='add'>{{t 'general.yes'}}</span>
+                      {{else}}
+                        <span class='remove'>{{t 'general.no'}}</span>
+                      {{/if}}
+                    </td>
+                    <td class='text-left'>{{lm.learningMaterial.notes}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{/if}}
         </div>
       </section>
 
@@ -277,32 +278,32 @@
         <div class='detail-content'>
           {{#if session.offerings.length}}
             <table>
-               <thead>
-                 <tr>
-                   <th class='text-left'>{{t 'general.time'}}</th>
-                   <th class='text-left'>{{t 'general.location'}}</th>
-                   <th class='text-left'>{{t 'general.instructors'}}</th>
-                 </tr>
-               </thead>
-               <tbody>
-                 {{#each session.offerings as |offering|}}
-                   <tr>
-                     <td class='text-left'>
-                       {{moment-format offering.startDate 'MM/DD/YYYY LT'}} -
-                       {{moment-format offering.endDate 'MM/DD/YYYY LT'}}
-                     </td>
-                     <td class='text-left'>{{offering.room}}</td>
-                     <td class='text-left'>
-                       <ul>
-                         {{#each offering.allInstructors as |user|}}
-                           <li>{{user.fullName}}</li>
-                         {{/each}}
-                       </ul>
-                     </td>
-                   </tr>
-                 {{/each}}
-               </tbody>
-             </table>
+              <thead>
+                <tr>
+                  <th class='text-left'>{{t 'general.time'}}</th>
+                  <th class='text-left'>{{t 'general.location'}}</th>
+                  <th class='text-left'>{{t 'general.instructors'}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each session.offerings as |offering|}}
+                  <tr>
+                    <td class='text-left'>
+                      {{moment-format offering.startDate 'MM/DD/YYYY LT'}} -
+                      {{moment-format offering.endDate 'MM/DD/YYYY LT'}}
+                    </td>
+                    <td class='text-left'>{{offering.room}}</td>
+                    <td class='text-left'>
+                      <ul>
+                        {{#each offering.allInstructors as |user|}}
+                          <li>{{user.fullName}}</li>
+                        {{/each}}
+                      </ul>
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
           {{else}}
             <p>{{t 'general.noOfferings'}}</p>
           {{/if}}

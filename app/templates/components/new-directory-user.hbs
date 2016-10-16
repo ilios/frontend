@@ -50,16 +50,16 @@
       <label class="form-label">{{t 'general.username'}}:</label>
       <div class="form-data">
         {{#if (await allowCustomUserName)}}
-            {{one-way-input
-              value=username
-              update=(action (mut username))
-              onenter=(perform save)
-              onescape=(action this.attrs.close)
-              focusOut=(action 'addErrorDisplayFor' 'username')
-            }}
-            {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
-              <span class="validation-error-message">{{v-get this 'username' 'message'}}</span>
-            {{/if}}
+          {{one-way-input
+            value=username
+            update=(action (mut username))
+            onenter=(perform save)
+            onescape=(action this.attrs.close)
+            focusOut=(action 'addErrorDisplayFor' 'username')
+          }}
+          {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
+            <span class="validation-error-message">{{v-get this 'username' 'message'}}</span>
+          {{/if}}
         {{else}}
           {{username}}
         {{/if}}

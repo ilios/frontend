@@ -4,7 +4,8 @@
 <div class='detail-competencies-content'>
   <ul class='static-list'>
     {{#each course.domains as |domain|}}
-      <li>{{domain.title}}
+      <li>
+        {{domain.title}}
         <ul>
           {{#each domain.subCompetencies as |competency|}}
             <li>{{competency.title}}</li>

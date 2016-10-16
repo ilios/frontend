@@ -20,7 +20,9 @@
           programId=(get (await learnerGroup.cohort.programYear.program) 'id')
           programYearId=(get (await learnerGroup.cohort.programYear) 'id')
         )
-      }}{{t 'general.learnerGroups'}}{{/link-to}}
+      }}
+        {{t 'general.learnerGroups'}}
+      {{/link-to}}
     </span>
     {{#each (reverse (await learnerGroup.allParents)) as |parent|}}
       <span>

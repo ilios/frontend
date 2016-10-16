@@ -109,7 +109,7 @@
       <div class="block duration">
         <label>{{t 'general.durationInDays'}}:</label>
         {{#if isFinalized}}
-           <span>{{sequenceBlock.duration}}</span>
+          <span>{{sequenceBlock.duration}}</span>
         {{else}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
@@ -143,21 +143,21 @@
 
     <div class="block order-in-sequence">
       <label>{{t 'general.orderInSequence'}}:</label>
-        <span>
-          {{#if sequenceBlock.parent.isOrdered}}
-            {{#if isFinalized}}
-              {{sequenceBlock.orderInSequence}}
-            {{else}}
-              {{inplace-select
-                value=sequenceBlock.orderInSequence
-                options=orderInSequenceOptions
-                save="changeOrderInSequence"
-              }}
-            {{/if}}
+      <span>
+        {{#if sequenceBlock.parent.isOrdered}}
+          {{#if isFinalized}}
+            {{sequenceBlock.orderInSequence}}
           {{else}}
-            {{t 'general.notApplicableAbbr'}}
+            {{inplace-select
+              value=sequenceBlock.orderInSequence
+              options=orderInSequenceOptions
+              save="changeOrderInSequence"
+            }}
           {{/if}}
-        </span>
+        {{else}}
+          {{t 'general.notApplicableAbbr'}}
+        {{/if}}
+      </span>
     </div>
     <div class="block selective">
       <label>{{t 'general.isSelective'}}?</label>
@@ -165,13 +165,13 @@
     {{#unless isEditingMinMax}}
       <div class="block minimum">
         <label>{{t 'general.minimum'}}:</label>
-          {{#if isFinalized}}
-            <span>{{sequenceBlock.minimum}}</span>
-          {{else}}
-            <span class="editinplace">
-              <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
-            </span>
-          {{/if}}
+        {{#if isFinalized}}
+          <span>{{sequenceBlock.minimum}}</span>
+        {{else}}
+          <span class="editinplace">
+            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
+          </span>
+        {{/if}}
       </div>
       <div class="block maximum">
         <label>{{t 'general.maximum'}}:</label>
@@ -205,7 +205,7 @@
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}
-        <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
+      <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
     {{else}}
       {{#if linkableSessions.length}}
         {{#liquid-if isManagingSessions class='horizontal sessions-list'}}

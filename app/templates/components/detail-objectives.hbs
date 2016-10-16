@@ -1,21 +1,21 @@
 {{#if isManaging}}
-    <div class='title'>
-        {{#if isManagingParents}}
-            <span class='specific-title'>
-                {{objectiveParentTitle}}
-            </span>
-        {{/if}}
-        {{#if isManagingDescriptors}}
-            <span class='specific-title'>
-                {{t 'general.objectiveDescriptorTitle'}}
-            </span>
-        {{/if}}
-        {{#if isManagingCompetency}}
-            <span class='specific-title'>
-                {{t 'general.objectiveCompetencyManagerTitle'}}
-            </span>
-        {{/if}}
-    </div>
+  <div class='title'>
+    {{#if isManagingParents}}
+      <span class='specific-title'>
+        {{objectiveParentTitle}}
+      </span>
+    {{/if}}
+    {{#if isManagingDescriptors}}
+      <span class='specific-title'>
+        {{t 'general.objectiveDescriptorTitle'}}
+      </span>
+    {{/if}}
+    {{#if isManagingCompetency}}
+      <span class='specific-title'>
+        {{t 'general.objectiveCompetencyManagerTitle'}}
+      </span>
+    {{/if}}
+  </div>
 {{else}}
   <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
     {{t 'general.objectives'}} ({{subject.objectives.length}})

@@ -28,29 +28,29 @@
         </div>
       {{/if}}
     </div>
-      <section class='resultslist-new'>
-        {{#liquid-if (and showNewUserForm allowAddNewUser) class='vertical'}}
-          {{#liquid-if (is-fulfilled newUserComponent)}}
-            {{component (await newUserComponent)
-              close=(action (mut showNewUserForm false))
-              transitionToUser=(action 'transitionToUser')
-              searchTerms=searchTerms
-              setSearchTerms=(action (mut searchTerms))
-            }}
-          {{else}}
-            {{fa-icon 'spinner' spin=true}}
-          {{/liquid-if}}
+    <section class='resultslist-new'>
+      {{#liquid-if (and showNewUserForm allowAddNewUser) class='vertical'}}
+        {{#liquid-if (is-fulfilled newUserComponent)}}
+          {{component (await newUserComponent)
+            close=(action (mut showNewUserForm false))
+            transitionToUser=(action 'transitionToUser')
+            searchTerms=searchTerms
+            setSearchTerms=(action (mut searchTerms))
+          }}
+        {{else}}
+          {{fa-icon 'spinner' spin=true}}
         {{/liquid-if}}
-        {{#liquid-if (and showBulkNewUserForm allowAddNewUser) class='vertical'}}
-          {{#liquid-if (is-fulfilled newBulkUserComponent)}}
-            {{bulk-new-users
-              close=(action (mut showBulkNewUserForm false))
-            }}
-          {{else}}
-            {{fa-icon 'spinner' spin=true}}
-          {{/liquid-if}}
+      {{/liquid-if}}
+      {{#liquid-if (and showBulkNewUserForm allowAddNewUser) class='vertical'}}
+        {{#liquid-if (is-fulfilled newBulkUserComponent)}}
+          {{bulk-new-users
+            close=(action (mut showBulkNewUserForm false))
+          }}
+        {{else}}
+          {{fa-icon 'spinner' spin=true}}
         {{/liquid-if}}
-      </section>
+      {{/liquid-if}}
+    </section>
     {{#if searchForUsers.lastSuccessful}}
       {{pagedlist-controls
         offset=offset
