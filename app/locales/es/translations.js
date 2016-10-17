@@ -24,6 +24,7 @@ export default {
     'associatedCourses': 'Cursos Asociados',
     'associatedGroups': 'Grupos Associados',
     'associatedWith': 'Ssociado con',
+    'author': 'Autor',
     'available': 'Disponible',
     'availableCohorts': 'Clases de La Graduación Disponibles',
     'availableLearnerGroups': 'Grupos de Aprendedores Disponibles',

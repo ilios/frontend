@@ -1,0 +1,25 @@
+.course-materials {
+  @include fill-parent;
+
+  .material-list {
+    margin-bottom: 2em;
+  }
+
+  h2 {
+    @include ilios-heading-h4;
+    @include fill-parent;
+
+    @include media($large-screen) {
+      @include span-columns(8);
+    }
+  }
+
+  .filter-session-lms {
+    @include fill-parent;
+
+    @include media($large-screen) {
+      @include span-columns(2);
+      @include omega;
+    }
+  }
+}
