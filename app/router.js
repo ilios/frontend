@@ -27,6 +27,7 @@ Router.map(function() {
     });
   });
   this.route('printCourse', { path: 'course/:course_id/print'});
+  this.route('course-materials', { path: 'courses/:course_id/materials'});
 
   this.route('instructorGroups', { path: 'instructorgroups'});
   this.route('instructorGroup', { path: 'instructorgroups/:instructor_group_id'});
