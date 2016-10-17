@@ -12,7 +12,7 @@ module.exports = {
     'nested-interactive': true,
     'self-closing-void-elements': false,
     'img-alt-attributes': false,
-    'link-rel-noopener': false,
+    'link-rel-noopener': true,
     'invalid-interactive': false,
     'inline-link-to': true,
     'style-concatenation': true,
