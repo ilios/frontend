@@ -8,7 +8,7 @@ module.exports = {
   rules: {
     'bare-strings': ['?', '»', '&mdash;'].concat(defaultAllowedBaseStrings),
     'block-indentation': true,
-    'html-comments': false,
+    'html-comments': true,
     'nested-interactive': false,
     'self-closing-void-elements': false,
     'img-alt-attributes': false,
