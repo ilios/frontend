@@ -54,18 +54,20 @@
         </div>
         <div class='detail-content'>
           {{#if course.competencies.isFulfilled}}
-            <ul class='static-list'>
-              {{#each course.domains as |domain|}}
-                <li>
-                  {{domain.title}}
-                  <ul>
-                    {{#each domain.subCompetencies as |competency|}}
-                      <li>{{competency.title}}</li>
-                    {{/each}}
-                  </ul>
-                </li>
-              {{/each}}
-            </ul>
+            {{#if course.competencies.length}}
+              <ul class='static-list'>
+                {{#each course.domains as |domain|}}
+                  <li>
+                    {{domain.title}}
+                    <ul>
+                      {{#each domain.subCompetencies as |competency|}}
+                        <li>{{competency.title}}</li>
+                      {{/each}}
+                    </ul>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
           {{else}}
             {{loading-part}}
           {{/if}}

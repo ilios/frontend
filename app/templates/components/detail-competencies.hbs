@@ -1,17 +1,19 @@
 <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
   {{t 'general.competencies'}} ({{course.competencies.length}})
 </div>
-<div class='detail-competencies-content'>
-  <ul class='static-list'>
-    {{#each course.domains as |domain|}}
-      <li>
-        {{domain.title}}
-        <ul>
-          {{#each domain.subCompetencies as |competency|}}
-            <li>{{competency.title}}</li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
-</div>
+{{#if course.competencies.length}}
+  <div class='detail-competencies-content'>
+    <ul class='static-list'>
+      {{#each course.domains as |domain|}}
+        <li>
+          {{domain.title}}
+          <ul>
+            {{#each domain.subCompetencies as |competency|}}
+              <li>{{competency.title}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

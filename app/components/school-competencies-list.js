@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const { Component, computed } = Ember;
-const { filterBy, sort } = computed
+const { filterBy, sort } = computed;
 
 export default Component.extend({
   competencies: [],
