@@ -23,8 +23,8 @@
 </div>
 <div class='programyear-competencies-content'>
   {{#if (and (is-fulfilled programYear.competencies) (is-fulfilled competencies) (not loadSelectedCompetencies.isRunning))}}
-    <ul class={{if isManaging 'managed-competency-list' 'competency-list'}}>
-      {{#if isManaging}}
+    {{#if isManaging}}
+      <ul class=managed-competency-list'>
         {{#each (sort-by 'title' (await domains)) as |domain|}}
           <li>
             {{#if (contains (get domain 'id') (map-by 'id' selectedCompetencies))}}
@@ -64,25 +64,29 @@
             </ul>
           </li>
         {{/each}}
-      {{else}}
-        {{#each (sort-by 'title' (await domains)) as |domain|}}
-          {{#if (or (contains domain.id (map-by 'id' selectedCompetencies)) (contains domain (await competenciesWithSelectedChildren)))}}
-            <li>
-              {{domain.title}}
-              <ul>
-                {{#each (sort-by 'title' (await competencies)) as |competency|}}
-                  {{#if (and (contains competency (await domain.treeChildren)) (contains competency.id (map-by 'id' selectedCompetencies)))}}
-                    <li>
-                      {{competency.title}}
-                    </li>
-                  {{/if}}
-                {{/each}}
-              </ul>
-            </li>
-          {{/if}}
-        {{/each}}
+      </ul>
+    {{else}}
+      {{#if (get (await programYear.competencies) 'length')}}
+        <ul class="competency-list">
+          {{#each (sort-by 'title' (await domains)) as |domain|}}
+            {{#if (or (contains domain.id (map-by 'id' selectedCompetencies)) (contains domain (await competenciesWithSelectedChildren)))}}
+              <li>
+                {{domain.title}}
+                <ul>
+                  {{#each (sort-by 'title' (await competencies)) as |competency|}}
+                    {{#if (and (contains competency (await domain.treeChildren)) (contains competency.id (map-by 'id' selectedCompetencies)))}}
+                      <li>
+                        {{competency.title}}
+                      </li>
+                    {{/if}}
+                  {{/each}}
+                </ul>
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
       {{/if}}
-    </ul>
+    {{/if}}
   {{else}}
     {{fa-icon 'spinner' spin=true}}
   {{/if}}

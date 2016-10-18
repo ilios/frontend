@@ -1,12 +1,14 @@
-<ul class='static-list'>
-  {{#each domains as |domain|}}
-    <li>
-      {{domain.title}}
-      <ul>
-        {{#each domain.children as |competency|}}
-          <li>{{competency.title}}</li>
-        {{/each}}
-      </ul>
-    </li>
-  {{/each}}
-</ul>
+{{#if competencies.length}}
+  <ul class='static-list'>
+    {{#each domains as |domain|}}
+      <li>
+        {{domain.title}}
+        <ul>
+          {{#each domain.children as |competency|}}
+            <li>{{competency.title}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
