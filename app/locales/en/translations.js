@@ -373,6 +373,7 @@ export default {
     'programYear': 'Program Year',
     'programYears': 'Program Years',
     'promoteToPrimaryCohort': 'Promote to primary cohort',
+    'publicationStatus': 'Publication Status',
     'publishAllConfirmation': 'Publish {{publishCount}}, schedule {{scheduleCount}}, and ignore {{ignoreCount}} sessions',
     'publishAllSessions': 'Publish {{sessionCount}} sessions',
     'publishAsIs': 'Publish As-is',
