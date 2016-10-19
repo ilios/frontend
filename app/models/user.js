@@ -19,6 +19,7 @@ var User = DS.Model.extend({
   examined:  DS.attr('boolean'),
   userSyncIgnore:  DS.attr('boolean'),
   icsFeedKey:  DS.attr('string'),
+  root: DS.attr('boolean'),
   reminders: DS.hasMany('user-made-reminder', {async: true}),
   reports: DS.hasMany('report', {async: true}),
   school: DS.belongsTo('school', {async: true}),
