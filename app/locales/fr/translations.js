@@ -211,6 +211,7 @@ export default {
     'learningMaterial': "Matière d’Étude",
     'learningMaterialManageTitle': "Manager Matières d’Étude",
     'learningMaterials': "Matières d’Étude",
+    'learningMaterialSummary': "Résumé Matières d'Étude",
     'level': "Niveau",
     'link': "Lien web",
     'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
