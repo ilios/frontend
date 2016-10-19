@@ -25,6 +25,13 @@ export default Component.extend({
         });
       }
 
-    })
+    });
+  }),
+
+  showMaterials: computed('routing.currentRouteName', function(){
+    return new Promise(resolve => {
+      const routing = this.get('routing');
+      resolve(routing.get('currentRouteName') !== 'course.materials');
+    });
   }),
 });
