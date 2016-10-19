@@ -30,6 +30,7 @@ export default {
     'availableLearnerGroups': 'Available Learner Groups',
     'backToAdminDashboard': 'Back to Admin Dashboard',
     'backToCalendar': 'Back to Calendar',
+    'backToCourse': 'Back to Course',
     'backToCourses': 'Back to Courses List',
     'backToDashboard': 'Back to Dashboard',
     'backToDetails': 'Back to Session Details',
