@@ -17,8 +17,8 @@ moduleForComponent('course-summary-header', 'Integration | Component | course su
 test('it renders', function(assert) {
   let course = Object.create({
     title: 'title',
-    startDate: new Date('2020-05-06 12:00:00'),
-    endDate: new Date('2020-12-11 12:00:00'),
+    startDate: new Date(2020, 4, 6, 12),
+    endDate: new Date(2020, 11, 11, 12),
     externalId: 'abc',
     level: 3,
     isPublished: true,
@@ -61,8 +61,8 @@ test('no link to materials when that is the current route', function(assert) {
 
   let course = Object.create({
     title: 'title',
-    startDate: new Date('2020-05-06 12:00:00'),
-    endDate: new Date('2020-12-11 12:00:00'),
+    startDate: new Date(2020, 4, 6, 12),
+    endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
   this.render(hbs`{{course-summary-header course=course}}`);
@@ -84,8 +84,8 @@ test('no link to rollover when that is the current route', function(assert) {
 
   let course = Object.create({
     title: 'title',
-    startDate: new Date('2020-05-06 12:00:00'),
-    endDate: new Date('2020-12-11 12:00:00'),
+    startDate: new Date(2020, 4, 6, 12),
+    endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
   this.render(hbs`{{course-summary-header course=course}}`);

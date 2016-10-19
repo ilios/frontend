@@ -6,6 +6,8 @@
     @include ilios-heading-h3;
     @include span-columns(7 of 12);
 
+    margin-bottom: 1em;
+
   }
 
   .course-summary-actions {
@@ -25,7 +27,7 @@
 
   .course-summary-content {
     @include fill-parent;
-    
+
     .block {
       @include ilios-overview-block;
     }
