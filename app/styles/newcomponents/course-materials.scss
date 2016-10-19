@@ -2,15 +2,19 @@
   @include fill-parent;
 
   .material-list {
+    border-bottom: 1px dotted $ilios-orange;
     margin-bottom: 2em;
+    padding-bottom: 1em;
   }
 
   h2 {
     @include ilios-heading-h4;
     @include fill-parent;
 
-    @include media($large-screen) {
-      @include span-columns(8);
+    &.session-material-title {
+      @include media($large-screen) {
+        @include span-columns(8);
+      }
     }
   }
 
