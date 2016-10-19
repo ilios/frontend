@@ -82,7 +82,7 @@ let setupSessionLms = function(){
   let session1 = Object.create({
     title: 'session1title',
     learningMaterials: resolve([sessionLm1, sessionLm2, sessionLm3]),
-    firstOfferingDate: resolve(new Date('2020-02-02 12:00:00')),
+    firstOfferingDate: resolve(new Date(2020, 1, 2, 12)),
   });
   sessionLm1.set('session', resolve(session1));
   sessionLm2.set('session', resolve(session1));
