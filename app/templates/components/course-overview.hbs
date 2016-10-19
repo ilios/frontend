@@ -2,6 +2,9 @@
   {{t 'general.overview'}}
 </div>
 <div class='course-overview-actions'>
+  {{#link-to 'course-materials' course class='materials'}}
+    {{fa-icon 'archive' title=(t 'general.learningMaterialsSummary') fixedWidth=true}}
+  {{/link-to}}
   {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
     {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
   {{/link-to}}

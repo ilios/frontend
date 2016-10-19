@@ -211,6 +211,7 @@ export default {
     'learningMaterial': 'Learning Material',
     'learningMaterialManageTitle': 'Manage Learning Material',
     'learningMaterials': 'Learning Materials',
+    'learningMaterialsSummary': 'Learning Materials Summary',
     'level': 'Level',
     'link': 'Web Link',
     'lmDescriptorTitle': 'Select MeSH Descriptors for Learning Materials',
