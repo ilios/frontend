@@ -155,7 +155,8 @@ export default Mixin.create(ValidationErrorDisplay, {
       email,
       phone,
       school,
-      enabled: true
+      enabled: true,
+      root: false
     });
     if (this.get('nonStudentMode')) {
       let facultyRole = roles.findBy('title', 'Faculty');
