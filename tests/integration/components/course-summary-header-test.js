@@ -1,20 +1,20 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 
 const { Object } = Ember;
 
-moduleForComponent('course-summary-header', 'Integration | Component | course symmary header', {
-  integration: true
+moduleForComponent('course-summary-header', 'Integration | Component | course summary header', {
+  integration: true,
+  beforeEach(){
+    let currentUserMock = Ember.Service.extend({
+      userIsCourseDirector: true,
+    });
+    this.register('service:currentUser', currentUserMock);
+  }
 });
 
 test('it renders', function(assert) {
-  let currentUserMock = Ember.Service.extend({
-    userIsCourseDirector: true,
-  });
-  this.register('service:currentUser', currentUserMock);
-
   let course = Object.create({
     title: 'title',
     startDate: new Date('2020-05-06 12:00:00'),
@@ -50,4 +50,50 @@ test('it renders', function(assert) {
   assert.equal(this.$(status).text().trim(), 'Published');
 
 
+});
+
+test('no link to materials when that is the current route', function(assert) {
+  let routerMock = Ember.Service.extend({
+    generateURL(){},
+    currentRouteName: 'course-materials',
+  });
+  this.register('service:-routing', routerMock);
+
+  let course = Object.create({
+    title: 'title',
+    startDate: new Date('2020-05-06 12:00:00'),
+    endDate: new Date('2020-12-11 12:00:00'),
+  });
+  this.set('course', course);
+  this.render(hbs`{{course-summary-header course=course}}`);
+  const actions = '.course-summary-actions i';
+  const printIcon = `${actions}:eq(0)`;
+  const rolloverIcon = `${actions}:eq(1)`;
+
+  assert.ok(this.$(actions).length, 2);
+  assert.ok(this.$(printIcon).hasClass('fa-print'));
+  assert.ok(this.$(rolloverIcon).hasClass('fa-random'));
+});
+
+test('no link to rollover when that is the current route', function(assert) {
+  let routerMock = Ember.Service.extend({
+    generateURL(){},
+    currentRouteName: 'course.rollover',
+  });
+  this.register('service:-routing', routerMock);
+
+  let course = Object.create({
+    title: 'title',
+    startDate: new Date('2020-05-06 12:00:00'),
+    endDate: new Date('2020-12-11 12:00:00'),
+  });
+  this.set('course', course);
+  this.render(hbs`{{course-summary-header course=course}}`);
+  const actions = '.course-summary-actions i';
+  const materialsIcon = `${actions}:eq(0)`;
+  const printIcon = `${actions}:eq(1)`;
+
+  assert.ok(this.$(actions).length, 2);
+  assert.ok(this.$(printIcon).hasClass('fa-print'));
+  assert.ok(this.$(materialsIcon).hasClass('fa-archive'));
 });
