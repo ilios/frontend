@@ -7,12 +7,12 @@ const { Promise, all, map } = RSVP;
 export default Route.extend(AuthenticatedRouteMixin, {
   afterModel(course){
     return all([
-      this.loadCourseLearhingMaterials(course),
-      this.loadSessionLearhingMaterials(course),
+      this.loadCourseLearningMaterials(course),
+      this.loadSessionLearningMaterials(course),
     ])
 
   },
-  loadCourseLearhingMaterials(course){
+  loadCourseLearningMaterials(course){
     return new Promise(resolve => {
       course.get('learningMaterials').then(courseLearningMaterials => {
         all(courseLearningMaterials.getEach('learningMaterial')).then(()=> {
@@ -21,7 +21,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       });
     });
   },
-  loadSessionLearhingMaterials(course){
+  loadSessionLearningMaterials(course){
     return new Promise(resolve => {
       course.get('sessions').then(sessions => {
         map(sessions.toArray(), session => {
