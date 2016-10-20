@@ -2,9 +2,9 @@
 
 
 <div class='rollover-form'>
-  <h3 class="title">{{t 'general.rollover'}}</h3>
+  <h3 class="title">{{t 'general.courseRollover'}}</h3>
 
-  <p class='rollover-summary'>{{t 'general.rolloverSummary'}}</p>
+  <p class='rollover-summary'>{{t 'general.courseRolloverSummary'}}</p>
 
   <div class='item title'>
     <label>{{t 'general.title'}}:</label>
@@ -32,7 +32,7 @@
           <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
             {{year}} - {{inc year}}
             {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
-              ({{t 'general.rolloverYearUnavailable'}})
+              ({{t 'general.courseRolloverYearUnavailable'}})
             {{/if}}
           </option>
         {{/each}}
