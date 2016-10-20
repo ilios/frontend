@@ -90,7 +90,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     const flashMessages = this.get('flashMessages');
     const store = this.get('store');
-    flashMessages.success('general.rolloverSuccess');
+    flashMessages.success('general.courseRolloverSuccess');
     store.pushPayload(newCoursesObj);
     let newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
 

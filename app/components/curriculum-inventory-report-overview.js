@@ -2,9 +2,11 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, RSVP, computed } = Ember;
+const { Component, RSVP, computed, inject } = Ember;
 const { alias } = computed;
 const { Promise } = RSVP;
+const { service } = inject;
+
 const Validations = buildValidations({
   description: [
     validator('length', {
@@ -16,6 +18,10 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
+  currentUser: service(),
+  routing: service('-routing'),
+  currentRoute: '',
+
   didReceiveAttrs(){
     this._super(...arguments);
 
@@ -37,6 +43,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       yearOptions,
     });
   },
+
+  showRollover: computed('currentUser', 'routing.currentRouteName', function(){
+    return new Promise(resolve => {
+      const routing = this.get('routing');
+      if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
+        resolve(false);
+      } else {
+        const currentUser = this.get('currentUser');
+        currentUser.get('userIsDeveloper').then(hasRole => {
+          resolve(hasRole);
+        });
+      }
+    })
+  }),
 
   classNames: ['curriculum-inventory-report-overview'],
   tagName: 'section',

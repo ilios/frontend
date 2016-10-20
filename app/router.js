@@ -66,7 +66,10 @@ Router.map(function() {
     path: 'curriculum-inventory-reports'
   });
   this.route('curriculumInventoryReport', {
-    path: 'curriculum-inventory-reports/:curriculum_inventory_report_id'
+    path: 'curriculum-inventory-reports/:curriculum_inventory_report_id',
+    resetNamespace: true
+  }, function() {
+    this.route('rollover', { path: '/rollover'});
   });
   this.route('curriculumInventorySequenceBlock', {
     path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id'

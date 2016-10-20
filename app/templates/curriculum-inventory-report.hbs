@@ -3,12 +3,5 @@
 </div>
 <section class='full-width curriculum-inventory-report'>
   {{curriculum-inventory-report-details report=model}}
-  <div class='list'>
-    {{#if (is-fulfilled model.topLevelSequenceBlocks)}}
-      {{curriculum-inventory-sequence-block-list
-        report=(await model)
-        remove='removeSequenceBlock'
-      }}
-    {{/if}}
-  </div>
+  {{liquid-outlet}}
 </section>
