@@ -79,7 +79,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (expandAdvancedOptions && skipOfferings) {
       data.skipOfferings = true;
     }
-    const host = this.get('host')?this.get('host'):'/';
+    const host = this.get('host') ? (this.get('host').replace(/\/+$/, '') + '/') : '/';
     const namespace = this.get('namespace');
 
     let url = host + namespace + `/courses/${courseId}/rollover`;
