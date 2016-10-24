@@ -4,6 +4,7 @@ import {
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
 
 const { run } = Ember;
 
@@ -21,9 +22,11 @@ test('top parent with no parents should be self', function(assert) {
   assert.expect(2);
 
   var model = this.subject();
-  model.get('topParents').then(topParents => {
-    assert.ok(topParents.get('length') === 1);
-    assert.equal(topParents.get('firstObject'), model);
+  return wait().then(()=>{
+    model.get('topParents').then(topParents => {
+      assert.ok(topParents.get('length') === 1);
+      assert.equal(topParents.get('firstObject'), model);
+    });
   });
 });
 

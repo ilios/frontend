@@ -294,7 +294,9 @@ test('rollover course with new start date', function(assert) {
           'Selected day changed to rollover date day.'
         );
         this.$('.done').click();
-        resolve();
+        wait().then(()=>{
+          resolve();
+        });
       });
     });
   });
@@ -368,7 +370,9 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
         );
         interactor.selectDate(rolloverDate.toDate());
         this.$('.done').click();
-        resolve();
+        wait().then(()=>{
+          resolve();
+        });
       });
     });
   });
@@ -420,7 +424,9 @@ test('rollover course with no offerings', function(assert) {
         this.$(offerings).trigger('update');
 
         this.$('.done').click();
-        resolve();
+        wait().then(()=>{
+          resolve();
+        });
       });
     });
   });
