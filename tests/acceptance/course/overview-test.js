@@ -365,7 +365,7 @@ test('remove director', function(assert) {
   visit(url);
   click('.coursedirectors .clickable');
   click('.coursedirectors li:eq(0)');
-  click('.coursedirectors .bigadd').then(()=> {
+  return click('.coursedirectors .bigadd').then(()=> {
     assert.equal(getElementText(find('.coursedirectors')), getText('Directors: None'));
   });
 });
