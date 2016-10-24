@@ -72,7 +72,7 @@
             <ul>
               {{#each courses as |course|}}
                 <li class='clickable'>
-                  <input {{action 'toggleCourse' course on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourses course}} />
+                  <input {{action 'toggleCourse' course on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourses course}}>
                   <span {{action 'toggleCourse' course}} class="list-indentation">{{course.title}}</span>
                 </li>
               {{/each}}
@@ -88,7 +88,7 @@
             <ul>
               {{#each sessionTypes as |type|}}
                 <li class='clickable'>
-                  <input {{action 'toggleSessionType' type on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedSessionTypes type}} />
+                  <input {{action 'toggleSessionType' type on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedSessionTypes type}}>
                   <span {{action 'toggleSessionType' type}} class="list-indentation">{{type.title}}</span>
                 </li>
               {{/each}}
@@ -104,7 +104,7 @@
             <ul>
               {{#each sessionTypes as |type|}}
                 <li class='clickable' {{action 'toggleSessionType' type}}>
-                  <input {{action 'toggleSessionType' type on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedSessionTypes type}} />
+                  <input {{action 'toggleSessionType' type on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedSessionTypes type}}>
                   <span {{action 'toggleSessionType' type}} class="list-indentation">{{type.title}}</span>
                 </li>
               {{/each}}
@@ -118,7 +118,7 @@
           <ul>
             {{#each courseLevels as |level|}}
               <li class='clickable'>
-                <input {{action 'toggleCourseLevel' level on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourseLevels level}} />
+                <input {{action 'toggleCourseLevel' level on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourseLevels level}}>
                 <span {{action 'toggleCourseLevel' level}} class="list-indentation">{{level}}</span>
               </li>
             {{/each}}
@@ -130,7 +130,7 @@
             <ul>
               {{#each cohorts as |cohort|}}
                 <li class='clickable'>
-                  <input {{action 'toggleCohort' cohort on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCohorts cohort}} />
+                  <input {{action 'toggleCohort' cohort on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCohorts cohort}}>
                   <span {{action 'toggleCohort' cohort}} class="list-indentation">{{cohort.displayTitle}} {{cohort.programYear.program.title}}</span>
                 </li>
               {{/each}}
