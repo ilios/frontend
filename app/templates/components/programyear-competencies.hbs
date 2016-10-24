@@ -29,17 +29,17 @@
           <li>
             {{#if (contains (get domain 'id') (map-by 'id' selectedCompetencies))}}
               <span class='clickable' onclick={{action 'removeCompetencyFromBuffer' domain}}>
-                <input type='checkbox' checked />
+                <input type='checkbox' checked>
                 {{domain.title}}
               </span>
             {{else if (contains domain (await competenciesWithSelectedChildren))}}
               <span class='clickable' onclick={{action 'addCompetencyToBuffer' domain}}>
-                <input type='checkbox' indeterminate={{true}} />
+                <input type='checkbox' indeterminate={{true}}>
                 {{domain.title}}
               </span>
             {{else}}
               <span class='clickable' onclick={{action 'addCompetencyToBuffer' domain}}>
-                <input type='checkbox' />
+                <input type='checkbox'>
                 {{domain.title}}
               </span>
             {{/if}}
@@ -49,12 +49,12 @@
                   <li>
                     {{#if (contains (get competency 'id') (map-by 'id' selectedCompetencies))}}
                       <span class='clickable' onclick={{action 'removeCompetencyFromBuffer' competency}}>
-                        <input type='checkbox' checked />
+                        <input type='checkbox' checked>
                         {{competency.title}}
                       </span>
                     {{else}}
                       <span class='clickable' onclick={{action 'addCompetencyToBuffer' competency}}>
-                        <input type='checkbox' />
+                        <input type='checkbox'>
                         {{competency.title}}
                       </span>
                     {{/if}}

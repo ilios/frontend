@@ -40,7 +40,7 @@
     <label>
       {{t 'general.uploadUsers'}} (<a target='_blank' rel='noopener' href='/assets/files/SampleUserUpload.txt'>{{t 'general.sampleFile'}}</a>):
     </label>
-    <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}} />
+    <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}}>
   </div>
   {{#if parseFile.isRunning}}
     <div class='file-is-loading'>{{fa-icon 'spinner' spin=true}}</div>

@@ -10,7 +10,7 @@ module.exports = {
     'block-indentation': true,
     'html-comments': true,
     'nested-interactive': true,
-    'self-closing-void-elements': false,
+    'self-closing-void-elements': true,
     'img-alt-attributes': false,
     'link-rel-noopener': true,
     'invalid-interactive': false,

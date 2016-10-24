@@ -147,7 +147,7 @@
                 <tr class='confirm-removal'>
                   <td colspan=10>
                     <div class='confirm-message'>
-                      {{t 'general.confirmSessionRemoval'}}<br />
+                      {{t 'general.confirmSessionRemoval'}}<br>
                       <div class="confirm-buttons">
                         <button {{action 'remove' sessionProxy}} class='remove text'>{{t 'general.yes'}}</button>
                         <button {{action 'cancelRemove' sessionProxy}} class='done text'>{{t 'general.cancel'}}</button>
@@ -188,6 +188,6 @@
       setLimit=this.attrs.setLimit
     }}
   {{else}}
-    <br /><h1>{{fa-icon 'spinner' spin=true}}</h1>
+    <br><h1>{{fa-icon 'spinner' spin=true}}</h1>
   {{/if}}
 </section>

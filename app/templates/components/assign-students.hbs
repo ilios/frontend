@@ -48,7 +48,7 @@
             <input
              type='checkbox'
              checked={{eq selectedUserIds.length filteredStudents.length}}
-             indeterminate={{and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length)}} />
+             indeterminate={{and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length)}}>
             {{t 'general.all'}}
           </th>
           <th class='text-left' colspan="4">{{t 'general.fullName'}}</th>
@@ -61,9 +61,9 @@
           <tr class='{{if (is-in selectedUserIds user.id) "highlighted"}}'>
             <td class='text-left clickable' colspan="1" {{action 'toggleUserSelection' user.id}}>
               {{#if (is-in selectedUserIds user.id)}}
-                <input type='checkbox' checked />
+                <input type='checkbox' checked>
               {{else}}
-                <input type='checkbox' />
+                <input type='checkbox'>
               {{/if}}
             </td>
             <td class='text-left' colspan="4">{{#link-to 'user' user}}{{user.fullName}}{{/link-to}}</td>

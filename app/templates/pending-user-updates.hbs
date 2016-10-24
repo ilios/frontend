@@ -21,7 +21,7 @@
     </div>
 
     <div id='titlefilter' class="filter">
-      <input type='text' value={{filter}} placeholder={{t 'general.pendingUserUpdates.filterBy'}} oninput={{action (mut filter) value="target.value"}} />
+      <input type='text' value={{filter}} placeholder={{t 'general.pendingUserUpdates.filterBy'}} oninput={{action (mut filter) value="target.value"}}>
     </div>
   </div>
 
@@ -42,7 +42,7 @@
             <tr>
               <th class='text-left' colspan=2>{{t 'general.fullName'}}</th>
               <th class='text-left' colspan=6>{{t 'general.description'}}</th>
-              <th />
+              <th></th>
               <th class='text-left' colspan=2>{{t 'general.actions'}}</th>
 
             </tr>
@@ -58,7 +58,7 @@
                     update=update
                   }}
                 </td>
-                <td />
+                <td></td>
                 <td class='text-left' colspan="2">
                   {{#if (is-in updatesBeingSaved update)}}
                     {{fa-icon 'spinner' spin=true}}
@@ -67,12 +67,12 @@
                       <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
                         {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
                         {{t 'general.pendingUserUpdates.updateIlios'}}
-                      </span><br />
+                      </span><br>
                     {{/if}}
                     <span class='clickable link' onclick={{action 'excludeFromSync' update}}>
                       {{fa-icon 'ban' class='no' title=(t 'general.excludeFromSync')}}
                       {{t 'general.excludeFromSync'}}
-                    </span><br />
+                    </span><br>
                     <span class='clickable link' onclick={{action 'disableUser' update}}>
                       {{fa-icon 'times' class='no' title=(t 'general.disableUser')}}
                       {{t 'general.disableUser'}}
