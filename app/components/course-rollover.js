@@ -52,13 +52,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   startDate: null,
   skipOfferings: false,
   title: null,
+  isSaving: false,
 
   save: task(function * (){
+    this.set('isSaving', true);
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['title', 'selectedYear']);
     let {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
+      this.set('isSaving', false);
       return;
     }
     const ajax = this.get('ajax');
