@@ -160,6 +160,7 @@ export default {
     'expandDetail': "Afficher Détails",
     'externalId': "ID de Cours",
     'file': "Fichier",
+    'fileSizeError': 'Ce dossier est trop grand. Taille maximale est {{maxSize}).',
     'fileTypeError': 'Mal fichier téléchargé : {{fileType}} ne semble pas être un fichier correctement délimité.',
     'filterByNameOrEmail': "Filtre par nom ou email",
     'filterPlaceholder': "Commencez à taper pour filtre la liste",

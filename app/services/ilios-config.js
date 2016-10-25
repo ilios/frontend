@@ -24,5 +24,9 @@ export default Ember.Service.extend({
 
   authenticationType: computed('config.type', function(){
     return this.itemFromConfig('type');
+  }),
+
+  maxUploadSize: computed('config.maxUploadSize', function(){
+    return this.itemFromConfig('maxUploadSize');
   })
 });

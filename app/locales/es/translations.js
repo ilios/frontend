@@ -160,6 +160,7 @@ export default {
     'expandDetail': 'Enseñar Detalles',
     'externalId': 'Identificación del Curso',
     'file': 'Archivo',
+    'fileSizeError': 'Este archivo es demasiado grande.  El tamaño máximo es {{maxSize}}.',
     'fileTypeError': 'Archivo mal subido: {{fileType}} no parece ser válido ficha separado archivo.',
     'filterByNameOrEmail': 'Aplicar un Filtro por nombre o email',
     'filterPlaceholder': 'Empieza marcando para aplicar un filtro',
