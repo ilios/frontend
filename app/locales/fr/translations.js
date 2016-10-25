@@ -155,6 +155,7 @@ export default {
     'file': "Fichier",
     'fileSizeError': 'Ce dossier est trop grand. Taille maximale est {{maxSize}).',
     'fileTypeError': 'Mal fichier téléchargé : {{fileType}} ne semble pas être un fichier correctement délimité.',
+    'fileUploadError': "Nous n'avons pas pu télécharger ce dossier. Assurez S'il vous plaît que vous êtes connectés au réseau. Si ce problème persiste merci de nous faire savoir.",
     'filterByNameOrEmail': "Filtre par nom ou email",
     'filterPlaceholder': "Commencez à taper pour filtre la liste",
     'finalErrorDisplayMessage': "Zoinks! Quelque chose ne vas pas du tout. S'il vous plaît rafraîchir votre navigateur et prévenez-nous à support@iliosproject.org si vous continuez à voir ce message.",

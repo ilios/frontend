@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import EmberUploader from 'ember-uploader';
 import readableFileSize from 'ilios/utils/readable-file-size';
+import { task, timeout } from 'ember-concurrency';
 
 const { FileField, Uploader } = EmberUploader;
-const { RSVP, inject, computed, isEmpty } = Ember;
+const { inject, computed, isEmpty } = Ember;
 const { service } = inject;
-const { Promise } = RSVP;
 
 const MAXIMUM_UPLOAD_ATTEMPTS = 3;
 
@@ -60,27 +60,28 @@ export default FileField.extend({
         uploader.on('progress', (e) => {
           this.get('setUploadPercentage')(e.percent);
         });
-        this.upload(uploader, file, 0);
+
+        return this.get('upload').perform(uploader, file, 0);
       }
 
     });
 
   },
 
-  upload(uploader, file, attempt){
-    return new Promise((resolve, reject) => {
-      uploader.upload(file).then(() => {
-        resolve();
-      }, error => {
-        this.get('setUploadPercentage')(0);
-        if (attempt < MAXIMUM_UPLOAD_ATTEMPTS) {
-          resolve(this.upload(uploader, file, attempt+1));
-        } else {
-          reject(error);
-        }
-      });
-    });
-
-  }
+  upload: task(function * (uploader, file, attempt) {
+    try {
+      let data = yield uploader.upload(file);
+      return data;
+    } catch (error) {
+      this.get('setUploadPercentage')(0);
+      yield timeout(attempt * 1000);
+      if (attempt < MAXIMUM_UPLOAD_ATTEMPTS) {
+        this.get('upload').perform(uploader, file, attempt+1);
+      } else {
+        const i18n = this.get('i18n');
+        throw new Error(i18n.t('general.fileUploadError'));
+      }
+    }
+  }).restartable(),
 
 });

@@ -155,6 +155,7 @@ export default {
     'file': 'Archivo',
     'fileSizeError': 'Este archivo es demasiado grande.  El tamaño máximo es {{maxSize}}.',
     'fileTypeError': 'Archivo mal subido: {{fileType}} no parece ser válido ficha separado archivo.',
+    'fileUploadError': 'No pudimos subir este archivo.   Por favor, asegúrese de que está conectado a la red.  Si este problema persiste, por favor avísenos.',
     'filterByNameOrEmail': 'Aplicar un Filtro por nombre o email',
     'filterPlaceholder': 'Empieza marcando para aplicar un filtro',
     'finalErrorDisplayMessage': '¡Zoinks! Algo es muy incorrecto. Por favor refresque su navegador y avísenos en support@iliosproject.org si sigue viendo este mensaje. ',
