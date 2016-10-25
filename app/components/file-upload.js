@@ -3,8 +3,11 @@ import EmberUploader from 'ember-uploader';
 import readableFileSize from 'ilios/utils/readable-file-size';
 
 const { FileField, Uploader } = EmberUploader;
-const { inject, computed, isEmpty } = Ember;
+const { RSVP, inject, computed, isEmpty } = Ember;
 const { service } = inject;
+const { Promise } = RSVP;
+
+const MAXIMUM_UPLOAD_ATTEMPTS = 3;
 
 let IliosUploader = Uploader.extend({
   iliosHeaders: [],
@@ -57,9 +60,25 @@ export default FileField.extend({
         uploader.on('progress', (e) => {
           this.get('setUploadPercentage')(e.percent);
         });
-        uploader.upload(file);
+        this.upload(uploader, file, 0);
       }
 
+    });
+
+  },
+
+  upload(uploader, file, attempt){
+    return new Promise((resolve, reject) => {
+      uploader.upload(file).then(() => {
+        resolve();
+      }, error => {
+        this.get('setUploadPercentage')(0);
+        if (attempt < MAXIMUM_UPLOAD_ATTEMPTS) {
+          resolve(this.upload(uploader, file, attempt+1));
+        } else {
+          reject(error);
+        }
+      });
     });
 
   }
