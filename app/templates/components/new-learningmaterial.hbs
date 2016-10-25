@@ -131,15 +131,19 @@
       <label class="form-label">{{t 'general.file'}}:</label>
       <div class="form-data">
         {{file-upload
-          finishedUploading='setFile'
-          startUploading='startUploadingFile'
-          setUploadPercentage='setFileUploadPercentage'
+          finishedUploading=(action 'setFile')
+          startUploading=(action 'startUploadingFile')
+          setUploadPercentage=(action 'setFileUploadPercentage')
+          setErrorMessage=(action (mut fileUploadErrorMessage))
           url=uploadPath
         }}
         {{#if showUploadStatus}}
           {{fa-icon 'spinner' spin=true}} {{fileUploadPercentage}}%
         {{else if fileHash}}
           {{fa-icon 'check' class='add'}}
+        {{/if}}
+        {{#if fileUploadErrorMessage}}
+          <span class="validation-error-message">{{fileUploadErrorMessage}}</span>
         {{/if}}
       </div>
     </div>

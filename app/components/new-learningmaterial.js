@@ -108,8 +108,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   classNames: ['new-learning-material'],
 
-  learningMaterialStatuses: [],
-  learningMaterialUserRoles: [],
+  learningMaterialStatuses: null,
+  learningMaterialUserRoles: null,
 
   editorParams: config.froalaEditorDefaults,
 
@@ -125,6 +125,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   copyrightRationale: null,
   owner: null,
   citation: null,
+  fileUploadErrorMessage: false,
 
   actions: {
     save: function(){
@@ -215,7 +216,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         filename: e.filename,
         fileHash: e.fileHash,
         showUploadStatus: false,
-        fileUploadPercentage: 100
+        fileUploadPercentage: 100,
+        fileUploadErrorMessage: null,
       });
     },
 
@@ -223,6 +225,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       set(this, 'fileHash', null);
       set(this, 'showUploadStatus', true);
       set(this, 'fileUploadPercentage', 0);
+      set(this, 'fileUploadErrorMessage', 0);
     },
 
     setFileUploadPercentage(percent) {

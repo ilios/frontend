@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import EmberUploader from 'ember-uploader';
+import readableFileSize from 'ilios/utils/readable-file-size';
 
 const { FileField, Uploader } = EmberUploader;
-const { inject, computed } = Ember;
+const { inject, computed, isEmpty } = Ember;
 const { service } = inject;
 
 let IliosUploader = Uploader.extend({
@@ -17,6 +18,8 @@ let IliosUploader = Uploader.extend({
 
 export default FileField.extend({
   session: service(),
+  iliosConfig: service(),
+  i18n: service(),
   url: '',
   headers: computed('session.isAuthenticated', function(){
     let headers = {};
@@ -28,25 +31,37 @@ export default FileField.extend({
   }),
 
   filesDidChange(files) {
-    const uploadUrl = this.get('url');
-    const uploader = IliosUploader.create({
-      url: uploadUrl,
-      iliosHeaders: this.get('headers')
-    });
-
-    this.sendAction('startUploading');
-
-    uploader.on('didUpload', (e) => {
-      this.sendAction('finishedUploading', e);
-    });
-
-    uploader.on('progress', (e) => {
-      this.sendAction('setUploadPercentage', e.percent);
-    });
-
-    if (!Ember.isEmpty(files)) {
-      uploader.upload(files[0]);
+    if (isEmpty(files)) {
+      return;
     }
+    const file = files[0];
+    const iliosConfig = this.get('iliosConfig');
+    iliosConfig.get('maxUploadSize').then(maxUploadSize => {
+      if (file.size > maxUploadSize) {
+        const i18n = this.get('i18n');
+        const maxSize = readableFileSize(maxUploadSize);
+        this.get('setErrorMessage')(i18n.t('general.fileSizeError', {maxSize}));
+      } else {
+        this.get('startUploading')();
+        const uploadUrl = this.get('url');
+        const uploader = IliosUploader.create({
+          url: uploadUrl,
+          iliosHeaders: this.get('headers')
+        });
+
+
+        uploader.on('didUpload', (e) => {
+          this.get('finishedUploading')(e);
+        });
+
+        uploader.on('progress', (e) => {
+          this.get('setUploadPercentage')(e.percent);
+        });
+        uploader.upload(file);
+      }
+
+    });
+
   }
 
 });

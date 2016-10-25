@@ -153,6 +153,7 @@ export default {
     'expandDetail': 'Show Details',
     'externalId': 'Course ID',
     'file': 'File',
+    'fileSizeError': 'This file is too large.  Maximum size is {{maxSize}}.',
     'fileTypeError': 'Bad file type: {{fileType}} does not appear to be a properly delimited file.',
     'filterByNameOrEmail': 'Filter by name or email',
     'filterPlaceholder': 'Start typing to filter list',
