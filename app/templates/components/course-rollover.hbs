@@ -12,7 +12,7 @@
       value=title
       update=(pipe (action 'changeTitle') (action 'addErrorDisplayFor' 'title'))
       onenter=(perform save)
-      disabled=save.isRunning
+      disabled=isSaving
       focusOut=(action 'addErrorDisplayFor' 'title')
       keyDown=(action 'addErrorDisplayFor' 'title')
       placeholder=(t 'general.courseTitlePlaceholder')
@@ -76,8 +76,8 @@
   </div>
 
   <div class='buttons'>
-    <button disabled={{if (or save.isRunning (not selectedYear) (contains selectedYear loadUnavailableYears.lastSuccessful.value)) true}} class='done text' {{action (perform save)}}>
-      {{#if save.isRunning}}
+    <button disabled={{if (or isSaving (not selectedYear) (contains selectedYear loadUnavailableYears.lastSuccessful.value)) true}} class='done text' {{action (perform save)}}>
+      {{#if isSaving}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
         {{t 'general.done'}}
