@@ -31,7 +31,7 @@ test('create new sequence block Issue #2108', function(assert) {
 
   visit(url);
   andThen(function() {
-    assert.equal(currentPath(), 'curriculumInventoryReport');
+    assert.equal(currentPath(), 'curriculumInventoryReport.index');
     assert.equal(find(newBlockForm).length, 0);
     assert.equal(find(newFormTitle).length, 0);
     click(addSequenceBlock).then(()=>{

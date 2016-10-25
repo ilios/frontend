@@ -93,7 +93,7 @@ test('rollover course', function(assert) {
   this.register('service:store', storeMock);
   let flashmessagesMock = Ember.Service.extend({
     success(message){
-      assert.equal(message, 'general.rolloverSuccess');
+      assert.equal(message, 'general.courseRolloverSuccess');
     }
   });
   this.register('service:flashMessages', flashmessagesMock);
