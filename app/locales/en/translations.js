@@ -162,6 +162,7 @@ export default {
     'file': 'File',
     'fileSizeError': 'This file is too large.  Maximum size is {{maxSize}}.',
     'fileTypeError': 'Bad file type: {{fileType}} does not appear to be a properly delimited file.',
+    'fileUploadError': 'We were unable to upload this file.  Please ensure you are connected to the network.  If this problem persists please let us know.',
     'filterByNameOrEmail': 'Filter by name or email',
     'filterPlaceholder': 'Start typing to filter list',
     'finalErrorDisplayMessage': 'Zoinks! Something is very wrong. Please refresh your browser and let us know at support@iliosproject.org if you continue to see this message.',
