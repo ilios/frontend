@@ -52,50 +52,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   startDate: null,
   skipOfferings: false,
   title: null,
-
-  save: task(function * (){
-    yield timeout(10);
-    this.send('addErrorDisplaysFor', ['title', 'selectedYear']);
-    let {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
-      return;
-    }
-    const ajax = this.get('ajax');
-    const courseId = this.get('course.id');
-    const expandAdvancedOptions = this.get('expandAdvancedOptions');
-    const year = this.get('selectedYear');
-    const newCourseTitle = this.get('title');
-    let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
-    let skipOfferings = this.get('skipOfferings');
-
-    let data = {
-      year,
-      newCourseTitle
-    };
-    if (expandAdvancedOptions && newStartDate) {
-      data.newStartDate = newStartDate;
-    }
-    if (expandAdvancedOptions && skipOfferings) {
-      data.skipOfferings = true;
-    }
-    const host = this.get('host') ? this.get('host') : '';
-    const namespace = this.get('namespace');
-
-    let url = host + '/' + namespace + `/courses/${courseId}/rollover`;
-    const newCoursesObj = yield ajax.request(url, {
-      method: 'POST',
-      data
-    });
-
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
-    flashMessages.success('general.rolloverSuccess');
-    store.pushPayload(newCoursesObj);
-    let newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
-
-    return this.get('visit')(newCourse);
-  }).drop(),
+  isSaving: false,
 
   loadUnavailableYears: task(function * (){
     yield timeout(250); //debounce title changes
@@ -143,6 +100,49 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     changeTitle(newTitle){
       this.set('title', newTitle);
       this.get('loadUnavailableYears').perform();
+    },
+    save(){
+      this.set('isSaving', true);
+      this.send('addErrorDisplaysFor', ['title', 'selectedYear']);
+      this.validate().then(({validations}) => {
+        if (validations.get('isInvalid')) {
+          this.set('isSaving', false);
+        } else {
+          const ajax = this.get('ajax');
+          const courseId = this.get('course.id');
+          const expandAdvancedOptions = this.get('expandAdvancedOptions');
+          const year = this.get('selectedYear');
+          const newCourseTitle = this.get('title');
+          let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
+          let skipOfferings = this.get('skipOfferings');
+
+          let data = {
+            year,
+            newCourseTitle
+          };
+          if (expandAdvancedOptions && newStartDate) {
+            data.newStartDate = newStartDate;
+          }
+          if (expandAdvancedOptions && skipOfferings) {
+            data.skipOfferings = true;
+          }
+          const host = this.get('host') ? this.get('host') : '';
+          const namespace = this.get('namespace');
+
+          let url = host + '/' + namespace + `/courses/${courseId}/rollover`;
+          ajax.request(url, {
+            method: 'POST',
+            data
+          }).then(newCoursesObj => {
+            const flashMessages = this.get('flashMessages');
+            const store = this.get('store');
+            flashMessages.success('general.rolloverSuccess');
+            store.pushPayload(newCoursesObj);
+            const newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
+            this.get('visit')(newCourse);
+          });
+        }
+      });
     }
   }
 });
