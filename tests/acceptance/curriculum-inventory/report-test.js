@@ -1,9 +1,6 @@
-import {
-  module,
-  test
-} from 'qunit';
+import destroyApp from '../../helpers/destroy-app';
+import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from 'ilios/tests/helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
@@ -11,7 +8,8 @@ var url = '/curriculum-inventory-reports/1';
 module('Acceptance: Curriculum Inventory: Report', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
+    setupAuthentication(application, false);
+    server.create('school');
   },
 
   afterEach: function() {
@@ -20,6 +18,15 @@ module('Acceptance: Curriculum Inventory: Report', {
 });
 
 test('create new sequence block Issue #2108', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    id: 1,
+    users: [4136],
+    title: 'developer',
+  });
   server.create('program');
   server.create('curriculumInventoryReport');
   server.create('curriculumInventorySequence');
@@ -39,5 +46,127 @@ test('create new sequence block Issue #2108', function(assert) {
       assert.equal(find(newFormTitle).length, 1);
       assert.equal(getElementText(newFormTitle), getText('New Sequence Block'));
     });
+  });
+});
+
+
+test('rollover hidden from instructors', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('program', {
+    id: 1,
+    'title': 'Doctor of Medicine',
+  });
+  server.create('userRole', {
+    id: 1,
+    users: [4136],
+    title: 'instructor'
+  });
+  server.create('curriculumInventoryReport', {
+    year: 2013,
+    name: 'foo bar',
+    description: 'lorem ipsum',
+    program: 1,
+  });
+  visit(url);
+  const container = '.curriculum-inventory-report-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(find(rollover).length, 0)
+  });
+});
+
+test('rollover visible to developers', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    id: 1,
+    users: [4136],
+    title: 'developer',
+  });
+  server.create('program', {
+    id: 1,
+    'title': 'Doctor of Medicine',
+  });
+  server.create('curriculumInventoryReport', {
+    year: 2013,
+    name: 'foo bar',
+    description: 'lorem ipsum',
+    program: 1,
+  });
+  visit(url);
+  const container = '.curriculum-inventory-report-overview';
+  const rollover = `${container} a.rollover`;
+
+  //return pauseTest();
+  andThen(function() {
+    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(find(rollover).length, 1)
+  });
+});
+
+test('rollover not visible to course directors', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    id: 1,
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('program', {
+    id: 1,
+    'title': 'Doctor of Medicine',
+  });
+  server.create('curriculumInventoryReport', {
+    year: 2013,
+    name: 'foo bar',
+    description: 'lorem ipsum',
+    program: 1,
+  });
+  visit(url);
+  const container = '.curriculum-inventory-report-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(find(rollover).length, 0)
+  });
+});
+
+test('rollover hidden on rollover route', function(assert) {
+  server.create('user', {
+    id: 4136,
+    roles: [1],
+  });
+  server.create('userRole', {
+    id: 1,
+    users: [4136],
+    title: 'course director'
+  });
+  server.create('program', {
+    id: 1,
+    'title': 'Doctor of Medicine',
+  });
+  server.create('curriculumInventoryReport', {
+    year: 2013,
+    name: 'foo bar',
+    description: 'lorem ipsum',
+    program: 1,
+  });
+  visit(`${url}/rollover`);
+  const container = '.curriculum-inventory-report-overview';
+  const rollover = `${container} a.rollover`;
+
+  andThen(function() {
+    assert.equal(currentPath(), 'curriculumInventoryReport.rollover');
+    assert.equal(find(rollover).length, 0)
   });
 });
