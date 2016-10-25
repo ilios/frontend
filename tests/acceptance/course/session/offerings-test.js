@@ -331,8 +331,8 @@ test('users can create a new offering single day', function(assert) {
     assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
     assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
     assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(learnerGroup1).text().trim(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).text().trim(), 'learner group 1', 'correct learner group is picked');
     assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
     assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
   });
@@ -394,8 +394,8 @@ test('users can create a new offering multi-day', function(assert) {
     assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
     assert.equal(find(multiDayStarts).text().trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
     assert.equal(find(multiDayEnds).text().trim(), 'Ends Monday September 12th @ 5:30 PM', 'multi-day statement is correct');
-    assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(learnerGroup1).text().trim(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).text().trim(), 'learner group 1', 'correct learner group is picked');
     assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
     assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
   });
@@ -451,8 +451,8 @@ test('users can create a new small group offering', function(assert) {
     assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
     assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
     assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).text(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).text(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(learnerGroup1).text().trim(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).text().trim(), 'learner group 1', 'correct learner group is picked');
     assert.equal(find(location1).text(), 'default 1', 'correct default location is added');
     assert.equal(find(location2).text(), 'default 2', 'correct default location is added');
     assert.equal(getElementText(instructors1), '0guyM.Mc0son', 'correct default instructors are added');
@@ -510,7 +510,7 @@ test('users can edit existing offerings', function(assert) {
       assert.equal(find(dayOfMonth).text(), 'October 5th', 'day of month is correct');
       assert.equal(find(startTime).text().trim(), 'Starts: 11:45 AM', 'start time is correct');
       assert.equal(find(endTime).text().trim(), 'Ends: 5:55 PM', 'end time is correct');
-      assert.equal(find(learnerGroup1).text(), 'learner group 1', 'correct learner group is picked');
+      assert.equal(find(learnerGroup1).text().trim(), 'learner group 1', 'correct learner group is picked');
       assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
       //@todo: skipping these, works in real life, but doesn't reload the list in tests
       // assert.equal(find(instructor1).text(), '6 guy M. Mc6son', 'instructor is correct');
@@ -588,14 +588,14 @@ test('users can create recurring small groups', function(assert) {
     assert.equal(find(endsTime).eq(2).text().trim(), 'Ends: 3:23 PM', 'third end time is correct');
     assert.equal(find(endsTime).eq(3).text().trim(), 'Ends: 3:23 PM', 'fourth end time is correct');
 
-    assert.equal(find(learnerGroups).eq(0).text(), 'learner group 0', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(1).text(), 'learner group 1', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(2).text(), 'learner group 0', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(3).text(), 'learner group 1', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(4).text(), 'learner group 0', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(5).text(), 'learner group 1', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(6).text(), 'learner group 0', 'fourth correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(7).text(), 'learner group 1', 'fourth correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(0).text().trim(), 'learner group 0', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(1).text().trim(), 'learner group 1', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(2).text().trim(), 'learner group 0', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(3).text().trim(), 'learner group 1', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(4).text().trim(), 'learner group 0', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(5).text().trim(), 'learner group 1', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(6).text().trim(), 'learner group 0', 'fourth correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(7).text().trim(), 'learner group 1', 'fourth correct learner group is picked');
 
     assert.equal(find(locations).eq(0).text(), 'default 1', 'first correct default location is picked');
     assert.equal(find(locations).eq(1).text(), 'default 2', 'first correct default location is picked');
@@ -688,14 +688,14 @@ test('users can create recurring single offerings', function(assert) {
     assert.equal(find(endsTime).eq(2).text().trim(), 'Ends: 3:23 PM', 'third end time is correct');
     assert.equal(find(endsTime).eq(3).text().trim(), 'Ends: 3:23 PM', 'fourth end time is correct');
 
-    assert.equal(find(learnerGroups).eq(0).text(), 'learner group 0', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(1).text(), 'learner group 1', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(2).text(), 'learner group 0', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(3).text(), 'learner group 1', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(4).text(), 'learner group 0', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(5).text(), 'learner group 1', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(6).text(), 'learner group 0', 'fourth correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(7).text(), 'learner group 1', 'fourth correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(0).text().trim(), 'learner group 0', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(1).text().trim(), 'learner group 1', 'first correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(2).text().trim(), 'learner group 0', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(3).text().trim(), 'learner group 1', 'second correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(4).text().trim(), 'learner group 0', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(5).text().trim(), 'learner group 1', 'third correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(6).text().trim(), 'learner group 0', 'fourth correct learner group is picked');
+    assert.equal(find(learnerGroups).eq(7).text().trim(), 'learner group 1', 'fourth correct learner group is picked');
 
   });
 });

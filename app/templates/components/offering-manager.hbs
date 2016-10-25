@@ -15,7 +15,14 @@
     <span class='offering-block-time-offering-learner_groups offering-detail-box'>
       <ul>
         {{#each (await offering.learnerGroups) as |learnerGroup|}}
-          <li>{{learnerGroup.title}}</li>
+          <li>
+            {{learnerGroup.title}}
+            {{#if (is-fulfilled learnerGroup.allParents)}}
+              {{#tooltip-on-element}}
+                {{join ' > ' (map-by 'title' (await learnerGroup.allParents))}}
+              {{/tooltip-on-element}}
+            {{/if}}
+          </li>
         {{else}}
           <li>{{fa-icon 'group'}}</li>
         {{/each}}
