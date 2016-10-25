@@ -4,7 +4,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, inject, set } = Ember;
-const { equal, not } = computed;
+const { equal, not, reads } = computed;
 const { service } = inject;
 
 const Validations = buildValidations({
@@ -68,6 +68,7 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
+  serverVariables: service(),
   init() {
     this._super(...arguments);
     const component = this;
@@ -95,6 +96,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     set(this, 'showUploadStatus', false);
     set(this, 'fileUploadPercentage', 0);
   },
+  host: reads('serverVariables.apiHost'),
+  uploadPath: computed('host', function(){
+    return this.get('host') + '/upload';
+  }),
+
 
   isFile: equal('type', 'file'),
   isCitation: equal('type', 'citation'),
