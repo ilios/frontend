@@ -297,7 +297,7 @@
                     <td class='text-left'>{{offering.room}}</td>
                     <td class='text-left'>
                       <ul>
-                        {{#each offering.allInstructors as |user|}}
+                        {{#each (await offering.allInstructors) as |user|}}
                           <li>{{user.fullName}}</li>
                         {{/each}}
                       </ul>
