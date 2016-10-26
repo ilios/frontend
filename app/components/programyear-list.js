@@ -195,11 +195,19 @@ const ProgramYearProxy = ObjectProxy.extend({
       const currentUser = this.get('currentUser');
       if (programYear.get('isPublishedOrScheduled')) {
         resolve(false);
-      } else {
-        currentUser.get('userIsDeveloper').then(isDeveloper => {
-          resolve(isDeveloper);
-        });
+        return;
       }
+      currentUser.get('userIsDeveloper').then(isDeveloper => {
+        if (! isDeveloper) {
+          resolve(false);
+          return;
+        }
+        programYear.get('cohort').then(cohort => {
+          cohort.get('users').then(users => {
+            resolve(0 === users.length);
+          });
+        });
+      });
     });
   }),
   userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
