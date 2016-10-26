@@ -40,9 +40,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTermTitle: null,
   isSavingNewTerm: false,
   newTerms: [],
+  description: null,
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('newTerms', []);
+    const term = this.get('term');
+    if (term) {
+      this.set('description', term.get('description'));
+    }
   },
   sortedTerms: computed('term.children.[]', function(){
     return new Promise(resolve => {
@@ -72,12 +77,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         this.set('term', newTerm);
       });
     },
-    changeTermDescription(description){
+    changeTermDescription(){
       const term = this.get('term');
+      const description = this.get('description');
       term.set('description', description);
-      term.save().then(newTerm => {
-        this.set('term', newTerm);
-      });
+      return term.save();
+    },
+    revertTermDescriptionChanges(){
+      const term = this.get('term');
+      this.set('description', term.get('description'));
     },
     createTerm(){
       this.send('addErrorDisplayFor', 'newTermTitle');
