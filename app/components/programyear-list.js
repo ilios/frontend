@@ -98,14 +98,6 @@ export default Component.extend({
     itemsToSave++;
     this.incrementSavedItems();
 
-    const classOfYear = savedProgramYear.get('classOfYear');
-    const title = i18n.t('general.classOf', { year: classOfYear });
-
-    let cohort = store.createRecord('cohort', { programYear: savedProgramYear, title });
-    yield cohort.save();
-    itemsToSave++;
-    this.incrementSavedItems();
-
     if (latestProgramYear) {
       const relatedObjectives = yield latestProgramYear.get('objectives');
       const objectives = relatedObjectives.sortBy('id').toArray();
