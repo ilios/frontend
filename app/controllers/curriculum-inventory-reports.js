@@ -172,6 +172,10 @@ export default Controller.extend({
     },
 
     removeCurriculumInventoryReport(report) {
+      let newReports = this.get('newReports');
+      if (newReports.contains(report)) {
+        newReports.removeObject(report);
+      }
       return report.destroyRecord();
     },
 
