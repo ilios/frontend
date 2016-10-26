@@ -60,5 +60,5 @@ test('counts members correctly', function(assert) {
   this.set('learnerGroup', learnerGroup);
   this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-  assert.equal(this.$('.detail-header .info').text().trim(), 'Members:  1 / 2');
+  assert.equal(this.$('header .info').text().trim(), 'Members:  1 / 2');
 });

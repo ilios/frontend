@@ -13,7 +13,7 @@ export default Component.extend({
     this._super(...arguments);
     this.setCheckAllState();
   },
-  classNames: ['learnergroup-user-list'],
+  classNames: ['learnergroup-cohort-user-manager'],
   sortBy: 'firstName',
   users: [],
   usersBeingMoved: [],

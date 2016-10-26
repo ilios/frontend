@@ -12,11 +12,27 @@
   }
 }
 
-@mixin detail-container-title () {
-  @include fill-parent;
+@mixin detail-container-title-style () {
   color: $text-blue;
   font-size: $base-font-size;
   font-weight: bold;
+  text-align: center;
+
+  @include media($large-screen) {
+    text-align: left;
+  }
+
+
+  &.collapsible {
+    &::after {
+      content: '\25BC';
+    }
+  }
+}
+
+@mixin detail-container-title () {
+  @include fill-parent;
+  @include detail-container-title-style;
 
   @include media($large-screen) {
     @include span-columns(8 of 12);
@@ -31,6 +47,7 @@
 
 @mixin detail-container-actions () {
   @include fill-parent;
+  text-align: center;
   vertical-align: middle;
 
   @include media($large-screen) {

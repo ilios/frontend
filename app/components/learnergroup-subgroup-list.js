@@ -9,7 +9,7 @@ const { Promise } = RSVP;
 export default Component.extend({
   store: service(),
   parentGroup: null,
-  classNames: ['detail-block', 'learnergroup-subgroup-list'],
+  classNames: ['learnergroup-subgroup-list'],
   tagName: 'section',
   showNewLearnerGroupForm: false,
   isSaving: false,

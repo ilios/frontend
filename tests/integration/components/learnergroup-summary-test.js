@@ -64,9 +64,9 @@ test('renders with data', function(assert) {
     isEditing=false
   }}`);
 
-  const location = '.overview .form-data:eq(0)';
-  const instructors = '.overview .form-data:eq(1)';
-  const courses = '.overview .form-data:eq(2)';
+  const location = '.learnergroup-overview .defaultlocation span:eq(0)';
+  const instructors = '.learnergroup-overview .defaultinstructors span';
+  const courses = '.learnergroup-overview .associatedcourses div';
 
   return wait().then(()=>{
     assert.equal(this.$(location).text().trim(), 'test location');
@@ -116,8 +116,8 @@ test('Update location', function(assert) {
     isEditing=false
   }}`);
 
-  const location = '.overview .form-data:eq(0)';
-  const editLocation = location + ' .editable';
+  const location = '.learnergroup-overview .defaultlocation span:eq(0)';
+  const editLocation = `${location} .editable`;
   const input =  `${location} input`;
   const save =  `${location} .done`;
   return wait().then(()=>{

@@ -1,0 +1,22 @@
+.learnergroup-cohort-user-manager {
+  @include detail-container($text-blue);
+
+  .title {
+    @include detail-container-title-style;
+  }
+
+  .actions {
+    @include fill-parent;
+    text-align: right;
+  }
+
+  .learnergroup-cohort-user-manager-content {
+    @include detail-container-content;
+
+    .list {
+      @include main-list-box-table;
+      max-height: 360px;
+      overflow: auto;
+    }
+  }
+}

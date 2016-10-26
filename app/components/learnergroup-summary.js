@@ -25,7 +25,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   learnerGroupTitle: null,
   cohortTitle: null,
   topLevelGroupTitle: null,
-  classNames: ['detail-view', 'learnergroup-detail-view'],
+  classNames: ['learnergroup-summary'],
   tagName: 'section',
   location: null,
   manageInstructors: false,

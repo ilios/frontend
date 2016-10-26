@@ -54,7 +54,7 @@ test('it renders', function(assert) {
     removeUsersFromGroup=(action nothing)
   }}`);
 
-  assert.equal(this.$('.detail-title').text().trim(), 'Members (2)');
+  assert.equal(this.$('.title').text().trim(), 'Members (2)');
   assert.equal(this.$(userList).length, 2);
   assert.equal(this.$(user1FirstName).text().trim(), 'Jasper');
   assert.equal(this.$(user1LastName).text().trim(), 'Dog');
@@ -120,8 +120,8 @@ test('it renders when editing', function(assert) {
     removeUsersFromGroup=(action nothing)
   }}`);
 
-  assert.notEqual(this.$('.detail-title').text().search(/Members of current group \(2\)/), -1);
-  assert.notEqual(this.$('.detail-title').text().search(/All other members of top group \(0\)/), -1);
+  assert.notEqual(this.$('.title').text().search(/Members of current group \(2\)/), -1);
+  assert.notEqual(this.$('.title').text().search(/All other members of top group \(0\)/), -1);
   assert.equal(this.$(userList).length, 2);
   assert.equal(this.$(user1CheckBox).length, 1);
   assert.notOk(this.$(user1CheckBox).prop('checked'));

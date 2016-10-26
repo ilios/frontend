@@ -18,7 +18,7 @@ export default Component.extend({
   cohortTitle: null,
   users: [],
   selectedUsers: [],
-  classNames: ['learnergroup-user-list'],
+  classNames: ['learnergroup-user-manager'],
   isEditing: false,
   usersBeingMoved: [],
   sortBy: 'firstName',
