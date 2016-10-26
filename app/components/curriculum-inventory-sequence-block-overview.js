@@ -23,6 +23,7 @@ export default Component.extend({
   duration: null,
   childSequenceOrder: null,
   orderInSequence: null,
+  description: null,
 
   isSaving: false,
   isFinalized: false,
@@ -70,6 +71,7 @@ export default Component.extend({
     const endDate = sequenceBlock.get('endDate');
     const childSequenceOrder = sequenceBlock.get('childSequenceOrder');
     const orderInSequence = sequenceBlock.get('orderInSequence');
+    const description = sequenceBlock.get('description');
     const i18n = this.get('i18n');
     const childSequenceOrderOptions = [
       Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
@@ -94,6 +96,7 @@ export default Component.extend({
       duration,
       childSequenceOrder,
       orderInSequence,
+      description,
       requiredOptions,
       childSequenceOrderOptions,
       isFinalized,
@@ -142,10 +145,16 @@ export default Component.extend({
       block.save();
     },
 
-    changeDescription(value) {
+    changeDescription() {
       let block = this.get('sequenceBlock');
-      block.set('description', value);
-      block.save();
+      const description = this.get('description');
+      block.set('description', description);
+      return block.save();
+    },
+
+    revertDescriptionChanges() {
+      let block = this.get('sequenceBlock');
+      this.set('description', block.get('description'));
     },
 
     changeChildSequenceOrder(value) {
