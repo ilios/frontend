@@ -11,7 +11,6 @@ export default Component.extend({
   classNames: ['programyear-list'],
 
   store: service(),
-  i18n: service(),
   currentUser: service(),
 
   program: null,
@@ -68,7 +67,6 @@ export default Component.extend({
     const latestProgramYear = this.get('sortedContent').get('lastObject');
     const program = this.get('program');
     const store = this.get('store');
-    const i18n = this.get('i18n');
     let itemsToSave = 0;
     this.resetSaveItems();
 
