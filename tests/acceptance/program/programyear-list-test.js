@@ -441,3 +441,36 @@ test('non-privileged users cannot lock and unlock course but can see the icon', 
     });
   });
 });
+
+test('delete-button is not visible for program years with populated cohorts', function(assert) {
+  server.create('user', {
+    id: 1,
+    cohorts: [1]
+  });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+    published: false,
+    cohort: 1
+  });
+  server.create('cohort', {
+    programYear: 1,
+    users: [1]
+  });
+  server.create('userRole', {
+    title: 'Developer',
+  });
+  server.db.users.update(4136, {roles: [1]});
+
+  const firstProgramYearRow = '.list tbody tr:eq(0)';
+  const deleteButtonOnFirstRow = `${firstProgramYearRow} .remove`;
+
+  visit(url);
+  andThen(() => {
+    assert.ok(isPresent(find(firstProgramYearRow)), 'program year is visible');
+    assert.ok(isEmpty(find(deleteButtonOnFirstRow)), 'no delete-button is visible');
+  });
+});
