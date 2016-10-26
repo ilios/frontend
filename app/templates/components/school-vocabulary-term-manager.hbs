@@ -17,7 +17,20 @@
     {{/unless}}
   </p>
   <p class='term-description'>
-    {{inplace-textarea value=term.description save='changeTermDescription' clickPromptTranslation='general.clickToAddTermDescription'}}
+    {{#editable-field
+      value=(if description description (t 'general.clickToAddTermDescription'))
+      save=(action 'changeTermDescription')
+      close=(action 'revertTermDescriptionChanges')
+      as |isSaving save close|
+    }}
+      {{one-way-textarea
+        value=description
+        update=(action (mut description))
+        onenter=save
+        onescape=close
+        disabled=isSaving
+      }}
+    {{/editable-field}}
   </p>
 {{/if}}
 {{#each newTerms as |term|}}
