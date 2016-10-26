@@ -51,7 +51,7 @@ test('it renders', function(assert) {
   }}`);
 
 
-  assert.equal(this.$('.detail-title').text().trim(), 'Cohort Members NOT assigned to top level group  (2)');
+  assert.equal(this.$('.title').text().trim(), 'Cohort Members NOT assigned to top level group  (2)');
   assert.equal(this.$(userList).length, 2);
   assert.equal(this.$(user1CheckBox).length, 1);
   assert.notOk(this.$(user1CheckBox).prop('checked'));

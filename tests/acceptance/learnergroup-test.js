@@ -44,11 +44,13 @@ test('generate new subgroups', function(assert) {
 
   assert.expect(11);
 
-  const expandButton = '.expand-button';
-  const input = '.new-learnergroup input';
-  const done = '.new-learnergroup .done';
-  const multiGroupsButton = '.second-button';
-  const parentLearnergroupTitle = 'learner group 0';
+  const subgroupList = '.learnergroup-subgroup-list';
+  const expandButton = `${subgroupList} .expand-button`;
+  const input = `${subgroupList} .new-learnergroup input`;
+  const done = `${subgroupList} .new-learnergroup .done`;
+  const multiGroupsButton = `${subgroupList} .second-button`;
+  const parentLearnergroupTitle = `learner group 0`;
+  const table = `${subgroupList} .learnergroup-subgroup-list-list table tbody`;
 
   visit('/learnergroups/1');
   // add five subgroups
@@ -57,10 +59,10 @@ test('generate new subgroups', function(assert) {
   fillIn(input, '5');
   click(done);
   function getCellData(row, cell) {
-    return find(`.resultslist-list tbody tr:eq(${row}) td:eq(${cell})`).text().trim();
+    return find(`${table} tr:eq(${row}) td:eq(${cell})`).text().trim();
   }
   andThen(() => {
-    assert.equal(find('.resultslist-list tbody tr').length, 7, 'all subgroups are displayed.');
+    assert.equal(find(`${table} tr`).length, 7, 'all subgroups are displayed.');
     for (let i = 0; i < 5; i++) {
       assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
     }
@@ -73,7 +75,7 @@ test('generate new subgroups', function(assert) {
     fillIn(input, '2');
     click(done);
     andThen(() => {
-      assert.equal(find('.resultslist-list tbody tr').length, 9, 'all subgroups are still displayed.');
+      assert.equal(find(`${table} tr`).length, 9, 'all subgroups are still displayed.');
       assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
       assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
     });
