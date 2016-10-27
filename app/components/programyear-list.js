@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, ObjectProxy, RSVP, run } = Ember;
+const { Component, computed, inject, ObjectProxy, RSVP, run, isPresent } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
 const { hash } = RSVP;
@@ -203,6 +203,10 @@ const ProgramYearProxy = ObjectProxy.extend({
           return;
         }
         programYear.get('cohort').then(cohort => {
+          if (! isPresent(cohort)) {
+            resolve(false);
+            return;
+          }
           cohort.get('users').then(users => {
             resolve(0 === users.length);
           });
