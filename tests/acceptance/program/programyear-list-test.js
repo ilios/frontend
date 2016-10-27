@@ -242,7 +242,6 @@ function getTableDataText(n, i, element = '') {
 }
 
 test('can add a program-year (with no pre-existing program-years)', function(assert) {
-  server.logging = true;
   server.create('program', {
     id: 1,
     school: 1,
