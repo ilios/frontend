@@ -105,7 +105,9 @@
     <span class="universallocator"><strong>{{universalLocator}}{{course.id}}</strong></span>
   </div>
   <div class="coursedirectors">
-    <label>{{t 'general.directors'}}:</label>
+    <label class={{if editable 'clickable link'}} onclick={{if editable (action (toggle 'manageDirectors' this))}}>
+      {{t 'general.directors'}}:
+    </label>
     {{#unless showDirectorManagerLoader}}
       {{#if manageDirectors}}
         {{course-director-manager
@@ -114,13 +116,15 @@
           close=(toggle-action 'manageDirectors' this)
         }}
       {{else}}
-        <span class={{if editable 'clickable link'}} onclick={{if editable (action (toggle 'manageDirectors' this))}}>
-          {{#if (get (await course.directors) 'length')}}
-            {{join '; ' (map-by 'fullName' (sort-by 'lastName' (await course.directors)))}}
-          {{else}}
-            {{t 'general.none'}}
-          {{/if}}
-        </span>
+        {{#if (get (await course.directors) 'length')}}
+          <ul class="tag-list">
+            {{#each (sort-by 'lastName' (await course.directors)) as |director|}}
+              <li>{{director.fullName}}</li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <span>{{t 'general.none'}}</span>
+        {{/if}}
       {{/if}}
     {{else}}
       <span>{{fa-icon 'spinner' spin=true}}</span>
