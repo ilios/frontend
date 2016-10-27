@@ -36,7 +36,6 @@ export default Component.extend({
   tagName: 'section',
 
   searchMore: task(function * () {
-    var self = this;
     var terms = this.get('terms');
     var query = this.get('query');
     const descriptors = yield this.get('store').query('mesh-descriptor', {
@@ -50,18 +49,17 @@ export default Component.extend({
         terms: terms
       });
     });
-    self.set('searchPage', self.get('searchPage') + 1);
-    self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
-    if (self.get('hasMoreSearchResults')) {
+    this.set('searchPage', this.get('searchPage') + 1);
+    this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
+    if (this.get('hasMoreSearchResults')) {
       results.pop();
     }
-    self.get('searchResults').pushObjects(results);
+    this.get('searchResults').pushObjects(results);
   }).drop(),
 
 
   actions: {
     search: function(query){
-      var self = this;
       this.set('searchReturned', false);
       this.set('searching', true);
       this.set('query', query);
@@ -69,21 +67,21 @@ export default Component.extend({
       this.get('store').query('mesh-descriptor', {
         q: query,
         limit: this.get('searchResultsPerPage') + 1
-      }).then(function(descriptors){
+      }).then(descriptors => {
         let results = descriptors.map(function(descriptor){
           return ProxiedDescriptors.create({
             content: descriptor,
             terms: terms
           });
         });
-        self.set('searchReturned', true);
-        self.set('searching', false);
-        self.set('searchPage', 1);
-        self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
-        if (self.get('hasMoreSearchResults')) {
+        this.set('searchReturned', true);
+        this.set('searching', false);
+        this.set('searchPage', 1);
+        this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
+        if (this.get('hasMoreSearchResults')) {
           results.pop();
         }
-        self.set('searchResults', results);
+        this.set('searchResults', results);
       });
     },
 
