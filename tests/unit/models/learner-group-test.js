@@ -358,3 +358,55 @@ test('check sortTitle on sub group', function(assert) {
   });
 
 });
+
+test('check removeUserFromGroupAndAllDescendants', function(assert) {
+  assert.expect(7);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  return learnerGroup.get('allParents').then(groups => {
+    assert.equal(groups.length, 0);
+
+    let user1 = store.createRecord('user');
+
+    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, users: [user1]});
+    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, users: [user1]});
+    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, users: [user1]});
+    let subGroup4 = store.createRecord('learner-group', {parent: subGroup1});
+
+    return subGroup1.removeUserFromGroupAndAllDescendants(user1).then(groups => {
+      assert.equal(groups.length, 3);
+      assert.notOk(groups.contains(learnerGroup));
+      assert.ok(groups.contains(subGroup1));
+      assert.ok(groups.contains(subGroup2));
+      assert.ok(groups.contains(subGroup3));
+      assert.notOk(groups.contains(subGroup4));
+    });
+  });
+});
+
+test('check addUserToGroupAndAllParents', function(assert) {
+  assert.expect(7);
+  let learnerGroup = this.subject();
+  let store = this.store();
+
+  return learnerGroup.get('allParents').then(groups => {
+    assert.equal(groups.length, 0);
+
+    let user1 = store.createRecord('user', {id: 1});
+
+    let subGroup1 = store.createRecord('learner-group', {id: 1, parent: learnerGroup, users: [user1]});
+    let subGroup2 = store.createRecord('learner-group', {id: 2, parent: subGroup1});
+    let subGroup3 = store.createRecord('learner-group', {id: 3, parent: subGroup2});
+    let subGroup4 = store.createRecord('learner-group', {id: 4, parent: subGroup1});
+
+    return subGroup3.addUserToGroupAndAllParents(user1).then(groups => {
+      assert.equal(groups.length, 3);
+      assert.ok(groups.contains(learnerGroup));
+      assert.notOk(groups.contains(subGroup1));
+      assert.ok(groups.contains(subGroup2));
+      assert.ok(groups.contains(subGroup3));
+      assert.notOk(groups.contains(subGroup4));
+    });
+  });
+});
