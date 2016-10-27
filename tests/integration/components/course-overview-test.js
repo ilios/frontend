@@ -175,3 +175,29 @@ test('course external id validation passes on empty value', function(assert) {
     });
   });
 });
+
+test('shows a list of course directors', function(assert) {
+  let storeMock = Service.extend({
+    findAll(what){
+      assert.equal('course-clerkship-type', what);
+      return resolve([]);
+    }
+  });
+  this.register('service:store', storeMock);
+
+  let course = Object.create({
+    clerkshipType: resolve(Object.create()),
+    directors: resolve([
+      Object.create({ 'fullName': 'Adam Zyzzyva', 'lastName': 'Zyzzyva' }),
+      Object.create({ 'fullName': 'Zoe Aaardvark', 'lastName': 'Aardvark' }),
+      Object.create({ 'fullName': 'Mike Middleman', 'lastName': 'Middleman' })
+    ])
+  });
+  this.set('course', course);
+  this.render(hbs`{{course-overview course=course}}`);
+
+  const directorsList = '.coursedirectors ul';
+  assert.equal(this.$(`${directorsList} li:eq(0)`).text().trim(), 'Zoe Aaardvark');
+  assert.equal(this.$(`${directorsList} li:eq(1)`).text().trim(), 'Mike Middleman');
+  assert.equal(this.$(`${directorsList} li:eq(2)`).text().trim(), 'Adam Zyzzyva');
+});
