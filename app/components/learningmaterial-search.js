@@ -18,6 +18,25 @@ export default Component.extend({
   searching: false,
   searchReturned: false,
 
+  searchMore: task(function * () {
+    const query = this.get('query');
+    const results  = yield this.get('store').query('learningMaterial', {
+      q: query,
+      limit: this.get('searchResultsPerPage') + 1,
+      offset: this.get('searchPage') * this.get('searchResultsPerPage'),
+      'order_by[title]': 'ASC',
+    });
+    let lms = results.map(lm => {
+      return lm;
+    });
+    this.set('searchPage', this.get('searchPage') + 1);
+    this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
+    if (this.get('hasMoreSearchResults')) {
+      lms.pop();
+    }
+    this.get('searchResults').pushObjects(lms);
+  }).drop(),
+
   addLearningMaterial: task(function * (lm) {
     yield this.sendAction('add', lm);
   }).enqueue(),
@@ -51,25 +70,6 @@ export default Component.extend({
           lms.pop();
         }
         this.set('searchResults', lms);
-      });
-    },
-    searchMore() {
-      const query = this.get('query');
-      this.get('store').query('learningMaterial', {
-        q: query,
-        limit: this.get('searchResultsPerPage') + 1,
-        offset: this.get('searchPage') * this.get('searchResultsPerPage'),
-        'order_by[title]': 'ASC',
-      }).then(results => {
-        let lms = results.map(lm => {
-          return lm;
-        });
-        this.set('searchPage', this.get('searchPage') + 1);
-        this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
-        if (this.get('hasMoreSearchResults')) {
-          lms.pop();
-        }
-        this.get('searchResults').pushObjects(lms);
       });
     },
     clear(){
