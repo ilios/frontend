@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 import layout from '../templates/components/mesh-manager';
 
 const { Component, computed } = Ember;
@@ -33,6 +34,31 @@ export default Component.extend({
     return terms.sortBy('name');
   }),
   tagName: 'section',
+
+  searchMore: task(function * () {
+    var self = this;
+    var terms = this.get('terms');
+    var query = this.get('query');
+    const descriptors = yield this.get('store').query('mesh-descriptor', {
+      q: query,
+      limit: this.get('searchResultsPerPage') + 1,
+      offset: this.get('searchPage') * this.get('searchResultsPerPage')
+    });
+    let results = descriptors.map(function(descriptor){
+      return ProxiedDescriptors.create({
+        content: descriptor,
+        terms: terms
+      });
+    });
+    self.set('searchPage', self.get('searchPage') + 1);
+    self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
+    if (self.get('hasMoreSearchResults')) {
+      results.pop();
+    }
+    self.get('searchResults').pushObjects(results);
+  }).drop(),
+
+
   actions: {
     search: function(query){
       var self = this;
@@ -60,29 +86,7 @@ export default Component.extend({
         self.set('searchResults', results);
       });
     },
-    searchMore: function() {
-      var self = this;
-      var terms = this.get('terms');
-      var query = this.get('query');
-      this.get('store').query('mesh-descriptor', {
-        q: query,
-        limit: this.get('searchResultsPerPage') + 1,
-        offset: this.get('searchPage') * this.get('searchResultsPerPage')
-      }).then(function(descriptors){
-        let results = descriptors.map(function(descriptor){
-          return ProxiedDescriptors.create({
-            content: descriptor,
-            terms: terms
-          });
-        });
-        self.set('searchPage', self.get('searchPage') + 1);
-        self.set('hasMoreSearchResults', (results.length > self.get('searchResultsPerPage')));
-        if (self.get('hasMoreSearchResults')) {
-          results.pop();
-        }
-        self.get('searchResults').pushObjects(results);
-      });
-    },
+
     clear: function(){
       this.set('searchResults', []);
       this.set('searchReturned', false);

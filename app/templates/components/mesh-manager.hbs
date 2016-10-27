@@ -46,8 +46,11 @@
           </li>
         {{/each}}
       </ul>
-      {{#if hasMoreSearchResults }}
-        <button {{action 'searchMore'}}>{{t 'general.showMore' }}</button>
+      {{#if hasMoreSearchResults}}
+        <button {{action (perform searchMore)}} disabled={{if searchMore.isRunning true}}>
+          {{fa-icon (if searchMore.isRunning 'spinner') spin=(if searchMore.isRunning true false)}}
+          {{t 'general.showMore' }}
+        </button>
       {{/if}}
     </div>
   {{else}}
