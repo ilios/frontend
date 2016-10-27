@@ -301,29 +301,59 @@ export default DS.Model.extend({
   isTopLevelGroup: computed('parent', function(){
     return isEmpty(this.belongsTo('parent').id());
   }),
+  /**
+   * Takes a user out of  a group and then traverses child groups recursivly
+   * to remove the user from them as well.  Will only modify groups where the
+   * user currently exists.
+   * @param User user
+   * @return modified LearnerGroup[]
+   */
   removeUserFromGroupAndAllDescendants(user){
-    let groups = [this];
-    return new Ember.RSVP.Promise(resolve => {
-      this.get('users').removeObject(user);
-      this.get('allDescendants').then(all => {
-        all.forEach(group=>{
-          groups.pushObject(group);
-          group.get('users').removeObject(user);
+    let modifiedGroups = [];
+    const userId = user.get('id');
+    return new Promise(resolve => {
+      if (this.hasMany('users').ids().contains(userId)) {
+        this.get('users').removeObject(user);
+        modifiedGroups.pushObject(this);
+      }
+      this.get('children').then(children => {
+        map(children.toArray(), (group => {
+          return group.removeUserFromGroupAndAllDescendants(user);
+        })).then(groups => {
+          let flat = groups.reduce((flattened, arr) => {
+            return flattened.pushObjects(arr);
+          }, []);
+          modifiedGroups.pushObjects(flat);
+          resolve(modifiedGroups.uniq());
         });
-        resolve(groups);
       });
     });
   },
+  /**
+   * Adds a user to a group and then traverses parent groups recursivly
+   * to add the user to them as well.  Will only modify groups where the
+   * user currently does not exist.
+   * @param User user
+   * @return modified LearnerGroup[]
+   */
   addUserToGroupAndAllParents(user){
-    let groups = [this];
+    let modifiedGroups = [];
+    const userId = user.get('id');
     return new Promise(resolve => {
-      this.get('users').pushObject(user);
-      this.get('allParents').then(all => {
-        all.forEach(group=>{
-          groups.pushObject(group);
-          group.get('users').pushObject(user);
-        });
-        resolve(groups);
+      if (!this.hasMany('users').ids().contains(userId)) {
+        this.get('users').pushObject(user);
+        modifiedGroups.pushObject(this);
+      }
+      this.get('parent').then(parentGroup => {
+        if (isEmpty(parentGroup)) {
+          resolve(modifiedGroups.uniq());
+        } else {
+          parentGroup.addUserToGroupAndAllParents(user).then(parentGroups => {
+            modifiedGroups.pushObjects(parentGroups);
+            resolve(modifiedGroups.uniq());
+          });
+        }
+
       });
     });
   },
