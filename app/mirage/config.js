@@ -232,7 +232,21 @@ export default function() {
   this.get('api/programyears/:id', 'programYear');
   this.put('api/programyears/:id', 'programYear');
   this.delete('api/programyears/:id', 'programYear');
-  this.post('api/programyears', 'programYear');
+  this.post('api/programyears', function(db, request) {
+    let attrs = JSON.parse(request.requestBody);
+    let record = db.programYears.insert(attrs);
+    let programRecord = db.programs.find(record.programYear.program);
+    let cohortAttr = {
+      programYear: record.id,
+      title: 'Class of ' + (parseInt(programRecord.duration, 10) + parseInt(record.programYear.startYear, 10))
+    };
+    const cohortRecord = db.cohorts.insert(cohortAttr);
+    record.programYear.cohort = cohortRecord.id;
+    record = db.programYears.update(record.id, record.programYear);
+    return {
+      programYears: record
+    };
+  });
 
   this.get('api/programyearstewards', getAll);
   this.get('api/programyearstewards/:id', 'programYearSteward');
