@@ -1,4 +1,5 @@
 /* eslint-env node */
+const API_VERSION = require('./api-version.js');
 
 module.exports = function(environment) {
   var ENV = {
@@ -105,6 +106,7 @@ module.exports = function(environment) {
     },
 
     APP: {
+      apiVersion: API_VERSION,
       // Here you can pass flags/options to your application instance
       // when it is created
     },
