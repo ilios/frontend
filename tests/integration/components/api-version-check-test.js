@@ -16,9 +16,10 @@ test('shows no warning when versions match', function(assert) {
   const iliosConfigMock = Service.extend({
     apiVersion: resolve(apiVersion)
   });
+  const warningOverlay = '.api-version-check-warning';
   this.register('service:iliosConfig', iliosConfigMock);
   this.render(hbs`{{api-version-check}}`);
-  assert.equal($('.api-version-check-warning').length, 0);
+  assert.equal($(warningOverlay).length, 0);
 
 });
 
@@ -26,8 +27,9 @@ test('shows warning on mismatch', function(assert) {
   const iliosConfigMock = Service.extend({
     apiVersion: resolve('bad')
   });
+  const warningOverlay = '.api-version-check-warning';
   this.register('service:iliosConfig', iliosConfigMock);
   this.render(hbs`{{api-version-check}}`);
-  assert.equal($('.api-version-check-warning').length, 1);
+  assert.equal($(warningOverlay).length, 1);
 
 });
