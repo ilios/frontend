@@ -1,6 +1,9 @@
 import moment from 'moment';
 import getAll from './helpers/get-all';
 import Mirage from 'ember-cli-mirage';
+import ENV from 'ilios/config/environment';
+
+const { apiVersion } = ENV.APP;
 
 export default function() {
   this.timing = 100;
@@ -406,7 +409,8 @@ export default function() {
 
   this.get('application/config', function() {
     return { config: {
-      type: 'form'
+      type: 'form',
+      apiVersion
     }};
     // return { config: {
     //   type: 'shibboleth',
