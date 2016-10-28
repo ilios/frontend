@@ -28,5 +28,9 @@ export default Ember.Service.extend({
 
   maxUploadSize: computed('config.maxUploadSize', function(){
     return this.itemFromConfig('maxUploadSize');
+  }),
+
+  apiVersion: computed('config.apiVersion', function(){
+    return this.itemFromConfig('apiVersion');
   })
 });
