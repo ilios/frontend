@@ -20,6 +20,8 @@ export default {
     'allSchools': 'Toutes les écoles',
     'allVocabularies': 'Touts vocabulaires',
     'anything': "Quelque chose",
+    'apiVersionMismatch': 'API  conflit de version',
+    'apiVersionMismatchDetails': "Ce 'frontend' ne correspond pas à la version de l'API avec laquelle il communique. Notifiez S'il vous plaît un administrateur ou un propriétaire technique du système quant à cette erreur immédiatement. Vous ne pouvez pas travailler avec Ilios avant que ce ne soit résolu.",
     'assignedTerms': 'Termes assignées',
     'associatedCourses': "Cours Associés",
     'associatedGroups': "Groupes Associés",
