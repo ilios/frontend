@@ -20,6 +20,8 @@ export default {
     'allSchools': 'All Schools',
     'allVocabularies': 'All Vocabularies',
     'anything': 'Anything',
+    'apiVersionMismatch': 'API Version Mismatch',
+    'apiVersionMismatchDetails': 'This frontend does not match the version of the API that it is communicating with. Please notify an administrator or technical owner of the system regarding this error <em>immediately</em>, You cannot work with Ilios until this is resolved',
     'assignedTerms': 'Assigned Terms',
     'associatedCourses': 'Associated Courses',
     'associatedGroups': 'Associated Groups',
