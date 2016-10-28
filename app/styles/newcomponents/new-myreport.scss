@@ -1,0 +1,22 @@
+.new-myreport {
+  background-color: $background-grey;
+  border: 1px solid $header-grey;
+  margin: .5em;
+  padding: 1em 1em 3em;
+
+  label {
+    @include ilios-label;
+  }
+
+  .title {
+    @include fill-parent;
+    @include ilios-heading-h5;
+    color: $ilios-orange;
+  }
+
+  select {
+    width: 85%;
+  }
+
+
+}
