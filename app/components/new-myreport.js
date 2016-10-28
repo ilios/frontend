@@ -21,7 +21,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   i18n: service(),
   currentUser: service(),
   flashMessages: service(),
-  classNames: ['form-container', 'detail-view', 'new-myreport', 'mesh-manager'],
+  classNames: ['new-myreport', 'mesh-manager'],
   title: null,
   currentSchool: null,
   currentSubject: 'course',
