@@ -2,7 +2,7 @@
   <section class='new-result form-container'>
     <div class="new-result-title">{{t 'general.newCurriculumInventoryReport'}}</div>
     <div class="detail-content">
-      <div class="form-col form-col-12">
+      <div class="form-col form-col-12 name">
         <label class="form-label">{{t 'general.name'}}:</label>
         <div class="form-data form-data-text form-input-row">
           {{one-way-input
@@ -20,8 +20,8 @@
           {{/if}}
         </div>
       </div>
-    
-      <div class="form-col form-col-12">
+
+      <div class="form-col form-col-12 description">
         <label class="form-label">{{t 'general.description'}}:</label>
         <div class="form-data form-data-text form-input-row">
           {{one-way-textarea
@@ -32,15 +32,15 @@
           }}
         </div>
       </div>
-    
-      <div class="form-col form-col-12">
+
+      <div class="form-col form-col-12 program">
         <label class="form-label">{{t 'general.program'}}:</label>
         <div class="form-data form-data-text form-input-row">
           {{currentProgram.title}}
         </div>
       </div>
-    
-      <div class="form-col form-col-12">
+
+      <div class="form-col form-col-12 academic-year">
         <label class="form-label">{{t 'general.academicYear'}}:</label>
         <div class="form-data form-data-text form-input-row">
           {{one-way-select
@@ -51,7 +51,7 @@
             update=(action (mut selectedYear))}}
         </div>
       </div>
-    
+
       <div class="form-col-6 form-data-submit">
         <button class='done text' {{action 'save'}}>
           {{#if isSaving}}
