@@ -90,7 +90,7 @@
     "ember-tether": "0.3.1",
     "ember-tooltips": "2.3.2",
     "ember-truth-helpers": "1.2.0",
-    "ember-uploader": "1.2.0",
+    "ember-uploader": "1.2.1",
     "ember-watson": "^0.8.0",
     "emberx-select": "2.2.2",
     "eslint": "^3.4.0",
