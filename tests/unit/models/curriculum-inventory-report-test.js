@@ -2,7 +2,6 @@ import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 
-
 moduleForModel('curriculum-inventory-report', 'Unit | Model | CurriculumInventoryReport', {
   needs: modelList
 });
