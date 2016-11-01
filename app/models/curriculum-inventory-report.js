@@ -17,6 +17,13 @@ export default DS.Model.extend({
   program: DS.belongsTo('program', {async: true}),
   academicLevels: DS.hasMany('curriculum-inventory-academic-level', {async: true}),
 
+  /**
+   * A list of top-level sequence blocks owned by this report.
+   * Returns a promise that resolves to an array of sequence block objects.
+   * @property topLevelSequenceBlocks
+   * @type {Ember.computed}
+   * @public
+   */
   topLevelSequenceBlocks: computed('sequenceBlocks.[]', function(){
     return new Promise(resolve => {
       this.get('sequenceBlocks').then(sequenceBlocks => {
@@ -28,15 +35,34 @@ export default DS.Model.extend({
     });
   }),
 
+  /**
+   * Whether this report has been finalized, or not. Returns a boolean.
+   * @property isFinalized
+   * @type {Ember.computed}
+   * @public
+   */
   isFinalized: computed('export', function(){
     return !! this.belongsTo('export').id();
   }),
 
+  /**
+   * A label corresponding to this report's academic year. Returns a string.
+   * @property yearLabel
+   * @type {Ember.computed}
+   * @public
+   */
   yearLabel: computed('year', function() {
     const year = this.get('year');
     return year + ' - ' + (parseInt(year, 10) + 1);
   }),
 
+  /**
+   * A list of courses that area linked to sequence blocks in this report.
+   * Returns a promise that resolves to an array of course objects.
+   * @property linkedCourses
+   * @type {Ember.computed}
+   * @public
+   */
   linkedCourses: computed('sequenceBlocks.@each.course', function() {
     return new Promise(resolve => {
       this.get('sequenceBlocks').then(sequenceBlocks => {
@@ -56,6 +82,12 @@ export default DS.Model.extend({
     })
   }),
 
+  /**
+   * Whether this report has any courses linked to it via its sequence blocks, or not. Returns a boolean.
+   * @property hasLinkedCourses
+   * @type {Ember.computed}
+   * @public
+   */
   hasLinkedCourses: computed('linkedCourses.[]', function(){
     return new Promise(resolve => {
       this.get('linkedCourses').then(linkedCourses => {
@@ -65,6 +97,15 @@ export default DS.Model.extend({
     });
   }),
 
+  /**
+   * A list of published courses that share the same academic year and owning school association as this report,
+   * and therefore are eligible to be linked to sequence blocks of this report.
+   * Already linked courses are excluded.
+   * Returns a promise that resolves to an array of course objects.
+   * @property linkableCourses
+   * @type {Ember.computed}
+   * @public
+   */
   linkableCourses: computed('year', 'linkedCourses.[]', function(){
     return new Promise(resolve => {
       this.get('program').then(program => {
