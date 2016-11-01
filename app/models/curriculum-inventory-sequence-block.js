@@ -31,6 +31,17 @@ export default DS.Model.extend({
   isUnordered: equal('childSequenceOrder', 2),
   isParallel: equal('childSequenceOrder', 3),
 
+  /**
+   * A list of all ancestors (parent, its parents parent etc) of this sequence block.
+   * First element of the list is the block's direct ancestor (parent), while the last element is the oldest ancestor.
+   *
+   * Returns a promise that resolves to an array of sequence block objects.
+   * If this sequence block is a top-level block within its owning report, then that array is empty.
+   * @property allParents
+   * @type {Ember.computed}
+   * @public
+   * @todo Rename this property to 'ancestors'. [ST 2016/11/01]
+   */
   allParents: computed('parent', 'parent.allParents.[]', function(){
     return new Promise(resolve => {
       this.get('parent').then(parent => {
