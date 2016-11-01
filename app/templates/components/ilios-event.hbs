@@ -1,4 +1,4 @@
-{{#if event}}
+{{#if (and event (is-fulfilled courseObjectives) (is-fulfilled courseLearningMaterials) (is-fulfilled sessionObjectives) (is-fulfilled sessionLearningMaterials))}}
   <div class='ilios-event-print-course'>
     {{#if course.isPublishedOrScheduled}}
       {{#link-to 'printCourse' course}}
@@ -7,27 +7,29 @@
     {{/if}}
   </div>
   {{ilios-calendar-single-event
-    courseTitle=course.title
-    sessionTitle=sessionTitle.content
-    description=description.content
-    offeredAtPhrase=offeredAt
+    courseTitle=(get (await course) 'title')
+    sessionTitle=(await sessionTitle)
+    description=(await description)
+    offeredAtPhrase=(t 'general.offeredAt' date=(moment-format event.startDate 'dddd, MMMM Do YYYY, h:mm a'))
     location=event.location
-    taughtByPhrase=taughtBy.content
-    sessionIsPhrase=sessionIs.content
-    courseObjectivesPhrase=courseObjectivesPhrase
-    courseLearningMaterialsPhrase=courseLearningMaterialsPhrase
-    courseObjectives=courseObjectives
-    courseLearningMaterials=courseLearningMaterials
-    sessionObjectivesPhrase=sessionObjectivesPhrase
-    sessionLearningMaterialsPhrase=sessionLearningMaterialsPhrase
-    sessionObjectives=sessionObjectives
-    sessionLearningMaterials=sessionLearningMaterials
-    requiredPhrase=requiredPhrase
-    noContentPhrase=noContentPhrase
+    taughtByPhrase=taughtBy
+    sessionIsPhrase=(await sessionIs)
+    courseObjectivesPhrase=(t 'general.courseObjectives')
+    courseLearningMaterialsPhrase=(t 'general.courseLearningMaterials')
+    courseObjectives=(await courseObjectives)
+    courseLearningMaterials=(await courseLearningMaterials)
+    sessionObjectivesPhrase=(t 'general.sessionObjectives')
+    sessionLearningMaterialsPhrase=(t 'general.sessionLearningMaterials')
+    sessionObjectives=(await sessionObjectives)
+    sessionLearningMaterials=(await sessionLearningMaterials)
+    requiredPhrase=(t 'general.required')
+    noContentPhrase=(t 'general.none')
     lastModified=event.lastModified
-    attireRequired=thesession.attireRequired
-    attireRequiredPhrase=attireRequiredPhrase
-    equipmentRequired=thesession.equipmentRequired
-    equipmentRequiredPhrase=equipmentRequiredPhrase
+    attireRequired=(get (await session) 'attireRequired')
+    attireRequiredPhrase=(t 'general.specialAttireIsRequired')
+    equipmentRequired=(get (await session) 'equipmentRequired')
+    equipmentRequiredPhrase=(t 'general.specialEquipmentIsRequired')
   }}
+{{else}}
+  {{pulse-loader}}
 {{/if}}

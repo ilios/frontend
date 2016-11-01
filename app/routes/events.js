@@ -18,7 +18,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     if(container === 'U'){
       service = this.get('userEvents');
     }
-    
+
     return service.getEventForSlug(slug);
   }
 });
