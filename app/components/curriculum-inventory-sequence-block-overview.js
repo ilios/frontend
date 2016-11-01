@@ -14,7 +14,6 @@ export default Component.extend({
   sequenceBlock: null,
   parent: null,
   report: null,
-  linkableCourses: [],
   minimum: 0,
   maximum: 0,
   orderInSequenceOptions: [],
@@ -24,7 +23,6 @@ export default Component.extend({
   childSequenceOrder: null,
   orderInSequence: null,
   description: null,
-
   isSaving: false,
   isFinalized: false,
   isManagingSessions: false,
@@ -57,14 +55,6 @@ export default Component.extend({
         orderInSequenceOptions.pushObject(Ember.Object.create({ 'id': num, 'title': num }));
       }
     }
-
-    let linkableCourses = yield report.get('linkableCourses');
-    linkableCourses = linkableCourses.toArray();
-    const course = yield sequenceBlock.get('course');
-    if (course) {
-      linkableCourses.pushObject(course);
-    }
-
     const linkedSessions = yield sequenceBlock.get('sessions');
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
@@ -90,7 +80,6 @@ export default Component.extend({
       academicLevels,
       isInOrderedSequence,
       orderInSequenceOptions,
-      linkableCourses,
       startDate,
       endDate,
       duration,
@@ -132,6 +121,53 @@ export default Component.extend({
     });
   }),
 
+  /**
+   * A list of courses that can be linked to this sequence block.
+   * Returns a promise that resolves to an array of course objects.
+   * @property linkableCourses
+   * @type {Ember.computed}
+   * @public
+   */
+  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', function(){
+    return new Promise(resolve => {
+      const report = this.get('report');
+      const sequenceBlock = this.get('sequenceBlock');
+      report.get('program').then(program => {
+        let schoolId = program.belongsTo('school').id();
+        this.get('store').query('course', {
+          filters: {
+            school: [schoolId],
+            published: true,
+            year: report.get('year'),
+          },
+          limit: 10000
+        }).then(allLinkableCourses => {
+          report.get('linkedCourses').then(linkedCourses => {
+            // Filter out all courses that are linked to (sequence blocks in) this report.
+            let linkableCourses = allLinkableCourses.filter(function(course) {
+              return ! linkedCourses.contains(course);
+            });
+            // Always add the currently linked course to this list, if existent.
+            sequenceBlock.get('course').then(course => {
+              if (isPresent(course)) {
+                linkableCourses.pushObject(course);
+              }
+              resolve(linkableCourses);
+            });
+          });
+        });
+      });
+    });
+  }),
+
+  changeCourse: task(function * (courseId) {
+    let linkableCourses = yield this.get('linkableCourses');
+    let course = linkableCourses.toArray().findBy('id', courseId);
+    let block = this.get('sequenceBlock');
+    block.set('course', course);
+    yield block.save();
+  }).drop(),
+
   actions: {
     changeRequired: function(value){
       let block = this.get('sequenceBlock');
@@ -170,14 +206,6 @@ export default Component.extend({
       let academicYear = this.get('academicLevels').findBy('id', value);
       let block = this.get('sequenceBlock');
       block.set('academicLevel', academicYear);
-      block.save();
-    },
-
-    changeCourse(value) {
-      let linkableCourses = this.get('linkableCourses');
-      let course = linkableCourses.findBy('id', value);
-      let block = this.get('sequenceBlock');
-      block.set('course', course);
       block.save();
     },
 

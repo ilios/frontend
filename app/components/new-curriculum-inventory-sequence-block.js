@@ -83,7 +83,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   orderInSequence: 0,
   childSequenceOrder: null,
   isInOrderedSequence: false,
-  linkableCourse: [],
   startDate: null,
   endDate: null,
   course: null,
@@ -123,7 +122,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (isPresent(parent)) {
       academicLevel = yield parent.get('academicLevel');
     }
-    const linkableCourses = yield report.get('linkableCourses');
     const i18n = this.get('i18n');
     const childSequenceOrderOptions = [
       Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
@@ -144,15 +142,45 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       isInOrderedSequence,
       orderInSequence,
       orderInSequenceOptions,
-      linkableCourses,
       requiredOptions,
       childSequenceOrderOptions,
       required,
       childSequenceOrder,
     });
-
     this.set('isLoaded', true);
   }).restartable(),
+
+  /**
+   * A list of courses that can be linked to this sequence block.
+   * Returns a promise that resolves to an array of course objects.
+   * @property linkableCourses
+   * @type {Ember.computed}
+   * @public
+   */
+  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', function(){
+    return new Promise(resolve => {
+      const report = this.get('report');
+      report.get('program').then(program => {
+        let schoolId = program.belongsTo('school').id();
+        this.get('store').query('course', {
+          filters: {
+            school: [schoolId],
+            published: true,
+            year: report.get('year'),
+          },
+          limit: 10000
+        }).then(allLinkableCourses => {
+          report.get('linkedCourses').then(linkedCourses => {
+            // Filter out all courses that are linked to (sequence blocks in) this report.
+            let linkableCourses = allLinkableCourses.filter(function(course) {
+              return ! linkedCourses.contains(course);
+            });
+            resolve(linkableCourses);
+          });
+        });
+      });
+    });
+  }),
 
   actions: {
     save: function(){

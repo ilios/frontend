@@ -9,10 +9,11 @@
         {{inplace-select
           displayValueOverride=(await sequenceBlock.course.title)
           value=(await sequenceBlock.course.id)
-          options=(sort-by 'title' linkableCourses)
+          options=(sort-by 'title' (await linkableCourses))
           showSelectPrompt=true
           selectPromptTranslation='general.selectCourse'
-          save='changeCourse'
+          save=(perform changeCourse)
+          disabled=changeCourse.isRunning
         }}
       {{/if}}
       {{#if (is-fulfilled sequenceBlock.course)}}
