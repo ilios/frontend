@@ -6,10 +6,10 @@ const { service } = inject;
 const { reads } = computed;
 
 export default AjaxService.extend({
-  serverVariables: service(),
+  iliosConfig: service(),
   session: service(),
 
-  host: reads('serverVariables.apiHost'),
+  host: reads('iliosConfig.apiHost'),
 
   headers: computed('session.isAuthenticated', function(){
     let headers = {};

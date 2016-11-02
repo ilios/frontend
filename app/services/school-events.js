@@ -10,9 +10,9 @@ export default Ember.Service.extend(EventMixin, {
   store: service(),
   currentUser: service(),
   ajax: service(),
-  serverVariables: service(),
+  iliosConfig: service(),
 
-  namespace: reads('serverVariables.apiNameSpace'),
+  namespace: reads('iliosConfig.apiNameSpace'),
 
   getEvents(schoolId, from, to){
     var deferred = Ember.RSVP.defer();

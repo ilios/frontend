@@ -22,7 +22,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   ajax: service(),
   store: service(),
   flashMessages: service(),
-  serverVariables: service(),
+  iliosConfig: service(),
   didReceiveAttrs(){
     this._super(...arguments);
     const report = this.get('report');
@@ -44,8 +44,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('years', years);
   },
 
-  host: reads('serverVariables.apiHost'),
-  namespace: reads('serverVariables.apiNameSpace'),
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
   classNames: ['curriculum-inventory-report-rollover'],
   years: [],
   selectedYear: null,

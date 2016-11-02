@@ -23,13 +23,13 @@ export default Ember.Component.extend({
     this.set('expiresAt', twoWeeksFromNow.toDate());
     this.set('generatedJwt', null);
   },
-  serverVariables: service(),
+  iliosConfig: service(),
   ajax: service(),
   flashMessages: service(),
   session: service(),
 
-  host: reads('serverVariables.apiHost'),
-  namespace: reads('serverVariables.apiNameSpace'),
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
   expiresAt: null,
   maxDate: null,
   minDate: null,

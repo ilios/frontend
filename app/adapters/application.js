@@ -8,10 +8,10 @@ const { reads } = computed;
 const { RESTAdapter } = DS;
 
 export default RESTAdapter.extend(DataAdapterMixin, {
-  serverVariables: service(),
+  iliosConfig: service(),
 
-  host: reads('serverVariables.apiHost'),
-  namespace: reads('serverVariables.apiNameSpace'),
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
 
   coalesceFindRequests: true,
 
