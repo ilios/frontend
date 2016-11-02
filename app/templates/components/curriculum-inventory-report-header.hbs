@@ -26,7 +26,7 @@
 </div>
 <div class ='header-actions'>
   <a class="button" {{action (perform downloadReport report)}}>
-    <button>
+    <button class="download">
       {{#if downloadFromSameDomain}}
         {{fa-icon (if downloadReport.isRunning 'spinner' 'download') spin=(if downloadReport.isRunning true false)}}
       {{else}}
@@ -36,6 +36,6 @@
     </button>
   </a>
   {{#unless isFinalized}}
-    <button {{action 'finalize'}} >{{t 'general.finalize'}}</button>
+    <button {{action 'finalize'}} class="finalize">{{t 'general.finalize'}}</button>
   {{/unless}}
 </div>
