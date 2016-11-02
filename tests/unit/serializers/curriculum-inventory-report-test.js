@@ -23,10 +23,22 @@ test('it serializes records', function(assert) {
 test('it removes all non postable fields', function(assert) {
   let record = this.subject();
   Ember.run(()=> {
-    var uri = "/abandon/all/hope/ye/who/enter/here";
+    let uri = "/abandon/all/hope/ye/who/enter/here";
     record.set('absoluteFileUri', uri);
     assert.equal(record.get('absoluteFileUri'), uri);
-    var serializedRecord = record.serialize();
+    let serializedRecord = record.serialize();
     assert.ok(!('absoluteFileUri' in serializedRecord));
+  });
+});
+
+test('start and end date are formatted during serialization', function(assert) {
+  let record = this.subject();
+  Ember.run(()=> {
+    record.set('startDate', new Date());
+    record.set('endDate', new Date());
+    let serializedRecord = record.serialize();
+    const pattern = /\d{4}-\d{2}-\d{2}/;
+    assert.ok(serializedRecord.startDate.match(pattern));
+    assert.ok(serializedRecord.endDate.match(pattern));
   });
 });
