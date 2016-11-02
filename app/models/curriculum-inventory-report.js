@@ -17,7 +17,14 @@ export default DS.Model.extend({
   program: DS.belongsTo('program', {async: true}),
   academicLevels: DS.hasMany('curriculum-inventory-academic-level', {async: true}),
 
-  topLevelSequenceBlocks: computed('sequenceBlocks.[]', function(){
+  /**
+   * A list of top-level sequence blocks owned by this report.
+   * Returns a promise that resolves to an array of sequence block objects.
+   * @property topLevelSequenceBlocks
+   * @type {Ember.computed}
+   * @public
+   */
+  topLevelSequenceBlocks: computed('sequenceBlocks.[]', function () {
     return new Promise(resolve => {
       this.get('sequenceBlocks').then(sequenceBlocks => {
         let topLevelBlocks = sequenceBlocks.filter(function (block) {
@@ -28,16 +35,35 @@ export default DS.Model.extend({
     });
   }),
 
-  isFinalized: computed('export', function(){
-    return !! this.belongsTo('export').id();
+  /**
+   * Whether this report has been finalized, or not. Returns a boolean.
+   * @property isFinalized
+   * @type {Ember.computed}
+   * @public
+   */
+  isFinalized: computed('export', function () {
+    return !!this.belongsTo('export').id();
   }),
 
-  yearLabel: computed('year', function() {
+  /**
+   * A label corresponding to this report's academic year. Returns a string.
+   * @property yearLabel
+   * @type {Ember.computed}
+   * @public
+   */
+  yearLabel: computed('year', function () {
     const year = this.get('year');
     return year + ' - ' + (parseInt(year, 10) + 1);
   }),
 
-  linkedCourses: computed('sequenceBlocks.@each.course', function() {
+  /**
+   * A list of courses that area linked to sequence blocks in this report.
+   * Returns a promise that resolves to an array of course objects.
+   * @property linkedCourses
+   * @type {Ember.computed}
+   * @public
+   */
+  linkedCourses: computed('sequenceBlocks.@each.course', function () {
     return new Promise(resolve => {
       this.get('sequenceBlocks').then(sequenceBlocks => {
         let promises = [];
@@ -47,8 +73,8 @@ export default DS.Model.extend({
         });
 
         all(promises).then(courses => {
-          courses = courses.filter(function(course) {
-            return ! isEmpty(course);
+          courses = courses.filter(function (course) {
+            return !isEmpty(course);
           });
           resolve(courses);
         });
@@ -56,35 +82,19 @@ export default DS.Model.extend({
     })
   }),
 
-  hasLinkedCourses: computed('linkedCourses.[]', function(){
+  /**
+   * Whether this report has any courses linked to it via its sequence blocks, or not. Returns a boolean.
+   * @property hasLinkedCourses
+   * @type {Ember.computed}
+   * @public
+   */
+  hasLinkedCourses: computed('linkedCourses.[]', function () {
     return new Promise(resolve => {
       this.get('linkedCourses').then(linkedCourses => {
-        let hasCourses = ! Ember.isEmpty(linkedCourses);
+        let hasCourses = !Ember.isEmpty(linkedCourses);
         resolve(hasCourses);
       })
     });
-  }),
-
-  linkableCourses: computed('year', 'linkedCourses.[]', function(){
-    return new Promise(resolve => {
-      this.get('program').then(program => {
-        let schoolId = program.belongsTo('school').id();
-        this.get('store').query('course', {
-          filters: {
-            school: [schoolId],
-            published: true,
-            year: this.get('year'),
-          },
-          limit: 10000
-        }).then(allLinkableCourses => {
-          this.get('linkedCourses').then(linkedCourses => {
-            let linkableCourses = allLinkableCourses.filter(function(course) {
-              return ! linkedCourses.contains(course);
-            });
-            resolve(linkableCourses);
-          })
-        });
-      });
-    });
   })
 });
+
