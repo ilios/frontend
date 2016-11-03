@@ -1,7 +1,7 @@
 {
   "name": "ilios",
   "dependencies": {
-    "ember": "~2.8.2",
+    "ember": "~2.9.1",
     "ember-uploader": "0.3.11",
     "neat": "~1.7.2",
     "normalize.css": "~3.0.3",
