@@ -60,7 +60,7 @@ test('change title fails on empty value', function(assert) {
   let block = Object.create({
     title: 'block title',
     save(){
-      assert.fail('save() should never have been invoked.');
+      assert.ok(false, 'Save action should not have been invoked.');
     }
   });
   this.set('sequenceBlock', block);
@@ -80,7 +80,7 @@ test('change title fails on too-short value', function(assert) {
   let block = Object.create({
     title: 'block title',
     save(){
-      assert.fail('save() should never have been invoked.');
+      assert.ok(false, 'Save action should not have been invoked.');
     }
   });
   this.set('sequenceBlock', block);
@@ -100,7 +100,7 @@ test('change title fails on overlong value', function(assert) {
   let block = Object.create({
     title: 'block title',
     save(){
-      assert.fail('save() should never have been invoked.');
+      assert.ok(false, 'Save action should not have been invoked.');
     }
   });
   this.set('sequenceBlock', block);
