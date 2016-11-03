@@ -70,7 +70,7 @@ test('change name fails on empty value', function(assert) {
     absoluteFileUri: 'foo/bar',
     name: 'old name',
     save(){
-      assert.fail('save() should never have been invoked.');
+      assert.ok(false, 'Save action should not have been invoked.');
     }
   });
   this.set('report', report);
