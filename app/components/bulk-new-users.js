@@ -83,7 +83,7 @@ export default Component.extend(NewUser, {
   i18n: service(),
   ajax: service(),
   flashMessages: service(),
-  serverVariables: service(),
+  iliosConfig: service(),
 
   classNames: ['bulk-new-users'],
   file: null,
@@ -93,8 +93,8 @@ export default Component.extend(NewUser, {
   savingUserErrors: null,
   savingAuthenticationErrors: null,
   fileUploadError: false,
-  host: reads('serverVariables.apiHost'),
-  namespace: reads('serverVariables.apiNameSpace'),
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
 
   existingUsernames(){
     const store = this.get('store');

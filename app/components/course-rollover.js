@@ -25,7 +25,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   ajax: service(),
   store: service(),
   flashMessages: service(),
-  serverVariables: service(),
+  iliosConfig: service(),
   didReceiveAttrs(){
     this._super(...arguments);
     let thisYear = parseInt(moment().format('YYYY'));
@@ -42,8 +42,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.get('loadUnavailableYears').perform();
     this.get('changeSelectedYear').perform(thisYear);
   },
-  host: reads('serverVariables.apiHost'),
-  namespace: reads('serverVariables.apiNameSpace'),
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
   classNames: ['course-rollover'],
   years: [],
   selectedYear: null,

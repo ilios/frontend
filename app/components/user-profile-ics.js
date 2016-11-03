@@ -7,7 +7,7 @@ const { service } = inject;
 const { reads } = computed;
 
 export default Component.extend({
-  serverVariables: service(),
+  iliosConfig: service(),
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -19,7 +19,7 @@ export default Component.extend({
     }
   },
 
-  host: reads('serverVariables.apiHost'),
+  host: reads('iliosConfig.apiHost'),
 
   classNameBindings: [':user-profile-ics', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
 

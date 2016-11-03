@@ -68,7 +68,7 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
-  serverVariables: service(),
+  iliosConfig: service(),
   init() {
     this._super(...arguments);
     const component = this;
@@ -96,7 +96,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     set(this, 'showUploadStatus', false);
     set(this, 'fileUploadPercentage', 0);
   },
-  host: reads('serverVariables.apiHost'),
+  host: reads('iliosConfig.apiHost'),
   uploadPath: computed('host', function(){
     return this.get('host') + '/upload';
   }),
