@@ -40,9 +40,9 @@ test('save', function(assert) {
   this.set('block', block);
   this.set('saveAction', saveAction);
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-  this.$('.minimum input').val('50');
+  this.$('.minimum input').val(newMinimum);
   this.$('.minimum input').trigger('change');
-  this.$('.maximum input').val('100');
+  this.$('.maximum input').val(newMaximum);
   this.$('.maximum input').trigger('change');
   this.$('.buttons .done').click();
 });
