@@ -4,8 +4,8 @@ import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
 const { Component, computed, isPresent, RSVP, inject } = Ember;
-const { PromiseObject } = DS;
 const { service } = inject;
+const { Promise } = RSVP;
 
 export default Component.extend({
   init() {
@@ -317,20 +317,17 @@ export default Component.extend({
     return this.get('allCourses');
   }),
   selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
-    let defer = RSVP.defer();
-
-    if(this.get('schoolPickedByUser')){
-      defer.resolve(this.get('schoolPickedByUser'));
-    } else {
-      this.get('currentUser').get('model').then(user => {
-        user.get('school').then(school => {
-          defer.resolve(school);
+    const schoolPickedByUser = this.get('schoolPickedByUser');
+    return new Promise(resolve => {
+      if (schoolPickedByUser)  {
+        resolve(schoolPickedByUser);
+      } else {
+        this.get('currentUser').get('model').then(user => {
+          user.get('school').then(school => {
+            resolve(school);
+          });
         });
-      });
-    }
-
-    return PromiseObject.create({
-      promise: defer.promise
+      }
     });
   }),
   hasMoreThanOneSchool: computed.gt('schools.length', 1),
@@ -346,18 +343,17 @@ export default Component.extend({
   schools: computed('allSchools.[]', 'selectedSchool', function(){
     return this.get('allSchools').sortBy('title');
   }),
-  selectedAcademicYear: computed('academicYearSelectedByUser', function(){
-    if(this.get('academicYearSelectedByUser')){
-      //wrap it in a proxy so the is-equal comparison works the same as the promise
-      return DS.PromiseObject.create({
-        promise: RSVP.resolve(this.get('academicYearSelectedByUser'))
-      });
-    }
-
-    return DS.PromiseObject.create({
-      promise: this.get('allAcademicYears').then(years => {
-        return years.sortBy('title').get('lastObject');
-      })
+  selectedAcademicYear: computed('academicYearSelectedByUser', 'allAcademicYears.[]', function(){
+    const academicYearSelectedByUser = this.get('academicYearSelectedByUser');
+    return new Promise(resolve => {
+      if (academicYearSelectedByUser)  {
+        resolve(academicYearSelectedByUser);
+      } else {
+        this.get('allAcademicYears').then(years => {
+          const year = years.sortBy('title').get('lastObject');
+          resolve(year);
+        });
+      }
     });
   }),
   allAcademicYears: computed(function(){
@@ -423,24 +419,6 @@ export default Component.extend({
   }),
 
   actions: {
-    changeDate(newDate){
-      this.sendAction('changeDate', newDate);
-    },
-    changeView(newView){
-      this.sendAction('changeView', newView);
-    },
-    selectEvent(event){
-      this.sendAction('selectEvent', event);
-    },
-    toggleShowFilters() {
-      this.sendAction('toggleShowFilters');
-    },
-    toggleMySchedule() {
-      this.sendAction('toggleMySchedule');
-    },
-    toggleCourseFilters() {
-      this.sendAction('toggleCourseFilters');
-    },
     toggleSessionType(sessionType){
       if(this.get('selectedSessionTypes').contains(sessionType)){
         this.get('selectedSessionTypes').removeObject(sessionType);
@@ -468,25 +446,6 @@ export default Component.extend({
       } else {
         this.get('selectedCourses').pushObject(course);
       }
-    },
-
-    pickSchool() {
-      let selectedEl = this.$('.calendar-school-picker select')[0];
-      let selectedIndex = selectedEl.selectedIndex;
-      const schools = this.get('schools');
-      let school = schools.toArray()[selectedIndex];
-
-      this.sendAction('changeSchool', school);
-    },
-
-    changeSelectedYear() {
-      let selectedEl = this.$('.calendar-year-picker select')[0];
-      let selectedIndex = selectedEl.selectedIndex;
-      this.get('academicYears').then(years => {
-        let year = years.toArray()[selectedIndex];
-
-        this.sendAction('changeAcademicYear', year);
-      });
     },
 
     clearFilters() {

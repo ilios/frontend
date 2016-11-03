@@ -16,17 +16,17 @@
       selectedView=selectedView
       mySchedule=mySchedule
       showFilters=showFilters
-      changeDate='changeDate'
-      changeView='changeView'
-      selectEvent='selectEvent'
-      toggleMySchedule='toggleMySchedule'
-      toggleShowFilters='toggleShowFilters'
-      academicYearSelectedByUser=academicYearSelectedByUser
-      schoolPickedByUser=schoolPickedByUser
-      changeAcademicYear='changeAcademicYear'
-      changeSchool='changeSchool'
+      changeDate=(action 'changeDate')
+      changeView=(action (mut view))
+      selectEvent=(action 'selectEvent')
+      toggleMySchedule=(action 'toggleMySchedule')
+      toggleShowFilters=(action 'toggleShowFilters')
+      academicYearSelectedByUser=selectedAcademicYear
+      schoolPickedByUser=selectedSchool
+      changeAcademicYear=(action (mut academicYear))
+      changeSchool=(action (mut school))
       courseFilters=courseFilters
-      toggleCourseFilters='toggleCourseFilters'
+      toggleCourseFilters=(action (toggle 'courseFilters' this))
     }}
   {{else}}
     {{dashboard-agenda}}

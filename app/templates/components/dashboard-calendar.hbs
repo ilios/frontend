@@ -4,7 +4,7 @@
       value=mySchedule
       onLabel='general.mySchedule'
       offLabel='general.allEvents'
-      action='toggleMySchedule'
+      action=toggleMySchedule
       cssId='togglemyschedule'
     }}
   </div>
@@ -14,7 +14,7 @@
       value=showFilters
       onLabel='general.showFilters'
       offLabel='general.hideFilters'
-      action='toggleShowFilters'
+      action=toggleShowFilters
       cssId='showfilters'
     }}
   </div>
@@ -25,7 +25,7 @@
         value=courseFilters
         onLabel='general.courseOrType'
         offLabel='general.detail'
-        action='toggleCourseFilters'
+        action=toggleCourseFilters
         cssId='togglecoursefilters'
       }}
     </div>
@@ -39,9 +39,9 @@
     <div class='calendar-options-control calendar-school-picker'>
       {{fa-icon 'university'}}
       {{#if hasMoreThanOneSchool}}
-        <select {{action 'pickSchool' on='change'}}>
+        <select onchange={{action changeSchool value="target.value"}}>
           {{#each schools as |school|}}
-            <option value="{{school}}" selected={{is-equal school selectedSchool.content}}>
+            <option value="{{school.id}}" selected={{is-equal school (await selectedSchool)}}>
               {{school.title}}
             </option>
           {{/each}}
@@ -53,9 +53,9 @@
   {{/unless}}
   {{#if showFilters}}
     <div id='calendar-year-picker' class='calendar-options-control calendar-year-picker'>
-      <select {{action 'changeSelectedYear' on='change'}}>
+      <select onchange={{action changeAcademicYear value="target.value"}}>
         {{#each academicYears as |year|}}
-          <option value="{{year}}" selected={{is-equal year selectedAcademicYear.content}}>
+          <option value="{{year.title}}" selected={{is-equal year (await selectedAcademicYear)}}>
             {{year.academicYearTitle}}
           </option>
         {{/each}}
@@ -162,9 +162,9 @@
     calendarEventsPromise=filteredEvents
     selectedDate=calendarDate
     selectedView=selectedView
-    changeDate='changeDate'
-    changeView='changeView'
-    selectEvent='selectEvent'
+    changeDate=changeDate
+    changeView=changeView
+    selectEvent=selectEvent
     day=dayTranslation
     week=weekTranslation
     month=monthTranslation
