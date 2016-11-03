@@ -17,68 +17,43 @@ export default Controller.extend({
 
   currentUser: service(),
 
-  academicYearSelectedByUser: computed('academicYear', {
-    get() {
-      const academicYear = this.get('academicYear');
-      const { academicYears } = this.get('model');
+  selectedAcademicYear: computed('academicYear', 'model.academicYears.[]', function(){
+    const academicYear = this.get('academicYear');
+    const { academicYears } = this.get('model');
 
-      return academicYears.find((year) => year.get('title') === parseInt(academicYear));
-    },
-
-    set(key, value) {
-      this.set('academicYear', value.get('title'));
-
-      return value;
-    }
+    return academicYears.findBy('id', academicYear);
   }),
 
-  schoolPickedByUser: computed('school', {
-    get() {
-      const school = this.get('school');
-      const { schools } = this.get('model');
+  selectedSchool: computed('school', 'model.schools.[]', function(){
+    const schoolId = this.get('school');
+    const { schools } = this.get('model');
 
-      return schools.find((availableSchool) => availableSchool.get('title') === school);
-    },
-
-    set(key, value) {
-      this.set('school', value.get('title'));
-
-      return value;
-    }
+    return schools.findBy('id', schoolId);
   }),
 
-  selectedDate: computed('date', {
-    get() {
-      const date = this.get('date');
+  selectedDate: computed('date', function(){
+    const date = this.get('date');
 
-      if (date) {
-        return moment(date, 'YYYY-MM-DD').format();
-      }
-
-      return moment().format();
+    if (date) {
+      return moment(date, 'YYYY-MM-DD').format();
     }
+
+    return moment().format();
   }),
+  selectedView: computed('view', function(){
+    let view = this.get('view');
+    let viewOptions = ['month', 'week', 'day'];
 
-  selectedView: computed('view', {
-    get() {
-      let view = this.get('view');
-      let viewOptions = ['month', 'week', 'day'];
-
-      if (viewOptions.indexOf(view) === -1) {
-        view = 'week';
-      }
-
-      return view;
+    if (viewOptions.indexOf(view) === -1) {
+      view = 'week';
     }
+
+    return view;
   }),
 
   actions: {
     changeDate(newDate) {
       this.set('date', moment(newDate).format('YYYY-MM-DD'));
-    },
-
-    changeView(newView) {
-      this.set('view', newView);
     },
 
     selectEvent(event) {
@@ -107,18 +82,6 @@ export default Controller.extend({
       } else {
         this.set('showFilters', true);
       }
-    },
-
-    toggleCourseFilters() {
-      this.set('courseFilters', !this.get('courseFilters'));
-    },
-
-    changeAcademicYear(year) {
-      this.set('academicYearSelectedByUser', year);
-    },
-
-    changeSchool(school) {
-      this.set('schoolPickedByUser', school);
     }
   }
 });
