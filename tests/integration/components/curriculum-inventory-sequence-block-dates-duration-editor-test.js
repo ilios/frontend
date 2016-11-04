@@ -226,9 +226,3 @@ test('save fails if start-date is given but no end-date is provided', function(a
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
   });
 });
-
-
-test('save fails on invalid duration', function(assert) {
-  // @todo implement [ST 2016/11/03]
-  assert.ok(true);
-});
