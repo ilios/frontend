@@ -31,7 +31,7 @@
     </div>
 
     {{#if showClearFilters}}
-      <span id='calendar-clear-filters' class="calendar-clear-filters" {{action 'clearFilters'}}>{{t 'general.clearnFilters'}}</span>
+      <span id='calendar-clear-filters' class="calendar-clear-filters" {{action 'clearFilters'}}>{{t 'general.clearFilters'}}</span>
     {{/if}}
   {{/if}}
 
@@ -152,7 +152,7 @@
       {{#each filterTags as |tag|}}
         <span class="filter-tag {{tag.class}}" {{action 'removeFilter' tag.filter}}>{{tag.name}} {{fa-icon 'close'}}</span>
       {{/each}}
-      <span id='calendar-clear-filters' class="filters-clear-filters" {{action 'clearFilters'}}>{{t 'general.clearnFilters'}}</span>
+      <span id='calendar-clear-filters' class="filters-clear-filters" {{action 'clearFilters'}}>{{t 'general.clearFilters'}}</span>
     </div>
   </section>
 {{/if}}
