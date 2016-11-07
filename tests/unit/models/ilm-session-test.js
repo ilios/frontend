@@ -43,7 +43,7 @@ test('check allInstructors', function(assert) {
           assert.ok(instructors.contains(user2));
           assert.ok(instructors.contains(user3));
         });
-      })
+      });
 
     });
   });

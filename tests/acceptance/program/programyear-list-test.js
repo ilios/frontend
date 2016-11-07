@@ -198,7 +198,7 @@ test('can delete a program-year', function(assert) {
   server.create('userRole', {
     title: 'Developer',
   });
-  server.db.users.update(4136, {roles: [1]})
+  server.db.users.update(4136, {roles: [1]});
 
   const deleteButton = '.remove';
   const confirmRemovalButton = '.confirm-message button.remove';
@@ -355,7 +355,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
       assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
       assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
       assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
-    })
+    });
   });
 });
 
@@ -390,7 +390,7 @@ test('privileged users can lock and unlock program-year', function(assert) {
   server.create('userRole', {
     title: 'Developer'
   });
-  server.db.users.update(4136, {roles: [1]})
+  server.db.users.update(4136, {roles: [1]});
 
   visit(url);
   andThen(function() {

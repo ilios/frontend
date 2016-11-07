@@ -45,7 +45,7 @@ test('escape calls clear', function(assert) {
   this.on('clear', function(){
     assert.ok(true);
   });
-  this.on('search', parseInt)
+  this.on('search', parseInt);
   this.render(hbs`{{search-box search=(action 'search') clear=(action 'clear')}}`);
   run(() => {
     this.$('input').val('typed it');

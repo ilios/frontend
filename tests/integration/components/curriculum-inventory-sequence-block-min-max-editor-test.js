@@ -36,7 +36,7 @@ test('save', function(assert) {
   let saveAction = function(min, max) {
     assert.equal(min, newMinimum, 'New minimum got passed to save action.');
     assert.equal(max, newMaximum, 'New maximum got passed to save action.');
-  }
+  };
   this.set('block', block);
   this.set('saveAction', saveAction);
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
@@ -54,7 +54,7 @@ test('cancel', function(assert) {
     maximum: 10,
   });
   let cancelAction = function() {
-    assert.ok(true, 'Cancel action got invoked.')
+    assert.ok(true, 'Cancel action got invoked.');
   };
   this.set('block', block);
   this.set('cancelAction', cancelAction);
@@ -86,7 +86,7 @@ test('save fails when minimum is less than zero', function(assert) {
   assert.expect(2);
   let block = Object.create();
   let saveAction = function() {
-    assert.ok(false, 'Save action should have not been invoked.')
+    assert.ok(false, 'Save action should have not been invoked.');
   };
   this.set('block', block);
   this.set('saveAction', saveAction);
@@ -106,7 +106,7 @@ test('save fails when minimum is empty', function(assert) {
   assert.expect(2);
   let block = Object.create();
   let saveAction = function() {
-    assert.ok(false, 'Save action should have not been invoked.')
+    assert.ok(false, 'Save action should have not been invoked.');
   };
   this.set('block', block);
   this.set('saveAction', saveAction);
@@ -126,7 +126,7 @@ test('save fails when maximum is empty', function(assert) {
   assert.expect(2);
   let block = Object.create();
   let saveAction = function() {
-    assert.ok(false, 'Save action should have not been invoked.')
+    assert.ok(false, 'Save action should have not been invoked.');
   };
   this.set('block', block);
   this.set('saveAction', saveAction);

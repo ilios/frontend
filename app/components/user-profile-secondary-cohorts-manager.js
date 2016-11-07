@@ -17,7 +17,7 @@ export default Component.extend({
         return true;
       }
       return cohort.get('id') !== primaryCohort.get('id');
-    })
+    });
   }),
 
   assignableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'cohorts.[]', {

@@ -38,7 +38,7 @@ test('it renders', function(assert) {
     }
     assert.equal(this.$(title).length, 1);
     assert.equal(this.$(title).val().trim(), course.get('title'));
-  })
+  });
 
 });
 

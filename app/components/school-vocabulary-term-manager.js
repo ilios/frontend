@@ -64,8 +64,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const term = this.get('term');
       if (isPresent(term)) {
         term.get('allParents').then(allParents => {
-          resolve(allParents.toArray().reverse())
-        })
+          resolve(allParents.toArray().reverse());
+        });
       }
     });
   }),

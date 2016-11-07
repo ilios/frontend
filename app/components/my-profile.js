@@ -43,7 +43,7 @@ export default Ember.Component.extend({
       user.get('roles').then(roles => {
         resolve(roles.mapBy('title'));
       });
-    })
+    });
   }),
   apiDocsUrl: computed('host', 'namespace', function(){
     let apiPath = '/' + this.get('namespace');

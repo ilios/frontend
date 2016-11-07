@@ -26,7 +26,7 @@ export default Controller.extend({
 
   unassignedStudents: computed('selectedSchool', function(){
     return new Promise(resolve => {
-      let school = this.get('selectedSchool')
+      let school = this.get('selectedSchool');
       this.get('store').query('user', {
         limit: 1000,
         filters: {

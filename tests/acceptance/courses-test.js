@@ -12,7 +12,7 @@ module('Acceptance: Courses', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.createList('school', 2)
+    server.createList('school', 2);
   },
 
   afterEach: function() {
@@ -346,7 +346,7 @@ test('new course can be deleted', function(assert) {
   server.create('userRole', {
     title: 'Developer'
   });
-  server.db.users.update(4136, {roles: [1]})
+  server.db.users.update(4136, {roles: [1]});
 
   assert.expect(7);
 
@@ -597,7 +597,7 @@ test('developer users can lock and unlock course', function(assert) {
   server.create('userRole', {
     title: 'Developer'
   });
-  server.db.users.update(4136, {roles: [1]})
+  server.db.users.update(4136, {roles: [1]});
   server.create('course', {
     year: 2014,
     school: 1,

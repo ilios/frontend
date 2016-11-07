@@ -74,8 +74,8 @@ export default Component.extend(SortableTable, {
 
           resolve(filteredObjs);
         }
-      })
-    })
+      });
+    });
   }),
   sessions: computed('course.sessions.[]', function(){
     const course = this.get('course');

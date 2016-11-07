@@ -147,7 +147,7 @@ export default Controller.extend({
     return PromiseObject.create({
       promise: this.get('currentUser').get('model').then(user => {
         return user.get('school').then(school => {
-          return school
+          return school;
         });
       })
     });

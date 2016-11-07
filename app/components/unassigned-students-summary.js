@@ -17,7 +17,7 @@ export default Component.extend({
       this.get('currentUser.model').then(user => {
         user.get('schools').then(schools => {
           resolve(schools);
-        })
+        });
       });
     });
   }),

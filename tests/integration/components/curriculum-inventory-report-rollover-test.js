@@ -43,7 +43,7 @@ test('it renders', function(assert) {
     assert.equal(this.$(name).val().trim(), report.get('name'));
     assert.equal(this.$(description).length, 1);
     assert.equal(this.$(description).val().trim(), report.get('description'));
-  })
+  });
 });
 
 test('rollover report', function(assert) {

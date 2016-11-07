@@ -23,7 +23,7 @@ let Competency = Object.extend({
 
         return null;
       }
-    }
+    };
   }
 });
 
@@ -87,7 +87,7 @@ test('delete fires delete', function(assert) {
   this.set('nothing', parseInt);
   this.set('remove', (what) => {
     assert.equal(what, domain1);
-  })
+  });
   this.render(hbs`{{school-competencies-manager add=(action nothing) remove=(action remove) competencies=competencies}}`);
 
   const domains = '.hierarchical-list-manager';
@@ -111,7 +111,7 @@ test('add fires add', function(assert) {
   this.set('add', (what, title) => {
     assert.equal(what, domain1);
     assert.equal(title, 'new c');
-  })
+  });
   this.render(hbs`{{school-competencies-manager add=(action add) remove=(action nothing) competencies=competencies}}`);
 
   const domains = '.hierarchical-list-manager';

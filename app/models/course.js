@@ -184,7 +184,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
         schoolVocabs.forEach(vocabs => {
           vocabs.forEach(vocab => {
             v.pushObject(vocab);
-          })
+          });
         });
         v = v.sortBy('school.title', 'title');
         deferred.resolve(v);

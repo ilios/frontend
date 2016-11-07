@@ -95,7 +95,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         });
       }
 
-    })
+    });
   }),
 
   actions: {

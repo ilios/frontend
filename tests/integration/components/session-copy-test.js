@@ -79,7 +79,7 @@ test('it renders', function(assert) {
     assert.equal(this.$(`${courseSelect} option:eq(1)`).text().trim(), course2.get('title'));
     assert.ok(this.$(save).not(':disabled'));
 
-  })
+  });
 
 });
 

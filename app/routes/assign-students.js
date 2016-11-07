@@ -13,7 +13,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
           return {
             primarySchool,
             schools
-          }
+          };
         });
       });
     });

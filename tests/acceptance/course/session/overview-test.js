@@ -459,7 +459,7 @@ test('copy hidden from instructors', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 0)
+    assert.equal(find(copy).length, 0);
   });
 });
 
@@ -482,7 +482,7 @@ test('copy visible to developers', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 1)
+    assert.equal(find(copy).length, 1);
   });
 });
 
@@ -505,7 +505,7 @@ test('copy visible to course directors', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 1)
+    assert.equal(find(copy).length, 1);
   });
 });
 
@@ -528,6 +528,6 @@ test('copy hidden on copy route', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.copy');
-    assert.equal(find(copy).length, 0)
+    assert.equal(find(copy).length, 0);
   });
 });

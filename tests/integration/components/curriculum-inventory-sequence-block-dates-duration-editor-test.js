@@ -118,7 +118,7 @@ test('cancel', function(assert) {
     duration: 10
   });
   let cancelAction = function() {
-    assert.ok(true, 'Cancel action got invoked.')
+    assert.ok(true, 'Cancel action got invoked.');
   };
   this.set('block', block);
   this.set('cancel', cancelAction);

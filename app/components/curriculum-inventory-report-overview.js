@@ -55,7 +55,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           resolve(hasRole);
         });
       }
-    })
+    });
   }),
 
   classNames: ['curriculum-inventory-report-overview'],

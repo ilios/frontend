@@ -331,7 +331,7 @@ test('check sortTitle on top group', function(assert) {
 
       store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
 
-      let sortTitle = learnerGroup.get('sortTitle')
+      let sortTitle = learnerGroup.get('sortTitle');
       assert.equal(sortTitle, 'topgroup');
     });
   });
@@ -352,7 +352,7 @@ test('check sortTitle on sub group', function(assert) {
       let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
       let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
 
-      let sortTitle = subGroup3.get('sortTitle')
+      let sortTitle = subGroup3.get('sortTitle');
       assert.equal(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');
     });
   });

@@ -56,7 +56,7 @@ export default Component.extend({
       let filterTitle = yield learnerGroup.get('filterTitle');
       filterMatch = filterTitle.match(exp) != null;
     }
-    let available = hasUnSelectedChildren || !selectedGroups.contains(learnerGroup)
+    let available = hasUnSelectedChildren || !selectedGroups.contains(learnerGroup);
 
     this.set('isVisible', filterMatch && available);
     this.set('selectable', available);

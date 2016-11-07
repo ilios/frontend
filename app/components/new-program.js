@@ -35,7 +35,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           });
           this.get('save')(program).finally(()=>{
             this.set('isSaving', false);
-          })
+          });
         } else {
           this.set('isSaving', false);
         }
