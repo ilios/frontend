@@ -217,7 +217,7 @@ export default Component.extend({
           parent.get('children').then(children => {
             children.invoke('reload');
           });
-        })
+        });
       });
     },
     changeDatesAndDuration(start, end, duration) {

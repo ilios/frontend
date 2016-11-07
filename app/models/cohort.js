@@ -41,7 +41,7 @@ export default Model.extend({
   topLevelLearnerGroups: computed('learnerGroups.[]', function(){
     let defer = Ember.RSVP.defer();
     this.get('learnerGroups').then(learnerGroups => {
-      let topLevelGroups = learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null)
+      let topLevelGroups = learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
       defer.resolve(topLevelGroups);
     });
 

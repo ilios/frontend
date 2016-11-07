@@ -537,7 +537,7 @@ test('rollover hidden from instructors', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 0)
+    assert.equal(find(rollover).length, 0);
   });
 });
 
@@ -560,7 +560,7 @@ test('rollover visible to developers', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 1)
+    assert.equal(find(rollover).length, 1);
   });
 });
 
@@ -583,7 +583,7 @@ test('rollover visible to course directors', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 1)
+    assert.equal(find(rollover).length, 1);
   });
 });
 
@@ -606,6 +606,6 @@ test('rollover hidden on rollover route', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'course.rollover');
-    assert.equal(find(rollover).length, 0)
+    assert.equal(find(rollover).length, 0);
   });
 });

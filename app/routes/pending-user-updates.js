@@ -11,7 +11,7 @@ export default Ember.Route.extend({
           return {
             primarySchool,
             schools
-          }
+          };
         });
       });
     });

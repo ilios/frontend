@@ -176,7 +176,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
           this.get('save')(learningMaterial).finally(()=>{
             this.send('clearErrorDisplay');
-          })
+          });
         }
       }).finally(() => {
         this.set('isSaving', false);

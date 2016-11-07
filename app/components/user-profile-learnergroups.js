@@ -44,7 +44,7 @@ export default Component.extend({
           });
         }).then(groupObjects => {
           resolve(groupObjects.sortBy('sortTitle'));
-        })
+        });
       });
     });
   }),

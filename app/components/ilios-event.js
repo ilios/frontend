@@ -51,7 +51,7 @@ export default Component.extend({
       } else {
         store.findRecord('offering', offeringId).then(offering => {
           resolve(offering);
-        })
+        });
       }
     });
   }),
@@ -64,7 +64,7 @@ export default Component.extend({
       } else {
         store.findRecord('ilm-session', ilmSessionId).then(ilmSession => {
           resolve(ilmSession);
-        })
+        });
       }
     });
   }),

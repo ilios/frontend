@@ -17,7 +17,7 @@ export default Component.extend({
     return new Promise(resolve => {
       const isManaging = this.get('isManaging');
       this.get('school.vocabularies').then(vocabularies => {
-        resolve(vocabularies.get('length') && ! isManaging)
+        resolve(vocabularies.get('length') && ! isManaging);
       });
     });
 

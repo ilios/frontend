@@ -50,8 +50,8 @@ export default Model.extend({
             return item != null;
           });
           resolve(rhett);
-        })
-      })
+        });
+      });
     });
 
   })

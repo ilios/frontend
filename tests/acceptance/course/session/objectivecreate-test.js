@@ -57,7 +57,7 @@ test('save new objective', function(assert) {
           assert.equal(getElementText(tds.eq(1)), getText('Add New'));
           assert.equal(getElementText(tds.eq(2)), getText('Add New'));
         });
-      }, 100)
+      }, 100);
     }, 100);
   });
 

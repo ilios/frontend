@@ -24,7 +24,7 @@ module('Acceptance: API Version Check', {
 test('No warning shows up when api versions match', function(assert) {
   assert.expect(2);
   server.get('application/config', function() {
-    assert.ok(true, 'our config override was called')
+    assert.ok(true, 'our config override was called');
     return { config: {
       type: 'form',
       apiVersion
@@ -41,7 +41,7 @@ test('No warning shows up when api versions match', function(assert) {
 test('Warning shows up when api versions do not match', function(assert) {
   assert.expect(2);
   server.get('application/config', function() {
-    assert.ok(true, 'our config override was called')
+    assert.ok(true, 'our config override was called');
     return { config: {
       type: 'form',
       apiVersion: 'v0.bad'

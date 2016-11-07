@@ -48,7 +48,7 @@ export default Component.extend({
 
   competencies: computed('programYear.program.school.competencies.[]', function(){
     return new Promise(resolve => {
-      const programYear = this.get('programYear')
+      const programYear = this.get('programYear');
       programYear.get('program').then(program => {
         program.get('school').then(school => {
           school.get('competencies').then(competencies => {

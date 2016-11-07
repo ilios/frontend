@@ -9,7 +9,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return all([
       this.loadCourseLearningMaterials(course),
       this.loadSessionLearningMaterials(course),
-    ])
+    ]);
 
   },
   loadCourseLearningMaterials(course){
@@ -17,7 +17,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       course.get('learningMaterials').then(courseLearningMaterials => {
         all(courseLearningMaterials.getEach('learningMaterial')).then(()=> {
           resolve();
-        })
+        });
       });
     });
   },
@@ -31,7 +31,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
           ]);
         }).then(()=>{
           resolve();
-        })
+        });
       });
     });
   }

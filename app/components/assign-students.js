@@ -57,7 +57,7 @@ export default Component.extend({
       return [];
     }
     return students.filter(user => {
-      return (!savedUserIds.contains(user.get('id')))
+      return (!savedUserIds.contains(user.get('id')));
     }).sortBy('lastName', 'firstName').slice(offset, end);
   }),
 

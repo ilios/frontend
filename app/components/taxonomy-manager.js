@@ -71,7 +71,7 @@ export default Component.extend({
       this.sendAction('remove', term);
     },
     changeSelectedVocabulary(vocabId) {
-      this.set('vocabId', vocabId)
+      this.set('vocabId', vocabId);
     }
   }
 });

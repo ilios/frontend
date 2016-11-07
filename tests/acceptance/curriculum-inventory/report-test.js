@@ -76,7 +76,7 @@ test('rollover hidden from instructors', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 0)
+    assert.equal(find(rollover).length, 0);
   });
 });
 
@@ -107,7 +107,7 @@ test('rollover visible to developers', function(assert) {
   //return pauseTest();
   andThen(function() {
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 1)
+    assert.equal(find(rollover).length, 1);
   });
 });
 
@@ -137,7 +137,7 @@ test('rollover not visible to course directors', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 0)
+    assert.equal(find(rollover).length, 0);
   });
 });
 
@@ -167,6 +167,6 @@ test('rollover hidden on rollover route', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'curriculumInventoryReport.rollover');
-    assert.equal(find(rollover).length, 0)
+    assert.equal(find(rollover).length, 0);
   });
 });

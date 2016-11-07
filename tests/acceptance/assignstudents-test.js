@@ -10,7 +10,7 @@ moduleForAcceptance('Acceptance | assign students', {
     application = startApp();
     setupAuthentication(application);
 
-    server.createList('school', 2)
+    server.createList('school', 2);
 
   },
   afterEach: function() {

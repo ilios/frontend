@@ -54,7 +54,7 @@ test('can create new vocabulary', function(assert) {
           assert.ok(true);
           return RSVP.resolve(this);
         }
-      }
+      };
     }
   });
   this.register('service:store', storeMock);

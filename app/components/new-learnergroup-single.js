@@ -32,7 +32,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         }
       }).finally(()=>{
         this.set('isSaving', false);
-      })
+      });
     },
   }
 });

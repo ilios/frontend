@@ -78,7 +78,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         });
       }
 
-    })
+    });
   }),
 
   actions: {

@@ -58,7 +58,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           newSchool.save().then(school => {
             this.get('newSchools').pushObject(school);
           }).finally(() => {
-            this.send('clearErrorDisplay')
+            this.send('clearErrorDisplay');
             this.set('title', null);
             this.set('showNewSchoolForm', false);
             this.set('isSavingNewSchool', false);

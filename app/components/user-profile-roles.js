@@ -90,7 +90,7 @@ export default Component.extend({
         let roleTitles = roles.map(role => role.get('title').toLowerCase());
         resolve(roleTitles);
       });
-    })
+    });
   }),
 
   isCourseDirector: computed('roleTitles.[]', 'isCourseDirectorFlipped', function(){

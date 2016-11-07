@@ -16,7 +16,7 @@ export default Component.extend({
         return {
           domain,
           competencies: []
-        }
+        };
       }
       let domainCompetencies = competencies.filter(
         competency => competency.belongsTo('parent').id() === domain.get('id')

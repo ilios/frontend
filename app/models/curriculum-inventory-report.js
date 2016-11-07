@@ -79,7 +79,7 @@ export default DS.Model.extend({
           resolve(courses);
         });
       });
-    })
+    });
   }),
 
   /**
@@ -93,7 +93,7 @@ export default DS.Model.extend({
       this.get('linkedCourses').then(linkedCourses => {
         let hasCourses = !Ember.isEmpty(linkedCourses);
         resolve(hasCourses);
-      })
+      });
     });
   })
 });

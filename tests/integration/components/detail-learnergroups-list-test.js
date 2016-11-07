@@ -27,9 +27,9 @@ test('it renders', function(assert) {
     hasMany(){
       return {
         ids(){
-          return [1,2]
+          return [1,2];
         }
-      }
+      };
     }
   });
   tlg1.set('topLevelGroup', resolve(tlg1));
@@ -40,9 +40,9 @@ test('it renders', function(assert) {
     hasMany(){
       return {
         ids(){
-          return [1, 2, 3]
+          return [1, 2, 3];
         }
-      }
+      };
     }
   });
   let subSubGroup1 = Object.create({
@@ -52,9 +52,9 @@ test('it renders', function(assert) {
     hasMany(){
       return {
         ids(){
-          return [1]
+          return [1];
         }
-      }
+      };
     }
   });
   let tlg2 = Object.create({
@@ -63,9 +63,9 @@ test('it renders', function(assert) {
     hasMany(){
       return {
         ids(){
-          return [1,2]
+          return [1,2];
         }
-      }
+      };
     }
   });
   tlg2.set('topLevelGroup', resolve(tlg2));
@@ -76,9 +76,9 @@ test('it renders', function(assert) {
     hasMany(){
       return {
         ids(){
-          return []
+          return [];
         }
-      }
+      };
     }
   });
 
@@ -90,7 +90,7 @@ test('it renders', function(assert) {
 
 
   this.set('learnerGroups', [tlg1, subGroup1, subSubGroup1, subGroup2]);
-  this.set('nothing', parseInt)
+  this.set('nothing', parseInt);
 
   this.render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups remove=(action nothing)}}`);
 

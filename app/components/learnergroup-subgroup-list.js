@@ -59,7 +59,7 @@ export default Component.extend({
                   saveSomeGroups(groups);
                 } else {
                   this.set('isSaving', false);
-                  this.set('showNewLearnerGroupForm', false)
+                  this.set('showNewLearnerGroupForm', false);
                   this.get('flashMessages').success('general.savedSuccessfully');
                   resolve();
                 }
