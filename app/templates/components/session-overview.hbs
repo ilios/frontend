@@ -82,7 +82,7 @@
         <label>{{t 'general.supplementalCurriculum'}}:</label>
         <span>
           {{#if editable}}
-            {{inplace-boolean value=session.supplemental save='changeSupplemental'}}
+            {{toggle-yesno yes=session.supplemental toggle=(action 'changeSupplemental')}}
           {{else}}
             {{#if session.supplemental}}
               <span class='add'>{{t 'general.yes'}}</span>
@@ -96,7 +96,7 @@
         <label>{{t 'general.specialAttireRequired'}}:</label>
         <span>
           {{#if editable}}
-            {{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}
+            {{toggle-yesno yes=session.attireRequired toggle=(action 'changeSpecialAttire')}}
           {{else}}
             {{#if session.attireRequired}}
               <span class='add'>{{t 'general.yes'}}</span>
@@ -110,7 +110,7 @@
         <label>{{t 'general.specialEquipmentRequired'}}:</label>
         <span>
           {{#if editable}}
-            {{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}
+            {{toggle-yesno yes=session.equipmentRequired toggle=(action 'changeSpecialEquipment')}}
           {{else}}
             {{#if session.equipmentRequired}}
               <span class='add'>{{t 'general.yes'}}</span>
@@ -125,7 +125,7 @@
         <label>{{t 'general.independentLearning'}}:</label>
         <span>
           {{#if editable}}
-            {{inplace-boolean value=session.isIndependentLearning save='saveIndependentLearning'}}
+            {{toggle-yesno yes=session.isIndependentLearning toggle=(action 'saveIndependentLearning')}}
           {{else}}
             {{#if session.isIndependentLearning}}
               <span class='add'>{{t 'general.yes'}}</span>

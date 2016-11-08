@@ -68,7 +68,7 @@
       {{#if isFinalized}}
         <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
       {{else}}
-        {{inplace-boolean value=sequenceBlock.track save='changeTrack'}}
+        {{toggle-yesno yes=sequenceBlock.track toggle=(action 'changeTrack')}}
       {{/if}}
     </div>
     {{#unless isEditingDatesAndDuration}}

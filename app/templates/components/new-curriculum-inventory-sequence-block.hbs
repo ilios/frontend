@@ -61,7 +61,8 @@
 
   <div class="item track">
     <label>{{t 'general.isTrack'}}?</label>
-    {{inplace-boolean value=track save='changeTrack'}}
+    {{toggle-yesno yes=track toggle=(action 'changeTrack')}}
+
   </div>
 
   <div class='item start-date'>

@@ -21,7 +21,7 @@
     <label class="form-label">{{t 'general.required'}}:</label>
     <div class="form-data required">
       {{#if editable}}
-        {{inplace-boolean value=valueBuffer.required save='changeRequired'}}
+        {{toggle-yesno yes=valueBuffer.required toggle=(action 'changeRequired')}}
       {{else}}
         {{#if valueBuffer.required}}
           <span class='add'>{{t 'general.yes'}}</span>
@@ -45,7 +45,7 @@
     <label class="form-label">{{t 'general.showNotesToStudents'}}:</label>
     <div class="form-data publicnotes">
       {{#if editable}}
-        {{inplace-boolean value=valueBuffer.publicNotes save='changePublicNotes'}}
+        {{toggle-yesno yes=valueBuffer.publicNotes toggle=(action 'changePublicNotes')}}
       {{else}}
         {{#if valueBuffer.publicNotes}}
           <span class='add'>{{t 'general.yes'}}</span>

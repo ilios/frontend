@@ -11,14 +11,11 @@ moduleForComponent('toggle-yesno', 'Integration | Component | toggle yesno', {
 });
 
 test('it renders', function(assert) {
-  assert.expect(4);
+  assert.expect(2);
   const state = 'input';
-  const label = '.switch-label';
 
   this.set('value', true);
   this.render(hbs`{{toggle-yesno yes=value action='clicked'}}`);
-  assert.equal(window.getComputedStyle(this.$(label).get(0),':before').content.search(/No/), 1);
-  assert.equal(window.getComputedStyle(this.$(label).get(0),':after').content.search(/Yes/), 1);
 
   assert.ok(this.$(state).prop('checked'));
 
