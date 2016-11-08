@@ -65,40 +65,7 @@ export default Component.extend({
     } else {
       let deferred = RSVP.defer();
       this.get('selectedSchool').then(school => {
-        this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')).then(events => {
-          if(this.get('selectedView') === 'day'){
-            deferred.resolve(events);
-          } else {
-            let sessionEvents = {};
-            let promises = [];
-            events.forEach(event => {
-              if(event.name === 'Scheduled'){
-                let sid = 'sched' + moment(event.startDate).unix() + moment(event.endDate).unix();
-                if(!(sid in sessionEvents)){
-                  sessionEvents[sid] = [];
-                }
-                sessionEvents[sid].pushObject(event);
-              }
-              else {
-                promises.pushObject(this.get('schoolEvents').getSessionForEvent(event).then(session => {
-                  let sid = session.get('id') + moment(event.startDate).format() +
-                      moment(event.endDate).format();
-                  if(!(sid in sessionEvents)){
-                    sessionEvents[sid] = [];
-                  }
-                  sessionEvents[sid].pushObject(event);
-                }));
-              }
-            });
-            RSVP.all(promises).then(() => {
-              let singleEventPerSessionAndTime = [];
-              for(let id in sessionEvents){
-                singleEventPerSessionAndTime.pushObject(sessionEvents[id].get('firstObject'));
-              }
-              deferred.resolve(singleEventPerSessionAndTime);
-            });
-          }
-        });
+        deferred.resolve(this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')));
       });
       return DS.PromiseArray.create({
         promise: deferred.promise
