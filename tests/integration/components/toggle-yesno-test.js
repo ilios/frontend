@@ -11,26 +11,37 @@ moduleForComponent('toggle-yesno', 'Integration | Component | toggle yesno', {
 });
 
 test('it renders', function(assert) {
-  assert.expect(5);
+  assert.expect(4);
+  const state = 'input';
+  const label = '.switch-label';
 
   this.set('value', true);
-  this.render(hbs`{{toggle-yesno yes=value label='general.location' action='clicked'}}`);
+  this.render(hbs`{{toggle-yesno yes=value action='clicked'}}`);
+  assert.equal(window.getComputedStyle(this.$(label).get(0),':before').content.search(/No/), 1);
+  assert.equal(window.getComputedStyle(this.$(label).get(0),':after').content.search(/Yes/), 1);
 
-  assert.equal(this.$().text().trim(), 'Location:');
-  assert.ok(this.$('input').prop('checked'));
-  
+  assert.ok(this.$(state).prop('checked'));
+
   this.set('value', false);
-  assert.ok(!this.$('input').prop('checked'));
-  
-  let value = false;
-  this.on('clicked', () => {
-    value = !value;
-    this.set('value', value);
+  assert.notOk(this.$(state).prop('checked'));
+
+});
+
+test('click', function(assert) {
+  assert.expect(5);
+  const state = 'input';
+  const element = 'span:eq(0)';
+  this.set('value', true);
+  this.set('toggle', (val) => {
+    const value = this.get('value');
+    assert.equal(!value, val);
+    this.set('value', val);
   });
-  this.$('label').click();
-  assert.ok(this.$('input').prop('checked'));
-  
-  this.$('label').click();
-  assert.ok(!this.$('input').prop('checked'));
-  
+  this.render(hbs`{{toggle-yesno yes=value toggle=(action toggle)}}`);
+  assert.ok(this.$(state).prop('checked'));
+  this.$(element).click();
+
+  assert.notOk(this.$(state).prop('checked'));
+  this.$(element).click();
+  assert.ok(this.$(state).prop('checked'));
 });
