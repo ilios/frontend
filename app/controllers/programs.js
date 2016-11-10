@@ -100,6 +100,7 @@ export default Controller.extend({
   editorOn: false,
 
   saved: false,
+  removed: false,
   savedProgram: null,
 
   actions: {
@@ -118,7 +119,9 @@ export default Controller.extend({
     removeProgram(program) {
       this.get('model.schools').removeObject(program);
       program.deleteRecord();
-      program.save();
+      return program.save().then((savedProgram) => {
+        this.setProperties({ deleted: true, saved: false, savedProgram });
+      });
     },
 
     save(program) {

@@ -401,6 +401,7 @@ export default {
     'remove': "Supprîme",
     'removeAll': 'Supprimer Tous',
     'removeCohort': 'Supprîmer Cohorte',
+    'removedSuccessfully': "Supprimé avec succès",
     'removeLearnerToCohort': { 'one': 'Renvoyer l’étudiant à {{cohort}}', 'other': 'Renvoyer {{count}} étudiants à {{cohort}}' },
     'removePrimaryCohort': 'Supprîmer Cohorte Primaire',
     'reportConfirmRemove': 'Êtes-vous sûrs que vous voulez supprimer ce rapport? Cette action ne peut pas être défaite.',
