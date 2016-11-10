@@ -401,6 +401,7 @@ export default {
     'remove': 'Remove',
     'removeAll': 'Remove All',
     'removeCohort': 'Remove Cohort',
+    'removedSuccessfully': 'Removed Successfully',
     'removeLearnerToCohort': { 'one': 'Remove learner to {{cohort}}', 'other': 'Remove {{count}} learners to {{cohort}}' },
     'removePrimaryCohort': 'Remove Primary Cohort',
     'reportConfirmRemove': 'Are you sure you want to delete this report? This action cannot be undone.',

@@ -401,6 +401,7 @@ export default {
     'remove': 'Remover',
     'removeAll': 'Quitar Todos',
     'removeCohort': 'Remover Cohorte',
+    'removedSuccessfully': 'Eliminado con éxito',
     'removeLearnerToCohort': { 'one': 'Quite estudiante a {{cohort}}', 'other': 'Quite {{count}} estudiantes a {{cohort}}' },
     'removePrimaryCohort': 'Remover Principal Cohorte',
     'reportConfirmRemove': '¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer.',
