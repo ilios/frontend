@@ -156,11 +156,7 @@ test('remove program', function(assert) {
     });
   });
   andThen(function(){
-<<<<<<< HEAD
     assert.equal(getElementText(find('.flash-messages')),getText(''));
-=======
-	assert.equal(getElementText(find('.flash-messages')),getText(''));
->>>>>>> 2d73b20abf4c6edd72fd8b333db60f924b17e77e
     assert.equal(0, find('.list tbody tr').length);
   });
 });
