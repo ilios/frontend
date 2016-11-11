@@ -41,6 +41,12 @@
         {{t 'general.savedSuccessfully'}}
       </div>
     {{/if}}
+	
+    {{#if deleted}}
+      <div class='saved-program'>
+        {{fa-icon 'external-link-square'}} {{savedProgram.title}} {{t 'general.removedSuccessfully'}}
+      </div>
+    {{/if}}
 
     <div class='list'>
       {{#if filteredPrograms.isFulfilled}}
