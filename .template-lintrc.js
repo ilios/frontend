@@ -18,5 +18,6 @@ module.exports = {
     'style-concatenation': true,
     'triple-curlies': false,
     'deprecated-each-syntax': true,
+    'deprecated-inline-view-helper': false,
   }
 };
