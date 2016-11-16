@@ -61,6 +61,7 @@ Router.map(function() {
   this.route('school', { path: 'schools/:school_id'});
   this.route('assign-students', {path: '/admin/assignstudents'});
   this.route('myprofile');
+  this.route('mymaterials');
   this.route('course-rollover');
   this.route('curriculumInventoryReports', {
     path: 'curriculum-inventory-reports'

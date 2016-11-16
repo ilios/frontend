@@ -1,0 +1,37 @@
+import Ember from 'ember';
+import SortableTable from 'ilios/mixins/sortable-table';
+
+const { Component, computed, isPresent } = Ember;
+
+export default Component.extend(SortableTable, {
+  classNames: ['my-materials'],
+  filter: null,
+  courseIdFilter: null,
+  filteredMaterials: computed('materials.[]', 'filter', 'courseIdFilter', function(){
+    let materials = this.get('materials');
+    const filter = this.get('filter');
+    const courseIdFilter = this.get('courseIdFilter');
+    if (isPresent(courseIdFilter)) {
+      materials = materials.filterBy('course', courseIdFilter);
+    }
+    if (isPresent(filter)) {
+      const exp = new RegExp(filter, 'gi');
+
+      materials = materials.filter(material => {
+        let searchString = material.title + material.courseTitle + material.sessionTitle;
+        return searchString.match(exp);
+      });
+    }
+
+    return materials;
+  }),
+  courses: computed('materials.[]', function(){
+    const materials = this.get('materials');
+    return materials.map(material => {
+      return {
+        id: material.course,
+        title: material.courseTitle
+      };
+    }).uniqBy('id').sortBy('title');
+  }),
+});
