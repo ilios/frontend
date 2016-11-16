@@ -273,6 +273,7 @@ export default {
     'mustBeSameDayOfWeekAsCurrentStartDate': 'Must be same day of week as current start date',
     'myCalendar': 'My Calendar',
     'myCourses': 'My Courses',
+    'myMaterials': 'My Materials',
     'myProfile': 'My Profile',
     'myReports': 'My Reports',
     'mySchedule': 'My Schedule',

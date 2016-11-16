@@ -273,6 +273,7 @@ export default {
     'mustBeSameDayOfWeekAsCurrentStartDate': 'Doit être le même jour de la semaine que le courant date de début',
     'myCalendar': "Mon Calendrier",
     'myCourses': "Mes Cours",
+    'myMaterials': "Mes Matières d'étude",
     'myProfile': 'Mon profil',
     'myReports': "Mes Rapports",
     'mySchedule': "Mon Calendrier (liste)",
