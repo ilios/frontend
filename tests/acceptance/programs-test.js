@@ -139,7 +139,7 @@ test('add new program', function(assert) {
 });
 
 test('remove program', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
@@ -156,6 +156,7 @@ test('remove program', function(assert) {
     });
   });
   andThen(function(){
+    assert.equal(find('.flash-messages').length, 1);
     assert.equal(0, find('.list tbody tr').length);
   });
 });
