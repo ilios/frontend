@@ -139,7 +139,7 @@ test('add new program', function(assert) {
 });
 
 test('remove program', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
