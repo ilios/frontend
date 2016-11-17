@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed } = Ember;
+const { RSVP, computed } = Ember;
+const { Promise, map } = RSVP;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -10,56 +11,50 @@ export default DS.Model.extend({
   ilmSessions: DS.hasMany('ilm-session', {async: true}),
   users: DS.hasMany('user', {async: true}),
   offerings: DS.hasMany('offering', {async: true}),
-  courses: computed('offerings.[]', 'ilmSessions.[]', function(){
-    var defer = Ember.RSVP.defer();
-    let promises = [];
-    let allCourses = [];
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
+  coursesFromOfferings: computed('offerings.[]', function(){
+    return new Promise(resolve => {
       this.get('offerings').then(offerings => {
-        if(!offerings.length){
-          resolve();
-        }
-        let promises = [];
-        offerings.forEach(offering => {
-          promises.pushObject(offering.get('session').then(session =>{
-            return session.get('course').then(course => {
-              allCourses.pushObject(course);
+        map(offerings.toArray(), offering => {
+          return new Promise(resolve => {
+            offering.get('session').then(session => {
+              session.get('course').then(course => {
+                resolve(course);
+              });
             });
-          }));
-        });
-        Ember.RSVP.all(promises).then(()=>{
-          resolve();
+          });
+        }).then(courses => {
+          resolve(courses.uniq());
         });
       });
-    }));
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
-      this.get('ilmSessions').then(ilmSessions => {
-        if(!ilmSessions.length){
-          resolve();
-        }
-        let promises = [];
-        ilmSessions.forEach(ilmSession => {
-          promises.pushObject(ilmSession.get('session').then(session =>{
-            if(!session){
-              return;
-            }
-            return session.get('course').then(course => {
-              allCourses.pushObject(course);
-            });
-          }));
-        });
-        Ember.RSVP.all(promises).then(()=>{
-          resolve();
-        });
-      });
-    }));
-
-    Ember.RSVP.all(promises).then(()=>{
-      defer.resolve(allCourses.uniq());
     });
-
-    return DS.PromiseArray.create({
-      promise: defer.promise
+  }),
+  coursesFromIlmSessions: computed('ilmSessions.[]', function(){
+    return new Promise(resolve => {
+      this.get('ilmSessions').then(ilmSessions => {
+        map(ilmSessions.toArray(), ilmSession => {
+          return new Promise(resolve => {
+            ilmSession.get('session').then(session => {
+              session.get('course').then(course => {
+                resolve(course);
+              });
+            });
+          });
+        }).then(courses => {
+          resolve(courses.uniq());
+        });
+      });
+    });
+  }),
+  courses: computed('coursesFromOfferings.[]', 'coursesFromIlmSessions.[]', function(){
+    return new Promise(resolve => {
+      this.get('coursesFromOfferings').then(offeringCourses => {
+        this.get('coursesFromIlmSessions').then(ilmCourses => {
+          let courses = [];
+          courses.pushObjects(offeringCourses);
+          courses.pushObjects(ilmCourses);
+          resolve(courses.uniqBy('id'));
+        });
+      });
     });
   }),
 });

@@ -17,7 +17,13 @@
           {{/link-to}}
         </td>
         <td class='text-center hide-from-small-screen'>{{instructorGroup.users.length}}</td>
-        <td class='text-center hide-from-small-screen'>{{instructorGroup.courses.length}}</td>
+        <td class='text-center hide-from-small-screen'>
+          {{#if (is-fulfilled instructorGroup.courses)}}
+            {{get (await instructorGroup.courses) 'length'}}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/if}}
+        </td>
         <td class='text-right'>
           {{#link-to 'instructorGroup' instructorGroup class='edit'}}
             {{fa-icon 'edit'}}
@@ -29,7 +35,7 @@
         <tr class='confirm-removal'>
           <td colspan=5>
             <div class='confirm-message'>
-              {{t 'general.confirmRemoveInstructorGroup' instructorCount=instructorGroup.users.length courseCount=instructorGroup.courses.length}} <br>
+              {{t 'general.confirmRemoveInstructorGroup' instructorCount=(get (await instructorGroup.users) 'length') courseCount=(get (await instructorGroup.courses) 'length')}} <br>
               <div class="confirm-buttons">
                 <button {{action 'remove' instructorGroup}} class='remove text'>{{t 'general.yes'}}</button>
                 <button {{action 'cancelRemove' instructorGroup}} class='done text'>{{t 'general.cancel'}}</button>

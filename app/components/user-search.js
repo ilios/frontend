@@ -6,7 +6,7 @@ const { notEmpty, oneWay } = computed;
 
 let userProxy = Ember.ObjectProxy.extend({
   isUser: true,
-  currentlyActiveUsers: [],
+  currentlyActiveUsers: null,
   isActive: computed('content', 'currentlyActiveUsers.[]', function(){
     let user = this.get('content');
     if(!user.get('enabled')){
@@ -32,7 +32,7 @@ export default Component.extend({
   classNames: ['user-search'],
   showMoreInputPrompt: false,
   searchReturned: false,
-  currentlyActiveUsers: [],
+  currentlyActiveUsers: null,
   placeholder: null,
   roles: '',
   availableInstructorGroups: [],
