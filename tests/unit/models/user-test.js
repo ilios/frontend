@@ -40,10 +40,12 @@ test('gets all directed courses', function(assert) {
   let courses = [];
   Ember.run(()=>{
     courses.pushObject(store.createRecord('course', {
-      directors: [model]
+      directors: [model],
+      id: 1,
     }));
     courses.pushObject(store.createRecord('course', {
-      directors: [model]
+      directors: [model],
+      id: 2
     }));
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
@@ -59,7 +61,7 @@ test('gets all learner group courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
     });
@@ -73,7 +75,7 @@ test('gets all learner group courses', function(assert) {
       offerings: [offering1, offering2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });
@@ -100,7 +102,7 @@ test('gets all instructor group courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
     });
@@ -114,7 +116,7 @@ test('gets all instructor group courses', function(assert) {
       offerings: [offering1, offering2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });
@@ -141,7 +143,7 @@ test('gets all instructed offering courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
     });
@@ -153,7 +155,7 @@ test('gets all instructed offering courses', function(assert) {
       session: session1,
       instructors: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });
@@ -177,7 +179,7 @@ test('gets all learner offering courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
     });
@@ -189,7 +191,7 @@ test('gets all learner offering courses', function(assert) {
       session: session1,
       learners: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });
@@ -213,7 +215,7 @@ test('gets all learner group ILMSession courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1,
     });
@@ -227,7 +229,7 @@ test('gets all learner group ILMSession courses', function(assert) {
       ilmSessions: [ilm1, ilm2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });
@@ -254,26 +256,32 @@ test('gets all instructor group ILMSession courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1,
     });
+    let session2 = store.createRecord('session', {
+      course: course1,
+    });
     let ilm1 = store.createRecord('ilmSession', {
+      id: 1,
       session: session1
     });
     let ilm2 = store.createRecord('ilmSession', {
-      session: session1
+      id: 2,
+      session: session2
     });
     store.createRecord('instructorGroup', {
       ilmSessions: [ilm1, ilm2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    let course2 = store.createRecord('course', {id: 2});
+    let session3 = store.createRecord('session', {
       course: course2
     });
     let ilm3 = store.createRecord('ilmSession', {
-      session: session2
+      id: 3,
+      session: session3
     });
     store.createRecord('instructorGroup', {
       ilmSessions: [ilm3],
@@ -295,7 +303,7 @@ test('gets all learner ilm courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
     });
@@ -303,7 +311,7 @@ test('gets all learner ilm courses', function(assert) {
       session: session1,
       learners: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });
@@ -327,7 +335,7 @@ test('gets all instructor ilm courses', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(()=>{
-    let course1 = store.createRecord('course');
+    let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
     });
@@ -335,7 +343,7 @@ test('gets all instructor ilm courses', function(assert) {
       session: session1,
       instructors: [model]
     });
-    let course2 = store.createRecord('course');
+    let course2 = store.createRecord('course', {id: 2});
     let session2 = store.createRecord('session', {
       course: course2
     });

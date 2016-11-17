@@ -1,40 +1,41 @@
 <div class="backtolink">{{#link-to 'instructorGroups'}}{{t 'general.backToInstructorGroups'}}{{/link-to}}</div>
-<div class='detail-view instructorgroups-detail-view'>
-  <div class='detail-view-main-title'>
-    {{instructorgroup-header instructorGroup=instructorGroup}}
-  </div>
-  <div class='detail-view-details instructorgroup-overview'>
-    <section class='detail-overview detail-block'>
-      <div class='detail-title'>
-        {{instructorGroup.title}} {{t 'general.members'}} ({{instructorGroup.users.length}})
-      </div>
-      <div class='detail-content'>
-        <label>{{t 'general.instructors'}}:</label>
-        <span>
-          <ul class='removable-list tag-list'>
-            {{#each sortedUsers as |user|}}
-              <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-            {{/each}}
-          </ul>
-        </span>
-        {{user-search
-          addUser='addUser'
-          currentlyActiveUsers=instructorGroup.users
-        }}
-      </div>
+{{instructorgroup-header instructorGroup=instructorGroup}}
 
-      <div class="inline-label-data-block instructorgroupcourses">
-        <label>{{t 'general.associatedCourses'}}:</label>
-        <div>
-          <ul>
-            {{#each sortedCourses as |course|}}
-              <li>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.title}}{{/link-to}}</li>
-            {{else}}
-              {{t 'general.none'}}
-            {{/each}}
-          </ul>
-        </div>
-      </div> <br>
-    </section>
+<div class='instructorgroup-overview'>
+  <h2>
+    {{instructorGroup.title}} {{t 'general.members'}} ({{instructorGroup.users.length}})
+  </h2>
+  <div class='instructorgroup-overview-content'>
+    {{#if (is-fulfilled instructorGroup.users)}}
+      <label>{{t 'general.instructors'}}:</label>
+      <span>
+        <ul class='removable-list tag-list'>
+          {{#each (sort-by 'lastName' 'firstName' (await instructorGroup.users)) as |user|}}
+            <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+          {{/each}}
+        </ul>
+      </span>
+    {{else}}
+      <span class='instructorgroup-loading'>{{fa-icon 'spinner' spin=true}}</span>
+    {{/if}}
+    {{user-search
+      addUser='addUser'
+      currentlyActiveUsers=(await instructorGroup.users)
+    }}
+  </div>
+
+  <div class="instructorgroupcourses">
+    <label>{{t 'general.associatedCourses'}}:</label>
+    {{#if (is-fulfilled instructorGroup.courses)}}
+      <ul>
+        {{#each (sort-by 'title' (await instructorGroup.courses)) as |course|}}
+          <li>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.title}}{{/link-to}}</li>
+        {{else}}
+          {{t 'general.none'}}
+        {{/each}}
+      </ul>
+    {{else}}
+      <span class='instructorgroup-loading'>{{fa-icon 'spinner' spin=true}}</span>
+    {{/if}}
   </div>
 </div>
