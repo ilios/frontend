@@ -16,7 +16,9 @@ export default Ember.Service.extend({
 
   itemFromConfig(key){
     return this.get('config').then(config => {
-      return config.config[key];
+      const obj = config.config;
+      
+      return key in obj?obj[key]:null;
     });
   },
 
@@ -34,6 +36,14 @@ export default Ember.Service.extend({
 
   apiVersion: computed('config.apiVersion', function(){
     return this.itemFromConfig('apiVersion');
+  }),
+
+  trackingEnabled: computed('config.trackingEnabled', function(){
+    return this.itemFromConfig('trackingEnabled');
+  }),
+
+  trackingCode: computed('config.trackingCode', function(){
+    return this.itemFromConfig('trackingCode');
   }),
 
   apiNameSpace: computed('serverVariables.apiNameSpace', function(){
