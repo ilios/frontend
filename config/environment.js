@@ -10,10 +10,10 @@ module.exports = function(environment) {
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
       'default-src': ["'none'"],
-      'script-src':  ["'self'", "'unsafe-eval'"],
+      'script-src':  ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
       'font-src':    ["'self'"],
-      'connect-src': ["'self'"],
-      'img-src':     ["'self'", 'data:'],
+      'connect-src': ["'self'", 'www.google-analytics.com'],
+      'img-src':     ["'self'", 'data:', 'www.google-analytics.com'],
       'style-src':   ["'self'", "'unsafe-inline'"],
       'media-src':   ["'self'"]
     },
@@ -91,6 +91,9 @@ module.exports = function(environment) {
         'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v1',
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
       }
+    },
+    'ember-metrics': {
+      includeAdapters: ['google-analytics']
     },
     EmberENV: {
       FEATURES: {

@@ -1,9 +1,23 @@
 import Ember from 'ember';
 import config from './config/environment';
 
+const { inject } = Ember;
+const { service } = inject;
+
 const Router = Ember.Router.extend({
+  iliosMetrics: service(),
+
   location: config.locationType,
-  rootURL: config.rootURL
+  rootURL: config.rootURL,
+
+  didTransition() {
+    this._super(...arguments);
+    const iliosMetrics = this.get('iliosMetrics');
+    const page = this.get('url');
+    const title = this.getWithDefault('currentRouteName', 'unknown');
+    
+    iliosMetrics.track(page, title);
+  },
 });
 
 Router.map(function() {
