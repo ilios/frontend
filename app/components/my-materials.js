@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import SortableTable from 'ilios/mixins/sortable-table';
+import escapeRegExp from '../utils/escape-reg-exp';
 
 const { Component, computed, isPresent } = Ember;
 
@@ -15,7 +16,8 @@ export default Component.extend(SortableTable, {
       materials = materials.filterBy('course', courseIdFilter);
     }
     if (isPresent(filter)) {
-      const exp = new RegExp(filter, 'gi');
+      let val = escapeRegExp(filter);
+      const exp = new RegExp(val, 'gi');
 
       materials = materials.filter(material => {
         let searchString = material.title + material.courseTitle + material.sessionTitle;

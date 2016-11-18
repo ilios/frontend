@@ -285,3 +285,26 @@ test('choosing course fires action', function(assert) {
   this.$(allCourses).prop('selected', true).change();
 
 });
+
+test('find with slash does not blow up on regex error', function(assert) {
+  this.set('materials', createMaterials());
+  this.set('nothing', parseInt);
+  this.set('filter', null);
+  this.render(hbs`{{my-materials
+    materials=materials
+    setCourseIdFilter=(action nothing)
+    setFilter=(action nothing)
+    filter=filter
+  }}`);
+
+  const table = 'table:eq(0)';
+  const materials = `${table} tbody tr`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+
+  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
+
+  this.set('filter', "course2\\");
+
+  assert.equal(this.$(materials).length, 0);
+});
