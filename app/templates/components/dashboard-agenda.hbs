@@ -1,8 +1,9 @@
-{{#liquid-if weeksEvents.isFulfilled}}
-  {{#if weeksEvents.length}}
+<h3>{{t 'general.upcomingActivities' days=daysInAdvance}}</h3>
+{{#if (is-fulfilled weeksEvents)}}
+  {{#if (gt (get (await weeksEvents) 'length') 0)}}
     <table>
       <tbody>
-        {{#each weeksEvents as |event|}}
+        {{#each (await weeksEvents) as |event|}}
           {{#if event.isBlanked}}
             <tr>
               <td class='event-date'>
@@ -46,8 +47,8 @@
       </tbody>
     </table>
   {{else}}
-    {{t 'general.noEvents'}}
+    <p>{{t 'general.none'}}</p>
   {{/if}}
 {{else}}
   <p>{{fa-icon 'spinner' spin=true}} {{t 'general.loadingEvents'}}</p>
-{{/liquid-if}}
+{{/if}}

@@ -113,7 +113,7 @@ test('load month calendar', function(assert) {
     startDate: endOfMonth.format(),
     endDate: endOfMonth.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=month');
+  visit('/dashboard?show=calendar&view=month');
   andThen(function() {
     assert.equal(currentPath(), 'dashboard');
     let events = find('div.event');
@@ -142,7 +142,7 @@ test('load week calendar', function(assert) {
     startDate: endOfWeek.format(),
     endDate: endOfWeek.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   andThen(function() {
     assert.equal(currentPath(), 'dashboard');
     let events = find('div.event');
@@ -177,7 +177,7 @@ test('load day calendar', function(assert) {
     startDate: yesterday.format(),
     endDate: yesterday.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=day');
+  visit('/dashboard?show=calendar&view=day');
   andThen(function() {
     assert.equal(currentPath(), 'dashboard');
     let events = find('div.event');
@@ -197,14 +197,14 @@ test('click month day number and go to day', function(assert) {
     startDate: aDayInTheMonth.format(),
     endDate: aDayInTheMonth.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=month');
+  visit('/dashboard?show=calendar&view=month');
   andThen(function() {
     let dayOfMonth = aDayInTheMonth.date();
     let link = find('.day .clickable').filter(function(){
       return parseInt($(this).text()) === dayOfMonth;
     }).eq(0);
     click(link).then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&showCalendar=true&view=day');
+      assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
     });
   });
 });
@@ -217,11 +217,11 @@ test('click week day title and go to day', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=week');
+  visit('/dashboard?show=calendar&view=week');
   andThen(function() {
     let dayOfWeek = today.day();
     click(find('.week-titles .clickable').eq(dayOfWeek)).then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&showCalendar=true&view=day');
+      assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
     });
   });
 });
@@ -234,10 +234,10 @@ test('click forward on a day goes to next day', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=day');
+  visit('/dashboard?show=calendar&view=day');
   andThen(function() {
     click('.calendar-time-picker li:eq(2)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&showCalendar=true&view=day');
+      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
     });
   });
 });
@@ -250,10 +250,10 @@ test('click forward on a week goes to next week', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=week');
+  visit('/dashboard?show=calendar&view=week');
   andThen(function() {
     click('.calendar-time-picker li:eq(2)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&showCalendar=true');
+      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
     });
   });
 });
@@ -266,10 +266,10 @@ test('click forward on a month goes to next month', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=month');
+  visit('/dashboard?show=calendar&view=month');
   andThen(function() {
     click('.calendar-time-picker li:eq(2)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&showCalendar=true&view=month');
+      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
     });
   });
 });
@@ -282,10 +282,10 @@ test('click back on a day goes to previous day', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=day');
+  visit('/dashboard?show=calendar&view=day');
   andThen(function() {
     click('.calendar-time-picker li:eq(0)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&showCalendar=true&view=day');
+      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
     });
   });
 });
@@ -298,10 +298,10 @@ test('click back on a week goes to previous week', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=week');
+  visit('/dashboard?show=calendar&view=week');
   andThen(function() {
     click('.calendar-time-picker li:eq(0)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&showCalendar=true');
+      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
     });
   });
 });
@@ -314,10 +314,10 @@ test('click back on a month goes to previous month', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?showCalendar=true&view=month');
+  visit('/dashboard?show=calendar&view=month');
   andThen(function() {
     click('.calendar-time-picker li:eq(0)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&showCalendar=true&view=month');
+      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
     });
   });
 });
@@ -336,7 +336,7 @@ test('show user events', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   andThen(function() {
     let events = find('div.event');
     assert.equal(events.length, 2);
@@ -362,7 +362,7 @@ test('show school events', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   chooseSchoolEvents();
   andThen(function() {
     let events = find('div.event');
@@ -395,7 +395,7 @@ test('test session type filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   andThen(function() {
     let events = find('div.event');
@@ -447,7 +447,7 @@ test('test course level filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   chooseDetailFilter();
   andThen(function() {
@@ -491,7 +491,7 @@ test('test cohort filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   chooseDetailFilter();
   andThen(function() {
@@ -547,7 +547,7 @@ test('test course filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   andThen(function() {
     let events = find('div.event');
@@ -587,7 +587,7 @@ test('test course and session type filter together', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   andThen(function() {
     let events = find('div.event');
@@ -658,7 +658,7 @@ test('academic year filters cohort', function(assert) {
   server.create('cohort', {
     programYear: 3
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   chooseDetailFilter();
   andThen(() => {
@@ -683,7 +683,7 @@ test('academic year filters courses', function(assert) {
   server.create('course', {
     year: 2014
   });
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   andThen(() => {
     pickOption('.calendar-year-picker select', '2015 - 2016', assert);
@@ -705,7 +705,7 @@ test('clear all filters', function(assert) {
   const courselevel = '.courselevelfilter li:first input';
   const cohort = '.cohortfilter li:first input';
 
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   chooseDetailFilter();
   andThen(() => {
@@ -747,7 +747,7 @@ test('filter tags work properly', function(assert) {
     click(`.filter-tag:eq(${n})`);
   }
 
-  visit('/dashboard?showCalendar=true');
+  visit('/dashboard?show=calendar');
   showFilters();
   chooseDetailFilter();
   andThen(() => {
@@ -785,44 +785,39 @@ test('filter tags work properly', function(assert) {
 });
 
 test('query params work', function(assert) {
-  const calendarSlider = '.switch-label:eq(0)';
-  const scheduleSlider = '.switch-label:eq(1)';
-  const filterSlider = '.switch-label:eq(2)';
+  const calendarSlider = '.calendar-view-picker button:eq(2)';
+  const scheduleSlider = '.switch-label:eq(0)';
+  const filterSlider = '.switch-label:eq(1)';
   const academicYearDropdown = '.calendar-year-picker select';
 
   visit('/dashboard');
   click(calendarSlider);
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?showCalendar=true');
+    assert.equal(currentURL(), '/dashboard?show=calendar');
   });
 
   click(scheduleSlider);
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
   });
 
   click(filterSlider);
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
   });
 
   chooseDetailFilter();
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&showCalendar=true&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
   });
 
   pickOption(academicYearDropdown, '2015 - 2016', assert);
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&showCalendar=true&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
   });
 
   click(filterSlider);
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&showCalendar=true');
-  });
-
-  click(calendarSlider);
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
   });
 });
