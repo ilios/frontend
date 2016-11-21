@@ -1,16 +1,11 @@
 <section class='dashboard fullwidth'>
   <div class='calendar-profile'>
-    {{t 'general.myCalendar'}}
-
-    {{toggle-wide
-      value=showCalendar
-      onLabel='general.calendarOn'
-      offLabel='general.calendarOff'
-      action='toggleShowCalendar'
-      cssId='calendar-profile'
+    {{calendar-view-picker
+      show=show
+      change=(action 'setShow')
     }}
   </div>
-  {{#liquid-if showCalendar class='vertical'}}
+  {{#liquid-if (eq show 'calendar') class='vertical'}}
     {{dashboard-calendar
       selectedDate=selectedDate
       selectedView=selectedView
@@ -28,6 +23,8 @@
       courseFilters=courseFilters
       toggleCourseFilters=(action (toggle 'courseFilters' this))
     }}
+  {{else if (eq show 'materials')}}
+    {{dashboard-materials}}
   {{else}}
     {{dashboard-agenda}}
   {{/liquid-if}}
