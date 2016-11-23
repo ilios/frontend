@@ -127,12 +127,6 @@
     }
   }
 
-  .form-data .time-picker {
-    select {
-      min-width: 4em;
-    }
-  }
-
   .form-col-radiogroup {
     @include span-columns(10 of 10);
 
