@@ -50,6 +50,7 @@ test('clicking the header expands the list', function(assert) {
   const school = Object.create({
     vocabularies
   });
+  const title = '.title';
 
   this.set('school', school);
   this.on('click', () => {
@@ -58,6 +59,6 @@ test('clicking the header expands the list', function(assert) {
   this.render(hbs`{{school-vocabularies-collapsed school=school expand=(action 'click')}}`);
   return wait().then(() => {
     assert.equal(this.$().text().trim().search(/Vocabularies \(1\)/), 0);
-    this.$('.detail-title').click();
+    this.$(title).click();
   });
 });

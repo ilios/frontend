@@ -2,58 +2,53 @@
   {{#link-to 'schools'}}{{t 'general.backToSchools'}}{{/link-to}}
 </div>
 
-<div class='detail-view'>
-  <div class='detail-view-main-title'>
-    <div class='detail-header'>
-      <span class='title'>
-        {{#editable-field
-          tagName='h2'
-          value=title
-          save=(action 'changeTitle')
-          close=(action 'revertTitleChanges')
-          as |isSaving save close|
-        }}
-          {{one-way-input
-            value=title
-            update=(action (mut title))
-            onenter=save
-            onescape=close
-            disabled=isSaving
-            focusOut=(action 'addErrorDisplayFor' 'title')
-            keyPress=(action 'addErrorDisplayFor' 'title')
-          }}
-          {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-            <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-          {{/if}}
-        {{/editable-field}}
-      </span>
-    </div>
-  </div>
-  <div class='detail-view-details'>
-    {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
-      {{school-competencies-expanded
-        school=school
-        collapse=(action this.attrs.setSchoolCompetencyDetails false)
-        expand=(action this.attrs.setSchoolCompetencyDetails true)
-        isManaging=schoolManageCompetencies
-        setSchoolManageCompetencies=this.attrs.setSchoolManageCompetencies
-      }}
-    {{else}}
-      {{school-competencies-collapsed school=school expand=(action this.attrs.setSchoolCompetencyDetails true)}}
+<div class='school-overview'>
+  {{#editable-field
+    tagName='h2'
+    value=title
+    save=(action 'changeTitle')
+    close=(action 'revertTitleChanges')
+    as |isSaving save close|
+  }}
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=save
+      onescape=close
+      disabled=isSaving
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      keyPress=(action 'addErrorDisplayFor' 'title')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
+  {{/editable-field}}
+</div>
 
-    {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
-      {{school-vocabularies-expanded
-        school=school
-        collapse=(action this.attrs.setSchoolVocabularyDetails false)
-        expand=(action this.attrs.setSchoolVocabularyDetails true)
-        managedVocabularyId=schoolManagedVocabulary
-        setSchoolManagedVocabulary=this.attrs.setSchoolManagedVocabulary
-        managedTermId=schoolManagedVocabularyTerm
-        setSchoolManagedVocabularyTerm=this.attrs.setSchoolManagedVocabularyTerm
-      }}
-    {{else}}
-      {{school-vocabularies-collapsed school=school expand=(action this.attrs.setSchoolVocabularyDetails true)}}
-    {{/if}}
-  </div>
+<div class='school-manager-content'>
+  {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
+    {{school-competencies-expanded
+      school=school
+      collapse=(action this.attrs.setSchoolCompetencyDetails false)
+      expand=(action this.attrs.setSchoolCompetencyDetails true)
+      isManaging=schoolManageCompetencies
+      setSchoolManageCompetencies=this.attrs.setSchoolManageCompetencies
+    }}
+  {{else}}
+    {{school-competencies-collapsed school=school expand=(action this.attrs.setSchoolCompetencyDetails true)}}
+  {{/if}}
+
+  {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
+    {{school-vocabularies-expanded
+      school=school
+      collapse=(action this.attrs.setSchoolVocabularyDetails false)
+      expand=(action this.attrs.setSchoolVocabularyDetails true)
+      managedVocabularyId=schoolManagedVocabulary
+      setSchoolManagedVocabulary=this.attrs.setSchoolManagedVocabulary
+      managedTermId=schoolManagedVocabularyTerm
+      setSchoolManagedVocabularyTerm=this.attrs.setSchoolManagedVocabularyTerm
+    }}
+  {{else}}
+    {{school-vocabularies-collapsed school=school expand=(action this.attrs.setSchoolVocabularyDetails true)}}
+  {{/if}}
 </div>

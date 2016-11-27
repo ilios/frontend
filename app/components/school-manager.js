@@ -23,7 +23,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this._super(...arguments);
     this.set('title', this.get('school.title'));
   },
-  classNames: [ 'full-width', 'school-manager' ],
+  classNames: ['school-manager' ],
   tagName: 'section',
   school: null,
   title: null,

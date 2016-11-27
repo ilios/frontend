@@ -57,7 +57,7 @@ test('it renders', function(assert) {
 
   const title = 'h5';
   const input = 'input';
-  const domains = '.hierarchical-list-manager';
+  const domains = '.hierarchical-list';
   const domain1Title = `${domains} .competency-title-editor:eq(0)`;
   const comp1Title = `${domains}:eq(0) li:eq(0)`;
   const comp1Delete = `${domains}:eq(0) li:eq(0) i`;
@@ -90,7 +90,7 @@ test('delete fires delete', function(assert) {
   });
   this.render(hbs`{{school-competencies-manager add=(action nothing) remove=(action remove) competencies=competencies}}`);
 
-  const domains = '.hierarchical-list-manager';
+  const domains = '.hierarchical-list';
   const domain1Icon = `${domains} i`;
 
 
@@ -114,7 +114,7 @@ test('add fires add', function(assert) {
   });
   this.render(hbs`{{school-competencies-manager add=(action add) remove=(action nothing) competencies=competencies}}`);
 
-  const domains = '.hierarchical-list-manager';
+  const domains = '.hierarchical-list';
   const domain1Input = `${domains} input:eq(0)`;
   const domain1Add = `${domains} button:eq(0)`;
 

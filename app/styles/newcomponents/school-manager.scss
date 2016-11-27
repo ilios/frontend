@@ -1,0 +1,19 @@
+.school-manager {
+  .school-overview {
+    border-bottom: 1px dotted $header-grey;
+
+    h2 {
+      @include ilios-heading-h2;
+    }
+
+    .school-overview-content {
+      @include ilios-overview-content;
+    }
+  }
+
+  .vocabulary-title,
+  .term-title {
+    font-size: 1.1 * $base-font-size;
+    font-weight: bold;
+  }
+}

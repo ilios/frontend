@@ -8,6 +8,8 @@ const { service } = inject;
 export default Component.extend({
   store: service(),
   school: null,
+  tagName: 'section',
+  classNames: ['school-vocabularies-expanded'],
   managedVocabularyId: null,
   managedTermId: null,
   managedVocabulary: null,

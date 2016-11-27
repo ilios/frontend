@@ -5,6 +5,8 @@ const { reads, filterBy, sort } = computed;
 
 export default Component.extend({
   school: null,
+  tagName: 'section',
+  classNames: ['school-competencies-collapsed'],
   competencies: reads('school.competencies'),
   allDomains: filterBy('competencies', 'isDomain'),
   allCompetencies: filterBy('competencies', 'isNotDomain'),
