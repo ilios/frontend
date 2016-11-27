@@ -6,6 +6,8 @@ const { service } = inject;
 
 export default Component.extend({
   store: service(),
+  tagName: 'section',
+  classNames: ['school-competencies-expanded'],
   school: null,
   isManaging: false,
   bufferedCompetencies: null,

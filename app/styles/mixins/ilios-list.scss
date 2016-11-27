@@ -85,3 +85,21 @@
     }
   }
 }
+
+@mixin ilios-list-hierarchical() {
+  background-color: $grey;
+  border: 1px solid $black;
+  margin: 1em;
+  padding: 1em;
+
+
+  h4 {
+    font-weight: bold;
+    margin-bottom: 1em;
+    width: 100%;
+  }
+
+  ul {
+    margin-left: 2em;
+  }
+}
