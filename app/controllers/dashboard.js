@@ -5,15 +5,24 @@ const { computed, Controller, inject } = Ember;
 const { service } = inject;
 
 export default Controller.extend({
-  queryParams: ['date', 'view', 'showCalendar', 'mySchedule', 'showFilters', 'courseFilters', 'school', 'academicYear'],
+  queryParams: [
+    'date',
+    'view',
+    'mySchedule',
+    'showFilters',
+    'courseFilters',
+    'school',
+    'academicYear',
+    'show',
+  ],
   date: null,
   view: 'week',
-  showCalendar: false,
   mySchedule: true,
   showFilters: false,
   courseFilters: true,
   academicYear: null,
   school: null,
+  show: 'agenda',
 
   currentUser: service(),
 
@@ -60,14 +69,6 @@ export default Controller.extend({
       this.transitionToRoute('events', event.slug);
     },
 
-    toggleShowCalendar() {
-      if (this.get('showCalendar')) {
-        this.setProperties({ showCalendar: false, mySchedule: true, showFilters: false, school: null, academicYear: null, courseFilters: true });
-      } else {
-        this.set('showCalendar', true);
-      }
-    },
-
     toggleMySchedule() {
       if (this.get('mySchedule')) {
         this.setProperties({ mySchedule: false, school: null });
@@ -82,6 +83,14 @@ export default Controller.extend({
       } else {
         this.set('showFilters', true);
       }
+    },
+
+    setShow(what) {
+      if (!['agenda', 'materials', 'calendar'].contains(what)) {
+        what = 'agenda';
+      }
+
+      this.set('show', what);
     }
   }
 });
