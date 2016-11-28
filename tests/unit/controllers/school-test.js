@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:school', 'Unit | Controller | school', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['service:iliosMetrics'],
 });
 
 // Replace this with your real tests.

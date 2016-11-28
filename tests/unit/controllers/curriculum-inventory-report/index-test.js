@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:curriculum-inventory-report/index', 'Unit | Controller | curriculum inventory report/index', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['service:iliosMetrics'],
 });
 
 // Replace this with your real tests.

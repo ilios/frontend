@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:program/index', 'Unit | Route | Program/Index ', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['service:iliosMetrics'],
 });
 
 test('it exists', function(assert) {

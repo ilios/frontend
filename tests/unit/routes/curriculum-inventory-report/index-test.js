@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:curriculum-inventory-report/index', 'Unit | Route | curriculum inventory report/index', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['service:iliosMetrics'],
 });
 
 test('it exists', function(assert) {
