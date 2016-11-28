@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('controller:program/index', 'Unit | Controller | Program / Index ', {
-  // Specify the other units that are required for this test.
-  needs: ['controller:program']
+  needs: ['service:iliosMetrics'],
 });
 
 // Replace this with your real tests.

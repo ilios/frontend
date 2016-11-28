@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('controller:session/index', 'Unit | Controller | Session / Index ', {
-  // Specify the other units that are required for this test.
-  needs: ['controller:course', 'controller:session']
+  needs: ['controller:course', 'controller:session', 'service:iliosMetrics']
 });
 
 // Replace this with your real tests.

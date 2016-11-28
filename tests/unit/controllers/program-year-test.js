@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:program-year', 'Unit | Controller | ProgramYear ', {
-  // Specify the other units that are required for this test.
-  needs: ['controller:program']
+  needs: ['service:iliosMetrics'],
 });
 
 // Replace this with your real tests.
