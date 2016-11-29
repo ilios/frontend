@@ -109,29 +109,34 @@
             <table>
               <thead>
                 <tr>
-                  <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
-                  <th class='text-center'>{{t 'general.type'}}</th>
-                  <th class='text-center'>{{t 'general.required'}}</th>
-                  <th class='text-left'>{{t 'general.notes'}}</th>
-                  <th class='text-left'>{{t 'general.citation'}}</th>
+                  <th class='text-left' colspan=2  width='20%'>{{t 'general.displayName'}}</th>
+                  <th class='text-center' width='10%'>{{t 'general.type'}}</th>
+                  <th class='text-center' width='10%'>{{t 'general.required'}}</th>
+                  <th class='text-left' width='10%'>{{t 'general.notes'}}</th>
+                  <th class='text-left' width='40%'>{{t 'general.description'}}</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each courseLearningMaterials as |lm|}}
                   <tr>
-                    <td class='text-left' colspan=2>
+                    <td class='text-left text-top' colspan=2>
                       {{lm.learningMaterial.title}}
                     </td>
-                    <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                    <td class='text-center'>
+                    <td class='text-center text-top'>{{lm.learningMaterial.type}}</td>
+                    <td class='text-center text-top'>
                       {{#if lm.required}}
                         <span class='add'>{{t 'general.yes'}}</span>
                       {{else}}
                         <span class='remove'>{{t 'general.no'}}</span>
                       {{/if}}
                     </td>
-                    <td class='text-left'>{{lm.learningMaterial.notes}}</td>
-                    <td class='text-left'>{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top'> {{#if lm.notes}}
+                        <span class='add'>{{t 'general.yes'}}</span>
+                      {{else}}
+                        <span class='remove'>{{t 'general.no'}}</span>
+                      {{/if}}
+                    </td>
+                    <td class='text-left text-top'>{{{lm.learningMaterial.description}}}{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
@@ -219,29 +224,29 @@
             <table>
               <thead>
                 <tr>
-                  <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
-                  <th class='text-center'>{{t 'general.type'}}</th>
-                  <th class='text-center'>{{t 'general.required'}}</th>
-                  <th class='text-left'>{{t 'general.notes'}}</th>
-                  <th class='text-left'>{{t 'general.citation'}}</th>
+                  <th class='text-left' colspan=2  width='20%'>{{t 'general.displayName'}}</th>
+                  <th class='text-center' width='10%'>{{t 'general.type'}}</th>
+                  <th class='text-center' width='10%'>{{t 'general.required'}}</th>
+                  <th class='text-left' width='10%'>{{t 'general.notes'}}</th>
+                  <th class='text-left' width='40%'>{{t 'general.description'}}</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each session.sessionLearningMaterials as |lm|}}
                   <tr>
-                    <td class='text-left' colspan=2>
+                    <td class='text-left text-top' colspan=2>
                       {{lm.learningMaterial.title}}
                     </td>
-                    <td class='text-center'>{{lm.learningMaterial.type}}</td>
-                    <td class='text-center'>
+                    <td class='text-center text-top'>{{lm.learningMaterial.type}}</td>
+                    <td class='text-center text-top'>
                       {{#if lm.required}}
                         <span class='add'>{{t 'general.yes'}}</span>
                       {{else}}
                         <span class='remove'>{{t 'general.no'}}</span>
                       {{/if}}
                     </td>
-                    <td class='text-left'>{{lm.learningMaterial.notes}}</td>
-                    <td class='text-left'>{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top'>{{lm.learningMaterial.notes}}</td>
+                    <td class='text-left text-top'>{{{lm.learningMaterial.description}}}{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
