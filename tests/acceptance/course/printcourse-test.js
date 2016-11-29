@@ -56,7 +56,8 @@ module('Acceptance: Course - Print Course', {
       userRole: 1,
       copyrightPermission: true,
       courseLearningMaterials: [1],
-      citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
+      citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
+     description: 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.'
     });
     server.create('courseLearningMaterial',{
       learningMaterial: 1,
@@ -89,7 +90,7 @@ test('test print course learning materials', function(assert) {
     assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(0)').text().trim(), 'Save the Clock Tower');
     assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(1)').text(), 'file');
     assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(2)').text().trim(), 'No');
-    assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(4)').text().trim(), 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
+    assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(4)').text().trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
     assert.equal(find('.detail-content ul li:eq(2)').text(), 'Flux Capacitor');
   });
 });
