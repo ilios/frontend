@@ -109,11 +109,11 @@
             <table>
               <thead>
                 <tr>
-                  <th class='text-left' colspan=2  width='20%'>{{t 'general.displayName'}}</th>
-                  <th class='text-center' width='10%'>{{t 'general.type'}}</th>
-                  <th class='text-center' width='10%'>{{t 'general.required'}}</th>
-                  <th class='text-left' width='10%'>{{t 'general.notes'}}</th>
-                  <th class='text-left' width='50%'>{{t 'general.description'}}</th>
+                  <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
+                  <th class='text-center'>{{t 'general.type'}}</th>
+                  <th class='text-center'>{{t 'general.required'}}</th>
+                  <th class='text-left'>{{t 'general.notes'}}</th>
+                  <th class='text-left description' colspan=4>{{t 'general.description'}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,7 +137,7 @@
                         <span class='remove'>{{t 'general.no'}}</span>
                       {{/if}}
                     </td>
-                    <td class='text-left text-top'>{{{lm.learningMaterial.description}}}{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top' colspan=4>{{{lm.learningMaterial.description}}}{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
@@ -225,11 +225,11 @@
             <table>
               <thead>
                 <tr>
-                  <th class='text-left' colspan=2  width='20%'>{{t 'general.displayName'}}</th>
-                  <th class='text-center' width='10%'>{{t 'general.type'}}</th>
-                  <th class='text-center' width='10%'>{{t 'general.required'}}</th>
-                  <th class='text-left' width='10%'>{{t 'general.notes'}}</th>
-                  <th class='text-left' width='50%'>{{t 'general.description'}}</th>
+                  <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
+                  <th class='text-center'>{{t 'general.type'}}</th>
+                  <th class='text-center'>{{t 'general.required'}}</th>
+                  <th class='text-left'>{{t 'general.notes'}}</th>
+                  <th class='text-left' colspan=4>{{t 'general.description'}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -247,7 +247,7 @@
                       {{/if}}
                     </td>
                     <td class='text-left text-top'>{{lm.learningMaterial.notes}}</td>
-                    <td class='text-left text-top'>{{{lm.learningMaterial.description}}}{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top' colspan=4>{{{lm.learningMaterial.description}}}{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
