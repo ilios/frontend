@@ -45,7 +45,7 @@ before_install:
     fi
 
 install:
-  - travis_retry npm install --no-optional
+  - travis_retry npm install
   - travis_retry bower install
 
 before_script:
