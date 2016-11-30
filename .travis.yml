@@ -22,8 +22,8 @@ env:
 
 cache:
   directories:
-    - node_modules
-    - bower_components
+    - $HOME/.npm
+    - $HOME/.cache
 
 matrix:
   fast_finish: true
