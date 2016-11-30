@@ -43,6 +43,17 @@
     padding: 0;
   }
 
+  td,
+  th {
+    padding: 0 0 .5em .5em;
+    vertical-align: top;
+  }
+
+  td:first-of-type,
+  th:first-of-type {
+    padding-left: 0;
+  }
+
   thead {
     background-color: $header-blue;
     color: $white;
