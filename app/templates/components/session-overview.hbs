@@ -167,10 +167,26 @@
         <div class="sessionilmduedate block">
           <label>{{t 'general.dueBy'}}:</label>
           <span>
-            {{#if editable}}
-              {{inplace-date value=session.ilmSession.dueDate save='changeIlmDueDate'}}
-            {{else}}
-              {{moment-format session.ilmSession.dueDate 'MM/DD/YY'}}
+            {{#if (is-fulfilled session.ilmSession)}}
+              {{#if editable}}
+                {{#editable-field
+                  value=(moment-format session.ilmSession.dueDate 'MM/DD/YY')
+                  save=(action 'changeIlmDueDate')
+                  close=(action 'revertIlmDueDateChanges')
+                }}
+                  {{pikaday-input
+                    value=dueDate
+                    format='MM/DD/YY'
+                    onSelection=(action (mut dueDate))
+                    focusOut=(action 'addErrorDisplayFor' 'dueDate')
+                  }}
+                  {{#if (and (v-get this 'dueDate' 'isInvalid') (is-in showErrorsFor 'dueDate'))}}
+                    <span class="validation-error-message">{{v-get this 'dueDate' 'message'}}</span>
+                  {{/if}}
+                {{/editable-field}}
+              {{else}}
+                {{moment-format session.ilmSession.dueDate 'MM/DD/YY'}}
+              {{/if}}
             {{/if}}
           </span>
         </div>
