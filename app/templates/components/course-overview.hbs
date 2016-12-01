@@ -50,7 +50,6 @@
           value=(if course.clerkshipType course.clerkshipType.title (t 'general.notAClerkship'))
           save=(action 'changeClerkshipType')
           close=(action 'revertClerkshipTypeChanges')
-          as |isSaving save close|
         }}
           <select onchange={{action "setCourseClerkshipType" value="target.value"}}>
             <option value=null selected={{is-empty selectedClerkshipType}}>{{t 'general.notAClerkship'}}</option>
