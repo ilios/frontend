@@ -55,6 +55,7 @@ test('it renders with materials', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
   }}`);
@@ -116,6 +117,7 @@ test('filter by title', function(assert) {
   this.set('filter', null);
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     filter=filter
@@ -140,6 +142,7 @@ test('filter by session title', function(assert) {
   this.set('filter', null);
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     filter=filter
@@ -164,6 +167,7 @@ test('filter by course title', function(assert) {
   this.set('filter', null);
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     filter=filter
@@ -188,6 +192,7 @@ test('filter by course', function(assert) {
   this.set('courseIdFilter', null);
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     courseIdFilter=courseIdFilter
@@ -268,6 +273,7 @@ test('choosing course fires action', function(assert) {
 
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     setCourseIdFilter=(action setCourseIdFilter)
@@ -292,6 +298,7 @@ test('find with slash does not blow up on regex error', function(assert) {
   this.set('filter', null);
   this.render(hbs`{{my-materials
     materials=materials
+    sortBy='firstOfferingDate'
     setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     filter=filter

@@ -60,6 +60,7 @@ test('renders with data', function(assert) {
   this.render(hbs`{{learnergroup-summary
     toggleEditMode=(action nothing)
     setSortUsersBy=(action nothing)
+    sortUsersBy='firstName'
     learnerGroup=learnerGroup
     isEditing=false
   }}`);
