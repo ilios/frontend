@@ -52,7 +52,7 @@
           save=(action 'changeDescription')
           close=(action 'revertDescriptionChanges')
           clickPrompt=(if report.description report.description (t 'general.clickToEdit'))
-          as |isSaving save close|
+          as |isSaving|
           }}
             <textarea
               onchange={{action (mut description) value="target.value"}}

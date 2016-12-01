@@ -188,7 +188,6 @@
             renderHtml=true
             isSaveDisabled=(and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))
             clickPrompt=(t 'general.clickToEdit')
-            as |isSaving save close|
           }}
             {{froala-editor
               params=editorParams

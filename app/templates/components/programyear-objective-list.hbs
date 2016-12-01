@@ -22,6 +22,7 @@
     </table>
   {{/if}}
 {{else}}
+  {{! template-lint-disable unused-block-params }}
   {{#each (repeat programYear.objectives.length) as |empty|}}
     <div>{{fa-icon 'spinner' spin = true}}</div>
   {{/each}}
