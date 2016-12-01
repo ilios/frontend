@@ -170,12 +170,10 @@ test('add new instructorgroup', function(assert) {
   assert.expect(1);
   visit('/instructorgroups');
   let newTitle = 'new test tile';
-  andThen(function() {
-    click('.actions button');
-    fillIn('.newinstructorgroup-title input', newTitle);
-    click('.newinstructorgroup .done');
-  });
-  andThen(function(){
+  click('.actions button');
+  fillIn('.newinstructorgroup-title input', newTitle);
+  click('.newinstructorgroup .done');
+  andThen(() => {
     assert.equal(getElementText(find('.savedinstructorgroup')), getText(newTitle + 'Saved Successfully'));
   });
 });
