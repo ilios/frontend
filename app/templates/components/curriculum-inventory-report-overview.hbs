@@ -14,7 +14,21 @@
         {{#if isFinalized}}
           {{moment-format report.startDate 'MM/DD/YY'}}
         {{else}}
-          {{inplace-date value=report.startDate save='changeStartDate'}}
+          {{#editable-field
+            value=(moment-format report.startDate 'MM/DD/YY')
+            save=(action 'changeStartDate')
+            close=(action 'revertStartDateChanges')
+          }}
+            {{pikaday-input
+              value=startDate
+              format='MM/DD/YY'
+              onSelection=(action (mut startDate))
+              focusOut=(action 'addErrorDisplayFor' 'startDate')
+            }}
+            {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
+              <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
+            {{/if}}
+          {{/editable-field}}
         {{/if}}
       </span>
     </div>
@@ -24,7 +38,21 @@
         {{#if isFinalized}}
           {{moment-format report.endDate 'MM/DD/YY'}}
         {{else}}
-          {{inplace-date value=report.endDate save='changeEndDate'}}
+          {{#editable-field
+            value=(moment-format report.endDate 'MM/DD/YY')
+            save=(action 'changeEndDate')
+            close=(action 'revertEndDateChanges')
+          }}
+            {{pikaday-input
+              value=endDate
+              format='MM/DD/YY'
+              onSelection=(action (mut endDate))
+              focusOut=(action 'addErrorDisplayFor' 'endDate')
+            }}
+            {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
+              <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+            {{/if}}
+          {{/editable-field}}
         {{/if}}
       </span>
     </div>

@@ -15,6 +15,12 @@ const Validations = buildValidations({
       allowBlank: true
     }),
   ],
+  startDate: [
+    validator('presence', true),
+  ],
+  endDate: [
+    validator('presence', true),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -30,6 +36,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const currentYear = new Date().getFullYear();
     const year = report.get('year');
     const yearLabel = report.get('yearLabel');
+    const startDate = report.get('startDate');
+    const endDate = report.get('endDate');
 
     let yearOptions = [];
     yearOptions.pushObject(Ember.Object.create({'id': year, 'title': yearLabel}));
@@ -41,6 +49,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.setProperties({
       description,
       yearOptions,
+      startDate,
+      endDate,
     });
   },
 
@@ -62,16 +72,58 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
   description: null,
   report: null,
+  startDate: null,
+  endDate: null,
   yearOptions: [],
   isFinalized: alias('report.isFinalized'),
   actions: {
-    changeStartDate: function(newDate){
-      this.get('report').set('startDate', newDate);
-      this.get('report').save();
+    changeStartDate(){
+      const newDate = this.get('startDate');
+      const report = this.get('report');
+      this.send('addErrorDisplayFor', 'startDate');
+      return new Promise((resolve, reject) => {
+        this.validate().then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'startDate');
+            report.set('startDate', newDate);
+            report.save().then((newCourse) => {
+              this.set('startDate', newCourse.get('startDate'));
+              this.set('report', newCourse);
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
+      });
     },
-    changeEndDate: function(newDate){
-      this.get('report').set('endDate', newDate);
-      this.get('report').save();
+    revertStartDateChanges(){
+      const report = this.get('report');
+      this.set('startDate', report.get('startDate'));
+    },
+    changeEndDate(){
+      const newDate = this.get('endDate');
+      const report = this.get('report');
+      this.send('addErrorDisplayFor', 'endDate');
+      return new Promise((resolve, reject) => {
+        this.validate().then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'endDate');
+            report.set('endDate', newDate);
+            report.save().then((newCourse) => {
+              this.set('endDate', newCourse.get('endDate'));
+              this.set('report', newCourse);
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
+      });
+    },
+    revertEndDateChanges(){
+      const report = this.get('report');
+      this.set('endDate', report.get('endDate'));
     },
     changeYear(year) {
       this.get('report').set('year', year);

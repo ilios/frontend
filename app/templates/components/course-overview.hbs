@@ -73,7 +73,21 @@
     <label>{{t 'general.start'}}:</label>
     <span>
       {{#if editable}}
-        {{inplace-date value=course.startDate save='changeStartDate'}}
+        {{#editable-field
+          value=(moment-format course.startDate 'MM/DD/YY')
+          save=(action 'changeStartDate')
+          close=(action 'revertStartDateChanges')
+        }}
+          {{pikaday-input
+            value=startDate
+            format='MM/DD/YY'
+            onSelection=(action (mut startDate))
+            focusOut=(action 'addErrorDisplayFor' 'startDate')
+          }}
+          {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
+            <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
       {{else}}
         {{moment-format course.startDate 'MM/DD/YY'}}&nbsp;
       {{/if}}
@@ -83,7 +97,21 @@
     <label>{{t 'general.end'}}:</label>
     <span>
       {{#if editable}}
-        {{inplace-date value=course.endDate save='changeEndDate'}}
+        {{#editable-field
+          value=(moment-format course.endDate 'MM/DD/YY')
+          save=(action 'changeEndDate')
+          close=(action 'revertEndDateChanges')
+        }}
+          {{pikaday-input
+            value=endDate
+            format='MM/DD/YY'
+            onSelection=(action (mut endDate))
+            focusOut=(action 'addErrorDisplayFor' 'endDate')
+          }}
+          {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
+            <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
       {{else}}
         {{moment-format course.endDate 'MM/DD/YY'}}&nbsp;
       {{/if}}

@@ -16,6 +16,12 @@ const Validations = buildValidations({
       max: 255
     }),
   ],
+  startDate: [
+    validator('presence', true),
+  ],
+  endDate: [
+    validator('presence', true),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -44,6 +50,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.get('directorsToPassToManager').perform();
     const course = this.get('course');
     this.set('externalId', course.get('externalId'));
+    this.set('startDate', course.get('startDate'));
+    this.set('endDate', course.get('endDate'));
 
     course.get('clerkshipType').then(clerkshipType => {
       if (isEmpty(clerkshipType)) {
@@ -55,6 +63,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   course: null,
   externalId: null,
+  startDate: null,
   levelOptions: [],
   classNames: ['course-overview'],
   tagName: 'section',
@@ -132,13 +141,53 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         }
       });
     },
-    changeStartDate: function(newDate){
-      this.get('course').set('startDate', newDate);
-      this.get('course').save();
+    changeStartDate(){
+      const newDate = this.get('startDate');
+      const course = this.get('course');
+      this.send('addErrorDisplayFor', 'startDate');
+      return new Promise((resolve, reject) => {
+        this.validate().then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'startDate');
+            course.set('startDate', newDate);
+            course.save().then((newCourse) => {
+              this.set('startDate', newCourse.get('startDate'));
+              this.set('course', newCourse);
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
+      });
     },
-    changeEndDate: function(newDate){
-      this.get('course').set('endDate', newDate);
-      this.get('course').save();
+    revertStartDateChanges(){
+      const course = this.get('course');
+      this.set('startDate', course.get('startDate'));
+    },
+    changeEndDate(){
+      const newDate = this.get('endDate');
+      const course = this.get('course');
+      this.send('addErrorDisplayFor', 'endDate');
+      return new Promise((resolve, reject) => {
+        this.validate().then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'endDate');
+            course.set('endDate', newDate);
+            course.save().then((newCourse) => {
+              this.set('endDate', newCourse.get('endDate'));
+              this.set('course', newCourse);
+              resolve();
+            });
+          } else {
+            reject();
+          }
+        });
+      });
+    },
+    revertEndDateChanges(){
+      const course = this.get('course');
+      this.set('endDate', course.get('endDate'));
     },
     changeExternalId() {
       const newExternalId = this.get('externalId');

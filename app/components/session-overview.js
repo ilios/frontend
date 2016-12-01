@@ -25,6 +25,9 @@ const Validations = buildValidations({
       positive: true,
     }),
   ],
+  dueDate: [
+    validator('presence', true),
+  ],
   description: [
     validator('length', {
       min: 3,
@@ -42,6 +45,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     this.get('session.ilmSession').then(ilmSession => {
       if (ilmSession){
         this.set('hours', ilmSession.get('hours'));
+        this.set('dueDate', ilmSession.get('dueDate'));
       }
     });
     this.get('session.sessionDescription').then(sessionDescription => {
@@ -54,6 +58,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   session: null,
   title: null,
   hours: null,
+  dueDate: null,
   description: null,
   publishTarget: oneWay('session'),
   editable: true,
@@ -179,11 +184,32 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         }
       });
     },
-    changeIlmDueDate: function(value){
-      this.get('session.ilmSession').then(function(ilmSession){
-        if(ilmSession){
-          ilmSession.set('dueDate', value);
-          ilmSession.save();
+    changeIlmDueDate() {
+      const newDueDate = this.get('dueDate');
+      const session = this.get('session');
+      this.send('addErrorDisplayFor', 'dueDate');
+      return new Promise((resolve, reject) => {
+        this.validate({ on: ['dueDate'] }).then(({validations}) => {
+          if (validations.get('isValid')) {
+            this.send('removeErrorDisplayFor', 'dueDate');
+            session.get('ilmSession').then(function(ilmSession){
+              if(ilmSession){
+                ilmSession.set('dueDate', newDueDate);
+                resolve(ilmSession.save());
+              } else {
+                reject();
+              }
+            });
+          } else {
+            reject();
+          }
+        });
+      });
+    },
+    revertIlmDueDateChanges(){
+      this.get('session').get('ilmSession').then(ilmSession => {
+        if (ilmSession) {
+          this.set('dueDate', ilmSession.get('dueDate'));
         }
       });
     },
