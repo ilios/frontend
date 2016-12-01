@@ -91,8 +91,10 @@ export default Controller.extend({
       instructorGroup.save();
     },
     saveNewInstructorGroup: function(newInstructorGroup){
+      let newInstructorGroups = this.get('newInstructorGroups').toArray();
       return newInstructorGroup.save().then(savedInstructorGroup => {
-        this.get('newInstructorGroups').pushObject(savedInstructorGroup);
+        newInstructorGroups.pushObject(savedInstructorGroup);
+        this.set('newInstructorGroups', newInstructorGroups);
         this.set('showNewInstructorGroupForm', false);
       });
     },
