@@ -137,7 +137,7 @@
                         <span class='remove'>{{t 'general.no'}}</span>
                       {{/if}}
                     </td>
-                    <td class='text-left text-top' colspan=4>{{big-text text=lm.learningMaterial.description}}{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top' colspan=4>{{removeHtmlTags lm.learningMaterial.description}} {{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
@@ -218,7 +218,7 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.learningMaterials'}} ({{session.sessionLearningMaterials.length}})
+          {{t 'general.learningMaterials'}}<br/>({{session.sessionLearningMaterials.length}})
         </div>
         <div class='detail-content'>
           {{#if session.sessionLearningMaterials.length}}
@@ -247,7 +247,7 @@
                       {{/if}}
                     </td>
                     <td class='text-left text-top'>{{lm.learningMaterial.notes}}</td>
-                    <td class='text-left text-top' colspan=4>{{big-text text=lm.learningMaterial.description}}{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top' colspan=4>{{removeHtmlTags lm.learningMaterial.description}}<br/>{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
