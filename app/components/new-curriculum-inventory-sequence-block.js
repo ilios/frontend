@@ -203,7 +203,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             maximum: this.get('maximum'),
             course: this.get('course'),
             duration: this.get('duration') || 0,
-          });
+            report: this.get('report')
+        });
           this.get('save')(block).finally(()=> {
             const parent = this.get('parent');
             if (parent) {
