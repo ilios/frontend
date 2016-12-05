@@ -72,7 +72,7 @@ test('it renders', function(assert) {
     assert.equal(this.$(`.required option:eq(2)`).val(), '3', 'Required option value is correct.');
     assert.equal(this.$(`.required option:eq(2)`).text().trim(), 'Required In Track', 'Required option label is correct.');
     assert.equal(this.$(`.track label`).text().trim(), 'Is Track?', 'Track label is correct');
-    assert.equal(this.$(`.track .editinplace`).length, 1, 'Track switcher is visible.');
+    assert.equal(this.$(`.track .switch`).length, 1, 'Track switcher is visible.');
     assert.equal(this.$(`.start-date label`).text().trim(), 'Start Date:', 'Start date label is correct.');
     assert.equal(this.$(`.start-date input`).val(), '', 'Start date input is initially empty.');
     assert.equal(this.$(`.end-date label`).text().trim(), 'End Date:', 'End date label is correct.');
