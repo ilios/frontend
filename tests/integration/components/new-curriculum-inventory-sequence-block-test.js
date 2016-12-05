@@ -208,8 +208,78 @@ skip('selecting course reveals additional course info', function(assert) {
   });
 });
 
-skip('save', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save', function(assert) {
+  assert.expect(17);
+  let school = Object.create({ id() { return 1; }});
+  let academicLevels = [];
+  for (let i = 0; i < 10; i++) {
+    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i}` }));
+  }
+  let newTitle = 'new sequence block';
+  let newDescription = 'lorem ipsum';
+  let newStartDate = moment('2016-01-05');
+  let newEndDate = moment('2016-02-12');
+
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+  let report = Object.create({
+    academicLevels,
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+    createRecord(what, data) {
+      assert.equal(what, 'curriculumInventorySequenceBlock');
+      assert.equal(data.title, newTitle, 'Given title gets passed.');
+      assert.equal(data.description, newDescription, 'Given description gets passed.');
+      assert.equal(data.parent, null, 'No parent gets passed for new top-level block.');
+      assert.equal(data.academicLevel, academicLevels[0], 'First academic level gets passed by default.');
+      assert.equal(data.required, 1, '"Required" is passed by default.');
+      assert.equal(data.track, false, 'FALSE is passed for "Is Track?" by default.');
+      assert.equal(data.orderInSequence, 0, 'order in sequence is zero for top-level blocks.');
+      assert.equal(data.childSequenceOrder, 1, 'Child sequence order defaults to "ordered".');
+      assert.equal(
+        moment(data.startDate).format('YYYY-MM-DD'),
+        newStartDate.format('YYYY-MM-DD'),
+        'Given start date gets passed.'
+      );
+      assert.equal(moment(
+        data.endDate).format('YYYY-MM-DD'),
+        newEndDate.format('YYYY-MM-DD'),
+        'Given end date gets passed.'
+      );
+      assert.equal(data.minimum, 0, 'Minimum defaults to zero.');
+      assert.equal(data.minimum, 0, 'Maximum defaults to zero');
+      assert.equal(data.course, null, 'No course gets selected/passed by default.');
+      assert.equal(data.duration, 0, 'Duration defaults to zero');
+      assert.equal(data.report, report, 'Given report gets passed.');
+      return Object.create();
+    }
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.set('saveBlock', (block) => {
+    assert.ok(block, 'Sequence block gets passed to saveBlock action.');
+    return resolve();
+  });
+
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+  this.$('.title input').val(newTitle).change();
+  this.$('.description textarea').val(newDescription).change();
+  this.$('.academic-year option:eq(0)').prop('selected', true).change();
+  let interactor = openDatepicker(this.$('.start-date input'));
+  interactor.selectDate(newStartDate.toDate());
+  interactor = openDatepicker(this.$('.end-date input'));
+  interactor.selectDate(newEndDate.toDate());
+  this.$('button.done').click();
 });
 
 skip('save nested block passes parent block id', function(assert) {
