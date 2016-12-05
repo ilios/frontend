@@ -123,7 +123,6 @@ export default Component.extend({
       this.set('isSaving', true);
       const report = this.get('report');
       const parent = this.get('parent');
-      block.set('report', report);
       return block.save().then((savedBlock) => {
         if (! this.get('isDestroyed')) {
           this.setProperties({saved: true, savedBlock, isSaving: false, editorOn: false});
