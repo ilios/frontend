@@ -1,0 +1,15 @@
+.leadership-collapsed {
+  @include collapsed-container($ilios-orange);
+
+  .title {
+    @include collapsed-container-title;
+  }
+
+  .content {
+    @include collapsed-container-content;
+
+    table {
+      @include collapsed-container-table;
+    }
+  }
+}

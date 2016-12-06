@@ -9,10 +9,14 @@ export default Controller.extend({
     'schoolVocabularyDetails',
     'schoolManagedVocabulary',
     'schoolManagedVocabularyTerm',
+    'schoolLeadershipDetails',
+    'schoolManageLeadership'
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,
   schoolVocabularyDetails: false,
   schoolManagedVocabulary: null,
   schoolManagedVocabularyTerm: null,
+  schoolLeadershipDetails: false,
+  schoolManageLeadership: false,
 });

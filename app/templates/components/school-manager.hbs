@@ -26,6 +26,22 @@
 </div>
 
 <div class='school-manager-content'>
+  {{#if (or (and (eq school.directors.length 0) (eq school.administrators.length 0)) schoolLeadershipDetails)}}
+    {{school-leadership-expanded
+      school=school
+      collapse=(action setSchoolLeadershipDetails false)
+      expand=(action setSchoolLeadershipDetails true)
+      isManaging=schoolManageLeadership
+      setIsManaging=setSchoolManageLeadership
+    }}
+  {{else}}
+    {{leadership-collapsed
+      title=(t 'general.schoolLeadership')
+      directorsCount=(has-many-length school 'directors')
+      administratorsCount=(has-many-length school 'administrators')
+      expand=(action setSchoolLeadershipDetails true)
+    }}
+  {{/if}}
   {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
     {{school-competencies-expanded
       school=school

@@ -1,0 +1,38 @@
+<table>
+  <thead>
+    <tr>
+      <th>{{t 'general.directors'}}</th>
+      <th>{{t 'general.administrators'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <ul>
+          {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
+            <li>{{fa-icon 'remove' class='clickable remove' click=(action removeDirector user)}} {{user.fullName}}</li>
+          {{else}}
+            {{t 'general.none'}}
+          {{/each}}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
+            <li>{{fa-icon 'remove' class='clickable remove' click=(action removeAdministrator user)}} {{user.fullName}}</li>
+          {{else}}
+            {{t 'general.none'}}
+          {{/each}}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{leadership-search existingUsers=directors selectUser=addDirector}}
+      </td>
+      <td>
+        {{leadership-search existingUsers=administrators selectUser=addAdministrator}}
+      </td>
+    </tr>
+  </tbody>
+</table>
