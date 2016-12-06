@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export function removeHtmlTags(params) {
   if (!(params[0] === undefined)) {
-    return jQuery("<p>" + params[0] + "</p>").text();
+    return Ember.$("<p>" + params[0] + "</p>").text();
   }  
 }
 
