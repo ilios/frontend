@@ -274,7 +274,6 @@ test('save with defaults', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   this.$('.title input').val(newTitle).change();
   this.$('.description textarea').val(newDescription).change();
-  this.$('.academic-year option:eq(0)').prop('selected', true).change();
   let interactor = openDatepicker(this.$('.start-date input'));
   interactor.selectDate(newStartDate.toDate());
   interactor = openDatepicker(this.$('.end-date input'));
@@ -338,7 +337,6 @@ test('save with non-defaults', function(assert) {
   return wait().then(() => {
     this.$('.title input').val('foo bar').change();
     this.$('.description textarea').val('lorem ipsum').change();
-    this.$('.academic-year option:eq(0)').prop('selected', true).change();
     this.$('.duration input').val(duration).change();
     this.$('.minimum input').val(minimum).change();
     this.$('.maximum input').val(maximum).change();
@@ -351,10 +349,56 @@ test('save with non-defaults', function(assert) {
   });
 });
 
+test('save nested block in ordered sequence', function(assert) {
+  assert.expect(3);
+  let school = Object.create({ id() { return 1; }});
+  let academicLevels = [];
+  for (let i = 0; i < 10; i++) {
+    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i}` }));
+  }
 
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+  let report = Object.create({
+    academicLevels,
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
 
-skip('save nested block in ordered sequence', function(assert) {
-  assert.ok(false, 'to be implemented');
+  let parentBlock = Object.create({
+    isOrdered: true,
+    children: resolve([ Object.create()])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+    createRecord(what, data) {
+      assert.equal(data.orderInSequence, 2, 'Selected order-in-sequence gets passed.');
+      assert.equal(data.parent, parentBlock, 'Parent gets passed.');
+      return Object.create();
+    }
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.set('parentBlock', parentBlock);
+
+  this.set('saveBlock', (block) => {
+    assert.ok(block, 'Sequence block gets passed to saveBlock action.');
+    return resolve();
+  });
+
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock save=(action saveBlock)}}`);
+  this.$('.title input').val('Foo Bar').change();
+  this.$('.description textarea').val('Lorem Ipsum').change();
+  this.$('.order-in-sequence option:eq(1)').prop('selected', true).change();
+  this.$('.duration input').val('19').change();
+  this.$('button.done').click();
 });
 
 test('cancel', function(assert) {
