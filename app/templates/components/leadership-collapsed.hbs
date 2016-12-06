@@ -1,0 +1,23 @@
+<div class='title clickable'  {{action expand}}>
+  {{title}}
+</div>
+<div class='content'>
+  <table class='condensed'>
+    <thead>
+      <tr>
+        <th class='text-left'>{{t 'general.summary'}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{t 'general.directors'}}</td>
+        <td>{{t 'general.directorCount' count=directorsCount}}</td>
+      </tr>
+      <tr>
+        <td>{{t 'general.administrators'}}</td>
+        <td>{{t 'general.administratorCount' count=administratorsCount}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
