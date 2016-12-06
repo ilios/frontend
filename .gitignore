@@ -18,4 +18,3 @@ testem.log
 lcov.dat
 sauce-example.log
 .env
-.tm_properties
