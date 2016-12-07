@@ -479,46 +479,455 @@ test('clear dates', function(assert) {
   });
 });
 
-skip('save fails when minimum is larger than maximum', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails when minimum is larger than maximum', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    this.$('.maximum input').val('5').change();
+    this.$('.minimum input').val('10').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save fails when minimum is less than zero', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails when minimum is less than zero', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    this.$('.minimum input').val('-1').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save fails when minimum is empty', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails when minimum is empty', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    this.$('.minimum input').val('').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save fails when maximum is empty', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails when maximum is empty', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    this.$('.maximum input').val('-1').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save with date range and a zero duration', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save with date range and a zero duration', function(assert) {
+  assert.expect(1);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+    createRecord(what, data) {
+      assert.equal(data.duration, '0');
+      return Object.create();
+    }
+  });
+  this.set('saveBlock', () => {
+    return resolve();
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    this.$('.duration input').val('0').change();
+    this.$('button.done').click();
+  });
 });
 
-skip('save with non-zero duration and no date range', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save with non-zero duration and no date range', function(assert) {
+  assert.expect(1);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let duration = 10;
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+    createRecord(what, data) {
+      assert.equal(data.duration, duration);
+      return Object.create();
+    }
+  });
+  this.set('saveBlock', () => {
+    return resolve();
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.duration input').val(duration).change();
+    this.$('button.done').click();
+  });
 });
 
-skip('save fails if end-date is older than start-date', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails if end-date is older than start-date', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    interactor.selectDate(moment('2011-12-30').toDate());
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save fails on missing duration', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails on missing duration', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    this.$('.duration input').val('').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save fails on invalid duration', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails on invalid duration', function(assert) {
+  assert.expect(2);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let endDateInput = this.$('.end-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    interactor = openDatepicker(endDateInput);
+    interactor.selectDate(moment('2016-12-30').toDate());
+    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    this.$('.duration input').val('WRONG').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    });
+  });
 });
 
-skip('save fails if neither date range nor duration is provided', function(assert) {
-  assert.ok(false, 'to be implemented');
+test('save fails if neither date range nor non-zero duration is provided', function(assert) {
+  assert.expect(1);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.duration text').val('Lorem Ipsum').change();
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 2, 'Validation errors show.');
+    });
+  });
 });
 
-skip('save fails if start-date is given but no end-date is provided', function(assert) {
-  assert.ok(false, 'to be implemented');
-});
+test('save fails if start-date is given but no end-date is provided', function(assert) {
+  assert.expect(1);
+  let school = Object.create({ id() { return 1; }});
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: [],
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([])
+  });
+
+  let storeMock = Service.extend({
+    query(){
+      return resolve([]);
+    },
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+  return wait().then(() => {
+    this.$('.title input').val('Foo Bar').change();
+    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.duration text').val('Lorem Ipsum').change();
+    let startDateInput = this.$('.start-date input');
+    let interactor = openDatepicker(startDateInput);
+    interactor.selectDate(moment('2016-11-12').toDate());
+    this.$('button.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.validation-error-message').length, 1, 'Validation errors show.');
+    });
+  });});
