@@ -36,3 +36,9 @@ test('returns model when ids method is missing', function(assert) {
   let result = hasManyLength([model, 'bar']);
   assert.equal(result, model);
 });
+
+test('returns model when model is null', function(assert) {
+  let model = null;
+  let result = hasManyLength([model, 'bar']);
+  assert.equal(result, model);
+});
