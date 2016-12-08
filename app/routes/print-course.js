@@ -14,20 +14,33 @@ export default Route.extend(AuthenticatedRouteMixin, {
   // only allow priviligeds users to view unpublished courses
   afterModel(course, transition){
     if (course.get('isPublishedOrScheduled')) {
-      return true;
+      return this.preloadCourseData(course);
     }
     return new Promise(resolve => {
       const currentUser = this.get('currentUser');
       all([
         currentUser.get('userIsCourseDirector'),
         currentUser.get('userIsFaculty'),
-        currentUser.get('userIsDeveloper')
+        currentUser.get('userIsDeveloper'),
       ]).then(hasRole => {
         if (!hasRole.contains(true)) {
           transition.abort();
         } else {
-          resolve(true);
+          this.preloadCourseData(course).then(()=> {
+            resolve(true);
+          });
         }
+      });
+    });
+  },
+  preloadCourseData(course){
+    return new Promise(resolve => {
+      all([
+        course.get('sessions'),
+        course.get('competencies'),
+        course.get('objectives'),
+      ]).then(()=> {
+        resolve(true);
       });
     });
   },
