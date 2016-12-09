@@ -1,32 +1,38 @@
-{{#if isManaging}}
-  <div class='title'>
-    <span class='detail-specific-title'>{{t 'general.termsManageTitle'}}</span>
-  </div>
-{{else}}
-  <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
-    {{t 'general.terms'}} ({{subject.terms.length}})
-  </div>
-{{/if}}
-<div class='actions'>
+<section class='detail-block'>
   {{#if isManaging}}
-    <button class='bigadd' {{action 'save'}}>
-      {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
-    </button>
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else if editable}}
-    <button {{action 'manage'}}>{{t 'general.termsManageTitle'}}</button>
-  {{/if}}
-</div>
-<div class='content'>
-  {{#if isManaging}}
-    {{taxonomy-manager
-    subject=subject
-    selectedTerms=bufferedTerms
-    add='addTermToBuffer'
-    remove='removeTermFromBuffer'}}
+    <div class='title'>
+      <span class='detail-specific-title'>
+  	  {{t 'general.termsManageTitle'}}
+  	   </span>
+    </div>
   {{else}}
-    {{#each subject.associatedVocabularies as |vocab| }}
-      {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
-    {{/each}}
+    <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
+      {{t 'general.terms'}} ({{subject.terms.length}})
+    </div>
   {{/if}}
-</div>
+  <div class='actions'>
+    {{#if editable}}
+      {{#if isManaging}}
+        <button class='bigadd' {{action 'save'}}>
+          {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+        </button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+      {{else}}
+        <button {{action 'manage'}}>{{t 'general.termsManageTitle'}}</button>
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class='content'>
+    {{#if isManaging}}
+      {{taxonomy-manager
+      subject=subject
+      selectedTerms=bufferedTerms
+      add='addTermToBuffer'
+      remove='removeTermFromBuffer'}}
+    {{else}}
+      {{#each subject.associatedVocabularies as |vocab| }}
+        {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
+      {{/each}}
+    {{/if}}
+  </div>
+</section>
