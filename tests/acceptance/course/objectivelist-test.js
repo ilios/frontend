@@ -128,7 +128,7 @@ test('long objective', function(assert) {
     assert.equal(getElementText(td), getText(longTitle.substring(0,200)));
     click('i:eq(0)', td);
     andThen(function(){
-      assert.equal(getElementText(td), getText(longTitle));
+      assert.equal(getElementText(find('.fr-element', td)), getText(longTitle));
     });
   });
 });
