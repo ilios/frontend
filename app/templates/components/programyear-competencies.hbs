@@ -24,7 +24,7 @@
 <div class='programyear-competencies-content'>
   {{#if (and (is-fulfilled programYear.competencies) (is-fulfilled competencies) (not loadSelectedCompetencies.isRunning))}}
     {{#if isManaging}}
-      <ul class=managed-competency-list'>
+      <ul class='managed-competency-list'>
         {{#each (sort-by 'title' (await domains)) as |domain|}}
           <li>
             {{#if (contains (get domain 'id') (map-by 'id' selectedCompetencies))}}
