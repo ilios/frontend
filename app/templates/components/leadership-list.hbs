@@ -7,7 +7,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>
+      <td class='text-top'>
         <ul>
           {{#if (is-array directors)}}
             {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
@@ -20,7 +20,7 @@
           {{/if}}
         </ul>
       </td>
-      <td>
+      <td class='text-top'>
         <ul>
           {{#if (is-array administrators)}}
             {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}

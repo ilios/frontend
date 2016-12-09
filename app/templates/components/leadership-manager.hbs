@@ -7,7 +7,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>
+      <td class='text-top'>
         <ul>
           {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
             <li>{{fa-icon 'remove' class='clickable remove' click=(action removeDirector user)}} {{user.fullName}}</li>
@@ -16,7 +16,7 @@
           {{/each}}
         </ul>
       </td>
-      <td>
+      <td class='text-top'>
         <ul>
           {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
             <li>{{fa-icon 'remove' class='clickable remove' click=(action removeAdministrator user)}} {{user.fullName}}</li>
