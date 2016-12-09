@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* global QUnit */
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
@@ -14,7 +12,6 @@ export default function startApp(attrs) {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
-    // QUnit.config.testTimeout = 100000;
   });
 
   return application;
