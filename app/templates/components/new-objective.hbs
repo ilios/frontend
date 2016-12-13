@@ -1,8 +1,8 @@
 <div class="new-objective-title">{{t 'general.newObjective'}}</div>
 
 <div class="new-objective-form">
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.description'}}:</div>
+  <div class="form-col form-col-12">
+    <label class="form-label">{{t 'general.description'}}:</label>
 
     <div class="form-data form-data-text form-input-row">
       {{froala-editor
@@ -14,7 +14,7 @@
         <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
       {{/if}}
     </div>
-  </label>
+  </div>
 
   <div class="form-col-6 form-data-submit">
     <button disabled={{or isSaving (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}} class='done text' {{action 'save'}}>
