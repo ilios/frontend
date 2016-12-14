@@ -92,11 +92,11 @@ test('can edit user roles', function(assert) {
     assert.equal(user.get('enabled'), false, 'user is disabled');
     assert.equal(user.get('userSyncIgnore'), true, 'user is sync ignored');
 
-    assert.notOk(userRoles.contains(courseDirectorRole));
-    assert.ok(userRoles.contains(facultyRole));
-    assert.ok(userRoles.contains(developerRole));
-    assert.ok(userRoles.contains(formerStudentRole));
-    assert.ok(userRoles.contains(studentRole));
+    assert.notOk(userRoles.includes(courseDirectorRole));
+    assert.ok(userRoles.includes(facultyRole));
+    assert.ok(userRoles.includes(developerRole));
+    assert.ok(userRoles.includes(formerStudentRole));
+    assert.ok(userRoles.includes(studentRole));
 
     return resolve(user);
   });

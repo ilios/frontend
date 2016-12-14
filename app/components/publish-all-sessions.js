@@ -92,7 +92,7 @@ export default Component.extend({
   
   actions: {
     toggleSession(session){
-      if(this.get('sessionsToOverride').contains(session)){
+      if(this.get('sessionsToOverride').includes(session)){
         this.get('sessionsToOverride').removeObject(session);
       } else{
         this.get('sessionsToOverride').pushObject(session);
@@ -100,14 +100,14 @@ export default Component.extend({
     },
     publishAllAsIs(){
       this.get('overridableSessions').forEach(session =>{
-        if(!this.get('sessionsToOverride').contains(session)){
+        if(!this.get('sessionsToOverride').includes(session)){
           this.get('sessionsToOverride').pushObject(session);
         }
       });
     },
     publishNoneAsIs(){
       this.get('overridableSessions').forEach(session =>{
-        if(this.get('sessionsToOverride').contains(session)){
+        if(this.get('sessionsToOverride').includes(session)){
           this.get('sessionsToOverride').removeObject(session);
         }
       });
@@ -117,7 +117,7 @@ export default Component.extend({
       let asIsSessions = this.get('sessionsToOverride');
       let sessionsToSave = [];
       this.get('overridableSessions').forEach(session =>{
-        session.set('publishedAsTbd', !asIsSessions.contains(session));
+        session.set('publishedAsTbd', !asIsSessions.includes(session));
         session.set('published', true);
         sessionsToSave.pushObject(session);
       });

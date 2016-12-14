@@ -28,7 +28,7 @@ export default Component.extend({
         let assignableCohorts = usableCohorts.filter(cohort => {
           return (
             this.get('cohorts') &&
-            !this.get('cohorts').contains(cohort)
+            !this.get('cohorts').includes(cohort)
           );
         });
         defer.resolve(assignableCohorts);

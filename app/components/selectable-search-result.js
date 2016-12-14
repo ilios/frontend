@@ -6,7 +6,7 @@ export default Component.extend({
   selectedItems: Ember.A(),
   item: null,
   selected: computed('item', 'selectedItems.[]', function(){
-    return this.get('selectedItems').contains(this.item);
+    return this.get('selectedItems').includes(this.item);
   }),
   click: function() {
     this.sendAction('action', this.get('item'));

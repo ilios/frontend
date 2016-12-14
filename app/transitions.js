@@ -26,7 +26,7 @@ export default function(){
       topRoutes.push('instructorGroups');
       topRoutes.push('instructorGroup');
       topRoutes.push('programs');
-      return topRoutes.contains(this);
+      return topRoutes.includes(this);
     }),
     this.use('crossFade', {duration: 500})
   );

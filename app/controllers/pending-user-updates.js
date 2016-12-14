@@ -63,7 +63,7 @@ export default Controller.extend({
     return this.get('allUpdates')
       .sortBy('user.lastName', 'user.firstName')
       .slice(offset, end).filter(update => {
-        return !this.get('deletedUpdates').contains(update) &&
+        return !this.get('deletedUpdates').includes(update) &&
         (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
       });
   }),

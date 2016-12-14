@@ -62,9 +62,9 @@ test('check competencies', function(assert) {
 
     return course.get('competencies').then(competencies => {
       assert.equal(competencies.length, 3);
-      assert.ok(competencies.contains(competency1));
-      assert.ok(competencies.contains(competency2));
-      assert.ok(competencies.contains(competency3));
+      assert.ok(competencies.includes(competency1));
+      assert.ok(competencies.includes(competency2));
+      assert.ok(competencies.includes(competency3));
 
       let competency4 = store.createRecord('competency');
       let competency5 = store.createRecord('competency');
@@ -75,11 +75,11 @@ test('check competencies', function(assert) {
 
       return course.get('competencies').then(competencies => {
         assert.equal(competencies.length, 5);
-        assert.ok(competencies.contains(competency1));
-        assert.ok(competencies.contains(competency2));
-        assert.ok(competencies.contains(competency3));
-        assert.ok(competencies.contains(competency4));
-        assert.ok(competencies.contains(competency5));
+        assert.ok(competencies.includes(competency1));
+        assert.ok(competencies.includes(competency2));
+        assert.ok(competencies.includes(competency3));
+        assert.ok(competencies.includes(competency4));
+        assert.ok(competencies.includes(competency5));
       });
 
     });

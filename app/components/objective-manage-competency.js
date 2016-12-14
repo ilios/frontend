@@ -86,7 +86,7 @@ export default Component.extend({
           filter(domains.toArray(), (domain => {
             return new Promise(resolve => {
               domain.get('children').then(children => {
-                let availableChildren = children.filter(child => competencies.contains(child));
+                let availableChildren = children.filter(child => competencies.includes(child));
                 resolve(availableChildren.length === 0);
               });
             });

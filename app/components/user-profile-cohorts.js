@@ -91,7 +91,7 @@ export default Component.extend({
               resolve(
                 programYear.get('published') &&
                 !programYear.get('archived') &&
-                !selectedCohorts.contains(cohort)
+                !selectedCohorts.includes(cohort)
               );
             });
           });

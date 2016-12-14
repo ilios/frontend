@@ -30,7 +30,7 @@ export default Component.extend({
 
     const readSchools = yield this.get('readSchools');
     const writeSchools = yield this.get('writeSchools');
-    const readOnlySchools = readSchools.filter(school => !writeSchools.contains(school));
+    const readOnlySchools = readSchools.filter(school => !writeSchools.includes(school));
 
     const userPermissions = yield user.get('permissions');
     yield userPermissions.invoke('destroyRecord');
@@ -120,7 +120,7 @@ export default Component.extend({
       this.get('secondarySchools').then(schools => {
         let overriddenIds = schools.filter(school => {
           const permission = school.get('id') + 'read';
-          return togglePermissions.contains(permission);
+          return togglePermissions.includes(permission);
         }).mapBy('id');
         user.get('permissions').then(permissions => {
           let existingIds = permissions.filter(permission => {
@@ -128,8 +128,8 @@ export default Component.extend({
           }).mapBy('tableRowId');
           let readSchools = schools.filter(school => {
             let id = school.get('id');
-            return (existingIds.contains(id) && !overriddenIds.contains(id)) ||
-                   (!existingIds.contains(id) && overriddenIds.contains(id));
+            return (existingIds.includes(id) && !overriddenIds.includes(id)) ||
+                   (!existingIds.includes(id) && overriddenIds.includes(id));
           });
 
           resolve(readSchools);
@@ -147,7 +147,7 @@ export default Component.extend({
       this.get('secondarySchools').then(schools => {
         let overriddenIds = schools.filter(school => {
           const permission = school.get('id') + 'write';
-          return togglePermissions.contains(permission);
+          return togglePermissions.includes(permission);
         }).mapBy('id');
         user.get('permissions').then(permissions => {
           let existingIds = permissions.filter(permission => {
@@ -155,8 +155,8 @@ export default Component.extend({
           }).mapBy('tableRowId');
           let writeSchools = schools.filter(school => {
             let id = school.get('id');
-            return (existingIds.contains(id) && !overriddenIds.contains(id)) ||
-                   (!existingIds.contains(id) && overriddenIds.contains(id));
+            return (existingIds.includes(id) && !overriddenIds.includes(id)) ||
+                   (!existingIds.includes(id) && overriddenIds.includes(id));
           });
 
           resolve(writeSchools);
@@ -170,7 +170,7 @@ export default Component.extend({
   actions: {
     toggleReadSchool(school){
       const permission = school.get('id') + 'read';
-      if (this.get('togglePermissions').contains(permission)) {
+      if (this.get('togglePermissions').includes(permission)) {
         this.get('togglePermissions').removeObject(permission);
       } else {
         this.get('togglePermissions').pushObject(permission);
@@ -178,7 +178,7 @@ export default Component.extend({
     },
     toggleWriteSchool(school){
       const permission = school.get('id') + 'write';
-      if (this.get('togglePermissions').contains(permission)) {
+      if (this.get('togglePermissions').includes(permission)) {
         this.get('togglePermissions').removeObject(permission);
       } else {
         this.get('togglePermissions').pushObject(permission);

@@ -23,7 +23,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
         currentUser.get('userIsFaculty'),
         currentUser.get('userIsDeveloper'),
       ]).then(hasRole => {
-        if (!hasRole.contains(true)) {
+        if (!hasRole.includes(true)) {
           transition.abort();
         } else {
           this.preloadCourseData(course).then(()=> {

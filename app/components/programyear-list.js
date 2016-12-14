@@ -40,7 +40,7 @@ export default Component.extend({
       }
 
       return years.filter((year) => {
-        return !this.get('existingStartYears').contains(year.toString());
+        return !this.get('existingStartYears').includes(year.toString());
       }).map((startYear) => {
         return { label: `${startYear} - ${startYear + 1}`, value: startYear };
       });

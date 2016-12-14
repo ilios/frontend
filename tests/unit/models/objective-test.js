@@ -70,8 +70,8 @@ test('corrent top parents with multi parent tree', function(assert) {
 
     model.get('topParents').then(topParents => {
       assert.ok(topParents.get('length') === 2);
-      assert.ok(topParents.contains(parent3));
-      assert.ok(topParents.contains(parent4));
+      assert.ok(topParents.includes(parent3));
+      assert.ok(topParents.includes(parent4));
     });
   });
 

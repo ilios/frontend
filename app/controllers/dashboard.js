@@ -86,7 +86,7 @@ export default Controller.extend({
     },
 
     setShow(what) {
-      if (!['agenda', 'materials', 'calendar'].contains(what)) {
+      if (!['agenda', 'materials', 'calendar'].includes(what)) {
         what = 'agenda';
       }
 

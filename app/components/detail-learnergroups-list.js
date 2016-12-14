@@ -51,7 +51,7 @@ export default Component.extend({
       filter(learnerGroups, group => {
         return new Promise(resolve => {
           group.get('allDescendants').then(children => {
-            let selectedChildren = children.filter(child => ids.contains(child.get('id')));
+            let selectedChildren = children.filter(child => ids.includes(child.get('id')));
             resolve(selectedChildren.length === 0);
           });
         });

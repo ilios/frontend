@@ -65,7 +65,7 @@ export default Component.extend({
 
   clickUser: task(function * (user) {
     const existingUserIds = this.get('existingUserIds');
-    if (existingUserIds.contains(user.get('id'))) {
+    if (existingUserIds.includes(user.get('id'))) {
       return;
     }
     this.set('searchValue', null);

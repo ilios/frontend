@@ -39,7 +39,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('years', years);
 
     const currentYear = this.get('currentYear');
-    if (isPresent(currentYear) && years.contains(parseInt(currentYear.get('title')))) {
+    if (isPresent(currentYear) && years.includes(parseInt(currentYear.get('title')))) {
       this.set('selectedYear', currentYear.get('title'));
     } else {
       this.set('selectedYear', thisYear);

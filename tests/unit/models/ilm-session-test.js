@@ -31,17 +31,17 @@ test('check allInstructors', function(assert) {
 
     return model.get('allInstructors').then(instructors => {
       assert.equal(instructors.length, 2);
-      assert.ok(instructors.contains(user1));
-      assert.ok(instructors.contains(user2));
+      assert.ok(instructors.includes(user1));
+      assert.ok(instructors.includes(user2));
 
       return instructorGroup.get('users').then(users =>{
         let user3 = store.createRecord('user');
         users.pushObject(user3);
         return model.get('allInstructors').then(instructors => {
           assert.equal(instructors.length, 3);
-          assert.ok(instructors.contains(user1));
-          assert.ok(instructors.contains(user2));
-          assert.ok(instructors.contains(user3));
+          assert.ok(instructors.includes(user1));
+          assert.ok(instructors.includes(user2));
+          assert.ok(instructors.includes(user3));
         });
       });
 

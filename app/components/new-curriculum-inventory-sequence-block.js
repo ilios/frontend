@@ -173,7 +173,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           report.get('linkedCourses').then(linkedCourses => {
             // Filter out all courses that are linked to (sequence blocks in) this report.
             let linkableCourses = allLinkableCourses.filter(function(course) {
-              return ! linkedCourses.contains(course);
+              return ! linkedCourses.includes(course);
             });
             resolve(linkableCourses);
           });

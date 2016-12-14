@@ -127,7 +127,7 @@ export default Component.extend({
         let promises = [];
 
         let oldTerms = terms.filter(term => {
-          return !this.get('bufferTerms').contains(term);
+          return !this.get('bufferTerms').includes(term);
         });
         terms.clear();
         terms.addObjects(this.get('bufferTerms'));

@@ -73,7 +73,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
           }
           if(competency.get('id') !== domain.get('id')){
             let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-            if(!subCompetencies.contains(competency)){
+            if(!subCompetencies.includes(competency)){
               subCompetencies.pushObject(competency);
               subCompetencies.sortBy('title');
             }

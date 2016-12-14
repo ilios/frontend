@@ -241,11 +241,11 @@ var User = DS.Model.extend({
     return new Promise(resolve => {
       user.get('learnerGroups').then(userGroups => {
         //all the groups a user is in that are in our current learner groups tree
-        let relevantGroups = userGroups.filter(group => learnerGroupTree.contains(group));
+        let relevantGroups = userGroups.filter(group => learnerGroupTree.includes(group));
         let relevantGroupIds = relevantGroups.mapBy('id');
         let lowestGroup = relevantGroups.find( group => {
           let childIds = group.hasMany('children').ids();
-          let childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.contains(id));
+          let childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.includes(id));
           return childGroupsWhoAreUserGroupMembers.length === 0;
         });
 

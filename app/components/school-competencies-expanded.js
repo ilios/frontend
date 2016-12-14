@@ -49,7 +49,7 @@ export default Component.extend({
     },
     removeCompetencyFromBuffer(competency){
       let buffer = this.get('bufferedCompetencies');
-      if (buffer.contains(competency)) {
+      if (buffer.includes(competency)) {
         buffer.removeObject(competency);
       }
     },
@@ -61,7 +61,7 @@ export default Component.extend({
         let domainsToRemove = [];
         let bufferedCompetencies = this.get('bufferedCompetencies');
         schoolCompetencies.filter(competency => {
-          return !bufferedCompetencies.contains(competency);
+          return !bufferedCompetencies.includes(competency);
         }).forEach(competency => {
           competency.deleteRecord();
           if (competency.get('isDomain')) {

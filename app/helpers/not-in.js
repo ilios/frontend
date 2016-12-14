@@ -11,7 +11,7 @@ export function notIn([values, item]) {
     return false;
   }
 
-  return !values.contains(item);
+  return !values.includes(item);
 }
 
 export default Helper.extend({

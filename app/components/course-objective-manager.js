@@ -18,7 +18,7 @@ var competencyGroup = Ember.Object.extend({
 var objectiveProxy = Ember.ObjectProxy.extend({
   courseObjective: null,
   selected: computed('content', 'courseObjective.parents.[]', function(){
-    return this.get('courseObjective.parents').contains(this.get('content'));
+    return this.get('courseObjective.parents').includes(this.get('content'));
   }),
 });
 

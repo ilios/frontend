@@ -57,7 +57,7 @@ export default Component.extend({
       return [];
     }
     return students.filter(user => {
-      return (!savedUserIds.contains(user.get('id')));
+      return (!savedUserIds.includes(user.get('id')));
     }).sortBy('lastName', 'firstName').slice(offset, end);
   }),
 
@@ -109,7 +109,7 @@ export default Component.extend({
     let cohort = yield this.get('bestSelectedCohort');
     let students = this.get('students');
     let studentsToModify = students.filter(user => {
-      return ids.contains(user.get('id'));
+      return ids.includes(user.get('id'));
     });
     if (!cohort || studentsToModify.length < 1) {
       return;
@@ -147,7 +147,7 @@ export default Component.extend({
       }
     },
     toggleUserSelection(userId){
-      if (this.get('selectedUserIds').contains(userId)) {
+      if (this.get('selectedUserIds').includes(userId)) {
         this.get('selectedUserIds').removeObject(userId);
       } else {
         this.get('selectedUserIds').pushObject(userId);

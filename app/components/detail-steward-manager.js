@@ -29,7 +29,7 @@ export default Component.extend({
       //display those with departments or those who are not already solo-assigned
       display: computed('content', 'departments.length', function(){
         return this.get('departments').length > 0 ||
-               !this.get('selectedSchools').contains(this.get('content'));
+               !this.get('selectedSchools').includes(this.get('content'));
       }),
     });
     this.get('schools').then(schools => {
@@ -42,7 +42,7 @@ export default Component.extend({
         });
         let promise = school.get('departments').then(departments => {
           let filteredDepartments = departments.filter(
-             department => !this.get('selectedDepartments').contains(department)
+             department => !this.get('selectedDepartments').includes(department)
           );
           proxy.set('departments', filteredDepartments);
           schoolProxies.pushObject(proxy);
@@ -66,7 +66,7 @@ export default Component.extend({
       //display those with departments or those who are not already solo-assigned
       display: computed('content', 'departments.length', function(){
         return this.get('departments').length > 0 ||
-               this.get('selectedSchools').contains(this.get('content'));
+               this.get('selectedSchools').includes(this.get('content'));
       })
     });
     this.get('schools').then(schools => {
@@ -79,7 +79,7 @@ export default Component.extend({
         });
         let promise = school.get('departments').then(departments => {
           let filteredDepartments = departments.filter(
-             department => this.get('selectedDepartments').contains(department)
+             department => this.get('selectedDepartments').includes(department)
           );
           proxy.set('departments', filteredDepartments);
           schoolProxies.pushObject(proxy);
@@ -103,7 +103,7 @@ export default Component.extend({
       this.sendAction('add', steward);
       schoolProxy.get('content').get('departments').then(departments => {
         let selectedDepartments = this.get('stewardedDepartments').mapBy('content');
-        let newDepartments = departments.filter(deparment => !selectedDepartments.contains(deparment));
+        let newDepartments = departments.filter(deparment => !selectedDepartments.includes(deparment));
         newDepartments.forEach(department => {
           let steward = this.get('store').createRecord('program-year-steward', {
             school: schoolProxy.get('content'),

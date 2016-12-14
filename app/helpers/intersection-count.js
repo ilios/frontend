@@ -15,7 +15,7 @@ export function intersectionCount([a, b]/*, hash*/) {
 
   let count = 0;
   a.forEach((item) => {
-    if (b.contains(item)) {
+    if (b.includes(item)) {
       count++;
     }
   });

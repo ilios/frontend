@@ -145,7 +145,7 @@ export default Component.extend({
           report.get('linkedCourses').then(linkedCourses => {
             // Filter out all courses that are linked to (sequence blocks in) this report.
             let linkableCourses = allLinkableCourses.filter(function(course) {
-              return ! linkedCourses.contains(course);
+              return ! linkedCourses.includes(course);
             });
             // Always add the currently linked course to this list, if existent.
             sequenceBlock.get('course').then(course => {

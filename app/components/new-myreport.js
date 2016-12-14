@@ -60,7 +60,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     const subject = this.get('currentSubject');
 
-    return list.filter(item =>item.subjects.contains(subject));
+    return list.filter(item =>item.subjects.includes(subject));
   }),
   prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', function(){
     const type = this.get('currentPrepositionalObject');
@@ -90,7 +90,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         'instructor-group',
         'competency',
       ];
-      if(schoolScopedModels.contains(model)) {
+      if(schoolScopedModels.includes(model)) {
         if ('session' === model) {
           query.filters.schools = [this.get('currentSchool').get('id')];
         } else {

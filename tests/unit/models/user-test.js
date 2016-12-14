@@ -50,7 +50,7 @@ test('gets all directed courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -91,7 +91,7 @@ test('gets all learner group courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -132,7 +132,7 @@ test('gets all instructor group courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -168,7 +168,7 @@ test('gets all instructed offering courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -204,7 +204,7 @@ test('gets all learner offering courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -245,7 +245,7 @@ test('gets all learner group ILMSession courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -292,7 +292,7 @@ test('gets all instructor group ILMSession courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -324,7 +324,7 @@ test('gets all learner ilm courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -356,7 +356,7 @@ test('gets all instructor ilm courses', function(assert) {
     model.get('allRelatedCourses').then(allRelatedCourses => {
       assert.equal(allRelatedCourses.length, courses.length);
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.contains(course));
+        assert.ok(allRelatedCourses.includes(course));
       });
     });
   });
@@ -454,9 +454,9 @@ test('gets secondary cohorts (all cohorts not the primary cohort)', function(ass
 
     model.get('secondaryCohorts').then(cohorts => {
       assert.equal(cohorts.length, 2);
-      assert.ok(cohorts.contains(secondaryCohort));
-      assert.ok(cohorts.contains(anotherCohort));
-      assert.notOk(cohorts.contains(primaryCohort));
+      assert.ok(cohorts.includes(secondaryCohort));
+      assert.ok(cohorts.includes(anotherCohort));
+      assert.notOk(cohorts.includes(primaryCohort));
     });
   });
 

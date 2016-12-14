@@ -32,9 +32,9 @@ test('check allinstructors', function(assert) {
 
     return offering.get('allInstructors').then(users => {
       assert.equal(users.length, 3);
-      assert.ok(users.contains(user1));
-      assert.ok(users.contains(user2));
-      assert.ok(users.contains(user3));
+      assert.ok(users.includes(user1));
+      assert.ok(users.includes(user2));
+      assert.ok(users.includes(user3));
       let user4 = store.createRecord('user');
       let user5 = store.createRecord('user');
       offering.get('instructors').pushObject(user4);
@@ -43,11 +43,11 @@ test('check allinstructors', function(assert) {
 
       return offering.get('allInstructors').then(users => {
         assert.equal(users.length, 5);
-        assert.ok(users.contains(user1));
-        assert.ok(users.contains(user2));
-        assert.ok(users.contains(user3));
-        assert.ok(users.contains(user4));
-        assert.ok(users.contains(user5));
+        assert.ok(users.includes(user1));
+        assert.ok(users.includes(user2));
+        assert.ok(users.includes(user3));
+        assert.ok(users.includes(user4));
+        assert.ok(users.includes(user5));
       });
 
     });

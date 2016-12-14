@@ -33,7 +33,7 @@ export default Component.extend({
       var ilmSession = this.get('ilmSession.content');
 
       let instructorGroups = ilmSession.get('instructorGroups');
-      let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').contains(group));
+      let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').includes(group));
       instructorGroups.clear();
       removableInstructorGroups.forEach(group => {
         group.get('ilmSessions').then(ilmSessions => {
@@ -49,7 +49,7 @@ export default Component.extend({
       });
 
       let instructors = ilmSession.get('instructors');
-      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').contains(user));
+      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').includes(user));
       instructors.clear();
       removableInstructors.forEach(user => {
         user.get('instructorIlmSessions').then(ilmSessions => {

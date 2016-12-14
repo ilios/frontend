@@ -32,8 +32,8 @@ test('get top level sequence blocks', function(assert){
     model.get('sequenceBlocks').pushObjects([ block1, block2, block3 ]);
     model.get('topLevelSequenceBlocks').then(blocks => {
       assert.equal(blocks.length, 2);
-      assert.ok(blocks.contains(block1));
-      assert.ok(blocks.contains(block2));
+      assert.ok(blocks.includes(block1));
+      assert.ok(blocks.includes(block2));
     });
   });
 });
@@ -79,9 +79,9 @@ test('get linked courses', function(assert) {
     });
     model.get('sequenceBlocks').pushObjects([ block1, block2, block3 ]);
     model.get('linkedCourses').then(linkedCourses => {
-      assert.ok(linkedCourses.contains(course1));
-      assert.ok(linkedCourses.contains(course2));
-      assert.notOk(linkedCourses.contains(course3));
+      assert.ok(linkedCourses.includes(course1));
+      assert.ok(linkedCourses.includes(course2));
+      assert.notOk(linkedCourses.includes(course3));
     });
   });
 });
