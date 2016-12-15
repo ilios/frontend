@@ -9,13 +9,10 @@
     "lodash": "~4.0.0",
     "Faker": "~3.0.1",
     "font-awesome": "~4.5.0",
-    "moment": ">= 2.8.0",
-    "moment-timezone": ">= 0.1.0",
     "froala-wysiwyg-editor": "^2.4.0",
     "clipboard": "~1.5.5",
     "papaparse": "~4.1.2",
     "zxcvbn": "~4.3.0",
-    "crypto-js": "^3.1.6",
     "js-cookie": "^2.0.4",
     "ember-cli-shims": "0.1.3"
   }
