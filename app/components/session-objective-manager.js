@@ -6,7 +6,7 @@ const { Component, computed, observer, on } = Ember;
 var objectiveProxy = Ember.ObjectProxy.extend({
   sessionObjective: null,
   selected: computed('content', 'sessionObjective.parents.[]', function(){
-    return this.get('sessionObjective.parents').contains(this.get('content'));
+    return this.get('sessionObjective.parents').includes(this.get('content'));
   }),
 });
 

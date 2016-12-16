@@ -36,7 +36,7 @@ export default Component.extend({
       return false;
     }
     linkableSessions.forEach(linkableSession => {
-      if (! linkedSessions.contains(linkableSession)) {
+      if (! linkedSessions.includes(linkableSession)) {
         return false;
       }
     });
@@ -58,7 +58,7 @@ export default Component.extend({
 
     let isSelected = false;
     linkedSessions.forEach(linkedSession => {
-      if (linkableSessions.contains(linkedSession)) {
+      if (linkableSessions.includes(linkedSession)) {
         isSelected = true;
       }
     });
@@ -79,7 +79,7 @@ export default Component.extend({
   actions: {
     changeSession(session) {
       let sessions = this.get('linkedSessionsBuffer');
-      if (sessions.contains(session)) {
+      if (sessions.includes(session)) {
         sessions.removeObject(session);
       } else {
         sessions.addObject(session);

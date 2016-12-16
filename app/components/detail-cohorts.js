@@ -23,7 +23,7 @@ export default Component.extend({
       course.get('cohorts').then(cohortList => {
         let bufferedCohorts = this.get('bufferedCohorts');
         let removedCohorts = cohortList.filter(cohort => {
-          return !bufferedCohorts.contains(cohort);
+          return !bufferedCohorts.includes(cohort);
         });
         cohortList.clear();
         bufferedCohorts.forEach(cohort=>{

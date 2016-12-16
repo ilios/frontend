@@ -80,9 +80,9 @@ test('list available users', function(assert) {
     model.get('availableUsers').then(function(users){
       var names = users.mapBy('firstName');
       assert.equal(users.get('length'), 3);
-      assert.ok(names.contains(2));
-      assert.ok(names.contains(3));
-      assert.ok(names.contains(4));
+      assert.ok(names.includes(2));
+      assert.ok(names.includes(3));
+      assert.ok(names.includes(4));
     });
   });
 });
@@ -124,9 +124,9 @@ test('check allDescendantUsers', function(assert) {
 
     return learnerGroup.get('allDescendantUsers').then(users => {
       assert.equal(users.length, 3);
-      assert.ok(users.contains(user1));
-      assert.ok(users.contains(user2));
-      assert.ok(users.contains(user3));
+      assert.ok(users.includes(user1));
+      assert.ok(users.includes(user2));
+      assert.ok(users.includes(user3));
       let user4 = store.createRecord('user');
       let user5 = store.createRecord('user');
       learnerGroup.get('users').pushObject(user4);
@@ -135,11 +135,11 @@ test('check allDescendantUsers', function(assert) {
 
       return learnerGroup.get('allDescendantUsers').then(users => {
         assert.equal(users.length, 5);
-        assert.ok(users.contains(user1));
-        assert.ok(users.contains(user2));
-        assert.ok(users.contains(user3));
-        assert.ok(users.contains(user4));
-        assert.ok(users.contains(user5));
+        assert.ok(users.includes(user1));
+        assert.ok(users.includes(user2));
+        assert.ok(users.includes(user3));
+        assert.ok(users.includes(user4));
+        assert.ok(users.includes(user5));
       });
 
     });
@@ -160,9 +160,9 @@ test('check allDescendants', function(assert) {
 
     return learnerGroup.get('allDescendants').then(groups => {
       assert.equal(groups.length, 3);
-      assert.ok(groups.contains(subGroup1));
-      assert.ok(groups.contains(subGroup2));
-      assert.ok(groups.contains(subGroup3));
+      assert.ok(groups.includes(subGroup1));
+      assert.ok(groups.includes(subGroup2));
+      assert.ok(groups.includes(subGroup3));
 
       let subGroup4 = store.createRecord('learner-group');
       learnerGroup.get('children').pushObject(subGroup4);
@@ -171,11 +171,11 @@ test('check allDescendants', function(assert) {
 
       return learnerGroup.get('allDescendants').then(groups => {
         assert.equal(groups.length, 5);
-        assert.ok(groups.contains(subGroup1));
-        assert.ok(groups.contains(subGroup2));
-        assert.ok(groups.contains(subGroup3));
-        assert.ok(groups.contains(subGroup4));
-        assert.ok(groups.contains(subGroup5));
+        assert.ok(groups.includes(subGroup1));
+        assert.ok(groups.includes(subGroup2));
+        assert.ok(groups.includes(subGroup3));
+        assert.ok(groups.includes(subGroup4));
+        assert.ok(groups.includes(subGroup5));
       });
 
     });
@@ -222,9 +222,9 @@ test('check allinstructors', function(assert) {
 
     return learnerGroup.get('allInstructors').then(users => {
       assert.equal(users.length, 3);
-      assert.ok(users.contains(user1));
-      assert.ok(users.contains(user2));
-      assert.ok(users.contains(user3));
+      assert.ok(users.includes(user1));
+      assert.ok(users.includes(user2));
+      assert.ok(users.includes(user3));
       let user4 = store.createRecord('user');
       let user5 = store.createRecord('user');
       learnerGroup.get('instructors').pushObject(user4);
@@ -233,11 +233,11 @@ test('check allinstructors', function(assert) {
 
       return learnerGroup.get('allInstructors').then(users => {
         assert.equal(users.length, 5);
-        assert.ok(users.contains(user1));
-        assert.ok(users.contains(user2));
-        assert.ok(users.contains(user3));
-        assert.ok(users.contains(user4));
-        assert.ok(users.contains(user5));
+        assert.ok(users.includes(user1));
+        assert.ok(users.includes(user2));
+        assert.ok(users.includes(user3));
+        assert.ok(users.includes(user4));
+        assert.ok(users.includes(user5));
       });
 
     });
@@ -376,11 +376,11 @@ test('check removeUserFromGroupAndAllDescendants', function(assert) {
 
     return subGroup1.removeUserFromGroupAndAllDescendants(user1).then(groups => {
       assert.equal(groups.length, 3);
-      assert.notOk(groups.contains(learnerGroup));
-      assert.ok(groups.contains(subGroup1));
-      assert.ok(groups.contains(subGroup2));
-      assert.ok(groups.contains(subGroup3));
-      assert.notOk(groups.contains(subGroup4));
+      assert.notOk(groups.includes(learnerGroup));
+      assert.ok(groups.includes(subGroup1));
+      assert.ok(groups.includes(subGroup2));
+      assert.ok(groups.includes(subGroup3));
+      assert.notOk(groups.includes(subGroup4));
     });
   });
 });
@@ -402,11 +402,11 @@ test('check addUserToGroupAndAllParents', function(assert) {
 
     return subGroup3.addUserToGroupAndAllParents(user1).then(groups => {
       assert.equal(groups.length, 3);
-      assert.ok(groups.contains(learnerGroup));
-      assert.notOk(groups.contains(subGroup1));
-      assert.ok(groups.contains(subGroup2));
-      assert.ok(groups.contains(subGroup3));
-      assert.notOk(groups.contains(subGroup4));
+      assert.ok(groups.includes(learnerGroup));
+      assert.notOk(groups.includes(subGroup1));
+      assert.ok(groups.includes(subGroup2));
+      assert.ok(groups.includes(subGroup3));
+      assert.notOk(groups.includes(subGroup4));
     });
   });
 });

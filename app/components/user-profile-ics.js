@@ -65,7 +65,7 @@ export default Component.extend({
         host = window.location.protocol + '//' + window.location.hostname;
         const port = window.location.port;
 
-        if (![80, 443].contains(port)) {
+        if (![80, 443].includes(port)) {
           host += ':' + port;
         }
       }

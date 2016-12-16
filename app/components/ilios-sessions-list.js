@@ -21,7 +21,7 @@ const SessionProxy = ObjectProxy.extend({
         this.get('content').get('course').then(course => {
           this.get('currentUser.model').then(user => {
             user.get('directedCourses').then(directedCourses => {
-              defer.resolve(directedCourses.contains(course));
+              defer.resolve(directedCourses.includes(course));
             });
           });
         });

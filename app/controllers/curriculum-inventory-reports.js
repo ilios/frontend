@@ -116,7 +116,7 @@ export default Controller.extend({
       const selectedProgram = this.get('selectedProgram');
       if (isPresent(selectedProgram)) {
         let newReports = this.get('newReports').filter(report => {
-          return report.get('program').get('id') === selectedProgram.get('id') && !all.contains(report);
+          return report.get('program').get('id') === selectedProgram.get('id') && !all.includes(report);
         });
         all.pushObjects(newReports.toArray());
       }
@@ -173,7 +173,7 @@ export default Controller.extend({
 
     removeCurriculumInventoryReport(report) {
       let newReports = this.get('newReports');
-      if (newReports.contains(report)) {
+      if (newReports.includes(report)) {
         newReports.removeObject(report);
       }
       return report.destroyRecord();

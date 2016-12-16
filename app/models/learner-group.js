@@ -101,7 +101,7 @@ export default DS.Model.extend({
                 });
               });
               var availableUsers = parentUsers.filter(function(user){
-                return !selectedUsers.contains(user);
+                return !selectedUsers.includes(user);
               });
               resolve(availableUsers);
             });
@@ -166,7 +166,7 @@ export default DS.Model.extend({
           let promises = [];
           users.forEach(user => {
             let promise = user.get('learnerGroups').then(userGroups => {
-              var subGroups = userGroups.filter(group => descendants.contains(group));
+              var subGroups = userGroups.filter(group => descendants.includes(group));
               if(subGroups.length === 0){
                 membersAtThisLevel.pushObject(user);
               }
@@ -312,7 +312,7 @@ export default DS.Model.extend({
     let modifiedGroups = [];
     const userId = user.get('id');
     return new Promise(resolve => {
-      if (this.hasMany('users').ids().contains(userId)) {
+      if (this.hasMany('users').ids().includes(userId)) {
         this.get('users').removeObject(user);
         modifiedGroups.pushObject(this);
       }
@@ -340,7 +340,7 @@ export default DS.Model.extend({
     let modifiedGroups = [];
     const userId = user.get('id');
     return new Promise(resolve => {
-      if (!this.hasMany('users').ids().contains(userId)) {
+      if (!this.hasMany('users').ids().includes(userId)) {
         this.get('users').pushObject(user);
         modifiedGroups.pushObject(this);
       }

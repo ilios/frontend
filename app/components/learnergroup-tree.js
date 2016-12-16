@@ -26,7 +26,7 @@ export default Component.extend({
     const selectedGroups = this.get('selectedGroups');
     return new Promise(resolve => {
       filter(children.toArray(), (child => {
-        if (!selectedGroups.contains(child)) {
+        if (!selectedGroups.includes(child)) {
           return true;
         }
         return child.get('children').then(children => {
@@ -56,7 +56,7 @@ export default Component.extend({
       let filterTitle = yield learnerGroup.get('filterTitle');
       filterMatch = filterTitle.match(exp) != null;
     }
-    let available = hasUnSelectedChildren || !selectedGroups.contains(learnerGroup);
+    let available = hasUnSelectedChildren || !selectedGroups.includes(learnerGroup);
 
     this.set('isVisible', filterMatch && available);
     this.set('selectable', available);

@@ -172,7 +172,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const users = yield cohort.get('users');
 
     let filteredUsers = users.filter(
-      user => !currentUsers.contains(user)
+      user => !currentUsers.includes(user)
     );
 
     this.set('showCohortManagerLoader', false);

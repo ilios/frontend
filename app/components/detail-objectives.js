@@ -73,7 +73,7 @@ export default Component.extend({
         let objective = this.get('mangeParentsObjective');
         objective.get('parents').then(newParents => {
           let oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
-            return !newParents.contains(parent);
+            return !newParents.includes(parent);
           });
           oldParents.forEach(parent => {
             parent.get('children').removeObject(objective);
@@ -88,7 +88,7 @@ export default Component.extend({
         let objective = this.get('manageDescriptorsObjective');
         objective.get('meshDescriptors').then(newDescriptors => {
           let oldDescriptors = this.get('initialStateForManageMeshObjective').filter(descriptor => {
-            return !newDescriptors.contains(descriptor);
+            return !newDescriptors.includes(descriptor);
           });
           oldDescriptors.forEach(descriptor => {
             descriptor.get('objectives').removeObject(objective);

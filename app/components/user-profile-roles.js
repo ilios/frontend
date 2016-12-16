@@ -97,7 +97,7 @@ export default Component.extend({
     const flipped = this.get('isCourseDirectorFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
-        const originallyYes = roleTitles.contains('course director');
+        const originallyYes = roleTitles.includes('course director');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
@@ -108,7 +108,7 @@ export default Component.extend({
     const flipped = this.get('isFacultyFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
-        const originallyYes = roleTitles.contains('faculty');
+        const originallyYes = roleTitles.includes('faculty');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
@@ -119,7 +119,7 @@ export default Component.extend({
     const flipped = this.get('isDeveloperFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
-        const originallyYes = roleTitles.contains('developer');
+        const originallyYes = roleTitles.includes('developer');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
@@ -130,7 +130,7 @@ export default Component.extend({
     const flipped = this.get('isStudentFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
-        const originallyYes = roleTitles.contains('student');
+        const originallyYes = roleTitles.includes('student');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });
@@ -141,7 +141,7 @@ export default Component.extend({
     const flipped = this.get('isFormerStudentFlipped');
     return new Promise(resolve => {
       this.get('roleTitles').then(roleTitles => {
-        const originallyYes = roleTitles.contains('former student');
+        const originallyYes = roleTitles.includes('former student');
 
         resolve((originallyYes && !flipped) || (!originallyYes && flipped));
       });

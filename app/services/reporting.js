@@ -81,13 +81,13 @@ export default Service.extend({
 
       if(subject === 'session'){
         let sessionSingulars = ['sessionTypes', 'courses'];
-        if(sessionSingulars.contains(what)){
+        if(sessionSingulars.includes(what)){
           what = singularize(what);
         }
       }
       if(subject === 'instructor'){
         let specialInstructed = ['learningMaterials', 'sessionTypes', 'courses', 'sessions'];
-        if(specialInstructed.contains(what)){
+        if(specialInstructed.includes(what)){
           what = 'instructed' + what.capitalize();
         }
       }

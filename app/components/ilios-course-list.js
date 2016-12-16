@@ -39,7 +39,7 @@ const CourseProxy = ObjectProxy.extend({
           } else {
             currentUser.get('model').then(user => {
               user.get('directedCourses').then(directedCourses => {
-                resolve(directedCourses.contains(course));
+                resolve(directedCourses.includes(course));
               });
             });
           }
@@ -57,7 +57,7 @@ const CourseProxy = ObjectProxy.extend({
         } else {
           currentUser.get('model').then(user => {
             user.get('directedCourses').then(directedCourses => {
-              resolve(directedCourses.contains(course));
+              resolve(directedCourses.includes(course));
             });
           });
         }

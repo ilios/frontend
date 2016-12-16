@@ -18,8 +18,8 @@ export default Component.extend({
         user.get('roles').then(roles => {
           let ids = roles.mapBy('id');
           let permissions = {
-            isFaculty: ids.contains('1')||ids.contains('2')||ids.contains('3'),
-            isAdmin: ids.contains('2'),
+            isFaculty: ids.includes('1')||ids.includes('2')||ids.includes('3'),
+            isAdmin: ids.includes('2'),
           };
           resolve(permissions);
         });

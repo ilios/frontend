@@ -115,7 +115,7 @@ export default Component.extend(NewUser, {
     this.set('fileUploadError', false);
     return new Promise(resolve => {
       let allowedFileTypes = ['text/plain', 'text/csv'];
-      if (!allowedFileTypes.contains(file.type)) {
+      if (!allowedFileTypes.includes(file.type)) {
         const i18n = this.get('i18n');
         this.set('fileUploadError', true);
         throw new Error(i18n.t('general.fileTypeError', {fileType: file.type}));
@@ -232,7 +232,7 @@ export default Component.extend(NewUser, {
         yield RSVP.all(authentications.invoke('save'));
       } catch (e) {
         let userErrors = parts.filter(obj => obj.user.get('isError'));
-        let authenticationErrors = parts.filter(obj => !userErrors.contains(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
+        let authenticationErrors = parts.filter(obj => !userErrors.includes(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
         this.get('savingUserErrors').pushObjects(userErrors);
         this.get('savingAuthenticationErrors').pushObjects(authenticationErrors);
       } finally {
@@ -266,7 +266,7 @@ export default Component.extend(NewUser, {
     },
     toggleUserSelection(obj){
       let selectedUsers = this.get('selectedUsers');
-      if (selectedUsers.contains(obj)) {
+      if (selectedUsers.includes(obj)) {
         selectedUsers.removeObject(obj);
       } else {
         selectedUsers.pushObject(obj);

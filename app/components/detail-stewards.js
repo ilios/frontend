@@ -59,7 +59,7 @@ export default Component.extend({
     save: function(){
       let programYear = this.get('programYear');
       programYear.get('stewards').then(stewards => {
-        let removableStewards = stewards.filter(steward => !this.get('bufferStewards').contains(steward));
+        let removableStewards = stewards.filter(steward => !this.get('bufferStewards').includes(steward));
         stewards.clear();
         var promises = [];
         removableStewards.forEach(steward => {

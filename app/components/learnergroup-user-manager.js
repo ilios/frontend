@@ -116,7 +116,7 @@ export default Component.extend({
       this.get('setSortBy')(what);
     },
     toggleUserSelection(user){
-      if (this.get('selectedUsers').contains(user)) {
+      if (this.get('selectedUsers').includes(user)) {
         this.get('selectedUsers').removeObject(user);
       } else {
         this.get('selectedUsers').pushObject(user);

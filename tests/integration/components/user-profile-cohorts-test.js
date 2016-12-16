@@ -140,9 +140,9 @@ test('can edit user cohorts', function(assert) {
   user.set('save', ()=> {
     assert.equal(user.get('primaryCohort'), cohort2, 'user has correct primary cohort');
 
-    assert.ok(!usercohorts.contains(cohort1), 'cohort1 has been removed');
-    assert.ok(usercohorts.contains(cohort2), 'cohort2 is still present');
-    assert.ok(usercohorts.contains(cohort3), 'cohort3 has been added');
+    assert.ok(!usercohorts.includes(cohort1), 'cohort1 has been removed');
+    assert.ok(usercohorts.includes(cohort2), 'cohort2 is still present');
+    assert.ok(usercohorts.includes(cohort3), 'cohort3 has been added');
 
     return resolve(user);
   });

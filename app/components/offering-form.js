@@ -331,7 +331,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       filter(learnerGroups, group => {
         return new Promise(resolve => {
           group.get('allDescendants').then(children => {
-            let selectedChildren = children.filter(child => ids.contains(child.get('id')));
+            let selectedChildren = children.filter(child => ids.includes(child.get('id')));
             resolve(selectedChildren.length === 0);
           });
         });
@@ -383,7 +383,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     },
     toggleRecurringDay(day){
       let recurringDays = this.get('recurringDays');
-      if (recurringDays.contains(day)) {
+      if (recurringDays.includes(day)) {
         recurringDays.removeObject(day);
       } else {
         recurringDays.pushObject(day);

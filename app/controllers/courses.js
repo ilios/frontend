@@ -68,7 +68,7 @@ export default Controller.extend({
       if (isPresent(selectedYear)) {
         let selectedYearTitle = selectedYear.get('title');
         let newCourses = this.get('newCourses').filter(course => {
-          return course.get('year') === selectedYearTitle && !all.contains(course);
+          return course.get('year') === selectedYearTitle && !all.includes(course);
         });
         all.pushObjects(newCourses.toArray());
       }
@@ -122,7 +122,7 @@ export default Controller.extend({
         if(filterMyCourses){
           this.get('allRelatedCourses').then(allRelatedCourses => {
             let myFilteredCourses = filteredCourses.filter(course => {
-              return allRelatedCourses.contains(course);
+              return allRelatedCourses.includes(course);
             });
 
             defer.resolve(myFilteredCourses);

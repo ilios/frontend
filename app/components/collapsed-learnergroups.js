@@ -24,7 +24,7 @@ export default Component.extend({
       let cohorts = yield map(learnerGroups.toArray(), (group => group.get('cohort')));
       let summaryBlocks =  cohorts.reduce((set, cohort) => {
         let key = 'cohort' + cohort.get('id');
-        if (!Object.keys(set).contains(key)) {
+        if (!Object.keys(set).includes(key)) {
           set[key] = {
             cohort,
             count: 0

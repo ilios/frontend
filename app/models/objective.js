@@ -100,7 +100,7 @@ export default Model.extend({
         parents.forEach(parent => {
           promises.pushObject(parent.get('programYears').then(programYears => {
             let programYear = programYears.get('firstObject');
-            if(programYearsToRemove.contains(programYear)){
+            if(programYearsToRemove.includes(programYear)){
               parents.removeObject(parent);
               parent.get('children').removeObject(this);
             }

@@ -12,7 +12,7 @@ let userProxy = Ember.ObjectProxy.extend({
     if(!user.get('enabled')){
       return false;
     }
-    return !this.get('currentlyActiveUsers').contains(user);
+    return !this.get('currentlyActiveUsers').includes(user);
   }),
   sortTerm: computed('content.firstName', 'content.lastName', function(){
     return this.get('content.lastName')+this.get('content.firstName');
@@ -22,7 +22,7 @@ let instructorGroupProxy = Ember.ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: [],
   isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){
-    return !this.get('currentlyActiveInstructorGroups').contains(this.get('content'));
+    return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
   }),
   sortTerm: oneWay('content.title'),
 });
@@ -88,14 +88,14 @@ export default Component.extend({
     addUser: function(user){
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
-      if(!this.get('currentlyActiveUsers').contains(user)){
+      if(!this.get('currentlyActiveUsers').includes(user)){
         this.sendAction('addUser', user);
       }
     },
     addInstructorGroup: function(group){
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
-      if(!this.get('currentlyActiveInstructorGroups').contains(group)){
+      if(!this.get('currentlyActiveInstructorGroups').includes(group)){
         this.sendAction('addInstructorGroup', group);
       }
     }

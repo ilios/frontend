@@ -45,7 +45,7 @@ export default Ember.Service.extend({
   availableCohortsObserver: observer('availableCohorts.[]', function(){
     var self = this;
     this.get('availableCohorts').then(function(cohorts){
-      if(!cohorts.contains(self.get('currentCohort'))){
+      if(!cohorts.includes(self.get('currentCohort'))){
         self.set('currentCohort', null);
       }
     });
@@ -136,42 +136,42 @@ export default Ember.Service.extend({
   userIsCourseDirector: computed('useRoleTitles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.contains('course director'));
+        resolve(roleTitles.includes('course director'));
       });
     });
   }),
   userIsFaculty: computed('useRoleTitles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.contains('faculty'));
+        resolve(roleTitles.includes('faculty'));
       });
     });
   }),
   userIsDeveloper: computed('useRoleTitles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.contains('developer'));
+        resolve(roleTitles.includes('developer'));
       });
     });
   }),
   userIsStudent: computed('useRoleTitles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.contains('student'));
+        resolve(roleTitles.includes('student'));
       });
     });
   }),
   userIsPublic: computed('useRoleTitles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.contains('public'));
+        resolve(roleTitles.includes('public'));
       });
     });
   }),
   userIsFormerStudent: computed('useRoleTitles.[]', function(){
     return new Ember.RSVP.Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.contains('former student'));
+        resolve(roleTitles.includes('former student'));
       });
     });
   }),
@@ -209,8 +209,8 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewSchools', hasRole.contains(true));
-          this.set('canEditSchools', hasRole.contains(true));
+          this.set('canViewSchools', hasRole.includes(true));
+          this.set('canEditSchools', hasRole.includes(true));
         }
       });
     }
@@ -228,8 +228,8 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewPrograms', hasRole.contains(true));
-          this.set('canEditPrograms', hasRole.contains(true));
+          this.set('canViewPrograms', hasRole.includes(true));
+          this.set('canEditPrograms', hasRole.includes(true));
         }
       });
     }
@@ -249,9 +249,9 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewCourses', hasRole.contains(true));
-          this.set('canEditCourses', hasRole.contains(true));
-          this.set('canPrintUnpublishedCourse', hasRole.contains(true));
+          this.set('canViewCourses', hasRole.includes(true));
+          this.set('canEditCourses', hasRole.includes(true));
+          this.set('canPrintUnpublishedCourse', hasRole.includes(true));
         }
       });
     }
@@ -265,8 +265,8 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewInstructorGroups', hasRole.contains(true));
-          this.set('canEditInstructorGroups', hasRole.contains(true));
+          this.set('canViewInstructorGroups', hasRole.includes(true));
+          this.set('canEditInstructorGroups', hasRole.includes(true));
         }
       });
     }
@@ -284,8 +284,8 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewLearnerGroups', hasRole.contains(true));
-          this.set('canEditLearnerGroups', hasRole.contains(true));
+          this.set('canViewLearnerGroups', hasRole.includes(true));
+          this.set('canEditLearnerGroups', hasRole.includes(true));
         }
       });
     }
@@ -303,7 +303,7 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewCurriculumInventory', hasRole.contains(true));
+          this.set('canViewCurriculumInventory', hasRole.includes(true));
         }
       });
     }
@@ -315,7 +315,7 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canEditCurriculumInventory', hasRole.contains(true));
+          this.set('canEditCurriculumInventory', hasRole.includes(true));
         }
       });
     }
@@ -336,7 +336,7 @@ export default Ember.Service.extend({
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
-          this.set('canViewAdminDashboard', hasRole.contains(true));
+          this.set('canViewAdminDashboard', hasRole.includes(true));
         }
       });
     }

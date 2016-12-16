@@ -21,7 +21,7 @@ export default Component.extend({
           currentUser.get('userIsCourseDirector'),
           currentUser.get('userIsDeveloper')
         ]).then(hasRole => {
-          resolve(hasRole.contains(true));
+          resolve(hasRole.includes(true));
         });
       }
 

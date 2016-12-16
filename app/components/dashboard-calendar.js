@@ -102,7 +102,7 @@ export default Component.extend({
           ourEvents.then(events => {
             let filteredEvents = events.filter(event => {
               return allFilteredEvents.every(arr => {
-                let bool = arr.contains(event);
+                let bool = arr.includes(event);
 
                 return bool;
               });
@@ -129,7 +129,7 @@ export default Component.extend({
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then(id => {
-          if (selectedSessionTypes.contains(id)) {
+          if (selectedSessionTypes.includes(id)) {
             matchingEvents.pushObject(event);
           }
         }));
@@ -155,7 +155,7 @@ export default Component.extend({
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then(level => {
-          if (selectedCourseLevels.contains(level)) {
+          if (selectedCourseLevels.includes(level)) {
             matchingEvents.pushObject(event);
           }
         }));
@@ -182,7 +182,7 @@ export default Component.extend({
       if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
           if (cohorts.any(cohortId => {
-            return selectedCohorts.contains(cohortId);
+            return selectedCohorts.includes(cohortId);
           })) {
             matchingEvents.pushObject(event);
           }
@@ -209,7 +209,7 @@ export default Component.extend({
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
         promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
-          if (selectedCourses.contains(courseId)) {
+          if (selectedCourses.includes(courseId)) {
             matchingEvents.pushObject(event);
           }
         }));
@@ -387,28 +387,28 @@ export default Component.extend({
 
   actions: {
     toggleSessionType(sessionType){
-      if(this.get('selectedSessionTypes').contains(sessionType)){
+      if(this.get('selectedSessionTypes').includes(sessionType)){
         this.get('selectedSessionTypes').removeObject(sessionType);
       } else {
         this.get('selectedSessionTypes').pushObject(sessionType);
       }
     },
     toggleCourseLevel(level){
-      if(this.get('selectedCourseLevels').contains(level)){
+      if(this.get('selectedCourseLevels').includes(level)){
         this.get('selectedCourseLevels').removeObject(level);
       } else {
         this.get('selectedCourseLevels').pushObject(level);
       }
     },
     toggleCohort(cohort){
-      if(this.get('selectedCohorts').contains(cohort)){
+      if(this.get('selectedCohorts').includes(cohort)){
         this.get('selectedCohorts').removeObject(cohort);
       } else {
         this.get('selectedCohorts').pushObject(cohort);
       }
     },
     toggleCourse(course){
-      if(this.get('selectedCourses').contains(course)){
+      if(this.get('selectedCourses').includes(course)){
         this.get('selectedCourses').removeObject(course);
       } else {
         this.get('selectedCourses').pushObject(course);

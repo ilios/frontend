@@ -26,13 +26,13 @@ export default Component.extend({
           } else {
             this.get('currentUser.model').then(user => {
               offering.get('allInstructors').then(allInstructors => {
-                if(allInstructors.contains(user)){
+                if(allInstructors.includes(user)){
                   resolve(true);
                 } else {
                   offering.get('session').then(session => {
                     session.get('course').then(course => {
                       user.get('directedCourses').then(directedCourses => {
-                        resolve(directedCourses.contains(course));
+                        resolve(directedCourses.includes(course));
                       });
                     });
                   });

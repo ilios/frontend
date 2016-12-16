@@ -190,7 +190,7 @@ test('create new user', function(assert) {
           save(){
             const roles = this.get('roles');
             assert.equal(roles.length, 1, 'Only one new role was added');
-            assert.ok(roles.contains(facultyRole), 'The faculty role was added');
+            assert.ok(roles.includes(facultyRole), 'The faculty role was added');
             assert.ok(true, 'save gets called');
 
             return Object.create({

@@ -11,7 +11,7 @@ export default Component.extend({
   isSelected: computed('term', 'selectedTerms.[]', function() {
     let term = this.get('term');
     let selectedTerms = this.get('selectedTerms');
-    return selectedTerms.contains(term);
+    return selectedTerms.includes(term);
   }),
 
   click: function() {

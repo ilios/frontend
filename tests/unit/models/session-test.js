@@ -67,9 +67,9 @@ test('check associatedOfferingLearnerGroups', function(assert) {
 
     return session.get('associatedOfferingLearnerGroups').then(groups => {
       assert.equal(groups.length, 3);
-      assert.ok(groups.contains(learnerGroup1));
-      assert.ok(groups.contains(learnerGroup2));
-      assert.ok(groups.contains(learnerGroup3));
+      assert.ok(groups.includes(learnerGroup1));
+      assert.ok(groups.includes(learnerGroup2));
+      assert.ok(groups.includes(learnerGroup3));
 
       let learnerGroup4 = store.createRecord('learner-group');
       let offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
@@ -79,11 +79,11 @@ test('check associatedOfferingLearnerGroups', function(assert) {
 
       return session.get('associatedOfferingLearnerGroups').then(groups => {
         assert.equal(groups.length, 5);
-        assert.ok(groups.contains(learnerGroup1));
-        assert.ok(groups.contains(learnerGroup2));
-        assert.ok(groups.contains(learnerGroup3));
-        assert.ok(groups.contains(learnerGroup4));
-        assert.ok(groups.contains(learnerGroup5));
+        assert.ok(groups.includes(learnerGroup1));
+        assert.ok(groups.includes(learnerGroup2));
+        assert.ok(groups.includes(learnerGroup3));
+        assert.ok(groups.includes(learnerGroup4));
+        assert.ok(groups.includes(learnerGroup5));
       });
 
     });
@@ -107,19 +107,19 @@ test('check associatedIlmLearnerGroups', function(assert) {
 
     return session.get('associatedIlmLearnerGroups').then(groups => {
       assert.equal(groups.length, 3);
-      assert.ok(groups.contains(learnerGroup1));
-      assert.ok(groups.contains(learnerGroup2));
-      assert.ok(groups.contains(learnerGroup3));
+      assert.ok(groups.includes(learnerGroup1));
+      assert.ok(groups.includes(learnerGroup2));
+      assert.ok(groups.includes(learnerGroup3));
 
       let learnerGroup4 = store.createRecord('learner-group');
       session.get('ilmSession').get('learnerGroups').pushObject(learnerGroup4);
 
       return session.get('associatedIlmLearnerGroups').then(groups => {
         assert.equal(groups.length, 4);
-        assert.ok(groups.contains(learnerGroup1));
-        assert.ok(groups.contains(learnerGroup2));
-        assert.ok(groups.contains(learnerGroup3));
-        assert.ok(groups.contains(learnerGroup4));
+        assert.ok(groups.includes(learnerGroup1));
+        assert.ok(groups.includes(learnerGroup2));
+        assert.ok(groups.includes(learnerGroup3));
+        assert.ok(groups.includes(learnerGroup4));
       });
     });
   });
@@ -145,9 +145,9 @@ test('check associatedLearnerGroups', function(assert) {
 
     return session.get('associatedLearnerGroups').then(groups => {
       assert.equal(groups.length, 3);
-      assert.ok(groups.contains(learnerGroup1));
-      assert.ok(groups.contains(learnerGroup2));
-      assert.ok(groups.contains(learnerGroup3));
+      assert.ok(groups.includes(learnerGroup1));
+      assert.ok(groups.includes(learnerGroup2));
+      assert.ok(groups.includes(learnerGroup3));
 
       let learnerGroup4 = store.createRecord('learner-group');
       session.get('ilmSession').get('learnerGroups').pushObject(learnerGroup4);
@@ -156,11 +156,11 @@ test('check associatedLearnerGroups', function(assert) {
 
       return session.get('associatedLearnerGroups').then(groups => {
         assert.equal(groups.length, 5);
-        assert.ok(groups.contains(learnerGroup1));
-        assert.ok(groups.contains(learnerGroup2));
-        assert.ok(groups.contains(learnerGroup3));
-        assert.ok(groups.contains(learnerGroup4));
-        assert.ok(groups.contains(learnerGroup5));
+        assert.ok(groups.includes(learnerGroup1));
+        assert.ok(groups.includes(learnerGroup2));
+        assert.ok(groups.includes(learnerGroup3));
+        assert.ok(groups.includes(learnerGroup4));
+        assert.ok(groups.includes(learnerGroup5));
       });
     });
   });

@@ -100,7 +100,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           currentUser.get('userIsCourseDirector'),
           currentUser.get('userIsDeveloper')
         ]).then(hasRole => {
-          resolve(hasRole.contains(true));
+          resolve(hasRole.includes(true));
         });
       }
 
