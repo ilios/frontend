@@ -25,25 +25,24 @@
   </span>
   <span class ='session-publication'>
     {{#if editable}}
-      {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
-        {{#if showAsIs}}
-          <li class='danger' {{action 'publish'}}>{{t 'general.publishAsIs'}}</li>
-        {{/if}}
-        {{#if showPublish}}
-          <li class='good' {{action 'publish'}}>{{t 'general.publishSession'}}</li>
-        {{/if}}
-        {{#if showReview}}
-          {{#link-to 'session.publicationCheck' course session}}
-            <li class='good' >{{t 'general.reviewMissingItems' count=session.allPublicationIssuesLength}}</li>
-          {{/link-to}}
-        {{/if}}
-        {{#if showTbd}}
-          <li class='good' {{action 'publishAsTbd'}}>{{t 'general.markAsScheduled'}}</li>
-        {{/if}}
-        {{#if showUnPublish}}
-          <li class='danger' {{action 'unpublish'}}>{{t 'general.unPublishSession'}}</li>
-        {{/if}}
-      {{/action-menu}}
+
+      {{publish-menu
+        title=menuTitle
+        icon=menuIcon
+        publicationStatus=publicationStatus
+        showAsIs=showAsIs
+        showPublish=showPublish
+        showReview=showReview
+        showTbd=showTbd
+        showUnPublish=showUnPublish
+        reviewRoute='session.publicationCheck'
+        reviewObject=session
+        publishTranslation='general.publishSession'
+        unPublishTranslation='general.unPublishSession'
+        publish=(action 'publish')
+        publishAsTbd=(action 'publishAsTbd')
+        unpublish=(action 'unpublish')
+      }}
     {{else}}
       {{publication-status item=session}}
     {{/if}}
