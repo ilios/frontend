@@ -40,18 +40,18 @@ test('check published program', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
-    let menu = find('.program-publication-menu').eq(0);
-    let button = find('.button' ,menu);
-    assert.equal(getElementText(button), getText('Published'));
+    const menu = '.publish-menu:eq(0)';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    assert.equal(getElementText(selector), getText('Published'));
     //we have to click the button to create the options
-    click('.button', menu).then(function(){
-      let items = find('.dropdown-menu li', menu);
-      assert.equal(items.length, 3);
-      let expectedItems = ['Review 1 Missing Items', 'Mark as Scheduled', 'UnPublish Program'];
-      for(let i = 0; i < items.length; i++){
-        assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-      }
-    });
+    click(selector);
+    let items = find(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Review 1 Missing Items', 'Mark as Scheduled', 'UnPublish Program'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+    }
   });
 });
 
@@ -60,18 +60,18 @@ test('check scheduled program', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
-    let menu = find('.program-publication-menu').eq(0);
-    let button = find('.button' ,menu);
-    assert.equal(getElementText(button), getText('Scheduled'));
+    const menu = '.publish-menu:eq(0)';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    assert.equal(getElementText(selector), getText('Scheduled'));
     //we have to click the button to create the options
-    click('.button', menu).then(function(){
-      let items = find('.dropdown-menu li', menu);
-      assert.equal(items.length, 3);
-      let expectedItems = ['Publish As-is', 'Review 1 Missing Items', 'UnPublish Program'];
-      for(let i = 0; i < items.length; i++){
-        assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-      }
-    });
+    click(selector);
+    let items = find(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Publish As-is', 'Review 1 Missing Items', 'UnPublish Program'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+    }
   });
 });
 
@@ -80,112 +80,108 @@ test('check draft program', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'program.index');
-    let menu = find('.program-publication-menu').eq(0);
-    let button = find('.button' ,menu);
-    assert.equal(getElementText(button), getText('Not Published'));
+    const menu = '.publish-menu:eq(0)';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    assert.equal(getElementText(selector), getText('Not Published'));
     //we have to click the button to create the options
-    click('.button', menu).then(function(){
-      let items = find('.dropdown-menu li', menu);
-      assert.equal(items.length, 3);
-      let expectedItems = ['Publish As-is', 'Review 1 Missing Items', 'Mark as Scheduled'];
-      for(let i = 0; i < items.length; i++){
-        assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-      }
-    });
+    click(selector);
+    let items = find(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Publish As-is', 'Review 1 Missing Items', 'Mark as Scheduled'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+    }
   });
 });
 
 test('check publish draft program', function(assert) {
   visit('/programs/' + fixtures.draft.id);
+  const menu = '.publish-menu:eq(0)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const publish = `${choices}:eq(0)`;
+  click(selector);
+  click(publish);
 
-
-  andThen(function() {
-    let menu = find('.program-publication-menu').eq(0);
-    click('.button', menu).then(function(){
-      return click('li:eq(0)', menu);
-    });
-
-    andThen(function(){
-      assert.equal(getElementText(find('.button', menu)), getText('Published'));
-    });
+  andThen(function(){
+    assert.equal(getElementText(selector), getText('Published'));
   });
 });
 
 test('check schedule draft program', function(assert) {
   visit('/programs/' + fixtures.draft.id);
-  andThen(function() {
-    let menu = find('.program-publication-menu').eq(0);
-    click('.button', menu).then(function(){
-      return click('li:eq(2)', menu);
-    });
+  const menu = '.publish-menu:eq(0)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const schedule = `${choices}:eq(2)`;
 
-    andThen(function(){
-      assert.equal(getElementText(find('.button', menu)), getText('Scheduled'));
-    });
+  click(selector);
+  click(schedule);
+
+  andThen(function(){
+    assert.equal(getElementText(selector), getText('Scheduled'));
   });
 });
 
 test('check publish scheduled program', function(assert) {
   visit('/programs/' + fixtures.scheduled.id);
-  andThen(function() {
-    let menu = find('.program-publication-menu').eq(0);
-    click('.button', menu).then(function(){
-      return click('li:eq(0)', menu);
-    });
+  const menu = '.publish-menu:eq(0)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const publish = `${choices}:eq(0)`;
+  click(selector);
+  click(publish);
 
-    andThen(function(){
-      assert.equal(getElementText(find('.button', menu)), getText('Published'));
-    });
+  andThen(() => {
+    assert.equal(getElementText(selector), getText('Published'));
   });
 });
 
 test('check unpublish scheduled program', function(assert) {
   visit('/programs/' + fixtures.scheduled.id);
-  andThen(function() {
-    let menu = find('.program-publication-menu').eq(0);
-    click('.button', menu).then(function(){
-      return click('li:eq(2)', menu);
-    });
+  const menu = '.publish-menu:eq(0)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const unPublish = `${choices}:eq(2)`;
+  click(selector);
+  click(unPublish);
 
-    andThen(function(){
-      assert.equal(getElementText(find('.button', menu)), getText('Not Published'));
-    });
+  andThen(() => {
+    assert.equal(getElementText(selector), getText('Not Published'));
   });
 });
 
 test('check schedule published program', function(assert) {
   visit('/programs/' + fixtures.published.id);
-  andThen(function() {
-    let menu = find('.program-publication-menu').eq(0);
-    click('.button', menu).then(function(){
-      return click('li:eq(1)', menu);
-    });
+  const menu = '.publish-menu:eq(0)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const schedule = `${choices}:eq(1)`;
+  click(selector);
+  click(schedule);
 
-    andThen(function(){
-      assert.equal(getElementText(find('.button', menu)), getText('Scheduled'));
-      //we have to click the button to create the options
-      click('.button', menu).then(function(){
-        let items = find('.dropdown-menu li', menu);
-        assert.equal(items.length, 3);
-        let expectedItems = ['Publish As-is', 'Review 1 Missing Items', 'UnPublish Program'];
-        for(let i = 0; i < items.length; i++){
-          assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-        }
-      });
-    });
+  andThen(function(){
+    assert.equal(getElementText(selector), getText('Scheduled'));
+    let items = find(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Publish As-is', 'Review 1 Missing Items', 'UnPublish Program'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+    }
   });
 });
 
 test('check unpublish published program', function(assert) {
   visit('/programs/' + fixtures.published.id);
-  andThen(function() {
-    let menu = find('.program-publication-menu').eq(0);
-    click('.button', menu).then(function(){
-      return click('li:eq(2)', menu);
-    });
+  const menu = '.publish-menu:eq(0)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const unPublish = `${choices}:eq(2)`;
+  click(selector);
+  click(unPublish);
 
-    andThen(function(){
-      assert.equal(getElementText(find('.button', menu)), getText('Not Published'));
-    });
+  andThen(() => {
+    assert.equal(getElementText(selector), getText('Not Published'));
   });
 });
