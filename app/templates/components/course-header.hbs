@@ -31,27 +31,23 @@
 </span>
 <span class ='course-publication'>
   {{#if editable}}
-
-    {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :course-publication-menu :right-edge'}}
-      {{#if showAsIs}}
-        <li class='danger' {{action 'publish'}}>{{t 'general.publishAsIs'}}</li>
-      {{/if}}
-      {{#if showPublish}}
-        <li class='good' {{action 'publish'}}>{{t 'general.publishCourse'}}</li>
-      {{/if}}
-      {{#if showReview}}
-        {{#link-to 'course.publicationCheck' course}}
-          <li class='good' >{{t 'general.reviewMissingItems' count=course.allPublicationIssuesLength}}</li>
-        {{/link-to}}
-      {{/if}}
-      {{#if showTbd}}
-        <li class='good' {{action 'publishAsTbd'}}>{{t 'general.markAsScheduled'}}</li>
-      {{/if}}
-      {{#if showUnPublish}}
-        <li class='danger' {{action 'unpublish'}}>{{t 'general.unPublishCourse'}}</li>
-      {{/if}}
-
-    {{/action-menu}}
+    {{publish-menu
+      title=menuTitle
+      icon=menuIcon
+      publicationStatus=publicationStatus
+      showAsIs=showAsIs
+      showPublish=showPublish
+      showReview=showReview
+      showTbd=showTbd
+      showUnPublish=showUnPublish
+      reviewRoute='course.publicationCheck'
+      reviewObject=course
+      publishTranslation='general.publishCourse'
+      unPublishTranslation='general.unPublishCourse'
+      publish=(action 'publish')
+      publishAsTbd=(action 'publishAsTbd')
+      unpublish=(action 'unpublish')
+    }}
 
   {{else}}
     {{publication-status item=course}}
