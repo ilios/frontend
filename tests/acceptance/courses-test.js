@@ -264,10 +264,11 @@ test('user can only delete non-published courses with proper privileges', functi
 });
 
 test('new course', function(assert) {
-  server.create('academicYear', {id: 2014});
+  const year = moment().year();
+  server.create('academicYear', {id: year});
   assert.expect(5);
 
-  const url = '/courses?year=2014';
+  const url = `/courses?year=${year}`;
   const expandButton = '.expand-button';
   const input = '.new-course input';
   const selectField = '.new-course select';
@@ -277,17 +278,17 @@ test('new course', function(assert) {
   visit(url);
   click(expandButton);
   fillIn(input, 'Course 1');
-  pickOption(selectField, '2014 - 2015', assert);
+  pickOption(selectField, `${year} - ${year + 1}`, assert);
   click(saveButton);
   andThen(() => {
     function getContent(i) {
       return find(`tbody tr td:eq(${i})`).text().trim();
     }
 
-    assert.equal(find(savedLink).text().trim(), 'Course 1', 'link is visisble');
+    assert.equal(find(savedLink).text().trim(), 'Course 1', 'link is visible');
     assert.equal(getContent(0), 'Course 1', 'course is correct');
     assert.equal(getContent(1), 'school 0', 'school is correct');
-    assert.equal(getContent(2), '2014 - 2015', 'year is correct');
+    assert.equal(getContent(2), `${year} - ${year + 1}`, 'year is correct');
   });
 });
 
@@ -312,10 +313,11 @@ test('new course in another year does not display in list', function(assert) {
 });
 
 test('new course does not appear twice when navigating back', function(assert) {
-  server.create('academicYear', {id: 2014});
+  const year = moment().year();
+  server.create('academicYear', {id: year});
   assert.expect(5);
 
-  const url = '/courses?year=2014';
+  const url = `/courses?year=${year}`;
   const expandButton = '.expand-button';
   const input = '.new-course input';
   const selectField = '.new-course select';
@@ -327,7 +329,7 @@ test('new course does not appear twice when navigating back', function(assert) {
   visit(url);
   click(expandButton);
   fillIn(input, courseTitle);
-  pickOption(selectField, '2014 - 2015', assert);
+  pickOption(selectField, `${year} - ${year + 1}`, assert);
   click(saveButton);
   andThen(() => {
     assert.equal(find(savedLink).length, 1, 'one copy of the save link');
@@ -342,7 +344,8 @@ test('new course does not appear twice when navigating back', function(assert) {
 });
 
 test('new course can be deleted', function(assert) {
-  server.create('academicYear', {id: 2014});
+  const year = moment().year();
+  server.create('academicYear', {id: year});
   server.create('userRole', {
     title: 'Developer'
   });
@@ -350,7 +353,7 @@ test('new course can be deleted', function(assert) {
 
   assert.expect(7);
 
-  const url = '/courses?year=2014';
+  const url = `/courses?year=${year}`;
   const expandButton = '.expand-button';
   const input = '.new-course input';
   const selectField = '.new-course select';
@@ -366,7 +369,7 @@ test('new course can be deleted', function(assert) {
     assert.equal(find(savedCourse).length, 0, 'there are intially no saved courses');
     click(expandButton);
     fillIn(input, 'Course 1');
-    pickOption(selectField, '2014 - 2015', assert);
+    pickOption(selectField, `${year} - ${year + 1}`, assert);
     click(saveButton);
     andThen(() => {
       assert.equal(find(courses).length, 1, 'there is one new course');
