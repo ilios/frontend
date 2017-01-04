@@ -37,7 +37,7 @@ test('`availableAcademicYears` computed property works properly', function(asser
   const programYears = [{
     academicYears: `${nextYear} - ${twoYearsFromNow}`, startYear: `${nextYear}`
   }, {
-    academicYears: `${twoYearsFromNow} - ${threeYearsFromNow}`, startYear: `${threeYearsFromNow}`
+    academicYears: `${twoYearsFromNow} - ${threeYearsFromNow}`, startYear: `${twoYearsFromNow}`
   }];
 
   for (let i = 0; i < 10; i++) {
