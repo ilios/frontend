@@ -130,14 +130,14 @@
                         <span class='remove'>{{t 'general.no'}}</span>
                       {{/if}}
                     </td>
-                    <td class='text-left text-top'> 
+                    <td class='text-left text-top'>
                       {{#if lm.notes}}
                         <span class='add'>{{t 'general.yes'}}</span>
                       {{else}}
                         <span class='remove'>{{t 'general.no'}}</span>
                       {{/if}}
                     </td>
-                    <td class='text-left text-top' colspan=4>{{removeHtmlTags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top' colspan=4>{{remove-html-tags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>
@@ -247,7 +247,7 @@
                       {{/if}}
                     </td>
                     <td class='text-left text-top'>{{lm.learningMaterial.notes}}</td>
-                    <td class='text-left text-top' colspan=4>{{removeHtmlTags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
+                    <td class='text-left text-top' colspan=4>{{remove-html-tags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
                   </tr>
                 {{/each}}
               </tbody>

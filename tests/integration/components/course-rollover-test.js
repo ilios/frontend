@@ -214,7 +214,13 @@ test('disable years when title already exists', function(assert) {
 test('rollover course with new start date', function(assert) {
   assert.expect(8);
   // ensure that rollover date and course start date fall on the same day of the week.
-  const courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  // Also, make sure that we're not crossing year boundaries here.
+  // Otherwise, ilios will propel us into the current year which we do not want right here.
+  if (courseStartDate.year() !== moment().year()) {
+    courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+  }
+
   const rolloverDate = moment(courseStartDate).add(1, 'week');
 
   let course = Object.create({
@@ -305,7 +311,12 @@ test('rollover course with new start date', function(assert) {
 test('rollover course prohibit non-matching day-of-week date selection', function(assert) {
   assert.expect(5);
   // rollover date and course start date don't fall on the same day of the week.
-  const courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  // Make sure that we're not crossing year boundaries here.
+  // Otherwise, ilios will propel us into the current year which we do not want right here.
+  if (courseStartDate.year() !== moment().year()) {
+    courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+  }
   const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
 
   let course = Object.create({
@@ -370,6 +381,70 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
         );
         interactor.selectDate(rolloverDate.toDate());
         this.$('.done').click();
+        wait().then(()=>{
+          resolve();
+        });
+      });
+    });
+  });
+});
+
+/**
+ * This tests wonky business logic where the targeted rollover start date gets adjusted to a date in the current year
+ * if the given course has a start date in a former year.
+ */
+test('rollover start date adjustment with former year course start date', function(assert) {
+  assert.expect(3);
+
+  const courseStartDate = moment().hour(0).minute(0).subtract(2, 'year').day(1);
+  const rolloverDate = moment()
+    .hour(0)
+    .minute(0)
+    .isoWeek(courseStartDate.isoWeek()).
+    isoWeekday(courseStartDate.isoWeekday());
+
+  let course = Object.create({
+    id: 1,
+    startDate: courseStartDate.toDate(),
+    title: 'old course'
+  });
+
+  let storeMock = Service.extend({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  this.register('service:store', storeMock);
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const startDate = `${advancedOptions} input:eq(0)`;
+
+  return new Promise(resolve => {
+    run(()=>{
+      this.$(title).click();
+      wait().then(()=>{
+        let interactor = openDatepicker(this.$(startDate));
+        assert.equal(
+          interactor.selectedYear(),
+          rolloverDate.year(),
+          'Selected year initialized to this year.'
+        );
+        assert.equal(
+          interactor.selectedMonth(),
+          rolloverDate.month(),
+          "Selected month initialized to this year's equivalent of course's start month."
+        );
+        assert.equal(
+          interactor.selectedDay(),
+          rolloverDate.date(),
+          "Selected month initialized to this year's equivalent of course's start day."
+        );
+
         wait().then(()=>{
           resolve();
         });

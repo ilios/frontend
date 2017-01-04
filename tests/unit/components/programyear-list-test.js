@@ -29,13 +29,16 @@ test('properties have default values', function(assert) {
 test('`availableAcademicYears` computed property works properly', function(assert) {
   assert.expect(1);
 
-  const programYears = [{
-    academicYears: '2017 - 2018', startYear: '2017'
-  }, {
-    academicYears: '2018 - 2019', startYear: '2018'
-  }];
-
   const currentYear = new Date().getFullYear();
+  const nextYear = currentYear + 1;
+  const twoYearsFromNow = nextYear + 1;
+  const threeYearsFromNow = twoYearsFromNow + 1;
+
+  const programYears = [{
+    academicYears: `${nextYear} - ${twoYearsFromNow}`, startYear: `${nextYear}`
+  }, {
+    academicYears: `${twoYearsFromNow} - ${threeYearsFromNow}`, startYear: `${twoYearsFromNow}`
+  }];
 
   for (let i = 0; i < 10; i++) {
     if (i !== 5) {
