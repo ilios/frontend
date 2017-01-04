@@ -214,7 +214,13 @@ test('disable years when title already exists', function(assert) {
 test('rollover course with new start date', function(assert) {
   assert.expect(8);
   // ensure that rollover date and course start date fall on the same day of the week.
-  const courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  // Also, make sure that we're not crossing year boundaries here.
+  // Otherwise, ilios will propel us into the current year which we do not want right here.
+  if (courseStartDate.year() !== moment().year()) {
+    courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+  }
+
   const rolloverDate = moment(courseStartDate).add(1, 'week');
 
   let course = Object.create({
@@ -305,7 +311,12 @@ test('rollover course with new start date', function(assert) {
 test('rollover course prohibit non-matching day-of-week date selection', function(assert) {
   assert.expect(5);
   // rollover date and course start date don't fall on the same day of the week.
-  const courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  // Make sure that we're not crossing year boundaries here.
+  // Otherwise, ilios will propel us into the current year which we do not want right here.
+  if (courseStartDate.year() !== moment().year()) {
+    courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+  }
   const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
 
   let course = Object.create({
