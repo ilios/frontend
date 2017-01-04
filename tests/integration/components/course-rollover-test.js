@@ -389,6 +389,70 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
   });
 });
 
+/**
+ * This tests wonky business logic where the targeted rollover start date gets adjusted to a date in the current year
+ * if the given course has a start date in a former year.
+ */
+test('rollover start date adjustment with former year course start date', function(assert) {
+  assert.expect(3);
+
+  const courseStartDate = moment().hour(0).minute(0).subtract(2, 'year').day(1);
+  const rolloverDate = moment()
+    .hour(0)
+    .minute(0)
+    .isoWeek(courseStartDate.isoWeek()).
+    isoWeekday(courseStartDate.isoWeekday());
+
+  let course = Object.create({
+    id: 1,
+    startDate: courseStartDate.toDate(),
+    title: 'old course'
+  });
+
+  let storeMock = Service.extend({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  this.register('service:store', storeMock);
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const startDate = `${advancedOptions} input:eq(0)`;
+
+  return new Promise(resolve => {
+    run(()=>{
+      this.$(title).click();
+      wait().then(()=>{
+        let interactor = openDatepicker(this.$(startDate));
+        assert.equal(
+          interactor.selectedYear(),
+          rolloverDate.year(),
+          'Selected year initialized to this year.'
+        );
+        assert.equal(
+          interactor.selectedMonth(),
+          rolloverDate.month(),
+          "Selected month initialized to this year's equivalent of course's start month."
+        );
+        assert.equal(
+          interactor.selectedDay(),
+          rolloverDate.date(),
+          "Selected month initialized to this year's equivalent of course's start day."
+        );
+
+        wait().then(()=>{
+          resolve();
+        });
+      });
+    });
+  });
+});
+
 test('rollover course with no offerings', function(assert) {
   assert.expect(3);
   let course = Object.create({
