@@ -109,18 +109,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }).drop(),
 
   loadYears: task(function * (){
-    let thisYear = parseInt(moment().format('YYYY'));
+    const now = moment();
+    const thisYear = now.year();
     yield timeout(10);
     const store = this.get('store');
 
     let years = yield store.findAll('academicYear');
-    let futureYears = years.map(year => parseInt(year.get('id'))).filter(year => year >= thisYear).sort();
+    let academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
 
     if (isEmpty(this.get('selectedYear'))) {
-      this.set('selectedYear', futureYears.get('firstObject'));
+      this.set('selectedYear', academicYears.get('firstObject'));
     }
 
-    return futureYears;
+    return academicYears;
   }).drop(),
 
   loadCourses: task(function * (){

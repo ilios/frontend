@@ -12,8 +12,9 @@ moduleForComponent('session-copy', 'Integration | Component | session copy', {
 });
 
 test('it renders', function(assert) {
-  let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
-  let thisYear = lastYear + 1;
+  const now = moment();
+  let thisYear = now.year();
+  let lastYear = thisYear - 1;
   let nextYear = thisYear + 1;
 
   let school = Object.create({
@@ -42,7 +43,7 @@ test('it renders', function(assert) {
     query(what, {limit, filters}){
       assert.equal(what, 'course');
       assert.equal(filters.school, 1);
-      assert.equal(filters.year, thisYear);
+      assert.equal(filters.year, lastYear);
       assert.equal(limit, 10000);
 
       return [course1, course2];
@@ -70,9 +71,9 @@ test('it renders', function(assert) {
   const save = '.done';
 
   return wait().then(()=>{
-    assert.equal(this.$(`${yearSelect} option`).length, 2);
+    assert.equal(this.$(`${yearSelect} option`).length, 3);
     for (let i=0; i<2; i++){
-      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
+      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${lastYear + i} - ${lastYear + i + 1}`);
     }
     assert.equal(this.$(`${courseSelect} option`).length, 2);
     assert.equal(this.$(`${courseSelect} option:eq(0)`).text().trim(), course1.get('title'));
