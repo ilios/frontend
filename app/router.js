@@ -15,7 +15,7 @@ const Router = Ember.Router.extend({
     const iliosMetrics = this.get('iliosMetrics');
     const page = this.get('url');
     const title = this.getWithDefault('currentRouteName', 'unknown');
-    
+
     iliosMetrics.track(page, title);
   },
 });
@@ -48,9 +48,9 @@ Router.map(function() {
 
   this.route("testModels");
   this.route("loading");
-  this.route('programs');
   this.route('learnerGroup', { path: 'learnergroups/:learner_group_id'});
   this.route('learnerGroups', { path: 'learnergroups'});
+  this.route('programs');
   this.route('program', {
     path: 'programs/:program_id',
     resetNamespace: true
