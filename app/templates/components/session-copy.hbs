@@ -46,7 +46,7 @@
   </div>
 
   <div class='buttons'>
-    <button disabled={{if (or save.isRunning (not selectedYear) (not selectedCourse)) true}} class='done text' {{action (perform save)}}>
+    <button class='done text' disabled={{if (or save.isRunning (not selectedYear) (not selectedCourse)) true}} {{action (perform save)}}>
       {{#if save.isRunning}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
