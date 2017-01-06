@@ -252,6 +252,34 @@ test('change start date', function(assert) {
   });
 });
 
+test('start date validation', function(assert) {
+  assert.expect(2);
+  server.create('user', {
+    id: 4136
+  });
+  const course = server.create('course', {
+    year: 2013,
+    startDate: new Date('2013-04-23'),
+    endDate: new Date('2013-05-22'),
+    school: 1,
+  });
+  visit(url + '?details=true');
+  andThen(function() {
+    const container = find('.course-overview');
+    click(find('.coursestartdate .editable', container));
+    andThen(function(){
+      assert.notOk(find('.coursestartdate .validation-error-message', container).length, 'no validation error shown.');
+      const interactor = openDatepicker(find('.coursestartdate input', container));
+      const newDate = moment(course.startDate).add(1, 'year');
+      interactor.selectDate(newDate.toDate());
+      click(find('.coursestartdate .editinplace .actions .done', container));
+      andThen(function(){
+        assert.ok(find('.coursestartdate .validation-error-message', container).length, 'validation error shows.');
+      });
+    });
+  });
+});
+
 test('change end date', function(assert) {
   server.create('user', {
     id: 4136
@@ -284,6 +312,34 @@ test('change end date', function(assert) {
         assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + newDate.format('MM/DD/YY')));
       });
 
+    });
+  });
+});
+
+test('end date validation', function(assert) {
+  assert.expect(2);
+  server.create('user', {
+    id: 4136
+  });
+  const course = server.create('course', {
+    year: 2013,
+    startDate: new Date('2013-04-23'),
+    endDate: new Date('2013-05-22'),
+    school: 1,
+  });
+  visit(url + '?details=true');
+  andThen(function() {
+    const container = find('.course-overview');
+    click(find('.courseenddate .editable', container));
+    andThen(function(){
+      assert.notOk(find('.courseenddate .validation-error-message', container).length, 'no validation error shown.');
+      const interactor = openDatepicker(find('.courseenddate input', container));
+      const newDate = moment(course.endDate).subtract(1, 'year');
+      interactor.selectDate(newDate.toDate());
+      click(find('.courseenddate .editinplace .actions .done', container));
+      andThen(function(){
+        assert.ok(find('.courseenddate .validation-error-message', container).length, 'validation error shows.');
+      });
     });
   });
 });
