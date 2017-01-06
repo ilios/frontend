@@ -222,6 +222,8 @@ test('change start date', function(assert) {
   });
   var course = server.create('course', {
     year: 2013,
+    startDate: new Date('2013-04-23'),
+    endDate: new Date('2015-05-22'),
     school: 1,
   });
   var startDate = moment.utc(course.startDate).format('MM/DD/YY');
@@ -257,6 +259,8 @@ test('change end date', function(assert) {
   var course = server.create('course', {
     year: 2013,
     school: 1,
+    startDate: new Date('2013-04-23'),
+    endDate: new Date('2015-05-22'),
   });
   var endDate = moment.utc(course.endDate).format('MM/DD/YY');
   visit(url);
