@@ -56,7 +56,7 @@ Router.map(function() {
     resetNamespace: true
   }, function(){
     this.route('publicationCheck', { path: '/publicationcheck'});
-    this.route("programYear", {
+    this.route("pYear", {
       path: '/programyears/:program-year_id',
       resetNamespace: true
     }, function(){
