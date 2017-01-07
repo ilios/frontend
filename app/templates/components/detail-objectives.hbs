@@ -1,6 +1,6 @@
-{{#if isManaging}}
+{{#if (or isManaging currentlyManagedObjective)}}
   <div class='title'>
-    {{#if isManagingParents}}
+    {{#if (or isManagingParents currentlyManagedObjective)}}
       <span class='specific-title'>
         {{objectiveParentTitle}}
       </span>
@@ -22,7 +22,7 @@
   </div>
 {{/if}}
 <div class='detail-objectives-actions'>
-  {{#if isManaging class='horizontal'}}
+  {{#if (or isManaging currentlyManagedObjective) class='horizontal'}}
     <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
     <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else}}
@@ -38,7 +38,7 @@
       cancel=(action 'toggleNewObjectiveEditor')
     }}
   {{/if}}
-  {{#unless isManaging class="horizontal"}}
+  {{#unless (or isManaging currentlyManagedObjective) class="horizontal"}}
     {{#if isCourse}}
       {{course-objective-list
         course=subject
@@ -63,7 +63,7 @@
       }}
     {{/if}}
   {{else}}
-    {{#if isManagingParents}}
+    {{#if (or isManagingParents currentlyManagedObjective)}}
       {{#if isCourse}}
         {{course-objective-manager
           courseObjective=mangeParentsObjective

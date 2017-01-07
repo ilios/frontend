@@ -1,10 +1,12 @@
-{{#if (or (eq course.objectives.length 0) courseObjectiveDetails)}}
+{{#if (or (eq course.objectives.length 0) courseObjectiveDetails currentlyManagedObjective)}}
   {{detail-objectives
     subject=course
     isCourse=true
     editable=editable
     collapse=(action this.attrs.setCourseObjectiveDetails false)
     expand=(action this.attrs.setCourseObjectiveDetails true)
+    setCurrentlyManagedObjective=(action this.attrs.setCurrentlyManagedObjective)
+    currentlyManagedObjective=currentlyManagedObjective
   }}
 {{else}}
   {{collapsed-objectives subject=course expand=(action this.attrs.setCourseObjectiveDetails true)}}
