@@ -70,7 +70,7 @@
     "ember-froala": "2.4.0",
     "ember-i18n": "4.5.0",
     "ember-i18n-cp-validations": "2.8.0",
-    "ember-inflector": "1.10.0",
+    "ember-inflector": "1.11.0",
     "ember-load": "0.0.10",
     "ember-load-initializers": "^0.6.1",
     "ember-metrics": "0.7.0",
