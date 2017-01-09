@@ -19,13 +19,13 @@ const Validations = buildValidations({
   startDate: [
     validator('date', {
       dependentKeys: ['model.endDate'],
-      before: reads('model.endDate'),
+      onOrBefore: reads('model.endDate'),
     }),
   ],
   endDate: [
     validator('date', {
       dependentKeys: ['model.startDate'],
-      after: reads('model.startDate'),
+      onOrAfter: reads('model.startDate'),
     }),
   ],
 });
