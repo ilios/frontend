@@ -28,13 +28,13 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{course-rollover course=course}}`);
 
-  const thisYear = parseInt(moment().format('YYYY'));
+  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
   const yearSelect = '.year-select select';
   const title = '.title input';
 
   return wait().then(()=>{
-    for (let i=0; i<5; i++){
-      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
+    for (let i=0; i<6; i++){
+      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${lastYear + i} - ${lastYear + 1 + i}`);
     }
     assert.equal(this.$(title).length, 1);
     assert.equal(this.$(title).val().trim(), course.get('title'));
@@ -52,11 +52,11 @@ test('rollover course', function(assert) {
 
   let ajaxMock = Service.extend({
     request(url, {method, data}){
-      let thisYear = parseInt(moment().format('YYYY'));
+      let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
       assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
       assert.equal(method, 'POST');
       assert.ok('year' in data);
-      assert.equal(data.year, thisYear);
+      assert.equal(data.year, lastYear);
       assert.equal(data.newCourseTitle, course.get('title'));
       assert.notOk('newStartDate' in data);
       assert.notOk('skipOfferings' in data);
@@ -171,7 +171,7 @@ test('rollover course with new title', function(assert) {
 
 test('disable years when title already exists', function(assert) {
   assert.expect(8);
-  const thisYear = parseInt(moment().format('YYYY'));
+  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
 
   let storeMock = Service.extend({
     query(what, {filters}){
@@ -182,11 +182,11 @@ test('disable years when title already exists', function(assert) {
       return [
         {
           id: 2,
-          year: thisYear
+          year: lastYear
         },
         {
           id: 3,
-          year: thisYear+2
+          year: lastYear+2
         },
       ];
     }
@@ -357,33 +357,38 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
   this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
   const advancedOptions = '.advanced-options';
   const title = `.advanced-options-title`;
+  const yearSelect = '.year-select select';
   const startDate = `${advancedOptions} input:eq(0)`;
 
   return new Promise(resolve => {
     run(()=>{
       this.$(title).click();
       wait().then(()=>{
-        let interactor = openDatepicker(this.$(startDate));
-        assert.equal(
-          interactor.selectedYear(),
-          courseStartDate.year(),
-          'Selected year initialized to course start date year.'
-        );
-        assert.equal(
-          interactor.selectedMonth(),
-          courseStartDate.month(),
-          'Selected month initialized to course start date month.'
-        );
-        assert.equal(
-          interactor.selectedDay(),
-          courseStartDate.date(),
-          'Selected day initialized to course start date day.'
-        );
-        interactor.selectDate(rolloverDate.toDate());
-        this.$('.done').click();
+        this.$(yearSelect).val(courseStartDate.format('YYYY')).change();
         wait().then(()=>{
-          resolve();
+          let interactor = openDatepicker(this.$(startDate));
+          assert.equal(
+            interactor.selectedYear(),
+            courseStartDate.year(),
+            'Selected year initialized to course start date year.'
+          );
+          assert.equal(
+            interactor.selectedMonth(),
+            courseStartDate.month(),
+            'Selected month initialized to course start date month.'
+          );
+          assert.equal(
+            interactor.selectedDay(),
+            courseStartDate.date(),
+            'Selected day initialized to course start date day.'
+          );
+          interactor.selectDate(rolloverDate.toDate());
+          this.$('.done').click();
+          wait().then(()=>{
+            resolve();
+          });
         });
+
       });
     });
   });
@@ -400,8 +405,8 @@ test('rollover start date adjustment with former year course start date', functi
   const rolloverDate = moment()
     .hour(0)
     .minute(0)
-    .isoWeek(courseStartDate.isoWeek()).
-    isoWeekday(courseStartDate.isoWeekday());
+    .isoWeek(courseStartDate.isoWeek())
+    .isoWeekday(courseStartDate.isoWeekday());
 
   let course = Object.create({
     id: 1,
@@ -422,31 +427,35 @@ test('rollover start date adjustment with former year course start date', functi
   this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
   const advancedOptions = '.advanced-options';
   const title = `.advanced-options-title`;
+  const yearSelect = '.year-select select';
   const startDate = `${advancedOptions} input:eq(0)`;
 
   return new Promise(resolve => {
     run(()=>{
       this.$(title).click();
       wait().then(()=>{
-        let interactor = openDatepicker(this.$(startDate));
-        assert.equal(
-          interactor.selectedYear(),
-          rolloverDate.year(),
-          'Selected year initialized to this year.'
-        );
-        assert.equal(
-          interactor.selectedMonth(),
-          rolloverDate.month(),
-          "Selected month initialized to this year's equivalent of course's start month."
-        );
-        assert.equal(
-          interactor.selectedDay(),
-          rolloverDate.date(),
-          "Selected month initialized to this year's equivalent of course's start day."
-        );
-
+        this.$(yearSelect).val(rolloverDate.format('YYYY')).change();
         wait().then(()=>{
-          resolve();
+          let interactor = openDatepicker(this.$(startDate));
+          assert.equal(
+            interactor.selectedYear(),
+            rolloverDate.year(),
+            'Selected year initialized to this year.'
+          );
+          assert.equal(
+            interactor.selectedMonth(),
+            rolloverDate.month(),
+            "Selected month initialized to this year's equivalent of course's start month."
+          );
+          assert.equal(
+            interactor.selectedDay(),
+            rolloverDate.date(),
+            "Selected month initialized to this year's equivalent of course's start day."
+          );
+
+          wait().then(()=>{
+            resolve();
+          });
         });
       });
     });

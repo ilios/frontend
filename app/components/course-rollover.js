@@ -28,10 +28,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   iliosConfig: service(),
   didReceiveAttrs(){
     this._super(...arguments);
-    let thisYear = parseInt(moment().format('YYYY'));
+    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
     let years = [];
-    for (let i = 0; i < 5; i++) {
-      years.push(thisYear + i);
+    for (let i = 0; i < 6; i++) {
+      years.push(lastYear + i);
     }
     this.set('years', years);
     const course = this.get('course');
@@ -40,7 +40,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     this.get('loadUnavailableYears').perform();
-    this.get('changeSelectedYear').perform(thisYear);
+    this.get('changeSelectedYear').perform(lastYear);
   },
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
