@@ -5,7 +5,7 @@
     {{#if multipleCohorts}}
       {{#x-select value=selectedCohortId action="changeSelectedCohort"}}
         {{#each availableCohorts as |cohort|}}
-          {{#x-option value=cohort.id}}{{cohort.title}}{{/x-option}}
+          {{#xs.option value=cohort.id}}{{cohort.title}}{{/xs.option}}
         {{/each}}
       {{/x-select}}
     {{else}}
