@@ -12,9 +12,15 @@
       <button class='good' {{action publish}}>{{t publishTranslation}}</button>
     {{/if}}
     {{#if (and showReview reviewRoute reviewObject)}}
-      {{#link-to reviewRoute reviewObject}}
-        <button class='good' >{{t 'general.reviewMissingItems' count=(get reviewObject 'allPublicationIssuesLength')}}</button>
-      {{/link-to}}
+      {{#if secondReviewObject}}
+        {{#link-to reviewRoute reviewObject secondReviewObject}}
+          <button class='good' >{{t 'general.reviewMissingItems' count=(get reviewObject 'allPublicationIssuesLength')}}</button>
+        {{/link-to}}
+      {{else}}
+        {{#link-to reviewRoute reviewObject}}
+          <button class='good' >{{t 'general.reviewMissingItems' count=(get reviewObject 'allPublicationIssuesLength')}}</button>
+        {{/link-to}}
+      {{/if}}
     {{/if}}
     {{#if showTbd}}
       <button class='good' {{action publishAsTbd}}>{{t 'general.markAsScheduled'}}</button>

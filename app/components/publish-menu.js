@@ -14,6 +14,7 @@ export default Component.extend({
   showUnPublish: false,
   reviewRoute: null,
   reviewObject: null,
+  secondReviewObject: null,
   publishTranslation: '',
   unpublishTranslation: '',
 });
