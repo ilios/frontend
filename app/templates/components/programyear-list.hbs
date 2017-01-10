@@ -12,7 +12,7 @@
 
     {{#if saved}}
       <div class='savedprogramyear'>
-        {{#link-to 'programYear.index' program savedProgramYear}}
+        {{#link-to 'pYear.index' program savedProgramYear}}
           {{fa-icon 'external-link-square'}} {{savedProgramYear.academicYear}}
         {{/link-to}}
         {{t 'general.savedSuccessfully'}}
@@ -38,7 +38,7 @@
             {{#unless programYearProxy.archived}}
               <tr class="{{if programYearProxy.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left'>
-                  {{#link-to 'programYear.index' program programYearProxy.content}}
+                  {{#link-to 'pYear.index' program programYearProxy.content}}
                     {{fa-icon 'external-link-square'}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
