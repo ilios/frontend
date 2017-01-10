@@ -4,7 +4,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, computed, RSVP, isEmpty, inject } = Ember;
-const { not } = computed;
+const { not, reads } = computed;
 const { Promise, all } = RSVP;
 const { service } = inject;
 
@@ -17,10 +17,16 @@ const Validations = buildValidations({
     }),
   ],
   startDate: [
-    validator('presence', true),
+    validator('date', {
+      dependentKeys: ['model.endDate'],
+      onOrBefore: reads('model.endDate'),
+    }),
   ],
   endDate: [
-    validator('presence', true),
+    validator('date', {
+      dependentKeys: ['model.startDate'],
+      onOrAfter: reads('model.startDate'),
+    }),
   ],
 });
 
