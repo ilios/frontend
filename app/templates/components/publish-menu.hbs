@@ -12,8 +12,8 @@
       <button class='good' {{action publish}}>{{t publishTranslation}}</button>
     {{/if}}
     {{#if (and showReview reviewRoute reviewObject)}}
-      {{#if secondReviewObject}}
-        {{#link-to reviewRoute reviewObject secondReviewObject}}
+      {{#if parentObject}}
+        {{#link-to reviewRoute parentObject reviewObject}}
           <button class='good' >{{t 'general.reviewMissingItems' count=(get reviewObject 'allPublicationIssuesLength')}}</button>
         {{/link-to}}
       {{else}}

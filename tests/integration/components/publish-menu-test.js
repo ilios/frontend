@@ -134,15 +134,15 @@ test('unpublish action fires', function(assert) {
   this.$(item).click();
 });
 
-test('it renders with second review object', function(assert) {
+test('it renders with parent review object', function(assert) {
   let testObj = Object.create({
     allPublicationIssuesLength: 3
   });
-  let secondTestObject = Object.create({
-    allPublicationIssuesLength: 3
+  let parentTestObject = Object.create({
+    allPublicationIssuesLength: 8
   });
   this.set('testObj', testObj);
-  this.set('secondTestObject', secondTestObject);
+  this.set('parentTestObject', parentTestObject);
   this.set('nothing', parseInt);
   this.render(hbs`{{publish-menu
     title='title'
@@ -155,7 +155,7 @@ test('it renders with second review object', function(assert) {
     unPublishTranslation='general.unPublishCourse'
     reviewRoute='course.publicationCheck'
     reviewObject=testObj
-    secondReviewObject=secondTestObject
+    parentObject=parentTestObject
     publish=(action nothing)
     publishAsTbd=(action nothing)
     unpublish=(action nothing)

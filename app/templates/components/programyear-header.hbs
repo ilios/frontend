@@ -19,7 +19,7 @@
         showUnPublish=showUnPublish
         reviewRoute='programYear.publicationCheck'
         reviewObject=programYear
-        secondReviewObject=(await programYear.program)
+        parentObject=(await programYear.program)
         publishTranslation='general.publishProgramYear'
         unPublishTranslation='general.unPublishProgramYear'
         publish=(action 'publish')
