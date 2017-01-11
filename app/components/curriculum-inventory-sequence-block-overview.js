@@ -31,6 +31,7 @@ export default Component.extend({
   academicLevels: [],
   childSequenceOrderOptions: [],
   requiredOptions: [],
+  course: null,
 
 
   didReceiveAttrs(){
@@ -74,6 +75,7 @@ export default Component.extend({
       Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack')})
     ];
     const isFinalized = yield report.get('isFinalized');
+    const course = yield sequenceBlock.get('course');
     this.setProperties({
       parent,
       report,
@@ -89,10 +91,10 @@ export default Component.extend({
       requiredOptions,
       childSequenceOrderOptions,
       isFinalized,
-      linkedSessions
+      linkedSessions,
+      course,
     });
   }),
-
 
   linkableSessions: computed('sequenceBlock.course', function(){
     let defer = RSVP.defer();
@@ -160,7 +162,7 @@ export default Component.extend({
     });
   }),
 
-  changeCourse: task(function * (courseId) {
+  saveCourseChange: task(function * (courseId) {
     let linkableCourses = yield this.get('linkableCourses');
     let course = linkableCourses.toArray().findBy('id', courseId);
     let block = this.get('sequenceBlock');
@@ -173,6 +175,16 @@ export default Component.extend({
       let block = this.get('sequenceBlock');
       block.set('required', value);
       block.save();
+    },
+
+    changeCourse() {
+      let course = this.get('course');
+      this.get('saveCourseChange').perform(course.get('id'));
+    },
+
+    revertCourseChanges() {
+      let block = this.get('sequenceBlock');
+      this.set('course', block.get('course'));
     },
 
     changeTrack: function(value){

@@ -4,29 +4,33 @@
     <div class="block course">
       <label>{{t 'general.course'}}:</label>
       {{#if isFinalized}}
-        <span>{{if sequenceBlock.course sequenceBlock.course.title (t 'general.notApplicableAbbr')}}</span>
+        <span>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
       {{else}}
-        {{inplace-select
-          displayValueOverride=(await sequenceBlock.course.title)
-          value=(await sequenceBlock.course.id)
-          options=(sort-by 'title' (await linkableCourses))
-          showSelectPrompt=true
-          selectPromptTranslation='general.selectCourse'
-          save=(perform changeCourse)
-          disabled=changeCourse.isRunning
+        {{#editable-field
+          value=course.title
+          save=(action 'changeCourse')
+          close=(action 'revertCourseChanges')
+          clickPrompt=(t 'general.selectCourse')
         }}
+          {{one-way-select
+            course
+            options=(sort-by 'title' (await linkableCourses))
+            optionValuePath="id"
+            optionLabelPath="title"
+            disabled=saveCourseChange.isRunning
+            update=(action (mut course))
+          }}
+        {{/editable-field}}
       {{/if}}
-      {{#if (is-fulfilled sequenceBlock.course)}}
-        {{#if sequenceBlock.course}}
-          <span class="details">
-            {{t 'general.level'}}: {{sequenceBlock.course.level}},
-            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
-            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}}
-            {{#if sequenceBlock.course.clerkshipType}}
-              - {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
-            {{/if}}
-          </span>
-        {{/if}}
+      {{#if course}}
+        <span class="details">
+          {{t 'general.level'}}: {{course.level}},
+          {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
+          {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
+          {{#if course.clerkshipType}}
+            - {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+          {{/if}}
+        </span>
       {{/if}}
     </div>
     <div class="block description">
