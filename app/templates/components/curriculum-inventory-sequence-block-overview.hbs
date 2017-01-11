@@ -64,7 +64,17 @@
           }}
         </span>
       {{else}}
-        {{inplace-select value=sequenceBlock.required options=requiredOptions save='changeRequired'}}
+        {{#editable-field
+          value=requiredLabel
+          save=(action 'changeRequired')
+          close=(action 'revertRequiredChanges')
+        }}
+          <select onchange={{action (mut required) value="target.value"}}>
+            <option value=1 selected={{eq required '1'}}>{{t 'general.required'}}</option>
+            <option value=2 selected={{eq required '2'}}>{{t 'general.optionalElective'}}</option>
+            <option value=3 selected={{eq required '3'}}>{{t 'general.requiredInTrack'}}</option>
+          </select>
+        {{/editable-field}}
       {{/if}}
     </div>
     <div class="block track">

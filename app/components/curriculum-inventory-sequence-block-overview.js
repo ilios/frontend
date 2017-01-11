@@ -32,6 +32,7 @@ export default Component.extend({
   childSequenceOrderOptions: [],
   requiredOptions: [],
   course: null,
+  required: null,
 
 
   didReceiveAttrs(){
@@ -57,6 +58,7 @@ export default Component.extend({
       }
     }
     const linkedSessions = yield sequenceBlock.get('sessions');
+    const required = '' + sequenceBlock.get('required');
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
@@ -68,11 +70,6 @@ export default Component.extend({
       Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
       Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.unordered')}),
       Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.parallel')})
-    ];
-    const requiredOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.required') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.optionalElective')}),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack')})
     ];
     const isFinalized = yield report.get('isFinalized');
     const course = yield sequenceBlock.get('course');
@@ -88,12 +85,25 @@ export default Component.extend({
       childSequenceOrder,
       orderInSequence,
       description,
-      requiredOptions,
       childSequenceOrderOptions,
       isFinalized,
       linkedSessions,
       course,
+      required,
     });
+  }),
+
+  requiredLabel: computed('required', function(){
+    const i18n = this.get('i18n');
+    const required = this.get('required');
+    switch(required) {
+    case '1':
+      return i18n.t('general.required');
+    case '2':
+      return i18n.t('general.optionalElective');
+    case '3':
+      return i18n.t('general.requiredInTrack');
+    }
   }),
 
   linkableSessions: computed('sequenceBlock.course', function(){
@@ -171,10 +181,16 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-    changeRequired: function(value){
+
+    changeRequired: function(){
       let block = this.get('sequenceBlock');
-      block.set('required', value);
+      block.set('required', parseInt(this.get('required'), 10));
       block.save();
+    },
+
+    revertRequiredChanges: function(){
+      let block = this.get('sequenceBlock');
+      this.set('required', '' + block.get('required'));
     },
 
     changeCourse() {
