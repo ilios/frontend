@@ -29,8 +29,6 @@ export default Component.extend({
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
   academicLevels: [],
-  childSequenceOrderOptions: [],
-  requiredOptions: [],
   course: null,
   required: null,
 
@@ -62,15 +60,10 @@ export default Component.extend({
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
-    const childSequenceOrder = sequenceBlock.get('childSequenceOrder');
+    const childSequenceOrder = '' + sequenceBlock.get('childSequenceOrder');
     const orderInSequence = sequenceBlock.get('orderInSequence');
     const description = sequenceBlock.get('description');
     const i18n = this.get('i18n');
-    const childSequenceOrderOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.unordered')}),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.parallel')})
-    ];
     const isFinalized = yield report.get('isFinalized');
     const course = yield sequenceBlock.get('course');
     this.setProperties({
@@ -85,7 +78,6 @@ export default Component.extend({
       childSequenceOrder,
       orderInSequence,
       description,
-      childSequenceOrderOptions,
       isFinalized,
       linkedSessions,
       course,
@@ -103,6 +95,19 @@ export default Component.extend({
       return i18n.t('general.optionalElective');
     case '3':
       return i18n.t('general.requiredInTrack');
+    }
+  }),
+
+  childSequenceOrderLabel: computed('childSequenceOrder', function(){
+    const i18n = this.get('i18n');
+    const childSequenceOrder = this.get('childSequenceOrder');
+    switch(childSequenceOrder) {
+    case '1':
+      return i18n.t('general.ordered');
+    case '2':
+      return i18n.t('general.unordered');
+    case '3':
+      return i18n.t('general.parallel');
     }
   }),
 
@@ -181,7 +186,6 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-
     changeRequired: function(){
       let block = this.get('sequenceBlock');
       block.set('required', parseInt(this.get('required'), 10));
@@ -221,15 +225,21 @@ export default Component.extend({
       this.set('description', block.get('description'));
     },
 
-    changeChildSequenceOrder(value) {
+    changeChildSequenceOrder() {
       let block = this.get('sequenceBlock');
-      block.set('childSequenceOrder', value);
+      block.set('childSequenceOrder', parseInt(this.get('childSequenceOrder'), 10));
       block.save().then(block => {
         block.get('children').then(children => {
           children.invoke('reload');
         });
       });
     },
+
+    revertChildSequenceOrderChanges: function(){
+      let block = this.get('sequenceBlock');
+      this.set('childSequenceOrder', '' + block.get('childSequenceOrder'));
+    },
+
     changeAcademicLevel(value){
       let academicYear = this.get('academicLevels').findBy('id', value);
       let block = this.get('sequenceBlock');
