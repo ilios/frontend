@@ -37,6 +37,7 @@
         showUnPublish=showUnPublish
         reviewRoute='session.publicationCheck'
         reviewObject=session
+        parentObject=(await session.course)
         publishTranslation='general.publishSession'
         unPublishTranslation='general.unPublishSession'
         publish=(action 'publish')

@@ -133,3 +133,51 @@ test('unpublish action fires', function(assert) {
   assert.equal(this.$(item).text().trim(), 'UnPublish Course');
   this.$(item).click();
 });
+
+test('it renders with parent review object', function(assert) {
+  let testObj = Object.create({
+    allPublicationIssuesLength: 3
+  });
+  let parentTestObject = Object.create({
+    allPublicationIssuesLength: 8
+  });
+  this.set('testObj', testObj);
+  this.set('parentTestObject', parentTestObject);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{publish-menu
+    title='title'
+    showAsIs=true
+    showPublish=true
+    showReview=true
+    showTbd=true
+    showUnPublish=true
+    publishTranslation='general.publishCourse'
+    unPublishTranslation='general.unPublishCourse'
+    reviewRoute='course.publicationCheck'
+    reviewObject=testObj
+    parentObject=parentTestObject
+    publish=(action nothing)
+    publishAsTbd=(action nothing)
+    unpublish=(action nothing)
+  }}`);
+  const toggle = '.rl-dropdown-toggle';
+  const icon = `${toggle} i`;
+  const dropDownItems = '.rl-dropdown button';
+  const asIs = `${dropDownItems}:eq(0)`;
+  const publish = `${dropDownItems}:eq(1)`;
+  const review = `${dropDownItems}:eq(2)`;
+  const schedule = `${dropDownItems}:eq(3)`;
+  const unpublish = `${dropDownItems}:eq(4)`;
+
+
+  assert.equal(this.$(toggle).text().trim(), 'title');
+  assert.ok(this.$(icon).hasClass('fa-cloud'));
+
+  this.$(toggle).click();
+  assert.equal(this.$(dropDownItems).length, 5);
+  assert.equal(this.$(asIs).text().trim(), 'Publish As-is');
+  assert.equal(this.$(publish).text().trim(), 'Publish Course');
+  assert.equal(this.$(review).text().trim(), 'Review 3 Missing Items');
+  assert.equal(this.$(schedule).text().trim(), 'Mark as Scheduled');
+  assert.equal(this.$(unpublish).text().trim(), 'UnPublish Course');
+});
