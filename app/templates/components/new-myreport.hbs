@@ -85,11 +85,11 @@
           }}
         {{/if}}
       {{else}}
-        {{#liquid-if prepositionalObjectIdList.isFulfilled class='crossFade'}}
+        {{#liquid-if (is-fulfilled prepositionalObjectIdList) class='crossFade'}}
           <select onchange={{action "changePrepositionalObjectId" value="target.value"}}>
-            {{#each prepositionalObjectIdList as |option|}}
-              <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
-                {{option.label}}
+            {{#each (sort-by 'label' (await prepositionalObjectIdList)) as |option|}}
+              <option value={{option.value}}>
+                {{await option.label}}
               </option>
             {{/each}}
           </select>
