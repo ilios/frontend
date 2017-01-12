@@ -58,6 +58,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('externalId', course.get('externalId'));
     this.set('startDate', course.get('startDate'));
     this.set('endDate', course.get('endDate'));
+    this.set('level', course.get('level'));
 
     course.get('clerkshipType').then(clerkshipType => {
       if (isEmpty(clerkshipType)) {
@@ -70,6 +71,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   course: null,
   externalId: null,
   startDate: null,
+  level: null,
   levelOptions: [],
   classNames: ['course-overview'],
   tagName: 'section',
@@ -220,9 +222,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('externalId', course.get('externalId'));
     },
 
-    changeLevel: function(value){
-      this.get('course').set('level', value);
+    changeLevel(){
+      this.get('course').set('level', this.get('level'));
       this.get('course').save();
+    },
+
+    revertLevelChanges(){
+      this.set('level', this.get('course').get('level'));
     },
   }
 });
