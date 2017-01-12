@@ -30,7 +30,21 @@
 
       <label class="form-label">{{t 'general.durationInYears'}}:</label>
       <div class="form-data programduration">
-        <div>{{inplace-select value=program.duration options=durationOptions save='changeDuration'}}</div>
+        <div>
+          {{#editable-field
+            value=duration
+            save=(action 'changeDuration')
+            close=(action 'revertDurationChanges')
+          }}
+            {{one-way-select
+              duration
+              options=durationOptions
+              optionTargetPath="id"
+              optionLabelPath="title"
+              update=(action (mut duration))
+            }}
+          {{/editable-field}}
+        </div>
       </div>
 
     </div>

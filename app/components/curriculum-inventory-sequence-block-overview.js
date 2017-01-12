@@ -28,9 +28,10 @@ export default Component.extend({
   isManagingSessions: false,
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
-  academicLevels: [],
-  childSequenceOrderOptions: [],
-  requiredOptions: [],
+  academicLevels: null,
+  course: null,
+  required: null,
+  academicLevel: null,
 
 
   didReceiveAttrs(){
@@ -44,7 +45,6 @@ export default Component.extend({
     const parent = yield sequenceBlock.get('parent');
     let academicLevels = yield report.get('academicLevels');
     academicLevels = academicLevels.toArray();
-
     let isInOrderedSequence = false;
     let orderInSequenceOptions = [];
     if (isPresent(parent) && parent.get('isOrdered')) {
@@ -52,31 +52,24 @@ export default Component.extend({
       const siblings = yield parent.get('children');
       for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
         let num = i + 1;
-        orderInSequenceOptions.pushObject(Ember.Object.create({ 'id': num, 'title': num }));
+        orderInSequenceOptions.push(num);
       }
     }
     const linkedSessions = yield sequenceBlock.get('sessions');
+    const academicLevel = yield sequenceBlock.get('academicLevel');
+    const required = '' + sequenceBlock.get('required');
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
-    const childSequenceOrder = sequenceBlock.get('childSequenceOrder');
+    const childSequenceOrder = '' + sequenceBlock.get('childSequenceOrder');
     const orderInSequence = sequenceBlock.get('orderInSequence');
     const description = sequenceBlock.get('description');
-    const i18n = this.get('i18n');
-    const childSequenceOrderOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.unordered')}),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.parallel')})
-    ];
-    const requiredOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.required') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.optionalElective')}),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack')})
-    ];
     const isFinalized = yield report.get('isFinalized');
+    const course = yield sequenceBlock.get('course');
     this.setProperties({
       parent,
       report,
+      academicLevel,
       academicLevels,
       isInOrderedSequence,
       orderInSequenceOptions,
@@ -86,13 +79,38 @@ export default Component.extend({
       childSequenceOrder,
       orderInSequence,
       description,
-      requiredOptions,
-      childSequenceOrderOptions,
       isFinalized,
-      linkedSessions
+      linkedSessions,
+      course,
+      required,
     });
   }),
 
+  requiredLabel: computed('required', function(){
+    const i18n = this.get('i18n');
+    const required = this.get('required');
+    switch(required) {
+    case '1':
+      return i18n.t('general.required');
+    case '2':
+      return i18n.t('general.optionalElective');
+    case '3':
+      return i18n.t('general.requiredInTrack');
+    }
+  }),
+
+  childSequenceOrderLabel: computed('childSequenceOrder', function(){
+    const i18n = this.get('i18n');
+    const childSequenceOrder = this.get('childSequenceOrder');
+    switch(childSequenceOrder) {
+    case '1':
+      return i18n.t('general.ordered');
+    case '2':
+      return i18n.t('general.unordered');
+    case '3':
+      return i18n.t('general.parallel');
+    }
+  }),
 
   linkableSessions: computed('sequenceBlock.course', function(){
     let defer = RSVP.defer();
@@ -160,7 +178,7 @@ export default Component.extend({
     });
   }),
 
-  changeCourse: task(function * (courseId) {
+  saveCourseChange: task(function * (courseId) {
     let linkableCourses = yield this.get('linkableCourses');
     let course = linkableCourses.toArray().findBy('id', courseId);
     let block = this.get('sequenceBlock');
@@ -169,10 +187,25 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-    changeRequired: function(value){
+    changeRequired: function(){
       let block = this.get('sequenceBlock');
-      block.set('required', value);
+      block.set('required', parseInt(this.get('required'), 10));
       block.save();
+    },
+
+    revertRequiredChanges: function(){
+      let block = this.get('sequenceBlock');
+      this.set('required', '' + block.get('required'));
+    },
+
+    changeCourse() {
+      let course = this.get('course');
+      this.get('saveCourseChange').perform(course.get('id'));
+    },
+
+    revertCourseChanges() {
+      let block = this.get('sequenceBlock');
+      this.set('course', block.get('course'));
     },
 
     changeTrack: function(value){
@@ -193,25 +226,41 @@ export default Component.extend({
       this.set('description', block.get('description'));
     },
 
-    changeChildSequenceOrder(value) {
+    changeChildSequenceOrder() {
       let block = this.get('sequenceBlock');
-      block.set('childSequenceOrder', value);
+      block.set('childSequenceOrder', parseInt(this.get('childSequenceOrder'), 10));
       block.save().then(block => {
         block.get('children').then(children => {
           children.invoke('reload');
         });
       });
     },
-    changeAcademicLevel(value){
-      let academicYear = this.get('academicLevels').findBy('id', value);
+
+    revertChildSequenceOrderChanges: function(){
       let block = this.get('sequenceBlock');
-      block.set('academicLevel', academicYear);
+      this.set('childSequenceOrder', '' + block.get('childSequenceOrder'));
+    },
+
+    changeAcademicLevel(){
+      let block = this.get('sequenceBlock');
+      block.set('academicLevel', this.get('academicLevel'));
       block.save();
     },
 
-    changeOrderInSequence(value) {
+    setAcademicLevel(id) {
+      let levels = this.get('academicLevels');
+      let level = levels.findBy('id', id);
+      this.set('academicLevel', level);
+    },
+
+    revertAcademicLevelChanges(){
       let block = this.get('sequenceBlock');
-      block.set('orderInSequence', value);
+      this.set('academicLevel', block.get('academicLevel'));
+    },
+
+    changeOrderInSequence() {
+      let block = this.get('sequenceBlock');
+      block.set('orderInSequence', this.get('orderInSequence'));
       block.save().then(block => {
         block.get('parent').then(parent => {
           parent.get('children').then(children => {
@@ -220,6 +269,12 @@ export default Component.extend({
         });
       });
     },
+
+    revertOrderInSequenceChanges(){
+      let block = this.get('sequenceBlock');
+      this.set('orderInSequence', block.get('orderInSequence'));
+    },
+
     changeDatesAndDuration(start, end, duration) {
       let block = this.get('sequenceBlock');
       block.set('startDate', start);

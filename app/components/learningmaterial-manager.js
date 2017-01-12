@@ -7,6 +7,11 @@ const { not } = computed;
 export default Component.extend({
   layout: layout,
   classNames: ['learningmaterial-manager'],
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('status', this.get('valueBuffer').get('status'));
+  },
+  status: null,
   learningMaterial: null,
   valueBuffer: null,
   isCourse: false,
@@ -31,9 +36,15 @@ export default Component.extend({
     return this.get('learningMaterial.learningMaterial.type') === 'citation';
   }),
   actions: {
-    changeStatus: function(statusId){
-      var newStatus = this.get('learningMaterialStatuses').findBy('id', statusId);
-      this.sendAction('changeStatus', newStatus);
+    setStatus(id) {
+      let status = this.get('learningMaterialStatuses').findBy('id', id);
+      this.set('status', status);
+    },
+    changeStatus: function(){
+      this.sendAction('changeStatus', this.get('status'));
+    },
+    revertStatusChanges(){
+      this.set('status', this.get('valueBuffer').get('status'));
     },
     changeRequired: function(value){
       this.sendAction('changeRequired', value);

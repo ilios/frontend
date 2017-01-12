@@ -48,6 +48,11 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         this.set('dueDate', ilmSession.get('dueDate'));
       }
     });
+
+    this.get('session.sessionType').then(sessionType => {
+      this.set('sessionType', sessionType);
+    });
+
     this.get('session.sessionDescription').then(sessionDescription => {
       if (sessionDescription){
         this.set('description', sessionDescription.get('description'));
@@ -64,6 +69,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   editable: true,
   sortTypes: ['title'],
   sessionTypes: [],
+  sessionType: null,
   sortedSessionTypes: sort('sessionTypes', 'sortTypes'),
   showCheckLink: true,
   isSaving: false,
@@ -137,11 +143,22 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       this.set('title', session.get('title'));
     },
 
-    changeSessionType: function(newId){
-      var session = this.get('session');
-      var type = this.get('sessionTypes').findBy('id', newId);
+    setSessionType(id){
+      let type = this.get('sessionTypes').findBy('id', id);
+      this.set('sessionType', type);
+    },
+
+    changeSessionType: function(){
+      let session = this.get('session');
+      let type = this.get('sessionType');
       session.set('sessionType', type);
       session.save();
+    },
+
+    revertSessionTypeChanges: function(){
+      this.get('session').get('sessionType').then(sessionType => {
+        this.set('sessionType', sessionType);
+      });
     },
     changeSupplemental: function(value){
       this.get('session').set('supplemental', value);

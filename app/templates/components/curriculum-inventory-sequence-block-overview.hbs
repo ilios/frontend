@@ -4,29 +4,33 @@
     <div class="block course">
       <label>{{t 'general.course'}}:</label>
       {{#if isFinalized}}
-        <span>{{if sequenceBlock.course sequenceBlock.course.title (t 'general.notApplicableAbbr')}}</span>
+        <span>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
       {{else}}
-        {{inplace-select
-          displayValueOverride=(await sequenceBlock.course.title)
-          value=(await sequenceBlock.course.id)
-          options=(sort-by 'title' (await linkableCourses))
-          showSelectPrompt=true
-          selectPromptTranslation='general.selectCourse'
-          save=(perform changeCourse)
-          disabled=changeCourse.isRunning
+        {{#editable-field
+          value=course.title
+          save=(action 'changeCourse')
+          close=(action 'revertCourseChanges')
+          clickPrompt=(t 'general.selectCourse')
         }}
+          {{one-way-select
+            course
+            options=(sort-by 'title' (await linkableCourses))
+            optionValuePath="id"
+            optionLabelPath="title"
+            disabled=saveCourseChange.isRunning
+            update=(action (mut course))
+          }}
+        {{/editable-field}}
       {{/if}}
-      {{#if (is-fulfilled sequenceBlock.course)}}
-        {{#if sequenceBlock.course}}
-          <span class="details">
-            {{t 'general.level'}}: {{sequenceBlock.course.level}},
-            {{t 'general.startDate'}}: {{moment-format sequenceBlock.course.startDate 'YYYY-MM-DD'}},
-            {{t 'general.endDate'}}: {{moment-format sequenceBlock.course.endDate 'YYYY-MM-DD'}}
-            {{#if sequenceBlock.course.clerkshipType}}
-              - {{t 'general.clerkship'}} ({{sequenceBlock.course.clerkshipType.title}})
-            {{/if}}
-          </span>
-        {{/if}}
+      {{#if course}}
+        <span class="details">
+          {{t 'general.level'}}: {{course.level}},
+          {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
+          {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
+          {{#if course.clerkshipType}}
+            - {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+          {{/if}}
+        </span>
       {{/if}}
     </div>
     <div class="block description">
@@ -60,7 +64,17 @@
           }}
         </span>
       {{else}}
-        {{inplace-select value=sequenceBlock.required options=requiredOptions save='changeRequired'}}
+        {{#editable-field
+          value=requiredLabel
+          save=(action 'changeRequired')
+          close=(action 'revertRequiredChanges')
+        }}
+          <select onchange={{action (mut required) value="target.value"}}>
+            <option value=1 selected={{eq required '1'}}>{{t 'general.required'}}</option>
+            <option value=2 selected={{eq required '2'}}>{{t 'general.optionalElective'}}</option>
+            <option value=3 selected={{eq required '3'}}>{{t 'general.requiredInTrack'}}</option>
+          </select>
+        {{/editable-field}}
       {{/if}}
     </div>
     <div class="block track">
@@ -143,11 +157,17 @@
           }}
         </span>
       {{else}}
-        {{inplace-select
-          value=sequenceBlock.childSequenceOrder
-          options=childSequenceOrderOptions
-          save='changeChildSequenceOrder'
+        {{#editable-field
+          value=childSequenceOrderLabel
+          save=(action 'changeChildSequenceOrder')
+          close=(action 'revertChildSequenceOrderChanges')
         }}
+          <select onchange={{action (mut childSequenceOrder) value="target.value"}}>
+            <option value=1 selected={{eq childSequenceOrder '1'}}>{{t 'general.ordered'}}</option>
+            <option value=2 selected={{eq childSequenceOrder '2'}}>{{t 'general.unordered'}}</option>
+            <option value=3 selected={{eq childSequenceOrder '3'}}>{{t 'general.parallel'}}</option>
+          </select>
+        {{/editable-field}}
       {{/if}}
     </div>
 
@@ -158,11 +178,17 @@
           {{#if isFinalized}}
             {{sequenceBlock.orderInSequence}}
           {{else}}
-            {{inplace-select
-              value=sequenceBlock.orderInSequence
-              options=orderInSequenceOptions
-              save="changeOrderInSequence"
+            {{#editable-field
+              value=orderInSequence
+              save=(action 'changeOrderInSequence')
+              close=(action 'revertOrderInSequenceChanges')
             }}
+              {{one-way-select
+                value=orderInSequence
+                options=orderInSequenceOptions
+                update=(action (mut orderInSequence))
+              }}
+            {{/editable-field}}
           {{/if}}
         {{else}}
           {{t 'general.notApplicableAbbr'}}
@@ -203,15 +229,21 @@
     <div class="block academic-level">
       <label>{{t 'general.academicLevel'}}:</label>
       {{#if isFinalized}}
-        <span>{{sequenceBlock.academicLevel.name}}</span>
+        <span>{{academicLevel.name}}</span>
       {{else}}
-        {{inplace-select
-          displayValueOverride=(await sequenceBlock.academicLevel.name)
-          value=(await sequenceBlock.academicLevel.id)
-          options=(sort-by 'level' academicLevels)
-          optionLabelPath='name'
-          save='changeAcademicLevel'
+        {{#editable-field
+          value=academicLevel.name
+          save=(action 'changeAcademicLevel')
+          close=(action 'revertAcademicLevelChanges')
         }}
+          {{one-way-select
+            academicLevel.id
+            options=(sort-by 'level' academicLevels)
+            optionTargetPath="id"
+            optionLabelPath="name"
+            update=(action 'setAcademicLevel')
+          }}
+        {{/editable-field}}
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}

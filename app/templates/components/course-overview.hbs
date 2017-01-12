@@ -121,9 +121,21 @@
     <label>{{t 'general.level'}}:</label>
     <span>
       {{#if editable}}
-        {{inplace-select value=course.level options=levelOptions save='changeLevel'}}
+        {{#editable-field
+          value=level
+          save=(action 'changeLevel')
+          close=(action 'revertLevelChanges')
+        }}
+          {{one-way-select
+            level
+            options=levelOptions
+            optionTargetPath="id"
+            optionLabelPath="title"
+            update=(action (mut level))
+          }}
+        {{/editable-field}}
       {{else}}
-        {{course.level}}&nbsp;
+        {{level}}&nbsp;
       {{/if}}
     </span>
   </div>

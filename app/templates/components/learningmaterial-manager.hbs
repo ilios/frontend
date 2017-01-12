@@ -7,13 +7,21 @@
     <label class="form-label">{{t 'general.status'}}:</label>
     <div class="form-data status">
       {{#if editable}}
-        {{inplace-select
-          value=valueBuffer.status.id
-          options=statusOptions
-          save='changeStatus'
+        {{#editable-field
+          value=status.title
+          save=(action 'changeStatus')
+          close=(action 'revertStatusChanges')
         }}
+          {{one-way-select
+            status.id
+            options=statusOptions
+            optionTargetPath="id"
+            optionLabelPath="title"
+            update=(action "setStatus")
+          }}
+        {{/editable-field}}
       {{else}}
-        {{valueBuffer.status.title}}
+        {{status.title}}
       {{/if}}
     </div>
   </div>
