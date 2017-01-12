@@ -35,12 +35,17 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   vocabulary: null,
+  title: null,
   newTermTitle: null,
   isSavingNewTerm: false,
   newTerms: [],
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('newTerms', []);
+    const vocabulary = this.get('vocabulary');
+    if (vocabulary) {
+      this.set('title', vocabulary.get('title'));
+    }
   },
   sortedTerms: computed('vocabulary.terms.[]', function(){
     return new Promise(resolve => {
@@ -58,10 +63,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
   actions: {
-    changeVocabularyTitle(title){
+    changeVocabularyTitle(){
       const vocabulary = this.get('vocabulary');
+      const title = this.get('title');
       vocabulary.set('title', title);
-      vocabulary.save();
+      return vocabulary.save();
+    },
+    revertVocabularyTitleChanges(){
+      const vocabulary = this.get('vocabulary');
+      this.set('title', vocabulary.get('title'));
     },
     createTerm(){
       this.send('addErrorDisplayFor', 'newTermTitle');

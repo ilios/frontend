@@ -1,7 +1,20 @@
 <div class='header-bar'>
   <span class='title'>
     <h2>
-      {{inplace-text tagName='span' value=learnerGroup.title save='changeTitle'}}
+      {{#editable-field
+        value=(if title title (t 'general.clickToEdit'))
+        save=(action 'changeTitle')
+        close=(action 'revertTitleChanges')
+        as |isSaving save close|
+      }}
+        {{one-way-input
+        	value=title
+        	update=(action (mut title))
+        	onenter=save
+        	onescape=close
+        	disabled=isSaving
+        }}
+      {{/editable-field}}
     </h2>
   </span>
   <span class='info'>
