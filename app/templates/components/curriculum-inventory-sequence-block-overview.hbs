@@ -229,15 +229,21 @@
     <div class="block academic-level">
       <label>{{t 'general.academicLevel'}}:</label>
       {{#if isFinalized}}
-        <span>{{sequenceBlock.academicLevel.name}}</span>
+        <span>{{academicLevel.name}}</span>
       {{else}}
-        {{inplace-select
-          displayValueOverride=(await sequenceBlock.academicLevel.name)
-          value=(await sequenceBlock.academicLevel.id)
-          options=(sort-by 'level' academicLevels)
-          optionLabelPath='name'
-          save='changeAcademicLevel'
+        {{#editable-field
+          value=academicLevel.name
+          save=(action 'changeAcademicLevel')
+          close=(action 'revertAcademicLevelChanges')
         }}
+          {{one-way-select
+            academicLevel.id
+            options=(sort-by 'level' academicLevels)
+            optionTargetPath="id"
+            optionLabelPath="name"
+            update=(action 'setAcademicLevel')
+          }}
+        {{/editable-field}}
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}

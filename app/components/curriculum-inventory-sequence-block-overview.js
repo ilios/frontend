@@ -28,9 +28,10 @@ export default Component.extend({
   isManagingSessions: false,
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
-  academicLevels: [],
+  academicLevels: null,
   course: null,
   required: null,
+  academicLevel: null,
 
 
   didReceiveAttrs(){
@@ -44,7 +45,6 @@ export default Component.extend({
     const parent = yield sequenceBlock.get('parent');
     let academicLevels = yield report.get('academicLevels');
     academicLevels = academicLevels.toArray();
-
     let isInOrderedSequence = false;
     let orderInSequenceOptions = [];
     if (isPresent(parent) && parent.get('isOrdered')) {
@@ -56,6 +56,7 @@ export default Component.extend({
       }
     }
     const linkedSessions = yield sequenceBlock.get('sessions');
+    const academicLevel = yield sequenceBlock.get('academicLevel');
     const required = '' + sequenceBlock.get('required');
     const duration = sequenceBlock.get('duration');
     const startDate = sequenceBlock.get('startDate');
@@ -68,6 +69,7 @@ export default Component.extend({
     this.setProperties({
       parent,
       report,
+      academicLevel,
       academicLevels,
       isInOrderedSequence,
       orderInSequenceOptions,
@@ -239,11 +241,21 @@ export default Component.extend({
       this.set('childSequenceOrder', '' + block.get('childSequenceOrder'));
     },
 
-    changeAcademicLevel(value){
-      let academicYear = this.get('academicLevels').findBy('id', value);
+    changeAcademicLevel(){
       let block = this.get('sequenceBlock');
-      block.set('academicLevel', academicYear);
+      block.set('academicLevel', this.get('academicLevel'));
       block.save();
+    },
+
+    setAcademicLevel(id) {
+      let levels = this.get('academicLevels');
+      let level = levels.findBy('id', id);
+      this.set('academicLevel', level);
+    },
+
+    revertAcademicLevelChanges(){
+      let block = this.get('sequenceBlock');
+      this.set('academicLevel', block.get('academicLevel'));
     },
 
     changeOrderInSequence() {
