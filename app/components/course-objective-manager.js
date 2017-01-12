@@ -198,8 +198,5 @@ export default Component.extend({
       courseObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(courseObjective);
     },
-    changeSelectedCohort(id){
-      this.set('selectedCohortId', id);
-    }
   }
 });

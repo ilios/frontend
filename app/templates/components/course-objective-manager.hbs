@@ -3,11 +3,13 @@
   <label class='group-picker'>
     <span class="choose-cohort-title">{{t 'general.chooseCohortTitle'}}:</span>
     {{#if multipleCohorts}}
-      {{#x-select value=selectedCohortId action="changeSelectedCohort"}}
-        {{#each availableCohorts as |cohort|}}
-          {{#x-option value=cohort.id}}{{cohort.title}}{{/x-option}}
-        {{/each}}
-      {{/x-select}}
+      {{one-way-select
+        value=selectedCohortId
+        options=availableCohorts
+        optionTargetPath="id"
+        optionLabelPath="title"
+        update=(action (mut selectedCohortId))
+      }}
     {{else}}
       {{currentCohort.title}}
     {{/if}}
