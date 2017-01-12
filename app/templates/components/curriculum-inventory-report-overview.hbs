@@ -61,7 +61,19 @@
       {{#if (or isFinalized (await report.hasLinkedCourses))}}
         <span>{{report.yearLabel}}</span>
       {{else}}
-        {{inplace-select value=report.year displayValueOverride=report.yearLabel options=yearOptions save="changeYear"}}
+        {{#editable-field
+          value=year
+          save=(action 'changeYear')
+          close=(action 'revertYearChanges')
+        }}
+          {{one-way-select
+            year
+            options=yearOptions
+            optionTargetPath="id"
+            optionLabelPath="title"
+            update=(action (mut year))
+          }}
+        {{/editable-field}}
       {{/if}}
     </div>
 

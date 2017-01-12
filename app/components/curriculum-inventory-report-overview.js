@@ -27,6 +27,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
   currentRoute: '',
+  year: null,
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -51,6 +52,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       yearOptions,
       startDate,
       endDate,
+      year
     });
   },
 
@@ -125,9 +127,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const report = this.get('report');
       this.set('endDate', report.get('endDate'));
     },
-    changeYear(year) {
-      this.get('report').set('year', year);
-      this.get('report').save();
+    changeYear() {
+      let report = this.get('report');
+      let year = this.get('year');
+      report.set('year', year);
+      report.save();
+    },
+    revertYearChanges(){
+      this.set('year', this.get('report').get('year'));
     },
     changeDescription() {
       const report = this.get('report');
