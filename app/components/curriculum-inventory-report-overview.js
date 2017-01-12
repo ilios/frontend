@@ -56,6 +56,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   },
 
+  yearLabel: computed('year', function() {
+    const year = this.get('year');
+    return year + ' - ' + (parseInt(year, 10) + 1);
+  }),
+
   showRollover: computed('currentUser', 'routing.currentRouteName', function(){
     return new Promise(resolve => {
       const routing = this.get('routing');

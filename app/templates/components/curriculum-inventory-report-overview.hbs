@@ -62,7 +62,7 @@
         <span>{{report.yearLabel}}</span>
       {{else}}
         {{#editable-field
-          value=year
+          value=yearLabel
           save=(action 'changeYear')
           close=(action 'revertYearChanges')
         }}
