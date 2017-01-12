@@ -43,8 +43,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let yearOptions = [];
     yearOptions.pushObject(Ember.Object.create({'id': year, 'title': yearLabel}));
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
-      yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' -  ' + (i + 1)}));
+      if (i != year) {
+        yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' -  ' + (i + 1)}));
+      }
     }
+
     yearOptions = yearOptions.uniq().sortBy('title');
 
     this.setProperties({
