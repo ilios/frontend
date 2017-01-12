@@ -68,13 +68,21 @@
         <label>{{t 'general.sessionType'}}:</label>
         <span>
           {{#if editable}}
-            {{inplace-select
-              value=session.sessionType.id
-              options=sortedSessionTypes
-              save='changeSessionType'
+            {{#editable-field
+              value=sessionType.title
+              save=(action 'changeSessionType')
+              close=(action 'revertSessionTypeChanges')
             }}
+              {{one-way-select
+                value=sessionType.id
+                options=sortedSessionTypes
+                optionTargetPath="id"
+                optionLabelPath="title"
+                update=(action "setSessionType")
+              }}
+            {{/editable-field}}
           {{else}}
-            {{session.sessionType.title}}&nbsp;
+            {{session.sessionType}}&nbsp;
           {{/if}}
         </span>
       </div>
