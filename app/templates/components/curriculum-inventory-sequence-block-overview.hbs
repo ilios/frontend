@@ -178,11 +178,17 @@
           {{#if isFinalized}}
             {{sequenceBlock.orderInSequence}}
           {{else}}
-            {{inplace-select
-              value=sequenceBlock.orderInSequence
-              options=orderInSequenceOptions
-              save="changeOrderInSequence"
+            {{#editable-field
+              value=orderInSequence
+              save=(action 'changeOrderInSequence')
+              close=(action 'revertOrderInSequenceChanges')
             }}
+              {{one-way-select
+                value=orderInSequence
+                options=orderInSequenceOptions
+                update=(action (mut orderInSequence))
+              }}
+            {{/editable-field}}
           {{/if}}
         {{else}}
           {{t 'general.notApplicableAbbr'}}

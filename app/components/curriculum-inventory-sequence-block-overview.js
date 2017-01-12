@@ -52,7 +52,7 @@ export default Component.extend({
       const siblings = yield parent.get('children');
       for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
         let num = i + 1;
-        orderInSequenceOptions.pushObject(Ember.Object.create({ 'id': num, 'title': num }));
+        orderInSequenceOptions.push(num);
       }
     }
     const linkedSessions = yield sequenceBlock.get('sessions');
@@ -63,7 +63,6 @@ export default Component.extend({
     const childSequenceOrder = '' + sequenceBlock.get('childSequenceOrder');
     const orderInSequence = sequenceBlock.get('orderInSequence');
     const description = sequenceBlock.get('description');
-    const i18n = this.get('i18n');
     const isFinalized = yield report.get('isFinalized');
     const course = yield sequenceBlock.get('course');
     this.setProperties({
@@ -247,9 +246,9 @@ export default Component.extend({
       block.save();
     },
 
-    changeOrderInSequence(value) {
+    changeOrderInSequence() {
       let block = this.get('sequenceBlock');
-      block.set('orderInSequence', value);
+      block.set('orderInSequence', this.get('orderInSequence'));
       block.save().then(block => {
         block.get('parent').then(parent => {
           parent.get('children').then(children => {
@@ -258,6 +257,12 @@ export default Component.extend({
         });
       });
     },
+
+    revertOrderInSequenceChanges(){
+      let block = this.get('sequenceBlock');
+      this.set('orderInSequence', block.get('orderInSequence'));
+    },
+
     changeDatesAndDuration(start, end, duration) {
       let block = this.get('sequenceBlock');
       block.set('startDate', start);
