@@ -11,7 +11,20 @@
 
 {{#if term}}
   <p class='term-title'>
-    {{inplace-text value=term.title save='changeTermTitle'}}
+    {{#editable-field
+      value=(if title title (t 'general.clickToEdit'))
+      save=(action 'changeTermTitle')
+      close=(action 'revertTermTitleChanges')
+      as |isSaving save close|
+    }}
+      {{one-way-input
+      	value=title
+      	update=(action (mut title))
+      	onenter=save
+      	onescape=close
+      	disabled=isSaving
+      }}
+    {{/editable-field}}
     {{#unless (or term.hasChildren term.hasAssociations)}}
       {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
     {{/unless}}

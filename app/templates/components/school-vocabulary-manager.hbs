@@ -3,7 +3,22 @@
   <span>{{vocabulary.title}}</span>
 </div><br>
 
-<p class='vocabulary-title'>{{inplace-text value=vocabulary.title save='changeVocabularyTitle'}}</p>
+<p class='vocabulary-title'>
+  {{#editable-field
+    value=(if title title (t 'general.clickToEdit'))
+    save=(action 'changeVocabularyTitle')
+    close=(action 'revertVocabularyTitleChanges')
+    as |isSaving save close|
+  }}
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=save
+      onescape=close
+      disabled=isSaving
+    }}
+  {{/editable-field}}
+</p>
 
 {{#each newTerms as |term|}}
   <div class='saved-result'>

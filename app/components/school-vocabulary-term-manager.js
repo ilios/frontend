@@ -41,12 +41,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSavingNewTerm: false,
   newTerms: [],
   description: null,
+  title: null,
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('newTerms', []);
     const term = this.get('term');
     if (term) {
       this.set('description', term.get('description'));
+      this.set('title', term.get('title'));
     }
   },
   sortedTerms: computed('term.children.[]', function(){
@@ -70,12 +72,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
   actions: {
-    changeTermTitle(title){
+    changeTermTitle(){
       const term = this.get('term');
+      const title = this.get('title');
       term.set('title', title);
-      term.save().then(newTerm => {
-        this.set('term', newTerm);
-      });
+      return term.save();
+    },
+    revertTermTitleChanges(){
+      const term = this.get('term');
+      this.set('title', term.get('title'));
     },
     changeTermDescription(){
       const term = this.get('term');
