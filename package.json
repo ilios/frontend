@@ -73,7 +73,7 @@
     "ember-inflector": "1.11.0",
     "ember-load": "0.0.10",
     "ember-load-initializers": "^0.6.1",
-    "ember-metrics": "0.7.0",
+    "ember-metrics": "0.8.0",
     "ember-modal-dialog": "0.9.0",
     "ember-moment": "7.3.0",
     "ember-normalize": "1.0.0",
