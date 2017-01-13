@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { moduleForComponent, test, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
@@ -153,12 +153,8 @@ test('order-in-sequence options are visible for ordered parent sequence block', 
   });
 });
 
-/* for whatever reason, changing the course option does not trigger the course property to be mutated on this component.
- * commented this test in until a solution has been found.
- * @todo try this again in acceptance test [ST 2016/11/04]
- */
-skip('selecting course reveals additional course info', function(assert) {
-  assert.expect(6);
+test('selecting course reveals additional course info', function(assert) {
+  assert.expect(4);
   let school = Object.create({ id() { return 1; }});
   let clerkshipType = Object.create({
     title: 'selective'
@@ -192,18 +188,16 @@ skip('selecting course reveals additional course info', function(assert) {
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
-    let details = this.$('.course .details');
     let courseOption = this.$('.course option:eq(1)');
-    assert.equal(details.length, 0, 'Course details are initially not visible.');
-    this.$('.course select').val(1).trigger('change');
+    this.$('.course select').val('1').trigger('change');
     courseOption.prop('selected', true);
     courseOption.trigger('change');
     return wait().then(() => {
-      assert.equal(details.length, 1, 'Course details are visible when course is selected.');
-      assert.ok(details.text().indexOf('Level: ' + course.get('level')) === 0);
-      assert.ok(details.text().indexOf('Start Date: ' + moment(course.get('startDate')).format('YYYY-MM-DD')) > 0);
-      assert.ok(details.text().indexOf('End Date: ' + moment(course.get('endDate')).format('YYYY-MM-DD')) > 0);
-      assert.ok(details.text().indexOf('Clerkship (' + course.get('clerkshipType').get('title') + ')') > 0);
+      let details = this.$('.course .details').text().trim();
+      assert.ok(details.indexOf('Level: ' + course.get('level')) === 0);
+      assert.ok(details.indexOf('Start Date: ' + moment(course.get('startDate')).format('YYYY-MM-DD')) > 0);
+      assert.ok(details.indexOf('End Date: ' + moment(course.get('endDate')).format('YYYY-MM-DD')) > 0);
+      assert.ok(details.indexOf('Clerkship (' + course.get('clerkshipType').get('title') + ')') > 0);
     });
   });
 });
