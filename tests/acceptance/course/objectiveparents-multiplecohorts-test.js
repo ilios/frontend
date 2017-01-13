@@ -5,6 +5,10 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import Ember from 'ember';
+
+const { RSVP, run } = Ember;
+const { Promise } = RSVP;
 
 var application;
 var url = '/courses/1?details=true&courseObjectiveDetails=true';
@@ -154,32 +158,31 @@ test('list parent objectives by competency', function(assert) {
 
 test('change course objective parent', function(assert) {
   assert.expect(9);
-  visit(url);
-  andThen(function() {
-    let tds = find('.course-objective-list tbody tr:eq(0) td');
-    click('.link', tds.eq(1));
-    andThen(function() {
-      let objectiveManager = find('.objective-manager').eq(0);
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      select('.objective-manager .group-picker select', 'program 0 cohort 0').then(()=>{
-        click('li:eq(1)', parentPicker);
-      });
-      andThen(function(){
-        assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
-        assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
-        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-        assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
-      });
-      select('.objective-manager .group-picker select', 'program 0 cohort 1');
-      andThen(() => {
-        parentPicker = find('.parent-picker', objectiveManager).eq(0);
-        click('li:eq(1)', parentPicker);
-        andThen(function(){
+  return new Promise(resolve => {
+    visit(url);
+    andThen(() => {
+      let tds = find('.course-objective-list tbody tr:eq(0) td');
+      click('.link', tds.eq(1)).then(() => {
+        let objectiveManager = find('.objective-manager').eq(0);
+        let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+        let groupPicker = find('.group-picker select', objectiveManager).eq(0);
+        click('li:eq(1)', parentPicker).then(() => {
           assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
           assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
           assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
           assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
-          assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+          groupPicker.val('2');
+          groupPicker.trigger('change');
+          run.later(() => {
+            click('li:eq(1)', parentPicker).then(() => {
+              assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
+              assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
+              assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+              assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+              assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+              resolve();
+            });
+          });
         });
       });
     });
