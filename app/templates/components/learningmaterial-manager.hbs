@@ -43,7 +43,18 @@
     <label class="form-label">{{t 'general.instructionalNotes'}}:</label>
     <div class="form-data notes">
       {{#if editable}}
-        {{inplace-html value=valueBuffer.notes save='changeNotes'}}
+        {{#editable-field
+          value=notes
+          save=(action 'saveNoteChanges' )
+          close=(action 'revertNoteChanges')
+          clickPrompt=(t 'general.clickToEdit')
+        }}
+          {{froala-editor
+            params=editorParams
+            value=notes
+            contentChanged=(action "changeNotes")
+          }}
+        {{/editable-field}}
       {{else}}
         <span class='list-reset'>{{{valueBuffer.notes}}}</span>
       {{/if}}

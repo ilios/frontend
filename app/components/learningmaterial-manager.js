@@ -10,8 +10,10 @@ export default Component.extend({
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('status', this.get('valueBuffer').get('status'));
+    this.set('notes', this.get('valueBuffer').get('notes'));
   },
   status: null,
+  notes: null,
   learningMaterial: null,
   valueBuffer: null,
   isCourse: false,
@@ -52,8 +54,18 @@ export default Component.extend({
     changePublicNotes: function(value){
       this.sendAction('changePublicNotes', value);
     },
-    changeNotes: function(value){
-      this.sendAction('changeNotes', value);
+    changeNotes(event, editor){
+      if(editor){
+        const contents = editor.html.get();
+        this.set('notes', contents);
+      }
     },
+    saveNoteChanges: function(){
+      const notes = this.get('notes');
+      return this.get('changeNotes')(notes);
+    },
+    revertNoteChanges(){
+      this.set('notes', this.get('valueBuffer').get('notes'));
+    }
   }
 });

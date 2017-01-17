@@ -450,9 +450,9 @@ test('edit learning material', function(assert) {
         click(find('.status .done', container));
       });
       let newNote = 'text text.  Woo hoo!';
-      click(find('.notes .editable span', container)).then(function(){
+      click(find('.notes .editable', container)).then(function(){
         //wait for the editor to load
-        Ember.run.later(()=>{
+        later(()=>{
           find('.notes .froalaEditor', container).froalaEditor('html.set', newNote);
           find('.notes .froalaEditor', container).froalaEditor('events.trigger', 'contentChanged');
           click(find('.notes .done', container));
