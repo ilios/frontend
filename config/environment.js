@@ -31,7 +31,6 @@ module.exports = function(environment) {
       tokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
-      timeFactor: 1000
     },
     i18n: {
       defaultLocale: 'en'
