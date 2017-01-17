@@ -31,6 +31,7 @@ module.exports = function(environment) {
       tokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
+      refreshLeeway: 300
     },
     i18n: {
       defaultLocale: 'en'
