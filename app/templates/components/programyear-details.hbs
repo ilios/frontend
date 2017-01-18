@@ -33,4 +33,13 @@
   {{collapsed-taxonomies subject=programYear expand=(action setPyTaxonomyDetails true)}}
 {{/liquid-if}}
 
-{{detail-stewards programYear=programYear editable=editable}}
+{{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
+  {{detail-stewards
+  programYear=programYear
+  editable=editable
+  collapse=(action setPyStewardDetails false)
+  expand=(action setPyStewardDetails true)
+  }}
+{{else}}
+  {{collapsed-stewards programYear=programYear expand=(action setPyStewardDetails true)}}
+{{/liquid-if}}

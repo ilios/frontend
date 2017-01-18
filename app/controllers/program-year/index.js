@@ -10,11 +10,15 @@ export default Controller.extend({
     'pyTaxonomyDetails',
     'pyCompetencyDetails',
     'managePyCompetencies',
+    'pyStewardDetails',
+    'managePyStewards'
   ],
   pyObjectiveDetails: false,
   pyTaxonomyDetails: false,
   pyCompetencyDetails: false,
   managePyCompetencies: false,
+  pyStewardDetails: false,
+  managePyStewards: false,
 
   programYearController: controller('programYear'),
   programController: controller('program'),
