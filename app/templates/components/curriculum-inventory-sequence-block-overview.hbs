@@ -58,10 +58,7 @@
       <label>{{t 'general.required'}}:</label>
       {{#if isFinalized}}
         <span>
-          {{if sequenceBlock.isRequired
-          (t 'general.yes')
-          (if sequenceBlock.isOptional (t 'general.no') (t 'general.requiredInTrack'))
-          }}
+          {{requiredLabel}}
         </span>
       {{else}}
         {{#editable-field
@@ -150,12 +147,7 @@
     <div class="block child-sequence-order">
       <label>{{t 'general.childSequenceOrder'}}:</label>
       {{#if isFinalized}}
-        <span>
-          {{if sequenceBlock.isOrdered
-            (t 'general.ordered')
-            (if sequenceBlock.isUnordered (t 'general.unordered') (t 'general.parallel'))
-          }}
-        </span>
+        <span>{{childSequenceOrderLabel}}</span>
       {{else}}
         {{#editable-field
           value=childSequenceOrderLabel
@@ -174,7 +166,7 @@
     <div class="block order-in-sequence">
       <label>{{t 'general.orderInSequence'}}:</label>
       <span>
-        {{#if sequenceBlock.parent.isOrdered}}
+        {{#if isInOrderedSequence}}
           {{#if isFinalized}}
             {{sequenceBlock.orderInSequence}}
           {{else}}
