@@ -1,0 +1,37 @@
+.detail-steward-manager {
+  .remove-list,
+  .add-list {
+    @include fill-parent;
+
+    border: 1px solid $base-link-color;
+    height: 380px;
+    overflow: scroll;
+    padding: $base-font-size;
+
+    @include media($large-screen) {
+      @include span-columns(5);
+    }
+  }
+
+  .remove-list {
+    background-color: $header-grey;
+  }
+
+  .add-list {
+    background-color: $white;
+  }
+
+  li {
+    color: $base-link-color;
+    cursor: pointer;
+    font-weight: 500;
+
+    ul {
+      margin-left: 2em;
+
+      li {
+        font-weight: 300;
+      }
+    }
+  }
+}

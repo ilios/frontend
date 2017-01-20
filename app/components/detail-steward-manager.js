@@ -1,152 +1,157 @@
 import Ember from 'ember';
-import DS from 'ember-data';
+import { task } from 'ember-concurrency';
 
-const { Component, computed } = Ember;
-const { filter, mapBy } = computed;
+const { Component, computed, RSVP, inject, isPresent } = Ember;
+const { map, filter } = RSVP;
+const { service } = inject;
 
 export default Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
   stewards: [],
   tagName: 'section',
-  classNames: ['detail-block'],
-  stewardedDepartmentlessSchools: filter('stewards', function(steward){
-    return !steward.get('department.content');
+  classNames: ['detail-steward-manager'],
+
+  /**
+   * This is a hack because ember-async-helpers flickers when the CPs are evaluated
+   * so we cheat and use ember-concurrency to display the values
+   */
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.get('getStewardsBySchool').perform();
+    this.get('getAvailableSchools').perform();
+  },
+  getStewardsBySchool: task(function *(){
+    return yield this.get('stewardsBySchool');
   }),
-  stewardedSchools: mapBy('stewardedDepartmentlessSchools', 'school'),
-  selectedSchools: mapBy('stewardedSchools', 'content'),
-  stewardedDepartments: mapBy('stewards', 'department'),
-  selectedDepartments: mapBy('stewardedDepartments', 'content'),
-  schools: computed(function(){
-    return DS.PromiseArray.create({
-      promise: this.get('store').findAll('school')
-    });
+  getAvailableSchools: task(function *(){
+    return yield this.get('availableSchools');
   }),
-  availableSchools: computed('stewardedSchools.[]', 'stewardedDepartments.[]', 'schools.[]', function(){
-    let defer = Ember.RSVP.defer();
-    let schoolProxy = Ember.ObjectProxy.extend({
-      departments: [],
-      selectedSchools: [],
-      //display those with departments or those who are not already solo-assigned
-      display: computed('content', 'departments.length', function(){
-        return this.get('departments').length > 0 ||
-               !this.get('selectedSchools').includes(this.get('content'));
-      }),
-    });
-    this.get('schools').then(schools => {
-      let promises = [];
-      let schoolProxies = [];
-      schools.forEach(school => {
-        let proxy = schoolProxy.create({
-          content: school,
-          selectedSchools: this.get('selectedSchools')
-        });
-        let promise = school.get('departments').then(departments => {
-          let filteredDepartments = departments.filter(
-             department => !this.get('selectedDepartments').includes(department)
-          );
-          proxy.set('departments', filteredDepartments);
-          schoolProxies.pushObject(proxy);
-        });
-        promises.pushObject(promise);
-      });
-      Ember.RSVP.all(promises).then(()=>{
-        defer.resolve(schoolProxies.filterBy('display').sortBy('title'));
-      });
+
+  allSchools: computed(async function(){
+    const store = this.get('store');
+    return await store.findAll('school');
+  }),
+
+  selectedDepartments: computed('stewards.[]', async function(){
+    const stewards = this.get('stewards');
+    const selectedDepartments = await map(stewards.toArray(), async steward => {
+      return await steward.get('department');
     });
 
-    return DS.PromiseArray.create({
-      promise: defer.promise
+    return selectedDepartments.filter(department => {
+      return isPresent(department);
     });
   }),
-  stewardSchools: computed('selectedSchools.[]', 'selectedDepartments.[]', 'schools.[]', function(){
-    let defer = Ember.RSVP.defer();
-    let schoolProxy = Ember.ObjectProxy.extend({
-      departments: [],
-      selectedSchools: [],
-      //display those with departments or those who are not already solo-assigned
-      display: computed('content', 'departments.length', function(){
-        return this.get('departments').length > 0 ||
-               this.get('selectedSchools').includes(this.get('content'));
-      })
-    });
-    this.get('schools').then(schools => {
-      let promises = [];
-      let schoolProxies = [];
-      schools.forEach(school => {
-        let proxy = schoolProxy.create({
-          content: school,
-          selectedSchools: this.get('selectedSchools')
-        });
-        let promise = school.get('departments').then(departments => {
-          let filteredDepartments = departments.filter(
-             department => this.get('selectedDepartments').includes(department)
-          );
-          proxy.set('departments', filteredDepartments);
-          schoolProxies.pushObject(proxy);
-        });
-        promises.pushObject(promise);
-      });
-      Ember.RSVP.all(promises).then(()=>{
-        defer.resolve(schoolProxies.filterBy('display').sortBy('title'));
-      });
+
+  selectedSchools: computed('stewards.[]', async function(){
+    const stewards = this.get('stewards');
+    const selectedDepartments = await map(stewards.toArray(), async steward => {
+      return await steward.get('school');
     });
 
-    return DS.PromiseArray.create({
-      promise: defer.promise
+    return selectedDepartments.filter(department => {
+      return isPresent(department);
     });
   }),
-  actions: {
-    addSchool: function(schoolProxy){
-      let steward = this.get('store').createRecord('program-year-steward', {
-        school: schoolProxy.get('content'),
+
+  stewardsBySchool: computed('stewards.[]', async function(){
+    const stewards = this.get('stewards');
+    const stewardObjects = await map(stewards.toArray(), async steward => {
+      const school = await steward.get('school');
+      const department = await steward.get('department');
+      return {
+        school,
+        department,
+      };
+    });
+    const schools = stewardObjects.uniqBy('school.id');
+    const stewardsBySchool = schools.map(schoolObj => {
+      const departments = stewardObjects.filter(obj => {
+        return obj.school.get('id') === schoolObj.school.get('id') &&
+               isPresent(obj.department);
+      }).mapBy('department');
+      delete schoolObj.department;
+      schoolObj.departments = departments;
+
+      return schoolObj;
+    });
+
+    return stewardsBySchool;
+  }),
+
+  availableSchools: computed('selectedDepartments.[]', 'selectedSchools.[]', 'allSchools.[]', async function(){
+    const allSchools = await this.get('allSchools');
+    const selectedDepartments = await this.get('selectedDepartments');
+    const selectedSchools = await this.get('selectedSchools');
+
+    const selectedDepartmentIds = selectedDepartments.mapBy('id');
+    const selectedSchoolIds = selectedSchools.mapBy('id');
+    const unselectedSchoolsAndSchoolsWithUnselectedDepartments = await filter(allSchools.toArray(), async school => {
+      const departments = await school.get('departments');
+      const unlselectedDepartments = departments.filter(department => {
+        return !selectedDepartmentIds.includes(department.get('id'));
       });
-      this.sendAction('add', steward);
-      schoolProxy.get('content').get('departments').then(departments => {
-        let selectedDepartments = this.get('stewardedDepartments').mapBy('content');
-        let newDepartments = departments.filter(deparment => !selectedDepartments.includes(deparment));
-        newDepartments.forEach(department => {
-          let steward = this.get('store').createRecord('program-year-steward', {
-            school: schoolProxy.get('content'),
-            department: department
-          });
-          this.sendAction('add', steward);
-        });
+      return !selectedSchoolIds.includes(school.get('id')) || isPresent(unlselectedDepartments);
+    });
+
+    const availableSchools = await map(unselectedSchoolsAndSchoolsWithUnselectedDepartments.toArray(), async school => {
+      const allSchoolDepartments = await school.get('departments');
+      const departments = allSchoolDepartments.filter(department => {
+        return !selectedDepartmentIds.includes(department.get('id'));
       });
-    },
-    addDepartment: function(schoolProxy, department){
-      let steward = this.get('store').createRecord('program-year-steward', {
-        school: schoolProxy.get('content'),
-        department: department,
+      return {
+        school,
+        departments
+      };
+    });
+
+    return availableSchools;
+
+  }),
+  addSchool: task(function * (school){
+    const store = this.get('store');
+    const selectedDepartments = yield this.get('selectedDepartments');
+    const steward = store.createRecord('program-year-steward', {
+      school
+    });
+    this.get('add')(steward);
+    const departments = yield school.get('departments');
+    const newDepartments = departments.filter(department => {
+      return !selectedDepartments.includes(department);
+    });
+    newDepartments.forEach(department => {
+      const steward = store.createRecord('program-year-steward', {
+        school,
+        department
       });
-      this.sendAction('add', steward);
-    },
-    removeSchool: function(school){
-      let steward = this.get('stewards').find(steward => {
-        return steward.get('school.id') === school.get('id') && !steward.get('department.content');
+      this.get('add')(steward);
+    });
+  }),
+  addDepartment: task(function * (school, department){
+    const store = this.get('store');
+    const selectedDepartments = yield this.get('selectedDepartments');
+    if (!selectedDepartments.includes(department)) {
+      const steward = store.createRecord('program-year-steward', {
+        school,
+        department
       });
-      if(steward){
-        this.sendAction('remove', steward);
-      }
-      school.get('departments').then(departments => {
-        departments.forEach(department => {
-          let steward = this.get('stewards').find(steward => {
-            return steward.get('school.id') === school.get('id') &&
-            steward.get('department.id') === department.get('id');
-          });
-          if(steward){
-            this.sendAction('remove', steward);
-          }
-        });
-      });
-    },
-    removeDepartment: function(school, department){
-      let steward = this.get('stewards').find(steward => {
-        return steward.get('school.id') === school.get('id') &&
-        steward.get('department.id') === department.get('id');
-      });
-      if(steward){
-        this.sendAction('remove', steward);
-      }
-    },
-  }
+      this.get('add')(steward);
+    }
+  }),
+  removeDepartment: task(function * (school, department){
+    const stewards = this.get('stewards');
+    const stewardToRemove = stewards.find(steward => {
+      return department.get('id') === steward.belongsTo('department').id();
+    });
+    yield this.get('remove')(stewardToRemove);
+  }),
+  removeSchool: task(function * (school){
+    const stewards = this.get('stewards');
+    const stewardsToRemove = stewards.filter(steward => {
+      return school.get('id') === steward.belongsTo('school').id();
+    });
+    for (let i = 0; i < stewardsToRemove.length; i++) {
+      yield this.get('remove')(stewardsToRemove[i]);
+    }
+  }),
 });
