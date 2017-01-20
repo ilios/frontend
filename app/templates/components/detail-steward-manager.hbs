@@ -1,36 +1,44 @@
 <section class='remove-list'>
-  <ul>
-    {{#each (sort-by 'school.title' getStewardsBySchool.lastSuccessful.value) as |obj|}}
-      <li>
-        <span class='removable' onclick={{perform removeSchool obj.school}}>
-          {{fa-icon 'times'}} {{obj.school.title}}
-        </span>
-        <ul>
-          {{#each (sort-by 'title' obj.departments) as |department|}}
-            <li class='clickable' onclick={{perform removeDepartment obj.school department}}>
-              {{fa-icon 'times'}} {{department.title}}
-            </li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
+  {{#if (and stewardsBySchoolLoaded (not isSaving))}}
+    <ul>
+      {{#each (sort-by 'school.title' getStewardsBySchool.lastSuccessful.value) as |obj|}}
+        <li>
+          <span class='removable' onclick={{perform removeSchool obj.school}}>
+            {{fa-icon 'times'}} {{obj.school.title}}
+          </span>
+          <ul>
+            {{#each (sort-by 'title' obj.departments) as |department|}}
+              <li class='clickable' onclick={{perform removeDepartment obj.school department}}>
+                {{fa-icon 'times'}} {{department.title}}
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+  {{/if}}
 </section>
 
 
 <section class='add-list'>
-  <ul>
-    {{#each (sort-by 'school.title' getAvailableSchools.lastSuccessful.value) as |obj|}}
-      <li>
-        <span class='clickable' onclick={{perform addSchool obj.school}}>
-          {{obj.school.title}}
-        </span>
-        <ul>
-          {{#each (sort-by 'title' obj.departments) as |department|}}
-            <li class='clickable' onclick={{perform addDepartment obj.school department}}>{{department.title}}</li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
+  {{#if (and availableSchoolsLoaded (not isSaving))}}
+    <ul>
+      {{#each (sort-by 'school.title' getAvailableSchools.lastSuccessful.value) as |obj|}}
+        <li>
+          <span class='clickable' onclick={{perform addSchool obj.school}}>
+            {{obj.school.title}}
+          </span>
+          <ul>
+            {{#each (sort-by 'title' obj.departments) as |department|}}
+              <li class='clickable' onclick={{perform addDepartment obj.school department}}>{{department.title}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+  {{/if}}
 </section>

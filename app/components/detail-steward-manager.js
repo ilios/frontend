@@ -10,6 +10,8 @@ export default Component.extend({
   stewards: [],
   tagName: 'section',
   classNames: ['detail-steward-manager'],
+  stewardsBySchoolLoaded: false,
+  availableSchoolsLoaded: false,
 
   /**
    * This is a hack because ember-async-helpers flickers when the CPs are evaluated
@@ -21,10 +23,14 @@ export default Component.extend({
     this.get('getAvailableSchools').perform();
   },
   getStewardsBySchool: task(function *(){
-    return yield this.get('stewardsBySchool');
+    const stewardsBySchool =  yield this.get('stewardsBySchool');
+    this.set('stewardsBySchoolLoaded', true);
+    return stewardsBySchool;
   }),
   getAvailableSchools: task(function *(){
-    return yield this.get('availableSchools');
+    const availableSchools =  yield this.get('availableSchools');
+    this.set('availableSchoolsLoaded', true);
+    return availableSchools;
   }),
 
   allSchools: computed(async function(){

@@ -26,23 +26,30 @@
   {{#if isManaging}}
     {{detail-steward-manager
       stewards=bufferStewards
+      isSaving=save.isRunning
       add=(action "addStewardToBuffer")
       remove=(action "removeStewardFromBuffer")
     }}
   {{else}}
     <ul class='static-list'>
-      {{#each (sort-by 'schoolTitle' (await stewardsBySchool)) as |obj|}}
-        <li>
-          {{obj.schoolTitle}}
-          {{#if obj.departments.length}}
-            <ul>
-              {{#each (sort-by 'departmentTitle' obj.departments) as |depObject|}}
-                <li>{{depObject.departmentTitle}}</li>
-              {{/each}}
-            </ul>
-          {{/if}}
-        </li>
-      {{/each}}
+      {{#if (is-fulfilled stewardsBySchool)}}
+        {{#each (sort-by 'schoolTitle' (await stewardsBySchool)) as |obj|}}
+          <li>
+            {{obj.schoolTitle}}
+            {{#if obj.departments.length}}
+              <ul>
+                {{#each (sort-by 'departmentTitle' obj.departments) as |depObject|}}
+                  <li>{{depObject.departmentTitle}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </li>
+        {{else}}
+          <li>{{t 'general.none'}}</li>
+        {{/each}}
+      {{else}}
+        <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+      {{/if}}
     </ul>
   {{/if}}
 </div>
