@@ -6,23 +6,24 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var url = '/programs/1/programyears/1';
+let application;
+let url = '/programs/1/programyears/1?pyStewardDetails=true';
 module('Acceptance: Program Year - Stewards', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
     server.create('school', {
       departments: [1,2,5,6,7,8,9],
-      stewardedProgramYears: [1]
+      programs: [1],
+      stewards: [1]
     });
     server.create('school', {
       departments: [3],
-      stewardedProgramYears: [1,2]
+      stewards: [2]
     });
     server.create('school', {
       departments: [4],
-      stewardedProgramYears: [3]
+      stewards: [3]
     });
     server.create('program', {
       school: 1,
@@ -40,22 +41,21 @@ module('Acceptance: Program Year - Stewards', {
     });
     server.create('programYearSteward', {
       programYear: 1,
-      school: 3,
-      department: null
+      school: 3
     });
     server.create('department', {
       school: 1,
-      stewardedProgramYears: [1]
+      stewards: [1]
     });
     server.create('department', {
       school: 1
     });
     server.create('department', {
       school: 2,
-      stewardedProgramYears: [2]
+      stewards: [2]
     });
     server.create('department', {
-      school: 3,
+      school: 3
     });
 
     server.createList('department', 5, {
@@ -63,7 +63,7 @@ module('Acceptance: Program Year - Stewards', {
     });
     server.create('programYear', {
       program: 1,
-      stewards: [1,2,3]
+      stewards: [1, 2, 3]
     });
     server.create('cohort');
   },
@@ -73,136 +73,126 @@ module('Acceptance: Program Year - Stewards', {
   }
 });
 
-test('list', function(assert) {
+test('list', async function(assert) {
   assert.expect(2);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-stewards');
-    assert.equal(getElementText(find('.detail-title', container)), getText('Stewarding Schools and Departments (3)'));
-    var items = find('ul.static-list', container);
-    assert.equal(getElementText(items), getText('school 0 department 0 school 1 department 2 school 2'));
-  });
+  const container = '.detail-stewards';
+  const title = `${container} .title`;
+  const list = `${container} .static-list`;
+
+  await visit(url);
+  assert.equal(getElementText(title), getText('Stewarding Schools and Departments (3)'));
+  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
+
 });
 
-test('save', function(assert) {
+test('save', async function(assert) {
   assert.expect(5);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-stewards');
-    click('.detail-actions button', container).then(function(){
-      assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
-      assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 school 1 department 2 school 2'));
-      click('.tree-list.selectable li:eq(0) ul li:eq(0)', container);
-      click('.tree-list.removable li:eq(0) ul li:eq(0)', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
-        assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 1 school 1 department 2 school 2'));
-      });
+  const container = '.detail-stewards';
+  const manage = `${container} .actions button`;
+  const save = `${container} .bigadd`;
+  const selected = `${container} .remove-list`;
+  const available = `${container} .add-list`;
+  const department1 = `${available} li:eq(0) ul li:eq(0)`;
+  const department0 = `${selected} li:eq(0) ul li:eq(0)`;
+  const list = `${container} .static-list`;
 
-      click('.bigadd', container);
+  await visit(url);
+  await click(manage);
+  assert.equal(getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 0 school 1 department 2 school 2'));
+  await click(department1);
+  await click(department0);
+  assert.equal(getElementText(available), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 1 school 1 department 2 school 2'));
+  await click(save);
+  assert.equal(getElementText(list), getText('school 0 department 1 school 1 department 2 school 2'));
 
-      andThen(function(){
-        assert.equal(getElementText(find('.static-list', container)), getText('school 0 department 1 school 1 department 2 school 2'));
-      });
-    });
-  });
 });
 
-test('select school and all departments', function(assert) {
+test('select school and all departments', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-stewards');
-    click('.detail-actions button', container).then(function(){
-      click('.tree-list.selectable li:eq(0)', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 1 school 2 department 3'));
-        assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-      });
-
-      click('.bigadd', container);
-
-      andThen(function(){
-        assert.equal(getElementText(find('.static-list', container)), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-      });
-    });
-  });
+  const container = '.detail-stewards';
+  const manage = `${container} .actions button`;
+  const save = `${container} .bigadd`;
+  const selected = `${container} .remove-list`;
+  const available = `${container} .add-list`;
+  const school0 = `${available} li:eq(0) .clickable`;
+  const list = `${container} .static-list`;
+  await visit(url);
+  await click(manage);
+  await click(school0);
+  assert.equal(getElementText(available), getText('school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
+  await click(save);
+  assert.equal(getElementText(list), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
 });
 
-test('select all departments but not school', function(assert) {
+test('select all departments but not school', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-stewards');
-    //click and then wait for each department in the list
-    click('.detail-actions button', container).then(function(){
-      click('.tree-list.selectable li:eq(0) li', container).then(()=>{
-        click('.tree-list.selectable li:eq(0) li', container).then(()=>{
-          click('.tree-list.selectable li:eq(0) li', container).then(()=>{
-            click('.tree-list.selectable li:eq(0) li', container).then(()=>{
-              click('.tree-list.selectable li:eq(0) li', container).then(()=>{
-                click('.tree-list.selectable li:eq(0) li', container).then(()=>{
-                });
-              });
-            });
-          });
-        });
-      });
-      andThen(function(){
-        assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 school 1 school 2 department 3'));
-        assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-      });
-
-      click('.bigadd', container);
-
-      andThen(function(){
-        assert.equal(getElementText(find('.static-list', container)), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-      });
-    });
-  });
+  const container = '.detail-stewards';
+  const manage = `${container} .actions button`;
+  const save = `${container} .bigadd`;
+  const selected = `${container} .remove-list`;
+  const available = `${container} .add-list`;
+  const departments = `${available} li:eq(0) ul li`;
+  const department1 = `${departments}:eq(0)`;
+  const department4 = `${departments}:eq(0)`;
+  const department5 = `${departments}:eq(0)`;
+  const department6 = `${departments}:eq(0)`;
+  const department7 = `${departments}:eq(0)`;
+  const department8 = `${departments}:eq(0)`;
+  const list = `${container} .static-list`;
+  await visit(url);
+  await click(manage);
+  await click(department1);
+  await click(department4);
+  await click(department5);
+  await click(department6);
+  await click(department7);
+  await click(department8);
+  assert.equal(getElementText(available), getText('school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
+  await click(save);
+  assert.equal(getElementText(list), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
 });
 
-test('remove solo school with no departments', function(assert) {
+test('remove solo school with no departments', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-stewards');
-    click('.detail-actions button', container).then(function(){
-      click('.tree-list.removable>li:eq(2) span', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
-        assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 school 1 department 2'));
-      });
-
-      click('.bigadd', container);
-
-      andThen(function(){
-        assert.equal(getElementText(find('.static-list', container)), getText('school 0 department 0 school 1 department 2'));
-      });
-    });
-  });
+  const container = '.detail-stewards';
+  const manage = `${container} .actions button`;
+  const save = `${container} .bigadd`;
+  const selected = `${container} .remove-list`;
+  const available = `${container} .add-list`;
+  const school2 = `${selected} ul:eq(0)>li:eq(2) .removable`;
+  const list = `${container} .static-list`;
+  await visit(url);
+  await click(manage);
+  await click(school2);
+  assert.equal(getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 0 school 1 department 2'));
+  await click(save);
+  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2'));
 });
 
-test('cancel', function(assert) {
-  assert.expect(5);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-stewards');
-    click('.detail-actions button', container).then(function(){
-      assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
-      assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 0 school 1 department 2 school 2'));
-      click('.tree-list.selectable li:eq(0) ul li:eq(0)', container);
-      click('.tree-list.removable li:eq(0) ul li:eq(0)', container);
-      andThen(function(){
-        assert.equal(getElementText(find('.tree-list.selectable', container)), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 1 school 2 department 3'));
-        assert.equal(getElementText(find('.tree-list.removable', container)), getText('school 0 department 1 school 1 department 2 school 2'));
-      });
-
-      click('.bigcancel', container);
-
-      andThen(function(){
-        assert.equal(getElementText(find('.static-list', container)), getText('school 0 department 0 school 1 department 2 school 2'));
-      });
-    });
-  });
+test('cancel', async function(assert) {
+  assert.expect(6);
+  const container = '.detail-stewards';
+  const manage = `${container} .actions button`;
+  const cancel = `${container} .bigcancel`;
+  const selected = `${container} .remove-list`;
+  const available = `${container} .add-list`;
+  const department0 = `${selected} li:eq(0) ul li:eq(0)`;
+  const department1 = `${available} li:eq(0) ul li:eq(0)`;
+  const list = `${container} .static-list`;
+  await visit(url);
+  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
+  await click(manage);
+  assert.equal(getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 0 school 1 department 2 school 2'));
+  await click(department1);
+  await click(department0);
+  assert.equal(getElementText(available), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+  assert.equal(getElementText(selected), getText('school 0 department 1 school 1 department 2 school 2'));
+  await click(cancel);
+  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
 });

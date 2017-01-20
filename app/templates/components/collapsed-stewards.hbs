@@ -1,5 +1,5 @@
 <div class='title' {{action (action expand)}}>
-  {{t 'general.stewardingSchoolsAndDepartments'}} ({{programYear.stewards.length}})
+  {{t 'general.stewardingSchoolsAndDepartments'}} ({{get (await programYear.stewards) 'length'}})
 </div>
 {{#if (is-pending schoolData)}}
   <h3>{{fa-icon 'spinner' spin=true}}</h3>
