@@ -133,6 +133,7 @@ export default {
     'defaultInstructorsNotLoaded': '(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)',
     'defaultLocation': 'Ubicación Predeterminada',
     'defaultLocationNotLoaded': '(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)',
+    'departments': 'Departmentos',
     'description': 'Descripción',
     'detail': 'Detalle',
     'details': 'Detalles de Curso',

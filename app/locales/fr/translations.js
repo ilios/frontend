@@ -133,6 +133,7 @@ export default {
     'defaultInstructorsNotLoaded': "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)",
     'defaultLocation': "Localisation par Défaut",
     'defaultLocationNotLoaded': "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)",
+    'departments': "Facultés",
     'description': "Description",
     'detail': "Détail",
     'details': "Détails de Cours",
