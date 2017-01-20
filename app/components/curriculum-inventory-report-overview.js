@@ -33,7 +33,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
   currentRoute: '',
-  year: [],
+  year: null,
 
   didReceiveAttrs(){
     this._super(...arguments);
