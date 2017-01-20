@@ -14,10 +14,10 @@
     </button>
     <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if editable}}
-    <button onclick={{perform manage}}>
+    <button class='manage' onclick={{perform manage}}>
       {{t 'general.stewardsManageTitle'}}
       {{#if manage.isRunning}}
-        &nbsp; {{fa-icon 'spinner' spin=true}}
+        {{fa-icon 'spinner' spin=true}}
       {{/if}}
     </button>
   {{/if}}

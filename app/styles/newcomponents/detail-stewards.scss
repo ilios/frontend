@@ -7,6 +7,10 @@
 
   .actions {
     @include detail-container-actions;
+
+    .manage i {
+      margin-left: 1em;
+    }
   }
 
   .content {
