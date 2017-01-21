@@ -1,7 +1,7 @@
 {{#unless loadAttr.running}}
   <section class='detail-block'>
     <div class='detail-title'>
-      {{t 'general.sequenceBlocks'}} ({{sortedBlocks.length}})
+      {{t 'general.sequenceBlocks'}} ({{get (await sortedBlocks) 'length'}})
     </div>
 
     <div class='detail-actions'>
@@ -29,7 +29,7 @@
         {{/if}}
       </section>
       {{#if (is-fulfilled sortedBlocks)}}
-        {{#if sortedBlocks.length}}
+        {{#if (get (await sortedBlocks) 'length')}}
           <div class='resultslist-list'>
             <table>
               <thead>
@@ -44,14 +44,14 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each sortedBlocks as |block|}}
+                {{#each (await sortedBlocks) as |block|}}
                   <tr class="{{if block.showRemoveConfirmation 'confirm-removal'}}">
                     <td class='text-left' colspan=5>
                       {{#link-to 'curriculumInventorySequenceBlock' block.content}}
                         {{block.title}}
                       {{/link-to}}
                     </td>
-                    <td class='text-center' colspan=1>{{block.academicLevel.level}}</td>
+                    <td class='text-center' colspan=1>{{get (await block.academicLevel) 'level'}}</td>
                     <td class='text-center' colspan=2>
                       {{#if isInOrderedSequence}}
                         {{block.orderInSequence}}
@@ -74,8 +74,8 @@
                       {{/if}}
                     </td>
                     <td class='text-center' colspan=2>
-                      {{#if block.course}}
-                        {{block.course.title}}
+                      {{#if (await block.course)}}
+                        {{get (await block.course) 'title'}}
                       {{else}}
                         {{t 'general.notApplicableAbbr'}}
                       {{/if}}
