@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { task } from 'ember-concurrency';
 
 const { Component, computed, RSVP, isPresent, ObjectProxy } = Ember;
-const { PromiseArray } = DS;
+const { Promise } = RSVP;
 
 const SequenceBlockProxy = ObjectProxy.extend({
   content: null,
@@ -53,49 +52,46 @@ export default Component.extend({
   }),
 
   sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', function() {
-    let defer = RSVP.defer();
-    const parent = this.get('parent');
-    const sequenceBlocks = this.get('sequenceBlocks');
-
-    if (isPresent(parent) && 1 === parent.get('childSequenceOrder')) {
-      let sortedBlocks = [];
-      sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
-        sortedBlocks.pushObject(SequenceBlockProxy.create({
-          content: block
-        }));
-      });
-      defer.resolve(sortedBlocks);
-    } else {
-      let promises = [];
-      let blockProxies = [];
-      if (! sequenceBlocks.length) {
-        defer.resolve(sequenceBlocks);
-      } else {
-        sequenceBlocks.forEach(block => {
-          let proxy = ObjectProxy.create({
-            content: block,
-            level: null
-          });
-          let promise = block.get('academicLevel').then(academicLevel => {
-            proxy.set('level', academicLevel.get('level'));
-            blockProxies.pushObject(proxy);
-          });
-          promises.pushObject(promise);
-          RSVP.all(promises).then(()=> {
-            let sortedProxies = blockProxies.sortBy('level', 'startDate', 'title', 'id');
-            let sortedBlocks = [];
-            sortedProxies.forEach(sortedProxy => {
-              sortedBlocks.pushObject(SequenceBlockProxy.create({
-                content: sortedProxy.get('content')
-              }));
-            });
-            defer.resolve(sortedBlocks);
-          });
+    return new Promise(resolve => {
+      const parent = this.get('parent');
+      const sequenceBlocks = this.get('sequenceBlocks');
+      if (isPresent(parent) && 1 === parent.get('childSequenceOrder')) {
+        let sortedBlocks = [];
+        sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
+          sortedBlocks.pushObject(SequenceBlockProxy.create({
+            content: block
+          }));
         });
+        resolve(sortedBlocks);
+      } else {
+        let promises = [];
+        let blockProxies = [];
+        if (! sequenceBlocks.length) {
+          resolve(sequenceBlocks);
+        } else {
+          sequenceBlocks.forEach(block => {
+            let proxy = ObjectProxy.create({
+              content: block,
+              level: null
+            });
+            let promise = block.get('academicLevel').then(academicLevel => {
+              proxy.set('level', academicLevel.get('level'));
+              blockProxies.pushObject(proxy);
+            });
+            promises.pushObject(promise);
+            RSVP.all(promises).then(()=> {
+              let sortedProxies = blockProxies.sortBy('level', 'startDate', 'title', 'id');
+              let sortedBlocks = [];
+              sortedProxies.forEach(sortedProxy => {
+                sortedBlocks.pushObject(SequenceBlockProxy.create({
+                  content: sortedProxy.get('content')
+                }));
+              });
+              resolve(sortedBlocks);
+            });
+          });
+        }
       }
-    }
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
