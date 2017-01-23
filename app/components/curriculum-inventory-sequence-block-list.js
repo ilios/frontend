@@ -55,7 +55,7 @@ export default Component.extend({
     return new Promise(resolve => {
       const parent = this.get('parent');
       const sequenceBlocks = this.get('sequenceBlocks');
-      if (isPresent(parent) && 1 === parent.get('childSequenceOrder')) {
+      if (isPresent(parent) && parent.get('isOrdered')) {
         let sortedBlocks = [];
         sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
           sortedBlocks.pushObject(SequenceBlockProxy.create({
