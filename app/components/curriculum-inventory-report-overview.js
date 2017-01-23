@@ -3,7 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component, RSVP, computed, inject } = Ember;
-const { alias } = computed;
+const { alias, reads } = computed;
 const { Promise } = RSVP;
 const { service } = inject;
 
@@ -16,10 +16,16 @@ const Validations = buildValidations({
     }),
   ],
   startDate: [
-    validator('presence', true),
+    validator('date', {
+      dependentKeys: ['model.endDate'],
+      onOrBefore: reads('model.endDate'),
+    }),
   ],
   endDate: [
-    validator('presence', true),
+    validator('date', {
+      dependentKeys: ['model.startDate'],
+      onOrAfter: reads('model.startDate'),
+    }),
   ],
 });
 
@@ -44,7 +50,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     yearOptions.pushObject(Ember.Object.create({'id': year, 'title': yearLabel}));
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
       if (i != year) {
-        yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' -  ' + (i + 1)}));
+        yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' - ' + (i + 1)}));
       }
     }
 
@@ -84,7 +90,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   report: null,
   startDate: null,
   endDate: null,
-  yearOptions: [],
+  yearOptions: null,
   isFinalized: alias('report.isFinalized'),
   actions: {
     changeStartDate(){

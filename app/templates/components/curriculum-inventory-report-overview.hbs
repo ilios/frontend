@@ -8,7 +8,7 @@
     {{/if}}
   </div>
   <div class='curriculum-inventory-report-overview-content'>
-    <div class="block">
+    <div class="block start-date">
       <label>{{t 'general.start'}}:</label>
       <span>
         {{#if isFinalized}}
@@ -32,7 +32,7 @@
         {{/if}}
       </span>
     </div>
-    <div class="block">
+    <div class="block end-date">
       <label>{{t 'general.end'}}:</label>
       <span>
         {{#if isFinalized}}
@@ -56,10 +56,10 @@
         {{/if}}
       </span>
     </div>
-    <div class="block">
+    <div class="block academic-year">
       <label>{{t 'general.academicYear'}}:</label>
       {{#if (or isFinalized (await report.hasLinkedCourses))}}
-        <span>{{report.yearLabel}}</span>
+        <span>{{yearLabel}}</span>
       {{else}}
         {{#editable-field
           value=yearLabel
@@ -77,7 +77,7 @@
       {{/if}}
     </div>
 
-    <div class="block">
+    <div class="block program">
       <label>{{t 'general.program'}}:</label>
       <span>{{report.program.title}} ({{report.program.shortTitle}})</span>
     </div>
@@ -85,13 +85,13 @@
       <label>{{t 'general.description'}}:</label>
       <span>
         {{#if isFinalized}}
-          {{report.description}}
+          {{description}}
         {{else}}
           {{#editable-field
           value=description
           save=(action 'changeDescription')
           close=(action 'revertDescriptionChanges')
-          clickPrompt=(if report.description report.description (t 'general.clickToEdit'))
+          clickPrompt=(if description description (t 'general.clickToEdit'))
           as |isSaving|
           }}
             <textarea
