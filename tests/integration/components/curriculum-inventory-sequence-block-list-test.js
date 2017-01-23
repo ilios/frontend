@@ -347,3 +347,90 @@ test('cancel delete', function(assert){
     assert.equal(this.$('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
   });
 });
+
+
+test('empty top level blocks list', function(assert) {
+  assert.expect(2);
+
+  let school = Object.create({ id() { return 1; }});
+
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let report = Object.create({
+    academicLevels: resolve([]),
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([]),
+    isFinalized: false,
+    name: 'Lorem Ipsum',
+    startDate: moment('2015-06-12').toDate(),
+    endDate: moment('2016-04-11').toDate(),
+    description: 'Lorem Ipsum',
+    topLevelSequenceBlocks: resolve([])
+  });
+
+  this.set('report', report);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report}}`);
+  return wait().then(() => {
+    assert.equal(this.$('.detail-title').text().trim(), `Sequence Blocks (0)`,
+      'Component title is correct, and show the correct number of blocks.'
+    );
+    assert.equal(
+      this.$('.default-message').text().trim(), 'There are no sequence blocks in this report.',
+      'No blocks message is visible.'
+    );
+  });
+});
+
+test('empty nested blocks list', function(assert) {
+  assert.expect(2);
+
+  let school = Object.create({ id() { return 1; }});
+
+  let program = Object.create({
+    belongsTo() {
+      return school;
+    }
+  });
+
+  let parentBlock = Object.create({
+    id: 1,
+    academicLevel: resolve(Object.create({ id: 1, level: '2'})),
+    title: 'Parent Block',
+    course: resolve(null),
+    isOrdered: true,
+    children: resolve([]),
+  });
+
+  let report = Object.create({
+    academicLevels: resolve([]),
+    year: '2016',
+    program: resolve(program),
+    linkedCourses: resolve([]),
+    isFinalized: false,
+    name: 'Lorem Ipsum',
+    startDate: moment('2015-06-12').toDate(),
+    endDate: moment('2016-04-11').toDate(),
+    description: 'Lorem Ipsum',
+    topLevelSequenceBlocks: resolve([parentBlock]),
+    sequenceBlocks: resolve([parentBlock])
+  });
+
+  parentBlock.set('report', resolve(report));
+
+  this.set('parent', parentBlock);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent}}`);
+  return wait().then(() => {
+    assert.equal(this.$('.detail-title').text().trim(), `Sequence Blocks (0)`,
+      'Component title is correct, and show the correct number of blocks.'
+    );
+    assert.equal(
+      this.$('.default-message').text().trim(), 'This sequence block has no nested sequence blocks.',
+      'No blocks message is visible.'
+    );
+  });
+});
