@@ -1,107 +1,103 @@
 import Ember from 'ember';
-import DS from 'ember-data';
+import { task, timeout } from 'ember-concurrency';
 
-const { Component, computed } = Ember;
+const { Component, RSVP, computed, inject, isEmpty, isPresent } = Ember;
+const { map, all } = RSVP;
+const { service } = inject;
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  classNames: ['detail-stewards'],
+  store: service(),
   programYear: null,
   isManaging: false,
   bufferStewards: [],
-  stewardsBySchool: computed('programYear.stewards.[]', function(){
-    let deferred = Ember.RSVP.defer();
-    let programYear = this.get('programYear');
+  classNameBindings: [':detail-stewards', ':stewards-manager', 'showCollapsible:collapsible'],
+  editable: true,
 
-    let stewardingSchools = [];
-    programYear.get('stewards').then(stewards => {
-      let promises = [];
-      stewards.forEach(steward => {
-        let promise = steward.get('school').then(school => {
-          let stewardingSchool = stewardingSchools.find(
-            obj => obj.get('id') === school.get('id')
-          );
-          if(!stewardingSchool){
-            stewardingSchool = Ember.ObjectProxy.create({
-              content: school,
-              stewardingDepartments: []
-            });
-            stewardingSchools.pushObject(stewardingSchool);
-          }
-          let promise2 = steward.get('department').then(department => {
-            if(department){
-              let stewardingDepartments = stewardingSchool.get('stewardingDepartments');
-              stewardingDepartments.pushObject(department);
-              stewardingDepartments.uniq().sortBy('title');
-            }
-          });
-          promises.pushObject(promise2);
-        });
+  showCollapsible: computed('isManaging', 'programYear.stewards.[]', function () {
+    const isManaging = this.get('isManaging');
+    const programYear = this.get('programYear');
+    const stewardIds = programYear.hasMany('stewards').ids();
+    return !isManaging && stewardIds.get('length');
+  }),
 
-        promises.pushObject(promise);
-      });
-      Ember.RSVP.all(promises).then(() => {
-        deferred.resolve(stewardingSchools.sortBy('title'));
-      });
+  stewardsBySchool: computed('programYear.stewards.[]', async function(){
+    const programYear = this.get('programYear');
+    if (isEmpty(programYear)) {
+      return [];
+    }
+
+    const stewards = await programYear.get('stewards');
+    const stewardObjects = await map(stewards.toArray(), async steward => {
+      const school = await steward.get('school');
+      const department = await steward.get('department');
+      const departmentId = isPresent(department)?department.get('id'):0;
+      const departmentTitle = isPresent(department)?department.get('title'):null;
+      return {
+        schoolId: school.get('id'),
+        schoolTitle: school.get('title'),
+        departmentId,
+        departmentTitle,
+      };
+    });
+    const schools = stewardObjects.uniqBy('schoolId');
+    const schoolData = schools.map(obj => {
+      const departments = stewardObjects.filterBy('schoolId', obj.schoolId);
+      const rhett = {
+        schoolId: obj.schoolId,
+        schoolTitle: obj.schoolTitle,
+        departments
+      };
+
+      return rhett;
     });
 
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
+    return schoolData;
+  }),
+
+  save: task( function * (){
+    yield timeout(10);
+    const programYear = this.get('programYear');
+    const bufferStewards = this.get('bufferStewards');
+    let stewards = yield programYear.get('stewards');
+    let stewardsToRemove = stewards.filter(steward => !bufferStewards.includes(steward));
+    let stewardsToAdd = bufferStewards.filter(steward => !stewards.includes(steward));
+    stewardsToAdd.setEach('programYear', programYear);
+    yield all(stewardsToRemove.invoke('destroyRecord'));
+    yield all(stewardsToAdd.invoke('save'));
+    this.set('isManaging', false);
+    this.set('bufferStewards', []);
+  }),
+
+  manage: task( function * (){
+    yield timeout(10);
+    this.get('expand')();
+    const stewards = yield this.get('programYear.stewards');
+    this.set('bufferStewards', stewards.toArray());
+    this.set('isManaging', true);
   }),
   actions: {
-    manage: function(){
-      this.get('programYear.stewards').then((stewards)=>{
-        this.set('bufferStewards', stewards.toArray());
-        this.set('isManaging', true);
-      });
-    },
-    save: function(){
-      let programYear = this.get('programYear');
-      programYear.get('stewards').then(stewards => {
-        let removableStewards = stewards.filter(steward => !this.get('bufferStewards').includes(steward));
-        stewards.clear();
-        var promises = [];
-        removableStewards.forEach(steward => {
-          promises.pushObject(steward.get('school').then(school => {
-            school.get('stewards').removeObject(steward);
-          }));
-          promises.pushObject(steward.get('department').then(department => {
-            if(department){
-              department.get('stewards').removeObject(steward);
-            }
-          }));
-          steward.deleteRecord();
-          promises.pushObject(steward.save());
-        });
-        this.get('bufferStewards').forEach(function(steward){
-          steward.set('programYear', programYear);
-          stewards.pushObject(steward);
-          promises.pushObject(steward.get('school').then(school => {
-            school.get('stewards').addObject(steward);
-          }));
-          promises.pushObject(steward.get('department').then(department => {
-            if(department){
-              department.get('stewards').addObject(steward);
-            }
-          }));
-          promises.pushObject(steward.save());
-        });
-        Ember.RSVP.all(promises).then( () => {
-          this.set('isManaging', false);
-        });
-      });
-
+    collapse(){
+      const programYear = this.get('programYear');
+      const stewardIds = programYear.hasMany('stewards').ids();
+      if (stewardIds.get('length')) {
+        this.get('collapse')();
+      }
     },
     cancel: function(){
-      this.set('bufferStewards', []);
       this.set('isManaging', false);
+      this.set('bufferStewards', []);
     },
     addStewardToBuffer: function(steward){
-      this.get('bufferStewards').pushObject(steward);
+      //copy the array to didReceiveAttrs gets called on detail-steward-manager
+      let bufferStewards = this.get('bufferStewards').toArray();
+      bufferStewards.pushObject(steward);
+      this.set('bufferStewards', bufferStewards);
     },
     removeStewardFromBuffer: function(steward){
-      this.get('bufferStewards').removeObject(steward);
+      //copy the array to didReceiveAttrs gets called on detail-steward-manager
+      let bufferStewards = this.get('bufferStewards').toArray();
+      bufferStewards.removeObject(steward);
+      this.set('bufferStewards', bufferStewards);
     },
   }
 });

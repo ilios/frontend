@@ -1,0 +1,26 @@
+<div class='title' {{action (action expand)}}>
+  {{t 'general.stewardingSchoolsAndDepartments'}} ({{get (await programYear.stewards) 'length'}})
+</div>
+{{#if (is-pending schoolData)}}
+  <h3>{{fa-icon 'spinner' spin=true}}</h3>
+{{/if}}
+{{#unless (is-pending schoolData)}}
+  <div class='content'>
+    <table class='condensed'>
+      <thead>
+        <tr>
+          <th class='text-center'>{{t 'general.school'}}</th>
+          <th class='text-center'>{{t 'general.departments'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sort-by 'schoolTitle' (await schoolData)) as |obj| }}
+          <tr>
+            <td class='text-left'>{{obj.schoolTitle}}</td>
+            <td class='text-center'>{{obj.departmentCount}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{/unless}}

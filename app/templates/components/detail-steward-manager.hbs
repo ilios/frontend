@@ -1,34 +1,44 @@
-<section class='halfwidth'>
-  <ul class='tree-list removable'>
-    {{#each stewardSchools as |schoolProxy|}}
-      <li>
-        <span class='removable' {{action 'removeSchool' schoolProxy.content}}>
-          {{fa-icon 'times'}} {{schoolProxy.title}}
-        </span>
-        <ul>
-          {{#each schoolProxy.departments as |department|}}
-            <li class='removable' {{action 'removeDepartment' schoolProxy.content department}}>
-              {{fa-icon 'times'}} {{department.title}}
-            </li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
+<section class='remove-list'>
+  {{#if (and stewardsBySchoolLoaded (not isSaving))}}
+    <ul>
+      {{#each (sort-by 'school.title' getStewardsBySchool.lastSuccessful.value) as |obj|}}
+        <li>
+          <span class='removable' onclick={{perform removeSchool obj.school}}>
+            {{fa-icon 'times'}} {{obj.school.title}}
+          </span>
+          <ul>
+            {{#each (sort-by 'title' obj.departments) as |department|}}
+              <li class='clickable' onclick={{perform removeDepartment obj.school department}}>
+                {{fa-icon 'times'}} {{department.title}}
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+  {{/if}}
 </section>
 
 
-<section class='halfwidth'>
-  <ul class='tree-list selectable'>
-    {{#each availableSchools as |schoolProxy|}}
-      <li {{action 'addSchool' schoolProxy}}>
-        {{schoolProxy.title}}
-        <ul>
-          {{#each schoolProxy.departments as |department|}}
-            <li {{action 'addDepartment' schoolProxy department}}>{{department.title}}</li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
+<section class='add-list'>
+  {{#if (and availableSchoolsLoaded (not isSaving))}}
+    <ul>
+      {{#each (sort-by 'school.title' getAvailableSchools.lastSuccessful.value) as |obj|}}
+        <li>
+          <span class='clickable' onclick={{perform addSchool obj.school}}>
+            {{obj.school.title}}
+          </span>
+          <ul>
+            {{#each (sort-by 'title' obj.departments) as |department|}}
+              <li class='clickable' onclick={{perform addDepartment obj.school department}}>{{department.title}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+  {{/if}}
 </section>

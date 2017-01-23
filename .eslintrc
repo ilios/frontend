@@ -6,6 +6,7 @@
   extends: "eslint:recommended",
   parserOptions: {
     sourceType: "module",
+    ecmaVersion: 8,
   },
   rules: {
     /* Possible Errors http://eslint.org/docs/rules/#possible-errors */

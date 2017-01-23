@@ -1,13 +1,17 @@
 {{programyear-details
-  program=program
+  program=(await programYear.program)
   editable=editable
   programYear=model
   pyObjectiveDetails=pyObjectiveDetails
   pyTaxonomyDetails=pyTaxonomyDetails
   pyCompetencyDetails=pyCompetencyDetails
   managePyCompetencies=managePyCompetencies
+  pyStewardDetails=pyStewardDetails
+  managePyStewards=managePyStewards
   setPyObjectiveDetails=(action (mut pyObjectiveDetails))
   setPyTaxonomyDetails=(action (mut pyTaxonomyDetails))
   setPyCompetencyDetails=(action (mut pyCompetencyDetails))
   setManagePyCompetencies=(action (mut managePyCompetencies))
+  setPyStewardDetails=(action (mut pyStewardDetails))
+  setManagePyStewards=(action (mut managePyStewards))
 }}
