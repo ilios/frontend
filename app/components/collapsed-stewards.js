@@ -26,9 +26,9 @@ export default Component.extend({
     });
     const schools = stewardObjects.uniqBy('schoolId');
     const schoolData = schools.map(obj => {
-      const deparrments = stewardObjects.filterBy('schoolId', obj.schoolId);
+      const departments = stewardObjects.filterBy('schoolId', obj.schoolId);
       delete obj.departmentId;
-      obj.departmentCount = deparrments.length;
+      obj.departmentCount = departments.length;
 
       return obj;
     });

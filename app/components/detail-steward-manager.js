@@ -94,10 +94,10 @@ export default Component.extend({
     const selectedSchoolIds = selectedSchools.mapBy('id');
     const unselectedSchoolsAndSchoolsWithUnselectedDepartments = await filter(allSchools.toArray(), async school => {
       const departments = await school.get('departments');
-      const unlselectedDepartments = departments.filter(department => {
+      const unselectedDepartments = departments.filter(department => {
         return !selectedDepartmentIds.includes(department.get('id'));
       });
-      return !selectedSchoolIds.includes(school.get('id')) || isPresent(unlselectedDepartments);
+      return !selectedSchoolIds.includes(school.get('id')) || isPresent(unselectedDepartments);
     });
 
     const availableSchools = await map(unselectedSchoolsAndSchoolsWithUnselectedDepartments.toArray(), async school => {
