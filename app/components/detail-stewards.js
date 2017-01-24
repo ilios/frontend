@@ -29,12 +29,14 @@ export default Component.extend({
     const stewards = await programYear.get('stewards');
     const stewardObjects = await map(stewards.toArray(), async steward => {
       const school = await steward.get('school');
+      const schoolId = isPresent(school)?school.get('id'):0;
+      const schoolTitle = isPresent(school)?school.get('title'):null;
       const department = await steward.get('department');
       const departmentId = isPresent(department)?department.get('id'):0;
       const departmentTitle = isPresent(department)?department.get('title'):null;
       return {
-        schoolId: school.get('id'),
-        schoolTitle: school.get('title'),
+        schoolId,
+        schoolTitle,
         departmentId,
         departmentTitle,
       };
