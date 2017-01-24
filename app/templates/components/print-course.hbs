@@ -80,7 +80,7 @@
         </div>
 
         <div class='detail-content'>
-          {{#each course.associatedVocabularies as |vocab|}}
+          {{#each (await course.associatedVocabularies) as |vocab|}}
             {{detail-terms-list vocabulary=vocab terms=course.terms canEdit=false}}
           {{/each}}
         </div>
@@ -263,7 +263,7 @@
 
         <div class='detail-content'>
           <div class='detail-content'>
-            {{#each session.associatedVocabularies as |vocab|}}
+            {{#each (await session.associatedVocabularies) as |vocab|}}
               {{detail-terms-list vocabulary=vocab terms=session.terms canEdit=false}}
             {{/each}}
           </div>
