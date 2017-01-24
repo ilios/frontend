@@ -39,7 +39,7 @@
               {{if (is-in linkedSessions session) (t 'general.yes') (t 'general.no')}}
             </td>
             <td class='text-left' colspan=3>{{session.title}}</td>
-            <td class='text-left' colspan=3>{{session.sessionType.title}}</td>
+            <td class='text-left' colspan=3>{{get (await session.sessionType) "title"}}</td>
             <td class='text-center' colspan=1>
               {{#if (is-in linkedSessions session)}}
                 {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
@@ -55,7 +55,7 @@
                 {{/unless}}
               {{/if}}
             </td>
-            <td class='text-center' colspan=1>{{session.offerings.length}}</td>
+            <td class='text-center' colspan=1>{{get (await session.offerings) "length"}}</td>
           </tr>
         {{/each}}
       </tbody>
