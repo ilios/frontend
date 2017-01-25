@@ -1,10 +1,9 @@
 <div class='title' {{action (action this.attrs.expand)}}>
   {{t 'general.terms'}} ({{subject.terms.length}})
 </div>
-{{#if subject.associatedVocabularies.isPending}}
+{{#if (is-pending subject.associatedVocabularies)}}
   <h3>{{fa-icon 'spinner' spin=true}}</h3>
-{{/if}}
-{{#unless subject.associatedVocabularies.isPending}}
+{{else}}
   <div class='content'>
     <table class='condensed'>
       <thead>
@@ -15,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each subject.associatedVocabularies as |vocab| }}
+        {{#each (await subject.associatedVocabularies) as |vocab| }}
           <tr>
             <td class='text-left'>{{vocab.title}}</td>
             <td class='text-center'>{{vocab.school.title}}</td>
@@ -25,4 +24,4 @@
       </tbody>
     </table>
   </div>
-{{/unless}}
+{{/if}}

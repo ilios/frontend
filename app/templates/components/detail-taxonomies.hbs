@@ -25,7 +25,7 @@
     add='addTermToBuffer'
     remove='removeTermFromBuffer'}}
   {{else}}
-    {{#each subject.associatedVocabularies as |vocab| }}
+    {{#each (await subject.associatedVocabularies) as |vocab| }}
       {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
     {{/each}}
   {{/if}}
