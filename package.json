@@ -109,8 +109,7 @@
   },
   "greenkeeper": {
     "ignore": [
-      "ember-cli-mirage",
-      "ember-data"
+      "ember-cli-mirage"
     ]
   },
   "private": true
