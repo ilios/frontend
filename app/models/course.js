@@ -139,45 +139,42 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   schools: computed('school', 'cohorts.[]', function() {
-    let schools = [];
-    let promises = [];
+    return new Promise(resolve => {
+      let schools = [];
+      let promises = [];
 
-    // get course-owning school
-    let promise = new Promise(resolve => {
-      this.get('school').then(school => {
-        schools.pushObject(school);
-        resolve();
-      });
-
-    });
-    promises.pushObject(promise);
-
-    // get schools from associated cohorts
-    promise = new Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        map(cohorts.mapBy('programYear'), programYear => {
-          return programYear.get('program').then(program => {
-            return program.get('school').then(school => {
-              schools.pushObject(school);
-            });
-          });
-        }).then(() => {
+      // get course-owning school
+      let promise = new Promise(resolve => {
+        this.get('school').then(school => {
+          schools.pushObject(school);
           resolve();
         });
+
       });
-    });
-    promises.pushObject(promise);
+      promises.pushObject(promise);
 
-    // once the two promises above resolve,
-    // dedupe all schools and return a promise-array containing the dupe-free list of schools.
-    let deferred = defer();
-    all(promises).then(() => {
-      let s = schools.uniq();
-      deferred.resolve(s);
-    });
+      // get schools from associated cohorts
+      promise = new Promise(resolve => {
+        this.get('cohorts').then(cohorts => {
+          map(cohorts.mapBy('programYear'), programYear => {
+            return programYear.get('program').then(program => {
+              return program.get('school').then(school => {
+                schools.pushObject(school);
+              });
+            });
+          }).then(() => {
+            resolve();
+          });
+        });
+      });
+      promises.pushObject(promise);
 
-    return PromiseArray.create({
-      promise: deferred.promise
+      // once the two promises above resolve,
+      // de-dupe all schools and return a promise-array containing the dupe-free list of schools.
+      all(promises).then(() => {
+        let s = schools.uniq();
+        resolve(s);
+      });
     });
   }),
 
