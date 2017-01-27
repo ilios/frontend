@@ -39,9 +39,9 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   competencies: computed('objectives.@each.treeCompetencies', function(){
     let promise = new Promise(resolve => {
       this.get('objectives').then(function(objectives){
-        var promises = objectives.getEach('treeCompetencies');
+        let promises = objectives.getEach('treeCompetencies');
         all(promises).then(function(trees){
-          var competencies = trees.reduce(function(array, set){
+          let competencies = trees.reduce(function(array, set){
             return array.pushObjects(set.toArray());
           }, []);
           competencies = competencies.uniq().filter(function(item){
