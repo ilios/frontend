@@ -20,6 +20,12 @@ export default DS.Model.extend(PublishableModel,{
   }),
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
 
+  /**
+   * All cohorts associated with this program via its program years.
+   * @property cohorts
+   * @type {Ember.computed}
+   * @public
+   */
   cohorts: computed('programYears.[]', function() {
     let deferred = defer();
     let allCohorts = [];
@@ -50,6 +56,12 @@ export default DS.Model.extend(PublishableModel,{
     });
   }),
 
+  /**
+   * All courses linked to this program via its program years/cohorts.
+   * @property courses
+   * @type {Ember.computed}
+   * @public
+   */
   courses: computed('cohorts.[]', function() {
     let deferred = defer();
     let allCourses = [];
