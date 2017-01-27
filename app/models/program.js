@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
 const { computed, RSVP } = Ember;
-const { all, defer, Promise} = RSVP;
+const { all, Promise} = RSVP;
 
 export default DS.Model.extend(PublishableModel,{
   title: DS.attr('string'),
@@ -27,32 +27,29 @@ export default DS.Model.extend(PublishableModel,{
    * @public
    */
   cohorts: computed('programYears.[]', function() {
-    let deferred = defer();
-    let allCohorts = [];
-    let promises = [];
-    promises.pushObject(new Promise(resolve => {
-      this.get('programYears').then(programYears => {
-        if(!programYears.length){
-          resolve();
-        }
-        let promises = [];
-        programYears.forEach(programYear => {
-          promises.pushObject(programYear.get('cohort').then(cohort =>{
-            allCohorts.pushObject(cohort);
-          }));
+    return new Promise(resolve => {
+      let allCohorts = [];
+      let promises = [];
+      promises.pushObject(new Promise(resolve => {
+        this.get('programYears').then(programYears => {
+          if(!programYears.length){
+            resolve();
+          }
+          let promises = [];
+          programYears.forEach(programYear => {
+            promises.pushObject(programYear.get('cohort').then(cohort =>{
+              allCohorts.pushObject(cohort);
+            }));
+          });
+          all(promises).then(()=>{
+            resolve();
+          });
         });
-        all(promises).then(()=>{
-          resolve();
-        });
+      }));
+
+      all(promises).then(()=>{
+        resolve(allCohorts);
       });
-    }));
-
-    all(promises).then(()=>{
-      deferred.resolve(allCohorts);
-    });
-
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
@@ -63,34 +60,31 @@ export default DS.Model.extend(PublishableModel,{
    * @public
    */
   courses: computed('cohorts.[]', function() {
-    let deferred = defer();
-    let allCourses = [];
-    let promises = [];
-    promises.pushObject(new Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        if(!cohorts.length){
-          resolve();
-        }
-        let promises = [];
-        cohorts.forEach(cohort => {
-          promises.pushObject(cohort.get('courses').then(courses =>{
-            courses.forEach(course => {
-              allCourses.pushObject(course);
-            });
-          }));
+    return new Promise(resolve => {
+      let allCourses = [];
+      let promises = [];
+      promises.pushObject(new Promise(resolve => {
+        this.get('cohorts').then(cohorts => {
+          if(!cohorts.length){
+            resolve();
+          }
+          let promises = [];
+          cohorts.forEach(cohort => {
+            promises.pushObject(cohort.get('courses').then(courses =>{
+              courses.forEach(course => {
+                allCourses.pushObject(course);
+              });
+            }));
+          });
+          all(promises).then(()=>{
+            resolve();
+          });
         });
-        all(promises).then(()=>{
-          resolve();
-        });
+      }));
+
+      all(promises).then(()=>{
+        resolve(allCourses.uniq());
       });
-    }));
-
-    all(promises).then(()=>{
-      deferred.resolve(allCourses.uniq());
-    });
-
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
