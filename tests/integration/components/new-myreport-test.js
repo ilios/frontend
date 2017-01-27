@@ -5,6 +5,8 @@ import tHelper from "ember-i18n/helper";
 const { RSVP, Service, Object } = Ember;
 const { resolve } = RSVP;
 
+import wait from 'ember-test-helpers/wait';
+
 moduleForComponent('new-myreport', 'Integration | Component | new myreport', {
   integration: true,
   beforeEach: function() {
@@ -207,4 +209,56 @@ test('choosing session type selects correct objects', function(assert) {
     'competency',
     'mesh term',
   ]);
+});
+
+
+test('can search for user #2506', function(assert) {
+  assert.expect(8);
+
+  const user = Object.create({
+    id: 1,
+    fullName: 'Test Person',
+    email: 'test@sample.com',
+    enabled: true
+  });
+  let storeMock = Service.extend({
+    query(what, {limit, q}){
+      assert.equal('user', what);
+      assert.equal(limit, 100);
+      assert.equal(q, 'abcd');
+      return resolve([user]);
+    },
+    peekRecord(what, userId){
+      assert.equal('user', what);
+      assert.equal(user.get('id'), userId);
+
+      return user;
+    }
+  });
+  this.register('service:store', storeMock);
+
+  this.on('close', parseInt);
+  this.render(hbs`{{new-myreport close=(action 'close')}}`);
+
+  const subjects = `select:eq(1) option`;
+  const objectSelect = 'select:eq(2)';
+  const targetSubject = `${subjects}:eq(0)`;
+  const targetObject = `instructor`;
+  const userSearch = '.user-search';
+  const input = `${userSearch} input`;
+  const results = `${userSearch} li`;
+  const firstResult = `${results}:eq(1)`;
+  const selectedUser = `.removable-list`;
+
+
+  assert.equal(this.$(targetSubject).val(), 'course');
+  this.$(objectSelect).val(targetObject).change();
+
+  assert.equal(this.$(userSearch).length, 1);
+  this.$(input).val('abcd').change();
+
+  return wait().then(()=>{
+    this.$(firstResult).click();
+    assert.equal(this.$(selectedUser).text().trim(), 'Test Person');
+  });
 });

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed } = Ember;
+const { Component, computed, isEmpty } = Ember;
 const { notEmpty, oneWay } = computed;
 
 let userProxy = Ember.ObjectProxy.extend({
@@ -20,7 +20,7 @@ let userProxy = Ember.ObjectProxy.extend({
 });
 let instructorGroupProxy = Ember.ObjectProxy.extend({
   isInstructorGroup: true,
-  currentlyActiveInstructorGroups: [],
+  currentlyActiveInstructorGroups: null,
   isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){
     return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
   }),
@@ -36,7 +36,7 @@ export default Component.extend({
   placeholder: null,
   roles: '',
   availableInstructorGroups: [],
-  currentlyActiveInstructorGroups: [],
+  currentlyActiveInstructorGroups: null,
   integrateInstructorGroups: notEmpty('availableInstructorGroups'),
   search: task(function * (searchTerms = '') {
     this.set('showMoreInputPrompt', false);
@@ -58,10 +58,11 @@ export default Component.extend({
       };
     }
     let users = yield this.get('store').query('user', query);
+    const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
     let results = users.map(user => {
       return userProxy.create({
         content: user,
-        currentlyActiveUsers: this.get('currentlyActiveUsers'),
+        currentlyActiveUsers,
       });
     });
 
@@ -71,10 +72,11 @@ export default Component.extend({
       let filteredGroups = this.get('availableInstructorGroups').filter(group => {
         return group.get('title') && group.get('title').match(exp);
       });
+      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
       let instructorGroupProxies = filteredGroups.map(group => {
         return instructorGroupProxy.create({
           content: group,
-          currentlyActiveInstructorGroups: this.get('currentlyActiveInstructorGroups'),
+          currentlyActiveInstructorGroups,
         });
       });
 
@@ -88,14 +90,16 @@ export default Component.extend({
     addUser: function(user){
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
-      if(!this.get('currentlyActiveUsers').includes(user)){
+      const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
+      if(!currentlyActiveUsers.includes(user)){
         this.sendAction('addUser', user);
       }
     },
     addInstructorGroup: function(group){
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
-      if(!this.get('currentlyActiveInstructorGroups').includes(group)){
+      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
+      if(!currentlyActiveInstructorGroups.includes(group)){
         this.sendAction('addInstructorGroup', group);
       }
     }
