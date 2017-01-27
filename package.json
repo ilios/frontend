@@ -109,7 +109,9 @@
   },
   "greenkeeper": {
     "ignore": [
-      "ember-cli-mirage"
+      "ember-cli-mirage",
+      "ember-tether"
+
     ]
   },
   "private": true
