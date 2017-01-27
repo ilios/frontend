@@ -50,17 +50,17 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.competencies'}} ({{course.competencies.length}})
+          {{t 'general.competencies'}} ({{get (await course.competencies) 'length'}})
         </div>
         <div class='detail-content'>
-          {{#if course.competencies.isFulfilled}}
-            {{#if course.competencies.length}}
+          {{#if (is-fulfilled course.competencies)}}
+            {{#if (get (await course.competencies) 'length')}}
               <ul class='static-list'>
-                {{#each course.domains as |domain|}}
+                {{#each (await course.domains) as |domain|}}
                   <li>
                     {{domain.title}}
                     <ul>
-                      {{#each domain.subCompetencies as |competency|}}
+                      {{#each (await domain.subCompetencies) as |competency|}}
                         <li>{{competency.title}}</li>
                       {{/each}}
                     </ul>
