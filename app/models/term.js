@@ -3,8 +3,8 @@ import Ember from 'ember';
 
 const { computed, RSVP } =  Ember;
 const { empty, notEmpty, collect, sum, gte } = computed;
-const { defer } = RSVP;
-const { attr, belongsTo, hasMany, Model, PromiseArray, PromiseObject } = DS;
+const { Promise } = RSVP;
+const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
   title: attr('string'),
@@ -30,21 +30,19 @@ export default Model.extend({
    * @public
    */
   allParents: computed('parent', 'parent.allParents.[]', function(){
-    let deferred = defer();
-    this.get('parent').then(parent => {
-      let parents = [];
-      if(!parent){
-        deferred.resolve(parents);
-      } else {
-        parents.pushObject(parent);
-        parent.get('allParents').then(allParents => {
-          parents.pushObjects(allParents);
-          deferred.resolve(parents);
-        });
-      }
-    });
-    return PromiseArray.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      this.get('parent').then(parent => {
+        let parents = [];
+        if(!parent){
+          resolve(parents);
+        } else {
+          parents.pushObject(parent);
+          parent.get('allParents').then(allParents => {
+            parents.pushObjects(allParents);
+            resolve(parents);
+          });
+        }
+      });
     });
   }),
 
@@ -56,17 +54,14 @@ export default Model.extend({
    * @public
    */
   termWithAllParents: computed('allParents.[]', function(){
-    let deferred = defer();
-    let terms = [];
-    let term = this;
-    this.get('allParents').then(allParents => {
-      terms.pushObjects(allParents);
-      terms.pushObject(term);
-      deferred.resolve(terms);
-    });
-
-    return PromiseArray.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      let terms = [];
+      let term = this;
+      this.get('allParents').then(allParents => {
+        terms.pushObjects(allParents);
+        terms.pushObject(term);
+        resolve(terms);
+      });
     });
   }),
 
@@ -78,25 +73,20 @@ export default Model.extend({
    * @public
    */
   allParentTitles: computed('parent.{title,allParentTitles.[]}', function() {
-    let deferred = defer();
-
-    this.get('parent').then(parent => {
-      let titles = [];
-      if(!parent){
-        deferred.resolve(titles);
-      } else {
-        parent.get('allParents').then(parents => {
-          titles = titles.concat(parents.mapBy('title'));
-          titles.push(this.get('parent.title'));
-          deferred.resolve(titles);
-        });
-      }
+    return new Promise(resolve => {
+      this.get('parent').then(parent => {
+        let titles = [];
+        if(!parent){
+          resolve(titles);
+        } else {
+          parent.get('allParents').then(parents => {
+            titles = titles.concat(parents.mapBy('title'));
+            titles.push(this.get('parent.title'));
+            resolve(titles);
+          });
+        }
+      });
     });
-
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
-
   }),
 
   /**
@@ -107,19 +97,16 @@ export default Model.extend({
    * @public
    */
   titleWithParentTitles: computed('title', 'allParentTitles.[]', function() {
-    let deferred = defer();
-    this.get('allParentTitles').then(parentTitles => {
-      let title;
-      if (! parentTitles.get('length')) {
-        title = this.get('title');
-      } else {
-        title = parentTitles.join(' > ') + ' > ' + this.get('title');
-      }
-      deferred.resolve(title);
-    });
-
-    return PromiseObject.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      this.get('allParentTitles').then(parentTitles => {
+        let title;
+        if (! parentTitles.get('length')) {
+          title = this.get('title');
+        } else {
+          title = parentTitles.join(' > ') + ' > ' + this.get('title');
+        }
+        resolve(title);
+      });
     });
   }),
 });
