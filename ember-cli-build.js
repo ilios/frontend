@@ -23,7 +23,7 @@ module.exports = function(defaults) {
     emberCliFontAwesome: {
       useScss: true
     },
-    babel: {
+    'ember-cli-babel': {
       includePolyfill: true
     },
     'ember-cli-qunit': {
