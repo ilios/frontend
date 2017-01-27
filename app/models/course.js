@@ -6,7 +6,7 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, RSVP } = Ember;
 const { filterBy, mapBy, sum } = computed;
-const { Promise } = RSVP;
+const { all, defer, map, Promise } = RSVP;
 const { Model, PromiseArray } = DS;
 
 export default Model.extend(PublishableModel, CategorizableModel, {
@@ -40,7 +40,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     let promise = new Promise(resolve => {
       this.get('objectives').then(function(objectives){
         var promises = objectives.getEach('treeCompetencies');
-        Ember.RSVP.all(promises).then(function(trees){
+        all(promises).then(function(trees){
           var competencies = trees.reduce(function(array, set){
             return array.pushObjects(set.toArray());
           }, []);
@@ -57,7 +57,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     });
   }),
   domains: computed('competencies.@each.domain', function(){
-    let defer = RSVP.defer();
+    let deferred = defer();
     let domainContainer = {};
     let domainIds = [];
     let promises = [];
@@ -81,15 +81,15 @@ export default Model.extend(PublishableModel, CategorizableModel, {
         }
       ));
     });
-    RSVP.all(promises).then(function(){
+    all(promises).then(function(){
       let domains = domainIds.map(function(id){
         return domainContainer[id];
       }).sortBy('title');
-      defer.resolve(domains);
+      deferred.resolve(domains);
     });
 
     return PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
   publishedSessions: filterBy('sessions', 'isPublished'),
@@ -142,9 +142,9 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     promises.pushObject(promise);
 
     // get schools from associated cohorts
-    promise = new Ember.RSVP.Promise(resolve => {
+    promise = new Promise(resolve => {
       this.get('cohorts').then(cohorts => {
-        RSVP.map(cohorts.mapBy('programYear'), programYear => {
+        map(cohorts.mapBy('programYear'), programYear => {
           return programYear.get('program').then(program => {
             return program.get('school').then(school => {
               schools.pushObject(school);
@@ -159,8 +159,8 @@ export default Model.extend(PublishableModel, CategorizableModel, {
 
     // once the two promises above resolve,
     // dedupe all schools and return a promise-array containing the dupe-free list of schools.
-    let deferred = Ember.RSVP.defer();
-    RSVP.all(promises).then(() => {
+    let deferred = defer();
+    all(promises).then(() => {
       let s = schools.uniq();
       deferred.resolve(s);
     });
@@ -177,9 +177,9 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   assignableVocabularies: computed('schools.@each.vocabularies', function() {
-    let deferred = Ember.RSVP.defer();
+    let deferred = defer();
     this.get('schools').then(function (schools) {
-      RSVP.all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
+      all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
         let v = [];
         schoolVocabs.forEach(vocabs => {
           vocabs.forEach(vocab => {
