@@ -20,7 +20,7 @@
       <option value=null selected={{is-equal null currentSchool}}>
         {{t 'general.allSchools'}}
       </option>
-      {{#each schoolList as |school|}}
+      {{#each (await schoolList) as |school|}}
         <option value={{school.id}} selected={{is-equal school currentSchool}}>
           {{school.title}}
         </option>
@@ -88,7 +88,7 @@
         {{#liquid-if (is-fulfilled prepositionalObjectIdList) class='crossFade'}}
           <select onchange={{action "changePrepositionalObjectId" value="target.value"}}>
             {{#each (sort-by 'label' (await prepositionalObjectIdList)) as |option|}}
-              <option value={{option.value}}>
+              <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
                 {{await option.label}}
               </option>
             {{/each}}
