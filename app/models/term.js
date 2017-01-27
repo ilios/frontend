@@ -23,9 +23,9 @@ export default Model.extend({
   hasAssociations: gte('totalAssociations', 1),
 
   allParents: computed('parent', 'parent.allParents.[]', function(){
-    var deferred = defer();
+    let deferred = defer();
     this.get('parent').then(parent => {
-      var parents = [];
+      let parents = [];
       if(!parent){
         deferred.resolve(parents);
       } else {
