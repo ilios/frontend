@@ -6,33 +6,33 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, RSVP } = Ember;
 const { filterBy, mapBy, sum } = computed;
-const { all, defer, map, Promise } = RSVP;
-const { Model, PromiseArray } = DS;
+const { all, map, Promise } = RSVP;
+const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend(PublishableModel, CategorizableModel, {
-  title: DS.attr('string'),
-  level: DS.attr('number'),
-  year: DS.attr('number'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
-  externalId: DS.attr('string'),
-  locked: DS.attr('boolean'),
-  archived: DS.attr('boolean'),
-  clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
-  directors: DS.hasMany('user', {
+  title: attr('string'),
+  level: attr('number'),
+  year: attr('number'),
+  startDate: attr('date'),
+  endDate: attr('date'),
+  externalId: attr('string'),
+  locked: attr('boolean'),
+  archived: attr('boolean'),
+  clerkshipType: belongsTo('course-clerkship-type', {async: true}),
+  school: belongsTo('school', {async: true}),
+  directors: hasMany('user', {
     async: true,
     inverse: 'directedCourses'
   }),
-  administrators: DS.hasMany('user', {
+  administrators: hasMany('user', {
     async: true,
     inverse: 'administeredCourses'
   }),
-  cohorts: DS.hasMany('cohort', {async: true}),
-  objectives: DS.hasMany('objective', {async: true}),
-  meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
-  learningMaterials: DS.hasMany('course-learning-material', {async: true}),
-  sessions: DS.hasMany('session', {async: true}),
+  cohorts: hasMany('cohort', {async: true}),
+  objectives: hasMany('objective', {async: true}),
+  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  learningMaterials: hasMany('course-learning-material', {async: true}),
+  sessions: hasMany('session', {async: true}),
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }),
@@ -47,11 +47,11 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     return new Promise(resolve => {
       this.get('objectives').then(function(objectives){
         let promises = objectives.getEach('treeCompetencies');
-        all(promises).then(function(trees){
-          let competencies = trees.reduce(function(array, set){
+        all(promises).then(trees => {
+          let competencies = trees.reduce((array, set) => {
             return array.pushObjects(set.toArray());
           }, []);
-          competencies = competencies.uniq().filter(function(item){
+          competencies = competencies.uniq().filter(item => {
             return item != null;
           });
           resolve(competencies);
@@ -72,7 +72,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
       let domainIds = [];
       let promises = [];
       this.get('competencies').then(competencies => {
-        competencies.forEach(function(competency){
+        competencies.forEach(competency => {
           promises.pushObject(competency.get('domain').then(domain => {
             if(!domainContainer.hasOwnProperty(domain.get('id'))){
               domainIds.pushObject(domain.get('id'));
@@ -88,12 +88,11 @@ export default Model.extend(PublishableModel, CategorizableModel, {
                 subCompetencies.sortBy('title');
               }
             }
-          }
-          ));
+          }));
         });
 
-        all(promises).then(function(){
-          let domains = domainIds.map(function(id){
+        all(promises).then(() => {
+          let domains = domainIds.map(id => {
             return domainContainer[id];
           }).sortBy('title');
 
@@ -186,8 +185,8 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    */
   assignableVocabularies: computed('schools.@each.vocabularies', function() {
     return new Promise(resolve => {
-      this.get('schools').then(function (schools) {
-        all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
+      this.get('schools').then(schools => {
+        all(schools.mapBy('vocabularies')).then(schoolVocabs => {
           let v = [];
           schoolVocabs.forEach(vocabs => {
             vocabs.forEach(vocab => {
