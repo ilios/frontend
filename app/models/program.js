@@ -2,7 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
-const { computed } = Ember;
+const { computed, RSVP } = Ember;
+const { all, defer, Promise} = RSVP;
 
 export default DS.Model.extend(PublishableModel,{
   title: DS.attr('string'),
@@ -20,10 +21,10 @@ export default DS.Model.extend(PublishableModel,{
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
 
   cohorts: computed('programYears.[]', function() {
-    let defer = Ember.RSVP.defer();
+    let deferred = defer();
     let allCohorts = [];
     let promises = [];
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
+    promises.pushObject(new Promise(resolve => {
       this.get('programYears').then(programYears => {
         if(!programYears.length){
           resolve();
@@ -34,26 +35,26 @@ export default DS.Model.extend(PublishableModel,{
             allCohorts.pushObject(cohort);
           }));
         });
-        Ember.RSVP.all(promises).then(()=>{
+        all(promises).then(()=>{
           resolve();
         });
       });
     }));
 
-    Ember.RSVP.all(promises).then(()=>{
-      defer.resolve(allCohorts);
+    all(promises).then(()=>{
+      deferred.resolve(allCohorts);
     });
 
     return DS.PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
 
   courses: computed('cohorts.[]', function() {
-    let defer = Ember.RSVP.defer();
+    let deferred = defer();
     let allCourses = [];
     let promises = [];
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
+    promises.pushObject(new Promise(resolve => {
       this.get('cohorts').then(cohorts => {
         if(!cohorts.length){
           resolve();
@@ -66,20 +67,21 @@ export default DS.Model.extend(PublishableModel,{
             });
           }));
         });
-        Ember.RSVP.all(promises).then(()=>{
+        all(promises).then(()=>{
           resolve();
         });
       });
     }));
 
-    Ember.RSVP.all(promises).then(()=>{
-      defer.resolve(allCourses.uniq());
+    all(promises).then(()=>{
+      deferred.resolve(allCourses.uniq());
     });
 
     return DS.PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
+
   requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
   optionalPublicationLengthFields: ['programYears'],
   requiredPublicationIssues: computed('title', 'shortTitle', 'duration', function(){
