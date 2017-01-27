@@ -21,16 +21,16 @@
   {{/if}}
 </td>
 <td class='text-left text-top' colspan=2>
-  {{#if objective.competency}}
+  {{#if (await objective.competency)}}
     {{#if editable}}
       <span class='clickable link' {{action this.attrs.manageCompetency objective}}>
-        {{objective.competency.title}}
+        {{get (await objective.competency) "title"}}
       </span>
     {{else}}
-      {{objective.competency.title}}
+      {{get (await objective.competency) "title"}}
     {{/if}}
-    {{#if (not-eq (await objective.competency.id) (await objective.competency.domain.id))}}
-      ({{objective.competency.domain.title}})
+    {{#if (not-eq (get (await objective.competency) "id") (get (await objective.competency.domain) "id"))}}
+      ({{get (await objective.competency.domain) "title"}})
     {{/if}}
   {{else}}
     {{#if editable}}
@@ -43,7 +43,7 @@
 <td class='text-left text-top' colspan=2>
   {{#if objective.meshDescriptors.length}}
     <ul>
-      {{#each objective.meshDescriptors as |descriptor|}}
+      {{#each (await objective.meshDescriptors) as |descriptor|}}
         {{#if editable}}
           <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
         {{else}}
