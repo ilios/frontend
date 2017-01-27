@@ -1,28 +1,29 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { computed } =  Ember;
+const { computed, RSVP } =  Ember;
 const { empty, notEmpty, collect, sum, gte } = computed;
-const { Model } = DS;
+const { defer } = RSVP;
+const { attr, belongsTo, hasMany, Model, PromiseArray, PromiseObject } = DS;
 
 export default Model.extend({
-  title: DS.attr('string'),
-  description: DS.attr('string'),
-  vocabulary: DS.belongsTo('vocabulary', {async: true}),
-  parent: DS.belongsTo('term', { inverse: 'children', async: true }),
-  children: DS.hasMany('term', { inverse: 'parent', async: true }),
+  title: attr('string'),
+  description: attr('string'),
+  vocabulary: belongsTo('vocabulary', {async: true}),
+  parent: belongsTo('term', { inverse: 'children', async: true }),
+  children: hasMany('term', { inverse: 'parent', async: true }),
   isTopLevel: empty('parent.content'),
-  programYears: DS.hasMany('programYear', { async: true }),
-  sessions: DS.hasMany('session', { async: true }),
-  courses: DS.hasMany('course', { async: true }),
-  aamcResourceTypes: DS.hasMany('term', { async: true }),
+  programYears: hasMany('programYear', { async: true }),
+  sessions: hasMany('session', { async: true }),
+  courses: hasMany('course', { async: true }),
+  aamcResourceTypes: hasMany('term', { async: true }),
   hasChildren: notEmpty('children.content'),
   associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
 
   allParents: computed('parent', 'parent.allParents.[]', function(){
-    var deferred = Ember.RSVP.defer();
+    var deferred = defer();
     this.get('parent').then(parent => {
       var parents = [];
       if(!parent){
@@ -35,13 +36,13 @@ export default Model.extend({
         });
       }
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
 
   termWithAllParents: computed('allParents.[]', function(){
-    let deferred = Ember.RSVP.defer();
+    let deferred = defer();
     let terms = [];
     let term = this;
     this.get('allParents').then(allParents => {
@@ -50,13 +51,13 @@ export default Model.extend({
       deferred.resolve(terms);
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
 
   allParentTitles: computed('parent.{title,allParentTitles.[]}', function() {
-    let deferred = Ember.RSVP.defer();
+    let deferred = defer();
 
     this.get('parent').then(parent => {
       let titles = [];
@@ -71,14 +72,14 @@ export default Model.extend({
       }
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
 
   }),
 
   titleWithParentTitles: computed('title', 'allParentTitles.[]', function() {
-    let deferred = Ember.RSVP.defer();
+    let deferred = defer();
     this.get('allParentTitles').then(parentTitles => {
       let title;
       if (! parentTitles.get('length')) {
@@ -89,7 +90,7 @@ export default Model.extend({
       deferred.resolve(title);
     });
 
-    return DS.PromiseObject.create({
+    return PromiseObject.create({
       promise: deferred.promise
     });
   }),
