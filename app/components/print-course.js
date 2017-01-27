@@ -26,7 +26,8 @@ export default Component.extend({
 
       const course = this.get('course');
       if(!course){
-        return [];
+        resolve([]);
+        return;
       }
 
       let SessionProxy = ObjectProxy.extend({
