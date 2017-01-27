@@ -36,8 +36,15 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }),
+
+  /**
+   * All competencies linked to this course via its objectives.
+   * @property competencies
+   * @type {Ember.computed}
+   * @public
+   */
   competencies: computed('objectives.@each.treeCompetencies', function(){
-    let promise = new Promise(resolve => {
+    return new Promise(resolve => {
       this.get('objectives').then(function(objectives){
         let promises = objectives.getEach('treeCompetencies');
         all(promises).then(function(trees){
@@ -51,11 +58,8 @@ export default Model.extend(PublishableModel, CategorizableModel, {
         });
       });
     });
-
-    return PromiseArray.create({
-      promise: promise
-    });
   }),
+
   domains: computed('competencies.@each.domain', function(){
     let deferred = defer();
     let domainContainer = {};
