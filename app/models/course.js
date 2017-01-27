@@ -6,92 +6,102 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, RSVP } = Ember;
 const { filterBy, mapBy, sum } = computed;
-const { Promise } = RSVP;
-const { Model, PromiseArray } = DS;
+const { all, map, Promise } = RSVP;
+const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend(PublishableModel, CategorizableModel, {
-  title: DS.attr('string'),
-  level: DS.attr('number'),
-  year: DS.attr('number'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
-  externalId: DS.attr('string'),
-  locked: DS.attr('boolean'),
-  archived: DS.attr('boolean'),
-  clerkshipType: DS.belongsTo('course-clerkship-type', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
-  directors: DS.hasMany('user', {
+  title: attr('string'),
+  level: attr('number'),
+  year: attr('number'),
+  startDate: attr('date'),
+  endDate: attr('date'),
+  externalId: attr('string'),
+  locked: attr('boolean'),
+  archived: attr('boolean'),
+  clerkshipType: belongsTo('course-clerkship-type', {async: true}),
+  school: belongsTo('school', {async: true}),
+  directors: hasMany('user', {
     async: true,
     inverse: 'directedCourses'
   }),
-  administrators: DS.hasMany('user', {
+  administrators: hasMany('user', {
     async: true,
     inverse: 'administeredCourses'
   }),
-  cohorts: DS.hasMany('cohort', {async: true}),
-  objectives: DS.hasMany('objective', {async: true}),
-  meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
-  learningMaterials: DS.hasMany('course-learning-material', {async: true}),
-  sessions: DS.hasMany('session', {async: true}),
+  cohorts: hasMany('cohort', {async: true}),
+  objectives: hasMany('objective', {async: true}),
+  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  learningMaterials: hasMany('course-learning-material', {async: true}),
+  sessions: hasMany('session', {async: true}),
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }),
+
+  /**
+   * All competencies linked to this course via its objectives.
+   * @property competencies
+   * @type {Ember.computed}
+   * @public
+   */
   competencies: computed('objectives.@each.treeCompetencies', function(){
-    let promise = new Promise(resolve => {
+    return new Promise(resolve => {
       this.get('objectives').then(function(objectives){
-        var promises = objectives.getEach('treeCompetencies');
-        Ember.RSVP.all(promises).then(function(trees){
-          var competencies = trees.reduce(function(array, set){
+        let promises = objectives.getEach('treeCompetencies');
+        all(promises).then(trees => {
+          let competencies = trees.reduce((array, set) => {
             return array.pushObjects(set.toArray());
           }, []);
-          competencies = competencies.uniq().filter(function(item){
+          competencies = competencies.uniq().filter(item => {
             return item != null;
           });
           resolve(competencies);
         });
       });
     });
-
-    return PromiseArray.create({
-      promise: promise
-    });
   }),
+
+  /**
+   * All competency domains linked to this course via its objectives.
+   * @property domains
+   * @type {Ember.computed}
+   * @public
+   */
   domains: computed('competencies.@each.domain', function(){
-    let defer = RSVP.defer();
-    let domainContainer = {};
-    let domainIds = [];
-    let promises = [];
-    this.get('competencies').forEach(function(competency){
-      promises.pushObject(competency.get('domain').then(
-        domain => {
-          if(!domainContainer.hasOwnProperty(domain.get('id'))){
-            domainIds.pushObject(domain.get('id'));
-            domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
-              content: domain,
-              subCompetencies: []
-            });
-          }
-          if(competency.get('id') !== domain.get('id')){
-            let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-            if(!subCompetencies.includes(competency)){
-              subCompetencies.pushObject(competency);
-              subCompetencies.sortBy('title');
+    return new Promise(resolve => {
+      let domainContainer = {};
+      let domainIds = [];
+      let promises = [];
+      this.get('competencies').then(competencies => {
+        competencies.forEach(competency => {
+          promises.pushObject(competency.get('domain').then(domain => {
+            if(!domainContainer.hasOwnProperty(domain.get('id'))){
+              domainIds.pushObject(domain.get('id'));
+              domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
+                content: domain,
+                subCompetencies: []
+              });
             }
-          }
-        }
-      ));
-    });
-    RSVP.all(promises).then(function(){
-      let domains = domainIds.map(function(id){
-        return domainContainer[id];
-      }).sortBy('title');
-      defer.resolve(domains);
-    });
+            if(competency.get('id') !== domain.get('id')){
+              let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
+              if(!subCompetencies.includes(competency)){
+                subCompetencies.pushObject(competency);
+                subCompetencies.sortBy('title');
+              }
+            }
+          }));
+        });
 
-    return PromiseArray.create({
-      promise: defer.promise
+        all(promises).then(() => {
+          let domains = domainIds.map(id => {
+            return domainContainer[id];
+          }).sortBy('title');
+
+          resolve(domains);
+        });
+      });
     });
   }),
+
   publishedSessions: filterBy('sessions', 'isPublished'),
   publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
@@ -128,45 +138,42 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   schools: computed('school', 'cohorts.[]', function() {
-    let schools = [];
-    let promises = [];
+    return new Promise(resolve => {
+      let schools = [];
+      let promises = [];
 
-    // get course-owning school
-    let promise = new Promise(resolve => {
-      this.get('school').then(school => {
-        schools.pushObject(school);
-        resolve();
-      });
-
-    });
-    promises.pushObject(promise);
-
-    // get schools from associated cohorts
-    promise = new Ember.RSVP.Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        RSVP.map(cohorts.mapBy('programYear'), programYear => {
-          return programYear.get('program').then(program => {
-            return program.get('school').then(school => {
-              schools.pushObject(school);
-            });
-          });
-        }).then(() => {
+      // get course-owning school
+      let promise = new Promise(resolve => {
+        this.get('school').then(school => {
+          schools.pushObject(school);
           resolve();
         });
+
       });
-    });
-    promises.pushObject(promise);
+      promises.pushObject(promise);
 
-    // once the two promises above resolve,
-    // dedupe all schools and return a promise-array containing the dupe-free list of schools.
-    let deferred = Ember.RSVP.defer();
-    RSVP.all(promises).then(() => {
-      let s = schools.uniq();
-      deferred.resolve(s);
-    });
+      // get schools from associated cohorts
+      promise = new Promise(resolve => {
+        this.get('cohorts').then(cohorts => {
+          map(cohorts.mapBy('programYear'), programYear => {
+            return programYear.get('program').then(program => {
+              return program.get('school').then(school => {
+                schools.pushObject(school);
+              });
+            });
+          }).then(() => {
+            resolve();
+          });
+        });
+      });
+      promises.pushObject(promise);
 
-    return PromiseArray.create({
-      promise: deferred.promise
+      // once the two promises above resolve,
+      // de-dupe all schools and return a promise-array containing the dupe-free list of schools.
+      all(promises).then(() => {
+        let s = schools.uniq();
+        resolve(s);
+      });
     });
   }),
 
@@ -177,21 +184,19 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   assignableVocabularies: computed('schools.@each.vocabularies', function() {
-    let deferred = Ember.RSVP.defer();
-    this.get('schools').then(function (schools) {
-      RSVP.all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
-        let v = [];
-        schoolVocabs.forEach(vocabs => {
-          vocabs.forEach(vocab => {
-            v.pushObject(vocab);
+    return new Promise(resolve => {
+      this.get('schools').then(schools => {
+        all(schools.mapBy('vocabularies')).then(schoolVocabs => {
+          let v = [];
+          schoolVocabs.forEach(vocabs => {
+            vocabs.forEach(vocab => {
+              v.pushObject(vocab);
+            });
           });
+          v = v.sortBy('school.title', 'title');
+          resolve(v);
         });
-        v = v.sortBy('school.title', 'title');
-        deferred.resolve(v);
       });
     });
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
-  }),
+  })
 });
