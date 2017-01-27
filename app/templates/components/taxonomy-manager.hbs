@@ -1,6 +1,6 @@
 {{#if selectedTerms}}
   <div class='selected-terms'>
-    {{#each subject.assignableVocabularies as |vocab| }}
+    {{#each (await subject.assignableVocabularies) as |vocab| }}
       {{detail-terms-list
         vocabulary=vocab
         terms=selectedTerms
@@ -10,20 +10,25 @@
     {{/each}}
   </div>
 {{/if}}
-{{#if subject.assignableVocabularies.length}}
+{{#if (get (await subject.assignableVocabularies) 'length')}}
   <div class='vocabulary-picker'>
     <label class="inline-label">
       <strong>{{t 'general.selectVocabulary'}}</strong>
     </label>
     <div id="vocabulary-selection" class="inline-data">
       <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
-        {{#each subject.assignableVocabularies as |vocab|}}
+        {{#each (await subject.assignableVocabularies) as |vocab|}}
           <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
         {{/each}}
       </select>
     </div>
   </div>
   <div class='terms-picker tag-tree'>
-    {{selectable-terms-list selectedTerms=selectedTerms terms=selectedVocabulary.topLevelTerms add='add' remove='remove'}}
+    {{selectable-terms-list
+      selectedTerms=selectedTerms
+      terms=(get (await selectedVocabulary) 'topLevelTerms')
+      add='add'
+      remove='remove'
+    }}
   </div>
 {{/if}}
