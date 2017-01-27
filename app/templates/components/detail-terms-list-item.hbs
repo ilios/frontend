@@ -6,7 +6,7 @@
 {{#if term.isTopLevel}}
   {{term.title}}
 {{else}}
-  {{#each term.allParentTitles as |title|}}
+  {{#each (await term.allParentTitles) as |title|}}
     <span class="muted">{{title}} &raquo;</span>
   {{/each}}
   {{term.title}}
