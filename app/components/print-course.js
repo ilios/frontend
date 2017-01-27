@@ -14,6 +14,13 @@ export default Component.extend({
   sortDirectorsBy: ['lastName', 'firstName'],
   sortedDirectors: computed.sort('course.directors', 'sortDirectorsBy'),
   sortedMeshDescriptors: computed.sort('course.meshDescriptors', 'sortTitle'),
+
+  /**
+   * A list of proxied course sessions, sorted by title.
+   * @property sortedSessionProxies
+   * @type {Ember.computed}
+   * @public
+   */
   sortedSessionProxies: computed('course.sessions.[]', function(){
     return new Promise(resolve => {
 
