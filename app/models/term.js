@@ -22,6 +22,13 @@ export default Model.extend({
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
 
+  /**
+   * A list of parent terms of this term, sorted by ancestry (oldest ancestor first).
+   *
+   * @property allParents
+   * @type {Ember.computed}
+   * @public
+   */
   allParents: computed('parent', 'parent.allParents.[]', function(){
     let deferred = defer();
     this.get('parent').then(parent => {
@@ -41,6 +48,13 @@ export default Model.extend({
     });
   }),
 
+  /**
+   * A list of parent terms of this term, including this term as its last item.
+   *
+   * @property termWithAllParents
+   * @type {Ember.computed}
+   * @public
+   */
   termWithAllParents: computed('allParents.[]', function(){
     let deferred = defer();
     let terms = [];
@@ -56,6 +70,13 @@ export default Model.extend({
     });
   }),
 
+  /**
+   * A list of parent terms titles of this term, sorted by ancestry (oldest ancestor first).
+   *
+   * @property allParentTitles
+   * @type {Ember.computed}
+   * @public
+   */
   allParentTitles: computed('parent.{title,allParentTitles.[]}', function() {
     let deferred = defer();
 
@@ -78,6 +99,13 @@ export default Model.extend({
 
   }),
 
+  /**
+   * A list of parent terms titles of this term, including this term's title as its last item.
+   *
+   * @property titleWithParentTitles
+   * @type {Ember.computed}
+   * @public
+   */
   titleWithParentTitles: computed('title', 'allParentTitles.[]', function() {
     let deferred = defer();
     this.get('allParentTitles').then(parentTitles => {
@@ -94,5 +122,4 @@ export default Model.extend({
       promise: deferred.promise
     });
   }),
-
 });
