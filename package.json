@@ -95,6 +95,7 @@
     "liquid-tether": "2.0.3",
     "loader.js": "^4.0.11",
     "node-sass": "4.3.0",
+    "normalize.css": "^4.1.1",
     "pluralize": "^3.0.0",
     "validator": "^6.0.0"
   },
