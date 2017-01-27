@@ -60,42 +60,49 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     });
   }),
 
+  /**
+   * All competency domains linked to this course via its objectives.
+   * @property domains
+   * @type {Ember.computed}
+   * @public
+   */
   domains: computed('competencies.@each.domain', function(){
-    let deferred = defer();
-    let domainContainer = {};
-    let domainIds = [];
-    let promises = [];
-    this.get('competencies').forEach(function(competency){
-      promises.pushObject(competency.get('domain').then(
-        domain => {
-          if(!domainContainer.hasOwnProperty(domain.get('id'))){
-            domainIds.pushObject(domain.get('id'));
-            domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
-              content: domain,
-              subCompetencies: []
-            });
-          }
-          if(competency.get('id') !== domain.get('id')){
-            let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-            if(!subCompetencies.includes(competency)){
-              subCompetencies.pushObject(competency);
-              subCompetencies.sortBy('title');
+    return new Promise(resolve => {
+      let domainContainer = {};
+      let domainIds = [];
+      let promises = [];
+      this.get('competencies').then(competencies => {
+        competencies.forEach(function(competency){
+          promises.pushObject(competency.get('domain').then(domain => {
+            if(!domainContainer.hasOwnProperty(domain.get('id'))){
+              domainIds.pushObject(domain.get('id'));
+              domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
+                content: domain,
+                subCompetencies: []
+              });
+            }
+            if(competency.get('id') !== domain.get('id')){
+              let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
+              if(!subCompetencies.includes(competency)){
+                subCompetencies.pushObject(competency);
+                subCompetencies.sortBy('title');
+              }
             }
           }
-        }
-      ));
-    });
-    all(promises).then(function(){
-      let domains = domainIds.map(function(id){
-        return domainContainer[id];
-      }).sortBy('title');
-      deferred.resolve(domains);
-    });
+          ));
+        });
 
-    return PromiseArray.create({
-      promise: deferred.promise
+        all(promises).then(function(){
+          let domains = domainIds.map(function(id){
+            return domainContainer[id];
+          }).sortBy('title');
+
+          resolve(domains);
+        });
+      });
     });
   }),
+
   publishedSessions: filterBy('sessions', 'isPublished'),
   publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
