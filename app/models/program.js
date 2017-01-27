@@ -2,7 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
 
-const { computed } = Ember;
+const { computed, RSVP } = Ember;
+const { all, Promise} = RSVP;
 
 export default DS.Model.extend(PublishableModel,{
   title: DS.attr('string'),
@@ -19,67 +20,74 @@ export default DS.Model.extend(PublishableModel,{
   }),
   curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
 
+  /**
+   * All cohorts associated with this program via its program years.
+   * @property cohorts
+   * @type {Ember.computed}
+   * @public
+   */
   cohorts: computed('programYears.[]', function() {
-    let defer = Ember.RSVP.defer();
-    let allCohorts = [];
-    let promises = [];
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
-      this.get('programYears').then(programYears => {
-        if(!programYears.length){
-          resolve();
-        }
-        let promises = [];
-        programYears.forEach(programYear => {
-          promises.pushObject(programYear.get('cohort').then(cohort =>{
-            allCohorts.pushObject(cohort);
-          }));
+    return new Promise(resolve => {
+      let allCohorts = [];
+      let promises = [];
+      promises.pushObject(new Promise(resolve => {
+        this.get('programYears').then(programYears => {
+          if(!programYears.length){
+            resolve();
+          }
+          let promises = [];
+          programYears.forEach(programYear => {
+            promises.pushObject(programYear.get('cohort').then(cohort =>{
+              allCohorts.pushObject(cohort);
+            }));
+          });
+          all(promises).then(()=>{
+            resolve();
+          });
         });
-        Ember.RSVP.all(promises).then(()=>{
-          resolve();
-        });
+      }));
+
+      all(promises).then(()=>{
+        resolve(allCohorts);
       });
-    }));
-
-    Ember.RSVP.all(promises).then(()=>{
-      defer.resolve(allCohorts);
-    });
-
-    return DS.PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
+  /**
+   * All courses linked to this program via its program years/cohorts.
+   * @property courses
+   * @type {Ember.computed}
+   * @public
+   */
   courses: computed('cohorts.[]', function() {
-    let defer = Ember.RSVP.defer();
-    let allCourses = [];
-    let promises = [];
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        if(!cohorts.length){
-          resolve();
-        }
-        let promises = [];
-        cohorts.forEach(cohort => {
-          promises.pushObject(cohort.get('courses').then(courses =>{
-            courses.forEach(course => {
-              allCourses.pushObject(course);
-            });
-          }));
+    return new Promise(resolve => {
+      let allCourses = [];
+      let promises = [];
+      promises.pushObject(new Promise(resolve => {
+        this.get('cohorts').then(cohorts => {
+          if(!cohorts.length){
+            resolve();
+          }
+          let promises = [];
+          cohorts.forEach(cohort => {
+            promises.pushObject(cohort.get('courses').then(courses =>{
+              courses.forEach(course => {
+                allCourses.pushObject(course);
+              });
+            }));
+          });
+          all(promises).then(()=>{
+            resolve();
+          });
         });
-        Ember.RSVP.all(promises).then(()=>{
-          resolve();
-        });
+      }));
+
+      all(promises).then(()=>{
+        resolve(allCourses.uniq());
       });
-    }));
-
-    Ember.RSVP.all(promises).then(()=>{
-      defer.resolve(allCourses.uniq());
-    });
-
-    return DS.PromiseArray.create({
-      promise: defer.promise
     });
   }),
+
   requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
   optionalPublicationLengthFields: ['programYears'],
   requiredPublicationIssues: computed('title', 'shortTitle', 'duration', function(){
