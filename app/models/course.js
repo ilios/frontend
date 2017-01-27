@@ -177,21 +177,19 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   assignableVocabularies: computed('schools.@each.vocabularies', function() {
-    let deferred = defer();
-    this.get('schools').then(function (schools) {
-      all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
-        let v = [];
-        schoolVocabs.forEach(vocabs => {
-          vocabs.forEach(vocab => {
-            v.pushObject(vocab);
+    return new Promise(resolve => {
+      this.get('schools').then(function (schools) {
+        all(schools.mapBy('vocabularies')).then(function (schoolVocabs) {
+          let v = [];
+          schoolVocabs.forEach(vocabs => {
+            vocabs.forEach(vocab => {
+              v.pushObject(vocab);
+            });
           });
+          v = v.sortBy('school.title', 'title');
+          resolve(v);
         });
-        v = v.sortBy('school.title', 'title');
-        deferred.resolve(v);
       });
     });
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
-  }),
+  })
 });
