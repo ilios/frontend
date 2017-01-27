@@ -16,26 +16,19 @@ export default Model.extend({
   programYears: hasMany('program-year', {async: true}),
   isDomain: empty('parent.content'),
   isNotDomain: not('isDomain'),
-  domain: computed('parent', 'parent.domain', function(){
-    let promise = new Ember.RSVP.Promise(
-      resolve => {
-        this.get('parent').then(
-          parent => {
-            if(!parent){
-              resolve(this);
-            } else {
-              parent.get('domain').then(
-                domain => resolve(domain)
-              );
-            }
-          }
-        );
-      }
-    );
-    return DS.PromiseObject.create({
-      promise: promise
+
+  domain: computed('parent', 'parent.domain', function() {
+    return new Promise(resolve => {
+      this.get('parent').then(parent => {
+        if (!parent) {
+          resolve(this);
+        } else {
+          parent.get('domain').then(domain => resolve(domain));
+        }
+      });
     });
   }),
+
   treeChildren: computed('children.[]', function(){
     return new Promise(resolve => {
       let rhett = [];
@@ -53,6 +46,5 @@ export default Model.extend({
         });
       });
     });
-
   })
 });
