@@ -58,7 +58,7 @@
     "ember-concurrency": "0.7.19",
     "ember-cp-validations": "3.2.2",
     "ember-cryptojs-shim": "^2.0.0",
-    "ember-data": "~2.10.0",
+    "ember-data": "~2.11.0",
     "ember-exam": "0.6.0",
     "ember-export-application-global": "^1.0.5",
     "ember-font-awesome": "2.2.0",
@@ -109,8 +109,7 @@
   },
   "greenkeeper": {
     "ignore": [
-      "ember-cli-mirage",
-      "ember-data"
+      "ember-cli-mirage"
     ]
   },
   "private": true
