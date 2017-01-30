@@ -92,6 +92,7 @@
     "liquid-fire": "0.27.0",
     "liquid-tether": "2.0.3",
     "loader.js": "^4.0.11",
+    "node-sass": "4.3.0",
     "pluralize": "^3.0.0",
     "validator": "^6.0.0"
   },
@@ -111,7 +112,6 @@
     "ignore": [
       "ember-cli-mirage",
       "ember-tether"
-
     ]
   },
   "private": true
