@@ -8,9 +8,11 @@
     courseObjectiveDetails=courseObjectiveDetails
     courseTaxonomyDetails = courseTaxonomyDetails
     courseCompetencyDetails = courseCompetencyDetails
+    currentlyManagedObjective=currentlyManagedObjective
     setCourseObjectiveDetails=(action this.attrs.setCourseObjectiveDetails)
     setCourseTaxonomyDetails=(action this.attrs.setCourseTaxonomyDetails)
     setCourseCompetencyDetails=(action this.attrs.setCourseCompetencyDetails)
+    setCurrentlyManagedObjective=(action this.attrs.setCurrentlyManagedObjective)
   }}
   <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'general.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
 {{/if}}

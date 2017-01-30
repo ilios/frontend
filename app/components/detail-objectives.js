@@ -31,6 +31,23 @@ export default Component.extend({
   newObjectiveEditorOn: false,
   newObjectiveTitle: null,
   editorParams: config.froalaEditorDefaults,
+  currentlyManagedObjective: 0,
+  didReceiveAttrs() {
+    const currentlyManagedObjectiveId = this.get('currentlyManagedObjective');
+    if (currentlyManagedObjectiveId) {
+      this.get('subject.objectives').then(objectives => {
+        let objective = objectives.toArray().find(objective => {
+          return objective.get('id') == currentlyManagedObjectiveId;
+        });
+        if (objective) {
+          objective.get('parents').then((parents) => {
+            this.set('initialStateForManageParentsObjective', parents.toArray());
+            this.set('mangeParentsObjective', objective);
+          });
+        }
+      });
+    }
+  },
 
   showCollapsible: computed('isManaging', 'objectives', function(){
     const isManaging = this.get('isManaging');
@@ -52,6 +69,7 @@ export default Component.extend({
       objective.get('parents').then((parents) => {
         this.set('initialStateForManageParentsObjective', parents.toArray());
         this.set('mangeParentsObjective', objective);
+        this.get('setCurrentlyManagedObjective')(objective.get('id'));
       });
     },
     manageDescriptors: function(objective){
@@ -80,6 +98,7 @@ export default Component.extend({
           });
           objective.save().then(() => {
             this.set('mangeParentsObjective', null);
+            this.get('setCurrentlyManagedObjective')(0);
             scrollTo("#objective-" + objective.get('id'));
           });
         });
@@ -127,6 +146,7 @@ export default Component.extend({
         parents.clear();
         parents.addObjects(this.get('initialStateForManageParentsObjective'));
         self.set('mangeParentsObjective', null);
+        self.get('setCurrentlyManagedObjective')(0);
       }
 
       if(this.get('isManagingDescriptors')){

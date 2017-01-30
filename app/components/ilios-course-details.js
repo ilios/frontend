@@ -11,6 +11,7 @@ export default Component.extend({
   courseObjectiveDetails: null,
   courseTaxonomyDetails: null,
   courseCompetencyDetails: null,
+  currentlyManagedObjective: null,
   actions: {
     collapse: function(){
       this.get('setShowDetails')(false);

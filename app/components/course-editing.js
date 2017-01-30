@@ -8,6 +8,7 @@ export default Component.extend({
   courseObjectiveDetails: false,
   courseTaxonomyDetails: false,
   courseCompetencyDetails: false,
+  currentlyManagedObjective: 0,
   actions: {
     save: function(){
       var self = this;
