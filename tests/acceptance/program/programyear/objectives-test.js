@@ -329,7 +329,7 @@ test('empty objective title can not be saved', function(assert) {
   const container = '.programyear-objective-list';
   const title = `${container} tbody tr:eq(0) td:eq(0)`;
   const edit = `${title} .editable span`;
-  const editor = `${title} .froalaEditor`;
+  const editor = `${title} .fr-box`;
   const initialObjectiveTitle = 'objective 0';
   const save = `${title} .done`;
   const errorMessage = `${title} .validation-error-message`;

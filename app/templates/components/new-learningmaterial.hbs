@@ -94,9 +94,8 @@
     <label class="form-label">{{t 'general.description'}}:</label>
     <div class="form-data">
       {{froala-editor
-        params=editorParams
-        value=description
-        contentChanged=(action 'changeDescription')
+        content=description
+        update=(action 'changeDescription')
       }}
     </div>
   </div>

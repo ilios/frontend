@@ -8,9 +8,8 @@
         close=(action 'revertTitleChanges')
       }}
         {{froala-editor
-          params=editorParams
-          value=title
-          contentChanged=(action "changeTitle")
+          content=title
+          update=(action "changeTitle")
         }}
         {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>

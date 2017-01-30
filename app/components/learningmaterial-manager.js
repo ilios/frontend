@@ -54,12 +54,6 @@ export default Component.extend({
     changePublicNotes: function(value){
       this.sendAction('changePublicNotes', value);
     },
-    changeNotes(event, editor){
-      if(editor){
-        const contents = editor.html.get();
-        this.set('notes', contents);
-      }
-    },
     saveNoteChanges: function(){
       const notes = this.get('notes');
       return this.get('changeNotes')(notes);

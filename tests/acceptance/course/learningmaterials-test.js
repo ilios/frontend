@@ -187,9 +187,9 @@ test('list learning materials', function(assert) {
 //     fillIn(inputs.eq(1), testAuthor);
 //     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
 //     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-//     find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
-//     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-//     find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
+//     find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
+//     find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
+//     find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
 //     click('.detail-learningmaterials .new-learning-material .done');
 //     andThen(function(){
 //       let container = find('.detail-learningmaterials');
@@ -238,8 +238,8 @@ test('create new link learning material', function(assert) {
     fillIn(inputs.eq(2), testUrl);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
-    find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
+    find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
+    find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
     click('.detail-learningmaterials .new-learning-material .done');
     andThen(function(){
       let container = find('.detail-learningmaterials');
@@ -288,8 +288,8 @@ test('create new citation learning material', function(assert) {
     fillIn(find('textarea', newLmContainer).eq(0), testCitation);
     pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
     pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
-    find('.froalaEditor', newLmContainer).froalaEditor('html.set', testDescription);
-    find('.froalaEditor', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
+    find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
+    find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
     click('.detail-learningmaterials .new-learning-material .done');
     andThen(function(){
       let container = find('.detail-learningmaterials');
@@ -453,8 +453,8 @@ test('edit learning material', function(assert) {
       click(find('.notes .editable', container)).then(function(){
         //wait for the editor to load
         later(()=>{
-          find('.notes .froalaEditor', container).froalaEditor('html.set', newNote);
-          find('.notes .froalaEditor', container).froalaEditor('events.trigger', 'contentChanged');
+          find('.notes .fr-box', container).froalaEditor('html.set', newNote);
+          find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
           click(find('.notes .done', container));
           andThen(function(){
             assert.equal(getElementText(find('.notes', container)), getText(newNote));

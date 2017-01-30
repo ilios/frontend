@@ -44,8 +44,8 @@ test('save new objective', function(assert) {
     click('.detail-objectives .detail-objectives-actions button');
     //wait for the editor to load
     Ember.run.later(()=>{
-      find('.detail-objectives .newobjective .froalaEditor').froalaEditor('html.set', newObjectiveTitle);
-      find('.detail-objectives .newobjective .froalaEditor').froalaEditor('events.trigger', 'contentChanged');
+      find('.detail-objectives .newobjective .fr-box').froalaEditor('html.set', newObjectiveTitle);
+      find('.detail-objectives .newobjective .fr-box').froalaEditor('events.trigger', 'contentChanged');
       Ember.run.later(()=>{
         click('.detail-objectives .newobjective button.done');
         andThen(function(){
@@ -90,7 +90,7 @@ test('empty objective title can not be created', function(assert) {
   const container = '.detail-objectives:eq(0)';
   const expandNewObjective = `${container} .detail-objectives-actions button`;
   const newObjective = `${container} .newobjective`;
-  const editor = `${newObjective} .froalaEditor`;
+  const editor = `${newObjective} .fr-box`;
   const save = `${newObjective} .done`;
   const errorMessage = `${newObjective} .validation-error-message`;
   visit(url);

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'ilios/config/environment';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
@@ -111,8 +110,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   learningMaterialStatuses: null,
   learningMaterialUserRoles: null,
 
-  editorParams: config.froalaEditorDefaults,
-
   filename: null,
   fileHash: null,
   status: null,
@@ -197,18 +194,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
 
-    changeDescription(event, editor) {
-      if (editor) {
-        let html = editor.html.get();
-        let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-        let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+    changeDescription(html) {
+      let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+      let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
 
-        //if all we have is empty html then save null
-        if(strippedText.length === 0){
-          html = null;
-        }
-        this.set('description', html);
+      //if all we have is empty html then save null
+      if(strippedText.length === 0){
+        html = null;
       }
+      this.set('description', html);
     },
 
     setFile(e) {
