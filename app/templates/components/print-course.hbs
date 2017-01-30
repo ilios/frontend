@@ -161,7 +161,7 @@
     </div>
   </div>
 
-  {{#each sortedSessionProxies as |session|}}
+  {{#each (await sortedSessionProxies) as |session|}}
     <div class='detail-view print-detail-view'>
       <div class='detail-view-main-title'>
         <div class='detail-header'>

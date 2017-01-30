@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { Component, computed, RSVP, ObjectProxy, inject } = Ember;
-const { PromiseArray } = DS;
+const { Promise } = RSVP;
 const { service } = inject;
 
 export default Component.extend({
@@ -15,41 +14,47 @@ export default Component.extend({
   sortDirectorsBy: ['lastName', 'firstName'],
   sortedDirectors: computed.sort('course.directors', 'sortDirectorsBy'),
   sortedMeshDescriptors: computed.sort('course.meshDescriptors', 'sortTitle'),
+
+  /**
+   * A list of proxied course sessions, sorted by title.
+   * @property sortedSessionProxies
+   * @type {Ember.computed}
+   * @public
+   */
   sortedSessionProxies: computed('course.sessions.[]', function(){
-    const course = this.get('course');
-    if(!course){
-      return [];
-    }
-    let deferred = RSVP.defer();
-    let SessionProxy = ObjectProxy.extend({
-      sortTitle: ['title'],
-      sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
-      sessionLearningMaterials: computed('content', function(){
-        let session = this.get('content').get('id');
-        return this.get('store').query('sessionLearningMaterial', {
-          filters: {
-            session
-          }
-        });
-      })
-    });
-    course.get('sessions').then(sessions => {
-      if (!this.get('includeUnpublishedSessions')) {
-        sessions = sessions.filterBy('isPublishedOrScheduled');
+    return new Promise(resolve => {
+
+      const course = this.get('course');
+      if(!course){
+        resolve([]);
+        return;
       }
-      let proxiedSessions = sessions.map(function(session){
-        return SessionProxy.create({
-          content: session
-        });
+
+      let SessionProxy = ObjectProxy.extend({
+        sortTitle: ['title'],
+        sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
+        sessionLearningMaterials: computed('content', function(){
+          let session = this.get('content').get('id');
+          return this.get('store').query('sessionLearningMaterial', {
+            filters: {
+              session
+            }
+          });
+        })
       });
-      deferred.resolve(proxiedSessions.sortBy('title'));
+      course.get('sessions').then(sessions => {
+        if (!this.get('includeUnpublishedSessions')) {
+          sessions = sessions.filterBy('isPublishedOrScheduled');
+        }
+        let proxiedSessions = sessions.map(function(session){
+          return SessionProxy.create({
+            content: session
+          });
+        });
+        resolve(proxiedSessions.sortBy('title'));
+      });
+
     });
-
-
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
-
   }),
 
   courseLearningMaterials: computed('course', function(){
