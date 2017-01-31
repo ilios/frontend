@@ -33,86 +33,89 @@ test('check fields', function(assert) {
   });
 });
 
-test('change title', function(assert) {
+test('change title', async function(assert) {
   server.create('program', {
     school: 1,
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-header');
-    assert.equal(getElementText(find('.title h2', container)), getText('program 0'));
-    click(find('.title h2 .editable', container));
-    andThen(function(){
-      var input = find('.title .editinplace input', container);
-      assert.equal(getText(input.val()), getText('program 0'));
-      fillIn(input, 'test new title');
-      click(find('.title .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.title h2', container)), getText('test new title'));
-      });
-    });
-  });
+  const container = '.program-details';
+  const header = `${container} .program-header`;
+  const title = `${header} .title`;
+  const edit = `${title} .editable`;
+  const input = `${title} input`;
+  const done = `${title} .done`;
+
+  await visit(url);
+  assert.equal(getElementText(title), getText('program 0'));
+  await click(edit);
+  let field = await find(input);
+  assert.equal(getText(field.val()), getText('program 0'));
+  fillIn(field, 'test new title');
+  await click(done);
+  assert.equal(getElementText(title), getText('test new title'));
 });
 
-test('change short title', function(assert) {
-  var program = server.create('program', {
+test('change short title', async function(assert) {
+  let program = server.create('program', {
     school: 1,
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-overview');
-    assert.equal(getElementText(find('.programtitleshort .editable', container)), getText(program.shortTitle));
-    click(find('.programtitleshort .editable', container));
-    andThen(function(){
-      var input = find('.programtitleshort .editinplace input', container);
-      assert.equal(getText(input.val()), getText(program.shortTitle));
-      fillIn(input, 'test title');
-      click(find('.programtitleshort .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.programtitleshort .editable', container)), getText('test title'));
-      });
-    });
-  });
+  const container = '.program-details';
+  const overview = `${container} .program-overview`;
+  const shortTitle = `${overview} .programtitleshort span:eq(0)`;
+  const edit = `${shortTitle} .editable`;
+  const input = `${shortTitle} input`;
+  const done = `${shortTitle} .done`;
+
+  await visit(url);
+  assert.equal(getElementText(shortTitle), getText(program.shortTitle));
+  await click(edit);
+  let field = await find(input);
+  assert.equal(getText(field.val()), getText(program.shortTitle));
+  fillIn(field, 'test title');
+  await click(done);
+  assert.equal(getElementText(shortTitle), getText('test title'));
 });
 
-test('change duration', function(assert) {
-  var program = server.create('program', {
+test('change duration', async function(assert) {
+  let program = server.create('program', {
     school: 1,
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-overview');
-    assert.equal(getElementText(find('.programduration .editable', container)), program.duration);
-    click(find('.programduration .editable', container));
-    andThen(function(){
-      let options = find('.programduration select option', container);
-      assert.equal(options.length, 10);
-      for(let i = 0; i < 10; i++){
-        assert.equal(getElementText(options.eq(i)), i+1);
-      }
-      pickOption(find('.programduration select', container), '9', assert);
-      click(find('.programduration .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.programduration .editable', container)), 9);
-      });
-    });
-  });
+  const container = '.program-details';
+  const overview = `${container} .program-overview`;
+  const duration = `${overview} .programduration span:eq(0)`;
+  const edit = `${duration} .editable`;
+  const select = `${duration} select`;
+  const options = `${select} option`;
+  const done = `${duration} .done`;
+
+  await visit(url);
+  assert.equal(getElementText(duration), program.duration);
+  await click(edit);
+
+  let durations = find(options);
+  assert.equal(durations.length, 10);
+  for(let i = 0; i < 10; i++){
+    assert.equal(getElementText(durations.eq(i)), i+1);
+  }
+  pickOption(select, '9', assert);
+  await click(done);
+  assert.equal(getElementText(duration), '9');
 });
 
-test('leave duration at 1', function(assert) {
-  server.create('program', {
+
+test('leave duration at 1', async function(assert) {
+  let program = server.create('program', {
     school: 1,
-    duration: 1
+    duration: 1,
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-overview');
-    click(find('.programduration .editable', container));
-    andThen(function(){
-      click(find('.programduration .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.programduration .editable', container)), 1);
-      });
-    });
-  });
+  const container = '.program-details';
+  const overview = `${container} .program-overview`;
+  const duration = `${overview} .programduration span:eq(0)`;
+  const edit = `${duration} .editable`;
+  const done = `${duration} .done`;
+
+  await visit(url);
+  assert.equal(getElementText(duration), program.duration);
+  await click(edit);
+  await click(done);
+  assert.equal(getElementText(duration), '1');
 });
