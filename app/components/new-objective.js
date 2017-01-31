@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import config from 'ilios/config/environment';
 
 const { Component } = Ember;
 
@@ -18,7 +17,6 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
   classNames: ['newobjective', 'new-result', 'form-container'],
-  editorParams: config.froalaEditorDefaults,
 
   title: null,
   isSaving: false,
@@ -38,12 +36,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         this.set('isSaving', false);
       });
     },
-    changeTitle(event, editor){
+    changeTitle(contents){
       this.send('addErrorDisplayFor', 'title');
-      if(editor){
-        const contents = editor.html.get();
-        this.set('title', contents);
-      }
+      this.set('title', contents);
     },
   }
 });

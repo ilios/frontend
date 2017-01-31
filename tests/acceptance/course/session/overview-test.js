@@ -302,7 +302,7 @@ test('change description', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.sessiondescription .froalaEditor');
+        let editor = find('.sessiondescription .fr-box');
         let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), description);
         editor.froalaEditor('html.set', 'test new description');
@@ -332,7 +332,7 @@ test('add description', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.sessiondescription .froalaEditor');
+        let editor = find('.sessiondescription .fr-box');
         let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), '');
         editor.froalaEditor('html.set', 'test new description');
@@ -356,7 +356,7 @@ test('empty description removes description', function(assert) {
   });
   const container = '.sessiondescription';
   const description = `${container} .content`;
-  const editorElement = `${container} .froalaEditor`;
+  const editorElement = `${container} .fr-box`;
   const edit = `${container} .editable`;
   const save = `${container} .done`;
 
@@ -391,7 +391,7 @@ test('remove description', function(assert) {
   });
   const container = '.sessiondescription';
   const description = `${container} .content`;
-  const editorElement = `${container} .froalaEditor`;
+  const editorElement = `${container} .fr-box`;
   const edit = `${container} .editable`;
   const save = `${container} .done`;
 

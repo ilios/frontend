@@ -36,54 +36,6 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'en'
     },
-    froalaEditorDefaults: {
-      toolbarInline: false,
-      placeholderText: '',
-      allowHTML: true,
-      saveInterval: false,
-      pastePlain: true,
-      spellcheck: true,
-      toolbarButtons: [
-        'bold',
-        'italic',
-        'subscript',
-        'superscript',
-        'formatOL',
-        'formatUL',
-        'insertLink',
-        'html'
-      ],
-      toolbarButtonsMD: [
-        'bold',
-        'italic',
-        'subscript',
-        'superscript',
-        'formatOL',
-        'formatUL',
-        'insertLink',
-        'html'
-      ],
-      toolbarButtonsSM: [
-        'bold',
-        'italic',
-        'subscript',
-        'superscript',
-        'formatOL',
-        'formatUL',
-        'insertLink',
-        'html'
-      ],
-      toolbarButtonsXS: [
-        'bold',
-        'italic',
-        'subscript',
-        'superscript',
-        'formatOL',
-        'formatUL',
-        'insertLink',
-        'html'
-      ],
-    },
     serverVariables: {
       tagPrefix: 'iliosconfig',
       vars: ['api-host', 'api-name-space'],

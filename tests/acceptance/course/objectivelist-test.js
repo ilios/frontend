@@ -153,7 +153,7 @@ test('edit objective title', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.froalaEditor', td);
+        let editor = find('.fr-box', td);
         let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), getText(objective.title));
 
@@ -183,7 +183,7 @@ test('empty objective title can not be saved', function(assert) {
   const container = '.course-objective-list';
   const title = `${container} tbody tr:eq(0) td:eq(0)`;
   const edit = `${title} .editable span`;
-  const editor = `${title} .froalaEditor`;
+  const editor = `${title} .fr-box`;
   const initialObjectiveTitle = 'objective 0';
   const save = `${title} .done`;
   const errorMessage = `${title} .validation-error-message`;

@@ -33,11 +33,13 @@ module.exports = function(defaults) {
     //fix for #2570
     sassOptions: {
       nodeSass: nodeSass
+    },
+    'ember-froala-editor': {
+      languages: ['fr','es'],
+      plugins: ['lists', 'code_view', 'link'],
+      themes: 'gray'
     }
   });
-  app.import('bower_components/froala-wysiwyg-editor/js/plugins/lists.min.js');
-  app.import('bower_components/froala-wysiwyg-editor/js/plugins/code_view.min.js');
-  app.import('bower_components/froala-wysiwyg-editor/js/plugins/link.min.js');
 
   return app.toTree();
 };

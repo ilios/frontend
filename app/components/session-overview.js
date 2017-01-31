@@ -3,7 +3,6 @@ import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import config from 'ilios/config/environment';
 
 const { Component, computed, RSVP, isEmpty, inject } = Ember;
 const { oneWay, sort } = computed;
@@ -59,7 +58,6 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       }
     });
   },
-  editorParams: config.froalaEditorDefaults,
   session: null,
   title: null,
   hours: null,
@@ -265,9 +263,8 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
 
     },
-    changeDescription(event, editor){
+    changeDescription(html){
       this.send('addErrorDisplayFor', 'description');
-      let html = editor.html.get();
       let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
       let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
 

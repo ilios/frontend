@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
-import config from 'ilios/config/environment';
 
 const { Component, computed, inject } = Ember;
 const { service } = inject;
@@ -30,7 +29,6 @@ export default Component.extend({
   initialStateForManageCompetencyObjective: null,
   newObjectiveEditorOn: false,
   newObjectiveTitle: null,
-  editorParams: config.froalaEditorDefaults,
 
   showCollapsible: computed('isManaging', 'objectives', function(){
     const isManaging = this.get('isManaging');

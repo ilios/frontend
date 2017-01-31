@@ -50,9 +50,8 @@
           clickPrompt=(t 'general.clickToEdit')
         }}
           {{froala-editor
-            params=editorParams
-            value=notes
-            contentChanged=(action "changeNotes")
+            content=notes
+            update=(action (mut notes))
           }}
         {{/editable-field}}
       {{else}}

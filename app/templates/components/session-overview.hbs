@@ -214,9 +214,8 @@
             clickPrompt=(t 'general.clickToEdit')
           }}
             {{froala-editor
-              params=editorParams
-              value=description
-              contentChanged=(action "changeDescription")
+              content=description
+              update=(action "changeDescription")
             }}
             {{#if (and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))}}
               <span class="validation-error-message">{{v-get this 'description' 'message'}}</span>

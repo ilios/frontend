@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import config from 'ilios/config/environment';
 
 const { Mixin, RSVP } = Ember;
 const { Promise } = RSVP;
@@ -22,7 +21,6 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
     this._super(...arguments);
     this.set('title', this.get('objective').get('title'));
   },
-  editorParams: config.froalaEditorDefaults,
   tagName: 'tr',
   classNameBindings: ['showRemoveConfirmation:confirm-removal'],
 
@@ -55,12 +53,9 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
       const objective = this.get('objective');
       this.set('title', objective.get('title'));
     },
-    changeTitle(event, editor){
+    changeTitle(contents){
       this.send('addErrorDisplayFor', 'title');
-      if(editor){
-        const contents = editor.html.get();
-        this.set('title', contents);
-      }
+      this.set('title', contents);
     },
   }
 });

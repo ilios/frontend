@@ -49,8 +49,8 @@ test('can change title', function(assert) {
   }}`);
 
   this.$('td:eq(0) .editable').click();
-  this.$('td:eq(0) .froalaEditor').froalaEditor('html.set', 'new title');
-  this.$('td:eq(0) .froalaEditor').froalaEditor('events.trigger', 'contentChanged');
+  this.$('td:eq(0) .fr-box').froalaEditor('html.set', 'new title');
+  this.$('td:eq(0) .fr-box').froalaEditor('events.trigger', 'contentChanged');
   this.$('td:eq(0) .done').click();
 
 });

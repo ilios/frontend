@@ -322,7 +322,7 @@ test('change description', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.sessiondescription .froalaEditor');
+        let editor = find('.sessiondescription .fr-box');
         let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), description);
         editor.froalaEditor('html.set', 'test new description');
@@ -349,7 +349,7 @@ test('add description', function(assert) {
     andThen(function(){
       //wait for the editor to load
       Ember.run.later(()=>{
-        let editor = find('.sessiondescription .froalaEditor');
+        let editor = find('.sessiondescription .fr-box');
         let editorContents = editor.data('froala.editor').$el.text();
         assert.equal(getText(editorContents), '');
         editor.froalaEditor('html.set', 'test new description');
