@@ -4,18 +4,18 @@
       <label class="inline-label">
         {{fa-icon 'university'}}
       </label>
-      {{#if hasMoreThanOneSchool}}
+      {{#if (await hasMoreThanOneSchool)}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
-            <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
+            <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{#if selectedSchool}}
+        {{#if (await selectedSchool)}}
           {{selectedSchool.title}}
-        {{else if schools.isFulfilled}}
+        {{else}}
           {{t 'general.none'}}
         {{/if}}
       {{/if}}
@@ -24,19 +24,21 @@
       <label class="inline-label">
         {{fa-icon 'list-alt'}}
       </label>
-      {{#if hasMoreThanOneProgram}}
+      {{#if (gt (get (await programs) 'length') 1)}}
         <select onchange={{action "changeSelectedProgram" value="target.value"}}>
-          {{#each sortedPrograms as |program|}}
-            <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
+          {{#each (sort-by 'title' (await programs)) as |program|}}
+            <option value={{program.id}} selected={{is-equal program (await selectedProgram)}}>
               {{program.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{#if selectedProgram}}
-          {{selectedProgram.title}}
-        {{else if programs.isFulfilled}}
-          {{t 'general.none'}}
+        {{#if (is-fulfilled selectedProgram)}}
+          {{#if (await selectedProgram)}}
+            {{get (await selectedProgram) 'title'}}
+          {{else}}
+            {{t 'general.none'}}
+          {{/if}}
         {{/if}}
       {{/if}}
     </div>
@@ -47,7 +49,7 @@
       <div class="resultslist-title">
         <h2>{{t 'general.curriculumInventoryReports'}}</h2>
       </div>
-      {{#if selectedProgram}}
+      {{#if (await selectedProgram)}}
         <div class='resultslist-actions'>
           {{expand-collapse-button
             value=showNewCurriculumInventoryReportForm
@@ -59,7 +61,7 @@
     <section class='resultslist-new'>
       {{#liquid-if showNewCurriculumInventoryReportForm class='vertical'}}
         {{new-curriculum-inventory-report
-          currentProgram=selectedProgram
+          currentProgram=(await selectedProgram)
           save=(action 'saveNewCurriculumInventoryReport')
           cancel=(action 'cancel')
         }}
@@ -74,13 +76,13 @@
       {{/if}}
     </section>
     <div class='resultslist-list'>
-      {{#if reports.isFulfilled}}
+      {{#if (is-fulfilled reportsAndNewReports)}}
         {{curriculum-inventory-report-list
-        reports=reportsAndNewReports
-        edit='editCurriculumInventoryReport'
-        remove='removeCurriculumInventoryReport'
-        sortBy=sortReportsBy
-        setSortBy=(action (mut sortReportsBy))
+          reports=reportsAndNewReports
+          edit='editCurriculumInventoryReport'
+          remove='removeCurriculumInventoryReport'
+          sortBy=sortReportsBy
+          setSortBy=(action (mut sortReportsBy))
         }}
       {{else}}
         {{pulse-loader}}
