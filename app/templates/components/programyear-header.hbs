@@ -1,33 +1,31 @@
-<div class='detail-header'>
-  <span class='title'>
-    {{#if programYear.locked}}{{fa-icon 'lock'}}{{/if}}
-    {{#if programYear}}
-      <h2>{{t 'general.matriculationYear'}} {{programYear.academicYear}}</h2>
-      <h4>{{programYear.cohort.displayTitle}}</h4>
-    {{/if}}
-  </span>
-  <span class ='actions'>
-    {{#if editable}}
-      {{publish-menu
-        title=menuTitle
-        icon=menuIcon
-        publicationStatus=publicationStatus
-        showAsIs=showAsIs
-        showPublish=showPublish
-        showReview=showReview
-        showTbd=showTbd
-        showUnPublish=showUnPublish
-        reviewRoute='programYear.publicationCheck'
-        reviewObject=programYear
-        parentObject=(await programYear.program)
-        publishTranslation='general.publishProgramYear'
-        unPublishTranslation='general.unPublishProgramYear'
-        publish=(action 'publish')
-        publishAsTbd=(action 'publishAsTbd')
-        unpublish=(action 'unpublish')
-      }}
-    {{else}}
-      {{publication-status item=programYear}}
-    {{/if}}
-  </span>
+<div class='title'>
+  {{#if programYear.locked}}{{fa-icon 'lock'}}{{/if}}
+  {{#if programYear}}
+    <h4>{{t 'general.matriculationYear'}} {{programYear.academicYear}}</h4>
+    <h5>{{programYear.cohort.displayTitle}}</h5>
+  {{/if}}
+</div>
+<div class ='programyear-publication'>
+  {{#if editable}}
+    {{publish-menu
+      title=menuTitle
+      icon=menuIcon
+      publicationStatus=publicationStatus
+      showAsIs=showAsIs
+      showPublish=showPublish
+      showReview=showReview
+      showTbd=showTbd
+      showUnPublish=showUnPublish
+      reviewRoute='programYear.publicationCheck'
+      reviewObject=programYear
+      parentObject=(await programYear.program)
+      publishTranslation='general.publishProgramYear'
+      unPublishTranslation='general.unPublishProgramYear'
+      publish=(action 'publish')
+      publishAsTbd=(action 'publishAsTbd')
+      unpublish=(action 'unpublish')
+    }}
+  {{else}}
+    {{publication-status item=programYear}}
+  {{/if}}
 </div>

@@ -1,31 +1,27 @@
-<section class='detail-overview detail-block'>
-  <div class='detail-title'>
-    {{t 'general.overview'}}
-  </div>
-  <div class='detail-content'>
-    <label>{{t 'general.directors'}}:</label>
-    <span>
-      {{#if editable}}
-        <ul class='removable-list tag-list'>
-          {{#each sortedDirectors as |user|}}
-            <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-          {{/each}}
-        </ul>
-      {{else}}
-        <ul class='tag-list'>
-          {{#each sortedDirectors as |user|}}
-            <li>{{user.fullName}}</li>
-          {{/each}}
-        </ul>
-      {{/if}}
-    </span>
+<h5>{{t 'general.overview'}}</h5>
+<div class='programyear-overview-content'>
+  <label>{{t 'general.directors'}}:</label>
+  <span>
     {{#if editable}}
-      {{user-search
-        addUser='addDirector'
-        currentlyActiveUsers=programYear.directors
-      }}
-      <br>
-      <br>
+      <ul class='removable-list tag-list'>
+        {{#each sortedDirectors as |user|}}
+          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <ul class='tag-list'>
+        {{#each sortedDirectors as |user|}}
+          <li>{{user.fullName}}</li>
+        {{/each}}
+      </ul>
     {{/if}}
-  </div>
-</section>
+  </span>
+  {{#if editable}}
+    {{user-search
+      addUser='addDirector'
+      currentlyActiveUsers=programYear.directors
+    }}
+    <br>
+    <br>
+  {{/if}}
+</div>
