@@ -22,6 +22,7 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
     this._super(...arguments);
     this.set('programTitle', this.get('program.title'));
   },
+  classNames: ['program-header'],
   program: null,
   programTitle: null,
   publishTarget: alias('program'),
