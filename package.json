@@ -65,7 +65,7 @@
     "ember-font-awesome": "2.2.0",
     "ember-froala": "2.4.1",
     "ember-i18n": "4.5.0",
-    "ember-i18n-cp-validations": "2.9.0",
+    "ember-i18n-cp-validations": "3.0.1",
     "ember-inflector": "1.11.0",
     "ember-load": "0.0.11",
     "ember-load-initializers": "^0.6.1",
