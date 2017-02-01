@@ -34,11 +34,11 @@
             {{report.name}}
           {{/link-to}}
         </td>
-        <td class='text-center' colspan=2 {{action 'edit' report.content}}>{{report.program.title}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report.content}}>{{report.yearLabel}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report.content}}>{{moment-format report.startDate 'MM/DD/YY'}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report.content}}>{{moment-format report.endDate 'MM/DD/YY'}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report.content}}>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.program.title}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.yearLabel}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.startDate 'MM/DD/YY'}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.endDate 'MM/DD/YY'}}</td>
+        <td class='text-center' colspan=2 {{action 'edit' report}}>
           {{#if report.isFinalized}}{{fa-icon 'lock'}}{{/if}}
           {{publication-status
             publishedLangKey='general.finalized'
