@@ -13,12 +13,12 @@
     {{#if showMoreInputPrompt}}
       <li>{{t 'general.moreInputRequiredPrompt'}}</li>
     {{else}}
-      {{#if searchResults.isPending}}
+      {{#if (is-pending searchResults)}}
         <li>{{t 'general.currentlySearchingPrompt'}}</li>
       {{else}}
-        {{#if searchResults.content}}
-          <li class='results-count'>{{searchResults.content.length}} {{t 'general.results'}}</li>
-          {{#each searchResults.content as |proxy|}}
+        {{#if (get (await searchResults) 'length')}}
+          <li class='results-count'>{{get (await searchResults) 'length'}} {{t 'general.results'}}</li>
+          {{#each (await searchResults) as |proxy|}}
             <li>
               {{#link-to 'user' proxy}}
                 <div class='livesearch-user-name'>

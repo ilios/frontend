@@ -1,11 +1,10 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import queryUtils from '../utils/query-utils';
 
-const { Component, computed, inject, isEmpty, run } = Ember;
+const { Component, computed, inject, isEmpty, run, RSVP } = Ember;
 const { service } = inject;
 const { debounce } = run;
-const { PromiseObject } = DS;
+const { Promise } = RSVP;
 const { cleanQuery } = queryUtils;
 
 export default Component.extend({
@@ -41,23 +40,23 @@ export default Component.extend({
 
   searchResults: computed('revisedQuery', {
     get() {
-      const q = this.get('revisedQuery');
-      const store = this.get('store');
+      return new Promise(resolve => {
+        const q = this.get('revisedQuery');
+        const store = this.get('store');
 
-      if (!isEmpty(q)) {
-        const searchResults = store.query('user', {
-          q,
-          'order_by[lastName]': 'ASC',
-          'order_by[firstName]': 'ASC',
-          limit: 100
-        }).then((users) => {
-          return users;
-        });
-
-        return PromiseObject.create({
-          promise: searchResults
-        });
-      }
+        if (!isEmpty(q)) {
+          store.query('user', {
+            q,
+            'order_by[lastName]': 'ASC',
+            'order_by[firstName]': 'ASC',
+            limit: 100
+          }).then((users) => {
+            resolve(users.toArray());
+          });
+        } else {
+          resolve([]);
+        }
+      });
     }
   }).readOnly(),
 
