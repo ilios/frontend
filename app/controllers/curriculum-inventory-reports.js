@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { computed, Controller, RSVP, isEmpty, isPresent, inject } = Ember;
+const { Promise } = RSVP;
 const { gt, oneWay, sort } = computed;
 const { service } = inject;
-const { PromiseArray, PromiseObject } = DS;
 
 export default Controller.extend({
   i18n: service(),
@@ -24,140 +23,103 @@ export default Controller.extend({
   sortReportsBy: 'name',
   sortByTitle:['title'],
 
-  newReports: [],
-  newestReport: computed('newReports.[]', function(){
-    const reports = this.get('newReports');
-    if (reports.length) {
-      return reports[reports.length - 1];
-    }
-    return false;
-  }),
+  newReport: null,
   sortedSchools: sort('schools', 'sortByTitle'),
   hasMoreThanOneSchool: gt('schools.length', 1),
-  sortedPrograms: sort('programs', 'sortByTitle'),
-  hasMoreThanOneProgram: gt('programs.length', 1),
 
   showNewCurriculumInventoryForm: false,
 
-  programs: computed('selectedSchool', function(){
-    let defer = RSVP.defer();
-    this.get('selectedSchool').then(school => {
-      if(isEmpty(school)){
-        defer.resolve([]);
-      } else {
-        this.get('store').query('program', {
-          filters: {
-            school: school.get('id'),
-            published: true
-          }
-        }).then(programs => {
-          defer.resolve(programs);
-        });
-      }
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
-
+  /**
+   * The currently selected school. Defaults to the current-user's primary school if none is selected.
+   * @property selectedSchool
+   * @type {Ember.computed}
+   * @public
+   */
   selectedSchool: computed('schools.[]', 'schoolId', function(){
-    let schools = this.get('schools');
-    if(isPresent(this.get('schoolId'))){
-      let school =  schools.find(school => {
-        return school.get('id') === this.get('schoolId');
-      });
-      if(school){
-        return PromiseObject.create({
-          promise: RSVP.resolve(school)
+    return new Promise(resolve => {
+      let schools = this.get('schools');
+      if(isPresent(this.get('schoolId'))){
+        let school =  schools.find(school => {
+          return school.get('id') === this.get('schoolId');
         });
-      }
-    }
-    return PromiseObject.create({
-      promise: this.get('currentUser').get('model').then(user => {
-        return user.get('school').then(school => {
-          return school;
-        });
-      })
-    });
-  }),
-
-  selectedProgram: computed('programs.[]', 'programId', function(){
-    let defer = RSVP.defer();
-    this.get('programs').then(programs => {
-      let program;
-      if(isPresent(this.get('programId'))){
-        program =  programs.find(program => {
-          return program.get('id') === this.get('programId');
-        });
-
-      }
-      if(program){
-        defer.resolve(program);
-      } else {
-        if(programs.length > 1){
-          defer.resolve(null);
-        } else {
-          defer.resolve(programs.sortBy('title').get('firstObject'));
+        if(school){
+          resolve(school);
         }
-      }
-    });
-
-    return PromiseObject.create({
-      promise: defer.promise
-    });
-  }),
-
-  reportsAndNewReports: computed('reports.[]', 'newReports.[]', function(){
-    let defer = RSVP.defer();
-    this.get('reports').then(reports => {
-      let all = [];
-      all.pushObjects(reports.toArray());
-      const selectedProgram = this.get('selectedProgram');
-      if (isPresent(selectedProgram)) {
-        let newReports = this.get('newReports').filter(report => {
-          return report.get('program').get('id') === selectedProgram.get('id') && !all.includes(report);
+      } else {
+        this.get('currentUser').get('model').then(user => {
+          user.get('school').then(school => {
+            resolve(school);
+          });
         });
-        all.pushObjects(newReports.toArray());
       }
-      defer.resolve(all);
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
-  reports: computed('selectedProgram', function(){
-    let defer = RSVP.defer();
-    this.get('selectedSchool').then(selectedSchool => {
-      this.get('selectedProgram').then(selectedProgram => {
-        if(isEmpty(selectedSchool) || isEmpty(selectedProgram)){
-          defer.resolve([]);
+  /**
+   * A list of published programs owned by the currently selected school.
+   * @property programs
+   * @type {Ember.computed}
+   * @protected
+   */
+  programs: computed('selectedSchool', function(){
+    return new Promise(resolve => {
+      this.get('selectedSchool').then(school => {
+        if(isEmpty(school)){
+          resolve([]);
         } else {
-          this.get('store').query('curriculum-inventory-report', {
+          this.get('store').query('program', {
             filters: {
-              program: selectedProgram.get('id')
-            },
-            limit: 500
-          }).then(reports => {
-            defer.resolve(reports);
+              school: school.get('id'),
+              published: true
+            }
+          }).then(programs => {
+            resolve(programs.toArray());
           });
         }
       });
     });
-    return PromiseArray.create({
-      promise: defer.promise
+  }),
+
+  /**
+   * The currently selected program.
+   * Defaults to the first available program for the currently selected school if none is selected.
+   * @property selectedProgram
+   * @type {Ember.computed}
+   * @public
+   */
+  selectedProgram: computed('programs.[]', 'programId', function(){
+    return new Promise(resolve => {
+      this.get('programs').then(programs => {
+        let program;
+        let programId = this.get('programId');
+        if(isPresent(programId)){
+          program = programs.find(program => {
+            return program.get('id') === this.get('programId');
+          });
+        }
+        if(program){
+          resolve(program);
+        } else {
+          if(programs.length){
+            program = programs.sortBy('title').get('firstObject');
+            resolve(program);
+          } else {
+            resolve(null);
+          }
+        }
+      });
     });
   }),
 
   actions: {
     changeSelectedProgram(programId) {
-      let program = this.get('programs').findBy('id', programId);
-      program.get('school').then(school => {
-        this.set('schoolId', school.get('id'));
-        this.set('programId', programId);
-        this.set('showNewCurriculumInventoryReportForm', false);
+      this.get('programs').then(programs => {
+        let program = programs.findBy('id', programId);
+        program.get('school').then(school => {
+          this.set('schoolId', school.get('id'));
+          this.set('programId', programId);
+          this.set('showNewCurriculumInventoryReportForm', false);
+        });
       });
     },
 
@@ -172,11 +134,12 @@ export default Controller.extend({
     },
 
     removeCurriculumInventoryReport(report) {
-      let newReports = this.get('newReports');
-      if (newReports.includes(report)) {
-        newReports.removeObject(report);
-      }
-      return report.destroyRecord();
+      this.get('selectedProgram').then(program => {
+        program.get('curriculumInventoryReports').then(reports => {
+          reports.removeObject(report);
+          report.destroyRecord();
+        });
+      });
     },
 
     toggleNewCurriculumInventoryReportForm() {
@@ -184,9 +147,17 @@ export default Controller.extend({
     },
 
     saveNewCurriculumInventoryReport(newReport) {
-      return newReport.save().then(savedReport => {
-        this.get('newReports').pushObject(savedReport);
-        this.set('showNewCurriculumInventoryReportForm', false);
+      return new Promise(resolve => {
+        newReport.save().then(savedReport => {
+          this.set('newReport', savedReport);
+          this.get('selectedProgram').then(program => {
+            program.get('curriculumInventoryReports').then(reports => {
+              reports.pushObject(savedReport);
+              this.set('showNewCurriculumInventoryReportForm', false);
+              resolve(savedReport);
+            });
+          });
+        });
       });
     },
 

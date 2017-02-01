@@ -27,7 +27,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each sortedReports as |report|}}
+    {{#each (sort-by sortBy (await proxiedReports)) as |report|}}
       <tr class="{{if report.showRemoveConfirmation 'confirm-removal'}}">
         <td class='text-left' colspan=4>
           {{#link-to 'curriculumInventoryReport' report.content}}
