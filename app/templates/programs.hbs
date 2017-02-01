@@ -34,14 +34,14 @@
     {{/if}}
 
     {{#if saved}}
-      <div class='saved-program'>
+      <div class='saved-result'>
         {{#link-to 'program' savedProgram}}
           {{fa-icon 'external-link-square'}} {{savedProgram.title}}
         {{/link-to}}
         {{t 'general.savedSuccessfully'}}
       </div>
     {{/if}}
-	
+
     {{#if deleted}}
       <div class='saved-program'>
         {{savedProgram.title}} {{t 'general.removedSuccessfully'}}

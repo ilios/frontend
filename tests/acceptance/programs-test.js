@@ -121,7 +121,7 @@ test('add new program', function(assert) {
   const expandButton = '.expand-button';
   const input = '.new-program input';
   const saveButton = '.new-program .done';
-  const savedLink = '.saved-program a';
+  const savedLink = '.saved-result a';
 
   visit(url);
   click(expandButton);

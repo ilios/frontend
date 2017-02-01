@@ -174,7 +174,7 @@ test('add new instructorgroup', function(assert) {
   fillIn('.newinstructorgroup-title input', newTitle);
   click('.newinstructorgroup .done');
   andThen(() => {
-    assert.equal(getElementText(find('.savedinstructorgroup')), getText(newTitle + 'Saved Successfully'));
+    assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully'));
   });
 });
 
