@@ -5,12 +5,6 @@
     {{/link-to}}
   {{/if}}
 </div>
-<div class='detail-view programyear-detail-view'>
-  <div class='detail-view-main-title'>
-    {{programyear-header programYear=model}}
-  </div>
-  <div class='detail-view-details'>
-    {{programyear-overview programYear=model}}
-    {{outlet}}
-  </div>
-</div>
+{{programyear-header programYear=model}}
+{{programyear-overview programYear=model}}
+{{outlet}}
