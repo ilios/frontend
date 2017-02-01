@@ -2,7 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import moment from 'moment';
-const { Object } = Ember;
+const { Object, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-list', 'Integration | Component | curriculum inventory report list', {
   integration: true,
@@ -33,9 +34,15 @@ test('it renders', function(assert) {
     }),
     isFinalized: true,
   });
+
   const reports = [ report1, report2 ];
-  this.set('reports', reports);
-  this.render(hbs`{{curriculum-inventory-report-list reports=reports}}`);
+
+  const program = Object.create({
+    curriculumInventoryReports: resolve(reports)
+  });
+
+  this.set('program', program);
+  this.render(hbs`{{curriculum-inventory-report-list program=program}}`);
   assert.equal(this.$('th').length, 7, 'Table header has seven columns.');
   assert.equal(this.$('th:eq(0)').text().trim(), 'Report Name', 'First column table header is labeled correctly');
   assert.equal(this.$('th:eq(1)').text().trim(), 'Program', 'Second column table header is labeled correctly');
@@ -89,8 +96,12 @@ test('it renders', function(assert) {
 });
 
 test('empty list', function(assert) {
-  this.set('reports', []);
-  this.render(hbs`{{curriculum-inventory-report-list reports=reports}}`);
+  const program = Object.create({
+    curriculumInventoryReports: resolve([])
+  });
+
+  this.set('program', program);
+  this.render(hbs`{{curriculum-inventory-report-list program=program}}`);
   assert.equal(this.$('thead tr').length, 1, 'Table header shows.');
   assert.equal(this.$('tbody').length, 1, 'Table body shows.');
   assert.equal(this.$('tbody tr').length, 0, 'Table body is empty.');
@@ -102,9 +113,13 @@ test('delete and confirm', function(assert) {
   let removeAction =  function(obj) {
     assert.equal(report, obj, 'Report is passed to remove action.');
   };
-  this.set('reports', [ report ]);
+  const program = Object.create({
+    curriculumInventoryReports: resolve([ report ])
+  });
+
+  this.set('program', program);
   this.set('removeAction', removeAction);
-  this.render(hbs`{{curriculum-inventory-report-list reports=reports remove=removeAction}}`);
+  this.render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
   assert.equal(this.$('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
   this.$(`tbody tr:eq(0) .remove`).click();
   assert.equal(this.$('.confirm-removal').length, 2, 'Confirm dialog shows.');
@@ -117,9 +132,13 @@ test('delete and cancel', function(assert) {
   let removeAction =  function() {
     assert.ok(false, 'Remove action should not have been invoked.');
   };
-  this.set('reports', [ report ]);
+  const program = Object.create({
+    curriculumInventoryReports: resolve([ report ])
+  });
+
+  this.set('program', program);
   this.set('removeAction', removeAction);
-  this.render(hbs`{{curriculum-inventory-report-list reports=reports remove=removeAction}}`);
+  this.render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
   assert.equal(this.$('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
   this.$(`tbody tr:eq(0) .remove`).click();
   assert.equal(this.$('.confirm-removal').length, 2, 'Confirm dialog shows.');
@@ -132,14 +151,18 @@ test('sorting', function(assert) {
   let report = Object.create();
   let count = 0;
   let sortBys = ['name', 'name:desc', 'year', 'year:desc'];
-  this.set('reports', [ report ]);
+  const program = Object.create({
+    curriculumInventoryReports: resolve([ report ])
+  });
+
+  this.set('program', program);
   this.set('sortBy', 'id');
   this.set('setSortBy', (what) => {
     assert.equal(what, sortBys[count]);
     this.set('sortBy', what);
     count++;
   });
-  this.render(hbs`{{curriculum-inventory-report-list reports=reports setSortBy=(action setSortBy) sortBy=sortBy}}`);
+  this.render(hbs`{{curriculum-inventory-report-list program=program setSortBy=(action setSortBy) sortBy=sortBy}}`);
   this.$(`th:eq(0)`).click();
   this.$(`th:eq(0)`).click();
   this.$(`th:eq(2)`).click();
@@ -152,9 +175,13 @@ test('edit', function(assert) {
   let editAction =  function(obj) {
     assert.equal(report, obj, 'Report is passed to edit action.');
   };
-  this.set('reports', [ report ]);
+  const program = Object.create({
+    curriculumInventoryReports: resolve([ report ])
+  });
+
+  this.set('program', program);
   this.set('editAction', editAction);
-  this.render(hbs`{{curriculum-inventory-report-list reports=reports edit=editAction}}`);
+  this.render(hbs`{{curriculum-inventory-report-list program=program edit=editAction}}`);
   this.$(`tbody tr:eq(0) td:eq(1)`).click();
   this.$(`tbody tr:eq(0) td:eq(2)`).click();
   this.$(`tbody tr:eq(0) td:eq(3)`).click();
