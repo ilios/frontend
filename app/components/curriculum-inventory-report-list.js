@@ -18,17 +18,17 @@ const ReportProxy = ObjectProxy.extend({
 export default Component.extend({
   currentUser: service(),
   i18n: service(),
-  courses: [],
+  program: null,
 
   /**
    * @property proxiedReports
    * @type {Ember.computed}
    * @public
    */
-  proxiedReports: computed('reports.[]', function(){
+  proxiedReports: computed('program.curriculumInventoryReports.[]', function(){
     return new Promise(resolve => {
       const i18n = this.get('i18n');
-      this.get('reports').then(reports => {
+      this.get('program').get('curriculumInventoryReports').then(reports => {
         resolve(reports.map(report => {
           return ReportProxy.create({
             content: report,

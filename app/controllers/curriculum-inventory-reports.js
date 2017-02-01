@@ -23,43 +23,11 @@ export default Controller.extend({
   sortReportsBy: 'name',
   sortByTitle:['title'],
 
-  newReports: [],
-  newestReport: computed('newReports.[]', function(){
-    const reports = this.get('newReports');
-    if (reports.length) {
-      return reports[reports.length - 1];
-    }
-    return false;
-  }),
+  newReport: null,
   sortedSchools: sort('schools', 'sortByTitle'),
   hasMoreThanOneSchool: gt('schools.length', 1),
 
   showNewCurriculumInventoryForm: false,
-
-  /**
-   * A list of published programs owned by the currently selected school.
-   * @property programs
-   * @type {Ember.computed}
-   * @protected
-   */
-  programs: computed('selectedSchool', function(){
-    return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
-        if(isEmpty(school)){
-          resolve([]);
-        } else {
-          this.get('store').query('program', {
-            filters: {
-              school: school.get('id'),
-              published: true
-            }
-          }).then(programs => {
-            resolve(programs.toArray());
-          });
-        }
-      });
-    });
-  }),
 
   /**
    * The currently selected school. Defaults to the current-user's primary school if none is selected.
@@ -84,6 +52,31 @@ export default Controller.extend({
           });
         });
       }
+    });
+  }),
+
+  /**
+   * A list of published programs owned by the currently selected school.
+   * @property programs
+   * @type {Ember.computed}
+   * @protected
+   */
+  programs: computed('selectedSchool', function(){
+    return new Promise(resolve => {
+      this.get('selectedSchool').then(school => {
+        if(isEmpty(school)){
+          resolve([]);
+        } else {
+          this.get('store').query('program', {
+            filters: {
+              school: school.get('id'),
+              published: true
+            }
+          }).then(programs => {
+            resolve(programs.toArray());
+          });
+        }
+      });
     });
   }),
 
@@ -118,57 +111,6 @@ export default Controller.extend({
     });
   }),
 
-  /**
-   * A list of all available reports, including newly added ones.
-   * @property reportAndNewReports
-   * @type {Ember.computed}
-   * @public
-   */
-  reportsAndNewReports: computed('reports.[]', 'newReports.[]', function(){
-    return new Promise(resolve => {
-      this.get('reports').then(reports => {
-        let all = [];
-        all.pushObjects(reports);
-        this.get('selectedProgram').then(selectedProgram => {
-          if (isPresent(selectedProgram)) {
-            let newReports = this.get('newReports').filter(report => {
-              return report.get('program').get('id') === selectedProgram.get('id') && !all.includes(report);
-            });
-            all.pushObjects(newReports.toArray());
-          }
-          resolve(all);
-        });
-      });
-    });
-  }),
-
-  /**
-   * A list of all reports for the currently selected program.
-   * @property reports
-   * @type {Ember.computed}
-   * @public
-   */
-  reports: computed('selectedProgram', 'selectedSchool', function(){
-    return new Promise(resolve => {
-      this.get('selectedSchool').then(selectedSchool => {
-        this.get('selectedProgram').then(selectedProgram => {
-          if(isEmpty(selectedSchool) || isEmpty(selectedProgram)){
-            resolve([]);
-          } else {
-            this.get('store').query('curriculum-inventory-report', {
-              filters: {
-                program: selectedProgram.get('id')
-              },
-              limit: 500
-            }).then(reports => {
-              resolve(reports.toArray());
-            });
-          }
-        });
-      });
-    });
-  }),
-
   actions: {
     changeSelectedProgram(programId) {
       this.get('programs').then(programs => {
@@ -192,11 +134,12 @@ export default Controller.extend({
     },
 
     removeCurriculumInventoryReport(report) {
-      let newReports = this.get('newReports');
-      if (newReports.includes(report)) {
-        newReports.removeObject(report);
-      }
-      return report.destroyRecord();
+      this.get('selectedProgram').then(program => {
+        program.get('curriculumInventoryReports').then(reports => {
+          reports.removeObject(report);
+          report.destroyRecord();
+        });
+      });
     },
 
     toggleNewCurriculumInventoryReportForm() {
@@ -204,9 +147,17 @@ export default Controller.extend({
     },
 
     saveNewCurriculumInventoryReport(newReport) {
-      return newReport.save().then(savedReport => {
-        this.get('newReports').pushObject(savedReport);
-        this.set('showNewCurriculumInventoryReportForm', false);
+      return new Promise(resolve => {
+        newReport.save().then(savedReport => {
+          this.set('newReport', savedReport);
+          this.get('selectedProgram').then(program => {
+            program.get('curriculumInventoryReports').then(reports => {
+              reports.pushObject(savedReport);
+              this.set('showNewCurriculumInventoryReportForm', false);
+              resolve(savedReport);
+            });
+          });
+        });
       });
     },
 

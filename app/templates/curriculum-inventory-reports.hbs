@@ -66,22 +66,22 @@
           cancel=(action 'cancel')
         }}
       {{/liquid-if}}
-      {{#if newestReport}}
+      {{#if newReport}}
         <div class='saved-result'>
-          {{#link-to 'curriculumInventoryReport' newestReport}}
-            {{fa-icon 'external-link-square'}} {{newestReport.name}}
+          {{#link-to 'curriculumInventoryReport' newReport}}
+            {{fa-icon 'external-link-square'}} {{newReport.name}}
           {{/link-to}}
           {{t 'general.savedSuccessfully'}}
         </div>
       {{/if}}
     </section>
     <div class='resultslist-list'>
-      {{#if (is-fulfilled reportsAndNewReports)}}
+      {{#if (is-fulfilled reports)}}
         {{curriculum-inventory-report-list
-          reports=reportsAndNewReports
           edit='editCurriculumInventoryReport'
           remove='removeCurriculumInventoryReport'
           sortBy=sortReportsBy
+          program=(await selectedProgram)
           setSortBy=(action (mut sortReportsBy))
         }}
       {{else}}
