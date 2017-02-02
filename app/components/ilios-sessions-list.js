@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-const { Component, computed, inject, RSVP, ObjectProxy } = Ember;
+const { Component, computed, inject, RSVP, ObjectProxy, Object } = Ember;
 const { service } = inject;
 const { not, alias } = computed;
-const { hash, map, Promise } = RSVP;
+const { all, hash, map, Promise } = RSVP;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -100,20 +100,62 @@ export default Component.extend({
   sortedSessions: computed('filteredContent', 'sortBy', 'sortedAscending', function() {
     return new Promise(resolve => {
       let sortBy = this.get('sortBy');
-      if (-1 === sortBy.indexOf(':')) {
+      if (-1 !== sortBy.indexOf(':')) {
         sortBy = sortBy.split(':', 1)[0];
       }
       let sortedAscending = this.get('sortedAscending');
       this.get('filteredContent').then(sessions => {
         if ('title' === sortBy) {
-          sessions = sessions.sortBy(sortBy);
+          let sortedSessions = sessions.sortBy(sortBy);
           if (! sortedAscending) {
-            sessions = sessions.slice().reverse();
+            sortedSessions = sessions.slice().reverse();
+
           }
+          resolve(sortedSessions);
+        } else if ('offeringCount' === sortBy || 'learnerGroupCount' === sortBy) {
+          let sortedSessions = sessions.sort((sessionA, sessionB) => {
+            if (sessionA.get(sortBy) > sessionB.get(sortBy)) {
+              return 1;
+            } else if (sessionA.get(sortBy) < sessionB.get(sortBy)){
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          if (! sortedAscending) {
+            sortedSessions.reverse();
+
+          }
+          resolve(sortedSessions);
         } else {
-          // @todo sort by session-type title, offering-count, first offering and groups count. [ST 2017/02/01]
+          let promises = [];
+          let proxies = [];
+          sessions.forEach(session => {
+            let proxy = Object.create({
+              session,
+              content: session,
+              sortValue: null
+            });
+            let promise = session.get('content').get(sortBy).then(sortValue => {
+              proxy.set('sortValue', sortValue);
+              proxies.pushObject(proxy);
+            });
+
+            promises.pushObject(promise);
+          });
+
+          all(promises).then(()=> {
+            let sortedProxies = proxies.sortBy('sortValue');
+            let sortedSessions = [];
+            sortedProxies.forEach(sortedProxy => {
+              sortedSessions.pushObject(sortedProxy.get('content'));
+            });
+            if (! sortedAscending) {
+              sortedSessions.reverse();
+            }
+            resolve(sortedSessions);
+          });
         }
-        resolve(sessions);
       });
     });
   }),
@@ -122,7 +164,7 @@ export default Component.extend({
     const sortBy = this.get('sortBy');
     return sortBy.search(/desc/) === -1;
   }),
-  displayedSessions: computed('sortedSessions', 'offset', 'limit', 'sortBy', function(){
+  displayedSessions: computed('sortedSessions', 'offset', 'limit', function(){
     const limit = this.get('limit');
     const offset = this.get('offset');
     const end = limit + offset;
