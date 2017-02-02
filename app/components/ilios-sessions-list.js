@@ -110,6 +110,8 @@ export default Component.extend({
           if (! sortedAscending) {
             sessions = sessions.slice().reverse();
           }
+        } else {
+          // @todo sort by session-type title, offering-count, first offering and groups count. [ST 2017/02/01]
         }
         resolve(sessions);
       });
