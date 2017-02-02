@@ -273,7 +273,7 @@ test('new course', function(assert) {
   const input = '.new-course input';
   const selectField = '.new-course select';
   const saveButton = '.done';
-  const savedLink = '.savedcourse a';
+  const savedLink = '.saved-result a';
 
   visit(url);
   click(expandButton);
@@ -322,7 +322,7 @@ test('new course does not appear twice when navigating back', function(assert) {
   const input = '.new-course input';
   const selectField = '.new-course select';
   const saveButton = '.done';
-  const savedLink = '.savedcourse a';
+  const savedLink = '.saved-result a';
   const courseTitle = "Course 1";
   const course1InList = `tbody tr:contains("${courseTitle}")`;
 
@@ -361,7 +361,7 @@ test('new course can be deleted', function(assert) {
   const courses = '.list tbody tr';
   const deleteCourse = `${courses} .remove`;
   const deleteConfirm = `.confirm-buttons .remove`;
-  const savedCourse = '.savedcourse';
+  const savedCourse = '.saved-result';
 
   visit(url);
   andThen(() => {
