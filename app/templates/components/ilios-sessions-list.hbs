@@ -105,7 +105,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each displayedSessions as |sessionProxy|}}
+            {{#each (await displayedSessions) as |sessionProxy|}}
               <tr class="{{if sessionProxy.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left' colspan=3>
                   {{#link-to 'session.index' course sessionProxy.content}}
@@ -138,7 +138,7 @@
                   {{#link-to 'session.index' course sessionProxy.content class='edit'}}
                     {{fa-icon 'edit'}}
                   {{/link-to}}
-                  {{#if (and sessionProxy.userCanDelete editable)}}
+                  {{#if (and (await sessionProxy.userCanDelete) editable)}}
                     <span class='clickable remove' {{action 'confirmRemoval' sessionProxy}}>{{fa-icon 'trash'}}</span>
                   {{/if}}
                 </td>
