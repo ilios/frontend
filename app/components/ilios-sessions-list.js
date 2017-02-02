@@ -1,11 +1,9 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { Component, computed, inject, RSVP, ObjectProxy } = Ember;
-const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
-const { sort, not, alias, collect } = computed;
-const { Promise } = RSVP;
+const { not, alias } = computed;
+const { hash, map, Promise } = RSVP;
 
 const SessionProxy = ObjectProxy.extend({
   content: null,
@@ -13,23 +11,20 @@ const SessionProxy = ObjectProxy.extend({
   expandOfferings: false,
   showRemoveConfirmation: false,
   userCanDelete: computed('content.course', 'currentUser.model.directedCourses.[]', function(){
-    let defer = RSVP.defer();
-    this.get('currentUser.userIsDeveloper').then(isDeveloper => {
-      if(isDeveloper){
-        defer.resolve(true);
-      } else {
-        this.get('content').get('course').then(course => {
-          this.get('currentUser.model').then(user => {
-            user.get('directedCourses').then(directedCourses => {
-              defer.resolve(directedCourses.includes(course));
+    return new Promise(resolve => {
+      this.get('currentUser.userIsDeveloper').then(isDeveloper => {
+        if(isDeveloper){
+          resolve(true);
+        } else {
+          this.get('content').get('course').then(course => {
+            this.get('currentUser.model').then(user => {
+              user.get('directedCourses').then(directedCourses => {
+                resolve(directedCourses.includes(course));
+              });
             });
           });
-        });
-      }
-    });
-
-    return PromiseObject.create({
-      promise: defer.promise
+        }
+      });
     });
   })
 });
@@ -51,10 +46,10 @@ export default Component.extend({
   course: null,
 
   proxiedSessions: computed('sessions.[]', function() {
-    return new Promise( resolve => {
+    return new Promise(resolve => {
       this.get('sessions').then(sessions => {
-        return RSVP.map(sessions.toArray(), session => {
-          return RSVP.hash({
+        return map(sessions.toArray(), session => {
+          return hash({
             sessionType: session.get('sessionType'),
             firstOfferingDate: session.get('firstOfferingDate'),
             associatedLearnerGroups: session.get('associatedLearnerGroups'),
@@ -76,49 +71,64 @@ export default Component.extend({
     });
   }),
 
-  filteredContent: computed('proxiedSessions.[]', 'filterBy', function(){
-    let defer = RSVP.defer();
-    this.get('proxiedSessions').then(sessions => {
-      let filter = this.get('filterBy');
-      let filterExpressions = filter.split(' ').map(function(string){
-        return new RegExp(string, 'gi');
-      });
-      let filtered = sessions.filter(session => {
-        let searchString = session.get('searchString');
-        if(searchString === null || searchString === undefined){
-          return false;
-        }
-        let matchedSearchTerms = 0;
-        for (let i = 0; i < filterExpressions.length; i++) {
-          if(searchString.match(filterExpressions[i])){
-            matchedSearchTerms++;
+  filteredContent: computed('proxiedSessions', 'filterBy', function(){
+    return new Promise(resolve => {
+      this.get('proxiedSessions').then(sessions => {
+        let filter = this.get('filterBy');
+        let filterExpressions = filter.split(' ').map(function (string) {
+          return new RegExp(string, 'gi');
+        });
+        let filtered = sessions.filter(session => {
+          let searchString = session.get('searchString');
+          if (searchString === null || searchString === undefined) {
+            return false;
           }
-        }
-        //if the number of matching search terms is equal to the number searched, return true
-        return (matchedSearchTerms === filterExpressions.length);
+          let matchedSearchTerms = 0;
+          for (let i = 0; i < filterExpressions.length; i++) {
+            if (searchString.match(filterExpressions[i])) {
+              matchedSearchTerms++;
+            }
+          }
+          //if the number of matching search terms is equal to the number searched, return true
+          return (matchedSearchTerms === filterExpressions.length);
+        });
+        resolve(filtered.sortBy('title'));
       });
-
-      defer.resolve(filtered.sortBy('title'));
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
   sortBy: 'title',
-  sortSessionsBy: collect('sortBy'),
-  sortedSessions: sort('filteredContent', 'sortSessionsBy'),
+  sortedSessions: computed('filteredContent', 'sortBy', 'sortedAscending', function() {
+    return new Promise(resolve => {
+      let sortBy = this.get('sortBy');
+      if (-1 === sortBy.indexOf(':')) {
+        sortBy = sortBy.split(':', 1)[0];
+      }
+      let sortedAscending = this.get('sortedAscending');
+      this.get('filteredContent').then(sessions => {
+        if ('title' === sortBy) {
+          sessions = sessions.sortBy(sortBy);
+          if (! sortedAscending) {
+            sessions = sessions.slice().reverse();
+          }
+        }
+        resolve(sessions);
+      });
+    });
+  }),
+
   sortedAscending: computed('sortBy', function(){
     const sortBy = this.get('sortBy');
     return sortBy.search(/desc/) === -1;
   }),
-  displayedSessions: computed('sortedSessions.[]', 'sortBy', 'offset', 'limit', function(){
+  displayedSessions: computed('sortedSessions', 'offset', 'limit', 'sortBy', function(){
     const limit = this.get('limit');
     const offset = this.get('offset');
     const end = limit + offset;
-    let sessions = this.get('sortedSessions');
-
-    return sessions.slice(offset, end);
+    return new Promise(resolve => {
+      this.get('sortedSessions').then(sessions => {
+        resolve(sessions.slice(offset, end));
+      });
+    });
   }),
 
   editorOn: false,
