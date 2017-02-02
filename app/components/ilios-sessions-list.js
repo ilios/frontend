@@ -127,6 +127,35 @@ export default Component.extend({
 
           }
           resolve(sortedSessions);
+
+        } else if ('sessionType' === sortBy) {
+          let promises = [];
+          let proxies = [];
+          sessions.forEach(session => {
+            let proxy = Object.create({
+              session,
+              content: session,
+              sortValue: null
+            });
+            let promise = session.get('content').get('sessionType').then(sessionType => {
+              proxy.set('sortValue', sessionType.get('title'));
+              proxies.pushObject(proxy);
+            });
+
+            promises.pushObject(promise);
+          });
+
+          all(promises).then(()=> {
+            let sortedProxies = proxies.sortBy('sortValue');
+            let sortedSessions = [];
+            sortedProxies.forEach(sortedProxy => {
+              sortedSessions.pushObject(sortedProxy.get('content'));
+            });
+            if (! sortedAscending) {
+              sortedSessions.reverse();
+            }
+            resolve(sortedSessions);
+          });
         } else {
           let promises = [];
           let proxies = [];
