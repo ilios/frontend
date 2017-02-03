@@ -1,20 +1,23 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { Component, computed, RSVP } = Ember;
-const { PromiseArray } = DS;
+const { Promise } = RSVP;
 
 export default Component.extend({
+
   cohorts: [],
+
+  /**
+   * A list of cohorts, sorted by school and display title.
+   * @property sortedCohorts
+   * @type {Ember.computed}
+   * @public
+   */
   sortedCohorts: computed('cohorts.@each.{school,displayTitle}', function(){
-    let defer = RSVP.defer();
-
-    this.get('cohorts').then(cohorts => {
-      defer.resolve(cohorts.sortBy('school', 'displayTitle'));
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
+    return new Promise(resolve => {
+      this.get('cohorts').then(cohorts => {
+        resolve(cohorts.sortBy('school', 'displayTitle'));
+      });
     });
   }),
 });
