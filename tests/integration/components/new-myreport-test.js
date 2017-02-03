@@ -218,14 +218,13 @@ test('choosing term selects correct objects', function(assert) {
 test('choosing session type selects correct objects', function(assert) {
   return checkObjects(this, assert, 10, 'session type', [
     'course',
-    'session',
-    'program year',
     'program',
     'instructor',
+    'instructor group',
     'learning material',
     'competency',
     'mesh term',
-    'session type',
+    'term'
   ]);
 });
 
