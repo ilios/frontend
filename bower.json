@@ -6,7 +6,6 @@
     "lodash": "~4.0.0",
     "Faker": "~3.0.1",
     "font-awesome": "~4.5.0",
-    "froala-wysiwyg-editor": "~2.4.1",
     "papaparse": "~4.1.2",
     "zxcvbn": "~4.3.0",
     "js-cookie": "^2.0.4"
