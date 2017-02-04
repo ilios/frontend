@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, observer, RSVP } = Ember;
+const { computed, isBlank, observer, RSVP } = Ember;
 const { Model, PromiseArray } = DS;
 const { Promise } = RSVP;
 
@@ -13,7 +13,6 @@ export default Model.extend({
   courses: DS.hasMany('course', {async: true}),
   learnerGroups: DS.hasMany('learner-group', {async: true}),
   users: DS.hasMany('user', {async: true}),
-  displayTitle: '',
   competencies: computed('programYear.competencies.[]', function(){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve) {
@@ -49,19 +48,28 @@ export default Model.extend({
       promise: defer.promise
     });
   }),
-  displayTitleObserver: observer('title', 'programYear.classOfYear', function(){
-    var self = this;
-    if(this.get('title.length') > 0){
-      this.set('displayTitle', this.get('title'));
-    } else {
-      this.get('programYear').then(function(programYear){
-        //I dont' know why this is necessary, but sometimes tests fail if we assume that programYear is set here
-        var classOfYear = programYear?programYear.get('classOfYear'):null;
-        var title = self.get('i18n').t('general.classOf', {year: classOfYear});
-        self.set('displayTitle', title);
-      });
-    }
+
+  /**
+   * The cohort's display title, which could either be an explicitly set title, or "Class of YYYY" as a fallback.
+   * @property displayTitle
+   * @type {Ember.computed}
+   * @public
+   */
+  displayTitle: computed('title', 'programYear.classOfYear', function(){
+    return new Promise(resolve => {
+      let title = this.get('title');
+      if (! isBlank(title)) {
+        resolve(title);
+      } else {
+        this.get('programYear').then(programYear => {
+          let classOfYear = programYear ? programYear.get('classOfYear') : null;
+          let title = self.get('i18n').t('general.classOf', {year: classOfYear});
+          resolve(title);
+        });
+      }
+    });
   }),
+
   currentLevel: computed('programYear.startYear', function(){
     var startYear = this.get('programYear.startYear');
     if(startYear){
