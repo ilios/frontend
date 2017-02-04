@@ -16,7 +16,7 @@ moduleForComponent('new-myreport', 'Integration | Component | new myreport', {
 });
 
 test('it renders', function(assert) {
-  assert.expect(29);
+  assert.expect(31);
 
   const mockSchools = [
     {id: 2, title: 'second'},
@@ -54,6 +54,7 @@ test('it renders', function(assert) {
   const eighthSubject = `${subjects}:eq(7)`;
   const ninthSubject = `${subjects}:eq(8)`;
   const tenthSubject = `${subjects}:eq(9)`;
+  const eleventhSubject = `${subjects}:eq(10)`;
 
 
   assert.equal(this.$(title).text(), 'New Report');
@@ -84,8 +85,10 @@ test('it renders', function(assert) {
   assert.equal(this.$(eighthSubject).val(), 'competency');
   assert.equal(this.$(ninthSubject).text().trim(), 'MeSH Terms');
   assert.equal(this.$(ninthSubject).val(), 'mesh term');
-  assert.equal(this.$(tenthSubject).text().trim(), 'Session Types');
-  assert.equal(this.$(tenthSubject).val(), 'session type');
+  assert.equal(this.$(tenthSubject).text().trim(), 'Terms');
+  assert.equal(this.$(tenthSubject).val(), 'term');
+  assert.equal(this.$(eleventhSubject).text().trim(), 'Session Types');
+  assert.equal(this.$(eleventhSubject).val(), 'session type');
 });
 
 let checkObjects = function(context, assert, subjectNum, subjectVal, expectedObjects){
@@ -199,8 +202,21 @@ test('choosing mesh term selects correct objects', function(assert) {
   ]);
 });
 
+test('choosing term selects correct objects', function(assert) {
+  return checkObjects(this, assert, 9, 'term', [
+    'course',
+    'session',
+    'program year',
+    'program',
+    'instructor',
+    'learning material',
+    'competency',
+    'mesh term',
+  ]);
+});
+
 test('choosing session type selects correct objects', function(assert) {
-  return checkObjects(this, assert, 9, 'session type', [
+  return checkObjects(this, assert, 10, 'session type', [
     'course',
     'program',
     'instructor',
@@ -208,6 +224,7 @@ test('choosing session type selects correct objects', function(assert) {
     'learning material',
     'competency',
     'mesh term',
+    'term'
   ]);
 });
 
