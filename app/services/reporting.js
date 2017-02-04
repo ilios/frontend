@@ -209,5 +209,23 @@ export default Service.extend({
       };
     });
     return RSVP.resolve(map);
-  }
+  },
+  termsResults(results){
+    return RSVP.map (results.toArray(), result => {
+      return new RSVP.Promise(resolve => {
+        result.get('vocabulary').then(vocabulary => {
+          result.get('titleWithParentTitles').then(titleWithParentTitles => {
+            const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
+            resolve({value: title});
+          });
+        });
+      });
+    });
+  },
+  objectivesResults(results){
+    return this.titleResults(results);
+  },
+  learnerGroupsResults(results){
+    return this.titleResults(results);
+  },
 });

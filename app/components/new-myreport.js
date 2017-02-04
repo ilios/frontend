@@ -6,6 +6,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 const { Component, computed, inject, RSVP, isEmpty, isPresent } = Ember;
 const { service } = inject;
 const { PromiseArray } = DS;
+const { oneWay } = computed;
 
 const Validations = buildValidations({
   title: [
@@ -40,6 +41,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       {value: 'learning material', label: this.get('i18n').t('general.learningMaterials')},
       {value: 'competency', label: this.get('i18n').t('general.competencies')},
       {value: 'mesh term', label: this.get('i18n').t('general.meshTerms')},
+      {value: 'term', label: this.get('i18n').t('general.terms')},
       {value: 'session type', label: this.get('i18n').t('general.sessionTypes')},
     ];
 
@@ -47,15 +49,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
   prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
     let list = [
-      {value: 'course', label: this.get('i18n').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type']},
-      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term']},
-      {value: 'program', label: this.get('i18n').t('general.program'), subjects: ['course', 'session', 'session type']},
-      {value: 'instructor', label: this.get('i18n').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type']},
+      {value: 'course', label: this.get('i18n').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
+      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
+      {value: 'program year', label: this.get('i18n').t('general.programYear'), subjects: ['term']},
+      {value: 'program', label: this.get('i18n').t('general.program'), subjects: ['course', 'session', 'session type', 'term']},
+      {value: 'instructor', label: this.get('i18n').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type', 'term']},
       {value: 'instructor group', label: this.get('i18n').t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'session type']},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type']},
-      {value: 'competency', label: this.get('i18n').t('general.competency'), subjects: ['course', 'session', 'session type']},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type']},
-      {value: 'session type', label: this.get('i18n').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term']},
+      {value: 'learning material', label: this.get('i18n').t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type', 'term']},
+      {value: 'competency', label: this.get('i18n').t('general.competency'), subjects: ['course', 'session', 'session type', 'term']},
+      {value: 'mesh term', label: this.get('i18n').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type', 'term']},
+      {value: 'session type', label: this.get('i18n').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
+      {value: 'term', label: this.get('i18n').t('general.term'), subjects: ['course', 'session', 'program', 'program year', 'session type']},
     ];
 
     const subject = this.get('currentSubject');
@@ -89,27 +93,67 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         'session-type',
         'instructor-group',
         'competency',
+        'term',
       ];
       if(schoolScopedModels.includes(model)) {
-        if ('session' === model) {
+        if ('session' === model || 'term' == model) {
           query.filters.schools = [this.get('currentSchool').get('id')];
         } else {
           query.filters.school = this.get('currentSchool').get('id');
         }
       }
     }
+				
+    const PrepositionObject = Ember.Object.extend({
+      model: null,
+      type: null,
+      value: oneWay('model.id'),
+					
+      label: computed('model', 'type', function(){
+        const type = this.get('type');
+        const model = this.get('model');
+        return new RSVP.Promise(resolve => {
+          switch(type){
+          case 'mesh term':
+            resolve(model.get('name'));
+            break;
+          case 'term':
+            model.get('vocabulary').then(vocabulary => {
+              model.get('titleWithParentTitles').then(titleWithParentTitles => {
+                const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
+                resolve(title);
+              });
+            });
+            break;
+          default:
+            resolve(model.get('title'));
+          }
+        });
+      })
+    });
 
     store.query(model, query).then(objects => {
-      let label = type === 'mesh term'?'name':'title';
       let values = objects.map(object => {
-        return {
-          value: object.get('id'),
-          label: object.get(label)
-        };
-      }).sortBy('label');
-
-      defer.resolve(values);
+        return PrepositionObject.create({
+          type,
+          model: object,
+        });
+      });
+					
+      RSVP.map(values, obj => {
+        return new RSVP.Promise(resolve => {
+          obj.get('label').then(label => {
+            resolve({
+              value: obj.get('value'),
+              label: label
+            });
+          });
+        });
+      }).then(listWithSortTerm => {
+        defer.resolve(listWithSortTerm);
+      });
     });
+										
     return PromiseArray.create({
       promise: defer.promise
     });
