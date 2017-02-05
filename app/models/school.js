@@ -25,6 +25,7 @@ export default DS.Model.extend({
     async: true,
     inverse: 'administeredSchools'
   }),
+  configurations: DS.hasMany('school-config', {async: true}),
   cohorts: computed('programs.@each.programYears', {
     get(){
       return this.get('store').query('cohort', {

@@ -275,6 +275,12 @@ export default function() {
   this.delete('api/schools/:id', 'school');
   this.post('api/schools', 'school');
 
+  this.get('api/schoolconfigs', getAll);
+  this.get('api/schoolconfigs/:id', 'schoolConfig');
+  this.put('api/schoolconfigs/:id', 'schoolConfig');
+  this.delete('api/schoolconfigs/:id', 'schoolConfig');
+  this.post('api/schoolconfigs', 'schoolConfig');
+
   this.get('api/sessiondescriptions', getAll);
   this.get('api/sessiondescriptions/:id', 'sessionDescription');
   this.put('api/sessiondescriptions/:id', 'sessionDescription');

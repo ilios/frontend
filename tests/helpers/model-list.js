@@ -45,6 +45,7 @@ export default [
   'model:program-year-steward',
   'model:report',
   'model:school',
+  'model:school-config',
   'model:session-description',
   'model:session-learning-material',
   'model:session-type',

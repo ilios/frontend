@@ -68,6 +68,7 @@ module.exports = function(environment) {
     //Hide a feature while it is in development
     IliosFeatures: {
       allowAddNewUser: true,
+      schoolSessionAttributes: false,
     }
   };
 
@@ -84,6 +85,8 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+
+    ENV.IliosFeatures.schoolSessionAttributes = true;
   }
 
   if (environment === 'test') {
@@ -100,6 +103,8 @@ module.exports = function(environment) {
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
+
+    ENV.IliosFeatures.schoolSessionAttributes = true;
   }
 
 /*

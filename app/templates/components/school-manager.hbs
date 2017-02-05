@@ -67,4 +67,18 @@
   {{else}}
     {{school-vocabularies-collapsed school=school expand=(action this.attrs.setSchoolVocabularyDetails true)}}
   {{/if}}
+
+  {{#if schoolSessionAttributes}}
+    {{#if schoolSessionAttributesDetails}}
+      {{school-session-attributes-expanded
+        school=school
+        collapse=(action setSchoolSessionAttributesDetails false)
+        setSchoolManagedSessionAttributes=setSchoolManagedSessionAttributes
+        isManaging=schoolManageSessionAttributes
+        setManaging=setSchoolManageSessionAttributes
+      }}
+    {{else}}
+      {{school-session-attributes-collapsed school=school expand=(action setSchoolSessionAttributesDetails true)}}
+    {{/if}}
+  {{/if}}
 </div>
