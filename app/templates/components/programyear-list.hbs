@@ -42,7 +42,7 @@
                     {{fa-icon 'external-link-square'}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
-                <td class='text-left'>{{programYearProxy.cohort.displayTitle}}</td>
+                <td class='text-left'>{{await programYearProxy.cohort.displayTitle}}</td>
 
                 <td class='text-left'>
                   {{#if programYearProxy.competencies.length}}
