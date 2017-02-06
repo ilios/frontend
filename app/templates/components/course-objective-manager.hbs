@@ -11,7 +11,7 @@
         update=(action (mut selectedCohortId))
       }}
     {{else}}
-      {{currentCohort.title}}
+      {{get (await currentCohort) 'title'}}
     {{/if}}
   </label>
   <div class='parent-picker'>

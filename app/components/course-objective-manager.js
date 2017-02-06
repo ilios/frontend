@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { Component, computed, isEmpty, observer, on } = Ember;
+const { Component, computed, isEmpty, observer, on, RSVP } = Ember;
+const { Promise } = RSVP;
 const { none } = computed;
 
 var competencyGroup = Ember.Object.extend({
@@ -27,13 +28,18 @@ var cohortProxy = Ember.Object.extend({
   objective: [],
   id: computed.oneWay('cohort.id'),
   title: computed('cohort.displayTitle', 'cohort.programYear.program.title', function(){
-    var program = this.get('cohort.programYear.program.title');
-    var cohort = this.get('cohort.displayTitle');
-    if(program && cohort) {
-      return program + ' ' + cohort;
-    }
-
-    return '';
+    return new Promise(resolve => {
+      this.get('cohort.programYear.program').then(program => {
+        let programTitle = program.get('title');
+        this.get('cohort.displayTitle').then(cohortTitle => {
+          let title = '';
+          if(programTitle && cohortTitle) {
+            title = programTitle + ' ' + cohortTitle;
+          }
+          resolve(title);
+        });
+      });
+    });
   }),
   objectivesByCompetency: computed('objectives.[]', function(){
     let deferred = Ember.RSVP.defer();
