@@ -86,7 +86,26 @@ export default Component.extend({
       this.get('selectedSchool').then(school => {
         this.get('selectedAcademicYear').then(year => {
           school.getCohortsForYear(year.get('title')).then(cohorts => {
-            resolve(cohorts.sortBy('displayTitle'));
+            let proxies = [];
+            let promises = [];
+            cohorts.forEach(cohort => {
+              let proxy = Object.create({
+                cohort,
+                displayTitle: null
+              });
+              proxies.pushObject(proxy);
+              promises.pushObject(cohort.get('displayTitle').then(displayTitle => {
+                proxy.set('displayTitle', displayTitle);
+              }));
+            });
+            all(promises).then(() => {
+              let sortedCohorts = [];
+              let sortedProxies = proxies.sortBy('displayTitle');
+              sortedProxies.forEach(proxy => {
+                sortedCohorts.pushObject(proxy.get('cohort'));
+              });
+              resolve(sortedCohorts);
+            });
           });
         });
       });
@@ -186,15 +205,25 @@ export default Component.extend({
           switch (model) {
           case 'session-type':
             hash.class = 'tag-session-type';
-            hash.name = filter.get('title');
+            hash.name = new Promise(resolve => {
+              resolve(filter.get('title'));
+            });
             break;
           case 'cohort':
             hash.class = 'tag-cohort';
-            hash.name = `${filter.get('displayTitle')} ${filter.get('programYear.program.title')}`;
+            hash.name = new Promise(resolve => {
+              filter.get('displayTitle').then(displayTitle => {
+                filter.get('programYear.program').then(program => {
+                  resolve(`${displayTitle} ${program.get('title')}`);
+                });
+              });
+            });
             break;
           case 'course':
             hash.class = 'tag-course';
-            hash.name = filter.get('title');
+            hash.name = new Promise(resolve => {
+              resolve(filter.get('title'));
+            });
             break;
           }
         }
