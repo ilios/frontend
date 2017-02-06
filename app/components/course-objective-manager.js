@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
+import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty, observer, on, RSVP } = Ember;
-const { Promise } = RSVP;
-const { none } = computed;
+const { Component, computed, isEmpty, Object, ObjectProxy, RSVP } = Ember;
+const { all, Promise } = RSVP;
+const { none, oneWay } = computed;
 
-var competencyGroup = Ember.Object.extend({
+const competencyGroup = Object.extend({
   title: '',
   originalObjectives: [],
   uniqueObjectives: computed.uniq('originalObjectives'),
@@ -16,178 +16,193 @@ var competencyGroup = Ember.Object.extend({
   noTitle: none('title')
 });
 
-var objectiveProxy = Ember.ObjectProxy.extend({
+const objectiveProxy = ObjectProxy.extend({
   courseObjective: null,
   selected: computed('content', 'courseObjective.parents.[]', function(){
     return this.get('courseObjective.parents').includes(this.get('content'));
   }),
 });
 
-var cohortProxy = Ember.Object.extend({
+const cohortProxy = Object.extend({
   cohort: null,
-  objective: [],
-  id: computed.oneWay('cohort.id'),
-  title: computed('cohort.displayTitle', 'cohort.programYear.program.title', function(){
-    return new Promise(resolve => {
-      this.get('cohort.programYear.program').then(program => {
-        let programTitle = program.get('title');
-        this.get('cohort.displayTitle').then(cohortTitle => {
-          let title = '';
-          if(programTitle && cohortTitle) {
-            title = programTitle + ' ' + cohortTitle;
-          }
-          resolve(title);
-        });
-      });
-    });
-  }),
+  objective: null,
+  id: oneWay('cohort.id'),
+  title: null,
   objectivesByCompetency: computed('objectives.[]', function(){
-    let deferred = Ember.RSVP.defer();
-    let objectives = this.get('objectives');
-    let competencies = [];
-    let promises = [];
-    objectives.forEach(objective => {
-      promises.pushObject(objective.get('competency').then(competency => {
-        competencies.pushObject(competency);
-      }));
-    });
-    Ember.RSVP.all(promises).then(() => {
-      let groups = competencies.uniq().filter(competency => {
-        return !!competency;
-      }).map(competency => {
+    return new Promise(resolve => {
+      let objectives = this.get('objectives');
+      let competencies = [];
+      let promises = [];
+      objectives.forEach(objective => {
+        promises.pushObject(objective.get('competency').then(competency => {
+          competencies.pushObject(competency);
+        }));
+      });
+      all(promises).then(() => {
+        let groups = competencies.uniq().filter(competency => {
+          return !!competency;
+        }).map(competency => {
+          let ourObjectives = objectives.filter(objective => {
+            return objective.get('competency').get('id') === competency.get('id');
+          });
+          return competencyGroup.create({
+            title: competency.get('title'),
+            originalObjectives: ourObjectives
+          });
+        });
+
+        groups = groups.sortBy('title');
+
+        // finally, add all program objectives that are not linked to a competency
+        // in a group and add it to the end of the list.
+        // @see https://github.com/ilios/frontend/issues/1905
         let ourObjectives = objectives.filter(objective => {
-          return objective.get('competency').get('id') === competency.get('id');
+          return isEmpty(objective.get('competency').get('content'));
         });
-        return competencyGroup.create({
-          title: competency.get('title'),
-          originalObjectives: ourObjectives
-        });
+        if (!isEmpty(ourObjectives)) {
+          let specialGroup = competencyGroup.create({
+            title: null,
+            originalObjectives: ourObjectives,
+          });
+          groups.pushObject(specialGroup);
+        }
+        resolve(groups);
       });
-
-      groups = groups.sortBy('title');
-
-      // finally, add all program objectives that are not linked to a competency
-      // in a group and add it to the end of the list.
-      // @see https://github.com/ilios/frontend/issues/1905
-      let ourObjectives = objectives.filter(objective => {
-        return isEmpty(objective.get('competency').get('content'));
-      });
-      if (!isEmpty(ourObjectives)) {
-        let specialGroup = competencyGroup.create({
-          title: null,
-          originalObjectives: ourObjectives,
-        });
-        groups.pushObject(specialGroup);
-      }
-      deferred.resolve(groups);
     });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
+
   })
 });
 
 export default Component.extend({
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
-  showObjectiveList: false,
-  showCohortList: false,
-  cohorts: computed(
-    'courseObjective.courses.[]',
-    'courseObjective.courses.@each.cohorts',
-    function(){
-      var courseObjective = this.get('courseObjective');
-      var groups = [];
-      if(!courseObjective){
-        return [];
-      }
-      var deferred = Ember.RSVP.defer();
-      courseObjective.get('courses').then(function(courses){
-        var course = courses.get('firstObject');
-        course.get('cohorts').then(function(cohorts){
-          var promises = cohorts.map(function(cohort){
-            return cohort.get('objectives').then(function(objectives){
-              var objectiveProxies = objectives.map(function(objective){
-                return objectiveProxy.create({
-                  content: objective,
-                  courseObjective: courseObjective,
+  selectedCohort: null,
+
+  didReceiveAttrs(){
+    this.get('loadAttr').perform();
+  },
+
+  loadAttr: task(function * () {
+    let cohorts = yield this.get('cohorts');
+    let firstCohort = cohorts.get('firstObject');
+    if(firstCohort != null){
+      this.set('selectedCohort', firstCohort);
+    }
+  }),
+
+  /**
+   * @property cohorts
+   * @type {Ember.computed}
+   * @protected
+   */
+  cohorts: computed('courseObjective.courses.[]','courseObjective.courses.@each.cohorts', function() {
+    return new Promise(resolve => {
+      let courseObjective = this.get('courseObjective');
+      if (! courseObjective) {
+        resolve([]);
+      } else {
+        let groups = [];
+        courseObjective.get('courses').then(courses => {
+          let course = courses.get('firstObject');
+          course.get('cohorts').then(cohorts => {
+            let promises = cohorts.map(cohort => {
+              return new Promise(resolve => {
+                cohort.get('objectives').then(objectives => {
+                  let objectiveProxies = objectives.map(objective => {
+                    return objectiveProxy.create({
+                      content: objective,
+                      courseObjective,
+                    });
+                  });
+                  cohort.get('programYear.program').then(program => {
+                    let programTitle = program.get('title');
+                    cohort.get('displayTitle').then(cohortTitle => {
+                      let title = '';
+                      if(programTitle && cohortTitle) {
+                        title = programTitle + ' ' + cohortTitle;
+                      }
+                      let group = cohortProxy.create({
+                        cohort: cohort,
+                        objectives: objectiveProxies,
+                        title
+                      });
+                      resolve(groups.pushObject(group));
+                    });
+                  });
                 });
               });
-              var group = cohortProxy.create({
-                cohort: cohort,
-                objectives: objectiveProxies
-              });
-              groups.pushObject(group);
+            });
+            all(promises).then(() => {
+              resolve(groups);
             });
           });
-          Ember.RSVP.all(promises).then(function(){
-            deferred.resolve(groups);
-          });
         });
-      });
-      return DS.PromiseArray.create({
-        promise: deferred.promise
-      });
-    }
-  ),
-  selectedCohortId: null,
-  multipleCohorts: computed.gt('availableCohorts.length', 1),
-  availableCohorts: computed('cohorts.@each.{id,title}', function(){
-    var cohorts = this.get('cohorts');
-    if(!cohorts){
-      return [];
-    }
-    return cohorts.map(function(cohort){
-      return {
-        id: cohort.get('id'),
-        title: cohort.get('title')
-      };
-    }).sortBy('title');
-  }),
-  currentCohort: computed('selectedCohortId', 'cohorts.[]', function(){
-    var selectedCohortId = this.get('selectedCohortId');
-    if(selectedCohortId){
-      var matchingGroups = this.get('cohorts').filterBy('id', selectedCohortId);
-      if(matchingGroups.length > 0){
-        this.set('showObjectiveList', true);
-        return matchingGroups.get('firstObject');
       }
-    }
-
-    return null;
+    });
   }),
-  watchCohorts: on('init', observer(
-    'availableCohorts.[]',
-    'selectedCohortId',
-    'availableCohorts.length',
-    function(){
-      Ember.run.later(this, function(){
-        if(this.get('selectedCohortId') == null){
-          var firstCohort = this.get('availableCohorts.firstObject');
-          if(firstCohort != null){
-            this.set('selectedCohortId', firstCohort.id);
-          }
-        }
-      }, 500);
 
-      //debounce this to avoid weird saving behavior and animations
-      Ember.run.debounce(this, function(){
-        if(!this.get('isDestroyed')){
-          this.set('showCohortList', this.get('availableCohorts.length') > 0);
+  /**
+   * @property availableCohorts
+   * @type {Ember.computed}
+   * @public
+   */
+  availableCohorts: computed('cohorts.@each.{id,title}', function(){
+    return new Promise(resolve => {
+      this.get('cohorts').then(cohorts => {
+        if(!cohorts){
+          resolve([]);
+        } else {
+          let sortedCohorts = cohorts.map(cohort => {
+            return {
+              id: cohort.get('id'),
+              title: cohort.get('title')
+            };
+          }).sortBy('title');
+          resolve(sortedCohorts);
         }
-      }, 500);
-    }
-  )),
+      });
+    });
+  }),
+
+  /**
+   * @property currentCohort
+   * @type {Ember.computed}
+   * @public
+   */
+  currentCohort: computed('selectedCohort', 'cohorts.[]', function(){
+    return new Promise(resolve => {
+      let selectedCohort = this.get('selectedCohort');
+      if (selectedCohort){
+        this.get('cohorts').then(cohorts => {
+          let matchingGroups = cohorts.filterBy('id', selectedCohort.get('id'));
+          let currentCohort = null;
+          if(matchingGroups.length > 0){
+            currentCohort = matchingGroups.get('firstObject');
+          }
+          resolve(currentCohort);
+        });
+      } else {
+        resolve(null);
+      }
+    });
+  }),
+
   actions: {
-    addParent: function(parentProxy){
-      var courseObjective = this.get('courseObjective');
-      var newParent = parentProxy.get('content');
+    setSelectedCohort(cohortId){
+      this.get('cohorts').then(cohorts => {
+        let selectedCohort = cohorts.findBy('id', cohortId);
+        this.set('selectedCohort', selectedCohort);
+      });
+    },
+    addParent(parentProxy){
+      let courseObjective = this.get('courseObjective');
+      let newParent = parentProxy.get('content');
 
       //remove any other parents in the same cohort
-      newParent.get('programYears').then(function(programYears){
-        var newProgramYear = programYears.get('firstObject');
-        newProgramYear.get('objectives').then(function(oldParents){
-          oldParents.forEach(function(oldParent){
+      newParent.get('programYears').then(programYears => {
+        let newProgramYear = programYears.get('firstObject');
+        newProgramYear.get('objectives').then(oldParents => {
+          oldParents.forEach(oldParent => {
             if(oldParent.get('id') !== newParent.get('id')){
               courseObjective.get('parents').removeObject(oldParent);
               oldParent.get('children').removeObject(courseObjective);
@@ -198,9 +213,9 @@ export default Component.extend({
         });
       });
     },
-    removeParent: function(parentProxy){
-      var removingParent = parentProxy.get('content');
-      var courseObjective = this.get('courseObjective');
+    removeParent(parentProxy){
+      let removingParent = parentProxy.get('content');
+      let courseObjective = this.get('courseObjective');
       courseObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(courseObjective);
     },
