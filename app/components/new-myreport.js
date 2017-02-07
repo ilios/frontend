@@ -1,11 +1,10 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, inject, RSVP, isEmpty, isPresent } = Ember;
+const { Component, computed, inject, RSVP, isEmpty, isPresent, Object } = Ember;
+const { map, Promise } = RSVP;
 const { service } = inject;
-const { PromiseArray } = DS;
 const { oneWay } = computed;
 
 const Validations = buildValidations({
@@ -66,98 +65,100 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     return list.filter(item =>item.subjects.includes(subject));
   }),
+
+  /**
+   * A list of prepositional objects. Each object has a id and label property.
+   * @property prepositionalObjectIdList
+   * @type {Ember.computed}
+   * @public
+   */
   prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', function(){
-    const type = this.get('currentPrepositionalObject');
-
-    let defer = RSVP.defer();
-    if(isEmpty(type) || type === 'instructor' || type === 'mesh term'){
-      defer.resolve([]);
-      return PromiseArray.create({
-        promise: defer.promise
-      });
-    }
+    return new Promise(resolve => {
+      const type = this.get('currentPrepositionalObject');
 
 
-    let model = type.dasherize();
-    const store = this.get('store');
-    const school = this.get('currentSchool');
-    let query = {
-      limit: 1000,
-      filters: {}
-    };
-    if(isPresent(school)){
-      let schoolScopedModels = [
-        'session',
-        'course',
-        'program',
-        'session-type',
-        'instructor-group',
-        'competency',
-        'term',
-      ];
-      if(schoolScopedModels.includes(model)) {
-        if ('session' === model || 'term' == model) {
-          query.filters.schools = [this.get('currentSchool').get('id')];
-        } else {
-          query.filters.school = this.get('currentSchool').get('id');
+      if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
+        resolve([]);
+        return;
+      }
+
+      let model = type.dasherize();
+      const store = this.get('store');
+      const school = this.get('currentSchool');
+      let query = {
+        limit: 1000,
+        filters: {}
+      };
+      if (isPresent(school)) {
+        let schoolScopedModels = [
+          'session',
+          'course',
+          'program',
+          'session-type',
+          'instructor-group',
+          'competency',
+          'term',
+        ];
+        if (schoolScopedModels.includes(model)) {
+          if ('session' === model || 'term' == model) {
+            query.filters.schools = [this.get('currentSchool').get('id')];
+          } else {
+            query.filters.school = this.get('currentSchool').get('id');
+          }
         }
       }
-    }
-				
-    const PrepositionObject = Ember.Object.extend({
-      model: null,
-      type: null,
-      value: oneWay('model.id'),
-					
-      label: computed('model', 'type', function(){
-        const type = this.get('type');
-        const model = this.get('model');
-        return new RSVP.Promise(resolve => {
-          switch(type){
-          case 'mesh term':
-            resolve(model.get('name'));
-            break;
-          case 'term':
-            model.get('vocabulary').then(vocabulary => {
-              model.get('titleWithParentTitles').then(titleWithParentTitles => {
-                const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
-                resolve(title);
-              });
-            });
-            break;
-          default:
-            resolve(model.get('title'));
-          }
-        });
-      })
-    });
 
-    store.query(model, query).then(objects => {
-      let values = objects.map(object => {
-        return PrepositionObject.create({
-          type,
-          model: object,
-        });
+      const PrepositionObject = Object.extend({
+        model: null,
+        type: null,
+        value: oneWay('model.id'),
+        label: computed('model', 'type', function () {
+          const type = this.get('type');
+          const model = this.get('model');
+          return new Promise(resolve => {
+            switch (type) {
+            case 'mesh term':
+              resolve(model.get('name'));
+              break;
+            case 'term':
+              model.get('vocabulary').then(vocabulary => {
+                model.get('titleWithParentTitles').then(titleWithParentTitles => {
+                  const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
+                  resolve(title);
+                });
+              });
+              break;
+            default:
+              resolve(model.get('title'));
+            }
+          });
+        })
       });
-					
-      RSVP.map(values, obj => {
-        return new RSVP.Promise(resolve => {
-          obj.get('label').then(label => {
-            resolve({
-              value: obj.get('value'),
-              label: label
-            });
+
+      store.query(model, query).then(objects => {
+        let values = objects.map(object => {
+          return PrepositionObject.create({
+            type,
+            model: object,
           });
         });
-      }).then(listWithSortTerm => {
-        defer.resolve(listWithSortTerm);
+        map(values, obj => {
+          return new Promise(resolve => {
+            obj.get('label').then(label => {
+              resolve({
+                value: obj.get('value'),
+                label: label
+              });
+            });
+          });
+        }).then(listWithSortTerm => {
+          resolve(listWithSortTerm);
+        });
       });
-    });
-										
-    return PromiseArray.create({
-      promise: defer.promise
+
     });
   }),
+
   currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function(){
     const currentSubjectValue = this.get('currentSubject');
     let currentSubject = this.get('subjectList').find(subject => {
@@ -186,26 +187,34 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return null;
     }
   }),
+  /**
+   * A list of schools that the current user is associated with, sorted by title.
+   * @property schoolList
+   * @type {Ember.computed}
+   * @public
+   */
   schoolList: computed('currentUser.schools.[]',function(){
-    let defer = RSVP.defer();
-    this.get('currentUser').get('model').then(user => {
-      if(isEmpty(user)){
-        defer.resolve([]);
-      } else {
-        user.get('schools').then(schools => {
-          defer.resolve(schools.sortBy('title'));
-        });
-      }
-    });
-    return PromiseArray.create({
-      promise: defer.promise
+    return new Promise(resolve => {
+      this.get('currentUser').get('model').then(user => {
+        if(isEmpty(user)){
+          resolve([]);
+        } else {
+          user.get('schools').then(schools => {
+            resolve(schools.sortBy('title'));
+          });
+        }
+      });
     });
   }),
+
   actions: {
     changeSchool(schoolId){
-      let school = this.get('schoolList').find(school =>  school.get('id') === schoolId);
-      this.set('currentSchool', school);
+      this.get('schoolList').then(schoolList => {
+        let school = schoolList.find(school =>  school.get('id') === schoolId);
+        this.set('currentSchool', school);
+      });
     },
+
     changeSubject(subject){
       this.set('currentSubject', subject);
       this.set('currentPrepositionalObject', null);
