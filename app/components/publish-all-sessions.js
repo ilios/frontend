@@ -43,7 +43,7 @@ export default Component.extend({
         });
         resolve(filteredSessions);
       });
-     });
+    });
   }),
 
   /**
