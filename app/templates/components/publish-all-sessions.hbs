@@ -9,7 +9,7 @@
 <div class='publish-all-sessions-unpublishable'>
   <section class='detail-block {{if unPublishableCollapsed 'collapsed' 'collapsible'}}'>
     <div class='detail-title clickable' {{action 'toggleUnPublishableCollapsed'}}>
-      {{t 'general.incompleteSessions'}} ({{unPublishableSessions.length}})
+      {{t 'general.incompleteSessions'}} ({{get (await unPublishableSessions) 'length'}})
     </div>
     {{#unless unPublishableCollapsed}}
       <div class='detail-content'>
@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each unPublishableSessions as |session|}}
+            {{#each (await unPublishableSessions) as |session|}}
               <tr>
                 <td>{{session.title}}</td>
                 {{#if session.offerings.length}}
@@ -60,7 +60,7 @@
 
   <section class="detail-block {{if publishableCollapsed 'collapsed' 'collapsible'}}">
     <div class='detail-title clickable' {{action 'togglePublishableCollapsed'}}>
-      {{t 'general.completeSessions'}} ({{publishableSessions.length}})
+      {{t 'general.completeSessions'}} ({{get (await publishableSessions) 'length'}})
     </div>
     {{#unless publishableCollapsed}}
       <div class='detail-content'>
@@ -75,7 +75,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each publishableSessions as |session|}}
+            {{#each (await publishableSessions) as |session|}}
               <tr>
                 <td>{{session.title}}</td>
                 {{#if session.offerings.length}}
@@ -110,10 +110,10 @@
 <div class='publish-all-sessions-overridable'>
   <section class='detail-block'>
     <div class='detail-title'>
-      {{t 'general.reviewSessions'}} ({{overridableSessions.length}})
+      {{t 'general.reviewSessions'}} ({{get (await overridableSessions) 'length'}})
     </div>
     <div class='detail-content'>
-      <button disabled={{allSessionsAsIs}} {{action 'publishAllAsIs'}}>
+      <button disabled={{await allSessionsAsIs}} {{action 'publishAllAsIs'}}>
         {{t 'general.publishAsIs'}}
       </button>
       <button disabled={{noSessionsAsIs}} {{action 'publishNoneAsIs'}}>
@@ -131,7 +131,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each overridableSessions as |session|}}
+          {{#each (await overridableSessions) as |session|}}
             <tr>
               <td>
                 <ul>
@@ -176,9 +176,9 @@
   <div class='publish-all-sessions-review'>
     <p>
       {{t 'general.publishAllConfirmation'
-        publishCount=publishCount
-        scheduleCount=scheduleCount
-        ignoreCount=ignoreCount
+        publishCount=(await publishCount)
+        scheduleCount=(await scheduleCount)
+        ignoreCount=(await ignoreCount)
       }}
     </p>
     <button {{action 'save'}}>{{t 'general.go'}}</button>
