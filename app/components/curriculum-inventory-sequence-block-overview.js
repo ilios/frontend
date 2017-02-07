@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { task } from 'ember-concurrency';
 
 const { inject, Component, isPresent, computed, RSVP, isEmpty } = Ember;
-const { PromiseArray } = DS;
+const { Promise } = RSVP;
 const { service } = inject;
 
 export default Component.extend({
@@ -112,30 +111,35 @@ export default Component.extend({
     }
   }),
 
+  /**
+   * A list of sessions that this sequence block can be linked to. Excludes ILMs.
+   *
+   * @property linkableSessions
+   * @type {Ember.computed}
+   * @public
+   */
   linkableSessions: computed('sequenceBlock.course', function(){
-    let defer = RSVP.defer();
-    this.get('sequenceBlock').get('course').then(course => {
-      if (! isPresent(course)) {
-        defer.resolve([]);
-        return;
-      }
-      this.get('store').query('session', {
-        filters: {
-          course: course.get('id'),
-          published: true
-        },
-        limit: 10000,
-      }).then(sessions => {
-        // filter out ILM sessions
-        let filteredSessions = sessions.toArray().filter(function(session) {
-          return isEmpty(session.belongsTo('ilmSession').id());
+    return new Promise(resolve => {
+      this.get('sequenceBlock').get('course').then(course => {
+        if (! isPresent(course)) {
+          resolve([]);
+          return;
+        }
+        this.get('store').query('session', {
+          filters: {
+            course: course.get('id'),
+            published: true
+          },
+          limit: 10000,
+        }).then(sessions => {
+          // filter out ILM sessions
+          let filteredSessions = sessions.toArray().filter(function(session) {
+            return isEmpty(session.belongsTo('ilmSession').id());
 
+          });
+          resolve(filteredSessions);
         });
-        defer.resolve(filteredSessions);
       });
-    });
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
