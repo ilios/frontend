@@ -5,7 +5,8 @@ import momentFormat from 'ember-moment/computeds/format';
 
 const { Component, computed, isPresent, RSVP, inject } = Ember;
 const { service } = inject;
-const { Promise } = RSVP;
+const { all, defer, Promise } = RSVP;
+const { PromiseArray } = DS;
 
 export default Component.extend({
   init() {
@@ -59,15 +60,15 @@ export default Component.extend({
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
   ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
     if(this.get('mySchedule')) {
-      return DS.PromiseArray.create({
+      return PromiseArray.create({
         promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
       });
     } else {
-      let deferred = RSVP.defer();
+      let deferred = defer();
       this.get('selectedSchool').then(school => {
         deferred.resolve(this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')));
       });
-      return DS.PromiseArray.create({
+      return PromiseArray.create({
         promise: deferred.promise
       });
     }
@@ -79,7 +80,7 @@ export default Component.extend({
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
     function() {
-      let defer = RSVP.defer();
+      let defer = defer();
       let promises = [];
       let eventTypes = [
         'eventsWithSelectedSessionTypes',
@@ -94,7 +95,7 @@ export default Component.extend({
         }));
       });
 
-      RSVP.all(promises).then(()=> {
+      all(promises).then(()=> {
         let ourEvents = this.get('ourEvents');
         if(!ourEvents){
           defer.resolve([]);
@@ -111,7 +112,7 @@ export default Component.extend({
           });
         }
       });
-      return DS.PromiseArray.create({
+      return PromiseArray.create({
         promise: defer.promise
       });
     }
@@ -124,7 +125,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = RSVP.defer();
+    let defer = defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
@@ -136,10 +137,10 @@ export default Component.extend({
       }
     });
 
-    RSVP.all(promises).then(()=> {
+    all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
@@ -150,7 +151,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = RSVP.defer();
+    let defer = defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
@@ -162,10 +163,10 @@ export default Component.extend({
       }
     });
 
-    RSVP.all(promises).then(()=> {
+    all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
@@ -176,7 +177,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = RSVP.defer();
+    let defer = defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
@@ -190,10 +191,10 @@ export default Component.extend({
       }
     });
 
-    RSVP.all(promises).then(()=> {
+    all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
@@ -204,7 +205,7 @@ export default Component.extend({
       return events;
     }
     let matchingEvents = [];
-    let defer = RSVP.defer();
+    let defer = defer();
     let promises = [];
     events.forEach(event => {
       if (event.ilmSession || event.offering) {
@@ -216,17 +217,17 @@ export default Component.extend({
       }
     });
 
-    RSVP.all(promises).then(()=> {
+    all(promises).then(()=> {
       defer.resolve(matchingEvents);
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
 
   selectedSessionTypes: [],
   sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: this.get('selectedSchool').then(school => {
         return school.get('sessionTypes').then( types => {
           return types.sortBy('title');
@@ -245,7 +246,7 @@ export default Component.extend({
   }),
   selectedCohorts: [],
   allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
-    let defer = RSVP.defer();
+    let defer = defer();
     this.get('selectedSchool').then(school => {
       this.get('selectedAcademicYear').then(year => {
         school.getCohortsForYear(year.get('title')).then(cohorts => {
@@ -253,7 +254,7 @@ export default Component.extend({
         });
       });
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
@@ -262,7 +263,7 @@ export default Component.extend({
   }),
   selectedCourses: [],
   allCourses: computed('selectedSchool', 'selectedAcademicYear', function(){
-    let defer = RSVP.defer();
+    let defer = defer();
     this.get('selectedSchool').then((school) => {
       this.get('selectedAcademicYear').then((year) => {
         this.get('store').query('course', {
@@ -276,7 +277,7 @@ export default Component.extend({
         });
       });
     });
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: defer.promise
     });
   }),
@@ -299,7 +300,7 @@ export default Component.extend({
   }),
   hasMoreThanOneSchool: computed.gt('schools.length', 1),
   allSchools: computed(function(){
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: this.get('currentUser.model').then(user => {
         return user.get('schools').then(schools => {
           return schools;
@@ -327,7 +328,7 @@ export default Component.extend({
     return this.get('store').findAll('academic-year');
   }),
   academicYears: computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: this.get('allAcademicYears').then(years => {
         return years.sortBy('title');
       })
