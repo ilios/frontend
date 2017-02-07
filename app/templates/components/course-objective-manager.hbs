@@ -1,49 +1,49 @@
 <div class='list-reset objectivetitle course-objective-title'>{{{courseObjective.title}}}</div>
 {{#unless loadAttr.isRunning}}
-{{#liquid-if (get (await cohorts) 'length')  class="horizontal"}}
-  <label class='group-picker'>
-    <span class="choose-cohort-title">{{t 'general.chooseCohortTitle'}}:</span>
-    {{#if (gt (get (await cohorts) 'length') 1)}}
-      {{one-way-select
-        value=(get (await selectedCohort) 'id')
-        options=(await cohorts)
-        optionTargetPath="id"
-        optionLabelPath="title"
-        update=(action 'setSelectedCohort')
-      }}
-    {{else}}
-      {{get (await currentCohort) 'title'}}
-    {{/if}}
-  </label>
-  <div class='parent-picker'>
-    {{#liquid-if (await currentCohort) class='vertical'}}
-      {{#each (await (get (await currentCohort) 'objectivesByCompetency')) as |competency|}}
-        <h5 class="competency-title {{if competency.selected 'selected'}}">
-          {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
-        </h5>
-        <ul>
-          {{#each (await competency.objectives) as |objective|}}
-            {{#if objective.selected}}
-              <li class='selected clickable' {{action 'removeParent' objective}}>
-                <input type='radio' checked="checked">
-                {{objective.textTitle}}
-              </li>
-            {{else}}
-              <li class='clickable' {{action 'addParent' objective}}>
-                <input type='radio'>
-                {{objective.textTitle}}
-              </li>
-            {{/if}}
-          {{/each}}
-        </ul>
-      {{/each}}
-    {{/liquid-if}}
-  </div>
-{{else}}
-  <div class='no-group'>
-    <p>
-      {{t 'general.missingCohortMessage'}}
-    </p>
-  </div>
-{{/liquid-if}}
+  {{#liquid-if (get (await cohorts) 'length')  class="horizontal"}}
+    <label class='group-picker'>
+      <span class="choose-cohort-title">{{t 'general.chooseCohortTitle'}}:</span>
+      {{#if (gt (get (await cohorts) 'length') 1)}}
+        {{one-way-select
+          value=(get (await selectedCohort) 'id')
+          options=(await cohorts)
+          optionTargetPath="id"
+          optionLabelPath="title"
+          update=(action 'setSelectedCohort')
+        }}
+      {{else}}
+        {{get (await currentCohort) 'title'}}
+      {{/if}}
+    </label>
+    <div class='parent-picker'>
+      {{#liquid-if (await currentCohort) class='vertical'}}
+        {{#each (await (get (await currentCohort) 'objectivesByCompetency')) as |competency|}}
+          <h5 class="competency-title {{if competency.selected 'selected'}}">
+            {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
+          </h5>
+          <ul>
+            {{#each (await competency.objectives) as |objective|}}
+              {{#if objective.selected}}
+                <li class='selected clickable' {{action 'removeParent' objective}}>
+                  <input type='radio' checked="checked">
+                  {{objective.textTitle}}
+                </li>
+              {{else}}
+                <li class='clickable' {{action 'addParent' objective}}>
+                  <input type='radio'>
+                  {{objective.textTitle}}
+                </li>
+              {{/if}}
+            {{/each}}
+          </ul>
+        {{/each}}
+      {{/liquid-if}}
+    </div>
+  {{else}}
+    <div class='no-group'>
+      <p>
+        {{t 'general.missingCohortMessage'}}
+      </p>
+    </div>
+  {{/liquid-if}}
 {{/unless}}
