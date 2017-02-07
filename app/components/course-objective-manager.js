@@ -122,6 +122,7 @@ export default Component.extend({
                         title = programTitle + ' ' + cohortTitle;
                       }
                       let group = cohortProxy.create({
+                        id: cohort.get('id'),
                         cohort: cohort,
                         objectives: objectiveProxies,
                         title
@@ -133,34 +134,11 @@ export default Component.extend({
               });
             });
             all(promises).then(() => {
-              resolve(groups);
+              resolve(groups.sortBy('title'));
             });
           });
         });
       }
-    });
-  }),
-
-  /**
-   * @property availableCohorts
-   * @type {Ember.computed}
-   * @public
-   */
-  availableCohorts: computed('cohorts.@each.{id,title}', function(){
-    return new Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        if(!cohorts){
-          resolve([]);
-        } else {
-          let sortedCohorts = cohorts.map(cohort => {
-            return {
-              id: cohort.get('id'),
-              title: cohort.get('title')
-            };
-          }).sortBy('title');
-          resolve(sortedCohorts);
-        }
-      });
     });
   }),
 
