@@ -2,23 +2,35 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
 
-const { computed } = Ember;
+const { computed, Object, RSVP, Service } = Ember;
+const { resolve } = RSVP;
 
 let mockReports = [
-  Ember.Object.create({displayTitle: {content: 'all courses'}, subject: 'courses', user: 1}),
-  Ember.Object.create({displayTitle: {content: 'courses for session'}, subject: 'courses', prepositionalObject: 'session', prepositionalObjectTableRowId: 11, user: 1}),
+  Object.create({
+    displayTitle: resolve('all courses'),
+    subject: 'courses',
+    user: 1
+  }),
+  Object.create({
+    displayTitle: resolve('courses for session'),
+    subject: 'courses',
+    prepositionalObject: 'session',
+    prepositionalObjectTableRowId: 11,
+    user: 1
+  }),
 ];
 
-let reportingMock = Ember.Service.extend({
+let reportingMock = Service.extend({
   reportsList: computed(function(){
-    return Ember.RSVP.resolve(mockReports);
+    return resolve(mockReports);
   })
 });
 
-let reportingMockNoReports = Ember.Service.extend({
+let reportingMockNoReports = Service.extend({
   reportsList: computed(function(){
-    return Ember.RSVP.resolve([]);
+    return resolve([]);
   })
 });
 
@@ -36,11 +48,15 @@ test('list reports', function(assert) {
   this.render(hbs`{{dashboard-myreports}}`);
 
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
-  for(let i = 0; i < 2; i++){
-    let tds = this.$(`table tr:eq(${i}) td`);
-    assert.equal(tds.eq(0).text().trim(), mockReports[i].displayTitle.content);
-  }
-  assert.equal(this.$(`table tr`).length, 2);
+  return wait().then(()=> {
+    for (let i = 0; i < 2; i++) {
+      let tds = this.$(`table tr:eq(${i}) td`);
+      mockReports[i].get('displayTitle').then(displayTitle => {
+        assert.equal(tds.eq(0).text().trim(), displayTitle);
+      });
+    }
+    assert.equal(this.$(`table tr`).length, 2);
+  });
 });
 
 test('display none when no reports', function(assert) {
@@ -49,5 +65,4 @@ test('display none when no reports', function(assert) {
   this.render(hbs`{{dashboard-myreports}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
   assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
-
 });
