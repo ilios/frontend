@@ -180,7 +180,6 @@ export default Component.extend({
       all(promises).then(() => {
         this.set('totalSessionsToSave', sessionsToSave.length);
         this.set('currentSessionsSaved', 0);
-        this.set('isSaving', true);
 
         let saveSomeSessions = (sessions) => {
           let chunk = sessions.splice(0, 6);
