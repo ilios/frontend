@@ -93,7 +93,7 @@ export default Component.extend({
   /**
    * @property cohorts
    * @type {Ember.computed}
-   * @protected
+   * @public
    */
   cohorts: computed('courseObjective.courses.[]','courseObjective.courses.@each.cohorts', function() {
     return new Promise(resolve => {
