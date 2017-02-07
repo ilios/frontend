@@ -3,16 +3,16 @@ import { task } from 'ember-concurrency';
 
 const { Component, computed, isEmpty, Object, ObjectProxy, RSVP } = Ember;
 const { all, Promise } = RSVP;
-const { none, oneWay } = computed;
+const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
 const competencyGroup = Object.extend({
   title: '',
   originalObjectives: [],
-  uniqueObjectives: computed.uniq('originalObjectives'),
+  uniqueObjectives: uniq('originalObjectives'),
   objectiveSorting: ['title'],
-  objectives: computed.sort('uniqueObjectives', 'objectiveSorting'),
-  selectedObjectives: computed.filterBy('uniqueObjectives', 'selected', true),
-  selected: computed.gt('selectedObjectives.length', 0),
+  objectives: sort('uniqueObjectives', 'objectiveSorting'),
+  selectedObjectives: filterBy('uniqueObjectives', 'selected', true),
+  selected: gt('selectedObjectives.length', 0),
   noTitle: none('title')
 });
 
