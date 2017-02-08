@@ -80,25 +80,25 @@ export default Component.extend({
    * @property cohorts
    * @type {Ember.computed}
    * @public
-   * @todo Check if this can be replaced with allCohorts(). [ST 2017/02/07]
    */
-  cohorts: computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
-    return this.get('allCohorts');
+  cohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
+    return new Promise(resolve => {
+      this.get('selectedSchool').then(school => {
+        this.get('selectedAcademicYear').then(year => {
+          school.getCohortsForYear(year.get('title')).then(cohorts => {
+            resolve(cohorts.sortBy('displayTitle'));
+          });
+        });
+      });
+    });
   }),
 
   /**
    * @property courseLevels
-   * @type {Ember.computed}
+   * @type {Array}
    * @public
-   * @todo Review whether this needs to be a computed property, get rid of it if applicable. [ST 2017/02/07]
    */
-  courseLevels: computed('selectedCourseLevels.[]', function(){
-    let levels = [];
-    for(let i =1; i <=5; i++){
-      levels.pushObject(i);
-    }
-    return levels;
-  }),
+  courseLevels: [1, 2, 3, 4, 5],
 
   /**
    * @property courses
@@ -435,23 +435,6 @@ export default Component.extend({
         });
         all(promises).then(()=> {
           resolve(matchingEvents);
-        });
-      });
-    });
-  }),
-
-  /**
-   * @property allCohorts
-   * @type {Ember.computed}
-   * @protected
-   */
-  allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
-    return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
-        this.get('selectedAcademicYear').then(year => {
-          school.getCohortsForYear(year.get('title')).then(cohorts => {
-            resolve(cohorts.sortBy('displayTitle'));
-          });
         });
       });
     });

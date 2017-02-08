@@ -116,9 +116,9 @@
         <div id='calendar-courselevelfilter' class='calendar-filter-list small-filter-list courselevelfilter'>
           {{t 'general.courseLevels'}}
           <ul>
-            {{#each (await courseLevels) as |level|}}
+            {{#each courseLevels as |level|}}
               <li class='clickable'>
-                <input {{action 'toggleCourseLevel' level on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourseLevels level}}>
+                <input {{action 'toggleCourseLevel' level on='change'}} class='checkbox' type='checkbox' checked={{contains level selectedCourseLevels}}>
                 <span {{action 'toggleCourseLevel' level}} class="list-indentation">{{level}}</span>
               </li>
             {{/each}}
