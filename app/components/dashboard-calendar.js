@@ -1,12 +1,10 @@
 import moment from 'moment';
 import Ember from 'ember';
-import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
 const { Component, computed, isPresent, RSVP, inject } = Ember;
 const { service } = inject;
 const { all, Promise } = RSVP;
-const { PromiseArray } = DS;
 
 export default Component.extend({
   init() {
@@ -64,6 +62,19 @@ export default Component.extend({
     return 1;
   }),
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
+
+  /**
+   * @property academicYears
+   * @type {Ember.computed}
+   * @public
+   */
+  academicYears: computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
+    return new Promise(resolve => {
+      this.get('allAcademicYears').then(years => {
+        resolve(years.sortBy('title'));
+      });
+    });
+  }),
 
   /**
    * @property cohorts
@@ -413,16 +424,13 @@ export default Component.extend({
     });
   }),
 
-
+  /**
+   * @property allAcademicYears
+   * @type {Ember.computed}
+   * @protected
+   */
   allAcademicYears: computed(function(){
     return this.get('store').findAll('academic-year');
-  }),
-  academicYears: computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
-    return PromiseArray.create({
-      promise: this.get('allAcademicYears').then(years => {
-        return years.sortBy('title');
-      })
-    });
   }),
 
   showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
