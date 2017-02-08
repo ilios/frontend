@@ -65,6 +65,16 @@ export default Component.extend({
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
 
   /**
+   * @property cohorts
+   * @type {Ember.computed}
+   * @public
+   * @todo Check if this can be replaced with allCohorts(). [ST 2017/02/07]
+   */
+  cohorts: computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
+    return this.get('allCohorts');
+  }),
+
+  /**
    * @property courseLevels
    * @type {Ember.computed}
    * @public
@@ -83,6 +93,7 @@ export default Component.extend({
    * @property courses
    * @type {Ember.computed}
    * @public
+   * @todo Check if this can be replaced with allCourses(). [ST 2017/02/07]
    */
   courses: computed('allCourses.[]', 'selectedCourses.[]', function(){
     return this.get('allCourses');
@@ -310,10 +321,6 @@ export default Component.extend({
         });
       });
     });
-  }),
-
-  cohorts: computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
-    return this.get('allCohorts');
   }),
 
   /**
