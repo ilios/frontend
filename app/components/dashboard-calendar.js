@@ -414,7 +414,7 @@ export default Component.extend({
       let results = a.concat(b, c, d);
       this.set('activeFilters', results);
 
-      return isPresent(results) ? true : false;
+      return isPresent(results);
     }
   }).readOnly(),
 
