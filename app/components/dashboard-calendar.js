@@ -58,20 +58,31 @@ export default Component.extend({
     return 1;
   }),
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
+
+  /**
+   * @property ourEvents
+   * @type {Ember.computed}
+   * @protected
+   */
   ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
-    if(this.get('mySchedule')) {
-      return PromiseArray.create({
-        promise: this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'))
-      });
-    } else {
-      let deferred = defer();
-      this.get('selectedSchool').then(school => {
-        deferred.resolve(this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp')));
-      });
-      return PromiseArray.create({
-        promise: deferred.promise
-      });
-    }
+    return new Promise(resolve => {
+      if(this.get('mySchedule')) {
+        this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp')).then(userEvents => {
+          resolve(userEvents);
+        });
+      } else {
+        this.get('selectedSchool').then(school => {
+          this.get('schoolEvents').getEvents(
+            school.get('id'),
+            this.get('fromTimeStamp'),
+            this.get('toTimeStamp')
+          ).then(schoolEvents => {
+            resolve(schoolEvents);
+          });
+        });
+      }
+    });
+
   }),
   filteredEvents: computed(
     'ourEvents.[]',
