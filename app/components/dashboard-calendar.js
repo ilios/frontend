@@ -288,23 +288,27 @@ export default Component.extend({
     return this.get('allCohorts');
   }),
   selectedCourses: [],
+
+  /**
+   * @property allCourses
+   * @type {Ember.computed}
+   * @protected
+   */
   allCourses: computed('selectedSchool', 'selectedAcademicYear', function(){
-    let defer = defer();
-    this.get('selectedSchool').then((school) => {
-      this.get('selectedAcademicYear').then((year) => {
-        this.get('store').query('course', {
-          filters: {
-            school: school.get('id'),
-            year: year.get('title')
-          },
-          limit: 1000
-        }).then((courses) => {
-          defer.resolve(courses.sortBy('title'));
+    return new Promise(resolve => {
+      this.get('selectedSchool').then((school) => {
+        this.get('selectedAcademicYear').then((year) => {
+          this.get('store').query('course', {
+            filters: {
+              school: school.get('id'),
+              year: year.get('title')
+            },
+            limit: 1000
+          }).then((courses) => {
+            resolve(courses.sortBy('title'));
+          });
         });
       });
-    });
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
   courses: computed('allCourses.[]', 'selectedCourses.[]', function(){
