@@ -24,6 +24,7 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   activeFilters: null,
+  schoolPickedByUser: null,
   selectedDate: null,
   selectedView: null,
   selectedCohorts: [],
