@@ -295,19 +295,23 @@ export default Component.extend({
     });
   }),
 
+  /**
+   * @property allCohorts
+   * @type {Ember.computed}
+   * @protected
+   */
   allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
-    let defer = defer();
-    this.get('selectedSchool').then(school => {
-      this.get('selectedAcademicYear').then(year => {
-        school.getCohortsForYear(year.get('title')).then(cohorts => {
-          defer.resolve(cohorts.sortBy('displayTitle'));
+    return new Promise(resolve => {
+      this.get('selectedSchool').then(school => {
+        this.get('selectedAcademicYear').then(year => {
+          school.getCohortsForYear(year.get('title')).then(cohorts => {
+            resolve(cohorts.sortBy('displayTitle'));
+          });
         });
       });
     });
-    return PromiseArray.create({
-      promise: defer.promise
-    });
   }),
+
   cohorts: computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
     return this.get('allCohorts');
   }),
