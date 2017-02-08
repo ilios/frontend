@@ -1,20 +1,49 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
-const { Component, computed, RSVP } = Ember;
-const { PromiseArray } = DS;
+const { Component, computed, Object, RSVP } = Ember;
+const { all, Promise } = RSVP;
 
 export default Component.extend({
+
   cohorts: [],
+
+
+  /**
+   * A list of cohorts, sorted by school and display title.
+   * @property sortedCohorts
+   * @type {Ember.computed}
+   * @public
+   */
   sortedCohorts: computed('cohorts.@each.{school,displayTitle}', function(){
-    let defer = RSVP.defer();
+    return new Promise(resolve => {
+      this.get('cohorts').then(cohorts => {
+        let promises = [];
+        let proxies = [];
+        let sortedCohorts = [];
+        cohorts.toArray().forEach(cohort => {
+          let proxy = Object.create({
+            cohort,
+            schoolTitle: null,
+            displayTitle: null,
+          });
 
-    this.get('cohorts').then(cohorts => {
-      defer.resolve(cohorts.sortBy('school', 'displayTitle'));
-    });
+          proxies.pushObject(proxy);
 
-    return PromiseArray.create({
-      promise: defer.promise
+          promises.pushObject(cohort.get('displayTitle').then(displayTitle => {
+            proxy.set('displayTitle', displayTitle);
+          }));
+          promises.pushObject(cohort.get('school').then(school => {
+            proxy.set('schoolTitle', school.get('title'));
+          }));
+        });
+        all(promises).then(() => {
+          let sortedProxies = proxies.sortBy('schoolTitle', 'displayTitle');
+          sortedProxies.forEach(sortedProxy => {
+            sortedCohorts.pushObject(sortedProxy.get('cohort'));
+          });
+          resolve(sortedCohorts);
+        });
+      });
     });
   }),
 });

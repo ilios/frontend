@@ -1,5 +1,5 @@
-{{#if sortedCohorts.isFulfilled}}
-  {{#if sortedCohorts.length}}
+{{#if (is-fulfilled sortedCohorts)}}
+  {{#if (get (await sortedCohorts) 'length')}}
     <table>
       <thead>
         <tr>
@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each sortedCohorts as |cohort|}}
+        {{#each (await sortedCohorts) as |cohort|}}
           <tr>
             <td class='text-left'>{{cohort.programYear.program.school.title}}</td>
             <td class='text-left'>{{cohort.programYear.program.title}}</td>

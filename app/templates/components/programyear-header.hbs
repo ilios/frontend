@@ -2,7 +2,7 @@
   {{#if programYear.locked}}{{fa-icon 'lock'}}{{/if}}
   {{#if programYear}}
     <h4>{{t 'general.matriculationYear'}} {{programYear.academicYear}}</h4>
-    <h5>{{programYear.cohort.displayTitle}}</h5>
+    <h5>{{await programYear.cohort.displayTitle}}</h5>
   {{/if}}
 </div>
 <div class ='programyear-publication'>
