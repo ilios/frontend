@@ -25,10 +25,10 @@ export default Component.extend({
   schoolPickedByUser: null,
   selectedDate: null,
   selectedView: null,
-  selectedCohorts: [],
-  selectedCourseLevels: [],
-  selectedCourses: [],
-  selectedSessionTypes: [],
+  selectedCohorts: null,
+  selectedCourseLevels: null,
+  selectedCourses: null,
+  selectedSessionTypes: null,
 
   dueTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('general.dueThisDay');
