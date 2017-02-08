@@ -5,7 +5,7 @@ import momentFormat from 'ember-moment/computeds/format';
 
 const { Component, computed, isPresent, RSVP, inject } = Ember;
 const { service } = inject;
-const { all, defer, Promise } = RSVP;
+const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend({
@@ -125,110 +125,129 @@ export default Component.extend({
     }
   ),
 
+  /**
+   * @property eventsWithSelectedSessionTypes
+   * @type {Ember.computed}
+   * @protected
+   */
   eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', function(){
-    let selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
-    let events = this.get('ourEvents');
-    if(selectedSessionTypes.length === 0) {
-      return events;
-    }
-    let matchingEvents = [];
-    let defer = defer();
-    let promises = [];
-    events.forEach(event => {
-      if (event.ilmSession || event.offering) {
-        promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then(id => {
-          if (selectedSessionTypes.includes(id)) {
-            matchingEvents.pushObject(event);
+    return new Promise(resolve => {
+      this.get('ourEvents').then(events => {
+        let selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
+        if(selectedSessionTypes.length === 0) {
+          resolve(events);
+          return;
+        }
+        let matchingEvents = [];
+        let promises = [];
+        events.forEach(event => {
+          if (event.ilmSession || event.offering) {
+            promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then(id => {
+              if (selectedSessionTypes.includes(id)) {
+                matchingEvents.pushObject(event);
+              }
+            }));
           }
-        }));
-      }
-    });
-
-    all(promises).then(()=> {
-      defer.resolve(matchingEvents);
-    });
-    return PromiseArray.create({
-      promise: defer.promise
+        });
+        all(promises).then(()=> {
+          resolve(matchingEvents);
+        });
+      });
     });
   }),
+
+  /**
+   * @property eventsWithSelectedCourseLevels
+   * @type {Ember.computed}
+   * @protected
+   */
   eventsWithSelectedCourseLevels: computed('ourEvents.[]', 'selectedCourseLevels.[]', function(){
-    let selectedCourseLevels = this.get('selectedCourseLevels');
-    let events = this.get('ourEvents');
-    if(selectedCourseLevels.length === 0) {
-      return events;
-    }
-    let matchingEvents = [];
-    let defer = defer();
-    let promises = [];
-    events.forEach(event => {
-      if (event.ilmSession || event.offering) {
-        promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then(level => {
-          if (selectedCourseLevels.includes(level)) {
-            matchingEvents.pushObject(event);
+    return new Promise(resolve => {
+      this.get('ourEvents').then(events => {
+        let selectedCourseLevels = this.get('selectedCourseLevels');
+        if(selectedCourseLevels.length === 0) {
+          resolve(events);
+          return;
+        }
+        let matchingEvents = [];
+        let promises = [];
+        events.forEach(event => {
+          if (event.ilmSession || event.offering) {
+            promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then(level => {
+              if (selectedCourseLevels.includes(level)) {
+                matchingEvents.pushObject(event);
+              }
+            }));
           }
-        }));
-      }
-    });
-
-    all(promises).then(()=> {
-      defer.resolve(matchingEvents);
-    });
-    return PromiseArray.create({
-      promise: defer.promise
+        });
+        all(promises).then(()=> {
+          resolve(matchingEvents);
+        });
+      });
     });
   }),
+
+  /**
+   * @property eventsWithSelectedCohorts
+   * @type {Ember.computed}
+   * @protected
+   */
   eventsWithSelectedCohorts: computed('ourEvents.[]', 'selectedCohorts.[]', function(){
-    let selectedCohorts = this.get('selectedCohorts').mapBy('id');
-    let events = this.get('ourEvents');
-    if(selectedCohorts.length === 0) {
-      return events;
-    }
-    let matchingEvents = [];
-    let defer = defer();
-    let promises = [];
-    events.forEach(event => {
-      if (event.ilmSession || event.offering) {
-        promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
-          if (cohorts.any(cohortId => {
-            return selectedCohorts.includes(cohortId);
-          })) {
-            matchingEvents.pushObject(event);
+    return new Promise(resolve => {
+      this.get('ourEvents').then(events => {
+        let selectedCohorts = this.get('selectedCohorts').mapBy('id');
+        if(selectedCohorts.length === 0) {
+          resolve(events);
+          return;
+        }
+        let matchingEvents = [];
+        let promises = [];
+        events.forEach(event => {
+          if (event.ilmSession || event.offering) {
+            promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
+              if (cohorts.any(cohortId => {
+                return selectedCohorts.includes(cohortId);
+              })) {
+                matchingEvents.pushObject(event);
+              }
+            }));
           }
-        }));
-      }
-    });
-
-    all(promises).then(()=> {
-      defer.resolve(matchingEvents);
-    });
-    return PromiseArray.create({
-      promise: defer.promise
+        });
+        all(promises).then(()=> {
+          resolve(matchingEvents);
+        });
+      });
     });
   }),
-  eventsWithSelectedCourses: computed('ourEvents.[]', 'selectedCourses.[]', function(){
-    let selectedCourses = this.get('selectedCourses').mapBy('id');
-    let events = this.get('ourEvents');
-    if(selectedCourses.length === 0) {
-      return events;
-    }
-    let matchingEvents = [];
-    let defer = defer();
-    let promises = [];
-    events.forEach(event => {
-      if (event.ilmSession || event.offering) {
-        promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
-          if (selectedCourses.includes(courseId)) {
-            matchingEvents.pushObject(event);
-          }
-        }));
-      }
-    });
 
-    all(promises).then(()=> {
-      defer.resolve(matchingEvents);
-    });
-    return PromiseArray.create({
-      promise: defer.promise
+  /**
+   * @property eventsWithSelectedCourses
+   * @type {Ember.computed}
+   * @protected
+   */
+  eventsWithSelectedCourses: computed('ourEvents.[]', 'selectedCourses.[]', function(){
+    return new Promise(resolve => {
+      let selectedCourses = this.get('selectedCourses').mapBy('id');
+      this.get('ourEvents').then(events => {
+        if(selectedCourses.length === 0) {
+          resolve(events);
+          return;
+        }
+        let matchingEvents = [];
+        let promises = [];
+        events.forEach(event => {
+          if (event.ilmSession || event.offering) {
+            promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
+              if (selectedCourses.includes(courseId)) {
+                matchingEvents.pushObject(event);
+              }
+            }));
+          }
+        });
+        all(promises).then(()=> {
+          resolve(matchingEvents);
+        });
+      });
     });
   }),
 
