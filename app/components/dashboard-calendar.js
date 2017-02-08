@@ -65,6 +65,21 @@ export default Component.extend({
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
 
   /**
+   * @property courseLevels
+   * @type {Ember.computed}
+   * @public
+   * @todo Review whether this needs to be a computed property, get rid of it if applicable. [ST 2017/02/07]
+   */
+  courseLevels: computed('selectedCourseLevels.[]', function(){
+    let levels = [];
+    for(let i =1; i <=5; i++){
+      levels.pushObject(i);
+    }
+
+    return levels;
+  }),
+
+  /**
    * @property courses
    * @type {Ember.computed}
    * @public
@@ -280,14 +295,6 @@ export default Component.extend({
     });
   }),
 
-  courseLevels: computed('selectedCourseLevels.[]', function(){
-    let levels = [];
-    for(let i =1; i <=5; i++){
-      levels.pushObject(i);
-    }
-
-    return levels;
-  }),
   allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
     let defer = defer();
     this.get('selectedSchool').then(school => {
