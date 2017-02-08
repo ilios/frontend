@@ -174,6 +174,25 @@ export default Component.extend({
   }),
 
   /**
+   * @property selectedAcademicYear
+   * @type {Ember.computed}
+   * @public
+   */
+  selectedAcademicYear: computed('academicYearSelectedByUser', 'allAcademicYears.[]', function(){
+    const academicYearSelectedByUser = this.get('academicYearSelectedByUser');
+    return new Promise(resolve => {
+      if (academicYearSelectedByUser)  {
+        resolve(academicYearSelectedByUser);
+      } else {
+        this.get('allAcademicYears').then(years => {
+          const year = years.sortBy('title').get('lastObject');
+          resolve(year);
+        });
+      }
+    });
+  }),
+
+  /**
    * @property sessionTypes
    * @type {Ember.computed}
    * @public
@@ -394,19 +413,7 @@ export default Component.extend({
     });
   }),
 
-  selectedAcademicYear: computed('academicYearSelectedByUser', 'allAcademicYears.[]', function(){
-    const academicYearSelectedByUser = this.get('academicYearSelectedByUser');
-    return new Promise(resolve => {
-      if (academicYearSelectedByUser)  {
-        resolve(academicYearSelectedByUser);
-      } else {
-        this.get('allAcademicYears').then(years => {
-          const year = years.sortBy('title').get('lastObject');
-          resolve(year);
-        });
-      }
-    });
-  }),
+
   allAcademicYears: computed(function(){
     return this.get('store').findAll('academic-year');
   }),
