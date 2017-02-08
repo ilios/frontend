@@ -30,6 +30,14 @@ export default Model.extend({
     async: true
   }),
   meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  ancestor: belongsTo('objective', {
+    inverse: 'descendants',
+    async: true
+  }),
+  descendants: hasMany('objective', {
+    inverse: 'ancestor',
+    async: true
+  }),
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
   hasMesh: gte('meshDescriptors.length', 1),

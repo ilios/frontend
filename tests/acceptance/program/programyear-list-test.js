@@ -292,8 +292,16 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     programYears: [1],
     vocabulary: 1
   });
-  server.createList('objective', 3, {
+  server.create('objective', {
+    descendants: [4]
+  });
+
+  server.createList('objective', 2, {
     programYears: [1]
+  });
+  server.create('objective', {
+    ancestor: 1,
+    programYears: [1],
   });
   server.create('programYearSteward', {
     department: 1,
@@ -315,7 +323,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     directors: [2,3,4],
     competencies: [1,2,3],
     terms: [1,2,3],
-    objectives: [1,2,3],
+    objectives: [2,3,4],
     stewards: [1],
     published: false
   });
