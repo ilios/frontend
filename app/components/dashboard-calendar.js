@@ -115,6 +115,21 @@ export default Component.extend({
   ),
 
   /**
+   * @property sessionTypes
+   * @type {Ember.computed}
+   * @public
+   */
+  sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
+    return new Promise(resolve => {
+      this.get('selectedSchool').then(school => {
+        school.get('sessionTypes').then(types => {
+          resolve(types.sortBy('title'));
+        });
+      });
+    });
+  }),
+
+  /**
    * @property ourEvents
    * @type {Ember.computed}
    * @protected
@@ -260,21 +275,6 @@ export default Component.extend({
         });
         all(promises).then(()=> {
           resolve(matchingEvents);
-        });
-      });
-    });
-  }),
-
-  /**
-   * @property sessionTypes
-   * @type {Ember.computed}
-   * @public
-   */
-  sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
-    return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
-        school.get('sessionTypes').then(types => {
-          resolve(types.sortBy('title'));
         });
       });
     });
