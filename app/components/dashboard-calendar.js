@@ -152,6 +152,45 @@ export default Component.extend({
   ),
 
   /**
+   * @property filterTags
+   * @type {Ember.computed}
+   * @public
+   */
+  filterTags: computed('activeFilters', {
+    get() {
+      const activeFilters = this.get('activeFilters');
+
+      return activeFilters.map((filter) => {
+        let hash = {};
+        hash.filter = filter;
+
+        if (typeof filter === 'number') {
+          hash.class = 'tag-course-level';
+          hash.name = `Course Level ${filter}`;
+        } else {
+          let model = filter.get('constructor.modelName');
+
+          switch (model) {
+          case 'session-type':
+            hash.class = 'tag-session-type';
+            hash.name = filter.get('title');
+            break;
+          case 'cohort':
+            hash.class = 'tag-cohort';
+            hash.name = `${filter.get('displayTitle')} ${filter.get('programYear.program.title')}`;
+            break;
+          case 'course':
+            hash.class = 'tag-course';
+            hash.name = filter.get('title');
+            break;
+          }
+        }
+        return hash;
+      });
+    }
+  }),
+
+  /**
    * @property selectedSchool
    * @type {Ember.computed}
    * @public
@@ -217,6 +256,25 @@ export default Component.extend({
       });
     });
   }),
+
+  /**
+   * @property showClearFilters
+   * @type {Ember.computed}
+   * @public
+   */
+  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
+    get() {
+      const a = this.get('selectedSessionTypes');
+      const b = this.get('selectedCourseLevels');
+      const c = this.get('selectedCohorts');
+      const d = this.get('selectedCourses');
+
+      let results = a.concat(b, c, d);
+      this.set('activeFilters', results);
+
+      return isPresent(results);
+    }
+  }).readOnly(),
 
   /**
    * @property ourEvents
@@ -431,55 +489,6 @@ export default Component.extend({
    */
   allAcademicYears: computed(function(){
     return this.get('store').findAll('academic-year');
-  }),
-
-  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
-    get() {
-      const a = this.get('selectedSessionTypes');
-      const b = this.get('selectedCourseLevels');
-      const c = this.get('selectedCohorts');
-      const d = this.get('selectedCourses');
-
-      let results = a.concat(b, c, d);
-      this.set('activeFilters', results);
-
-      return isPresent(results);
-    }
-  }).readOnly(),
-
-  filterTags: computed('activeFilters', {
-    get() {
-      const activeFilters = this.get('activeFilters');
-
-      return activeFilters.map((filter) => {
-        let hash = {};
-        hash.filter = filter;
-
-        if (typeof filter === 'number') {
-          hash.class = 'tag-course-level';
-          hash.name = `Course Level ${filter}`;
-        } else {
-          let model = filter.get('constructor.modelName');
-
-          switch (model) {
-          case 'session-type':
-            hash.class = 'tag-session-type';
-            hash.name = filter.get('title');
-            break;
-          case 'cohort':
-            hash.class = 'tag-cohort';
-            hash.name = `${filter.get('displayTitle')} ${filter.get('programYear.program.title')}`;
-            break;
-          case 'course':
-            hash.class = 'tag-course';
-            hash.name = filter.get('title');
-            break;
-          }
-        }
-
-        return hash;
-      });
-    }
   }),
 
   actions: {
