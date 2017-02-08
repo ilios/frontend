@@ -366,7 +366,7 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
 
 
 test('change course', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
   let program = Object.create({
     belongsTo() {
       return  Object.create({ id() { return 1; }});
@@ -431,7 +431,10 @@ test('change course', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'}))
+    academicLevel: resolve(Object.create({ name: 'Year 1'})),
+    save() {
+      assert.ok(true, "The sequence block's  save() function was invoked.");
+    }
   });
 
   let storeMock = Service.extend({

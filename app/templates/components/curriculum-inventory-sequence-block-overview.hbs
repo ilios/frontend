@@ -241,7 +241,7 @@
     {{#unless (is-fulfilled linkableSessions)}}
       <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
     {{else}}
-      {{#if linkableSessions.length}}
+      {{#if (get (await linkableSessions) 'length')}}
         {{#liquid-if isManagingSessions class='horizontal sessions-list'}}
           {{curriculum-inventory-sequence-block-session-manager
             sequenceBlock=sequenceBlock
@@ -253,7 +253,7 @@
           }}
         {{else}}
           <div class="block sessions">
-            <label>{{t 'general.sessions'}} ({{linkableSessions.length}})</label>
+            <label>{{t 'general.sessions'}} ({{get (await linkableSessions) 'length'}})</label>
             {{#unless (or isManagingSessions isFinalized)}}
               <div class="actions">
                 <button {{action 'toggleManagingSessions'}}>{{t 'general.manage'}}</button>
