@@ -82,8 +82,13 @@ export default Component.extend({
         });
       }
     });
-
   }),
+
+  /**
+   * @property filteredEvents
+   * @type {Ember.computed}
+   * @public
+   */
   filteredEvents: computed(
     'ourEvents.[]',
     'eventsWithSelectedSessionTypes.[]',
@@ -91,40 +96,31 @@ export default Component.extend({
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
     function() {
-      let defer = defer();
-      let promises = [];
-      let eventTypes = [
-        'eventsWithSelectedSessionTypes',
-        'eventsWithSelectedCourseLevels',
-        'eventsWithSelectedCohorts',
-        'eventsWithSelectedCourses',
-      ];
-      let allFilteredEvents = [];
-      eventTypes.forEach(name => {
-        promises.pushObject(this.get(name).then(events => {
-          allFilteredEvents.pushObject(events);
-        }));
-      });
+      return new Promise(resolve => {
+        let promises = [];
+        let eventTypes = [
+          'eventsWithSelectedSessionTypes',
+          'eventsWithSelectedCourseLevels',
+          'eventsWithSelectedCohorts',
+          'eventsWithSelectedCourses',
+        ];
+        let allFilteredEvents = [];
+        eventTypes.forEach(name => {
+          promises.pushObject(this.get(name).then(events => {
+            allFilteredEvents.pushObject(events);
+          }));
+        });
 
-      all(promises).then(()=> {
-        let ourEvents = this.get('ourEvents');
-        if(!ourEvents){
-          defer.resolve([]);
-        } else {
-          ourEvents.then(events => {
+        all(promises).then(()=> {
+          this.get('ourEvents').then(events => {
             let filteredEvents = events.filter(event => {
               return allFilteredEvents.every(arr => {
-                let bool = arr.includes(event);
-
-                return bool;
+                return arr.includes(event);
               });
             });
-            defer.resolve(filteredEvents);
+            resolve(filteredEvents);
           });
-        }
-      });
-      return PromiseArray.create({
-        promise: defer.promise
+        });
       });
     }
   ),
