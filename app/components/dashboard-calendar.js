@@ -23,8 +23,13 @@ export default Component.extend({
   currentUser: service(),
   store: service(),
   i18n: service(),
+  activeFilters: null,
   selectedDate: null,
   selectedView: null,
+  selectedCohorts: [],
+  selectedCourseLevels: [],
+  selectedCourses: [],
+  selectedSessionTypes: [],
 
   dueTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('general.dueThisDay');
@@ -260,7 +265,6 @@ export default Component.extend({
     });
   }),
 
-  selectedSessionTypes: [],
   sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
     return PromiseArray.create({
       promise: this.get('selectedSchool').then(school => {
@@ -270,7 +274,6 @@ export default Component.extend({
       })
     });
   }),
-  selectedCourseLevels: [],
   courseLevels: computed('selectedCourseLevels.[]', function(){
     let levels = [];
     for(let i =1; i <=5; i++){
@@ -279,7 +282,6 @@ export default Component.extend({
 
     return levels;
   }),
-  selectedCohorts: [],
   allCohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
     let defer = defer();
     this.get('selectedSchool').then(school => {
@@ -296,7 +298,6 @@ export default Component.extend({
   cohorts: computed('allCohorts.[].displayTitle', 'selectedCohorts.[]', function(){
     return this.get('allCohorts');
   }),
-  selectedCourses: [],
 
   /**
    * @property allCourses
@@ -385,8 +386,6 @@ export default Component.extend({
       return isPresent(results) ? true : false;
     }
   }).readOnly(),
-
-  activeFilters: null,
 
   filterTags: computed('activeFilters', {
     get() {
