@@ -379,8 +379,6 @@ export default Component.extend({
     });
   }),
 
-  hasMoreThanOneSchool: computed.gt('schools.length', 1),
-
   /**
    * @property allSchools
    * @type {Ember.computed}

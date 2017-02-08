@@ -38,7 +38,7 @@
   {{#unless mySchedule}}
     <div class='calendar-options-control calendar-school-picker'>
       {{fa-icon 'university'}}
-      {{#if hasMoreThanOneSchool}}
+      {{#if (gt 1 (get (await schools)) 'length')}}
         <select onchange={{action changeSchool value="target.value"}}>
           {{#each schools as |school|}}
             <option value="{{school.id}}" selected={{is-equal school (await selectedSchool)}}>
