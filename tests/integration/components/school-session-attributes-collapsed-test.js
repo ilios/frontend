@@ -13,11 +13,11 @@ moduleForComponent('school-session-attributes-collapsed', 'Integration | Compone
 test('it renders', async function(assert) {
   assert.expect(12);
   const config1 = Object.create({
-    key: 'showSessionAttendanceRequired',
+    name: 'showSessionAttendanceRequired',
     value: false
   });
   const config2 = Object.create({
-    key: 'showSessionSupplemental',
+    name: 'showSessionSupplemental',
     value: true
   });
   const school = Object.create({

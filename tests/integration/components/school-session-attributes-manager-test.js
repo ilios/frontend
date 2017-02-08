@@ -45,16 +45,16 @@ test('it renders', function(assert) {
   assert.ok(this.$(specialEquipmentCheckbox).not(':checked'));
 });
 
-let selectTest = function(context, assert, key, position){
+let selectTest = function(context, assert, name, position){
   assert.expect(3);
 
   context.set('showSessionAttendanceRequired', false);
   context.set('showSessionSupplemental', false);
   context.set('showSessionSpecialAttireRequired', false);
   context.set('showSessionSpecialEquipmentRequired', false);
-  context.set('enable', (sentKey) => {
-    assert.equal(sentKey, key);
-    context.set(sentKey, true);
+  context.set('enable', (sentName) => {
+    assert.equal(sentName, name);
+    context.set(sentName, true);
   });
   context.set('nothing', parseInt);
   context.render(hbs`{{school-session-attributes-manager
@@ -89,16 +89,16 @@ test('select showSessionSpecialEquipmentRequired', function(assert) {
   selectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
 });
 
-let unSelectTest = function(context, assert, key, position){
+let unSelectTest = function(context, assert, name, position){
   assert.expect(3);
 
   context.set('showSessionAttendanceRequired', true);
   context.set('showSessionSupplemental', true);
   context.set('showSessionSpecialAttireRequired', true);
   context.set('showSessionSpecialEquipmentRequired', true);
-  context.set('disable', (sentKey) => {
-    assert.equal(sentKey, key);
-    context.set(sentKey, false);
+  context.set('disable', (sentName) => {
+    assert.equal(sentName, name);
+    context.set(sentName, false);
   });
   context.set('nothing', parseInt);
   context.render(hbs`{{school-session-attributes-manager

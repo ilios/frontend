@@ -25,9 +25,9 @@ export default Component.extend({
     }
     return await school.get('configurations');
   }),
-  async getConfigValue(key){
+  async getConfigValue(name){
     const configs = await this.get('configs');
-    const config = configs.findBy('key', key);
+    const config = configs.findBy('name', name);
     const value = isEmpty(config)?false:config.get('value');
 
     return Ember.$.parseJSON(value);
@@ -44,12 +44,12 @@ export default Component.extend({
   showSessionSpecialEquipmentRequired: computed('configs.[]', async function(){
     return await this.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
-  createSessionAttributeConfig(key){
+  createSessionAttributeConfig(name){
     const store = this.get('store');
     const school = this.get('school');
     const config = store.createRecord('school-config', {
       school,
-      key
+      name
     });
 
     return config;
@@ -57,21 +57,21 @@ export default Component.extend({
   save: task(function * (){
     const configs = yield this.get('configs');
 
-    const keys = [
+    const names = [
       'AttendanceRequired',
       'Supplemental',
       'SpecialAttireRequired',
       'SpecialEquipmentRequired',
     ];
     let toSave = [];
-    for (let i = 0; i < keys.length; i++) {
-      let key = keys[i];
-      let oldValue = yield this.get(`showSession${key}`);
-      let newValue = this.get(`bufferedShowSession${key}`);
+    for (let i = 0; i < names.length; i++) {
+      let name = names[i];
+      let oldValue = yield this.get(`showSession${name}`);
+      let newValue = this.get(`bufferedShowSession${name}`);
       if (oldValue !== newValue) {
-        let config = configs.findBy('key', `showSession${key}`);
+        let config = configs.findBy('name', `showSession${name}`);
         if (isEmpty(config)) {
-          config = this.createSessionAttributeConfig(`showSession${key}`);
+          config = this.createSessionAttributeConfig(`showSession${name}`);
         }
         config.set('value', newValue);
         toSave.pushObject(config);
@@ -97,13 +97,13 @@ export default Component.extend({
       this.set('bufferedConfigurations', []);
       this.get('setManaging')(false);
     },
-    enableSessionAttributeConfig(key){
-      const bufferKey = 'buffered' + key.capitalize();
-      this.set(bufferKey, true);
+    enableSessionAttributeConfig(name){
+      const bufferName = 'buffered' + name.capitalize();
+      this.set(bufferName, true);
     },
-    disableSessionAttributeConfig(key){
-      const bufferKey = 'buffered' + key.capitalize();
-      this.set(bufferKey, false);
+    disableSessionAttributeConfig(name){
+      const bufferName = 'buffered' + name.capitalize();
+      this.set(bufferName, false);
     },
   }
 });

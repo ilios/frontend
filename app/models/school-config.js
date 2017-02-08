@@ -4,6 +4,6 @@ const { Model, attr, belongsTo } = DS;
 
 export default Model.extend({
   school: belongsTo('school', {async: true}),
-  key: attr('string'),
+  name: attr('string'),
   value: attr('string'),
 });

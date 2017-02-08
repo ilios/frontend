@@ -13,9 +13,9 @@ export default Component.extend({
     }
     return await school.get('configurations');
   }),
-  async getConfigValue(key){
+  async getConfigValue(name){
     const configs = await this.get('configs');
-    const config = configs.findBy('key', key);
+    const config = configs.findBy('name', name);
     const value = isEmpty(config)?false:config.get('value');
 
     return Ember.$.parseJSON(value);

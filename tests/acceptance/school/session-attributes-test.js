@@ -26,12 +26,12 @@ test('check fields collapsed', async function(assert) {
   });
   server.create('schoolConfig', {
     school: 1,
-    key: 'showSessionAttendanceRequired',
+    name: 'showSessionAttendanceRequired',
     value: false
   });
   server.create('schoolConfig', {
     school: 1,
-    key: 'showSessionSupplemental',
+    name: 'showSessionSupplemental',
     value: true
   });
   await visit(url);
@@ -70,12 +70,12 @@ test('check fields expanded', async function(assert) {
   });
   server.create('schoolConfig', {
     school: 1,
-    key: 'showSessionAttendanceRequired',
+    name: 'showSessionAttendanceRequired',
     value: false
   });
   server.create('schoolConfig', {
     school: 1,
-    key: 'showSessionSupplemental',
+    name: 'showSessionSupplemental',
     value: true
   });
   await visit(`${url}?schoolSessionAttributesDetails=true`);
@@ -114,12 +114,12 @@ test('manage session attributes', async function(assert) {
   });
   server.create('schoolConfig', {
     school: 1,
-    key: 'showSessionAttendanceRequired',
+    name: 'showSessionAttendanceRequired',
     value: false
   });
   server.create('schoolConfig', {
     school: 1,
-    key: 'showSessionSupplemental',
+    name: 'showSessionSupplemental',
     value: true
   });
   await visit(`${url}?schoolSessionAttributesDetails=true&schoolManageSessionAttributes=true`);
