@@ -104,10 +104,23 @@ export default Component.extend({
    * @property courses
    * @type {Ember.computed}
    * @public
-   * @todo Check if this can be replaced with allCourses(). [ST 2017/02/07]
    */
-  courses: computed('allCourses.[]', 'selectedCourses.[]', function(){
-    return this.get('allCourses');
+  courses: computed('selectedSchool', 'selectedAcademicYear', function(){
+    return new Promise(resolve => {
+      this.get('selectedSchool').then((school) => {
+        this.get('selectedAcademicYear').then((year) => {
+          this.get('store').query('course', {
+            filters: {
+              school: school.get('id'),
+              year: year.get('title')
+            },
+            limit: 1000
+          }).then((courses) => {
+            resolve(courses.sortBy('title'));
+          });
+        });
+      });
+    });
   }),
 
   /**
@@ -438,29 +451,6 @@ export default Component.extend({
         this.get('selectedAcademicYear').then(year => {
           school.getCohortsForYear(year.get('title')).then(cohorts => {
             resolve(cohorts.sortBy('displayTitle'));
-          });
-        });
-      });
-    });
-  }),
-
-  /**
-   * @property allCourses
-   * @type {Ember.computed}
-   * @protected
-   */
-  allCourses: computed('selectedSchool', 'selectedAcademicYear', function(){
-    return new Promise(resolve => {
-      this.get('selectedSchool').then((school) => {
-        this.get('selectedAcademicYear').then((year) => {
-          this.get('store').query('course', {
-            filters: {
-              school: school.get('id'),
-              year: year.get('title')
-            },
-            limit: 1000
-          }).then((courses) => {
-            resolve(courses.sortBy('title'));
           });
         });
       });
