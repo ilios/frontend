@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, ObjectProxy, RSVP, run, isPresent } = Ember;
+const { Component, computed, inject, ObjectProxy, RSVP, run, isPresent, isEmpty } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
 const { hash } = RSVP;
@@ -104,6 +104,10 @@ export default Component.extend({
 
       for (let i = 0; i < objectives.length; i++) {
         let objectiveToCopy = objectives[i];
+        let ancestor = yield objectiveToCopy.get('ancestor');
+        if (isEmpty(ancestor)) {
+          ancestor = objectiveToCopy;
+        }
         let newObjective = store.createRecord(
           'objective',
           objectiveToCopy.getProperties('title')
@@ -111,6 +115,7 @@ export default Component.extend({
         let props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
         newObjective.setProperties(props);
         newObjective.set('programYears', [savedProgramYear]);
+        newObjective.set('ancestor', ancestor);
         yield newObjective.save();
         this.incrementSavedItems();
       }
