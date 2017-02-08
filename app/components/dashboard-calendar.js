@@ -265,15 +265,21 @@ export default Component.extend({
     });
   }),
 
+  /**
+   * @property sessionTypes
+   * @type {Ember.computed}
+   * @public
+   */
   sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
-    return PromiseArray.create({
-      promise: this.get('selectedSchool').then(school => {
-        return school.get('sessionTypes').then( types => {
-          return types.sortBy('title');
+    return new Promise(resolve => {
+      this.get('selectedSchool').then(school => {
+        school.get('sessionTypes').then(types => {
+          resolve(types.sortBy('title'));
         });
-      })
+      });
     });
   }),
+
   courseLevels: computed('selectedCourseLevels.[]', function(){
     let levels = [];
     for(let i =1; i <=5; i++){
