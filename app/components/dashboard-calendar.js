@@ -368,18 +368,25 @@ export default Component.extend({
 
   hasMoreThanOneSchool: computed.gt('schools.length', 1),
 
+  /**
+   * @property allSchools
+   * @type {Ember.computed}
+   * @protected
+   */
   allSchools: computed(function(){
-    return PromiseArray.create({
-      promise: this.get('currentUser.model').then(user => {
-        return user.get('schools').then(schools => {
-          return schools;
+    return new Promise(resolve => {
+      this.get('currentUser.model').then(user => {
+        user.get('schools').then(schools => {
+          resolve(schools);
         });
-      })
+      });
     });
   }),
+
   schools: computed('allSchools.[]', 'selectedSchool', function(){
     return this.get('allSchools').sortBy('title');
   }),
+
   selectedAcademicYear: computed('academicYearSelectedByUser', 'allAcademicYears.[]', function(){
     const academicYearSelectedByUser = this.get('academicYearSelectedByUser');
     return new Promise(resolve => {
