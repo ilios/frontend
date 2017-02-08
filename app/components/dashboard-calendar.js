@@ -60,31 +60,6 @@ export default Component.extend({
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
 
   /**
-   * @property ourEvents
-   * @type {Ember.computed}
-   * @protected
-   */
-  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
-    return new Promise(resolve => {
-      if(this.get('mySchedule')) {
-        this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp')).then(userEvents => {
-          resolve(userEvents);
-        });
-      } else {
-        this.get('selectedSchool').then(school => {
-          this.get('schoolEvents').getEvents(
-            school.get('id'),
-            this.get('fromTimeStamp'),
-            this.get('toTimeStamp')
-          ).then(schoolEvents => {
-            resolve(schoolEvents);
-          });
-        });
-      }
-    });
-  }),
-
-  /**
    * @property filteredEvents
    * @type {Ember.computed}
    * @public
@@ -124,6 +99,31 @@ export default Component.extend({
       });
     }
   ),
+
+  /**
+   * @property ourEvents
+   * @type {Ember.computed}
+   * @protected
+   */
+  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
+    return new Promise(resolve => {
+      if(this.get('mySchedule')) {
+        this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp')).then(userEvents => {
+          resolve(userEvents);
+        });
+      } else {
+        this.get('selectedSchool').then(school => {
+          this.get('schoolEvents').getEvents(
+            school.get('id'),
+            this.get('fromTimeStamp'),
+            this.get('toTimeStamp')
+          ).then(schoolEvents => {
+            resolve(schoolEvents);
+          });
+        });
+      }
+    });
+  }),
 
   /**
    * @property eventsWithSelectedSessionTypes
