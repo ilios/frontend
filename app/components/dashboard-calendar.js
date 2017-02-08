@@ -60,6 +60,15 @@ export default Component.extend({
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
 
   /**
+   * @property courses
+   * @type {Ember.computed}
+   * @public
+   */
+  courses: computed('allCourses.[]', 'selectedCourses.[]', function(){
+    return this.get('allCourses');
+  }),
+
+  /**
    * @property filteredEvents
    * @type {Ember.computed}
    * @public
@@ -311,9 +320,7 @@ export default Component.extend({
       });
     });
   }),
-  courses: computed('allCourses.[]', 'selectedCourses.[]', function(){
-    return this.get('allCourses');
-  }),
+
   selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
     const schoolPickedByUser = this.get('schoolPickedByUser');
     return new Promise(resolve => {
