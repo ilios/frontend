@@ -161,6 +161,19 @@ export default Component.extend({
   }),
 
   /**
+   * @property schools
+   * @type {Ember.computed}
+   * @public
+   */
+  schools: computed('allSchools.[]', 'selectedSchool', function(){
+    return new Promise(resolve => {
+      this.get('allSchools').then(schools => {
+        resolve(schools.sortBy('title'));
+      });
+    });
+  }),
+
+  /**
    * @property sessionTypes
    * @type {Ember.computed}
    * @public
@@ -381,10 +394,6 @@ export default Component.extend({
         });
       });
     });
-  }),
-
-  schools: computed('allSchools.[]', 'selectedSchool', function(){
-    return this.get('allSchools').sortBy('title');
   }),
 
   selectedAcademicYear: computed('academicYearSelectedByUser', 'allAcademicYears.[]', function(){
