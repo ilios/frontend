@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, isPresent, RSVP, inject } = Ember;
+const { Component, computed, isPresent, RSVP, Object, inject } = Ember;
 const { service } = inject;
 const { all, Promise } = RSVP;
 
