@@ -85,7 +85,6 @@ export default Component.extend({
     for(let i =1; i <=5; i++){
       levels.pushObject(i);
     }
-
     return levels;
   }),
 
@@ -139,6 +138,26 @@ export default Component.extend({
       });
     }
   ),
+
+  /**
+   * @property selectedSchool
+   * @type {Ember.computed}
+   * @public
+   */
+  selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
+    const schoolPickedByUser = this.get('schoolPickedByUser');
+    return new Promise(resolve => {
+      if (schoolPickedByUser)  {
+        resolve(schoolPickedByUser);
+      } else {
+        this.get('currentUser').get('model').then(user => {
+          user.get('school').then(school => {
+            resolve(school);
+          });
+        });
+      }
+    });
+  }),
 
   /**
    * @property sessionTypes
@@ -346,21 +365,8 @@ export default Component.extend({
     });
   }),
 
-  selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
-    const schoolPickedByUser = this.get('schoolPickedByUser');
-    return new Promise(resolve => {
-      if (schoolPickedByUser)  {
-        resolve(schoolPickedByUser);
-      } else {
-        this.get('currentUser').get('model').then(user => {
-          user.get('school').then(school => {
-            resolve(school);
-          });
-        });
-      }
-    });
-  }),
   hasMoreThanOneSchool: computed.gt('schools.length', 1),
+
   allSchools: computed(function(){
     return PromiseArray.create({
       promise: this.get('currentUser.model').then(user => {
