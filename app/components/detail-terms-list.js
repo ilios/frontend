@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP } = Ember;
+const { all, Promise } = RSVP;
 
 /**
  * Displays all given terms that belong to a given vocabulary as a list of tags.
@@ -45,34 +45,24 @@ export default Component.extend({
    * @public
    */
   sortedTerms: computed('filteredTerms.[]', function() {
-    let terms = this.get('filteredTerms');
-    let promises = [];
-    let temp = [];
-    terms.forEach(term => {
-      let promise = new Ember.RSVP.Promise(resolve => {
-        term.get('titleWithParentTitles').then(title => {
-          temp.pushObject({
-            'term': term,
-            'title': title
-          });
-          resolve();
+    return new Promise(resolve => {
+      let terms = this.get('filteredTerms');
+      let promises = [];
+      let proxies = [];
+      terms.forEach(term => {
+        promises.pushObject(term.get('titleWithParentTitles').then(title => {
+          proxies.pushObject({ term, title });
+        }));
+      });
+
+      all(promises).then(() => {
+        let sortedProxies = proxies.sort((a, b) => {
+          let titleA = a.title.toLowerCase();
+          let titleB = b.title.toLowerCase();
+          return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
         });
+        resolve(sortedProxies.mapBy('term'));
       });
-      promises.pushObject(promise);
-    });
-
-    let deferred = Ember.RSVP.defer();
-    Ember.RSVP.all(promises).then(() => {
-      let sorted = temp.sort(function(a, b) {
-        let titleA = a.title.toLowerCase();
-        let titleB = b.title.toLowerCase();
-        return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
-      });
-      deferred.resolve(sorted.mapBy('term'));
-    });
-
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
@@ -82,7 +72,7 @@ export default Component.extend({
    *
    * @property filteredTerms
    * @type {Ember.computed}
-   * @public
+   * @protected
    */
   filteredTerms: computed('terms.[]', 'vocabulary', function () {
     let terms = this.get('terms');
