@@ -51,15 +51,12 @@ export default Component.extend({
       let proxies = [];
       terms.forEach(term => {
         promises.pushObject(term.get('titleWithParentTitles').then(title => {
-          proxies.pushObject({
-            'term': term,
-            'title': title
-          });
+          proxies.pushObject({ term, title });
         }));
       });
 
       all(promises).then(() => {
-        let sortedProxies = proxies.sort(function(a, b) {
+        let sortedProxies = proxies.sort((a, b) => {
           let titleA = a.title.toLowerCase();
           let titleB = b.title.toLowerCase();
           return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
