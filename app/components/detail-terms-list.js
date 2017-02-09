@@ -48,10 +48,10 @@ export default Component.extend({
     return new Promise(resolve => {
       let terms = this.get('filteredTerms');
       let promises = [];
-      let temp = [];
+      let proxies = [];
       terms.forEach(term => {
         promises.pushObject(term.get('titleWithParentTitles').then(title => {
-          temp.pushObject({
+          proxies.pushObject({
             'term': term,
             'title': title
           });
@@ -59,12 +59,12 @@ export default Component.extend({
       });
 
       all(promises).then(() => {
-        let sorted = temp.sort(function(a, b) {
+        let sortedProxies = proxies.sort(function(a, b) {
           let titleA = a.title.toLowerCase();
           let titleB = b.title.toLowerCase();
           return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
         });
-        resolve(sorted.mapBy('term'));
+        resolve(sortedProxies.mapBy('term'));
       });
     });
   }),
