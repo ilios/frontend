@@ -1,48 +1,49 @@
 import moment from 'moment';
 import Ember from 'ember';
-import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP, Object } = Ember;
 const { oneWay, sort } = computed;
+const { Promise } = RSVP;
 
 export default Component.extend({
   store: Ember.inject.service(),
   session: null,
   offerings: oneWay('session.offerings'),
   editable: true,
-  offeringBlocks: computed(
-    'offerings.@each.{startDate,endDate,room,instructorGroups}',
-    function(){
-      var offerings = this.get('offerings');
-      if(offerings == null){
-        return Ember.A();
+
+  /**
+   * @property offeringBlocks
+   * @type {Ember.computed}
+   * @public
+   */
+  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,instructorGroups}', function() {
+    return new Promise(resolve => {
+      let offerings = this.get('offerings');
+      if (offerings == null) {
+        resolve([]);
       }
-      var deferred = Ember.RSVP.defer();
-      offerings.then(function(offerings){
+      offerings.then(offerings => {
         let dateBlocks = {};
-        offerings.forEach(function(offering){
+        offerings.forEach(offering => {
           let key = offering.get('dateKey');
-          if(!(key in dateBlocks)){
+          if (!(key in dateBlocks)) {
             dateBlocks[key] = OfferingDateBlock.create({
               dateKey: key
             });
           }
           dateBlocks[key].addOffering(offering);
-
         });
         //convert indexed object to array
         let dateBlockArray = [];
-        for(let key in dateBlocks){
+        for (let key in dateBlocks) {
           dateBlockArray.pushObject(dateBlocks[key]);
         }
-        deferred.resolve(dateBlockArray.sortBy('dateStamp'));
+        resolve(dateBlockArray.sortBy('dateStamp'));
       });
-      return DS.PromiseArray.create({
-        promise: deferred.promise
-      });
-    }
-  ),
+    });
+  }),
+
   actions: {
     removeOffering: function(offering){
       let session = this.get('session');
@@ -55,7 +56,7 @@ export default Component.extend({
   }
 });
 
-var OfferingBlock = Ember.Object.extend({
+let OfferingBlock = Object.extend({
   //we have to init the offerins array because otherwise it gets passed by reference
   //and shared among isntances
   init: function(){
@@ -63,18 +64,18 @@ var OfferingBlock = Ember.Object.extend({
     this.set('offerings', []);
   },
   offerings: null,
-  addOffering: function(offering){
+  addOffering(offering){
     this.get('offerings').pushObject(offering);
   },
 });
 
-var OfferingDateBlock = OfferingBlock.extend({
+let OfferingDateBlock = OfferingBlock.extend({
   dateKey: null,
   //convert our day of the year key into a date at midnight
   date: computed('dateKey', function(){
-    var year = this.get('dateKey').substring(0,4);
-    var dayOfYear = this.get('dateKey').substring(4);
-    var date = new Date(year, 0);
+    let year = this.get('dateKey').substring(0,4);
+    let dayOfYear = this.get('dateKey').substring(4);
+    let date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
   }),
   dateStamp: momentFormat('date', 'X'),
@@ -101,7 +102,7 @@ var OfferingDateBlock = OfferingBlock.extend({
   })
 });
 
-var OfferingTimeBlock = OfferingBlock.extend({
+let OfferingTimeBlock = OfferingBlock.extend({
   timeKey: null,
   isMultiDay: computed('startDate', 'endDate', function(){
     return this.get('startDate').format('DDDDYYYY') !== this.get('endDate').format('DDDDYYYY');
