@@ -72,7 +72,7 @@ export default Component.extend({
    *
    * @property filteredTerms
    * @type {Ember.computed}
-   * @public
+   * @protected
    */
   filteredTerms: computed('terms.[]', 'vocabulary', function () {
     let terms = this.get('terms');
