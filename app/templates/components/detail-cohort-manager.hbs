@@ -1,7 +1,7 @@
 <ul class='removable-list tag-list'>
   {{#each sortedCohorts as |cohort|}}
     <li {{action 'remove' cohort}}>
-      {{cohort.programYear.program.school.title}} | 
+      {{cohort.programYear.program.school.title}} |
       {{cohort.programYear.program.title}} |
       {{cohort.title}} | {{fa-icon 'remove'}}
     </li>
@@ -9,10 +9,10 @@
 </ul>
 <div class='selectable-list'>
   <ul>
-    {{#if availableCohorts.isFulfilled}}
-      {{#each sortedAvailableCohorts as |cohort|}}
+    {{#if (is-fulfilled sortedAvailableCohorts)}}
+      {{#each (await sortedAvailableCohorts) as |cohort|}}
         <li {{action 'add' cohort}}>
-          {{cohort.programYear.program.school.title}} | 
+          {{cohort.programYear.program.school.title}} |
           {{cohort.programYear.program.title}} |
           {{cohort.title}}
         </li>
