@@ -1,48 +1,49 @@
 import moment from 'moment';
 import Ember from 'ember';
-import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP } = Ember;
 const { oneWay, sort } = computed;
+const { Promise } = RSVP;
 
 export default Component.extend({
   store: Ember.inject.service(),
   session: null,
   offerings: oneWay('session.offerings'),
   editable: true,
-  offeringBlocks: computed(
-    'offerings.@each.{startDate,endDate,room,instructorGroups}',
-    function(){
+
+  /**
+   * @property offeringBlocks
+   * @type {Ember.computed}
+   * @public
+   */
+  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,instructorGroups}', function() {
+    return new Promise(resolve => {
       var offerings = this.get('offerings');
-      if(offerings == null){
-        return Ember.A();
+      if (offerings == null) {
+        resolve([]);
       }
-      var deferred = Ember.RSVP.defer();
-      offerings.then(function(offerings){
+      offerings.then(function (offerings) {
         let dateBlocks = {};
-        offerings.forEach(function(offering){
+        offerings.forEach(function (offering) {
           let key = offering.get('dateKey');
-          if(!(key in dateBlocks)){
+          if (!(key in dateBlocks)) {
             dateBlocks[key] = OfferingDateBlock.create({
               dateKey: key
             });
           }
           dateBlocks[key].addOffering(offering);
-
         });
         //convert indexed object to array
         let dateBlockArray = [];
-        for(let key in dateBlocks){
+        for (let key in dateBlocks) {
           dateBlockArray.pushObject(dateBlocks[key]);
         }
-        deferred.resolve(dateBlockArray.sortBy('dateStamp'));
+        resolve(dateBlockArray.sortBy('dateStamp'));
       });
-      return DS.PromiseArray.create({
-        promise: deferred.promise
-      });
-    }
-  ),
+    });
+  }),
+
   actions: {
     removeOffering: function(offering){
       let session = this.get('session');
