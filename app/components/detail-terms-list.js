@@ -1,9 +1,7 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { Component, computed, RSVP } = Ember;
 const { all, defer, Promise } = RSVP;
-const { PromiseArray } = DS;
 
 /**
  * Displays all given terms that belong to a given vocabulary as a list of tags.
@@ -47,34 +45,31 @@ export default Component.extend({
    * @public
    */
   sortedTerms: computed('filteredTerms.[]', function() {
-    let terms = this.get('filteredTerms');
-    let promises = [];
-    let temp = [];
-    terms.forEach(term => {
-      let promise = new Promise(resolve => {
-        term.get('titleWithParentTitles').then(title => {
-          temp.pushObject({
-            'term': term,
-            'title': title
+    return new Promise(resolve => {
+      let terms = this.get('filteredTerms');
+      let promises = [];
+      let temp = [];
+      terms.forEach(term => {
+        let promise = new Promise(resolve => {
+          term.get('titleWithParentTitles').then(title => {
+            temp.pushObject({
+              'term': term,
+              'title': title
+            });
+            resolve();
           });
-          resolve();
         });
+        promises.pushObject(promise);
       });
-      promises.pushObject(promise);
-    });
 
-    let deferred = defer();
-    all(promises).then(() => {
-      let sorted = temp.sort(function(a, b) {
-        let titleA = a.title.toLowerCase();
-        let titleB = b.title.toLowerCase();
-        return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
+      all(promises).then(() => {
+        let sorted = temp.sort(function(a, b) {
+          let titleA = a.title.toLowerCase();
+          let titleB = b.title.toLowerCase();
+          return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
+        });
+        resolve(sorted.mapBy('term'));
       });
-      deferred.resolve(sorted.mapBy('term'));
-    });
-
-    return PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
