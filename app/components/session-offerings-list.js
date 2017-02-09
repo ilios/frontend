@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, RSVP } = Ember;
+const { Component, computed, RSVP, Object } = Ember;
 const { oneWay, sort } = computed;
 const { Promise } = RSVP;
 
@@ -56,7 +56,7 @@ export default Component.extend({
   }
 });
 
-let OfferingBlock = Ember.Object.extend({
+let OfferingBlock = Object.extend({
   //we have to init the offerins array because otherwise it gets passed by reference
   //and shared among isntances
   init: function(){
