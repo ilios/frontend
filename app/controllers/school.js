@@ -10,7 +10,9 @@ export default Controller.extend({
     'schoolManagedVocabulary',
     'schoolManagedVocabularyTerm',
     'schoolLeadershipDetails',
-    'schoolManageLeadership'
+    'schoolManageLeadership',
+    'schoolManageSessionAttributes',
+    'schoolSessionAttributesDetails',
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,
@@ -19,4 +21,6 @@ export default Controller.extend({
   schoolManagedVocabularyTerm: null,
   schoolLeadershipDetails: false,
   schoolManageLeadership: false,
+  schoolManageSessionAttributes: false,
+  schoolSessionAttributesDetails: false,
 });

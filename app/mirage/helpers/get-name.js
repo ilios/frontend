@@ -27,6 +27,7 @@ var models = [
   'programYears',
   'programYearStewards',
   'recurringEvents',
+  'schoolConfigs',
   'sessionDescriptions',
   'sessionLearningMaterials',
   'sessionTypes',

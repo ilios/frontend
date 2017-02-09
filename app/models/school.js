@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { computed } = Ember;
+const { computed, isEmpty } = Ember;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -25,6 +25,7 @@ export default DS.Model.extend({
     async: true,
     inverse: 'administeredSchools'
   }),
+  configurations: DS.hasMany('school-config', {async: true}),
   cohorts: computed('programs.@each.programYears', {
     get(){
       return this.get('store').query('cohort', {
@@ -77,5 +78,42 @@ export default DS.Model.extend({
     return DS.PromiseArray.create({
       promise: defer.promise
     });
-  }
+  },
+  async getConfigByName(name){
+    const configs = await this.get('configurations');
+    const config = configs.findBy('name', name);
+
+    return isEmpty(config)?null:config;
+  },
+  async getConfigValue(name){
+    const config = await this.getConfigByName(name);
+    const value = isEmpty(config)?null:config.get('value');
+
+    return Ember.$.parseJSON(value);
+  },
+  async setConfigValue(name, value){
+    const oldValue = await this.getConfigValue(name);
+    if (value !== oldValue) {
+      let config = await this.getConfigByName(name);
+      if (isEmpty(config)) {
+        config = await this.createConfig(name);
+      }
+      config.set('value', value);
+
+      return config;
+    }
+
+    return false;
+  },
+  async createConfig(name){
+    const store = this.get('store');
+    const config = store.createRecord('school-config', {
+      school: this,
+      name
+    });
+    let configurations = await this.get('configurations');
+    configurations.pushObject(config);
+
+    return config;
+  },
 });

@@ -17,6 +17,8 @@ test('it renders', function(assert) {
     setSchoolVocabularyDetails=(action 'nothing')
     setSchoolLeadershipDetails=(action 'nothing')
     setSchoolManageLeadership=(action 'nothing')
+    setSchoolSessionAttributesDetails=(action 'nothing')
+    setSchoolManageSessionAttributes=(action 'nothing')
   }}`);
 
   assert.notEqual(this.$().text().search(/Back to Schools List/), -1);
