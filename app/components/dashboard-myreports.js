@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
-const { computed, inject, Component } = Ember;
+const { computed, inject, Component, RSVP } = Ember;
 const { service } = inject;
-const { PromiseArray } = DS;
+const { Promise } = RSVP;
 
 export default Component.extend({
   reporting: service(),
@@ -11,11 +10,17 @@ export default Component.extend({
   classNames: ['dashboard-block', 'dashboard-double-block', 'dashboard-myreports'],
   myReportEditorOn: false,
   selectedReport: null,
-  reportSorting: ['title'],
-  sortedReports: computed.sort('listOfReports', 'reportSorting'),
-  listOfReports: computed('reporting.reportsList.[]', function(){
-    return PromiseArray.create({
-      promise: this.get('reporting').get('reportsList')
+
+  /**
+   * @property sortedReports
+   * @type {Ember.computed}
+   * @public
+   */
+  sortedReports: computed('reporting.reportsList.[]', function(){
+    return new Promise(resolve => {
+      this.get('reporting').get('reportsList').then(reports => {
+        resolve(reports.sortBy('title'));
+      });
     });
   }),
   reportResultsList: computed('selectedReport', function(){
@@ -23,7 +28,7 @@ export default Component.extend({
     if(!report){
       return [];
     }
-    
+
     return this.get('reporting').getResults(report);
   }),
   actions: {
