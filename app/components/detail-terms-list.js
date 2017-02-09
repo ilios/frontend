@@ -50,16 +50,12 @@ export default Component.extend({
       let promises = [];
       let temp = [];
       terms.forEach(term => {
-        let promise = new Promise(resolve => {
-          term.get('titleWithParentTitles').then(title => {
-            temp.pushObject({
-              'term': term,
-              'title': title
-            });
-            resolve();
+        promises.pushObject(term.get('titleWithParentTitles').then(title => {
+          temp.pushObject({
+            'term': term,
+            'title': title
           });
-        });
-        promises.pushObject(promise);
+        }));
       });
 
       all(promises).then(() => {
