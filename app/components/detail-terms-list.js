@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const { Component, computed, RSVP } = Ember;
-const { all, defer, Promise } = RSVP;
+const { all, Promise } = RSVP;
 
 /**
  * Displays all given terms that belong to a given vocabulary as a list of tags.
