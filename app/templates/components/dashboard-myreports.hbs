@@ -44,11 +44,11 @@
     {{#liquid-if myReportEditorOn class='vertical'}}
       {{new-myreport close=(action 'toggleEditor')}}
     {{/liquid-if}}
-    {{#if listOfReports.isFulfilled}}
-      {{#if sortedReports.length}}
+    {{#if (is-fulfilled sortedReports)}}
+      {{#if (get (await sortedReports) 'length')}}
         <table>
           <tbody>
-            {{#each sortedReports as |report|}}
+            {{#each (await sortedReports) as |report|}}
               <tr>
                 <td {{action 'selectReport' report}} class='link clickable' colspan=4>
                   {{fa-icon 'external-link-square'}}
