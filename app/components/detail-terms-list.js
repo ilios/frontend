@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP } = Ember;
+const { all, defer, Promise } = RSVP;
+const { PromiseArray } = DS;
 
 /**
  * Displays all given terms that belong to a given vocabulary as a list of tags.
@@ -49,7 +51,7 @@ export default Component.extend({
     let promises = [];
     let temp = [];
     terms.forEach(term => {
-      let promise = new Ember.RSVP.Promise(resolve => {
+      let promise = new Promise(resolve => {
         term.get('titleWithParentTitles').then(title => {
           temp.pushObject({
             'term': term,
@@ -61,8 +63,8 @@ export default Component.extend({
       promises.pushObject(promise);
     });
 
-    let deferred = Ember.RSVP.defer();
-    Ember.RSVP.all(promises).then(() => {
+    let deferred = defer();
+    all(promises).then(() => {
       let sorted = temp.sort(function(a, b) {
         let titleA = a.title.toLowerCase();
         let titleB = b.title.toLowerCase();
@@ -71,7 +73,7 @@ export default Component.extend({
       deferred.resolve(sorted.mapBy('term'));
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
