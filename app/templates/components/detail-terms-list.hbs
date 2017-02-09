@@ -1,9 +1,9 @@
-{{#if sortedTerms}}
+{{#if (is-fulfilled sortedTerms)}}
   <div>
     <strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})
   </div>
   <ul class="{{if canEdit 'removable-list' null}} tag-list selected-taxonomy-terms">
-    {{#each sortedTerms as |term|}}
+    {{#each (await sortedTerms) as |term|}}
       {{#if canEdit}}
         {{detail-terms-list-item canEdit=true remove=remove term=term}}
       {{else}}
