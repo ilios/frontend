@@ -1,12 +1,10 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import config from '../config/environment';
 
 const { Component, inject, RSVP } = Ember;
 const { service } = inject;
 const { Promise } = RSVP;
-const { IliosFeatures: { schoolSessionAttributes } } = config;
 
 const Validations = buildValidations({
   title: [
@@ -25,7 +23,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this._super(...arguments);
     this.set('title', this.get('school.title'));
   },
-  schoolSessionAttributes,
   classNames: ['school-manager' ],
   tagName: 'section',
   school: null,

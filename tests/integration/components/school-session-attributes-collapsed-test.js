@@ -1,10 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-
-const { Object, RSVP } = Ember;
-const { resolve } = RSVP;
 
 moduleForComponent('school-session-attributes-collapsed', 'Integration | Component | school session attributes collapsed', {
   integration: true
@@ -12,21 +8,21 @@ moduleForComponent('school-session-attributes-collapsed', 'Integration | Compone
 
 test('it renders', async function(assert) {
   assert.expect(12);
-  const config1 = Object.create({
-    name: 'showSessionAttendanceRequired',
-    value: false
-  });
-  const config2 = Object.create({
-    name: 'showSessionSupplemental',
-    value: true
-  });
-  const school = Object.create({
-    configurations: resolve([config1, config2])
-  });
 
-  this.set('school', school);
   this.set('nothing', parseInt);
-  this.render(hbs`{{school-session-attributes-collapsed school=school expand=(action nothing)}}`);
+  this.set('showSessionAttendanceRequired', false);
+  this.set('showSessionSupplemental', true);
+  this.set('showSessionSpecialAttireRequired', false);
+  this.set('showSessionSpecialEquipmentRequired', false);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{school-session-attributes-collapsed
+    showSessionAttendanceRequired=showSessionAttendanceRequired
+    showSessionSupplemental=showSessionSupplemental
+    showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
+    showSessionSpecialEquipmentRequired=showSessionSpecialEquipmentRequired
+    expand=(action nothing)
+  }}`);
+
   await wait();
 
   const rows = 'table tbody tr';
