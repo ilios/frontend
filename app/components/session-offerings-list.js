@@ -19,13 +19,13 @@ export default Component.extend({
    */
   offeringBlocks: computed('offerings.@each.{startDate,endDate,room,instructorGroups}', function() {
     return new Promise(resolve => {
-      var offerings = this.get('offerings');
+      let offerings = this.get('offerings');
       if (offerings == null) {
         resolve([]);
       }
-      offerings.then(function (offerings) {
+      offerings.then(offerings => {
         let dateBlocks = {};
-        offerings.forEach(function (offering) {
+        offerings.forEach(offering => {
           let key = offering.get('dateKey');
           if (!(key in dateBlocks)) {
             dateBlocks[key] = OfferingDateBlock.create({
@@ -56,7 +56,7 @@ export default Component.extend({
   }
 });
 
-var OfferingBlock = Ember.Object.extend({
+let OfferingBlock = Ember.Object.extend({
   //we have to init the offerins array because otherwise it gets passed by reference
   //and shared among isntances
   init: function(){
@@ -64,18 +64,18 @@ var OfferingBlock = Ember.Object.extend({
     this.set('offerings', []);
   },
   offerings: null,
-  addOffering: function(offering){
+  addOffering(offering){
     this.get('offerings').pushObject(offering);
   },
 });
 
-var OfferingDateBlock = OfferingBlock.extend({
+let OfferingDateBlock = OfferingBlock.extend({
   dateKey: null,
   //convert our day of the year key into a date at midnight
   date: computed('dateKey', function(){
-    var year = this.get('dateKey').substring(0,4);
-    var dayOfYear = this.get('dateKey').substring(4);
-    var date = new Date(year, 0);
+    let year = this.get('dateKey').substring(0,4);
+    let dayOfYear = this.get('dateKey').substring(4);
+    let date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
   }),
   dateStamp: momentFormat('date', 'X'),
@@ -102,7 +102,7 @@ var OfferingDateBlock = OfferingBlock.extend({
   })
 });
 
-var OfferingTimeBlock = OfferingBlock.extend({
+let OfferingTimeBlock = OfferingBlock.extend({
   timeKey: null,
   isMultiDay: computed('startDate', 'endDate', function(){
     return this.get('startDate').format('DDDDYYYY') !== this.get('endDate').format('DDDDYYYY');
