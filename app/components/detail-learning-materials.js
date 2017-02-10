@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, RSVP, ObjectProxy } = Ember;
+const { isEmpty, Component, computed, inject, RSVP, ObjectProxy } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
 const { Promise } = RSVP;
@@ -196,7 +196,10 @@ export default Component.extend({
         lm.save().then((savedLm) => {
           subject.get('learningMaterials').then(learningMaterials => {
             let lmSubject;
-            let position = learningMaterials.length + 1;
+            let position = 0;
+            if (! isEmpty(learningMaterials)) {
+              position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
+            }
             if (isCourse) {
               lmSubject = store.createRecord('course-learning-material', { course: subject, position });
             } else {
@@ -256,7 +259,11 @@ export default Component.extend({
           lmCollectionType = 'sessionLearningMaterials';
         }
         subject.get('learningMaterials').then(learningMaterials => {
-          newLearningMaterial.set('position', learningMaterials.length);
+          let position = 0;
+          if (! isEmpty(learningMaterials)) {
+            position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
+          }
+          newLearningMaterial.set('position', position);
           newLearningMaterial.save().then(savedLearningMaterial => {
             parentLearningMaterial.get(lmCollectionType).then(children => {
               children.pushObject(savedLearningMaterial);
