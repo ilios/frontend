@@ -102,10 +102,10 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.learningMaterials'}} ({{courseLearningMaterials.length}})
+          {{t 'general.learningMaterials'}} ({{get (await courseLearningMaterials) 'length'}})
         </div>
         <div class='detail-content'>
-          {{#if courseLearningMaterials.length}}
+          {{#if (get (await courseLearningMaterials) 'length')}}
             <table>
               <thead>
                 <tr>
@@ -117,7 +117,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each courseLearningMaterials as |lm|}}
+                {{#each (await courseLearningMaterials) as |lm|}}
                   <tr>
                     <td class='text-left text-top' colspan=2>
                       {{lm.learningMaterial.title}}
@@ -218,10 +218,10 @@
 
       <section class='detail-block'>
         <div class='detail-title'>
-          {{t 'general.learningMaterials'}}({{session.sessionLearningMaterials.length}})
+          {{t 'general.learningMaterials'}}({{get (await session.sessionLearningMaterials) 'length'}})
         </div>
         <div class='detail-content'>
-          {{#if session.sessionLearningMaterials.length}}
+          {{#if (get (await session.sessionLearningMaterials) 'length')}}
             <table>
               <thead>
                 <tr>
@@ -233,7 +233,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each session.sessionLearningMaterials as |lm|}}
+                {{#each (await session.sessionLearningMaterials) as |lm|}}
                   <tr>
                     <td class='text-left text-top' colspan=2>
                       {{lm.learningMaterial.title}}
