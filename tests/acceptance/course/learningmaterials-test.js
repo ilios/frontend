@@ -88,21 +88,25 @@ module('Acceptance: Course - Learning Materials', {
       learningMaterial: 1,
       course: 1,
       required: false,
-      meshDescriptors: [2,3]
+      meshDescriptors: [2,3],
+      position: 0,
     }));
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
       learningMaterial: 2,
       course: 1,
       required: false,
+      position: 1,
     }));
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
       learningMaterial: 3,
       course: 1,
       publicNotes: false,
+      position: 2,
     }));
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
       learningMaterial: 4,
       course: 1,
+      position: 3,
     }));
 
     fixtures.course = server.create('course', {
