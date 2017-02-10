@@ -5,6 +5,7 @@ import { translationMacro as t } from "ember-i18n";
 const { Component, computed, inject, RSVP} = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
+const { Promise } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend({
@@ -208,30 +209,31 @@ export default Component.extend({
       this.get('bufferMaterial').set('notes', value);
     },
     addLearningMaterial(parentLearningMaterial){
-      let defer = RSVP.defer();
-      let newLearningMaterial;
-      let lmCollectionType;
-      if(this.get('isCourse')){
-        newLearningMaterial = this.get('store').createRecord('course-learning-material', {
-          course: this.get('subject'),
-          learningMaterial: parentLearningMaterial
-        });
-        lmCollectionType = 'courseLearningMaterials';
-      }
-      if(this.get('isSession')){
-        newLearningMaterial = this.get('store').createRecord('session-learning-material', {
-          session: this.get('subject'),
-          learningMaterial: parentLearningMaterial
-        });
-        lmCollectionType = 'sessionLearningMaterials';
-      }
-      newLearningMaterial.save().then(savedLearningMaterial => {
-        parentLearningMaterial.get(lmCollectionType).then(children => {
-          children.pushObject(savedLearningMaterial);
-          defer.resolve(savedLearningMaterial);
+      return new Promise(resolve => {
+        let newLearningMaterial;
+        let lmCollectionType;
+
+        if(this.get('isCourse')){
+          newLearningMaterial = this.get('store').createRecord('course-learning-material', {
+            course: this.get('subject'),
+            learningMaterial: parentLearningMaterial
+          });
+          lmCollectionType = 'courseLearningMaterials';
+        }
+        if(this.get('isSession')){
+          newLearningMaterial = this.get('store').createRecord('session-learning-material', {
+            session: this.get('subject'),
+            learningMaterial: parentLearningMaterial
+          });
+          lmCollectionType = 'sessionLearningMaterials';
+        }
+        newLearningMaterial.save().then(savedLearningMaterial => {
+          parentLearningMaterial.get(lmCollectionType).then(children => {
+            children.pushObject(savedLearningMaterial);
+            resolve(savedLearningMaterial);
+          });
         });
       });
-      return defer.promise;
     },
     confirmRemoval(lmProxy){
       lmProxy.set('showRemoveConfirmation', true);
