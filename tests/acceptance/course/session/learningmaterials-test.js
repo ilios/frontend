@@ -96,21 +96,25 @@ module('Acceptance: Session - Learning Materials', {
       learningMaterial: 1,
       session: 1,
       required: false,
-      meshDescriptors: [2,3]
+      meshDescriptors: [2,3],
+      position: 0,
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
       learningMaterial: 2,
       session: 1,
       required: false,
+      position: 1,
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
       learningMaterial: 3,
       session: 1,
       publicNotes: false,
+      position: 2,
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
       learningMaterial: 4,
       session: 1,
+      position: 3,
     }));
 
     fixtures.session = server.create('session', {
