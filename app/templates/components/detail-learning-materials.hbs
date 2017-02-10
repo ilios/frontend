@@ -1,6 +1,6 @@
 <div class='title'>
   {{#unless isManaging}}
-    {{t 'general.learningMaterials'}} ({{proxyMaterials.length}})
+    {{t 'general.learningMaterials'}} ({{get (await proxyMaterials) 'length'}})
   {{/unless}}
   {{#if isManagingMaterial}}
     <span class='specific-title'>
@@ -68,7 +68,7 @@
         cancel=(action 'cancelNewLearningMaterial')}}
     {{/liquid-if}}
 
-    {{#if proxyMaterials.length}}
+    {{#if (get (await proxyMaterials) 'length')}}
       <table>
         <thead>
           <tr>
@@ -83,7 +83,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each proxyMaterials as |lmProxy|}}
+          {{#each (await proxyMaterials) as |lmProxy|}}
             <tr class="{{if lmProxy.showRemoveConfirmation 'confirm-removal'}}">
               <td class='text-left clickable link' colspan=3 {{action 'manageMaterial' lmProxy.content}}>
                 {{fa-icon 'external-link-square'}} {{lmProxy.learningMaterial.title}}
