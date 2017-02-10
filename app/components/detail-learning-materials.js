@@ -5,7 +5,7 @@ import { translationMacro as t } from "ember-i18n";
 const { Component, computed, inject, RSVP} = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
-const { Promise } = RSVP;
+const { resolve, Promise } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend({
@@ -165,23 +165,25 @@ export default Component.extend({
     },
 
     saveNewLearningMaterial(lm) {
-      const store = this.get('store');
-      const isCourse = this.get('isCourse');
-      const subject = this.get('subject');
-
-
-
-      return lm.save().then((savedLm) => {
-        let lmSubject;
-
-        if (isCourse) {
-          lmSubject = store.createRecord('course-learning-material', { course: subject });
-        } else {
-          lmSubject = store.createRecord('session-learning-material', { session: subject });
-        }
-        lmSubject.set('learningMaterial', savedLm);
-        return lmSubject.save().then(() => {
-          this.set('isEditing', false);
+      return new Promise(resolve => {
+        const store = this.get('store');
+        const isCourse = this.get('isCourse');
+        const subject = this.get('subject');
+        lm.save().then((savedLm) => {
+          subject.get('learningMaterials').then(learningMaterials => {
+            let lmSubject;
+            let position = learningMaterials.length + 1;
+            if (isCourse) {
+              lmSubject = store.createRecord('course-learning-material', { course: subject, position });
+            } else {
+              lmSubject = store.createRecord('session-learning-material', { session: subject, position });
+            }
+            lmSubject.set('learningMaterial', savedLm);
+            lmSubject.save().then(() => {
+              this.set('isEditing', false);
+              resolve();
+            });
+          });
         });
       });
     },
@@ -212,25 +214,30 @@ export default Component.extend({
       return new Promise(resolve => {
         let newLearningMaterial;
         let lmCollectionType;
+        let subject = this.get('subject');
 
         if(this.get('isCourse')){
           newLearningMaterial = this.get('store').createRecord('course-learning-material', {
-            course: this.get('subject'),
-            learningMaterial: parentLearningMaterial
+            course: subject,
+            learningMaterial: parentLearningMaterial,
           });
           lmCollectionType = 'courseLearningMaterials';
+
         }
         if(this.get('isSession')){
           newLearningMaterial = this.get('store').createRecord('session-learning-material', {
-            session: this.get('subject'),
-            learningMaterial: parentLearningMaterial
+            session: subject,
+            learningMaterial: parentLearningMaterial,
           });
           lmCollectionType = 'sessionLearningMaterials';
         }
-        newLearningMaterial.save().then(savedLearningMaterial => {
-          parentLearningMaterial.get(lmCollectionType).then(children => {
-            children.pushObject(savedLearningMaterial);
-            resolve(savedLearningMaterial);
+        subject.get('learningMaterials').then(learningMaterials => {
+          newLearningMaterial.set('position', learningMaterials.length);
+          newLearningMaterial.save().then(savedLearningMaterial => {
+            parentLearningMaterial.get(lmCollectionType).then(children => {
+              children.pushObject(savedLearningMaterial);
+              resolve(savedLearningMaterial);
+            });
           });
         });
       });
