@@ -33,6 +33,14 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   meshDescriptors: hasMany('mesh-descriptor', {async: true}),
   learningMaterials: hasMany('course-learning-material', {async: true}),
   sessions: hasMany('session', {async: true}),
+  ancestor: belongsTo('course', {
+    inverse: 'descendants',
+    async: true
+  }),
+  descendants: hasMany('course', {
+    inverse: 'ancestor',
+    async: true
+  }),
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }),
