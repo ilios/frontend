@@ -1,49 +1,45 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { singularize, pluralize } from 'ember-inflector';
 
 const { inject, Service, RSVP, computed, isEmpty } = Ember;
-const { PromiseArray } = DS;
 const { service } = inject;
+const { all, Promise, resolve, map } = RSVP;
 
 export default Service.extend({
   store: service(),
   currentUser: service(),
   reportsList: computed('currentUser.model.reports.[]', function(){
-    let defer = RSVP.defer();
     this.get('currentUser').get('model').then( user => {
-      if(isEmpty(user)){
-        defer.resolve([]);
-      } else {
-        user.get('reports').then( reports => {
-          defer.resolve(reports);
-        });
-      }
-    });
-    return PromiseArray.create({
-      promise: defer.promise
+      return new Promise(resolve => {
+        if(isEmpty(user)){
+          resolve([]);
+        } else {
+          user.get('reports').then( reports => {
+            resolve(reports);
+          });
+        }
+      });
     });
   }),
   getResults(report){
-    const subject = report.get('subject');
-    const object = report.get('prepositionalObject');
-    const objectId = report.get('prepositionalObjectTableRowId');
-    let defer = RSVP.defer();
-    report.get('school').then(school => {
-      this.get('store').query(
-        this.getModel(subject),
-        this.getQuery(subject, object, objectId, school)
-      ).then(results => {
-        let mapper = pluralize(subject.camelize()) + 'Results';
-        this[mapper](results).then(mappedResults => {
-          defer.resolve(mappedResults.sortBy('value'));
+    return new Promise(resolve => {
+      const subject = report.get('subject');
+      const object = report.get('prepositionalObject');
+      const objectId = report.get('prepositionalObjectTableRowId');
+      report.get('school').then(school => {
+        this.get('store').query(
+          this.getModel(subject),
+          this.getQuery(subject, object, objectId, school)
+        ).then(results => {
+          let mapper = pluralize(subject.camelize()) + 'Results';
+          this[mapper](results).then(mappedResults => {
+            resolve(mappedResults.sortBy('value'));
+          });
         });
       });
     });
-    return DS.PromiseArray.create({
-      promise: defer.promise
-    });
   },
+
   getModel(subject){
     let model = subject.dasherize();
     if(model === 'instructor'){
@@ -113,12 +109,12 @@ export default Service.extend({
       return rhett;
     });
 
-    return RSVP.resolve(map);
+    return resolve(map);
   },
   sessionsResults(results){
     const canView = this.get('currentUser.canViewCourses');
     let map = results.map(item => {
-      return new RSVP.Promise(resolve => {
+      return new Promise(resolve => {
         let rhett = {};
         item.get('course').then(course => {
           rhett.value = course.get('academicYear') + ' ' + course.get('title') + ' ' + item.get('title');
@@ -132,12 +128,12 @@ export default Service.extend({
       });
     });
 
-    return RSVP.all(map);
+    return all(map);
   },
   programsResults(results){
     const canView = this.get('currentUser.canViewPrograms');
     let map = results.map(item => {
-      return new RSVP.Promise(resolve => {
+      return new Promise(resolve => {
         let rhett = {};
         item.get('school').then(school => {
           rhett.value = school.get('title') + ': ' + item.get('title');
@@ -150,12 +146,12 @@ export default Service.extend({
       });
     });
 
-    return RSVP.all(map);
+    return all(map);
   },
   programYearsResults(results){
     const canView = this.get('currentUser.canViewPrograms');
     let map = results.map(item => {
-      return new RSVP.Promise(resolve => {
+      return new Promise(resolve => {
         let rhett = {};
         item.get('program').then(program => {
           program.get('school').then(school => {
@@ -172,7 +168,7 @@ export default Service.extend({
       });
     });
 
-    return RSVP.all(map);
+    return all(map);
   },
   instructorsResults(results){
     let map = results.map( result => {
@@ -180,7 +176,7 @@ export default Service.extend({
         value: result.get('fullName')
       };
     });
-    return RSVP.resolve(map);
+    return resolve(map);
   },
   titleResults(results){
     let map = results.map( result => {
@@ -188,7 +184,7 @@ export default Service.extend({
         value: result.get('title')
       };
     });
-    return RSVP.resolve(map);
+    return resolve(map);
   },
   instructorGroupsResults(results){
     return this.titleResults(results);
@@ -208,11 +204,11 @@ export default Service.extend({
         value: result.get('name')
       };
     });
-    return RSVP.resolve(map);
+    return resolve(map);
   },
   termsResults(results){
-    return RSVP.map (results.toArray(), result => {
-      return new RSVP.Promise(resolve => {
+    return map(results.toArray(), result => {
+      return new Promise(resolve => {
         result.get('vocabulary').then(vocabulary => {
           result.get('titleWithParentTitles').then(titleWithParentTitles => {
             const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
