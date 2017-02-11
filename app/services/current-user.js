@@ -44,7 +44,7 @@ export default Service.extend({
   }),
 
   availableCohortsObserver: observer('availableCohorts.[]', function(){
-    var self = this;
+    let self = this;
     this.get('availableCohorts').then(function(cohorts){
       if(!cohorts.includes(self.get('currentCohort'))){
         self.set('currentCohort', null);
@@ -53,22 +53,22 @@ export default Service.extend({
   }),
   currentCohort: null,
   availableCohorts: computed('currentSchool', function(){
-    var self = this;
+    let self = this;
     return new Promise(function(resolve) {
       self.get('currentSchool').then(function(school){
         school.get('programs').then(function(programs){
-          var promises = programs.map(function(program){
+          let promises = programs.map(function(program){
             return program.get('programYears');
           });
           hash(promises).then(function(hash){
-            var promises = [];
+            let promises = [];
             Object.keys(hash).forEach(function(key) {
               hash[key].forEach(function(programYear){
                 promises.push(programYear.get('cohort'));
               });
             });
             hash(promises).then(function(hash){
-              var cohorts = A();
+              let cohorts = A();
               Object.keys(hash).forEach(function(key) {
                 cohorts.pushObject(hash[key]);
               });
