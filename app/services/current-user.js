@@ -88,32 +88,32 @@ export default Service.extend({
    */
   cohortsInAllAssociatedSchools: computed('model.schools.[]', {
     get() {
-      let defer = RSVP.defer();
+      let deferred = defer();
       this.get('model').then(user => {
         user.get('schools').then(schools => {
-          RSVP.all(schools.mapBy('programs')).then(programsArrays => {
+          all(schools.mapBy('programs')).then(programsArrays => {
             let programs = [];
             programsArrays.forEach(arr => {
               arr.forEach(program => {
                 programs.push(program);
               });
             });
-            RSVP.all(programs.mapBy('programYears')).then(programYearsArrays => {
+            all(programs.mapBy('programYears')).then(programYearsArrays => {
               let programYears = [];
               programYearsArrays.forEach(arr => {
                 arr.forEach(programYear => {
                   programYears.push(programYear);
                 });
               });
-              RSVP.all(programYears.mapBy('cohort')).then(cohorts => {
-                defer.resolve(cohorts);
+              all(programYears.mapBy('cohort')).then(cohorts => {
+                deferred.resolve(cohorts);
               });
             });
           });
         });
       });
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   }).readOnly(),
@@ -348,10 +348,10 @@ export default Service.extend({
     'model.directedCourses.[]',
     'model.instructorIlmSessions.[]',
     function(){
-      let defer = RSVP.defer();
+      let deferred = defer();
       this.get('model').then( user => {
         if(isEmpty(user)){
-          defer.resolve([]);
+          deferred.resolve([]);
           return;
         }
         let currentYear = moment().format('YYYY');
@@ -369,11 +369,11 @@ export default Service.extend({
             archived: false
           }
         }).then(filteredCourses => {
-          defer.resolve(filteredCourses);
+          deferred.resolve(filteredCourses);
         });
       });
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   )
