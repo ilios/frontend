@@ -58,6 +58,8 @@
         targetItemTitle=meshMaterial.learningMaterial.title
       }}
     {{/if}}
+  {{else if isSorting}}
+      {{learning-materials-sort-manager learningMaterials=subject.learningMaterials}}
   {{else}}
     {{#liquid-if isEditing class="vertical"}}
       {{new-learningmaterial
@@ -69,6 +71,8 @@
     {{/liquid-if}}
 
     {{#if (get (await proxyMaterials) 'length')}}
+      <button {{action (mut isSorting) true}}>Sort Materials</button>
+
       <table>
         <thead>
           <tr>
