@@ -17,6 +17,7 @@ export default Component.extend({
   subject: null,
   isCourse: false,
   editable: true,
+  isSorting: false,
   isManaging: or('isManagingMaterial', 'isManagingMesh'),
   isManagingMaterial: notEmpty('managingMaterial'),
   isManagingMesh: notEmpty('meshMaterial'),

@@ -1,0 +1,7 @@
+{{#sortable-objects sortableObjectList=sortableObjectList sortEndAction='sortEndAction' enableSort=true useSwap=true sortingScope="sortingGroup"}}
+  {{#each sortableObjectList as |item|}}
+    {{#draggable-object content=item isSortable=true sortingScope="sortingGroup"}}
+      {{item.learningMaterial.title}}
+    {{/draggable-object}}
+  {{/each}}
+{{/sortable-objects}}
