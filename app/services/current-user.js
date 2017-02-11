@@ -44,32 +44,30 @@ export default Service.extend({
   }),
 
   availableCohortsObserver: observer('availableCohorts.[]', function(){
-    let self = this;
-    this.get('availableCohorts').then(function(cohorts){
-      if(!cohorts.includes(self.get('currentCohort'))){
-        self.set('currentCohort', null);
+    this.get('availableCohorts').then(cohorts => {
+      if(!cohorts.includes(this.get('currentCohort'))){
+        this.set('currentCohort', null);
       }
     });
   }),
   currentCohort: null,
   availableCohorts: computed('currentSchool', function(){
-    let self = this;
-    return new Promise(function(resolve) {
-      self.get('currentSchool').then(function(school){
-        school.get('programs').then(function(programs){
-          let promises = programs.map(function(program){
+    return new Promise(resolve => {
+      this.get('currentSchool').then(school => {
+        school.get('programs').then(programs => {
+          let promises = programs.map(program => {
             return program.get('programYears');
           });
-          hash(promises).then(function(hash){
+          hash(promises).then(hash => {
             let promises = [];
-            Object.keys(hash).forEach(function(key) {
-              hash[key].forEach(function(programYear){
+            Object.keys(hash).forEach(key => {
+              hash[key].forEach(programYear => {
                 promises.push(programYear.get('cohort'));
               });
             });
-            hash(promises).then(function(hash){
+            hash(promises).then(hash => {
               let cohorts = A();
-              Object.keys(hash).forEach(function(key) {
+              Object.keys(hash).forEach(key => {
                 cohorts.pushObject(hash[key]);
               });
               resolve(cohorts);
