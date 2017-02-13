@@ -482,6 +482,7 @@ export default {
     'singleGroup': 'Single Group',
     'smallGroupMessage': "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above.",
     'smallGroups': 'Small Groups',
+    'sortMaterials': 'Sort Materials',
     'specialAttireIsRequired': 'Special Attire is <strong><em>required</em></strong>',
     'specialAttireRequired': 'Special Attire Required',
     'specialEquipmentIsRequired': 'Special Equipment is <strong><em>required</em></strong>',
