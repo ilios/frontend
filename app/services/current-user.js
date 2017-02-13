@@ -2,11 +2,12 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
 
-const { computed, observer, on, RSVP, isEmpty, inject, get } = Ember;
-const { PromiseArray } = DS;
+const { computed, observer, on, RSVP, isEmpty, inject, get, $, Service, A } = Ember;
+const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
+const { all, defer, hash, Promise } = RSVP;
 
-export default Ember.Service.extend({
+export default Service.extend({
   store: service(),
   session: service(),
   currentUserId: computed('session.data.authenticated.jwt', function(){
@@ -21,13 +22,13 @@ export default Ember.Service.extend({
       return null;
     }
     const js = atob(jwt.split('.')[1]);
-    const obj = Ember.$.parseJSON(js);
+    const obj = $.parseJSON(js);
 
     return get(obj, 'user_id');
   }),
 
   model: computed('currentUserId', function(){
-    let deferred = Ember.RSVP.defer();
+    let deferred = defer();
     let currentUserId = this.get('currentUserId');
     if (!currentUserId) {
       deferred.resolve(null);
@@ -37,38 +38,36 @@ export default Ember.Service.extend({
       });
     }
 
-    return DS.PromiseObject.create({
+    return PromiseObject.create({
       promise: deferred.promise
     });
   }),
 
   availableCohortsObserver: observer('availableCohorts.[]', function(){
-    var self = this;
-    this.get('availableCohorts').then(function(cohorts){
-      if(!cohorts.includes(self.get('currentCohort'))){
-        self.set('currentCohort', null);
+    this.get('availableCohorts').then(cohorts => {
+      if(!cohorts.includes(this.get('currentCohort'))){
+        this.set('currentCohort', null);
       }
     });
   }),
   currentCohort: null,
   availableCohorts: computed('currentSchool', function(){
-    var self = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      self.get('currentSchool').then(function(school){
-        school.get('programs').then(function(programs){
-          var promises = programs.map(function(program){
+    return new Promise(resolve => {
+      this.get('currentSchool').then(school => {
+        school.get('programs').then(programs => {
+          let promises = programs.map(program => {
             return program.get('programYears');
           });
-          Ember.RSVP.hash(promises).then(function(hash){
-            var promises = [];
-            Object.keys(hash).forEach(function(key) {
-              hash[key].forEach(function(programYear){
+          hash(promises).then(hash => {
+            let promises = [];
+            Object.keys(hash).forEach(key => {
+              hash[key].forEach(programYear => {
                 promises.push(programYear.get('cohort'));
               });
             });
-            Ember.RSVP.hash(promises).then(function(hash){
-              var cohorts = Ember.A();
-              Object.keys(hash).forEach(function(key) {
+            hash(promises).then(hash => {
+              let cohorts = A();
+              Object.keys(hash).forEach(key => {
                 cohorts.pushObject(hash[key]);
               });
               resolve(cohorts);
@@ -89,38 +88,38 @@ export default Ember.Service.extend({
    */
   cohortsInAllAssociatedSchools: computed('model.schools.[]', {
     get() {
-      let defer = RSVP.defer();
+      let deferred = defer();
       this.get('model').then(user => {
         user.get('schools').then(schools => {
-          RSVP.all(schools.mapBy('programs')).then(programsArrays => {
+          all(schools.mapBy('programs')).then(programsArrays => {
             let programs = [];
             programsArrays.forEach(arr => {
               arr.forEach(program => {
                 programs.push(program);
               });
             });
-            RSVP.all(programs.mapBy('programYears')).then(programYearsArrays => {
+            all(programs.mapBy('programYears')).then(programYearsArrays => {
               let programYears = [];
               programYearsArrays.forEach(arr => {
                 arr.forEach(programYear => {
                   programYears.push(programYear);
                 });
               });
-              RSVP.all(programYears.mapBy('cohort')).then(cohorts => {
-                defer.resolve(cohorts);
+              all(programYears.mapBy('cohort')).then(cohorts => {
+                deferred.resolve(cohorts);
               });
             });
           });
         });
       });
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   }).readOnly(),
 
   userRoleTitles: computed('model.roles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('model').then(user => {
         if(!user){
           resolve([]);
@@ -134,42 +133,42 @@ export default Ember.Service.extend({
     });
   }),
   userIsCourseDirector: computed('useRoleTitles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
         resolve(roleTitles.includes('course director'));
       });
     });
   }),
   userIsFaculty: computed('useRoleTitles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
         resolve(roleTitles.includes('faculty'));
       });
     });
   }),
   userIsDeveloper: computed('useRoleTitles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
         resolve(roleTitles.includes('developer'));
       });
     });
   }),
   userIsStudent: computed('useRoleTitles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
         resolve(roleTitles.includes('student'));
       });
     });
   }),
   userIsPublic: computed('useRoleTitles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
         resolve(roleTitles.includes('public'));
       });
     });
   }),
   userIsFormerStudent: computed('useRoleTitles.[]', function(){
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.get('userRoleTitles').then(roleTitles => {
         resolve(roleTitles.includes('former student'));
       });
@@ -184,7 +183,7 @@ export default Ember.Service.extend({
     'userIsPublic',
     'userIsStudent',
   function(){
-    Ember.RSVP.all([
+    all([
       this.get('userIsCourseDirector'),
       this.get('userIsFaculty'),
       this.get('userIsDeveloper'),
@@ -205,7 +204,7 @@ export default Ember.Service.extend({
   canEditSchools: false,
   schoolsPrivilegesObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
@@ -223,7 +222,7 @@ export default Ember.Service.extend({
   canEditPrograms: false,
   programsPrivilegesObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
@@ -243,7 +242,7 @@ export default Ember.Service.extend({
   canPrintUnpublishedCourse: false,
   coursesPrivilegesObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsCourseDirector'),
         this.get('userIsFaculty'),
         this.get('userIsDeveloper')
@@ -260,7 +259,7 @@ export default Ember.Service.extend({
   canEditInstructorGroups: false,
   instructorGroupsPrivilegesObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
@@ -279,7 +278,7 @@ export default Ember.Service.extend({
   canEditLearnerGroups: false,
   learnerGroupsPrivilegesObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsCourseDirector'),
         this.get('userIsDeveloper')
       ]).then(hasRole => {
@@ -299,7 +298,7 @@ export default Ember.Service.extend({
   canViewCurriculumInventory: false,
   canViewCurriculumInventoryObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
@@ -311,7 +310,7 @@ export default Ember.Service.extend({
   canEditCurriculumInventory: false,
   canEditCurriculumInventoryObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
@@ -332,7 +331,7 @@ export default Ember.Service.extend({
   canViewAdminDashboard: false,
   canViewAdminDashboardObserver: on('init', observer('privileges',
     function(){
-      Ember.RSVP.all([
+      all([
         this.get('userIsDeveloper')
       ]).then(hasRole => {
         if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
@@ -349,10 +348,10 @@ export default Ember.Service.extend({
     'model.directedCourses.[]',
     'model.instructorIlmSessions.[]',
     function(){
-      let defer = RSVP.defer();
+      let deferred = defer();
       this.get('model').then( user => {
         if(isEmpty(user)){
-          defer.resolve([]);
+          deferred.resolve([]);
           return;
         }
         let currentYear = moment().format('YYYY');
@@ -370,11 +369,11 @@ export default Ember.Service.extend({
             archived: false
           }
         }).then(filteredCourses => {
-          defer.resolve(filteredCourses);
+          deferred.resolve(filteredCourses);
         });
       });
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   )
