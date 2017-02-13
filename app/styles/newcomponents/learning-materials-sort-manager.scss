@@ -1,3 +1,27 @@
 .learning-materials-sort-manager {
+  .actions {
+    @include fill-parent;
+    vertical-align: middle;
 
+    @include media($large-screen) {
+      @include span-columns(2 of 12);
+      @include omega();
+      @include shift(10);
+      text-align: right;
+    }
+  }
+
+  .content {
+    clear:both;
+    padding: 0.5em 0 0 0;
+  }
+  .draggable-object {
+    @include fill-parent;
+    background-color: $header-grey;
+    border-radius: 4px;
+    margin-right: .3em;
+    margin-top: 10px;
+    padding: .2em .4em .2em .6em;
+    vertical-align: middle;
+  }
 }
