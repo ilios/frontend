@@ -482,6 +482,7 @@ export default {
     'singleGroup': 'Seul groupe',
     'smallGroupMessage': "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de 'small groups'. Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton 'offre' au-dessus.",
     'smallGroups': "Groupes Particulaires",
+    'sortMaterials': 'Trier les matériaux',
     'specialAttireIsRequired': "Vêtements particuliers est <strong><em>requis</em></strong>",
     'specialAttireRequired': "Vêtements particuliers requis",
     'specialEquipmentIsRequired': "Équipage particulier est <strong><em>requis</em></strong>",

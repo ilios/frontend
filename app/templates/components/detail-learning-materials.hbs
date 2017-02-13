@@ -75,7 +75,7 @@
     {{/liquid-if}}
 
     {{#if (get (await proxyMaterials) 'length')}}
-      <button {{action (mut isSorting) true}}>Sort Materials</button>
+      <button {{action (mut isSorting) true}}>{{t 'general.sortMaterials'}}</button>
 
       <table>
         <thead>
