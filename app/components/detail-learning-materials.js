@@ -36,13 +36,14 @@ export default Component.extend(SortableByPosition, {
   isEditing: false,
   type: null,
 
-  displaySearchBox: computed('isManaging', 'isEditing', {
+  displaySearchBox: computed('isManaging', 'isEditing', 'isSorting', {
     get() {
       const isManaging = this.get('isManaging');
       const isEditing = this.get('isEditing');
       const editable = this.get('editable');
+      const isSorting = this.get('isSorting');
 
-      return isManaging ? false : isEditing ? false : editable;
+      return (!isManaging && !isEditing && !isSorting && editable);
     }
   }).readOnly(),
 
