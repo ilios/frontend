@@ -59,11 +59,11 @@
       }}
     {{/if}}
   {{else if isSorting}}
-      {{learning-materials-sort-manager
-        save=(action 'saveSortOrder')
-        cancel=(action 'cancelSorting')
-        subject=subject
-      }}
+    {{learning-materials-sort-manager
+      save=(action 'saveSortOrder')
+      cancel=(action 'cancelSorting')
+      subject=subject
+    }}
   {{else}}
     {{#liquid-if isEditing class="vertical"}}
       {{new-learningmaterial
