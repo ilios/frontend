@@ -8,6 +8,7 @@ export default Component.extend(SortableByPosition, {
   sortableObjectList: null,
   learningMaterials: null,
   didReceiveAttrs() {
+    this._super(...arguments);
     this.set('sortableObjectList',
       this.get('learningMaterials').toArray().sort(this.get('learningMaterialSortingCallback')));
   },
