@@ -232,6 +232,12 @@ export default Component.extend({
     }
   }),
 
+  hasMoreThanOneSchool: computed('schools.[]', function() {
+    return this.get('schools').then(schools => {
+      return (schools.length > 1);
+    });
+  }),
+
   /**
    * @property selectedSchool
    * @type {Ember.computed}
