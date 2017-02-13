@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 const { Component } = Ember;
 
 export default Component.extend(SortableByPosition, {
+  classNames: ['learning-materials-sort-manager'],
   sortableObjectList: null,
   subject: null,
 
