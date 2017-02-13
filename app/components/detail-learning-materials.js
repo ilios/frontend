@@ -200,6 +200,15 @@ export default Component.extend(SortableByPosition, {
       });
     },
 
+    saveSortOrder($learningMaterials){
+      // @todo bulk save learning materials [ST 2017/02/13]
+      this.set('isSorting', false);
+    },
+
+    cancelSorting() {
+      this.set('isSorting', false);
+    },
+
     cancelNewLearningMaterial() {
       this.set('isEditing', false);
     },
