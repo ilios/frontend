@@ -58,7 +58,7 @@ export default Component.extend(SortableByPosition, {
       promise: self.get('store').findAll('learning-material-user-role')
     });
   }),
-  proxyMaterials: computed('subject.learningMaterials.[]', function(){
+  proxyMaterials: computed('subject.learningMaterials.@each.{position}', function(){
     return new Promise(resolve => {
       let materialProxy = ObjectProxy.extend({
         sortTerms: ['name'],
