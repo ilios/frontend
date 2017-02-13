@@ -12,8 +12,11 @@ export default Component.extend(SortableByPosition, {
       this.get('learningMaterials').toArray().sort(this.get('learningMaterialSortingCallback')));
   },
   actions: {
-    sortEndAction(){
-
+    cancel(){
+      this.sendAction('cancel');
+    },
+    save() {
+      this.sendAction('save', this.get('learningMaterials'));
     }
   }
 });

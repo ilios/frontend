@@ -1,4 +1,6 @@
-{{#sortable-objects sortableObjectList=sortableObjectList sortEndAction='sortEndAction' enableSort=true useSwap=true sortingScope="sortingGroup"}}
+<button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+<button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+{{#sortable-objects sortableObjectList=sortableObjectList enableSort=true useSwap=true sortingScope="sortingGroup"}}
   {{#each sortableObjectList as |item|}}
     {{#draggable-object content=item isSortable=true sortingScope="sortingGroup"}}
       {{item.learningMaterial.title}}

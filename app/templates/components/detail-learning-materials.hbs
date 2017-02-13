@@ -59,7 +59,7 @@
       }}
     {{/if}}
   {{else if isSorting}}
-      {{learning-materials-sort-manager learningMaterials=subject.learningMaterials}}
+      {{learning-materials-sort-manager save=(action 'saveSortOrder') cancel=(action 'cancelSorting') learningMaterials=subject.learningMaterials}}
   {{else}}
     {{#liquid-if isEditing class="vertical"}}
       {{new-learningmaterial
