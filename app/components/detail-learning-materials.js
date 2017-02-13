@@ -7,7 +7,7 @@ import SortableByPosition from 'ilios/mixins/sortable-by-position';
 const { isEmpty, Component, computed, inject, RSVP, ObjectProxy } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
-const { Promise } = RSVP;
+const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend(SortableByPosition, {
@@ -20,6 +20,7 @@ export default Component.extend(SortableByPosition, {
   isCourse: false,
   editable: true,
   isSorting: false,
+  isSaving: false,
   isManaging: or('isManagingMaterial', 'isManagingMesh'),
   isManagingMaterial: notEmpty('managingMaterial'),
   isManagingMesh: notEmpty('meshMaterial'),
@@ -29,6 +30,8 @@ export default Component.extend(SortableByPosition, {
   newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
+  currentMaterialsSaved: 0,
+  totalMaterialsToSave: 0,
 
   isEditing: false,
   type: null,
@@ -91,6 +94,17 @@ export default Component.extend(SortableByPosition, {
       promise: defer.promise
     });
   }),
+
+  saveSomeMaterials(arr){
+    let chunk = arr.splice(0, 5);
+    return all(chunk.invoke('save')).then(() => {
+      if (arr.length){
+        this.set('currentMaterialsSaved', this.get('currentMaterialsSaved') + chunk.length);
+        return this.saveSomeMaterials(arr);
+      }
+    });
+  },
+
   actions: {
     manageMaterial(learningMaterial){
       var buffer = Ember.Object.create();
@@ -200,9 +214,18 @@ export default Component.extend(SortableByPosition, {
       });
     },
 
-    saveSortOrder($learningMaterials){
-      // @todo bulk save learning materials [ST 2017/02/13]
-      this.set('isSorting', false);
+    saveSortOrder(learningMaterials){
+      this.set('isSaving', true);
+      for (let i = 0, n = learningMaterials.length; i < n; i++) {
+        let lm = learningMaterials[i];
+        lm.set('position', i + 1);
+      }
+
+      this.set('totalMaterialsToSave', learningMaterials.length);
+      this.saveSomeMaterials(learningMaterials).then(() => {
+        this.set('isSaving', false);
+        this.set('isSorting', false);
+      });
     },
 
     cancelSorting() {

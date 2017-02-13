@@ -59,7 +59,11 @@
       }}
     {{/if}}
   {{else if isSorting}}
-      {{learning-materials-sort-manager save=(action 'saveSortOrder') cancel=(action 'cancelSorting') learningMaterials=subject.learningMaterials}}
+      {{learning-materials-sort-manager
+        save=(action 'saveSortOrder')
+        cancel=(action 'cancelSorting')
+        subject=subject
+      }}
   {{else}}
     {{#liquid-if isEditing class="vertical"}}
       {{new-learningmaterial
@@ -159,3 +163,11 @@
     {{/if}}
   {{/if}}
 </div>
+{{#liquid-if isSaving class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalMaterialsToSave
+    currentProgress=currentMaterialsSaved
+  }}
+{{/liquid-if}}
+
