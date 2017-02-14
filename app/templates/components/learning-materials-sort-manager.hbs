@@ -12,7 +12,7 @@
     }}
       {{#each sortableObjectList as |item|}}
         {{#draggable-object content=item isSortable=true sortingScope="sortingGroup"}}
-          <strong>::</strong> {{item.learningMaterial.title}}
+          <strong>::</strong> {{get (await item.learningMaterial) 'title'}}
         {{/draggable-object}}
       {{/each}}
     {{/sortable-objects}}
