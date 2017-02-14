@@ -11,8 +11,20 @@
       sortingScope="sortingGroup"
     }}
       {{#each sortableObjectList as |item|}}
-        {{#draggable-object content=item isSortable=true sortingScope="sortingGroup"}}
-          <strong>::</strong> {{get (await item.learningMaterial) 'title'}}
+        {{#draggable-object
+          content=item
+          isSortable=true
+          sortingScope="sortingGroup"
+        }}
+          {{fa-icon 'arrows'}}
+          <span class="draggable-object-content">
+            <span class="title">{{get (await item.learningMaterial) 'title'}}</span>
+            <span class="details">
+              {{capitalize (get (await item.learningMaterial) 'type')}},
+              {{t 'general.ownedBy' owner=(get (await item.learningMaterial.owningUser) 'fullName')}},
+              {{t 'general.status'}}: {{get (await item.learningMaterial.status) 'title'}}
+            </span>
+          </span>
         {{/draggable-object}}
       {{/each}}
     {{/sortable-objects}}
