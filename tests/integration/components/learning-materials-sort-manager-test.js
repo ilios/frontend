@@ -18,25 +18,51 @@ moduleForComponent('learning-materials-sort-manager', 'Integration | Component |
 });
 
 test('it renders', function(assert) {
-  assert.expect(5);
+  assert.expect(7);
+
+  let owner1 = Object.create({
+    id: 1,
+    fullName: 'Hans Wurst'
+  });
+
+  let owner2 = Object.create({
+    id: 2,
+    fullName: 'Hans Dampf'
+  });
+
+  let status1 = Object.create({
+    id: 1,
+    title: 'Done and done'
+  });
+
+  let status2 = Object.create({
+    id: 2,
+    title: 'Draft'
+  });
 
   let lm1 = Object.create({
-    title: 'Lorem Ipsum'
+    title: 'Lorem Ipsum',
+    status: status1,
+    owningUser: owner1,
+    type: 'file'
   });
 
   let lm2 = Object.create({
-    title: 'Baba Booey'
+    title: 'Foo Bar',
+    status: status2,
+    owningUser: owner2,
+    type: 'citation'
   });
 
   let clm1 = Object.create({
     id: 1,
-    learningMaterial: resolve(lm1),
+    learningMaterial: lm1,
     position: 1,
   });
 
   let clm2 = Object.create({
     id: 2,
-    learningMaterial: resolve(lm2),
+    learningMaterial: lm2,
     position: 0,
   });
 
@@ -52,8 +78,17 @@ test('it renders', function(assert) {
 
   return wait().then(() => {
     assert.equal(this.$('.draggable-object').length, 2);
-    assert.equal(this.$('.draggable-object:eq(0)').text().trim(), ':: ' + lm2.get('title'));
-    assert.equal(this.$('.draggable-object:eq(1)').text().trim(), ':: ' + lm1.get('title'));
+    assert.equal(this.$('.draggable-object:eq(0) .title').text().trim(), lm2.get('title'));
+    assert.equal(
+      this.$('.draggable-object:eq(0) .details').text().replace(/[\s\n\t]+/g, ''),
+      `${lm2.type.capitalize()}, owned by ${owner2.fullName}, Status: ${status2.title}`.replace(/[\s\n\t]+/g, '')
+    );
+
+    assert.equal(this.$('.draggable-object:eq(1) .title').text().trim(), lm1.get('title'));
+    assert.equal(
+      this.$('.draggable-object:eq(1) .details').text().replace(/[\s\n\t]+/g, ''),
+      `${lm1.type.capitalize()}, owned by ${owner1.fullName}, Status: ${status1.title}`.replace(/[\s\n\t]+/g, '')
+    );
     assert.equal(this.$('.actions .bigadd').length, 1);
     assert.equal(this.$('.actions .bigcancel').length, 1);
   });
