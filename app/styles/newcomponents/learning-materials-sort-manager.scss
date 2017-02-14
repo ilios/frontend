@@ -12,9 +12,10 @@
   }
 
   .content {
-    clear:both;
-    padding: 0.5em 0 0 0;
+    clear: both;
+    padding-top: .5em;
   }
+
   .draggable-object {
     @include fill-parent;
     background-color: $header-grey;
