@@ -7,7 +7,7 @@ import SortableByPosition from 'ilios/mixins/sortable-by-position';
 const { isEmpty, Component, computed, inject, RSVP, ObjectProxy } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
-const { all, Promise } = RSVP;
+const { all, Promise, resolve } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend(SortableByPosition, {
@@ -93,6 +93,14 @@ export default Component.extend(SortableByPosition, {
     });
     return PromiseArray.create({
       promise: defer.promise
+    });
+  }),
+
+  hasMoreThanOneLearningMaterial: computed('subject.learningMaterials.[]', function() {
+    return new Promise(resolve => {
+      this.get('subject').get('learningMaterials').then(materials => {
+        resolve(materials.length > 1);
+      });
     });
   }),
 
