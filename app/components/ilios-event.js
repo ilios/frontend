@@ -1,11 +1,12 @@
 import Ember from 'ember';
+import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 const { Component, computed, inject, RSVP, isEmpty} = Ember;
 const { notEmpty } = computed;
 const { service } = inject;
 const { Promise, map } = RSVP;
 
-export default Component.extend({
+export default Component.extend(SortableByPosition, {
   store: service(),
   i18n: service(),
   event: null,
@@ -113,7 +114,8 @@ export default Component.extend({
           },
           limit: 1000
         }).then((courseLearningMaterials) => {
-          map(courseLearningMaterials.toArray(), clm => {
+          let sortedMaterials = courseLearningMaterials.toArray().sort(this.get('learningMaterialSortingCallback'));
+          map(sortedMaterials, clm => {
             return new Promise(resolve => {
               clm.get('learningMaterial').then(learningMaterial => {
                 const { required, storedNotes, publicNotes } = clm.getProperties('required', 'notes', 'publicNotes');
@@ -188,7 +190,8 @@ export default Component.extend({
           },
           limit: 1000
         }).then((sessionLearningMaterials) => {
-          map(sessionLearningMaterials.toArray(), slm => {
+          let sortedMaterials = sessionLearningMaterials.toArray().sort(this.get('learningMaterialSortingCallback'));
+          map(sortedMaterials, slm => {
             return new Promise(resolve => {
               slm.get('learningMaterial').then(learningMaterial => {
                 const { required, storedNotes, publicNotes } = slm.getProperties('required', 'notes', 'publicNotes');
