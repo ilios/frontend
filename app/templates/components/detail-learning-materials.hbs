@@ -76,7 +76,7 @@
 
     {{#if (get (await proxyMaterials) 'length')}}
       {{#if (and editable (await hasMoreThanOneLearningMaterial))}}
-          <button {{action (mut isSorting) true}}>{{t 'general.sortMaterials'}}</button>
+        <button {{action (mut isSorting) true}}>{{t 'general.sortMaterials'}}</button>
       {{/if}}
       <table>
         <thead>
