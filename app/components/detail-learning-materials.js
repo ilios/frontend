@@ -266,6 +266,7 @@ export default Component.extend(SortableByPosition, {
           newLearningMaterial = this.get('store').createRecord('course-learning-material', {
             course: subject,
             learningMaterial: parentLearningMaterial,
+            position: 0,
           });
           lmCollectionType = 'courseLearningMaterials';
 
@@ -274,12 +275,13 @@ export default Component.extend(SortableByPosition, {
           newLearningMaterial = this.get('store').createRecord('session-learning-material', {
             session: subject,
             learningMaterial: parentLearningMaterial,
+            position: 0
           });
           lmCollectionType = 'sessionLearningMaterials';
         }
         subject.get('learningMaterials').then(learningMaterials => {
           let position = 0;
-          if (! isEmpty(learningMaterials)) {
+          if (learningMaterials.length > 1) {
             position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
           }
           newLearningMaterial.set('position', position);
