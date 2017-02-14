@@ -30,8 +30,8 @@ export default Component.extend(SortableByPosition, {
   newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
-  currentMaterialsSaved: 0,
-  totalMaterialsToSave: 0,
+  totalMaterialsToSave: null,
+  currentMaterialsSaved: null,
 
   isEditing: false,
   type: null,
@@ -221,8 +221,9 @@ export default Component.extend(SortableByPosition, {
         let lm = learningMaterials[i];
         lm.set('position', i + 1);
       }
-
       this.set('totalMaterialsToSave', learningMaterials.length);
+      this.set('currentMaterialsSaved', 0);
+
       this.saveSomeMaterials(learningMaterials).then(() => {
         this.set('isSaving', false);
         this.set('isSorting', false);
