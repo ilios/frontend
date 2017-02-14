@@ -367,6 +367,7 @@ export default {
     'other': 'Other',
     'otherId': 'Other ID',
     'overview': 'Overview',
+    'ownedBy': 'owned by {{owner}}',
     'owner': 'Owner',
     'pagedResultsCount': 'Showing {{start}} - {{end}} of {{total}}',
     'parallel': 'Parallel',
