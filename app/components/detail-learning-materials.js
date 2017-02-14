@@ -7,7 +7,7 @@ import SortableByPosition from 'ilios/mixins/sortable-by-position';
 const { isEmpty, Component, computed, inject, RSVP, ObjectProxy } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
-const { all, Promise, resolve } = RSVP;
+const { all, Promise } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend(SortableByPosition, {
