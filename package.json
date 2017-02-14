@@ -53,6 +53,7 @@
     "ember-cli-server-variables": "2.0.2",
     "ember-cli-shims": "^1.0.2",
     "ember-cli-sri": "^2.1.0",
+    "ember-cli-string-helpers": "1.0.0",
     "ember-cli-template-lint": "0.5.2",
     "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
