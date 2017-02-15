@@ -222,10 +222,4 @@ export default Service.extend({
       });
     });
   },
-  objectivesResults(results){
-    return this.titleResults(results);
-  },
-  learnerGroupsResults(results){
-    return this.titleResults(results);
-  },
 });
