@@ -11,10 +11,10 @@
 
 {{#liquid-if selectedReport class='crossFade'}}
   <h3>{{await selectedReport.displayTitle}}</h3>
-  {{#if reportResultsList.isFulfilled}}
-    {{#if reportResultsList.length}}
+  {{#if (is-fulfilled reportResultsList)}}
+    {{#if (get (await reportResultsList) 'length')}}
       <ul>
-        {{#each reportResultsList as |item|}}
+        {{#each (await reportResultsList) as |item|}}
           {{#if item.model2}}
             <li>
               {{#link-to item.route item.model item.model2}}

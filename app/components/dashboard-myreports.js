@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const { computed, inject, Component, RSVP } = Ember;
 const { service } = inject;
-const { Promise } = RSVP;
+const { Promise, resolve } = RSVP;
 
 export default Component.extend({
   reporting: service(),
@@ -26,9 +26,8 @@ export default Component.extend({
   reportResultsList: computed('selectedReport', function(){
     const report = this.get('selectedReport');
     if(!report){
-      return [];
+      return resolve([]);
     }
-
     return this.get('reporting').getResults(report);
   }),
   actions: {
