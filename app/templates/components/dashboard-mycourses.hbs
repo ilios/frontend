@@ -4,10 +4,10 @@
 
 <div class='dashboard-block-body'>
   {{#if (is-fulfilled listOfCourses)}}
-    {{#if (get (await sortedListOfCourses) 'length')}}
+    {{#if (get (await listOfCourses) 'length')}}
       <table>
         <tbody>
-          {{#each (await sortedListOfCourses) as |course|}}
+          {{#each (await listOfCourses) as |course|}}
             {{#if (can 'edit courses')}}
               <tr class='clickable'>
                 <td>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.academicYear}}{{/link-to}}</td>
