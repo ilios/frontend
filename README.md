@@ -15,52 +15,52 @@
 
 You will need the following things properly installed on your computer.
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM) and [Bower](http://bower.io/)
+* [Git](https://git-scm.com/)
+* [Node.js](https://nodejs.org/)
+* [Bower](https://bower.io/)
+
+We recommend installing Node.js though [NVM](https://github.com/creationix/nvm#installation)
 
 #### Installation
 
-* `git clone https://github.com/ilios/frontend.git` this repository
-* change into the new directory
+* `git clone git@github.com:ilios/frontend.git`
+* change into the new directory `cd frontend`
 * `npm install`
 * `bower install`
+
+#### Connection to the demo API server
+
+The Frontend needs to know where your API server is located.  You can set this information in a system wide
+environmental variable or just create a `.env` file in your code directory.
+* `echo "ILIOS_FRONTEND_API_HOST=https://ilios3-demo.ucsf.edu" > .env`
 
 #### Running / Development
 
 * `ember serve`
-* Visit your app at http://localhost:4200.
-
-##### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
+* Visit your app at http://localhost:4200
 
 #### Running Tests
 
 * `ember test`
 * `ember test --server`
 
-##### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-
 #### Further Reading / Useful Links
 
 * ember: http://emberjs.com/
 * ember-cli: http://www.ember-cli.com/
+* [Ilios User Guide](https://www.gitbook.com/book/iliosproject/ilios-user-guide/details)
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
 ## Open Source Heroes
 
-Every day these for profit companies make developing Ilios possible.  Without the free tier of service they offer to open source software we would be nowhere so if you have a chance to pay them for something please do.
+Every day these for profit companies make developing Ilios possible.  Without the free tier of service they offer to
+open source software we would be nowhere so if you have a chance to pay them for something please do.
 
 - [GitHub](https://github.com)
 - [Travis CI](https://travis-ci.org/)  
 - [Sauce Labs](https://saucelabs.com/)
 - [Heroku](https://www.heroku.com)
+- [Netlify](https://www.netlify.com)
 - [BrowserStack](https://www.browserstack.com)
