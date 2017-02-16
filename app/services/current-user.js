@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import moment from 'moment';
 
 const { computed, observer, on, RSVP, isEmpty, inject, get, $, Service, A } = Ember;
-const { PromiseArray, PromiseObject } = DS;
+const { PromiseArray } = DS;
 const { service } = inject;
 const { all, defer, hash, Promise } = RSVP;
 
@@ -28,19 +28,16 @@ export default Service.extend({
   }),
 
   model: computed('currentUserId', function(){
-    let deferred = defer();
-    let currentUserId = this.get('currentUserId');
-    if (!currentUserId) {
-      deferred.resolve(null);
-    } else {
-      this.get('store').find('user', currentUserId).then((user) => {
-        deferred.resolve(user);
-      });
-    }
-
-    return PromiseObject.create({
-      promise: deferred.promise
-    });
+    return new Promise(resolve => {
+      let currentUserId = this.get('currentUserId');
+      if (!currentUserId) {
+        resolve(null);
+      } else {
+        this.get('store').find('user', currentUserId).then((user) => {
+          resolve(user);
+        });
+      }
+    })
   }),
 
   availableCohortsObserver: observer('availableCohorts.[]', function(){
