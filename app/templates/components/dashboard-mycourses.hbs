@@ -3,11 +3,11 @@
 </div>
 
 <div class='dashboard-block-body'>
-  {{#if listOfCourses.isFulfilled}}
-    {{#if sortedListOfCourses.length}}
+  {{#if (is-fulfilled listOfCourses)}}
+    {{#if (get (await sortedListOfCourses) 'length')}}
       <table>
         <tbody>
-          {{#each sortedListOfCourses as |course|}}
+          {{#each (await sortedListOfCourses) as |course|}}
             {{#if (can 'edit courses')}}
               <tr class='clickable'>
                 <td>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.academicYear}}{{/link-to}}</td>
