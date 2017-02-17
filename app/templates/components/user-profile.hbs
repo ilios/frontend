@@ -36,7 +36,7 @@
 
 {{user-profile-ics
   user=user
-  isManagable=(eq (await currentUser.model.id) user.id)
+  isManagable=(eq (get (await currentUser.model) 'id') user.id)
   isManaging=isManagingIcs
   setIsManaging=setIsManagingIcs
 }}
