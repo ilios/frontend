@@ -5,7 +5,7 @@ const { Object } = Ember;
 
 module('Unit | Mixin | sortable by position');
 
-test('learning materials sorting callback', function(assert) {
+test('position sorting callback', function(assert) {
   const SortableByPositionObject = Object.extend(SortableByPositionMixin);
   const subject = SortableByPositionObject.create();
 
@@ -29,7 +29,7 @@ test('learning materials sorting callback', function(assert) {
 
   let objects = [ obj1, obj2, obj3, obj4 ];
 
-  let sortedObjects = objects.sort(subject.get('learningMaterialSortingCallback'));
+  let sortedObjects = objects.sort(subject.get('positionSortingCallback'));
 
   assert.equal(sortedObjects.length, objects.length);
   assert.equal(sortedObjects[0], obj3);

@@ -6,13 +6,14 @@ export default Mixin.create({
 
   /**
    * Callback function for <code>Array.sort()<code>.
+   * Compares two given Objects by their position property (in ascending order), and then by id (descending).
    *
-   * @method learningMaterialSortingCallback
+   * @method positionSortingCallback
    * @param {Ember.Object} obj1
    * @param {Ember.Object} obj2
    * @return {Number}
    */
-  learningMaterialSortingCallback(obj1, obj2) {
+  positionSortingCallback(obj1, obj2) {
     let pos1 = obj1.get('position');
     let pos2 = obj2.get('position');
     // 1. position, asc

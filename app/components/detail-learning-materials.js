@@ -67,7 +67,7 @@ export default Component.extend(SortableByPosition, {
         sortedDescriptors: computed.sort('content.meshDescriptors', 'sortTerms')
       });
       this.get('subject').get('learningMaterials').then(materials => {
-        let sortedMaterials = materials.toArray().sort(this.get('learningMaterialSortingCallback'));
+        let sortedMaterials = materials.toArray().sort(this.get('positionSortingCallback'));
         resolve(sortedMaterials.map(material => {
           return materialProxy.create({
             content: material
