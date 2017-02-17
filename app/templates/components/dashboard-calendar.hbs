@@ -169,7 +169,7 @@
     month=monthTranslation
     dueThisDay=dueTranslation
     loadingMessage=loadingEventsTranslation
-    icsFeedUrl=currentUser.model.absoluteIcsUri
+    icsFeedUrl=(get (await currentUser.model) 'absoluteIcsUri')
     icsInstructions=icsInstructionsTranslation
     showMore=(t 'general.showMore')
   }}
