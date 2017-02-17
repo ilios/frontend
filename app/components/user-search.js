@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
 const { Component, computed, isEmpty } = Ember;
-const { notEmpty, oneWay } = computed;
+const { oneWay } = computed;
 
 let userProxy = Ember.ObjectProxy.extend({
   isUser: true,
