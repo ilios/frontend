@@ -9,8 +9,8 @@ export default Service.extend({
   store: service(),
   currentUser: service(),
   reportsList: computed('currentUser.model.reports.[]', function(){
-    this.get('currentUser').get('model').then( user => {
-      return new Promise(resolve => {
+    return new Promise(resolve => {
+      this.get('currentUser').get('model').then( user => {
         if(isEmpty(user)){
           resolve([]);
         } else {
