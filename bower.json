@@ -2,9 +2,9 @@
   "name": "ilios",
   "dependencies": {
     "neat": "~1.7.2",
-    "pretender": "0.10.1",
+    "pretender": "~1.1.0",
     "lodash": "~4.0.0",
-    "Faker": "~3.0.1",
+    "Faker": "~3.1.0",
     "font-awesome": "~4.5.0",
     "papaparse": "~4.1.2",
     "zxcvbn": "~4.3.0",
