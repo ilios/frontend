@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, observer, on, ObjectProxy, RSVP, run } = Ember;
-const { debounce } = run;
+const { Component, computed, ObjectProxy, RSVP} = Ember;
 const { Promise } = RSVP;
 
 const objectiveProxy = ObjectProxy.extend({
@@ -14,7 +13,6 @@ const objectiveProxy = ObjectProxy.extend({
 export default Component.extend({
   classNames: ['objective-manager'],
   sessionObjective: null,
-  showObjectiveList: false,
   course: computed('sessionObjective.courses.[]', function(){
     return new Promise(resolve => {
       let sessionObjective = this.get('sessionObjective');
@@ -54,17 +52,15 @@ export default Component.extend({
       });
     });
   }),
-  watchProxiedObjectives: on('init', observer('proxiedObjectives.[]', function(){
-    //debounce setting showObjectiveList to avoid animating changes when
-    //a save causes the proxied list to change
-    debounce(this, function(){
-      if(!this.get('isDestroyed')){
-        this.get('proxiedObjectives').then(objectives => {
-          this.set('showObjectiveList', objectives.length > 0);
-        });
-      }
-    }, 500);
-  })),
+
+  showObjectiveList: computed('proxiedObjectives.[]', function() {
+    return new Promise(resolve => {
+      this.get('proxiedObjectives').then(objectives => {
+        resolve(objectives.length > 0);
+      });
+    });
+  }),
+
   actions: {
     addParent: function(parentProxy){
       let newParent = parentProxy.get('content');
