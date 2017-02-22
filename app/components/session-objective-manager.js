@@ -54,12 +54,14 @@ export default Component.extend({
       });
     });
   }),
-  watchProxiedObjectives: on('init', observer('proxiedObjectives.length', function(){
+  watchProxiedObjectives: on('init', observer('proxiedObjectives.[]', function(){
     //debounce setting showObjectiveList to avoid animating changes when
     //a save causes the proxied list to change
     debounce(this, function(){
       if(!this.get('isDestroyed')){
-        this.set('showObjectiveList', this.get('proxiedObjectives.length') > 0);
+        this.get('proxiedObjectives').then(objectives => {
+          this.set('showObjectiveList', objectives.length > 0);
+        });
       }
     }, 500);
   })),
