@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 const { Component, computed, RSVP, ObjectProxy, inject } = Ember;
 const { Promise } = RSVP;
 const { service } = inject;
 
-export default Component.extend({
+export default Component.extend(SortableByPosition, {
   store: service(),
   course: null,
   includeUnpublishedSessions: false,
@@ -34,11 +35,15 @@ export default Component.extend({
         sortTitle: ['title'],
         sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
-          let session = this.get('content').get('id');
-          return this.get('store').query('sessionLearningMaterial', {
-            filters: {
-              session
-            }
+          return new Promise(resolve => {
+            let session = this.get('content').get('id');
+            this.get('store').query('sessionLearningMaterial', {
+              filters: {
+                session
+              }
+            }).then(learningMaterials => {
+              resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+            });
           });
         })
       });
@@ -58,12 +63,16 @@ export default Component.extend({
   }),
 
   courseLearningMaterials: computed('course', function(){
-    let course = this.get('course').get('id');
-    return this.get('store').query('courseLearningMaterial', {
-      filters: {
-        course
-      }
+    return new Promise(resolve => {
+      let course = this.get('course').get('id');
+      this.get('store').query('courseLearningMaterial', {
+        filters: {
+          course
+        }
+      }).then(learningMaterials => {
+        resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+      });
     });
-  }),
+  })
 
 });

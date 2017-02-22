@@ -8,5 +8,6 @@ export default Model.extend({
   publicNotes: attr('boolean', { defaultValue: true }),
   session: belongsTo('session', { async: true }),
   learningMaterial: belongsTo('learning-material', { async: true }),
-  meshDescriptors: hasMany('mesh-descriptors', { async: true })
+  meshDescriptors: hasMany('mesh-descriptors', { async: true }),
+  position: attr('number')
 });
