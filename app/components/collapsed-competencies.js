@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { Component, computed, RSVP } = Ember;
+const { all, defer } = RSVP;
 const { PromiseArray } = DS;
 
 export default Component.extend({
@@ -24,7 +25,7 @@ export default Component.extend({
    * @public
    */
   summary: computed('subject.competencies.[]', function(){
-    let deferred = Ember.RSVP.defer();
+    let deferred = defer();
 
     this.get('subject.competencies').then(competencies => {
       let promises = [];
@@ -34,7 +35,7 @@ export default Component.extend({
           schools.pushObject(school);
         }));
       });
-      RSVP.all(promises).then(() => {
+      all(promises).then(() => {
         let schoolIds = schools.mapBy('id').uniq();
         let summary = [];
         schoolIds.forEach(id => {
