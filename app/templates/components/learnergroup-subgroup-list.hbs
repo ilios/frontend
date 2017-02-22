@@ -25,6 +25,15 @@
     {{/liquid-if}}
   </section>
 
+  {{#if saved}}
+    <div class='saved-result'>
+      {{#link-to 'learnerGroup' savedGroup}}
+        {{fa-icon 'external-link-square'}} {{savedGroup.title}}
+      {{/link-to}}
+      {{t 'general.savedSuccessfully'}}
+    </div>
+  {{/if}}
+
   <div class='learnergroup-subgroup-list-list'>
     {{#if (is-fulfilled parentGroup.children)}}
       {{#if (get (await parentGroup.children) 'length')}}

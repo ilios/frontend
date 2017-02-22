@@ -26,6 +26,8 @@ export default Controller.extend({
   programId: null,
   programYearId: null,
   titleFilter: null,
+  saved: false,
+  savedGroup: null,
 
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
@@ -222,11 +224,15 @@ export default Controller.extend({
           return cohort.get('users').then(users => {
             newLearnerGroup.get('users').pushObjects(users);
             return newLearnerGroup.save().then(() => {
+              this.set('saved', true);
+              this.set('savedGroup', newLearnerGroup);
               this.send('cancel');
             });
           });
         } else {
           return newLearnerGroup.save().then(() => {
+            this.set('saved', true);
+            this.set('savedGroup', newLearnerGroup);
             this.send('cancel');
           });
         }

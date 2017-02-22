@@ -13,6 +13,15 @@ export default Component.extend({
   tagName: 'section',
   showNewLearnerGroupForm: false,
   isSaving: false,
+  saved: false,
+  savedGroup: null,
+
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('saved', false);
+    this.set('savedGroup', null);
+  },
+
   actions: {
     saveNewLearnerGroup(title) {
       return new Promise (resolve => {
@@ -23,6 +32,8 @@ export default Component.extend({
 
           newLearnerGroup.save().then((savedLearnerGroup) => {
             this.set('showNewLearnerGroupForm', false);
+            this.set('saved', true);
+            this.set('savedGroup', savedLearnerGroup);
             resolve(savedLearnerGroup);
           });
         });
