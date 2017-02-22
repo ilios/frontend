@@ -1,8 +1,8 @@
 <div class='objectivetitle list-reset'>{{{sessionObjective.title}}}</div>
 
-{{#liquid-if showObjectiveList class='vertical'}}
+{{#liquid-if (await showObjectiveList) class='vertical'}}
   <div class='parent-picker'>
-    <h5>{{course.title}}</h5>
+    <h5>{{get (await course) 'title'}}</h5>
     <ul>
       {{#each (await proxiedObjectives) as |objective|}}
         {{#if objective.selected}}
