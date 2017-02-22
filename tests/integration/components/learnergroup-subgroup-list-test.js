@@ -125,10 +125,16 @@ test('add new group', function(assert) {
 
   this.$('.expand-button').click();
 
+  let newTitle = 'new group';
   return wait().then(()=>{
-    this.$('input').val('new group');
+    this.$('input').val(newTitle);
     this.$('input').trigger('change');
     this.$('.done').click();
+    return wait().then(() => {
+      assert.equal(this.$('.saved-result').text().trim().replace(/[\t\n\s]+/g, ''),
+        (newTitle + ' Saved Successfully').replace(/[\t\n\s]+/g, '')
+      );
+    });
   });
 
 });
