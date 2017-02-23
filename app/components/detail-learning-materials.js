@@ -1,14 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 import SortableByPosition from 'ilios/mixins/sortable-by-position';
-
 
 const { isEmpty, Component, computed, inject, RSVP, ObjectProxy, Object } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
 const { all, Promise } = RSVP;
-const { PromiseArray } = DS;
 
 export default Component.extend(SortableByPosition, {
   currentUser: service(),
@@ -47,18 +44,22 @@ export default Component.extend(SortableByPosition, {
     }
   }).readOnly(),
 
-  learningMaterialStatuses: computed(function(){
-    let self = this;
-    return PromiseArray.create({
-      promise: self.get('store').findAll('learning-material-status')
+  learningMaterialStatuses: computed(function() {
+    return new Promise(resolve => {
+      this.get('store').findAll('learning-material-status').then(statuses => {
+        resolve(statuses);
+      });
     });
   }),
-  learningMaterialUserRoles: computed(function(){
-    let self = this;
-    return PromiseArray.create({
-      promise: self.get('store').findAll('learning-material-user-role')
+
+  learningMaterialUserRoles: computed(function() {
+    return new Promise(resolve => {
+      this.get('store').findAll('learning-material-user-role').then(roles => {
+        resolve(roles);
+      });
     });
   }),
+
   proxyMaterials: computed('subject.learningMaterials.@each.{position}', function(){
     return new Promise(resolve => {
       let materialProxy = ObjectProxy.extend({
@@ -78,21 +79,19 @@ export default Component.extend(SortableByPosition, {
   }),
 
   parentMaterials: computed('subject.learningMaterials.[]', function(){
-    let deferred = defer();
-    this.get('subject.learningMaterials').then(subLms => {
-      let promises = [];
-      let learningMaterials = [];
-      subLms.forEach(lm => {
-        promises.pushObject(lm.get('learningMaterial').then(learningMaterial => {
-          learningMaterials.pushObject(learningMaterial);
-        }));
+    return new Promise(resolve => {
+      this.get('subject.learningMaterials').then(subLms => {
+        let promises = [];
+        let learningMaterials = [];
+        subLms.forEach(lm => {
+          promises.pushObject(lm.get('learningMaterial').then(learningMaterial => {
+            learningMaterials.pushObject(learningMaterial);
+          }));
+        });
+        all(promises).then(()=>{
+          resolve(learningMaterials);
+        });
       });
-      all(promises).then(()=>{
-        deferred.resolve(learningMaterials);
-      });
-    });
-    return PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
