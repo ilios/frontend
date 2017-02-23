@@ -48,13 +48,13 @@ export default Component.extend(SortableByPosition, {
   }).readOnly(),
 
   learningMaterialStatuses: computed(function(){
-    var self = this;
+    let self = this;
     return PromiseArray.create({
       promise: self.get('store').findAll('learning-material-status')
     });
   }),
   learningMaterialUserRoles: computed(function(){
-    var self = this;
+    let self = this;
     return PromiseArray.create({
       promise: self.get('store').findAll('learning-material-user-role')
     });
@@ -116,7 +116,7 @@ export default Component.extend(SortableByPosition, {
 
   actions: {
     manageMaterial(learningMaterial){
-      var buffer = Object.create();
+      let buffer = Object.create();
       buffer.set('publicNotes', learningMaterial.get('publicNotes'));
       buffer.set('required', learningMaterial.get('required'));
       buffer.set('notes', learningMaterial.get('notes'));
