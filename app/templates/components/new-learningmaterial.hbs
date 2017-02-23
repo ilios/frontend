@@ -51,7 +51,7 @@
     <label class="form-label">{{t 'general.userRole'}}:</label>
     <div class="form-data">
       <select  onchange={{action "changeUserRole" value="target.value"}}>
-        {{#each learningMaterialUserRoles as |role|}}
+        {{#each (await learningMaterialUserRoles) as |role|}}
           <option value={{role.id}} selected={{is-equal role userRole}}>
             {{role.title}}
           </option>
