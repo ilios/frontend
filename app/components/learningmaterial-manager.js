@@ -19,7 +19,7 @@ export default Component.extend({
   isCourse: false,
   isSession: not('isCourse'),
   editable: true,
-  learningMaterialStatuses: [],
+  learningMaterialStatuses: null,
   statusOptions: computed('learningMaterialStatuses.[]', function(){
     return this.get('learningMaterialStatuses').map(function(status){
       return Ember.Object.create({
