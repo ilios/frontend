@@ -1,10 +1,9 @@
 <div class='title'  {{action (action this.attrs.expand)}}>
   {{t 'general.competencies'}} ({{get (await subject.competencies) 'length'}})
 </div>
-{{#if summary.isPending}}
+{{#unless (is-fulfilled summary)}}
   <h3>{{fa-icon 'spinner' spin=true}}</h3>
-{{/if}}
-{{#unless summary.isPending}}
+{{else}}
   <div class='content'>
     <table>
       <thead>
@@ -14,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each summary as |item|}}
+        {{#each (await summary) as |item|}}
           <tr>
             <td>{{item.school.title}}</td>
             <td class='text-center'>
