@@ -8,7 +8,7 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   classNames: ['learningmaterial-search'],
-  currentMaterials: [],
+  currentMaterials: null,
   query: '',
   searchResults: [],
   searchPage: 0,
