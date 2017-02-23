@@ -18,7 +18,7 @@
     <label class="form-label">{{t 'general.status'}}:</label>
     <div class="form-data">
       <select  onchange={{action "changeStatus" value="target.value"}}>
-        {{#each learningMaterialStatuses as |lmStatus|}}
+        {{#each (await learningMaterialStatuses) as |lmStatus|}}
           <option value={{lmStatus.id}} selected={{is-equal lmStatus status}}>
             {{lmStatus.title}}
           </option>
