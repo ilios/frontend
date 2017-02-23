@@ -4,7 +4,7 @@ import { translationMacro as t } from "ember-i18n";
 import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 
-const { isEmpty, Component, computed, inject, RSVP, ObjectProxy } = Ember;
+const { isEmpty, Component, computed, inject, RSVP, ObjectProxy, Object } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
 const { all, Promise } = RSVP;
@@ -78,7 +78,7 @@ export default Component.extend(SortableByPosition, {
   }),
 
   parentMaterials: computed('subject.learningMaterials.[]', function(){
-    let defer = RSVP.defer();
+    let deferred = defer();
     this.get('subject.learningMaterials').then(subLms => {
       let promises = [];
       let learningMaterials = [];
@@ -87,12 +87,12 @@ export default Component.extend(SortableByPosition, {
           learningMaterials.pushObject(learningMaterial);
         }));
       });
-      RSVP.all(promises).then(()=>{
-        defer.resolve(learningMaterials);
+      all(promises).then(()=>{
+        deferred.resolve(learningMaterials);
       });
     });
     return PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
 
@@ -116,7 +116,7 @@ export default Component.extend(SortableByPosition, {
 
   actions: {
     manageMaterial(learningMaterial){
-      var buffer = Ember.Object.create();
+      var buffer = Object.create();
       buffer.set('publicNotes', learningMaterial.get('publicNotes'));
       buffer.set('required', learningMaterial.get('required'));
       buffer.set('notes', learningMaterial.get('notes'));
@@ -148,7 +148,7 @@ export default Component.extend(SortableByPosition, {
           promises.pushObject(parent.save());
         }));
 
-        Ember.RSVP.all(promises).then(()=> {
+        all(promises).then(()=> {
           this.set('bufferMaterial', null);
           this.set('managingMaterial', null);
         });
@@ -181,7 +181,7 @@ export default Component.extend(SortableByPosition, {
           }
         });
         promises.pushObject(lm.save());
-        Ember.RSVP.all(promises).then(()=> {
+        all(promises).then(()=> {
           this.set('meshMaterial', null);
           this.set('bufferTerms', []);
         });
