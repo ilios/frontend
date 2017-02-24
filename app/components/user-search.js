@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
 const { Component, computed, isEmpty } = Ember;
-const { notEmpty, oneWay } = computed;
+const { oneWay } = computed;
 
 let userProxy = Ember.ObjectProxy.extend({
   isUser: true,
@@ -35,9 +35,8 @@ export default Component.extend({
   currentlyActiveUsers: null,
   placeholder: null,
   roles: '',
-  availableInstructorGroups: [],
+  availableInstructorGroups: null,
   currentlyActiveInstructorGroups: null,
-  integrateInstructorGroups: notEmpty('availableInstructorGroups'),
   search: task(function * (searchTerms = '') {
     this.set('showMoreInputPrompt', false);
     this.set('searchReturned', false);
@@ -66,10 +65,11 @@ export default Component.extend({
       });
     });
 
-    if(this.get('integrateInstructorGroups')){
+    let availableInstructorGroups = yield this.get('availableInstructorGroups');
+    if(! isEmpty(availableInstructorGroups)){
       let exp = new RegExp(searchTerms, 'gi');
 
-      let filteredGroups = this.get('availableInstructorGroups').filter(group => {
+      let filteredGroups = availableInstructorGroups.filter(group => {
         return group.get('title') && group.get('title').match(exp);
       });
       const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');

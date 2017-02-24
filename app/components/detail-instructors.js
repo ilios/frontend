@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP } = Ember;
+const { Promise } = RSVP;
 
 export default Component.extend({
   currentUser: Ember.inject.service(),
@@ -10,10 +11,24 @@ export default Component.extend({
   isManaging: false,
   instructorGroupBuffer: [],
   instructorBuffer: [],
+
   titleCount: computed('ilmSession.instructorGroups.length', 'ilmSession.instructors.length', function(){
     return this.get('ilmSession.instructorGroups.length') +
            this.get('ilmSession.instructors.length');
   }),
+
+  availableInstructorGroups: computed('currentUser.model', function() {
+    return new Promise(resolve => {
+      this.get('currentUser.model').then(model => {
+        model.get('school').then(school => {
+          school.get('instructorGroups').then(instructorGroups => {
+            resolve(instructorGroups);
+          });
+        });
+      });
+    });
+  }),
+
   actions: {
     manage: function(){
       let promises = [];

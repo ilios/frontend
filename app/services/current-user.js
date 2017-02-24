@@ -1,11 +1,9 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import moment from 'moment';
 
 const { computed, observer, on, RSVP, isEmpty, inject, get, $, Service, A } = Ember;
-const { PromiseArray, PromiseObject } = DS;
 const { service } = inject;
-const { all, defer, hash, Promise } = RSVP;
+const { all, hash, Promise } = RSVP;
 
 export default Service.extend({
   store: service(),
@@ -28,18 +26,15 @@ export default Service.extend({
   }),
 
   model: computed('currentUserId', function(){
-    let deferred = defer();
-    let currentUserId = this.get('currentUserId');
-    if (!currentUserId) {
-      deferred.resolve(null);
-    } else {
-      this.get('store').find('user', currentUserId).then((user) => {
-        deferred.resolve(user);
-      });
-    }
-
-    return PromiseObject.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      let currentUserId = this.get('currentUserId');
+      if (!currentUserId) {
+        resolve(null);
+      } else {
+        this.get('store').find('user', currentUserId).then((user) => {
+          resolve(user);
+        });
+      }
     });
   }),
 
@@ -88,32 +83,30 @@ export default Service.extend({
    */
   cohortsInAllAssociatedSchools: computed('model.schools.[]', {
     get() {
-      let deferred = defer();
-      this.get('model').then(user => {
-        user.get('schools').then(schools => {
-          all(schools.mapBy('programs')).then(programsArrays => {
-            let programs = [];
-            programsArrays.forEach(arr => {
-              arr.forEach(program => {
-                programs.push(program);
-              });
-            });
-            all(programs.mapBy('programYears')).then(programYearsArrays => {
-              let programYears = [];
-              programYearsArrays.forEach(arr => {
-                arr.forEach(programYear => {
-                  programYears.push(programYear);
+      return new Promise(resolve => {
+        this.get('model').then(user => {
+          user.get('schools').then(schools => {
+            all(schools.mapBy('programs')).then(programsArrays => {
+              let programs = [];
+              programsArrays.forEach(arr => {
+                arr.forEach(program => {
+                  programs.push(program);
                 });
               });
-              all(programYears.mapBy('cohort')).then(cohorts => {
-                deferred.resolve(cohorts);
+              all(programs.mapBy('programYears')).then(programYearsArrays => {
+                let programYears = [];
+                programYearsArrays.forEach(arr => {
+                  arr.forEach(programYear => {
+                    programYears.push(programYear);
+                  });
+                });
+                all(programYears.mapBy('cohort')).then(cohorts => {
+                  resolve(cohorts);
+                });
               });
             });
           });
         });
-      });
-      return PromiseArray.create({
-        promise: deferred.promise
       });
     }
   }).readOnly(),
@@ -348,32 +341,30 @@ export default Service.extend({
     'model.directedCourses.[]',
     'model.instructorIlmSessions.[]',
     function(){
-      let deferred = defer();
-      this.get('model').then( user => {
-        if(isEmpty(user)){
-          deferred.resolve([]);
-          return;
-        }
-        let currentYear = moment().format('YYYY');
-        const currentMonth = parseInt(moment().format('M'));
-        if(currentMonth < 6){
-          currentYear--;
-        }
-        const previousYear = currentYear -1;
-        const nextYear = currentYear +1;
-        this.get('store').query('course', {
-          my: true,
-          filters: {
-            year: [previousYear, currentYear, nextYear],
-            locked: false,
-            archived: false
+      return new Promise(resolve => {
+        this.get('model').then(user => {
+          if(isEmpty(user)){
+            resolve([]);
+            return;
           }
-        }).then(filteredCourses => {
-          deferred.resolve(filteredCourses);
+          let currentYear = moment().format('YYYY');
+          const currentMonth = parseInt(moment().format('M'));
+          if(currentMonth < 6){
+            currentYear--;
+          }
+          const previousYear = currentYear -1;
+          const nextYear = currentYear +1;
+          this.get('store').query('course', {
+            my: true,
+            filters: {
+              year: [previousYear, currentYear, nextYear],
+              locked: false,
+              archived: false
+            }
+          }).then(filteredCourses => {
+            resolve(filteredCourses);
+          });
         });
-      });
-      return PromiseArray.create({
-        promise: deferred.promise
       });
     }
   )

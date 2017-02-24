@@ -7,9 +7,9 @@ export default Component.extend({
   currentUser: service(),
   tagName: 'div',
   classNames: ['dashboard-block', 'dashboard-my-courses'],
-  courseSorting: ['startDate:desc'],
-  sortedListOfCourses: computed.sort('listOfCourses', 'courseSorting'),
-  listOfCourses: computed('currentUser.relatedCourses.[]', function(){
-    return this.get('currentUser').get('activeRelatedCoursesInThisYearAndLastYear');
+  listOfCourses: computed('currentUser.activeRelatedCoursesInThisYearAndLastYear.[]', function(){
+    return this.get('currentUser').get('activeRelatedCoursesInThisYearAndLastYear').then(courses => {
+      return courses.sortBy('startDate');
+    });
   }),
 });

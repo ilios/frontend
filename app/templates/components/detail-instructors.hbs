@@ -23,7 +23,7 @@
       addInstructorGroup='addInstructorGroupToBuffer'
       removeInstructor='removeInstructorFromBuffer'
       removeInstructorGroup='removeInstructorGroupFromBuffer'
-      availableInstructorGroups=currentUser.model.school.instructorGroups
+      availableInstructorGroups=(await availableInstructorGroups)
       instructorGroups=instructorGroupBuffer
       instructors=instructorBuffer
     }}

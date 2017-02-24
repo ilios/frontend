@@ -7,7 +7,7 @@ const { sort } = computed;
 export default Component.extend({
   i18n: Ember.inject.service(),
   instructors: [],
-  availableInstructorGroups: [],
+  availableInstructorGroups: null,
   sortInstructorsBy: ['title'],
   classNames: ['detail-block'],
   tagName: 'section',
