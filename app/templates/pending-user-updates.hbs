@@ -27,13 +27,13 @@
 
   <section class='resultslist'>
 
-    {{#liquid-if allUpdates.isFulfilled}}
+    {{#liquid-if (is-fulfilled allUpdates)}}
       <div class='resultslist-list'>
 
         {{pagedlist-controls
           offset=offset
           limit=limit
-          total=allUpdates.length
+          total=(get (await allUpdates) 'length')
           setOffset=(action (mut offset))
           setLimit=(action (mut limit))
         }}
@@ -87,7 +87,7 @@
         {{pagedlist-controls
           offset=offset
           limit=limit
-          total=allUpdates.length
+          total=(get (await allUpdates) 'length')
           setOffset=(action (mut offset))
           setLimit=(action (mut limit))
         }}
