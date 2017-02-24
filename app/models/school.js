@@ -1,9 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { attr, belongsTo, hasMany, Model, PromiseArray } = DS;
+const { attr, belongsTo, hasMany, Model } = DS;
 const { computed, isEmpty, RSVP, $} = Ember;
-const { all, defer } = RSVP;
+const { all, Promise } = RSVP;
 
 export default Model.extend({
   title: attr('string'),
@@ -33,61 +33,59 @@ export default Model.extend({
       });
     }
   }).readOnly(),
+
   getCohortsForYear(year){
-    let deferred = defer();
-    this.getProgramYearsForYear(year).then(programYears => {
-      let cohorts = [];
-      let promises = [];
-      programYears.forEach(programYear => {
-        promises.pushObject(programYear.get('cohort').then(cohort => {
-          cohorts.pushObject(cohort);
-        }));
-      });
-      all(promises).then(()=> {
-        deferred.resolve(cohorts);
-      });
-    });
-
-
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
-  },
-  getProgramYearsForYear(year){
-    let deferred = defer();
-    this.get('programs').then(programs => {
-      let promises = [];
-      let filteredProgramYears = [];
-      programs.forEach(program => {
-        promises.pushObject(program.get('programYears').then(programYears => {
-          programYears.forEach(programYear => {
-            if(parseInt(programYear.get('startYear')) === year){
-              filteredProgramYears.pushObject(programYear);
-            }
-          });
-        }));
+    return new Promise(resolve => {
+      this.getProgramYearsForYear(year).then(programYears => {
+        let cohorts = [];
+        let promises = [];
+        programYears.forEach(programYear => {
+          promises.pushObject(programYear.get('cohort').then(cohort => {
+            cohorts.pushObject(cohort);
+          }));
+        });
         all(promises).then(()=> {
-          deferred.resolve(filteredProgramYears);
+          resolve(cohorts);
         });
       });
     });
+  },
 
-    return PromiseArray.create({
-      promise: deferred.promise
+  getProgramYearsForYear(year){
+    return new Promise(resolve => {
+      this.get('programs').then(programs => {
+        let promises = [];
+        let filteredProgramYears = [];
+        programs.forEach(program => {
+          promises.pushObject(program.get('programYears').then(programYears => {
+            programYears.forEach(programYear => {
+              if(parseInt(programYear.get('startYear')) === year){
+                filteredProgramYears.pushObject(programYear);
+              }
+            });
+          }));
+          all(promises).then(()=> {
+            resolve(filteredProgramYears);
+          });
+        });
+      });
     });
   },
+
   async getConfigByName(name){
     const configs = await this.get('configurations');
     const config = configs.findBy('name', name);
 
     return isEmpty(config)?null:config;
   },
+
   async getConfigValue(name){
     const config = await this.getConfigByName(name);
     const value = isEmpty(config)?null:config.get('value');
 
     return $.parseJSON(value);
   },
+
   async setConfigValue(name, value){
     const oldValue = await this.getConfigValue(name);
     if (value !== oldValue) {
@@ -102,6 +100,7 @@ export default Model.extend({
 
     return false;
   },
+
   async createConfig(name){
     const store = this.get('store');
     const config = store.createRecord('school-config', {
