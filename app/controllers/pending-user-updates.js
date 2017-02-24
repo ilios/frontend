@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { Controller, computed, RSVP, inject, isPresent, isEmpty } = Ember;
 const { sort, gt } = computed;
 const { service } = inject;
-const { PromiseArray } = DS;
+const { all, Promise } = RSVP;
 
 export default Controller.extend({
   store: service(),
@@ -34,22 +33,19 @@ export default Controller.extend({
   updatesBeingSaved: [],
 
   allUpdates: computed('selectedSchool', function(){
-    let defer = RSVP.defer();
-    let school = this.get('selectedSchool');
-    this.get('store').query('pending-user-update', {
-      limit: 1000,
-      filters: {
-        schools: [school.get('id')]
-      }
-    }).then(updates => {
-      //preload user for each update
-      RSVP.all(updates.mapBy('user')).then(() => {
-        defer.resolve(updates);
+    return new Promise(resolve => {
+      let school = this.get('selectedSchool');
+      this.get('store').query('pending-user-update', {
+        limit: 1000,
+        filters: {
+          schools: [school.get('id')]
+        }
+      }).then(updates => {
+        //preload user for each update
+        all(updates.mapBy('user')).then(() => {
+          resolve(updates);
+        });
       });
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
