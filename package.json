@@ -47,7 +47,6 @@
     "ember-cli-moment-shim": "3.0.1",
     "ember-cli-neat": "0.0.5",
     "ember-cli-password-strength": "0.2.1",
-    "ember-cli-preprocess-registry": "^3.0.0",
     "ember-cli-qunit": "^3.0.1",
     "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "6.1.1",
