@@ -69,6 +69,7 @@ module.exports = function(environment) {
     IliosFeatures: {
       allowAddNewUser: true,
       schoolSessionAttributes: false,
+      accessCourseVisualizations: false,
     }
   };
 
@@ -87,6 +88,7 @@ module.exports = function(environment) {
     };
 
     ENV.IliosFeatures.schoolSessionAttributes = true;
+    ENV.IliosFeatures.accessCourseVisualizations = true;
   }
 
   if (environment === 'test') {
@@ -105,6 +107,7 @@ module.exports = function(environment) {
     ENV.serverVariables.defaults['api-host'] = '';
 
     ENV.IliosFeatures.schoolSessionAttributes = true;
+    ENV.IliosFeatures.accessCourseVisualizations = true;
   }
 
 /*

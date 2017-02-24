@@ -15,7 +15,7 @@ const Router = Ember.Router.extend({
     const iliosMetrics = this.get('iliosMetrics');
     const page = this.get('url');
     const title = this.getWithDefault('currentRouteName', 'unknown');
-    
+
     iliosMetrics.track(page, title);
   },
 });
@@ -87,6 +87,10 @@ Router.map(function() {
   });
   this.route('curriculumInventorySequenceBlock', {
     path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id'
+  });
+
+  this.route('course-visualize-objectives', {
+    path: 'data/courses/:course_id/objectives'
   });
 });
 
