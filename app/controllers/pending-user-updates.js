@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 
 const { Controller, computed, RSVP, inject, isPresent, isEmpty } = Ember;
 const { sort, gt } = computed;
 const { service } = inject;
-const { PromiseArray } = DS;
+const { all, Promise } = RSVP;
 
 export default Controller.extend({
   store: service(),
@@ -34,22 +33,19 @@ export default Controller.extend({
   updatesBeingSaved: [],
 
   allUpdates: computed('selectedSchool', function(){
-    let defer = RSVP.defer();
-    let school = this.get('selectedSchool');
-    this.get('store').query('pending-user-update', {
-      limit: 1000,
-      filters: {
-        schools: [school.get('id')]
-      }
-    }).then(updates => {
-      //preload user for each update
-      RSVP.all(updates.mapBy('user')).then(() => {
-        defer.resolve(updates);
+    return new Promise(resolve => {
+      let school = this.get('selectedSchool');
+      this.get('store').query('pending-user-update', {
+        limit: 1000,
+        filters: {
+          schools: [school.get('id')]
+        }
+      }).then(updates => {
+        //preload user for each update
+        all(updates.mapBy('user')).then(() => {
+          resolve(updates);
+        });
       });
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
     });
   }),
 
@@ -60,13 +56,17 @@ export default Controller.extend({
     const filter = this.get('filter');
     const exp = new RegExp(filter, 'gi');
 
-    return this.get('allUpdates')
-      .sortBy('user.lastName', 'user.firstName')
-      .slice(offset, end).filter(update => {
-        return !this.get('deletedUpdates').includes(update) &&
-        (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
+    return new Promise(resolve => {
+      this.get('allUpdates').then(allUpdates => {
+        let sortedUpdates = allUpdates.sortBy('user.lastName', 'user.firstName').slice(offset, end).filter(update => {
+          return !this.get('deletedUpdates').includes(update) &&
+            (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
+        });
+        resolve(sortedUpdates);
       });
+    });
   }),
+
   actions: {
     changeSelectedSchool(schoolId){
       this.set('school', schoolId);
