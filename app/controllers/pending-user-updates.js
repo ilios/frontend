@@ -56,13 +56,17 @@ export default Controller.extend({
     const filter = this.get('filter');
     const exp = new RegExp(filter, 'gi');
 
-    return this.get('allUpdates')
-      .sortBy('user.lastName', 'user.firstName')
-      .slice(offset, end).filter(update => {
-        return !this.get('deletedUpdates').includes(update) &&
-        (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
+    return new Promise(resolve => {
+      this.get('allUpdates').then(allUpdates => {
+        let sortedUpdates = allUpdates.sortBy('user.lastName', 'user.firstName').slice(offset, end).filter(update => {
+          return !this.get('deletedUpdates').includes(update) &&
+            (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
+        });
+        resolve(sortedUpdates);
       });
+    });
   }),
+
   actions: {
     changeSelectedSchool(schoolId){
       this.set('school', schoolId);
