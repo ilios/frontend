@@ -14,7 +14,7 @@
         }}
           {{one-way-select
             status.id
-            options=statusOptions
+            options=(await statusOptions)
             optionTargetPath="id"
             optionLabelPath="title"
             update=(action "setStatus")

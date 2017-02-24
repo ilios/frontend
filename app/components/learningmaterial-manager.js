@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import layout from '../templates/components/learningmaterial-manager';
 
-const { Component, computed } = Ember;
+const { Component, computed, RSVP } = Ember;
 const { not } = computed;
+const { Promise } = RSVP;
 
 export default Component.extend({
   layout: layout,
@@ -12,6 +13,7 @@ export default Component.extend({
     this.set('status', this.get('valueBuffer').get('status'));
     this.set('notes', this.get('valueBuffer').get('notes'));
   },
+
   status: null,
   notes: null,
   learningMaterial: null,
@@ -19,14 +21,18 @@ export default Component.extend({
   isCourse: false,
   isSession: not('isCourse'),
   editable: true,
-  learningMaterialStatuses: [],
+  learningMaterialStatuses: null,
   statusOptions: computed('learningMaterialStatuses.[]', function(){
-    return this.get('learningMaterialStatuses').map(function(status){
-      return Ember.Object.create({
-        id: status.get('id'),
-        title: status.get('title')
+    return new Promise(resolve => {
+      this.get('learningMaterialStatuses').then(statuses => {
+        resolve(statuses.map(function(status){
+          return Ember.Object.create({
+            id: status.get('id'),
+            title: status.get('title')
+          });
+        }).sortBy('title'));
       });
-    }).sortBy('title');
+    });
   }),
   isFile: computed('learningMaterial.learningMaterial.type', function(){
     return this.get('learningMaterial.learningMaterial.type') === 'file';
@@ -39,8 +45,10 @@ export default Component.extend({
   }),
   actions: {
     setStatus(id) {
-      let status = this.get('learningMaterialStatuses').findBy('id', id);
-      this.set('status', status);
+      this.get('learningMaterialStatuses').then(statuses => {
+        let status = statuses.findBy('id', id);
+        this.set('status', status);
+      });
     },
     changeStatus: function(){
       this.sendAction('changeStatus', this.get('status'));
