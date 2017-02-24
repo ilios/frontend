@@ -1,31 +1,28 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { computed, isEmpty } = Ember;
+const { attr, belongsTo, hasMany, Model, PromiseArray } = DS;
+const { computed, isEmpty, RSVP, $} = Ember;
+const { all, defer } = RSVP;
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  templatePrefix: DS.attr('string'),
-  iliosAdministratorEmail: DS.attr('string'),
-  changeAlertRecipients: DS.attr('string'),
-  competencies: DS.hasMany('competencies', {async: true}),
-  courses: DS.hasMany('course', {async: true}),
-  programs: DS.hasMany('program', {async: true}),
-  departments: DS.hasMany('department', {async: true}),
-  vocabularies: DS.hasMany('vocabulary', {async: true}),
-  instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  curriculumInventoryInstitution: DS.belongsTo('curriculum-inventory-institution', {async: true}),
-  sessionTypes: DS.hasMany('session-type', {async: true}),
-  stewards: DS.hasMany('program-year-steward', {async: true}),
-  directors: DS.hasMany('user', {
-    async: true,
-    inverse: 'directedSchools'
-  }),
-  administrators: DS.hasMany('user', {
-    async: true,
-    inverse: 'administeredSchools'
-  }),
-  configurations: DS.hasMany('school-config', {async: true}),
+export default Model.extend({
+  title: attr('string'),
+  templatePrefix: attr('string'),
+  iliosAdministratorEmail: attr('string'),
+  changeAlertRecipients: attr('string'),
+  competencies: hasMany('competencies', {async: true}),
+  courses: hasMany('course', {async: true}),
+  programs: hasMany('program', {async: true}),
+  departments: hasMany('department', {async: true}),
+  vocabularies: hasMany('vocabulary', {async: true}),
+  instructorGroups: hasMany('instructor-group', {async: true}),
+  curriculumInventoryInstitution: belongsTo('curriculum-inventory-institution', {async: true}),
+  sessionTypes: hasMany('session-type', {async: true}),
+  stewards: hasMany('program-year-steward', {async: true}),
+  directors: hasMany('user', {async: true, inverse: 'directedSchools'}),
+  administrators: hasMany('user', {async: true, inverse: 'administeredSchools'}),
+  configurations: hasMany('school-config', {async: true}),
+
   cohorts: computed('programs.@each.programYears', {
     get(){
       return this.get('store').query('cohort', {
@@ -37,7 +34,7 @@ export default DS.Model.extend({
     }
   }).readOnly(),
   getCohortsForYear(year){
-    let defer = Ember.RSVP.defer();
+    let deferred = defer();
     this.getProgramYearsForYear(year).then(programYears => {
       let cohorts = [];
       let promises = [];
@@ -46,18 +43,18 @@ export default DS.Model.extend({
           cohorts.pushObject(cohort);
         }));
       });
-      Ember.RSVP.all(promises).then(()=> {
-        defer.resolve(cohorts);
+      all(promises).then(()=> {
+        deferred.resolve(cohorts);
       });
     });
 
 
-    return DS.PromiseArray.create({
-      promise: defer.promise
+    return PromiseArray.create({
+      promise: deferred.promise
     });
   },
   getProgramYearsForYear(year){
-    let defer = Ember.RSVP.defer();
+    let deferred = defer();
     this.get('programs').then(programs => {
       let promises = [];
       let filteredProgramYears = [];
@@ -69,14 +66,14 @@ export default DS.Model.extend({
             }
           });
         }));
-        Ember.RSVP.all(promises).then(()=> {
-          defer.resolve(filteredProgramYears);
+        all(promises).then(()=> {
+          deferred.resolve(filteredProgramYears);
         });
       });
     });
 
-    return DS.PromiseArray.create({
-      promise: defer.promise
+    return PromiseArray.create({
+      promise: deferred.promise
     });
   },
   async getConfigByName(name){
@@ -89,7 +86,7 @@ export default DS.Model.extend({
     const config = await this.getConfigByName(name);
     const value = isEmpty(config)?null:config.get('value');
 
-    return Ember.$.parseJSON(value);
+    return $.parseJSON(value);
   },
   async setConfigValue(name, value){
     const oldValue = await this.getConfigValue(name);
