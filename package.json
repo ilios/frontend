@@ -100,7 +100,7 @@
     "node-sass": "4.5.0",
     "normalize.css": "^4.1.1",
     "pluralize": "^3.0.0",
-    "validator": "^6.0.0"
+    "validator": "^7.0.0"
   },
   "engines": {
     "node": "^6",
