@@ -430,7 +430,7 @@ function getCellData(row, cell) {
 }
 
 test('add new learnergroup', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   server.create('user', { id: 4136 });
   server.create('school', { programs: [1] });
@@ -450,13 +450,15 @@ test('add new learnergroup', function(assert) {
   const input = '.new-learnergroup input';
   const done = '.new-learnergroup .done';
 
+  let newTitle = 'A New Test Title';
   visit(url);
   click(expandButton);
-  fillIn(input, 'A New Test Title');
+  fillIn(input, newTitle);
   click(done);
   andThen(() => {
     assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
     assert.equal(getCellData(0, 1), 0, 'member count is correct');
+    assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully', 'Success message is shown.'));
   });
 });
 
