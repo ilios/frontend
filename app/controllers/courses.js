@@ -1,15 +1,13 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
 import moment from 'moment';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 const { computed, Controller, RSVP, isEmpty, isPresent, observer, set, inject, run } = Ember;
 const { debounce } = run;
-const { defer, Promise } = RSVP;
+const { Promise } = RSVP;
 const { service } = inject;
 const { gt, sort } = computed;
-const { PromiseArray } = DS;
 
 export default Controller.extend({
   init() {
