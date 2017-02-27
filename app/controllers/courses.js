@@ -4,7 +4,10 @@ import { translationMacro as t } from "ember-i18n";
 import moment from 'moment';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, observer, set } = Ember;
+const { computed, Controller, RSVP, isEmpty, isPresent, observer, set, inject, run } = Ember;
+const { debounce } = run;
+const { defer } = RSVP;
+const { service } = inject;
 const { gt, sort } = computed;
 const { PromiseArray } = DS;
 
@@ -13,8 +16,8 @@ export default Controller.extend({
     this._super(...arguments);
     set(this, 'newCourses', []);
   },
-  i18n: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+  i18n: service(),
+  currentUser: service(),
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',
@@ -36,11 +39,11 @@ export default Controller.extend({
   sortedYears: sort('model.years', 'sortYearsBy'),
   newCourses: [],
   courses: computed('selectedSchool', 'selectedYear', function(){
-    let defer = RSVP.defer();
+    let deferred = defer();
     const selectedSchool = this.get('selectedSchool');
     const selectedYear = this.get('selectedYear');
     if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
-      defer.resolve([]);
+      deferred.resolve([]);
     } else {
       let schoolId = selectedSchool.get('id');
       let yearTitle = selectedYear.get('title');
@@ -52,16 +55,16 @@ export default Controller.extend({
         },
         limit: 500
       }).then(courses => {
-        defer.resolve(courses);
+        deferred.resolve(courses);
       });
     }
 
     return PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
   coursesAndNewCourses: computed('courses.[]', 'newCourses.[]', function(){
-    let defer = RSVP.defer();
+    let deferred = defer();
     this.get('courses').then(courses => {
       let all = [];
       all.pushObjects(courses.toArray());
@@ -74,17 +77,17 @@ export default Controller.extend({
         all.pushObjects(newCourses.toArray());
       }
 
-      defer.resolve(all);
+      deferred.resolve(all);
     });
 
     return PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
   watchFilter: observer('titleFilter', function(){
-    Ember.run.debounce(this, this.setFilter, 500);
+    debounce(this, this.setFilter, 500);
   }),
   setFilter: function(){
     const titleFilter = this.get('titleFilter');
@@ -93,12 +96,12 @@ export default Controller.extend({
   },
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   allRelatedCourses: computed('currentUser.model', function(){
-    let defer = RSVP.defer();
+    let deferred = defer();
     this.get('currentUser.model').then(user => {
-      defer.resolve(user.get('allRelatedCourses'));
+      deferred.resolve(user.get('allRelatedCourses'));
     });
     return PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
   filteredCourses: computed(
@@ -107,7 +110,7 @@ export default Controller.extend({
     'userCoursesOnly',
     'allRelatedCourses.[]',
     function(){
-      let defer = RSVP.defer();
+      let deferred = defer();
       let title = this.get('debouncedFilter');
       let filterMyCourses = this.get('userCoursesOnly');
       let exp = new RegExp(title, 'gi');
@@ -128,17 +131,17 @@ export default Controller.extend({
               return allRelatedCourses.includes(course);
             });
 
-            defer.resolve(myFilteredCourses);
+            deferred.resolve(myFilteredCourses);
           });
         } else {
-          defer.resolve(filteredCourses);
+          deferred.resolve(filteredCourses);
         }
 
       });
 
 
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   ),
