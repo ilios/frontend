@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 const { computed, inject, RSVP, ObjectProxy, Component } = Ember;
 const { service } = inject;
-const { collect, sort } = computed;
 const { Promise }= RSVP;
 
 const CourseProxy = ObjectProxy.extend({
@@ -78,18 +77,37 @@ export default Component.extend({
   i18n: service(),
   courses: [],
   proxiedCourses: computed('courses.[]', function(){
-    const i18n = this.get('i18n');
-    return this.get('courses').map(course => {
-      return CourseProxy.create({
-        content: course,
-        i18n,
-        currentUser: this.get('currentUser')
+    return new Promise(resolve => {
+      const i18n = this.get('i18n');
+      return this.get('courses').then(courses => {
+        resolve(courses.map(course => {
+          return CourseProxy.create({
+            content: course,
+            i18n,
+            currentUser: this.get('currentUser')
+          });
+        }));
       });
     });
   }),
   sortBy: 'title',
-  sortCourseBy: collect('sortBy'),
-  sortedCourses: sort('proxiedCourses', 'sortCourseBy'),
+  sortedCourses: computed('proxiedCourses.[]', 'sortBy', 'sortedAscending', function(){
+    return new Promise(resolve => {
+      let sortBy = this.get('sortBy');
+      if (-1 !== sortBy.indexOf(':')) {
+        sortBy = sortBy.split(':', 1)[0];
+      }
+      let sortedAscending = this.get('sortedAscending');
+      this.get('proxiedCourses').then(courses => {
+        let sortedCourses = courses.sortBy(sortBy);
+        if (!sortedAscending) {
+          sortedCourses = sortedCourses.slice().reverse();
+        }
+        resolve(sortedCourses);
+      });
+    });
+  }),
+
   sortedAscending: computed('sortBy', function(){
     const sortBy = this.get('sortBy');
     return sortBy.search(/desc/) === -1;
