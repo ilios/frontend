@@ -105,38 +105,33 @@ export default Controller.extend({
     'userCoursesOnly',
     'allRelatedCourses.[]',
     function(){
-      let deferred = defer();
-      let title = this.get('debouncedFilter');
-      let filterMyCourses = this.get('userCoursesOnly');
-      let exp = new RegExp(title, 'gi');
-      this.get('coursesAndNewCourses').then(courses => {
-        let filteredCourses;
-        if(isEmpty(title)){
-          filteredCourses = courses.sortBy('title');
-        } else {
-          filteredCourses = courses.filter(course => {
-            return (isPresent(course.get('title')) &&course.get('title').match(exp)) ||
-                   (isPresent(course.get('externalId')) &&course.get('externalId').match(exp));
-          }).sortBy('title');
-        }
+      return new Promise(resolve => {
+        let title = this.get('debouncedFilter');
+        let filterMyCourses = this.get('userCoursesOnly');
+        let exp = new RegExp(title, 'gi');
+        this.get('coursesAndNewCourses').then(courses => {
+          let filteredCourses;
+          if (isEmpty(title)) {
+            filteredCourses = courses.sortBy('title');
+          } else {
+            filteredCourses = courses.filter(course => {
+              return (isPresent(course.get('title')) && course.get('title').match(exp)) ||
+                (isPresent(course.get('externalId')) && course.get('externalId').match(exp));
+            }).sortBy('title');
+          }
 
-        if(filterMyCourses){
-          this.get('allRelatedCourses').then(allRelatedCourses => {
-            let myFilteredCourses = filteredCourses.filter(course => {
-              return allRelatedCourses.includes(course);
+          if (filterMyCourses) {
+            this.get('allRelatedCourses').then(allRelatedCourses => {
+              let myFilteredCourses = filteredCourses.filter(course => {
+                return allRelatedCourses.includes(course);
+              });
+
+              resolve(myFilteredCourses);
             });
-
-            deferred.resolve(myFilteredCourses);
-          });
-        } else {
-          deferred.resolve(filteredCourses);
-        }
-
-      });
-
-
-      return PromiseArray.create({
-        promise: deferred.promise
+          } else {
+            resolve(filteredCourses);
+          }
+        });
       });
     }
   ),

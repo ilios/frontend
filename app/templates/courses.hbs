@@ -59,7 +59,7 @@
       {{/each}}
     </section>
     <div class='list'>
-      {{#if filteredCourses.isFulfilled}}
+      {{#if (is-fulfilled filteredCourses)}}
         {{ilios-course-list
           courses=filteredCourses
           remove='removeCourse'
