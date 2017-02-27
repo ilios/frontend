@@ -201,7 +201,7 @@ export default Controller.extend({
     //called by the 'toggle-mycourses' component
     toggleMyCourses: function(){
       //get the current userCoursesOnly status and flip it
-      var newStatus = (! this.get('userCoursesOnly'));
+      let newStatus = (! this.get('userCoursesOnly'));
       //then set it to the new status
       this.set('userCoursesOnly', newStatus);
     },
