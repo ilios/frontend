@@ -14,7 +14,7 @@
   </div>
   {{#if session.isAuthenticated}}
     <div class='user'>
-      {{#action-menu title=currentUser.model.fullName icon='user'}}
+      {{#action-menu title=(get (await currentUser.model) 'fullName') icon='user' class='right-edge'}}
         {{#link-to 'myprofile'}}<li>{{t 'general.myProfile'}}</li>{{/link-to}}
         {{#link-to 'mymaterials'}}<li>{{t 'general.myMaterials'}}</li>{{/link-to}}
         {{#link-to 'logout'}}<li>{{t 'general.logout'}}</li>{{/link-to}}
