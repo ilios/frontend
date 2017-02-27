@@ -55,7 +55,7 @@ export default Controller.extend({
           },
           limit: 500
         }).then(courses => {
-          resolve(courses);
+          resolve(courses.toArray());
         });
       }
     });
@@ -65,7 +65,7 @@ export default Controller.extend({
     let deferred = defer();
     this.get('courses').then(courses => {
       let all = [];
-      all.pushObjects(courses.toArray());
+      all.pushObjects(courses);
       const selectedYear = this.get('selectedYear');
       if (isPresent(selectedYear)) {
         let selectedYearTitle = selectedYear.get('title');
