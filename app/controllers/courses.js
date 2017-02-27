@@ -72,7 +72,7 @@ export default Controller.extend({
         let newCourses = this.get('newCourses').filter(course => {
           return course.get('year') === selectedYearTitle && !all.includes(course);
         });
-        all.pushObjects(newCourses.toArray());
+        all.pushObjects(newCourses);
       }
 
       deferred.resolve(all);
