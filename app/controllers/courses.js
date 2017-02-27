@@ -90,15 +90,15 @@ export default Controller.extend({
     this.set('debouncedFilter', clean);
   },
   hasMoreThanOneSchool: gt('model.schools.length', 1),
+
   allRelatedCourses: computed('currentUser.model', function(){
-    let deferred = defer();
-    this.get('currentUser.model').then(user => {
-      deferred.resolve(user.get('allRelatedCourses'));
-    });
-    return PromiseArray.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      this.get('currentUser.model').then(user => {
+        resolve(user.get('allRelatedCourses'));
+      });
     });
   }),
+
   filteredCourses: computed(
     'debouncedFilter',
     'coursesAndNewCourses.[]',
