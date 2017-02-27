@@ -6,7 +6,7 @@ import escapeRegExp from '../utils/escape-reg-exp';
 
 const { computed, Controller, RSVP, isEmpty, isPresent, observer, set, inject, run } = Ember;
 const { debounce } = run;
-const { defer } = RSVP;
+const { defer, Promise } = RSVP;
 const { service } = inject;
 const { gt, sort } = computed;
 const { PromiseArray } = DS;
@@ -39,30 +39,28 @@ export default Controller.extend({
   sortedYears: sort('model.years', 'sortYearsBy'),
   newCourses: [],
   courses: computed('selectedSchool', 'selectedYear', function(){
-    let deferred = defer();
-    const selectedSchool = this.get('selectedSchool');
-    const selectedYear = this.get('selectedYear');
-    if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
-      deferred.resolve([]);
-    } else {
-      let schoolId = selectedSchool.get('id');
-      let yearTitle = selectedYear.get('title');
-      this.get('store').query('course', {
-        filters: {
-          school: schoolId,
-          year: yearTitle,
-          archived: false
-        },
-        limit: 500
-      }).then(courses => {
-        deferred.resolve(courses);
-      });
-    }
-
-    return PromiseArray.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      const selectedSchool = this.get('selectedSchool');
+      const selectedYear = this.get('selectedYear');
+      if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
+        resolve([]);
+      } else {
+        let schoolId = selectedSchool.get('id');
+        let yearTitle = selectedYear.get('title');
+        this.get('store').query('course', {
+          filters: {
+            school: schoolId,
+            year: yearTitle,
+            archived: false
+          },
+          limit: 500
+        }).then(courses => {
+          resolve(courses);
+        });
+      }
     });
   }),
+
   coursesAndNewCourses: computed('courses.[]', 'newCourses.[]', function(){
     let deferred = defer();
     this.get('courses').then(courses => {
