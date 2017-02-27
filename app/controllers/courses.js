@@ -62,26 +62,23 @@ export default Controller.extend({
   }),
 
   coursesAndNewCourses: computed('courses.[]', 'newCourses.[]', function(){
-    let deferred = defer();
-    this.get('courses').then(courses => {
-      let all = [];
-      all.pushObjects(courses);
-      const selectedYear = this.get('selectedYear');
-      if (isPresent(selectedYear)) {
-        let selectedYearTitle = selectedYear.get('title');
-        let newCourses = this.get('newCourses').filter(course => {
-          return course.get('year') === selectedYearTitle && !all.includes(course);
-        });
-        all.pushObjects(newCourses);
-      }
-
-      deferred.resolve(all);
-    });
-
-    return PromiseArray.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      this.get('courses').then(courses => {
+        let all = [];
+        all.pushObjects(courses);
+        const selectedYear = this.get('selectedYear');
+        if (isPresent(selectedYear)) {
+          let selectedYearTitle = selectedYear.get('title');
+          let newCourses = this.get('newCourses').filter(course => {
+            return course.get('year') === selectedYearTitle && !all.includes(course);
+          });
+          all.pushObjects(newCourses);
+        }
+        resolve(all);
+      });
     });
   }),
+
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
   watchFilter: observer('titleFilter', function(){
