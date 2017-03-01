@@ -253,3 +253,16 @@ test('first offering is updated when offering is updated #1276', function(assert
   });
 
 });
+
+test('title filter escapes regex', async function(assert) {
+  assert.expect(3);
+  const block = '.sessions-list';
+  const sessions = `${block} tbody tr`;
+  const firstSessionTitle = `${sessions}:eq(0) td:eq(0)`;
+  const titleFilter = `${block} .filter input`;
+  await visit(url);
+  assert.equal(find(sessions).length, fixtures.sessions.length);
+  assert.equal(getElementText(firstSessionTitle), getText(fixtures.sessions[0].title));
+  await fillIn(titleFilter, '\\');
+  assert.equal(find(sessions).length, 1);
+});

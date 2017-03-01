@@ -7,7 +7,7 @@
       <div id='titlefilter' class="filter">
         {{one-way-input
           value=filterBy
-          update=this.attrs.setFilterBy
+          update=(action 'cleanFilter')
           placeholder=(t 'general.sessionTitleFilterPlaceholder')
         }}
       </div>
@@ -51,8 +51,8 @@
         offset=offset
         limit=limit
         total=sessionsCount
-        setOffset=this.attrs.setOffset
-        setLimit=this.attrs.setLimit
+        setOffset=setOffset
+        setLimit=setLimit
       }}
       <div class='resultslist-list'>
         <table class='active-background'>
@@ -184,8 +184,8 @@
       offset=offset
       limit=limit
       total=sessionsCount
-      setOffset=this.attrs.setOffset
-      setLimit=this.attrs.setLimit
+      setOffset=setOffset
+      setLimit=setLimit
     }}
   {{else}}
     <br><h1>{{fa-icon 'spinner' spin=true}}</h1>

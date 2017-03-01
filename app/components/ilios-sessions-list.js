@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import escapeRegExp from '../utils/escape-reg-exp';
 
 const { Component, computed, inject, RSVP, ObjectProxy, Object } = Ember;
 const { service } = inject;
@@ -265,5 +266,9 @@ export default Component.extend({
       }
       this.get('setSortBy')(what);
     },
+    cleanFilter(str){
+      const clean = escapeRegExp(str);
+      this.get('setFilterBy')(clean);
+    }
   }
 });
