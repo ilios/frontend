@@ -696,3 +696,38 @@ test('no add button when there is no cohort', function(assert) {
     assert.equal(find(expandNewButton).length, 0);
   });
 });
+
+test('title filter escapes regex', async function(assert) {
+  assert.expect(4);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('cohort', {
+    programYear: 1,
+    learnerGroups: [1]
+  });
+  server.create('learnerGroup', {
+    title: 'yes\\no',
+    cohort: 1,
+  });
+
+  const groups = '.list tbody tr';
+  const firstGroupTitle = `${groups}:eq(0) td:eq(0)`;
+  const filter = '.titlefilter input';
+  await visit('/learnergroups');
+
+  assert.equal(find(groups).length, 1);
+  assert.equal(getElementText(firstGroupTitle), 'yes\\no');
+  await fillIn(filter, '\\');
+  assert.equal(find(groups).length, 1);
+  assert.equal(getElementText(firstGroupTitle), 'yes\\no');
+});
