@@ -1,28 +1,18 @@
 import Ember from 'ember';
 
-const { computed, Controller, inject } = Ember;
+const { Controller, inject, computed, isPresent } = Ember;
 const { service } = inject;
+const { alias } = computed;
 
 export default Controller.extend({
   currentUser: service(),
   session: service(),
-
   i18n: service(),
-
-  pageTitleTranslation: null,
-
-  pageTitle: computed('pageTitleTranslation', 'i18n.locale', {
-    get() {
-      if(this.get('pageTitleTranslation')){
-        return this.get('i18n').t(this.get('pageTitleTranslation'));
-      }
-
-      return '';
-    }
-  }).readOnly(),
+  headData: service(),
 
   showHeader: true,
   showNavigation: true,
+  titleTokenKeys: null,
 
   init() {
     this._super(...arguments);
@@ -32,6 +22,26 @@ export default Controller.extend({
 
     this.setProperties({ showErrorDisplay, errors });
   },
+
+  title: alias('headData.title'),
+  titleTokens: alias('headData.titleTokens'),
+
+  translatedTitle: computed('i18n.locale', 'title', 'titleTokens.[]', function(){
+    const title = this.get('title');
+    const tokens = this.get('titleTokens');
+    const i18n = this.get('i18n');
+    if (isPresent(title)) {
+      return title;
+    }
+
+    if (isPresent(tokens)) {
+      let translatedTokens = tokens.map(key => i18n.t(key));
+      return translatedTokens.join(' ');
+    }
+
+    return '';
+
+  }),
 
   showErrorDisplay: null,
   errors: null,

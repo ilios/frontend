@@ -7,6 +7,7 @@ const { Promise, all } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
+  titleToken: 'general.coursesAndSessions',
   beforeModel(){
     this.controllerFor('application').set('showHeader', false);
     this.controllerFor('application').set('showNavigation', false);

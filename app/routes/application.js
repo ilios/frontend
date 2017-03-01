@@ -8,6 +8,18 @@ const { service } = inject;
 export default Ember.Route.extend(ApplicationRouteMixin, {
   flashMessages: service(),
   ajax: service(),
+  i18n: service(),
+
+  /**
+  * Leave titles as an array
+  * All of our routes send translations for the 'titleToken' key and we do the translating in head.hbs
+  * and in the application controller.
+  * @param Array tokens
+  * @return Array
+  */
+  title(tokens){
+    return tokens;
+  },
 
   //Override the default session invalidator so we can do auth stuff
   sessionInvalidated() {

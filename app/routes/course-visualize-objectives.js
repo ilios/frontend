@@ -8,6 +8,7 @@ const { IliosFeatures: { accessCourseVisualizations } } = config;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
+  titleToken: 'general.coursesAndSessions',
   accessCourseVisualizations,
   beforeModel(){
     const accessCourseVisualizations = this.get('accessCourseVisualizations');

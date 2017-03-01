@@ -5,6 +5,7 @@ const { RSVP } = Ember;
 const { all } = RSVP;
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  titleToken: 'general.learnerGroups',
   afterModel(model){
     //preload data to speed up rendering later
     return all([

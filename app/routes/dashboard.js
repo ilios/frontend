@@ -10,6 +10,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   store: service(),
   today: new Date(),
+  titleToken: 'general.dashboard',
 
   model() {
     const store = this.get('store');
@@ -19,11 +20,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
         const academicYears = store.findAll('academic-year');
         resolve(hash({ schools, academicYears }));
       });
-    });     
+    });
   },
-
-  setupController() {
-    this._super.apply(this, arguments);
-    this.controllerFor('application').set('pageTitleTranslation', 'general.dashboard');
-  }
 });
