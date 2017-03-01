@@ -6,6 +6,9 @@ import moment from 'moment';
 
 import Ember from 'ember';
 
+const { run } = Ember;
+const { later } = run;
+
 var application;
 
 module('Acceptance: Courses', {
@@ -66,24 +69,24 @@ test('filters by title', function(assert) {
 
     //put these in nested later blocks because there is a 500ms debounce on the title filter
     fillIn('.titlefilter input', 'first');
-    Ember.run.later(function(){
+    later(function(){
       assert.equal(1, find('.list tbody tr').length);
       assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
       fillIn('.titlefilter input', 'second');
       andThen(function(){
-        Ember.run.later(function(){
+        later(function(){
           assert.equal(1, find('.list tbody tr').length);
           assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondCourse.title));
           fillIn('.titlefilter input', 'special');
           andThen(function(){
-            Ember.run.later(function(){
+            later(function(){
               assert.equal(2, find('.list tbody tr').length);
               assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstCourse.title));
               assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(secondCourse.title));
 
               fillIn('.titlefilter input', 'course');
               andThen(function(){
-                Ember.run.later(function(){
+                later(function(){
                   assert.equal(4, find('.list tbody tr').length);
                   assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
                   assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
@@ -92,7 +95,7 @@ test('filters by title', function(assert) {
 
                   fillIn('.titlefilter input', '');
                   andThen(function(){
-                    Ember.run.later(function(){
+                    later(function(){
                       assert.equal(4, find('.list tbody tr').length);
                       assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(lastCourse.title));
                       assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')), getText(regularCourse.title));
@@ -702,4 +705,23 @@ test('non-privileged users cannot lock and unlock course but can see the icon', 
       assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is still unlocked');
     });
   });
+});
+
+test('title filter escapes regex', async function(assert) {
+  server.create('academicYear', {id: 2014});
+  assert.expect(4);
+  let firstCourse = server.create('course', {
+    title: 'yes\\no',
+    year: 2014,
+    school: 1,
+  });
+  const courses = '.list tbody tr';
+  const firstCourseTitle = `${courses}:eq(0) td:eq(0)`;
+
+  await visit('/courses');
+  assert.equal(1, find(courses).length);
+  assert.equal(getElementText(firstCourseTitle), getText(firstCourse.title));
+  await fillIn('.titlefilter input', '\\');
+  assert.equal(1, find(courses).length);
+  assert.equal(getElementText(firstCourseTitle), getText(firstCourse.title));
 });
