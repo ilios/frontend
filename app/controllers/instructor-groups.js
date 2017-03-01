@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import { translationMacro as t } from "ember-i18n";
+import escapeRegExp from '../utils/escape-reg-exp';
 
 const { computed, Controller, RSVP, isEmpty, isPresent, inject, observer } = Ember;
 const { gt } = computed;
@@ -45,7 +46,9 @@ export default Controller.extend({
     Ember.run.debounce(this, this.setFilter, 500);
   }),
   setFilter: function(){
-    this.set('debouncedFilter', this.get('titleFilter'));
+    const titleFilter = this.get('titleFilter');
+    const clean = escapeRegExp(titleFilter);
+    this.set('debouncedFilter', clean);
   },
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   filteredInstructorGroups: computed(
