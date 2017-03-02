@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('controller:courses', 'CoursesController', {
-  needs: ['service:iliosMetrics'],
+  needs: ['service:iliosMetrics', 'service:headData'],
 });
 
 // Replace this with your real tests.

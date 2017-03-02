@@ -6,6 +6,7 @@ const { service } = inject;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
+  titleToken: 'general.admin',
   model(){
     return this.get('currentUser.model').then(user => {
       return user.get('schools').then(schools => {

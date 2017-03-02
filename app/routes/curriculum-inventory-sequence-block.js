@@ -5,7 +5,7 @@ const { RSVP, Route } = Ember;
 const { all } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-
+  titleToken: 'general.curriculumInventoryReports',
   afterModel(model){
     //preload data to speed up rendering later
     return all([
@@ -13,10 +13,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
       model.get('parent'),
       model.get('report'),
     ]);
-  },
-
-  setupController: function(controller, hash){
-    controller.set('model', hash);
-    this.controllerFor('application').set('pageTitleTranslation', 'general.curriculumInventoryReports');
   },
 });

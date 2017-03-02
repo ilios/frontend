@@ -9,6 +9,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
   ajax: service(),
+  titleToken: 'general.login',
 
   noAccountExistsError: false,
   noAccountExistsAccount: null,

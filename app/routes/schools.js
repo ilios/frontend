@@ -6,12 +6,8 @@ const { service } = inject;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
+  titleToken: 'general.schools',
   model(){
     return this.get('store').findAll('school');
-  },
-  setupController: function(controller, model){
-    this._super(...arguments);
-    controller.set('model', model);
-    this.controllerFor('application').set('pageTitleTranslation', 'general.schools');
   },
 });

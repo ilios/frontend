@@ -5,6 +5,7 @@ const { Route, RSVP } = Ember;
 const { Promise, all, map } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  titleToken: 'general.coursesAndSessions',
   afterModel(course){
     return all([
       this.loadCourseLearningMaterials(course),

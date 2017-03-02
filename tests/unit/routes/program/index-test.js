@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:program/index', 'Unit | Route | Program/Index ', {
-  needs: ['service:iliosMetrics'],
+  needs: ['service:iliosMetrics', 'service:headData'],
 });
 
 test('it exists', function(assert) {

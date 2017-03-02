@@ -9,6 +9,7 @@ export default Component.extend({
   i18n: service(),
   classNames: ['ilios-header'],
   tagName: 'header',
+  title: null,
   locales: computed('i18n.locales', 'i18n.locale', function() {
     return this.get('i18n.locales').map(locale => {
       return { id: locale, text: this.get('i18n').t('general.language.' + locale) };

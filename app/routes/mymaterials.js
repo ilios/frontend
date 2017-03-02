@@ -10,6 +10,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   ajax: service(),
   iliosConfig: service(),
+  titleToken: 'general.learningMaterials',
 
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
@@ -26,9 +27,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
         });
       });
     });
-  },
-  setupController: function(){
-    this._super(...arguments);
-    this.controllerFor('application').set('pageTitleTranslation', 'general.learningMaterials');
   },
 });

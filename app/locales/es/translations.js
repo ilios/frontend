@@ -201,6 +201,7 @@ export default {
     'icsAdminInstructions': 'Para agregar el calendario de Ilios de un usuario a otra aplicación o servicio, será necesario utilizar esta URL.  esta dirección URL es como una contraseña. ¡Quien lo sabe puede ver el calendario de este usuario!',
     'icsFeed': 'Fuente de ICS',
     'icsInstructions': 'Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!',
+    'ilios': 'Ilios',
     'ilm': 'ILM',
     'include': 'Incluir',
     'incompleteSessions': 'Sesiónes Incompletas: No se pueden publicar',

@@ -4,9 +4,5 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 const { Route } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  setupController() {
-    this._super(...arguments);
-
-    this.controllerFor('application').set('pageTitleTranslation', 'general.admin');
-  }
+  titleToken: 'general.admin',
 });

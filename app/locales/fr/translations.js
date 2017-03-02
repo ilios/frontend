@@ -201,6 +201,7 @@ export default {
     'icsAdminInstructions': "Pour ajouter le calendrier d'un utilisateur à des services ou applications autre, devront utiliser cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir le calendrier de cet utilisateur!",
     'icsFeed': 'Données de ICS',
     'icsInstructions': "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!",
+    'ilios': 'Ilios',
     'ilm': 'ILM',
     'include': 'Inclure',
     'incompleteSessions': "Séances incomplète: ne peut être pas publiée",

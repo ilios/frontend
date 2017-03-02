@@ -1,0 +1,8 @@
+<title>
+  {{t 'general.ilios'}}
+  {{#if model.titleTokens.length}}
+    {{#each model.titleTokens as |token|}}
+      {{t token}}&nbsp;
+    {{/each}}
+  {{/if}}
+</title>

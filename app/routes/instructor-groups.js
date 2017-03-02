@@ -7,6 +7,7 @@ const { service } = inject;
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   store: service(),
+  titleToken: 'general.instructorGroups',
   model() {
     let defer = RSVP.defer();
     let model = {};
@@ -21,10 +22,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
 
     return defer.promise;
-  },
-  setupController: function(controller, hash){
-    controller.set('model', hash);
-    this.controllerFor('application').set('pageTitleTranslation', 'general.instructorGroups');
   },
   queryParams: {
     titleFilter: {

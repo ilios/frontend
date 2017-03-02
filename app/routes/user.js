@@ -5,6 +5,7 @@ const { Route, RSVP } = Ember;
 const { Promise, hash, all } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  titleToken: 'general.admin',
   /**
   * Prefetch user relationship data to smooth loading
   **/
