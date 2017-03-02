@@ -15,8 +15,8 @@ moduleForComponent('new-myreport', 'Integration | Component | new myreport', {
   }
 });
 
-test('it renders', function(assert) {
-  assert.expect(31);
+test('it renders', async function(assert) {
+  assert.expect(35);
 
   const mockSchools = [
     {id: 2, title: 'second'},
@@ -37,11 +37,12 @@ test('it renders', function(assert) {
   this.on('close', parseInt);
   this.render(hbs`{{new-myreport close=(action 'close')}}`);
   const title = '.title';
-  const schools = 'select:eq(0) option';
-  const allSchools = `${schools}:eq(0)`;
-  const firstSchool = `${schools}:eq(1)`;
-  const secondSchool = `${schools}:eq(2)`;
-  const thirdSchool = `${schools}:eq(3)`;
+  const schools = 'select:eq(0)';
+  const schoolOptions = `${schools} option`;
+  const allSchools = `${schoolOptions}:eq(0)`;
+  const firstSchool = `${schoolOptions}:eq(1)`;
+  const secondSchool = `${schoolOptions}:eq(2)`;
+  const thirdSchool = `${schoolOptions}:eq(3)`;
 
   const subjects = 'select:eq(1) option';
   const firstSubject = `${subjects}:eq(0)`;
@@ -56,16 +57,20 @@ test('it renders', function(assert) {
   const tenthSubject = `${subjects}:eq(9)`;
   const eleventhSubject = `${subjects}:eq(10)`;
 
-
+  await wait();
   assert.equal(this.$(title).text(), 'New Report');
   assert.notEqual(this.$(allSchools).text().search(/All Schools/), -1);
   assert.equal(this.$(allSchools).val(), "null");
+  assert.ok(this.$(allSchools).not(':selected'), 'all schools is not selected');
   assert.notEqual(this.$(firstSchool).text().search(/first/), -1);
   assert.equal(this.$(firstSchool).val(), 1);
+  assert.ok(this.$(firstSchool).not(':selected'), 'first school is not selected');
   assert.notEqual(this.$(secondSchool).text().search(/second/), -1);
   assert.equal(this.$(secondSchool).val(), 2);
+  assert.ok(this.$(secondSchool).is(':selected'), 'users primary school is selected');
   assert.notEqual(this.$(thirdSchool).text().search(/third/), -1);
   assert.equal(this.$(thirdSchool).val(), 3);
+  assert.ok(this.$(thirdSchool).not(':selected'), 'third school is not selected');
 
   assert.equal(this.$(firstSubject).text().trim(), 'Courses');
   assert.equal(this.$(firstSubject).val(), 'course');
@@ -91,7 +96,7 @@ test('it renders', function(assert) {
   assert.equal(this.$(eleventhSubject).val(), 'session type');
 });
 
-let checkObjects = function(context, assert, subjectNum, subjectVal, expectedObjects){
+let checkObjects = async function(context, assert, subjectNum, subjectVal, expectedObjects){
   assert.expect(expectedObjects.length + 2);
   const mockSchools = [{id: 2, title: 'second'}];
   const mockUser = Object.create({
@@ -106,12 +111,16 @@ let checkObjects = function(context, assert, subjectNum, subjectVal, expectedObj
   context.on('close', parseInt);
   context.render(hbs`{{new-myreport close=(action 'close')}}`);
 
+  const schoolSelect = `select:eq(0)`;
   const select = `select:eq(1)`;
   const subjects = `${select} option`;
   const targetSubject = `${subjects}:eq(${subjectNum})`;
 
   const objectsOptions = 'select:eq(2) option';
 
+  await wait();
+  context.$(schoolSelect).val(null).change();
+  await wait();
   assert.equal(context.$(targetSubject).val(), subjectVal);
   context.$(select).val(subjectVal).change();
 
@@ -229,8 +238,21 @@ test('choosing session type selects correct objects', function(assert) {
 });
 
 
-test('can search for user #2506', function(assert) {
+test('can search for user #2506', async function(assert) {
   assert.expect(8);
+
+  const mockSchools = [
+    {id: 1, title: 'first'},
+  ];
+  const mockUser = Object.create({
+    schools: resolve(mockSchools),
+    school: resolve(Object.create(mockSchools[0]))
+  });
+  const currentUserMock = Service.extend({
+    model: resolve(mockUser)
+  });
+  this.register('service:current-user', currentUserMock);
+
 
   const user = Object.create({
     id: 1,
@@ -257,6 +279,7 @@ test('can search for user #2506', function(assert) {
   this.on('close', parseInt);
   this.render(hbs`{{new-myreport close=(action 'close')}}`);
 
+  const schoolSelect = 'select:eq(0)';
   const subjects = `select:eq(1) option`;
   const objectSelect = 'select:eq(2)';
   const targetSubject = `${subjects}:eq(0)`;
@@ -267,7 +290,9 @@ test('can search for user #2506', function(assert) {
   const firstResult = `${results}:eq(1)`;
   const selectedUser = `.removable-list`;
 
-
+  await wait();
+  this.$(schoolSelect).val(null).change();
+  await wait();
   assert.equal(this.$(targetSubject).val(), 'course');
   this.$(objectSelect).val(targetObject).change();
 
