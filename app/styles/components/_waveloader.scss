@@ -1,6 +1,6 @@
 .waveloader {
   &.is-full-size {
-    @include align-items(center);
+    align-items: center;
     display: flex;
     min-height: 100px;
   }
@@ -19,7 +19,7 @@
       position: relative;
 
       span {
-        @include animation(wave 2s infinite ease-in-out);
+        animation: wave 2s infinite ease-in-out;
         background: $ilios-orange;
         bottom: 0;
         display: block;
@@ -33,35 +33,35 @@
       $delay: $i * 2 / 10 + s;
 
       .widget span:nth-child(#{$i + 1}) {
-        @include animation-delay($delay);
+        animation-delay: $delay;
         left: $i * 11px;
       }
     }
   }
 }
 
-@include keyframes(wave) {
+@keyframes wave {
   0% {
-    @include transform(translateY(0));
     background: $ilios-orange;
     height: 10px;
+    transform: translateY(0);
   }
 
   25% {
-    @include transform(translateY(30px));
     background: $wave-loader-yellow;
     height: 60px;
+    transform: translateY(30px);
   }
 
   50% {
-    @include transform(translateY(0));
     background: $ilios-orange;
     height: 10px;
+    transform: translateY(0);
   }
 
   100% {
-    @include transform(translateY(0));
     background: $ilios-orange;
     height: 10px;
+    transform: translateY(0);
   }
 }

@@ -74,11 +74,11 @@
 
 .columnar-list {
   @include media($medium-screen) {
-    @include column-count(3);
+    column-count: 3;
   }
 
   @include media($large-screen) {
-    @include column-count(4);
+    column-count: 4;
   }
 }
 

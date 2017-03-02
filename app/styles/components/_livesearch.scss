@@ -3,7 +3,6 @@
   position: relative;
 
   .results {
-    @include transition (all .2s ease-in-out);
     background: $white;
     border: 1px solid $background-grey;
     border-radius: $base-border-radius;
@@ -14,6 +13,7 @@
     min-width: 191px;
     overflow: visible;
     top: 2em;
+    transition: all .2s ease-in-out;
     z-index: 100;
 
     li {

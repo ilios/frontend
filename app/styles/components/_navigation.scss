@@ -13,9 +13,7 @@ $sliding-menu-color-hover: #fff;
 
 .sliding-navigation {
   .sliding-menu-button {
-    @include transform(rotate(90deg));
     @include position(fixed, 105px 0 0 -45px);
-    @include transition(all .25s linear);
 
     background-color: $sliding-menu-background;
     border-color: $ilios-orange;
@@ -34,6 +32,8 @@ $sliding-menu-color-hover: #fff;
     -webkit-overflow-scrolling: touch;
     padding-top: .4em;
     text-align: center;
+    transform: rotate(90deg);
+    transition: all .25s linear;
     width: 120px;
     z-index: 201;
 
@@ -42,30 +42,30 @@ $sliding-menu-color-hover: #fff;
     }
 
     i {
-      @include transform(rotate(-90deg));
       margin-right: 10px;
+      transform: rotate(-90deg);
     }
 
     &.is-menu-visible {
-      @include transform(translateX(180px) rotate(90deg));
+      transform: translateX(180px) rotate(90deg);
     }
   }
 
   .sliding-menu-content {
     @include position(fixed, 60px auto 0 0);
     @include size(180px 100%);
-    @include transform(translateX(-190px));
-    @include transition(all .25s linear);
     background: $sliding-menu-background;
     border-right: 1px solid $header-grey;
     box-shadow: 2px 1px 3px $navigation-shadow-1, inset 1px 0 2px $navigation-shadow-2;
     color: $sliding-menu-color;
     -webkit-overflow-scrolling: touch;
     padding-top: 2em;
+    transform: translateX(-190px);
+    transition: all .25s linear;
     z-index: 201;
 
     @include media($giant-screen) {
-      @include transform(translateX(0));
+      transform: translateX(0);
     }
 
     li {
@@ -91,13 +91,12 @@ $sliding-menu-color-hover: #fff;
     }
 
     &.is-menu-visible {
-      @include transform(translateX(0));
+      transform: translateX(0);
     }
   }
 
   .menu-screen {
     @include position(fixed, 0 0 0 0);
-    @include transition;
     background: $sliding-menu-background;
     opacity: 0;
     visibility: hidden;

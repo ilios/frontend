@@ -15,7 +15,7 @@ a,
 }
 
 button {
-  @include appearance(none);
+  appearance: none;
   background-color: $base-link-color;
   border: 0;
   border-radius: $base-border-radius;
