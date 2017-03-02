@@ -6,7 +6,7 @@ node_js:
 sudo: false
 
 addons:
-  firefox: "latest-esr"
+  firefox: "latest"
 
 env:
   global:
