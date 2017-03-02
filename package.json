@@ -97,7 +97,6 @@
     "liquid-fire": "0.27.1",
     "liquid-tether": "2.0.3",
     "loader.js": "^4.2.2",
-    "node-sass": "4.5.0",
     "normalize.css": "^4.1.1",
     "pluralize": "^3.0.0",
     "validator": "^7.0.0"

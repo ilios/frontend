@@ -1,7 +1,6 @@
 /* eslint-env node */
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-var nodeSass = require('node-sass'); // loads specific version of node-sass from package.json
 
 module.exports = function(defaults) {
   var env = EmberApp.env() || 'development';
@@ -29,10 +28,6 @@ module.exports = function(defaults) {
     },
     'ember-cli-qunit': {
       useLintTree: false
-    },
-    //fix for #2570
-    sassOptions: {
-      nodeSass: nodeSass
     },
     'ember-froala-editor': {
       languages: ['fr','es'],
