@@ -29,6 +29,9 @@ test('can transition to `users` route', function(assert) {
 });
 
 test('can search for users', function(assert) {
+	
+  console.log("****")
+	
   server.createList('user', 20, { email: 'user@example.edu' });
   server.createList('authentication', 20);
 
@@ -37,6 +40,9 @@ test('can search for users', function(assert) {
   const secondResultUsername = `${secondResult} .name`;
   const secondResultEmail = `${secondResult} .email`;
   const name = '.user-display-name';
+
+  console.log("****")
+  console.log(name)
 
   visit(url);
   fillIn(userSearch, 'son');

@@ -241,11 +241,11 @@ export default function() {
   this.delete('api/offerings/:id', 'offering');
   this.post('api/offerings', 'offering');
 
-  this.get('api/pendinguserupdates', getAll);
-  this.get('api/pendinguserupdates/:id', 'pendingUserUpdate');
-  this.put('api/pendinguserupdates/:id', 'pendingUserUpdate');
-  this.delete('api/pendinguserupdates/:id', 'pendingUserUpdate');
-  this.post('api/pendinguserupdates', 'pendingUserUpdate');
+  this.get('api/pendinguserupdates');
+  this.get('api/pendinguserupdates/:id');
+  this.put('api/pendinguserupdates/:id');
+  this.del('api/pendinguserupdates/:id');
+  this.post('api/pendinguserupdates');
 
   this.get('api/permissions', getAll);
   this.get('api/permissions/:id', 'permission');
@@ -345,11 +345,11 @@ export default function() {
   this.delete('api/userroles/:id', 'userRole');
   this.post('api/userroles', 'userRole');
 
-  this.get('api/users', getAll);
-  this.get('api/users/:id', 'user');
-  this.put('api/users/:id', 'user');
-  this.delete('api/users/:id', 'user');
-  this.post('api/users', 'user');
+  this.get('api/users');
+  this.get('api/users/:id');
+  this.put('api/users/:id');
+  this.del('api/users/:id');
+  this.post('api/users');
 
   this.get('api/userevents/:userid', function(db, request) {
     let from = moment.unix(request.queryParams.from);
