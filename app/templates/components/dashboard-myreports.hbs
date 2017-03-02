@@ -1,69 +1,71 @@
-<div class='dashboard-block-header'>
-  {{t 'general.myReports'}}
-  <div class="dashboard-block-actions">
-    {{#liquid-if selectedReport class='crossFade'}}
-      <button {{action 'selectReport' null}}>{{t 'general.allReports'}}</button>
-    {{else}}
-      {{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}
-    {{/liquid-if}}
+{{#unless loadAttr.isRunning}}
+  <div class='dashboard-block-header'>
+    {{t 'general.myReports'}}
+    <div class="dashboard-block-actions">
+      {{#liquid-if selectedReport class='crossFade'}}
+        <button {{action 'selectReport' null}}>{{t 'general.allReports'}}</button>
+      {{else}}
+        {{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}
+      {{/liquid-if}}
+    </div>
   </div>
-</div>
 
-{{#liquid-if selectedReport class='crossFade'}}
-  <h3>{{await selectedReport.displayTitle}}</h3>
-  {{#if (is-fulfilled reportResultsList)}}
-    {{#if (get (await reportResultsList) 'length')}}
-      <ul>
-        {{#each (await reportResultsList) as |item|}}
-          {{#if item.model2}}
-            <li>
-              {{#link-to item.route item.model item.model2}}
-                {{item.value}}
-              {{/link-to}}
-            </li>
-          {{else if item.model}}
-            <li>
-              {{#link-to item.route item.model}}
-                {{item.value}}
-              {{/link-to}}
-            </li>
-          {{else}}
-            <li>{{item.value}}</li>
+  {{#liquid-if selectedReport class='crossFade'}}
+    <h3>{{await selectedReport.displayTitle}}</h3>
+    {{#if (is-fulfilled reportResultsList)}}
+      {{#if (get (await reportResultsList) 'length')}}
+        <ul>
+          {{#each (await reportResultsList) as |item|}}
+            {{#if item.model2}}
+              <li>
+                {{#link-to item.route item.model item.model2}}
+                  {{item.value}}
+                {{/link-to}}
+              </li>
+            {{else if item.model}}
+              <li>
+                {{#link-to item.route item.model}}
+                  {{item.value}}
+                {{/link-to}}
+              </li>
+            {{else}}
+              <li>{{item.value}}</li>
 
-          {{/if}}
-        {{/each}}
-      </ul>
-    {{else}}
-      {{t 'general.none'}}
-    {{/if}}
-  {{else}}
-    <h1>{{fa-icon 'spinner' spin=true}}</h1>
-  {{/if}}
-{{else}}
-  <div class='dashboard-block-body'>
-    {{#liquid-if myReportEditorOn class='vertical'}}
-      {{new-myreport close=(action 'toggleEditor')}}
-    {{/liquid-if}}
-    {{#if (is-fulfilled sortedReports)}}
-      {{#if (get (await sortedReports) 'length')}}
-        <table>
-          <tbody>
-            {{#each (await sortedReports) as |report|}}
-              <tr>
-                <td {{action 'selectReport' report}} class='link clickable' colspan=4>
-                  {{fa-icon 'external-link-square'}}
-                  {{await report.displayTitle}}
-                </td>
-                <td class='text-right remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
+            {{/if}}
+          {{/each}}
+        </ul>
       {{else}}
         {{t 'general.none'}}
       {{/if}}
     {{else}}
       <h1>{{fa-icon 'spinner' spin=true}}</h1>
     {{/if}}
-  </div>
-{{/liquid-if}}
+  {{else}}
+    <div class='dashboard-block-body'>
+      {{#liquid-if myReportEditorOn class='vertical'}}
+        {{new-myreport close=(action 'toggleEditor')}}
+      {{/liquid-if}}
+      {{#if (is-fulfilled sortedReports)}}
+        {{#if (get (await sortedReports) 'length')}}
+          <table>
+            <tbody>
+              {{#each (await sortedReports) as |report|}}
+                <tr>
+                  <td {{action 'selectReport' report}} class='link clickable' colspan=4>
+                    {{fa-icon 'external-link-square'}}
+                    {{await report.displayTitle}}
+                  </td>
+                  <td class='text-right remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{else}}
+          {{t 'general.none'}}
+        {{/if}}
+      {{else}}
+        <h1>{{fa-icon 'spinner' spin=true}}</h1>
+      {{/if}}
+    </div>
+  {{/liquid-if}}
+{{/unless}}

@@ -44,7 +44,13 @@ moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard m
 
 test('list reports', function(assert) {
   assert.expect(4);
+  let currentUserMock = Service.extend({
+    model: resolve(Object.create({
+      reports: resolve(mockReports)
+    }))
+  });
   this.register('service:reporting', reportingMock);
+  this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{dashboard-myreports}}`);
 
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
@@ -61,7 +67,13 @@ test('list reports', function(assert) {
 
 test('display none when no reports', function(assert) {
   assert.expect(2);
+  let currentUserMock = Service.extend({
+    model: resolve(Object.create({
+      reports: resolve([])
+    }))
+  });
   this.register('service:reporting', reportingMockNoReports);
+  this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{dashboard-myreports}}`);
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
   assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
