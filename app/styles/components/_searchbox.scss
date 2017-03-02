@@ -6,9 +6,9 @@
   margin-bottom: 10px;
 
   input {
-    @include appearance(none);
     @include margin(0);
     @include padding(0 0 0 28px);
+    appearance: none;
     background: $white;
     border: 1px solid $input-box-grey;
     border-radius: $base-border-radius;

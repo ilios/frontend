@@ -50,7 +50,6 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
   }
 
   .rl-dropdown {
-    @include transition (all .2s ease-in-out);
     background-color: $white;
     border-radius: $base-border-radius;
     box-shadow: 0 2px 2px transparentize($black, .8);
@@ -62,6 +61,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     position: absolute;
     text-align: left;
     top: 100%;
+    transition: all .2s ease-in-out;
     white-space: nowrap;
     z-index: 100;
 

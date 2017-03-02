@@ -2,7 +2,7 @@
   margin-left: 150px;
   margin-top: 50px;
 
-  @include keyframes(pulse) {
+  @keyframes pulse {
     0% {
       stroke-dashoffset: 691;
      }
@@ -19,12 +19,12 @@
   }
 
   &.is-full-size {
-    @include align-items(center);
+    align-items: center;
     display: flex;
     min-height: 100px;
   }
 
   .path {
-    @include animation(pulse 2.2s infinite ease-in-out);
+    animation: pulse 2.2s infinite ease-in-out;
   }
 }
