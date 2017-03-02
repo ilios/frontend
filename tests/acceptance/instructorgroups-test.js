@@ -332,3 +332,26 @@ test('click title takes you to instructorgroup route', function(assert) {
     assert.equal(currentURL(), '/instructorgroups/1');
   });
 });
+
+test('title filter escapes regex', async function(assert) {
+  assert.expect(4);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    instructorGroups: [1]
+  });
+  server.create('instructorGroup', {
+    title: 'yes\\no',
+    school: 1,
+  });
+
+  const groups = '.list tbody tr';
+  const firstGroupTitle = `${groups}:eq(0) td:eq(0)`;
+  const filter = '.titlefilter input';
+  await visit('/instructorgroups');
+
+  assert.equal(find(groups).length, 1);
+  assert.equal(getElementText(firstGroupTitle), 'yes\\no');
+  await fillIn(filter, '\\');
+  assert.equal(find(groups).length, 1);
+  assert.equal(getElementText(firstGroupTitle), 'yes\\no');
+});

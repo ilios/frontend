@@ -220,3 +220,26 @@ test('click title takes you to program route', function(assert) {
     assert.equal(currentURL(), '/programs/1');
   });
 });
+
+test('title filter escapes regex', async function(assert) {
+  assert.expect(4);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('program', {
+    title: 'yes\\no',
+    school: 1,
+  });
+
+  const programs = '.list tbody tr';
+  const firstProgramTitle = `${programs}:eq(0) td:eq(0)`;
+  const filter = '.titlefilter input';
+  await visit('/programs');
+
+  assert.equal(find(programs).length, 1);
+  assert.equal(getElementText(firstProgramTitle), 'yes\\no');
+  await fillIn(filter, '\\');
+  assert.equal(find(programs).length, 1);
+  assert.equal(getElementText(firstProgramTitle), 'yes\\no');
+});
