@@ -24,11 +24,11 @@
         <tr>
           {{#sortable-th
             colspan=3
-            click=(action 'sortBy' 'title')
-            sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
+            click=(action 'sortBy' 'sessionTitle')
+            sortedBy=(or (eq sortBy 'sessionTitle') (eq sortBy 'sessionTitle:desc'))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.title'}}
+            {{t 'general.session'}}
           {{/sortable-th}}
           {{#sortable-th
             colspan=3
@@ -40,11 +40,11 @@
           {{/sortable-th}}
           {{#sortable-th
             colspan=3
-            click=(action 'sortBy' 'sessionTitle')
-            sortedBy=(or (eq sortBy 'sessionTitle') (eq sortBy 'sessionTitle:desc'))
+            click=(action 'sortBy' 'title')
+            sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.session'}}
+            {{t 'general.title'}}
           {{/sortable-th}}
           {{#sortable-th
             colspan=1
@@ -60,6 +60,8 @@
       <tbody>
         {{#each (sort-by sortBy filteredMaterials) as |lmObject|}}
           <tr>
+            <td colspan="3">{{lmObject.sessionTitle}}</td>
+            <td colspan="3">{{lmObject.courseTitle}}</td>
             <td colspan="3">
               {{#if lmObject.absoluteFileUri}}
                 <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
@@ -70,8 +72,6 @@
                 <small>{{lmObject.citation}}</small>
               {{/if}}
             </td>
-            <td colspan="3">{{lmObject.courseTitle}}</td>
-            <td colspan="3">{{lmObject.sessionTitle}}</td>
             <td>
               {{#if lmObject.firstOfferingDate}}
                 {{moment-format lmObject.firstOfferingDate 'MM/DD/YYYY'}}

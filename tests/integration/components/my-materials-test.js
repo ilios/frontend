@@ -62,22 +62,22 @@ test('it renders with materials', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
-  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
   const firstLmLink = `${firstLmTitle} a`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
-  const firstLmSessionTitle = `${materials}:eq(0) td:eq(2)`;
+  const firstLmSessionTitle = `${materials}:eq(0) td:eq(0)`;
   const firstLmFirstOffering = `${materials}:eq(0) td:eq(3)`;
 
-  const secondLmTitle = `${materials}:eq(1) td:eq(0)`;
+  const secondLmTitle = `${materials}:eq(1) td:eq(2)`;
   const secondLmLink = `${secondLmTitle} a`;
   const secondLmCourseTitle = `${materials}:eq(1) td:eq(1)`;
-  const secondLmSessionTitle = `${materials}:eq(1) td:eq(2)`;
+  const secondLmSessionTitle = `${materials}:eq(1) td:eq(0)`;
   const secondLmFirstOffering = `${materials}:eq(1) td:eq(3)`;
 
-  const thirdLmTitle = `${materials}:eq(2) td:eq(0)`;
+  const thirdLmTitle = `${materials}:eq(2) td:eq(2)`;
   const thirdLmLink = `${thirdLmTitle} a`;
   const thirdLmCourseTitle = `${materials}:eq(2) td:eq(1)`;
-  const thirdLmSessionTitle = `${materials}:eq(2) td:eq(2)`;
+  const thirdLmSessionTitle = `${materials}:eq(2) td:eq(0)`;
   const thirdLmFirstOffering = `${materials}:eq(2) td:eq(3)`;
 
   const courseListOptions = '.course-filter option';
@@ -125,7 +125,7 @@ test('filter by title', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
-  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
   assert.equal(this.$(materials).length, 3);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
@@ -150,7 +150,7 @@ test('filter by session title', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
-  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
   assert.equal(this.$(materials).length, 3);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
@@ -175,7 +175,7 @@ test('filter by course title', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
-  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
   assert.equal(this.$(materials).length, 3);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
@@ -200,7 +200,7 @@ test('filter by course', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
-  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
   assert.equal(this.$(materials).length, 3);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
@@ -238,9 +238,9 @@ test('clicking sort fires action', function(assert) {
 
   const table = 'table:eq(0)';
   const headers = `${table} thead th`;
-  const title = `${headers}:eq(0)`;
+  const title = `${headers}:eq(2)`;
   const courseTitle = `${headers}:eq(1)`;
-  const sessionTitle = `${headers}:eq(2)`;
+  const sessionTitle = `${headers}:eq(0)`;
   const firstOffering = `${headers}:eq(3)`;
 
   this.$(title).click();
@@ -306,7 +306,7 @@ test('find with slash does not blow up on regex error', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
-  const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
+  const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
   assert.equal(this.$(materials).length, 3);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
