@@ -6,7 +6,7 @@
       value=title
       update=(action (mut title))
       onescape=(action this.attrs.close)
-      disabled=isSaving
+      disabled=save.isRunning
       focusOut=(action 'addErrorDisplayFor' 'title')
       keyDown=(action 'addErrorDisplayFor' 'title')
     }}
@@ -16,16 +16,18 @@
   </div>
   <p>
     {{t 'general.for'}}
-    <select onchange={{action "changeSchool" value="target.value"}}>
-      <option value=null selected={{is-equal null currentSchool}}>
-        {{t 'general.allSchools'}}
-      </option>
-      {{#each (await schoolList) as |school|}}
-        <option value={{school.id}} selected={{is-equal school currentSchool}}>
-          {{school.title}}
+    {{#if (is-fulfilled currentSchool)}}
+      <select onchange={{perform changeSchool value="target.value"}}>
+        <option value=null selected={{is-equal null (await currentSchool)}}>
+          {{t 'general.allSchools'}}
         </option>
-      {{/each}}
-    </select>
+        {{#each (await schoolList) as |school|}}
+          <option value={{school.id}} selected={{is-equal school.id (get (await currentSchool) 'id')}}>
+            {{school.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{/if}}
   </p>
   <p>
     {{t 'general.all'}}
@@ -100,8 +102,8 @@
     </p>
   {{/liquid-if}}
   <div class="input-buttons">
-    <button class='done text' {{action 'save'}}>
-      {{#if isSaving}}
+    <button class='done text' onclick={{perform save}}>
+      {{#if save.isRunning}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
         {{t 'general.save'}}

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import { task } from 'ember-concurrency';
 
 const { Component, computed, inject, RSVP, isEmpty, isPresent, Object } = Ember;
 const { map, Promise } = RSVP;
@@ -16,6 +17,33 @@ const Validations = buildValidations({
   ]
 });
 
+const PrepositionObject = Object.extend({
+  model: null,
+  type: null,
+  value: oneWay('model.id'),
+  label: computed('model', 'type', function () {
+    const type = this.get('type');
+    const model = this.get('model');
+    return new Promise(resolve => {
+      switch (type) {
+      case 'mesh term':
+        resolve(model.get('name'));
+        break;
+      case 'term':
+        model.get('vocabulary').then(vocabulary => {
+          model.get('titleWithParentTitles').then(titleWithParentTitles => {
+            const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
+            resolve(title);
+          });
+        });
+        break;
+      default:
+        resolve(model.get('title'));
+      }
+    });
+  })
+});
+
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   i18n: service(),
@@ -23,7 +51,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   flashMessages: service(),
   classNames: ['new-myreport', 'mesh-manager'],
   title: null,
-  currentSchool: null,
+  selectedSchool: null,
+  schoolChanged: false,
   currentSubject: 'course',
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
@@ -72,90 +101,49 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', function(){
-    return new Promise(resolve => {
-      const type = this.get('currentPrepositionalObject');
+  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', async function(){
+    const type = this.get('currentPrepositionalObject');
+    if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
+      return [];
+    }
 
-
-      if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
-        resolve([]);
-        return;
-      }
-
-      let model = type.dasherize();
-      const store = this.get('store');
-      const school = this.get('currentSchool');
-      let query = {
-        limit: 1000,
-        filters: {}
-      };
-      if (isPresent(school)) {
-        let schoolScopedModels = [
-          'session',
-          'course',
-          'program',
-          'session-type',
-          'instructor-group',
-          'competency',
-          'term',
-        ];
-        if (schoolScopedModels.includes(model)) {
-          if ('session' === model || 'term' == model) {
-            query.filters.schools = [this.get('currentSchool').get('id')];
-          } else {
-            query.filters.school = this.get('currentSchool').get('id');
-          }
+    let model = type.dasherize();
+    const store = this.get('store');
+    const school = await this.get('currentSchool');
+    let query = {
+      limit: 1000,
+      filters: {}
+    };
+    if (isPresent(school)) {
+      let schoolScopedModels = [
+        'session',
+        'course',
+        'program',
+        'session-type',
+        'instructor-group',
+        'competency',
+        'term',
+      ];
+      if (schoolScopedModels.includes(model)) {
+        if ('session' === model || 'term' == model) {
+          query.filters.schools = [school.get('id')];
+        } else {
+          query.filters.school = school.get('id');
         }
       }
-
-      const PrepositionObject = Object.extend({
-        model: null,
-        type: null,
-        value: oneWay('model.id'),
-        label: computed('model', 'type', function () {
-          const type = this.get('type');
-          const model = this.get('model');
-          return new Promise(resolve => {
-            switch (type) {
-            case 'mesh term':
-              resolve(model.get('name'));
-              break;
-            case 'term':
-              model.get('vocabulary').then(vocabulary => {
-                model.get('titleWithParentTitles').then(titleWithParentTitles => {
-                  const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
-                  resolve(title);
-                });
-              });
-              break;
-            default:
-              resolve(model.get('title'));
-            }
-          });
-        })
+    }
+    const objects = await store.query(model, query);
+    let values = objects.map(object => {
+      return PrepositionObject.create({
+        type,
+        model: object,
       });
+    });
 
-      store.query(model, query).then(objects => {
-        let values = objects.map(object => {
-          return PrepositionObject.create({
-            type,
-            model: object,
-          });
-        });
-        map(values, obj => {
-          return new Promise(resolve => {
-            obj.get('label').then(label => {
-              resolve({
-                value: obj.get('value'),
-                label: label
-              });
-            });
-          });
-        }).then(listWithSortTerm => {
-          resolve(listWithSortTerm);
-        });
-      });
-
+    return await map(values, async obj => {
+      const label = await obj.get('label');
+      const value = obj.get('value');
+      return {value, label};
     });
   }),
 
@@ -193,28 +181,97 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  schoolList: computed('currentUser.schools.[]',function(){
-    return new Promise(resolve => {
-      this.get('currentUser').get('model').then(user => {
-        if(isEmpty(user)){
-          resolve([]);
-        } else {
-          user.get('schools').then(schools => {
-            resolve(schools.sortBy('title'));
-          });
-        }
-      });
+  schoolList: computed('currentUser.schools.[]', async function(){
+    const currentUser = this.get('currentUser');
+    const user = await currentUser.get('model');
+
+    if (isEmpty(user)) {
+      return [];
+    }
+
+    const schools = await user.get('schools');
+    return schools.sortBy('title');
+  }),
+
+  currentSchool: computed('currentUser.model.school', 'selectedSchool', async function(){
+    const selectedSchool = this.get('selectedSchool');
+    const schoolChanged = this.get('schoolChanged');
+    if (isPresent(selectedSchool)) {
+      return selectedSchool;
+    }
+
+    //if the school has been set to null intentionally
+    if (schoolChanged) {
+      return null;
+    }
+
+    const currentUser = this.get('currentUser');
+    const user = await currentUser.get('model');
+    const school = await user.get('school');
+
+    return school;
+  }),
+
+  save: task(function *(){
+    this.set('isSaving', true);
+    this.send('addErrorDisplayFor', 'title');
+    const {validations} = yield this.validate();
+    if (validations.get('isInvalid')) {
+      return;
+    }
+    const flashMessages = this.get('flashMessages');
+    const store = this.get('store');
+    const subject = this.get('currentSubject');
+    const currentUser = this.get('currentUser');
+    const user = yield currentUser.get('model');
+    const title = this.get('title');
+    const prepositionalObject = this.get('currentPrepositionalObject');
+    const school = yield this.get('currentSchool');
+    const object = this.get('currentPrepositionalObject');
+    const prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
+    if (isPresent(subject) && isEmpty(object)) {
+      if (subject === 'instructor') {
+        flashMessages.alert('general.reportMissingObjectForInstructor');
+        return;
+      }
+      if (subject === 'mesh term') {
+        flashMessages.alert('general.reportMissingObjectForMeshTerm');
+        return;
+      }
+    }
+    if (
+        object && isEmpty(prepositionalObjectTableRowId)
+    ) {
+      if (object === 'instructor') {
+        flashMessages.alert('general.reportMissingInstructor');
+      }
+      if (object === 'mesh term') {
+        flashMessages.alert('general.reportMissingMeshTerm');
+      }
+      return;
+    }
+
+    let report = store.createRecord('report', {
+      title,
+      user,
+      subject,
+      prepositionalObject,
+      prepositionalObjectTableRowId,
+      school
     });
+    yield report.save();
+    this.send('clearErrorDisplay', 'title');
+    this.get('close')();
+  }),
+
+  changeSchool: task(function * (schoolId) {
+    const schoolList = yield this.get('schoolList');
+    const school = schoolList.findBy('id', schoolId);
+    this.set('selectedSchool', school);
+    this.set('schoolChanged', true);
   }),
 
   actions: {
-    changeSchool(schoolId){
-      this.get('schoolList').then(schoolList => {
-        let school = schoolList.find(school =>  school.get('id') === schoolId);
-        this.set('currentSchool', school);
-      });
-    },
-
     changeSubject(subject){
       this.set('currentSubject', subject);
       this.set('currentPrepositionalObject', null);
@@ -243,61 +300,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     closeEditor(){
       this.sendAction('close');
-    },
-    save(){
-      this.set('isSaving', true);
-      this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const flashMessages = this.get('flashMessages');
-          const store = this.get('store');
-          const subject = this.get('currentSubject');
-          let object = this.get('currentPrepositionalObject');
-          const prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
-          if (isPresent(subject) && isEmpty(object)) {
-            if (subject === 'instructor') {
-              flashMessages.alert('general.reportMissingObjectForInstructor');
-              return;
-            }
-            if (subject === 'mesh term') {
-              flashMessages.alert('general.reportMissingObjectForMeshTerm');
-              return;
-            }
-          }
-          if (
-              object && isEmpty(prepositionalObjectTableRowId)
-          ) {
-            if (object === 'instructor') {
-              flashMessages.alert('general.reportMissingInstructor');
-            }
-            if (object === 'mesh term') {
-              flashMessages.alert('general.reportMissingMeshTerm');
-            }
-            return;
-          }
-          this.get('currentUser.model').then(user => {
-
-            const title = this.get('title');
-            const subject = this.get('currentSubject');
-            const prepositionalObject = this.get('currentPrepositionalObject');
-            const school = this.get('currentSchool');
-            let report = store.createRecord('report', {
-              title,
-              user,
-              subject,
-              prepositionalObject,
-              prepositionalObjectTableRowId,
-              school
-            });
-            report.save().then(() => {
-              this.send('clearErrorDisplay', 'title');
-              this.get('close')();
-            });
-          });
-        }
-      }).finally(()=>{
-        this.set('isSaving', false);
-      });
     }
   }
 });
