@@ -3,8 +3,8 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:print-course', 'Unit | Controller | PrintCourse ', {
-  needs: ['service:iliosMetrics'],
+moduleFor('route:print-course', 'Unit | Route | PrintCourse ', {
+  needs: ['service:iliosMetrics', 'service:headData'],
 });
 
 test('it exists', function(assert) {

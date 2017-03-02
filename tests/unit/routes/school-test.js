@@ -1,7 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:school', 'Unit | Route | school', {
-  needs: ['service:iliosMetrics'],
+  needs: ['service:iliosMetrics', 'service:headData'],
 });
 
 test('it exists', function(assert) {

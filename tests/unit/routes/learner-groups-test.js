@@ -3,8 +3,8 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:learnerGroups', 'Unit | Controller | LearnerGroups ', {
-  needs: ['service:iliosMetrics'],
+moduleFor('route:learnerGroups', 'Unit | Route | LearnerGroups ', {
+  needs: ['service:iliosMetrics', 'service:headData'],
 });
 
 test('it exists', function(assert) {

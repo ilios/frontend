@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:session/publicationCheck', 'Unit | Route | Session/PublicationCheck ', {
-  needs: ['service:iliosMetrics'],
+  needs: ['service:iliosMetrics', 'service:headData'],
 });
 
 test('it exists', function(assert) {
