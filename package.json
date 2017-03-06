@@ -19,6 +19,8 @@
     "crypto-js": "^3.1.8",
     "elemental-calendar": "0.0.9",
     "ember-ajax": "2.5.6",
+    "ember-c3": "0.3.1",
+    "ember-c3-shim": "0.0.6",
     "ember-can": "0.8.3",
     "ember-cli": "2.11.1",
     "ember-cli-app-version": "^2.0.1",
