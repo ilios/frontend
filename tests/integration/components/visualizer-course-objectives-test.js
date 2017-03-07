@@ -10,10 +10,10 @@ moduleForComponent('visualizer-course-objectives', 'Integration | Component | vi
 
 test('it renders', function(assert) {
   const course = Object.create({
-    id: 13
+    title: 'test'
   });
   this.set('course', course);
   this.render(hbs`{{visualizer-course-objectives course=course}}`);
 
-  assert.equal(this.$().text().trim(), 'Course: 13');
+  assert.equal(this.$().text().trim(), 'test');
 });
