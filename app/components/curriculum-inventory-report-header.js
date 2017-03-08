@@ -44,7 +44,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   downloadReport: task(function * (report){
     let anchor = document.createElement('a');
-    anchor.href = report.absoluteFileUri;
+    anchor.href = report.get('absoluteFileUri');
     anchor.target = '_blank';
     anchor.rel = 'noopener';
     anchor.download = 'report.xml';
