@@ -241,7 +241,7 @@ export default function() {
   this.delete('api/offerings/:id', 'offering');
   this.post('api/offerings', 'offering');
 
-  this.get('api/pendinguserupdates');
+  this.get('api/pendinguserupdates', getAll);
   this.get('api/pendinguserupdates/:id');
   this.put('api/pendinguserupdates/:id');
   this.del('api/pendinguserupdates/:id');
