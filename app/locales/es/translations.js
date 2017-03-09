@@ -485,6 +485,7 @@ export default {
     'singleGroup': 'Solo grupo',
     'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba.",
     'smallGroups': 'Grupos Pequeños',
+    'sortObjectives': 'Clasificar los objetivos',
     'sortMaterials': 'Clasificar los materiales',
     'specialAttireIsRequired': 'Se <strong><em>require</em></strong> vestimenta especial',
     'specialAttireRequired': 'Vestimenta Especial Requerido',
