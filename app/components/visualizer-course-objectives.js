@@ -8,7 +8,7 @@ export default Component.extend({
   course: null,
   size: {
     height: 340,
-    width: 700
+    width: 900
   },
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
     const course = this.get('course');
