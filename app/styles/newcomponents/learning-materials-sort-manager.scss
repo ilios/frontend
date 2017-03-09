@@ -1,48 +1,5 @@
 .learning-materials-sort-manager {
-  .actions {
-    @include fill-parent;
-    vertical-align: middle;
-
-    @include media($large-screen) {
-      @include span-columns(2 of 12);
-      @include omega();
-      @include shift(10);
-      text-align: right;
-    }
-  }
-
-  .content {
-    clear: both;
-    padding-top: .5em;
-  }
-
-  .draggable-object {
-    @include fill-parent;
-    background-color: $header-grey;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: .3em;
-    margin-top: 10px;
-    padding: .2em .4em .2em .6em;
-    vertical-align: middle;
-
-    .fa {
-      vertical-align: top;
-    }
-  }
-
-  .draggable-object-content {
-    display: inline-block;
-
-    .details {
-      font-size: smaller;
-    }
-
-    .title {
-      @include fill-parent;
-      display: inline-block;
-    }
-  }
+  @include sort-manager;
 }
 
 
