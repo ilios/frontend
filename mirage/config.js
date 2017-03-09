@@ -345,7 +345,7 @@ export default function() {
   this.delete('api/userroles/:id', 'userRole');
   this.post('api/userroles', 'userRole');
 
-  this.get('api/users');
+  this.get('api/users', getAll);
   this.get('api/users/:id');
   this.put('api/users/:id');
   this.del('api/users/:id');
