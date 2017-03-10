@@ -1,10 +1,10 @@
 import Ember from 'ember';
+import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 const { computed, Component, RSVP } = Ember;
 const { Promise } = RSVP;
-const { sort } = computed;
 
-export default Component.extend({
+export default Component.extend(SortableByPosition, {
   editable: true,
   isSorting: false,
   isSaving: false,
@@ -21,9 +21,14 @@ export default Component.extend({
     });
   }),
 
-  sortedObjectives: sort('objectives', function(a, b){
-    return parseInt(a.get( 'id' )) - parseInt(b.get( 'id' ));
+  sortedObjectives: computed('objectives.[]', function(){
+    return new Promise(resolve => {
+      this.get('objectives').then(objectives => {
+        resolve(objectives.toArray().sort(this.get('positionSortingCallback')));
+      });
+    });
   }),
+
   classNames: ['course-objective-list'],
   objectivesForRemovalConfirmation: [],
   actions: {
