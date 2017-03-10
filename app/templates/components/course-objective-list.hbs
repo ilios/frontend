@@ -6,7 +6,7 @@
       cancel=(action 'cancelSorting')
     }}
   {{else}}
-    {{#if objectives.length}}
+    {{#if (get (await objectives) 'length')}}
       {{#if (and editable (await hasMoreThanOneObjective))}}
         <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t 'general.sortObjectives'}}</button>
       {{/if}}
@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each sortedObjectives as |objective|}}
+          {{#each (await sortedObjectives) as |objective|}}
             {{course-objective-list-item
               objective=objective
               editable=editable
