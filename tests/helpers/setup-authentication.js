@@ -8,8 +8,9 @@ export default function(application, userObject = {id: 4136}) {
   authenticateSession(application, token);
 
   if(userObject){
-    server.create('authentication', {id: userObject.id, user: userObject.id});
-    return server.create('user', userObject);
+    let user = server.create('user', userObject);
+    server.create('authentication', {id: user.id, user});
+    return user;
   }
 
   return null;

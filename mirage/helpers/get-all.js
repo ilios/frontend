@@ -2,7 +2,7 @@
 
 import getName from './get-name';
 
-export default function getAll(db, request){
+export default function getAll({db}, request){
   //turn /api/programyears?limit=1 into 'programYears'
   var modelRegex = /\/api\/([a-z]+).*/i;
   var modelName = getName(request.url.match(modelRegex)[1]);
