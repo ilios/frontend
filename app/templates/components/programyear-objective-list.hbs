@@ -1,25 +1,36 @@
 {{#if (is-fulfilled objectives)}}
-  {{#if objectives.length}}
-    <table>
-      <thead>
-        <tr>
-          <th class='text-left' colspan="3">{{t 'general.description'}}</th>
-          <th class='text-left' colspan="2">{{t 'general.competency'}}</th>
-          <th class='text-left' colspan="2">{{t 'general.meshTerms'}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await sortedObjectives) as |objective|}}
-          {{programyear-objective-list-item
-            objective=objective
-            programYear=programYear
-            manageCompetency=this.attrs.manageCompetency
-            manageDescriptors=this.attrs.manageDescriptors
-            editable=editable
-          }}
-        {{/each}}
-      </tbody>
-    </table>
+  {{#if isSorting}}
+    {{objective-sort-manager
+      subject=programYear
+      save=(action 'saveSortOrder')
+      cancel=(action 'cancelSorting')
+    }}
+  {{else}}
+    {{#if (get (await objectives) 'length')}}
+      {{#if (and editable (await hasMoreThanOneObjective))}}
+        <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t 'general.sortObjectives'}}</button>
+      {{/if}}
+      <table>
+        <thead>
+          <tr>
+            <th class='text-left' colspan="3">{{t 'general.description'}}</th>
+            <th class='text-left' colspan="2">{{t 'general.competency'}}</th>
+            <th class='text-left' colspan="2">{{t 'general.meshTerms'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await sortedObjectives) as |objective|}}
+            {{programyear-objective-list-item
+              objective=objective
+              programYear=programYear
+              manageCompetency=this.attrs.manageCompetency
+              manageDescriptors=this.attrs.manageDescriptors
+              editable=editable
+            }}
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
   {{/if}}
 {{else}}
   {{! template-lint-disable unused-block-params }}
@@ -27,3 +38,11 @@
     <div>{{fa-icon 'spinner' spin = true}}</div>
   {{/each}}
 {{/if}}
+
+{{#liquid-if isSaving class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalObjectivesToSave
+    currentProgress=currentObjectivesSaved
+  }}
+{{/liquid-if}}

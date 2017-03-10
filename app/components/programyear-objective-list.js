@@ -1,13 +1,11 @@
 import Ember from 'ember';
+import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';
 
 const { computed, Component } = Ember;
-const { not } = computed;
+const { alias, not } = computed;
 
-export default Component.extend({
+export default Component.extend(SortableObjectiveList, {
   classNames: ['programyear-objective-list'],
-  programYear: null,
+  programYear: alias('subject'),
   editable: not('programYear.locked'),
-  objectives: computed('programYear.objectives.[]', function(){
-    return this.get('programYear').get('objectives');
-  }),
 });
