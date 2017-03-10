@@ -2,13 +2,16 @@ import Ember from 'ember';
 import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 const { computed, Component, RSVP } = Ember;
-const { Promise } = RSVP;
+const { Promise, all } = RSVP;
 
 export default Component.extend(SortableByPosition, {
   editable: true,
   isSorting: false,
   isSaving: false,
   course: null,
+  totalObjectivesToSave: null,
+  currentObjectivesSaved: null,
+
   objectives: computed('course.objectives.[]', function(){
     return this.get('course').get('objectives');
   }),
@@ -31,6 +34,17 @@ export default Component.extend(SortableByPosition, {
 
   classNames: ['course-objective-list'],
   objectivesForRemovalConfirmation: [],
+
+  saveSomeObjectives(arr){
+    let chunk = arr.splice(0, 5);
+    return all(chunk.invoke('save')).then(() => {
+      if (arr.length){
+        this.set('currentObjectivesSaved', this.get('currentObjectivesSaved') + chunk.length);
+        return this.saveSomeObjectives(arr);
+      }
+    });
+  },
+
   actions: {
     remove(objective){
       objective.deleteRecord();
@@ -49,7 +63,7 @@ export default Component.extend(SortableByPosition, {
         lm.set('position', i + 1);
       }
       this.set('totalObjectivesToSave', objectives.length);
-      this.set('currentObjectiveSaved', 0);
+      this.set('currentObjectivesSaved', 0);
 
       this.saveSomeObjectives(objectives).then(() => {
         this.set('isSaving', false);
