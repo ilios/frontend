@@ -4,6 +4,11 @@
 {{#if (is-fulfilled objectiveData)}}
   {{chart-bar data=(await objectiveData) size=size padding=padding}}
   {{chart-pie data=(await objectiveData) size=size padding=padding}}
+  {{chart-donut data=(await objectiveData) size=size padding=padding}}
+  {{chart-spline data=(await objectiveData) size=size padding=padding}}
+  {{chart-line data=(await objectiveData) size=size padding=padding}}
+  {{chart-step data=(await objectiveData) size=size padding=padding}}
+  {{chart-scatter data=(await objectiveData) size=size padding=padding}}
 {{else}}
   {{fa-icon 'spinner' spin=true}}
 {{/if}}

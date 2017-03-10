@@ -9,17 +9,40 @@ export default Component.extend({
   avoiding code duplication
   and making stuff look nicer :)
   */
+  axis: {
+    x: {
+      label: {
+        text: 'Sessions',
+        position: 'outer-center',
+      }
+    },
+    y: {
+      label: {
+        text: 'Hours',
+        position: 'outer-middle',
+      }
+    }
+  },
+
+  data: {
+    order: 'asc'
+  },
 
   tooltip: {
-    show: false
+    show: true
   },
 
   color: {
     pattern: [
-      '#64CACF',
-      '#DF7BAA',
-      '#50AB85',
-      '#8D6FCA',
+      '#d71611',
+      '#AE59B6',
+      '#F62459',
+      '#913D88',
+      '#053AA5',
+      '#7E4CAC',
+      '#B00F60',
+      '#081E68',
+      '#56017e',
     ]
   },
 

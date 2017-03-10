@@ -1,0 +1,9 @@
+.c3-axis-x > .tick {
+  fill: none; // remove axis labels from x-axis
+}
+
+.c3 path,
+.c3 line {
+  fill: none;
+  stroke: $header-grey;
+}
