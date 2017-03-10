@@ -5,6 +5,8 @@ const { computed, Component, RSVP } = Ember;
 const { Promise, all } = RSVP;
 
 export default Component.extend(SortableByPosition, {
+  classNames: ['course-objective-list'],
+  objectivesForRemovalConfirmation: [],
   editable: true,
   isSorting: false,
   isSaving: false,
@@ -31,9 +33,6 @@ export default Component.extend(SortableByPosition, {
       });
     });
   }),
-
-  classNames: ['course-objective-list'],
-  objectivesForRemovalConfirmation: [],
 
   saveSomeObjectives(arr){
     let chunk = arr.splice(0, 5);
