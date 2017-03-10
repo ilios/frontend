@@ -12,38 +12,38 @@
       {{/if}}
       <table>
         <thead>
-        <tr>
-          <th class='text-left' colspan=3>{{t 'general.description'}}</th>
-          <th class='text-left' colspan=2>{{t 'general.parentObjectives'}}</th>
-          <th class='text-left' colspan=2>{{t 'general.meshTerms'}}</th>
-          <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
-        </tr>
+          <tr>
+            <th class='text-left' colspan=3>{{t 'general.description'}}</th>
+            <th class='text-left' colspan=2>{{t 'general.parentObjectives'}}</th>
+            <th class='text-left' colspan=2>{{t 'general.meshTerms'}}</th>
+            <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+          </tr>
         </thead>
         <tbody>
-        {{#each sortedObjectives as |objective|}}
-          {{course-objective-list-item
-            objective=objective
-            editable=editable
-            course=course
-            showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
-            remove=(action 'confirmRemoval')
-            manageParents=this.attrs.manageParents
-            manageDescriptors=this.attrs.manageDescriptors
-          }}
-          {{#if (is-in objectivesForRemovalConfirmation objective.id)}}
-            <tr class='confirm-removal'>
-              <td colspan=8>
-                <div class='confirm-message'>
-                  {{t 'general.confirmObjectiveRemoval'}}<br>
-                  <div class="confirm-buttons">
-                    <button {{action 'remove' objective}} class='remove text'>{{t 'general.yes'}}</button>
-                    <button {{action 'cancelRemove' objective}} class='done text'>{{t 'general.cancel'}}</button>
+          {{#each sortedObjectives as |objective|}}
+            {{course-objective-list-item
+              objective=objective
+              editable=editable
+              course=course
+              showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
+              remove=(action 'confirmRemoval')
+              manageParents=this.attrs.manageParents
+              manageDescriptors=this.attrs.manageDescriptors
+            }}
+            {{#if (is-in objectivesForRemovalConfirmation objective.id)}}
+              <tr class='confirm-removal'>
+                <td colspan=8>
+                  <div class='confirm-message'>
+                    {{t 'general.confirmObjectiveRemoval'}}<br>
+                    <div class="confirm-buttons">
+                      <button {{action 'remove' objective}} class='remove text'>{{t 'general.yes'}}</button>
+                      <button {{action 'cancelRemove' objective}} class='done text'>{{t 'general.cancel'}}</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>
-          {{/if}}
-        {{/each}}
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
         </tbody>
       </table>
     {{/if}}
