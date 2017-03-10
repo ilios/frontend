@@ -4,6 +4,7 @@ const { computed, Component } = Ember;
 const { sort, not } = computed;
 
 export default Component.extend({
+  classNames: ['programyear-objective-list'],
   programYear: null,
   editable: not('programYear.locked'),
   objectives: computed('programYear.objectives.[]', function(){
@@ -12,5 +13,5 @@ export default Component.extend({
   sortedObjectives: sort('objectives', function(a, b){
     return parseInt(a.get( 'id' )) - parseInt(b.get( 'id' ));
   }),
-  classNames: ['programyear-objective-list'],
+
 });
