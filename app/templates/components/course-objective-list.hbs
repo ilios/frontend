@@ -55,3 +55,11 @@
     <div>{{fa-icon 'spinner' spin = true}}</div>
   {{/each}}
 {{/if}}
+
+{{#liquid-if isSaving class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalObjectivesToSave
+    currentProgress=currentObjectivesSaved
+  }}
+{{/liquid-if}}
