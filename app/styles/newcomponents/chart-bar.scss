@@ -1,7 +1,5 @@
-.c3-axis-x {
-  & > .tick {
-    fill: none; // remove axis labels from x-axis
-  }
+.c3-axis-x > .tick {
+  fill: none; // remove axis labels from x-axis
 }
 
 .c3 path,
