@@ -1,19 +1,13 @@
 import Ember from 'ember';
+import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';
 
 const { computed, Component } = Ember;
-const { sort } = computed;
+const { alias } = computed;
 
-export default Component.extend({
+export default Component.extend(SortableObjectiveList, {
   classNames: ['session-objective-list'],
   objectivesForRemovalConfirmation: [],
-  session: null,
-
-  objectives: computed('session.objectives.[]', function(){
-    return this.get('session').get('objectives');
-  }),
-  sortedObjectives: sort('objectives', function(a, b){
-    return parseInt(a.get( 'id' )) - parseInt(b.get( 'id' ));
-  }),
+  session: alias('subject'),
 
   actions: {
     remove(objective){
