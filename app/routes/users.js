@@ -5,9 +5,6 @@ const { Route } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   titleToken: 'general.admin',
-  setupController(controller){
-    controller.get('searchForUsers').perform();
-  },
   queryParams: {
     query: {
       replace: true

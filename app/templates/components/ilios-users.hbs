@@ -1,0 +1,78 @@
+<div class="filters">
+  <div class="filter user-search">
+    {{one-way-search
+      value=query
+      update=setQuery
+      placeholder=(t 'general.searchUsers')
+    }}
+  </div>
+</div>
+
+<section class='users'>
+  <div class="header">
+    <span class='title'>{{t 'general.users'}}</span>
+    <div class='actions'>
+      {{#unless (or showNewUserForm showBulkNewUserForm)}}
+        <button {{action (toggle 'showNewUserForm' this)}}>{{t 'general.create'}}</button>
+        {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+          <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'general.createBulk'}}</button>
+        {{/if}}
+      {{else}}
+        <button {{action (if showNewUserForm (toggle 'showNewUserForm' this) (toggle 'showBulkNewUserForm' this))}}>
+          {{fa-icon 'minus'}}
+        </button>
+      {{/unless}}
+    </div>
+  </div>
+  <section class='new'>
+    {{#if showNewUserForm class='vertical'}}
+      {{#if (is-fulfilled newUserComponent)}}
+        {{component (await newUserComponent)
+          close=(action setShowNewUserForm false)
+          transitionToUser=transitionToUser
+          searchTerms=searchTerms
+          setSearchTerms=setSearchTerms
+        }}
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
+    {{/if}}
+    {{#if showBulkNewUserForm class='vertical'}}
+      {{#if (is-fulfilled newBulkUserComponent)}}
+        {{bulk-new-users
+          close=(action setShowNewUserForm false)
+        }}
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
+    {{/if}}
+  </section>
+  {{#if searchForUsers.lastSuccessful}}
+    {{pagedlist-controls
+      offset=offset
+      limit=limit
+      limitless=true
+      setOffset=(action 'setOffset')
+      setLimit=setLimit
+    }}
+
+    <div class='list'>
+      {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
+        {{user-list users=searchForUsers.lastSuccessful.value}}
+      {{else}}
+        <span class="no-results">{{t 'general.noResultsFound'}}</span>
+      {{/if}}
+    </div>
+
+    {{pagedlist-controls
+      offset=offset
+      limit=limit
+      limitless=true
+      setOffset=(action 'setOffset')
+      setLimit=setLimit
+    }}
+
+  {{else}}
+    {{pulse-loader}}
+  {{/if}}
+</section>

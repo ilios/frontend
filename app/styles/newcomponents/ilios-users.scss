@@ -1,0 +1,47 @@
+.ilios-users {
+  @include main-list;
+
+  .filters {
+    @include main-list-filters;
+
+    .filter {
+      @include main-list-filter;
+    }
+  }
+
+  .users {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h2 {
+        @include ilios-heading;
+      }
+
+      .title {
+        @include main-list-box-header-title(4);
+      }
+
+      .actions {
+        @include main-list-box-header-actions(8, 0);
+      }
+    }
+  }
+
+  .list {
+    @include main-list-box-table;
+
+    i {
+      margin-left: .5em;
+    }
+
+    .disabled-user-account {
+      font-style: italic;
+    }
+  }
+
+  .pagedlist-controls {
+    float: right;
+  }
+}

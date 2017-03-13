@@ -1,83 +1,16 @@
 {{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
-<section id='users' class='fullwidth main-border users'>
-  <div class="filter-tools">
-    <div class="filter user-search">
-      {{one-way-search
-        value=query
-        update=(action 'setQuery')
-        placeholder=(t 'general.searchUsers')
-      }}
-    </div>
-  </div>
-
-  <section class='resultslist'>
-    <div class="resultslist-header">
-      <span class='resultslist-title'>{{t 'general.users'}}</span>
-      {{#if allowAddNewUser}}
-        <div class='resultslist-actions'>
-          {{#unless (or showNewUserForm showBulkNewUserForm)}}
-            <button {{action (toggle 'showNewUserForm' this)}}>{{t 'general.create'}}</button>
-            {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
-              <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'general.createBulk'}}</button>
-            {{/if}}
-          {{else}}
-            <button {{action (if showNewUserForm (toggle 'showNewUserForm' this) (toggle 'showBulkNewUserForm' this))}}>
-              {{fa-icon 'minus'}}
-            </button>
-          {{/unless}}
-        </div>
-      {{/if}}
-    </div>
-    <section class='resultslist-new'>
-      {{#liquid-if (and showNewUserForm allowAddNewUser) class='vertical'}}
-        {{#liquid-if (is-fulfilled newUserComponent)}}
-          {{component (await newUserComponent)
-            close=(action (mut showNewUserForm false))
-            transitionToUser=(action 'transitionToUser')
-            searchTerms=searchTerms
-            setSearchTerms=(action (mut searchTerms))
-          }}
-        {{else}}
-          {{fa-icon 'spinner' spin=true}}
-        {{/liquid-if}}
-      {{/liquid-if}}
-      {{#liquid-if (and showBulkNewUserForm allowAddNewUser) class='vertical'}}
-        {{#liquid-if (is-fulfilled newBulkUserComponent)}}
-          {{bulk-new-users
-            close=(action (mut showBulkNewUserForm false))
-          }}
-        {{else}}
-          {{fa-icon 'spinner' spin=true}}
-        {{/liquid-if}}
-      {{/liquid-if}}
-    </section>
-    {{#if searchForUsers.lastSuccessful}}
-      {{pagedlist-controls
-        offset=offset
-        limit=limit
-        limitless=true
-        setOffset=(action 'setOffset')
-        setLimit=(action 'setLimit')
-      }}
-
-      <div class='resultslist-list'>
-        {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
-          {{user-list users=searchForUsers.lastSuccessful.value}}
-        {{else}}
-          <span class="no-results">{{t 'general.noResultsFound'}}</span>
-        {{/if}}
-      </div>
-
-      {{pagedlist-controls
-        offset=offset
-        limit=limit
-        limitless=true
-        setOffset=(action 'setOffset')
-        setLimit=(action 'setLimit')
-      }}
-
-    {{else}}
-      {{pulse-loader}}
-    {{/if}}
-  </section>
-</section>
+{{ilios-users
+  offset=offset
+  setOffset=(action (mut offset))
+  limit=limit
+  setLimit=(action (mut limit))
+  query=query
+  setQuery=(action (mut query))
+  showNewUserForm=showNewUserForm
+  setShowNewUserForm=(action (mut showNewUserForm))
+  showBulkNewUserForm=showBulkNewUserForm
+  setShowBulkNewUserForm=(action (mut showBulkNewUserForm))
+  searchTerms=searchTerms
+  setSearchTerms=(action (mut searchTerms))
+  transitionToUser=(action 'transitionToUser')
+}}
