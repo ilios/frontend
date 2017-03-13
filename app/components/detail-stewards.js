@@ -64,8 +64,8 @@ export default Component.extend({
     let stewardsToRemove = stewards.filter(steward => !bufferStewards.includes(steward));
     let stewardsToAdd = bufferStewards.filter(steward => !stewards.includes(steward));
     stewardsToAdd.setEach('programYear', programYear);
-    yield all(stewardsToRemove.invoke('destroyRecord'));
     yield all(stewardsToAdd.invoke('save'));
+    yield all(stewardsToRemove.invoke('destroyRecord'));
     this.set('isManaging', false);
     this.set('bufferStewards', []);
   }),
