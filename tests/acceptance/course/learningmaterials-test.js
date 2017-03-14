@@ -532,6 +532,9 @@ test('manage terms', function(assert) {
       assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
       fillIn(searchBoxInput, 'descriptor');
       click('span.search-icon', searchBox);
+	  
+	  //return pauseTest();
+	  
       andThen(function(){
         let searchResults = find('.mesh-search-results li', meshManager);
         assert.equal(searchResults.length, fixtures.meshDescriptors.length);
@@ -540,20 +543,20 @@ test('manage terms', function(assert) {
           let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
           assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
         }
-
-        for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-          if(material.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
-            assert.ok($(searchResults[i]).hasClass('disabled'));
+				
+        for (let i = 0; i < fixtures.meshDescriptors.length; i++){			
+          if(material.meshDescriptors.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
+            assert.ok($(searchResults[i]).hasClass('disabled'), '546');
           } else {
-            assert.ok(!$(searchResults[i]).hasClass('disabled'));
+            assert.ok(!$(searchResults[i]).hasClass('disabled'), '548');
           }
         }
         click('.removable-list li:eq(0)', meshManager).then(function(){
-          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'), '552');
         });
         click(searchResults[0]);
         andThen(function(){
-          assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'));
+          assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'), '556');
 
           let newExpectedMesh = [
             fixtures.meshDescriptors[0],
@@ -563,7 +566,7 @@ test('manage terms', function(assert) {
           assert.equal(removableItems.length, 2);
           for (let i = 0; i < 2; i++){
             let meshDescriptorName = find('.title', removableItems[i]).eq(0);
-            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
+            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name), '566');
           }
         });
       });

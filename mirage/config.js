@@ -90,18 +90,8 @@ export default function() {
   this.get('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.put('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.delete('api/courselearningmaterials/:id', 'courseLearningMaterial');
-  this.post('api/courselearningmaterials', function(db, request) {
-    let attrs = JSON.parse(request.requestBody);
-    let record = db.courseLearningMaterials.insert(attrs);
-    let lm = db.learningMaterials.find(record.learningMaterial);
-    if(lm){
-      lm.courseLearningMaterials.pushObject(record);
-    }
-    return {
-      courseLearningMaterial: record
-    };
-  });
-
+  this.post('api/courselearningmaterials', 'courseLearningMaterial');
+  
   this.get('api/courses', getAll);
   this.get('api/courses/:id', 'course');
   this.put('api/courses/:id', 'course');
@@ -257,7 +247,7 @@ export default function() {
   this.get('api/programyears/:id', 'programYear');
   this.put('api/programyears/:id', 'programYear');
   this.delete('api/programyears/:id', 'programYear');
-  this.post('api/programyears', function(db, request) {
+  this.post('api/programyears', function({db}, request) {
     let attrs = JSON.parse(request.requestBody);
     let record = db.programYears.insert(attrs);
     let programRecord = db.programs.find(record.programYear.program);
@@ -314,7 +304,7 @@ export default function() {
   this.put('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.delete('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
 
-  this.post('api/sessionlearningmaterials', function(db, request) {
+  this.post('api/sessionlearningmaterials', function({db}, request) {
     let attrs = JSON.parse(request.requestBody);
     let record = db.sessionLearningMaterials.insert(attrs);
     let lm = db.learningMaterials.find(record.learningMaterial);
@@ -351,7 +341,7 @@ export default function() {
   this.del('api/users/:id');
   this.post('api/users');
 
-  this.get('api/userevents/:userid', function(db, request) {
+  this.get('api/userevents/:userid', function({db}, request) {
     let from = moment.unix(request.queryParams.from);
     let to = moment.unix(request.queryParams.to);
     let userid = parseInt(request.params.userid);
@@ -367,7 +357,7 @@ export default function() {
     };
   });
 
-  this.get('api/schoolevents/:schoolid', function(db, request) {
+  this.get('api/schoolevents/:schoolid', function({db}, request) {
     let from = moment.unix(request.queryParams.from);
     let to = moment.unix(request.queryParams.to);
     let schoolId = parseInt(request.params.schoolid);
@@ -383,7 +373,7 @@ export default function() {
     };
   });
 
-  this.post('auth/login', function(db, request) {
+  this.post('auth/login', function({db}, request) {
     let errors = [];
     var attrs = JSON.parse(request.requestBody);
     if(!('username' in attrs) || !attrs.username){

@@ -21,7 +21,7 @@ module('Acceptance: Admin', {
 test('can transition to `users` route', function(assert) {
   const button = '.manage-users-summary a:eq(0)';
 
-  assert.equal(url, '/user', 'transition occurred');
+  assert.equal(url, '/admin', 'transition occurred');
 
   visit(url);
   click(button);
