@@ -13,6 +13,7 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   attireRequired: DS.attr('boolean'),
   equipmentRequired: DS.attr('boolean'),
   supplemental: DS.attr('boolean'),
+  attendanceRequired: DS.attr('boolean'),
   updatedAt: DS.attr('date'),
   sessionType: DS.belongsTo('session-type', {async: true}),
   course: DS.belongsTo('course', {async: true}),

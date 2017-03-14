@@ -10,6 +10,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import Ember from 'ember';
 
 var application;
+let url = '/courses/1/sessions/1/publicationcheck';
 module('Acceptance: Session - Publication Check', {
   beforeEach: function() {
     application = startApp();
@@ -61,7 +62,7 @@ test('full session count', function(assert) {
     sessionType: 1,
     sessionDescription: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
     var items = find('.session-publication-check .detail-content table tbody td');
@@ -97,7 +98,7 @@ test('check fields', function(assert) {
     sessionType: 1,
     sessionDescription: 1,
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -117,7 +118,7 @@ test('check remove ilm', function(assert) {
     course: 1,
     ilmSession: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -142,7 +143,7 @@ test('check add ilm', function(assert) {
     sessionType: 1,
     description: 'some text',
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -164,7 +165,7 @@ test('change ilm hours', function(assert) {
     course: 1,
     ilmSession: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
 
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
@@ -192,7 +193,7 @@ test('change ilm due date', function(assert) {
     course: 1,
     ilmSession: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
   andThen(function() {
     var container = find('.session-overview .sessionilmduedate');
     var dueDate = moment(ilmSession.dueDate).format('MM/DD/YY');
@@ -218,7 +219,7 @@ test('change title', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
   andThen(function() {
     let container = find('.session-header .title');
     assert.equal(getElementText(container), getText('session 0'));
@@ -240,7 +241,7 @@ test('change type', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
   andThen(function() {
     var container = find('.session-overview');
     assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
@@ -259,52 +260,163 @@ test('change type', function(assert) {
   });
 });
 
-test('change suplimental', function(assert) {
+
+
+test('session attributes are shown by school config', async assert => {
+  assert.expect(4);
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 2
   });
-  visit('/courses/1/sessions/1/publicationcheck');
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.ok(!find('.sessionsupplemental input', container).is(':checked'));
-    click(find('.sessionsupplemental .switch', container));
-    andThen(function(){
-      assert.ok(find('.sessionsupplemental input', container).is(':checked'));
-    });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSupplemental',
+    value: true
   });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialAttireRequired',
+    value: true
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialEquipmentRequired',
+    value: true
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionAttendanceRequired',
+    value: true
+  });
+  server.db.schools.update(1, {
+    configurations: [1, 2, 3, 4]
+  });
+  const sessionOverview = '.session-overview';
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+
+  await visit(url);
+  assert.equal(find(supplementalToggle).length, 1, 'control hidden');
+  assert.equal(find(specialAttireToggle).length, 1, 'control hidden');
+  assert.equal(find(specialEquiptmentToggle).length, 1, 'control hidden');
+  assert.equal(find(attendanceRequiredToggle).length, 1, 'control hidden');
 });
 
-test('change special attire', function(assert) {
+test('session attributes are hidden by school config', async assert => {
+  assert.expect(4);
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 2
   });
-  visit('/courses/1/sessions/1/publicationcheck');
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.ok(!find('.sessionspecialattire .switch input', container).is(':checked'));
-    click(find('.sessionspecialattire .switch', container));
-    andThen(function(){
-      assert.ok(find('.sessionspecialattire .switch input', container).is(':checked'));
-    });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSupplemental',
+    value: false
   });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialAttireRequired',
+    value: false
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialEquipmentRequired',
+    value: false
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionAttendanceRequired',
+    value: false
+  });
+  server.db.schools.update(1, {
+    configurations: [1, 2, 3, 4]
+  });
+  const sessionOverview = '.session-overview';
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+
+  await visit(url);
+  assert.equal(find(supplementalToggle).length, 0, 'control hidden');
+  assert.equal(find(specialAttireToggle).length, 0, 'control hidden');
+  assert.equal(find(specialEquiptmentToggle).length, 0, 'control hidden');
+  assert.equal(find(attendanceRequiredToggle).length, 0, 'control hidden');
 });
 
-test('change special equipment', function(assert) {
+test('session attributes are hidden when there is no school config', async assert => {
+  assert.expect(4);
+  server.create('user', {
+    id: 4136
+  });
   server.create('session', {
     course: 1,
     sessionType: 2
   });
-  visit('/courses/1/sessions/1/publicationcheck');
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.ok(!find('.sessionspecialequipment .switch input', container).is(':checked'));
-    click(find('.sessionspecialequipment .switch', container));
-    andThen(function(){
-      assert.ok(find('.sessionspecialequipment .switch input', container).is(':checked'));
-    });
+
+  const sessionOverview = '.session-overview';
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+
+  await visit(url);
+  assert.equal(find(supplementalToggle).length, 0, 'control hidden');
+  assert.equal(find(specialAttireToggle).length, 0, 'control hidden');
+  assert.equal(find(specialEquiptmentToggle).length, 0, 'control hidden');
+  assert.equal(find(attendanceRequiredToggle).length, 0, 'control hidden');
+});
+
+let testAttributeToggle = async function(assert, schoolVariableName, domclass){
+  assert.expect(3);
+  server.create('user', {
+    id: 4136
   });
+  server.create('session', {
+    course: 1,
+    sessionType: 2
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: schoolVariableName,
+    value: true
+  });
+  server.db.schools.update(1, {
+    configurations: [1]
+  });
+  const sessionOverview = '.session-overview';
+  const toggle = `${sessionOverview} .${domclass} .switch`;
+  const toggleValue = `${toggle} input`;
+
+  await visit(url);
+  assert.equal(find(toggleValue).length, 1, 'control exists');
+  assert.ok(find(toggleValue).not(':checked'), 'initiall not checked');
+  await click(toggle);
+  assert.ok(find(toggleValue).is(':checked'), 'clicking changed state');
+};
+
+test('change suplimental', async assert => {
+  await testAttributeToggle(assert, 'showSessionSupplemental', 'sessionsupplemental');
+});
+
+test('change special attire', async assert => {
+  await testAttributeToggle(assert, 'showSessionSpecialAttireRequired', 'sessionspecialattire');
+});
+
+test('change special equipment', async assert => {
+  await testAttributeToggle(assert, 'showSessionSpecialEquipmentRequired', 'sessionspecialequipment');
+});
+
+test('change attendance required', async assert => {
+  await testAttributeToggle(assert, 'showSessionAttendanceRequired', 'sessionattendancerequired');
 });
 
 test('change description', function(assert) {
@@ -313,7 +425,7 @@ test('change description', function(assert) {
     sessionType: 1,
     sessionDescription: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
   andThen(function() {
     let description = getText('session description 0');
     let container = find('.session-overview .sessiondescription');
@@ -341,7 +453,7 @@ test('add description', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit('/courses/1/sessions/1/publicationcheck');
+  visit(url);
   andThen(function() {
     let container = find('.session-overview .sessiondescription');
     assert.equal(getElementText(container), getText('Description: Click to edit'));

@@ -20,7 +20,9 @@ module('Acceptance: Session - Overview', {
       sessionTypes: [1,2]
     });
     server.create('academicYear');
-    server.create('course');
+    server.create('course', {
+      school: 1
+    });
     fixtures.sessionTypes = server.createList('sessionType', 2, {
       school: 1
     });
@@ -227,7 +229,8 @@ test('change type', function(assert) {
   });
 });
 
-test('change suplimental', function(assert) {
+test('session attributes are shown by school config', async assert => {
+  assert.expect(4);
   server.create('user', {
     id: 4136
   });
@@ -235,18 +238,44 @@ test('change suplimental', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.ok(!find('.sessionsupplemental .switch input', container).is(':checked'), 'initiall not checked');
-    click(find('.sessionsupplemental .switch', container));
-    andThen(function(){
-      assert.ok(find('.sessionsupplemental .switch input', container).is(':checked'), 'result of clicking it checked');
-    });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSupplemental',
+    value: true
   });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialAttireRequired',
+    value: true
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialEquipmentRequired',
+    value: true
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionAttendanceRequired',
+    value: true
+  });
+  server.db.schools.update(1, {
+    configurations: [1, 2, 3, 4]
+  });
+  const sessionOverview = '.session-overview';
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+
+  await visit(url);
+  assert.equal(find(supplementalToggle).length, 1, 'control hidden');
+  assert.equal(find(specialAttireToggle).length, 1, 'control hidden');
+  assert.equal(find(specialEquiptmentToggle).length, 1, 'control hidden');
+  assert.equal(find(attendanceRequiredToggle).length, 1, 'control hidden');
 });
 
-test('change special attire', function(assert) {
+test('session attributes are hidden by school config', async assert => {
+  assert.expect(4);
   server.create('user', {
     id: 4136
   });
@@ -254,18 +283,44 @@ test('change special attire', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.ok(!find('.sessionspecialattire .switch input', container).is(':checked'), 'initiall not checked');
-    click(find('.sessionspecialattire .switch', container));
-    andThen(function(){
-      assert.ok(find('.sessionspecialattire .switch input', container).is(':checked'));
-    });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSupplemental',
+    value: false
   });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialAttireRequired',
+    value: false
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionSpecialEquipmentRequired',
+    value: false
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: 'showSessionAttendanceRequired',
+    value: false
+  });
+  server.db.schools.update(1, {
+    configurations: [1, 2, 3, 4]
+  });
+  const sessionOverview = '.session-overview';
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+
+  await visit(url);
+  assert.equal(find(supplementalToggle).length, 0, 'control hidden');
+  assert.equal(find(specialAttireToggle).length, 0, 'control hidden');
+  assert.equal(find(specialEquiptmentToggle).length, 0, 'control hidden');
+  assert.equal(find(attendanceRequiredToggle).length, 0, 'control hidden');
 });
 
-test('change special equipment', function(assert) {
+test('session attributes are hidden when there is no school config', async assert => {
+  assert.expect(4);
   server.create('user', {
     id: 4136
   });
@@ -273,15 +328,62 @@ test('change special equipment', function(assert) {
     course: 1,
     sessionType: 2
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.ok(!find('.sessionspecialequipment .switch input', container).is(':checked'), 'initiall not checked');
-    click(find('.sessionspecialequipment .switch', container));
-    andThen(function(){
-      assert.ok(find('.sessionspecialequipment .switch input', container).is(':checked'));
-    });
+
+  const sessionOverview = '.session-overview';
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+
+  await visit(url);
+  assert.equal(find(supplementalToggle).length, 0, 'control hidden');
+  assert.equal(find(specialAttireToggle).length, 0, 'control hidden');
+  assert.equal(find(specialEquiptmentToggle).length, 0, 'control hidden');
+  assert.equal(find(attendanceRequiredToggle).length, 0, 'control hidden');
+});
+
+let testAttributeToggle = async function(assert, schoolVariableName, domclass){
+  assert.expect(3);
+  server.create('user', {
+    id: 4136
   });
+  server.create('session', {
+    course: 1,
+    sessionType: 2
+  });
+  server.create('schoolConfig', {
+    school: 1,
+    name: schoolVariableName,
+    value: true
+  });
+  server.db.schools.update(1, {
+    configurations: [1]
+  });
+  const sessionOverview = '.session-overview';
+  const toggle = `${sessionOverview} .${domclass} .switch`;
+  const toggleValue = `${toggle} input`;
+
+  await visit(url);
+  assert.equal(find(toggleValue).length, 1, 'control exists');
+  assert.ok(find(toggleValue).not(':checked'), 'initiall not checked');
+  await click(toggle);
+  assert.ok(find(toggleValue).is(':checked'), 'clicking changed state');
+};
+
+test('change suplimental', async assert => {
+  await testAttributeToggle(assert, 'showSessionSupplemental', 'sessionsupplemental');
+});
+
+test('change special attire', async assert => {
+  await testAttributeToggle(assert, 'showSessionSpecialAttireRequired', 'sessionspecialattire');
+});
+
+test('change special equipment', async assert => {
+  await testAttributeToggle(assert, 'showSessionSpecialEquipmentRequired', 'sessionspecialequipment');
+});
+
+test('change attendance required', async assert => {
+  await testAttributeToggle(assert, 'showSessionAttendanceRequired', 'sessionattendancerequired');
 });
 
 test('change description', function(assert) {

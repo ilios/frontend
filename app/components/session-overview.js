@@ -3,7 +3,9 @@ import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import config from '../config/environment';
 
+const { IliosFeatures: { schoolSessionAttributes } } = config;
 const { Component, computed, RSVP, isEmpty, inject } = Ember;
 const { oneWay, sort } = computed;
 const { Promise, all } = RSVP;
@@ -90,6 +92,41 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     });
   }),
 
+  school: computed('session.course.school', async function(){
+    const session = this.get('session');
+    const course = await session.get('course');
+    return await course.get('school');
+  }),
+
+  showAttendanceRequired: computed('school.configurations.[]', async function(){
+    if (!schoolSessionAttributes) {
+      return false;
+    }
+    const school = await this.get('school');
+    return await school.getConfigValue('showSessionAttendanceRequired');
+  }),
+  showSupplemental: computed('school.configurations.[]', async function(){
+    if (!schoolSessionAttributes) {
+      return true;
+    }
+    const school = await this.get('school');
+    return await school.getConfigValue('showSessionSupplemental');
+  }),
+  showSpecialAttireRequired: computed('school.configurations.[]', async function(){
+    if (!schoolSessionAttributes) {
+      return true;
+    }
+    const school = await this.get('school');
+    return await school.getConfigValue('showSessionSpecialAttireRequired');
+  }),
+  showSpecialEquipmentRequired: computed('school.configurations.[]', async function(){
+    if (!schoolSessionAttributes) {
+      return true;
+    }
+    const school = await this.get('school');
+    return await school.getConfigValue('showSessionSpecialEquipmentRequired');
+  }),
+
   actions: {
     saveIndependentLearning: function(value){
       var session = this.get('session');
@@ -168,6 +205,10 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     },
     changeSpecialAttire: function(value){
       this.get('session').set('attireRequired', value);
+      this.get('session').save();
+    },
+    changeAttendanceRequired: function(value){
+      this.get('session').set('attendanceRequired', value);
       this.get('session').save();
     },
     changeIlmHours() {
