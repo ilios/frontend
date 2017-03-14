@@ -86,48 +86,70 @@
           {{/if}}
         </span>
       </div>
-      <div class="sessionsupplemental switch-block">
-        <label>{{t 'general.supplementalCurriculum'}}:</label>
-        <span>
-          {{#if editable}}
-            {{toggle-yesno yes=session.supplemental toggle=(action 'changeSupplemental')}}
-          {{else}}
-            {{#if session.supplemental}}
-              <span class='add'>{{t 'general.yes'}}</span>
+      {{#if (await showSupplemental)}}
+        <div class="sessionsupplemental switch-block">
+          <label>{{t 'general.supplementalCurriculum'}}:</label>
+          <span>
+            {{#if editable}}
+              {{toggle-yesno yes=session.supplemental toggle=(action 'changeSupplemental')}}
             {{else}}
-              <span class='remove'>{{t 'general.no'}}</span>
+              {{#if session.supplemental}}
+                <span class='add'>{{t 'general.yes'}}</span>
+              {{else}}
+                <span class='remove'>{{t 'general.no'}}</span>
+              {{/if}}
             {{/if}}
-          {{/if}}
-        </span>
-      </div>
-      <div class="sessionspecialattire switch-block">
-        <label>{{t 'general.specialAttireRequired'}}:</label>
-        <span>
-          {{#if editable}}
-            {{toggle-yesno yes=session.attireRequired toggle=(action 'changeSpecialAttire')}}
-          {{else}}
-            {{#if session.attireRequired}}
-              <span class='add'>{{t 'general.yes'}}</span>
+          </span>
+        </div>
+      {{/if}}
+      {{#if (await showSpecialAttireRequired)}}
+        <div class="sessionspecialattire switch-block">
+          <label>{{t 'general.specialAttireRequired'}}:</label>
+          <span>
+            {{#if editable}}
+              {{toggle-yesno yes=session.attireRequired toggle=(action 'changeSpecialAttire')}}
             {{else}}
-              <span class='remove'>{{t 'general.no'}}</span>
+              {{#if session.attireRequired}}
+                <span class='add'>{{t 'general.yes'}}</span>
+              {{else}}
+                <span class='remove'>{{t 'general.no'}}</span>
+              {{/if}}
             {{/if}}
-          {{/if}}
-        </span>
-      </div>
-      <div class="sessionspecialequipment switch-block">
-        <label>{{t 'general.specialEquipmentRequired'}}:</label>
-        <span>
-          {{#if editable}}
-            {{toggle-yesno yes=session.equipmentRequired toggle=(action 'changeSpecialEquipment')}}
-          {{else}}
-            {{#if session.equipmentRequired}}
-              <span class='add'>{{t 'general.yes'}}</span>
+          </span>
+        </div>
+      {{/if}}
+      {{#if (await showSpecialEquipmentRequired)}}
+        <div class="sessionspecialequipment switch-block">
+          <label>{{t 'general.specialEquipmentRequired'}}:</label>
+          <span>
+            {{#if editable}}
+              {{toggle-yesno yes=session.equipmentRequired toggle=(action 'changeSpecialEquipment')}}
             {{else}}
-              <span class='remove'>{{t 'general.no'}}</span>
+              {{#if session.equipmentRequired}}
+                <span class='add'>{{t 'general.yes'}}</span>
+              {{else}}
+                <span class='remove'>{{t 'general.no'}}</span>
+              {{/if}}
             {{/if}}
-          {{/if}}
-        </span>
-      </div>
+          </span>
+        </div>
+      {{/if}}
+      {{#if (await showAttendanceRequired)}}
+        <div class="sessionattendancerequired switch-block">
+          <label>{{t 'general.attendanceRequired'}}:</label>
+          <span>
+            {{#if editable}}
+              {{toggle-yesno yes=session.attendanceRequired toggle=(action 'changeAttendanceRequired')}}
+            {{else}}
+              {{#if session.attendanceRequired}}
+                <span class='add'>{{t 'general.yes'}}</span>
+              {{else}}
+                <span class='remove'>{{t 'general.no'}}</span>
+              {{/if}}
+            {{/if}}
+          </span>
+        </div>
+      {{/if}}
       <hr>
       <div class="independentlearningcontrol switch-block">
         <label>{{t 'general.independentLearning'}}:</label>
