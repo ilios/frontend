@@ -54,8 +54,6 @@ test('check fields', function(assert) {
   });
   visit(url);
 
-  pauseTest();
-
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var container = find('.course-overview');
