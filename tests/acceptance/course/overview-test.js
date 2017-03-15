@@ -35,7 +35,7 @@ test('check fields', function(assert) {
     title: 'course director'
   });
   server.create('user', {
-	id: 2,
+    id: 2,
     directedCourses: [1],
     firstName: 'A',
     lastName: 'Director'
@@ -412,6 +412,7 @@ test('remove director', function(assert) {
     id: 4136
   });
   server.create('user', {
+    id: 2, 
     directedCourses: [1],
     firstName: 'A',
     lastName: 'Director'
@@ -441,12 +442,14 @@ test('manage directors', function(assert) {
     users: [1, 2, 4136]
   });
   server.create('user', {
+    id: 1, 
     directedCourses: [1],
     firstName: 'Added',
     lastName: 'Guy',
     roles: [1]
   });
   server.create('user', {
+	id: 2, 
     firstName: 'Disabled',
     lastName: 'Guy',
     enabled: false,
@@ -483,21 +486,22 @@ test('manage directors', function(assert) {
     andThen(function(){
       let searchResults = find('.live-search li', directors);
       assert.equal(searchResults.length, 4);
-      assert.equal(getElementText($(searchResults[0])), getText('3 Results'));
-      assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
-      assert.ok(!$(searchResults[1]).hasClass('inactive'));
-      assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
+      assert.equal(getElementText($(searchResults[0])), getText('3 Results'), '3 results');
+      assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'), '0 guy M. Mc0son');
+      assert.ok(!$(searchResults[1]).hasClass('inactive'), 'result 1 inactive');
+      assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'), 'Added M. Guy');
       assert.ok($(searchResults[2]).hasClass('inactive'));
-      assert.equal(getElementText($(searchResults[3])), getText('Disabled M. Guy'));
-      assert.ok($(searchResults[3]).hasClass('inactive'));
+      assert.equal(getElementText($(searchResults[3])), getText('Disabled M. Guy'), 'Disabled M. Guy');
+      assert.ok($(searchResults[3]).hasClass('inactive'), 'result 3 inctive');
 
       click('li:eq(0)', directors).then(function(){
-        assert.ok(!$(find('.live-search li:eq(2)', directors)).hasClass('inactive'));
+        assert.ok(!$(find('.live-search li:eq(1)', directors)).hasClass('inactive'), 'result 1 inactive after click');
         click(searchResults[1]);
         click('.coursedirectors .bigadd');
       });
       andThen(function(){
-        assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
+		  		  pauseTest();
+        assert.equal(getElementText(find('.coursedirectors li:eq(1)')), getText('0 guy M. Mc0son'), '0 guy M. Mc0son');
       });
     });
   });
@@ -513,6 +517,7 @@ test('search twice and list should be correct', function(assert) {
     users: [1, 4136]
   });
   server.create('user', {
+    id: 2, 
     directedCourses: [1],
     firstName: 'Added',
     lastName: 'Guy',
