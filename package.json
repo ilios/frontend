@@ -48,7 +48,7 @@
     "ember-cli-mirage": "0.1.14",
     "ember-cli-moment-shim": "3.0.1",
     "ember-cli-neat": "0.0.5",
-    "ember-cli-password-strength": "0.2.1",
+    "ember-cli-password-strength": "1.0.0",
     "ember-cli-qunit": "^3.0.1",
     "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "6.1.2",
