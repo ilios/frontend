@@ -237,10 +237,10 @@ test('create new link learning material', function(assert) {
     assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
     let labels = find('.detail-learningmaterials .new-learning-material label');
-    assert.equal(labels.length, 7);
+    assert.equal(labels.length, 7, 'label count is 7');
     const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
     const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
-    assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName));
+    assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName), 'user name in detail page');
     let newLmContainer = find('.detail-learningmaterials .new-learning-material');
     let inputs = find('input', newLmContainer);
     let selectBoxes = find('select', newLmContainer);
@@ -255,10 +255,10 @@ test('create new link learning material', function(assert) {
     andThen(function(){
       let container = find('.detail-learningmaterials');
       let rows = find('.detail-learningmaterials-content tbody tr', container);
-      assert.equal(rows.length, fixtures.session.learningMaterials.length + 1);
+      assert.equal(rows.length, fixtures.session.learningMaterials.length + 1, 'row length is number of learningmaterials');
       let row = rows.eq(fixtures.session.learningMaterials.length);
-      assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
-      assert.equal(getElementText(find('td:eq(1)', row)), getText('link'));
+      assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle)), 'title is displayed in row 1';
+      assert.equal(getElementText(find('td:eq(1)', row)), getText('link'), 'link is displayed in row 2');
     });
   });
 });
