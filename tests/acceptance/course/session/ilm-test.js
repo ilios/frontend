@@ -214,8 +214,8 @@ test('add instructor', function(assert) {
       assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
 
       var selectedUsers = find('.columnar-list:eq(1) li', container);
-      assert.equal(selectedUsers.length, 4);
-      assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son'));
+      assert.equal(selectedUsers.length, 3);
+      assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son'));
     });
   });
 });
