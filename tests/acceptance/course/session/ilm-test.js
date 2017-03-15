@@ -165,9 +165,9 @@ test('add instructor group', function(assert) {
       });
     });
     andThen(function(){
-      let selectedGroups = find('.removable-list:eq(0) li', container);
+      let selectedGroups = find('.removable-list:eq(0) li', container); 
       assert.equal(selectedGroups.length, 4);
-      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3'));
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3', 'instuctor group count'));
 
       let selectedUsers = find('.removable-list:eq(1) li', container);
       assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
@@ -199,13 +199,13 @@ test('add instructor', function(assert) {
       });
     });
     andThen(function(){
-      var selectedGroups = find('.removable-list:eq(0) li', container);
-      assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
-      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+      var selectedGroups = find('.removable-list:eq(0) li', container);	  
+      assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length, 'groups length test');
+      assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'), 'instructor groups text');
 
       var selectedUsers = find('.removable-list:eq(1) li', container);
-      assert.equal(selectedUsers.length, 4);
-      assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son'));
+      assert.equal(selectedUsers.length, 3, 'removable list count');
+      assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son'), 'removable list text');
       click('.bigadd', container);
     });
     andThen(function(){
@@ -214,8 +214,8 @@ test('add instructor', function(assert) {
       assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
 
       var selectedUsers = find('.columnar-list:eq(1) li', container);
-      assert.equal(selectedUsers.length, 4);
-      assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son'));
+      assert.equal(selectedUsers.length, 3);
+      assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son'));
     });
   });
 });
