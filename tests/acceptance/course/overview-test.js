@@ -35,7 +35,7 @@ test('check fields', function(assert) {
     title: 'course director'
   });
   server.create('user', {
-	id: 4137,
+	id: 2,
     directedCourses: [1],
     firstName: 'A',
     lastName: 'Director'
@@ -52,8 +52,6 @@ test('check fields', function(assert) {
     courses: [1]
   });
   visit(url);
-  
-  pauseTest();
 
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
