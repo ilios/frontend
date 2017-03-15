@@ -500,7 +500,6 @@ test('manage directors', function(assert) {
         click('.coursedirectors .bigadd');
       });
       andThen(function(){
-		  		  pauseTest();
         assert.equal(getElementText(find('.coursedirectors li:eq(1)')), getText('0 guy M. Mc0son'), '0 guy M. Mc0son');
       });
     });
