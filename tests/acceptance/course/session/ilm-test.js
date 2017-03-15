@@ -71,7 +71,7 @@ test('initial selected instructors', function(assert) {
 
     var selectedUsers = find('.columnar-list:eq(1) li', container);
     assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
-    assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
+    assert.equal(getElementText(selectedUsers), getText('4 guy M. Mc4son 2 guy M. Mc2son 3 guy M. Mc3son'));
   });
 });
 
