@@ -528,7 +528,7 @@ test('manage terms', function(assert) {
         }
 
         for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-          if(material.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
+          if(material.meshDescriptors.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
             assert.ok($(searchResults[i]).hasClass('disabled'));
           } else {
             assert.ok(!$(searchResults[i]).hasClass('disabled'));
