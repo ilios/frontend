@@ -386,4 +386,37 @@ export default DS.Model.extend({
       });
     });
   }),
+
+  /**
+   * Checks if this group or any of its subgroups has any learners.
+   * @property hasLearnersInGroupOrSubgroups
+   * @type {Ember.computed}
+   * @public
+   */
+  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
+    return new Promise(resolve => {
+      this.get('users').then(users => {
+        if(users.get('length')) {
+          resolve(true);
+          return;
+        }
+
+        this.get('children').then(children => {
+          if(! children.get('length')) {
+            resolve(false);
+            return;
+          }
+
+          let promises = children.map(subgroup => {
+            return subgroup.get('hasLearnersInGroupOrSubgroups');
+          });
+          all(promises).then(hasLearnersInSubgroups => {
+            resolve(hasLearnersInSubgroups.reduce((acc, val) => {
+              return (acc || val);
+            }, false));
+          });
+        });
+      });
+    });
+  }),
 });
