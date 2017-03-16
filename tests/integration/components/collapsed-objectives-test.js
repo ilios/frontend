@@ -39,7 +39,6 @@ test('displays summary data', function(assert) {
   assert.equal(this.$('.title').text().trim(), 'Objectives (3)');
   assert.equal(this.$('table tr').length, 4);
   assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'There are 3 objectives');
-
   assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), '1 has a parent');
   assert.equal(this.$('tr:eq(3) td:eq(0)').text().trim(), '1 has MeSH');
 
