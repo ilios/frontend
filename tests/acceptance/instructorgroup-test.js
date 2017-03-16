@@ -77,8 +77,8 @@ test('check fields', function(assert) {
 
     let items = find('.instructorgroup-overview-content .removable-list li');
     assert.equal(items.length, 2);
-    assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
-    assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
+    assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
+    assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
 
     let courses = find('.instructorgroupcourses li');
     assert.equal(getElementText(courses), getText('course 0 course 1'));
@@ -121,9 +121,9 @@ test('search instructors', function(assert) {
     assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son'));
     assert.ok(!searchResults.eq(3).hasClass('active'));
     assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son'));
-    assert.ok(searchResults.eq(4).hasClass('active'));
+    assert.ok(!searchResults.eq(4).hasClass('active'), 'class 4 is active');
     assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son'));
-    assert.ok(searchResults.eq(5).hasClass('active'));
+    assert.ok(searchResults.eq(5).hasClass('active'), 'class 5 is active');
   });
 });
 
