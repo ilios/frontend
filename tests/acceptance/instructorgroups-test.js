@@ -250,10 +250,6 @@ test('cancel remove instructorgroup', function(assert) {
 
 test('confirmation of remove message', function(assert) {
   server.create('user', {id: 4136});
-  // server.createList('user', 5, {
-  //   instructorGroups: [1]
-  // });
-
   server.create('user', {
     id: 2,
     instructorGroups: [1]
