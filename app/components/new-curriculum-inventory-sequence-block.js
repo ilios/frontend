@@ -3,9 +3,10 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { inject, Component, isPresent, computed } = Ember;
+const { inject, Component, isPresent, computed, RSVP } = Ember;
 const { service } = inject;
 const { gt, reads } = computed;
+const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [

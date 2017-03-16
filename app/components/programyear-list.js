@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 const { Component, computed, inject, ObjectProxy, RSVP, run, isPresent, isEmpty } = Ember;
 const { service } = inject;
 const { mapBy, sort } = computed;
-const { hash } = RSVP;
+const { Promise, hash } = RSVP;
 
 export default Component.extend({
   classNames: ['programyear-list'],

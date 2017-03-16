@@ -6,7 +6,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import wait from 'ember-test-helpers/wait';
 
 const { Service, RSVP, Object, run, getOwner } = Ember;
-const { resolve } = RSVP;
+const { Promise, resolve } = RSVP;
 
 moduleForComponent('course-rollover', 'Integration | Component | course rollover', {
   integration: true

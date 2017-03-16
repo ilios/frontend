@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed }  = Ember;
+const { RSVP, computed }  = Ember;
 const { alias, equal } = computed;
+const { Promise } = RSVP;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
