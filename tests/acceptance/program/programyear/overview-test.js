@@ -80,17 +80,17 @@ test('add director', function(assert) {
     let container = find('.programyear-overview').eq(0);
     let items = find('.removable-list li', container);
     assert.equal(items.length, 3);
-    assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
-    assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
-    assert.equal(getElementText(items.eq(2)), getText('3 guy M. Mc3son'));
+    assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
+    assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
+    assert.equal(getElementText(items.eq(2)), getText('4 guy M. Mc4son'));
 
     fillIn(find('.search-box input', container), 'guy').then(function(){
       click('.results li:eq(6)', container).then(function(){
         items = find('.removable-list li', container);
         assert.equal(items.length, 4);
-        assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
-        assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
-        assert.equal(getElementText(items.eq(2)), getText('3 guy M. Mc3son'));
+        assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
+        assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
+        assert.equal(getElementText(items.eq(2)), getText('4 guy M. Mc4son'));
         assert.equal(getElementText(items.eq(3)), getText('5 guy M. Mc5son'));
       });
 
