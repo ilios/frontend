@@ -2,7 +2,6 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import startMirage from '../../helpers/start-mirage';
-import wait from 'ember-test-helpers/wait';
 
 const { Object:EmberObject } = Ember;
 
@@ -71,7 +70,7 @@ test('icons all parents correctly', function(assert) {
   let objective = server.create('objective', {
     hasParents: true
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective]
 
   const course = EmberObject.create({
     objectives
@@ -93,7 +92,7 @@ test('icons no parents correctly', function(assert) {
   let objective = server.create('objective', {
     hasParents: false
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives
@@ -115,7 +114,7 @@ test('icons all mesh correctly', function(assert) {
   let objective = server.create('objective', {
     hasMesh: true
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives
@@ -137,7 +136,7 @@ test('icons no mesh correctly', function(assert) {
   let objective = server.create('objective', {
     hasMesh: false
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective]
 
   const course = EmberObject.create({
     objectives
