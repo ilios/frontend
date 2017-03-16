@@ -45,7 +45,6 @@ test('it renders', function(assert) {
     isNew: false
   });
   term3.set('vocabulary', resolve(vocabulary2));
-
   const school = EmberObject.create({
     vocabularies: resolve([vocabulary1, vocabulary2])
   });
