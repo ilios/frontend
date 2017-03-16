@@ -53,19 +53,19 @@ test('search directors', function(assert) {
     assert.equal(currentPath(), 'program.programYear.index');
     var container = find('.programyear-overview').eq(0);
     fillIn(find('.search-box input', container), 'guy').then(function(){
-      var searchResults = find('.results li', container);
-      assert.equal(searchResults.length, 7);
-      assert.equal(getElementText(searchResults.eq(0)), getText('6 Results'));
+      var searchResults = find('.results li', container);	  
+      assert.equal(searchResults.length, 7, 'results length');
+      assert.equal(getElementText(searchResults.eq(0)), getText('6 Results'), 'number or results display');
       assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son'));
       assert.ok(searchResults.eq(1).hasClass('active'));
       assert.equal(getElementText(searchResults.eq(2)), getText('1 guy M. Mc1son'));
-      assert.ok(searchResults.eq(2).hasClass('inactive'));
+      assert.ok(searchResults.eq(2).hasClass('active'));
       assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son'));
       assert.ok(searchResults.eq(3).hasClass('inactive'));
       assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son'));
       assert.ok(searchResults.eq(4).hasClass('inactive'));
       assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son'));
-      assert.ok(searchResults.eq(5).hasClass('active'));
+      assert.ok(searchResults.eq(5).hasClass('inactive'));
       assert.equal(getElementText(searchResults.eq(6)), getText('5 guy M. Mc5son'));
       assert.ok(searchResults.eq(6).hasClass('active'));
     });
