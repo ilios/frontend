@@ -2,6 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import startMirage from '../../helpers/start-mirage';
+import wait from 'ember-test-helpers/wait';
 
 const { Object:EmberObject } = Ember;
 
@@ -15,18 +16,23 @@ moduleForComponent('collapsed-objectives', 'Integration | Component | collapsed 
 test('displays summary data', function(assert) {
   assert.expect(9);
   let hasMesh = server.create('objective', {
+    id: 1, 
     hasMesh: true
   });
   let hasParents = server.create('objective', {
+    id: 2, 
     hasParents: true
   });
-  let plain = server.create('objective');
-  let objectives = [hasMesh, hasParents, plain].map(obj => Ember.Object.create(obj));
+  let plain = server.create('objective', {
+    id: 3
+  });
+  
+  let objectives = [hasMesh, hasParents, plain]; 
 
   const course = EmberObject.create({
     objectives
   });
-
+  
   this.set('subject', course);
   this.on('click', parseInt);
   this.render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
@@ -34,6 +40,7 @@ test('displays summary data', function(assert) {
   assert.equal(this.$('.title').text().trim(), 'Objectives (3)');
   assert.equal(this.$('table tr').length, 4);
   assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'There are 3 objectives');
+    
   assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), '1 has a parent');
   assert.equal(this.$('tr:eq(3) td:eq(0)').text().trim(), '1 has MeSH');
 
