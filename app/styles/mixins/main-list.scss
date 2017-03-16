@@ -69,19 +69,19 @@
   }
 }
 
-@mixin main-list-box-header-title () {
+@mixin main-list-box-header-title ($span: 6) {
   @include media($large-screen) {
-    @include span-columns(6);
+    @include span-columns($span);
     font-size: $base-font-size;
     font-weight: bold;
     padding-left: 1em;
   }
 }
 
-@mixin main-list-box-header-actions () {
+@mixin main-list-box-header-actions ($span: 2, $shift: 4) {
   @include media($large-screen) {
-    @include span-columns(2);
-    @include shift(4);
+    @include span-columns($span);
+    @include shift($shift);
     @include omega;
 
     padding-right: 1em;

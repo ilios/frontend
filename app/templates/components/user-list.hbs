@@ -3,9 +3,9 @@
     <tr>
       <th class='text-left' colspan=1></th>
       <th class='text-left' colspan=3>{{t 'general.fullName'}}</th>
-      <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
-      <th class='text-left' colspan=5>{{t 'general.email'}}</th>
-      <th class='text-left' colspan=2>{{t 'general.primarySchool'}}</th>
+      <th class='text-left hide-from-small-screen' colspan=2>{{t 'general.campusId'}}</th>
+      <th class='text-left hide-from-small-screen' colspan=5>{{t 'general.email'}}</th>
+      <th class='text-left hide-from-small-screen' colspan=2>{{t 'general.primarySchool'}}</th>
     </tr>
   </thead>
   <tbody>
@@ -17,9 +17,9 @@
           {{/unless}}
         </td>
         <td class='text-left' colspan=3>{{#link-to 'user' user}}{{user.fullName}}{{/link-to}}</td>
-        <td class='text-left' colspan=2>{{user.campusId}}</td>
-        <td class='text-left' colspan=5>{{user.email}}</td>
-        <td class='text-left' colspan=2>{{user.school.title}}</td>
+        <td class='text-left hide-from-small-screen' colspan=2>{{user.campusId}}</td>
+        <td class='text-left hide-from-small-screen' colspan=5>{{user.email}}</td>
+        <td class='text-left hide-from-small-screen' colspan=2>{{user.school.title}}</td>
       </tr>
     {{/each}}
   </tbody>

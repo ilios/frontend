@@ -71,20 +71,20 @@ test('can page through list of users', function(assert) {
   });
 });
 
-test('can search for a user and transition to user route', function(assert) {
+test('can search for a user and transition to user route', async function(assert) {
   server.createList('user', 40, { firstName: 'Test', lastName: 'Name', school: 1 });
 
   const userSearch = '.user-search input';
+  const firstStudent = 'tbody tr:eq(0) td:eq(1) a';
 
-  visit(url);
-  fillIn(userSearch, 'Test Name');
-  triggerEvent(userSearch, 'input');
-  andThen(() => {
-    assert.equal(getCellContent(1), 'Test M. Name', 'content is visible');
-  });
+  await visit(url);
+  await fillIn(userSearch, 'Test Name');
+  await triggerEvent(userSearch, 'input');
 
-  andThen(() => {
-    assert.equal(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
-    assert.equal(getCellContent(1), 'Test M. Name', 'content is visible');
-  });
+  assert.equal(getCellContent(1), 'Test M. Name', 'content is visible');
+  assert.equal(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
+
+  await click(firstStudent);
+  assert.equal(currentURL(), '/users/92', 'tranistioned to `user` route');
+
 });
