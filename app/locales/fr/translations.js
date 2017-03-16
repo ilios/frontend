@@ -29,6 +29,7 @@ export default {
     'associatedCourses': "Cours Associés",
     'associatedGroups': "Groupes Associés",
     'associatedWith': "associée de",
+    'attendanceIsRequired': 'Présence <strong><em>requise</em></strong>',
     'attendanceRequired': 'Participation Requise',
     'attribute': 'Attribut',
     'author': 'Auteur',
