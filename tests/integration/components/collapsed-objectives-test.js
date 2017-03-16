@@ -136,7 +136,7 @@ test('icons no mesh correctly', function(assert) {
   let objective = server.create('objective', {
     hasMesh: false
   });
-  let objectives = [objective]
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives
