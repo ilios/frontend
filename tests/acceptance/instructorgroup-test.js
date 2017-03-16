@@ -134,8 +134,8 @@ test('add instructor', function(assert) {
     let container = find('.instructorgroup-overview').eq(0);
     let items = find('.removable-list li', container);
     assert.equal(items.length, 2);
-    assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
-    assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
+    assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
+    assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
 
     fillIn(find('.search-box input', container), 'guy').then(function(){
       click('.results li:eq(4)', container).then(function(){
@@ -157,7 +157,7 @@ test('remove default instructor', function(assert) {
     click('.removable-list li:eq(0)', container).then(function(){
       let items = find('.removable-list li', container);
       assert.equal(items.length, 1);
-      assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
+      assert.equal(getElementText(items.eq(0)), getText('3 guy M. Mc3son'));
     });
   });
 });
