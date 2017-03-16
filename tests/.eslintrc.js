@@ -1,6 +1,6 @@
-{
-  "env": {
-    "embertest": true,
+module.exports = {
+  env: {
+    embertest: true
   },
   "globals": {
     "$": true,
@@ -10,4 +10,4 @@
     "select": true,
     "server": true,
   },
-}
+};
