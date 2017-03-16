@@ -1,10 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/start-mirage';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
-
-const { Object:EmberObject } = Ember;
 
 moduleForComponent('school-competencies-list', 'Integration | Component | school competencies list', {
   integration: true,
@@ -22,8 +19,7 @@ test('it renders', function(assert) {
   let competency2 = server.create('competency', {school: 1, parent: 1});
   domain.children = [competency1, competency2];
 
-  let competencies = [domain, competency1, competency2].map(obj => EmberObject.create(obj));
-
+  let competencies = [domain, competency1, competency2];
 
   this.set('competencies', competencies);
   this.render(hbs`{{school-competencies-list competencies=competencies}}`);

@@ -20,7 +20,7 @@ test('it renders', function(assert) {
   let domain = server.create('competency', {school: 1, isDomain: true, children: [2]});
   let competency = server.create('competency', {school: 1, isNotDomain: true, parent: 1});
 
-  let competencies = [domain, competency].map(obj => EmberObject.create(obj));
+  let competencies = [domain, competency];
 
   const school = EmberObject.create({
     competencies

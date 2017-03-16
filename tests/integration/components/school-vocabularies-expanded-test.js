@@ -22,7 +22,7 @@ test('it renders', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)

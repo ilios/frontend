@@ -22,7 +22,7 @@ test('it renders', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2];
 
   const school = EmberObject.create({
     vocabularies
@@ -45,7 +45,7 @@ test('clicking the header expands the list', function(assert) {
   assert.expect(2);
   let  vocabulary = server.create('vocabulary', {school: 1});
 
-  let vocabularies = [vocabulary].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary];
 
   const school = EmberObject.create({
     vocabularies

@@ -22,7 +22,7 @@ test('it renders', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
@@ -86,7 +86,7 @@ test('cannot delete vocabularies with terms', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2, vocabulary3].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2, vocabulary3];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
@@ -117,7 +117,7 @@ test('clicking delete removes the vocabulary', function(assert) {
     }
   };
 
-  let vocabularies = [vocabulary].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
@@ -144,7 +144,7 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   let  vocabulary1 = server.create('vocabulary', {school: 1, isNew: false});
   let  vocabulary2 = server.create('vocabulary', {school: 1, isNew: false});
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
