@@ -8,6 +8,7 @@ const { Model, attr, belongsTo, hasMany, PromiseArray } = DS;
 
 export default Model.extend({
   title: attr('string'),
+  position: attr('number'),
   competency: belongsTo('competency', {async: true}),
   courses: hasMany('course', {async: true}),
   //While it is possible at some point that objectives will be allowed to
