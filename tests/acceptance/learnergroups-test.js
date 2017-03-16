@@ -697,7 +697,14 @@ test('add new learnergroup with full cohort', function(assert) {
     program: 1,
     cohort: 1
   });
-  server.createList('user', 5, {cohort: 1});
+  
+  server.create('user', { id: 2 });
+  server.create('user', { id: 3 });
+  server.create('user', { id: 4 });
+  server.create('user', { id: 5 });
+  server.create('user', { id: 6 });
+  
+
   server.create('cohort', {
     programYear: 1,
     users: [2,3,4,5,6]
