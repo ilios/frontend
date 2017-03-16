@@ -146,6 +146,7 @@ export default Component.extend({
     saveNewObjective: function(title){
       let newObjective = this.get('store').createRecord('objective');
       newObjective.set('title', title);
+      newObjective.set('position', 0);
       if(this.get('isCourse')){
         newObjective.get('courses').addObject(this.get('subject'));
       }
