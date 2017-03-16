@@ -107,8 +107,8 @@ test('remove director', function(assert) {
     click('.removable-list li:eq(0)', container).then(function(){
       var items = find('.removable-list li', container);
       assert.equal(items.length, 2);
-      assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
-      assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
+      assert.equal(getElementText(items.eq(0)), getText('3 guy M. Mc3son'));
+      assert.equal(getElementText(items.eq(1)), getText('4 guy M. Mc4son'));
     });
   });
 });
