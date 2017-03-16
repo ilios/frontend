@@ -2,13 +2,8 @@
   {{course.title}}
 </h1>
 {{#if (is-fulfilled objectiveData)}}
-  {{chart-bar data=(await objectiveData) size=size padding=padding}}
-  {{chart-pie data=(await objectiveData) size=size padding=padding}}
-  {{chart-donut data=(await objectiveData) size=size padding=padding}}
-  {{chart-spline data=(await objectiveData) size=size padding=padding}}
-  {{chart-line data=(await objectiveData) size=size padding=padding}}
-  {{chart-step data=(await objectiveData) size=size padding=padding}}
-  {{chart-scatter data=(await objectiveData) size=size padding=padding}}
+  {{chart-pie data=(await objectiveData) width=width height=height}}
+  {{chart-donut data=(await objectiveData) width=width height=height}}
 {{else}}
   {{fa-icon 'spinner' spin=true}}
 {{/if}}

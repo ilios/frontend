@@ -11,6 +11,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   titleToken: 'general.coursesAndSessions',
   accessCourseVisualizations,
   beforeModel(){
+    this._super(...arguments);
     const accessCourseVisualizations = this.get('accessCourseVisualizations');
     if (!accessCourseVisualizations) {
       this.transitionTo('index');
