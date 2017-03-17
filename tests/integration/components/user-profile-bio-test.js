@@ -413,7 +413,7 @@ test('password strength 2 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345ab12').change();
+      this.$(passwordInput).val('12345ab13&').change();
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 2, 'meter is intially at 2');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Weak', 'weak is displayed for level 2 password');
@@ -438,7 +438,7 @@ test('password strength 3 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345ab13&').change();
+      this.$(passwordInput).val('12345ab13&!!').change();
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 3, 'meter is intially at 3');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Good', 'good is displayed for level 3 password');
