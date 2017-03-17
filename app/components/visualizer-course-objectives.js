@@ -1,4 +1,3 @@
-/* global d3 */
 import Ember from 'ember';
 
 const { Component, RSVP, computed, isPresent } = Ember;
@@ -6,10 +5,14 @@ const { map, filter } = RSVP;
 
 export default Component.extend({
   course: null,
-  size: {
-    height: 340,
-    width: 900
-  },
+  height: 360,
+  width: 360,
+  data: [
+    { label: 'Abulia', data: [10, 20] },
+    { label: 'Betelgeuse', data: [10, 20] },
+    { label: 'Cantaloupe', data: [100, 20] },
+    { label: 'Dijkstra', data: [10, 20] }
+  ],
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
     const course = this.get('course');
     const sessions = await course.get('sessions');
@@ -33,9 +36,9 @@ export default Component.extend({
 
     });
     const courseObjectives = await course.get('objectives');
-    let columns = courseObjectives.map(courseObjective => {
-      const title = courseObjective.get('id');
-      const hoursSpent = sessionCourseObjectiveMap.map(obj => {
+    return courseObjectives.map(courseObjective => {
+      const label = courseObjective.get('id');
+      const data = sessionCourseObjectiveMap.map(obj => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.hours;
         } else {
@@ -43,34 +46,10 @@ export default Component.extend({
         }
       });
 
-      let data = [title];
-      data.pushObjects(hoursSpent);
-
-      return data;
+      return {
+        label,
+        data
+      };
     });
-    // let groups = courseObjectives.mapBy('id');
-    let order = 'desc';
-
-    return {
-      columns,
-      order
-    };
   }),
-  tooltip: {
-    format: {
-      title: function(d) {
-        return 'Session ' + d;
-      },
-      value: function(value, ratio, id) {
-        let format = id === 'data1' ? d3.format(',') : d3.format('');
-        return format(value);
-      }
-    }
-  },
-  padding: {
-    top: 30,
-    right: 0,
-    bottom: 10,
-    left: 60,
-  },
 });
