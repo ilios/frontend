@@ -108,10 +108,7 @@ export default Component.extend({
         if (isEmpty(ancestor)) {
           ancestor = objectiveToCopy;
         }
-        let newObjective = store.createRecord(
-          'objective',
-          objectiveToCopy.getProperties('title')
-        );
+        let newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title', 'position']));
         let props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
         newObjective.setProperties(props);
         newObjective.set('programYears', [savedProgramYear]);
