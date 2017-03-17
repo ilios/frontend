@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Controller, computed, RSVP, inject, isPresent, isEmpty } = Ember;
+const { Controller, computed, RSVP, inject, isPresent, isEmpty, isBlank } = Ember;
 const { gt } = computed;
 const { service } = inject;
 const { Promise } = RSVP;
@@ -11,7 +11,7 @@ export default Controller.extend({
   queryParams: ['offset', 'limit', 'filter', 'school'],
   offset: 0,
   limit: 25,
-  filter: '',
+  filter: null,
   school: null,
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function(){
@@ -24,7 +24,7 @@ export default Controller.extend({
     return this.get('model.primarySchool');
   }),
 
-  unassignedStudents: computed('selectedSchool', function(){
+  unassignedStudents: computed('selectedSchool', 'filter', function(){
     return new Promise(resolve => {
       let school = this.get('selectedSchool');
       this.get('store').query('user', {
@@ -37,12 +37,14 @@ export default Controller.extend({
         }
       }).then(students => {
         const filter = this.get('filter');
-        const exp = new RegExp(filter, 'gi');
-        let displayed = students.filter(user => {
-          return (isEmpty(user.get('fullName')) || user.get('fullName').match(exp));
-        }).sortBy('lastName', 'firstName');
-
-        resolve(displayed);
+        if (!isBlank(filter)) {
+          const exp = new RegExp(filter, 'gi');
+          students = students.filter(user => {
+            return (isEmpty(user.get('fullName')) || user.get('fullName').match(exp));
+          });
+        }
+        students = students.sortBy('lastName', 'firstName');
+        resolve(students);
       });
     });
 
