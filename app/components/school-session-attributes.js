@@ -46,8 +46,10 @@ export default Component.extend({
         toSave.pushObject(config);
       }
     }
-
-    yield all(toSave.invoke('save'));
-    return this.get('manage')(false);
+    try {
+      return yield all(toSave.invoke('save'));
+    } finally {
+      this.get('manage')(false);
+    }
   }),
 });
