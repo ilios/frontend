@@ -17,6 +17,7 @@ moduleForComponent('school-vocabularies-list', 'Integration | Component | school
 
 test('it renders', function(assert) {
   assert.expect(4);
+
   let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
   let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
   server.createList('term', { vocabulary: [1]}, 2);

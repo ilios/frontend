@@ -19,8 +19,8 @@ test('it renders', function(assert) {
   assert.expect(5);
   let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2]});
   let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3]});
-  server.createList('term', { vocabulary: [1]}, 2);
-  server.createList('term', { vocabulary: [2]}, 1);
+  server.createList('term', 2, { vocabulary: [1]});
+  server.createList('term', 1, { vocabulary: [2]});
 
   let vocabularies = [vocabulary1, vocabulary2];
 
