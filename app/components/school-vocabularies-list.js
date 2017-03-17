@@ -24,7 +24,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   school: null,
   newVocabularies: [],
-  sortedVocabularies: computed('school.vocabularies', function(){
+  sortedVocabularies: computed('school.vocabularies.[]', function(){
     const school = this.get('school');
     return new Promise((resolve, reject) => {
       if (isPresent(school)) {
