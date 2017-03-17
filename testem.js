@@ -6,10 +6,9 @@ module.exports = {
   "disable_watching": true,
   'parallel': 5,
   "launch_in_ci": [
-    "PhantomJS"
+    "Chrome"
   ],
   "launch_in_dev": [
-    "PhantomJS",
     "Chrome"
   ]
 };
