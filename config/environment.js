@@ -68,7 +68,7 @@ module.exports = function(environment) {
     //Hide a feature while it is in development
     IliosFeatures: {
       allowAddNewUser: true,
-      schoolSessionAttributes: false,
+      schoolSessionAttributes: true,
       accessCourseVisualizations: false,
     }
   };
@@ -87,7 +87,6 @@ module.exports = function(environment) {
       enabled: false
     };
 
-    ENV.IliosFeatures.schoolSessionAttributes = true;
     ENV.IliosFeatures.accessCourseVisualizations = true;
   }
 
@@ -106,7 +105,6 @@ module.exports = function(environment) {
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
 
-    ENV.IliosFeatures.schoolSessionAttributes = true;
     ENV.IliosFeatures.accessCourseVisualizations = true;
   }
 
