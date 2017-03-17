@@ -20,8 +20,8 @@ test('it renders', function(assert) {
 
   let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
   let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
-  server.createList('term', { vocabulary: [1]}, 2);
-  server.createList('term', { vocabulary: [2]}, 1);
+  server.createList('term', 2, { vocabulary: [1]});
+  server.createList('term', 1, { vocabulary: [2]});
 
   let vocabularies = [vocabulary1, vocabulary2];
 
@@ -84,8 +84,8 @@ test('cannot delete vocabularies with terms', function(assert) {
   let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
   let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
   let  vocabulary3 = server.create('vocabulary', {school: 1, isNew: false});
-  server.createList('term', { vocabulary: [1]}, 2);
-  server.createList('term', { vocabulary: [2]}, 1);
+  server.createList('term', 2, { vocabulary: [1]});
+  server.createList('term', 1, { vocabulary: [2]});
 
   let vocabularies = [vocabulary1, vocabulary2, vocabulary3];
 
