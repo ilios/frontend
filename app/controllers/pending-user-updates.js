@@ -49,7 +49,7 @@ export default Controller.extend({
     });
   }),
 
-  displayedUpdates: computed('allUpdates.@each.user.fullName', 'filter', 'offset', 'limit', 'deletedUpdates.[]',  function(){
+  displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', function(){
     const limit = this.get('limit');
     const offset = this.get('offset');
     const end = limit + offset;
