@@ -11,21 +11,22 @@ export default Component.extend({
   store: service(),
   schoolSessionAttributes,
   classNames: ['school-session-attributes'],
+  school: null,
   isManaging: false,
   details: false,
-  showSessionAttendanceRequired: computed('school.configurations.[]', async function(){
+  showSessionAttendanceRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
     const school = this.get('school');
     return await school.getConfigValue('showSessionAttendanceRequired');
   }),
-  showSessionSupplemental: computed('school.configurations.[]', async function(){
+  showSessionSupplemental: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
     const school = this.get('school');
     return await school.getConfigValue('showSessionSupplemental');
   }),
-  showSessionSpecialAttireRequired: computed('school.configurations.[]', async function(){
+  showSessionSpecialAttireRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
     const school = this.get('school');
     return await school.getConfigValue('showSessionSpecialAttireRequired');
   }),
-  showSessionSpecialEquipmentRequired: computed('school.configurations.[]', async function(){
+  showSessionSpecialEquipmentRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
     const school = this.get('school');
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
