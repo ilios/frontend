@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:session', 'Unit | Route | Session ', {
-  needs: ['service:iliosMetrics', 'service:headData'],
+  needs: ['service:currentUser', 'service:iliosMetrics', 'service:headData', 'service:session'],
 });
 
 test('it exists', function(assert) {

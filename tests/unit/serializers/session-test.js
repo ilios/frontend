@@ -4,6 +4,7 @@ moduleForModel('session', 'Unit | Serializer | Session ', {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:session',
+    'service:i18n',
     'model:session-type',
     'model:course',
     'model:ilm-session',

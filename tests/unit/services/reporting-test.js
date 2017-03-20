@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:reporting', 'Unit | Service | reporting', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['service:currentUser'],
 });
 
 // Replace this with your real tests.

@@ -1,7 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:instructor-group', 'Unit | Route | instructor group ', {
-  needs: ['service:iliosMetrics', 'service:headData'],
+  needs: ['service:currentUser', 'service:iliosMetrics', 'service:headData', 'service:session'],
 });
 
 test('it exists', function(assert) {

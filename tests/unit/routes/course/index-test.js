@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:course/index', 'Unit | Route | Course/Index ', {
-  needs: ['service:iliosMetrics', 'service:headData'],
+  needs: ['service:currentUser', 'service:iliosMetrics', 'service:headData', 'service:session'],
 });
 
 test('it exists', function(assert) {

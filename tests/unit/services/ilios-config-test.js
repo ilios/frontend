@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:ilios-config', 'Unit | Service | ilios config', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['service:ajax', 'service:serverVariables'],
 });
 
 // Replace this with your real tests.
