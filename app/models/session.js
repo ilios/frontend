@@ -8,7 +8,7 @@ const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
 const { PromiseArray, PromiseObject } = DS;
 
-var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
+export default DS.Model.extend(PublishableModel, CategorizableModel, {
   title: DS.attr('string'),
   attireRequired: DS.attr('boolean'),
   equipmentRequired: DS.attr('boolean'),
@@ -238,5 +238,3 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
 
   assignableVocabularies: alias('course.assignableVocabularies'),
 });
-
-export default Session;
