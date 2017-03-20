@@ -6,7 +6,7 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
-const { attr, belongsTo, hasMany, Model, PromiseArray, PromiseObject } = DS;
+const { attr, belongsTo, hasMany, Model, PromiseObject } = DS;
 const { all, defer, Promise } = RSVP;
 
 export default Model.extend(PublishableModel, CategorizableModel, {
