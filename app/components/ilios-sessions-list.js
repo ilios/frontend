@@ -61,7 +61,7 @@ export default Component.extend({
               currentUser: this.get('currentUser'),
               sessionType: sessionType.get('title'),
               firstOfferingDate,
-              learnerGroupCount: associatedLearnerGroups.get('length'),
+              learnerGroupCount: associatedLearnerGroups.length,
               offeringCount: offerings.get('length')
             });
           });
