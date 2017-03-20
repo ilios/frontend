@@ -18,7 +18,15 @@
         <td class='text-center hide-from-small-screen'>{{learnerGroup.users.length}}</td>
         <td class='text-center hide-from-small-screen'>{{learnerGroup.children.length}}</td>
         <td class='text-right'>
-          <span class='clickable remove' {{action 'confirmRemove' learnerGroup}}>{{fa-icon 'trash'}}</span>
+          {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
+            {{#if (await learnerGroup.hasLearnersInGroupOrSubgroups)}}
+              {{fa-icon 'trash' class='disabled'}}
+            {{else}}
+              <span class='clickable remove' {{action 'confirmRemove' learnerGroup}}>{{fa-icon 'trash'}}</span>
+            {{/if}}
+          {{else}}
+            {{fa-icon 'spinner' spin=true}}
+          {{/if}}
         </td>
       </tr>
       {{#if (contains learnerGroup learnerGroupsForRemovalConfirmation)}}

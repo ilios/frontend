@@ -410,3 +410,82 @@ test('check addUserToGroupAndAllParents', function(assert) {
     });
   });
 });
+
+
+test('has no learners in group without learners and without subgroups', function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  Ember.run(() => {
+    learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
+      assert.notOk(hasLearners);
+    });
+  });
+});
+
+test('has learners in group with learners and but without learners in subgroups', function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  let store = this.store();
+  Ember.run(() => {
+    let learner = store.createRecord('user');
+    learnerGroup.get('users').then(users => {
+      users.pushObject(learner);
+      learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
+        assert.ok(hasLearners);
+      });
+    });
+  });
+});
+
+
+test('has no learners with no learners in group nor in subgroups', function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  let store = this.store();
+  Ember.run(() => {
+    let subgroup = store.createRecord('learner-group', { id: 2, parent: learnerGroup });
+    learnerGroup.get('children').then(subgroups => {
+      subgroups.pushObject(subgroup);
+      learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
+        assert.notOk(hasLearners);
+      });
+    });
+  });
+});
+
+
+test('has learners with no learners in group but with learners in subgroups', function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  let store = this.store();
+  Ember.run(() => {
+    let learner = store.createRecord('user', { id: 1 });
+    let subgroup = store.createRecord('learner-group', { id: 2, users: [ learner ], parent: learnerGroup });
+    learnerGroup.get('children').then(subgroups => {
+      subgroups.pushObject(subgroup);
+      learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
+        assert.ok(hasLearners);
+      });
+    });
+  });
+});
+
+test('has learners with learners in group and with learners in subgroups', function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  let store = this.store();
+  Ember.run(() => {
+    let learner = store.createRecord('user', { id: 1 });
+    let learner2 = store.createRecord('user', { id: 2 });
+    let subgroup = store.createRecord('learner-group', { id: 2, users: [ learner ], parent: learnerGroup });
+    learnerGroup.get('children').then(subgroups => {
+      subgroups.pushObject(subgroup);
+      learnerGroup.get('users').then(learners => {
+        learners.pushObject(learner2);
+        learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
+          assert.ok(hasLearners);
+        });
+      });
+    });
+  });
+});
