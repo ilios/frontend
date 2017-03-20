@@ -159,16 +159,17 @@ export default Model.extend(PublishableModel, CategorizableModel, {
 
   /**
    * Learner-groups associated with this session via its offerings.
+   *
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
    */
   associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
     return new Promise(resolve => {
-      this.get('offerings').then(function(offerings){
-        all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
+      this.get('offerings').then(offerings => {
+        all(offerings.mapBy('learnerGroups')).then(offeringLearnerGroups => {
           let allGroups = [];
-          offeringLearnerGroups.forEach(function(learnerGroups){
-            learnerGroups.forEach(function(group){
+          offeringLearnerGroups.forEach(learnerGroups => {
+            learnerGroups.forEach(group => {
               allGroups.pushObject(group);
             });
           });
