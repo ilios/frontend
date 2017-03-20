@@ -600,7 +600,6 @@ test('confirmation of remove message', function(assert) {
   });
   server.create('learnerGroup', {
     cohort: 1,
-    users: [2,3,4,5,6],
     offerings: [1,2],
     children: [2,3]
   });
@@ -615,8 +614,43 @@ test('confirmation of remove message', function(assert) {
     click('.list tbody tr:eq(0) td:eq(3) .remove').then(()=>{
       assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
       assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
-      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 5 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
+      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 0 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
     });
+  });
+});
+
+test('populated learner groups are not deletable', function(assert) {
+  server.create('user', {id: 4136});
+  server.createList('user', 5, {
+    learnerGroups: [1]
+  });
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('cohort', {
+    programYear: 1,
+    learnerGroups: [1]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    users: [2, 3, 4],
+    offerings: [1,2]
+  });
+
+  assert.expect(3);
+  visit('/learnergroups');
+  andThen(function() {
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText('learnergroup 0'));
+    assert.notOk(find('.list tbody tr:eq(0) td:eq(3) .remove').length, 'No delete action is available');
   });
 });
 
