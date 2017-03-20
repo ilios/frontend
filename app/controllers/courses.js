@@ -155,6 +155,10 @@ export default Controller.extend({
           courses.removeObject(course);
           course.destroyRecord().then(() => {
             this.get('deletedCourses').pushObject(course);
+            let newCourse = this.get('newCourse');
+            if (newCourse === course) {
+              this.set('newCourse', null);
+            }
             resolve();
           });
         });
