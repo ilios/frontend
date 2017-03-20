@@ -10,10 +10,6 @@ const { service } = inject;
 const { gt, sort } = computed;
 
 export default Controller.extend({
-  init() {
-    this._super(...arguments);
-    set(this, 'newCourses', []);
-  },
   i18n: service(),
   currentUser: service(),
   queryParams: {
@@ -23,6 +19,10 @@ export default Controller.extend({
     userCoursesOnly: 'mycourses',
     sortCoursesBy: 'sortBy',
 
+  },
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.set('newCourse', null);
   },
   placeholderValue: t('general.courseTitleFilterPlaceholder'),
   schoolId: null,
@@ -35,8 +35,9 @@ export default Controller.extend({
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
   sortYearsBy:['title:desc'],
   sortedYears: sort('model.years', 'sortYearsBy'),
-  newCourses: [],
-  courses: computed('selectedSchool', 'selectedYear', function(){
+  newCourse: null,
+  deletedCourses: [],
+  courses: computed('selectedSchool', 'selectedYear', 'deletedCourses.[]', 'newCourse', function(){
     return new Promise(resolve => {
       const selectedSchool = this.get('selectedSchool');
       const selectedYear = this.get('selectedYear');
@@ -59,24 +60,6 @@ export default Controller.extend({
     });
   }),
 
-  coursesAndNewCourses: computed('courses.[]', 'newCourses.[]', function(){
-    return new Promise(resolve => {
-      this.get('courses').then(courses => {
-        let all = [];
-        all.pushObjects(courses);
-        const selectedYear = this.get('selectedYear');
-        if (isPresent(selectedYear)) {
-          let selectedYearTitle = selectedYear.get('title');
-          let newCourses = this.get('newCourses').filter(course => {
-            return course.get('year') === selectedYearTitle && !all.includes(course);
-          });
-          all.pushObjects(newCourses);
-        }
-        resolve(all);
-      });
-    });
-  }),
-
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: null,
   watchFilter: observer('titleFilter', function(){
@@ -89,7 +72,7 @@ export default Controller.extend({
   },
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  allRelatedCourses: computed('currentUser.model', function(){
+  allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser.model').then(user => {
         resolve(user.get('allRelatedCourses'));
@@ -99,7 +82,7 @@ export default Controller.extend({
 
   filteredCourses: computed(
     'debouncedFilter',
-    'coursesAndNewCourses.[]',
+    'courses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
     function(){
@@ -107,7 +90,7 @@ export default Controller.extend({
         let title = this.get('debouncedFilter');
         let filterMyCourses = this.get('userCoursesOnly');
         let exp = new RegExp(title, 'gi');
-        this.get('coursesAndNewCourses').then(courses => {
+        this.get('courses').then(courses => {
           let filteredCourses;
           if (isEmpty(title)) {
             filteredCourses = courses.sortBy('title');
@@ -165,19 +148,30 @@ export default Controller.extend({
     return defaultYear;
   }),
   actions: {
-    removeCourse: function(course){
-      course.deleteRecord();
-      course.save().then(()=>{
-        if (this.get('newCourses').includes(course)) {
-          this.get('newCourses').removeObject(course);
-        }
+    removeCourse(course){
+      return new Promise(resolve => {
+        let school = this.get('selectedSchool');
+        school.get('courses').then(courses => {
+          courses.removeObject(course);
+          course.destroyRecord().then(() => {
+            this.get('deletedCourses').pushObject(course);
+            resolve();
+          });
+        });
       });
     },
-    saveNewCourse: function(newCourse){
-      newCourse.setDatesBasedOnYear();
-      return newCourse.save().then(savedCourse => {
-        this.set('showNewCourseForm', false);
-        this.get('newCourses').pushObject(savedCourse);
+    saveNewCourse(newCourse){
+      return new Promise(resolve => {
+        newCourse.setDatesBasedOnYear();
+        newCourse.save().then(savedCourse => {
+          this.set('showNewCourseForm', false);
+          this.set('newCourse', savedCourse);
+          let school = this.get('selectedSchool');
+          school.get('courses').then(courses => {
+            courses.pushObject(savedCourse);
+            resolve(savedCourse);
+          });
+        });
       });
     },
     changeSelectedYear: function(yearTitle){

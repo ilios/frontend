@@ -75,10 +75,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             year: this.get('selectedYear'),
             level: 1,
           });
-
-          this.get('save')(course).finally(() =>{
-            this.set('isSaving', true);
-          });
+          this.get('save')(course);
         } else {
           this.set('isSaving', false);
         }
