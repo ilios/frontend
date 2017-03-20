@@ -161,25 +161,21 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * Learner-groups associated with this session via its offerings.
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
-   * @public
    */
   associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
-    let deferred = defer();
-    this.get('offerings').then(function(offerings){
-      all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
-        let allGroups = [];
-        offeringLearnerGroups.forEach(function(learnerGroups){
-          learnerGroups.forEach(function(group){
-            allGroups.pushObject(group);
+    return new Promise(resolve => {
+      this.get('offerings').then(function(offerings){
+        all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
+          let allGroups = [];
+          offeringLearnerGroups.forEach(function(learnerGroups){
+            learnerGroups.forEach(function(group){
+              allGroups.pushObject(group);
+            });
           });
+          let groups = allGroups ? allGroups.uniq().sortBy('title') : [];
+          resolve(groups);
         });
-        let groups = allGroups?allGroups.uniq().sortBy('title'):[];
-        deferred.resolve(groups);
       });
-    });
-
-    return PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
@@ -218,7 +214,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     let deferred = defer();
     this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
       this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
-        let allGroups = [].pushObjects(offeringLearnerGroups.toArray()).pushObjects(ilmLearnerGroups.toArray());
+        let allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups.toArray());
         if (! isEmpty(allGroups)) {
           allGroups = allGroups.uniq().sortBy('title');
         }
