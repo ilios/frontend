@@ -77,35 +77,30 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * The maximum duration in hours (incl. fractions) of any session offerings.
    * @property sortedTerms
    * @type {Ember.computed}
-   * @readonly
-   * @public
    */
   maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function(){
-    let deferred = defer();
-    this.get('offerings').then(offerings => {
-      if (! offerings.length) {
-        deferred.resolve(0);
-      } else {
-        const sortedOfferings = offerings.toArray().sort(function (a, b) {
-          const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
-          const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
-          if (diffA > diffB) {
-            return 1;
-          } else if (diffA < diffB) {
-            return -1;
-          }
-          return 0;
-        });
-        const offering = sortedOfferings[0];
-        const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-        deferred.resolve(duration.toFixed(2));
-      }
+    return new Promise(resolve => {
+      this.get('offerings').then(offerings => {
+        if (! offerings.length) {
+          resolve(0);
+        } else {
+          const sortedOfferings = offerings.toArray().sort(function (a, b) {
+            const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
+            const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
+            if (diffA > diffB) {
+              return 1;
+            } else if (diffA < diffB) {
+              return -1;
+            }
+            return 0;
+          });
+          const offering = sortedOfferings[0];
+          const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+          resolve(duration.toFixed(2));
+        }
+      });
     });
-
-    return PromiseObject.create({
-      promise: deferred.promise
-    });
-  }).readOnly(),
+  }),
 
   /**
    * The total duration in hours (incl. fractions) of all session offerings.
