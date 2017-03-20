@@ -184,24 +184,20 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * Learner-groups associated with this session via its ILM.
    * @property associatedIlmLearnerGroups
    * @type {Ember.computed}
-   * @public
    */
   associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
-    let deferred = defer();
-    this.get('ilmSession').then(function(ilmSession){
-      if (! isPresent(ilmSession)) {
-        deferred.resolve([]);
-        return;
-      }
+    return new Promise(resolve => {
+      this.get('ilmSession').then(ilmSession => {
+        if (! isPresent(ilmSession)) {
+          resolve([]);
+          return;
+        }
 
-      ilmSession.get('learnerGroups').then(learnerGroups => {
-        let sortedGroups = learnerGroups.sortBy('title');
-        deferred.resolve(sortedGroups);
+        ilmSession.get('learnerGroups').then(learnerGroups => {
+          let sortedGroups = learnerGroups.sortBy('title');
+          resolve(sortedGroups);
+        });
       });
-    });
-
-    return PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
@@ -215,7 +211,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     let deferred = defer();
     this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
       this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
-        let allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups.toArray());
+        let allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
         if (! isEmpty(allGroups)) {
           allGroups = allGroups.uniq().sortBy('title');
         }
