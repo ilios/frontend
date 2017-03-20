@@ -55,7 +55,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   }).readOnly(),
 
   firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
-    var deferred = defer();
+    let deferred = defer();
     this.get('ilmSession').then(ilmSession => {
       if(ilmSession){
         deferred.resolve(ilmSession.get('dueDate'));
@@ -170,16 +170,16 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
-    var deferred = defer();
+    let deferred = defer();
     this.get('offerings').then(function(offerings){
       all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
-        var allGroups = [];
+        let allGroups = [];
         offeringLearnerGroups.forEach(function(learnerGroups){
           learnerGroups.forEach(function(group){
             allGroups.pushObject(group);
           });
         });
-        var groups = allGroups?allGroups.uniq().sortBy('title'):[];
+        let groups = allGroups?allGroups.uniq().sortBy('title'):[];
         deferred.resolve(groups);
       });
     });
@@ -196,7 +196,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
-    var deferred = defer();
+    let deferred = defer();
     this.get('ilmSession').then(function(ilmSession){
       if (! isPresent(ilmSession)) {
         deferred.resolve([]);
@@ -221,7 +221,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', function(){
-    var deferred = defer();
+    let deferred = defer();
     this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
       this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
         let allGroups = [].pushObjects(offeringLearnerGroups.toArray()).pushObjects(ilmLearnerGroups.toArray());
