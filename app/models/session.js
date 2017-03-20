@@ -111,27 +111,22 @@ export default Model.extend(PublishableModel, CategorizableModel, {
    * The total duration in hours (incl. fractions) of all session offerings.
    * @property sortedTerms
    * @type {Ember.computed}
-   * @readonly
-   * @public
    */
   totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function() {
-    let deferred = defer();
-    this.get('offerings').then(offerings => {
-      if (!offerings.length) {
-        deferred.resolve(0);
-      } else {
-        let total = 0;
-        offerings.forEach(offering => {
-          total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-        });
-        deferred.resolve(total.toFixed(2));
-      }
+    return new Promise(resolve => {
+      this.get('offerings').then(offerings => {
+        if (!offerings.length) {
+          resolve(0);
+        } else {
+          let total = 0;
+          offerings.forEach(offering => {
+            total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+          });
+          resolve(total.toFixed(2));
+        }
+      });
     });
-
-    return PromiseObject.create({
-      promise: deferred.promise
-    });
-  }).readOnly(),
+  }),
 
   searchString: computed('title', 'sessionType.title', 'status', function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
