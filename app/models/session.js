@@ -6,8 +6,8 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
-const { attr, belongsTo, hasMany, Model, PromiseObject } = DS;
-const { all, defer, Promise } = RSVP;
+const { attr, belongsTo, hasMany, Model } = DS;
+const { all, Promise } = RSVP;
 
 export default Model.extend(PublishableModel, CategorizableModel, {
   title: attr('string'),
@@ -53,23 +53,27 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     });
   }),
 
+  /**
+   * The earliest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
+   *
+   * @property firstOfferingDate
+   * @type {Ember.computed}
+   */
   firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
-    let deferred = defer();
-    this.get('ilmSession').then(ilmSession => {
-      if(ilmSession){
-        deferred.resolve(ilmSession.get('dueDate'));
-      } else {
-        this.get('sortedOfferingsByDate').then(offerings => {
-          if(isEmpty(offerings)){
-            deferred.resolve(null);
-          } else {
-            deferred.resolve(offerings.get('firstObject.startDate'));
-          }
-        });
-      }
-    });
-    return PromiseObject.create({
-      promise: deferred.promise
+    return new Promise(resolve => {
+      this.get('ilmSession').then(ilmSession => {
+        if(ilmSession){
+          resolve(ilmSession.get('dueDate'));
+        } else {
+          this.get('sortedOfferingsByDate').then(offerings => {
+            if(isEmpty(offerings)){
+              resolve(null);
+            } else {
+              resolve(offerings.get('firstObject.startDate'));
+            }
+          });
+        }
+      });
     });
   }),
 
