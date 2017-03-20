@@ -7,7 +7,7 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
 const { attr, belongsTo, hasMany, Model, PromiseArray, PromiseObject } = DS;
-const { all, defer } = RSVP;
+const { all, defer, Promise } = RSVP;
 
 export default Model.extend(PublishableModel, CategorizableModel, {
   title: attr('string'),
@@ -32,27 +32,26 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
-  sortedOfferingsByDate: computed('offerings.@each.startDate', {
-    get() {
-      let deferred = defer();
+
+  /**
+   * All offerings for this session, sorted by offering startdate in ascending order.
+   * @property sortedOfferingsByDate
+   * @type {Ember.computed}
+   */
+  sortedOfferingsByDate: computed('offerings.@each.startDate', function() {
+    return new Promise(resolve => {
       this.get('offerings').then(offerings => {
-        let sortedOfferingsByDate = offerings.filter(offering => isPresent(offering.get('startDate'))).sort((a, b) => {
+        resolve(offerings.filter(offering => isPresent(offering.get('startDate'))).sort((a, b) => {
           let aDate = moment(a.get('startDate'));
           let bDate = moment(b.get('startDate'));
           if(aDate === bDate){
             return 0;
           }
           return aDate > bDate ? 1 : -1;
-        });
-
-        deferred.resolve(sortedOfferingsByDate);
+        }));
       });
-
-      return PromiseArray.create({
-        promise: deferred.promise
-      });
-    }
-  }).readOnly(),
+    });
+  }),
 
   firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
     let deferred = defer();
