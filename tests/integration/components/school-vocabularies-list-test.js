@@ -6,6 +6,7 @@ import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 
 const { Object:EmberObject, Service, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('school-vocabularies-list', 'Integration | Component | school vocabularies list', {
   integration: true,
@@ -17,17 +18,40 @@ moduleForComponent('school-vocabularies-list', 'Integration | Component | school
 
 test('it renders', function(assert) {
   assert.expect(4);
-
-  let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
-  let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
-  server.createList('term', 2, { vocabulary: [1]});
-  server.createList('term', 1, { vocabulary: [2]});
-
-  let vocabularies = [vocabulary1, vocabulary2];
+  let term1 = Object.create({
+    id: 1,
+    title: 'term1'
+  });
+  let term2 = Object.create({
+    id: 2,
+    title: 'term2'
+  });
+  let term3 = Object.create({
+    id: 3,
+    title: 'term3'
+  });
+  let  vocabulary1 =  Object.create({
+    id: 1,
+    title: 'Vocabulary 1',
+    terms: resolve([term1, term2]),
+    isNew: false
+  });
+  term1.set('vocabulary', resolve(vocabulary1));
+  term2.set('vocabulary', resolve(vocabulary1));
+  let  vocabulary2 =  Object.create({
+    id: 2,
+    title: 'Vocabulary 2',
+    terms: resolve([term3]),
+    isNew: false
+  });
+  term3.set('vocabulary', resolve(vocabulary2));
 
   const school = EmberObject.create({
-    vocabularies: RSVP.resolve(vocabularies)
+    vocabularies: resolve([vocabulary1, vocabulary2])
   });
+  vocabulary1.set('school', resolve(school));
+  vocabulary2.set('school', resolve(school));
+
 
   this.on('edit', parseInt);
   this.set('school', school);

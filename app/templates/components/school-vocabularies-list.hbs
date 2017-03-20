@@ -60,7 +60,7 @@
                 <span class='clickable link' {{action this.attrs.manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
               </td>
               <td class='text-left text-top' colspan=1>
-                {{vocabulary.terms.length}}
+                {{get (await vocabulary.terms) 'length'}}
               </td>
 
               <td class='text-left text-top' colspan=1>
