@@ -145,6 +145,7 @@ test('cannot delete vocabularies with terms', function(assert) {
   const school = EmberObject.create({
     vocabularies: resolve([vocabulary1, vocabulary2, vocabulary3])
   });
+
   vocabulary1.set('school', resolve(school));
   vocabulary2.set('school', resolve(school));
   vocabulary3.set('school', resolve(school));
@@ -199,13 +200,11 @@ test('clicking delete removes the vocabulary', function(assert) {
 
 test('clicking edit fires the action to manage the vocab', function(assert) {
   assert.expect(1);
-
   let vocabulary1 =  Object.create({
     id: 1,
     title: 'Vocabulary 1',
     isNew: false
   });
-
   let vocabulary2 =  Object.create({
     id: 2,
     title: 'Vocabulary 2',
@@ -217,6 +216,9 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
+
+  vocabulary1.set('school', resolve(school));
+  vocabulary2.set('school', resolve(school));
 
   vocabulary1.set('school', resolve(school));
   vocabulary2.set('school', resolve(school));
