@@ -6,24 +6,25 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
-const { PromiseArray, PromiseObject } = DS;
+const { attr, belongsTo, hasMany, Model, PromiseArray, PromiseObject } = DS;
+const { all, defer } = RSVP;
 
-export default DS.Model.extend(PublishableModel, CategorizableModel, {
-  title: DS.attr('string'),
-  attireRequired: DS.attr('boolean'),
-  equipmentRequired: DS.attr('boolean'),
-  supplemental: DS.attr('boolean'),
-  attendanceRequired: DS.attr('boolean'),
-  updatedAt: DS.attr('date'),
-  sessionType: DS.belongsTo('session-type', {async: true}),
-  course: DS.belongsTo('course', {async: true}),
-  ilmSession: DS.belongsTo('ilm-session', {async: true}),
-  objectives: DS.hasMany('objective', {async: true}),
-  meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
-  sessionDescription: DS.belongsTo('session-description', {async: true}),
-  learningMaterials: DS.hasMany('session-learning-material', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
-  administrators: DS.hasMany('user', {
+export default Model.extend(PublishableModel, CategorizableModel, {
+  title: attr('string'),
+  attireRequired: attr('boolean'),
+  equipmentRequired: attr('boolean'),
+  supplemental: attr('boolean'),
+  attendanceRequired: attr('boolean'),
+  updatedAt: attr('date'),
+  sessionType: belongsTo('session-type', {async: true}),
+  course: belongsTo('course', {async: true}),
+  ilmSession: belongsTo('ilm-session', {async: true}),
+  objectives: hasMany('objective', {async: true}),
+  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  sessionDescription: belongsTo('session-description', {async: true}),
+  learningMaterials: hasMany('session-learning-material', {async: true}),
+  offerings: hasMany('offering', {async: true}),
+  administrators: hasMany('user', {
     async: true,
     inverse: 'administeredSessions'
   }),
@@ -33,7 +34,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   sortedOfferingsByDate: computed('offerings.@each.startDate', {
     get() {
-      let defer = RSVP.defer();
+      let deferred = defer();
       this.get('offerings').then(offerings => {
         let sortedOfferingsByDate = offerings.filter(offering => isPresent(offering.get('startDate'))).sort((a, b) => {
           let aDate = moment(a.get('startDate'));
@@ -44,17 +45,17 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
           return aDate > bDate ? 1 : -1;
         });
 
-        defer.resolve(sortedOfferingsByDate);
+        deferred.resolve(sortedOfferingsByDate);
       });
 
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   }).readOnly(),
 
   firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
-    var deferred = Ember.RSVP.defer();
+    var deferred = defer();
     this.get('ilmSession').then(ilmSession => {
       if(ilmSession){
         deferred.resolve(ilmSession.get('dueDate'));
@@ -81,7 +82,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function(){
-    let deferred = RSVP.defer();
+    let deferred = defer();
     this.get('offerings').then(offerings => {
       if (! offerings.length) {
         deferred.resolve(0);
@@ -115,7 +116,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function() {
-    let deferred = RSVP.defer();
+    let deferred = defer();
     this.get('offerings').then(offerings => {
       if (!offerings.length) {
         deferred.resolve(0);
@@ -169,9 +170,9 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
-    var deferred = Ember.RSVP.defer();
+    var deferred = defer();
     this.get('offerings').then(function(offerings){
-      Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
+      all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
         var allGroups = [];
         offeringLearnerGroups.forEach(function(learnerGroups){
           learnerGroups.forEach(function(group){
@@ -183,7 +184,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
       });
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
@@ -195,7 +196,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
-    var deferred = Ember.RSVP.defer();
+    var deferred = defer();
     this.get('ilmSession').then(function(ilmSession){
       if (! isPresent(ilmSession)) {
         deferred.resolve([]);
@@ -208,7 +209,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
       });
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
@@ -220,7 +221,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
    * @public
    */
   associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', function(){
-    var deferred = Ember.RSVP.defer();
+    var deferred = defer();
     this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
       this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
         let allGroups = [].pushObjects(offeringLearnerGroups.toArray()).pushObjects(ilmLearnerGroups.toArray());
@@ -231,7 +232,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
       });
     });
 
-    return DS.PromiseArray.create({
+    return PromiseArray.create({
       promise: deferred.promise
     });
   }),
