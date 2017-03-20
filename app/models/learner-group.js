@@ -395,26 +395,23 @@ export default DS.Model.extend({
    */
   hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
     return new Promise(resolve => {
-      this.get('users').then(users => {
-        if(users.get('length')) {
-          resolve(true);
+      const userIds = this.hasMany('users').ids();
+      if (userIds.length) {
+        resolve(true);
+      }
+      this.get('children').then(children => {
+        if(! children.get('length')) {
+          resolve(false);
           return;
         }
 
-        this.get('children').then(children => {
-          if(! children.get('length')) {
-            resolve(false);
-            return;
-          }
-
-          let promises = children.map(subgroup => {
-            return subgroup.get('hasLearnersInGroupOrSubgroups');
-          });
-          all(promises).then(hasLearnersInSubgroups => {
-            resolve(hasLearnersInSubgroups.reduce((acc, val) => {
-              return (acc || val);
-            }, false));
-          });
+        let promises = children.map(subgroup => {
+          return subgroup.get('hasLearnersInGroupOrSubgroups');
+        });
+        all(promises).then(hasLearnersInSubgroups => {
+          resolve(hasLearnersInSubgroups.reduce((acc, val) => {
+            return (acc || val);
+          }, false));
         });
       });
     });
