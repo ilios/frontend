@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('adapter:application', 'ApplicationAdapter', {
-  // Specify the other units that are required for this test.
-  // needs: ['serializer:foo']
+  needs: ['service:session', 'service:iliosConfig']
 });
 
 // Replace this with your real tests.

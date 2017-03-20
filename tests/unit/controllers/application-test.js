@@ -4,7 +4,13 @@ import {
 } from 'ember-qunit';
 
 moduleFor('controller:application', 'ApplicationController', {
-  needs: ['service:iliosMetrics', 'service:headData'],
+  needs: [
+    'service:currentUser',
+    'service:session',
+    'service:i18n',
+    'service:iliosMetrics',
+    'service:headData',
+  ],
 });
 
 // Replace this with your real tests.

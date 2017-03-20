@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('service:current-user', 'CurrentUserService', {
-  needs: ['model:user']
+  needs: ['service:session', 'model:user']
 });
 
 // Replace this with your real tests.

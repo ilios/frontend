@@ -4,7 +4,11 @@ import {
 } from 'ember-qunit';
 
 moduleFor('controller:program/index', 'Unit | Controller | Program / Index ', {
-  needs: ['service:iliosMetrics', 'service:headData'],
+  needs: [
+    'controller:program',
+    'service:iliosMetrics',
+    'service:headData',
+  ],
 });
 
 // Replace this with your real tests.

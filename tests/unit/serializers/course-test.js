@@ -4,6 +4,7 @@ moduleForModel('course', 'Unit | Serializer | Course ', {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:course',
+    'service:i18n',
     'model:school',
     'model:user',
     'model:course',

@@ -54,5 +54,6 @@ export default [
   'model:user-made-reminder',
   'model:user-role',
   'model:user',
-  'model:vocabulary'
+  'model:vocabulary',
+  'service:i18n',
 ];

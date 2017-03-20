@@ -4,8 +4,9 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 import strength from 'password-strength';
 
-const { Component, inject, computed, isEmpty } = Ember;
+const { Component, inject, computed, isEmpty, RSVP } = Ember;
 const { service } = inject;
+const { Promise } = RSVP;
 
 const Validations = buildValidations({
   firstName: [

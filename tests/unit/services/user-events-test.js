@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:user-events', 'Unit | Service | user events', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['service:ajax', 'service:currentUser', 'service:iliosConfig', 'service:session'],
 });
 
 // Replace this with your real tests.

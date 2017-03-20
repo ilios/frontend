@@ -1,8 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('file-upload', 'Unit | Component | file upload ', {
-  // Specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar'],
+  needs: ['service:session', 'service:iliosConfig', 'service:i18n'],
   unit: true
 });
 

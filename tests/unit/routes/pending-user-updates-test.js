@@ -1,7 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:pending-user-updates', 'Unit | Route | pending user updates', {
-  needs: ['service:iliosMetrics', 'service:headData'],
+  needs: ['service:currentUser', 'service:iliosMetrics', 'service:headData', 'service:session'],
 });
 
 test('it exists', function(assert) {
