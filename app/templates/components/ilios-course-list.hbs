@@ -55,7 +55,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each sortedCourses as |course|}}
+    {{#each (await sortedCourses) as |course|}}
       <tr class="{{if course.showRemoveConfirmation 'confirm-removal'}}">
         <td class='text-left' colspan=3>
           {{#link-to 'course' course.content}}

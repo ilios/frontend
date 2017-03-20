@@ -49,17 +49,17 @@
         }}
       {{/if}}
 
-      {{#each newCourses as |course|}}
+      {{#if newCourse}}
         <div class='saved-result'>
-          {{#link-to 'course' course}}
-            {{fa-icon 'external-link-square'}} {{course.title}}
+          {{#link-to 'course' newCourse}}
+            {{fa-icon 'external-link-square'}} {{newCourse.title}}
           {{/link-to}}
           {{t 'general.savedSuccessfully'}}
         </div>
-      {{/each}}
+      {{/if}}
     </section>
     <div class='list'>
-      {{#if filteredCourses.isFulfilled}}
+      {{#if (is-fulfilled filteredCourses)}}
         {{ilios-course-list
           courses=filteredCourses
           remove='removeCourse'
