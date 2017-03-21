@@ -1,0 +1,30 @@
+.course-objective-manager {
+  .course-objective-title {
+    margin-bottom: 1em;
+  }
+
+  label {
+    font-size: .85em;
+
+    .choose-cohort-title {
+      font-weight: bold;
+    }
+  }
+
+  .choose-display-mode {
+    @include fill-parent;
+    @include clearfix;
+    margin: 1em 0;
+    text-align: center;
+
+    label {
+      @include ilios-label;
+      @include row;
+    }
+
+    .click-choice-buttons {
+      margin: auto;
+      min-width: 280px;
+    }
+  }
+}
