@@ -1,20 +1,18 @@
-$light-blue: #add8e6;
-$blue-grey: #27496d;
-$very-dark-blue: #193047;
-
 @mixin press-button {
-  background: $light-blue;
-  box-shadow: inset 0 0 0 1px $blue-grey;
-  color: $white;
+  background: $super-light-grey;
+  box-shadow: inset 0 0 0 1px $black;
+  color: $black;
   float: left;
   font-weight: bold;
   height: 30px;
   outline: none;
-  min-width: 140px;
+  width: 140px;
 }
 
 @mixin active-button {
-  box-shadow: inset 0 0 0 1px $blue-grey, inset 1px 1px 11px $very-dark-blue;
+  background: $ilios-green;
+  box-shadow: inset 0 0 0 1px darken($ilios-green, 30);
+  color: $white;
 }
 
 .first-button {
