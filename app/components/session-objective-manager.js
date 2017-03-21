@@ -28,7 +28,7 @@ export default Component.extend({
       });
     });
   }),
-  proxiedObjectives: computed('course', 'course.objectives.[]', function(){
+  proxiedObjectives: computed('course', 'course.sortedObjectives.[]', function(){
     return new Promise(resolve => {
       let sessionObjective = this.get('sessionObjective');
       if(!sessionObjective){
@@ -40,14 +40,14 @@ export default Component.extend({
           resolve([]);
           return;
         }
-        course.get('objectives').then(function(objectives){
+        course.get('sortedObjectives').then(function(objectives){
           let objectiveProxies = objectives.map(function(objective){
             return objectiveProxy.create({
               content: objective,
               sessionObjective: sessionObjective,
             });
           });
-          resolve(objectiveProxies.sortBy('id'));
+          resolve(objectiveProxies);
         });
       });
     });
