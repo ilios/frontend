@@ -10,7 +10,7 @@ $very-dark-blue: #193047;
   font-weight: bold;
   height: 30px;
   outline: none;
-  width: 140px;
+  min-width: 140px;
 }
 
 @mixin active-button {
