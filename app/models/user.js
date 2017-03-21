@@ -99,7 +99,7 @@ export default Model.extend({
   permissions: hasMany('permission', {async: true}),
   schools: computed('school', function(){
     const store = this.get('store');
-    var deferred = defer();
+    let deferred = defer();
     this.get('school').then(primarySchool => {
       this.get('permissions').then(permissions => {
         let schoolIds = permissions.filter(permission => {
