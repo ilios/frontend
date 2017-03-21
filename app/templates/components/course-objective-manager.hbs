@@ -17,8 +17,8 @@
     </label>
     <div class='choose-display-mode'>
       {{click-choice-buttons
-        buttonContent1="Group by Competencies"
-        buttonContent2="List in order"
+        buttonContent1=(t 'general.groupByCompetencies')
+        buttonContent2=(t 'general.listInOrder')
         firstChoicePicked=groupByCompetencies
         action=(action (mut groupByCompetencies))
       }}
