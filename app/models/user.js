@@ -6,7 +6,7 @@ const { attr, belongsTo, hasMany, PromiseArray, Model } = DS;
 const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
 const { Promise } = RSVP;
 
-var User = Model.extend({
+export default Model.extend({
   lastName: attr('string'),
   firstName: attr('string'),
   middleName: attr('string'),
@@ -264,5 +264,3 @@ var User = Model.extend({
     });
   })
 });
-
-export default User;
