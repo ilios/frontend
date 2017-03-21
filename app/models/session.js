@@ -3,13 +3,15 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
 import CategorizableModel from 'ilios/mixins/categorizable-model';
+import SortableByPosition from 'ilios/mixins/sortable-by-position';
+
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
 const { attr, belongsTo, hasMany, Model } = DS;
 const { all, Promise } = RSVP;
 
-export default Model.extend(PublishableModel, CategorizableModel, {
+export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   title: attr('string'),
   attireRequired: attr('boolean'),
   equipmentRequired: attr('boolean'),
@@ -222,4 +224,18 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   }),
 
   assignableVocabularies: alias('course.assignableVocabularies'),
+
+  /**
+   * A list of session objectives, sorted by position and title.
+   * @property sortedObjectives
+   * @type {Ember.computed}
+   */
+  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
+    return new Promise(resolve => {
+      this.get('objectives').then(objectives => {
+        resolve(objectives.toArray().sort(this.get('positionSortingCallback')));
+      });
+    });
+  })
+
 });

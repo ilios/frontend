@@ -3,13 +3,14 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import PublishableModel from 'ilios/mixins/publishable-model';
 import CategorizableModel from 'ilios/mixins/categorizable-model';
+import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 const { computed, RSVP } = Ember;
 const { filterBy, mapBy, sum } = computed;
 const { all, map, Promise } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
 
-export default Model.extend(PublishableModel, CategorizableModel, {
+export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   title: attr('string'),
   level: attr('number'),
   year: attr('number'),
@@ -204,6 +205,19 @@ export default Model.extend(PublishableModel, CategorizableModel, {
           v = v.sortBy('school.title', 'title');
           resolve(v);
         });
+      });
+    });
+  }),
+
+  /**
+   * A list of course objectives, sorted by position and title.
+   * @property sortedObjectives
+   * @type {Ember.computed}
+   */
+  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
+    return new Promise(resolve => {
+      this.get('objectives').then(objectives => {
+        resolve(objectives.toArray().sort(this.get('positionSortingCallback')));
       });
     });
   })
