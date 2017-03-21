@@ -229,7 +229,7 @@ export default Model.extend({
    * Compare a users learner groups to a list of learner groups and find the one
    * that is the lowest leaf in the learner group tree
    * @property summary
-   * @param array learnerGroupTree all the groups we want to look into
+   * @param {Array} learnerGroupTree all the groups we want to look into
    * @type function
    * @public
    */
