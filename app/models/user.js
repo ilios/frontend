@@ -1,106 +1,105 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, PromiseProxyMixin, RSVP } = Ember;
-const { PromiseArray } = DS;
-const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
-const { Promise } = RSVP;
+const { computed, PromiseProxyMixin, Object, RSVP } = Ember;
+const { attr, belongsTo, hasMany, PromiseArray, Model } = DS;
+const { all, defer, Promise } = RSVP;
 
-var User = DS.Model.extend({
-  lastName: DS.attr('string'),
-  firstName: DS.attr('string'),
-  middleName: DS.attr('string'),
-  phone: DS.attr('string'),
-  email:  DS.attr('string'),
-  addedViaIlios:  DS.attr('boolean'),
-  enabled:  DS.attr('boolean'),
-  campusId:  DS.attr('string'),
-  otherId:  DS.attr('string'),
-  examined:  DS.attr('boolean'),
-  userSyncIgnore:  DS.attr('boolean'),
-  icsFeedKey:  DS.attr('string'),
-  root: DS.attr('boolean'),
-  reminders: DS.hasMany('user-made-reminder', {async: true}),
-  reports: DS.hasMany('report', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
-  authentication: DS.belongsTo('authentication', {async: true}),
-  directedCourses: DS.hasMany('course', {
+const ProxyContent = Object.extend(PromiseProxyMixin);
+
+export default Model.extend({
+  lastName: attr('string'),
+  firstName: attr('string'),
+  middleName: attr('string'),
+  phone: attr('string'),
+  email:  attr('string'),
+  addedViaIlios:  attr('boolean'),
+  enabled:  attr('boolean'),
+  campusId:  attr('string'),
+  otherId:  attr('string'),
+  examined:  attr('boolean'),
+  userSyncIgnore:  attr('boolean'),
+  icsFeedKey:  attr('string'),
+  root: attr('boolean'),
+  reminders: hasMany('user-made-reminder', {async: true}),
+  reports: hasMany('report', {async: true}),
+  school: belongsTo('school', {async: true}),
+  authentication: belongsTo('authentication', {async: true}),
+  directedCourses: hasMany('course', {
     async: true,
     inverse: 'directors'
   }),
-  administeredCourses: DS.hasMany('course', {
+  administeredCourses: hasMany('course', {
     async: true,
     inverse: 'administrators'
   }),
-  learnerGroups: DS.hasMany('learner-group', {
+  learnerGroups: hasMany('learner-group', {
     async: true,
     inverse: 'users'
   }),
-  instructedLearnerGroups: DS.hasMany('learner-group', {
+  instructedLearnerGroups: hasMany('learner-group', {
     async: true,
     inverse: 'instructors'
   }),
-  instructorGroups: DS.hasMany('instructor-group', {
+  instructorGroups: hasMany('instructor-group', {
     async: true,
     inverse: 'users'
   }),
-  instructorIlmSessions: DS.hasMany('ilm-session', {
+  instructorIlmSessions: hasMany('ilm-session', {
     async: true,
     inverse: 'instructors'
   }),
-  learnerIlmSessions: DS.hasMany('ilm-session', {
+  learnerIlmSessions: hasMany('ilm-session', {
     async: true,
     inverse: 'learners'
   }),
-  offerings: DS.hasMany('offering', {
+  offerings: hasMany('offering', {
     async: true,
     inverse: 'learners'
   }),
-  instructedOfferings: DS.hasMany('offering', {
+  instructedOfferings: hasMany('offering', {
     async: true,
     inverse: 'instructors'
   }),
-  programYears: DS.hasMany('program-year', {async: true}),
-  roles: DS.hasMany('user-role', {async: true}),
-  directedSchools: DS.hasMany('school', {
+  programYears: hasMany('program-year', {async: true}),
+  roles: hasMany('user-role', {async: true}),
+  directedSchools: hasMany('school', {
     async: true,
     inverse: 'directors'
   }),
-  administeredSchools: DS.hasMany('school', {
+  administeredSchools: hasMany('school', {
     async: true,
     inverse: 'administrators'
   }),
-  administeredSessions: DS.hasMany('session', {
+  administeredSessions: hasMany('session', {
     async: true,
     inverse: 'administrators'
   }),
-  directedPrograms: DS.hasMany('program', {
+  directedPrograms: hasMany('program', {
     async: true,
     inverse: 'directors'
   }),
 
-  isStudent: computed('roles', {
-    get() {
-      const isStudent = this.get('roles').then((roles) => {
-        return !!roles.find((role) => role.get('title') === 'Student');
-      });
+  isStudent: computed('roles', function() {
+    const isStudent = this.get('roles').then((roles) => {
+      return !!roles.find((role) => role.get('title') === 'Student');
+    });
 
-      return ProxyContent.create({
-        promise: isStudent
-      });
-    }
-  }).readOnly(),
+    return ProxyContent.create({
+      promise: isStudent
+    });
+  }),
 
-  cohorts: DS.hasMany('cohort', {
+  cohorts: hasMany('cohort', {
     async: true,
     inverse: 'users'
   }),
-  primaryCohort: DS.belongsTo('cohort', {async: true}),
-  pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
-  permissions: DS.hasMany('permission', {async: true}),
+  primaryCohort: belongsTo('cohort', {async: true}),
+  pendingUserUpdates: hasMany('pending-user-update', {async: true}),
+  permissions: hasMany('permission', {async: true}),
   schools: computed('school', function(){
     const store = this.get('store');
-    var defer = RSVP.defer();
+    let deferred = defer();
     this.get('school').then(primarySchool => {
       this.get('permissions').then(permissions => {
         let schoolIds = permissions.filter(permission => {
@@ -109,34 +108,32 @@ var User = DS.Model.extend({
         let promises = schoolIds.map(id => {
           return store.findRecord('school', id);
         });
-        RSVP.all(promises).then(schools => {
+        all(promises).then(schools => {
           schools.pushObject(primarySchool);
-          defer.resolve(schools.uniq());
+          deferred.resolve(schools.uniq());
         });
       });
     });
     return PromiseArray.create({
-      promise: defer.promise
+      promise: deferred.promise
     });
   }),
 
-  fullName: computed('firstName', 'middleName', 'lastName', {
-    get() {
-      const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
+  fullName: computed('firstName', 'middleName', 'lastName', function() {
+    const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
 
-      if (!firstName || !lastName) {
-        return '';
-      }
-
-      const middleInitial = middleName?middleName.charAt(0):false;
-
-      if (middleInitial) {
-        return `${firstName} ${middleInitial}. ${lastName}`;
-      } else {
-        return `${firstName} ${lastName}`;
-      }
+    if (!firstName || !lastName) {
+      return '';
     }
-  }).readOnly(),
+
+    const middleInitial = middleName?middleName.charAt(0):false;
+
+    if (middleInitial) {
+      return `${firstName} ${middleInitial}. ${lastName}`;
+    } else {
+      return `${firstName} ${lastName}`;
+    }
+  }),
 
   allRelatedCourses: computed(
     'directedCourses.[]',
@@ -148,18 +145,18 @@ var User = DS.Model.extend({
     'learnerIlmSessions.[]',
     'instructorIlmSessions.[]',
     function(){
-      let defer = RSVP.defer();
+      let deferred = defer();
       let promises = [];
       let allCourses = [];
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('directedCourses').then(courses => {
           allCourses.pushObjects(courses.toArray());
           resolve();
         });
       }));
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('learnerGroups').then(groups => {
-          RSVP.all(groups.mapBy('courses')).then(all => {
+          all(groups.mapBy('courses')).then(all => {
             all.forEach(arr => {
               allCourses.pushObjects(arr);
             });
@@ -167,9 +164,9 @@ var User = DS.Model.extend({
           });
         });
       }));
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('instructorGroups').then(groups => {
-          RSVP.all(groups.mapBy('courses')).then(all => {
+          all(groups.mapBy('courses')).then(all => {
             all.forEach(arr => {
               allCourses.pushObjects(arr);
             });
@@ -177,51 +174,51 @@ var User = DS.Model.extend({
           });
         });
       }));
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('instructedOfferings').then(offerings => {
-          RSVP.all(offerings.mapBy('session')).then(sessions => {
-            RSVP.all(sessions.mapBy('course')).then(courses => {
+          all(offerings.mapBy('session')).then(sessions => {
+            all(sessions.mapBy('course')).then(courses => {
               allCourses.pushObjects(courses);
               resolve();
             });
           });
         });
       }));
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('offerings').then(offerings => {
-          RSVP.all(offerings.mapBy('session')).then(sessions => {
-            RSVP.all(sessions.mapBy('course')).then(courses => {
+          all(offerings.mapBy('session')).then(sessions => {
+            all(sessions.mapBy('course')).then(courses => {
               allCourses.pushObjects(courses);
               resolve();
             });
           });
         });
       }));
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('learnerIlmSessions').then(ilmSessions => {
-          RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
-            RSVP.all(sessions.mapBy('course')).then(courses => {
+          all(ilmSessions.mapBy('session')).then(sessions => {
+            all(sessions.mapBy('course')).then(courses => {
               allCourses.pushObjects(courses);
               resolve();
             });
           });
         });
       }));
-      promises.pushObject(new RSVP.Promise(resolve => {
+      promises.pushObject(new Promise(resolve => {
         this.get('instructorIlmSessions').then(ilmSessions => {
-          RSVP.all(ilmSessions.mapBy('session')).then(sessions => {
-            RSVP.all(sessions.mapBy('course')).then(courses => {
+          all(ilmSessions.mapBy('session')).then(sessions => {
+            all(sessions.mapBy('course')).then(courses => {
               allCourses.pushObjects(courses);
               resolve();
             });
           });
         });
       }));
-      RSVP.all(promises).then(()=>{
-        defer.resolve(allCourses.uniq());
+      all(promises).then(()=>{
+        deferred.resolve(allCourses.uniq());
       });
       return PromiseArray.create({
-        promise: defer.promise
+        promise: deferred.promise
       });
     }
   ),
@@ -232,7 +229,7 @@ var User = DS.Model.extend({
    * Compare a users learner groups to a list of learner groups and find the one
    * that is the lowest leaf in the learner group tree
    * @property summary
-   * @param array learnerGroupTree all the groups we want to look into
+   * @param {Array} learnerGroupTree all the groups we want to look into
    * @type function
    * @public
    */
@@ -264,5 +261,3 @@ var User = DS.Model.extend({
     });
   })
 });
-
-export default User;
