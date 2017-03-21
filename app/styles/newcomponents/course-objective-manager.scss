@@ -17,14 +17,13 @@
     margin: 1em 0;
     text-align: center;
 
-    label {
-      @include ilios-label;
-      @include row;
-    }
-
     .click-choice-buttons {
       margin: auto;
-      min-width: 280px;
+      width: 340px;
+    }
+
+    .first-button {
+      width: 200px;
     }
   }
 }
