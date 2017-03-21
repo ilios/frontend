@@ -80,17 +80,15 @@ export default Model.extend({
     inverse: 'directors'
   }),
 
-  isStudent: computed('roles', {
-    get() {
-      const isStudent = this.get('roles').then((roles) => {
-        return !!roles.find((role) => role.get('title') === 'Student');
-      });
+  isStudent: computed('roles', function() {
+    const isStudent = this.get('roles').then((roles) => {
+      return !!roles.find((role) => role.get('title') === 'Student');
+    });
 
-      return ProxyContent.create({
-        promise: isStudent
-      });
-    }
-  }).readOnly(),
+    return ProxyContent.create({
+      promise: isStudent
+    });
+  }),
 
   cohorts: hasMany('cohort', {
     async: true,
@@ -121,23 +119,21 @@ export default Model.extend({
     });
   }),
 
-  fullName: computed('firstName', 'middleName', 'lastName', {
-    get() {
-      const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
+  fullName: computed('firstName', 'middleName', 'lastName', function() {
+    const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
 
-      if (!firstName || !lastName) {
-        return '';
-      }
-
-      const middleInitial = middleName?middleName.charAt(0):false;
-
-      if (middleInitial) {
-        return `${firstName} ${middleInitial}. ${lastName}`;
-      } else {
-        return `${firstName} ${lastName}`;
-      }
+    if (!firstName || !lastName) {
+      return '';
     }
-  }).readOnly(),
+
+    const middleInitial = middleName?middleName.charAt(0):false;
+
+    if (middleInitial) {
+      return `${firstName} ${middleInitial}. ${lastName}`;
+    } else {
+      return `${firstName} ${lastName}`;
+    }
+  }),
 
   allRelatedCourses: computed(
     'directedCourses.[]',
