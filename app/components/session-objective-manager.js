@@ -28,6 +28,7 @@ export default Component.extend({
       });
     });
   }),
+
   proxiedObjectives: computed('course', 'course.sortedObjectives.[]', function(){
     return new Promise(resolve => {
       let sessionObjective = this.get('sessionObjective');
@@ -35,13 +36,13 @@ export default Component.extend({
         resolve([]);
         return;
       }
-      this.get('course').then(function(course){
+      this.get('course').then(course => {
         if(!course){
           resolve([]);
           return;
         }
-        course.get('sortedObjectives').then(function(objectives){
-          let objectiveProxies = objectives.map(function(objective){
+        course.get('sortedObjectives').then(objectives => {
+          let objectiveProxies = objectives.map(objective => {
             return objectiveProxy.create({
               content: objective,
               sessionObjective: sessionObjective,
