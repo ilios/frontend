@@ -3,6 +3,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed, isBlank, RSVP } = Ember;
+const { alias } = computed;
 const { Model, PromiseArray } = DS;
 const { Promise } = RSVP;
 
@@ -95,4 +96,5 @@ export default Model.extend({
       });
     });
   }),
+  sortedObjectives: alias('programYear.sortedObjectives')
 });
