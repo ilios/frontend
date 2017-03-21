@@ -2,79 +2,79 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed, PromiseProxyMixin, RSVP } = Ember;
-const { PromiseArray } = DS;
+const { attr, belongsTo, hasMany, PromiseArray, Model } = DS;
 const ProxyContent = Ember.Object.extend(PromiseProxyMixin);
 const { Promise } = RSVP;
 
-var User = DS.Model.extend({
-  lastName: DS.attr('string'),
-  firstName: DS.attr('string'),
-  middleName: DS.attr('string'),
-  phone: DS.attr('string'),
-  email:  DS.attr('string'),
-  addedViaIlios:  DS.attr('boolean'),
-  enabled:  DS.attr('boolean'),
-  campusId:  DS.attr('string'),
-  otherId:  DS.attr('string'),
-  examined:  DS.attr('boolean'),
-  userSyncIgnore:  DS.attr('boolean'),
-  icsFeedKey:  DS.attr('string'),
-  root: DS.attr('boolean'),
-  reminders: DS.hasMany('user-made-reminder', {async: true}),
-  reports: DS.hasMany('report', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
-  authentication: DS.belongsTo('authentication', {async: true}),
-  directedCourses: DS.hasMany('course', {
+var User = Model.extend({
+  lastName: attr('string'),
+  firstName: attr('string'),
+  middleName: attr('string'),
+  phone: attr('string'),
+  email:  attr('string'),
+  addedViaIlios:  attr('boolean'),
+  enabled:  attr('boolean'),
+  campusId:  attr('string'),
+  otherId:  attr('string'),
+  examined:  attr('boolean'),
+  userSyncIgnore:  attr('boolean'),
+  icsFeedKey:  attr('string'),
+  root: attr('boolean'),
+  reminders: hasMany('user-made-reminder', {async: true}),
+  reports: hasMany('report', {async: true}),
+  school: belongsTo('school', {async: true}),
+  authentication: belongsTo('authentication', {async: true}),
+  directedCourses: hasMany('course', {
     async: true,
     inverse: 'directors'
   }),
-  administeredCourses: DS.hasMany('course', {
+  administeredCourses: hasMany('course', {
     async: true,
     inverse: 'administrators'
   }),
-  learnerGroups: DS.hasMany('learner-group', {
+  learnerGroups: hasMany('learner-group', {
     async: true,
     inverse: 'users'
   }),
-  instructedLearnerGroups: DS.hasMany('learner-group', {
+  instructedLearnerGroups: hasMany('learner-group', {
     async: true,
     inverse: 'instructors'
   }),
-  instructorGroups: DS.hasMany('instructor-group', {
+  instructorGroups: hasMany('instructor-group', {
     async: true,
     inverse: 'users'
   }),
-  instructorIlmSessions: DS.hasMany('ilm-session', {
+  instructorIlmSessions: hasMany('ilm-session', {
     async: true,
     inverse: 'instructors'
   }),
-  learnerIlmSessions: DS.hasMany('ilm-session', {
+  learnerIlmSessions: hasMany('ilm-session', {
     async: true,
     inverse: 'learners'
   }),
-  offerings: DS.hasMany('offering', {
+  offerings: hasMany('offering', {
     async: true,
     inverse: 'learners'
   }),
-  instructedOfferings: DS.hasMany('offering', {
+  instructedOfferings: hasMany('offering', {
     async: true,
     inverse: 'instructors'
   }),
-  programYears: DS.hasMany('program-year', {async: true}),
-  roles: DS.hasMany('user-role', {async: true}),
-  directedSchools: DS.hasMany('school', {
+  programYears: hasMany('program-year', {async: true}),
+  roles: hasMany('user-role', {async: true}),
+  directedSchools: hasMany('school', {
     async: true,
     inverse: 'directors'
   }),
-  administeredSchools: DS.hasMany('school', {
+  administeredSchools: hasMany('school', {
     async: true,
     inverse: 'administrators'
   }),
-  administeredSessions: DS.hasMany('session', {
+  administeredSessions: hasMany('session', {
     async: true,
     inverse: 'administrators'
   }),
-  directedPrograms: DS.hasMany('program', {
+  directedPrograms: hasMany('program', {
     async: true,
     inverse: 'directors'
   }),
@@ -91,13 +91,13 @@ var User = DS.Model.extend({
     }
   }).readOnly(),
 
-  cohorts: DS.hasMany('cohort', {
+  cohorts: hasMany('cohort', {
     async: true,
     inverse: 'users'
   }),
-  primaryCohort: DS.belongsTo('cohort', {async: true}),
-  pendingUserUpdates: DS.hasMany('pending-user-update', {async: true}),
-  permissions: DS.hasMany('permission', {async: true}),
+  primaryCohort: belongsTo('cohort', {async: true}),
+  pendingUserUpdates: hasMany('pending-user-update', {async: true}),
+  permissions: hasMany('permission', {async: true}),
   schools: computed('school', function(){
     const store = this.get('store');
     var defer = RSVP.defer();
