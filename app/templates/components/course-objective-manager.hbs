@@ -53,11 +53,17 @@
                 <li class='selected clickable' {{action 'removeParent' objective}}>
                   <input type='radio' checked="checked">
                   {{objective.textTitle}}
+                  {{#if (await objective.competency)}}
+                    <span class="details">({{await objective.competency.title}})</span>
+                  {{/if}}
                 </li>
               {{else}}
                 <li class='clickable' {{action 'addParent' objective}}>
                   <input type='radio'>
                   {{objective.textTitle}}
+                  {{#if (await objective.competency)}}
+                    <span class="details">({{await objective.competency.title}})</span>
+                  {{/if}}
                 </li>
               {{/if}}
             {{/each}}
