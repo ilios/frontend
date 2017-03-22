@@ -3,7 +3,16 @@
 </h1>
 {{#if (is-fulfilled objectiveData)}}
   {{chart-pie data=(await objectiveData) width=width height=height}}
-  {{chart-donut data=(await objectiveData) width=width height=height}}
+  {{chart-donut
+    data=(await objectiveData)
+    width=width
+    height=height
+    displayTooltip=(perform displayTooltip)
+    hideTooltip=(action 'hideTooltip')
+  }}
+  {{#liquid-if tooltipValue}}
+    <div class='tooltip'>{{{tooltipValue}}}</div>
+  {{/liquid-if}}
 {{else}}
   {{fa-icon 'spinner' spin=true}}
 {{/if}}

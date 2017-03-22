@@ -23,6 +23,8 @@ export default Component.extend({
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const displayTooltip = get(this, 'displayTooltip');
+    const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
     const donutWidth = width * .2;
     const color = scaleOrdinal(schemeCategory20);
@@ -32,11 +34,14 @@ export default Component.extend({
     let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
 
     let chart = svg.append('g').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
-    chart.selectAll('path').data(createPie(dataOrArray)).enter()
+    let path = chart.selectAll('path').data(createPie(dataOrArray)).enter()
       .append('path')
       .attr('d', createArc)
 
       .attr('fill', d =>  color(d.data.label));
+
+    path.on('mouseover', d => displayTooltip(d.data));
+    path.on('mouseout', d => hideTooltip(d.data));
 
     let g = chart.selectAll('g')
       .data(createPie(dataOrArray))
