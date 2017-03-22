@@ -3,8 +3,6 @@ import Ember from 'ember';
 import { select } from 'd3-selection';
 import { scaleOrdinal, schemeCategory10 } from 'd3-scale';
 import { arc, pie } from 'd3-shape';
-import { transition } from 'd3-transition';
-import { easeLinear } from 'd3-ease';
 
 const { Component, run, get } = Ember;
 
@@ -45,12 +43,6 @@ export default Component.extend({
     path.on('mouseover', d => displayTooltip(d.data));
     path.on('mouseout', d => hideTooltip(d.data));
 
-
-    let enterJoin = path.enter()
-      .append('path')
-      .attr('d', 0)
-      .attr('fill', d =>  color(d.data.label));
-
     let g = chart.selectAll('g')
       .data(createPie(dataOrArray))
       .enter().append('g')
@@ -58,8 +50,7 @@ export default Component.extend({
 
     g.append("text")
       .attr("fill", "#ffffff")
-      .attr('stroke', '#FFFFFF')
-      .style("font-size", ".85rem")
+      .style("font-size", ".8rem")
       .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
       .attr("dy", ".40rem")
       .attr("text-anchor", "middle")

@@ -1,10 +1,11 @@
 .tooltip {
   background: $background-grey;
   border: 1px solid $dark-grey;
-  border-radius: 4px;
-  box-shadow: 0 2 4px $light-grey;
+  border-radius: 2px;
+  box-shadow: 0 2 4px $dark-grey;
   color: $text-grey;
   font-size: .8rem;
   padding: 10px;
+  opacity: 0.9;
   width: 60%;
 }
