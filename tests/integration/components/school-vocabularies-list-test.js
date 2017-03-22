@@ -105,33 +105,20 @@ test('can create new vocabulary', function(assert) {
 
 test('cannot delete vocabularies with terms', function(assert) {
   assert.expect(3);
-  
-  /*
-  let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
-  let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
-  let  vocabulary3 = server.create('vocabulary', {school: 1, isNew: false});
-  server.createList('term', 2, { vocabulary: [1]});
-  server.createList('term', 1, { vocabulary: [2]});
 
-  let vocabularies = [vocabulary1, vocabulary2, vocabulary3];
-
-  const school = EmberObject.create({
-    vocabularies: RSVP.resolve(vocabularies)
-  });
-  */
-  let term1 = Object.create({
+  let term1 = EmberObject.create({
     id: 1,
     title: 'term1'
   });
-  let term2 = Object.create({
+  let term2 = EmberObject.create({
     id: 2,
     title: 'term2'
   });
-  let term3 = Object.create({
+  let term3 = EmberObject.create({
     id: 3,
     title: 'term3'
   });
-  let  vocabulary1 =  Object.create({
+  let  vocabulary1 =  EmberObject.create({
     id: 1,
     title: 'Vocabulary 1',
     terms: resolve([term1, term2]),
@@ -139,23 +126,24 @@ test('cannot delete vocabularies with terms', function(assert) {
   });
   term1.set('vocabulary', resolve(vocabulary1));
   term2.set('vocabulary', resolve(vocabulary1));
-  
-  let  vocabulary2 =  Object.create({
+
+  let  vocabulary2 =  EmberObject.create({
     id: 2,
     title: 'Vocabulary 2',
     terms: resolve([term3]),
     isNew: false
   });
-  
+
   term3.set('vocabulary', resolve(vocabulary2));
 
-  let  vocabulary3 =  Object.create({
+  let  vocabulary3 =  EmberObject.create({
     id: 3,
     title: 'Vocabulary 3',
+    terms: resolve([]),
     isNew: false
   });
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: resolve([vocabulary1, vocabulary2, vocabulary3])
   });
   vocabulary1.set('school', resolve(school));
@@ -212,13 +200,13 @@ test('clicking delete removes the vocabulary', function(assert) {
 
 test('clicking edit fires the action to manage the vocab', function(assert) {
   assert.expect(1);
-  
+
   let vocabulary1 =  Object.create({
     id: 1,
     title: 'Vocabulary 1',
     isNew: false
   });
-  
+
   let vocabulary2 =  Object.create({
     id: 2,
     title: 'Vocabulary 2',
@@ -230,7 +218,7 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
-  
+
   vocabulary1.set('school', resolve(school));
   vocabulary2.set('school', resolve(school));
 
