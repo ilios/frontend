@@ -56,7 +56,6 @@ module('Acceptance: Session - Offerings', {
       instructorGroups: [1],
       learnerGroups: [1],
     }));
-
     //users 4
     fixtures.users.pushObjects(server.createList('user', 1, {
       id: 4,
