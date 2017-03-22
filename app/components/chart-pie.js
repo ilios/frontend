@@ -1,9 +1,8 @@
 import Ember from 'ember';
 
 import { select } from 'd3-selection';
-import { scaleOrdinal, schemeCategory20b } from 'd3-scale';
+import { scaleOrdinal, schemeCategory20 } from 'd3-scale';
 import { arc, pie } from 'd3-shape';
-import { sum } from 'd3-array';
 
 const { Component, run, get } = Ember;
 
@@ -26,12 +25,10 @@ export default Component.extend({
     const width = get(this, 'width');
     const height = get(this, 'height');
     const radius = Math.min(width, height) / 2;
-    const color = scaleOrdinal(schemeCategory20b);
+    const color = scaleOrdinal(schemeCategory20);
 
     let createArc = arc().innerRadius(0).outerRadius(radius);
-    let createPie = pie().value(d => {
-      return sum(d.data);
-    }).sort(null);
+    let createPie = pie().value(d => d.data).sort(null);
 
     let chart = plot.selectAll('path').data(createPie(dataOrArray));
     chart.enter()
