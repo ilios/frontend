@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Component, RSVP, computed, isPresent } = Ember;
 const { map, filter } = RSVP;
@@ -7,12 +8,6 @@ export default Component.extend({
   course: null,
   height: 360,
   width: 360,
-  data: [
-    { label: 'Abulia', data: [10, 20] },
-    { label: 'Betelgeuse', data: [10, 20] },
-    { label: 'Cantaloupe', data: [100, 20] },
-    { label: 'Dijkstra', data: [10, 20] }
-  ],
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
     const course = this.get('course');
     const sessions = await course.get('sessions');
@@ -36,20 +31,48 @@ export default Component.extend({
 
     });
     const courseObjectives = await course.get('objectives');
-    return courseObjectives.map(courseObjective => {
-      const label = courseObjective.get('id');
-      const data = sessionCourseObjectiveMap.map(obj => {
+    let mappedObjectives = courseObjectives.map(courseObjective => {
+
+      const hours = sessionCourseObjectiveMap.map(obj => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.hours;
         } else {
           return 0;
         }
       });
+      const sessionObjectives = sessionCourseObjectiveMap.filter(obj => obj.objectives.includes(courseObjective.get('id')));
+      const meta = {
+        courseObjective,
+        sessionObjectives
+      };
+      const data = hours.reduce((total, hours) => total + parseInt(hours), 0);
 
       return {
-        label,
-        data
+        data,
+        meta
       };
     });
+
+    const totalHours = mappedObjectives.mapBy('data').reduce((total, hours) => total + hours, 0);
+    const mappedObjectivesWithLabel = mappedObjectives.map(obj => {
+      const percent = (obj.data / totalHours * 100).toFixed(1);
+      obj.label = `${percent}%`;
+      return obj;
+    });
+
+    return mappedObjectivesWithLabel;
   }),
+  displayTooltip: task(function * ({meta}){
+    let objectiveTitle = meta.courseObjective.get('title');
+    let competency = yield meta.courseObjective.get('competency');
+    if (competency) {
+      objectiveTitle += `(${competency})`;
+    }
+    this.set('tooltipValue', objectiveTitle);
+  }).restartable(),
+  actions: {
+    hideTooltip(){
+      this.set('tooltipValue', null);
+    }
+  }
 });

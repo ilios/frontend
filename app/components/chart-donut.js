@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
 import { select } from 'd3-selection';
-import { scaleOrdinal, schemeCategory20b } from 'd3-scale';
+import { scaleOrdinal, schemeCategory20 } from 'd3-scale';
 import { arc, pie } from 'd3-shape';
-import { sum } from 'd3-array';
+import { transition } from 'd3-transition';
+import { easeCubicInOut } from 'd3-ease';
 
 const { Component, run, get } = Ember;
 
@@ -24,20 +25,47 @@ export default Component.extend({
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const displayTooltip = get(this, 'displayTooltip');
+    const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
     const donutWidth = width * .2;
-    const color = scaleOrdinal(schemeCategory20b);
+    const color = scaleOrdinal(schemeCategory20);
+
+    let t = transition().duration(250).ease(easeCubicInOut);
 
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
-    let createPie = pie().value(d => {
-      return sum(d.data);
-    }).sort(null);
+    let createPie = pie().value(d => d.data).sort(null);
+    let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
 
-    let plot = svg.selectAll('path').data(createPie(dataOrArray));
-    plot.enter()
+    let chart = svg.append('g').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
+
+    let path = chart.selectAll('path').data(createPie(dataOrArray));
+    path.on('mouseover', d => displayTooltip(d.data));
+    path.on('mouseout', d => hideTooltip(d.data));
+
+    path.exit()
+      .transition(t)
+      .attr('d', 0)
+      .remove();
+
+    let enterJoin = path.enter()
       .append('path')
-      .attr('d', createArc)
-      .attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')')
+      .attr('d', 0)
       .attr('fill', d =>  color(d.data.label));
+
+    enterJoin.merge(path)
+      .transition(t)
+      .attr('d', createArc);
+
+    let g = chart.selectAll('g')
+      .data(createPie(dataOrArray))
+      .enter().append('g')
+      .attr('class', 'arc');
+
+    g.append("text")
+      .attr("fill", "#ffffff")
+      .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
+      .attr("dy", ".35em")
+      .text(d => d.data.label);
   },
 });
