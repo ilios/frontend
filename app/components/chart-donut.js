@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 import { select } from 'd3-selection';
-import { scaleOrdinal, schemeCategory20 } from 'd3-scale';
+import { scaleOrdinal, schemeCategory10 } from 'd3-scale';
 import { arc, pie } from 'd3-shape';
 import { transition } from 'd3-transition';
-import { easeCubicInOut } from 'd3-ease';
+import { easeLinear } from 'd3-ease';
 
 const { Component, run, get } = Ember;
 
@@ -29,9 +29,9 @@ export default Component.extend({
     const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
     const donutWidth = width * .2;
-    const color = scaleOrdinal(schemeCategory20);
+    const color = scaleOrdinal(schemeCategory10);
 
-    let t = transition().duration(250).ease(easeCubicInOut);
+    let t = transition().duration(250).ease(easeLinear);
 
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
@@ -50,6 +50,7 @@ export default Component.extend({
 
     let enterJoin = path.enter()
       .append('path')
+      .attr('stroke', '#FFFFFF ')
       .attr('d', 0)
       .attr('fill', d =>  color(d.data.label));
 
@@ -64,8 +65,10 @@ export default Component.extend({
 
     g.append("text")
       .attr("fill", "#ffffff")
+      .style("font-size", ".85rem")
       .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
-      .attr("dy", ".35em")
+      .attr("dy", ".40rem")
+      .attr("text-anchor", "middle")
       .text(d => d.data.label);
   },
 });
