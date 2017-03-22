@@ -28,15 +28,13 @@ test('classOf string', function(assert) {
   var model = this.subject();
   var store = model.store;
   Ember.run(function(){
-    store.createRecord('program', {id:99, duration:1});
-    store.find('program', 99).then(function(program){
-      model.set('program', program);
-      model.set('startYear', 2000);
-      assert.equal(model.get('classOfYear'), '2001');
-      program.set('duration', 5);
-      assert.equal(model.get('classOfYear'), '2005');
-      model.set('startYear', 2001);
-      assert.equal(model.get('classOfYear'), '2006');
-    });
+    const program = store.createRecord('program', {id:99, duration:1});
+    model.set('program', program);
+    model.set('startYear', 2000);
+    assert.equal(model.get('classOfYear'), '2001');
+    program.set('duration', 5);
+    assert.equal(model.get('classOfYear'), '2005');
+    model.set('startYear', 2001);
+    assert.equal(model.get('classOfYear'), '2006');
   });
 });
