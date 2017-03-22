@@ -9,6 +9,7 @@ const { service } = inject;
 
 export default Component.extend({
   store: service(),
+  iliosConfig: service(),
   classNames: ['ilios-users'],
   offset: null,
   limit: null,
@@ -35,7 +36,8 @@ export default Component.extend({
   }).cancelOn('deactivate').restartable(),
 
   newUserComponent: computed('iliosConfig.userSearchType', async function(){
-    const userSearchType = await this.get('iliosConfig.userSearchType');
+    const iliosConfig = this.get('iliosConfig');
+    const userSearchType = await iliosConfig.get('userSearchType');
 
     return userSearchType === 'ldap'?'new-directory-user':'new-user';
   }),
