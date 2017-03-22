@@ -220,9 +220,6 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   vocabulary1.set('school', resolve(school));
   vocabulary2.set('school', resolve(school));
 
-  vocabulary1.set('school', resolve(school));
-  vocabulary2.set('school', resolve(school));
-
   this.set('school', school);
   this.on('edit', function(id){
     assert.equal(id, vocabulary1.id);
