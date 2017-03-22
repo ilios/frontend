@@ -237,7 +237,7 @@ export default {
     'learningMaterialsSummary': "Résumé Matières d'Étude",
     'level': "Niveau",
     'link': "Lien web",
-    'listInOrder': 'Liste en Ordre',
+    'listByPriority': 'Liste par priorité',
     'lmDescriptorTitle': "Choisi MeSH pour les matières d'étude",
     'loading': "Chargement Ilios",
     'loadingEvents': "Rassembler les événements...",

@@ -237,7 +237,7 @@ export default {
     'learningMaterialsSummary': 'Resumen de Materiales de Aprendizaje',
     'level': 'Nivel',
     'link': 'Enlace de la Web',
-    'listInOrder': 'Lista en Orden',
+    'listByPriority': 'Lista por prioridad',
     'lmDescriptorTitle': 'Seleccione Descriptores de MeSH para Materiales de Aprendizaje',
     'loading': 'Marcando Ilios',
     'loadingEvents': 'Cargando eventos...',
