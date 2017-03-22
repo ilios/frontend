@@ -10,8 +10,6 @@ moduleForComponent('school-competencies-list', 'Integration | Component | school
   }
 });
 
-
-
 test('it renders', function(assert) {
   assert.expect(3);
   let domain = server.create('competency', {school: 1, isDomain: true});

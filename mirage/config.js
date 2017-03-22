@@ -91,7 +91,7 @@ export default function() {
   this.put('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.delete('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.post('api/courselearningmaterials', 'courseLearningMaterial');
-  
+
   this.get('api/courses', getAll);
   this.get('api/courses/:id', 'course');
   this.put('api/courses/:id', 'course');
@@ -303,7 +303,7 @@ export default function() {
   this.get('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.put('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.delete('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
-  this.post('api/sessionlearningmaterials', 'sessionLearningMaterial') 
+  this.post('api/sessionlearningmaterials', 'sessionLearningMaterial') ;
 
   this.get('api/sessiontypes', getAll);
   this.get('api/sessiontypes/:id', 'sessionType');

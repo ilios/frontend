@@ -30,7 +30,7 @@ test('check fields', function(assert) {
     id: 4136,
     roles: [1],
   });
-  
+
   server.create('userRole', {
     users: [4136],
     title: 'course director'
@@ -413,7 +413,7 @@ test('remove director', function(assert) {
     id: 4136
   });
   server.create('user', {
-    id: 2, 
+    id: 2,
     directedCourses: [1],
     firstName: 'A',
     lastName: 'Director'
@@ -443,14 +443,14 @@ test('manage directors', function(assert) {
     users: [1, 2, 4136]
   });
   server.create('user', {
-    id: 1, 
+    id: 1,
     directedCourses: [1],
     firstName: 'Added',
     lastName: 'Guy',
     roles: [1]
   });
   server.create('user', {
-	id: 2, 
+    id: 2,
     firstName: 'Disabled',
     lastName: 'Guy',
     enabled: false,
@@ -517,7 +517,7 @@ test('search twice and list should be correct', function(assert) {
     users: [1, 4136]
   });
   server.create('user', {
-    id: 2, 
+    id: 2,
     directedCourses: [1],
     firstName: 'Added',
     lastName: 'Guy',

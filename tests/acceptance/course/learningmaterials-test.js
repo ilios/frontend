@@ -532,9 +532,7 @@ test('manage terms', function(assert) {
       assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
       fillIn(searchBoxInput, 'descriptor');
       click('span.search-icon', searchBox);
-	  
-	  //return pauseTest();
-	  
+
       andThen(function(){
         let searchResults = find('.mesh-search-results li', meshManager);
         assert.equal(searchResults.length, fixtures.meshDescriptors.length);
@@ -543,8 +541,8 @@ test('manage terms', function(assert) {
           let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
           assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
         }
-				
-        for (let i = 0; i < fixtures.meshDescriptors.length; i++){			
+
+        for (let i = 0; i < fixtures.meshDescriptors.length; i++){
           if(material.meshDescriptors.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
             assert.ok($(searchResults[i]).hasClass('disabled'), '546');
           } else {
