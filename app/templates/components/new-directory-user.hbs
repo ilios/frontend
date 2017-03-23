@@ -1,4 +1,4 @@
-{{#liquid-if selectedUser class='horizontal'}}
+{{#if selectedUser}}
   <div class="detail-content form-container">
     <div class="form-col-12 multi-row">
       <label class="form-label">{{t 'general.createNew'}}:</label>
@@ -134,7 +134,7 @@
     }}
     <button type='search' {{action (perform findUsersInDirectory) searchTerms}}>{{t 'general.searchDirectory'}}</button>
   </div>
-  {{#liquid-if isSearching class='crossFade'}}
+  {{#if isSearching}}
     {{fa-icon 'spinner' spin=true}} {{t 'general.currentlySearchingPrompt'}}
   {{else if searchResultsReturned}}
     {{#if searchResults.length}}
@@ -188,5 +188,5 @@
     {{else}}
       <p><em>{{t 'general.noResultsFound'}}</em></p>
     {{/if}}
-  {{/liquid-if}}
-{{/liquid-if}}
+  {{/if}}
+{{/if}}
