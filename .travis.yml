@@ -22,6 +22,7 @@ cache:
   directories:
     - $HOME/.npm
     - $HOME/.cache
+    - $HOME/.package_cache
 
 matrix:
   fast_finish: true
@@ -30,6 +31,7 @@ before_install:
   - npm set progress=false
   - npm config set spin false
   - npm install -g bower
+  - npm install -g npm-cache
   # workaround for npm which rvm issue https://github.com/travis-ci/travis-ci/issues/5092#issuecomment-235542942
   - if [ -f "node_modules/.bin/which" ];
     then mv node_modules/.bin/which node_modules/.bin/which.backup;
@@ -43,8 +45,7 @@ before_install:
     fi
 
 install:
-  - travis_retry npm install
-  - travis_retry bower install
+  - travis_retry npm-cache install npm bower
 
 before_script:
   - "export DISPLAY=:99.0"
