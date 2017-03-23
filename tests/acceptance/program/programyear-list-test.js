@@ -280,7 +280,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
   server.createList('user', 3, {
     directedProgramYears: [1]
   });
-  server.createList('school', {
+  server.createList('school', 1, {
     vocabularies: [1],
     programs: [1],
 
