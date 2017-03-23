@@ -36,8 +36,8 @@ module('Acceptance: User', {
 });
 
 test('can search for users', function(assert) {
-  server.createList('user', 20, { email: 'user@example.edu' });
-  server.createList('authentication', 20);
+  server.create('user', {id: 2, email: 'user@example.edu'})
+  server.create('user', {id: 3, email: 'user@example.edu'})
 
   const userSearch = '.user-search input';
   const secondResult = '.user-search .results li:eq(2)';
