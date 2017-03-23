@@ -51,7 +51,6 @@
     "ember-cli-neat": "0.0.5",
     "ember-cli-password-strength": "1.0.0",
     "ember-cli-qunit": "^3.1.0",
-    "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "6.1.2",
     "ember-cli-server-variables": "2.0.2",
     "ember-cli-shims": "^1.0.2",
@@ -95,11 +94,10 @@
     "ember-truth-helpers": "1.3.0",
     "ember-uploader": "1.2.3",
     "ember-watson": "^0.8.5",
-    "eslint": "^3.14.1",
     "ilios-calendar": "^9.2.0",
     "liquid-fire": "0.27.2",
     "liquid-tether": "2.0.3",
-    "loader.js": "^4.2.2",
+    "loader.js": "^4.2.3",
     "normalize.css": "^6.0.0",
     "pluralize": "^3.0.0",
     "validator": "^7.0.0"
@@ -115,7 +113,8 @@
   "greenkeeper": {
     "ignore": [
       "ember-cli-mirage",
-      "ember-tether"
+      "ember-tether",
+      "ember-resolver"
     ]
   },
   "private": true
