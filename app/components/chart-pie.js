@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 import { select } from 'd3-selection';
-import { scaleOrdinal, schemeCategory20 } from 'd3-scale';
+import { scaleOrdinal, schemeCategory10 } from 'd3-scale';
 import { arc, pie } from 'd3-shape';
+import { transition } from 'd3-transition';
+import { easeLinear } from 'd3-ease';
 
 const { Component, run, get } = Ember;
 
@@ -20,22 +22,47 @@ export default Component.extend({
   draw(){
     const data = get(this, 'data');
     const dataOrArray = data?data:[];
-    const plot = select(this.element);
-
+    const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const displayTooltip = get(this, 'displayTooltip');
+    const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
-    const color = scaleOrdinal(schemeCategory20);
+    const color = scaleOrdinal(schemeCategory10);
+
+    let t = transition().duration(2000).ease(easeLinear);
 
     let createArc = arc().innerRadius(0).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
+    let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
 
-    let chart = plot.selectAll('path').data(createPie(dataOrArray));
-    chart.enter()
+    let chart = svg.append('g').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
+    let path = chart.selectAll('path').data(createPie(dataOrArray)).enter()
       .append('path')
       .attr('d', createArc)
-      .attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')')
+      .attr('stroke', '#FFFFFF')
       .attr('fill', d =>  color(d.data.label));
+
+    path.on('mouseover', d => displayTooltip(d.data));
+    path.on('mouseout', d => hideTooltip(d.data));
+
+    path.exit()
+      .transition(t)
+      .attr('d', 0)
+      .remove();
+
+    let g = chart.selectAll('g')
+      .data(createPie(dataOrArray))
+      .enter().append('g')
+      .attr('class', 'arc');
+
+    g.append("text")
+      .attr("fill", "#ffffff")
+      .style("font-size", ".8rem")
+      .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
+      .attr("dy", ".40rem")
+      .attr("text-anchor", "middle")
+      .text(d => d.data.label);
 
   },
 });
