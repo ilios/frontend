@@ -2,7 +2,8 @@ import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
 import {
   module,
-  test
+  test,
+  skip
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
@@ -276,7 +277,7 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
   });
 });
 
-test('can add a program-year (with pre-existing program-year)', function(assert) {
+skip('can add a program-year (with pre-existing program-year)', function(assert) {
   server.createList('user', 3, {
     directedProgramYears: [1]
   });
