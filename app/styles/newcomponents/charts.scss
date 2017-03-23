@@ -1,0 +1,13 @@
+.charts {
+  &.tooltip {
+    background: $background-grey;
+    border: 1px solid $dark-grey;
+    border-radius: 2px;
+    box-shadow: 0 2 4px $dark-grey;
+    color: $text-grey;
+    font-size: .8rem;
+    opacity: .9;
+    padding: 10px;
+    width: 60%;
+  }
+}
