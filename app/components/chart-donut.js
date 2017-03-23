@@ -10,7 +10,7 @@ const { Component, run, get } = Ember;
 
 export default Component.extend({
   tagName: 'svg',
-  classNames: ['chart-pie'],
+  classNames: ['chart-donut'],
   attributeBindings: ['width', 'height'],
   didReceiveAttrs() {
     // Anytime we get an update schedule a draw
@@ -32,7 +32,7 @@ export default Component.extend({
     const color = scaleOrdinal(schemeCategory10);
 
     let t = transition().duration(2000).ease(easeLinear);
-    
+
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
     let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
