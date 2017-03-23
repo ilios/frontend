@@ -28,7 +28,6 @@ const cohortProxy = Object.extend({
   objective: null,
   id: oneWay('cohort.id'),
   title: null,
-  courseObjective: null,
   objectivesByCompetency: computed('objectives.[]', function(){
     return new Promise(resolve => {
       let objectives = this.get('objectives');
@@ -70,20 +69,7 @@ const cohortProxy = Object.extend({
         resolve(groups);
       });
     });
-  }),
-  sortedObjectives: computed('cohort.sortedObjectives.[]', function() {
-    return new Promise(resolve => {
-      let courseObjective = this.get('courseObjective');
-      this.get('cohort.sortedObjectives').then(objectives => {
-        let proxies = objectives.map(objective => {
-          return objectiveProxy.create({
-            content: objective,
-            courseObjective,
-          });
-        });
-        resolve(proxies);
-      });
-    });
+
   })
 });
 
@@ -91,7 +77,6 @@ export default Component.extend({
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,
-  groupByCompetencies: true,
 
   didReceiveAttrs(){
     this.get('loadAttr').perform();
@@ -140,8 +125,7 @@ export default Component.extend({
                         id: cohort.get('id'),
                         cohort: cohort,
                         objectives: objectiveProxies,
-                        title,
-                        courseObjective
+                        title
                       });
                       resolve(groups.pushObject(group));
                     });
@@ -191,6 +175,7 @@ export default Component.extend({
     addParent(parentProxy){
       let courseObjective = this.get('courseObjective');
       let newParent = parentProxy.get('content');
+
       //remove any other parents in the same cohort
       newParent.get('programYears').then(programYears => {
         let newProgramYear = programYears.get('firstObject');

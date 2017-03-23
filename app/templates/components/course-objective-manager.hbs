@@ -15,60 +15,28 @@
         {{get (await currentCohort) 'title'}}
       {{/if}}
     </label>
-    <div class='choose-display-mode'>
-      {{click-choice-buttons
-        buttonContent1=(t 'general.groupByCompetencies')
-        buttonContent2=(t 'general.listByPriority')
-        firstChoicePicked=groupByCompetencies
-        action=(action (mut groupByCompetencies))
-      }}
-    </div>
     <div class='parent-picker'>
       {{#liquid-if (await currentCohort) class='vertical'}}
-        {{#if groupByCompetencies class='horizontal'}}
-          {{#each (await (get (await currentCohort) 'objectivesByCompetency')) as |competency|}}
-            <h5 class="competency-title {{if competency.selected 'selected'}}">
-              {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
-            </h5>
-            <ul>
-              {{#each (await competency.objectives) as |objective|}}
-                {{#if objective.selected}}
-                  <li class='selected clickable' {{action 'removeParent' objective}}>
-                    <input type='radio' checked="checked">
-                    {{objective.textTitle}}
-                  </li>
-                {{else}}
-                  <li class='clickable' {{action 'addParent' objective}}>
-                    <input type='radio'>
-                    {{objective.textTitle}}
-                  </li>
-                {{/if}}
-              {{/each}}
-            </ul>
-          {{/each}}
-        {{else}}
+        {{#each (await (get (await currentCohort) 'objectivesByCompetency')) as |competency|}}
+          <h5 class="competency-title {{if competency.selected 'selected'}}">
+            {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
+          </h5>
           <ul>
-            {{#each (await (get (await currentCohort) 'sortedObjectives')) as |objective|}}
+            {{#each (await competency.objectives) as |objective|}}
               {{#if objective.selected}}
                 <li class='selected clickable' {{action 'removeParent' objective}}>
                   <input type='radio' checked="checked">
                   {{objective.textTitle}}
-                  {{#if (await objective.competency)}}
-                    <span class="details">({{await objective.competency.title}})</span>
-                  {{/if}}
                 </li>
               {{else}}
                 <li class='clickable' {{action 'addParent' objective}}>
                   <input type='radio'>
                   {{objective.textTitle}}
-                  {{#if (await objective.competency)}}
-                    <span class="details">({{await objective.competency.title}})</span>
-                  {{/if}}
                 </li>
               {{/if}}
             {{/each}}
           </ul>
-        {{/if}}
+        {{/each}}
       {{/liquid-if}}
     </div>
   {{else}}
