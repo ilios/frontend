@@ -2,6 +2,7 @@ import Ember from 'ember';
 import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
 const { computed, Mixin, RSVP } = Ember;
+const { alias } = computed;
 const { all, Promise } = RSVP;
 
 export default Mixin.create(SortableByPosition, {
@@ -11,22 +12,12 @@ export default Mixin.create(SortableByPosition, {
   isSorting: false,
   isSaving: false,
 
-  objectives: computed('subject.objectives.[]', function(){
-    return this.get('subject').get('objectives');
-  }),
+  objectives: alias('subject.sortedObjectives'),
 
   hasMoreThanOneObjective: computed('objectives.[]', function(){
     return new Promise(resolve => {
       this.get('objectives').then(objectives => {
         resolve(objectives.length > 1);
-      });
-    });
-  }),
-
-  sortedObjectives: computed('objectives.[]', function(){
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.toArray().sort(this.get('positionSortingCallback')));
       });
     });
   }),

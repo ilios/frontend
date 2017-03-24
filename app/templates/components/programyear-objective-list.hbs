@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await sortedObjectives) as |objective|}}
+          {{#each (await objectives) as |objective|}}
             {{programyear-objective-list-item
               objective=objective
               programYear=programYear

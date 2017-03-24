@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await sortedObjectives) as |objective|}}
+          {{#each (await objectives) as |objective|}}
             {{session-objective-list-item
               objective=objective
               editable=editable
