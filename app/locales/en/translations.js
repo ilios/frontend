@@ -560,6 +560,7 @@ export default {
     'vocabulary': 'Vocabulary',
     'waitSaving': 'saving... one moment...',
     'weak': 'Weak',
+    'weekAtAGlance': 'Week at a Glance',
     'wednesday': 'Wednesday',
     'week': 'Week',
     'weekOf': 'Week of {{date}}',

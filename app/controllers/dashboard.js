@@ -22,7 +22,7 @@ export default Controller.extend({
   courseFilters: true,
   academicYear: null,
   school: null,
-  show: 'agenda',
+  show: 'week',
 
   currentUser: service(),
 
@@ -86,8 +86,8 @@ export default Controller.extend({
     },
 
     setShow(what) {
-      if (!['agenda', 'materials', 'calendar'].includes(what)) {
-        what = 'agenda';
+      if (!['week', 'agenda', 'materials', 'calendar'].includes(what)) {
+        what = 'week';
       }
 
       this.set('show', what);

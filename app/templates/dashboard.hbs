@@ -23,10 +23,12 @@
       courseFilters=courseFilters
       toggleCourseFilters=(action (toggle 'courseFilters' this))
     }}
-  {{else if (eq show 'materials')}}
-    {{dashboard-materials}}
-  {{else}}
-    {{dashboard-agenda}}
+    {{else if (eq show 'materials')}}
+      {{dashboard-materials}}
+    {{else if (eq show 'agenda')}}
+      {{dashboard-agenda}}
+    {{else}}
+      {{dashboard-week}}
   {{/liquid-if}}
   {{dashboard-myreports}}
   {{dashboard-mycourses}}
