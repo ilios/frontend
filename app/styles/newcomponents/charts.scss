@@ -2,12 +2,14 @@
   &.tooltip {
     background: $background-grey;
     border: 1px solid $dark-grey;
-    box-shadow: 0 0 2px $dark-grey;
+    border-radius: 15px;
+    box-shadow: 4px 4px 12px $dark-grey;
     color: $text-grey;
-    font-size: .8rem;
-    margin-top: 20px;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    margin: 15px;
     opacity: .9;
     padding: 10px;
-    width: 60%;
+    width: 40%;
   }
 }
