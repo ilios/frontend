@@ -81,7 +81,7 @@ let blankEventsMock = Ember.Service.extend({
   }
 });
 
-moduleForComponent('dashboard-week', 'Integration | Component | dashboard week', {
+moduleForComponent('week-glance', 'Integration | Component | week glance', {
   integration: true,
   setup(){
     initializer.initialize(this);
@@ -93,7 +93,7 @@ test('it renders with events', async function(assert) {
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  this.render(hbs`{{dashboard-week}}`);
+  this.render(hbs`{{week-glance}}`);
   const title = 'h3';
   const events = '.event';
   const firstEvent = `${events}:eq(0)`;
@@ -160,7 +160,7 @@ test('it renders blank', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  this.render(hbs`{{dashboard-week}}`);
+  this.render(hbs`{{week-glance}}`);
   const title = 'h3';
   const body = 'p';
 
