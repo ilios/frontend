@@ -43,7 +43,7 @@ test('it renders', function(assert){
     assert.equal(this.$('thead th:eq(3)').text().trim(), 'Actions');
     for (let i = 0, n = objectives.length; i < n; i++) {
       let objective = objectives[i];
-      assert.equal(this.$(`tbody tr:eq(${i}) td:eq(0)`).text().trim(), objective.get('title'))
+      assert.equal(this.$(`tbody tr:eq(${i}) td:eq(0)`).text().trim(), objective.get('title'));
     }
   });
 });
