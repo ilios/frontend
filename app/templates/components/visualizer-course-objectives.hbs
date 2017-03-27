@@ -2,7 +2,7 @@
   {{course.title}}
 </h1>
 <section class='course-overview'>
-{{#if (is-fulfilled objectiveData)}}
+  {{#if (is-fulfilled objectiveData)}}
   <div class='block'>
     {{chart-pie data=(await objectiveData)
       width=width
@@ -22,11 +22,11 @@
     {{#liquid-if tooltipValue}}
       <div class='charts tooltip'>
         <div class="tooltip-header">
-          <span class="tooltip-title">Objective ID</span>
-          <span class="tooltip-attr">Hours</span>
+          <span class="tooltip-title"></span>
+          <span class="tooltip-attr"></span>
         </div>
         <div class="tooltip-content">{{{tooltipValue}}}</div>
-        <a href="#">Link to session</a>
+        <a href="#"></a>
       </div>
     {{/liquid-if}}
   </div>
