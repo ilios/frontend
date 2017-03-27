@@ -3,34 +3,34 @@
 </h1>
 <section class='course-overview'>
   {{#if (is-fulfilled objectiveData)}}
-  <div class='block'>
-    {{chart-pie data=(await objectiveData)
-      width=width
-      height=height
-      displayTooltip=(perform displayTooltip)
-      hideTooltip=(action 'hideTooltip')
-    }}
-    {{chart-donut
-      data=(await objectiveData)
-      width=width
-      height=height
-      displayTooltip=(perform displayTooltip)
-      hideTooltip=(action 'hideTooltip')
-    }}
-  </div>
-  <div class='block'>
-    {{#liquid-if tooltipValue}}
-      <div class='charts tooltip'>
-        <div class="tooltip-header">
-          <span class="tooltip-title"></span>
-          <span class="tooltip-attr"></span>
+    <div class='block'>
+      {{chart-pie data=(await objectiveData)
+        width=width
+        height=height
+        displayTooltip=(perform displayTooltip)
+        hideTooltip=(action 'hideTooltip')
+      }}
+      {{chart-donut
+        data=(await objectiveData)
+        width=width
+        height=height
+        displayTooltip=(perform displayTooltip)
+        hideTooltip=(action 'hideTooltip')
+      }}
+    </div>
+    <div class='block'>
+      {{#liquid-if tooltipValue}}
+        <div class='charts tooltip'>
+          <div class="tooltip-header">
+            <span class="tooltip-title"></span>
+            <span class="tooltip-attr"></span>
+          </div>
+          <div class="tooltip-content">{{{tooltipValue}}}</div>
+          <a href="#"></a>
         </div>
-        <div class="tooltip-content">{{{tooltipValue}}}</div>
-        <a href="#"></a>
-      </div>
-    {{/liquid-if}}
-  </div>
-{{else}}
+      {{/liquid-if}}
+    </div>
+  {{else}}
   {{fa-icon 'spinner' spin=true}}
-{{/if}}
+  {{/if}}
 </section>
