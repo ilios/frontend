@@ -31,7 +31,7 @@ export default Component.extend({
     const radius = Math.min(width, height) / 2;
     const color = scaleOrdinal(schemeCategory10);
 
-    let t = transition().duration(2000).ease(easeLinear);
+    let t = transition().duration(500).ease(easeLinear);
 
     /*let t2 = transition()
           .ease(easeLinear)

@@ -32,7 +32,7 @@ export default Component.extend({
     const donutWidth = width * .2;
     const color = scaleOrdinal(schemeCategory10);
 
-    let t = transition().duration(2000).ease(easeLinear);
+    let t = transition().duration(500).ease(easeLinear);
 
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
@@ -50,9 +50,9 @@ export default Component.extend({
     chart.selectAll('path.slicepath').transition()
       .ease(easeLinear)
       .duration(1000)
-      .attrTween("d", tweenPie);
+      .attrTween("d", tweenDonut);
 
-    function tweenPie(b) {
+    function tweenDonut(b) {
       b.innerRadius = 0;
       var i = interpolate({startAngle: 0, endAngle: 0}, b);
       return function(t) { return createArc(i(t)); };
