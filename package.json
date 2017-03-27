@@ -18,7 +18,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "crypto-js": "^3.1.8",
     "elemental-calendar": "0.0.9",
-    "ember-ajax": "2.5.6",
+    "ember-ajax": "3.0.0-beta.1",
     "ember-can": "0.8.3",
     "ember-cli": "2.12.0",
     "ember-cli-app-version": "^3.0.0",
