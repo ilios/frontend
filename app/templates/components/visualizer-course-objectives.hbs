@@ -1,23 +1,36 @@
 <h1>
   {{course.title}}
 </h1>
+<section class='course-overview'>
 {{#if (is-fulfilled objectiveData)}}
-  {{chart-pie data=(await objectiveData)
-    width=width
-    height=height
-    displayTooltip=(perform displayTooltip)
-    hideTooltip=(action 'hideTooltip')
-  }}
-  {{chart-donut
-    data=(await objectiveData)
-    width=width
-    height=height
-    displayTooltip=(perform displayTooltip)
-    hideTooltip=(action 'hideTooltip')
-  }}
-  {{#liquid-if tooltipValue}}
-    <div class='charts tooltip'>{{{tooltipValue}}}</div>
-  {{/liquid-if}}
+  <div class='block'>
+    {{chart-pie data=(await objectiveData)
+      width=width
+      height=height
+      displayTooltip=(perform displayTooltip)
+      hideTooltip=(action 'hideTooltip')
+    }}
+    {{chart-donut
+      data=(await objectiveData)
+      width=width
+      height=height
+      displayTooltip=(perform displayTooltip)
+      hideTooltip=(action 'hideTooltip')
+    }}
+  </div>
+  <div class='block'>
+    {{#liquid-if tooltipValue}}
+      <div class='charts tooltip'>
+        <div class="tooltip-header">
+          <span class="tooltip-title">Objective ID</span>
+          <span class="tooltip-attr">Hours</span>
+        </div>
+        <div class="tooltip-content">{{{tooltipValue}}}</div>
+        <a href="#">Link to session</a>
+      </div>
+    {{/liquid-if}}
+  </div>
 {{else}}
   {{fa-icon 'spinner' spin=true}}
 {{/if}}
+</section>

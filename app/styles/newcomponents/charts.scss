@@ -1,4 +1,5 @@
 .charts {
+
   &.tooltip {
     background: $background-grey;
     border: 1px solid $dark-grey;
@@ -8,8 +9,34 @@
     font-size: $base-font-size;
     line-height: $base-line-height;
     margin: 15px;
+    max-height: 150px;
     opacity: .9;
     padding: 10px;
-    width: 40%;
+    width: 380px;
+    }
+
+  .tooltip-header {
+    border-bottom: 1px solid $dark-grey;
+    font-size: $h6-font-size;
+    line-height: $base-line-height;
+
+    .tooltip-title {
+      font-weight: bold;
+    }
+
+    .tooltip-attr {
+      font-style: italic;
+      left: 340px;
+      position: absolute;
+      top: 26px;
+    }
+  }
+
+  .tooltip-content {
+    font-size: .9 * $base-font-size;
+    margin: 10px 0 0;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
 }
