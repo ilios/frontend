@@ -14,7 +14,7 @@ const mockEvents = [
     location: 123,
     sessionTypeTitle: 'Lecture',
     courseExternalId: 'C1',
-    sessionDescription: 'Best Session For Sure',
+    sessionDescription: 'Best <strong>Session</strong> For Sure',
     isBlanked: false,
     isPublished: true,
     isScheduled: false,
