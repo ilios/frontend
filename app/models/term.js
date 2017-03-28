@@ -16,11 +16,12 @@ export default Model.extend({
   programYears: hasMany('programYear', { async: true }),
   sessions: hasMany('session', { async: true }),
   courses: hasMany('course', { async: true }),
-  aamcResourceTypes: hasMany('term', { async: true }),
+  aamcResourceTypes: hasMany('aamcResourceType', { async: true }),
   hasChildren: notEmpty('children.content'),
   associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
+
 
   /**
    * A list of parent terms of this term, sorted by ancestry (oldest ancestor first).
