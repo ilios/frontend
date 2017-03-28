@@ -85,7 +85,7 @@ test('it renders', function(assert) {
 });
 
 test('copy session', function(assert) {
-  assert.expect(19);
+  assert.expect(21);
 
   let thisYear = parseInt(moment().format('YYYY'));
 
@@ -104,10 +104,12 @@ test('copy session', function(assert) {
     required: false,
     publicNotes: true,
     learningMaterial: resolve(lm),
+    position: 3,
   });
   let objective = Object.create({
     title: 'session objective title',
-    parents: [Object.create()]
+    parents: [Object.create()],
+    position: 3,
   });
   let objectives = [objective];
   let meshDescriptors = [Object.create()];
@@ -163,6 +165,7 @@ test('copy session', function(assert) {
         assert.equal(learningMaterial.get('notes'), props.notes);
         assert.equal(learningMaterial.get('required'), props.required);
         assert.equal(learningMaterial.get('publicNotes'), props.publicNotes);
+        assert.equal(learningMaterial.get('position'), props.position);
 
         return Object.create({
           save(){
@@ -182,6 +185,7 @@ test('copy session', function(assert) {
       }
       if (what === 'objective') {
         assert.equal(objective.title, props.title);
+        assert.equal(objective.position, props.position);
 
         return Object.create({
           save(){

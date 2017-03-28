@@ -77,7 +77,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       let lm = yield learningMaterialToCopy.get('learningMaterial');
       let learningMaterial = store.createRecord(
         'sessionLearningMaterial',
-        learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes')
+        learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position')
       );
       learningMaterial.set('learningMaterial', lm);
       learningMaterial.set('session', session);
@@ -97,7 +97,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       let meshDescriptors = yield objectiveToCopy.get('meshDescriptors');
       let objective = store.createRecord(
         'objective',
-        objectiveToCopy.getProperties('title')
+        objectiveToCopy.getProperties('title', 'position')
       );
       objective.set('meshDescriptors', meshDescriptors);
       objective.set('sessions', [session]);
