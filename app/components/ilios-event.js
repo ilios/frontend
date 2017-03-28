@@ -150,6 +150,7 @@ export default Component.extend(SortableByPosition, {
     });
   }),
   sessionObjectives: computed('i18n.locale', 'session.sortedObjectives.[]', function(){
+    const i18n = this.get('i18n');
     return new Promise(resolve => {
       this.get('session').then(session => {
         session.get('sortedObjectives').then(objectives => {
@@ -164,7 +165,7 @@ export default Component.extend(SortableByPosition, {
                   if(isEmpty(competency)){
                     resolve({
                       title,
-                      domain: this.get('i18n').t('general.noAssociatedCompetencies').
+                      domain: i18n.t('general.noAssociatedCompetencies'),
                       position
                     });
                   } else {
