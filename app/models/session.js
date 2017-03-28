@@ -41,14 +41,16 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   sortedOfferingsByDate: computed('offerings.@each.startDate', function() {
     return new Promise(resolve => {
       this.get('offerings').then(offerings => {
-        resolve(offerings.filter(offering => isPresent(offering.get('startDate'))).sort((a, b) => {
+        let filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
+        let sortedOfferings = filteredOfferings.sort((a, b) => {
           let aDate = moment(a.get('startDate'));
           let bDate = moment(b.get('startDate'));
           if(aDate === bDate){
             return 0;
           }
           return aDate > bDate ? 1 : -1;
-        }));
+        });
+        resolve(sortedOfferings);
       });
     });
   }),
