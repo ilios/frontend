@@ -631,7 +631,7 @@ test('agenda show next seven days of events', function(assert) {
     endDate: yesterday.clone().add(1, 'hour').format(),
     offering: 3
   });
-  visit('/dashboard');
+  visit('/dashboard?show=agenda');
   andThen(function() {
     let events = find('tr');
     assert.equal(events.length, 2);
@@ -785,13 +785,13 @@ test('filter tags work properly', function(assert) {
 });
 
 test('query params work', function(assert) {
-  const calendarSlider = '.calendar-view-picker button:eq(2)';
+  const calendarPicker = '.calendar-view-picker button:eq(3)';
   const scheduleSlider = '.switch-label:eq(0)';
   const filterSlider = '.switch-label:eq(1)';
   const academicYearDropdown = '.calendar-year-picker select';
 
   visit('/dashboard');
-  click(calendarSlider);
+  click(calendarPicker);
   andThen(() => {
     assert.equal(currentURL(), '/dashboard?show=calendar');
   });
@@ -820,4 +820,32 @@ test('query params work', function(assert) {
   andThen(() => {
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
   });
+});
+
+test('week summary dispalys the whole week', async function(assert) {
+  let startOfTheWeek = moment().day(1).hour(0).minute(2);
+  server.create('userevent', {
+    user: 4136,
+    startDate: startOfTheWeek.format(),
+    endDate: startOfTheWeek.clone().add(1, 'hour').format(),
+    offering: 1,
+    isPublished: true,
+  });
+  let endOfTheWeek = moment().day(7).hour(22).minute(5);
+  server.create('userevent', {
+    user: 4136,
+    startDate: endOfTheWeek.format(),
+    endDate: endOfTheWeek.clone().add(1, 'hour').format(),
+    offering: 2,
+    isPublished: true,
+  });
+  const dashboard = '.dashboard-week';
+  const events = `${dashboard} .event`;
+
+  await visit('/dashboard?show=week');
+
+  let eventBLocks = find(events);
+  assert.equal(eventBLocks.length, 2);
+  assert.equal(getElementText(eventBLocks.eq(0)), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
+  assert.equal(getElementText(eventBLocks.eq(1)), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
 });
