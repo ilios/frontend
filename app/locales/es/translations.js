@@ -22,6 +22,7 @@ export default {
     'allReports': 'todos reportes',
     'allSchools': 'Todas las Escuelas',
     'allVocabularies': 'Todos los Vocabularios',
+    'allWeeks': 'Todas las Semanas',
     'anything': 'Caulquier Cosa',
     'apiVersionMismatch': 'Incompatibilidad de versión de API',
     'apiVersionMismatchDetails': 'Este interfaz de usuario no corresponde a la versión del API con el cual se comunica. Por favor notifique a un administrador o el dueño técnico del sistema con respecto a este error <em>inmediatamente</em>, no puede trabajar con Ilios hasta que esto sea resuelto',
