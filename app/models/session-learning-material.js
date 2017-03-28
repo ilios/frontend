@@ -9,5 +9,5 @@ export default Model.extend({
   session: belongsTo('session', { async: true }),
   learningMaterial: belongsTo('learning-material', { async: true }),
   meshDescriptors: hasMany('mesh-descriptors', { async: true }),
-  position: attr('number')
+  position: attr('number', { defaultValue: 0 })
 });
