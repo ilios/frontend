@@ -21,6 +21,7 @@ export default {
     'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
     'allReports': 'All Reports',
     'allSchools': 'All Schools',
+    'allWeeks': 'All Weeks',
     'allVocabularies': 'All Vocabularies',
     'anything': 'Anything',
     'apiVersionMismatch': 'API Version Mismatch',

@@ -106,6 +106,7 @@ Router.map(function() {
   this.route('course-visualize-objectives', {
     path: 'data/courses/:course_id/objectives'
   });
+  this.route('weeklyevents');
 });
 
 export default Router;

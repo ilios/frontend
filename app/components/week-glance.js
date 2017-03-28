@@ -5,7 +5,7 @@ const { Component, computed, inject } = Ember;
 const { service } = inject;
 
 export default Component.extend({
-  classNames: ['dashboard-week'],
+  classNames: ['week-glance'],
 
   userEvents: service(),
 
@@ -14,6 +14,9 @@ export default Component.extend({
 
   year: null,
   week: null,
+  collapsible: true,
+  collapsed: true,
+  showFullTitle: false,
 
   midnightAtTheStartOfThisWeek: computed('year', 'week', 'startOfWeek', function(){
     const year = this.get('year');

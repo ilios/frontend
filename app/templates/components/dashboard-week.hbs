@@ -1,1 +1,8 @@
-{{week-glance year=(moment-format today 'YYYY') week=(moment-format today 'W')}}
+{{#link-to 'weeklyevents' class='weeklylink'}}{{t 'general.allWeeks'}}{{/link-to}}
+{{week-glance
+  collapsible=false
+  collapsed=false
+  showFullTitle=true
+  year=(moment-format today 'YYYY')
+  week=(moment-format today 'W')
+}}

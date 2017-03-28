@@ -88,12 +88,40 @@ moduleForComponent('week-glance', 'Integration | Component | week glance', {
   },
 });
 
+const getTitle = function(fullTitle){
+  const today = moment().day(1);
+  const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
+  const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
+
+  let expectedTitle;
+  if (startOfWeek.month() != endOfWeek.month()) {
+    const from = startOfWeek.format('MMMM D');
+    const to = endOfWeek.format('MMMM D');
+    expectedTitle = `${from} - ${to}`;
+  } else {
+    const from = startOfWeek.format('MMMM D');
+    const to = endOfWeek.format('D');
+    expectedTitle = `${from}-${to}`;
+  }
+  if (fullTitle) {
+    expectedTitle += ' Week at a Glance';
+  }
+
+  return expectedTitle;
+};
+
 test('it renders with events', async function(assert) {
   assert.expect(15);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
-
-  this.render(hbs`{{week-glance}}`);
+  this.set('today', moment());
+  this.render(hbs`{{week-glance
+    collapsible=false
+    collapsed=false
+    showFullTitle=true
+    year=(moment-format today 'YYYY')
+    week=(moment-format today 'W')
+  }}`);
   const title = 'h3';
   const events = '.event';
   const firstEvent = `${events}:eq(0)`;
@@ -119,23 +147,8 @@ test('it renders with events', async function(assert) {
 
   await wait();
 
-  const today = moment().day(1);
-  const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
-  const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
-
-  let expectedTitle;
-  if (startOfWeek.month() != endOfWeek.month()) {
-    const from = startOfWeek.format('MMMM D');
-    const to = endOfWeek.format('MMMM D');
-    expectedTitle = `${from} - ${to}`;
-  } else {
-    const from = startOfWeek.format('MMMM D');
-    const to = endOfWeek.format('D');
-    expectedTitle = `${from}-${to}`;
-  }
-
-  expectedTitle += ' Week at a Glance';
-  assert.equal(this.$(title).text().trim(), expectedTitle);
+  const expectedTitle = getTitle(true);
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
   assert.equal(this.$(events).length, 2, 'Blank events are not shown');
 
   assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
@@ -160,17 +173,114 @@ test('it renders blank', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  this.render(hbs`{{week-glance}}`);
+  const today = moment();
+  this.set('today', today);
+  this.render(hbs`{{week-glance
+    collapsible=false
+    collapsed=false
+    showFullTitle=true
+    year=(moment-format today 'YYYY')
+    week=(moment-format today 'W')
+  }}`);
   const title = 'h3';
   const body = 'p';
+  const expectedTitle = getTitle(true);
 
   await wait();
 
-  const today = moment();
-  const startOfWeek = today.clone().day(1).format('MMMM D');
-  const endOfWeek = today.clone().day(7).format('D');
-  const expectedTitle = `${startOfWeek}-${endOfWeek} Week at a Glance`;
-  assert.equal(this.$(title).text().trim(), expectedTitle);
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
   assert.equal(this.$(body).text().trim(), 'None');
 
+});
+
+test('renders short title', async function(assert) {
+  assert.expect(1);
+  this.register('service:user-events', blankEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
+
+  const today = moment();
+  this.set('today', today);
+  this.render(hbs`{{week-glance
+    collapsible=false
+    collapsed=false
+    showFullTitle=false
+    year=(moment-format today 'YYYY')
+    week=(moment-format today 'W')
+  }}`);
+  const title = 'h3';
+  const expectedTitle = getTitle(false);
+  await wait();
+
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+});
+
+test('it renders collapsed', async function(assert) {
+  assert.expect(2);
+  this.register('service:user-events', blankEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
+
+  const today = moment();
+  this.set('today', today);
+  this.render(hbs`{{week-glance
+    collapsible=true
+    collapsed=true
+    showFullTitle=false
+    year=(moment-format today 'YYYY')
+    week=(moment-format today 'W')
+  }}`);
+  const title = 'h3';
+  const body = 'p';
+  const expectedTitle = getTitle(false);
+
+  await wait();
+
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+  assert.equal(this.$(body).length, 0);
+
+});
+
+test('click to expend', async function(assert) {
+  assert.expect(1);
+  this.register('service:user-events', blankEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
+
+  const today = moment();
+  this.set('today', today);
+  this.set('toggle', value => {
+    assert.ok(value);
+  });
+  this.render(hbs`{{week-glance
+    collapsible=true
+    collapsed=true
+    showFullTitle=false
+    year=(moment-format today 'YYYY')
+    week=(moment-format today 'W')
+    toggleCollapsed=(action toggle)
+  }}`);
+  const title = 'h3';
+  await wait();
+  this.$(title).click();
+});
+
+test('click to collapse', async function(assert) {
+  assert.expect(1);
+  this.register('service:user-events', blankEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
+
+  const today = moment();
+  this.set('today', today);
+  this.set('toggle', value => {
+    assert.notOk(value);
+  });
+  this.render(hbs`{{week-glance
+    collapsible=true
+    collapsed=false
+    showFullTitle=false
+    year=(moment-format today 'YYYY')
+    week=(moment-format today 'W')
+    toggleCollapsed=(action toggle)
+  }}`);
+  const title = 'h3';
+  await wait();
+  this.$(title).click();
 });
