@@ -54,12 +54,12 @@ export default Component.extend({
 
     function tweenDonut(b) {
       b.innerRadius = 0;
-      var i = interpolate({startAngle: 0, endAngle: 0}, b);
+      let i = interpolate({startAngle: 0, endAngle: 0}, b);
       return function(t) { return createArc(i(t)); };
     }
 
-    path.on('mouseover', d => displayTooltip(d.data));
-    path.on('mouseout', d => hideTooltip.duration(2000)(d.data));
+    path.on('mouseover', function(d, index, items) {displayTooltip(d.data, items[index], createLabelArc.centroid(d));});
+    //path.on('mouseout', d => hideTooltip(2000));
 
     path.exit()
       .transition(t)

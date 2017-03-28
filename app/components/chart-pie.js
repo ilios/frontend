@@ -62,8 +62,8 @@ export default Component.extend({
       return function(t) { return createArc(i(t)); };
     }
 
-    path.on('mouseover', d => displayTooltip(d.data));
-    path.on('mouseout', d => hideTooltip.duration(2000)(d.data));
+    path.on('mouseover', function(d, index, items) {displayTooltip(d.data, items[index], createLabelArc.centroid(d));});
+    //path.on('mouseout', d => hideTooltip());
 
     path.exit()
       .transition(t)
