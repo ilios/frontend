@@ -88,13 +88,34 @@ moduleForComponent('dashboard-week', 'Integration | Component | dashboard week',
   },
 });
 
+const getTitle = function(){
+  const today = moment().day(1);
+  const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
+  const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
+
+  let expectedTitle;
+  if (startOfWeek.month() != endOfWeek.month()) {
+    const from = startOfWeek.format('MMMM D');
+    const to = endOfWeek.format('MMMM D');
+    expectedTitle = `${from} - ${to}`;
+  } else {
+    const from = startOfWeek.format('MMMM D');
+    const to = endOfWeek.format('D');
+    expectedTitle = `${from}-${to}`;
+  }
+  expectedTitle += ' Week at a Glance';
+
+  return expectedTitle;
+};
+
 test('it renders with events', async function(assert) {
-  assert.expect(15);
+  assert.expect(16);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
   this.render(hbs`{{dashboard-week}}`);
   const title = 'h3';
+  const allWeeks = '.weeklylink';
   const events = '.event';
   const firstEvent = `${events}:eq(0)`;
   const secondEvent = `${events}:eq(1)`;
@@ -118,24 +139,9 @@ test('it renders with events', async function(assert) {
 
 
   await wait();
-
-  const today = moment().day(1);
-  const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
-  const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
-
-  let expectedTitle;
-  if (startOfWeek.month() != endOfWeek.month()) {
-    const from = startOfWeek.format('MMMM D');
-    const to = endOfWeek.format('MMMM D');
-    expectedTitle = `${from} - ${to}`;
-  } else {
-    const from = startOfWeek.format('MMMM D');
-    const to = endOfWeek.format('D');
-    expectedTitle = `${from}-${to}`;
-  }
-
-  expectedTitle += ' Week at a Glance';
-  assert.equal(this.$(title).text().trim(), expectedTitle);
+  const expectedTitle = getTitle();
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+  assert.equal(this.$(allWeeks).text().trim(), 'All Weeks');
   assert.equal(this.$(events).length, 2, 'Blank events are not shown');
 
   assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
@@ -163,14 +169,11 @@ test('it renders blank', async function(assert) {
   this.render(hbs`{{dashboard-week}}`);
   const title = 'h3';
   const body = 'p';
-
+  const expectedTitle = getTitle();
+  
   await wait();
 
-  const today = moment();
-  const startOfWeek = today.clone().day(1).format('MMMM D');
-  const endOfWeek = today.clone().day(7).format('D');
-  const expectedTitle = `${startOfWeek}-${endOfWeek} Week at a Glance`;
-  assert.equal(this.$(title).text().trim(), expectedTitle);
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
   assert.equal(this.$(body).text().trim(), 'None');
 
 });
