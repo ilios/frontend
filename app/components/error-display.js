@@ -4,10 +4,14 @@ const { Component, computed, isPresent } = Ember;
 
 export default Component.extend({
   classNames: ['error-display'],
-
   errors: null,
-
+  now: null,
   showDetails: true,
+
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('now', new Date());
+  },
 
   is404: computed('errors.[]', function(){
     const errors = this.get('errors');
