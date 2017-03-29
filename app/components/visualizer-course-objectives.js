@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, RSVP, computed, isPresent } = Ember;
+const { Component, RSVP, computed, isPresent, $ } = Ember;
 const { map, filter } = RSVP;
 
 export default Component.extend({
@@ -62,13 +62,27 @@ export default Component.extend({
 
     return mappedObjectivesWithLabel;
   }),
-  displayTooltip: task(function * ({meta}){
+  displayTooltip: task(function * ({meta}, slice, labelLocation){
     let objectiveTitle = meta.courseObjective.get('title');
     let competency = yield meta.courseObjective.get('competency');
     if (competency) {
       objectiveTitle += `(${competency})`;
     }
     this.set('tooltipValue', objectiveTitle);
+    let svg_parent = $(slice.nearestViewportElement);
+    let svg_offset = $(svg_parent).offset();
+    let svg_parent_offset = $(svg_parent).parent().offsetParent().offset();
+    let svg_dimension = {
+      width: $(svg_parent).width(),
+      height: $(svg_parent).height(),
+    };
+
+    const tooltip_width = 380;
+
+    let tooltip_top = svg_offset.top - svg_parent_offset.top + svg_dimension.height / 2 + labelLocation[1] + 20;
+    let tooltip_left = Math.max(0 ,svg_offset.left - svg_parent_offset.left + svg_dimension.width / 2 - tooltip_width / 2 + labelLocation[0]);
+
+    this.set('tooltipLocation', 'top:' + tooltip_top + 'px; left:' + tooltip_left + 'px;');
   }).restartable(),
   actions: {
     hideTooltip(){
