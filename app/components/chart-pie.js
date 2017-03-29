@@ -27,17 +27,11 @@ export default Component.extend({
     const width = get(this, 'width');
     const height = get(this, 'height');
     const displayTooltip = get(this, 'displayTooltip');
-    // const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
     const color = scaleOrdinal(schemeCategory10);
 
     let t = transition().duration(500).ease(easeLinear);
 
-    /*let t2 = transition()
-          .ease(easeLinear)
-          .duration(2000)
-          .attrTween("d", tweenPie);
-    */
     let createArc = arc().innerRadius(0).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
     let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
@@ -63,7 +57,6 @@ export default Component.extend({
     }
 
     path.on('mouseover', function(d, index, items) {displayTooltip(d.data, items[index], createLabelArc.centroid(d));});
-    //path.on('mouseout', d => hideTooltip());
 
     path.exit()
       .transition(t)

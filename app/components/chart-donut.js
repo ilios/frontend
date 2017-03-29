@@ -27,7 +27,6 @@ export default Component.extend({
     const width = get(this, 'width');
     const height = get(this, 'height');
     const displayTooltip = get(this, 'displayTooltip');
-    // const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
     const donutWidth = width * .2;
     const color = scaleOrdinal(schemeCategory10);
@@ -59,7 +58,6 @@ export default Component.extend({
     }
 
     path.on('mouseover', function(d, index, items) {displayTooltip(d.data, items[index], createLabelArc.centroid(d));});
-    //path.on('mouseout', d => hideTooltip(2000));
 
     path.exit()
       .transition(t)
