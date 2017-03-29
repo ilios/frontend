@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 
 module('Unit | Mixin | sortable objective list');
 
-// Replace this with your real tests.
 test('it works', function(assert) {
   let SortableObjectiveListObject = Ember.Object.extend(SortableObjectiveListMixin);
   let subject = SortableObjectiveListObject.create();
