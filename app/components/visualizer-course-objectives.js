@@ -79,10 +79,8 @@ export default Component.extend({
 
     const tooltip_width = 380;
 
-    let tooltip_top =
-      svg_offset.top - svg_parent_offset.top + svg_dimension.height / 2 + labelLocation[1] + 20;
+    let tooltip_top = svg_offset.top - svg_parent_offset.top + svg_dimension.height / 2 + labelLocation[1] + 20;
     let tooltip_left = Math.max(0 ,svg_offset.left - svg_parent_offset.left + svg_dimension.width / 2 - tooltip_width / 2 + labelLocation[0]);
-    console.log($(svg_parent), slice, labelLocation);
 
     this.set('tooltipLocation', 'top:' + tooltip_top + 'px; left:' + tooltip_left + 'px;');
   }).restartable(),

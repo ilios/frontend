@@ -27,7 +27,7 @@ export default Component.extend({
     const width = get(this, 'width');
     const height = get(this, 'height');
     const displayTooltip = get(this, 'displayTooltip');
-    const hideTooltip = get(this, 'hideTooltip');
+    // const hideTooltip = get(this, 'hideTooltip');
     const radius = Math.min(width, height) / 2;
     const color = scaleOrdinal(schemeCategory10);
 
