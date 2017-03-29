@@ -6,7 +6,7 @@ moduleForComponent('error-display', 'Integration | Component | error display', {
 });
 
 test('the detail link toggles properly', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   const errors = [{
     message: 'this is an error'
@@ -17,6 +17,9 @@ test('the detail link toggles properly', function(assert) {
   this.render(hbs`{{error-display errors=errors clearErrors=(action nothing)}}`);
 
   assert.equal(this.$('.error-detail-action').text().trim(), 'Hide Details');
+
+  let iso8601 = new RegExp(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/);
+  assert.ok(this.$('.timestamp').text().trim().match(iso8601), 'Current datetime is visible');
 
   this.$('.error-detail-action').click();
 

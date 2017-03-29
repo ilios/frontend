@@ -9,6 +9,7 @@
       {{t (if showDetails 'general.collapseDetail' 'general.expandDetail' )}}
     </span>
     {{#if showDetails}}
+      <div class="timestamp">{{moment-format now moment.ISO_8601}}</div>
       <div class="error-detail">
         <h3 class="error-total">{{t 'general.totalErrors' count=(get errors 'length')}}</h3>
 
@@ -28,3 +29,4 @@
     {{/if}}
   {{/if}}
 </div>
+
