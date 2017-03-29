@@ -52,7 +52,7 @@
     "ember-cli-password-strength": "1.0.2",
     "ember-cli-qunit": "^3.1.0",
     "ember-cli-sass": "6.1.2",
-    "ember-cli-server-variables": "2.0.2",
+    "ember-cli-server-variables": "2.1.0",
     "ember-cli-shims": "^1.0.2",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-string-helpers": "1.0.0",
