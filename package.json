@@ -64,7 +64,7 @@
     "ember-cryptojs-shim": "^2.0.0",
     "ember-d3": "0.3.2",
     "ember-data": "2.12.1",
-    "ember-drag-drop": "0.4.2",
+    "ember-drag-drop": "0.4.3",
     "ember-exam": "0.6.1",
     "ember-export-application-global": "^2.0.0",
     "ember-font-awesome": "3.0.5",
