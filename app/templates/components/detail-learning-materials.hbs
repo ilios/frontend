@@ -138,7 +138,7 @@
               <td class='text-center' colspan=2>
                 {{lmProxy.learningMaterial.status.title}}
               </td>
-              <td class='text-left text-top' colspan=1>
+              <td class='text-left text-center' colspan=1>
                 {{#if editable}}
                   <span class='clickable remove' {{action 'confirmRemoval' lmProxy}}>{{fa-icon 'trash'}}</span>
                 {{/if}}
@@ -171,4 +171,3 @@
     currentProgress=currentMaterialsSaved
   }}
 {{/liquid-if}}
-
