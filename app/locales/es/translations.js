@@ -87,7 +87,7 @@ export default {
     'confirmRemove': '¿Estás seguro que quieres borrar este ofrecimiento con {{learnerGroupCount}} grupos de aprendedores? Esta acción no se puede deshacer.',
     'confirmRemoveCourse': ' ¿Estás seguro que quieres borrar este curso, con {{publishedOfferingCount}} ofrecimientos publicados? Esta acción borrará todas las sessiones y ofrecimientos para este curso y no se puede deshacer.',
     'confirmRemoveInstructorGroup': '¿Estás seguro que quieres remover este grupo de instructores, con {{instructorCount}} instructores y {{courseCount}} cursos? Esta acción no se puede deshacer.',
-    'confirmRemoveLearnerGroup': '¿Estás seguro que quieres borrar este grupo de aprendedores, con {{learnerCount}} aprendedores y {{subgroupCount}} grupos subordinados? Esta acción no se puede deshacer.',
+    'confirmRemoveLearnerGroup': '¿Estás seguro que quieres borrar este grupo de aprendedores, con {{subgroupCount}} grupos subordinados? Esta acción no se puede deshacer.',
     'confirmRemoveProgram': '¿Estás seguro que quieres borrar este programa, con {{programYearCount}} años de prgrama y {{courseCount}} cursos? Esta accion removerá todos los cursos y actividades relacionadas a este programa, y no se puede deshacer.',
     'confirmRemoveProgramYear': '¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {{courseCount}} curso(s), y no se puede deshacer.',
     'confirmSessionRemoval': "¿Está seguro que desea eliminar este sessión?",
