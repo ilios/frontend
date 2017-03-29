@@ -57,6 +57,11 @@ $updated-color: #945c58;
       overflow-y: scroll;
       padding-bottom: 1em;
 
+      h5 {
+        font-weight: bold;
+        margin: 0 0 .5em;
+      }
+
       &.small-filter-list {
         @include span-columns(2 of 12);
       }
