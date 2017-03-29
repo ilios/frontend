@@ -614,7 +614,7 @@ test('confirmation of remove message', function(assert) {
     click('.list tbody tr:eq(0) td:eq(3) .remove').then(()=>{
       assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
       assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
-      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 0 learners and 2 subgroups? This action cannot be undone. Yes Cancel'));
+      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
     });
   });
 });
