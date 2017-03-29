@@ -85,7 +85,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
   sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
     return new Promise(resolve => {
       this.get('objectives').then(objectives => {
-        resolve(objectives.toArray().sort(this.get('positionSortingCallback')));
+        resolve(objectives.toArray().sort(this.positionSortingCallback));
       });
     });
   })

@@ -117,7 +117,7 @@ export default Component.extend(SortableByPosition, {
           },
           limit: 1000
         }).then((courseLearningMaterials) => {
-          let sortedMaterials = courseLearningMaterials.toArray().sort(this.get('positionSortingCallback'));
+          let sortedMaterials = courseLearningMaterials.toArray().sort(this.positionSortingCallback);
           map(sortedMaterials, clm => {
             return new Promise(resolve => {
               clm.get('learningMaterial').then(learningMaterial => {
@@ -197,7 +197,7 @@ export default Component.extend(SortableByPosition, {
           },
           limit: 1000
         }).then((sessionLearningMaterials) => {
-          let sortedMaterials = sessionLearningMaterials.toArray().sort(this.get('positionSortingCallback'));
+          let sortedMaterials = sessionLearningMaterials.toArray().sort(this.positionSortingCallback);
           map(sortedMaterials, slm => {
             return new Promise(resolve => {
               slm.get('learningMaterial').then(learningMaterial => {

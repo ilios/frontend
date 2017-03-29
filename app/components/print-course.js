@@ -42,7 +42,7 @@ export default Component.extend(SortableByPosition, {
                 session
               }
             }).then(learningMaterials => {
-              resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+              resolve(learningMaterials.toArray().sort(this.positionSortingCallback));
             });
           });
         })
@@ -70,7 +70,7 @@ export default Component.extend(SortableByPosition, {
           course
         }
       }).then(learningMaterials => {
-        resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+        resolve(learningMaterials.toArray().sort(this.positionSortingCallback));
       });
     });
   })
