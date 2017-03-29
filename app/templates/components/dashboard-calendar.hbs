@@ -67,7 +67,7 @@
     {{#liquid-if showFilters class='vertical'}}
       {{#liquid-if courseFilters class='crossFade'}}
         <div id='calendar-coursefilter' class='calendar-filter-list large-filter-list coursefilter'>
-          {{get (await selectedAcademicYear) 'academicYearTitle'}} {{t 'general.courses'}}
+          <h5>{{get (await selectedAcademicYear) 'academicYearTitle'}} {{t 'general.courses'}}</h5>
           {{#if (is-fulfilled courses)}}
             <ul>
               {{#each (await courses) as |course|}}
@@ -83,7 +83,7 @@
         </div>
 
         <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
-          {{t 'general.sessionTypes'}}
+          <h5>{{t 'general.sessionTypes'}}</h5>
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
@@ -99,7 +99,7 @@
         </div>
       {{else}}
         <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
-          {{t 'general.sessionTypes'}}
+          <h5>{{t 'general.sessionTypes'}}</h5>
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
@@ -114,7 +114,7 @@
           {{/if}}
         </div>
         <div id='calendar-courselevelfilter' class='calendar-filter-list small-filter-list courselevelfilter'>
-          {{t 'general.courseLevels'}}
+          <h5>{{t 'general.courseLevels'}}</h5>
           <ul>
             {{#each courseLevels as |level|}}
               <li class='clickable'>
@@ -125,7 +125,7 @@
           </ul>
         </div>
         <div id='calendar-cohortfilter' class='calendar-filter-list large-filter-list cohortfilter'>
-          {{get (await selectedAcademicYear) 'academicYearTitle'}} {{t 'general.programAndCohort'}}
+          <h5>{{get (await selectedAcademicYear) 'academicYearTitle'}} {{t 'general.programAndCohort'}}</h5>
           {{#if (is-fulfilled cohorts)}}
             <ul>
               {{#each (await cohorts) as |cohort|}}
