@@ -51,5 +51,7 @@ export default Component.extend({
       .attr("dy", ".35em")
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
+
+    svg.append("g").call(axisLeft(y));
   },
 });
