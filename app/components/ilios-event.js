@@ -69,28 +69,31 @@ export default Component.extend(SortableByPosition, {
       }
     });
   }),
-  courseObjectives: computed('i18n.locale', 'course.objectives.[]', function(){
+  courseObjectives: computed('i18n.locale', 'course.sortedObjectives.[]', function(){
     const i18n = this.get('i18n');
     return new Promise(resolve => {
       this.get('course').then(course => {
-        course.get('objectives').then(objectives => {
-          map(objectives.toArray(), objective => {
+        course.get('sortedObjectives').then(objectives => {
+          map(objectives, objective => {
             return new Promise(resolve => {
               objective.get('topParents').then(parents => {
                 let parent = parents.get('firstObject');
                 parent.get('competency').then(competency => {
                   //strip all HTML
                   let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
+                  let position = objective.get('position');
                   if(isEmpty(competency)){
                     resolve({
                       title,
-                      domain: i18n.t('general.noAssociatedCompetencies')
+                      domain: i18n.t('general.noAssociatedCompetencies'),
+                      position
                     });
                   } else {
                     competency.get('domain').then(domain => {
                       resolve({
                         title,
-                        domain: competency.get('title') + ' (' + domain.get('title') + ')'
+                        domain: competency.get('title') + ' (' + domain.get('title') + ')',
+                        position
                       });
                     });
                   }
@@ -114,7 +117,7 @@ export default Component.extend(SortableByPosition, {
           },
           limit: 1000
         }).then((courseLearningMaterials) => {
-          let sortedMaterials = courseLearningMaterials.toArray().sort(this.get('positionSortingCallback'));
+          let sortedMaterials = courseLearningMaterials.toArray().sort(this.positionSortingCallback);
           map(sortedMaterials, clm => {
             return new Promise(resolve => {
               clm.get('learningMaterial').then(learningMaterial => {
@@ -146,27 +149,31 @@ export default Component.extend(SortableByPosition, {
       });
     });
   }),
-  sessionObjectives: computed('i18n.locale', 'session.objectives.[]', function(){
+  sessionObjectives: computed('i18n.locale', 'session.sortedObjectives.[]', function(){
+    const i18n = this.get('i18n');
     return new Promise(resolve => {
       this.get('session').then(session => {
-        session.get('objectives').then(objectives => {
-          map(objectives.toArray(), objective => {
+        session.get('sortedObjectives').then(objectives => {
+          map(objectives, objective => {
             return new Promise(resolve => {
               objective.get('topParents').then(parents => {
                 let parent = parents.get('firstObject');
                 parent.get('competency').then(competency => {
                   //strip all HTML
                   let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
+                  let position = objective.get('position');
                   if(isEmpty(competency)){
                     resolve({
                       title,
-                      domain: this.get('i18n').t('general.noAssociatedCompetencies')
+                      domain: i18n.t('general.noAssociatedCompetencies'),
+                      position
                     });
                   } else {
                     competency.get('domain').then(domain => {
                       resolve({
                         title,
-                        domain: competency.get('title') + ' (' + domain.get('title') + ')'
+                        domain: competency.get('title') + ' (' + domain.get('title') + ')',
+                        position
                       });
                     });
                   }
@@ -190,7 +197,7 @@ export default Component.extend(SortableByPosition, {
           },
           limit: 1000
         }).then((sessionLearningMaterials) => {
-          let sortedMaterials = sessionLearningMaterials.toArray().sort(this.get('positionSortingCallback'));
+          let sortedMaterials = sessionLearningMaterials.toArray().sort(this.positionSortingCallback);
           map(sortedMaterials, slm => {
             return new Promise(resolve => {
               slm.get('learningMaterial').then(learningMaterial => {

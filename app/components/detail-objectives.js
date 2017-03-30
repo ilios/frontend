@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import scrollTo from '../utils/scroll-to';
 
-const { Component, computed, inject } = Ember;
+const { Component, computed, inject, isEmpty, RSVP } = Ember;
+const { Promise } = RSVP;
 const { service } = inject;
 const { or, notEmpty, alias } = computed;
 
@@ -144,21 +145,31 @@ export default Component.extend({
       }
     },
     saveNewObjective: function(title){
-      let newObjective = this.get('store').createRecord('objective');
-      newObjective.set('title', title);
-      newObjective.set('position', 0);
-      if(this.get('isCourse')){
-        newObjective.get('courses').addObject(this.get('subject'));
-      }
-      if(this.get('isSession')){
-        newObjective.get('sessions').addObject(this.get('subject'));
-      }
-      if(this.get('isProgramYear')){
-        newObjective.get('programYears').addObject(this.get('subject'));
-      }
-      return newObjective.save().then(() => {
-        this.set('newObjectiveEditorOn', false);
-        this.get('flashMessages').success('general.newObjectiveSaved');
+      return new Promise(resolve => {
+        let newObjective = this.get('store').createRecord('objective');
+        let subject = this.get('subject');
+        newObjective.set('title', title);
+        subject.get('objectives').then(objectives => {
+          let position = 0;
+          if (! isEmpty(objectives)) {
+            position = objectives.toArray().sortBy('position').reverse()[0].get('position') + 1;
+          }
+          newObjective.set('position', position);
+          if(this.get('isCourse')){
+            newObjective.get('courses').addObject(subject);
+          }
+          if(this.get('isSession')){
+            newObjective.get('sessions').addObject(subject);
+          }
+          if(this.get('isProgramYear')){
+            newObjective.get('programYears').addObject(subject);
+          }
+          newObjective.save().then(newObjective => {
+            this.set('newObjectiveEditorOn', false);
+            this.get('flashMessages').success('general.newObjectiveSaved');
+            resolve(newObjective);
+          });
+        });
       });
     },
     toggleNewObjectiveEditor() {

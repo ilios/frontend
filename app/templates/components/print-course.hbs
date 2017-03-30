@@ -92,7 +92,7 @@
         </div>
         <div class='detail-content'>
           <ul>
-            {{#each course.objectives as |objective|}}
+            {{#each (await course.sortedObjectives) as |objective|}}
               <li>{{objective.textTitle}}</li>
             {{/each}}
           </ul>
@@ -209,7 +209,7 @@
         </div>
         <div class='detail-content'>
           <ul>
-            {{#each session.objectives as |objective|}}
+            {{#each (await session.sortedObjectives) as |objective|}}
               <li>{{objective.textTitle}}</li>
             {{/each}}
           </ul>

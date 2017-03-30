@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 const { Component } = Ember;
 
 export default Component.extend(SortableByPosition, {
-  classNames: ['learning-materials-sort-manager'],
+  classNames: ['objective-sort-manager'],
   sortableObjectList: null,
   subject: null,
 
@@ -17,8 +17,8 @@ export default Component.extend(SortableByPosition, {
   },
 
   loadAttr: task(function * (subject) {
-    let learningMaterials = yield subject.get('learningMaterials');
-    this.set('sortableObjectList', learningMaterials.toArray().sort(this.positionSortingCallback));
+    let objectives = yield subject.get('objectives');
+    this.set('sortableObjectList', objectives.toArray().sort(this.positionSortingCallback));
   }),
 
   actions: {

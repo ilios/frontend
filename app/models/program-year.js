@@ -2,11 +2,14 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import PublishableModel from 'ilios/mixins/publishable-model';
 import CategorizableModel from 'ilios/mixins/categorizable-model';
+import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
-const { computed } = Ember;
+
+const { computed, RSVP } = Ember;
 const { alias } = computed;
+const { Promise } = RSVP;
 
-export default DS.Model.extend(PublishableModel, CategorizableModel, {
+export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   startYear: DS.attr('string'),
   locked: DS.attr('boolean'),
   archived: DS.attr('boolean'),
@@ -73,4 +76,17 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, {
     });
   }),
   assignableVocabularies: alias('program.school.vocabularies'),
+
+  /**
+   * A list of program-year objectives, sorted by position and title.
+   * @property sortedObjectives
+   * @type {Ember.computed}
+   */
+  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
+    return new Promise(resolve => {
+      this.get('objectives').then(objectives => {
+        resolve(objectives.toArray().sort(this.positionSortingCallback));
+      });
+    });
+  })
 });

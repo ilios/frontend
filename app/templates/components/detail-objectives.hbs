@@ -41,7 +41,7 @@
   {{#unless isManaging class="horizontal"}}
     {{#if isCourse}}
       {{course-objective-list
-        course=subject
+        subject=subject
         editable=editable
         manageParents=(action "manageParents")
         manageDescriptors=(action "manageDescriptors")
@@ -49,7 +49,7 @@
     {{/if}}
     {{#if isSession}}
       {{session-objective-list
-        session=subject
+        subject=subject
         editable=editable
         manageParents=(action "manageParents")
         manageDescriptors=(action "manageDescriptors")
@@ -57,7 +57,7 @@
     {{/if}}
     {{#if isProgramYear}}
       {{programyear-objective-list
-        programYear=subject
+        subject=subject
         manageDescriptors=(action "manageDescriptors")
         manageCompetency=(action "manageCompetency")
       }}

@@ -28,26 +28,27 @@ export default Component.extend({
       });
     });
   }),
-  proxiedObjectives: computed('course', 'course.objectives.[]', function(){
+
+  proxiedObjectives: computed('course', 'course.sortedObjectives.[]', function(){
     return new Promise(resolve => {
       let sessionObjective = this.get('sessionObjective');
       if(!sessionObjective){
         resolve([]);
         return;
       }
-      this.get('course').then(function(course){
+      this.get('course').then(course => {
         if(!course){
           resolve([]);
           return;
         }
-        course.get('objectives').then(function(objectives){
-          let objectiveProxies = objectives.map(function(objective){
+        course.get('sortedObjectives').then(objectives => {
+          let objectiveProxies = objectives.map(objective => {
             return objectiveProxy.create({
               content: objective,
               sessionObjective: sessionObjective,
             });
           });
-          resolve(objectiveProxies.sortBy('id'));
+          resolve(objectiveProxies);
         });
       });
     });
