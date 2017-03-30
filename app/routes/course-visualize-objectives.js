@@ -2,9 +2,10 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import config from '../config/environment';
 
-const { Route, inject } = Ember;
+const { Route, RSVP, inject } = Ember;
 const { service } = inject;
 const { IliosFeatures: { accessCourseVisualizations } } = config;
+const { all, map } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
@@ -17,4 +18,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
       this.transitionTo('index');
     }
   },
+  async afterModel(course){
+    const sessions = await course.get('sessions');
+    return await all([
+      course.get('objectives'),
+      map(sessions.toArray(), s => s.get('objectives')),
+      map(sessions.toArray(), s => s.get('offerings')),
+    ]);
+  }
 });
