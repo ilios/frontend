@@ -51,7 +51,7 @@ export default Component.extend({
 
   }),
 
-  weekEvents: computed('midnightStartOfLastWeek', 'midnightEndOfNextWeek', async function() {
+  weekEvents: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', async function() {
     const midnightAtTheStartOfThisWeek = await this.get('midnightAtTheStartOfThisWeek');
     const midnightAtTheEndOfThisWeek = await this.get('midnightAtTheEndOfThisWeek');
 

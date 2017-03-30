@@ -5,7 +5,10 @@ import Ember from 'ember';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
 
-let today = moment();
+const { RSVP } = Ember;
+const { resolve } = RSVP;
+
+const today = moment();
 
 const mockEvents = [
   {
@@ -72,12 +75,12 @@ const mockEvents = [
 ];
 const userEventsMock = Ember.Service.extend({
   getEvents(){
-    return new Ember.RSVP.resolve(mockEvents);
+    return new resolve(mockEvents);
   }
 });
-let blankEventsMock = Ember.Service.extend({
+const blankEventsMock = Ember.Service.extend({
   getEvents(){
-    return new Ember.RSVP.resolve([]);
+    return new resolve([]);
   }
 });
 
@@ -89,7 +92,6 @@ moduleForComponent('week-glance', 'Integration | Component | week glance', {
 });
 
 const getTitle = function(fullTitle){
-  const today = moment().day(1);
   const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
   const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
 
@@ -114,7 +116,7 @@ test('it renders with events', async function(assert) {
   assert.expect(15);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
-  this.set('today', moment());
+  this.set('today', today);
   this.render(hbs`{{week-glance
     collapsible=false
     collapsed=false
@@ -173,7 +175,6 @@ test('it renders blank', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  const today = moment();
   this.set('today', today);
   this.render(hbs`{{week-glance
     collapsible=false
@@ -198,7 +199,6 @@ test('renders short title', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  const today = moment();
   this.set('today', today);
   this.render(hbs`{{week-glance
     collapsible=false
@@ -219,7 +219,6 @@ test('it renders collapsed', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  const today = moment();
   this.set('today', today);
   this.render(hbs`{{week-glance
     collapsible=true
@@ -244,7 +243,6 @@ test('click to expend', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  const today = moment();
   this.set('today', today);
   this.set('toggle', value => {
     assert.ok(value);
@@ -267,7 +265,6 @@ test('click to collapse', async function(assert) {
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
-  const today = moment();
   this.set('today', today);
   this.set('toggle', value => {
     assert.notOk(value);
@@ -283,4 +280,60 @@ test('click to collapse', async function(assert) {
   const title = 'h3';
   await wait();
   this.$(title).click();
+});
+
+test('changing passed properties re-renders', async function(assert) {
+  assert.expect(10);
+  const nextYear = today.clone().add(1, 'year');
+  let count = 1;
+  const blankEventsMock = Ember.Service.extend({
+    getEvents(fromStamp, toStamp){
+      const from = moment(fromStamp, 'X');
+      const to = moment(toStamp, 'X');
+      switch (count) {
+      case 1:
+        assert.ok(from.isSame(today, 'year'));
+        assert.ok(to.isSame(today, 'year'));
+        assert.ok(from.isSame(today, 'isoWeek'));
+        assert.ok(to.isSame(today, 'isoWeek'));
+        break;
+      case 2:
+        assert.ok(from.isSame(nextYear, 'year'));
+        assert.ok(to.isSame(nextYear, 'year'));
+        assert.ok(from.isSame(nextYear, 'isoWeek'));
+        assert.ok(to.isSame(nextYear, 'isoWeek'));
+        break;
+      default:
+        assert.notOk(true, 'Called too many times');
+      }
+      count++;
+      return resolve([]);
+    }
+  });
+  this.register('service:user-events', blankEventsMock);
+  this.inject.service('user-events', { as: 'userEvents' });
+
+
+  let year = today.format('YYYY');
+  this.set('year', year);
+  this.set('today', today);
+  this.render(hbs`{{week-glance
+    collapsible=false
+    collapsed=false
+    showFullTitle=true
+    year=year
+    week=(moment-format today 'W')
+  }}`);
+  const title = 'h3';
+  const body = 'p';
+  const expectedTitle = getTitle(true);
+
+  await wait();
+
+  assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+  assert.equal(this.$(body).text().trim(), 'None');
+
+  this.set('year', nextYear.format('YYYY'));
+
+  return wait();
 });
