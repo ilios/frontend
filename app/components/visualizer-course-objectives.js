@@ -30,9 +30,16 @@ export default Component.extend({
       };
 
     });
+
+
+    return sessionCourseObjectiveMap;
+  }),
+
+  condensedObjectiveData: computed('objectiveData.[]', async function (){
+    const course = this.get('course');
+    const sessionCourseObjectiveMap  = await this.get('objectiveData');
     const courseObjectives = await course.get('objectives');
     let mappedObjectives = courseObjectives.map(courseObjective => {
-
       const hours = sessionCourseObjectiveMap.map(obj => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.hours;
@@ -61,6 +68,31 @@ export default Component.extend({
     });
 
     return mappedObjectivesWithLabel;
+  }),
+
+  sessionsObjectivesData: computed('objectiveData.[]', async function (){
+    const sessionCourseObjectiveMap  = await this.get('objectiveData');
+
+    const mappedDataWithLabel = sessionCourseObjectiveMap.map(({hours, objectives, sessionTitle: label}) => {
+      const total = Number(hours);
+      const splitHours = total / objectives.length;
+
+      const values = objectives.map(label => {
+        return {
+          label,
+          value: splitHours
+        };
+      });
+      return {
+        label,
+        total,
+        values
+      };
+    });
+
+    const withValues = mappedDataWithLabel.filter(obj => obj.values.length);
+
+    return withValues;
   }),
   displayTooltip: task(function * ({meta}, slice, labelLocation){
     let objectiveTitle = meta.courseObjective.get('title');

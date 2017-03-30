@@ -2,31 +2,33 @@
   {{course.title}}
 </h1>
 <section class='course-overview'>
-  {{#if (is-fulfilled objectiveData)}}
-    <div class='block'>
-      {{chart-pie data=(await objectiveData)
-        width=width
-        height=height
-        displayTooltip=(perform displayTooltip)
-      }}
-      {{chart-donut
-        data=(await objectiveData)
-        width=width
-        height=height
-        displayTooltip=(perform displayTooltip)
-      }}
-    </div>
-    {{#if tooltipValue}}
-      <div class='charts tooltip' style={{{tooltipLocation}}}>
-        <div class="tooltip-header">
-          <span class="tooltip-title"></span>
-          <span class="tooltip-attr"></span>
-        </div>
-        <div class="tooltip-content">{{{tooltipValue}}}</div>
-        <a href="#"></a>
+  <div class='block'>
+    {{chart-pie data=(await condensedObjectiveData)
+      width=width
+      height=height
+      displayTooltip=(perform displayTooltip)
+    }}
+    {{chart-donut
+      data=(await condensedObjectiveData)
+      width=width
+      height=height
+      displayTooltip=(perform displayTooltip)
+    }}
+    {{chart-bar data=(await sessionsObjectivesData)
+      width=width
+      height=height
+      displayTooltip=(perform displayTooltip)
+    }}
+  </div>
+
+  {{#if tooltipValue}}
+    <div class='charts tooltip' style={{{tooltipLocation}}}>
+      <div class="tooltip-header">
+        <span class="tooltip-title"></span>
+        <span class="tooltip-attr"></span>
       </div>
-    {{/if}}
-  {{else}}
-  {{fa-icon 'spinner' spin=true}}
+      <div class="tooltip-content">{{{tooltipValue}}}</div>
+      <a href="#"></a>
+    </div>
   {{/if}}
 </section>
