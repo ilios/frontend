@@ -6,24 +6,25 @@ import CategorizableModel from 'ilios/mixins/categorizable-model';
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, notEmpty, sum } = computed;
-const { PromiseArray, PromiseObject } = DS;
+const { attr, belongsTo, hasMany, Model } = DS;
+const { all, Promise } = RSVP;
 
-var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
-  title: DS.attr('string'),
-  attireRequired: DS.attr('boolean'),
-  equipmentRequired: DS.attr('boolean'),
-  supplemental: DS.attr('boolean'),
-  attendanceRequired: DS.attr('boolean'),
-  updatedAt: DS.attr('date'),
-  sessionType: DS.belongsTo('session-type', {async: true}),
-  course: DS.belongsTo('course', {async: true}),
-  ilmSession: DS.belongsTo('ilm-session', {async: true}),
-  objectives: DS.hasMany('objective', {async: true}),
-  meshDescriptors: DS.hasMany('mesh-descriptor', {async: true}),
-  sessionDescription: DS.belongsTo('session-description', {async: true}),
-  learningMaterials: DS.hasMany('session-learning-material', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
-  administrators: DS.hasMany('user', {
+export default Model.extend(PublishableModel, CategorizableModel, {
+  title: attr('string'),
+  attireRequired: attr('boolean'),
+  equipmentRequired: attr('boolean'),
+  supplemental: attr('boolean'),
+  attendanceRequired: attr('boolean'),
+  updatedAt: attr('date'),
+  sessionType: belongsTo('session-type', {async: true}),
+  course: belongsTo('course', {async: true}),
+  ilmSession: belongsTo('ilm-session', {async: true}),
+  objectives: hasMany('objective', {async: true}),
+  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  sessionDescription: belongsTo('session-description', {async: true}),
+  learningMaterials: hasMany('session-learning-material', {async: true}),
+  offerings: hasMany('offering', {async: true}),
+  administrators: hasMany('user', {
     async: true,
     inverse: 'administeredSessions'
   }),
@@ -31,11 +32,17 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
-  sortedOfferingsByDate: computed('offerings.@each.startDate', {
-    get() {
-      let defer = RSVP.defer();
+
+  /**
+   * All offerings for this session, sorted by offering startdate in ascending order.
+   * @property sortedOfferingsByDate
+   * @type {Ember.computed}
+   */
+  sortedOfferingsByDate: computed('offerings.@each.startDate', function() {
+    return new Promise(resolve => {
       this.get('offerings').then(offerings => {
-        let sortedOfferingsByDate = offerings.filter(offering => isPresent(offering.get('startDate'))).sort((a, b) => {
+        let filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
+        let sortedOfferings = filteredOfferings.sort((a, b) => {
           let aDate = moment(a.get('startDate'));
           let bDate = moment(b.get('startDate'));
           if(aDate === bDate){
@@ -43,33 +50,32 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
           }
           return aDate > bDate ? 1 : -1;
         });
-
-        defer.resolve(sortedOfferingsByDate);
+        resolve(sortedOfferings);
       });
-
-      return PromiseArray.create({
-        promise: defer.promise
-      });
-    }
-  }).readOnly(),
-
-  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('ilmSession').then(ilmSession => {
-      if(ilmSession){
-        deferred.resolve(ilmSession.get('dueDate'));
-      } else {
-        this.get('sortedOfferingsByDate').then(offerings => {
-          if(isEmpty(offerings)){
-            deferred.resolve(null);
-          } else {
-            deferred.resolve(offerings.get('firstObject.startDate'));
-          }
-        });
-      }
     });
-    return PromiseObject.create({
-      promise: deferred.promise
+  }),
+
+  /**
+   * The earliest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
+   *
+   * @property firstOfferingDate
+   * @type {Ember.computed}
+   */
+  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
+    return new Promise(resolve => {
+      this.get('ilmSession').then(ilmSession => {
+        if(ilmSession){
+          resolve(ilmSession.get('dueDate'));
+        } else {
+          this.get('sortedOfferingsByDate').then(offerings => {
+            if(isEmpty(offerings)){
+              resolve(null);
+            } else {
+              resolve(offerings.get('firstObject.startDate'));
+            }
+          });
+        }
+      });
     });
   }),
 
@@ -77,61 +83,51 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
    * The maximum duration in hours (incl. fractions) of any session offerings.
    * @property sortedTerms
    * @type {Ember.computed}
-   * @readonly
-   * @public
    */
   maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function(){
-    let deferred = RSVP.defer();
-    this.get('offerings').then(offerings => {
-      if (! offerings.length) {
-        deferred.resolve(0);
-      } else {
-        const sortedOfferings = offerings.toArray().sort(function (a, b) {
-          const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
-          const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
-          if (diffA > diffB) {
-            return 1;
-          } else if (diffA < diffB) {
-            return -1;
-          }
-          return 0;
-        });
-        const offering = sortedOfferings[0];
-        const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-        deferred.resolve(duration.toFixed(2));
-      }
+    return new Promise(resolve => {
+      this.get('offerings').then(offerings => {
+        if (! offerings.length) {
+          resolve(0);
+        } else {
+          const sortedOfferings = offerings.toArray().sort(function (a, b) {
+            const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
+            const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
+            if (diffA > diffB) {
+              return 1;
+            } else if (diffA < diffB) {
+              return -1;
+            }
+            return 0;
+          });
+          const offering = sortedOfferings[0];
+          const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+          resolve(duration.toFixed(2));
+        }
+      });
     });
-
-    return PromiseObject.create({
-      promise: deferred.promise
-    });
-  }).readOnly(),
+  }),
 
   /**
    * The total duration in hours (incl. fractions) of all session offerings.
    * @property sortedTerms
    * @type {Ember.computed}
-   * @readonly
-   * @public
    */
   totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function() {
-    let deferred = RSVP.defer();
-    this.get('offerings').then(offerings => {
-      if (!offerings.length) {
-        deferred.resolve(0);
-      } else {
-        let total = 0;
-        offerings.forEach(offering => {
-          total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-        });
-        deferred.resolve(total.toFixed(2));
-      }
+    return new Promise(resolve => {
+      this.get('offerings').then(offerings => {
+        if (!offerings.length) {
+          resolve(0);
+        } else {
+          let total = 0;
+          offerings.forEach(offering => {
+            total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+          });
+          resolve(total.toFixed(2));
+        }
+      });
     });
-
-    return PromiseObject.create({
-      promise: deferred.promise
-    });
-  }).readOnly(),
+  }),
 
   searchString: computed('title', 'sessionType.title', 'status', function(){
     return this.get('title') + this.get('sessionType.title') + this.get('status');
@@ -164,27 +160,24 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
 
   /**
    * Learner-groups associated with this session via its offerings.
+   *
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
-   * @public
    */
   associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('offerings').then(function(offerings){
-      Ember.RSVP.all(offerings.mapBy('learnerGroups')).then(function(offeringLearnerGroups){
-        var allGroups = [];
-        offeringLearnerGroups.forEach(function(learnerGroups){
-          learnerGroups.forEach(function(group){
-            allGroups.pushObject(group);
+    return new Promise(resolve => {
+      this.get('offerings').then(offerings => {
+        all(offerings.mapBy('learnerGroups')).then(offeringLearnerGroups => {
+          let allGroups = [];
+          offeringLearnerGroups.forEach(learnerGroups => {
+            learnerGroups.forEach(group => {
+              allGroups.pushObject(group);
+            });
           });
+          let groups = allGroups ? allGroups.uniq().sortBy('title') : [];
+          resolve(groups);
         });
-        var groups = allGroups?allGroups.uniq().sortBy('title'):[];
-        deferred.resolve(groups);
       });
-    });
-
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
@@ -192,24 +185,20 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
    * Learner-groups associated with this session via its ILM.
    * @property associatedIlmLearnerGroups
    * @type {Ember.computed}
-   * @public
    */
   associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('ilmSession').then(function(ilmSession){
-      if (! isPresent(ilmSession)) {
-        deferred.resolve([]);
-        return;
-      }
+    return new Promise(resolve => {
+      this.get('ilmSession').then(ilmSession => {
+        if (! isPresent(ilmSession)) {
+          resolve([]);
+          return;
+        }
 
-      ilmSession.get('learnerGroups').then(learnerGroups => {
-        let sortedGroups = learnerGroups.sortBy('title');
-        deferred.resolve(sortedGroups);
+        ilmSession.get('learnerGroups').then(learnerGroups => {
+          let sortedGroups = learnerGroups.sortBy('title');
+          resolve(sortedGroups);
+        });
       });
-    });
-
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
@@ -217,26 +206,20 @@ var Session = DS.Model.extend(PublishableModel, CategorizableModel, {
    * Learner-groups associated with this session via its ILM and offerings.
    * @property associatedLearnerGroups
    * @type {Ember.computed}
-   * @public
    */
   associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
-      this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
-        let allGroups = [].pushObjects(offeringLearnerGroups.toArray()).pushObjects(ilmLearnerGroups.toArray());
-        if (! isEmpty(allGroups)) {
-          allGroups = allGroups.uniq().sortBy('title');
-        }
-        deferred.resolve(allGroups);
+    return new Promise(resolve => {
+      this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
+        this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
+          let allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
+          if (! isEmpty(allGroups)) {
+            allGroups = allGroups.uniq().sortBy('title');
+          }
+          resolve(allGroups);
+        });
       });
-    });
-
-    return DS.PromiseArray.create({
-      promise: deferred.promise
     });
   }),
 
   assignableVocabularies: alias('course.assignableVocabularies'),
 });
-
-export default Session;
