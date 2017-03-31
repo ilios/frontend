@@ -44,7 +44,14 @@ export default Component.extend({
       .attr('height', d => chartHeight - y(d.total))
       .attr('fill', d =>  color(d.label));
 
-    svg.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
+    svg.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
+      .selectAll("text")
+      .attr("y", 0)
+      .attr("x", 9)
+      .attr("dy", ".35em")
+      .attr("transform", "rotate(75)")
+      .style("text-anchor", "start");
+
     svg.append("g").call(axisLeft(y));
   },
 });

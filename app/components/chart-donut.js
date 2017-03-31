@@ -48,7 +48,7 @@ export default Component.extend({
 
     chart.selectAll('path.slicepath').transition()
       .ease(easeLinear)
-      .duration(1000)
+      .duration(500)
       .attrTween("d", tweenDonut);
 
     function tweenDonut(b) {
@@ -80,7 +80,7 @@ export default Component.extend({
 
     g.append("text")
       .transition(t)
-      .delay(2000)
+      .delay(1000)
       .attr("fill", "#ffffff")
       .style("font-size", ".8rem")
       .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
