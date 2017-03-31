@@ -116,6 +116,10 @@ module.exports = function(environment) {
   }
 */
 
+  if (environment === 'preview') {
+    ENV.IliosFeatures.accessCourseVisualizations = true;
+  }
+
   //add our API host to the list of acceptable data sources
   ENV.contentSecurityPolicy['connect-src'].push(ENV.serverVariables.defaults['api-host']);
 
