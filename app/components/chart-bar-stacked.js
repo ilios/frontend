@@ -72,12 +72,12 @@ export default Component.extend({
       .style("text-anchor", "middle")
       .text("Label");
 
-    svg.append("g").call(axisLeft(y).ticks(10, "s"))
+    svg.append("g").call(axisLeft(y))
       .selectAll("text")
-      .attr("x", 4)
+      .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
-      .attr("text-anchor", "start")
+      .attr("text-anchor", "end")
       .attr("fill", "#000");
 
     svg.selectAll('.bar')
