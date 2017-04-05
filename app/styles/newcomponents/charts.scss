@@ -1,5 +1,8 @@
-.charts {
+.chart-container {
+  padding: 15px 30px;
+}
 
+.charts {
   &.tooltip {
     background: $background-grey;
     border: 1px solid $dark-grey;
