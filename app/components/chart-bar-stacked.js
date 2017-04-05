@@ -67,6 +67,12 @@ export default Component.extend({
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
 
+    svg.append("text")
+      .attr("transform", "translate(" + (chartWidth/16) + " ," + (chartHeight + margin.top + 40) + ")")
+      .style("text-anchor", "middle")
+      .attr("font", "10px")
+      .text("Label");
+
     svg.append("g").call(axisLeft(y).ticks(10, "s"))
       .selectAll("text")
       .attr("x", 4)
