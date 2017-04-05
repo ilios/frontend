@@ -25,7 +25,6 @@ export default Component.extend({
     const margin = {top: 0, right: 20, bottom: 40, left: 20};
     const chartWidth = get(this, 'width') - margin.left - margin.right;
     const chartHeight = get(this, 'height') - margin.top - margin.bottom;
-    const color = scaleOrdinal(schemeCategory10);
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
     const y = scaleLinear().range([chartHeight, 0]);
@@ -60,19 +59,6 @@ export default Component.extend({
 
     svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.selectAll('.bar')
-      .data(stack().keys(keys_list)(dataOrArray))
-      .enter().append("g")
-      .attr("class", "bar")
-      .attr("fill", function(d) { return z(d.key); })
-      .selectAll("rect")
-      .data(function(d) { return d; })
-      .enter().append("rect")
-      .attr("x", function(d) { return x(d.data.label); })
-      .attr("y", function(d) { return y(d[1]); })
-      .attr("height", function(d) {return y(d[0]) - y(d[1]); })
-      .attr("width", x.bandwidth());
-
     svg.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
       .selectAll("text")
       .attr("y", 0)
@@ -87,7 +73,20 @@ export default Component.extend({
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
       .attr("text-anchor", "start")
-      .attr("fill", d =>  color(d.label));
+      .attr("fill", "#000");
+
+    svg.selectAll('.bar')
+      .data(stack().keys(keys_list)(dataOrArray))
+      .enter().append("g")
+      .attr("class", "bar")
+      .attr("fill", function(d) { return z(d.key); })
+      .selectAll("rect")
+      .data(function(d) { return d; })
+      .enter().append("rect")
+      .attr("x", function(d) { return x(d.data.label); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("height", function(d) {return y(d[0]) - y(d[1]); })
+      .attr("width", x.bandwidth());
 
   },
 });
