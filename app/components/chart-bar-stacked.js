@@ -81,13 +81,13 @@ export default Component.extend({
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
 
-    svg.append("g").call(axisLeft(y).ticks(10))
+    svg.append("g").call(axisLeft(y).ticks(10, "s"))
       .selectAll("text")
       .attr("x", 4)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
       .attr("text-anchor", "start")
-      .attr("fill", "#000");
+      .attr("fill", d =>  color(d.label));
 
-      },
+  },
 });

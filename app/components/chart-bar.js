@@ -60,5 +60,5 @@ export default Component.extend({
       .attr('height', d => chartHeight - y(d.total))
       .attr('fill', d =>  color(d.label));
 
-      },
+  },
 });
