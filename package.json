@@ -61,7 +61,7 @@
     "ember-composable-helpers": "2.0.0",
     "ember-concurrency": "0.8.0",
     "ember-cp-validations": "3.3.0",
-    "ember-cryptojs-shim": "^2.0.0",
+    "ember-cryptojs-shim": "^3.0.0",
     "ember-d3": "0.3.2",
     "ember-data": "2.12.1",
     "ember-drag-drop": "0.4.3",
