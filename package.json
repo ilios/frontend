@@ -70,7 +70,7 @@
     "ember-font-awesome": "3.0.5",
     "ember-froala-editor": "2.4.2",
     "ember-i18n": "5.0.0",
-    "ember-i18n-cp-validations": "3.0.1",
+    "ember-i18n-cp-validations": "3.0.2",
     "ember-inflector": "1.11.0",
     "ember-load": "0.0.11",
     "ember-load-initializers": "^1.0.0",
