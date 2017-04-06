@@ -16,7 +16,7 @@ module.exports = function(deployTarget) {
       bucket: 'frontend-json-config',
     },
     'revision-data': {
-      type: 'git-commit',
+      type: 'git-tag-commit',
     },
     gzip: {
       //dont gzip the json index file
