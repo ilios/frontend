@@ -25,8 +25,10 @@
     }}
   {{else if (eq show 'materials')}}
     {{dashboard-materials}}
-  {{else}}
+  {{else if (eq show 'agenda')}}
     {{dashboard-agenda}}
+  {{else}}
+    {{dashboard-week}}
   {{/liquid-if}}
   {{dashboard-myreports}}
   {{dashboard-mycourses}}
