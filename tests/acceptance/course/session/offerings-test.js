@@ -699,3 +699,41 @@ test('users can create recurring single offerings', function(assert) {
 
   });
 });
+
+test('edit offerings twice #2850', async assert => {
+  assert.expect(2);
+  server.create('learnerGroup', {
+    cohort: 1,
+    children: [4],
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 3,
+    children: [5],
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 4,
+    children: [6],
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 5,
+  });
+  server.db.cohorts.update(1, {learnerGroups: [3, 4, 5, 6]});
+
+  const editButton = '.offering-detail-box i:first';
+  const form = '.offering-form';
+  const save = `${form} .done`;
+  const room = '.offering-block-time-offering-location:first';
+
+  await visit(url);
+  await click(editButton);
+
+  await click(save);
+  assert.equal(find(room).text(), 'room 0', 'location/room is correct');
+
+  await click(editButton);
+  await click(save);
+  assert.equal(find(room).text(), 'room 0', 'location/room is correct');
+});
