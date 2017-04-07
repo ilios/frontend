@@ -19,17 +19,26 @@
       }}
     </div>
     <div class="chart-container">
-      {{chart-bar data=(await sessionsObjectivesData)
+      {{chart-bar
+        data=(await sessionsObjectivesData)
         width=width
         height=height
       }}
     </div>
     <div class="chart-container">
-      {{chart-bar-stacked data=(await sessionsObjectivesData)
+      {{chart-bar-stacked
+        data=(await sessionsObjectivesData)
         width=width
         height=height
       }}
-    </div>  
+    </div>
+    <div class="chart-container">
+      {{chart-line
+        data=(await condensedObjectiveData)
+        width=width
+        height=height
+      }}
+    </div>
   </div>
 
   {{#if tooltipValue}}

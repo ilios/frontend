@@ -3,8 +3,14 @@
 
   svg {
     height: 420px;
-    padding: 20px 30px 0;
+    padding: 20px 40px 0;
     width: 400px;
+
+    .line {
+      fill: none;
+      stroke: $switch-blue;
+      stroke-width: 2px;
+     }
 
     text {
       font-size: 10px;

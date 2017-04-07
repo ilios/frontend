@@ -44,8 +44,8 @@ export default Component.extend({
       .style("text-anchor", "start");
 
     svg.append("text")
-      .attr("transform", "translate(" + (chartWidth/16) + " ," + (chartHeight + margin.top + 30) + ")")
-      .style("text-anchor", "middle")
+      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 0) + ")")
+      .style("text-anchor", "end")
       .attr("font", "10px")
       .text("Label");
 

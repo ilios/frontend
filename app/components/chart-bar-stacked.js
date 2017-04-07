@@ -68,8 +68,8 @@ export default Component.extend({
       .style("text-anchor", "start");
 
     svg.append("text")
-      .attr("transform", "translate(" + (chartWidth/16) + " ," + (chartHeight + margin.top + 40) + ")")
-      .style("text-anchor", "middle")
+      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
+      .style("text-anchor", "end")
       .text("Label");
 
     svg.append("g").call(axisLeft(y))
