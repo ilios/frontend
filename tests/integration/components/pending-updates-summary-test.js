@@ -14,7 +14,7 @@ moduleForComponent('pending-updates-summary', 'Integration | Component | pending
   }
 });
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   let primarySchool = Object.create(server.create('school'));
   let secondarySchool = Object.create(server.create('school'));
   let user = Object.create({
@@ -34,11 +34,13 @@ test('it renders', function(assert) {
 
   this.register('service:currentUser', currentUserMock);
   this.register('service:store', storeMock);
+  const container = 'div';
 
   this.render(hbs`{{pending-updates-summary}}`);
 
-  return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Updates from the Campus Directory/), 0);
-    assert.notEqual(this.$().text().trim().search(/There are 5 users needing attention/), -1);
-  });
+  await wait();
+
+  assert.equal(this.$().text().trim().search(/Updates from the Campus Directory/), 0);
+  assert.notEqual(this.$().text().trim().search(/There are 5 users needing attention/), -1);
+  assert.ok(this.$(container).hasClass('alert'));
 });
