@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 import { select } from 'd3-selection';
-import { scaleOrdinal, scaleBand, scaleLinear, schemeCategory10 } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import { line } from 'd3-shape';
 import { min, max } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
@@ -34,7 +34,7 @@ export default Component.extend({
     let valueline = line()
       .x(function(d) { return x(d.data); })
       .y(function(d) { return y(Number.parseFloat(d.label)/100); });
-      
+
     x.domain([0, max(dataOrArray, d => d.data + 1)]);
     y.domain([min(dataOrArray, d => Math.floor(Number.parseFloat(d.label)/10))/10, max(dataOrArray, d => Math.ceil(Number.parseFloat(d.label)/10))/10]);
 
