@@ -26,7 +26,7 @@
       }}
     </div>
     <div class="chart-container">
-      {{chart-bar-stacked
+      {{chart-stacked-bar
         data=(await sessionsObjectivesData)
         width=width
         height=height
@@ -44,11 +44,11 @@
   {{#if tooltipValue}}
     <div class='charts tooltip' style={{{tooltipLocation}}}>
       <div class="tooltip-header">
-        <span class="tooltip-title"></span>
-        <span class="tooltip-attr"></span>
+        <span class="tooltip-title">Percentage</span>
+        <span class="tooltip-attr">Hours</span>
       </div>
       <div class="tooltip-content">{{{tooltipValue}}}</div>
-      <a href="#"></a>
+      <a href="#">Link</a>
     </div>
   {{/if}}
 </section>
