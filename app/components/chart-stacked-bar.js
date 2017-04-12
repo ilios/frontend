@@ -30,32 +30,30 @@ export default Component.extend({
     const y = scaleLinear().range([chartHeight, 0]);
     const z = scaleOrdinal(schemeCategory10);
 
-    var keys_set = {};
-    var keys_list = [];
+    var keysSet = {};
+    var keysList = [];
 
-    let reformattedData = data.map((d) => {
+    const dataOrArray = data.map((d) => {
       let obj = {label: d.label, total: d.total};
       d.values.forEach((value, index) => {
-        var value_key = value.label + '-' + index;
-        obj[value_key] = value.value;
-        if (!keys_set[value_key]) {
-          keys_set[value_key] = 1;
-          keys_list.push(value_key);
+        var valueKey = value.label + '-' + index;
+        obj[valueKey] = value.value;
+        if (!keysSet[valueKey]) {
+          keysSet[valueKey] = 1;
+          keysList.push(valueKey);
         }
       });
       return obj;
-    }).map((d) => {
-      keys_list.forEach((key) => {
+    }).map(d => {
+      keysList.forEach((key) => {
         d[key] = d[key] || 0;
       });
       return d;
     });
 
-    const dataOrArray = reformattedData?reformattedData:[];
-
     x.domain(dataOrArray.map(d => d.label));
     y.domain([0, max(dataOrArray, d => d.total)]);
-    z.domain(keys_list);
+    z.domain(keysList);
 
     svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
@@ -81,7 +79,7 @@ export default Component.extend({
       .attr("fill", "#000");
 
     svg.selectAll('.bar')
-      .data(stack().keys(keys_list)(dataOrArray))
+      .data(stack().keys(keysList)(dataOrArray))
       .enter().append("g")
       .attr("class", "bar")
       .attr("fill", function(d) { return z(d.key); })

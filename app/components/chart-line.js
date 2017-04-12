@@ -32,8 +32,8 @@ export default Component.extend({
     const y = scaleLinear().range([chartHeight, 0]);
 
     let valueline = line()
-      .x(function(d) { return x(d.data); })
-      .y(function(d) { return y(Number.parseFloat(d.label)/100); });
+      .x(d => x(d.data))
+      .y(d => y(Number.parseFloat(d.label)/100));
 
     x.domain([0, max(dataOrArray, d => d.data + 1)]);
     y.domain([min(dataOrArray, d => Math.floor(Number.parseFloat(d.label)/10))/10, max(dataOrArray, d => Math.ceil(Number.parseFloat(d.label)/10))/10]);
