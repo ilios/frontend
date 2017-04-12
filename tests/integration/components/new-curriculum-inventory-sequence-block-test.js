@@ -8,8 +8,13 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 const { RSVP, Object, Service } = Ember;
 const { resolve } = RSVP;
 
+let storeMock;
 moduleForComponent('new-curriculum-inventory-sequence-block', 'Integration | Component | new curriculum inventory sequence block', {
-  integration: true
+  integration: true,
+  beforeEach(){
+    storeMock = Service.extend({});
+    this.register('service:store', storeMock);
+  }
 });
 
 test('it renders', function(assert) {
@@ -35,7 +40,7 @@ test('it renders', function(assert) {
     linkedCourses: resolve([ course2 ])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, {limit, filters}){
       assert.equal(what, 'course', 'Store is queried for courses.');
       assert.equal(filters.school.length, 1, 'One school id was passed.');
@@ -46,7 +51,6 @@ test('it renders', function(assert) {
       return resolve([course1, course2, course3 ]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -132,12 +136,11 @@ test('order-in-sequence options are visible for ordered parent sequence block', 
     children: resolve(siblings)
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.set('parentBlock', parentBlock);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock}}`);
@@ -179,12 +182,11 @@ test('selecting course reveals additional course info', function(assert) {
     program: resolve(program),
     linkedCourses: resolve([])
   });
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([ course ]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -226,7 +228,7 @@ test('save with defaults', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
@@ -258,7 +260,6 @@ test('save with defaults', function(assert) {
       return Object.create();
     }
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.set('saveBlock', (block) => {
     assert.ok(block, 'Sequence block gets passed to saveBlock action.');
@@ -304,7 +305,7 @@ test('save with non-defaults', function(assert) {
   let maximum = 12;
   let duration = 6;
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([ course ]);
     },
@@ -320,7 +321,6 @@ test('save with non-defaults', function(assert) {
       return Object.create();
     }
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.set('saveBlock', (block) => {
     assert.ok(block, 'Sequence block gets passed to saveBlock action.');
@@ -368,7 +368,7 @@ test('save nested block in ordered sequence', function(assert) {
     children: resolve([ Object.create()])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
@@ -378,7 +378,6 @@ test('save nested block in ordered sequence', function(assert) {
       return Object.create();
     }
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.set('parentBlock', parentBlock);
 
@@ -411,7 +410,7 @@ test('cancel', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
@@ -421,7 +420,6 @@ test('cancel', function(assert) {
     assert.ok(true, 'Cancel action was invoked.');
   };
 
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.set('cancelAction', cancelAction);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report cancel=(action cancelAction)}}`);
@@ -448,12 +446,11 @@ test('clear dates', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -489,12 +486,11 @@ test('save fails when minimum is larger than maximum', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -532,12 +528,11 @@ test('save fails when minimum is less than zero', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -574,12 +569,11 @@ test('save fails when minimum is empty', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -616,12 +610,11 @@ test('save fails when maximum is empty', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -658,7 +651,7 @@ test('save with date range and a zero duration', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
@@ -670,7 +663,6 @@ test('save with date range and a zero duration', function(assert) {
   this.set('saveBlock', () => {
     return resolve();
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   return wait().then(() => {
@@ -705,7 +697,7 @@ test('save with non-zero duration and no date range', function(assert) {
 
   let duration = 10;
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
@@ -717,7 +709,6 @@ test('save with non-zero duration and no date range', function(assert) {
   this.set('saveBlock', () => {
     return resolve();
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   return wait().then(() => {
@@ -744,12 +735,11 @@ test('save fails if end-date is older than start-date', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -786,12 +776,11 @@ test('save fails on missing duration', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -828,12 +817,11 @@ test('save fails on invalid duration', function(assert) {
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -870,12 +858,11 @@ test('save fails if neither date range nor non-zero duration is provided', funct
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
@@ -905,12 +892,11 @@ test('save fails if start-date is given but no end-date is provided', function(a
     linkedCourses: resolve([])
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     },
   });
-  this.register('service:store', storeMock);
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {

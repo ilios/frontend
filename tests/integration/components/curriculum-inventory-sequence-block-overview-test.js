@@ -9,11 +9,14 @@ import tHelper from "ember-i18n/helper";
 const { RSVP, Object, Service } = Ember;
 const { resolve } = RSVP;
 
+let storeMock;
 moduleForComponent('curriculum-inventory-sequence-block-overview', 'Integration | Component | curriculum inventory sequence block overview', {
   integration: true,
   beforeEach: function() {
     this.container.lookup('service:i18n').set('locale', 'en');
     this.registry.register('helper:t', tHelper);
+    storeMock = Service.extend({});
+    this.register('service:store', storeMock);
   }
 });
 
@@ -147,7 +150,7 @@ test('it renders', function(assert) {
 
   let linkableCourses = [ linkedCourse ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, params){
       if ('course' === what) {
         assert.equal(params.filters.school[0], school.id());
@@ -166,9 +169,8 @@ test('it renders', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
@@ -285,7 +287,7 @@ test('order in sequence is n/a for top level block', function(assert) {
     academicLevel: resolve(Object.create({ name: 'Year 1'}))
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -295,9 +297,12 @@ test('order in sequence is n/a for top level block', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
+      report=report
+      sequenceBlock=sequenceBlock
+      sortBy=sortBy
+      setSortBy=setSortBy}}
+  `);
   return wait().then(() => {
     assert.equal(this.$('.order-in-sequence > span').text().trim(), 'n/a');
   });
@@ -346,7 +351,7 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
 
   parentBlock.set('children', resolve([block]));
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -356,8 +361,7 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.order-in-sequence > span').text().trim(), 'n/a');
@@ -437,7 +441,7 @@ test('change course', function(assert) {
     }
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what){
       if ('course' === what) {
         return resolve(linkableCourses);
@@ -451,8 +455,7 @@ test('change course', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     this.$('.course .editinplace .clickable').click();
@@ -532,7 +535,7 @@ test('change description', function(assert) {
     }
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -542,8 +545,7 @@ test('change description', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
 
@@ -599,7 +601,7 @@ test('change required', function(assert) {
     }
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -609,8 +611,7 @@ test('change required', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
 
@@ -666,7 +667,7 @@ test('change track', function(assert) {
     }
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -676,8 +677,7 @@ test('change track', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.ok(this.$('.track input').prop('checked'), 'Track toggle is initially set to "yes"');
@@ -727,7 +727,7 @@ test('change child sequence order', function(assert) {
     }
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -737,8 +737,7 @@ test('change child sequence order', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.child-sequence-order .editinplace').text().trim(), 'Ordered');
@@ -814,7 +813,7 @@ test('change order in sequence', function(assert) {
 
   parentBlock.set('children', resolve([ block, siblingBlock ]));
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what){
       if ('course' === what) {
         return resolve([]);
@@ -828,9 +827,8 @@ test('change order in sequence', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.order-in-sequence .editinplace').text().trim(), block.get('orderInSequence'));
@@ -895,7 +893,7 @@ test('change academic level', function(assert) {
     }
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
@@ -905,8 +903,7 @@ test('change academic level', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', null);
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
 
@@ -1022,7 +1019,7 @@ test('manage sessions', function(assert) {
 
   let linkableCourses = [ linkedCourse ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, params){
       if ('course' === what) {
         assert.equal(params.filters.school[0], school.id());
@@ -1041,9 +1038,8 @@ test('manage sessions', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.curriculum-inventory-sequence-block-session-manager').length, 0,
@@ -1192,7 +1188,7 @@ test('finalized/read-only mode', function(assert) {
 
   let linkableCourses = [ linkedCourse ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, params){
       if ('course' === what) {
         assert.equal(params.filters.school[0], school.id());
@@ -1211,9 +1207,8 @@ test('finalized/read-only mode', function(assert) {
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.set('setSortBy', null);
-  this.register('service:store', storeMock);
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-overview 
+  this.render(hbs`{{curriculum-inventory-sequence-block-overview
     report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(

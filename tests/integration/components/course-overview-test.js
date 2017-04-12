@@ -3,21 +3,25 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
+let storeMock;
 moduleForComponent('course-overview', 'Integration | Component | course overview', {
-  integration: true
+  integration: true,
+  beforeEach(){
+    storeMock = Service.extend({});
+    this.register('service:store', storeMock);
+  }
 });
 
 const { Object, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 test('renders with no course id', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     findAll(what){
       assert.equal('course-clerkship-type', what);
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     clerkshipType: resolve(Object.create())
@@ -31,13 +35,12 @@ test('renders with no course id', function(assert) {
 });
 
 test('course external id validation fails if value is too short', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     findAll(what){
       assert.equal('course-clerkship-type', what);
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     clerkshipType: resolve(Object.create()),
@@ -62,13 +65,12 @@ test('course external id validation fails if value is too short', function(asser
 });
 
 test('course external id validation fails if value is too long', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     findAll(what){
       assert.equal('course-clerkship-type', what);
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     clerkshipType: resolve(Object.create()),
@@ -93,13 +95,12 @@ test('course external id validation fails if value is too long', function(assert
 });
 
 test('course external id validation passes on changed value within boundaries', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     findAll(what){
       assert.equal('course-clerkship-type', what);
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     clerkshipType: resolve(Object.create()),
@@ -135,13 +136,12 @@ test('course external id validation passes on changed value within boundaries', 
 });
 
 test('course external id validation passes on empty value', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     findAll(what){
       assert.equal('course-clerkship-type', what);
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     clerkshipType: resolve(Object.create()),
@@ -177,13 +177,12 @@ test('course external id validation passes on empty value', function(assert) {
 });
 
 test('shows a list of course directors', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     findAll(what){
       assert.equal('course-clerkship-type', what);
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     clerkshipType: resolve(Object.create()),
