@@ -24,12 +24,20 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 50, left: 70};
-    const chartWidth = get(this, 'width') - margin.left - margin.right;
-    const chartHeight = get(this, 'height') - margin.top - margin.bottom;
+    const margin = {top: 20, right: 20, bottom: 50, left: 30};
+    const width = get(this, 'width');
+    const height = get(this, 'height');
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
 
     const x = scaleLinear().range([0, chartWidth]);
     const y = scaleLinear().range([chartHeight, 0]);
+
+    svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
+
+    if (dataOrArray.length === 0) {
+      return;
+    }
 
     let valueline = line()
       .x(d => x(d.data))
@@ -38,24 +46,24 @@ export default Component.extend({
     x.domain([0, max(dataOrArray, d => d.data + 1)]);
     y.domain([min(dataOrArray, d => Math.floor(Number.parseFloat(d.label)/10))/10, max(dataOrArray, d => Math.ceil(Number.parseFloat(d.label)/10))/10]);
 
-    svg.append("path")
+    const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
+
+    container.append("path")
       .data([dataOrArray])
       .attr("class", "line")
       .attr("d", valueline);
 
-    svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
-
-    svg.append("g")
+    container.append("g")
       .attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
 
-    svg.append("text")
+    container.append("text")
       .attr("transform", "translate(" + (chartWidth/2) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "middle")
       .text("Label");
 
-    svg.append("g").call(axisLeft(y).tickFormat(format(".0%")));
+    container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
 
-    svg.append("text")
+    container.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 20 - margin.right)
       .attr("x", 0 - (chartHeight / 8))

@@ -5,16 +5,16 @@
   <div class='block'>
     <div class="chart-container">
       {{chart-pie data=(await condensedObjectiveData)
-        width=width
-        height=height
+        width=300
+        height=300
         displayTooltip=(perform displayTooltip)
       }}
     </div>
     <div class="chart-container">
       {{chart-donut
         data=(await condensedObjectiveData)
-        width=width
-        height=height
+        width=300
+        height=300
         displayTooltip=(perform displayTooltip)
       }}
     </div>
@@ -35,8 +35,8 @@
     <div class="chart-container">
       {{chart-line
         data=(await condensedObjectiveData)
-        width=width
-        height=height
+        width=350
+        height=400
       }}
     </div>
   </div>

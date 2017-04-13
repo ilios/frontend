@@ -22,34 +22,53 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 30, left: 40};
-    const chartWidth = get(this, 'width') - margin.left - margin.right;
-    const chartHeight = get(this, 'height') - margin.top - margin.bottom;
+    const margin = {top: 10, right: 20, bottom: 30, left: 25};
+    const width = get(this, 'width');
+    const height = get(this, 'height');
+    const chartWidth = width - margin.left - margin.right;
     const color = scaleOrdinal(schemeCategory10);
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
-    const y = scaleLinear().range([chartHeight, 0]);
+
+    svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
+
+    if (dataOrArray.length === 0) {
+      return;
+    }
 
     x.domain(dataOrArray.map(d => d.label));
-    y.domain([0, max(dataOrArray, d => d.total)]);
+    const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
-
-    svg.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
-      .selectAll("text")
+    const bottomScale = container.append("g").call(axisBottom(x));
+    const labels = bottomScale.selectAll("text")
       .attr("y", 0)
       .attr("x", 9)
       .attr("dy", ".35em")
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
 
-    svg.append("text")
-      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 0) + ")")
+    // This loop will figure out the tallest bottom label height,
+    // so that it can be substracted to
+    // the available height for the chart.
+    let maxLabelHeight = 0;
+    labels.each(function(label, index, allLabels) {
+      const currentLabel = allLabels[index];
+      const labelDimensions = currentLabel.getBoundingClientRect();
+      maxLabelHeight = Math.max(maxLabelHeight, Math.ceil(labelDimensions.height));
+    });
+
+    const chartHeight = height - margin.top - margin.bottom - maxLabelHeight;
+    const y = scaleLinear().range([chartHeight, 0]);
+    y.domain([0, max(dataOrArray, d => d.total)]);
+    bottomScale.attr("transform", "translate(0," + chartHeight + ")");
+
+    container.append("text")
+      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "end")
       .attr("font", "10px")
       .text("Label");
 
-    svg.append("g").call(axisLeft(y))
+    container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
@@ -57,7 +76,7 @@ export default Component.extend({
       .attr("text-anchor", "end")
       .attr("fill", "#000");
 
-    svg.selectAll('.bar').data(dataOrArray).enter()
+    container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')
       .attr('class', 'bar')
       .attr('x', d => x(d.label))
