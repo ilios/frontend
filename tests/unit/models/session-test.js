@@ -5,6 +5,8 @@ import {
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 
+const { run } = Ember;
+
 moduleForModel('session', 'Unit | Model | Session', {
   needs: modelList
 });
@@ -28,7 +30,7 @@ test('check required publication items', function(assert) {
 test('check required ILM publication items', function(assert) {
   var model = this.subject();
   var store = this.store();
-  Ember.run(function(){
+  run(function(){
     model.set('title', 'nothing');
     assert.equal(model.get('requiredPublicationIssues').length, 1);
     let ilmSession = store.createRecord('ilmSession');
@@ -49,14 +51,20 @@ test('check optional publication items', function(assert) {
   assert.equal(model.get('optionalPublicationIssues').length, 0);
 });
 
-test('check associatedOfferingLearnerGroups', function(assert) {
-  assert.expect(11);
+test('check empty associatedOfferingLearnerGroups', async function(assert) {
+  assert.expect(1);
+  let session = this.subject();
+  let groups = await session.get('associatedOfferingLearnerGroups');
+  assert.equal(groups.length, 0);
+
+});
+
+test('check first level associatedOfferingLearnerGroups', async function(assert) {
+  assert.expect(4);
   let session = this.subject();
   let store = this.store();
 
-  return session.get('associatedOfferingLearnerGroups').then(groups => {
-    assert.equal(groups.length, 0);
-
+  run( async ()=>{
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -65,39 +73,59 @@ test('check associatedOfferingLearnerGroups', function(assert) {
 
     session.get('offerings').pushObjects([offering1, offering2]);
 
-    return session.get('associatedOfferingLearnerGroups').then(groups => {
-      assert.equal(groups.length, 3);
-      assert.ok(groups.includes(learnerGroup1));
-      assert.ok(groups.includes(learnerGroup2));
-      assert.ok(groups.includes(learnerGroup3));
-
-      let learnerGroup4 = store.createRecord('learner-group');
-      let offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
-      session.get('offerings').pushObject(offering3);
-      let learnerGroup5 = store.createRecord('learner-group');
-      offering1.get('learnerGroups').pushObject(learnerGroup5);
-
-      return session.get('associatedOfferingLearnerGroups').then(groups => {
-        assert.equal(groups.length, 5);
-        assert.ok(groups.includes(learnerGroup1));
-        assert.ok(groups.includes(learnerGroup2));
-        assert.ok(groups.includes(learnerGroup3));
-        assert.ok(groups.includes(learnerGroup4));
-        assert.ok(groups.includes(learnerGroup5));
-      });
-
-    });
+    let groups = await session.get('associatedOfferingLearnerGroups');
+    assert.equal(groups.length, 3);
+    assert.ok(groups.includes(learnerGroup1));
+    assert.ok(groups.includes(learnerGroup2));
+    assert.ok(groups.includes(learnerGroup3));
   });
+
+
 });
 
-test('check associatedIlmLearnerGroups', function(assert) {
-  assert.expect(10);
+test('check multi level associatedOfferingLearnerGroups', async function(assert) {
+  assert.expect(6);
   let session = this.subject();
   let store = this.store();
 
-  return session.get('associatedIlmLearnerGroups').then(groups => {
-    assert.equal(groups.length, 0);
+  run( async () => {
+    let learnerGroup1 = store.createRecord('learner-group');
+    let learnerGroup2 = store.createRecord('learner-group');
+    let learnerGroup3 = store.createRecord('learner-group');
+    let learnerGroup4 = store.createRecord('learner-group');
+    let learnerGroup5 = store.createRecord('learner-group');
+    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5]});
+    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+    let offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
+    session.get('offerings').pushObjects([offering1, offering2, offering3]);
 
+    let groups = await session.get('associatedOfferingLearnerGroups');
+    assert.equal(groups.length, 5);
+    assert.ok(groups.includes(learnerGroup1));
+    assert.ok(groups.includes(learnerGroup2));
+    assert.ok(groups.includes(learnerGroup3));
+    assert.ok(groups.includes(learnerGroup4));
+    assert.ok(groups.includes(learnerGroup5));
+  });
+
+});
+
+test('check empty associatedIlmLearnerGroups', async function(assert) {
+  assert.expect(1);
+  let session = this.subject();
+
+  run( async () => {
+    let groups = await session.get('associatedIlmLearnerGroups');
+    assert.equal(groups.length, 0);
+  });
+});
+
+test('check associatedIlmLearnerGroups', async function(assert) {
+  assert.expect(4);
+  let session = this.subject();
+  let store = this.store();
+
+  run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -105,64 +133,47 @@ test('check associatedIlmLearnerGroups', function(assert) {
 
     session.set('ilmSession', ilm);
 
-    return session.get('associatedIlmLearnerGroups').then(groups => {
-      assert.equal(groups.length, 3);
-      assert.ok(groups.includes(learnerGroup1));
-      assert.ok(groups.includes(learnerGroup2));
-      assert.ok(groups.includes(learnerGroup3));
-
-      let learnerGroup4 = store.createRecord('learner-group');
-      session.get('ilmSession').get('learnerGroups').pushObject(learnerGroup4);
-
-      return session.get('associatedIlmLearnerGroups').then(groups => {
-        assert.equal(groups.length, 4);
-        assert.ok(groups.includes(learnerGroup1));
-        assert.ok(groups.includes(learnerGroup2));
-        assert.ok(groups.includes(learnerGroup3));
-        assert.ok(groups.includes(learnerGroup4));
-      });
-    });
+    let groups = await session.get('associatedIlmLearnerGroups');
+    assert.equal(groups.length, 3);
+    assert.ok(groups.includes(learnerGroup1));
+    assert.ok(groups.includes(learnerGroup2));
+    assert.ok(groups.includes(learnerGroup3));
   });
 });
 
-test('check associatedLearnerGroups', function(assert) {
-  assert.expect(11);
+test('check empty associatedLearnerGroups', async function(assert) {
+  assert.expect(1);
+  let session = this.subject();
+  const groups = await session.get('associatedLearnerGroups');
+  assert.equal(groups.length, 0);
+});
+
+test('check associatedLearnerGroups', async function(assert) {
+  assert.expect(6);
   let session = this.subject();
   let store = this.store();
 
-  return session.get('associatedLearnerGroups').then(groups => {
-    assert.equal(groups.length, 0);
-
+  run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
-    let ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3 ] });
-    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
+    let learnerGroup4 = store.createRecord('learner-group');
+    let learnerGroup5 = store.createRecord('learner-group');
+
+    let ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3, learnerGroup4 ] });
+    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5]});
     let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
 
     session.set('ilmSession', ilm);
     session.get('offerings').pushObjects([offering1, offering2]);
 
-    return session.get('associatedLearnerGroups').then(groups => {
-      assert.equal(groups.length, 3);
-      assert.ok(groups.includes(learnerGroup1));
-      assert.ok(groups.includes(learnerGroup2));
-      assert.ok(groups.includes(learnerGroup3));
-
-      let learnerGroup4 = store.createRecord('learner-group');
-      session.get('ilmSession').get('learnerGroups').pushObject(learnerGroup4);
-      let learnerGroup5 = store.createRecord('learner-group');
-      offering1.get('learnerGroups').pushObject(learnerGroup5);
-
-      return session.get('associatedLearnerGroups').then(groups => {
-        assert.equal(groups.length, 5);
-        assert.ok(groups.includes(learnerGroup1));
-        assert.ok(groups.includes(learnerGroup2));
-        assert.ok(groups.includes(learnerGroup3));
-        assert.ok(groups.includes(learnerGroup4));
-        assert.ok(groups.includes(learnerGroup5));
-      });
-    });
+    const groups = await session.get('associatedLearnerGroups');
+    assert.equal(groups.length, 5);
+    assert.ok(groups.includes(learnerGroup1));
+    assert.ok(groups.includes(learnerGroup2));
+    assert.ok(groups.includes(learnerGroup3));
+    assert.ok(groups.includes(learnerGroup4));
+    assert.ok(groups.includes(learnerGroup5));
   });
 });
 
@@ -171,7 +182,7 @@ test('check learner groups count', function(assert) {
   let session = this.subject();
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');

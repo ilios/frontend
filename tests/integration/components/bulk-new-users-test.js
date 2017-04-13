@@ -30,22 +30,23 @@ const currentUserMock = Service.extend({
   model: resolve(mockUser)
 });
 
-let storeMock = Service.extend({
-  query(what){
-    if (what === 'authentication') {
-      return resolve([{user: 199, username: 'existingName'}]);
-    }
-
-    return resolve([]);
-  },
-  createRecord(){
-    throw new Error('Create record called in untested context');
-  }
-});
+let storeMock;
 
 moduleForComponent('bulk-new-users', 'Integration | Component | bulk new users', {
   integration: true,
   beforeEach(){
+    storeMock = Service.extend({
+      query(what){
+        if (what === 'authentication') {
+          return resolve([{user: 199, username: 'existingName'}]);
+        }
+
+        return resolve([]);
+      },
+      createRecord(){
+        throw new Error('Create record called in untested context');
+      }
+    });
     this.register('service:current-user', currentUserMock);
     Ember.getOwner(this).lookup('service:flash-messages').registerTypes(['success', 'warning']);
     this.register('service:store', storeMock);
@@ -72,7 +73,7 @@ let createFile = function(users){
   return file;
 };
 
-let triggerUpload = function(users, inputElement){
+let triggerUpload = async function(users, inputElement){
   let file = createFile(users);
   inputElement.triggerHandler({
     type: 'change',
@@ -84,9 +85,10 @@ let triggerUpload = function(users, inputElement){
       }
     }
   });
+  await wait();
 };
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   assert.expect(8);
   this.set('nothing', parseInt);
 
@@ -103,23 +105,21 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
-  return wait().then(() => {
-    let content = this.$().text().trim();
-    assert.notEqual(content.search(/File with new user data/), -1);
-    assert.notEqual(content.search(/Primary School/), -1);
+  await wait();
 
-    const schools = 'select:eq(0) option';
-    let options = this.$(schools);
-    assert.equal(options.length, mockSchools.length);
-    assert.equal(options.eq(0).text().trim(), 'first');
-    assert.equal(options.eq(1).text().trim(), 'second');
-    assert.equal(options.eq(2).text().trim(), 'third');
-  });
+  let content = this.$().text().trim();
+  assert.notEqual(content.search(/File with new user data/), -1);
+  assert.notEqual(content.search(/Primary School/), -1);
 
-
+  const schools = 'select:eq(0) option';
+  let options = this.$(schools);
+  assert.equal(options.length, mockSchools.length);
+  assert.equal(options.eq(0).text().trim(), 'first');
+  assert.equal(options.eq(1).text().trim(), 'second');
+  assert.equal(options.eq(2).text().trim(), 'third');
 });
 
-test('select student mode display cohort', function(assert) {
+test('select student mode display cohort', async function(assert) {
   assert.expect(12);
   this.set('nothing', parseInt);
 
@@ -136,12 +136,9 @@ test('select student mode display cohort', function(assert) {
   });
 
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
-
-  run(()=> {
+  run( async () => {
     this.$('.click-choice-buttons .second-button').click();
-  });
-
-  return wait().then(() => {
+    await wait();
     let content = this.$().text().trim();
     assert.notEqual(content.search(/File with new user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
@@ -160,11 +157,9 @@ test('select student mode display cohort', function(assert) {
     assert.equal(options.eq(0).text().trim(), 'Program first');
     assert.equal(options.eq(1).text().trim(), 'Program second');
   });
-
-
 });
 
-test('parses file into table', function(assert) {
+test('parses file into table', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -172,38 +167,34 @@ test('parses file into table', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
-  run.later(() => {
-    let userRows = this.$('table tbody tr');
-    assert.equal(userRows.length, 2);
-    assert.ok(this.$('tr:eq(1) td:eq(0) input').prop('checked'));
-    assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), 'jasper');
-    assert.equal(this.$('tr:eq(1) td:eq(2)').text().trim(), 'johnson');
-    assert.equal(this.$('tr:eq(1) td:eq(3)').text().trim(), '');
-    assert.equal(this.$('tr:eq(1) td:eq(4)').text().trim(), '1234567890');
-    assert.equal(this.$('tr:eq(1) td:eq(5)').text().trim(), 'jasper.johnson@example.com');
-    assert.equal(this.$('tr:eq(1) td:eq(6)').text().trim(), '123Campus');
-    assert.equal(this.$('tr:eq(1) td:eq(7)').text().trim(), '123Other');
-    assert.equal(this.$('tr:eq(1) td:eq(8)').text().trim(), 'jasper');
-    assert.equal(this.$('tr:eq(1) td:eq(9)').text().trim(), '123Test');
+  let userRows = this.$('table tbody tr');
+  assert.equal(userRows.length, 2);
+  assert.ok(this.$('tr:eq(1) td:eq(0) input').prop('checked'));
+  assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), 'jasper');
+  assert.equal(this.$('tr:eq(1) td:eq(2)').text().trim(), 'johnson');
+  assert.equal(this.$('tr:eq(1) td:eq(3)').text().trim(), '');
+  assert.equal(this.$('tr:eq(1) td:eq(4)').text().trim(), '1234567890');
+  assert.equal(this.$('tr:eq(1) td:eq(5)').text().trim(), 'jasper.johnson@example.com');
+  assert.equal(this.$('tr:eq(1) td:eq(6)').text().trim(), '123Campus');
+  assert.equal(this.$('tr:eq(1) td:eq(7)').text().trim(), '123Other');
+  assert.equal(this.$('tr:eq(1) td:eq(8)').text().trim(), 'jasper');
+  assert.equal(this.$('tr:eq(1) td:eq(9)').text().trim(), '123Test');
 
-    assert.ok(this.$('tr:eq(2) td:eq(0) input').prop('checked'));
-    assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), 'jackson');
-    assert.equal(this.$('tr:eq(2) td:eq(2)').text().trim(), 'johnson');
-    assert.equal(this.$('tr:eq(2) td:eq(3)').text().trim(), 'middle');
-    assert.equal(this.$('tr:eq(2) td:eq(4)').text().trim(), '12345');
-    assert.equal(this.$('tr:eq(2) td:eq(5)').text().trim(), 'jj@example.com');
-    assert.equal(this.$('tr:eq(2) td:eq(6)').text().trim(), '1234Campus');
-    assert.equal(this.$('tr:eq(2) td:eq(7)').text().trim(), '1234Other');
-    assert.equal(this.$('tr:eq(2) td:eq(8)').text().trim(), 'jck');
-    assert.equal(this.$('tr:eq(2) td:eq(9)').text().trim(), '1234Test');
-  }, 1000);
-
-  return wait();
+  assert.ok(this.$('tr:eq(2) td:eq(0) input').prop('checked'));
+  assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), 'jackson');
+  assert.equal(this.$('tr:eq(2) td:eq(2)').text().trim(), 'johnson');
+  assert.equal(this.$('tr:eq(2) td:eq(3)').text().trim(), 'middle');
+  assert.equal(this.$('tr:eq(2) td:eq(4)').text().trim(), '12345');
+  assert.equal(this.$('tr:eq(2) td:eq(5)').text().trim(), 'jj@example.com');
+  assert.equal(this.$('tr:eq(2) td:eq(6)').text().trim(), '1234Campus');
+  assert.equal(this.$('tr:eq(2) td:eq(7)').text().trim(), '1234Other');
+  assert.equal(this.$('tr:eq(2) td:eq(8)').text().trim(), 'jck');
+  assert.equal(this.$('tr:eq(2) td:eq(9)').text().trim(), '1234Test');
 });
 
-test('saves valid faculty users', function(assert) {
+test('saves valid faculty users', async function(assert) {
   assert.expect(35);
   let called = 0;
   let facultyRole = {id: '3'};
@@ -293,15 +284,11 @@ test('saves valid faculty users', function(assert) {
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
     ['invaliduser'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
-  run.later(()=>{
-    this.$('.done').click();
-  }, 1000);
-
-  return wait();
+  await triggerUpload(users, this.$('input[type=file]'));
+  this.$('.done').click();
 });
 
-test('saves valid student users', function(assert) {
+test('saves valid student users', async function(assert) {
   assert.expect(37);
   let called = 0;
   let facultyRole = {id: '3'};
@@ -397,16 +384,12 @@ test('saves valid student users', function(assert) {
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
     ['invaliduser'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
-  run.later(()=>{
-    this.$('.done').click();
-  }, 1000);
-
-  return wait();
+  await triggerUpload(users, this.$('input[type=file]'));
+  this.$('.done').click();
 });
 
 
-test('cancel fires close', function(assert) {
+test('cancel fires close', async function(assert) {
   assert.expect(1);
   this.set('close', ()=> {
     assert.ok(true);
@@ -415,7 +398,7 @@ test('cancel fires close', function(assert) {
   this.$('.cancel').click();
 });
 
-test('validate firstName', function(assert) {
+test('validate firstName', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -423,23 +406,19 @@ test('validate firstName', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(1)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(1)';
-  run.later(() => {
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('validate lastName', function(assert) {
+test('validate lastName', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -447,22 +426,19 @@ test('validate lastName', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', '', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(2)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(2)';
-  run.later(()=>{assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('validate middleName', function(assert) {
+test('validate middleName', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -470,23 +446,20 @@ test('validate middleName', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middlenamewhchiswaytoolongforilios', '12345', 'jj@example.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(3)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(3)';
-  run.later(()=>{assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('validate email address', function(assert) {
+test('validate email address', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -494,23 +467,19 @@ test('validate email address', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj.com', '1234Campus', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(5)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(5)';
-  run.later(()=>{
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('validate campusId', function(assert) {
+test('validate campusId', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -518,23 +487,19 @@ test('validate campusId', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus123456TOOLONGJACK', '1234Other', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(6)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(6)';
-  run.later(()=>{
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('validate otherId', function(assert) {
+test('validate otherId', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -542,23 +507,19 @@ test('validate otherId', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234OtherWAYTOOLONGFORANID', 'jck', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(7)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(7)';
-  run.later(()=>{
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('validate username', function(assert) {
+test('validate username', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -566,23 +527,19 @@ test('validate username', function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', 'existingName', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
   const badCheck = 'tbody tr:eq(1) td:eq(0) input';
   const BadBox = 'tbody tr:eq(1) td:eq(8)';
-  run.later(()=>{
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
+  assert.ok(this.$(badCheck).prop('disabled'));
+  assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('duplicate username errors on save', function(assert) {
+test('duplicate username errors on save', async function(assert) {
   let called = 0;
   storeMock.reopen({
     findAll(what){
@@ -627,17 +584,13 @@ test('duplicate username errors on save', function(assert) {
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
-  triggerUpload(users, this.$('input[type=file]'));
-  run.later(()=>{
-    this.$('.done').click();
-    assert.ok(this.$('.saving-authentication-errors').length, 1);
-    assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
-  }, 1000);
-
-  return wait();
+  await triggerUpload(users, this.$('input[type=file]'));
+  this.$('.done').click();
+  assert.ok(this.$('.saving-authentication-errors').length, 1);
+  assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
 });
 
-test('error saving user', function(assert) {
+test('error saving user', async function(assert) {
   let called = 0;
   storeMock.reopen({
     findAll(what){
@@ -680,55 +633,43 @@ test('error saving user', function(assert) {
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
-  triggerUpload(users, this.$('input[type=file]'));
-  run.later(()=>{
-    this.$('.done').click();
-    assert.ok(this.$('.saving-user-errors').length, 1);
-    assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
-  }, 1000);
-
-  return wait();
+  await triggerUpload(users, this.$('input[type=file]'));
+  this.$('.done').click();
+  assert.ok(this.$('.saving-user-errors').length, 1);
+  assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
 });
 
-test('username not required', function(assert) {
+test('username not required', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
   let users = [
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', '1234Test'],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
-  run.later(()=>{
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
 });
 
-test('password not required if username is blank', function(assert) {
+test('password not required if username is blank', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
   let users = [
     ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const goodCheck = 'tbody tr:eq(0) td:eq(0) input';
   const goodBox = 'tbody tr:eq(0) td:eq(8)';
-  run.later(()=>{
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-  }, 1000);
-
-  return wait();
+  assert.notOk(this.$(goodCheck).prop('disabled'));
+  assert.notOk(this.$(goodBox).hasClass('error'));
 });
 
-test('dont create authentication if username is not set', function(assert) {
+test('dont create authentication if username is not set', async function(assert) {
   assert.expect(1);
   let called = 0;
   storeMock.reopen({
@@ -759,15 +700,11 @@ test('dont create authentication if username is not set', function(assert) {
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
   ];
-  triggerUpload(users, this.$('input[type=file]'));
-  run.later(()=>{
-    this.$('.done').click();
-  }, 1000);
-
-  return wait();
+  await triggerUpload(users, this.$('input[type=file]'));
+  this.$('.done').click();
 });
 
-test('ignore header row', function(assert) {
+test('ignore header row', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -775,12 +712,8 @@ test('ignore header row', function(assert) {
     ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
     ['Test Person', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
   ];
-  triggerUpload(users, this.$('input[type=file]'));
+  await triggerUpload(users, this.$('input[type=file]'));
 
   const rows = 'tbody tr';
-  run.later(()=>{
-    assert.equal(this.$(rows).length, 1);
-  }, 1000);
-
-  return wait();
+  assert.equal(this.$(rows).length, 1);
 });

@@ -1,22 +1,31 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import startMirage from '../../helpers/start-mirage';
 import wait from 'ember-test-helpers/wait';
 
 const { Object, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
+let storeMock;
+
 moduleForComponent('pending-updates-summary', 'Integration | Component | pending updates summary', {
   integration: true,
-  setup(){
-    startMirage(this.container);
+  beforeEach(){
+    storeMock = Service.extend({});
+    this.register('service:store', storeMock);
   }
 });
 
 test('it renders', async function(assert) {
-  let primarySchool = Object.create(server.create('school'));
-  let secondarySchool = Object.create(server.create('school'));
+  const container = 'div';
+  let primarySchool = Object.create({
+    id: 1,
+    title: 'school 0'
+  });
+  let secondarySchool = Object.create({
+    id: 2,
+    title: 'school 1'
+  });
   let user = Object.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
@@ -25,16 +34,14 @@ test('it renders', async function(assert) {
     model: resolve(user)
   });
 
-  let storeMock = Service.extend({
+
+  this.register('service:currentUser', currentUserMock);
+  storeMock.reopen({
     query(what){
       assert.equal('pending-user-update', what);
       return resolve([1, 2, 3, 4, 5]);
     }
   });
-
-  this.register('service:currentUser', currentUserMock);
-  this.register('service:store', storeMock);
-  const container = 'div';
 
   this.render(hbs`{{pending-updates-summary}}`);
 

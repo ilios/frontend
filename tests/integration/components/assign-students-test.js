@@ -6,8 +6,14 @@ import wait from 'ember-test-helpers/wait';
 const { Object, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
+let storeMock;
+
 moduleForComponent('assign-students', 'Integration | Component | assign students', {
-  integration: true
+  integration: true,
+  beforeEach(){
+    storeMock = Service.extend({});
+    this.register('service:store', storeMock);
+  }
 });
 
 test('nothing', function(assert){
@@ -47,7 +53,7 @@ test('it renders', function(assert) {
     })
   ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, {filters, limit}){
 
       assert.equal('cohort', what);
@@ -56,7 +62,6 @@ test('it renders', function(assert) {
       return resolve([cohort]);
     }
   });
-  this.register('service:store', storeMock);
 
   this.set('school', school);
   this.set('students', students);
@@ -80,10 +85,7 @@ test('it renders', function(assert) {
     assert.equal(this.$('tbody tr').length, 2);
     assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'test person');
     assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'second person');
-
-
   });
-
 });
 
 test('check all checks all', function(assert) {
@@ -100,12 +102,11 @@ test('check all checks all', function(assert) {
     })
   ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   this.set('school', school);
   this.set('students', students);
@@ -153,12 +154,11 @@ test('check some sets indeterminate state', function(assert) {
     }),
   ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   this.set('school', school);
   this.set('students', students);
@@ -210,12 +210,11 @@ test('when some are selected check all checks all', function(assert) {
     }),
   ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([]);
     }
   });
-  this.register('service:store', storeMock);
 
   this.set('school', school);
   this.set('students', students);
@@ -285,12 +284,11 @@ test('save sets primary cohort', function(assert) {
     })
   ];
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return resolve([cohort]);
     }
   });
-  this.register('service:store', storeMock);
 
   this.set('school', school);
   this.set('students', students);
@@ -311,8 +309,5 @@ test('save sets primary cohort', function(assert) {
     return wait().then(() => {
       this.$('button.done').click();
     });
-
-
   });
-
 });

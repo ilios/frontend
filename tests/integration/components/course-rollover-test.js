@@ -8,17 +8,21 @@ import wait from 'ember-test-helpers/wait';
 const { Service, RSVP, Object, run, getOwner } = Ember;
 const { Promise, resolve } = RSVP;
 
+let storeMock;
 moduleForComponent('course-rollover', 'Integration | Component | course rollover', {
-  integration: true
+  integration: true,
+  beforeEach(){
+    storeMock = Service.extend({});
+    this.register('service:store', storeMock);
+  }
 });
 
 test('it renders', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return [];
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     id: 1,
@@ -72,7 +76,7 @@ test('rollover course', function(assert) {
   });
   this.register('service:ajax', ajaxMock);
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     pushPayload(obj){
       assert.ok('courses' in obj);
       assert.ok(obj.courses.length, 1);
@@ -90,7 +94,6 @@ test('rollover course', function(assert) {
       return [];
     }
   });
-  this.register('service:store', storeMock);
   let flashmessagesMock = Ember.Service.extend({
     success(message){
       assert.equal(message, 'general.courseRolloverSuccess');
@@ -136,7 +139,7 @@ test('rollover course with new title', function(assert) {
   });
   this.register('service:ajax', ajaxMock);
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     pushPayload(){},
     peekRecord(what, id){
       assert.equal(what, 'course');
@@ -149,7 +152,6 @@ test('rollover course with new title', function(assert) {
       return [];
     }
   });
-  this.register('service:store', storeMock);
   let flashmessagesMock = Ember.Service.extend({
     success(){}
   });
@@ -173,7 +175,7 @@ test('disable years when title already exists', function(assert) {
   assert.expect(8);
   const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, {filters}){
       assert.equal(what, 'course');
       assert.ok('title' in filters);
@@ -191,7 +193,6 @@ test('disable years when title already exists', function(assert) {
       ];
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     id: 1,
@@ -248,12 +249,11 @@ test('rollover course with new start date', function(assert) {
   });
   this.register('service:ajax', ajaxMock);
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
     query(){return [];}
   });
-  this.register('service:store', storeMock);
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
   this.set('course', course);
@@ -342,12 +342,11 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
   });
   this.register('service:ajax', ajaxMock);
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
     query(){return [];}
   });
-  this.register('service:store', storeMock);
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
   this.set('course', course);
@@ -409,12 +408,11 @@ test('rollover start date adjustment with former year course start date', functi
     title: 'old course'
   });
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
     query(){return [];}
   });
-  this.register('service:store', storeMock);
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
   this.set('course', course);
@@ -479,12 +477,11 @@ test('rollover course with no offerings', function(assert) {
   });
   this.register('service:ajax', ajaxMock);
 
-  let storeMock = Service.extend({
+  storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
     query(){return [];}
   });
-  this.register('service:store', storeMock);
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
   this.set('course', course);
@@ -512,12 +509,11 @@ test('rollover course with no offerings', function(assert) {
 });
 
 test('errors do not show up initially', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return [];
     }
   });
-  this.register('service:store', storeMock);
   let course = Object.create({
     id: 1
   });
@@ -531,12 +527,11 @@ test('errors do not show up initially', function(assert) {
 });
 
 test('errors show up', function(assert) {
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(){
       return [];
     }
   });
-  this.register('service:store', storeMock);
   let course = Object.create({
     id: 1
   });
@@ -556,7 +551,7 @@ test('errors show up', function(assert) {
 test('changing the title looks for new matching courses', function(assert) {
   assert.expect(6);
   let count = 0;
-  let storeMock = Service.extend({
+  storeMock.reopen({
     query(what, {filters}){
       assert.equal(what, 'course');
       assert.ok('title' in filters);
@@ -570,7 +565,6 @@ test('changing the title looks for new matching courses', function(assert) {
       return [];
     }
   });
-  this.register('service:store', storeMock);
 
   let course = Object.create({
     id: 1,
