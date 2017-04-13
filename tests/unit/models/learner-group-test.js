@@ -5,6 +5,8 @@ import {
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
+const { run } = Ember;
+
 moduleForModel('learner-group', 'Unit | Model | LearnerGroup', {
   needs: modelList
 });
@@ -19,7 +21,7 @@ test('list courses', function(assert) {
   assert.expect(3);
   var model = this.subject();
   var store = model.store;
-  Ember.run(function(){
+  run(function(){
 
     var course1 = store.createRecord('course', {title:'course1'});
     var course2 = store.createRecord('course', {title:'course2'});
@@ -36,7 +38,7 @@ test('list courses', function(assert) {
     });
   });
 
-  Ember.run(function(){
+  run(function(){
     model.get('courses').then(function(courses){
       assert.equal(courses.length, 2);
       assert.equal(courses.objectAt(0).get('title'), 'course1');
@@ -51,7 +53,7 @@ test('list available users', function(assert) {
   var store = model.store;
   var newUsers = [];
 
-  Ember.run(function(){
+  run(function(){
     var parent = store.createRecord('learner-group', {title:'parent'});
     model.set('parent', parent);
     for(var i = 0; i < 5; i++){
@@ -76,7 +78,7 @@ test('list available users', function(assert) {
     });
   });
 
-  Ember.run(function(){
+  run(function(){
     model.get('availableUsers').then(function(users){
       var names = users.mapBy('firstName');
       assert.equal(users.get('length'), 3);
@@ -93,13 +95,13 @@ test('top level groups return false for the list of available users', function(a
   var store = model.store;
   var newUsers = [];
 
-  Ember.run(function(){
+  run(function(){
     for(var i = 0; i < 10; i++){
       newUsers[i] = store.createRecord('user', {firstName: i});
     }
   });
 
-  Ember.run(function(){
+  run(function(){
     model.get('availableUsers').then(function(users){
       assert.ok(!users);
     });
@@ -146,39 +148,31 @@ test('check allDescendantUsers', function(assert) {
   });
 });
 
-test('check allDescendants', function(assert) {
-  assert.expect(11);
+test('check empty allDescendants', async function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+
+  const groups = await learnerGroup.get('allDescendants');
+  assert.equal(groups.length, 0);
+});
+
+test('check allDescendants', async function(assert) {
+  assert.expect(5);
   let learnerGroup = this.subject();
   let store = this.store();
 
-  return learnerGroup.get('allDescendants').then(groups => {
-    assert.equal(groups.length, 0);
-
+  run( async () => {
     let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup});
     let subGroup2 = store.createRecord('learner-group', {parent: subGroup1});
     let subGroup3 = store.createRecord('learner-group', {parent: subGroup2});
+    let subGroup4 = store.createRecord('learner-group', {parent: learnerGroup});
 
-    return learnerGroup.get('allDescendants').then(groups => {
-      assert.equal(groups.length, 3);
-      assert.ok(groups.includes(subGroup1));
-      assert.ok(groups.includes(subGroup2));
-      assert.ok(groups.includes(subGroup3));
-
-      let subGroup4 = store.createRecord('learner-group');
-      learnerGroup.get('children').pushObject(subGroup4);
-      let subGroup5 = store.createRecord('learner-group');
-      subGroup3.get('children').pushObject(subGroup5);
-
-      return learnerGroup.get('allDescendants').then(groups => {
-        assert.equal(groups.length, 5);
-        assert.ok(groups.includes(subGroup1));
-        assert.ok(groups.includes(subGroup2));
-        assert.ok(groups.includes(subGroup3));
-        assert.ok(groups.includes(subGroup4));
-        assert.ok(groups.includes(subGroup5));
-      });
-
-    });
+    const groups = await learnerGroup.get('allDescendants');
+    assert.equal(groups.length, 4);
+    assert.ok(groups.includes(subGroup1));
+    assert.ok(groups.includes(subGroup2));
+    assert.ok(groups.includes(subGroup3));
+    assert.ok(groups.includes(subGroup4));
   });
 });
 
@@ -187,7 +181,7 @@ test('check subgroupNumberingOffset', function(assert) {
   let store = this.store();
   let learnerGroup = this.subject();
   assert.expect(3);
-  Ember.run(() => {
+  run(() => {
     learnerGroup.set('title', groupTitle);
     learnerGroup.get('subgroupNumberingOffset').then((offset) => {
       assert.equal(offset, 1); // no subgroups. offset is 1.
@@ -265,36 +259,26 @@ test('check allParents', function(assert) {
   });
 });
 
-test('check filterTitle on top group', function(assert) {
-  assert.expect(3);
+test('check filterTitle on top group', async function(assert) {
+  assert.expect(2);
   let learnerGroup = this.subject();
   let store = this.store();
 
-  Ember.run(() => {
+  run( async () => {
+
     learnerGroup.set('title', 'top group');
-    return learnerGroup.get('allDescendants').then(groups => {
-      assert.equal(groups.length, 0);
 
-      let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
-      let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
-      let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
+    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+    let subGroup4 = store.createRecord('learner-group', {title: 'subGroup5'});
+    subGroup3.get('children').pushObject(subGroup4);
 
-      return learnerGroup.get('filterTitle').then(filterTitle => {
-        assert.equal(filterTitle, 'subGroup1subGroup2subGroup3top group');
-
-        let subGroup4 = store.createRecord('learner-group', {title: 'subGroup4'});
-        learnerGroup.get('children').pushObject(subGroup4);
-        let subGroup5 = store.createRecord('learner-group', {title: 'subGroup5'});
-        subGroup3.get('children').pushObject(subGroup5);
-
-        return learnerGroup.get('filterTitle').then(filterTitle => {
-          assert.equal(filterTitle, 'subGroup1subGroup4subGroup2subGroup3subGroup5top group');
-        });
-
-      });
-    });
+    const groups = await learnerGroup.get('allDescendants');
+    assert.equal(groups.length, 4);
+    const filterTitle = await learnerGroup.get('filterTitle');
+    assert.equal(filterTitle, 'subGroup1subGroup2subGroup3subGroup5top group');
   });
-
 });
 
 test('check filterTitle on sub group', function(assert) {
@@ -302,7 +286,7 @@ test('check filterTitle on sub group', function(assert) {
   let learnerGroup = this.subject();
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     learnerGroup.set('title', 'top group');
     return learnerGroup.get('allDescendants').then(groups => {
       assert.equal(groups.length, 0);
@@ -324,7 +308,7 @@ test('check sortTitle on top group', function(assert) {
   let learnerGroup = this.subject();
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     learnerGroup.set('title', 'top group');
     return learnerGroup.get('allDescendants').then(groups => {
       assert.equal(groups.length, 0);
@@ -343,7 +327,7 @@ test('check sortTitle on sub group', function(assert) {
   let learnerGroup = this.subject();
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     learnerGroup.set('title', 'top group');
     return learnerGroup.get('allDescendants').then(groups => {
       assert.equal(groups.length, 0);
@@ -415,7 +399,7 @@ test('check addUserToGroupAndAllParents', function(assert) {
 test('has no learners in group without learners and without subgroups', function(assert) {
   assert.expect(1);
   let learnerGroup = this.subject();
-  Ember.run(() => {
+  run(() => {
     learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
       assert.notOk(hasLearners);
     });
@@ -426,7 +410,7 @@ test('has learners in group with learners and but without learners in subgroups'
   assert.expect(1);
   let learnerGroup = this.subject();
   let store = this.store();
-  Ember.run(() => {
+  run(() => {
     let learner = store.createRecord('user');
     learnerGroup.get('users').then(users => {
       users.pushObject(learner);
@@ -442,7 +426,7 @@ test('has no learners with no learners in group nor in subgroups', function(asse
   assert.expect(1);
   let learnerGroup = this.subject();
   let store = this.store();
-  Ember.run(() => {
+  run(() => {
     let subgroup = store.createRecord('learner-group', { id: 2, parent: learnerGroup });
     learnerGroup.get('children').then(subgroups => {
       subgroups.pushObject(subgroup);
@@ -458,7 +442,7 @@ test('has learners with no learners in group but with learners in subgroups', fu
   assert.expect(1);
   let learnerGroup = this.subject();
   let store = this.store();
-  Ember.run(() => {
+  run(() => {
     let learner = store.createRecord('user', { id: 1 });
     let subgroup = store.createRecord('learner-group', { id: 2, users: [ learner ], parent: learnerGroup });
     learnerGroup.get('children').then(subgroups => {
@@ -474,7 +458,7 @@ test('has learners with learners in group and with learners in subgroups', funct
   assert.expect(1);
   let learnerGroup = this.subject();
   let store = this.store();
-  Ember.run(() => {
+  run(() => {
     let learner = store.createRecord('user', { id: 1 });
     let learner2 = store.createRecord('user', { id: 2 });
     let subgroup = store.createRecord('learner-group', { id: 2, users: [ learner ], parent: learnerGroup });

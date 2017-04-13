@@ -5,6 +5,8 @@ import {
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
+const { run } = Ember;
+
 moduleForModel('course', 'Unit | Model | Course', {
   needs: modelList
 });
@@ -39,14 +41,20 @@ test('check optional publication items', function(assert) {
   assert.equal(model.get('optionalPublicationIssues').length, 0);
 });
 
-test('check competencies', function(assert) {
-  assert.expect(11);
+test('check empty competencies', async function(assert) {
+  assert.expect(1);
+  let course = this.subject();
+
+  const competencies = await course.get('competencies');
+  assert.equal(competencies.length, 0);
+});
+
+test('check competencies', async function(assert) {
+  assert.expect(4);
   let course = this.subject();
   let store = this.store();
 
-  return course.get('competencies').then(competencies => {
-    assert.equal(competencies.length, 0);
-
+  run( async () => {
     let competency1 = store.createRecord('competency');
     let competency2 = store.createRecord('competency');
     let competency3 = store.createRecord('competency');
@@ -57,32 +65,14 @@ test('check competencies', function(assert) {
     let objective4 = store.createRecord('objective', {courses: [course], parents: [objective2]});
     objective1.get('children').pushObject(objective3);
     objective2.get('children').pushObject(objective4);
-
     course.get('objectives').pushObjects([objective3, objective4]);
 
-    return course.get('competencies').then(competencies => {
-      assert.equal(competencies.length, 3);
-      assert.ok(competencies.includes(competency1));
-      assert.ok(competencies.includes(competency2));
-      assert.ok(competencies.includes(competency3));
+    const competencies = await course.get('competencies');
 
-      let competency4 = store.createRecord('competency');
-      let competency5 = store.createRecord('competency');
-      objective4.set('competency', competency4);
-      let objective5 = store.createRecord('objective', {competency: competency5});
-      let objective6 = store.createRecord('objective', {courses: [course], parents: [objective5]});
-      course.get('objectives').pushObject(objective6);
-
-      return course.get('competencies').then(competencies => {
-        assert.equal(competencies.length, 5);
-        assert.ok(competencies.includes(competency1));
-        assert.ok(competencies.includes(competency2));
-        assert.ok(competencies.includes(competency3));
-        assert.ok(competencies.includes(competency4));
-        assert.ok(competencies.includes(competency5));
-      });
-
-    });
+    assert.equal(competencies.length, 3);
+    assert.ok(competencies.includes(competency1));
+    assert.ok(competencies.includes(competency2));
+    assert.ok(competencies.includes(competency3));
   });
 });
 
@@ -91,7 +81,7 @@ test('check publishedSessionOfferingCounts count', function(assert) {
   let course = this.subject();
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     let offering1 = store.createRecord('offering');
     let offering2 = store.createRecord('offering');
     let offering3 = store.createRecord('offering');
