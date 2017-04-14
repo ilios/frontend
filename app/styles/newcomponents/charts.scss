@@ -1,5 +1,20 @@
-.charts {
+.chart-container {
 
+  svg {
+
+    .line {
+      fill: none;
+      stroke: $switch-blue;
+      stroke-width: 2px;
+     }
+
+    text {
+      font-size: 10px;
+    }
+  }
+}
+
+.charts {
   &.tooltip {
     background: $background-grey;
     border: 1px solid $dark-grey;
@@ -9,7 +24,7 @@
     font-size: $base-font-size;
     line-height: $base-line-height;
     margin: 0;
-    max-height: 150px;
+    min-height: 120px;
     opacity: .9;
     padding: 10px;
     position: absolute;
@@ -17,7 +32,7 @@
     }
 
   .tooltip-header {
-    // border-bottom: 1px solid $dark-grey;
+    border-bottom: 1px solid $dark-grey;
     font-size: $h6-font-size;
     line-height: $base-line-height;
 
@@ -27,16 +42,16 @@
 
     .tooltip-attr {
       font-style: italic;
-      left: 340px;
+      left: 324px;
       position: absolute;
-      top: 26px;
+      top: 10px;
     }
   }
 
   .tooltip-content {
     font-size: .9 * $base-font-size;
     margin: 10px 0 0;
-    // overflow: hidden;
+    overflow: hidden;
     // text-overflow: ellipsis;
     // white-space: nowrap;
   }

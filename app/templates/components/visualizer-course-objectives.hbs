@@ -3,22 +3,42 @@
 </h1>
 <section class='course-overview'>
   <div class='block'>
-    {{chart-pie data=(await condensedObjectiveData)
-      width=width
-      height=height
-      displayTooltip=(perform displayTooltip)
-    }}
-    {{chart-donut
-      data=(await condensedObjectiveData)
-      width=width
-      height=height
-      displayTooltip=(perform displayTooltip)
-    }}
-    {{chart-bar data=(await sessionsObjectivesData)
-      width=width
-      height=height
-      displayTooltip=(perform displayTooltip)
-    }}
+    <div class="chart-container">
+      {{chart-pie data=(await condensedObjectiveData)
+        width=300
+        height=300
+        displayTooltip=(perform displayTooltip)
+      }}
+    </div>
+    <div class="chart-container">
+      {{chart-donut
+        data=(await condensedObjectiveData)
+        width=300
+        height=300
+        displayTooltip=(perform displayTooltip)
+      }}
+    </div>
+    <div class="chart-container">
+      {{chart-bar
+        data=(await sessionsObjectivesData)
+        width=width
+        height=height
+      }}
+    </div>
+    <div class="chart-container">
+      {{chart-stacked-bar
+        data=(await sessionsObjectivesData)
+        width=width
+        height=height
+      }}
+    </div>
+    <div class="chart-container">
+      {{chart-line
+        data=(await condensedObjectiveData)
+        width=350
+        height=400
+      }}
+    </div>
   </div>
 
   {{#if tooltipValue}}

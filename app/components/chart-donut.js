@@ -36,7 +36,12 @@ export default Component.extend({
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
     let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
+    svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
 
+    if (dataOrArray.length === 0) {
+      return;
+    }
+    
     let chart = svg.append('g').attr('class', 'pie').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
     let path = chart.selectAll('path').data(createPie(dataOrArray)).enter()
       .append('g').attr('class', 'slice')
