@@ -1,54 +1,47 @@
 <h1>
   {{course.title}}
 </h1>
-<section class='course-overview'>
-  <div class='block'>
-    <div class="chart-container">
-      {{chart-pie data=(await condensedObjectiveData)
-        width=300
-        height=300
-        displayTooltip=(perform displayTooltip)
-      }}
-    </div>
-    <div class="chart-container">
-      {{chart-donut
-        data=(await condensedObjectiveData)
-        width=300
-        height=300
-        displayTooltip=(perform displayTooltip)
-      }}
-    </div>
-    <div class="chart-container">
-      {{chart-bar
-        data=(await sessionsObjectivesData)
-        width=width
-        height=height
-      }}
-    </div>
-    <div class="chart-container">
-      {{chart-stacked-bar
-        data=(await sessionsObjectivesData)
-        width=width
-        height=height
-      }}
-    </div>
-    <div class="chart-container">
-      {{chart-line
-        data=(await condensedObjectiveData)
-        width=350
-        height=400
-      }}
-    </div>
-  </div>
+{{#ilios-chart
+  name='pie'
+  width=width
+  height=height
+  data=(await condensedObjectiveData)
+  hover=(perform pieHover)
+  leave=(perform pieHover)
+  as |chart|
+}}
+  {{chart.tooltip content=pieHover.lastSuccessful.value.content title=pieHover.lastSuccessful.value.title}}
+{{/ilios-chart}}
 
-  {{#if tooltipValue}}
-    <div class='charts tooltip' style={{{tooltipLocation}}}>
-      <div class="tooltip-header">
-        <span class="tooltip-title"></span>
-        <span class="tooltip-attr"></span>
-      </div>
-      <div class="tooltip-content">{{{tooltipValue}}}</div>
-      <a href="#"></a>
-    </div>
-  {{/if}}
-</section>
+{{#ilios-chart
+  name='donut'
+  width=width
+  height=height
+  data=(await condensedObjectiveData)
+  hover=(perform donutHover)
+  leave=(perform donutHover)
+  as |chart|
+}}
+  {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
+{{/ilios-chart}}
+
+{{ilios-chart
+  name='bar'
+  width=width
+  height=height
+  data=(await sessionsObjectivesData)
+}}
+
+{{ilios-chart
+  name='stacked-bar'
+  width=width
+  height=height
+  data=(await sessionsObjectivesData)
+}}
+
+{{ilios-chart
+  name='line'
+  width=width
+  height=height
+  data=(await condensedObjectiveData)
+}}

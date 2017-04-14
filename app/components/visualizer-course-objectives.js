@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, RSVP, computed, isPresent, $ } = Ember;
+const { Component, RSVP, computed, isEmpty, isPresent, String } = Ember;
 const { map, filter } = RSVP;
+const { htmlSafe } = String;
 
 export default Component.extend({
   course: null,
@@ -94,31 +95,31 @@ export default Component.extend({
 
     return withValues;
   }),
-  displayTooltip: task(function * ({meta}, slice, labelLocation){
+  async getTooltipData(obj){
+    if (isEmpty(obj)) {
+      return '';
+    }
+    const { meta } = obj;
+
     let objectiveTitle = meta.courseObjective.get('title');
-    let competency = yield meta.courseObjective.get('competency');
+    let competency = await meta.courseObjective.get('competency');
     if (competency) {
       objectiveTitle += `(${competency})`;
     }
-    this.set('tooltipValue', objectiveTitle);
-    let svg_parent = $(slice.nearestViewportElement);
-    let svg_offset = $(svg_parent).offset();
-    let svg_parent_offset = $(svg_parent).parent().offsetParent().offset();
-    let svg_dimension = {
-      width: $(svg_parent).width(),
-      height: $(svg_parent).height(),
+
+    const title = htmlSafe(objectiveTitle);
+    const sessionTitles = meta.sessionObjectives.mapBy('sessionTitle');
+    const content = sessionTitles.join(', ');
+
+    return {
+      content,
+      title
     };
-
-    const tooltip_width = 380;
-
-    let tooltip_top = svg_offset.top - svg_parent_offset.top + svg_dimension.height / 2 + labelLocation[1] + 20;
-    let tooltip_left = Math.max(0 ,svg_offset.left - svg_parent_offset.left + svg_dimension.width / 2 - tooltip_width / 2 + labelLocation[0]);
-
-    this.set('tooltipLocation', 'top:' + tooltip_top + 'px; left:' + tooltip_left + 'px;');
+  },
+  pieHover: task(function * (obj){
+    return yield this.getTooltipData(obj);
   }).restartable(),
-  actions: {
-    hideTooltip(){
-      this.set('tooltipValue', null);
-    }
-  }
+  donutHover: task(function * (obj){
+    return yield this.getTooltipData(obj);
+  }).restartable(),
 });
