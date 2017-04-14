@@ -62,7 +62,7 @@
     "ember-cp-validations": "3.3.0",
     "ember-cryptojs-shim": "^3.0.0",
     "ember-d3": "0.3.2",
-    "ember-data": "2.12.1",
+    "ember-data": "2.12.2",
     "ember-drag-drop": "0.4.3",
     "ember-exam": "0.6.2",
     "ember-export-application-global": "^2.0.0",
