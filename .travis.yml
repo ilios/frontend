@@ -56,9 +56,6 @@ script:
   - if [ "$LINT" = true ];
     then scss-lint;
     fi
-  - if [ "$LINT" = true ];
-    then eslint .;
-    fi
   - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
 
 after_success:
