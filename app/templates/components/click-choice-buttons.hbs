@@ -1,2 +1,6 @@
-<button class="first-button active">{{buttonContent1}}</button>
-<button class="second-button">{{buttonContent2}}</button>
+<button class="first-button {{if firstChoicePicked 'active'}}" {{action 'clickFirstButton'}}>
+  {{buttonContent1}}
+</button>
+<button class="second-button {{unless firstChoicePicked 'active'}}" {{action 'clickSecondButton'}}>
+  {{buttonContent2}}
+</button>

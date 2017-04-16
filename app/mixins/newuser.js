@@ -185,9 +185,6 @@ export default Mixin.create(ValidationErrorDisplay, {
     },
     setPrimaryCohort(id){
       this.set('primaryCohortId', id);
-    },
-    setNonStudentMode(value){
-      this.set('nonStudentMode', value);
     }
   }
 });
