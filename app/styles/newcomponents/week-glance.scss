@@ -45,7 +45,8 @@
       }
     }
 
-    .sessiontype {
+    .sessiontype,
+    .location {
       font-style: italic;
     }
 
@@ -55,6 +56,12 @@
       i {
         color: $ilios-orange;
         font-size: .8 * $base-font-size;
+      }
+    }
+
+    .instructors {
+      label {
+        font-weight: bold;
       }
     }
   }

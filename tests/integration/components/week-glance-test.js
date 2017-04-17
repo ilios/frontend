@@ -14,7 +14,7 @@ const mockEvents = [
   {
     name: 'Learn to Learn',
     startDate: today.format(),
-    location: 123,
+    location: 'Room 123',
     sessionTypeTitle: 'Lecture',
     courseExternalId: 'C1',
     sessionDescription: 'Best <strong>Session</strong> For Sure',
@@ -43,7 +43,7 @@ const mockEvents = [
   {
     name: 'Finding the Point in Life',
     startDate: today.format(),
-    location: 123,
+    location: 'Room 456',
     sessionTypeTitle: 'Independent Learning',
     isBlanked: false,
     isPublished: true,
@@ -54,6 +54,10 @@ const mockEvents = [
         required: true,
         absoluteFileUri: 'http://myhost.com/url1',
       },
+    ],
+    instructors: [
+      'Second Person',
+      'First Person',
     ],
   },
   {
@@ -113,7 +117,7 @@ const getTitle = function(fullTitle){
 };
 
 test('it renders with events', async function(assert) {
-  assert.expect(15);
+  assert.expect(19);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
   this.set('today', today);
@@ -131,6 +135,7 @@ test('it renders with events', async function(assert) {
 
   const firstEventTitle = `${firstEvent} .title`;
   const firstSessionType = `${firstEvent} .sessiontype`;
+  const firstLocation = `${firstEvent} .location`;
   const firstDescription = `${firstEvent} .description`;
   const firstLearningMaterials = `${firstEvent} .learning-material`;
   const firstLm1 = `${firstLearningMaterials}:eq(0)`;
@@ -138,13 +143,16 @@ test('it renders with events', async function(assert) {
   const firstLm2Link = `${firstLm2} a`;
   const firstLm3 = `${firstLearningMaterials}:eq(2)`;
   const firstLm3Link = `${firstLm3} a`;
+  const firstInstructors = `${firstEvent} .instructors`;
 
   const secondEventTitle = `${secondEvent} .title`;
   const secondSessionType = `${secondEvent} .sessiontype`;
+  const secondLocation = `${secondEvent} .location`;
   const secondDescription = `${secondEvent} .description`;
   const secondLearningMaterials = `${secondEvent} .learning-material`;
   const secondLm1 = `${secondLearningMaterials}:eq(0)`;
   const secondLm1Link = `${secondLm1} a`;
+  const secondInstructors = `${secondEvent} .instructors`;
 
 
   await wait();
@@ -154,20 +162,24 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(events).length, 2, 'Blank events are not shown');
 
   assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
-  assert.equal(this.$(firstSessionType).text().replace(/[\t\n\s]+/g, ""), 'Lecture-C1');
+  assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
+  assert.equal(this.$(firstLocation).text().trim(), '- Room 123');
   assert.equal(this.$(firstDescription).text().trim(), 'Best Session For Sure');
   assert.equal(this.$(firstLm1).text().replace(/[\t\n\s]+/g, ""), 'CitationLMcitationtext');
   assert.equal(this.$(firstLm2).text().trim(), 'Link LM');
   assert.equal(this.$(firstLm2Link).attr('href'), 'http://myhost.com/url2');
   assert.equal(this.$(firstLm3).text().trim(), 'File LM');
   assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1');
+  assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
 
 
   assert.equal(this.$(secondEventTitle).text().trim(), 'Finding the Point in Life');
   assert.equal(this.$(secondSessionType).text().trim(), 'Independent Learning');
+  assert.equal(this.$(secondLocation).text().trim(), '- Room 456');
   assert.equal(this.$(secondDescription).text().trim(), '', 'Emtpy Description is Empty');
   assert.equal(this.$(secondLm1).text().trim(), 'Great Slides');
   assert.equal(this.$(secondLm1Link).attr('href'), 'http://myhost.com/url1');
+  assert.equal(this.$(secondInstructors).text().replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
 });
 
 test('it renders blank', async function(assert) {

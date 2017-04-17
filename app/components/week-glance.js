@@ -67,4 +67,9 @@ export default Component.extend({
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
   }),
+  actions: {
+    sortString(a, b){
+      return a.localeCompare(b);
+    }
+  }
 });
