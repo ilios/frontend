@@ -52,12 +52,12 @@
             sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.title'}}
+            {{t 'general.instructor'}}
           {{/sortable-th}}
           {{#sortable-th
             colspan=1
-            click=(action 'sortBy' 'firstOfferingDate')
-            sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
+            click=(action 'sortBy' 'instructor')
+            sortedBy=(or (eq sortBy 'instructor') (eq sortBy 'instructor:desc'))
             sortedAscending=sortedAscending
             sortType='numeric'
           }}
@@ -80,7 +80,7 @@
                 <small>{{lmObject.citation}}</small>
               {{/if}}
             </td>
-            <td colspan="1">{{lmObject.courseTitle}}</td>
+            <td colspan="1">{{lmObject.instructor}}</td>
             <td>
               {{#if lmObject.firstOfferingDate}}
                 {{moment-format lmObject.firstOfferingDate 'MM/DD/YYYY'}}
