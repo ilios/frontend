@@ -26,7 +26,8 @@ export default Component.extend({
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
-    const displayTooltip = get(this, 'displayTooltip');
+    const hover = get(this, 'hover');
+    const leave = get(this, 'leave');
     const radius = Math.min(width, height) / 2;
     const color = scaleOrdinal(schemeCategory10);
 
@@ -36,7 +37,7 @@ export default Component.extend({
     let createPie = pie().value(d => d.data).sort(null);
     let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
     svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
-    
+
     if (dataOrArray.length === 0) {
       return;
     }
@@ -61,7 +62,13 @@ export default Component.extend({
       return function(t) { return createArc(i(t)); };
     }
 
-    path.on('mouseover', function(d, index, items) {displayTooltip(d.data, items[index], createLabelArc.centroid(d));});
+    path.on('mouseover', (d, index, items) => {
+      hover(d.data, items[index], createLabelArc.centroid(d));
+    });
+
+    path.on('mouseout', () => {
+      leave();
+    });
 
     path.exit()
       .transition(t)

@@ -26,7 +26,8 @@ export default Component.extend({
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
-    const displayTooltip = get(this, 'displayTooltip');
+    const hover = get(this, 'hover');
+    const leave = get(this, 'leave');
     const radius = Math.min(width, height) / 2;
     const donutWidth = width * .2;
     const color = scaleOrdinal(schemeCategory10);
@@ -41,7 +42,7 @@ export default Component.extend({
     if (dataOrArray.length === 0) {
       return;
     }
-    
+
     let chart = svg.append('g').attr('class', 'pie').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
     let path = chart.selectAll('path').data(createPie(dataOrArray)).enter()
       .append('g').attr('class', 'slice')
@@ -62,7 +63,13 @@ export default Component.extend({
       return function(t) { return createArc(i(t)); };
     }
 
-    path.on('mouseover', function(d, index, items) {displayTooltip(d.data, items[index], createLabelArc.centroid(d));});
+    path.on('mouseover', (d, index, items) => {
+      hover(d.data, items[index], createLabelArc.centroid(d));
+    });
+
+    path.on('mouseout', () => {
+      leave();
+    });
 
     path.exit()
       .transition(t)
