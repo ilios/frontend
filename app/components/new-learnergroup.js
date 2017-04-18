@@ -10,9 +10,6 @@ export default Component.extend({
   classNames: ['new-learnergroup', 'new-result', 'form-container'],
 
   actions: {
-    setMode(value) {
-      this.set('singleMode', value);
-    },
     generateNewLearnerGroups(num){
       this.sendAction('generateNewLearnerGroups', num);
     }
