@@ -9,16 +9,18 @@
   margin: 0;
   max-height: 150px;
   opacity: .9;
+  overflow: auto;
   padding: 10px;
   position: absolute;
   width: 380px;
 
   .header {
+    border-bottom: 1px solid $dark-grey;
     font-size: $h6-font-size;
     line-height: $base-line-height;
 
     .title {
-      font-weight: bold;
+      font-weight: 500;
     }
 
     .attr {
