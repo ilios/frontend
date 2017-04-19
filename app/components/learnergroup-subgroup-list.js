@@ -8,6 +8,7 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   store: service(),
+  flashMessages: service(),
   parentGroup: null,
   classNames: ['learnergroup-subgroup-list'],
   tagName: 'section',
@@ -52,9 +53,11 @@ export default Component.extend({
           parentGroup.get('cohort').then((cohort) => {
             let groups = [];
             const padBy = countDigits(offset + parseInt(num, 10));
+            const parentTitle = parentGroup.get('title');
+            const shortenedParentTitle = parentTitle.substring(0, 60 - 1 - padBy);
             for (let i = 0; i < num; i++) {
               let newGroup = store.createRecord('learner-group', {
-                title: parentGroup.get('title') + ' ' + pad(offset + i, padBy),
+                title: shortenedParentTitle + ' ' + pad(offset + i, padBy),
                 parent: parentGroup,
                 cohort
               });
