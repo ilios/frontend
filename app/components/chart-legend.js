@@ -20,6 +20,7 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[];
     const svg = select(this.element);
+    const margin = {top: 20, right: 20, bottom: 50, left: 30};
     const width = get(this, 'width');
     const height = get(this, 'height');
     const legendRectSize = 18;
@@ -38,12 +39,7 @@ export default Component.extend({
       .append('g')
       .attr('class', 'legend')
       .style("font", "12px")
-      .attr('transform', function(d, i) {
-        var height = legendRectSize + legendSpacing;
-        var offset =  height * dataOrArray.length / 50;
-        var horz = 0 * legendRectSize;
-        var vert = i * height - offset;
-        return 'translate(' + horz + ',' + vert + ')';
+      .attr("transform", (d, i) => { return "translate(0," + i * 20 + ")";
       });
 
     legend.append('rect')
