@@ -119,9 +119,9 @@
                 <td class='text-left' colspan=2>
                   {{#if sessionProxy.firstOfferingDate}}
                     {{#if sessionProxy.ilmSession}}
-                      <strong>{{t 'general.ilm'}}: {{t 'general.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY'}}
+                      <strong>{{t 'general.ilm'}}: {{t 'general.dueBy'}}</strong> {{moment-format sessionProxy.firstOfferingDate 'L'}}
                     {{else}}
-                      {{moment-format sessionProxy.firstOfferingDate 'MM/DD/YYYY h:mma'}}
+                      {{moment-format sessionProxy.firstOfferingDate 'L LT'}}
                     {{/if}}
                   {{/if}}
                 </td>

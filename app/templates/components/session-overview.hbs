@@ -200,7 +200,7 @@
             {{#if (is-fulfilled session.ilmSession)}}
               {{#if editable}}
                 {{#editable-field
-                  value=(moment-format session.ilmSession.dueDate 'MM/DD/YY')
+                  value=(moment-format session.ilmSession.dueDate 'L')
                   save=(action 'changeIlmDueDate')
                   close=(action 'revertIlmDueDateChanges')
                 }}
@@ -215,7 +215,7 @@
                   {{/if}}
                 {{/editable-field}}
               {{else}}
-                {{moment-format session.ilmSession.dueDate 'MM/DD/YY'}}
+                {{moment-format session.ilmSession.dueDate 'L'}}
               {{/if}}
             {{/if}}
           </span>

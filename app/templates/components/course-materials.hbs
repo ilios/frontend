@@ -101,7 +101,7 @@
             <td colspan="3">{{lmObject.sessionTitle}}</td>
             <td>
               {{#if lmObject.firstOfferingDate}}
-                {{moment-format lmObject.firstOfferingDate 'MM/DD/YYYY'}}
+                {{moment-format lmObject.firstOfferingDate 'L'}}
               {{else}}
                 {{t 'general.none'}}
               {{/if}}

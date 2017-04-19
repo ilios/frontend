@@ -12,10 +12,10 @@
       <label>{{t 'general.start'}}:</label>
       <span>
         {{#if isFinalized}}
-          {{moment-format report.startDate 'MM/DD/YY'}}
+          {{moment-format report.startDate 'L'}}
         {{else}}
           {{#editable-field
-            value=(moment-format report.startDate 'MM/DD/YY')
+            value=(moment-format report.startDate 'L')
             save=(action 'changeStartDate')
             close=(action 'revertStartDateChanges')
           }}
@@ -36,10 +36,10 @@
       <label>{{t 'general.end'}}:</label>
       <span>
         {{#if isFinalized}}
-          {{moment-format report.endDate 'MM/DD/YY'}}
+          {{moment-format report.endDate 'L'}}
         {{else}}
           {{#editable-field
-            value=(moment-format report.endDate 'MM/DD/YY')
+            value=(moment-format report.endDate 'L')
             save=(action 'changeEndDate')
             close=(action 'revertEndDateChanges')
           }}

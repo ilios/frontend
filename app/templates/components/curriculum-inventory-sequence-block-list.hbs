@@ -61,14 +61,14 @@
                     </td>
                     <td class='text-center' colspan=2>
                       {{#if block.startDate}}
-                        {{moment-format block.startDate 'MM/DD/YY'}}
+                        {{moment-format block.startDate 'L'}}
                       {{else}}
                         {{t 'general.notApplicableAbbr'}}
                       {{/if}}
                     </td>
                     <td class='text-center' colspan=2>
                       {{#if block.endDate}}
-                        {{moment-format block.endDate 'MM/DD/YY'}}
+                        {{moment-format block.endDate 'L'}}
                       {{else}}
                         {{t 'general.notApplicableAbbr'}}
                       {{/if}}

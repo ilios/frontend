@@ -68,8 +68,8 @@
         <td class='text-center hide-from-small-screen' colspan=2>{{course.school.title}}</td>
         <td class='text-center hide-from-small-screen' colspan=2>{{course.academicYear}}</td>
         <td class='text-center hide-from-small-screen' colspan=1>{{course.level}}</td>
-        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.startDate 'MM/DD/YY'}}</td>
-        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.endDate 'MM/DD/YY'}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.startDate 'L'}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.endDate 'L'}}</td>
         <td class='text-left' colspan=3>
           {{#if course.isSaving}}
             {{fa-icon 'spinner' spin=true}}

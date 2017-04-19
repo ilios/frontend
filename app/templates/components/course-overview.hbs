@@ -77,7 +77,7 @@
     <span>
       {{#if editable}}
         {{#editable-field
-          value=(moment-format course.startDate 'MM/DD/YY')
+          value=(moment-format course.startDate 'L')
           save=(action 'changeStartDate')
           close=(action 'revertStartDateChanges')
         }}
@@ -92,7 +92,7 @@
           {{/if}}
         {{/editable-field}}
       {{else}}
-        {{moment-format course.startDate 'MM/DD/YY'}}&nbsp;
+        {{moment-format course.startDate 'L'}}&nbsp;
       {{/if}}
     </span>
   </div>
@@ -101,7 +101,7 @@
     <span>
       {{#if editable}}
         {{#editable-field
-          value=(moment-format course.endDate 'MM/DD/YY')
+          value=(moment-format course.endDate 'L')
           save=(action 'changeEndDate')
           close=(action 'revertEndDateChanges')
         }}
@@ -116,7 +116,7 @@
           {{/if}}
         {{/editable-field}}
       {{else}}
-        {{moment-format course.endDate 'MM/DD/YY'}}&nbsp;
+        {{moment-format course.endDate 'L'}}&nbsp;
       {{/if}}
     </span>
   </div>
