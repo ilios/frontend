@@ -20,7 +20,6 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 50, left: 30};
     const width = get(this, 'width');
     const height = get(this, 'height');
     const legendRectSize = 18;
