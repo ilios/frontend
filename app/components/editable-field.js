@@ -31,4 +31,12 @@ export default Component.extend({
     yield this.get('close')();
     this.set('isEditing', false);
   }).drop(),
+
+  edit: task(function * () {
+    this.set('isEditing', true);
+    yield timeout(10);
+    const control = this.$('.editor').find('input,textarea,select,.fr-element').filter(':visible:first');
+
+    control.focus();
+  }).drop(),
 });

@@ -1,6 +1,6 @@
 <span class='content'>
   {{#unless isEditing}}
-    <span onclick={{action (mut isEditing) true}} class='editable'>
+    <span onclick={{perform edit}} class='editable'>
       {{#if value}}
         {{#if looksEmpty}}
           {{fa-icon 'edit'}}
