@@ -3,17 +3,22 @@
     <h2>
       {{#editable-field
         value=(if title title (t 'general.clickToEdit'))
-        save=(action 'changeTitle')
+        save=(perform changeTitle)
         close=(action 'revertTitleChanges')
         as |isSaving save close|
       }}
         {{one-way-input
-        	value=title
-        	update=(action (mut title))
-        	onenter=save
-        	onescape=close
-        	disabled=isSaving
+          value=title
+          update=(action (mut title))
+          onenter=save
+          onescape=close
+          disabled=isSaving
+          focusOut=(action 'addErrorDisplayFor' 'title')
+          keyPress=(action 'addErrorDisplayFor' 'title')
         }}
+        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+        {{/if}}
       {{/editable-field}}
     </h2>
   </span>

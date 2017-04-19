@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 const { Object, RSVP } = Ember;
 const { resolve } = RSVP;
@@ -22,7 +23,7 @@ test('it renders', function(assert) {
   assert.equal(this.$('.breadcrumbs').text().replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
 });
 
-test('can change title', function(assert) {
+test('can change title', async function(assert) {
   let learnerGroup = Object.create({
     title: 'our group',
     save(){
@@ -38,6 +39,7 @@ test('can change title', function(assert) {
   this.$('h2 input').val('new title');
   this.$('h2 input').trigger('change');
   this.$('h2 .done').click();
+  await wait();
 });
 
 test('counts members correctly', function(assert) {
@@ -61,4 +63,33 @@ test('counts members correctly', function(assert) {
   this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
   assert.equal(this.$('header .info').text().trim(), 'Members:  1 / 2');
+});
+
+test('validate title length', async function(assert) {
+  assert.expect(4);
+  const title = 'h2';
+  const edit = `${title} .editable`;
+  const input = `${title} input`;
+  const done = `${title} .done`;
+  const errors = `${title} .validation-error-message`;
+
+  let learnerGroup = Object.create({
+    title: 'our group',
+    save(){
+      assert.ok(false, 'should not be called');
+    }
+  });
+
+  this.set('learnerGroup', learnerGroup);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+
+  assert.equal(this.$(title).text().trim(), 'our group', 'title is correct');
+  assert.equal(this.$(errors).length, 0, 'there are no errors');
+  this.$(edit).click();
+  const longTitle = 'x'.repeat(61);
+  this.$(input).val(longTitle).change();
+  this.$(done).click();
+  await wait();
+  assert.equal(this.$(errors).length, 1, 'there is now an error');
+  assert.ok(this.$(errors).text().search(/too long/) > -1, 'it is the correct error');
 });
