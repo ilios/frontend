@@ -190,3 +190,56 @@ test('clicking write selects read', function(assert) {
     });
   });
 });
+
+test('changing user modifies display #2389', async function(assert) {
+  let store = Service.extend({
+    findAll(){
+      return resolve([som, sod, sop]);
+    }
+  });
+  this.register('service:store', store);
+  let user2 = Object.create({
+    id: 14,
+    enabled: true,
+    userSyncIgnore: false,
+    school: resolve(sod),
+    schools: resolve([]),
+    permissions: resolve([])
+  });
+
+  this.set('user', user);
+  this.render(hbs`{{user-profile-schools user=user}}`);
+
+  const primarySchool = '.primary-school';
+  const permissionRows = 'tbody tr';
+  const firstRowPermissions = `${permissionRows}:eq(0)`;
+  const firstRowSchoolName = `${firstRowPermissions} td:eq(0)`;
+  const firstRowCanRead = `${firstRowPermissions} i:eq(0)`;
+  const firstRowCanWrite = `${firstRowPermissions} i:eq(1)`;
+  const secondRowPermissions = `${permissionRows}:eq(1)`;
+  const secondRowSchoolName = `${secondRowPermissions} td:eq(0)`;
+  const secondRowCanRead = `${secondRowPermissions} i:eq(0)`;
+  const secondRowCanWrite = `${secondRowPermissions} i:eq(1)`;
+
+  await wait();
+  assert.equal(this.$(permissionRows).length, 2, 'there are only two permission rows');
+  assert.equal(this.$(primarySchool).text().trim(), 'Primary School: SOM', 'primary school is correct');
+  assert.equal(this.$(firstRowSchoolName).text().trim(), 'SOD', 'correct first school');
+  assert.ok(this.$(firstRowCanRead).hasClass('fa-check'), 'sod can read');
+  assert.ok(this.$(firstRowCanWrite).hasClass('fa-check'), 'sod can write');
+  assert.equal(this.$(secondRowSchoolName).text().trim(), 'SOP', 'correct second school');
+  assert.ok(this.$(secondRowCanRead).hasClass('fa-ban'), 'sop can not read');
+  assert.ok(this.$(secondRowCanWrite).hasClass('fa-ban'), 'sop can not write');
+
+  this.set('user', user2);
+
+  await wait();
+  assert.equal(this.$(permissionRows).length, 2, 'there are only two permission rows');
+  assert.equal(this.$(primarySchool).text().trim(), 'Primary School: SOD', 'primary school is correct');
+  assert.equal(this.$(firstRowSchoolName).text().trim(), 'SOM', 'correct first school');
+  assert.ok(this.$(firstRowCanRead).hasClass('fa-ban'), 'sod can read');
+  assert.ok(this.$(firstRowCanWrite).hasClass('fa-ban'), 'sod can write');
+  assert.equal(this.$(secondRowSchoolName).text().trim(), 'SOP', 'correct second school');
+  assert.ok(this.$(secondRowCanRead).hasClass('fa-ban'), 'sop can not read');
+  assert.ok(this.$(secondRowCanWrite).hasClass('fa-ban'), 'sop can not write');
+});
