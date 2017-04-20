@@ -1,8 +1,21 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
+import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
 const { Component } = Ember;
 
-export default Component.extend({
+const Validations = buildValidations({
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 3,
+      max: 60
+    }),
+  ],
+});
+
+export default Component.extend(Validations, ValidationErrorDisplay, {
   learnerGroup: null,
   tagName: 'header',
   classNames: ['learnergroup-header'],
@@ -15,13 +28,22 @@ export default Component.extend({
   },
   title: null,
 
+  changeTitle: task(function * () {
+    const learnerGroup = this.get('learnerGroup');
+    const newTitle = this.get('title');
+    this.send('addErrorDisplayFor', 'title');
+    const {validations} = yield this.validate();
+    if (validations.get('isValid')) {
+      this.send('removeErrorDisplayFor', 'title');
+      learnerGroup.set('title', newTitle);
+      yield learnerGroup.save();
+      this.set('title', learnerGroup.get('title'));
+    } else {
+      throw false;
+    }
+  }),
+
   actions: {
-    changeTitle(){
-      const learnerGroup = this.get('learnerGroup');
-      const title = this.get('title');
-      learnerGroup.set('title', title);
-      return learnerGroup.save();
-    },
     revertTitleChanges(){
       const learnerGroup = this.get('learnerGroup');
       this.set('title', learnerGroup.get('title'));
