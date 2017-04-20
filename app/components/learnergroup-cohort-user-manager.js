@@ -56,6 +56,7 @@ export default Component.extend({
     yield timeout(10);
     yield this.get('addUsersToGroup')(users);
     this.get('usersBeingMoved').removeObjects(users);
+    this.set('selectedUsers', []);
   }),
 
   setCheckAllState(){
