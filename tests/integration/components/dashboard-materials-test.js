@@ -19,6 +19,7 @@ let lm1 = Object.create({
   sessionTitle: 'session1title',
   course: '1',
   courseTitle: 'course1title',
+  instructors: ['Instructor1name', 'Instructor2name'],
   firstOfferingDate: today.toDate(),
 });
 let lm2 = Object.create({
@@ -27,6 +28,7 @@ let lm2 = Object.create({
   sessionTitle: 'session2title',
   course: '2',
   courseTitle: 'course2title',
+  instructors: ['Instructor1name', 'Instructor2name'],
   firstOfferingDate: tomorrow.toDate(),
 });
 let lm3 = Object.create({
@@ -41,7 +43,7 @@ let lm3 = Object.create({
 const userMaterials = [lm1, lm2, lm3];
 
 test('it renders with materials', function(assert) {
-  assert.expect(20);
+  assert.expect(23);
   const currentUserMock = Service.extend({
     currentUserId: 11
   });
@@ -65,6 +67,7 @@ test('it renders with materials', function(assert) {
   });
   this.register('service:ajax', ajaxMock);
   this.render(hbs`{{dashboard-materials}}`);
+    
   const title = 'h3';
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
@@ -72,19 +75,22 @@ test('it renders with materials', function(assert) {
   const firstLmLink = `${firstLmTitle} a`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(2)`;
-  const firstLmFirstOffering = `${materials}:eq(0) td:eq(3)`;
+  const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
+  const firstLmFirstOffering = `${materials}:eq(0) td:eq(4)`;
 
   const secondLmTitle = `${materials}:eq(1) td:eq(0)`;
   const secondLmLink = `${secondLmTitle} a`;
   const secondLmCourseTitle = `${materials}:eq(1) td:eq(1)`;
   const secondLmSessionTitle = `${materials}:eq(1) td:eq(2)`;
-  const secondLmFirstOffering = `${materials}:eq(1) td:eq(3)`;
+  const secondLmInstructor = `${materials}:eq(1) td:eq(3)`;
+  const secondLmFirstOffering = `${materials}:eq(1) td:eq(4)`;
 
   const thirdLmTitle = `${materials}:eq(2) td:eq(0)`;
   const thirdLmLink = `${thirdLmTitle} a`;
   const thirdLmCourseTitle = `${materials}:eq(2) td:eq(1)`;
   const thirdLmSessionTitle = `${materials}:eq(2) td:eq(2)`;
-  const thirdLmFirstOffering = `${materials}:eq(2) td:eq(3)`;
+  const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
+  const thirdLmFirstOffering = `${materials}:eq(2) td:eq(4)`;
 
   return wait().then(()=>{
     assert.equal(this.$(title).text().trim(), 'My Learning Materials for the next 60 days');
@@ -92,18 +98,21 @@ test('it renders with materials', function(assert) {
     assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1');
     assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
     assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
+    assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
     assert.equal(this.$(firstLmFirstOffering).text().trim(), today.format('MM/DD/YYYY'));
 
     assert.equal(this.$(secondLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
     assert.equal(this.$(secondLmLink).length, 0);
     assert.equal(this.$(secondLmSessionTitle).text().trim(), 'session3title');
     assert.equal(this.$(secondLmCourseTitle).text().trim(), 'course3title');
+    assert.equal(this.$(secondLmInstructor).text().trim(), '');
     assert.equal(this.$(secondLmFirstOffering).text().trim(), today.format('MM/DD/YYYY'));
 
     assert.equal(this.$(thirdLmTitle).text().trim(), 'title2');
     assert.equal(this.$(thirdLmLink).prop('href').trim(), 'http://myhost.com/url2');
     assert.equal(this.$(thirdLmSessionTitle).text().trim(), 'session2title');
     assert.equal(this.$(thirdLmCourseTitle).text().trim(), 'course2title');
+    assert.equal(this.$(thirdLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
     assert.equal(this.$(thirdLmFirstOffering).text().trim(), tomorrow.format('MM/DD/YYYY'));
   });
 

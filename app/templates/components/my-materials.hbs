@@ -46,6 +46,9 @@
           }}
             {{t 'general.title'}}
           {{/sortable-th}}
+          <th>
+            {{t 'general.instructor'}}
+          </th>
           {{#sortable-th
             colspan=1
             click=(action 'sortBy' 'firstOfferingDate')
@@ -72,6 +75,7 @@
                 <small>{{lmObject.citation}}</small>
               {{/if}}
             </td>
+            <td colspan="1">{{join ', ' (sort-by (action 'sortString') lmObject.instructors)}}</td>
             <td>
               {{#if lmObject.firstOfferingDate}}
                 {{moment-format lmObject.firstOfferingDate 'MM/DD/YYYY'}}

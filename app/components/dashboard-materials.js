@@ -33,4 +33,9 @@ export default Component.extend({
       });
     });
   }),
+  actions: {
+    sortString(a, b){
+      return a.localeCompare(b);
+    }
+  }
 });
