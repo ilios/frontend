@@ -28,7 +28,23 @@ export default DS.Model.extend({
         resolve(title);
         return;
       }
+      const subjectTranslations = {
+        'course': 'general.courses',
+        'session': 'general.sessions',
+        'program': 'general.programs',
+        'program year': 'general.programYears',
+        'instructor': 'general.instructors',
+        'instructor group': 'general.instructorGroups',
+        'learning material': 'general.learningMaterials',
+        'competency': 'general.competencies',
+        'mesh term': 'general.meshTerms',
+        'term': 'general.terms',
+        'session type': 'general.sessionTypes',
+      };
+      const i18n = this.get('i18n');
       let subject = this.get('subject');
+      const subjectTranslation = i18n.t(subjectTranslations[subject]);
+
       let prepositionalObject = this.get('prepositionalObject');
 
       this.get('school').then(schoolObj => {
@@ -56,7 +72,7 @@ export default DS.Model.extend({
               object = record.get('title');
             }
             let displayTitle = this.get('i18n').t('general.reportDisplayTitleWithObject', {
-              subject,
+              subject: subjectTranslation,
               object,
               school
             });
