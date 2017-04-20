@@ -206,7 +206,7 @@
                 }}
                   {{pikaday-input
                     value=dueDate
-                    format='MM/DD/YY'
+                    format='L'
                     onSelection=(action (mut dueDate))
                     focusOut=(action 'addErrorDisplayFor' 'dueDate')
                   }}

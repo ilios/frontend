@@ -21,7 +21,7 @@
           }}
             {{pikaday-input
               value=startDate
-              format='MM/DD/YY'
+              format='L'
               onSelection=(action (mut startDate))
               focusOut=(action 'addErrorDisplayFor' 'startDate')
             }}
@@ -45,7 +45,7 @@
           }}
             {{pikaday-input
               value=endDate
-              format='MM/DD/YY'
+              format='L'
               onSelection=(action (mut endDate))
               focusOut=(action 'addErrorDisplayFor' 'endDate')
             }}
