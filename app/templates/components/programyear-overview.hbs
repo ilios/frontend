@@ -19,7 +19,7 @@
   {{#if editable}}
     {{user-search
       addUser='addDirector'
-      currentlyActiveUsers=programYear.directors
+      currentlyActiveUsers=(await programYear.directors)
     }}
     <br>
     <br>

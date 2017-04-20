@@ -112,3 +112,30 @@ test('remove director', function(assert) {
     });
   });
 });
+
+test('first director added is disabled #2770', async function(assert) {
+  assert.expect(5);
+  server.create('programYear', {
+    program: 1,
+    directors: []
+  });
+  server.create('cohort');
+  server.db.programs.update(1, {programYears: [1, 2]});
+  const overview = '.programyear-overview';
+  const directors = `${overview} .removable-list li`;
+  const search = `${overview} .live-search`;
+  const input = `${search} input`;
+  const results = `${search} .results li`;
+  const firstResult = `${results}:eq(1)`;
+
+  await visit('/programs/1/programyears/2');
+
+  assert.equal(currentPath(), 'program.programYear.index');
+  assert.equal(find(directors).length, 0, 'no directors initially');
+  await fillIn(input, 'guy');
+  assert.notOk(find(firstResult).hasClass('inactive'), 'the first user is active now');
+  await click(firstResult);
+  assert.equal(find(directors).length, 1, 'director is selected');
+  assert.ok(find(firstResult).hasClass('inactive'), 'the first user is now marked as inactive');
+
+});
