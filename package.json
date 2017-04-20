@@ -102,7 +102,7 @@
     "validator": "^7.0.0"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 6"
   },
   "ember-addon": {
     "paths": [
