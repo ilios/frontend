@@ -3493,7 +3493,13 @@ ember-i18n@5.0.0:
     ember-cli-version-checker "^1.2.0"
     ember-getowner-polyfill "^1.2.2"
 
-ember-inflector@1.11.0, ember-inflector@^1.9.2, ember-inflector@^1.9.4:
+ember-inflector@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-1.12.0.tgz#2c3046fa13da7f63835885d886fd16b46ab0874c"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+
+ember-inflector@^1.9.2, ember-inflector@^1.9.4:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-1.11.0.tgz#99baae18e2bee53cfa97d8db1d739280289a174f"
   dependencies:
