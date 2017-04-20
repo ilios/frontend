@@ -16,7 +16,6 @@ export default Component.extend({
     run.scheduleOnce('render', this, this.draw);
   },
   draw(){
-    console.log('draw');
     const root = select(this.element);
     // total tootlip hack
     const parentActions = get(this.parentView, 'actions');
