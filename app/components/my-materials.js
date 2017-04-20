@@ -21,9 +21,9 @@ export default Component.extend(SortableTable, {
 
       materials = materials.filter(material => {
         let searchString = material.title + material.courseTitle + material.sessionTitle;
-		if (isPresent(material.instructors)) {
-			searchString += material.instructors.join('')
-		}
+        if (isPresent(material.instructors)) {
+          searchString += material.instructors.join('');
+        }
         return searchString.match(exp);
       });
     }
