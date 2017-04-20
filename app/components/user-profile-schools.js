@@ -76,7 +76,7 @@ export default Component.extend({
 
   }).drop(),
 
-  displaySchools: computed('editableSchools.[]', 'displaySchools.[]', 'isManaging', function(){
+  displaySchools: computed('editableSchools.[]', 'secondarySchools.[]', 'isManaging', function(){
     const isManaging = this.get('isManaging');
     if (isManaging) {
       return this.get('editableSchools');
@@ -85,7 +85,7 @@ export default Component.extend({
     }
   }),
 
-  editableSchools: computed('currentUser.model.schools', 'currentUser.model.school', function(){
+  editableSchools: computed('user.school', 'currentUser.model.schools', 'currentUser.model.school', function(){
     const currentUser = this.get('currentUser');
     const user = this.get('user');
     return new Promise(resolve => {
@@ -100,7 +100,7 @@ export default Component.extend({
     });
   }),
 
-  secondarySchools: computed('currentUser.model.school', function(){
+  secondarySchools: computed('user.school', 'currentUser.model.school', function(){
     const store = this.get('store');
     const user = this.get('user');
     return new Promise(resolve => {
