@@ -57,7 +57,7 @@ export default Component.extend({
       };
     }
     let users = yield this.get('store').query('user', query);
-    const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
+    const currentlyActiveUsers = this.get('currentlyActiveUsers') === null?[]:this.get('currentlyActiveUsers');
     let results = users.map(user => {
       return userProxy.create({
         content: user,
