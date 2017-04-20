@@ -179,8 +179,8 @@ test('sort by firstName', function(assert) {
   assert.equal(this.$(user2FirstName).text().trim(), 'Jasper');
 });
 
-test('add multiple users', function(assert) {
-  assert.expect(3);
+test('add multiple users', async function(assert) {
+  assert.expect(5);
   const user1CheckBox = 'table:eq(1) tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
@@ -212,15 +212,18 @@ test('add multiple users', function(assert) {
     removeUsersFromGroup=(action nothing)
   }}`);
 
+  assert.equal(this.$(button).length, 0);
   this.$(user1CheckBox).click();
   assert.ok(this.$(user1CheckBox).prop('checked'));
   assert.equal(this.$(button).text().trim(), 'Move learner to this group');
-  return wait(this.$(button).click());
+  this.$(button).click();
+  await wait();
+  assert.equal(this.$(button).length, 0);
 
 });
 
-test('remove multiple users', function(assert) {
-  assert.expect(3);
+test('remove multiple users', async function(assert) {
+  assert.expect(5);
   const user1CheckBox = 'table:eq(1) tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const button = 'button.cancel';
 
@@ -252,11 +255,13 @@ test('remove multiple users', function(assert) {
     removeUsersFromGroup=(action removeMany)
   }}`);
 
+  assert.equal(this.$(button).length, 0);
   this.$(user1CheckBox).click();
   assert.ok(this.$(user1CheckBox).prop('checked'));
   assert.equal(this.$(button).text().trim(), 'Remove learner to this cohort');
-  return wait(this.$(button).click());
-
+  this.$(button).click();
+  await wait();
+  assert.equal(this.$(button).length, 0);
 });
 
 test('remove single user', function(assert) {

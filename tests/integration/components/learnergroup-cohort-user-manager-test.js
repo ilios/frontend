@@ -98,8 +98,8 @@ test('sort by firstName', function(assert) {
   assert.equal(this.$(user2FirstName).text().trim(), 'Jasper');
 });
 
-test('add multiple users', function(assert) {
-  assert.expect(2);
+test('add multiple users', async function(assert) {
+  assert.expect(4);
   const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
@@ -123,10 +123,12 @@ test('add multiple users', function(assert) {
     addUsersToGroup=(action 'addMany')
   }}`);
 
+  assert.equal(this.$(button).length, 0);
   this.$(user1CheckBox).click();
   assert.equal(this.$(button).text().trim(), 'Move learner to this group');
-  return wait(this.$(button).click());
-
+  this.$(button).click();
+  await wait();
+  assert.equal(this.$(button).length, 0, 'button is hidden after save');
 });
 
 test('add single user', function(assert) {
