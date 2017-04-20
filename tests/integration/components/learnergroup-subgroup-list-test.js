@@ -138,3 +138,139 @@ test('add new group', function(assert) {
   });
 
 });
+
+test('add multiple new groups', async function(assert) {
+  assert.expect(7);
+  let cohort = {a: 1};
+  let subGroup1 = Object.create({
+    title: 'group 1',
+    users: [1,2],
+    children: []
+  });
+  let parentGroup = Object.create({
+    title: 'group',
+    children: resolve([subGroup1]),
+    cohort: resolve(cohort),
+    subgroupNumberingOffset: resolve(2)
+  });
+
+  let storeMock = Service.extend({
+    createRecord(what, {title, cohort, parent}){
+      assert.equal('learner-group', what);
+      assert.equal('group 2', title);
+      assert.equal(cohort, cohort);
+      assert.equal(parent, parentGroup);
+
+      let newGroup = {
+        title,
+        cohort,
+        parent
+      };
+
+      return Object.create({
+        save(){
+          parentGroup.set('children', resolve([subGroup1, newGroup]));
+          return resolve(newGroup);
+        }
+      });
+    }
+  });
+  this.register('service:store', storeMock);
+
+  let flashmessagesMock = Ember.Service.extend({
+    success(message){
+      assert.equal(message, 'general.savedSuccessfully');
+    }
+  });
+  this.register('service:flashMessages', flashmessagesMock);
+
+  this.set('parentGroup', parentGroup);
+
+  const groups = 'table tbody tr';
+  const firstGroupTitle = `${groups}:eq(0) td:eq(0)`;
+  const secondGroupTitle = `${groups}:eq(1) td:eq(0)`;
+  const expandButton = '.expand-button';
+  const multiSelector = '.click-choice-buttons';
+  const multiGroupButton = `${multiSelector} button:eq(1)`;
+  const multiGroupCount = 'input';
+  const done = '.done';
+
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  assert.equal(this.$(firstGroupTitle).text().trim(), 'group 1');
+  this.$(expandButton).click();
+  await wait();
+  this.$(multiGroupButton).click();
+
+  this.$(multiGroupCount).val(1).change();
+  this.$(done).click();
+  await wait();
+
+  assert.equal(this.$(secondGroupTitle).text().trim(), 'group 2');
+
+});
+
+test('truncates multiple group with long name', async function(assert) {
+  assert.expect(6);
+  let cohort = {a: 1};
+  const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
+  const expectedGroupTitle = longTitle.substring(0, 58) + ' 1';
+  let parentGroup = Object.create({
+    title: longTitle,
+    children: resolve([]),
+    cohort: resolve(cohort),
+    subgroupNumberingOffset: resolve(1)
+  });
+
+  let storeMock = Service.extend({
+    createRecord(what, {title, cohort, parent}){
+      assert.equal('learner-group', what);
+      assert.equal(title, expectedGroupTitle, 'correct truncated title');
+      assert.equal(cohort, cohort);
+      assert.equal(parent, parentGroup);
+
+      let newGroup = {
+        title,
+        cohort,
+        parent
+      };
+
+      return Object.create({
+        save(){
+          parentGroup.set('children', resolve([newGroup]));
+          return resolve(newGroup);
+        }
+      });
+    }
+  });
+  this.register('service:store', storeMock);
+
+  let flashmessagesMock = Ember.Service.extend({
+    success(message){
+      assert.equal(message, 'general.savedSuccessfully');
+    }
+  });
+  this.register('service:flashMessages', flashmessagesMock);
+
+  this.set('parentGroup', parentGroup);
+
+  const groups = 'table tbody tr';
+  const firstGroupTitle = `${groups}:eq(0) td:eq(0)`;
+  const expandButton = '.expand-button';
+  const multiSelector = '.click-choice-buttons';
+  const multiGroupButton = `${multiSelector} button:eq(1)`;
+  const multiGroupCount = 'input';
+  const done = '.done';
+
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  this.$(expandButton).click();
+  await wait();
+  this.$(multiGroupButton).click();
+
+
+  this.$(multiGroupCount).val(1).change();
+  this.$(done).click();
+  await wait();
+
+  assert.equal(this.$(firstGroupTitle).text().trim(), expectedGroupTitle);
+
+});

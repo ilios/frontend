@@ -16,8 +16,8 @@
 
 <div class="detail-content">
   {{#if singleMode}}
-    {{new-learnergroup-single save=this.attrs.save cancel=this.attrs.cancel fillModeSupported=fillModeSupported}}
+    {{new-learnergroup-single save=save cancel=cancel fillModeSupported=fillModeSupported}}
   {{else}}
-    {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel=this.attrs.cancel}}
+    {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel=cancel}}
   {{/if}}
 </div>
