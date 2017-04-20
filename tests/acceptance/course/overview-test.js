@@ -55,11 +55,11 @@ test('check fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var container = find('.course-overview');
-    var startDate = moment.utc(course.startDate).format('MM/DD/YY');
+    var startDate = moment.utc(course.startDate).format('L');
     assert.equal(getElementText(find('.coursestartdate', container)), 'Start:' + startDate);
     assert.equal(getElementText(find('.courseexternalid', container)), 'CourseID:123');
     assert.equal(getElementText(find('.courselevel', container)), 'Level:3');
-    var endDate = moment.utc(course.endDate).format('MM/DD/YY');
+    var endDate = moment.utc(course.endDate).format('L');
     assert.equal(getElementText(find('.courseenddate', container)), 'End:' + endDate);
     assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText('Clerkship Type:' + clerkshipType.title));
@@ -88,11 +88,11 @@ test('check detail fields', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
     var container = find('.course-overview');
-    var startDate = moment.utc(course.startDate).format('MM/DD/YY');
+    var startDate = moment.utc(course.startDate).format('L');
     assert.equal(getElementText(find('.coursestartdate .editable', container)), startDate);
     assert.equal(getElementText(find('.courseexternalid .editable', container)), 123);
     assert.equal(getElementText(find('.courselevel .editable', container)), 3);
-    var endDate = moment.utc(course.endDate).format('MM/DD/YY');
+    var endDate = moment.utc(course.endDate).format('L');
     assert.equal(getElementText(find('.courseenddate .editable', container)), endDate);
     assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(clerkshipType.title));
   });
@@ -226,7 +226,7 @@ test('change start date', function(assert) {
     endDate: new Date('2015-05-22'),
     school: 1,
   });
-  var startDate = moment.utc(course.startDate).format('MM/DD/YY');
+  var startDate = moment.utc(course.startDate).format('L');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.course-overview .coursestartdate')), getText('Start:' + startDate));
@@ -245,7 +245,7 @@ test('change start date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.coursestartdate .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + newDate.format('MM/DD/YY')));
+        assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + newDate.format('L')));
       });
 
     });
@@ -290,7 +290,7 @@ test('change end date', function(assert) {
     startDate: new Date('2013-04-23'),
     endDate: new Date('2015-05-22'),
   });
-  var endDate = moment.utc(course.endDate).format('MM/DD/YY');
+  var endDate = moment.utc(course.endDate).format('L');
   visit(url);
   andThen(function() {
     assert.equal(getElementText(find('.course-overview .courseenddate')), getText('End:' + endDate));
@@ -309,7 +309,7 @@ test('change end date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.courseenddate .editinplace .actions .done', container));
       andThen(function(){
-        assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + newDate.format('MM/DD/YY')));
+        assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + newDate.format('L')));
       });
 
     });

@@ -66,11 +66,11 @@ test('it renders', function(assert) {
       'Academic year shows.'
     );
     assert.equal(this.$(`tbody tr:eq(${i}) td:eq(3)`).text().trim(),
-      moment(report.get('startDate')).format('MM/DD/YY'),
+      moment(report.get('startDate')).format('L'),
       'Start date shows.'
     );
     assert.equal(this.$(`tbody tr:eq(${i}) td:eq(4)`).text().trim(),
-      moment(report.get('endDate')).format('MM/DD/YY'),
+      moment(report.get('endDate')).format('L'),
       'End date shows.'
     );
     assert.equal(this.$(`tbody tr:eq(${i}) td:eq(5)`).text().trim(),

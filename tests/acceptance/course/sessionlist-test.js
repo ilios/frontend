@@ -224,7 +224,7 @@ test('first offering is updated when offering is updated #1276', function(assert
   const newStartDate = new Date(2010, 6, 4);
   andThen(function() {
     let container = find('.sessions-list');
-    assert.equal(getElementText(find('tr:eq(1) td:eq(3)', container), getText), getText(moment(fixtures.offerings[0].startDate).format('MM/DD/YYYY h:mma')));
+    assert.equal(getElementText(find('tr:eq(1) td:eq(3)', container)), getText(moment(fixtures.offerings[0].startDate).format('L LT')));
 
     click('tr:eq(1) .edit', container).then(()=> {
       assert.equal(currentPath(), 'course.session.index');

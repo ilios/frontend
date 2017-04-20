@@ -74,13 +74,13 @@ test('it renders', function (assert) {
       'Start date label is correct.'
     );
     assert.equal(this.$('.start-date .editinplace').text().trim(),
-      moment(report.get('startDate')).format('MM/DD/YY'), 'Start date is visible.'
+      moment(report.get('startDate')).format('L'), 'Start date is visible.'
     );
     assert.equal(this.$('.end-date label').text().trim(), 'End:',
       'End date label is correct.'
     );
     assert.equal(this.$('.end-date .editinplace').text().trim(),
-      moment(report.get('endDate')).format('MM/DD/YY'), 'End date is visible.'
+      moment(report.get('endDate')).format('L'), 'End date is visible.'
     );
     assert.equal(this.$('.academic-year label').text().trim(), 'Academic Year:',
       'Academic year label is correct.'
@@ -144,10 +144,10 @@ test('read-only/finalized mode', function (assert) {
   this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
   return wait().then(() => {
     assert.equal(this.$('.start-date > span:eq(0)').text().trim(),
-      moment(report.get('startDate')).format('MM/DD/YY'), 'Start date is visible.'
+      moment(report.get('startDate')).format('L'), 'Start date is visible.'
     );
     assert.equal(this.$('.end-date > span:eq(0)').text().trim(),
-      moment(report.get('endDate')).format('MM/DD/YY'), 'End date is visible.'
+      moment(report.get('endDate')).format('L'), 'End date is visible.'
     );
     assert.equal(this.$('.academic-year > span:eq(0)').text().trim(),
       report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
@@ -256,14 +256,14 @@ test('change start date', function (assert) {
     this.$('.start-date .editinplace .editable').click();
     return wait().then(() => {
       let interactor = openDatepicker(this.$('.start-date input'));
-      assert.equal(this.$('.start-date input').val(), moment(report.get('startDate')).format('MM/DD/YY'),
+      assert.equal(this.$('.start-date input').val(), moment(report.get('startDate')).format('L'),
         "The report's current start date is pre-selected in date picker."
       );
       let newVal = moment('2015-04-01');
       interactor.selectDate(newVal.toDate());
       this.$('.start-date .actions .done').click();
       return wait().then(() => {
-        assert.equal(this.$('.start-date .editinplace').text().trim(), newVal.format('MM/DD/YY'),
+        assert.equal(this.$('.start-date .editinplace').text().trim(), newVal.format('L'),
           'Edit link shown new start date post-update.'
         );
         assert.equal(moment(report.get('startDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
@@ -378,14 +378,14 @@ test('change end date', function (assert) {
     this.$('.end-date .editinplace .editable').click();
     return wait().then(() => {
       let interactor = openDatepicker(this.$('.end-date input'));
-      assert.equal(this.$('.end-date input').val(), moment(report.get('endDate')).format('MM/DD/YY'),
+      assert.equal(this.$('.end-date input').val(), moment(report.get('endDate')).format('L'),
         "The report's current end date is pre-selected in date picker."
       );
       let newVal = moment('2016-05-01');
       interactor.selectDate(newVal.toDate());
       this.$('.end-date .actions .done').click();
       return wait().then(() => {
-        assert.equal(this.$('.end-date .editinplace').text().trim(), newVal.format('MM/DD/YY'),
+        assert.equal(this.$('.end-date .editinplace').text().trim(), newVal.format('L'),
           'Edit link shown new end date post-update.'
         );
         assert.equal(moment(report.get('endDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),

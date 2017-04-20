@@ -101,8 +101,8 @@ test('it renders with top-level sequence blocks', function(assert) {
     assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), block1.get('title'));
     assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), academicLevel1.get('level'));
     assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'n/a');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), moment(block1.get('startDate')).format('MM/DD/YY'));
-    assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), moment(block1.get('endDate')).format('MM/DD/YY'));
+    assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), moment(block1.get('startDate')).format('L'));
+    assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), moment(block1.get('endDate')).format('L'));
     assert.equal(this.$('tbody tr:eq(1) td:eq(5)').text().trim(), course.get('title'));
     assert.equal(this.$('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
     assert.equal(this.$('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
@@ -193,8 +193,8 @@ test('it renders with nested blocks', function(assert) {
     assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), block1.get('title'));
     assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), academicLevel1.get('level'));
     assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), block1.get('orderInSequence'));
-    assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), moment(block1.get('startDate')).format('MM/DD/YY'));
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), moment(block1.get('endDate')).format('MM/DD/YY'));
+    assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), moment(block1.get('startDate')).format('L'));
+    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), moment(block1.get('endDate')).format('L'));
     assert.equal(this.$('tbody tr:eq(0) td:eq(5)').text().trim(), course.get('title'));
     assert.equal(this.$('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
     assert.equal(this.$('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
