@@ -57,7 +57,7 @@ script:
   - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
 
 after_success:
-  - test $TRAVIS_TAG && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy production --activate
+  - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
 
 #encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
 notifications:
