@@ -13,4 +13,3 @@ rules:
     - 2
     - allow-element-with-attribute: true
   no-transition-all: 0
-  no-vendor-prefixes: 0
