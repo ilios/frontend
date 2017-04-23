@@ -17,7 +17,7 @@
 
       //enforce a default width of 500px for text input on 100% width ro
       // scss-lint:disable QualifyingElement
-      input[type=text],
+      input[type='text'],
       textarea {
         width: 75%;
       }
@@ -107,7 +107,7 @@
 
     // scss-lint:disable QualifyingElement
     .editinplace .editor,
-    .form-data input[type=text] {
+    .form-data input[type='text'] {
       //explicitly override the default min-width of text input fields
       max-width: 90px;
       min-width: 90px;
