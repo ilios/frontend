@@ -80,6 +80,7 @@
 
     ul {
       @include ilios-list-badges();
+
       .top-level-group {
         background-color: $ilios-yellow;
         color: $black;

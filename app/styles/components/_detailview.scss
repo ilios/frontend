@@ -140,6 +140,7 @@ $collapse-control-shadow-black: rgba(0, 0, 0, .34);
 
     .title {
       @include span-columns(8 of 12);
+
       h2,
       h4 {
         display: inline;

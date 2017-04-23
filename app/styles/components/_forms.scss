@@ -14,6 +14,7 @@
     .form-data {
       @include span-columns(7 of 10);
       @include omega();
+
       //enforce a default width of 500px for text input on 100% width ro
       // scss-lint:disable QualifyingElement
       input[type=text],

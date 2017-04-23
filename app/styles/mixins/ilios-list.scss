@@ -22,6 +22,7 @@
     .badge {
       @include fill-parent;
       @include row();
+
       .text {
         @include span-columns(2 of 3);
         @include pad();
