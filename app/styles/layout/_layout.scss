@@ -3,7 +3,7 @@ body {
   margin-bottom: 40px;
 }
 
-// scss-lint:disable IdSelector
+// sass-lint:disable no-ids
 #site-container {
   @include outer-container;
   padding-left: 48px;
