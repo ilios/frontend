@@ -1509,7 +1509,7 @@ broccoli-merge-trees@^0.2.1, broccoli-merge-trees@^0.2.3:
     debug "^2.2.0"
     symlink-or-copy "^1.0.0"
 
-broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.1, broccoli-merge-trees@^1.1.2, broccoli-merge-trees@^1.1.3, broccoli-merge-trees@^1.1.4, broccoli-merge-trees@^1.2.4:
+broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.1, broccoli-merge-trees@^1.1.2, broccoli-merge-trees@^1.1.3, broccoli-merge-trees@^1.1.4, broccoli-merge-trees@^1.2.1, broccoli-merge-trees@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-1.2.4.tgz#a001519bb5067f06589d91afa2942445a2d0fdb5"
   dependencies:
@@ -1536,7 +1536,7 @@ broccoli-middleware@^1.0.0-beta.8:
     handlebars "^4.0.4"
     mime "^1.2.11"
 
-broccoli-persistent-filter@^1.0.1, broccoli-persistent-filter@^1.0.3, broccoli-persistent-filter@^1.0.8, broccoli-persistent-filter@^1.1.5, broccoli-persistent-filter@^1.1.6, broccoli-persistent-filter@^1.2.0:
+broccoli-persistent-filter@^1.0.1, broccoli-persistent-filter@^1.0.3, broccoli-persistent-filter@^1.0.8, broccoli-persistent-filter@^1.1.5, broccoli-persistent-filter@^1.1.6, broccoli-persistent-filter@^1.1.8, broccoli-persistent-filter@^1.2.0:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/broccoli-persistent-filter/-/broccoli-persistent-filter-1.2.13.tgz#61368669e2b8f35238fdd38a2a896597e4a1c821"
   dependencies:
@@ -1571,6 +1571,17 @@ broccoli-plugin@^1.0.0, broccoli-plugin@^1.1.0, broccoli-plugin@^1.2.0, broccoli
     quick-temp "^0.1.3"
     rimraf "^2.3.4"
     symlink-or-copy "^1.1.8"
+
+broccoli-sass-lint@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/broccoli-sass-lint/-/broccoli-sass-lint-1.1.2.tgz#02149c52167f176d11922ead5cbcbfd499001afa"
+  dependencies:
+    broccoli-persistent-filter "^1.1.8"
+    chalk "^1.1.1"
+    findup-sync "^0.3.0"
+    js-string-escape "1.0.0"
+    minimatch "^3.0.0"
+    sass-lint "^1.3.1"
 
 broccoli-sass-source-maps@^2.0.0:
   version "2.0.0"
@@ -2016,7 +2027,7 @@ combined-stream@~0.0.4:
   dependencies:
     delayed-stream "0.0.5"
 
-commander@2, commander@2.9.0, commander@^2.5.0, commander@^2.6.0:
+commander@2, commander@2.9.0, commander@^2.5.0, commander@^2.6.0, commander@^2.8.1:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -2083,7 +2094,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-concat-stream@^1.4.7, concat-stream@^1.5.2:
+concat-stream@^1.4.6, concat-stream@^1.4.7, concat-stream@^1.5.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
@@ -2619,6 +2630,13 @@ diff@^1.3.1:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
 
+doctrine@^1.2.2:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
+  dependencies:
+    esutils "^2.0.2"
+    isarray "^1.0.0"
+
 doctrine@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.0.0.tgz#c73d8d2909d22291e1a007a395804da8b665fe63"
@@ -3108,6 +3126,14 @@ ember-cli-qunit@^3.1.0:
     resolve "^1.1.6"
     silent-error "^1.0.0"
 
+ember-cli-sass-lint@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ember-cli-sass-lint/-/ember-cli-sass-lint-1.0.3.tgz#dbc8e7212196f1c1fe0a494d397e19f5daa15de6"
+  dependencies:
+    broccoli-merge-trees "^1.2.1"
+    broccoli-sass-lint "^1.1.2"
+    ember-cli-babel "^5.1.7"
+
 ember-cli-sass@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-6.0.0.tgz#31c9c8fa789c0d25aaf8e315431b7a3ec4ba0175"
@@ -3493,15 +3519,9 @@ ember-i18n@5.0.0:
     ember-cli-version-checker "^1.2.0"
     ember-getowner-polyfill "^1.2.2"
 
-ember-inflector@1.12.0:
+ember-inflector@1.12.0, ember-inflector@^1.9.2, ember-inflector@^1.9.4:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-1.12.0.tgz#2c3046fa13da7f63835885d886fd16b46ab0874c"
-  dependencies:
-    ember-cli-babel "^5.1.7"
-
-ember-inflector@^1.9.2, ember-inflector@^1.9.4:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-1.11.0.tgz#99baae18e2bee53cfa97d8db1d739280289a174f"
   dependencies:
     ember-cli-babel "^5.1.7"
 
@@ -4012,6 +4032,44 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+eslint@^2.7.0:
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-2.13.1.tgz#e4cc8fa0f009fb829aaae23855a29360be1f6c11"
+  dependencies:
+    chalk "^1.1.3"
+    concat-stream "^1.4.6"
+    debug "^2.1.1"
+    doctrine "^1.2.2"
+    es6-map "^0.1.3"
+    escope "^3.6.0"
+    espree "^3.1.6"
+    estraverse "^4.2.0"
+    esutils "^2.0.2"
+    file-entry-cache "^1.1.1"
+    glob "^7.0.3"
+    globals "^9.2.0"
+    ignore "^3.1.2"
+    imurmurhash "^0.1.4"
+    inquirer "^0.12.0"
+    is-my-json-valid "^2.10.0"
+    is-resolvable "^1.0.0"
+    js-yaml "^3.5.1"
+    json-stable-stringify "^1.0.0"
+    levn "^0.3.0"
+    lodash "^4.0.0"
+    mkdirp "^0.5.0"
+    optionator "^0.8.1"
+    path-is-absolute "^1.0.0"
+    path-is-inside "^1.0.1"
+    pluralize "^1.2.1"
+    progress "^1.1.8"
+    require-uncached "^1.0.2"
+    shelljs "^0.6.0"
+    strip-json-comments "~1.0.1"
+    table "^3.7.8"
+    text-table "~0.2.0"
+    user-home "^2.0.0"
+
 eslint@^3.0.0:
   version "3.19.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"
@@ -4052,7 +4110,7 @@ eslint@^3.0.0:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
-espree@^3.4.0:
+espree@^3.1.6, espree@^3.4.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/espree/-/espree-3.4.1.tgz#28a83ab4aaed71ed8fe0f5efe61b76a05c13c4d2"
   dependencies:
@@ -4294,6 +4352,13 @@ figures@^1.3.5:
     escape-string-regexp "^1.0.5"
     object-assign "^4.1.0"
 
+file-entry-cache@^1.1.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-1.3.1.tgz#44c61ea607ae4be9c1402f41f44270cbfe334ff8"
+  dependencies:
+    flat-cache "^1.2.1"
+    object-assign "^4.0.1"
+
 file-entry-cache@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-2.0.0.tgz#c392990c3e684783d838b8c84a45d8a048458361"
@@ -4376,6 +4441,12 @@ findup-sync@^0.2.1:
   resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-0.2.1.tgz#e0a90a450075c49466ee513732057514b81e878c"
   dependencies:
     glob "~4.3.0"
+
+findup-sync@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-0.3.0.tgz#37930aa5d816b777c03445e1966cc6790a4c0b16"
+  dependencies:
+    glob "~5.0.0"
 
 findup-sync@^0.4.2, findup-sync@^0.4.3:
   version "0.4.3"
@@ -4468,6 +4539,12 @@ froala-editor@~2.4.2:
   dependencies:
     font-awesome ">=4.4.0"
     jquery ">=1.11.0"
+
+front-matter@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/front-matter/-/front-matter-2.1.0.tgz#0bdff42cbad2b35c07ac7085811789759f9858c0"
+  dependencies:
+    js-yaml "^3.4.6"
 
 fs-exists-sync@^0.1.0:
   version "0.1.0"
@@ -4712,7 +4789,7 @@ glob@7.1.1, glob@^7.0.0, glob@^7.0.3, glob@^7.0.4, glob@^7.0.5, glob@^7.1.1, glo
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^5.0.10, glob@^5.0.15:
+glob@^5.0.10, glob@^5.0.15, glob@~5.0.0:
   version "5.0.15"
   resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
   dependencies:
@@ -4751,7 +4828,7 @@ globals@^6.4.0:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/globals/-/globals-6.4.1.tgz#8498032b3b6d1cc81eebc5f79690d8fe29fabf4f"
 
-globals@^9.0.0, globals@^9.14.0:
+globals@^9.0.0, globals@^9.14.0, globals@^9.2.0:
   version "9.17.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-9.17.0.tgz#0c0ca696d9b9bb694d2e5470bd37777caad50286"
 
@@ -4773,6 +4850,12 @@ globule@^1.0.0:
     glob "~7.1.1"
     lodash "~4.16.4"
     minimatch "~3.0.2"
+
+gonzales-pe@3.4.7:
+  version "3.4.7"
+  resolved "https://registry.yarnpkg.com/gonzales-pe/-/gonzales-pe-3.4.7.tgz#17c7be67ad6caff6277a3e387ac736e983d280ec"
+  dependencies:
+    minimist "1.1.x"
 
 good-listener@^1.2.0:
   version "1.2.2"
@@ -5026,7 +5109,7 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
-ignore@^3.2.0:
+ignore@^3.1.2, ignore@^3.2.0:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.7.tgz#4810ca5f1d8eca5595213a34b94f2eb4ed926bbd"
 
@@ -5078,6 +5161,10 @@ inflight@^1.0.4:
 inherits@2, inherits@2.0.3, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.0, inherits@~2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
+
+inherits@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
 ini@^1.3.4, ini@~1.3.0:
   version "1.3.4"
@@ -5374,6 +5461,10 @@ js-reporters@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/js-reporters/-/js-reporters-1.2.0.tgz#7cf2cb698196684790350d0c4ca07f4aed9ec17e"
 
+js-string-escape@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.0.tgz#d2d2365fd2e6b3948b8374ac7628ac0e84d00002"
+
 js-string-escape@^1.0.0, js-string-escape@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
@@ -5386,7 +5477,7 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
-js-yaml@3.x, js-yaml@^3.2.5, js-yaml@^3.2.7, js-yaml@^3.5.1, js-yaml@^3.6.1:
+js-yaml@3.x, js-yaml@^3.2.5, js-yaml@^3.2.7, js-yaml@^3.4.6, js-yaml@^3.5.1, js-yaml@^3.5.4, js-yaml@^3.6.1:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.3.tgz#33a05ec481c850c8875929166fe1beb61c728766"
   dependencies:
@@ -5687,6 +5778,10 @@ lodash.bind@^4.1.4:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/lodash.bind/-/lodash.bind-4.2.1.tgz#7ae3017e939622ac31b7d7d7dcb1b34db1690d35"
 
+lodash.capitalize@^4.1.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/lodash.capitalize/-/lodash.capitalize-4.2.1.tgz#f826c9b4e2a8511d84e3aca29db05e1a4f3b72a9"
+
 lodash.clonedeep@^4.3.2, lodash.clonedeep@^4.4.1, lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
@@ -5749,6 +5844,10 @@ lodash.isplainobject@^3.0.0:
 lodash.istypedarray@^3.0.0:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/lodash.istypedarray/-/lodash.istypedarray-3.0.6.tgz#c9a477498607501d8e8494d283b87c39281cef62"
+
+lodash.kebabcase@^4.0.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
@@ -6094,6 +6193,10 @@ minimist@0.0.8, minimist@~0.0.1:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
+minimist@1.1.x:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.1.3.tgz#3bedfd91a92d39016fcfaa1c681e8faa1a1efda8"
+
 minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
@@ -6416,7 +6519,7 @@ optimist@~0.3, optimist@~0.3.5:
   dependencies:
     wordwrap "~0.0.2"
 
-optionator@^0.8.2:
+optionator@^0.8.1, optionator@^0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.2.tgz#364c5e409d3f4d6301d6c0b4c05bba50180aeb64"
   dependencies:
@@ -7191,6 +7294,24 @@ sass-graph@^2.1.1:
     lodash "^4.0.0"
     yargs "^4.7.1"
 
+sass-lint@^1.3.1:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/sass-lint/-/sass-lint-1.10.2.tgz#825bd6b0da79ddd36a42ffae5b6d44ac4922502b"
+  dependencies:
+    commander "^2.8.1"
+    eslint "^2.7.0"
+    front-matter "2.1.0"
+    fs-extra "^1.0.0"
+    glob "^7.0.0"
+    globule "^1.0.0"
+    gonzales-pe "3.4.7"
+    js-yaml "^3.5.4"
+    lodash.capitalize "^4.1.0"
+    lodash.kebabcase "^4.0.0"
+    merge "^1.2.0"
+    path-is-absolute "^1.0.0"
+    util "^0.10.3"
+
 sax@1.2.1, sax@>=0.6.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
@@ -7259,6 +7380,10 @@ shebang-command@^1.2.0:
 shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
+
+shelljs@^0.6.0:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.6.1.tgz#ec6211bed1920442088fe0f70b2837232ed2c8a8"
 
 shelljs@^0.7.5:
   version "0.7.7"
@@ -7596,6 +7721,10 @@ strip-indent@^1.0.1:
   dependencies:
     get-stdin "^4.0.1"
 
+strip-json-comments@~1.0.1:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-1.0.4.tgz#1e15fbcac97d3ee99bf2d73b4c656b082bbafb91"
+
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
@@ -7924,6 +8053,12 @@ user-home@^2.0.0:
 util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
+
+util@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/util/-/util-0.10.3.tgz#7afb1afe50805246489e3db7fe0ed379336ac0f9"
+  dependencies:
+    inherits "2.0.1"
 
 utils-merge@1.0.0:
   version "1.0.0"
