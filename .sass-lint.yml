@@ -1,5 +1,3 @@
-files:
-  include: app/styles/**/*.scss
 rules:
   empty-args: 0
   force-attribute-nesting: 0
