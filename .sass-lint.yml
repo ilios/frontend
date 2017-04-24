@@ -9,6 +9,9 @@ rules:
   nesting-depth:
     - 1
     - max-depth: 4
+  no-color-literals:
+    - 1
+    - allow-rgba: true
   no-qualifying-elements:
     - 2
     - allow-element-with-attribute: true

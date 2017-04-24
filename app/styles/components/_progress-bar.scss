@@ -7,11 +7,12 @@
   $progress-background: darken($base-background-color, 5);
   $progress-animation-duration: .7s;
   $progress-color: $white;
+  $box-shadow-color: darken($progress-background, 50%);
 
   background-color: $progress-background;
   border: $progress-border;
   border-radius: $base-border-radius;
-  box-shadow: inset 0 0 3px 0 rgba(darken($progress-background, 50%), .15);
+  box-shadow: inset 0 0 3px 0 rgba($box-shadow-color, .15);
   margin: 0 auto;
   width: 100%;
 
