@@ -1,9 +1,5 @@
 $navigation-shadow-1: rgba(0, 0, 0, .19);
 $navigation-shadow-2: rgba(0, 0, 0, .34);
-/**
- * Component name:
- * `.sliding-navigation` - slide out navigation and menu items
- */
 $sliding-menu-border-color: $base-border-color;
 $sliding-menu-background: $background-grey;
 $sliding-menu-color: $ilios-orange;
@@ -29,7 +25,6 @@ $sliding-menu-color-hover: #fff;
     margin-bottom: $base-line-height;
     margin-top: 10px;
     outline: none;
-    -webkit-overflow-scrolling: touch;
     padding-top: .4em;
     text-align: center;
     transform: rotate(90deg);
@@ -58,7 +53,6 @@ $sliding-menu-color-hover: #fff;
     border-right: 1px solid $header-grey;
     box-shadow: 2px 1px 3px $navigation-shadow-1, inset 1px 0 2px $navigation-shadow-2;
     color: $sliding-menu-color;
-    -webkit-overflow-scrolling: touch;
     padding-top: 2em;
     transform: translateX(-190px);
     transition: all .25s linear;

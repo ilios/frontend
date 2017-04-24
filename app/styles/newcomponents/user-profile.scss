@@ -31,6 +31,7 @@
   }
 }
 
+// sass-lint:disable no-vendor-prefixes
 .user-profile-bio {
   @include ilios-form;
 
@@ -85,7 +86,7 @@
     width: 60%;
   }
 
-  meter[value="0"] {
+  meter[value='0'] {
     width: 40%;
   }
 
@@ -94,17 +95,17 @@
     background-color: $white;
   }
 
-  meter[value="0"]::-webkit-meter-optimum-value { background: $ilios-red; }
-  meter[value="1"]::-webkit-meter-optimum-value { background: $ilios-red; }
-  meter[value="2"]::-webkit-meter-optimum-value { background: $ilios-orange; }
-  meter[value="3"]::-webkit-meter-optimum-value { background: $ilios-yellow; }
-  meter[value="4"]::-webkit-meter-optimum-value { background: $ilios-green; }
+  meter[value='0']::-webkit-meter-optimum-value { background: $ilios-red; }
+  meter[value='1']::-webkit-meter-optimum-value { background: $ilios-red; }
+  meter[value='2']::-webkit-meter-optimum-value { background: $ilios-orange; }
+  meter[value='3']::-webkit-meter-optimum-value { background: $ilios-yellow; }
+  meter[value='4']::-webkit-meter-optimum-value { background: $ilios-green; }
 
-  meter[value="0"]:-moz-meter-bar { background: $ilios-red; }
-  meter[value="1"]:-moz-meter-bar { background: $ilios-red; }
-  meter[value="2"]:-moz-meter-bar { background: $ilios-orange; }
-  meter[value="3"]:-moz-meter-bar { background: $ilios-yellow; }
-  meter[value="4"]:-moz-meter-bar { background: $ilios-green; }
+  meter[value='0']:-moz-meter-bar { background: $ilios-red; }
+  meter[value='1']:-moz-meter-bar { background: $ilios-red; }
+  meter[value='2']:-moz-meter-bar { background: $ilios-orange; }
+  meter[value='3']:-moz-meter-bar { background: $ilios-yellow; }
+  meter[value='4']:-moz-meter-bar { background: $ilios-green; }
 
   .password-strength {
     display: inline-block;

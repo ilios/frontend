@@ -251,9 +251,8 @@ th {
   vertical-align: bottom;
 }
 
-// scss-lint:disable QualifyingElement
-input[type=text],
-input[type=password] {
+input[type='text'],
+input[type='password'] {
   background: $white;
   border: 1px solid $input-box-grey;
   border-radius: $base-border-radius;

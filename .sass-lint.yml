@@ -1,0 +1,16 @@
+rules:
+  empty-args: 0
+  force-attribute-nesting: 0
+  force-element-nesting: 0
+  force-pseudo-nesting: 0
+  mixins-before-declarations: 0
+  nesting-depth:
+    - 1
+    - max-depth: 4
+  no-color-literals:
+    - 1
+    - allow-rgba: true
+  no-qualifying-elements:
+    - 2
+    - allow-element-with-attribute: true
+  no-transition-all: 0

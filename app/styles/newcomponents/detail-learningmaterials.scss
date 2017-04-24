@@ -32,8 +32,6 @@
     }
   }
 
-  // scss-lint:disable NestingDepth
-  // scss-lint:disable SelectorDepth
   .learningmaterial-search {
     @include fill-parent;
     overflow: hidden;
@@ -43,9 +41,8 @@
     }
 
 
-    input[type=search] {
+    input[type='search'] {
       @include span-columns(7 of 7);
-
     }
 
     .selectable-list {

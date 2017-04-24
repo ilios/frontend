@@ -5,9 +5,9 @@
 @mixin collapsed-container-title () {
   @include fill-parent;
   color: $text-blue;
+  cursor: pointer;
   font-size: $base-font-size;
   font-weight: bold;
-  cursor: pointer;
 
   &::after {
     content: '\25BA';

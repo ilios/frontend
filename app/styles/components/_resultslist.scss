@@ -1,6 +1,5 @@
 $active-list-tr-background: rgba(239, 251, 255, .8);
 
-// scss-lint:disable SelectorDepth NestingDepth
 .resultslist {
   @include span-columns(12 of 12);
   border-color: $header-grey;
@@ -15,6 +14,7 @@ $active-list-tr-background: rgba(239, 251, 255, .8);
 
     .resultslist-title {
       @include span-columns(4 of 12);
+
       h2 {
         font-size: $base-font-size;
         margin: .3em 1em;
