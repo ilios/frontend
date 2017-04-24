@@ -40,6 +40,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
+  - yarn check
   - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
 
 after_success:
