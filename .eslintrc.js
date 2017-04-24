@@ -4,7 +4,7 @@ module.exports = {
     ecmaVersion: 8,
     sourceType: 'module'
   },
-  extends: 'eslint:recommended',
+  extends: ['eslint:recommended'],
   env: {
     browser: true
   },
@@ -14,6 +14,9 @@ module.exports = {
 
     /* Stylistic Issues http://eslint.org/docs/rules/#stylistic-issues */
     indent: [2, 2], /* two-space indentation */
-    semi: 2 /* require semi-colons */
+    semi: 2, /* require semi-colons */
+    /* require valid jsdoc comments */
+    "require-jsdoc": "error",
+    "valid-jsdoc": "error"
   }
 };
