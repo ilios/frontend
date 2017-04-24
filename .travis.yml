@@ -31,7 +31,7 @@ before_install:
   - npm install -g bower
 
 install:
-  - yarn install --no-lockfile
+  - yarn install
   - bower install
 
 before_script:
