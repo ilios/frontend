@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, get, isEmpty, run, String, $ } = Ember;
-import { select } from 'd3-selection';
+const { Component, computed, isEmpty, String, $ } = Ember;
 const { htmlSafe } = String;
 
 export default Component.extend({
@@ -11,23 +10,6 @@ export default Component.extend({
   title: null,
   attr: null,
   content: null,
-  didReceiveAttrs() {
-    // Anytime we get an update schedule a draw
-    run.scheduleOnce('render', this, this.draw);
-  },
-  draw(){
-    const root = select(this.element);
-    // total tootlip hack
-    const parentActions = get(this.parentView, 'actions');
-    const hover = parentActions.hoverTooltip;
-    const leave = parentActions.leave.bind(this.parentView);
-    root.on('mouseover', function() {
-      hover();
-    });
-    root.on('mouseout', () => {
-      leave();
-    });
-  },
   style: computed('slice', 'location', function(){
     const slice = this.get('slice');
     const location = this.get('location');

@@ -2,8 +2,6 @@ import Ember from 'ember';
 const { Component, computed, get, String } = Ember;
 const { htmlSafe } = String;
 
-let hideTooltipTimeout = 0;
-
 export default Component.extend({
   attributeBindings: ['style'],
   classNames: ['ilios-chart'],
@@ -26,7 +24,6 @@ export default Component.extend({
 
   actions: {
     hover(data, slice, location){
-      clearTimeout(hideTooltipTimeout);
       const hover = get(this, 'hover');
       hover(data);
       this.set('tooltipSlice', slice);
@@ -34,15 +31,9 @@ export default Component.extend({
     },
     leave(){
       const leave = get(this, 'leave');
-      clearTimeout(hideTooltipTimeout);
-      hideTooltipTimeout = setTimeout(function() {
-        leave();
-        this.set('tooltipSlice', null);
-        this.set('tooltipLocation', null);
-      }.bind(this), 200);
-    },
-    hoverTooltip() {
-      clearTimeout(hideTooltipTimeout);
+      leave();
+      this.set('tooltipSlice', null);
+      this.set('tooltipLocation', null);
     },
   }
 });
