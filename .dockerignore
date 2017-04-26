@@ -1,0 +1,11 @@
+.dockerignore
+.env
+.git
+.gitignore
+.gitattributes
+.travis.yml
+bower_components
+Dockerfile
+dist
+node_modules
+tmp
