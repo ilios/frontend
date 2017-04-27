@@ -3652,9 +3652,9 @@ ember-pikaday@2.2.2:
     ember-cli-node-assets "^0.1.4"
     pikaday "^1.4.0"
 
-ember-promise-helpers@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ember-promise-helpers/-/ember-promise-helpers-1.0.2.tgz#9984f82b4f1d156badcedbdb77ab147c5b47c6a5"
+ember-promise-helpers@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ember-promise-helpers/-/ember-promise-helpers-1.0.3.tgz#eb1a987aec4f4e9ad8b51519540c92299d1a5d71"
   dependencies:
     ember-cli-babel "^5.1.5"
 
