@@ -15,5 +15,5 @@ test('it renders', function(assert) {
   this.set('course', course);
   this.render(hbs`{{visualizer-course-objectives course=course}}`);
 
-  assert.equal(this.$().text().trim(), 'test');
+  assert.equal(this.$().text().trim(), '');
 });
