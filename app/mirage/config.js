@@ -7,6 +7,7 @@ const { apiVersion } = ENV.APP;
 
 export default function() {
   this.timing = 100;
+  this.passthrough('/write-coverage');
   this.namespace = '/';
 
 
