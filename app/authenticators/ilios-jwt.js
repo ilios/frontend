@@ -43,8 +43,11 @@ export default JwtTokenAuthenticator.extend({
           response = Ember.merge(response, tokenExpireData);
           resolve(this.getResponseData(response));
         }, e => {
-          const errors = e.errors || [];
-          reject(errors);
+          let error = {
+            'message': e.message,
+            'keys': e.payload.errors || [],
+          };
+          reject(error);
         });
       }
     });

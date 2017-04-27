@@ -1,8 +1,10 @@
 <div class='login-form'>
   {{#unless noAccountExistsError}}
     <h2>{{t 'general.login'}}</h2>
-    {{#each errors as |errorKey|}}
-      <div class='error'>{{t errorKey}}</div>
+    {{#each error.keys as |key|}}
+      <div class='error'>{{t key}}</div>
+    {{else}}
+      <div class='error'>{{error.message}}</div>
     {{/each}}
     <form id='user-login-form' {{action 'authenticate' on='submit'}}>
       <div class='form-container'>
