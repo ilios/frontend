@@ -5171,11 +5171,11 @@ ignore@^3.1.2, ignore@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.0.tgz#3812d22cbe9125f2c2b4915755a1b8abd745a001"
 
-ilios-calendar@^10.1.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/ilios-calendar/-/ilios-calendar-10.2.0.tgz#852789bdb48be789bb8bce7323e81a6c87cd46ab"
+ilios-calendar@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/ilios-calendar/-/ilios-calendar-11.0.0.tgz#2e6ac76d676bdcd0c9ee6b62c1c606920e1f0e6b"
   dependencies:
-    ember-cli-babel "^5.1.7"
+    ember-cli-babel "^6.0.0"
     ember-cli-htmlbars "^1.1.1"
     ember-cli-sass "^6.1.0"
 
