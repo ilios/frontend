@@ -20,9 +20,9 @@ export default Component.extend(SortableTable, {
       const exp = new RegExp(val, 'gi');
 
       materials = materials.filter(material => {
-        let searchString = material.title + material.courseTitle + material.sessionTitle;
+        let searchString = material.title + ' ' + material.courseTitle + ' ' + material.sessionTitle + ' ';
         if (isPresent(material.instructors)) {
-          searchString += material.instructors.join('');
+          searchString += material.instructors.join(' ');
         }
         return searchString.match(exp);
       });
