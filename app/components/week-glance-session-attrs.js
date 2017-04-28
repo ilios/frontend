@@ -14,9 +14,9 @@ export default Component.extend({
   session: null,
 
   didReceiveAttrs() {
-      let event = this.get('event');
-      this.get('loadAttr').perform(event);
- },
+    let event = this.get('event');
+    this.get('loadAttr').perform(event);
+  },
 
   loadAttr: task(function * (event) {
     let userEvents = this.get('userEvents');
