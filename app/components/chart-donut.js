@@ -22,7 +22,7 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');

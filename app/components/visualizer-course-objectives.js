@@ -9,6 +9,9 @@ export default Component.extend({
   course: null,
   height: 360,
   width: 360,
+  icon: false,
+  classNames: ['visualizer-course-objectives'],
+  tagName: 'span',
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
     const course = this.get('course');
     const sessions = await course.get('sessions');
@@ -96,7 +99,8 @@ export default Component.extend({
     return withValues;
   }),
   async getTooltipData(obj){
-    if (isEmpty(obj)) {
+    const icon = this.get('icon');
+    if (icon || isEmpty(obj) || obj.empty) {
       return '';
     }
     const { meta } = obj;

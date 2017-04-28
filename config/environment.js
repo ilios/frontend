@@ -69,7 +69,7 @@ module.exports = function(environment) {
     IliosFeatures: {
       allowAddNewUser: true,
       schoolSessionAttributes: true,
-      accessCourseVisualizations: false,
+      accessCourseVisualizations: true,
     }
   };
 

@@ -1,18 +1,3 @@
-<h1>
-  {{course.title}}
-</h1>
-{{#ilios-chart
-  name='pie'
-  width=width
-  height=height
-  data=(await condensedObjectiveData)
-  hover=(perform pieHover)
-  leave=(perform pieHover)
-  as |chart|
-}}
-  {{chart.tooltip content=pieHover.lastSuccessful.value.content title=pieHover.lastSuccessful.value.title}}
-{{/ilios-chart}}
-
 {{#ilios-chart
   name='donut'
   width=width
@@ -24,31 +9,3 @@
 }}
   {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
 {{/ilios-chart}}
-
-{{ilios-chart
-  name='bar'
-  width=width
-  height=height
-  data=(await sessionsObjectivesData)
-}}
-
-{{ilios-chart
-  name='legend'
-  width=width
-  height=height
-  data=(await sessionsObjectivesData)
-}}
-
-{{ilios-chart
-  name='stacked-bar'
-  width=width
-  height=height
-  data=(await sessionsObjectivesData)
-}}
-
-{{ilios-chart
-  name='line'
-  width=width
-  height=height
-  data=(await condensedObjectiveData)
-}}

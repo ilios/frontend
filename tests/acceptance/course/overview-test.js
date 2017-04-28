@@ -171,7 +171,7 @@ test('open and close details', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find('.course-details .title').length, 2);
+    assert.equal(find('.course-details .title').length, 3);
     click('.detail-collapsed-control').then(function(){
       assert.ok(find('.title').length > 2);
       assert.equal(currentURL(), '/courses/1?details=true');
@@ -181,7 +181,7 @@ test('open and close details', function(assert) {
   andThen(function() {
     assert.ok(find('.course-details .title').length > 2);
     click('.detail-collapsed-control').then(function(){
-      assert.equal(find('.course-details .title').length, 2);
+      assert.equal(find('.course-details .title').length, 3);
       assert.equal(currentURL(), '/courses/1');
     });
   });
