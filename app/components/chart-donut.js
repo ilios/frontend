@@ -33,7 +33,7 @@ export default Component.extend({
     const donutWidth = width * .2;
     const color = scaleOrdinal(schemeCategory10);
     const isIcon = get(this, 'icon');
-    
+
     let t = transition().duration(500).ease(easeLinear);
 
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
@@ -60,12 +60,12 @@ export default Component.extend({
         .ease(easeLinear)
         .duration(500)
         .attrTween("d", tweenDonut);
+    }
 
-      function tweenDonut(b) {
-        b.innerRadius = 0;
-        let i = interpolate({startAngle: 0, endAngle: 0}, b);
-        return function(t) { return createArc(i(t)); };
-      }
+    function tweenDonut(b) {
+      b.innerRadius = 0;
+      let i = interpolate({startAngle: 0, endAngle: 0}, b);
+      return function(t) { return createArc(i(t)); };
     }
 
     path.on('mouseover', (d, index, items) => {
@@ -78,7 +78,7 @@ export default Component.extend({
 
     let exit = path.exit();
     if (!isIcon) {
-      exit = exit.transition(t)
+      exit = exit.transition(t);
     }
     exit.attr('d', 0)
       .remove();
@@ -90,7 +90,7 @@ export default Component.extend({
 
     enterJoin = enterJoin.merge(path);
     if (!isIcon) {
-      enterJoin = enterJoin.transition(t)
+      enterJoin = enterJoin.transition(t);
     }
     enterJoin.attr('d', createArc);
 
