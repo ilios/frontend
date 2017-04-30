@@ -32,10 +32,9 @@ export default Component.extend({
     const radius = Math.min(width, height) / 2;
     const donutWidth = width * .2;
     const color = scaleOrdinal(schemeCategory10);
-    const isIcon = get(this, 'icon');
+    const isIcon = width < 100 || height < 100;
 
     let t = transition().duration(500).ease(easeLinear);
-
     let createArc = arc().innerRadius(radius - donutWidth).outerRadius(radius);
     let createPie = pie().value(d => d.data).sort(null);
     let createLabelArc = arc().outerRadius(radius - 32).innerRadius(radius - 32);
@@ -44,7 +43,6 @@ export default Component.extend({
     if (dataOrArray.length === 0) {
       return;
     }
-
 
     let chart = svg.append('g').attr('class', 'pie').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
     let path = chart.selectAll('path').data(createPie(dataOrArray)).enter()
