@@ -12,7 +12,6 @@ export default Component.extend({
   tooltip: null,
   tooltipSlice: null,
   tooltipLocation: null,
-  //icon: false,
   chartName: computed('type', function(){
     const name = this.get('name');
     return `chart-${name}`;
