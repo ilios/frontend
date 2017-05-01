@@ -19,6 +19,8 @@ test('it renders', function(assert) {
     setSchoolManageLeadership=(action 'nothing')
     setSchoolSessionAttributesDetails=(action 'nothing')
     setSchoolManageSessionAttributes=(action 'nothing')
+    setSchoolSessionTypeDetails=(action 'nothing')
+    setSchoolManagedSessionType=(action 'nothing')
   }}`);
 
   assert.notEqual(this.$().text().search(/Back to Schools List/), -1);

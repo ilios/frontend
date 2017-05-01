@@ -1,0 +1,13 @@
+.school-session-types-list {
+  height: 25em;
+  overflow: scroll;
+
+  .calendar-color {
+    .box {
+      border: 1px solid $black;
+      display: inline-block;
+      height: 1.5em;
+      width: 1.5em;
+    }
+  }
+}

@@ -13,6 +13,8 @@ export default Controller.extend({
     'schoolManageLeadership',
     'schoolManageSessionAttributes',
     'schoolSessionAttributesDetails',
+    'schoolSessionTypeDetails',
+    'schoolManagedSessionType',
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,
@@ -23,4 +25,6 @@ export default Controller.extend({
   schoolManageLeadership: false,
   schoolManageSessionAttributes: false,
   schoolSessionAttributesDetails: false,
+  schoolSessionTypeDetails: false,
+  schoolManagedSessionType: null,
 });

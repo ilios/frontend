@@ -1,0 +1,16 @@
+<div class='title {{if (await isCollapsible) "collapsible clickable"}}' {{action 'collapse'}}>
+  {{t 'general.sessionTypes'}}
+</div>
+<div class='school-session-types-expanded-content'>
+  {{#liquid-if managedSessionTypeId class='horizontal'}}
+    {{school-session-type-manager
+      sessionType=(await managedSessionType)
+      close=(action setSchoolManagedSessionType null)
+    }}
+  {{else}}
+    {{school-session-types-list
+      sessionTypes=(await sessionTypes)
+      manageSessionType=setSchoolManagedSessionType
+    }}
+  {{/liquid-if}}
+</div>

@@ -45,27 +45,39 @@
   {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
     {{school-competencies-expanded
       school=school
-      collapse=(action this.attrs.setSchoolCompetencyDetails false)
-      expand=(action this.attrs.setSchoolCompetencyDetails true)
+      collapse=(action setSchoolCompetencyDetails false)
+      expand=(action setSchoolCompetencyDetails true)
       isManaging=schoolManageCompetencies
-      setSchoolManageCompetencies=this.attrs.setSchoolManageCompetencies
+      setSchoolManageCompetencies=setSchoolManageCompetencies
     }}
   {{else}}
-    {{school-competencies-collapsed school=school expand=(action this.attrs.setSchoolCompetencyDetails true)}}
+    {{school-competencies-collapsed school=school expand=(action setSchoolCompetencyDetails true)}}
   {{/if}}
 
   {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
     {{school-vocabularies-expanded
       school=school
-      collapse=(action this.attrs.setSchoolVocabularyDetails false)
-      expand=(action this.attrs.setSchoolVocabularyDetails true)
+      collapse=(action setSchoolVocabularyDetails false)
+      expand=(action setSchoolVocabularyDetails true)
       managedVocabularyId=schoolManagedVocabulary
-      setSchoolManagedVocabulary=this.attrs.setSchoolManagedVocabulary
+      setSchoolManagedVocabulary=setSchoolManagedVocabulary
       managedTermId=schoolManagedVocabularyTerm
-      setSchoolManagedVocabularyTerm=this.attrs.setSchoolManagedVocabularyTerm
+      setSchoolManagedVocabularyTerm=setSchoolManagedVocabularyTerm
     }}
   {{else}}
-    {{school-vocabularies-collapsed school=school expand=(action this.attrs.setSchoolVocabularyDetails true)}}
+    {{school-vocabularies-collapsed school=school expand=(action setSchoolVocabularyDetails true)}}
+  {{/if}}
+
+  {{#if (or (eq (get (await school.sessionTypes) 'length') 0) schoolSessionTypeDetails)}}
+    {{school-session-types-expanded
+      school=school
+      collapse=(action setSchoolSessionTypeDetails false)
+      expand=(action setSchoolSessionTypeDetails true)
+      managedSessionTypeId=schoolManagedSessionType
+      setSchoolManagedSessionType=setSchoolManagedSessionType
+    }}
+  {{else}}
+    {{school-session-types-collapsed school=school expand=(action setSchoolSessionTypeDetails true)}}
   {{/if}}
   {{school-session-attributes
     school=school
