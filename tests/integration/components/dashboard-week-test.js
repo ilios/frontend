@@ -5,6 +5,9 @@ import Ember from 'ember';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
 
+const { RSVP, Service, Object } = Ember;
+const { resolve } = RSVP;
+
 let today = moment();
 
 const mockEvents = [
@@ -74,14 +77,21 @@ const mockEvents = [
     isScheduled: true,
   },
 ];
-const userEventsMock = Ember.Service.extend({
+const userEventsMock = Service.extend({
   getEvents(){
-    return new Ember.RSVP.resolve(mockEvents);
+    return new resolve(mockEvents);
+  },
+  getSessionForEvent() {
+    return Object.create({
+      attireRequired: false,
+      equipmentRequired: false,
+      attendanceRequired: false,
+    });
   }
 });
-let blankEventsMock = Ember.Service.extend({
+let blankEventsMock = Service.extend({
   getEvents(){
-    return new Ember.RSVP.resolve([]);
+    return new resolve([]);
   }
 });
 

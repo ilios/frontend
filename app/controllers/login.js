@@ -15,12 +15,11 @@ export default Controller.extend({
       let authenticator = 'authenticator:ilios-jwt';
       this.set('errors', []);
       this.get('session').authenticate(authenticator, credentials).then(() => {
-
-      }, errors => {
-        let mappedErrors = errors.map(e => {
-          return 'general.' + e.title;
+      }, error => {
+        let keys = error.keys.map(key => {
+          return ('general.' + key);
         });
-        this.set('errors', mappedErrors);
+        this.set('error', { 'message': error.message, 'keys': keys });
       });
     }
   }

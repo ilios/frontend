@@ -5,6 +5,7 @@ const { htmlSafe } = String;
 export default Component.extend({
   attributeBindings: ['style'],
   classNames: ['ilios-chart'],
+  tagName: 'span',
   name: null,
   width: null,
   height: null,

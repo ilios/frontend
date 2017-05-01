@@ -7,6 +7,15 @@
 
   .detail-objectives-actions {
     @include detail-container-actions;
+
+    .expand-collapse-button {
+      display: inline;
+      margin-left: 1em;
+
+      button {
+        vertical-align: top;
+      }
+    }
   }
 
   .detail-objectives-content {
