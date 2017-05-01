@@ -20,7 +20,6 @@ export default Component.extend({
   data: null,
   width: null,
   height: null,
-  icon: false,
   draw(){
     const data = get(this, 'data');
     const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
