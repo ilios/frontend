@@ -3275,9 +3275,9 @@ ember-cli-version-checker@^1.0.2, ember-cli-version-checker@^1.1.3, ember-cli-ve
     rsvp "3.0.14"
     yuidocjs "^0.10.0"
 
-ember-cli@2.12.2:
-  version "2.12.2"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.12.2.tgz#eccae6359e5d4e49d509e6391dcdf1961848377a"
+ember-cli@2.12.3:
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.12.3.tgz#6a1e2793f7c59fb970fa71289fbe886460ed6780"
   dependencies:
     amd-name-resolver "0.0.6"
     bower-config "^1.3.0"
@@ -3342,7 +3342,7 @@ ember-cli@2.12.2:
     minimatch "^3.0.0"
     morgan "^1.5.2"
     node-modules-path "^1.0.0"
-    nopt "^4.0.0"
+    nopt "^3.0.6"
     npm-package-arg "^4.1.1"
     portfinder "^1.0.7"
     promise-map-series "^0.2.1"
@@ -6393,7 +6393,13 @@ nomnom@^1.8.1:
   dependencies:
     abbrev "1"
 
-nopt@^4.0.0, nopt@^4.0.1:
+nopt@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
+  dependencies:
+    abbrev "1"
+
+nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
   dependencies:
