@@ -23,7 +23,7 @@
             </span>
           </h4>
           <p>
-            <span class ='sessiontype'>
+            <span class='sessiontype'>
               {{event.sessionTypeTitle}}
             </span>
             {{#if event.location}}
@@ -31,8 +31,11 @@
                 - {{event.location}}
               </span>
             {{/if}}
+            {{week-glance-session-attrs event=event}}
           </p>
-          <p class='description'>{{{event.sessionDescription}}}</p>
+          <p class='description'>
+            {{{event.sessionDescription}}}
+          </p>
           {{#if event.instructors.length}}
             <div class='instructors'>
               <label>{{t 'general.instructors'}}:</label>
