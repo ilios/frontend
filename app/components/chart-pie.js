@@ -22,7 +22,7 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
@@ -30,6 +30,7 @@ export default Component.extend({
     const leave = get(this, 'leave');
     const radius = Math.min(width, height) / 2;
     const color = scaleOrdinal(schemeCategory10);
+    const isIcon = width < 100 || height < 100;
 
     let t = transition().duration(500).ease(easeLinear);
 
@@ -51,10 +52,12 @@ export default Component.extend({
       .attr('stroke', '#FFFFFF')
       .attr('fill', d =>  color(d.data.label));
 
-    chart.selectAll('path.slicepath').transition()
-      .ease(easeLinear)
-      .duration(500)
-      .attrTween("d", tweenPie);
+    if (!isIcon) {
+      chart.selectAll('path.slicepath').transition()
+        .ease(easeLinear)
+        .duration(500)
+        .attrTween("d", tweenPie);
+    }
 
     function tweenPie(b) {
       b.innerRadius = 0;
@@ -70,25 +73,27 @@ export default Component.extend({
       leave();
     });
 
-    path.exit()
-      .transition(t)
-      .attr('d', 0)
+    let exit = path.exit();
+    if (!isIcon) {
+      exit = exit.transition(t);
+    }
+    exit.attr('d', 0)
       .remove();
 
     let g = chart.selectAll('g.pie')
       .data(createPie(dataOrArray))
       .enter().append('g')
       .attr('class', 'arc');
-
-    g.append("text")
-      .transition(t)
-      .delay(1000)
-      .attr("fill", "#ffffff")
-      .style("font-size", ".8rem")
-      .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
-      .attr("dy", ".40rem")
-      .attr("text-anchor", "middle")
-      .text(d => d.data.label);
-
+    if (!isIcon) {
+      g.append("text")
+        .transition(t)
+        .delay(1000)
+        .attr("fill", "#ffffff")
+        .style("font-size", ".8rem")
+        .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
+        .attr("dy", ".40rem")
+        .attr("text-anchor", "middle")
+        .text(d => d.data.label);
+    }
   },
 });
