@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('course-summary-header', 'Integration | Component | course summary header', {
   integration: true,
@@ -15,7 +15,7 @@ moduleForComponent('course-summary-header', 'Integration | Component | course su
 });
 
 test('it renders', function(assert) {
-  let course = Object.create({
+  let course = EmberObject.create({
     title: 'title',
     startDate: new Date(2020, 4, 6, 12),
     endDate: new Date(2020, 11, 11, 12),
@@ -59,7 +59,7 @@ test('no link to materials when that is the current route', function(assert) {
   });
   this.register('service:-routing', routerMock);
 
-  let course = Object.create({
+  let course = EmberObject.create({
     title: 'title',
     startDate: new Date(2020, 4, 6, 12),
     endDate: new Date(2020, 11, 11, 12),
@@ -82,7 +82,7 @@ test('no link to rollover when that is the current route', function(assert) {
   });
   this.register('service:-routing', routerMock);
 
-  let course = Object.create({
+  let course = EmberObject.create({
     title: 'title',
     startDate: new Date(2020, 4, 6, 12),
     endDate: new Date(2020, 11, 11, 12),

@@ -5,7 +5,7 @@ import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 
 moduleForComponent('collapsed-competencies', 'Integration | Component | collapsed competencies', {
   integration: true,
@@ -19,13 +19,13 @@ test('it renders', function(assert) {
   assert.expect(4);
   let schoolA = server.create('school', {title: 'Medicine'});
   let schoolB = server.create('school', {title: 'Pharmacy'});
-  let competencyA = Object.create(server.create('competency', { school: 1 }));
+  let competencyA = EmberObject.create(server.create('competency', { school: 1 }));
   competencyA.school = RSVP.resolve(schoolA);
-  let competencyB = Object.create(server.create('competency', { school: 2 }));
+  let competencyB = EmberObject.create(server.create('competency', { school: 2 }));
   competencyB.school = RSVP.resolve(schoolB);
   let competencies = [competencyA, competencyB];
 
-  const course = Object.create({
+  const course = EmberObject.create({
     competencies: RSVP.resolve(competencies)
   });
 
@@ -45,13 +45,13 @@ test('clicking the header expands the list', function(assert) {
   assert.expect(2);
   let schoolA = server.create('school', {title: 'Medicine'});
   let schoolB = server.create('school', {title: 'Pharmacy'});
-  let competencyA = Object.create(server.create('competency', { school: 1 }));
+  let competencyA = EmberObject.create(server.create('competency', { school: 1 }));
   competencyA.school = RSVP.resolve(schoolA);
-  let competencyB = Object.create(server.create('competency', { school: 2 }));
+  let competencyB = EmberObject.create(server.create('competency', { school: 2 }));
   competencyB.school = RSVP.resolve(schoolB);
   let competencies = [competencyA, competencyB];
 
-  const course = Object.create({
+  const course = EmberObject.create({
     competencies: RSVP.resolve(competencies)
   });
 

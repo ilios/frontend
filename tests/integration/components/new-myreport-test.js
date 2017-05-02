@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-const { RSVP, Service, Object } = Ember;
+const { RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 import wait from 'ember-test-helpers/wait';
@@ -23,9 +23,9 @@ test('it renders', async function(assert) {
     {id: 1, title: 'first'},
     {id: 3, title: 'third'},
   ];
-  const mockUser = Object.create({
+  const mockUser = EmberObject.create({
     schools: resolve(mockSchools),
-    school: resolve(Object.create(mockSchools[0]))
+    school: resolve(EmberObject.create(mockSchools[0]))
   });
 
   const currentUserMock = Service.extend({
@@ -99,9 +99,9 @@ test('it renders', async function(assert) {
 let checkObjects = async function(context, assert, subjectNum, subjectVal, expectedObjects){
   assert.expect(expectedObjects.length + 2);
   const mockSchools = [{id: 2, title: 'second'}];
-  const mockUser = Object.create({
+  const mockUser = EmberObject.create({
     schools: resolve(mockSchools),
-    school: resolve(Object.create(mockSchools[0]))
+    school: resolve(EmberObject.create(mockSchools[0]))
   });
 
   const currentUserMock = Service.extend({
@@ -244,9 +244,9 @@ test('can search for user #2506', async function(assert) {
   const mockSchools = [
     {id: 1, title: 'first'},
   ];
-  const mockUser = Object.create({
+  const mockUser = EmberObject.create({
     schools: resolve(mockSchools),
-    school: resolve(Object.create(mockSchools[0]))
+    school: resolve(EmberObject.create(mockSchools[0]))
   });
   const currentUserMock = Service.extend({
     model: resolve(mockUser)
@@ -254,7 +254,7 @@ test('can search for user #2506', async function(assert) {
   this.register('service:current-user', currentUserMock);
 
 
-  const user = Object.create({
+  const user = EmberObject.create({
     id: 1,
     fullName: 'Test Person',
     email: 'test@sample.com',

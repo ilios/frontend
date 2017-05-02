@@ -5,7 +5,7 @@ import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
 
 
-const { RSVP, Service, Object } = Ember;
+const { RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('week-glance-session-attrs', 'Integration | Component | week glance session attrs', {
@@ -18,11 +18,11 @@ moduleForComponent('week-glance-session-attrs', 'Integration | Component | week 
 test('it renders', async function(assert) {
   assert.expect(4);
 
-  const mockEvent = Object.create({});
+  const mockEvent = EmberObject.create({});
   const userEventsMock = Service.extend({
-    getSessionForEvent(event){
-      assert.equal(event, mockEvent);
-      let mockSession = Object.create({
+    getSessionForEvent(e){
+      assert.equal(e, mockEvent);
+      let mockSession = EmberObject.create({
         attireRequired: true,
         equipmentRequired: true,
         attendanceRequired: true,
@@ -46,11 +46,11 @@ test('it renders', async function(assert) {
 test('only show applicable session attributes', async function(assert) {
   assert.expect(4);
 
-  const mockEvent = Object.create({});
+  const mockEvent = EmberObject.create({});
   const userEventsMock = Service.extend({
-    getSessionForEvent(event){
-      assert.equal(event, mockEvent);
-      let mockSession = Object.create({
+    getSessionForEvent(e){
+      assert.equal(e, mockEvent);
+      let mockSession = EmberObject.create({
         attireRequired: true,
         equipmentRequired: false,
         attendanceRequired: false,

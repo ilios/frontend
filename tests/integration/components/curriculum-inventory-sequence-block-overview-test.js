@@ -6,7 +6,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
@@ -23,29 +23,29 @@ moduleForComponent('curriculum-inventory-sequence-block-overview', 'Integration 
 test('it renders', function(assert) {
   assert.expect(38);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let linkedCourse = Object.create({
+  let linkedCourse = EmberObject.create({
     id: 1,
     title: 'Course A',
     startDate: new Date('2015-02-02'),
     endDate: new Date('2015-03-30'),
-    clerkshipType: Object.create({ title: 'Block' }),
+    clerkshipType: EmberObject.create({ title: 'Block' }),
     level: 4
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -53,7 +53,7 @@ test('it renders', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 1,
     isOrdered: true,
     children: null,
@@ -61,7 +61,7 @@ test('it renders', function(assert) {
 
   let academicLevel = academicLevels[0];
 
-  let ilmSession = Object.create({
+  let ilmSession = EmberObject.create({
     id: 1,
     course: resolve(linkedCourse),
     title: 'Session A',
@@ -76,14 +76,14 @@ test('it renders', function(assert) {
         };
       }
     },
-    sessionType: Object.create({
+    sessionType: EmberObject.create({
       'title': 'Independent Learning'
     }),
     maxSingleOfferingDuration: resolve(10),
     totalSumOfferingsDuration: resolve(20)
   });
 
-  let session1 = Object.create({
+  let session1 = EmberObject.create({
     id: 1,
     course: resolve(linkedCourse),
     title: 'Session B',
@@ -98,14 +98,14 @@ test('it renders', function(assert) {
         };
       }
     },
-    sessionType: resolve(Object.create({
+    sessionType: resolve(EmberObject.create({
       'title': 'Presentation'
     })),
     maxSingleOfferingDuration: resolve(10),
     totalSumOfferingsDuration: resolve(20)
   });
 
-  let session2 = Object.create({
+  let session2 = EmberObject.create({
     id: 2,
     course: resolve(linkedCourse),
     title: 'Session C',
@@ -120,14 +120,14 @@ test('it renders', function(assert) {
         };
       }
     },
-    sessionType: resolve(Object.create({
+    sessionType: resolve(EmberObject.create({
       'title': 'Lecture'
     }))
   });
 
   linkedCourse.set('sessions', resolve([session1, session2, ilmSession]));
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),
@@ -254,13 +254,13 @@ test('it renders', function(assert) {
 
 test('order in sequence is n/a for top level block', function(assert) {
   assert.expect(1);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -268,7 +268,7 @@ test('order in sequence is n/a for top level block', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),
@@ -284,7 +284,7 @@ test('order in sequence is n/a for top level block', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'}))
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'}))
   });
 
   storeMock.reopen({
@@ -310,13 +310,13 @@ test('order in sequence is n/a for top level block', function(assert) {
 
 test('order in sequence is n/a for nested sequence block in non-ordered sequence ', function(assert) {
   assert.expect(1);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -324,13 +324,13 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
     isFinalized: resolve(false)
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 1,
     isOrdered: false,
     children: null,
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),
@@ -346,7 +346,7 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'}))
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'}))
   });
 
   parentBlock.set('children', resolve([block]));
@@ -371,37 +371,37 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
 
 test('change course', function(assert) {
   assert.expect(11);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let linkedCourse = Object.create({
+  let linkedCourse = EmberObject.create({
     id: 1,
     title: 'Course A',
     sessions: resolve([]),
     startDate: new Date('2015-02-02'),
     endDate: new Date('2015-03-30'),
-    clerkshipType: Object.create({ title: 'Block' }),
+    clerkshipType: EmberObject.create({ title: 'Block' }),
     level: 4
   });
 
-  let linkableCourse1 = Object.create({
+  let linkableCourse1 = EmberObject.create({
     id: 2,
     title: 'Course C',
     startDate: new Date('2013-02-02'),
     endDate: new Date('2013-03-30'),
-    clerkshipType: Object.create({ title: 'Something else' }),
+    clerkshipType: EmberObject.create({ title: 'Something else' }),
     level: 4
   });
 
-  let linkableCourse2 = Object.create({
+  let linkableCourse2 = EmberObject.create({
     id: 3,
     title: 'Course B',
     startDate: new Date('2012-02-02'),
     endDate: new Date('2012-03-30'),
-    clerkshipType: Object.create({ title: 'Indeed.' }),
+    clerkshipType: EmberObject.create({ title: 'Indeed.' }),
     level: 4
   });
 
@@ -411,7 +411,7 @@ test('change course', function(assert) {
     linkableCourse2,
   ];
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -419,7 +419,7 @@ test('change course', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),
@@ -435,7 +435,7 @@ test('change course', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'})),
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'})),
     save() {
       assert.ok(true, "The sequence block's  save() function was invoked.");
     }
@@ -499,13 +499,13 @@ test('change course', function(assert) {
 
 test('change description', function(assert) {
   assert.expect(4);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -513,7 +513,7 @@ test('change description', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: '',
     report: resolve(report),
@@ -529,7 +529,7 @@ test('change description', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'})),
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'})),
     save() {
       assert.ok(true, "The sequence block's  save() function was invoked.");
     }
@@ -565,13 +565,13 @@ test('change description', function(assert) {
 
 test('change required', function(assert) {
   assert.expect(4);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -579,7 +579,7 @@ test('change required', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: '',
     report: resolve(report),
@@ -595,7 +595,7 @@ test('change required', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'})),
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'})),
     save() {
       assert.ok(true, "The sequence block's  save() function was invoked.");
     }
@@ -631,13 +631,13 @@ test('change required', function(assert) {
 
 test('change track', function(assert) {
   assert.expect(3);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -645,7 +645,7 @@ test('change track', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: '',
     report: resolve(report),
@@ -661,7 +661,7 @@ test('change track', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'})),
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'})),
     save() {
       assert.ok(true, "The sequence block's  save() function was invoked.");
     }
@@ -690,13 +690,13 @@ test('change track', function(assert) {
 
 test('change child sequence order', function(assert) {
   assert.expect(3);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -704,7 +704,7 @@ test('change child sequence order', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: '',
     report: resolve(report),
@@ -720,7 +720,7 @@ test('change child sequence order', function(assert) {
     track: true,
     minimum: 0,
     maximum: 0,
-    academicLevel: resolve(Object.create({ name: 'Year 1'})),
+    academicLevel: resolve(EmberObject.create({ name: 'Year 1'})),
     children: resolve([]),
     save() {
       return resolve(this);
@@ -757,20 +757,20 @@ test('change child sequence order', function(assert) {
 test('change order in sequence', function(assert) {
   assert.expect(7);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -778,13 +778,13 @@ test('change order in sequence', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 1,
     isOrdered: true,
     children: null,
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),
@@ -806,7 +806,7 @@ test('change order in sequence', function(assert) {
     }
   });
 
-  let siblingBlock = Object.create({
+  let siblingBlock = EmberObject.create({
     id: 3,
     orderInSequence: 2
   });
@@ -852,18 +852,18 @@ test('change order in sequence', function(assert) {
 
 test('change academic level', function(assert) {
   assert.expect(4);
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
-      return  Object.create({ id() { return 1; }});
+      return  EmberObject.create({ id() { return 1; }});
     }
   });
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -871,7 +871,7 @@ test('change academic level', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: '',
     report: resolve(report),
@@ -924,29 +924,29 @@ test('change academic level', function(assert) {
 test('manage sessions', function(assert) {
   assert.expect(7);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let linkedCourse = Object.create({
+  let linkedCourse = EmberObject.create({
     id: 1,
     title: 'Course A',
     startDate: new Date('2015-02-02'),
     endDate: new Date('2015-03-30'),
-    clerkshipType: Object.create({ title: 'Block' }),
+    clerkshipType: EmberObject.create({ title: 'Block' }),
     level: 4
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -954,7 +954,7 @@ test('manage sessions', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let session1 = Object.create({
+  let session1 = EmberObject.create({
     id: 1,
     course: resolve(linkedCourse),
     title: 'Session B',
@@ -969,14 +969,14 @@ test('manage sessions', function(assert) {
         };
       }
     },
-    sessionType: resolve(Object.create({
+    sessionType: resolve(EmberObject.create({
       'title': 'Presentation'
     })),
     maxSingleOfferingDuration: resolve(10),
     totalSumOfferingsDuration: resolve(20)
   });
 
-  let session2 = Object.create({
+  let session2 = EmberObject.create({
     id: 2,
     course: resolve(linkedCourse),
     title: 'Session C',
@@ -991,14 +991,14 @@ test('manage sessions', function(assert) {
         };
       }
     },
-    sessionType: resolve(Object.create({
+    sessionType: resolve(EmberObject.create({
       'title': 'Lecture'
     }))
   });
 
   linkedCourse.set('sessions', resolve([session1, session2]));
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),
@@ -1061,29 +1061,29 @@ test('manage sessions', function(assert) {
 test('finalized/read-only mode', function(assert) {
   assert.expect(23);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let linkedCourse = Object.create({
+  let linkedCourse = EmberObject.create({
     id: 1,
     title: 'Course A',
     startDate: new Date('2015-02-02'),
     endDate: new Date('2015-03-30'),
-    clerkshipType: Object.create({ title: 'Block' }),
+    clerkshipType: EmberObject.create({ title: 'Block' }),
     level: 4
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -1091,7 +1091,7 @@ test('finalized/read-only mode', function(assert) {
     isFinalized: resolve(true)
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 1,
     isOrdered: true,
     children: null,
@@ -1099,7 +1099,7 @@ test('finalized/read-only mode', function(assert) {
 
   let academicLevel = academicLevels[0];
 
-  let ilmSession = Object.create({
+  let ilmSession = EmberObject.create({
     id: 1,
     course: resolve(linkedCourse),
     title: 'Session A',
@@ -1114,14 +1114,14 @@ test('finalized/read-only mode', function(assert) {
         };
       }
     },
-    sessionType: Object.create({
+    sessionType: EmberObject.create({
       'title': 'Independent Learning'
     }),
     maxSingleOfferingDuration: resolve(10),
     totalSumOfferingsDuration: resolve(20)
   });
 
-  let session1 = Object.create({
+  let session1 = EmberObject.create({
     id: 1,
     course: resolve(linkedCourse),
     title: 'Session B',
@@ -1136,14 +1136,14 @@ test('finalized/read-only mode', function(assert) {
         };
       }
     },
-    sessionType: resolve(Object.create({
+    sessionType: resolve(EmberObject.create({
       'title': 'Presentation'
     })),
     maxSingleOfferingDuration: resolve(10),
     totalSumOfferingsDuration: resolve(20)
   });
 
-  let session2 = Object.create({
+  let session2 = EmberObject.create({
     id: 2,
     course: resolve(linkedCourse),
     title: 'Session C',
@@ -1158,14 +1158,14 @@ test('finalized/read-only mode', function(assert) {
         };
       }
     },
-    sessionType: resolve(Object.create({
+    sessionType: resolve(EmberObject.create({
       'title': 'Lecture'
     }))
   });
 
   linkedCourse.set('sessions', resolve([session1, session2, ilmSession]));
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 2,
     description: 'lorem ipsum',
     report: resolve(report),

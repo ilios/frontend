@@ -4,7 +4,7 @@ import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('school-competencies-list', 'Integration | Component | school competencies list', {
   integration: true,
@@ -22,7 +22,7 @@ test('it renders', function(assert) {
   let competency2 = server.create('competency', {school: 1, parent: 1});
   domain.children = [competency1, competency2];
 
-  let competencies = [domain, competency1, competency2].map(obj => Object.create(obj));
+  let competencies = [domain, competency1, competency2].map(obj => EmberObject.create(obj));
 
 
   this.set('competencies', competencies);

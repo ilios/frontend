@@ -2,24 +2,24 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
-let school = Object.create({
+let school = EmberObject.create({
 });
-let program = Object.create({
+let program = EmberObject.create({
   school: resolve(school)
 });
-let programYear = Object.create({
+let programYear = EmberObject.create({
   program: resolve(program)
 });
-let domain1 = Object.create({
+let domain1 = EmberObject.create({
   id: 1,
   title: 'domain1',
   programYears: resolve([programYear]),
 });
 domain1.set('domain', resolve(domain1));
-let competency1 = Object.create({
+let competency1 = EmberObject.create({
   id: 2,
   domain: resolve(domain1),
   title: 'competency1',
@@ -27,7 +27,7 @@ let competency1 = Object.create({
   programYears: resolve([programYear]),
   treeChildren: resolve([]),
 });
-let competency2 = Object.create({
+let competency2 = EmberObject.create({
   id: 2,
   domain: resolve(domain1),
   title: 'competency2',

@@ -4,16 +4,16 @@ import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 
-const { RSVP, Service, Object, run } = Ember;
+const { RSVP, Service, Object:EmberObject, run } = Ember;
 const { resolve } = RSVP;
 const duration = 4;
-const program = Object.create({id: 1, title: 'Program', duration});
+const program = EmberObject.create({id: 1, title: 'Program', duration});
 const startYear = moment().format('YYYY');
-const py1 = Object.create({program, startYear});
-const py2 = Object.create({program, startYear});
+const py1 = EmberObject.create({program, startYear});
+const py2 = EmberObject.create({program, startYear});
 const mockCohorts = [
-  Object.create({id: 2, title: 'second', programYear: py1}),
-  Object.create({id: 1, title: 'first', programYear: py2}),
+  EmberObject.create({id: 2, title: 'second', programYear: py1}),
+  EmberObject.create({id: 1, title: 'first', programYear: py2}),
 ];
 
 const mockSchools = [
@@ -21,9 +21,9 @@ const mockSchools = [
   {id: 1, title: 'first', cohorts: resolve([])},
   {id: 3, title: 'third', cohorts: resolve([])},
 ];
-const mockUser = Object.create({
+const mockUser = EmberObject.create({
   schools: resolve(mockSchools),
-  school: resolve(Object.create(mockSchools[0]))
+  school: resolve(EmberObject.create(mockSchools[0]))
 });
 
 const currentUserMock = Service.extend({
@@ -205,7 +205,7 @@ test('saves valid faculty users', async function(assert) {
       return [facultyRole, studentRole];
     },
     createRecord(what, obj) {
-      let rhett = Object.create(obj);
+      let rhett = EmberObject.create(obj);
       switch (called) {
       case 0:
         assert.equal(what, 'user');
@@ -299,7 +299,7 @@ test('saves valid student users', async function(assert) {
       return [facultyRole, studentRole];
     },
     createRecord(what, obj) {
-      let rhett = Object.create(obj);
+      let rhett = EmberObject.create(obj);
       switch (called) {
       case 0:
         assert.equal(what, 'user');
@@ -549,7 +549,7 @@ test('duplicate username errors on save', async function(assert) {
       return [facultyRole, studentRole];
     },
     createRecord(what, obj) {
-      let rhett = Object.create(obj);
+      let rhett = EmberObject.create(obj);
       switch (called) {
       case 0:
         assert.equal(what, 'user');
@@ -600,7 +600,7 @@ test('error saving user', async function(assert) {
       return [facultyRole, studentRole];
     },
     createRecord(what, obj) {
-      let rhett = Object.create(obj);
+      let rhett = EmberObject.create(obj);
       switch (called) {
       case 0:
         assert.equal(what, 'user');
@@ -677,7 +677,7 @@ test('dont create authentication if username is not set', async function(assert)
       return [{id: '3'}, {id: '4'}];
     },
     createRecord(what, obj) {
-      let rhett = Object.create(obj);
+      let rhett = EmberObject.create(obj);
       switch (called) {
       case 0:
         rhett.reopen({

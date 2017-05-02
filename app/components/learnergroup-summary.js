@@ -59,8 +59,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       learnerGroup.get('topLevelGroup').then(topLevelGroup => {
         let treeGroups = [];
         treeGroups.pushObject(topLevelGroup);
-        topLevelGroup.get('allDescendants').then((all) => {
-          treeGroups.pushObjects(all);
+        topLevelGroup.get('allDescendants').then(allDescendants => {
+          treeGroups.pushObjects(allDescendants);
           resolve(treeGroups);
         });
       });

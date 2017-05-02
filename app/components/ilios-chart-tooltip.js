@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-const { Component, computed, isEmpty, String, $ } = Ember;
-const { htmlSafe } = String;
+const { Component, computed, isEmpty, String:EmberString, $ } = Ember;
+const { htmlSafe } = EmberString;
 
 export default Component.extend({
   classNameBindings: [':ilios-chart-tooltip', 'hidden:hidden'],
@@ -10,11 +10,12 @@ export default Component.extend({
   title: null,
   attr: null,
   content: null,
+  location: null,
   style: computed('slice', 'location', function(){
     const slice = this.get('slice');
-    const location = this.get('location');
+    const position = this.get('location');
     const width = this.get('width');
-    if (isEmpty(slice) || isEmpty(location) ) {
+    if (isEmpty(slice) || isEmpty(position) ) {
       return htmlSafe('');
     }
 
@@ -26,8 +27,8 @@ export default Component.extend({
       height: $(svgParent).height(),
     };
 
-    let tooltipTop = svgParentsvgOffset.top - svgParentOffset.top + svgDimensions.height / 2 + location[1] + 20;
-    let tooltipLeft = Math.max(0 ,svgParentsvgOffset.left - svgParentOffset.left + svgDimensions.width / 2 - width / 2 + location[0]);
+    let tooltipTop = svgParentsvgOffset.top - svgParentOffset.top + svgDimensions.height / 2 + position[1] + 20;
+    let tooltipLeft = Math.max(0 ,svgParentsvgOffset.left - svgParentOffset.left + svgDimensions.width / 2 - width / 2 + position[0]);
 
     return htmlSafe('top:' + tooltipTop + 'px; left:' + tooltipLeft + 'px;');
   }),

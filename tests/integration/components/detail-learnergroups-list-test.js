@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('detail-learnergroups-list', 'Integration | Component | detail learnergroups list', {
@@ -21,7 +21,7 @@ test('it renders', function(assert) {
   const set2Group1 = set2 + ' li:eq(0)';
   const set2Group2 = set2 + ' li:eq(1)';
 
-  let tlg1 = Object.create({
+  let tlg1 = EmberObject.create({
     allParentTitles: [],
     title: 'tlg1',
     hasMany(){
@@ -33,7 +33,7 @@ test('it renders', function(assert) {
     }
   });
   tlg1.set('topLevelGroup', resolve(tlg1));
-  let subGroup1 = Object.create({
+  let subGroup1 = EmberObject.create({
     allParentTitles: ['tlg1'],
     topLevelGroup: resolve(tlg1),
     title: 'sub group 1',
@@ -45,7 +45,7 @@ test('it renders', function(assert) {
       };
     }
   });
-  let subSubGroup1 = Object.create({
+  let subSubGroup1 = EmberObject.create({
     allParentTitles: ['tlg1', 'sub group 1'],
     topLevelGroup: resolve(tlg1),
     title: 'sub sub group 1',
@@ -57,7 +57,7 @@ test('it renders', function(assert) {
       };
     }
   });
-  let tlg2 = Object.create({
+  let tlg2 = EmberObject.create({
     allParentTitles: [],
     title: 'tlg2',
     hasMany(){
@@ -69,7 +69,7 @@ test('it renders', function(assert) {
     }
   });
   tlg2.set('topLevelGroup', resolve(tlg2));
-  let subGroup2 = Object.create({
+  let subGroup2 = EmberObject.create({
     topLevelGroup: resolve(tlg2),
     allParentTitles: ['tlg2'],
     title: 'sub group 2',

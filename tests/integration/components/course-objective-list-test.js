@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('course-objective-list', 'Integration | Component | course objective list', {
@@ -13,19 +13,19 @@ moduleForComponent('course-objective-list', 'Integration | Component | course ob
 test('it renders', function(assert){
   assert.expect(7);
 
-  let objective1 = Object.create({
+  let objective1 = EmberObject.create({
     title: 'Objective A',
     position: 0
   });
 
-  let objective2 = Object.create({
+  let objective2 = EmberObject.create({
     title: 'Objective B',
     position: 0
   });
 
   let objectives = [ objective1, objective2 ];
 
-  let course = Object.create({
+  let course = EmberObject.create({
     sortedObjectives: resolve(objectives),
   });
 
@@ -50,7 +50,7 @@ test('it renders', function(assert){
 
 test('empty list', function(assert){
   assert.expect(2);
-  let course = Object.create({
+  let course = EmberObject.create({
     objectives: resolve([]),
   });
   this.set('subject', course);
@@ -64,10 +64,10 @@ test('empty list', function(assert){
 
 test('no "sort objectives" button in list with one item', function(assert){
   assert.expect(2);
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'Objective A',
   });
-  let course = Object.create({
+  let course = EmberObject.create({
     sortedObjectives: resolve([ objective ]),
   });
 

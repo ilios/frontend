@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('new-curriculum-inventory-report', 'Integration | Component | new curriculum inventory report', {
@@ -13,7 +13,7 @@ moduleForComponent('new-curriculum-inventory-report', 'Integration | Component |
 test('it renders', function(assert) {
   assert.expect(20);
 
-  const program = Object.create({
+  const program = EmberObject.create({
     id: 1,
     title: 'Doctor of Medicine'
   });
@@ -82,7 +82,7 @@ test('it renders', function(assert) {
 test('save', function(assert) {
   assert.expect(6);
 
-  this.set('program', Object.create());
+  this.set('program', EmberObject.create());
   this.set('saveReport', (report) => {
     const currentYear = parseInt(moment().format('YYYY'));
     const expectedSelectedYear = currentYear - 5;
@@ -113,7 +113,7 @@ test('save', function(assert) {
 
 test('cancel', function(assert) {
   assert.expect(1);
-  this.set('program', Object.create());
+  this.set('program', EmberObject.create());
   this.set('cancelReport', () => {
     assert.ok(true, 'Cancel action got invoked.');
   });
@@ -124,7 +124,7 @@ test('cancel', function(assert) {
 test('pressing enter in name input field fires save action', function(assert){
   assert.expect(1);
 
-  this.set('program', Object.create());
+  this.set('program', EmberObject.create());
   this.set('saveReport', () => {
     assert.ok(true, 'Save action got invoked.');
     return resolve(true);
@@ -138,14 +138,14 @@ test('pressing enter in name input field fires save action', function(assert){
 
 test('validation errors do not show up initially', function(assert) {
   assert.expect(1);
-  this.set('program', Object.create());
+  this.set('program', EmberObject.create());
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
   assert.equal(this.$('.validation-error-message').length, 0);
 });
 
 test('validation errors show up when saving with empty report name', function(assert) {
   assert.expect(1);
-  this.set('program', Object.create());
+  this.set('program', EmberObject.create());
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
   this.$('button.done').click();
   assert.equal(this.$('.validation-error-message').length, 1);
@@ -153,7 +153,7 @@ test('validation errors show up when saving with empty report name', function(as
 
 test('validation errors show up when saving with a too long report name', function(assert) {
   assert.expect(1);
-  this.set('program', Object.create());
+  this.set('program', EmberObject.create());
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
   this.$('.name input').val('0123456789'.repeat(7)).change();
   this.$('button.done').click();

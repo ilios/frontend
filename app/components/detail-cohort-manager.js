@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, RSVP, Object} = Ember;
+const { Component, computed, inject, RSVP, Object:EmberObject } = Ember;
 const { service } = inject;
 const { sort } = computed;
 const { all, Promise } = RSVP;
@@ -55,7 +55,7 @@ export default Component.extend({
         let promises = [];
         let proxies = [];
         cohorts.forEach(cohort => {
-          let proxy = Object.create({
+          let proxy = EmberObject.create({
             cohort,
             schoolTitle: null,
             programTitle: null

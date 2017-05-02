@@ -84,10 +84,10 @@ test('list objectives', function(assert) {
 
       let parentTitle = '';
       if('parents' in objective){
-        let parent = fixtures.parentObjectives[objective.parents[0] - 1];
-        parentTitle = parent.title;
-        if('competency' in parent){
-          parentTitle += `(${fixtures.competencies[parent.competency - 1].title})`;
+        let parentObjective = fixtures.parentObjectives[objective.parents[0] - 1];
+        parentTitle = parentObjective.title;
+        if('competency' in parentObjective){
+          parentTitle += `(${fixtures.competencies[parentObjective.competency - 1].title})`;
         }
       } else {
         parentTitle = 'Add New';

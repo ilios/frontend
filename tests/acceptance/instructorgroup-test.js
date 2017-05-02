@@ -139,7 +139,7 @@ test('add instructor', function(assert) {
 
     fillIn(find('.search-box input', container), 'guy').then(function(){
       click('.results li:eq(4)', container).then(function(){
-        let items = find('.removable-list li', container);
+        items = find('.removable-list li', container);
         assert.equal(items.length, 3);
         assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
         assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));

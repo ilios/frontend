@@ -4,16 +4,16 @@ import tHelper from "ember-i18n/helper";
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { computed, Object, RSVP, Service } = Ember;
+const { computed, Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let mockReports = [
-  Object.create({
+  EmberObject.create({
     displayTitle: resolve('all courses'),
     subject: 'courses',
     user: 1
   }),
-  Object.create({
+  EmberObject.create({
     displayTitle: resolve('courses for session'),
     subject: 'courses',
     prepositionalObject: 'session',
@@ -45,7 +45,7 @@ moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard m
 test('list reports', function(assert) {
   assert.expect(4);
   let currentUserMock = Service.extend({
-    model: resolve(Object.create({
+    model: resolve(EmberObject.create({
       reports: resolve(mockReports)
     }))
   });
@@ -68,7 +68,7 @@ test('list reports', function(assert) {
 test('display none when no reports', function(assert) {
   assert.expect(2);
   let currentUserMock = Service.extend({
-    model: resolve(Object.create({
+    model: resolve(EmberObject.create({
       reports: resolve([])
     }))
   });

@@ -4,7 +4,7 @@ import { test, skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import tHelper from "ember-i18n/helper";
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('objective-sort-manager', 'Integration | Component | objective sort manager', {
@@ -20,17 +20,17 @@ moduleForComponent('objective-sort-manager', 'Integration | Component | objectiv
 test('it renders', function(assert) {
   assert.expect(5);
 
-  let objective1 = Object.create({
+  let objective1 = EmberObject.create({
     title: 'Objective 1',
     position: 1,
   });
 
-  let objective2 = Object.create({
+  let objective2 = EmberObject.create({
     title: 'Objective 2',
     position: 0
   });
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     objectives: resolve([ objective1, objective2 ])
   });
 
@@ -49,13 +49,13 @@ test('it renders', function(assert) {
 
 test('cancel', function(assert) {
   assert.expect(1);
-  let subject = Object.create({
+  let subject = EmberObject.create({
     objectives: resolve([
-      Object.create({
+      EmberObject.create({
         title: 'Objective A',
         position: 1,
       }),
-      Object.create({
+      EmberObject.create({
         title: 'Objective B',
         position: 2
       })
@@ -76,19 +76,19 @@ test('cancel', function(assert) {
 test('save', function(assert) {
   assert.expect(3);
 
-  let objective1 = Object.create({
+  let objective1 = EmberObject.create({
     title: 'Objective1',
     position: 0
   });
 
-  let objective2 = Object.create({
+  let objective2 = EmberObject.create({
     title: 'Objective2',
     position: 0
   });
 
   let objectives = [ objective1, objective2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     objectives: resolve(objectives),
   });
   this.set('subject', subject);

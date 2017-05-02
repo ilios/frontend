@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, RSVP, computed, isEmpty, isPresent, String } = Ember;
+const { Component, RSVP, computed, isEmpty, isPresent, String:EmberString } = Ember;
 const { map, filter } = RSVP;
-const { htmlSafe } = String;
+const { htmlSafe } = EmberString;
 
 export default Component.extend({
   course: null,
@@ -56,7 +56,7 @@ export default Component.extend({
         courseObjective,
         sessionObjectives
       };
-      const data = hours.reduce((total, hours) => total + parseInt(hours), 0);
+      const data = hours.reduce((accumulator, current) => accumulator + parseInt(current), 0);
 
       return {
         data,
@@ -81,9 +81,9 @@ export default Component.extend({
       const total = Number(hours);
       const splitHours = total / objectives.length;
 
-      const values = objectives.map(label => {
+      const values = objectives.map(objectiveLabel => {
         return {
-          label,
+          label: objectiveLabel,
           value: splitHours
         };
       });

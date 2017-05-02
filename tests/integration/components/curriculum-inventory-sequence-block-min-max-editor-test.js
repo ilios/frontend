@@ -4,14 +4,14 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('curriculum-inventory-sequence-block-min-max-editor', 'Integration | Component | curriculum inventory sequence block min max editor', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  let block = Object.create({
+  let block = EmberObject.create({
     minimum: 5,
     maximum: 10,
   });
@@ -29,7 +29,7 @@ test('save', function(assert) {
   assert.expect(2);
   const newMinimum = '50';
   const newMaximum = '100';
-  let block = Object.create({
+  let block = EmberObject.create({
     minimum: 5,
     maximum: 10
   });
@@ -49,7 +49,7 @@ test('save', function(assert) {
 
 test('cancel', function(assert) {
   assert.expect(1);
-  let block = Object.create({
+  let block = EmberObject.create({
     minimum: 5,
     maximum: 10,
   });
@@ -64,7 +64,7 @@ test('cancel', function(assert) {
 
 test('save fails when minimum is larger than maximum', function(assert) {
   assert.expect(2);
-  let block = Object.create();
+  let block = EmberObject.create();
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };
@@ -84,7 +84,7 @@ test('save fails when minimum is larger than maximum', function(assert) {
 
 test('save fails when minimum is less than zero', function(assert) {
   assert.expect(2);
-  let block = Object.create();
+  let block = EmberObject.create();
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };
@@ -104,7 +104,7 @@ test('save fails when minimum is less than zero', function(assert) {
 
 test('save fails when minimum is empty', function(assert) {
   assert.expect(2);
-  let block = Object.create();
+  let block = EmberObject.create();
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };
@@ -124,7 +124,7 @@ test('save fails when minimum is empty', function(assert) {
 
 test('save fails when maximum is empty', function(assert) {
   assert.expect(2);
-  let block = Object.create();
+  let block = EmberObject.create();
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };

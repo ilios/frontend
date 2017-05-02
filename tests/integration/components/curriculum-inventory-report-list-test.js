@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import moment from 'moment';
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-list', 'Integration | Component | curriculum inventory report list', {
@@ -10,26 +10,26 @@ moduleForComponent('curriculum-inventory-report-list', 'Integration | Component 
 });
 
 test('it renders', function(assert) {
-  let report1 = Object.create({
+  let report1 = EmberObject.create({
     id: 1,
     name: 'Zeppelin',
     year: 2017,
     yearLabel: '2017 - 2018',
     startDate: moment('2017-07-01').toDate(),
     endDate: moment('2018-06-30').toDate(),
-    program: Object.create({
+    program: EmberObject.create({
       'title': 'Doctor of Medicine'
     }),
     isFinalized: false,
   });
-  let report2 = Object.create({
+  let report2 = EmberObject.create({
     id: 2,
     name: 'Aardvark',
     year: 2016,
     startDate: moment('2016-07-01').toDate(),
     endDate: moment('2017-06-30').toDate(),
     yearLabel: '2016 - 2017',
-    program: Object.create({
+    program: EmberObject.create({
       'title': 'Doctor of Rocket Surgery'
     }),
     isFinalized: true,
@@ -37,7 +37,7 @@ test('it renders', function(assert) {
 
   const reports = [ report1, report2 ];
 
-  const program = Object.create({
+  const program = EmberObject.create({
     curriculumInventoryReports: resolve(reports)
   });
 
@@ -96,7 +96,7 @@ test('it renders', function(assert) {
 });
 
 test('empty list', function(assert) {
-  const program = Object.create({
+  const program = EmberObject.create({
     curriculumInventoryReports: resolve([])
   });
 
@@ -109,11 +109,11 @@ test('empty list', function(assert) {
 
 test('delete and confirm', function(assert) {
   assert.expect(3);
-  let report = Object.create();
+  let report = EmberObject.create();
   let removeAction =  function(obj) {
     assert.equal(report, obj, 'Report is passed to remove action.');
   };
-  const program = Object.create({
+  const program = EmberObject.create({
     curriculumInventoryReports: resolve([ report ])
   });
 
@@ -128,11 +128,11 @@ test('delete and confirm', function(assert) {
 
 test('delete and cancel', function(assert) {
   assert.expect(3);
-  let report = Object.create();
+  let report = EmberObject.create();
   let removeAction =  function() {
     assert.ok(false, 'Remove action should not have been invoked.');
   };
-  const program = Object.create({
+  const program = EmberObject.create({
     curriculumInventoryReports: resolve([ report ])
   });
 
@@ -148,10 +148,10 @@ test('delete and cancel', function(assert) {
 
 test('sorting', function(assert) {
   assert.expect(4);
-  let report = Object.create();
+  let report = EmberObject.create();
   let count = 0;
   let sortBys = ['name', 'name:desc', 'year', 'year:desc'];
-  const program = Object.create({
+  const program = EmberObject.create({
     curriculumInventoryReports: resolve([ report ])
   });
 
@@ -171,11 +171,11 @@ test('sorting', function(assert) {
 
 test('edit', function(assert) {
   assert.expect(5);
-  let report = Object.create({ id: 1 });
+  let report = EmberObject.create({ id: 1 });
   let editAction =  function(obj) {
     assert.equal(report, obj, 'Report is passed to edit action.');
   };
-  const program = Object.create({
+  const program = EmberObject.create({
     curriculumInventoryReports: resolve([ report ])
   });
 

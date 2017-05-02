@@ -135,8 +135,8 @@ test('list parent objectives by competency', function(assert) {
 
       pickOption(find('.group-picker select', objectiveManager), 'program 0 cohort 1', assert);
       andThen(()=>{
-        let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-        let competencyTitles = find('.competency-title', parentPicker);
+        parentPicker = find('.parent-picker', objectiveManager).eq(0);
+        competencyTitles = find('.competency-title', parentPicker);
         assert.equal(competencyTitles.length, fixtures.competencies.length);
         //every competency is in the list
         assert.equal(getElementText(competencyTitles.eq(0)), getText('competency 0'));
@@ -144,7 +144,7 @@ test('list parent objectives by competency', function(assert) {
         assert.equal(getElementText(competencyTitles.eq(1)), getText('competency 1'));
         assert.ok(!competencyTitles.eq(1).hasClass('selected'));
 
-        let items = find('li', parentPicker);
+        items = find('li', parentPicker);
         assert.equal(getElementText(items.eq(0)), getText('objective 3'));
         assert.equal(getElementText(items.eq(1)), getText('objective 4'));
         assert.equal(getElementText(items.eq(2)), getText('objective 5'));

@@ -1,28 +1,28 @@
 import Ember from 'ember';
 import SortableByPositionMixin from 'ilios/mixins/sortable-by-position';
 import { module, test } from 'qunit';
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 module('Unit | Mixin | sortable by position');
 
 test('position sorting callback', function(assert) {
-  const SortableByPositionObject = Object.extend(SortableByPositionMixin);
+  const SortableByPositionObject = EmberObject.extend(SortableByPositionMixin);
   const subject = SortableByPositionObject.create();
 
-  const obj1 = Object.create({
+  const obj1 = EmberObject.create({
     id: 1,
     position: 3,
   });
 
-  const obj2 = Object.create({
+  const obj2 = EmberObject.create({
     id: 2,
     position: 2,
   });
-  const obj3 = Object.create({
+  const obj3 = EmberObject.create({
     id: 3,
     position: 1,
   });
-  const obj4 = Object.create({
+  const obj4 = EmberObject.create({
     id: 4,
     position: 2
   });

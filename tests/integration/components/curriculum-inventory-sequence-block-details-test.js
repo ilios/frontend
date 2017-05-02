@@ -6,7 +6,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-details', 'Integration | Component | curriculum inventory sequence block details', {
@@ -20,20 +20,20 @@ moduleForComponent('curriculum-inventory-sequence-block-details', 'Integration |
 test('it renders', function(assert) {
   assert.expect(7);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -41,12 +41,12 @@ test('it renders', function(assert) {
     isFinalized: resolve(false)
   });
 
-  let grandParentBlock = Object.create({
+  let grandParentBlock = EmberObject.create({
     id: 1,
     title: 'Okely Dokely',
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 2,
     title: 'Foo',
     parent: resolve(grandParentBlock)
@@ -56,7 +56,7 @@ test('it renders', function(assert) {
 
   let academicLevel = academicLevels[0];
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 3,
     description: 'lorem ipsum',
     report: resolve(report),

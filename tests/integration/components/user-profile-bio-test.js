@@ -3,19 +3,19 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 let user;
 let authentication;
 moduleForComponent('user-profile-bio', 'Integration | Component | user profile bio', {
   integration: true,
   beforeEach(){
-    authentication = Object.create({
+    authentication = EmberObject.create({
       username: 'test-username',
       user: 13,
       password: null
     });
-    user = Object.create({
+    user = EmberObject.create({
       id: 13,
       fullName: 'Test Person Name Thing',
       firstName: 'Test Person',

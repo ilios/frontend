@@ -6,7 +6,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-list', 'Integration | Component | curriculum inventory sequence block list', {
@@ -21,23 +21,23 @@ moduleForComponent('curriculum-inventory-sequence-block-list', 'Integration | Co
 test('it renders with top-level sequence blocks', function(assert) {
   assert.expect(25);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: "Life Lessons",
   });
 
-  let academicLevel1 = Object.create({ id: 1, level: '2'});
-  let academicLevel2 = Object.create({ id: 2, level: '1'});
+  let academicLevel1 = EmberObject.create({ id: 1, level: '2'});
+  let academicLevel2 = EmberObject.create({ id: 2, level: '1'});
 
-  let block1 = Object.create({
+  let block1 = EmberObject.create({
     id: 1,
     academicLevel: resolve(academicLevel1),
     title: 'Foo',
@@ -47,7 +47,7 @@ test('it renders with top-level sequence blocks', function(assert) {
     orderInSequence: 0,
   });
 
-  let block2 = Object.create({
+  let block2 = EmberObject.create({
     id: 2,
     academicLevel: resolve(academicLevel2),
     title: 'Bar',
@@ -59,7 +59,7 @@ test('it renders with top-level sequence blocks', function(assert) {
 
   let blocks = [block1, block2];
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),
@@ -113,24 +113,24 @@ test('it renders with top-level sequence blocks', function(assert) {
 test('it renders with nested blocks', function(assert) {
   assert.expect(18);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: "Life Lessons",
   });
 
-  let academicLevel1 = Object.create({ id: 1, level: '2'});
-  let academicLevel2 = Object.create({ id: 2, level: '1'});
+  let academicLevel1 = EmberObject.create({ id: 1, level: '2'});
+  let academicLevel2 = EmberObject.create({ id: 2, level: '1'});
 
 
-  let block1 = Object.create({
+  let block1 = EmberObject.create({
     id: 2,
     academicLevel: resolve(academicLevel1),
     title: 'Foo',
@@ -140,7 +140,7 @@ test('it renders with nested blocks', function(assert) {
     orderInSequence: 1,
   });
 
-  let block2 = Object.create({
+  let block2 = EmberObject.create({
     id: 3,
     academicLevel: resolve(academicLevel2),
     title: 'Bar',
@@ -152,7 +152,7 @@ test('it renders with nested blocks', function(assert) {
 
   let nestedBlocks = [block1, block2];
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 1,
     academicLevel: resolve(academicLevel1),
     title: 'Parent Block',
@@ -161,7 +161,7 @@ test('it renders with nested blocks', function(assert) {
     children: resolve(nestedBlocks),
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),
@@ -214,24 +214,24 @@ test('it renders with nested blocks', function(assert) {
 test('finalized/read-only mode', function(assert){
   assert.expect(3);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let block1 = Object.create({
+  let block1 = EmberObject.create({
     id: 1,
-    academicLevel: resolve(Object.create({ id: 1, level: '2'})),
+    academicLevel: resolve(EmberObject.create({ id: 1, level: '2'})),
     title: 'Bar',
     startDate: new Date('2015-02-23'),
     endDate: new Date('2016-12-03'),
     course: resolve(null),
     orderInSequence: 0,
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),
@@ -257,17 +257,17 @@ test('finalized/read-only mode', function(assert){
 test('delete', function(assert){
   assert.expect(4);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let block1 = Object.create({
+  let block1 = EmberObject.create({
     id: 1,
-    academicLevel: resolve(Object.create({ id: 1, level: '2'})),
+    academicLevel: resolve(EmberObject.create({ id: 1, level: '2'})),
     title: 'Foo',
     startDate: new Date('2015-02-23'),
     endDate: new Date('2016-12-03'),
@@ -275,7 +275,7 @@ test('delete', function(assert){
     orderInSequence: 0,
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),
@@ -307,17 +307,17 @@ test('delete', function(assert){
 test('cancel delete', function(assert){
   assert.expect(2);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let block1 = Object.create({
+  let block1 = EmberObject.create({
     id: 1,
-    academicLevel: resolve(Object.create({ id: 1, level: '2'})),
+    academicLevel: resolve(EmberObject.create({ id: 1, level: '2'})),
     title: 'Foo',
     startDate: new Date('2015-02-23'),
     endDate: new Date('2016-12-03'),
@@ -325,7 +325,7 @@ test('cancel delete', function(assert){
     orderInSequence: 0,
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),
@@ -352,15 +352,15 @@ test('cancel delete', function(assert){
 test('empty top level blocks list', function(assert) {
   assert.expect(2);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),
@@ -389,24 +389,24 @@ test('empty top level blocks list', function(assert) {
 test('empty nested blocks list', function(assert) {
   assert.expect(2);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     id: 1,
-    academicLevel: resolve(Object.create({ id: 1, level: '2'})),
+    academicLevel: resolve(EmberObject.create({ id: 1, level: '2'})),
     title: 'Parent Block',
     course: resolve(null),
     isOrdered: true,
     children: resolve([]),
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: resolve([]),
     year: '2016',
     program: resolve(program),

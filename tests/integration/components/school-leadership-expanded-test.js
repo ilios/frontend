@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-leadership-expanded', 'Integration | Component | school leadership expanded', {
@@ -13,17 +13,17 @@ moduleForComponent('school-leadership-expanded', 'Integration | Component | scho
 test('it renders', function(assert) {
   assert.expect(6);
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'a',
     lastName: 'person',
     fullName: 'a b person',
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'b',
     lastName: 'person',
     fullName: 'b a person',
   });
-  let school = Object.create({
+  let school = EmberObject.create({
     directors: resolve([user1]),
     administrators: resolve([user1, user2]),
     hasMany(what){
@@ -71,7 +71,7 @@ test('it renders', function(assert) {
 
 test('clicking the header collapses', function(assert) {
   assert.expect(1);
-  let school = Object.create({
+  let school = EmberObject.create({
     directors: resolve([]),
     administrators: resolve([]),
     hasMany(what){
@@ -111,7 +111,7 @@ test('clicking the header collapses', function(assert) {
 
 test('clicking manage fires action', function(assert) {
   assert.expect(1);
-  let school = Object.create({
+  let school = EmberObject.create({
     directors: resolve([]),
     administrators: resolve([]),
     hasMany(what){

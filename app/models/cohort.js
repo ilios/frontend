@@ -64,7 +64,7 @@ export default Model.extend({
       } else {
         this.get('programYear').then(programYear => {
           let classOfYear = programYear ? programYear.get('classOfYear') : null;
-          let title = this.get('i18n').t('general.classOf', {year: classOfYear});
+          title = this.get('i18n').t('general.classOf', {year: classOfYear});
           resolve(title);
         });
       }

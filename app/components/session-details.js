@@ -20,13 +20,8 @@ export default Component.extend({
   },
   actions: {
     save: function(){
-      var self = this;
-      var  session = this.get('session');
-      session.save().then(function(session){
-        if(!self.get('isDestroyed')){
-          self.set('session', session);
-        }
-      });
+      const  session = this.get('session');
+      session.save();
     },
   }
 });

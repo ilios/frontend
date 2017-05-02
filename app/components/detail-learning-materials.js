@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
 import SortableByPosition from 'ilios/mixins/sortable-by-position';
 
-const { isEmpty, Component, computed, inject, RSVP, ObjectProxy, Object } = Ember;
+const { isEmpty, Component, computed, inject, RSVP, ObjectProxy, Object:EmberObject } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
 const { all, Promise } = RSVP;
@@ -115,7 +115,7 @@ export default Component.extend(SortableByPosition, {
 
   actions: {
     manageMaterial(learningMaterial){
-      let buffer = Object.create();
+      let buffer = EmberObject.create();
       buffer.set('publicNotes', learningMaterial.get('publicNotes'));
       buffer.set('required', learningMaterial.get('required'));
       buffer.set('notes', learningMaterial.get('notes'));

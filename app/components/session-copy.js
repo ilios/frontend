@@ -159,7 +159,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     },
     changeSelectedCourse(id){
       let courses = this.get('loadCourses.lastSuccessful.value');
-      let course = courses.find(course => course.get('id') === id);
+      let course = courses.findBy('id', id);
 
       this.set('selectedCourse', course);
     }

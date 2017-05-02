@@ -3,21 +3,21 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object: EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let user;
 moduleForComponent('user-profile-schools', 'Integration | Component | user profile schools', {
   integration: true,
   beforeEach(){
-    let sodPermission = Object.create({
+    let sodPermission = EmberObject.create({
       user,
       tableName: 'school',
       tableRowId: '2',
       canRead: true,
       canWrite: true
     });
-    user = Object.create({
+    user = EmberObject.create({
       id: 13,
       enabled: true,
       userSyncIgnore: false,
@@ -27,7 +27,7 @@ moduleForComponent('user-profile-schools', 'Integration | Component | user profi
     });
 
     let currentUser = Service.extend({
-      model: resolve(Object.create({
+      model: resolve(EmberObject.create({
         school: resolve(sod),
         schools: resolve([som, sod, sop])
       }))
@@ -36,15 +36,15 @@ moduleForComponent('user-profile-schools', 'Integration | Component | user profi
   }
 });
 
-let som = Object.create({
+let som = EmberObject.create({
   id: '1',
   title: 'SOM'
 });
-let sod = Object.create({
+let sod = EmberObject.create({
   id: '2',
   title: 'SOD'
 });
-let sop = Object.create({
+let sop = EmberObject.create({
   id: '3',
   title: 'SOP'
 });
@@ -198,7 +198,7 @@ test('changing user modifies display #2389', async function(assert) {
     }
   });
   this.register('service:store', store);
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     id: 14,
     enabled: true,
     userSyncIgnore: false,

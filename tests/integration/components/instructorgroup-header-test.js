@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('instructorgroup-header', 'Integration | Component | instructorgroup header', {
@@ -12,7 +12,7 @@ moduleForComponent('instructorgroup-header', 'Integration | Component | instruct
 
 test('it renders', function(assert) {
   assert.expect(3);
-  let instructorGroup = Object.create({
+  let instructorGroup = EmberObject.create({
     title: 'lorem ipsum',
     school: {title: 'medicine'},
     users: [{}, {}, {}],
@@ -28,7 +28,7 @@ test('it renders', function(assert) {
 
 test('can change title', function(assert) {
   assert.expect(3);
-  let instructorGroup = Object.create({
+  let instructorGroup = EmberObject.create({
     title: 'lorem ipsum',
     save(){
       assert.equal(this.get('title'), 'new title');

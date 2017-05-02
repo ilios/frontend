@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty, Object, ObjectProxy, RSVP } = Ember;
+const { Component, computed, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
 const { all, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
-const competencyGroup = Object.extend({
+const competencyGroup = EmberObject.extend({
   title: '',
   originalObjectives: [],
   uniqueObjectives: uniq('originalObjectives'),
@@ -23,7 +23,7 @@ const objectiveProxy = ObjectProxy.extend({
   }),
 });
 
-const cohortProxy = Object.extend({
+const cohortProxy = EmberObject.extend({
   cohort: null,
   objective: null,
   id: oneWay('cohort.id'),

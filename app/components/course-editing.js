@@ -10,13 +10,8 @@ export default Component.extend({
   courseCompetencyDetails: false,
   actions: {
     save: function(){
-      var self = this;
-      var course = this.get('course');
-      course.save().then(function(course){
-        if(!self.get('isDestroyed')){
-          self.set('course', course);
-        }
-      });
+      const course = this.get('course');
+      course.save();
     },
   }
 });

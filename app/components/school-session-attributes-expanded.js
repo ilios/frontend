@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, Object, isEmpty } = Ember;
+const { Component, Object:EmberObject, isEmpty } = Ember;
 
 export default Component.extend({
   tagName: 'section',
@@ -41,7 +41,7 @@ export default Component.extend({
     const showSessionSpecialAttireRequired = isEmpty(bufferedShowSessionSpecialAttireRequired)?false:bufferedShowSessionSpecialAttireRequired;
     const showSessionSpecialEquipmentRequired = isEmpty(bufferedShowSessionSpecialEquipmentRequired)?false:bufferedShowSessionSpecialEquipmentRequired;
 
-    const values = Object.create({
+    const values = EmberObject.create({
       showSessionAttendanceRequired,
       showSessionSupplemental,
       showSessionSpecialAttireRequired,

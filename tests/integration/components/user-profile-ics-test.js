@@ -3,13 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 let user;
 moduleForComponent('user-profile-ics', 'Integration | Component | user profile ics', {
   integration: true,
   beforeEach(){
-    user = Object.create({
+    user = EmberObject.create({
       id: 13,
       icsFeedKey: 'testkey'
     });

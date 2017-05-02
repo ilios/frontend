@@ -5,7 +5,7 @@ import initializer from "ilios/instance-initializers/ember-i18n";
 import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 
-const { Object, Service, RSVP } = Ember;
+const { Object:EmberObject, Service, RSVP } = Ember;
 
 moduleForComponent('school-vocabularies-list', 'Integration | Component | school vocabularies list', {
   integration: true,
@@ -22,9 +22,9 @@ test('it renders', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
 
@@ -60,7 +60,7 @@ test('can create new vocabulary', function(assert) {
   this.register('service:store', storeMock);
 
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: RSVP.resolve([])
   });
 
@@ -86,9 +86,9 @@ test('cannot delete vocabularies with terms', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2, vocabulary3].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2, vocabulary3].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
 
@@ -117,9 +117,9 @@ test('clicking delete removes the vocabulary', function(assert) {
     }
   };
 
-  let vocabularies = [vocabulary].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
   this.on('edit', parseInt);
@@ -144,9 +144,9 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   let  vocabulary1 = server.create('vocabulary', {school: 1, isNew: false});
   let  vocabulary2 = server.create('vocabulary', {school: 1, isNew: false});
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
 
