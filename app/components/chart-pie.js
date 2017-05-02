@@ -85,15 +85,15 @@ export default Component.extend({
       .enter().append('g')
       .attr('class', 'arc');
     if (!isIcon) {
-    g.append("text")
-      .transition(t)
-      .delay(1000)
-      .attr("fill", "#ffffff")
-      .style("font-size", ".8rem")
-      .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
-      .attr("dy", ".40rem")
-      .attr("text-anchor", "middle")
-      .text(d => d.data.label);
+      g.append("text")
+        .transition(t)
+        .delay(1000)
+        .attr("fill", "#ffffff")
+        .style("font-size", ".8rem")
+        .attr('transform', d => "translate(" + createLabelArc.centroid(d) + ")")
+        .attr("dy", ".40rem")
+        .attr("text-anchor", "middle")
+        .text(d => d.data.label);
     }
   },
 });
