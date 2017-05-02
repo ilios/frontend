@@ -3,36 +3,36 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('user-profile-learnergroups', 'Integration | Component | user profile learnergroups', {
   integration: true
 });
-let som = Object.create({
+let som = EmberObject.create({
   id: '1',
   title: 'SOM'
 });
-let sod = Object.create({
+let sod = EmberObject.create({
   id: '2',
   title: 'SOD'
 });
-let program1 = Object.create({
+let program1 = EmberObject.create({
   title: 'Program1',
   school: resolve(som)
 });
-let program2 = Object.create({
+let program2 = EmberObject.create({
   title: 'Program2',
   school: resolve(sod)
 });
 som.set('programs', resolve([program1]));
 sod.set('programs', resolve([program2]));
-let programYear1 = Object.create({
+let programYear1 = EmberObject.create({
   program: resolve(program1),
   published: true,
   archived: false,
 });
-let programYear2 = Object.create({
+let programYear2 = EmberObject.create({
   program: resolve(program2),
   published: true,
   archived: false,
@@ -40,7 +40,7 @@ let programYear2 = Object.create({
 program1.set('programYears', resolve([programYear1]));
 program2.set('programYears', resolve([programYear2]));
 
-let cohort1 = Object.create({
+let cohort1 = EmberObject.create({
   id: 1,
   title: 'Cohort1',
   programYear: resolve(programYear1),
@@ -48,7 +48,7 @@ let cohort1 = Object.create({
   school: resolve(som)
 });
 
-let cohort2 = Object.create({
+let cohort2 = EmberObject.create({
   id: 2,
   title: 'Cohort2',
   programYear: resolve(programYear2),
@@ -57,12 +57,12 @@ let cohort2 = Object.create({
 });
 programYear1.set('cohort', resolve(cohort1));
 programYear2.set('cohort', resolve(cohort2));
-let learnerGroup1 = Object.create({
+let learnerGroup1 = EmberObject.create({
   id: 1,
   title: 'LearnerGroup1',
   cohort: resolve(cohort1),
 });
-let learnerGroup2 = Object.create({
+let learnerGroup2 = EmberObject.create({
   id: 2,
   title: 'LearnerGroup2',
   cohort: resolve(cohort2),
@@ -70,7 +70,7 @@ let learnerGroup2 = Object.create({
 
 let userlearnergroups = [learnerGroup1, learnerGroup2];
 
-let user = Object.create({
+let user = EmberObject.create({
   learnerGroups: resolve(userlearnergroups),
 });
 

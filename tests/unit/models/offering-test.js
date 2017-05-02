@@ -30,24 +30,24 @@ test('check allinstructors', function(assert) {
     let instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
     offering.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
-    return offering.get('allInstructors').then(users => {
-      assert.equal(users.length, 3);
-      assert.ok(users.includes(user1));
-      assert.ok(users.includes(user2));
-      assert.ok(users.includes(user3));
+    return offering.get('allInstructors').then(allInstructors => {
+      assert.equal(allInstructors.length, 3);
+      assert.ok(allInstructors.includes(user1));
+      assert.ok(allInstructors.includes(user2));
+      assert.ok(allInstructors.includes(user3));
       let user4 = store.createRecord('user');
       let user5 = store.createRecord('user');
       offering.get('instructors').pushObject(user4);
       let instructorGroup3 = store.createRecord('instructor-group', {users: [user5]});
       offering.get('instructorGroups').pushObject(instructorGroup3);
 
-      return offering.get('allInstructors').then(users => {
-        assert.equal(users.length, 5);
-        assert.ok(users.includes(user1));
-        assert.ok(users.includes(user2));
-        assert.ok(users.includes(user3));
-        assert.ok(users.includes(user4));
-        assert.ok(users.includes(user5));
+      return offering.get('allInstructors').then(allInstructors2 => {
+        assert.equal(allInstructors2.length, 5);
+        assert.ok(allInstructors2.includes(user1));
+        assert.ok(allInstructors2.includes(user2));
+        assert.ok(allInstructors2.includes(user3));
+        assert.ok(allInstructors2.includes(user4));
+        assert.ok(allInstructors2.includes(user5));
       });
 
     });

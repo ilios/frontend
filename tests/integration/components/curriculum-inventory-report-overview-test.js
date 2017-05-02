@@ -7,7 +7,7 @@ import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 import {openDatepicker} from 'ember-pikaday/helpers/pikaday';
 
-const {RSVP, Object, Service} = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const {resolve} = RSVP;
 
 moduleForComponent('curriculum-inventory-report-overview', 'Integration | Component | curriculum inventory report overview', {
@@ -23,7 +23,7 @@ moduleForComponent('curriculum-inventory-report-overview', 'Integration | Compon
 test('it renders', function (assert) {
   assert.expect(12);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -31,10 +31,10 @@ test('it renders', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -42,7 +42,7 @@ test('it renders', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -107,7 +107,7 @@ test('it renders', function (assert) {
 test('read-only/finalized mode', function (assert) {
   assert.expect(5);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -115,10 +115,10 @@ test('read-only/finalized mode', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -126,7 +126,7 @@ test('read-only/finalized mode', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -164,7 +164,7 @@ test('read-only/finalized mode', function (assert) {
 test('rollover button not visible for non-developer user', function (assert) {
   assert.expect(1);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -172,10 +172,10 @@ test('rollover button not visible for non-developer user', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -183,7 +183,7 @@ test('rollover button not visible for non-developer user', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -213,7 +213,7 @@ test('rollover button not visible for non-developer user', function (assert) {
 test('change start date', function (assert) {
   assert.expect(3);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -221,10 +221,10 @@ test('change start date', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -232,7 +232,7 @@ test('change start date', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -277,7 +277,7 @@ test('change start date', function (assert) {
 test('validation fails if given start date follows end date', function (assert) {
   assert.expect(2);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -285,10 +285,10 @@ test('validation fails if given start date follows end date', function (assert) 
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -296,7 +296,7 @@ test('validation fails if given start date follows end date', function (assert) 
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -335,7 +335,7 @@ test('validation fails if given start date follows end date', function (assert) 
 test('change end date', function (assert) {
   assert.expect(3);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -343,10 +343,10 @@ test('change end date', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -354,7 +354,7 @@ test('change end date', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -399,7 +399,7 @@ test('change end date', function (assert) {
 test('validation fails if given end date precedes end date', function (assert) {
   assert.expect(2);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -407,10 +407,10 @@ test('validation fails if given end date precedes end date', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -418,7 +418,7 @@ test('validation fails if given end date precedes end date', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -457,7 +457,7 @@ test('validation fails if given end date precedes end date', function (assert) {
 test('change academic year', function (assert) {
   assert.expect(4);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -465,10 +465,10 @@ test('change academic year', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -476,7 +476,7 @@ test('change academic year', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: parseInt(moment().format('YYYY'), 10),
     program,
@@ -518,7 +518,7 @@ test('change academic year', function (assert) {
 test('academic year unchangeable if course has been linked', function (assert) {
   assert.expect(2);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -526,10 +526,10 @@ test('academic year unchangeable if course has been linked', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -537,7 +537,7 @@ test('academic year unchangeable if course has been linked', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -567,7 +567,7 @@ test('academic year unchangeable if course has been linked', function (assert) {
 test('change description', function (assert) {
   assert.expect(3);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -575,10 +575,10 @@ test('change description', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -586,7 +586,7 @@ test('change description', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,
@@ -623,7 +623,7 @@ test('change description', function (assert) {
 test('description validation fails if text is too long', function (assert) {
   assert.expect(3);
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id() {
       return 1;
     }
@@ -631,10 +631,10 @@ test('description validation fails if text is too long', function (assert) {
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({id: i, name: `Year ${i + 1}`}));
+    academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     },
@@ -642,7 +642,7 @@ test('description validation fails if text is too long', function (assert) {
     shortTitle: 'DRS'
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program,

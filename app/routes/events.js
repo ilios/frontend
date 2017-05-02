@@ -11,14 +11,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
   model(params){
     let slug = params.slug;
     let container = slug.substring(0, 1);
-    let service;
+    let eventService;
     if(container === 'S'){
-      service = this.get('schoolEvents');
+      eventService = this.get('schoolEvents');
     }
     if(container === 'U'){
-      service = this.get('userEvents');
+      eventService = this.get('userEvents');
     }
 
-    return service.getEventForSlug(slug);
+    return eventService.getEventForSlug(slug);
   }
 });

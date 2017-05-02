@@ -4,7 +4,7 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 moduleForComponent('curriculum-inventory-sequence-block-session-list', 'Integration | Component | curriculum inventory sequence block session list', {
   integration: true,
@@ -18,23 +18,23 @@ moduleForComponent('curriculum-inventory-sequence-block-session-list', 'Integrat
 test('it renders', function(assert) {
   assert.expect(20);
 
-  let offering1 = Object.create({id: 1});
-  let offering2 = Object.create({id: 2});
-  let offering3 = Object.create({id: 3});
+  let offering1 = EmberObject.create({id: 1});
+  let offering2 = EmberObject.create({id: 2});
+  let offering3 = EmberObject.create({id: 3});
 
   let offerings1 = [ offering1, offering2 ];
   let offerings2 = [ offering3 ];
   let offerings3 = [];
 
-  let sessionType1 = Object.create({ title: 'Lecture'});
-  let sessionType2 = Object.create({ title: 'Ceremony'});
-  let sessionType3 = Object.create({ title: 'Small Group'});
+  let sessionType1 = EmberObject.create({ title: 'Lecture'});
+  let sessionType2 = EmberObject.create({ title: 'Ceremony'});
+  let sessionType3 = EmberObject.create({ title: 'Small Group'});
 
   let totalTime1 = (30).toFixed(2);
   let totalTime2 = (15).toFixed(2);
   let totalTime3 = (0).toFixed(2);
 
-  let session1 = Object.create({
+  let session1 = EmberObject.create({
     id: 1,
     title: 'Aardvark',
     offerings: resolve(offerings1),
@@ -42,7 +42,7 @@ test('it renders', function(assert) {
     maxSingleOfferingDuration: resolve(totalTime1)
   });
 
-  let session2 = Object.create({
+  let session2 = EmberObject.create({
     id: 2,
     title: 'Bluebird',
     offerings: resolve(offerings2),
@@ -50,7 +50,7 @@ test('it renders', function(assert) {
     totalSumOfferingsDuration: resolve(totalTime2)
   });
 
-  let session3 = Object.create({
+  let session3 = EmberObject.create({
     id: 3,
     title: 'Zeppelin',
     offerings: resolve(offerings3),
@@ -61,7 +61,7 @@ test('it renders', function(assert) {
   let linkedSessions = [session1, session3];
   let linkableSessions = [session1, session2, session3];
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 1,
     sessions: resolve(linkedSessions),
   });
@@ -99,7 +99,7 @@ test('it renders', function(assert) {
 test('empty list', function(assert) {
   assert.expect(2);
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 1,
     sessions: resolve([]),
   });
@@ -115,15 +115,15 @@ test('empty list', function(assert) {
 
 test('sort by title', function(assert) {
   assert.expect(1);
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'Zeppelin',
     offerings: resolve([]),
-    sessionType: resolve(Object.create({ title: 'Lecture'})),
+    sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
     maxSingleOfferingDuration: resolve(0)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 1,
     sessions: resolve([ session ]),
   });
@@ -140,15 +140,15 @@ test('sort by title', function(assert) {
 
 test('sort by session type', function(assert) {
   assert.expect(1);
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'Zeppelin',
     offerings: resolve([]),
-    sessionType: resolve(Object.create({ title: 'Lecture'})),
+    sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
     maxSingleOfferingDuration: resolve(0)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 1,
     sessions: resolve([ session ]),
   });
@@ -165,15 +165,15 @@ test('sort by session type', function(assert) {
 
 test('sort by offerings total', function(assert) {
   assert.expect(1);
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'Zeppelin',
     offerings: resolve([]),
-    sessionType: resolve(Object.create({ title: 'Lecture'})),
+    sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
     maxSingleOfferingDuration: resolve(0)
   });
 
-  let block = Object.create({
+  let block = EmberObject.create({
     id: 1,
     sessions: resolve([ session ]),
   });

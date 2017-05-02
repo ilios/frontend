@@ -5,7 +5,7 @@ import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('school-competencies-collapsed', 'Integration | Component | school competencies collapsed', {
   integration: true,
@@ -20,9 +20,9 @@ test('it renders', function(assert) {
   let domain = server.create('competency', {school: 1, isDomain: true, children: [2]});
   let competency = server.create('competency', {school: 1, isNotDomain: true, parent: 1});
 
-  let competencies = [domain, competency].map(obj => Object.create(obj));
+  let competencies = [domain, competency].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     competencies
   });
 

@@ -77,13 +77,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
 
     this.get('learningMaterialStatuses').then((statuses) => {
-      let defaultStatus = statuses.find((status) => status.get('title') === 'Final');
+      let defaultStatusObject = statuses.findBy('title', 'Final');
 
-      if (!defaultStatus) {
-        defaultStatus = statuses.get('firstObject');
+      if (!defaultStatusObject) {
+        defaultStatusObject = statuses.get('firstObject');
       }
 
-      this.set('status', defaultStatus);
+      this.set('status', defaultStatusObject);
     });
 
     this.get('learningMaterialUserRoles').then((roles) => {

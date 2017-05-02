@@ -541,11 +541,11 @@ test('search twice and list should be correct', function(assert) {
       assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
       assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
       click(searchResults[1]).then(function(){
-        let searchBoxInput = find('input', searchBox);
+        searchBoxInput = find('input', searchBox);
         fillIn(searchBoxInput, 'guy');
         click('span.search-icon', searchBox);
         andThen(function(){
-          let searchResults = find('.live-search li', directors);
+          searchResults = find('.live-search li', directors);
           assert.equal(searchResults.length, 3);
           assert.equal(getElementText($(searchResults[0])), getText('2 Results'));
           assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));

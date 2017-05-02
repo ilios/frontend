@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('my-materials', 'Integration | Component | my materials', {
   integration: true
@@ -10,7 +10,7 @@ moduleForComponent('my-materials', 'Integration | Component | my materials', {
 
 
 let createMaterials = function(){
-  let lm1 = Object.create({
+  let lm1 = EmberObject.create({
     title: 'title1',
     absoluteFileUri: 'http://myhost.com/url1',
     sessionTitle: 'session1title',
@@ -19,7 +19,7 @@ let createMaterials = function(){
     instructors: ['Instructor1name', 'Instructor2name'],
     firstOfferingDate: new Date(2003, 1, 2, 12),
   });
-  let lm2 = Object.create({
+  let lm2 = EmberObject.create({
     title: 'title2',
     link: 'http://myhost.com/url2',
     sessionTitle: 'session2title',
@@ -28,7 +28,7 @@ let createMaterials = function(){
     instructors: ['Instructor1name', 'Instructor2name'],
     firstOfferingDate: new Date(2016, 1, 2, 12),
   });
-  let lm3 = Object.create({
+  let lm3 = EmberObject.create({
     title: 'title3',
     citation: 'citationtext',
     sessionTitle: 'session3title',

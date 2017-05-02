@@ -227,7 +227,7 @@ test('manage competencies', function(assert) {
 
       andThen(function(){
         click('.parent-picker .clickable:eq(2)', objectiveManager).then(function(){
-          let items = find('.parent-picker .clickable');
+          items = find('.parent-picker .clickable');
           assert.ok(!$(items[0]).hasClass('selected'));
           assert.ok(!$(items[1]).hasClass('selected'));
           assert.ok($(items[2]).hasClass('selected'));

@@ -4,7 +4,7 @@ import { test, skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import tHelper from "ember-i18n/helper";
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('learning-materials-sort-manager', 'Integration | Component | learning materials sort manager', {
@@ -20,47 +20,47 @@ moduleForComponent('learning-materials-sort-manager', 'Integration | Component |
 test('it renders', function(assert) {
   assert.expect(7);
 
-  let owner1 = Object.create({
+  let owner1 = EmberObject.create({
     id: 1,
     fullName: 'Hans Wurst'
   });
 
-  let owner2 = Object.create({
+  let owner2 = EmberObject.create({
     id: 2,
     fullName: 'Hans Dampf'
   });
 
-  let status1 = Object.create({
+  let status1 = EmberObject.create({
     id: 1,
     title: 'Done and done'
   });
 
-  let status2 = Object.create({
+  let status2 = EmberObject.create({
     id: 2,
     title: 'Draft'
   });
 
-  let lm1 = Object.create({
+  let lm1 = EmberObject.create({
     title: 'Lorem Ipsum',
     status: status1,
     owningUser: owner1,
     type: 'file'
   });
 
-  let lm2 = Object.create({
+  let lm2 = EmberObject.create({
     title: 'Foo Bar',
     status: status2,
     owningUser: owner2,
     type: 'citation'
   });
 
-  let clm1 = Object.create({
+  let clm1 = EmberObject.create({
     id: 1,
     learningMaterial: lm1,
     position: 1,
   });
 
-  let clm2 = Object.create({
+  let clm2 = EmberObject.create({
     id: 2,
     learningMaterial: lm2,
     position: 0,
@@ -68,7 +68,7 @@ test('it renders', function(assert) {
 
   let clms = [ clm1, clm2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     learningMaterials: resolve(clms)
   });
 
@@ -96,19 +96,19 @@ test('it renders', function(assert) {
 
 test('cancel', function(assert) {
   assert.expect(1);
-  let subject = Object.create({
+  let subject = EmberObject.create({
     learningMaterials: resolve([
-      Object.create({
+      EmberObject.create({
         id: 1,
         position: 1,
-        learningMaterial: resolve(Object.create({
+        learningMaterial: resolve(EmberObject.create({
           title: 'First'
         }))
       }),
-      Object.create({
+      EmberObject.create({
         id: 2,
         position: 2,
-        learningMaterial: resolve(Object.create({
+        learningMaterial: resolve(EmberObject.create({
           title: 'Second'
         }))
       })
@@ -129,25 +129,25 @@ test('cancel', function(assert) {
 test('save', function(assert) {
   assert.expect(3);
 
-  let clm1 = Object.create({
+  let clm1 = EmberObject.create({
     id: 1,
     position: 1,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       title: 'First'
     }))
   });
 
-  let clm2 = Object.create({
+  let clm2 = EmberObject.create({
     id: 2,
     position: 2,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       title: 'Second'
     }))
   });
 
   let clms = [ clm1, clm2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     learningMaterials: resolve(clms),
   });
   this.set('subject', subject);

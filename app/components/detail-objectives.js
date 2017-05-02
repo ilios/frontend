@@ -164,10 +164,10 @@ export default Component.extend({
           if(this.get('isProgramYear')){
             newObjective.get('programYears').addObject(subject);
           }
-          newObjective.save().then(newObjective => {
+          newObjective.save().then(savedObjective => {
             this.set('newObjectiveEditorOn', false);
             this.get('flashMessages').success('general.newObjectiveSaved');
-            resolve(newObjective);
+            resolve(savedObjective);
           });
         });
       });

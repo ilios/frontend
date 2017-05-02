@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object } = Ember;
+const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('leadership-manager', 'Integration | Component | leadership manager', {
@@ -12,12 +12,12 @@ moduleForComponent('leadership-manager', 'Integration | Component | leadership m
 
 test('it renders with data', function(assert) {
   assert.expect(5);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'a',
     lastName: 'person',
     fullName: 'a b person',
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'b',
     lastName: 'person',
     fullName: 'b a person',
@@ -67,7 +67,7 @@ test('it renders without data', function(assert) {
 
 test('it remove director', function(assert) {
   assert.expect(3);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'a',
     lastName: 'person',
     fullName: 'a b person',
@@ -97,7 +97,7 @@ test('it remove director', function(assert) {
 
 test('it remove administrator', function(assert) {
   assert.expect(3);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'a',
     lastName: 'person',
     fullName: 'a b person',
@@ -127,7 +127,7 @@ test('it remove administrator', function(assert) {
 
 test('add director', function(assert) {
   assert.expect(6);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     fullName: 'test person',
     email: 'testemail'
   });
@@ -176,7 +176,7 @@ test('add director', function(assert) {
 
 test('add administrator', function(assert) {
   assert.expect(6);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     fullName: 'test person',
     email: 'testemail'
   });

@@ -1,24 +1,22 @@
-{{#if schoolSessionAttributes}}
-  {{#if (and (is-fulfilled showSessionAttendanceRequired) (is-fulfilled showSessionSupplemental) (is-fulfilled showSessionSpecialAttireRequired) (is-fulfilled showSessionSpecialEquipmentRequired))}}
-    {{#if details}}
-      {{school-session-attributes-expanded
-        showSessionAttendanceRequired=(await showSessionAttendanceRequired)
-        showSessionSupplemental=(await showSessionSupplemental)
-        showSessionSpecialAttireRequired=(await showSessionSpecialAttireRequired)
-        showSessionSpecialEquipmentRequired=(await showSessionSpecialEquipmentRequired)
-        collapse=collapse
-        isManaging=isManaging
-        manage=manage
-        saveAll=(perform save)
-      }}
-    {{else}}
-      {{school-session-attributes-collapsed
-        showSessionAttendanceRequired=(await showSessionAttendanceRequired)
-        showSessionSupplemental=(await showSessionSupplemental)
-        showSessionSpecialAttireRequired=(await showSessionSpecialAttireRequired)
-        showSessionSpecialEquipmentRequired=(await showSessionSpecialEquipmentRequired)
-        expand=expand
-      }}
-    {{/if}}
+{{#if (and (is-fulfilled showSessionAttendanceRequired) (is-fulfilled showSessionSupplemental) (is-fulfilled showSessionSpecialAttireRequired) (is-fulfilled showSessionSpecialEquipmentRequired))}}
+  {{#if details}}
+    {{school-session-attributes-expanded
+      showSessionAttendanceRequired=(await showSessionAttendanceRequired)
+      showSessionSupplemental=(await showSessionSupplemental)
+      showSessionSpecialAttireRequired=(await showSessionSpecialAttireRequired)
+      showSessionSpecialEquipmentRequired=(await showSessionSpecialEquipmentRequired)
+      collapse=collapse
+      isManaging=isManaging
+      manage=manage
+      saveAll=(perform save)
+    }}
+  {{else}}
+    {{school-session-attributes-collapsed
+      showSessionAttendanceRequired=(await showSessionAttendanceRequired)
+      showSessionSupplemental=(await showSessionSupplemental)
+      showSessionSpecialAttireRequired=(await showSessionSpecialAttireRequired)
+      showSessionSpecialEquipmentRequired=(await showSessionSpecialEquipmentRequired)
+      expand=expand
+    }}
   {{/if}}
 {{/if}}

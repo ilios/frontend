@@ -53,11 +53,10 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       }
 
       if(config.type === 'cas'){
-        let location = window.location;
-        let currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
+        let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
         let queryParams = {};
-        if (location.search.length > 1) {
-          location.search.substr(1).split('&').forEach(str => {
+        if (window.location.search.length > 1) {
+          window.location.search.substr(1).split('&').forEach(str => {
             let arr = str.split('=');
             queryParams[arr[0]] = arr[1];
           });

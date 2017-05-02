@@ -5,7 +5,7 @@ import Ember from 'ember';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object, run, getOwner } = Ember;
+const { Service, RSVP, Object:EmberObject, run, getOwner } = Ember;
 const { Promise, resolve } = RSVP;
 
 let storeMock;
@@ -24,7 +24,7 @@ test('it renders', function(assert) {
     }
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old course'
   });
@@ -48,7 +48,7 @@ test('it renders', function(assert) {
 
 test('rollover course', function(assert) {
   assert.expect(14);
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old title',
     startDate: moment().hour(0).minute(0).second(0).toDate()
@@ -86,7 +86,7 @@ test('rollover course', function(assert) {
       assert.equal(what, 'course');
       assert.equal(id, 14);
 
-      return Object.create({
+      return EmberObject.create({
         id: 14
       });
     },
@@ -115,7 +115,7 @@ test('rollover course', function(assert) {
 
 test('rollover course with new title', function(assert) {
   assert.expect(5);
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old title',
     startDate: moment().hour(0).minute(0).second(0).toDate()
@@ -144,7 +144,7 @@ test('rollover course with new title', function(assert) {
     peekRecord(what, id){
       assert.equal(what, 'course');
       assert.equal(id, 14);
-      return Object.create({
+      return EmberObject.create({
         id: 14
       });
     },
@@ -194,7 +194,7 @@ test('disable years when title already exists', function(assert) {
     }
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'to be rolled',
   });
@@ -224,7 +224,7 @@ test('rollover course with new start date', function(assert) {
 
   const rolloverDate = moment(courseStartDate).add(1, 'week');
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     startDate: courseStartDate.toDate(),
     title: 'old course'
@@ -317,7 +317,7 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
   }
   const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'test title',
     startDate: courseStartDate.toDate()
@@ -402,7 +402,7 @@ test('rollover start date adjustment with former year course start date', functi
     .isoWeek(courseStartDate.isoWeek())
     .isoWeekday(courseStartDate.isoWeekday());
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     startDate: courseStartDate.toDate(),
     title: 'old course'
@@ -457,7 +457,7 @@ test('rollover start date adjustment with former year course start date', functi
 
 test('rollover course with no offerings', function(assert) {
   assert.expect(3);
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old course'
   });
@@ -514,7 +514,7 @@ test('errors do not show up initially', function(assert) {
       return [];
     }
   });
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1
   });
   this.set('course', course);
@@ -532,7 +532,7 @@ test('errors show up', function(assert) {
       return [];
     }
   });
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1
   });
   this.set('course', course);
@@ -566,7 +566,7 @@ test('changing the title looks for new matching courses', function(assert) {
     }
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'to be rolled',
   });

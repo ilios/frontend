@@ -126,11 +126,11 @@ export default Component.extend({
       return !selectedDepartments.includes(department);
     });
     newDepartments.forEach(department => {
-      const steward = store.createRecord('program-year-steward', {
+      const newSteward = store.createRecord('program-year-steward', {
         school,
         department
       });
-      this.get('add')(steward);
+      this.get('add')(newSteward);
     });
   }),
   addDepartment: task(function * (school, department){

@@ -4,7 +4,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP } = Ember;
+const { Service, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('dashboard-materials', 'Integration | Component | dashboard materials', {
@@ -13,7 +13,7 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
 
 let today = moment();
 let tomorrow = moment().add(1, 'day');
-let lm1 = Object.create({
+let lm1 = EmberObject.create({
   title: 'title1',
   absoluteFileUri: 'http://myhost.com/url1',
   sessionTitle: 'session1title',
@@ -22,7 +22,7 @@ let lm1 = Object.create({
   instructors: ['Instructor1name', 'Instructor2name'],
   firstOfferingDate: today.toDate(),
 });
-let lm2 = Object.create({
+let lm2 = EmberObject.create({
   title: 'title2',
   link: 'http://myhost.com/url2',
   sessionTitle: 'session2title',
@@ -31,7 +31,7 @@ let lm2 = Object.create({
   instructors: ['Instructor1name', 'Instructor2name'],
   firstOfferingDate: tomorrow.toDate(),
 });
-let lm3 = Object.create({
+let lm3 = EmberObject.create({
   title: 'title3',
   citation: 'citationtext',
   sessionTitle: 'session3title',
@@ -67,7 +67,7 @@ test('it renders with materials', function(assert) {
   });
   this.register('service:ajax', ajaxMock);
   this.render(hbs`{{dashboard-materials}}`);
-    
+
   const title = 'h3';
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;

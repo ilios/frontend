@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('competency-title-editor', 'Integration | Component | competency title editor', {
   integration: true
@@ -11,7 +11,7 @@ moduleForComponent('competency-title-editor', 'Integration | Component | compete
 
 test('validation errors do not show up initially', function(assert) {
   assert.expect(1);
-  let competency = Object.create({
+  let competency = EmberObject.create({
     title: 'test'
   });
   this.set('competency', competency);
@@ -23,7 +23,7 @@ test('validation errors do not show up initially', function(assert) {
 
 test('validation errors show up when saving', function(assert) {
   assert.expect(1);
-  let competency = Object.create({
+  let competency = EmberObject.create({
     title: 'test'
   });
   this.set('competency', competency);

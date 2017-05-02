@@ -53,17 +53,17 @@ export default Service.extend({
           let promises = programs.map(program => {
             return program.get('programYears');
           });
-          hash(promises).then(hash => {
-            let promises = [];
-            Object.keys(hash).forEach(key => {
-              hash[key].forEach(programYear => {
-                promises.push(programYear.get('cohort'));
+          hash(promises).then(obj => {
+            let promises2 = [];
+            Object.keys(obj).forEach(key => {
+              obj[key].forEach(programYear => {
+                promises2.push(programYear.get('cohort'));
               });
             });
-            hash(promises).then(hash => {
+            hash(promises2).then(obj2 => {
               let cohorts = A();
-              Object.keys(hash).forEach(key => {
-                cohorts.pushObject(hash[key]);
+              Object.keys(obj2).forEach(key => {
+                cohorts.pushObject(obj2[key]);
               });
               resolve(cohorts);
             });

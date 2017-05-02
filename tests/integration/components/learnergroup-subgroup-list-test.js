@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('learnergroup-subgroup-list', 'Integration | Component | learnergroup subgroup list', {
@@ -98,18 +98,18 @@ test('add new group', function(assert) {
   };
 
   let storeMock = Service.extend({
-    createRecord(what, {title, cohort, parent}){
+    createRecord(what, {title, cohort:groupCohort, parent:groupParent}){
       assert.equal('learner-group', what);
       assert.equal('new group', title);
-      assert.equal(cohort, cohort);
+      assert.equal(cohort, groupCohort, 'cohort is correct');
 
       let newGroup = {
         title,
-        cohort,
-        parent
+        cohort: groupCohort,
+        parent: groupParent
       };
 
-      return Object.create({
+      return EmberObject.create({
         save(){
           return resolve(newGroup);
         }
@@ -118,7 +118,7 @@ test('add new group', function(assert) {
   });
   this.register('service:store', storeMock);
 
-  this.set('parentGroup', Object.create(parentGroup));
+  this.set('parentGroup', EmberObject.create(parentGroup));
 
   this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
   assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'first');
@@ -142,12 +142,12 @@ test('add new group', function(assert) {
 test('add multiple new groups', async function(assert) {
   assert.expect(7);
   let cohort = {a: 1};
-  let subGroup1 = Object.create({
+  let subGroup1 = EmberObject.create({
     title: 'group 1',
     users: [1,2],
     children: []
   });
-  let parentGroup = Object.create({
+  let parentGroup = EmberObject.create({
     title: 'group',
     children: resolve([subGroup1]),
     cohort: resolve(cohort),
@@ -155,19 +155,19 @@ test('add multiple new groups', async function(assert) {
   });
 
   let storeMock = Service.extend({
-    createRecord(what, {title, cohort, parent}){
+    createRecord(what, {title, cohort:groupCohort, parent:groupParent}){
       assert.equal('learner-group', what);
       assert.equal('group 2', title);
-      assert.equal(cohort, cohort);
-      assert.equal(parent, parentGroup);
+      assert.equal(cohort, groupCohort);
+      assert.equal(groupParent, parentGroup);
 
       let newGroup = {
         title,
-        cohort,
-        parent
+        cohort: groupCohort,
+        parent: groupParent
       };
 
-      return Object.create({
+      return EmberObject.create({
         save(){
           parentGroup.set('children', resolve([subGroup1, newGroup]));
           return resolve(newGroup);
@@ -214,7 +214,7 @@ test('truncates multiple group with long name', async function(assert) {
   let cohort = {a: 1};
   const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
   const expectedGroupTitle = longTitle.substring(0, 58) + ' 1';
-  let parentGroup = Object.create({
+  let parentGroup = EmberObject.create({
     title: longTitle,
     children: resolve([]),
     cohort: resolve(cohort),
@@ -222,19 +222,19 @@ test('truncates multiple group with long name', async function(assert) {
   });
 
   let storeMock = Service.extend({
-    createRecord(what, {title, cohort, parent}){
+    createRecord(what, {title, cohort:groupCohort, parent:groupParent}){
       assert.equal('learner-group', what);
       assert.equal(title, expectedGroupTitle, 'correct truncated title');
-      assert.equal(cohort, cohort);
-      assert.equal(parent, parentGroup);
+      assert.equal(cohort, groupCohort);
+      assert.equal(groupParent, parentGroup);
 
       let newGroup = {
         title,
-        cohort,
-        parent
+        cohort: groupCohort,
+        parent: groupParent
       };
 
-      return Object.create({
+      return EmberObject.create({
         save(){
           parentGroup.set('children', resolve([newGroup]));
           return resolve(newGroup);

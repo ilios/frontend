@@ -144,7 +144,7 @@ test('removing a cohort remove course objectives parents linked to that cohort',
       click('.detail-cohorts .removable-list li:eq(0)');
       click('.detail-cohorts button.bigadd');
       andThen(function(){
-        let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
+        parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
         assert.equal(parents.length, 1);
         assert.equal(getElementText(parents), getText(fixtures.parentObjective2.title));
       });

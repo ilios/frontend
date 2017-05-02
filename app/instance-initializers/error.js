@@ -96,8 +96,8 @@ export default {
       this.incrementLastErrorSent();
       ajax.post('/errors', {
         data: {data: JSON.stringify(error)}
-      }).catch(function(error){
-        console.log('Error sending error message', error);
+      }).catch(function(e){
+        console.log('Error sending error message', e);
         //prevent throwing errors on errors
       });
     }

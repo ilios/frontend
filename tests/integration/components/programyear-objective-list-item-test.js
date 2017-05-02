@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('programyear-objective-list-item', 'Integration | Component | programyear objective list item', {
@@ -10,7 +10,7 @@ moduleForComponent('programyear-objective-list-item', 'Integration | Component |
 });
 
 test('it renders', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);
@@ -30,7 +30,7 @@ test('it renders', function(assert) {
 
 
 test('can change title', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title',
     save(){
       assert.equal(this.get('title'), '<p>new title</p>');
@@ -56,7 +56,7 @@ test('can change title', function(assert) {
 });
 
 test('can manage competency', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);
@@ -78,7 +78,7 @@ test('can manage competency', function(assert) {
 });
 
 test('can manage descriptors', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);

@@ -12,7 +12,7 @@ moduleForComponent('course-overview', 'Integration | Component | course overview
   }
 });
 
-const { Object, Service, RSVP } = Ember;
+const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 test('renders with no course id', function(assert) {
@@ -23,8 +23,8 @@ test('renders with no course id', function(assert) {
     }
   });
 
-  let course = Object.create({
-    clerkshipType: resolve(Object.create())
+  let course = EmberObject.create({
+    clerkshipType: resolve(EmberObject.create())
   });
   this.set('course', course);
   this.render(hbs`{{course-overview course=course}}`);
@@ -42,18 +42,18 @@ test('course external id validation fails if value is too short', function(asser
     }
   });
 
-  let course = Object.create({
-    clerkshipType: resolve(Object.create()),
+  let course = EmberObject.create({
+    clerkshipType: resolve(EmberObject.create()),
   });
   this.set('course', course);
   this.render(hbs`{{course-overview course=course}}`);
 
   const item = '.courseexternalid';
   const error = `${item} .validation-error-message`;
-  const open = `${item} .clickable`;
+  const button = `${item} .clickable`;
   const save = `${item} .actions .done`;
   const input = `${item} input`;
-  this.$(open).click();
+  this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
     this.$(input).val('a').change();
@@ -72,18 +72,18 @@ test('course external id validation fails if value is too long', function(assert
     }
   });
 
-  let course = Object.create({
-    clerkshipType: resolve(Object.create()),
+  let course = EmberObject.create({
+    clerkshipType: resolve(EmberObject.create()),
   });
   this.set('course', course);
   this.render(hbs`{{course-overview course=course}}`);
 
   const item = '.courseexternalid';
   const error = `${item} .validation-error-message`;
-  const open = `${item} .clickable`;
+  const button = `${item} .clickable`;
   const save = `${item} .actions .done`;
   const input = `${item} input`;
-  this.$(open).click();
+  this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
     this.$(input).val('tooLong'.repeat(50)).change();
@@ -102,8 +102,8 @@ test('course external id validation passes on changed value within boundaries', 
     }
   });
 
-  let course = Object.create({
-    clerkshipType: resolve(Object.create()),
+  let course = EmberObject.create({
+    clerkshipType: resolve(EmberObject.create()),
     externalid: 'abcde',
     save() {
       let that = this;
@@ -121,10 +121,10 @@ test('course external id validation passes on changed value within boundaries', 
 
   const item = '.courseexternalid';
   const error = `${item} .validation-error-message`;
-  const open = `${item} .clickable`;
+  const button = `${item} .clickable`;
   const save = `${item} .actions .done`;
   const input = `${item} input`;
-  this.$(open).click();
+  this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
     this.$(input).val('legit').change();
@@ -143,8 +143,8 @@ test('course external id validation passes on empty value', function(assert) {
     }
   });
 
-  let course = Object.create({
-    clerkshipType: resolve(Object.create()),
+  let course = EmberObject.create({
+    clerkshipType: resolve(EmberObject.create()),
     externalid: 'abcde',
     save() {
       let that = this;
@@ -162,10 +162,10 @@ test('course external id validation passes on empty value', function(assert) {
 
   const item = '.courseexternalid';
   const error = `${item} .validation-error-message`;
-  const open = `${item} .clickable`;
+  const button = `${item} .clickable`;
   const save = `${item} .actions .done`;
   const input = `${item} input`;
-  this.$(open).click();
+  this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
     this.$(input).val('').change();
@@ -184,12 +184,12 @@ test('shows a list of course directors', function(assert) {
     }
   });
 
-  let course = Object.create({
-    clerkshipType: resolve(Object.create()),
+  let course = EmberObject.create({
+    clerkshipType: resolve(EmberObject.create()),
     directors: resolve([
-      Object.create({ 'fullName': 'Adam Zyzzyva', 'lastName': 'Zyzzyva' }),
-      Object.create({ 'fullName': 'Zoe Aaardvark', 'lastName': 'Aardvark' }),
-      Object.create({ 'fullName': 'Mike Middleman', 'lastName': 'Middleman' })
+      EmberObject.create({ 'fullName': 'Adam Zyzzyva', 'lastName': 'Zyzzyva' }),
+      EmberObject.create({ 'fullName': 'Zoe Aaardvark', 'lastName': 'Aardvark' }),
+      EmberObject.create({ 'fullName': 'Mike Middleman', 'lastName': 'Middleman' })
     ])
   });
   this.set('course', course);

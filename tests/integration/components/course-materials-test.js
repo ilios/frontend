@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('course-materials', 'Integration | Component | course materials', {
@@ -11,18 +11,18 @@ moduleForComponent('course-materials', 'Integration | Component | course materia
 });
 
 test('course lms render', function(assert) {
-  let lm1 = Object.create({
+  let lm1 = EmberObject.create({
     title: 'title1',
     description: 'description1',
     originalAuthor: 'author1',
     link: 'url1',
     type: 'link',
   });
-  let courseLm1 = Object.create({
+  let courseLm1 = EmberObject.create({
     learningMaterial: resolve(lm1),
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     sessions: resolve([]),
     learningMaterials: resolve([courseLm1])
   });
@@ -48,21 +48,21 @@ test('course lms render', function(assert) {
 });
 
 let setupSessionLms = function(){
-  let lm1 = Object.create({
+  let lm1 = EmberObject.create({
     title: 'title1',
     description: 'description1',
     originalAuthor: 'author1',
     url: 'http://myhost.com/url1',
     type: 'link',
   });
-  let lm2 = Object.create({
+  let lm2 = EmberObject.create({
     title: 'title2',
     description: 'description2',
     originalAuthor: 'author2',
     url: 'http://myhost.com/url2',
     type: 'file',
   });
-  let lm3 = Object.create({
+  let lm3 = EmberObject.create({
     title: 'title3',
     description: 'description3',
     originalAuthor: 'author3',
@@ -70,16 +70,16 @@ let setupSessionLms = function(){
     type: 'citation',
     citation: 'citationtext',
   });
-  let sessionLm1 = Object.create({
+  let sessionLm1 = EmberObject.create({
     learningMaterial: resolve(lm1),
   });
-  let sessionLm2 = Object.create({
+  let sessionLm2 = EmberObject.create({
     learningMaterial: resolve(lm2),
   });
-  let sessionLm3 = Object.create({
+  let sessionLm3 = EmberObject.create({
     learningMaterial: resolve(lm3),
   });
-  let session1 = Object.create({
+  let session1 = EmberObject.create({
     title: 'session1title',
     learningMaterials: resolve([sessionLm1, sessionLm2, sessionLm3]),
     firstOfferingDate: resolve(new Date(2020, 1, 2, 12)),
@@ -88,7 +88,7 @@ let setupSessionLms = function(){
   sessionLm2.set('session', resolve(session1));
   sessionLm3.set('session', resolve(session1));
 
-  let course = Object.create({
+  let course = EmberObject.create({
     sessions: resolve([session1])
   });
 

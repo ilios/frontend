@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object } = Ember;
+const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('user-search', 'Integration | Component | user search', {
@@ -32,7 +32,7 @@ test('input triggers search', function(assert) {
       assert.equal('user', what);
       assert.equal(100, limit);
       assert.equal('search words', q);
-      return resolve([Object.create({fullName: 'test person', email: 'testemail'})]);
+      return resolve([EmberObject.create({fullName: 'test person', email: 'testemail'})]);
     }
   });
   this.register('service:store', storeMock);
@@ -74,10 +74,10 @@ test('search for groups', function(assert) {
     }
   });
   this.register('service:store', storeMock);
-  let group1 = Object.create({
+  let group1 = EmberObject.create({
     title: 'test1'
   });
-  let group2 = Object.create({
+  let group2 = EmberObject.create({
     title: 'test2'
   });
   this.set('availableInstructorGroups', [group1, group2]);
@@ -93,7 +93,7 @@ test('search for groups', function(assert) {
 });
 
 test('click user fires add user', function(assert) {
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     fullName: 'test person',
     email: 'testemail'
   });
@@ -125,7 +125,7 @@ test('click group fires add group', function(assert) {
   });
   this.register('service:store', storeMock);
 
-  let group1 = Object.create({
+  let group1 = EmberObject.create({
     title: 'test1'
   });
   this.on('action', function(group){

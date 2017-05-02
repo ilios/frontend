@@ -458,7 +458,7 @@ test('edit learning material', function(assert) {
 
             click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(0)');
             andThen(function(){
-              let container = $('.learningmaterial-manager');
+              container = $('.learningmaterial-manager');
               assert.equal(getElementText(find('.notes', container)), getText(newNote));
               assert.equal(getElementText(find('.status', container)), getText('status 2'));
             });
@@ -638,7 +638,7 @@ test('find and add learning material', function(assert) {
         click(searchResults[0]);
 
         andThen(function(){
-          let rows = find('.detail-learningmaterials-content tbody tr', container);
+          rows = find('.detail-learningmaterials-content tbody tr', container);
           assert.equal(rows.length, fixtures.session.learningMaterials.length + 1);
         });
       }, 1000);

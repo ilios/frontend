@@ -15,6 +15,9 @@ module.exports = {
     /* Stylistic Issues http://eslint.org/docs/rules/#stylistic-issues */
     indent: [2, 2], /* two-space indentation */
     semi: 2, /* require semi-colons */
-    'no-shadow': [2, {builtinGlobals: true}], /* Prevent shadowing globals like Object*/
+    'no-shadow': [2, {
+      builtinGlobals: true,
+      allow: ['event', 'i', 'name', 'parent', 'resolve', 'self', 'select', 'scrollTo', 'status']
+    },], /* Prevent shadowing globals like Object*/
   }
 };

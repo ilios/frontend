@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { Component, computed, inject, RSVP, ObjectProxy, Object } = Ember;
+const { Component, computed, inject, RSVP, ObjectProxy, Object:EmberObject } = Ember;
 const { service } = inject;
 const { not, alias } = computed;
 const { all, hash, map, Promise } = RSVP;
@@ -133,7 +133,7 @@ export default Component.extend({
           let promises = [];
           let proxies = [];
           sessions.forEach(session => {
-            let proxy = Object.create({
+            let proxy = EmberObject.create({
               session,
               content: session,
               sortValue: null
@@ -161,7 +161,7 @@ export default Component.extend({
           let promises = [];
           let proxies = [];
           sessions.forEach(session => {
-            let proxy = Object.create({
+            let proxy = EmberObject.create({
               session,
               content: session,
               sortValue: null

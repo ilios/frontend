@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('collapsed-learnergroups', 'Integration | Component | collapsed learnergroups', {
@@ -13,44 +13,44 @@ moduleForComponent('collapsed-learnergroups', 'Integration | Component | collaps
 
 test('displays summary data', function(assert) {
   assert.expect(6);
-  let cohort1 = Object.create({
+  let cohort1 = EmberObject.create({
     id: '1',
     title: 'cohort 1',
-    programYear: resolve(Object.create({
-      program: resolve(Object.create({
+    programYear: resolve(EmberObject.create({
+      program: resolve(EmberObject.create({
         title: 'program 1'
       }))
     }))
   });
-  let cohort2 = Object.create({
+  let cohort2 = EmberObject.create({
     id: '2',
     title: 'cohort 2',
-    programYear: resolve(Object.create({
-      program: resolve(Object.create({
+    programYear: resolve(EmberObject.create({
+      program: resolve(EmberObject.create({
         title: 'program 2'
       }))
     }))
   });
 
-  let learnerGroup1 = Object.create({
+  let learnerGroup1 = EmberObject.create({
     id: 1,
     cohort: resolve(cohort1)
   });
-  let learnerGroup2 = Object.create({
+  let learnerGroup2 = EmberObject.create({
     id: 2,
     cohort: resolve(cohort1)
   });
-  let learnerGroup3 = Object.create({
+  let learnerGroup3 = EmberObject.create({
     id: 3,
     cohort: resolve(cohort1)
   });
-  let learnerGroup4 = Object.create({
+  let learnerGroup4 = EmberObject.create({
     id: 4,
     cohort: resolve(cohort2)
   });
   let learnerGroups = [learnerGroup1, learnerGroup2, learnerGroup3, learnerGroup4];
 
-  const subject = Object.create({
+  const subject = EmberObject.create({
     learnerGroups: resolve(learnerGroups)
   });
 
@@ -70,7 +70,7 @@ test('displays summary data', function(assert) {
 test('clicking expand icon opens full view', function(assert) {
   assert.expect(2);
 
-  const subject = Object.create({
+  const subject = EmberObject.create({
     learnerGroups: resolve([])
   });
 

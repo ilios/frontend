@@ -5,7 +5,7 @@ import Ember from 'ember';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP, Service } = Ember;
+const { Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 const today = moment();
@@ -82,14 +82,14 @@ const userEventsMock = Service.extend({
     return new resolve(mockEvents);
   },
   getSessionForEvent() {
-    return Object.create({
+    return EmberObject.create({
       attireRequired: false,
       equipmentRequired: false,
       attendanceRequired: false,
     });
   }
 });
-const blankEventsMock = Service.extend({
+let blankEventsMock = Service.extend({
   getEvents(){
     return new resolve([]);
   }
@@ -305,7 +305,7 @@ test('changing passed properties re-renders', async function(assert) {
   assert.expect(10);
   const nextYear = today.clone().add(1, 'year');
   let count = 1;
-  const blankEventsMock = Service.extend({
+  blankEventsMock = Service.reopen({
     getEvents(fromStamp, toStamp){
       const from = moment(fromStamp, 'X');
       const to = moment(toStamp, 'X');

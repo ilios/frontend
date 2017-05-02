@@ -3,14 +3,14 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let user;
 moduleForComponent('user-profile-roles', 'Integration | Component | user profile roles', {
   integration: true,
   beforeEach(){
-    user = Object.create({
+    user = EmberObject.create({
       id: 6,
       enabled: true,
       userSyncIgnore: false,
@@ -18,19 +18,19 @@ moduleForComponent('user-profile-roles', 'Integration | Component | user profile
     });
   }
 });
-let courseDirectorRole = Object.create({
+let courseDirectorRole = EmberObject.create({
   title: 'Course Director'
 });
-let facultyRole = Object.create({
+let facultyRole = EmberObject.create({
   title: 'Faculty'
 });
-let developerRole = Object.create({
+let developerRole = EmberObject.create({
   title: 'Developer'
 });
-let formerStudentRole = Object.create({
+let formerStudentRole = EmberObject.create({
   title: 'Former Student'
 });
-let studentRole = Object.create({
+let studentRole = EmberObject.create({
   title: 'Student'
 });
 

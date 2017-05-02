@@ -6,7 +6,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-details', 'Integration | Component | curriculum inventory report details', {
@@ -21,20 +21,20 @@ moduleForComponent('curriculum-inventory-report-details', 'Integration | Compone
 test('it renders', function(assert) {
   assert.expect(2);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -64,20 +64,20 @@ test('it renders', function(assert) {
 test('finalize report', function(assert) {
   assert.expect(8);
 
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -94,7 +94,7 @@ test('finalize report', function(assert) {
     createRecord(what, params) {
       assert.equal(what, 'curriculumInventoryExport', 'createRecord() got invoked for export.');
       assert.equal(params.report, report, 'Report gets passed to correctly.');
-      return Object.create({
+      return EmberObject.create({
         save() {
           return resolve(this);
         }
@@ -130,20 +130,20 @@ test('finalize report', function(assert) {
 
 test('start finalizing report, then cancel', function(assert){
   assert.expect(3);
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
 
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i + 1}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),

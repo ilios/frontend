@@ -3,7 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, RSVP, isEmpty, isPresent, Object } = Ember;
+const { Component, computed, inject, RSVP, isEmpty, isPresent, Object:EmberObject } = Ember;
 const { map, Promise } = RSVP;
 const { service } = inject;
 const { oneWay } = computed;
@@ -17,7 +17,7 @@ const Validations = buildValidations({
   ]
 });
 
-const PrepositionObject = Object.extend({
+const PrepositionObject = EmberObject.extend({
   model: null,
   type: null,
   value: oneWay('model.id'),

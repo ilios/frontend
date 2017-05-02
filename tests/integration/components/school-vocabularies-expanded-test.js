@@ -5,7 +5,7 @@ import initializer from "ilios/instance-initializers/ember-i18n";
 import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 
 moduleForComponent('school-vocabularies-expanded', 'Integration | Component | school vocabularies expanded', {
   integration: true,
@@ -22,9 +22,9 @@ test('it renders', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
 

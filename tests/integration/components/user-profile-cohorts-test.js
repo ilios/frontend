@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('user-profile-cohorts', 'Integration | Component | user profile cohorts', {
@@ -12,38 +12,38 @@ moduleForComponent('user-profile-cohorts', 'Integration | Component | user profi
     this.register('service:currentUser', currentUserMock);
   }
 });
-let som = Object.create({
+let som = EmberObject.create({
   id: '1',
   title: 'SOM'
 });
-let sod = Object.create({
+let sod = EmberObject.create({
   id: '2',
   title: 'SOD'
 });
-let program1 = Object.create({
+let program1 = EmberObject.create({
   title: 'Program1',
   school: resolve(som)
 });
-let program2 = Object.create({
+let program2 = EmberObject.create({
   title: 'Program2',
   school: resolve(sod)
 });
-let programYear1 = Object.create({
+let programYear1 = EmberObject.create({
   program: resolve(program1),
   published: true,
   archived: false,
 });
-let programYear2 = Object.create({
+let programYear2 = EmberObject.create({
   program: resolve(program2),
   published: true,
   archived: false,
 });
-let programYear3 = Object.create({
+let programYear3 = EmberObject.create({
   program: resolve(program2),
   published: true,
   archived: false,
 });
-let programYear4 = Object.create({
+let programYear4 = EmberObject.create({
   program: resolve(program2),
   published: true,
   archived: false,
@@ -51,7 +51,7 @@ let programYear4 = Object.create({
 program1.set('programYears', resolve([programYear1, programYear4]));
 program2.set('programYears', resolve([programYear2, programYear3]));
 
-let cohort1 = Object.create({
+let cohort1 = EmberObject.create({
   id: 1,
   title: 'Cohort1',
   programYear: resolve(programYear1),
@@ -59,7 +59,7 @@ let cohort1 = Object.create({
   school: resolve(som)
 });
 
-let cohort2 = Object.create({
+let cohort2 = EmberObject.create({
   id: 2,
   title: 'Cohort2',
   programYear: resolve(programYear2),
@@ -67,7 +67,7 @@ let cohort2 = Object.create({
   school: resolve(sod)
 });
 
-let cohort3 = Object.create({
+let cohort3 = EmberObject.create({
   id: 3,
   title: 'Cohort3',
   programYear: resolve(programYear3),
@@ -75,7 +75,7 @@ let cohort3 = Object.create({
   school: resolve(sod)
 });
 
-let cohort4 = Object.create({
+let cohort4 = EmberObject.create({
   id: 4,
   title: 'Cohort4',
   programYear: resolve(programYear4),
@@ -91,12 +91,12 @@ sod.set('programs', resolve([program2]));
 
 let usercohorts = [cohort1, cohort2];
 
-let user = Object.create({
+let user = EmberObject.create({
   primaryCohort: resolve(cohort1),
   cohorts: resolve(usercohorts),
 });
 
-const mockCurrentUser = Object.create({
+const mockCurrentUser = EmberObject.create({
   schools: resolve([som, sod]),
   school: resolve(som),
 });

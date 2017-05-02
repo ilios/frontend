@@ -124,24 +124,24 @@ test('check allDescendantUsers', function(assert) {
     let subGroup2 = store.createRecord('learner-group', {users: [user3]});
     learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
 
-    return learnerGroup.get('allDescendantUsers').then(users => {
-      assert.equal(users.length, 3);
-      assert.ok(users.includes(user1));
-      assert.ok(users.includes(user2));
-      assert.ok(users.includes(user3));
+    return learnerGroup.get('allDescendantUsers').then(allDescendantUsers => {
+      assert.equal(allDescendantUsers.length, 3);
+      assert.ok(allDescendantUsers.includes(user1));
+      assert.ok(allDescendantUsers.includes(user2));
+      assert.ok(allDescendantUsers.includes(user3));
       let user4 = store.createRecord('user');
       let user5 = store.createRecord('user');
       learnerGroup.get('users').pushObject(user4);
       let subGroup3 = store.createRecord('learner-group', {users: [user5]});
       learnerGroup.get('children').pushObject(subGroup3);
 
-      return learnerGroup.get('allDescendantUsers').then(users => {
-        assert.equal(users.length, 5);
-        assert.ok(users.includes(user1));
-        assert.ok(users.includes(user2));
-        assert.ok(users.includes(user3));
-        assert.ok(users.includes(user4));
-        assert.ok(users.includes(user5));
+      return learnerGroup.get('allDescendantUsers').then(allDescendantUsers2 => {
+        assert.equal(allDescendantUsers2.length, 5);
+        assert.ok(allDescendantUsers2.includes(user1));
+        assert.ok(allDescendantUsers2.includes(user2));
+        assert.ok(allDescendantUsers2.includes(user3));
+        assert.ok(allDescendantUsers2.includes(user4));
+        assert.ok(allDescendantUsers2.includes(user5));
       });
 
     });
@@ -187,11 +187,11 @@ test('check subgroupNumberingOffset', function(assert) {
       assert.equal(offset, 1); // no subgroups. offset is 1.
       store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 1' });
       store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 3' });
-      learnerGroup.get('subgroupNumberingOffset').then((offset) => {
-        assert.equal(offset, 4); // highest number is 3. 3 + 1 = 4. offset is 4.
+      learnerGroup.get('subgroupNumberingOffset').then(subgroupNumberingOffset => {
+        assert.equal(subgroupNumberingOffset, 4); // highest number is 3. 3 + 1 = 4. offset is 4.
         store.createRecord('learner-group', {parent: learnerGroup, title: 'not the parent title 4' });
-        learnerGroup.get('subgroupNumberingOffset').then((offset) => {
-          assert.equal(offset, 4); // subgroup with title-mismatch is ignored, offset is still 4.
+        learnerGroup.get('subgroupNumberingOffset').then(subgroupNumberingOffset2 => {
+          assert.equal(subgroupNumberingOffset2, 4); // subgroup with title-mismatch is ignored, offset is still 4.
         });
       });
     });
@@ -214,24 +214,24 @@ test('check allinstructors', function(assert) {
     let instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
     learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
-    return learnerGroup.get('allInstructors').then(users => {
-      assert.equal(users.length, 3);
-      assert.ok(users.includes(user1));
-      assert.ok(users.includes(user2));
-      assert.ok(users.includes(user3));
+    return learnerGroup.get('allInstructors').then(allInstructors => {
+      assert.equal(allInstructors.length, 3);
+      assert.ok(allInstructors.includes(user1));
+      assert.ok(allInstructors.includes(user2));
+      assert.ok(allInstructors.includes(user3));
       let user4 = store.createRecord('user');
       let user5 = store.createRecord('user');
       learnerGroup.get('instructors').pushObject(user4);
       let instructorGroup3 = store.createRecord('instructor-group', {users: [user5]});
       learnerGroup.get('instructorGroups').pushObject(instructorGroup3);
 
-      return learnerGroup.get('allInstructors').then(users => {
-        assert.equal(users.length, 5);
-        assert.ok(users.includes(user1));
-        assert.ok(users.includes(user2));
-        assert.ok(users.includes(user3));
-        assert.ok(users.includes(user4));
-        assert.ok(users.includes(user5));
+      return learnerGroup.get('allInstructors').then(allInstructors2 => {
+        assert.equal(allInstructors2.length, 5);
+        assert.ok(allInstructors2.includes(user1));
+        assert.ok(allInstructors2.includes(user2));
+        assert.ok(allInstructors2.includes(user3));
+        assert.ok(allInstructors2.includes(user4));
+        assert.ok(allInstructors2.includes(user5));
       });
 
     });
@@ -250,11 +250,11 @@ test('check allParents', function(assert) {
     let subGroup2 = store.createRecord('learner-group', {parent: subGroup1});
     let subGroup3 = store.createRecord('learner-group', {parent: subGroup2});
 
-    return subGroup3.get('allParents').then(groups => {
-      assert.equal(groups.length, 3);
-      assert.equal(groups[0], subGroup2);
-      assert.equal(groups[1], subGroup1);
-      assert.equal(groups[2], learnerGroup);
+    return subGroup3.get('allParents').then(allParents => {
+      assert.equal(allParents.length, 3);
+      assert.equal(allParents[0], subGroup2);
+      assert.equal(allParents[1], subGroup1);
+      assert.equal(allParents[2], learnerGroup);
     });
   });
 });
@@ -358,13 +358,13 @@ test('check removeUserFromGroupAndAllDescendants', function(assert) {
     let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, users: [user1]});
     let subGroup4 = store.createRecord('learner-group', {parent: subGroup1});
 
-    return subGroup1.removeUserFromGroupAndAllDescendants(user1).then(groups => {
-      assert.equal(groups.length, 3);
-      assert.notOk(groups.includes(learnerGroup));
-      assert.ok(groups.includes(subGroup1));
-      assert.ok(groups.includes(subGroup2));
-      assert.ok(groups.includes(subGroup3));
-      assert.notOk(groups.includes(subGroup4));
+    return subGroup1.removeUserFromGroupAndAllDescendants(user1).then(groupsToRemove => {
+      assert.equal(groupsToRemove.length, 3);
+      assert.notOk(groupsToRemove.includes(learnerGroup));
+      assert.ok(groupsToRemove.includes(subGroup1));
+      assert.ok(groupsToRemove.includes(subGroup2));
+      assert.ok(groupsToRemove.includes(subGroup3));
+      assert.notOk(groupsToRemove.includes(subGroup4));
     });
   });
 });
@@ -384,13 +384,13 @@ test('check addUserToGroupAndAllParents', function(assert) {
     let subGroup3 = store.createRecord('learner-group', {id: 3, parent: subGroup2});
     let subGroup4 = store.createRecord('learner-group', {id: 4, parent: subGroup1});
 
-    return subGroup3.addUserToGroupAndAllParents(user1).then(groups => {
-      assert.equal(groups.length, 3);
-      assert.ok(groups.includes(learnerGroup));
-      assert.notOk(groups.includes(subGroup1));
-      assert.ok(groups.includes(subGroup2));
-      assert.ok(groups.includes(subGroup3));
-      assert.notOk(groups.includes(subGroup4));
+    return subGroup3.addUserToGroupAndAllParents(user1).then(groupsToAdd => {
+      assert.equal(groupsToAdd.length, 3);
+      assert.ok(groupsToAdd.includes(learnerGroup));
+      assert.notOk(groupsToAdd.includes(subGroup1));
+      assert.ok(groupsToAdd.includes(subGroup2));
+      assert.ok(groupsToAdd.includes(subGroup3));
+      assert.notOk(groupsToAdd.includes(subGroup4));
     });
   });
 });

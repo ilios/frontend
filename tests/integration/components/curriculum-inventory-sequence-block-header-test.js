@@ -4,7 +4,7 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-header', 'Integration | Component | curriculum inventory sequence block header', {
@@ -12,7 +12,7 @@ moduleForComponent('curriculum-inventory-sequence-block-header', 'Integration | 
 });
 
 test('it renders', function(assert) {
-  let block = Object.create({
+  let block = EmberObject.create({
     title: 'Block title'
   });
   this.set('sequenceBlock', block);
@@ -22,7 +22,7 @@ test('it renders', function(assert) {
 });
 
 test('read-only mode for block in finalized report', function(assert) {
-  let block = Object.create({
+  let block = EmberObject.create({
     title: 'Block title',
     report: {
       isFinalized: true
@@ -36,7 +36,7 @@ test('read-only mode for block in finalized report', function(assert) {
 test('change title', function(assert) {
   assert.expect(3);
   const newTitle = 'new title';
-  let block = Object.create({
+  let block = EmberObject.create({
     title: 'block title',
     save(){
       assert.equal(this.get('title'), newTitle);
@@ -57,7 +57,7 @@ test('change title', function(assert) {
 
 test('change title fails on empty value', function(assert) {
   assert.expect(2);
-  let block = Object.create({
+  let block = EmberObject.create({
     title: 'block title',
     save(){
       assert.ok(false, 'Save action should not have been invoked.');
@@ -77,7 +77,7 @@ test('change title fails on empty value', function(assert) {
 
 test('change title fails on too-short value', function(assert) {
   assert.expect(2);
-  let block = Object.create({
+  let block = EmberObject.create({
     title: 'block title',
     save(){
       assert.ok(false, 'Save action should not have been invoked.');
@@ -97,7 +97,7 @@ test('change title fails on too-short value', function(assert) {
 
 test('change title fails on overlong value', function(assert) {
   assert.expect(2);
-  let block = Object.create({
+  let block = EmberObject.create({
     title: 'block title',
     save(){
       assert.ok(false, 'Save action should not have been invoked.');

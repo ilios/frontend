@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('learnergroup-summary', 'Integration | Component | learnergroup summary', {
@@ -11,35 +11,35 @@ moduleForComponent('learnergroup-summary', 'Integration | Component | learnergro
 });
 
 test('renders with data', function(assert) {
-  const user1 = Object.create({
+  const user1 = EmberObject.create({
     fullName: 'user1'
   });
-  const user2 = Object.create({
+  const user2 = EmberObject.create({
     fullName: 'user2'
   });
-  const user3 = Object.create({
+  const user3 = EmberObject.create({
     fullName: 'user3'
   });
-  const user4 = Object.create({
+  const user4 = EmberObject.create({
     fullName: 'user4'
   });
-  const user5 = Object.create({
+  const user5 = EmberObject.create({
     fullName: 'user5'
   });
-  const user6 = Object.create({
+  const user6 = EmberObject.create({
     fullName: 'user6'
   });
 
-  const cohort = Object.create({
+  const cohort = EmberObject.create({
     title: 'this cohort',
     users: resolve([user1, user2, user3, user4]),
   });
-  let subGroup = Object.create({
+  let subGroup = EmberObject.create({
     title: 'test sub-group',
     users: resolve([]),
     children: resolve([]),
   });
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     title: 'test group',
     location: 'test location',
     children: resolve([subGroup]),
@@ -65,12 +65,12 @@ test('renders with data', function(assert) {
     isEditing=false
   }}`);
 
-  const location = '.learnergroup-overview .defaultlocation span:eq(0)';
+  const defaultLocation = '.learnergroup-overview .defaultlocation span:eq(0)';
   const instructors = '.learnergroup-overview .defaultinstructors span';
   const courses = '.learnergroup-overview .associatedcourses div';
 
   return wait().then(()=>{
-    assert.equal(this.$(location).text().trim(), 'test location');
+    assert.equal(this.$(defaultLocation).text().trim(), 'test location');
     assert.equal(this.$(instructors).text().trim(), 'user5; user6');
     assert.equal(this.$(courses).text().trim(), 'test course 1; test course 2');
   });
@@ -79,16 +79,16 @@ test('renders with data', function(assert) {
 test('Update location', function(assert) {
   assert.expect(3);
 
-  const cohort = Object.create({
+  const cohort = EmberObject.create({
     title: 'this cohort',
     users: resolve([]),
   });
-  let subGroup = Object.create({
+  let subGroup = EmberObject.create({
     title: 'test sub-group',
     users: resolve([]),
     children: resolve([]),
   });
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     title: 'test group',
     location: 'test location',
     children: resolve([subGroup]),
@@ -117,18 +117,18 @@ test('Update location', function(assert) {
     isEditing=false
   }}`);
 
-  const location = '.learnergroup-overview .defaultlocation span:eq(0)';
-  const editLocation = `${location} .editable`;
-  const input =  `${location} input`;
-  const save =  `${location} .done`;
+  const defaultLocation = '.learnergroup-overview .defaultlocation span:eq(0)';
+  const editLocation = `${defaultLocation} .editable`;
+  const input =  `${defaultLocation} input`;
+  const save =  `${defaultLocation} .done`;
   return wait().then(()=>{
-    assert.equal(this.$(location).text().trim(), 'test location');
+    assert.equal(this.$(defaultLocation).text().trim(), 'test location');
     this.$(editLocation).click();
     return wait().then(()=> {
       this.$(input).val('new location name').change();
       this.$(save).click();
       return wait().then(()=> {
-        assert.equal(this.$(location).text().trim(), 'new location name');
+        assert.equal(this.$(defaultLocation).text().trim(), 'new location name');
       });
     });
   });

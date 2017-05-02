@@ -17,12 +17,12 @@ export default Controller.extend({
     return arr;
   }),
   actions: {
-    toggleOpenWeek(week, open) {
+    toggleOpenWeek(week, shouldOpen) {
       const expanded = this.get('expanded');
       const expandedString = expanded?expanded:'';
       let arr =  expandedString.split('-');
       arr.removeObject(week);
-      if (open) {
+      if (shouldOpen) {
         arr.pushObject(week);
       }
       arr = arr.sort();

@@ -139,10 +139,9 @@ export default Controller.extend({
 
   selectedSchool: computed('model.schools.[]', 'schoolId', function(){
     let schools = this.get('model.schools');
-    if(isPresent(this.get('schoolId'))){
-      let school =  schools.find(school => {
-        return school.get('id') === this.get('schoolId');
-      });
+    const schoolId = this.get('schoolId');
+    if(isPresent(schoolId)){
+      const school = schools.findBy('id', schoolId);
       if(school){
         return PromiseObject.create({
           promise: RSVP.resolve(school)
@@ -162,11 +161,9 @@ export default Controller.extend({
     let defer = RSVP.defer();
     this.get('programs').then(programs => {
       let program;
-      if(isPresent(this.get('programId'))){
-        program =  programs.find(program => {
-          return program.get('id') === this.get('programId');
-        });
-
+      const programId = this.get('programId');
+      if(isPresent(programId)){
+        program = programs.findBy('id', programId);
       }
       if(program){
         defer.resolve(program);
@@ -189,10 +186,9 @@ export default Controller.extend({
     let defer = RSVP.defer();
     this.get('programYears').then(programYears => {
       let programYear;
-      if(isPresent(this.get('programYearId'))){
-        programYear =  programYears.find(programYear => {
-          return programYear.get('id') === this.get('programYearId');
-        });
+      const programYearId = this.get('programYearId');
+      if(isPresent(programYearId)){
+        programYear = programYears.findBy('id', programYearId);
       }
       if(programYear){
         defer.resolve(programYear);
@@ -256,7 +252,7 @@ export default Controller.extend({
     },
 
     changeSelectedProgramYear(programYearId) {
-      let programYear = this.get('programYears').find(programYear => programYear.get('id') === programYearId);
+      let programYear = this.get('programYears').findBy('id', programYearId);
       programYear.get('program').then(program => {
         program.get('school').then(school => {
           this.set('schoolId', school.get('id'));

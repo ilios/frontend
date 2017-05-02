@@ -18,10 +18,9 @@ export default Controller.extend({
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
   selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function(){
     let schools = this.get('model.schools');
-    if(isPresent(this.get('school'))){
-      let school =  schools.find(school => {
-        return school.get('id') === this.get('school');
-      });
+    const schoolId = this.get('school');
+    if(isPresent(schoolId)){
+      const school = schools.findBy('id', schoolId);
       if(school){
         return school;
       }

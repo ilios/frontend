@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-const { String, computed } = Ember;
-const { htmlSafe } = String;
+const { String:EmberString, computed } = Ember;
+const { htmlSafe } = EmberString;
 
 export default Ember.Component.extend({
   classNames: ['progress-bar'],

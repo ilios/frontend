@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('publish-all-sessions', 'Integration | Component | publish all sessions', {
@@ -12,36 +12,36 @@ moduleForComponent('publish-all-sessions', 'Integration | Component | publish al
 
 test('it renders', async function(assert) {
   assert.expect(4);
-  const unpublishableSession = Object.create({
+  const unpublishableSession = EmberObject.create({
     id: 1,
     title: 'session 1',
-    requiredPublicationIssues: Object.create({
+    requiredPublicationIssues: EmberObject.create({
       length: 1
     }),
-    optionalPublicationIssues: Object.create({
+    optionalPublicationIssues: EmberObject.create({
       length: 1
     }),
     published: false,
   });
-  const completeSession = Object.create({
+  const completeSession = EmberObject.create({
     id: 2,
     title: 'session 2',
-    requiredPublicationIssues: Object.create({
+    requiredPublicationIssues: EmberObject.create({
       length: 0
     }),
-    optionalPublicationIssues: Object.create({
+    optionalPublicationIssues: EmberObject.create({
       length: 0
     }),
     allPublicationIssuesLength: 0,
     published: true,
   });
-  const publishableSession = Object.create({
+  const publishableSession = EmberObject.create({
     id: 3,
     title: 'session 3',
-    requiredPublicationIssues: Object.create({
+    requiredPublicationIssues: EmberObject.create({
       length: 0
     }),
-    optionalPublicationIssues: Object.create({
+    optionalPublicationIssues: EmberObject.create({
       length: 1
     }),
     published: false,

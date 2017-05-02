@@ -4,7 +4,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object } = Ember;
+const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-rollover', 'Integration | Component | curriculum inventory report rollover', {
@@ -21,7 +21,7 @@ test('it renders', function(assert) {
   this.register('service:store', storeMock);
 
   const thisYear = parseInt(moment().format('YYYY'));
-  let report = Object.create({
+  let report = EmberObject.create({
     id: 1,
     name: 'old report',
     description: 'this is an old report',
@@ -49,7 +49,7 @@ test('it renders', function(assert) {
 test('rollover report', function(assert) {
   assert.expect(12);
   const thisYear = parseInt(moment().format('YYYY'));
-  let report = Object.create({
+  let report = EmberObject.create({
     id: 1,
     name: 'old report',
     description: 'this is an old report',
@@ -58,7 +58,6 @@ test('rollover report', function(assert) {
 
   let ajaxMock = Service.extend({
     request(url, {method, data}){
-      let thisYear = parseInt(moment().format('YYYY'));
       assert.equal(url.trim(), `/api/curriculuminventoryreports/${report.get('id')}/rollover`);
       assert.equal(method, 'POST');
       assert.equal(data.year, thisYear + 1);
@@ -86,7 +85,7 @@ test('rollover report', function(assert) {
       assert.equal(what, 'curriculum-inventory-report');
       assert.equal(id, 14);
 
-      return Object.create({
+      return EmberObject.create({
         id: 14
       });
     },
@@ -117,7 +116,7 @@ test('rollover report', function(assert) {
 test('rollover report with new name, description and year', function(assert) {
   assert.expect(7);
   const thisYear = parseInt(moment().format('YYYY'));
-  let report = Object.create({
+  let report = EmberObject.create({
     id: 1,
     name: 'old report',
     description: 'this is an old report',
@@ -151,7 +150,7 @@ test('rollover report with new name, description and year', function(assert) {
     peekRecord(what, id){
       assert.equal(what, 'curriculum-inventory-report');
       assert.equal(id, 14);
-      return Object.create({
+      return EmberObject.create({
         id: 14
       });
     },
@@ -191,7 +190,7 @@ test('no input validation errors are shown initially', function(assert) {
     }
   });
   this.register('service:store', storeMock);
-  let report = Object.create({
+  let report = EmberObject.create({
     id: 1,
   });
   this.set('report', report);
@@ -210,7 +209,7 @@ test('input validation fails on blank reort name', function(assert) {
     }
   });
   this.register('service:store', storeMock);
-  let report = Object.create({
+  let report = EmberObject.create({
     id: 1,
     name: 'report name',
   });

@@ -77,8 +77,8 @@ test('add director', function(assert) {
 
   andThen(function() {
     assert.equal(currentPath(), 'program.programYear.index');
-    var container = find('.programyear-overview').eq(0);
-    var items = find('.removable-list li', container);
+    let container = find('.programyear-overview').eq(0);
+    let items = find('.removable-list li', container);
     assert.equal(items.length, 3);
     assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
     assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
@@ -86,7 +86,7 @@ test('add director', function(assert) {
 
     fillIn(find('.search-box input', container), 'guy').then(function(){
       click('.results li:eq(6)', container).then(function(){
-        var items = find('.removable-list li', container);
+        items = find('.removable-list li', container);
         assert.equal(items.length, 4);
         assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
         assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));

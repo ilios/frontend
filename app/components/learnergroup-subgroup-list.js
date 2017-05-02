@@ -64,13 +64,13 @@ export default Component.extend({
               groups.pushObject(newGroup);
             }
 
-            let saveSomeGroups = (groups) => {
-              let chunk = groups.splice(0, 6);
+            let saveSomeGroups = (groupsToSave) => {
+              let chunk = groupsToSave.splice(0, 6);
 
               RSVP.all(chunk.invoke('save')).then(() => {
-                if (groups.length){
+                if (groupsToSave.length){
                   this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
-                  saveSomeGroups(groups);
+                  saveSomeGroups(groupsToSave);
                 } else {
                   this.set('isSaving', false);
                   this.set('showNewLearnerGroupForm', false);

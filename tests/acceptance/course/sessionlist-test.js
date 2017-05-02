@@ -232,10 +232,10 @@ test('first offering is updated when offering is updated #1276', function(assert
       assert.equal(offerings.length, 3);
       let offering = find('.offering-block-time-offering').eq(0);
       return click('.offering-block-time-offering-actions .edit', offering).then(function(){
-        let container = find('.offering-manager');
-        const startDateInput = '.start-date input';
-        const doneButton = '.done';
-        let startDateInteractor = openDatepicker(find(startDateInput, container));
+        const offeringManager = '.offering-manager';
+        const startDateInput = `${offeringManager} .start-date input`;
+        const doneButton = `${offeringManager} .done`;
+        let startDateInteractor = openDatepicker(find(startDateInput));
         startDateInteractor.selectDate(newStartDate);
         return click(doneButton).then(() => {
           return click('.backtosessionlink a');
@@ -244,7 +244,7 @@ test('first offering is updated when offering is updated #1276', function(assert
 
     });
     andThen(function(){
-      let container = find('.sessions-list');
+      container = find('.sessions-list');
       assert.equal(currentPath(), 'course.index');
       let actualDateText = getElementText(find('tr:eq(1) td:eq(3)', container), getText);
       let expectedDateText = getText(moment(newStartDate).format('MM/DD/YYYY'));

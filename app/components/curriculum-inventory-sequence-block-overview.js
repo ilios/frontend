@@ -233,8 +233,8 @@ export default Component.extend({
     changeChildSequenceOrder() {
       let block = this.get('sequenceBlock');
       block.set('childSequenceOrder', parseInt(this.get('childSequenceOrder'), 10));
-      block.save().then(block => {
-        block.get('children').then(children => {
+      block.save().then(savedBlock => {
+        savedBlock.get('children').then(children => {
           children.invoke('reload');
         });
       });
@@ -265,8 +265,8 @@ export default Component.extend({
     changeOrderInSequence() {
       let block = this.get('sequenceBlock');
       block.set('orderInSequence', this.get('orderInSequence'));
-      block.save().then(block => {
-        block.get('parent').then(parent => {
+      block.save().then(savedBlock => {
+        savedBlock.get('parent').then(parent => {
           parent.get('children').then(children => {
             children.invoke('reload');
           });
