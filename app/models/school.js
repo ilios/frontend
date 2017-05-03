@@ -34,21 +34,15 @@ export default Model.extend({
     }
   }).readOnly(),
 
-  getCohortsForYear(year){
-    return new Promise(resolve => {
-      this.getProgramYearsForYear(year).then(programYears => {
-        let cohorts = [];
-        let promises = [];
-        programYears.forEach(programYear => {
-          promises.pushObject(programYear.get('cohort').then(cohort => {
-            cohorts.pushObject(cohort);
-          }));
-        });
-        all(promises).then(()=> {
-          resolve(cohorts);
-        });
-      });
+  async getCohortsForYear(year){
+    let cohorts = await this.get('cohorts');
+    let cohortsForYear = await Ember.RSVP.filter(cohorts.toArray(), async cohort => {
+      const programYear = await cohort.get('programYear');
+      let start = parseInt(programYear.get('startYear'));
+      let end = parseInt(programYear.get('classOfYear'));
+      return (parseInt(year) >= start && parseInt(year) <= end);
     });
+    return cohortsForYear;
   },
 
   getProgramYearsForYear(year){
