@@ -4,7 +4,7 @@ import Ember from 'ember';
 import startMirage from '../../helpers/start-mirage';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, Service, RSVP } = Ember;
+const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('unassigned-students-summary', 'Integration | Component | unassigned students summary', {
@@ -15,9 +15,9 @@ moduleForComponent('unassigned-students-summary', 'Integration | Component | una
 });
 
 test('it renders', function(assert) {
-  let primarySchool = Object.create(server.create('school'));
-  let secondarySchool = Object.create(server.create('school'));
-  let user = Object.create({
+  let primarySchool = EmberObject.create(server.create('school'));
+  let secondarySchool = EmberObject.create(server.create('school'));
+  let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
   });
@@ -55,8 +55,8 @@ test('it renders', function(assert) {
 });
 
 test('it renders empty', function(assert) {
-  let primarySchool = Object.create(server.create('school'));
-  let user = Object.create({
+  let primarySchool = EmberObject.create(server.create('school'));
+  let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool])
   });

@@ -286,7 +286,7 @@ test('users can create a new offering single day', function(assert) {
   const startTimes = '.start-time select';
   const durationHours = '.offering-duration .hours input';
   const durationMinutes = '.offering-duration .minutes input';
-  const location = '.room input';
+  const offeringLocation = '.room input';
 
   const availableLearnerGroups = '.available-learner-groups .tree-groups-list';
   const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
@@ -320,7 +320,7 @@ test('users can create a new offering single day', function(assert) {
 
   fillIn(durationHours, 15);
   fillIn(durationMinutes, 15);
-  fillIn(location, 'Rm. 111');
+  fillIn(offeringLocation, 'Rm. 111');
   click(learnerGroupOne);
   click(learnerGroupTwo);
   fillIn(searchBox, 'guy');
@@ -350,7 +350,7 @@ test('users can create a new offering multi-day', function(assert) {
   const startTimes = `${form} .start-time select`;
   const durationHours = `${form} .offering-duration .hours input`;
   const durationMinutes = `${form} .offering-duration .minutes input`;
-  const location = `${form} .room input`;
+  const offeringLocation = `${form} .room input`;
 
   const availableLearnerGroups = `${form} .available-learner-groups .tree-groups-list`;
   const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
@@ -384,7 +384,7 @@ test('users can create a new offering multi-day', function(assert) {
 
   fillIn(durationHours, 39);
   fillIn(durationMinutes, 15);
-  fillIn(location, 'Rm. 111');
+  fillIn(offeringLocation, 'Rm. 111');
   click(learnerGroupOne);
   click(learnerGroupTwo);
   fillIn(searchBox, 'guy');
@@ -471,7 +471,7 @@ test('users can edit existing offerings', function(assert) {
   const startTimes = `${form} .start-time select`;
   const durationHours = `${form} .offering-duration .hours input`;
   const durationMinutes = `${form} .offering-duration .minutes input`;
-  const location = `${form} .room input`;
+  const offeringLocation = `${form} .room input`;
 
   const removeLearnerGroupOne = `${form} .selected-learner-groups .remove-all-subgroups:eq(0)`;
   const removeFirstInstructor = `${form} .instructors .removable-list:eq(1) li:first i`;
@@ -500,7 +500,7 @@ test('users can edit existing offerings', function(assert) {
 
     fillIn(durationHours, 6);
     fillIn(durationMinutes, 10);
-    fillIn(location, 'Rm. 111');
+    fillIn(offeringLocation, 'Rm. 111');
     click(removeLearnerGroupOne);
     click(removeFirstInstructor);
     click(removeFirstInstructorGroup);

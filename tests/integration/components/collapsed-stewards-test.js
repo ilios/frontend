@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('collapsed-stewards', 'Integration | Component | collapsed stewards', {
@@ -12,38 +12,38 @@ moduleForComponent('collapsed-stewards', 'Integration | Component | collapsed st
 
 test('it renders', function(assert) {
   assert.expect(5);
-  let school1 = Object.create({
+  let school1 = EmberObject.create({
     id: 1,
     title: 'school1'
   });
-  let school2 = Object.create({
+  let school2 = EmberObject.create({
     id: 2,
     title: 'school2'
   });
-  let department1 = Object.create({
+  let department1 = EmberObject.create({
     id: 1,
     school: resolve(school1)
   });
-  let department2 = Object.create({
+  let department2 = EmberObject.create({
     id: 2,
     school: resolve(school1)
   });
   school1.set('departments', resolve([department1, department2]));
-  let department3 = Object.create({
+  let department3 = EmberObject.create({
     id: 3,
     school: resolve(school2)
   });
   school2.set('departments', resolve([department3]));
 
-  let programYear = Object.create();
-  let steward1 = Object.create({
+  let programYear = EmberObject.create();
+  let steward1 = EmberObject.create({
     programYear: resolve(programYear),
     school: resolve(school1),
     department: resolve(department1)
   });
   department1.set('stewards', resolve([steward1]));
 
-  let steward2 = Object.create({
+  let steward2 = EmberObject.create({
     programYear: resolve(programYear),
     school: resolve(school1),
     department: resolve(department2)
@@ -51,7 +51,7 @@ test('it renders', function(assert) {
   department2.set('stewards', resolve([steward2]));
   school1.set('stewards', resolve([steward1, steward2]));
 
-  let steward3 = Object.create({
+  let steward3 = EmberObject.create({
     programYear: resolve(programYear),
     school: resolve(school2),
     department: resolve(department3)
@@ -88,7 +88,7 @@ test('it renders', function(assert) {
 
 test('clicking the header expands the list', function(assert) {
   assert.expect(1);
-  let programYear = Object.create({
+  let programYear = EmberObject.create({
     stewards: resolve([])
   });
   this.set('programYear', programYear);

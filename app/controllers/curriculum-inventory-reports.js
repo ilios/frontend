@@ -38,10 +38,9 @@ export default Controller.extend({
   selectedSchool: computed('schools.[]', 'schoolId', function(){
     return new Promise(resolve => {
       let schools = this.get('schools');
-      if(isPresent(this.get('schoolId'))){
-        let school =  schools.find(school => {
-          return school.get('id') === this.get('schoolId');
-        });
+      const schoolId = this.get('schoolId');
+      if(isPresent(schoolId)){
+        let school = schools.findBy('id', schoolId);
         if(school){
           resolve(school);
         }
@@ -93,9 +92,7 @@ export default Controller.extend({
         let program;
         let programId = this.get('programId');
         if(isPresent(programId)){
-          program = programs.find(program => {
-            return program.get('id') === this.get('programId');
-          });
+          program = programs.findBy('id', programId);
         }
         if(program){
           resolve(program);

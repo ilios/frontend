@@ -4,7 +4,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object } = Ember;
+const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('session-copy', 'Integration | Component | session copy', {
@@ -17,23 +17,23 @@ test('it renders', function(assert) {
   let lastYear = thisYear - 1;
   let nextYear = thisYear + 1;
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1
   });
 
-  let course1 = Object.create({
+  let course1 = EmberObject.create({
     id: 1,
     title: 'old course',
     school: school
   });
 
-  let course2 = Object.create({
+  let course2 = EmberObject.create({
     id: 1,
     title: 'old course 2',
     school: school
   });
 
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'old session',
     course: course1
@@ -52,7 +52,7 @@ test('it renders', function(assert) {
       assert.equal(what, 'academicYear');
 
       return [lastYear, thisYear, nextYear].map(year => {
-        return Object.create({
+        return EmberObject.create({
           id: year,
           title: year
         });
@@ -89,41 +89,41 @@ test('copy session', function(assert) {
 
   let thisYear = parseInt(moment().format('YYYY'));
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old course',
     school: school
   });
-  let lm = Object.create();
-  let learningMaterial = Object.create({
+  let lm = EmberObject.create();
+  let learningMaterial = EmberObject.create({
     notes: 'soem notes',
     required: false,
     publicNotes: true,
     learningMaterial: resolve(lm),
     position: 3,
   });
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'session objective title',
-    parents: [Object.create()],
+    parents: [EmberObject.create()],
     position: 3,
   });
   let objectives = [objective];
-  let meshDescriptors = [Object.create()];
-  let terms = [Object.create()];
+  let meshDescriptors = [EmberObject.create()];
+  let terms = [EmberObject.create()];
 
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'old session',
     course,
     attireRequired: true,
     equipmentRequired: false,
     supplemental: true,
-    sessionType: resolve(Object.create()),
-    sessionDescription: resolve(Object.create({
+    sessionType: resolve(EmberObject.create()),
+    sessionDescription: resolve(EmberObject.create({
       id: 13,
       description: 'test description'
     })),
@@ -139,7 +139,7 @@ test('copy session', function(assert) {
     },
     findAll(){
       return [thisYear].map(year => {
-        return Object.create({
+        return EmberObject.create({
           id: year,
           title: year
         });
@@ -152,7 +152,7 @@ test('copy session', function(assert) {
         assert.equal(session.supplemental, props.supplemental);
         assert.equal(session.title, props.title);
 
-        return Object.create({
+        return EmberObject.create({
           id: 14,
           save(){
             assert.equal(course, this.get('course'));
@@ -167,7 +167,7 @@ test('copy session', function(assert) {
         assert.equal(learningMaterial.get('publicNotes'), props.publicNotes);
         assert.equal(learningMaterial.get('position'), props.position);
 
-        return Object.create({
+        return EmberObject.create({
           save(){
             assert.equal(this.get('session.id'), 14);
             assert.equal(this.get('learningMaterial.id'), lm.get('id'));
@@ -177,7 +177,7 @@ test('copy session', function(assert) {
       if (what === 'sessionDescription') {
         assert.equal('test description', props.description);
 
-        return Object.create({
+        return EmberObject.create({
           save(){
             assert.equal(this.get('session.id'), 14);
           }
@@ -187,7 +187,7 @@ test('copy session', function(assert) {
         assert.equal(objective.title, props.title);
         assert.equal(objective.position, props.position);
 
-        return Object.create({
+        return EmberObject.create({
           save(){
             let sessions = this.get('sessions');
             assert.equal(sessions.length, 1);
@@ -233,17 +233,17 @@ test('errors do not show up initially and save cannot be clicked', function(asse
   this.register('service:store', storeMock);
 
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old course',
     school: school
   });
 
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'old session',
     course
@@ -266,17 +266,17 @@ test('changing the year looks for new matching courses', function(assert) {
   let thisYear = parseInt(moment().format('YYYY'));
   let nextYear = thisYear + 1;
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old course',
     school: school
   });
 
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'old session',
     course
@@ -303,7 +303,7 @@ test('changing the year looks for new matching courses', function(assert) {
     },
     findAll(){
       return [thisYear, nextYear].map(year => {
-        return Object.create({
+        return EmberObject.create({
           id: year,
           title: year
         });
@@ -327,25 +327,25 @@ test('copy session into the first course in a different year year #2130', functi
   let thisYear = parseInt(moment().format('YYYY'));
   let nextYear = parseInt(moment().add(1, 'year').format('YYYY'));
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1
   });
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'old course',
     school: school,
     year: thisYear
   });
 
-  let firstCourse = Object.create({
+  let firstCourse = EmberObject.create({
     id: 2,
     title: 'old course',
     school: school,
     year: nextYear
   });
 
-  let targetCourse = Object.create({
+  let targetCourse = EmberObject.create({
     id: 3,
     title: 'alpha first',
     school: school,
@@ -353,15 +353,15 @@ test('copy session into the first course in a different year year #2130', functi
   });
 
 
-  let session = Object.create({
+  let session = EmberObject.create({
     id: 1,
     title: 'old session',
     course,
     attireRequired: true,
     equipmentRequired: false,
     supplemental: true,
-    sessionType: resolve(Object.create()),
-    sessionDescription: resolve(Object.create()),
+    sessionType: resolve(EmberObject.create()),
+    sessionDescription: resolve(EmberObject.create()),
     objectives: resolve([]),
     meshDescriptors: resolve([]),
     terms: resolve([]),
@@ -375,11 +375,11 @@ test('copy session into the first course in a different year year #2130', functi
       assert.ok('year' in filters, 'filtered by year');
 
       const year = parseInt(filters.year);
-      return [course, firstCourse, targetCourse].filter(course => course.get('year') === year);
+      return [course, firstCourse, targetCourse].filter(c => c.get('year') === year);
     },
     findAll(){
       return [thisYear, nextYear].map(year => {
-        return Object.create({
+        return EmberObject.create({
           id: year,
           title: year
         });
@@ -387,7 +387,7 @@ test('copy session into the first course in a different year year #2130', functi
     },
     createRecord(what){
       if (what === 'session') {
-        return Object.create({
+        return EmberObject.create({
           id: 14,
           save(){
             assert.equal(targetCourse.get('id'), this.get('course.id'), 'the correct course was selected');
@@ -396,7 +396,7 @@ test('copy session into the first course in a different year year #2130', functi
       }
 
       if (what === 'sessionDescription') {
-        return Object.create({
+        return EmberObject.create({
           save(){
           }
         });

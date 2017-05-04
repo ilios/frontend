@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, Service, RSVP } = Ember;
+const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
@@ -21,31 +21,31 @@ test('nothing', function(assert){
 });
 
 test('it renders', function(assert) {
-  let program = Object.create({
+  let program = EmberObject.create({
     duration: 20,
     title: 'program title'
   });
-  let programYear = Object.create({
+  let programYear = EmberObject.create({
     program,
     startYear: 2020
   });
-  let cohort = Object.create({
+  let cohort = EmberObject.create({
     title: 'test cohort',
     programYear
   });
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1,
     cohorts: resolve([cohort])
   });
   let students = [
-    Object.create({
+    EmberObject.create({
       id: 1,
       fullName: 'test person',
       email: 'tstemail',
       campusId: 'id123'
     }),
-    Object.create({
+    EmberObject.create({
       id: 2,
       fullName: 'second person',
       email: '2nd@.com',
@@ -89,12 +89,12 @@ test('it renders', function(assert) {
 });
 
 test('check all checks all', function(assert) {
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1,
     cohorts: resolve([])
   });
   let students = [
-    Object.create({
+    EmberObject.create({
       id: 1,
       fullName: 'test person',
       email: 'tstemail',
@@ -135,18 +135,18 @@ test('check all checks all', function(assert) {
 });
 
 test('check some sets indeterminate state', function(assert) {
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1,
     cohorts: resolve([])
   });
   let students = [
-    Object.create({
+    EmberObject.create({
       id: 1,
       fullName: 'test person',
       email: 'tstemail',
       campusId: 'id123'
     }),
-    Object.create({
+    EmberObject.create({
       id: 2,
       fullName: 'test person2',
       email: 'tstemail2',
@@ -191,18 +191,18 @@ test('check some sets indeterminate state', function(assert) {
 });
 
 test('when some are selected check all checks all', function(assert) {
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1,
     cohorts: resolve([])
   });
   let students = [
-    Object.create({
+    EmberObject.create({
       id: 1,
       fullName: 'test person',
       email: 'tstemail',
       campusId: 'id123'
     }),
-    Object.create({
+    EmberObject.create({
       id: 2,
       fullName: 'test person2',
       email: 'tstemail2',
@@ -254,26 +254,26 @@ test('save sets primary cohort', function(assert) {
     }
   });
   this.register('service:flashMessages', flashmessagesMock);
-  let program = Object.create({
+  let program = EmberObject.create({
     duration: 20,
     title: 'program title'
   });
-  let programYear = Object.create({
+  let programYear = EmberObject.create({
     program,
     startYear: 2020
   });
-  let cohort = Object.create({
+  let cohort = EmberObject.create({
     id: 1,
     title: 'test cohort',
     programYear
   });
 
-  let school = Object.create({
+  let school = EmberObject.create({
     id: 1,
     cohorts: resolve([cohort])
   });
   let students = [
-    Object.create({
+    EmberObject.create({
       id: 1,
       fullName: 'test person',
       email: 'tstemail',

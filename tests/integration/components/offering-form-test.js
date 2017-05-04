@@ -6,7 +6,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 const nothing = ()=>{};
@@ -259,9 +259,9 @@ test('close sends close', function(assert) {
   this.set('close', ()=>{
     assert.ok(true);
   });
-  const close = '.buttons .cancel';
+  const closeButton = '.buttons .cancel';
   this.render(hbs`{{offering-form close=(action close)}}`);
-  this.$(close).click();
+  this.$(closeButton).click();
 });
 
 test('save not recurring', function(assert) {
@@ -492,7 +492,7 @@ test('learnerGroup validation errors show up when saving', function(assert) {
 });
 
 test('renders when an offering is provided', function(assert) {
-  let offering = Object.create({
+  let offering = EmberObject.create({
     room: 'emerald bay',
     startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
     endDate: moment('2005-06-24').hour(19).minute(24).toDate(),

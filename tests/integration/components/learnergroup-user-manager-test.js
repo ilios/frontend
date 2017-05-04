@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, ObjectProxy } = Ember;
+const { Object:EmberObject, ObjectProxy } = Ember;
 
 moduleForComponent('learnergroup-user-manager', 'Integration | Component | learnergroup user manager', {
   integration: true
@@ -21,14 +21,14 @@ test('it renders', function(assert) {
   const user2CampusId = 'tbody tr:eq(1) td:eq(3)';
   const user2Email = 'tbody tr:eq(1) td:eq(4)';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'Jasper',
     lastName: 'Dog',
     campusId: '1234',
     email: 'testemail',
     enabled: true,
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'Jackson',
     lastName: 'Doggy',
     campusId: '123',
@@ -81,23 +81,23 @@ test('it renders when editing', function(assert) {
   const user2CampusId = 'tbody tr:eq(1) td:eq(3)';
   const user2Email = 'tbody tr:eq(1) td:eq(4)';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'Jasper',
     lastName: 'Dog',
     campusId: '1234',
     email: 'testemail',
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'Jackson',
     lastName: 'Doggy',
     campusId: '123',
     email: 'testemail2',
     enabled: false,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
@@ -142,15 +142,15 @@ test('sort by firstName', function(assert) {
   const user1FirstName = 'tbody tr:eq(0) td:eq(1)';
   const user2FirstName = 'tbody tr:eq(1) td:eq(1)';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'Jasper',
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'Jackson',
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
@@ -184,9 +184,9 @@ test('add multiple users', async function(assert) {
   const user1CheckBox = 'table:eq(1) tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
@@ -227,9 +227,9 @@ test('remove multiple users', async function(assert) {
   const user1CheckBox = 'table:eq(1) tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const button = 'button.cancel';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
@@ -268,9 +268,9 @@ test('remove single user', function(assert) {
   assert.expect(1);
   const action = 'table:eq(1) tbody tr:eq(0) td:eq(6) .clickable';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
@@ -304,9 +304,9 @@ test('add single user', function(assert) {
   assert.expect(1);
   const action = 'table:eq(2) tbody tr:eq(0) td:eq(6) .clickable';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 2
     }),
   });
@@ -342,16 +342,16 @@ test('when users are selected single action is disabled', function(assert) {
   const action1 = 'table:eq(1) tbody tr:eq(0) td:eq(6) .clickable';
   const action2 = 'table:eq(2) tbody tr:eq(0) td:eq(6) .clickable';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
 
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 2
     }),
   });
@@ -387,15 +387,15 @@ test('checkall', function(assert) {
   const user2CheckBox = 'tbody tr:eq(1) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
@@ -436,15 +436,15 @@ test('checking one puts checkall box into indeterminate state', function(assert)
   const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const user2CheckBox = 'tbody tr:eq(1) td:eq(0) input[type=checkbox]';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     enabled: true,
-    lowestGroupInTree: Object.create({
+    lowestGroupInTree: EmberObject.create({
       id: 1
     }),
   });

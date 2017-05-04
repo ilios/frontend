@@ -54,8 +54,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         if (validations.get('isValid')) {
           const school = this.get('school');
           let vocabulary = this.get('store').createRecord('vocabulary', {title, school});
-          vocabulary.save().then(vocabulary => {
-            this.get('newVocabularies').pushObject(vocabulary);
+          vocabulary.save().then(savedVocabulary => {
+            this.get('newVocabularies').pushObject(savedVocabulary);
           }).finally(() => {
             if (!self.get('isDestroyed')) {
               self.send('removeErrorDisplayFor', 'newVocabularyTitle');

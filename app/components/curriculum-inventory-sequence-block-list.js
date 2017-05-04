@@ -29,10 +29,10 @@ export default Component.extend({
   loadAttr: task(function * (parent, report) {
     if (isPresent(parent)) {
       let sequenceBlocks = yield parent.get('children');
-      let report = yield parent.get('report');
+      let parentReport = yield parent.get('report');
       this.setProperties({
         sequenceBlocks,
-        report,
+        report: parentReport,
         savedBlock: null,
         saved: false,
       });

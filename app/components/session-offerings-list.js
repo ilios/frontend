@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, RSVP, Object } = Ember;
+const { Component, computed, RSVP, Object:EmberObject } = Ember;
 const { oneWay, sort } = computed;
 const { Promise } = RSVP;
 
@@ -23,9 +23,9 @@ export default Component.extend({
       if (offerings == null) {
         resolve([]);
       }
-      offerings.then(offerings => {
+      offerings.then(arr => {
         let dateBlocks = {};
-        offerings.forEach(offering => {
+        arr.forEach(offering => {
           let key = offering.get('dateKey');
           if (!(key in dateBlocks)) {
             dateBlocks[key] = OfferingDateBlock.create({
@@ -56,7 +56,7 @@ export default Component.extend({
   }
 });
 
-let OfferingBlock = Object.extend({
+let OfferingBlock = EmberObject.extend({
   //we have to init the offerins array because otherwise it gets passed by reference
   //and shared among isntances
   init: function(){

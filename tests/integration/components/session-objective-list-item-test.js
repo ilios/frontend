@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('session-objective-list-item', 'Integration | Component | session objective list item', {
@@ -10,7 +10,7 @@ moduleForComponent('session-objective-list-item', 'Integration | Component | ses
 });
 
 test('it renders', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);
@@ -30,7 +30,7 @@ test('it renders', function(assert) {
 });
 
 test('renders removable', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);
@@ -48,7 +48,7 @@ test('renders removable', function(assert) {
 });
 
 test('can change title', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title',
     save(){
       assert.equal(this.get('title'), '<p>new title</p>');
@@ -73,7 +73,7 @@ test('can change title', function(assert) {
 });
 
 test('can manage parents', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);
@@ -94,7 +94,7 @@ test('can manage parents', function(assert) {
 });
 
 test('can manage descriptors', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);
@@ -115,7 +115,7 @@ test('can manage descriptors', function(assert) {
 });
 
 test('can trigger removal', function(assert) {
-  let objective = Object.create({
+  let objective = EmberObject.create({
     title: 'fake title'
   });
   this.set('objective', objective);

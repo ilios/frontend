@@ -6,7 +6,7 @@ import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent(
   'curriculum-inventory-sequence-block-dates-duration-editor',
@@ -17,7 +17,7 @@ moduleForComponent(
 );
 
 test('it renders', function(assert) {
-  let block = Object.create({
+  let block = EmberObject.create({
     startDate: moment('2016-04-23').toDate(),
     endDate: moment('2016-06-02').toDate(),
     duration: 10
@@ -47,7 +47,7 @@ test('save', function(assert) {
   const newStartDate = moment('2016-10-30');
   const newEndDate = moment('2016-11-02');
   const newDuration = '5';
-  let block = Object.create({
+  let block = EmberObject.create({
     startDate: moment('2016-04-23').toDate(),
     endDate: moment('2016-06-02').toDate(),
     duration: 5
@@ -74,7 +74,7 @@ test('save with date range and a zero duration', function(assert) {
   const newStartDate = moment('2016-10-30');
   const newEndDate = moment('2016-11-02');
   const newDuration = '0';
-  let block = Object.create();
+  let block = EmberObject.create();
   let saveAction = function(startDate, endDate, duration) {
     assert.equal(moment(startDate).format('YYYY-MM-DD'), newStartDate.format('YYYY-MM-DD'), 'New start date on save.');
     assert.equal(moment(endDate).format('YYYY-MM-DD'), newEndDate.format('YYYY-MM-DD'), 'New end date on save.');
@@ -95,7 +95,7 @@ test('save with date range and a zero duration', function(assert) {
 test('save with non-zero duration and no date range', function(assert) {
   assert.expect(3);
   const newDuration = '5';
-  let block = Object.create();
+  let block = EmberObject.create();
 
   let saveAction = function(startDate, endDate, duration) {
     assert.equal(startDate, null, 'NULL for start date on save.');
@@ -112,7 +112,7 @@ test('save with non-zero duration and no date range', function(assert) {
 
 test('cancel', function(assert) {
   assert.expect(1);
-  let block = Object.create({
+  let block = EmberObject.create({
     startDate: moment('2016-04-23').toDate(),
     endDate: moment('2016-06-02').toDate(),
     duration: 10
@@ -131,7 +131,7 @@ test('save fails if end-date is older than start-date', function(assert) {
   assert.expect(2);
   const newStartDate = moment('2016-10-30');
   const newEndDate = moment('2013-11-02');
-  let block = Object.create({ duration: 0 });
+  let block = EmberObject.create({ duration: 0 });
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };
@@ -151,7 +151,7 @@ test('save fails if end-date is older than start-date', function(assert) {
 
 test('save fails on missing duration', function(assert) {
   assert.expect(2);
-  let block = Object.create({
+  let block = EmberObject.create({
     startDate: moment('2016-04-23').toDate(),
     endDate: moment('2016-06-02').toDate(),
     duration: 10
@@ -173,7 +173,7 @@ test('save fails on missing duration', function(assert) {
 
 test('save fails on invalid duration', function(assert) {
   assert.expect(2);
-  let block = Object.create({
+  let block = EmberObject.create({
     startDate: moment('2016-04-23').toDate(),
     endDate: moment('2016-06-02').toDate(),
     duration: 10
@@ -195,7 +195,7 @@ test('save fails on invalid duration', function(assert) {
 
 test('save fails if neither date range nor duration is provided', function(assert) {
   assert.expect(2);
-  let block = Object.create({ duration: 0 });
+  let block = EmberObject.create({ duration: 0 });
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };
@@ -211,7 +211,7 @@ test('save fails if neither date range nor duration is provided', function(asser
 
 test('save fails if start-date is given but no end-date is provided', function(assert) {
   assert.expect(2);
-  let block = Object.create({ duration: 0 });
+  let block = EmberObject.create({ duration: 0 });
   let saveAction = function() {
     assert.ok(false, 'Save action should have not been invoked.');
   };

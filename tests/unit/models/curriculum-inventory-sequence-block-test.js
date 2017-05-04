@@ -16,13 +16,13 @@ test('get all ancestors of nested sequence block', function(assert) {
   let model = this.subject();
   let store = this.store();
   Ember.run(() => {
-    let parent = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ model ] });
-    let grandParent = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ parent ] });
-    parent.set('parent', grandParent);
-    model.set('parent', parent);
+    let parentBlock = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ model ] });
+    let grandParent = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ parentBlock ] });
+    parentBlock.set('parent', grandParent);
+    model.set('parent', parentBlock);
     model.get('allParents').then(ancestors => {
       assert.equal(ancestors.length, 2);
-      assert.equal(ancestors[0], parent);
+      assert.equal(ancestors[0], parentBlock);
       assert.equal(ancestors[1], grandParent);
     });
   });

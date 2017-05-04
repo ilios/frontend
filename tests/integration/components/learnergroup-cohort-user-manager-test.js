@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('learnergroup-cohort-user-manager', 'Integration | Component | learnergroup cohort user manager', {
   integration: true
@@ -22,14 +22,14 @@ test('it renders', function(assert) {
   const user2CampusId = 'tbody tr:eq(1) td:eq(3)';
   const user2Email = 'tbody tr:eq(1) td:eq(4)';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'Jasper',
     lastName: 'Dog',
     campusId: '1234',
     email: 'testemail',
     enabled: true,
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'Jackson',
     lastName: 'Doggy',
     campusId: '123',
@@ -72,10 +72,10 @@ test('sort by firstName', function(assert) {
   const user1FirstName = 'tbody tr:eq(0) td:eq(1)';
   const user2FirstName = 'tbody tr:eq(1) td:eq(1)';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'Jasper',
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'Jackson',
   });
 
@@ -103,7 +103,7 @@ test('add multiple users', async function(assert) {
   const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
   });
 
@@ -135,7 +135,7 @@ test('add single user', function(assert) {
   assert.expect(1);
   const action = 'tbody tr:eq(0) td:eq(5) .clickable';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
   });
 
@@ -164,7 +164,7 @@ test('when users are selected single action is disabled', function(assert) {
   const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const action = 'tbody tr:eq(0) td:eq(5) .clickable';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
   });
 
@@ -193,10 +193,10 @@ test('checkall', function(assert) {
   const user2CheckBox = 'tbody tr:eq(1) td:eq(0) input[type=checkbox]';
   const button = 'button.done';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     enabled: true,
   });
 
@@ -231,10 +231,10 @@ test('checking one puts checkall box into indeterminate state', function(assert)
   const user1CheckBox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
   const user2CheckBox = 'tbody tr:eq(1) td:eq(0) input[type=checkbox]';
 
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     enabled: true,
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     enabled: true,
   });
 

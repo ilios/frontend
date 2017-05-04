@@ -98,7 +98,7 @@ export default Service.extend({
   },
   coursesResults(results){
     const canViewCourses = this.get('currentUser.canViewCourses');
-    let map = results.map(course => {
+    let mappedResults = results.map(course => {
       let rhett = {};
       rhett.value = course.get('academicYear') + ' ' + course.get('title');
       if(canViewCourses){
@@ -109,11 +109,11 @@ export default Service.extend({
       return rhett;
     });
 
-    return resolve(map);
+    return resolve(mappedResults);
   },
   sessionsResults(results){
     const canView = this.get('currentUser.canViewCourses');
-    let map = results.map(item => {
+    let mappedResults = results.map(item => {
       return new Promise(resolve => {
         let rhett = {};
         item.get('course').then(course => {
@@ -128,11 +128,11 @@ export default Service.extend({
       });
     });
 
-    return all(map);
+    return all(mappedResults);
   },
   programsResults(results){
     const canView = this.get('currentUser.canViewPrograms');
-    let map = results.map(item => {
+    let mappedResults = results.map(item => {
       return new Promise(resolve => {
         let rhett = {};
         item.get('school').then(school => {
@@ -146,11 +146,11 @@ export default Service.extend({
       });
     });
 
-    return all(map);
+    return all(mappedResults);
   },
   programYearsResults(results){
     const canView = this.get('currentUser.canViewPrograms');
-    let map = results.map(item => {
+    let mappedResults = results.map(item => {
       return new Promise(resolve => {
         let rhett = {};
         item.get('program').then(program => {
@@ -168,23 +168,23 @@ export default Service.extend({
       });
     });
 
-    return all(map);
+    return all(mappedResults);
   },
   instructorsResults(results){
-    let map = results.map( result => {
+    let mappedResults = results.map( result => {
       return {
         value: result.get('fullName')
       };
     });
-    return resolve(map);
+    return resolve(mappedResults);
   },
   titleResults(results){
-    let map = results.map( result => {
+    let mappedResults = results.map( result => {
       return {
         value: result.get('title')
       };
     });
-    return resolve(map);
+    return resolve(mappedResults);
   },
   instructorGroupsResults(results){
     return this.titleResults(results);
@@ -199,12 +199,12 @@ export default Service.extend({
     return this.titleResults(results);
   },
   meshTermsResults(results){
-    let map = results.map( result => {
+    let mappedResults = results.map( result => {
       return {
         value: result.get('name')
       };
     });
-    return resolve(map);
+    return resolve(mappedResults);
   },
   termsResults(results){
     return map(results.toArray(), result => {

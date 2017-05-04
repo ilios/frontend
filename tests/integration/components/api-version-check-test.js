@@ -5,7 +5,7 @@ import ENV from 'ilios/config/environment';
 
 const { apiVersion } = ENV.APP;
 
-const { Service, RSVP, $ } = Ember;
+const { Service, RSVP, $:jQuery } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('api-version-check', 'Integration | Component | api version check', {
@@ -19,7 +19,7 @@ test('shows no warning when versions match', function(assert) {
   const warningOverlay = '.api-version-check-warning';
   this.register('service:iliosConfig', iliosConfigMock);
   this.render(hbs`{{api-version-check}}`);
-  assert.equal($(warningOverlay).length, 0);
+  assert.equal(jQuery(warningOverlay).length, 0);
 
 });
 

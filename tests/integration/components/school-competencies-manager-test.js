@@ -3,9 +3,9 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
-let Competency = Object.extend({
+let Competency = EmberObject.extend({
   id: null,
   title: null,
   parent: null,
@@ -16,9 +16,9 @@ let Competency = Object.extend({
     let self = this;
     return {
       id(){
-        let parent = self.parent;
-        if (parent) {
-          return parent.id;
+        let parentCompetency = self.parent;
+        if (parentCompetency) {
+          return parentCompetency.id;
         }
 
         return null;

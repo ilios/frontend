@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { RSVP, Service, Object } = Ember;
+const { RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 import wait from 'ember-test-helpers/wait';
@@ -59,9 +59,9 @@ test('add user form renders when configured to', async function(assert) {
   const mockSchools = [
     {id: 1, title: 'first', cohorts: resolve([])},
   ];
-  const mockUser = Object.create({
+  const mockUser = EmberObject.create({
     schools: resolve(mockSchools),
-    school: resolve(Object.create(mockSchools[0]))
+    school: resolve(EmberObject.create(mockSchools[0]))
   });
 
   const currentUserMock = Service.extend({
@@ -100,9 +100,9 @@ test('directory search renders when configured to', async function(assert) {
   const mockSchools = [
     {id: 1, title: 'first'},
   ];
-  const mockUser = Object.create({
+  const mockUser = EmberObject.create({
     schools: resolve(mockSchools),
-    school: resolve(Object.create(mockSchools[0]))
+    school: resolve(EmberObject.create(mockSchools[0]))
   });
 
   const currentUserMock = Service.extend({

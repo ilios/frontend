@@ -5,7 +5,7 @@ import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('school-vocabularies-collapsed', 'Integration | Component | school vocabularies collapsed', {
   integration: true,
@@ -22,9 +22,9 @@ test('it renders', function(assert) {
   server.createList('term', { vocabulary: [1]}, 2);
   server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies
   });
 
@@ -45,9 +45,9 @@ test('clicking the header expands the list', function(assert) {
   assert.expect(2);
   let  vocabulary = server.create('vocabulary', {school: 1});
 
-  let vocabularies = [vocabulary].map(obj => Object.create(obj));
+  let vocabularies = [vocabulary].map(obj => EmberObject.create(obj));
 
-  const school = Object.create({
+  const school = EmberObject.create({
     vocabularies
   });
   const title = '.title';

@@ -76,7 +76,7 @@ export default Component.extend({
         filter(competencies.toArray(), (competency => {
           return new Promise(resolve => {
             competency.get('treeChildren').then(children => {
-              let selectedChildren = children.filter(competency => selectedCompetencies.includes(competency));
+              let selectedChildren = children.filter(c => selectedCompetencies.includes(c));
               resolve(selectedChildren.length > 0);
             });
           });

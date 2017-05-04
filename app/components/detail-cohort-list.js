@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, Object, RSVP } = Ember;
+const { Component, computed, Object:EmberObject, RSVP } = Ember;
 const { all, Promise } = RSVP;
 
 export default Component.extend({
@@ -21,7 +21,7 @@ export default Component.extend({
         let proxies = [];
         let sortedCohorts = [];
         cohorts.toArray().forEach(cohort => {
-          let proxy = Object.create({
+          let proxy = EmberObject.create({
             cohort,
             schoolTitle: null,
             displayTitle: null,

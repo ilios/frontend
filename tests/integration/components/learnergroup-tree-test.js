@@ -2,14 +2,14 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('learnergroup-tree', 'Integration | Component | learnergroup tree', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     children: []
   });
   this.set('learnerGroup', learnerGroup);

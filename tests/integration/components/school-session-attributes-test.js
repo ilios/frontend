@@ -3,7 +3,7 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('school-session-attributes', 'Integration | Component | school session attributes', {
   integration: true
@@ -11,7 +11,7 @@ moduleForComponent('school-session-attributes', 'Integration | Component | schoo
 
 test('it renders collapsed', async function(assert) {
   assert.expect(13);
-  const school = Object.create({
+  const school = EmberObject.create({
     async getConfigValue(name){
       if (name === 'showSessionSupplemental') {
         return true;
@@ -63,7 +63,7 @@ test('it renders collapsed', async function(assert) {
 
 test('it renders expanded', async function(assert) {
   assert.expect(13);
-  const school = Object.create({
+  const school = EmberObject.create({
     async getConfigValue(name){
       if (name === 'showSessionSupplemental') {
         return true;
@@ -115,7 +115,7 @@ test('it renders expanded', async function(assert) {
 
 test('clicking expand fires action', async function(assert) {
   assert.expect(1);
-  const school = Object.create({
+  const school = EmberObject.create({
     async getConfigValue(){
       return false;
     },
@@ -140,7 +140,7 @@ test('clicking expand fires action', async function(assert) {
 
 test('clicking collapse fires action', async function(assert) {
   assert.expect(1);
-  const school = Object.create({
+  const school = EmberObject.create({
     async getConfigValue(){
       return false;
     },

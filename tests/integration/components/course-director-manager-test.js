@@ -3,15 +3,15 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('course-director-manager', 'Integration | Component | course director manager', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  const fakeUser1 = Object.create({fullName: 'test person 1'});
-  const fakeUser2 = Object.create({fullName: 'test person 2'});
+  const fakeUser1 = EmberObject.create({fullName: 'test person 1'});
+  const fakeUser2 = EmberObject.create({fullName: 'test person 2'});
 
   this.set('nothing', parseInt);
   this.set('users', [fakeUser1, fakeUser2]);
@@ -28,8 +28,8 @@ test('it renders', function(assert) {
 
 test('can remove users', function(assert) {
   assert.expect(4);
-  const fakeUser1 = Object.create({fullName: 'test person 1'});
-  const fakeUser2 = Object.create({fullName: 'test person 2'});
+  const fakeUser1 = EmberObject.create({fullName: 'test person 1'});
+  const fakeUser2 = EmberObject.create({fullName: 'test person 2'});
 
   const user1 = 'li:eq(0)';
   const user2 = 'li:eq(1)';

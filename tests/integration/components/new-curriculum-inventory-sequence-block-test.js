@@ -5,7 +5,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { RSVP, Object, Service } = Ember;
+const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
@@ -19,21 +19,21 @@ moduleForComponent('new-curriculum-inventory-sequence-block', 'Integration | Com
 
 test('it renders', function(assert) {
   assert.expect(75);
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
   }
-  let course1 = Object.create({ title: 'Belial', id: 1 });
-  let course2 = Object.create({ title: 'Behemoth', id: 2 });
-  let course3 = Object.create({ title: 'Beelzebub', id: 3 });
+  let course1 = EmberObject.create({ title: 'Belial', id: 1 });
+  let course2 = EmberObject.create({ title: 'Behemoth', id: 2 });
+  let course3 = EmberObject.create({ title: 'Beelzebub', id: 3 });
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -113,13 +113,13 @@ test('it renders', function(assert) {
 
 test('order-in-sequence options are visible for ordered parent sequence block', function(assert) {
   assert.expect(24);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -128,10 +128,10 @@ test('order-in-sequence options are visible for ordered parent sequence block', 
 
   let siblings = [];
   for (let i = 0; i < 10; i++) {
-    siblings.pushObject(Object.create());
+    siblings.pushObject(EmberObject.create());
   }
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     isOrdered: true,
     children: resolve(siblings)
   });
@@ -158,11 +158,11 @@ test('order-in-sequence options are visible for ordered parent sequence block', 
 
 test('selecting course reveals additional course info', function(assert) {
   assert.expect(4);
-  let school = Object.create({ id() { return 1; }});
-  let clerkshipType = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let clerkshipType = EmberObject.create({
     title: 'selective'
   });
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'my fancy course',
     startDate: moment('2016-05-01').toDate(),
@@ -171,12 +171,12 @@ test('selecting course reveals additional course info', function(assert) {
     clerkshipType
   });
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -206,22 +206,22 @@ test('selecting course reveals additional course info', function(assert) {
 
 test('save with defaults', function(assert) {
   assert.expect(17);
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
   }
   let newTitle = 'new sequence block';
   let newDescription = 'lorem ipsum';
   let newStartDate = moment('2016-01-05');
   let newEndDate = moment('2016-02-12');
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -257,7 +257,7 @@ test('save with defaults', function(assert) {
       assert.equal(data.course, null, 'No course gets selected/passed by default.');
       assert.equal(data.duration, 0, 'Duration defaults to zero');
       assert.equal(data.report, report, 'Given report gets passed.');
-      return Object.create();
+      return EmberObject.create();
     }
   });
   this.set('report', report);
@@ -278,23 +278,23 @@ test('save with defaults', function(assert) {
 
 test('save with non-defaults', function(assert) {
   assert.expect(9);
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
   }
 
-  let course = Object.create({
+  let course = EmberObject.create({
     id: 1,
     title: 'Test Course'
   });
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
@@ -318,7 +318,7 @@ test('save with non-defaults', function(assert) {
       assert.equal(data.maximum, maximum, 'Given maximum gets passed.');
       assert.equal(data.course, course, 'Selected course gets passed.');
       assert.equal(data.duration, duration, 'Given duration gets passed.');
-      return Object.create();
+      return EmberObject.create();
     }
   });
   this.set('report', report);
@@ -345,27 +345,27 @@ test('save with non-defaults', function(assert) {
 
 test('save nested block in ordered sequence', function(assert) {
   assert.expect(3);
-  let school = Object.create({ id() { return 1; }});
+  let school = EmberObject.create({ id() { return 1; }});
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(Object.create({ id: i, name: `Year ${i}` }));
+    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
   }
 
-  let program = Object.create({
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels,
     year: '2016',
     program: resolve(program),
     linkedCourses: resolve([])
   });
 
-  let parentBlock = Object.create({
+  let parentBlock = EmberObject.create({
     isOrdered: true,
-    children: resolve([ Object.create()])
+    children: resolve([ EmberObject.create()])
   });
 
   storeMock.reopen({
@@ -375,7 +375,7 @@ test('save nested block in ordered sequence', function(assert) {
     createRecord(what, data) {
       assert.equal(data.orderInSequence, 2, 'Selected order-in-sequence gets passed.');
       assert.equal(data.parent, parentBlock, 'Parent gets passed.');
-      return Object.create();
+      return EmberObject.create();
     }
   });
   this.set('report', report);
@@ -396,14 +396,14 @@ test('save nested block in ordered sequence', function(assert) {
 
 test('cancel', function(assert) {
   assert.expect(1);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -432,14 +432,14 @@ test('clear dates', function(assert) {
   assert.expect(4);
   const newStartDate = moment('2016-01-12');
   const newEndDate = moment('2017-02-22');
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -472,14 +472,14 @@ test('clear dates', function(assert) {
 
 test('save fails when minimum is larger than maximum', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -514,14 +514,14 @@ test('save fails when minimum is larger than maximum', function(assert) {
 
 test('save fails when minimum is less than zero', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -555,14 +555,14 @@ test('save fails when minimum is less than zero', function(assert) {
 
 test('save fails when minimum is empty', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -596,14 +596,14 @@ test('save fails when minimum is empty', function(assert) {
 
 test('save fails when maximum is empty', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -637,14 +637,14 @@ test('save fails when maximum is empty', function(assert) {
 
 test('save with date range and a zero duration', function(assert) {
   assert.expect(1);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -657,7 +657,7 @@ test('save with date range and a zero duration', function(assert) {
     },
     createRecord(what, data) {
       assert.equal(data.duration, '0');
-      return Object.create();
+      return EmberObject.create();
     }
   });
   this.set('saveBlock', () => {
@@ -681,14 +681,14 @@ test('save with date range and a zero duration', function(assert) {
 
 test('save with non-zero duration and no date range', function(assert) {
   assert.expect(1);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -703,7 +703,7 @@ test('save with non-zero duration and no date range', function(assert) {
     },
     createRecord(what, data) {
       assert.equal(data.duration, duration);
-      return Object.create();
+      return EmberObject.create();
     }
   });
   this.set('saveBlock', () => {
@@ -721,14 +721,14 @@ test('save with non-zero duration and no date range', function(assert) {
 
 test('save fails if end-date is older than start-date', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -762,14 +762,14 @@ test('save fails if end-date is older than start-date', function(assert) {
 
 test('save fails on missing duration', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -803,14 +803,14 @@ test('save fails on missing duration', function(assert) {
 
 test('save fails on invalid duration', function(assert) {
   assert.expect(2);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -844,14 +844,14 @@ test('save fails on invalid duration', function(assert) {
 
 test('save fails if neither date range nor non-zero duration is provided', function(assert) {
   assert.expect(1);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),
@@ -878,14 +878,14 @@ test('save fails if neither date range nor non-zero duration is provided', funct
 
 test('save fails if start-date is given but no end-date is provided', function(assert) {
   assert.expect(1);
-  let school = Object.create({ id() { return 1; }});
-  let program = Object.create({
+  let school = EmberObject.create({ id() { return 1; }});
+  let program = EmberObject.create({
     belongsTo() {
       return school;
     }
   });
 
-  let report = Object.create({
+  let report = EmberObject.create({
     academicLevels: [],
     year: '2016',
     program: resolve(program),

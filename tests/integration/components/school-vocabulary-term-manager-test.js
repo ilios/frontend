@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-vocabulary-term-manager', 'Integration | Component | school vocabulary term manager', {
@@ -15,12 +15,12 @@ test('it renders', function(assert) {
     {id: 2, title: 'second'},
   ]);
   let children = resolve([]);
-  let vocabulary = Object.create({
+  let vocabulary = EmberObject.create({
     title: 'fake vocab'
   });
   let title = 'fake term';
   let description = 'fake tescription';
-  let term = Object.create({
+  let term = EmberObject.create({
     allParents,
     children,
     vocabulary: resolve(vocabulary),

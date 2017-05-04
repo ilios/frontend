@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, isPresent, RSVP, Object, inject } = Ember;
+const { Component, computed, isPresent, RSVP, Object:EmberObject, inject } = Ember;
 const { service } = inject;
 const { all, Promise } = RSVP;
 
@@ -89,7 +89,7 @@ export default Component.extend({
             let proxies = [];
             let promises = [];
             cohorts.forEach(cohort => {
-              let proxy = Object.create({
+              let proxy = EmberObject.create({
                 cohort,
                 displayTitle: null
               });

@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('leadership-list', 'Integration | Component | leadership list', {
   integration: true
@@ -10,12 +10,12 @@ moduleForComponent('leadership-list', 'Integration | Component | leadership list
 
 test('it renders with data', function(assert) {
   assert.expect(5);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'a',
     lastName: 'person',
     fullName: 'a b person',
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'b',
     lastName: 'person',
     fullName: 'b a person',

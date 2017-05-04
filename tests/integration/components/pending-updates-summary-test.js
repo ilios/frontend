@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, Service, RSVP } = Ember;
+const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
@@ -18,15 +18,15 @@ moduleForComponent('pending-updates-summary', 'Integration | Component | pending
 
 test('it renders', async function(assert) {
   const container = 'div';
-  let primarySchool = Object.create({
+  let primarySchool = EmberObject.create({
     id: 1,
     title: 'school 0'
   });
-  let secondarySchool = Object.create({
+  let secondarySchool = EmberObject.create({
     id: 2,
     title: 'school 1'
   });
-  let user = Object.create({
+  let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
   });

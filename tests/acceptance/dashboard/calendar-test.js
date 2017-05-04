@@ -401,7 +401,7 @@ test('test session type filter', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 2);
     pickSessionType(0).then(() => {
-      let events = find('div.event');
+      events = find('div.event');
       assert.equal(events.length, 1);
     });
 
@@ -454,7 +454,7 @@ test('test course level filter', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 2);
     pickCourseLevel(0).then(() => {
-      let events = find('div.event');
+      events = find('div.event');
       assert.equal(events.length, 2);
     });
   });
@@ -498,7 +498,7 @@ test('test cohort filter', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 2);
     pickCohort(0).then(() => {
-      let events = find('div.event');
+      events = find('div.event');
       assert.equal(events.length, 2);
     });
   });
@@ -553,7 +553,7 @@ test('test course filter', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 3);
     pickCourse(0).then(() => {
-      let events = find('div.event');
+      events = find('div.event');
       assert.equal(events.length, 2);
     });
   });
@@ -593,7 +593,7 @@ test('test course and session type filter together', function(assert) {
     let events = find('div.event');
     assert.equal(events.length, 3);
     pickCourse(0).then(() => {
-      let events = find('div.event');
+      events = find('div.event');
       assert.equal(events.length, 2);
     });
   });

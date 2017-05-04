@@ -127,7 +127,7 @@ test('manage mesh', function(assert) {
         click(searchResults[3]);
         andThen(function(){
           assert.ok($(find('.mesh-search-results > li:eq(3)', meshManager)).hasClass('disabled'));
-          let removableItems = find('.removable-list li', meshManager);
+          removableItems = find('.removable-list li', meshManager);
           assert.equal(
             getElementText(find('.content .title', removableItems.eq(0)).eq(0)),
             getText('descriptor 0')

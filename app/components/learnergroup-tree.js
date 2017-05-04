@@ -29,8 +29,8 @@ export default Component.extend({
         if (!selectedGroups.includes(child)) {
           return true;
         }
-        return child.get('children').then(children => {
-          return this.hasUnSelectedChildren(children);
+        return child.get('children').then(childChildren => {
+          return this.hasUnSelectedChildren(childChildren);
         });
       })).then(unselectedChildren => {
         resolve(unselectedChildren.length > 0);

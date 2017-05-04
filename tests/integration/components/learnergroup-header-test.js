@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('learnergroup-header', 'Integration | Component | learnergroup header', {
@@ -11,7 +11,7 @@ moduleForComponent('learnergroup-header', 'Integration | Component | learnergrou
 });
 
 test('it renders', function(assert) {
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     title: 'our group',
     allParents: resolve([{title: 'parent group'}])
   });
@@ -24,7 +24,7 @@ test('it renders', function(assert) {
 });
 
 test('can change title', async function(assert) {
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     title: 'our group',
     save(){
       assert.equal(this.get('title'), 'new title');
@@ -43,16 +43,16 @@ test('can change title', async function(assert) {
 });
 
 test('counts members correctly', function(assert) {
-  let cohort = Object.create({
+  let cohort = EmberObject.create({
     title: 'test group',
     users: [1, 2]
   });
-  let subGroup = Object.create({
+  let subGroup = EmberObject.create({
     title: 'test sub-group',
     users: [],
     children: [],
   });
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     title: 'test group',
     usersOnlyAtThisLevel: [1],
     cohort,
@@ -73,7 +73,7 @@ test('validate title length', async function(assert) {
   const done = `${title} .done`;
   const errors = `${title} .validation-error-message`;
 
-  let learnerGroup = Object.create({
+  let learnerGroup = EmberObject.create({
     title: 'our group',
     save(){
       assert.ok(false, 'should not be called');

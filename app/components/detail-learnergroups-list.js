@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, Object, RSVP, isEmpty } = Ember;
+const { Component, computed, Object:EmberObject, RSVP, isEmpty } = Ember;
 const { Promise, filter, map, resolve } = RSVP;
 
 export default Component.extend({
@@ -25,11 +25,11 @@ export default Component.extend({
                   resolve(childTopLevelGroup === topLevelGroup);
                 });
               });
-            }).then(groups => {
-              resolve(groups);
+            }).then(filteredGroups => {
+              resolve(filteredGroups);
             });
           });
-          return Object.create({
+          return EmberObject.create({
             topLevelGroup,
             groups
           });

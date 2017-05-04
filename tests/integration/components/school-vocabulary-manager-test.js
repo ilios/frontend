@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-vocabulary-manager', 'Integration | Component | school vocabulary manager', {
@@ -10,7 +10,7 @@ moduleForComponent('school-vocabulary-manager', 'Integration | Component | schoo
 });
 
 test('it renders', function(assert) {
-  let vocabulary = Object.create({
+  let vocabulary = EmberObject.create({
     title: 'fake vocab',
     terms: resolve([])
   });

@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, PromiseProxyMixin, Object, RSVP } = Ember;
+const { computed, PromiseProxyMixin, Object:EmberObject, RSVP } = Ember;
 const { attr, belongsTo, hasMany, PromiseArray, Model } = DS;
 const { all, defer, Promise } = RSVP;
 
-const ProxyContent = Object.extend(PromiseProxyMixin);
+const ProxyContent = EmberObject.extend(PromiseProxyMixin);
 
 export default Model.extend({
   lastName: attr('string'),
@@ -156,8 +156,8 @@ export default Model.extend({
       }));
       promises.pushObject(new Promise(resolve => {
         this.get('learnerGroups').then(groups => {
-          all(groups.mapBy('courses')).then(all => {
-            all.forEach(arr => {
+          all(groups.mapBy('courses')).then(courses => {
+            courses.forEach(arr => {
               allCourses.pushObjects(arr);
             });
             resolve();
@@ -166,8 +166,8 @@ export default Model.extend({
       }));
       promises.pushObject(new Promise(resolve => {
         this.get('instructorGroups').then(groups => {
-          all(groups.mapBy('courses')).then(all => {
-            all.forEach(arr => {
+          all(groups.mapBy('courses')).then(courses => {
+            courses.forEach(arr => {
               allCourses.pushObjects(arr);
             });
             resolve();

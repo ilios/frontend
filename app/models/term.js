@@ -32,13 +32,13 @@ export default Model.extend({
    */
   allParents: computed('parent', 'parent.allParents.[]', function(){
     return new Promise(resolve => {
-      this.get('parent').then(parent => {
+      this.get('parent').then(parentTerm => {
         let parents = [];
-        if(!parent){
+        if(!parentTerm){
           resolve(parents);
         } else {
-          parents.pushObject(parent);
-          parent.get('allParents').then(allParents => {
+          parents.pushObject(parentTerm);
+          parentTerm.get('allParents').then(allParents => {
             parents.pushObjects(allParents);
             resolve(parents);
           });
@@ -75,12 +75,12 @@ export default Model.extend({
    */
   allParentTitles: computed('parent.{title,allParentTitles.[]}', function() {
     return new Promise(resolve => {
-      this.get('parent').then(parent => {
+      this.get('parent').then(parentTerm => {
         let titles = [];
-        if(!parent){
+        if(!parentTerm){
           resolve(titles);
         } else {
-          parent.get('allParents').then(parents => {
+          parentTerm.get('allParents').then(parents => {
             titles = titles.concat(parents.mapBy('title'));
             titles.push(this.get('parent.title'));
             resolve(titles);

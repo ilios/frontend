@@ -38,13 +38,13 @@ test('it removes all non postable fields', function(assert) {
   var store = this.store();
   Ember.run(()=> {
     var now = new Date();
-    var document = 'lorem ipsum';
+    var doc = 'lorem ipsum';
     var user = store.createRecord('user', {});
     record.set('createdAt', now);
-    record.set('document', document);
+    record.set('document', doc);
     record.set('createdBy', user);
     assert.equal(record.get('createdAt'), now);
-    assert.equal(record.get('document'), document);
+    assert.equal(record.get('document'), doc);
     record.get('createdBy').then(creator => {
       assert.equal(user, creator);
     });

@@ -61,8 +61,8 @@ export default Component.extend({
 
     function tweenDonut(b) {
       b.innerRadius = 0;
-      let i = interpolate({startAngle: 0, endAngle: 0}, b);
-      return function(t) { return createArc(i(t)); };
+      const i = interpolate({startAngle: 0, endAngle: 0}, b);
+      return p => createArc(i(p));
     }
 
     path.on('mouseover', (d, index, items) => {

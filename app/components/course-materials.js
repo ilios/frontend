@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import SortableTable from 'ilios/mixins/sortable-table';
 
-const { Component, RSVP, Object, computed, isEmpty, isPresent } = Ember;
+const { Component, RSVP, Object:EmberObject, computed, isEmpty, isPresent } = Ember;
 const { Promise, map } = RSVP;
 
 export default Component.extend(SortableTable, {
@@ -34,7 +34,7 @@ export default Component.extend(SortableTable, {
             sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
               sessionLearningMaterial.get('session').then(session => {
                 session.get('firstOfferingDate').then(firstOfferingDate => {
-                  let obj = Object.create({
+                  let obj = EmberObject.create({
                     title: learningMaterial.get('title'),
                     description: learningMaterial.get('description'),
                     author: learningMaterial.get('originalAuthor'),
@@ -100,7 +100,7 @@ export default Component.extend(SortableTable, {
         map(clms.toArray(), courseLearningMaterial => {
           return new Promise(resolve =>{
             courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
-              let obj = Object.create({
+              let obj = EmberObject.create({
                 title: learningMaterial.get('title'),
                 description: learningMaterial.get('description'),
                 author: learningMaterial.get('originalAuthor'),

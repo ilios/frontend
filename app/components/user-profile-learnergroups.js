@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, RSVP, Object, computed, isEmpty } = Ember;
+const { Component, RSVP, Object:EmberObject, computed, isEmpty } = Ember;
 const { Promise, map } = RSVP;
 
 export default Component.extend({
@@ -27,7 +27,7 @@ export default Component.extend({
                   const programTitle = program.get('title');
                   const cohortTitle = cohort.get('title');
 
-                  let learnerGroupObject = Object.create({
+                  let learnerGroupObject = EmberObject.create({
                     allParentsTitle,
                     title,
                     schoolTitle,

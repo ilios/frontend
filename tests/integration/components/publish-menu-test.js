@@ -1,12 +1,15 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('publish-menu', 'Integration | Component | publish menu', {
   integration: true
 });
 
 test('it renders', function(assert) {
-  let testObj = Object.create({
+  let testObj = EmberObject.create({
     allPublicationIssuesLength: 3
   });
   this.set('testObj', testObj);
@@ -135,10 +138,10 @@ test('unpublish action fires', function(assert) {
 });
 
 test('it renders with parent review object', function(assert) {
-  let testObj = Object.create({
+  let testObj = EmberObject.create({
     allPublicationIssuesLength: 3
   });
-  let parentTestObject = Object.create({
+  let parentTestObject = EmberObject.create({
     allPublicationIssuesLength: 8
   });
   this.set('testObj', testObj);

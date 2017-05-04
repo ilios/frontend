@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('learnergroup-instructor-manager', 'Integration | Component | learnergroup instructor manager', {
@@ -11,14 +11,14 @@ moduleForComponent('learnergroup-instructor-manager', 'Integration | Component |
 });
 
 test('it renders', function(assert) {
-  const learnerGroup = Object.create({
+  const learnerGroup = EmberObject.create({
     title: 'this group',
     instructors: resolve([
-      Object.create({
+      EmberObject.create({
         fullName: 'test person'
       })
     ]),
-    instructorGroups: resolve([Object.create({
+    instructorGroups: resolve([EmberObject.create({
       title: 'test group'
     })]),
   });
@@ -41,22 +41,22 @@ test('can remove groups', function(assert) {
   const group1 = 'li:eq(2)';
   const group2 = 'li:eq(3)';
   const saveButton = 'button.bigadd';
-  const learnerGroup = Object.create({
+  const learnerGroup = EmberObject.create({
     title: 'this group',
     instructors: resolve([
-      Object.create({
+      EmberObject.create({
         fullName: 'test person'
       }),
-      Object.create({
+      EmberObject.create({
         fullName: 'test person 2'
       })
     ]),
     instructorGroups: resolve([
-      Object.create({
+      EmberObject.create({
         id: 42,
         title: 'test group'
       }),
-      Object.create({
+      EmberObject.create({
         id: 'beans',
         title: 'test group 2'
       }),
@@ -90,22 +90,22 @@ test('can remove users', function(assert) {
   const user1 = 'li:eq(0)';
   const user2 = 'li:eq(1)';
   const saveButton = 'button.bigadd';
-  const learnerGroup = Object.create({
+  const learnerGroup = EmberObject.create({
     title: 'this group',
     instructors: resolve([
-      Object.create({
+      EmberObject.create({
         fullName: 'test person'
       }),
-      Object.create({
+      EmberObject.create({
         fullName: 'test person 2'
       })
     ]),
     instructorGroups: resolve([
-      Object.create({
+      EmberObject.create({
         id: 42,
         title: 'test group'
       }),
-      Object.create({
+      EmberObject.create({
         id: 'beans',
         title: 'test group 2'
       }),

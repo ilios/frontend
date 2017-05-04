@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import startMirage from '../../helpers/start-mirage';
 
-const { Object } = Ember;
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('collapsed-objectives', 'Integration | Component | collapsed objectives', {
   integration: true,
@@ -23,7 +23,7 @@ test('displays summary data', function(assert) {
   let plain = server.create('objective');
   let objectives = [hasMesh, hasParents, plain].map(obj => Ember.Object.create(obj));
 
-  const course = Object.create({
+  const course = EmberObject.create({
     objectives
   });
 
@@ -46,7 +46,7 @@ test('displays summary data', function(assert) {
 test('clicking expand icon opens full view', function(assert) {
   assert.expect(2);
 
-  const course = Object.create();
+  const course = EmberObject.create();
 
   this.set('subject', course);
   this.on('click', function() {
@@ -66,7 +66,7 @@ test('icons all parents correctly', function(assert) {
   });
   let objectives = [objective].map(obj => Ember.Object.create(obj));
 
-  const course = Object.create({
+  const course = EmberObject.create({
     objectives
   });
 
@@ -88,7 +88,7 @@ test('icons no parents correctly', function(assert) {
   });
   let objectives = [objective].map(obj => Ember.Object.create(obj));
 
-  const course = Object.create({
+  const course = EmberObject.create({
     objectives
   });
 
@@ -110,7 +110,7 @@ test('icons all mesh correctly', function(assert) {
   });
   let objectives = [objective].map(obj => Ember.Object.create(obj));
 
-  const course = Object.create({
+  const course = EmberObject.create({
     objectives
   });
 
@@ -132,7 +132,7 @@ test('icons no mesh correctly', function(assert) {
   });
   let objectives = [objective].map(obj => Ember.Object.create(obj));
 
-  const course = Object.create({
+  const course = EmberObject.create({
     objectives
   });
 

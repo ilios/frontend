@@ -4,7 +4,7 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object } = Ember;
+const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-header', 'Integration | Component | curriculum inventory report header', {
@@ -12,7 +12,7 @@ moduleForComponent('curriculum-inventory-report-header', 'Integration | Componen
 });
 
 test('it renders', function(assert) {
-  let report = Object.create({
+  let report = EmberObject.create({
     isFinalized: false,
     absoluteFileUri: 'foo/bar',
     name: 'Report name'
@@ -26,7 +26,7 @@ test('it renders', function(assert) {
 });
 
 test('finalized reports render in read-only mode.', function(assert) {
-  let report = Object.create({
+  let report = EmberObject.create({
     isFinalized: true,
     absoluteFileUri: 'foo/bar',
     name: 'Report name'
@@ -42,7 +42,7 @@ test('finalized reports render in read-only mode.', function(assert) {
 test('change name', function(assert) {
   assert.expect(3);
   const newName = 'new name';
-  let report = Object.create({
+  let report = EmberObject.create({
     isFinalized: false,
     absoluteFileUri: 'foo/bar',
     name: 'old name',
@@ -65,7 +65,7 @@ test('change name', function(assert) {
 
 test('change name fails on empty value', function(assert) {
   assert.expect(2);
-  let report = Object.create({
+  let report = EmberObject.create({
     isFinalized: false,
     absoluteFileUri: 'foo/bar',
     name: 'old name',
@@ -87,7 +87,7 @@ test('change name fails on empty value', function(assert) {
 
 test('clicking on finalize button fires action', function(assert){
   assert.expect(1);
-  let report = Object.create({
+  let report = EmberObject.create({
     isFinalized: false,
     absoluteFileUri: 'foo/bar',
     name: 'Report name'

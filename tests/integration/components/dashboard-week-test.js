@@ -5,7 +5,7 @@ import Ember from 'ember';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Service, Object } = Ember;
+const { RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 let today = moment();
@@ -82,7 +82,7 @@ const userEventsMock = Service.extend({
     return new resolve(mockEvents);
   },
   getSessionForEvent() {
-    return Object.create({
+    return EmberObject.create({
       attireRequired: false,
       equipmentRequired: false,
       attendanceRequired: false,
@@ -103,7 +103,6 @@ moduleForComponent('dashboard-week', 'Integration | Component | dashboard week',
 });
 
 const getTitle = function(){
-  const today = moment().day(1);
   const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
   const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
 

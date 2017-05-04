@@ -4,7 +4,7 @@ import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
-const { Service, Object, RSVP } = Ember;
+const { Service, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 const mockSchools = [
@@ -12,9 +12,9 @@ const mockSchools = [
   {id: 1, title: 'first', cohorts: resolve([])},
   {id: 3, title: 'third', cohorts: resolve([])},
 ];
-const mockUser = Object.create({
+const mockUser = EmberObject.create({
   schools: resolve(mockSchools),
-  school: resolve(Object.create(mockSchools[0]))
+  school: resolve(EmberObject.create(mockSchools[0]))
 });
 
 const currentUserMock = Service.extend({
@@ -103,15 +103,15 @@ test('initial search input fires search and fills input', function(assert) {
 
 test('create new user', function(assert) {
   assert.expect(42);
-  let facultyRole = Object.create({
+  let facultyRole = EmberObject.create({
     id: 3,
     title: 'Faculty'
   });
-  let studentRole = Object.create({
+  let studentRole = EmberObject.create({
     id: 4,
     title: 'Student'
   });
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     firstName: 'user1-first',
     lastName: 'user1-last',
     campusId: 'user1-campus',
@@ -120,7 +120,7 @@ test('create new user', function(assert) {
     user: null,
     username: 'user1-username',
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     firstName: 'user2-first',
     lastName: 'user2-last',
     campusId: 'user2-campus',
@@ -129,7 +129,7 @@ test('create new user', function(assert) {
     user: 4136,
     username: 'user2-username',
   });
-  let user3 = Object.create({
+  let user3 = EmberObject.create({
     firstName: 'user3-first',
     lastName: 'user3-last',
     campusId: null,
@@ -186,14 +186,14 @@ test('create new user', function(assert) {
         assert.equal(phone, user1.get('telephoneNumber'), 'record created with correct value for phone');
         assert.equal(email, user1.get('email'), 'record created with correct value for email');
 
-        return new Object({
+        return new EmberObject({
           save(){
             const roles = this.get('roles');
             assert.equal(roles.length, 1, 'Only one new role was added');
             assert.ok(roles.includes(facultyRole), 'The faculty role was added');
             assert.ok(true, 'save gets called');
 
-            return Object.create({
+            return EmberObject.create({
               id: '13'
             });
           }
@@ -207,7 +207,7 @@ test('create new user', function(assert) {
         assert.equal(password, null, 'record has no password');
         assert.equal(user.get('id'), '13', 'we are linking to the expected user');
 
-        return new Object({
+        return new EmberObject({
           save(){
             assert.ok(true, 'save gets called');
           }

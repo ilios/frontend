@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object, RSVP } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('detail-learning-materials', 'Integration | Component | detail learning materials', {
@@ -13,22 +13,22 @@ moduleForComponent('detail-learning-materials', 'Integration | Component | detai
 test('sort button visible when lm list has 2+ items and editing is allowed', function(assert){
   assert.expect(1);
 
-  let clm1 = Object.create({
+  let clm1 = EmberObject.create({
     id: 1,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 1,
     }))
   });
 
-  let clm2 = Object.create({
+  let clm2 = EmberObject.create({
     id: 2,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 2,
     }))
   });
   let clms = [ clm1, clm2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     id: 1,
     learningMaterials: resolve(clms)
   });
@@ -45,16 +45,16 @@ test('sort button visible when lm list has 2+ items and editing is allowed', fun
 test('sort button not visible when in read-only mode', function(assert){
   assert.expect(1);
 
-  let lm1 = Object.create({
+  let lm1 = EmberObject.create({
     id: 1,
   });
 
-  let lm2 = Object.create({
+  let lm2 = EmberObject.create({
     id: 2,
   });
   let lms = [ lm1, lm2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     id: 1,
     learningMaterials: resolve(lms)
   });
@@ -71,7 +71,7 @@ test('sort button not visible when in read-only mode', function(assert){
 test('sort button not visible when lm list is empty', function(assert){
   assert.expect(1);
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     id: 1,
     learningMaterials: resolve([])
   });
@@ -86,16 +86,16 @@ test('sort button not visible when lm list is empty', function(assert){
 });
 
 test('sort button not visible when lm list only contains one item', function(assert){
-  let clm1 = Object.create({
+  let clm1 = EmberObject.create({
     id: 1,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 1,
     }))
   });
 
   let clms = [ clm1 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     id: 1,
     learningMaterials: resolve(clms)
   });
@@ -112,22 +112,22 @@ test('sort button not visible when lm list only contains one item', function(ass
 test('click sort button, then cancel', function(assert){
   assert.expect(6);
 
-  let clm1 = Object.create({
+  let clm1 = EmberObject.create({
     id: 1,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 1,
     }))
   });
 
-  let clm2 = Object.create({
+  let clm2 = EmberObject.create({
     id: 2,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 2,
     }))
   });
   let clms = [ clm1, clm2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     id: 1,
     learningMaterials: resolve(clms)
   });
@@ -156,9 +156,9 @@ test('click sort button, then cancel', function(assert){
 test('click sort button, then save', function(assert){
   assert.expect(2);
 
-  let clm1 = Object.create({
+  let clm1 = EmberObject.create({
     id: 1,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 1,
     })),
     save() {
@@ -167,9 +167,9 @@ test('click sort button, then save', function(assert){
     }
   });
 
-  let clm2 = Object.create({
+  let clm2 = EmberObject.create({
     id: 2,
-    learningMaterial: resolve(Object.create({
+    learningMaterial: resolve(EmberObject.create({
       id: 2,
     })),
     save() {
@@ -179,7 +179,7 @@ test('click sort button, then save', function(assert){
   });
   let clms = [ clm1, clm2 ];
 
-  let subject = Object.create({
+  let subject = EmberObject.create({
     id: 1,
     learningMaterials: resolve(clms)
   });

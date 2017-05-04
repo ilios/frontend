@@ -25,10 +25,9 @@ export default Component.extend({
     return new Promise(resolve => {
       this.get('currentUser').get('model').then(user => {
         user.get('schools').then(schools => {
-          if(isPresent(this.get('schoolId'))){
-            let school =  schools.find(school => {
-              return school.get('id') === this.get('schoolId');
-            });
+          const schoolId = this.get('schoolId');
+          if(isPresent(schoolId)){
+            const school = schools.findBy('id', schoolId);
             if(school){
               resolve(school);
               return;

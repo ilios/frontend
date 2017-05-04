@@ -33,15 +33,15 @@ export default DS.Model.extend({
         if(!offerings.length){
           resolve();
         }
-        let promises = [];
+        let promises2 = [];
         offerings.forEach(offering => {
-          promises.pushObject(offering.get('session').then(session =>{
+          promises2.pushObject(offering.get('session').then(session =>{
             return session.get('course').then(course => {
               allCourses.pushObject(course);
             });
           }));
         });
-        Ember.RSVP.all(promises).then(()=>{
+        Ember.RSVP.all(promises2).then(()=>{
           resolve();
         });
       });
@@ -51,9 +51,9 @@ export default DS.Model.extend({
         if(!ilmSessions.length){
           resolve();
         }
-        let promises = [];
+        let promises2 = [];
         ilmSessions.forEach(ilmSession => {
-          promises.pushObject(ilmSession.get('session').then(session =>{
+          promises2.pushObject(ilmSession.get('session').then(session =>{
             if(!session){
               return;
             }
@@ -62,7 +62,7 @@ export default DS.Model.extend({
             });
           }));
         });
-        Ember.RSVP.all(promises).then(()=>{
+        Ember.RSVP.all(promises2).then(()=>{
           resolve();
         });
       });
@@ -364,8 +364,8 @@ export default DS.Model.extend({
         users.pushObjects(instructors.toArray());
         this.get('instructorGroups').then(instructorGroups => {
           RSVP.all(instructorGroups.mapBy('users')).then(arr => {
-            arr.forEach(instructors =>{
-              users.pushObjects(instructors.toArray());
+            arr.forEach(groupInstructors =>{
+              users.pushObjects(groupInstructors.toArray());
             });
             resolve(users.uniq());
           });

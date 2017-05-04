@@ -1,15 +1,12 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
-import config from '../config/environment';
 
-const { IliosFeatures: { schoolSessionAttributes } } = config;
 const { Component, RSVP, inject, computed } = Ember;
 const { all } = RSVP;
 const { service } = inject;
 
 export default Component.extend({
   store: service(),
-  schoolSessionAttributes,
   classNames: ['school-session-attributes'],
   school: null,
   isManaging: false,

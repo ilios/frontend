@@ -1,6 +1,6 @@
 import Ember from 'ember';
-const { Component, computed, get, String } = Ember;
-const { htmlSafe } = String;
+const { Component, computed, get, String:EmberString } = Ember;
+const { htmlSafe } = EmberString;
 
 export default Component.extend({
   attributeBindings: ['style'],
@@ -24,11 +24,11 @@ export default Component.extend({
   }),
 
   actions: {
-    hover(data, slice, location){
+    hover(data, slice, tooltipLocation){
       const hover = get(this, 'hover');
       hover(data);
       this.set('tooltipSlice', slice);
-      this.set('tooltipLocation', location);
+      this.set('tooltipLocation', tooltipLocation);
     },
     leave(){
       const leave = get(this, 'leave');

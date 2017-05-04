@@ -49,7 +49,7 @@ test('save new objective', function(assert) {
       Ember.run.later(()=>{
         click('.detail-objectives .newobjective button.done');
         andThen(function(){
-          let objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
+          objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
           assert.equal(objectiveRows.length, fixtures.course.objectives.length + 1);
           let tds = find('td', objectiveRows.eq(0));
           assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));

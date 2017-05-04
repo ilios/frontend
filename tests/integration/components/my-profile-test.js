@@ -5,7 +5,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { Object, RSVP, Service } = Ember;
+const { Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('my-profile', 'Integration | Component | my profile', {
@@ -13,33 +13,33 @@ moduleForComponent('my-profile', 'Integration | Component | my profile', {
 });
 
 test('it renders all yes', function(assert) {
-  const cohort = Object.create({
+  const cohort = EmberObject.create({
     title: 'test cohort',
-    programYear: Object.create({
-      program: Object.create({
+    programYear: EmberObject.create({
+      program: EmberObject.create({
         title: 'test program'
       })
     })
   });
-  const user = Object.create({
+  const user = EmberObject.create({
     fullName: 'test name',
     isStudent: true,
     roles: resolve([
-      Object.create({title: 'Course Director'}),
-      Object.create({title: 'Faculty'}),
-      Object.create({title: 'Developer'}),
-      Object.create({title: 'Former Student'}),
+      EmberObject.create({title: 'Course Director'}),
+      EmberObject.create({title: 'Faculty'}),
+      EmberObject.create({title: 'Developer'}),
+      EmberObject.create({title: 'Former Student'}),
     ]),
     userSyncIgnore: true,
-    school: resolve(Object.create({title: 'test school'})),
-    primaryCohort: resolve(Object.create({title: 'test cohort'})),
+    school: resolve(EmberObject.create({title: 'test school'})),
+    primaryCohort: resolve(EmberObject.create({title: 'test cohort'})),
     secondaryCohorts: resolve([
-      Object.create({title: 'second cohort'}),
-      Object.create({title: 'a third cohort'}),
+      EmberObject.create({title: 'second cohort'}),
+      EmberObject.create({title: 'a third cohort'}),
     ]),
     learnerGroups: resolve([
-      Object.create({title: 'first group', cohort}),
-      Object.create({title: 'a second group', cohort}),
+      EmberObject.create({title: 'first group', cohort}),
+      EmberObject.create({title: 'a second group', cohort}),
     ]),
   });
 
@@ -65,7 +65,7 @@ test('it renders all yes', function(assert) {
 });
 
 test('it renders all no', function(assert) {
-  const user = Object.create({
+  const user = EmberObject.create({
     fullName: 'test name',
     isStudent: false,
     roles: resolve([]),

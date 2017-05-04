@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object } = Ember;
+const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('leadership-search', 'Integration | Component | leadership search', {
@@ -41,7 +41,7 @@ test('input triggers search', function(assert) {
       assert.equal('user', what);
       assert.equal(100, limit);
       assert.equal('search words', q);
-      return resolve([Object.create({fullName: 'test person', email: 'testemail'})]);
+      return resolve([EmberObject.create({fullName: 'test person', email: 'testemail'})]);
     }
   });
   this.register('service:store', storeMock);
@@ -88,7 +88,7 @@ test('no results displays messages', function(assert) {
 });
 
 test('click user fires add user', function(assert) {
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     fullName: 'test person',
     email: 'testemail'
   });
@@ -117,12 +117,12 @@ test('click user fires add user', function(assert) {
 
 test('can not add users twice', function(assert) {
   assert.expect(6);
-  let user1 = Object.create({
+  let user1 = EmberObject.create({
     id: 1,
     fullName: 'test person',
     email: 'testemail'
   });
-  let user2 = Object.create({
+  let user2 = EmberObject.create({
     id: 2,
     fullName: 'test person2',
     email: 'testemail2'

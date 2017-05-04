@@ -35,13 +35,13 @@ export default DS.Model.extend(PublishableModel,{
           if(!programYears.length){
             resolve();
           }
-          let promises = [];
+          let promises2 = [];
           programYears.forEach(programYear => {
-            promises.pushObject(programYear.get('cohort').then(cohort =>{
+            promises2.pushObject(programYear.get('cohort').then(cohort =>{
               allCohorts.pushObject(cohort);
             }));
           });
-          all(promises).then(()=>{
+          all(promises2).then(()=>{
             resolve();
           });
         });
@@ -68,15 +68,15 @@ export default DS.Model.extend(PublishableModel,{
           if(!cohorts.length){
             resolve();
           }
-          let promises = [];
+          let promises2 = [];
           cohorts.forEach(cohort => {
-            promises.pushObject(cohort.get('courses').then(courses =>{
+            promises2.pushObject(cohort.get('courses').then(courses =>{
               courses.forEach(course => {
                 allCourses.pushObject(course);
               });
             }));
           });
-          all(promises).then(()=>{
+          all(promises2).then(()=>{
             resolve();
           });
         });
