@@ -63,11 +63,6 @@ export default Component.extend({
       .attr("text-anchor", "end")
       .attr("fill", "#000");
 
-    container.append("text")
-      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 30) + ")")
-      .style("text-anchor", "end")
-      .text("Label");
-
     container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')
       .attr('class', 'bar')
