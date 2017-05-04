@@ -43,11 +43,11 @@ export default Component.extend({
 
     const leftScale = container.append("g").call(axisLeft(y));
     const labels = leftScale.selectAll("text")
-      .attr("y", 4)
+      .attr("y", 0)
       .attr("x", -8)
       .attr("dy", "0.35em")
-      .attr("text-anchor", "end")
-      .attr("fill", "#000");
+      .attr("fill", "#000")
+      .style("text-anchor", "end");
 
     let maxLabelLeftPosition = width;
     labels.each(function(label, index, allLabels) {
@@ -59,16 +59,16 @@ export default Component.extend({
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
 
     const bottomScale = container.append("g").call(axisBottom(x));
-    bottomScale.attr("transform", "translate(0," + chartWidth + ")")
+    bottomScale.attr("transform", "translate(0," + chartHeight + ")")
       .selectAll("text")
-      .attr("x", x(x.ticks(10).pop()) + 0.5)
+      .attr("x", x(x.ticks(10).pop()) + 0)
       .attr("y", 16)
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .attr("fill", "#000");
 
     container.append("text")
-      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
+      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 30) + ")")
       .style("text-anchor", "end")
       .text("Label");
 
