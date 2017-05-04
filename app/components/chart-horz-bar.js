@@ -32,10 +32,6 @@ export default Component.extend({
     const x = scaleLinear().range([chartWidth, 0]);
     const y = scaleBand().range([0, chartHeight]).padding(0.4);
 
-    if (dataOrArray.length === 0) {
-      return;
-    }
-
     x.domain([0, max(dataOrArray, d => d.total)]);
     y.domain(dataOrArray.map(d => d.label));
 
