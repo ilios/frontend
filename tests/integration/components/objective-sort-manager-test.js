@@ -94,8 +94,8 @@ test('save', function(assert) {
   this.set('subject', subject);
   this.on('save', function(data){
     assert.equal(data.length, objectives.length);
-    assert.ok(data.contains(objective1));
-    assert.ok(data.contains(objective2));
+    assert.ok(data.includes(objective1));
+    assert.ok(data.includes(objective2));
   });
 
   this.render(hbs`{{objective-sort-manager subject=subject save=(action 'save')}}`);

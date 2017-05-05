@@ -153,8 +153,8 @@ test('save', function(assert) {
   this.set('subject', subject);
   this.on('save', function(data){
     assert.equal(data.length, clms.length);
-    assert.ok(data.contains(clm1));
-    assert.ok(data.contains(clm2));
+    assert.ok(data.includes(clm1));
+    assert.ok(data.includes(clm2));
   });
 
   this.render(hbs`{{learning-materials-sort-manager subject=subject save=(action 'save')}}`);

@@ -7,12 +7,15 @@ const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
+let currentUserMock;
 
 moduleForComponent('pending-updates-summary', 'Integration | Component | pending updates summary', {
   integration: true,
   beforeEach(){
     storeMock = Service.extend({});
+    currentUserMock = Service.extend({});
     this.register('service:store', storeMock);
+    this.register('service:currentUser', currentUserMock);
   }
 });
 
@@ -30,12 +33,10 @@ test('it renders', async function(assert) {
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
   });
-  let currentUserMock = Service.extend({
+  currentUserMock.reopen({
     model: resolve(user)
   });
 
-
-  this.register('service:currentUser', currentUserMock);
   storeMock.reopen({
     query(what){
       assert.equal('pending-user-update', what);
