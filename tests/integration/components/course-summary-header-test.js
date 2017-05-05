@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import moment from 'moment';
 
 const { Object:EmberObject } = Ember;
 
@@ -43,9 +44,9 @@ test('it renders', function(assert) {
   assert.ok(this.$(materialsIcon).hasClass('fa-archive'));
   assert.ok(this.$(printIcon).hasClass('fa-print'));
   assert.ok(this.$(rolloverIcon).hasClass('fa-random'));
-  assert.equal(this.$(start).text().trim(), '05/06/20');
+  assert.equal(this.$(start).text().trim(), moment(course.startDate).format('L'));
   assert.equal(this.$(externalId).text().trim(), 'abc');
-  assert.equal(this.$(end).text().trim(), '12/11/20');
+  assert.equal(this.$(end).text().trim(), moment(course.endDate).format('L'));
   assert.equal(this.$(level).text().trim(), '3');
   assert.equal(this.$(status).text().trim(), 'Published');
 

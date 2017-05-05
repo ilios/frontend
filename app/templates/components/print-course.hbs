@@ -18,7 +18,7 @@
         <div class='detail-content'>
           <div class="inline-label-data-block">
             <label>{{t 'general.start'}}:</label>
-            <div>{{moment-format course.startDate 'MM/DD/YYYY'}}</div>
+            <div>{{moment-format course.startDate 'L'}}</div>
           </div>
           <div class="inline-label-data-block">
             <label>{{t 'general.externalId'}}:</label>
@@ -30,7 +30,7 @@
           </div>
           <div class="inline-label-data-block">
             <label>{{t 'general.end'}}:</label>
-            <div>{{moment-format course.endDate 'MM/DD/YYYY'}}</div>
+            <div>{{moment-format course.endDate 'L'}}</div>
           </div>
           <br>
           <br>
@@ -301,8 +301,8 @@
                 {{#each session.offerings as |offering|}}
                   <tr>
                     <td class='text-left'>
-                      {{moment-format offering.startDate 'MM/DD/YYYY LT'}} -
-                      {{moment-format offering.endDate 'MM/DD/YYYY LT'}}
+                      {{moment-format offering.startDate 'L LT'}} -
+                      {{moment-format offering.endDate 'L LT'}}
                     </td>
                     <td class='text-left'>{{offering.room}}</td>
                     <td class='text-left'>

@@ -77,13 +77,13 @@
     <span>
       {{#if editable}}
         {{#editable-field
-          value=(moment-format course.startDate 'MM/DD/YY')
+          value=(moment-format course.startDate 'L')
           save=(action 'changeStartDate')
           close=(action 'revertStartDateChanges')
         }}
           {{pikaday-input
             value=startDate
-            format='MM/DD/YY'
+            format='L'
             onSelection=(action (mut startDate))
             focusOut=(action 'addErrorDisplayFor' 'startDate')
           }}
@@ -92,7 +92,7 @@
           {{/if}}
         {{/editable-field}}
       {{else}}
-        {{moment-format course.startDate 'MM/DD/YY'}}&nbsp;
+        {{moment-format course.startDate 'L'}}&nbsp;
       {{/if}}
     </span>
   </div>
@@ -101,13 +101,13 @@
     <span>
       {{#if editable}}
         {{#editable-field
-          value=(moment-format course.endDate 'MM/DD/YY')
+          value=(moment-format course.endDate 'L')
           save=(action 'changeEndDate')
           close=(action 'revertEndDateChanges')
         }}
           {{pikaday-input
             value=endDate
-            format='MM/DD/YY'
+            format='L'
             onSelection=(action (mut endDate))
             focusOut=(action 'addErrorDisplayFor' 'endDate')
           }}
@@ -116,7 +116,7 @@
           {{/if}}
         {{/editable-field}}
       {{else}}
-        {{moment-format course.endDate 'MM/DD/YY'}}&nbsp;
+        {{moment-format course.endDate 'L'}}&nbsp;
       {{/if}}
     </span>
   </div>

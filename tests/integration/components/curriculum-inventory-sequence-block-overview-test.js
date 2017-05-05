@@ -202,12 +202,12 @@ test('it renders', function(assert) {
     assert.ok(this.$('.track input').prop('checked'), 'Track toggle is set to "yes"');
     assert.equal(this.$('.start-date label').text().trim(), 'Start:', 'Start date label is correct.');
     assert.equal(
-      this.$('.start-date .editinplace').text().trim(), moment(block.get('startDate')).format('MM/DD/YY'),
+      this.$('.start-date .editinplace').text().trim(), moment(block.get('startDate')).format('L'),
       'Start date is visible.'
     );
     assert.equal(this.$('.end-date label').text().trim(), 'End:', 'End date label is correct.');
     assert.equal(
-      this.$('.end-date .editinplace').text().trim(), moment(block.get('endDate')).format('MM/DD/YY'),
+      this.$('.end-date .editinplace').text().trim(), moment(block.get('endDate')).format('L'),
       'End date is visible.'
     );
     assert.equal(this.$('.duration label').text().trim(), 'Duration (in Days):', 'Duration label is correct.');
@@ -1234,11 +1234,11 @@ test('finalized/read-only mode', function(assert) {
     assert.equal(this.$('.required > span:eq(0)').text().trim(), 'Optional (elective)', 'Required is visible.');
     assert.ok(this.$('.track > span:eq(0)').text().trim(), 'Is Track is visible.');
     assert.equal(
-      this.$('.start-date > span:eq(0)').text().trim(), moment(block.get('startDate')).format('MM/DD/YY'),
+      this.$('.start-date > span:eq(0)').text().trim(), moment(block.get('startDate')).format('L'),
       'Start date is visible.'
     );
     assert.equal(
-      this.$('.end-date > span:eq(0)').text().trim(), moment(block.get('endDate')).format('MM/DD/YY'),
+      this.$('.end-date > span:eq(0)').text().trim(), moment(block.get('endDate')).format('L'),
       'End date is visible.'
     );
     assert.equal(this.$('.duration > span:eq(0)').text().trim(), block.get('duration'), 'Duration is visible.');

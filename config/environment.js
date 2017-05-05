@@ -47,6 +47,10 @@ module.exports = function(environment) {
     'ember-metrics': {
       includeAdapters: ['google-analytics']
     },
+    moment: {
+      // Full list of locales: https://github.com/moment/moment/tree/2.10.3/locale
+      includeLocales: ['es', 'fr']
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -106,6 +110,9 @@ module.exports = function(environment) {
     ENV.serverVariables.defaults['api-host'] = '';
 
     ENV.IliosFeatures.accessCourseVisualizations = true;
+
+    //silence warnings in tests when dates are not initialized
+    ENV.moment.allowEmpty = true;
   }
 
 /*

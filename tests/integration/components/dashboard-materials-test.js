@@ -99,21 +99,21 @@ test('it renders with materials', function(assert) {
     assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
     assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
     assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
-    assert.equal(this.$(firstLmFirstOffering).text().trim(), today.format('MM/DD/YYYY'));
+    assert.equal(this.$(firstLmFirstOffering).text().trim(), today.format('L'));
 
     assert.equal(this.$(secondLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
     assert.equal(this.$(secondLmLink).length, 0);
     assert.equal(this.$(secondLmSessionTitle).text().trim(), 'session3title');
     assert.equal(this.$(secondLmCourseTitle).text().trim(), 'course3title');
     assert.equal(this.$(secondLmInstructor).text().trim(), '');
-    assert.equal(this.$(secondLmFirstOffering).text().trim(), today.format('MM/DD/YYYY'));
+    assert.equal(this.$(secondLmFirstOffering).text().trim(), today.format('L'));
 
     assert.equal(this.$(thirdLmTitle).text().trim(), 'title2');
     assert.equal(this.$(thirdLmLink).prop('href').trim(), 'http://myhost.com/url2');
     assert.equal(this.$(thirdLmSessionTitle).text().trim(), 'session2title');
     assert.equal(this.$(thirdLmCourseTitle).text().trim(), 'course2title');
     assert.equal(this.$(thirdLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
-    assert.equal(this.$(thirdLmFirstOffering).text().trim(), tomorrow.format('MM/DD/YYYY'));
+    assert.equal(this.$(thirdLmFirstOffering).text().trim(), tomorrow.format('L'));
   });
 
 });

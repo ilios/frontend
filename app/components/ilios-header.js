@@ -7,6 +7,7 @@ export default Component.extend({
   session: service(),
   currentUser: service(),
   i18n: service(),
+  moment: service(),
   classNames: ['ilios-header'],
   tagName: 'header',
   title: null,
@@ -18,6 +19,7 @@ export default Component.extend({
   actions: {
     changeLocale(newLocale){
       this.get('i18n').set('locale', newLocale);
+      this.get('moment').setLocale(newLocale);
     }
   }
 });

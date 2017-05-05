@@ -88,7 +88,7 @@
         {{#if isFinalized}}
           <span>
             {{#if sequenceBlock.startDate}}
-              {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+              {{moment-format sequenceBlock.startDate 'L'}}
             {{else}}
               {{t 'general.notApplicableAbbr'}}
             {{/if}}
@@ -97,7 +97,7 @@
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">
               {{#if sequenceBlock.startDate}}
-                {{moment-format sequenceBlock.startDate 'MM/DD/YY'}}
+                {{moment-format sequenceBlock.startDate 'L'}}
               {{else}}
                 {{t 'general.clickToEdit'}}
               {{/if}}
@@ -110,7 +110,7 @@
         {{#if isFinalized}}
           <span>
             {{#if sequenceBlock.endDate}}
-              {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+              {{moment-format sequenceBlock.endDate 'L'}}
             {{else}}
               {{t 'general.notApplicableAbbr'}}
             {{/if}}
@@ -119,7 +119,7 @@
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">
               {{#if sequenceBlock.endDate}}
-                {{moment-format sequenceBlock.endDate 'MM/DD/YY'}}
+                {{moment-format sequenceBlock.endDate 'L'}}
               {{else}}
                 {{t 'general.clickToEdit'}}
               {{/if}}

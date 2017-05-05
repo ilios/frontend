@@ -9,6 +9,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   flashMessages: service(),
   ajax: service(),
   i18n: service(),
+  moment: service(),
 
   /**
   * Leave titles as an array
@@ -34,6 +35,11 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         }
       });
     }
+  },
+  beforeModel() {
+    const i18n = this.get('i18n');
+    const moment = this.get('moment');
+    moment.setLocale(i18n.get('locale'));
   },
 
   actions: {

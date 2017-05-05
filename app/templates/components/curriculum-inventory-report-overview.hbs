@@ -12,16 +12,16 @@
       <label>{{t 'general.start'}}:</label>
       <span>
         {{#if isFinalized}}
-          {{moment-format report.startDate 'MM/DD/YY'}}
+          {{moment-format report.startDate 'L'}}
         {{else}}
           {{#editable-field
-            value=(moment-format report.startDate 'MM/DD/YY')
+            value=(moment-format report.startDate 'L')
             save=(action 'changeStartDate')
             close=(action 'revertStartDateChanges')
           }}
             {{pikaday-input
               value=startDate
-              format='MM/DD/YY'
+              format='L'
               onSelection=(action (mut startDate))
               focusOut=(action 'addErrorDisplayFor' 'startDate')
             }}
@@ -36,16 +36,16 @@
       <label>{{t 'general.end'}}:</label>
       <span>
         {{#if isFinalized}}
-          {{moment-format report.endDate 'MM/DD/YY'}}
+          {{moment-format report.endDate 'L'}}
         {{else}}
           {{#editable-field
-            value=(moment-format report.endDate 'MM/DD/YY')
+            value=(moment-format report.endDate 'L')
             save=(action 'changeEndDate')
             close=(action 'revertEndDateChanges')
           }}
             {{pikaday-input
               value=endDate
-              format='MM/DD/YY'
+              format='L'
               onSelection=(action (mut endDate))
               focusOut=(action 'addErrorDisplayFor' 'endDate')
             }}
