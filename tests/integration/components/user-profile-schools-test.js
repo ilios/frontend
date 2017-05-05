@@ -7,9 +7,23 @@ const { RSVP, Object: EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let user;
+let storeMock;
+let som = EmberObject.create({
+  id: '1',
+  title: 'SOM'
+});
+let sod = EmberObject.create({
+  id: '2',
+  title: 'SOD'
+});
+let sop = EmberObject.create({
+  id: '3',
+  title: 'SOP'
+});
 moduleForComponent('user-profile-schools', 'Integration | Component | user profile schools', {
   integration: true,
   beforeEach(){
+    storeMock = Service.extend({});
     let sodPermission = EmberObject.create({
       user,
       tableName: 'school',
@@ -33,29 +47,16 @@ moduleForComponent('user-profile-schools', 'Integration | Component | user profi
       }))
     });
     this.register('service:currentUser', currentUser);
+    this.register('service:store', storeMock);
   }
 });
 
-let som = EmberObject.create({
-  id: '1',
-  title: 'SOM'
-});
-let sod = EmberObject.create({
-  id: '2',
-  title: 'SOD'
-});
-let sop = EmberObject.create({
-  id: '3',
-  title: 'SOP'
-});
-
 test('it renders', function(assert) {
-  let store = Service.extend({
+  storeMock.reopen({
     findAll(){
       return resolve([som, sod, sop]);
     }
   });
-  this.register('service:store', store);
 
   this.set('user', user);
   this.render(hbs`{{user-profile-schools user=user}}`);
@@ -81,12 +82,11 @@ test('it renders', function(assert) {
 
 test('clicking manage sends the action', function(assert) {
   assert.expect(1);
-  let store = Service.extend({
+  storeMock.reopen({
     findAll(){
       return resolve([som, sod, sop]);
     }
   });
-  this.register('service:store', store);
   this.set('user', user);
   this.set('click', (what) =>{
     assert.ok(what, 'recieved boolean true value');
@@ -99,7 +99,7 @@ test('clicking manage sends the action', function(assert) {
 test('can edit user school permissions', function(assert) {
   assert.expect(16);
 
-  let store = Service.extend({
+  storeMock.reopen({
     findAll(){
       return resolve([som, sod, sop]);
     },
@@ -125,7 +125,6 @@ test('can edit user school permissions', function(assert) {
       }
     },
   });
-  this.register('service:store', store);
   this.set('user', user);
   this.set('nothing', parseInt);
 
@@ -156,17 +155,14 @@ test('can edit user school permissions', function(assert) {
   });
 });
 
-
-
-test('clicking write selects read', function(assert) {
+test('clicking write selects read', async function(assert) {
   assert.expect(6);
 
-  let store = Service.extend({
+  storeMock.reopen({
     findAll(){
       return resolve([som, sod, sop]);
     },
   });
-  this.register('service:store', store);
   this.set('user', user);
   this.set('nothing', parseInt);
 
@@ -177,27 +173,24 @@ test('clicking write selects read', function(assert) {
   const secondRowCanRead = `${secondRowPermissions} input:eq(0)`;
   const secondRowCanWrite = `${secondRowPermissions} input:eq(1)`;
 
-  return wait().then(()=>{
-    assert.ok(this.$(secondRowCanRead).not(':checked'), 'sop can not read');
-    assert.ok(this.$(secondRowCanWrite).not(':checked'), 'sop can not write');
-    assert.ok(this.$(secondRowCanRead).not(':disabled'), 'sop can not write');
+  await wait();
+  assert.ok(this.$(secondRowCanRead).not(':checked'), 'sop can not read');
+  assert.ok(this.$(secondRowCanWrite).not(':checked'), 'sop can not write');
+  assert.ok(this.$(secondRowCanRead).not(':disabled'), 'sop read is not disabled');
 
-    this.$(secondRowCanWrite).click().change();
-    return wait().then(()=>{
-      assert.ok(this.$(secondRowCanRead).is(':checked'), 'sop canRead');
-      assert.ok(this.$(secondRowCanWrite).is(':checked'), 'sop canWrite');
-      assert.ok(this.$(secondRowCanRead).is(':disabled'), 'sop read selected');
-    });
-  });
+  this.$(secondRowCanWrite).click().change();
+  await wait();
+  assert.ok(this.$(secondRowCanRead).is(':checked'), 'sop canRead');
+  assert.ok(this.$(secondRowCanWrite).is(':checked'), 'sop canWrite');
+  assert.ok(this.$(secondRowCanRead).is(':disabled'), 'sop read is disabled');
 });
 
 test('changing user modifies display #2389', async function(assert) {
-  let store = Service.extend({
+  storeMock.reopen({
     findAll(){
       return resolve([som, sod, sop]);
     }
   });
-  this.register('service:store', store);
   let user2 = EmberObject.create({
     id: 14,
     enabled: true,

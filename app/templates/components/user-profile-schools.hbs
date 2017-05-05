@@ -27,9 +27,9 @@
           <td>
             {{#if isManaging}}
               {{one-way-checkbox
-                checked=(or (contains school.id (map-by 'id' (await readSchools))) (contains school.id (map-by 'id' (await writeSchools))))
+                checked=(is-in (await readAndWriteSchoolIds) school.id)
                 update=(action 'toggleReadSchool' school)
-                disabled=(contains school.id (map-by 'id' (await writeSchools)))
+                disabled=(is-in (await writeSchoolIds) school.id)
               }}
             {{else}}
               {{fa-icon

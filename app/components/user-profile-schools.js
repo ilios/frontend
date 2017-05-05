@@ -100,71 +100,72 @@ export default Component.extend({
     });
   }),
 
-  secondarySchools: computed('user.school', 'currentUser.model.school', function(){
+  secondarySchools: computed('user.school', 'currentUser.model.school', async function(){
     const store = this.get('store');
     const user = this.get('user');
-    return new Promise(resolve => {
-      store.findAll('school').then(schools => {
-        user.get('school').then(primarySchool => {
-          let secondarySchools = schools.filter(school => school.get('id') !== primarySchool.get('id'));
-          resolve(secondarySchools);
-        });
-      });
-    });
+    const schools = await store.findAll('school');
+    const primarySchool = await user.get('school');
+    const secondarySchools = schools.filter(school => school.get('id') !== primarySchool.get('id'));
+
+    return secondarySchools;
   }),
 
-  readSchools: computed('user.permissios.[]', 'secondarySchools.[]', 'togglePermissions.[]', function(){
+  readSchools: computed('user.permissions.[]', 'secondarySchools.[]', 'togglePermissions.[]', async function(){
     const togglePermissions = this.get('togglePermissions');
     const user = this.get('user');
-    return new Promise(resolve => {
-      this.get('secondarySchools').then(schools => {
-        let overriddenIds = schools.filter(school => {
-          const permission = school.get('id') + 'read';
-          return togglePermissions.includes(permission);
-        }).mapBy('id');
-        user.get('permissions').then(permissions => {
-          let existingIds = permissions.filter(permission => {
-            return permission.get('tableName') === 'school' && permission.get('canRead');
-          }).mapBy('tableRowId');
-          let readSchools = schools.filter(school => {
-            let id = school.get('id');
-            return (existingIds.includes(id) && !overriddenIds.includes(id)) ||
-                   (!existingIds.includes(id) && overriddenIds.includes(id));
-          });
 
-          resolve(readSchools);
-        });
-
-
-      });
+    const schools = await this.get('secondarySchools');
+    const overriddenIds = schools.filter(school => {
+      const permission = school.get('id') + 'read';
+      return togglePermissions.includes(permission);
+    }).mapBy('id');
+    const permissions = await user.get('permissions');
+    const existingIds = permissions.filter(permission => {
+      return permission.get('tableName') === 'school' && permission.get('canRead');
+    }).mapBy('tableRowId');
+    const readSchools = schools.filter(school => {
+      let id = school.get('id');
+      return (existingIds.includes(id) && !overriddenIds.includes(id)) ||
+             (!existingIds.includes(id) && overriddenIds.includes(id));
     });
+
+    return readSchools;
   }),
 
-  writeSchools: computed('user.permissios.[]', 'secondarySchools.[]', 'togglePermissions.[]', function(){
+  writeSchools: computed('user.permissions.[]', 'secondarySchools.[]', 'togglePermissions.[]', async function(){
     const togglePermissions = this.get('togglePermissions');
     const user = this.get('user');
-    return new Promise(resolve => {
-      this.get('secondarySchools').then(schools => {
-        let overriddenIds = schools.filter(school => {
-          const permission = school.get('id') + 'write';
-          return togglePermissions.includes(permission);
-        }).mapBy('id');
-        user.get('permissions').then(permissions => {
-          let existingIds = permissions.filter(permission => {
-            return permission.get('tableName') === 'school' && permission.get('canWrite');
-          }).mapBy('tableRowId');
-          let writeSchools = schools.filter(school => {
-            let id = school.get('id');
-            return (existingIds.includes(id) && !overriddenIds.includes(id)) ||
-                   (!existingIds.includes(id) && overriddenIds.includes(id));
-          });
 
-          resolve(writeSchools);
-        });
-
-
-      });
+    const schools = await this.get('secondarySchools');
+    const overriddenIds = schools.filter(school => {
+      const permission = school.get('id') + 'write';
+      return togglePermissions.includes(permission);
+    }).mapBy('id');
+    const permissions = await user.get('permissions');
+    const existingIds = permissions.filter(permission => {
+      return permission.get('tableName') === 'school' && permission.get('canWrite');
+    }).mapBy('tableRowId');
+    const writeSchools = schools.filter(school => {
+      let id = school.get('id');
+      return (existingIds.includes(id) && !overriddenIds.includes(id)) ||
+             (!existingIds.includes(id) && overriddenIds.includes(id));
     });
+
+    return [].concat(writeSchools);
+  }),
+
+  readAndWriteSchoolIds: computed('readSchools.[]', 'writeSchools.[]', async function(){
+    const readSchools = await this.get('readSchools');
+    const writeSchools = await this.get('writeSchools');
+
+    const all = [].concat(readSchools, writeSchools);
+
+    return all.mapBy('id');
+  }),
+
+  writeSchoolIds: computed('writeSchools.[]', async function(){
+    const writeSchools = await this.get('writeSchools');
+    return writeSchools.mapBy('id');
   }),
 
   actions: {
