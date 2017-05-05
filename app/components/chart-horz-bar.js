@@ -43,7 +43,7 @@ export default Component.extend({
       leftScale = container.append("g").call(axisLeft(y));
     }
 
-    let labels = leftScale
+    let labels = leftScale;
     if (!isIcon) {
       labels.selectAll("text")
         .attr("y", 0)
@@ -61,9 +61,9 @@ export default Component.extend({
 
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
 
-    let bottomScale = container;
+    let bottomScale = container.append("g");
     if (!isIcon) {
-      bottomScale = container.append("g").call(axisBottom(x))
+      bottomScale = bottomScale.call(axisBottom(x))
         .attr("transform", "translate(0," + chartHeight + ")")
         .selectAll("text")
         .attr("x", x(x.ticks(10).pop()) + 0)
@@ -71,7 +71,7 @@ export default Component.extend({
         .attr("dy", "0.35em")
         .attr("text-anchor", "end")
         .attr("fill", "#000");
-      }
+    }
 
     container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')

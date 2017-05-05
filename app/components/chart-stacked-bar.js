@@ -83,14 +83,14 @@ export default Component.extend({
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelBottomPosition +'px;');
 
     if (!isIcon) {
-    container.append("text")
+      container.append("text")
       .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "end")
       .text("Label");
     }
 
     if (!isIcon) {
-    container.append("g").call(axisLeft(y))
+      container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)

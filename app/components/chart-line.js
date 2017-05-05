@@ -58,16 +58,16 @@ export default Component.extend({
       .attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
 
     if (!isIcon) {
-    container.append("text")
+      container.append("text")
       .attr("transform", "translate(" + (chartWidth/2) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "middle")
       .text("Label");
     }
 
     if (!isIcon) {
-    container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
+      container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
 
-    container.append("text")
+      container.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 20 - margin.right)
       .attr("x", 0 - (chartHeight / 8))

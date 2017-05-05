@@ -41,7 +41,7 @@ export default Component.extend({
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
     const bottomScale = container.append("g").call(axisBottom(x));
-    const labels = bottomScale
+    const labels = bottomScale;
     if (!isIcon) {
       bottomScale.selectAll("text")
       .attr("y", 0)
@@ -67,13 +67,13 @@ export default Component.extend({
     bottomScale.attr("transform", "translate(0," + chartHeight + ")");
 
     if (!isIcon) {
-    container.append("text")
+      container.append("text")
       .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "end")
       .attr("font", "10px")
       .text("Label");
 
-    container.append("g").call(axisLeft(y))
+      container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
