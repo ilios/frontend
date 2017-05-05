@@ -44,8 +44,8 @@ export default Component.extend({
     const labels = bottomScale;
     if (!isIcon) {
       bottomScale.selectAll("text")
-      .attr("y", 10)
-      .attr("x", 0)
+      .attr("y", 0)
+      .attr("x", 10)
       .attr("dy", ".35em")
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
@@ -71,9 +71,9 @@ export default Component.extend({
     const y = scaleLinear().range([chartHeight, 0]);
     y.domain([0, max(dataOrArray, d => d.total)]);
 
-    container.append("g").call(axisLeft(y));
+
     if (!isIcon) {
-      container.selectAll("text")
+    container.append("g").call(axisLeft(y)).selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
