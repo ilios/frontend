@@ -67,12 +67,6 @@ export default Component.extend({
     bottomScale.attr("transform", "translate(0," + chartHeight + ")");
 
     if (!isIcon) {
-      container.append("text")
-      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
-      .style("text-anchor", "end")
-      .attr("font", "10px")
-      .text("Label");
-
       container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
