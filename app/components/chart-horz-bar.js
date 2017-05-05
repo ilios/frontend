@@ -61,9 +61,9 @@ export default Component.extend({
 
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
 
-    let bottomScale = container.append("g");
+    const bottomScale = container.append("g");
     if (!isIcon) {
-      bottomScale = bottomScale.call(axisBottom(x))
+      bottomScale.call(axisBottom(x))
         .attr("transform", "translate(0," + chartHeight + ")")
         .selectAll("text")
         .attr("x", x(x.ticks(10).pop()) + 0)
