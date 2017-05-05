@@ -2,10 +2,22 @@
   name='donut'
   width=width
   height=height
-  data=(await condensedObjectiveData)
+  data=(await objectiveWithHours)
   hover=(perform donutHover)
   leave=(perform donutHover)
   as |chart|
 }}
   {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
 {{/ilios-chart}}
+
+{{#unless (or icon (eq (get (await objectiveWithoutHours) 'length') 0))}}
+  <div class='zero-hours'>
+    <h4>{{fa-icon 'warning' class='warning'}} {{t 'general.unusedObjectives'}}:</h4>
+    <p>{{t 'general.objectivesWithNoHours'}}</p>
+    <ul>
+      {{#each (sort-by 'meta.courseObjective.title' (await objectiveWithoutHours)) as |obj|}}
+        <li>{{obj.meta.courseObjective.title}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/unless}}

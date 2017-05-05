@@ -1,0 +1,33 @@
+.visualizer-course-objectives {
+  .zero-hours {
+    p {
+      margin-top: .5em;
+    }
+
+    h4 {
+      @include ilios-heading-h4;
+    }
+
+    li {
+      list-style-type: disc;
+      margin-left: 1em;
+      padding-bottom: .5em;
+    }
+  }
+
+  &.not-icon {
+    .ilios-chart {
+      @include fill-parent;
+      @include media($large-screen) {
+        @include span-columns(5);
+      }
+    }
+
+    .zero-hours {
+      @include fill-parent;
+      @include media($large-screen) {
+        @include span-columns(6);
+      }
+    }
+  }
+}
