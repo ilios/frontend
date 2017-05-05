@@ -46,7 +46,28 @@ export default function() {
   this.delete('api/authentications/:id', 'authentication');
   this.post('api/authentications', 'authentication');
 
-  this.get('api/cohorts', getAll);
+  this.get('api/cohorts', (db, request) => {
+    const params = request.queryParams;
+    const keys = Object.keys(params);
+    const schoolKey = 'filters[schools]';
+    if (keys.includes(schoolKey)) {
+      const schoolsFilter = params[schoolKey];
+      const cohorts = db.cohorts.filter(cohort => {
+        const programYearId = parseInt(cohort.programYear);
+        const programYear = db.programYears.find(programYearId);
+        const programId = parseInt(programYear.program);
+        const program = db.programs.find(programId);
+        const schoolId = program.school;
+
+        return schoolsFilter.includes(schoolId.toString());
+      });
+
+      return {cohorts};
+
+    } else {
+      return getAll(db, request);
+    }
+  });
   this.get('api/cohorts/:id', 'cohort');
   this.put('api/cohorts/:id', 'cohort');
   this.delete('api/cohorts/:id', 'cohort');
