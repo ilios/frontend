@@ -20,7 +20,7 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
     const margin = {top: 10, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
