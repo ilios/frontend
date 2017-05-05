@@ -63,7 +63,7 @@ export default Component.extend({
 
     let chartHeight = height - margin.top - margin.bottom - maxLabelHeight;
     if (isIcon) {
-     chartHeight = height;
+      chartHeight = height;
     }
 
     bottomScale.attr("transform", "translate(0," + chartHeight + ")");
@@ -71,9 +71,9 @@ export default Component.extend({
     const y = scaleLinear().range([chartHeight, 0]);
     y.domain([0, max(dataOrArray, d => d.total)]);
 
+    container.append("g").call(axisLeft(y));
     if (!isIcon) {
-    container.append("g").call(axisLeft(y))
-      .selectAll("text")
+     container.selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
