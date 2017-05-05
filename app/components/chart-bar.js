@@ -72,12 +72,13 @@ export default Component.extend({
     const y = scaleLinear().range([chartHeight, 0]);
     y.domain([0, max(dataOrArray, d => d.total)]);
 
+    const leftScale = container.append("g").call(axisLeft(y));
+
     if (!isIcon) {
-      container.append("g").call(axisLeft(y)).selectAll("text")
+      leftScale.selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
-      .attr("transform", "translate")
       .attr("fill", "#000")
       .style("text-anchor", "end");
     }
@@ -87,6 +88,7 @@ export default Component.extend({
       .attr('class', 'bar')
       .attr('x', d => x(d.label))
       .attr('y', d => y(d.total))
+      .attr("transform", "translate")
       .attr("width", x.bandwidth())
       .attr('height', d => chartHeight - y(d.total))
       .attr('fill', d =>  color(d.label));
