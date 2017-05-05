@@ -22,12 +22,12 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[];
     const svg = select(this.element);
-    const margin = {top: 10, right: 20, bottom: 30, left: 25};
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
     const height = get(this, 'height');
     const chartWidth = width - margin.left - margin.right;
     const color = scaleOrdinal(schemeCategory10);
-    const isIcon = width < 100 || height < 100;
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
 
@@ -45,7 +45,7 @@ export default Component.extend({
     if (!isIcon) {
       bottomScale.selectAll("text")
       .attr("y", 0)
-      .attr("x", 9)
+      .attr("x", 10)
       .attr("dy", ".35em")
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
@@ -61,13 +61,18 @@ export default Component.extend({
       maxLabelHeight = Math.max(maxLabelHeight, Math.ceil(labelDimensions.height));
     });
 
-    const chartHeight = height - margin.top - margin.bottom - maxLabelHeight;
-    const y = scaleLinear().range([chartHeight, 0]);
-    y.domain([0, max(dataOrArray, d => d.total)]);
+    let chartHeight = height - margin.top - margin.bottom - maxLabelHeight;
+    if (isIcon) {
+     chartHeight = height;
+    }
+
     bottomScale.attr("transform", "translate(0," + chartHeight + ")");
 
+    const y = scaleLinear().range([chartHeight, 0]);
+    y.domain([0, max(dataOrArray, d => d.total)]);
+
     if (!isIcon) {
-      container.append("g").call(axisLeft(y))
+    container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
