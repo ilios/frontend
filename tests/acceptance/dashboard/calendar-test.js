@@ -665,7 +665,7 @@ test('academic year filters cohort', function(assert) {
     pickOption('.calendar-year-picker select', '2015 - 2016', assert);
     andThen(()=> {
       let cohortFilter = find('.cohortfilter li');
-      assert.equal(cohortFilter.length, 2);
+      assert.equal(cohortFilter.length, 3);
     });
     pickOption('.calendar-year-picker select', '2014 - 2015', assert);
     andThen(()=> {
