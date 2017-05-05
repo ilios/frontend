@@ -16,7 +16,7 @@
     <p>{{t 'general.objectivesWithNoHours'}}</p>
     <ul>
       {{#each (sort-by 'meta.courseObjective.title' (await objectiveWithoutHours)) as |obj|}}
-        <li>{{obj.meta.courseObjective.title}}</li>
+        <li>{{{obj.meta.courseObjective.title}}}</li>
       {{/each}}
     </ul>
   </div>
