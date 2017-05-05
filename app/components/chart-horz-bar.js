@@ -28,6 +28,7 @@ export default Component.extend({
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
     const color = scaleOrdinal(schemeCategory10);
+    const isIcon = width < 100 || height < 100;
 
     const x = scaleLinear().range([chartWidth, 0]);
     const y = scaleBand().range([0, chartHeight]).padding(0.4);
@@ -37,13 +38,19 @@ export default Component.extend({
 
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    const leftScale = container.append("g").call(axisLeft(y));
-    const labels = leftScale.selectAll("text")
-      .attr("y", 0)
-      .attr("x", -8)
-      .attr("dy", "0.35em")
-      .attr("fill", "#000")
-      .style("text-anchor", "end");
+    let leftScale = container;
+    if (!isIcon) {
+      leftScale = container.append("g").call(axisLeft(y));
+    }
+
+    let labels = leftScale
+    if (!isIcon) {
+      labels.selectAll("text")
+        .attr("y", 0)
+        .attr("x", -8)
+        .attr("dy", "0.35em")
+        .style("text-anchor", "end");
+    }
 
     let maxLabelLeftPosition = width;
     labels.each(function(label, index, allLabels) {
@@ -54,14 +61,17 @@ export default Component.extend({
 
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
 
-    const bottomScale = container.append("g").call(axisBottom(x));
-    bottomScale.attr("transform", "translate(0," + chartHeight + ")")
-      .selectAll("text")
-      .attr("x", x(x.ticks(10).pop()) + 0)
-      .attr("y", 16)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", "end")
-      .attr("fill", "#000");
+    let bottomScale = container;
+    if (!isIcon) {
+      bottomScale = container.append("g").call(axisBottom(x))
+        .attr("transform", "translate(0," + chartHeight + ")")
+        .selectAll("text")
+        .attr("x", x(x.ticks(10).pop()) + 0)
+        .attr("y", 16)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "end")
+        .attr("fill", "#000");
+      }
 
     container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')

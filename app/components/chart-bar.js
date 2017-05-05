@@ -27,6 +27,7 @@ export default Component.extend({
     const height = get(this, 'height');
     const chartWidth = width - margin.left - margin.right;
     const color = scaleOrdinal(schemeCategory10);
+    const isIcon = width < 100 || height < 100;
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
 
@@ -40,12 +41,15 @@ export default Component.extend({
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
     const bottomScale = container.append("g").call(axisBottom(x));
-    const labels = bottomScale.selectAll("text")
+    const labels = bottomScale
+    if (!isIcon) {
+      bottomScale.selectAll("text")
       .attr("y", 0)
       .attr("x", 9)
       .attr("dy", ".35em")
       .attr("transform", "rotate(75)")
       .style("text-anchor", "start");
+    }
 
     // This loop will figure out the tallest bottom label height,
     // so that it can be substracted to
@@ -62,6 +66,7 @@ export default Component.extend({
     y.domain([0, max(dataOrArray, d => d.total)]);
     bottomScale.attr("transform", "translate(0," + chartHeight + ")");
 
+    if (!isIcon) {
     container.append("text")
       .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "end")
@@ -75,6 +80,7 @@ export default Component.extend({
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .attr("fill", "#000");
+    }
 
     container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')

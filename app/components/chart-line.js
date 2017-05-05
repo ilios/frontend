@@ -22,13 +22,14 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
     const margin = {top: 20, right: 20, bottom: 50, left: 30};
     const width = get(this, 'width');
     const height = get(this, 'height');
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
+    const isIcon = width < 100 || height < 100;
 
     const x = scaleLinear().range([0, chartWidth]);
     const y = scaleLinear().range([chartHeight, 0]);
@@ -56,11 +57,14 @@ export default Component.extend({
     container.append("g")
       .attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
 
+    if (!isIcon) {
     container.append("text")
       .attr("transform", "translate(" + (chartWidth/2) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "middle")
       .text("Label");
+    }
 
+    if (!isIcon) {
     container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
 
     container.append("text")
@@ -70,6 +74,7 @@ export default Component.extend({
       .attr("dy", "1em")
       .style("text-anchor", "start")
       .text("Value");
+    }
 
   },
 });

@@ -27,6 +27,7 @@ export default Component.extend({
     const height = get(this, 'height');
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
+    const isIcon = width < 100 || height < 100;
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
     const y = scaleLinear().range([chartHeight, 0]);
@@ -62,13 +63,16 @@ export default Component.extend({
 
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    const labels = container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
-      .selectAll("text")
-      .attr("y", 0)
-      .attr("x", 9)
-      .attr("dy", ".35em")
-      .attr("transform", "rotate(75)")
-      .style("text-anchor", "start");
+    let labels = container;
+    if (!isIcon) {
+      labels = container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
+        .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(75)")
+        .style("text-anchor", "start");
+    }
 
     let maxLabelBottomPosition = height;
     labels.each(function(label, index, allLabels) {
@@ -78,11 +82,14 @@ export default Component.extend({
     });
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelBottomPosition +'px;');
 
+    if (!isIcon) {
     container.append("text")
       .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "end")
       .text("Label");
+    }
 
+    if (!isIcon) {
     container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
@@ -90,6 +97,7 @@ export default Component.extend({
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .attr("fill", "#000");
+    }
 
     container.selectAll('.bar')
       .data(stack().keys(keysList)(dataOrArray))
