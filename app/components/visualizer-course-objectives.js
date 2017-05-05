@@ -10,7 +10,7 @@ export default Component.extend({
   height: 360,
   width: 360,
   icon: false,
-  classNames: ['visualizer-course-objectives'],
+  classNameBindings: ['icon::not-icon', ':visualizer-course-objectives'],
   tagName: 'span',
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
     const course = this.get('course');
@@ -74,30 +74,20 @@ export default Component.extend({
     return mappedObjectivesWithLabel;
   }),
 
-  sessionsObjectivesData: computed('objectiveData.[]', async function (){
-    const sessionCourseObjectiveMap  = await this.get('objectiveData');
+  objectiveWithHours: computed('condensedObjectiveData.[]', async function(){
+    const condensedObjectiveData = await this.get('condensedObjectiveData');
+    const objectiveWithHours = condensedObjectiveData.filter(obj => obj.data !== 0);
 
-    const mappedDataWithLabel = sessionCourseObjectiveMap.map(({hours, objectives, sessionTitle: label}) => {
-      const total = Number(hours);
-      const splitHours = total / objectives.length;
-
-      const values = objectives.map(objectiveLabel => {
-        return {
-          label: objectiveLabel,
-          value: splitHours
-        };
-      });
-      return {
-        label,
-        total,
-        values
-      };
-    });
-
-    const withValues = mappedDataWithLabel.filter(obj => obj.values.length);
-
-    return withValues;
+    return objectiveWithHours;
   }),
+
+  objectiveWithoutHours: computed('condensedObjectiveData.[]', async function(){
+    const condensedObjectiveData = await this.get('condensedObjectiveData');
+    const objectiveWithoutHours = condensedObjectiveData.filterBy('data', 0);
+
+    return objectiveWithoutHours;
+  }),
+
   async getTooltipData(obj){
     const icon = this.get('icon');
     if (icon || isEmpty(obj) || obj.empty) {
@@ -120,9 +110,6 @@ export default Component.extend({
       title
     };
   },
-  pieHover: task(function * (obj){
-    return yield this.getTooltipData(obj);
-  }).restartable(),
   donutHover: task(function * (obj){
     return yield this.getTooltipData(obj);
   }).restartable(),

@@ -1,0 +1,13 @@
+.course-visualize-objectives {
+  h2 {
+    @include ilios-heading-h2;
+    margin: .5em;
+    text-align: center;
+  }
+
+  h3 {
+    @include ilios-heading-h3;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+}
