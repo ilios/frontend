@@ -20,7 +20,7 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
     const width = get(this, 'width');
     const height = get(this, 'height');
@@ -30,15 +30,16 @@ export default Component.extend({
     const color = scaleOrdinal(schemeCategory10);
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
+    x.domain(dataOrArray.map(d => d.label));
+
     svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
 
     if (dataOrArray.length === 0) {
       return;
     }
 
-    x.domain(dataOrArray.map(d => d.label));
-
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
+
     let chartHeight = height;
 
     if (!isIcon) {
