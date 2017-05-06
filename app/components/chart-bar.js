@@ -30,7 +30,6 @@ export default Component.extend({
     const color = scaleOrdinal(schemeCategory10);
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
-    console.log(isIcon);
     svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
 
     if (dataOrArray.length === 0) {
