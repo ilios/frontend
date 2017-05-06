@@ -24,12 +24,12 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 50, left: 30};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
-    const isIcon = width < 100 || height < 100;
 
     const x = scaleLinear().range([0, chartWidth]);
     const y = scaleLinear().range([chartHeight, 0]);
@@ -49,13 +49,12 @@ export default Component.extend({
 
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
+    container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
+    
     container.append("path")
       .data([dataOrArray])
       .attr("class", "line")
       .attr("d", valueline);
-
-    container.append("g")
-      .attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
 
     if (!isIcon) {
       container.append("text")
@@ -64,9 +63,9 @@ export default Component.extend({
       .text("Label");
     }
 
-    if (!isIcon) {
-      container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
+    container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
 
+    if (!isIcon) {
       container.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 20 - margin.right)

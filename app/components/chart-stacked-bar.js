@@ -22,12 +22,12 @@ export default Component.extend({
   draw(){
     const data = get(this, 'data') || [];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
-    const isIcon = width < 100 || height < 100;
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
     const y = scaleLinear().range([chartHeight, 0]);
