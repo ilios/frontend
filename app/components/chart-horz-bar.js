@@ -22,13 +22,13 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
-    const margin = {top: 10, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
     const color = scaleOrdinal(schemeCategory10);
-    const isIcon = width < 100 || height < 100;
 
     const x = scaleLinear().range([chartWidth, 0]);
     const y = scaleBand().range([0, chartHeight]).padding(0.4);
@@ -60,9 +60,8 @@ export default Component.extend({
     });
 
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
-
-    const bottomScale = container.append("g");
     if (!isIcon) {
+      const bottomScale = container.append("g");
       bottomScale.call(axisBottom(x))
         .attr("transform", "translate(0," + chartHeight + ")")
         .selectAll("text")
