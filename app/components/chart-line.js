@@ -50,7 +50,7 @@ export default Component.extend({
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
     container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
-    
+
     container.append("path")
       .data([dataOrArray])
       .attr("class", "line")
@@ -63,9 +63,8 @@ export default Component.extend({
       .text("Label");
     }
 
-    container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
-
     if (!isIcon) {
+      container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
       container.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 20 - margin.right)
