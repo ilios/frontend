@@ -58,7 +58,7 @@ export default Component.extend({
       const labelDimensions = currentLabel.getBoundingClientRect();
       maxLabelLeftPosition = Math.max(maxLabelLeftPosition, chartWidth + labelDimensions.width + margin.left);
     });
-
+  
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
     if (!isIcon) {
       const bottomScale = container.append("g");

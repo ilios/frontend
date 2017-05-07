@@ -72,13 +72,14 @@ export default Component.extend({
     y.domain([0, max(dataOrArray, d => d.total)]);
 
     if (!isIcon) {
-      const leftScale = container.append("g").call(axisLeft(y));
-      leftScale.selectAll("text")
+      const leftScale = container.append("g");
+      leftScale.call(axisLeft(y))
+      .selectAll("text")
       .attr("x", -8)
-      .attr("y", y(y.ticks(10).pop()) + 0.5)
+      .attr("y", y(y.ticks(10).pop()) + 0)
       .attr("dy", "0.35em")
-      .attr("fill", "#000")
-      .style("text-anchor", "end");
+      .attr("text-anchor", "end")
+      .attr("fill", "#000");
     }
 
     container.selectAll('.bar').data(dataOrArray).enter()
