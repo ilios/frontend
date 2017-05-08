@@ -43,10 +43,11 @@ export default Component.extend({
     let chartHeight = height;
 
     if (!isIcon) {
-      const bottomScale = container.append("g").call(axisBottom(x));
+      const bottomScale = container.append("g");
       const labels = bottomScale;
       if (!isIcon) {
-        bottomScale.selectAll("text")
+        bottomScale.call(axisBottom(x))
+        .selectAll("text")
         .attr("y", 0)
         .attr("x", 10)
         .attr("dy", ".35em")
