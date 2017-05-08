@@ -121,12 +121,13 @@ let checkObjects = async function(context, assert, subjectNum, subjectVal, expec
   await wait();
   context.$(schoolSelect).val(null).change();
   await wait();
-  assert.equal(context.$(targetSubject).val(), subjectVal);
+  assert.equal(context.$(targetSubject).val(), subjectVal, `${subjectVal} is in the list where we expect it.`);
   context.$(select).val(subjectVal).change();
+  await wait();
 
-  assert.equal(context.$(`${objectsOptions}:eq(0)`).val(), '');
+  assert.equal(context.$(`${objectsOptions}:eq(0)`).val(), '', 'first option is blank');
   expectedObjects.forEach((val, i) => {
-    assert.equal(context.$(`${objectsOptions}:eq(${i+1})`).val(), val);
+    assert.equal(context.$(`${objectsOptions}:eq(${i+1})`).val(), val, `${val} is object option`);
   });
 };
 
@@ -295,6 +296,7 @@ test('can search for user #2506', async function(assert) {
   await wait();
   assert.equal(this.$(targetSubject).val(), 'course');
   this.$(objectSelect).val(targetObject).change();
+  await wait();
 
   assert.equal(this.$(userSearch).length, 1);
   this.$(input).val('abcd').change();

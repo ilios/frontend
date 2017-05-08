@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
@@ -47,7 +48,7 @@ test('renders removable', function(assert) {
   assert.ok(this.$('tr').hasClass('confirm-removal'));
 });
 
-test('can change title', function(assert) {
+test('can change title', async function(assert) {
   let objective = EmberObject.create({
     title: 'fake title',
     save(){
@@ -70,6 +71,7 @@ test('can change title', function(assert) {
   this.$('td:eq(0) .fr-box').froalaEditor('events.trigger', 'contentChanged');
   this.$('td:eq(0) .done').click();
 
+  await wait();
 });
 
 test('can manage parents', function(assert) {
