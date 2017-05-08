@@ -77,7 +77,7 @@ export default Component.extend({
       leftScale.call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
-      .attr("y", y(y.ticks(10).pop()) + 0)
+      .attr("y", y(y.ticks(1).pop()) + 0.5)
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .attr("fill", "#000");

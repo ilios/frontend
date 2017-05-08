@@ -58,14 +58,14 @@ export default Component.extend({
       const labelDimensions = currentLabel.getBoundingClientRect();
       maxLabelLeftPosition = Math.max(maxLabelLeftPosition, chartWidth + labelDimensions.width + margin.left);
     });
-  
+
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
     if (!isIcon) {
       const bottomScale = container.append("g");
       bottomScale.call(axisBottom(x))
         .attr("transform", "translate(0," + chartHeight + ")")
         .selectAll("text")
-        .attr("x", x(x.ticks(10).pop()) + 0)
+        .attr("x", x(x.ticks(1).pop()) + 0.5)
         .attr("y", 16)
         .attr("dy", "0.35em")
         .attr("text-anchor", "end")
