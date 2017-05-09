@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('chart-stacked-bar', 'Integration | Component | chart bar', {
+moduleForComponent('chart-stacked-bar', 'Integration | Component | chart stacked bar', {
   integration: true
 });
 
