@@ -1,49 +1,38 @@
 import Ember from 'ember';
 
-const { Component, computed, Object:EmberObject, RSVP } = Ember;
-const { all, Promise } = RSVP;
+const { Component, computed, Object:EmberObject, RSVP, inject, isEmpty } = Ember;
+const { map } = RSVP;
+const { service } = inject;
 
 export default Component.extend({
-
+  i18n: service(),
   cohorts: [],
-
-
   /**
    * A list of cohorts, sorted by school and display title.
    * @property sortedCohorts
    * @type {Ember.computed}
    * @public
    */
-  sortedCohorts: computed('cohorts.@each.{school,displayTitle}', function(){
-    return new Promise(resolve => {
-      this.get('cohorts').then(cohorts => {
-        let promises = [];
-        let proxies = [];
-        let sortedCohorts = [];
-        cohorts.toArray().forEach(cohort => {
-          let proxy = EmberObject.create({
-            cohort,
-            schoolTitle: null,
-            displayTitle: null,
-          });
+  sortedCohorts: computed('cohorts.[]', async function(){
+    const cohorts = this.get('cohorts');
+    const sortProxies = await map(cohorts.toArray(), async cohort => {
+      const school = await cohort.get('school');
+      const schoolTitle = school.get('title');
+      let displayTitle = cohort.get('title');
+      if (isEmpty(displayTitle)) {
+        const i18n = this.get('i18n');
+        const classOfYear = await cohort.get('classOfYear');
 
-          proxies.pushObject(proxy);
+        displayTitle = i18n.t('general.classOf', {year: classOfYear});
+      }
 
-          promises.pushObject(cohort.get('displayTitle').then(displayTitle => {
-            proxy.set('displayTitle', displayTitle);
-          }));
-          promises.pushObject(cohort.get('school').then(school => {
-            proxy.set('schoolTitle', school.get('title'));
-          }));
-        });
-        all(promises).then(() => {
-          let sortedProxies = proxies.sortBy('schoolTitle', 'displayTitle');
-          sortedProxies.forEach(sortedProxy => {
-            sortedCohorts.pushObject(sortedProxy.get('cohort'));
-          });
-          resolve(sortedCohorts);
-        });
+      return EmberObject.create({
+        cohort,
+        schoolTitle,
+        displayTitle,
       });
     });
+
+    return sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
   }),
 });
