@@ -1,8 +1,11 @@
-import { moduleForModel, test } from 'ember-qunit';
+import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
+import modelList from '../../helpers/model-list';
 
-moduleForModel('session-type', 'Unit | Model | session type', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel('session-type', 'Unit | Model | SessionType', {
+  needs: modelList
 });
 
 test('it exists', function(assert) {

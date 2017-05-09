@@ -1,6 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import CategorizableModel from 'ilios/mixins/categorizable-model';
+import CategorizableModel from 'ilios-common/mixins/categorizable-model';
+
+const inflector = Ember.Inflector.inflector;
+inflector.irregular('vocabulary', 'vocabularies');
 
 const { computed } =  Ember;
 const { filterBy } = computed;

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import PublishableModel from 'ilios/mixins/publishable-model';
+import PublishableModel from 'ilios-common/mixins/publishable-model';
 
 const { computed, RSVP } = Ember;
 const { all, Promise} = RSVP;

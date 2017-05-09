@@ -1,9 +1,9 @@
 import moment from 'moment';
 import DS from 'ember-data';
 import Ember from 'ember';
-import PublishableModel from 'ilios/mixins/publishable-model';
-import CategorizableModel from 'ilios/mixins/categorizable-model';
-import SortableByPosition from 'ilios/mixins/sortable-by-position';
+import PublishableModel from 'ilios-common/mixins/publishable-model';
+import CategorizableModel from 'ilios-common/mixins/categorizable-model';
+import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { computed, RSVP } = Ember;
 const { filterBy, mapBy, sum } = computed;

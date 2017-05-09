@@ -1,8 +1,11 @@
-import { moduleForModel, test } from 'ember-qunit';
+import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
+import modelList from '../../helpers/model-list';
 
-moduleForModel('alert', 'Unit | Model | alert', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel('alert', 'Unit | Model | Alert', {
+  needs: modelList
 });
 
 test('it exists', function(assert) {

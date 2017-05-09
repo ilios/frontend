@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
+import modelList from '../../helpers/model-list';
 
-moduleForModel('ingestion-exception', 'Unit | Model | ingestion exception', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel('ingestion-exception' , 'Unit | Model | ingestion exception ', {
+  needs: modelList
 });
 
 test('it exists', function(assert) {

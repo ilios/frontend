@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
+import modelList from '../../helpers/model-list';
 
-moduleForModel('curriculum-inventory-sequence-block-session', 'Unit | Model | curriculum inventory sequence block session', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel('curriculum-inventory-sequence-block-session', 'Unit | Model | CurriculumInventorySequenceBlockSession ', {
+  needs: modelList
 });
 
 test('it exists', function(assert) {

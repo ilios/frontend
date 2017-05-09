@@ -1,8 +1,11 @@
-import { moduleForModel, test } from 'ember-qunit';
+import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
+import modelList from '../../helpers/model-list';
 
-moduleForModel('curriculum-inventory-export', 'Unit | Model | curriculum inventory export', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel('curriculum-inventory-export', 'Unit | Model | CurriculumInventoryExport', {
+  needs: modelList
 });
 
 test('it exists', function(assert) {

@@ -1,8 +1,11 @@
-import { moduleForModel, test } from 'ember-qunit';
+import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
+import modelList from '../../helpers/model-list';
 
-moduleForModel('mesh-descriptor', 'Unit | Model | mesh descriptor', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel('mesh-descriptor', 'Unit | Model | MeshDescriptor', {
+  needs: modelList
 });
 
 test('it exists', function(assert) {
