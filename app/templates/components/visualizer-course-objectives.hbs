@@ -11,9 +11,9 @@
     {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
   {{/ilios-chart}}
 
-  {{else}}
+{{else}}
     <div class='with-hours'>
-      <p>No Course Objectives Currently Linked to Instructional Time.</p>
+      <p>{{t 'general.objectivesWithNoLink'}}</p>
       <h4>{{fa-icon 'meh-o' class='meh-o'}}</h4>
     </div>
 {{/if}}
