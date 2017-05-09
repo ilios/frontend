@@ -1,14 +1,22 @@
-{{#ilios-chart
-  name='donut'
-  width=width
-  height=height
-  data=(await objectiveWithHours)
-  hover=(perform donutHover)
-  leave=(perform donutHover)
-  as |chart|
-}}
-  {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
-{{/ilios-chart}}
+{{#if (or icon (gt (get (await objectiveWithHours) 'length') 0))}}
+  {{#ilios-chart
+    name='donut'
+    width=width
+    height=height
+    data=(await objectiveWithHours)
+    hover=(perform donutHover)
+    leave=(perform donutHover)
+    as |chart|
+  }}
+    {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
+  {{/ilios-chart}}
+
+  {{else}}
+    <div class='with-hours'>
+      <p>No Course Objectives Currently Linked to Instructional Time.</p>
+      <h4>{{fa-icon 'meh-o' class='meh-o'}}</h4>
+    </div>
+{{/if}}
 
 {{#unless (or icon (eq (get (await objectiveWithoutHours) 'length') 0))}}
   <div class='zero-hours'>

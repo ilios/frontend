@@ -366,6 +366,7 @@ export default {
     'objectives': 'Objectives',
     'objectivesTotalInstructionalTime': 'Objectives: Total Instructional Time',
     'objectivesWithNoHours': 'The following course objectives are either not linked to any session, or only linked to sessions without offering or duration data.',
+    'objectivesWithNoLink': 'No Course Objectives Currently Linked to Instructional Time.',
     'objectiveTitle': 'Session Objective',
     'off': 'Off',
     'offeredAt': 'On {{date}}',

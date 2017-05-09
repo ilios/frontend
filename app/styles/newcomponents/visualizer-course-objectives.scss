@@ -19,6 +19,16 @@
     }
   }
 
+  .with-hours {
+    p {
+      margin-top: .5em;
+    }
+
+    .meh-o {
+      font-size: 30em;
+    }
+  }
+
   &.not-icon {
     .ilios-chart {
       @include fill-parent;
@@ -27,7 +37,8 @@
       }
     }
 
-    .zero-hours {
+    .zero-hours,
+    .with-hours {
       @include fill-parent;
       @include media($large-screen) {
         @include span-columns(6);
