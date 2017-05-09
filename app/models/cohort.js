@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, isBlank, RSVP } = Ember;
+const { computed, RSVP } = Ember;
 const { alias } = computed;
 const { Model, PromiseArray } = DS;
 const { Promise } = RSVP;
@@ -47,27 +47,6 @@ export default Model.extend({
 
     return PromiseArray.create({
       promise: defer.promise
-    });
-  }),
-
-  /**
-   * The cohort's display title, which could either be an explicitly set title, or "Class of YYYY" as a fallback.
-   * @property displayTitle
-   * @type {Ember.computed}
-   * @public
-   */
-  displayTitle: computed('title', 'programYear.classOfYear', function(){
-    return new Promise(resolve => {
-      let title = this.get('title');
-      if (! isBlank(title)) {
-        resolve(title);
-      } else {
-        this.get('programYear').then(programYear => {
-          let classOfYear = programYear ? programYear.get('classOfYear') : null;
-          title = this.get('i18n').t('general.classOf', {year: classOfYear});
-          resolve(title);
-        });
-      }
     });
   }),
 
