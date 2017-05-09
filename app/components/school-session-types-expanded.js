@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Component, computed, inject } = Ember;
 const { notEmpty } = computed;
@@ -29,6 +30,26 @@ export default Component.extend({
 
     return sessionType;
   }),
+  assessmentOptions: computed(async function(){
+    const store = this.get('store');
+    return await store.findAll('assessment-option');
+  }),
+  save: task(function * (title, calendarColor, assessment, assessmentOption) {
+    const store = this.get('store');
+    const sessionType = store.createRecord('sessionType');
+    const closeComponent = this.get('setSchoolNewSessionType');
+    const school = this.get('school');
+    sessionType.setProperties({
+      school,
+      title,
+      calendarColor,
+      assessment,
+      assessmentOption
+    });
+
+    yield sessionType.save();
+    closeComponent(false);
+  }),
   actions: {
     async collapse(){
       const isCollapsible = this.get('isCollapsible');
@@ -43,5 +64,10 @@ export default Component.extend({
       const setSchoolManagedSessionType = this.get('setSchoolManagedSessionType');
       setSchoolManagedSessionType(null);
     },
+    toggleSchoolNewSessionType(){
+      let schoolNewSessionType = this.get("schoolNewSessionType");
+      let setSchoolNewSessionType = this.get("setSchoolNewSessionType");
+      setSchoolNewSessionType(!schoolNewSessionType);
+    }
   }
 });
