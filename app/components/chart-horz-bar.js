@@ -22,9 +22,10 @@ export default Component.extend({
     const data = get(this, 'data');
     const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
-    const margin = {top: 10, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
     const color = scaleOrdinal(schemeCategory10);
@@ -37,13 +38,19 @@ export default Component.extend({
 
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    const leftScale = container.append("g").call(axisLeft(y));
-    const labels = leftScale.selectAll("text")
-      .attr("y", 0)
-      .attr("x", -8)
-      .attr("dy", "0.35em")
-      .attr("fill", "#000")
-      .style("text-anchor", "end");
+    let leftScale = container;
+    if (!isIcon) {
+      leftScale = container.append("g").call(axisLeft(y));
+    }
+
+    let labels = leftScale;
+    if (!isIcon) {
+      labels.selectAll("text")
+        .attr("y", 0)
+        .attr("x", -8)
+        .attr("dy", "0.35em")
+        .style("text-anchor", "end");
+    }
 
     let maxLabelLeftPosition = width;
     labels.each(function(label, index, allLabels) {
@@ -53,15 +60,17 @@ export default Component.extend({
     });
 
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelLeftPosition +'px;');
-
-    const bottomScale = container.append("g").call(axisBottom(x));
-    bottomScale.attr("transform", "translate(0," + chartHeight + ")")
-      .selectAll("text")
-      .attr("x", x(x.ticks(10).pop()) + 0)
-      .attr("y", 16)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", "end")
-      .attr("fill", "#000");
+    if (!isIcon) {
+      const bottomScale = container.append("g");
+      bottomScale.call(axisBottom(x))
+        .attr("transform", "translate(0," + chartHeight + ")")
+        .selectAll("text")
+        .attr("x", x(x.ticks(1).pop()) + 0.5)
+        .attr("y", 16)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "end")
+        .attr("fill", "#000");
+    }
 
     container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')

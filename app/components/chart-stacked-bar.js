@@ -22,9 +22,10 @@ export default Component.extend({
   draw(){
     const data = get(this, 'data') || [];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -62,13 +63,16 @@ export default Component.extend({
 
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    const labels = container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
-      .selectAll("text")
-      .attr("y", 0)
-      .attr("x", 9)
-      .attr("dy", ".35em")
-      .attr("transform", "rotate(75)")
-      .style("text-anchor", "start");
+    let labels = container;
+    if (!isIcon) {
+      labels = container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x))
+        .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(75)")
+        .style("text-anchor", "start");
+    }
 
     let maxLabelBottomPosition = height;
     labels.each(function(label, index, allLabels) {
@@ -78,18 +82,22 @@ export default Component.extend({
     });
     svg.attr('style', 'width:' + width +'px;height:' + maxLabelBottomPosition +'px;');
 
-    container.append("text")
+    if (!isIcon) {
+      container.append("text")
       .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "end")
       .text("Label");
+    }
 
-    container.append("g").call(axisLeft(y))
+    if (!isIcon) {
+      container.append("g").call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
       .attr("y", y(y.ticks(10).pop()) + 0.5)
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .attr("fill", "#000");
+    }
 
     container.selectAll('.bar')
       .data(stack().keys(keysList)(dataOrArray))

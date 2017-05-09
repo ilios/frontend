@@ -20,15 +20,17 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
-    const margin = {top: 10, right: 20, bottom: 30, left: 25};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const color = scaleOrdinal(schemeCategory10);
 
     const x = scaleBand().range([0, chartWidth]).padding(0.4);
+    x.domain(dataOrArray.map(d => d.label));
 
     svg.attr('style', 'width:' + width +'px;height:' + height +'px;');
 
@@ -36,45 +38,50 @@ export default Component.extend({
       return;
     }
 
-    x.domain(dataOrArray.map(d => d.label));
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
-    const bottomScale = container.append("g").call(axisBottom(x));
-    const labels = bottomScale.selectAll("text")
-      .attr("y", 0)
-      .attr("x", 9)
-      .attr("dy", ".35em")
-      .attr("transform", "rotate(75)")
-      .style("text-anchor", "start");
+    let chartHeight = height;
 
-    // This loop will figure out the tallest bottom label height,
-    // so that it can be substracted to
-    // the available height for the chart.
-    let maxLabelHeight = 0;
-    labels.each(function(label, index, allLabels) {
-      const currentLabel = allLabels[index];
-      const labelDimensions = currentLabel.getBoundingClientRect();
-      maxLabelHeight = Math.max(maxLabelHeight, Math.ceil(labelDimensions.height));
-    });
+    if (!isIcon) {
+      const bottomScale = container.append("g");
+      const labels = bottomScale;
+      if (!isIcon) {
+        bottomScale.call(axisBottom(x))
+        .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 10)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(75)")
+        .style("text-anchor", "start");
+      }
 
-    const chartHeight = height - margin.top - margin.bottom - maxLabelHeight;
+      // This loop will figure out the tallest bottom label height,
+      // so that it can be substracted to
+      // the available height for the chart.
+      let maxLabelHeight = 0;
+      labels.each(function(label, index, allLabels) {
+        const currentLabel = allLabels[index];
+        const labelDimensions = currentLabel.getBoundingClientRect();
+        maxLabelHeight = Math.max(maxLabelHeight, Math.ceil(labelDimensions.height));
+      });
+
+      chartHeight = height - margin.top - margin.bottom - maxLabelHeight;
+      bottomScale.attr("transform", "translate(0," + chartHeight + ")");
+    }
+
     const y = scaleLinear().range([chartHeight, 0]);
     y.domain([0, max(dataOrArray, d => d.total)]);
-    bottomScale.attr("transform", "translate(0," + chartHeight + ")");
 
-    container.append("text")
-      .attr("transform", "translate(" + (chartWidth/20) + " ," + (chartHeight + margin.top + 20) + ")")
-      .style("text-anchor", "end")
-      .attr("font", "10px")
-      .text("Label");
-
-    container.append("g").call(axisLeft(y))
+    if (!isIcon) {
+      const leftScale = container.append("g");
+      leftScale.call(axisLeft(y))
       .selectAll("text")
       .attr("x", -8)
-      .attr("y", y(y.ticks(10).pop()) + 0.5)
+      .attr("y", y(y.ticks(1).pop()) + 0.5)
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .attr("fill", "#000");
+    }
 
     container.selectAll('.bar').data(dataOrArray).enter()
       .append('rect')

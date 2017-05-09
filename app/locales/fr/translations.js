@@ -366,6 +366,7 @@ export default {
     'objectives': "Objectifs",
     'objectivesTotalInstructionalTime': "Objectifs: Totalité du Temps d'Enseignement",
     'objectivesWithNoHours': "Les objectifs de cours suivant ne sont ou liés avec aucune séance, ou liés seulement aux séance sans offrir ou ou des données de durée.",
+    'objectivesWithNoLink': 'Nul objectifs de course actuellement lié au temps dénseignment.',
     'objectiveTitle': "Objectif de Séance",
     'off': "Éteindre",
     'offeredAt': "À {{date}}",

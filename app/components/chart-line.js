@@ -22,11 +22,12 @@ export default Component.extend({
   height: null,
   draw(){
     const data = get(this, 'data');
-    const dataOrArray = data?data:[];
+    const dataOrArray = data?data:[{data: 1, label: '', empty: true}];
     const svg = select(this.element);
-    const margin = {top: 20, right: 20, bottom: 50, left: 30};
     const width = get(this, 'width');
     const height = get(this, 'height');
+    const isIcon = width < 100 || height < 100;
+    const margin = isIcon ? {top: 0, right: 0, bottom: 0, left: 0} : {top: 10, right: 20, bottom: 30, left: 25};
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -48,28 +49,30 @@ export default Component.extend({
 
     const container = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
+    container.append("g").attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
+
     container.append("path")
       .data([dataOrArray])
       .attr("class", "line")
       .attr("d", valueline);
 
-    container.append("g")
-      .attr("transform", "translate(0," + chartHeight + ")").call(axisBottom(x));
-
-    container.append("text")
+    if (!isIcon) {
+      container.append("text")
       .attr("transform", "translate(" + (chartWidth/2) + " ," + (chartHeight + margin.top + 20) + ")")
       .style("text-anchor", "middle")
       .text("Label");
+    }
 
-    container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
-
-    container.append("text")
+    if (!isIcon) {
+      container.append("g").call(axisLeft(y).tickFormat(format(".0%")));
+      container.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 20 - margin.right)
       .attr("x", 0 - (chartHeight / 8))
       .attr("dy", "1em")
       .style("text-anchor", "start")
       .text("Value");
+    }
 
   },
 });
