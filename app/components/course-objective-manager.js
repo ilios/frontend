@@ -116,13 +116,13 @@ export default Component.extend({
       const programYear = await cohort.get('programYear');
       const program = await programYear.get('program');
       const programTitle = program.get('title');
-      let title = cohort.get('title');
-      if (isEmpty(title)) {
+      let cohortTitle = cohort.get('title');
+      if (isEmpty(cohortTitle)) {
         const i18n = this.get('i18n');
-        const classOfYear = programYear ? programYear.get('classOfYear') : null;
-        title = i18n.t('general.classOf', {year: classOfYear});
+        const classOfYear = await cohort.get('classOfYear');
+        cohortTitle = i18n.t('general.classOf', {year: classOfYear});
       }
-      title = programTitle + ' ' + title;
+      const title = programTitle + ' ' + cohortTitle;
 
       return cohortProxy.create({
         id: cohort.get('id'),

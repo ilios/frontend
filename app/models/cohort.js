@@ -96,5 +96,12 @@ export default Model.extend({
       });
     });
   }),
-  sortedObjectives: alias('programYear.sortedObjectives')
+  sortedObjectives: alias('programYear.sortedObjectives'),
+  classOfYear: computed('programYear.startYear', 'programYear.program.duration', async function(){
+    const programYear = await this.get('programYear');
+    const startYear = parseInt(programYear.get('startYear'));
+    const program = await programYear.get('program');
+    const duration = parseInt(program.get('duration'));
+    return (startYear + duration);
+  }),
 });
