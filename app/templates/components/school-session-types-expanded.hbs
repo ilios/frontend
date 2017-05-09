@@ -7,18 +7,18 @@
 <div class='school-session-types-expanded-content'>
   {{#liquid-if schoolNewSessionType class='vertical'}}
     {{school-session-type-form
-	  title=null
-	  calendarColor="#ffffff"
-	  assessment=false
-	  assessmentOption=null
-	  assessmentOptions=(await assessmentOptions)
-	  canEditTitle=true
-	  canEditCalendarColor=true
-	  canEditAssessment=true
-	  canEditAssessmentOption=true
-	  save=(perform save)
-	  close=(action setSchoolNewSessionType false)
-	}}
+      title=null
+      calendarColor="#ffffff"
+      assessment=false
+      assessmentOption=null
+      assessmentOptions=(await assessmentOptions)
+      canEditTitle=true
+      canEditCalendarColor=true
+      canEditAssessment=true
+      canEditAssessmentOption=true
+      save=(perform save)
+      close=(action setSchoolNewSessionType false)
+    }}
   {{/liquid-if}}
   {{#liquid-if managedSessionTypeId class='horizontal'}}
     {{school-session-type-manager
