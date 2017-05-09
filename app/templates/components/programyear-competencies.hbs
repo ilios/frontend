@@ -34,7 +34,7 @@
               </span>
             {{else if (contains domain (await competenciesWithSelectedChildren))}}
               <span class='clickable' onclick={{action 'addCompetencyToBuffer' domain}}>
-                <input type='checkbox' indeterminate={{true}}>
+                {{one-way-checkbox indeterminate=true}}
                 {{domain.title}}
               </span>
             {{else}}
