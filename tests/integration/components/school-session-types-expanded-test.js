@@ -85,7 +85,7 @@ test('it renders as manager', async function(assert) {
   assert.equal(this.$(items).length, 4);
 });
 
-test('editing sessoin type fires action', async function(assert) {
+test('editing session type fires action', async function(assert) {
   assert.expect(1);
   this.set('school', school);
   this.set('nothing', parseInt);
@@ -104,6 +104,28 @@ test('editing sessoin type fires action', async function(assert) {
   const table = 'table';
   const sessionTypes = `${table} tbody tr`;
   const edit = `${sessionTypes}:eq(0) td:eq(5) .edit`;
+
+  this.$(edit).click();
+});
+
+test('clicking expand new session fires action', async function(assert) {
+  assert.expect(1);
+  this.set('school', school);
+  this.set('nothing', parseInt);
+  this.set('click', isExpanded => {
+    assert.equal(isExpanded, true);
+  });
+  this.render(hbs`{{school-session-types-expanded
+    school=school
+    collapse=(action nothing)
+    expand=(action nothing)
+    managedSessionTypeId=null
+    setSchoolManagedSessionType=(action nothing)
+	setSchoolNewSessionType=(action click)
+  }}`);
+  await wait();
+
+  const edit = `.expand-collapse-button button`;
 
   this.$(edit).click();
 });
