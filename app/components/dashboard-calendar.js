@@ -206,7 +206,12 @@ export default Component.extend({
           case 'cohort':
             hash.class = 'tag-cohort';
             hash.name = new Promise(resolve => {
-              filter.get('displayTitle').then(displayTitle => {
+              let displayTitle = filter.get('title');
+              const i18n = this.get('i18n');
+              filter.get('classOfYear').then(classOfYear => {
+                if (isEmpty(displayTitle)) {
+                  displayTitle = i18n.t('general.classOf', {year: classOfYear});
+                }
                 filter.get('programYear.program').then(program => {
                   resolve(`${displayTitle} ${program.get('title')}`);
                 });

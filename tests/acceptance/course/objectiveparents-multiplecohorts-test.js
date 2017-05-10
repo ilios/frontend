@@ -205,8 +205,10 @@ test('save changes', function(assert) {
   andThen(function(){
     let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
     assert.equal(getElementText(td), getText(
+      'program0cohort0' +
       fixtures.parentObjectives[1].title +
       '(' + fixtures.competencies[fixtures.parentObjectives[1].competency - 1].title + ')' +
+      'program0cohort1' +
       fixtures.parentObjectives[4].title +
       '(' + fixtures.competencies[fixtures.parentObjectives[4].competency - 1].title + ')'
     ));
@@ -229,8 +231,10 @@ test('cancel changes', function(assert) {
   andThen(function(){
     let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
     assert.equal(getElementText(td), getText(
+      'program0cohort0' +
       fixtures.parentObjectives[0].title +
       '(' + fixtures.competencies[fixtures.parentObjectives[0].competency - 1].title + ')' +
+        'program0cohort1' +
         fixtures.parentObjectives[3].title +
         '(' + fixtures.competencies[fixtures.parentObjectives[3].competency - 1].title + ')'
     ));

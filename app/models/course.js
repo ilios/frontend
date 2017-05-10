@@ -225,6 +225,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     const meta = this.hasMany('cohorts');
     const ids = meta.ids();
 
-    return ids.length > 0;
+    return ids.length > 1;
   }),
 });
