@@ -2,7 +2,7 @@
   <div class="backtolink">
     {{#link-to 'course' model}}{{t 'general.backToCourse'}}{{/link-to}}
   </div>
-  <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{course.academicYear}}{{/link-to}}</h2>
+  <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
   <h3>{{t 'general.objectivesTotalInstructionalTime'}}</h3>
   
   {{visualizer-course-objectives course=model}}
