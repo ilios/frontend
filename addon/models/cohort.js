@@ -2,7 +2,7 @@ import moment from 'moment';
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, isBlank, RSVP } = Ember;
+const { computed, RSVP } = Ember;
 const { alias } = computed;
 const { Model, PromiseArray } = DS;
 const { Promise } = RSVP;
@@ -50,27 +50,6 @@ export default Model.extend({
     });
   }),
 
-  /**
-   * The cohort's display title, which could either be an explicitly set title, or "Class of YYYY" as a fallback.
-   * @property displayTitle
-   * @type {Ember.computed}
-   * @public
-   */
-  displayTitle: computed('title', 'programYear.classOfYear', function(){
-    return new Promise(resolve => {
-      let title = this.get('title');
-      if (! isBlank(title)) {
-        resolve(title);
-      } else {
-        this.get('programYear').then(programYear => {
-          let classOfYear = programYear ? programYear.get('classOfYear') : null;
-          title = this.get('i18n').t('general.classOf', {year: classOfYear});
-          resolve(title);
-        });
-      }
-    });
-  }),
-
   currentLevel: computed('programYear.startYear', function(){
     var startYear = this.get('programYear.startYear');
     if(startYear){
@@ -96,5 +75,12 @@ export default Model.extend({
       });
     });
   }),
-  sortedObjectives: alias('programYear.sortedObjectives')
+  sortedObjectives: alias('programYear.sortedObjectives'),
+  classOfYear: computed('programYear.startYear', 'programYear.program.duration', async function(){
+    const programYear = await this.get('programYear');
+    const startYear = parseInt(programYear.get('startYear'));
+    const program = await programYear.get('program');
+    const duration = parseInt(program.get('duration'));
+    return (startYear + duration);
+  }),
 });
