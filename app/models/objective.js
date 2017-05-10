@@ -122,5 +122,23 @@ export default Model.extend({
         });
       });
     });
-  }
+  },
+  firstProgram: computed('programYears.[]', async function(){
+    const programYears = await this.get('programYears');
+    const programYear = programYears.get('firstObject');
+    const program = await programYear.get('program');
+
+    return program;
+  }),
+  firstCohort: computed('programYears.[]', async function(){
+    const programYears = await this.get('programYears');
+    const programYear = programYears.get('firstObject');
+    if (!programYear) {
+      return null;
+    }
+
+    const cohort = await programYear.get('cohort');
+
+    return cohort;
+  }),
 });

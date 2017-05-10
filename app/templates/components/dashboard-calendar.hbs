@@ -131,7 +131,14 @@
               {{#each (await cohorts) as |cohort|}}
                 <li class='clickable'>
                   <input {{action 'toggleCohort' cohort on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCohorts cohort}}>
-                  <span {{action 'toggleCohort' cohort}} class="list-indentation">{{await cohort.displayTitle}} {{cohort.programYear.program.title}}</span>
+                  <span {{action 'toggleCohort' cohort}} class="list-indentation">
+                    {{#if cohort.title}}
+                      {{cohort.title}}
+                    {{else}}
+                      {{t 'general.classOf' year=(await cohort.classOfYear)}}
+                    {{/if}}
+                    {{get (await cohort.programYear.program) 'title'}}
+                  </span>
                 </li>
               {{/each}}
             </ul>

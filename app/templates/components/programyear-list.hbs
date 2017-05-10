@@ -42,7 +42,13 @@
                     {{fa-icon 'external-link-square'}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
-                <td class='text-left'>{{await programYearProxy.cohort.displayTitle}}</td>
+                <td class='text-left'>
+                  {{#if (get (await programYearProxy.cohort) 'title')}}
+                    {{get (await programYearProxy.cohort) 'title'}}
+                  {{else}}
+                    {{t 'general.classOf' year=(await programYearProxy.cohort.classOfYear)}}
+                  {{/if}}
+                </td>
 
                 <td class='text-left'>
                   {{#if programYearProxy.competencies.length}}

@@ -220,5 +220,11 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
         resolve(objectives.toArray().sort(this.positionSortingCallback));
       });
     });
-  })
+  }),
+  hasMultipleCohorts: computed('cohorts.[]', function(){
+    const meta = this.hasMany('cohorts');
+    const ids = meta.ids();
+
+    return ids.length > 0;
+  }),
 });
