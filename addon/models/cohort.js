@@ -8,7 +8,6 @@ const { Model, PromiseArray } = DS;
 const { Promise } = RSVP;
 
 export default Model.extend({
-  i18n: Ember.inject.service(),
   title: DS.attr('string'),
   programYear: DS.belongsTo('program-year', {async: true}),
   courses: DS.hasMany('course', {async: true}),

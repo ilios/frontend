@@ -5,12 +5,8 @@ import {
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
-let needs = modelList;
-// needs.pushObject('service:i18n');
-// needs.pushObject('locale:en/translations');
-
 moduleForModel('cohort', 'Unit | Model | Cohort', {
-  needs
+  needs :modelList
 });
 
 test('it exists', function(assert) {
@@ -53,28 +49,3 @@ test('list top level groups', function(assert) {
   });
 
 });
-//
-// test('get display title', function(assert) {
-//   assert.expect(2);
-//   let model = this.subject();
-//
-//   var store = model.store;
-//
-//   Ember.run(function(){
-//     var program = store.createRecord('program', {duration: 4});
-//     var programYear = store.createRecord('program-year', {startYear:'2000', program: program, cohort: model});
-//     model.set('programYear', programYear);
-//   });
-//
-//   Ember.run(function(){
-//     var displayTitle = model.get('displayTitle');
-//     assert.equal(displayTitle, 'Class of 2004');
-//   });
-//
-//   Ember.run(function(){
-//     model.set('title', 'testtitle');
-//     var displayTitle = model.get('displayTitle');
-//     assert.equal(displayTitle, 'testtitle');
-//   });
-//
-// });

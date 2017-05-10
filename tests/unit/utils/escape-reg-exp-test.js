@@ -1,10 +1,10 @@
-import escapeRegExp from 'dummy/utils/escape-reg-exp';
+import escapeRegExp from '../../../utils/escape-reg-exp';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | escape reg exp');
+module('Unit | Utility | escape Regular Expressions special characters');
 
-// Replace this with your real tests.
-test('it works', function(assert) {
-  let result = escapeRegExp();
-  assert.ok(result);
+test('escapes special chars', function(assert) {
+  assert.equal(escapeRegExp('\\^$*+?.()|{}[]'), '\\\\\\^\\$\\*\\+\\?\\.\\(\\)\\|\\{\\}\\[\\]');
+  assert.equal(escapeRegExp('abc'), 'abc');
+  assert.equal(escapeRegExp('MoneyBag$$$ +1'), 'MoneyBag\\$\\$\\$ \\+1');
 });
