@@ -89,9 +89,9 @@ test('gets all learner group courses', function(assert) {
 
     let courses = [course1, course2];
     model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
+      assert.equal(allRelatedCourses.length, courses.length, 'all expected courses returned');
       courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
+        assert.ok(allRelatedCourses.includes(course), `course ${course.id} returned`);
       });
     });
   });
