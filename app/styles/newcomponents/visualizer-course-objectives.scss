@@ -46,3 +46,29 @@
     }
   }
 }
+
+.course-overview-actions {
+  .visualizer-course-objectives {
+    span {
+      position: absolute;
+      top: 116px;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .visualizer-course-objectives {
+      span {
+        top: 189px;
+      }
+    }
+  }
+
+
+  @media screen and (max-width: 420px) {
+    .visualizer-course-objectives {
+      span {
+        top: 225px;
+      }
+    }
+  }
+}
