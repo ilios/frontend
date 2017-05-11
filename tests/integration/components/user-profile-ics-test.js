@@ -2,6 +2,9 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import {
+  triggerSuccess
+} from '../../helpers/ember-cli-clipboard';
 
 const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
@@ -18,19 +21,6 @@ moduleForComponent('user-profile-ics', 'Integration | Component | user profile i
     });
     this.register('service:serverVariables', serverVariablesMock);
   }
-});
-
-test('it renders', function(assert) {
-
-  this.set('user', user);
-  this.render(hbs`{{user-profile-ics user=user}}`);
-  const linkBox = '.ics-link';
-  const link = `${linkBox} a:eq(0)`;
-
-  return wait().then(()=>{
-    assert.equal(this.$(linkBox).text().trim(), 'Web Link', 'link text is correct');
-    assert.equal(this.$(link).attr('href'), 'http://myhost.com/ics/testkey', 'feed link is correct');
-  });
 });
 
 test('clicking manage sends the action', function(assert) {
@@ -70,4 +60,24 @@ test('can refresh key', function(assert) {
 
     return wait();
   });
+});
+
+test('clicking copy displays message', async function(assert) {
+  assert.expect(4);
+  const iliosConfigMock = Service.extend({
+    userSearchType: resolve('ldap')
+  });
+  this.register('service:iliosConfig', iliosConfigMock);
+  this.set('user', user);
+  this.render(hbs`{{user-profile-ics user=user}}`);
+  const button = 'button.copy-btn';
+  const successMessage = '.yes';
+
+  await wait();
+  assert.equal(this.$(successMessage).length, 0);
+  assert.equal(this.$(button).length, 1);
+  triggerSuccess(this, '.copy-btn');
+  assert.equal(this.$(successMessage).length, 1);
+  assert.equal(this.$(successMessage).text().trim(), 'Copied Successfully');
+
 });
