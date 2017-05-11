@@ -4,7 +4,7 @@
     <button disabled={{refreshKey.isRunning}} title={{t 'general.refreshIcsFeedKey'}} class='refresh-key' {{action (perform refreshKey)}}>{{fa-icon (if refreshKey.isRunning 'spinner' 'refresh') spin=(if refreshKey.isRunning true false)}}</button>
     <button disabled={{refreshKey.isRunning}} class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
   {{else if isManagable}}
-    <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+    <button class='manage' {{action setIsManaging true}} title={{t 'general.refreshIcsFeedKey'}}>{{fa-icon 'edit'}}</button>
   {{/if}}
 </div>
 
