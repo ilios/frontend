@@ -29,6 +29,7 @@ export default Component.extend({
   icsFeedKey: null,
   hasSavedRecently: false,
   finishedSetup: false,
+  showCopySuccessMessage: false,
 
   /**
    * Generate a random token from a combination of
@@ -56,6 +57,12 @@ export default Component.extend({
     this.set('hasSavedRecently', false);
 
   }).drop(),
+
+  textCopied: task(function * (){
+    this.set('showCopySuccessMessage', true);
+    yield timeout(3000);
+    this.set('showCopySuccessMessage', false);
+  }).restartable(),
 
   icsFeedUrl: computed('icsFeedKey', 'host', function(){
     const icsFeedKey = this.get('icsFeedKey');

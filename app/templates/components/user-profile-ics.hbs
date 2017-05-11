@@ -10,11 +10,15 @@
 
 <p>
   {{#if icsFeedKey.length}}
-    <span class='ics-instructions'>{{t 'general.icsAdminInstructions'}}</span><br>
-    <span class='ics-link'><a href={{icsFeedUrl}}>{{t 'general.link'}}</a></span>
-    {{#copy-button clipboardText=icsFeedUrl}}
-      {{fa-icon 'copy'}}
-    {{/copy-button}}
+    <p class='ics-instructions'>{{t 'general.icsAdminInstructions'}}</p>
+    <p>
+      {{#copy-button clipboardText=icsFeedUrl success=(perform textCopied)}}
+        {{fa-icon 'copy'}} {{t 'general.link'}}
+      {{/copy-button}}
+      {{#if showCopySuccessMessage}}
+        <span class='yes'>{{t 'general.copiedSuccessfully'}}</span>
+      {{/if}}
+    </p>
   {{else}}
     {{t 'general.none'}}
   {{/if}}
