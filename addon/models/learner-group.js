@@ -262,22 +262,14 @@ export default DS.Model.extend({
       });
     });
   }),
-  allParents: computed('parent', 'parent.allParents.[]', function(){
-    return new Promise(resolve => {
-      this.get('parent').then(parent => {
-        let parents = [];
-        if(!parent){
-          resolve(parents);
-        } else {
-          parents.pushObject(parent);
-          parent.get('allParents').then(allParents => {
-            parents.pushObjects(allParents);
-            resolve(parents);
-          });
-        }
+  allParents: computed('parent', 'parent.allParents.[]', async function(){
+    const parent = await this.get('parent');
+    if (!parent) {
+      return [];
+    }
+    const allParents = await parent.get('allParents');
 
-      });
-    });
+    return [parent].pushObjects(allParents);
   }),
   topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
     return new Ember.RSVP.Promise(
