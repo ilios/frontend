@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
-const { all, Promise } = RSVP;
+const { Component, computed, inject, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
+const { all, map, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
+const { service } = inject;
 
 const competencyGroup = EmberObject.extend({
   title: '',
@@ -74,6 +75,7 @@ const cohortProxy = EmberObject.extend({
 });
 
 export default Component.extend({
+  i18n: service(),
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,
@@ -95,51 +97,42 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  cohorts: computed('courseObjective.courses.[]','courseObjective.courses.@each.cohorts', function() {
-    return new Promise(resolve => {
-      let courseObjective = this.get('courseObjective');
-      if (! courseObjective) {
-        resolve([]);
-      } else {
-        let groups = [];
-        courseObjective.get('courses').then(courses => {
-          let course = courses.get('firstObject');
-          course.get('cohorts').then(cohorts => {
-            let promises = cohorts.map(cohort => {
-              return new Promise(resolve => {
-                cohort.get('objectives').then(objectives => {
-                  let objectiveProxies = objectives.map(objective => {
-                    return objectiveProxy.create({
-                      content: objective,
-                      courseObjective,
-                    });
-                  });
-                  cohort.get('programYear.program').then(program => {
-                    let programTitle = program.get('title');
-                    cohort.get('displayTitle').then(cohortTitle => {
-                      let title = '';
-                      if(programTitle && cohortTitle) {
-                        title = programTitle + ' ' + cohortTitle;
-                      }
-                      let group = cohortProxy.create({
-                        id: cohort.get('id'),
-                        cohort: cohort,
-                        objectives: objectiveProxies,
-                        title
-                      });
-                      resolve(groups.pushObject(group));
-                    });
-                  });
-                });
-              });
-            });
-            all(promises).then(() => {
-              resolve(groups.sortBy('title'));
-            });
-          });
+  cohorts: computed('courseObjective.courses.[]','courseObjective.courses.@each.cohorts', async function() {
+    const courseObjective = this.get('courseObjective');
+    if (! courseObjective) {
+      return [];
+    }
+    const courses = await courseObjective.get('courses');
+    const course = courses.get('firstObject');
+    const cohorts = await course.get('cohorts');
+    const cohortProxies = await map(cohorts.toArray(), async cohort => {
+      const objectives = await cohort.get('objectives');
+      let objectiveProxies = objectives.map(objective => {
+        return objectiveProxy.create({
+          content: objective,
+          courseObjective,
         });
+      });
+      const programYear = await cohort.get('programYear');
+      const program = await programYear.get('program');
+      const programTitle = program.get('title');
+      let cohortTitle = cohort.get('title');
+      if (isEmpty(cohortTitle)) {
+        const i18n = this.get('i18n');
+        const classOfYear = await cohort.get('classOfYear');
+        cohortTitle = i18n.t('general.classOf', {year: classOfYear});
       }
+      const title = programTitle + ' ' + cohortTitle;
+
+      return cohortProxy.create({
+        id: cohort.get('id'),
+        cohort: cohort,
+        objectives: objectiveProxies,
+        title
+      });
     });
+
+    return cohortProxies.sortBy('title');
   }),
 
   /**

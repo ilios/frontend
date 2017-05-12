@@ -2,15 +2,26 @@ import Ember from 'ember';
 
 const { inject, computed } = Ember;
 const { service } = inject;
-const { not, oneWay, or } = computed;
+const { not, or } = computed;
 
 export default Ember.Mixin.create({
   publishTarget: null,
   currentUser: service(),
   flashMessages: service(),
   store: service(),
+  i18n: service(),
   showCheckLink: true,
-  menuTitle: oneWay('publishTarget.status'),
+  menuTitle: computed('i18n.locale', 'publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
+    const publishTarget = this.get('publishTarget');
+    const i18n = this.get('i18n');
+    if(publishTarget.get('publishedAsTbd')){
+      return i18n.t('general.scheduled');
+    }
+    if(publishTarget.get('isPublished')){
+      return i18n.t('general.published');
+    }
+    return i18n.t('general.notPublished');
+  }),
   menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
     if(this.get('publishTarget.publishedAsTbd')){
       return 'clock-o';

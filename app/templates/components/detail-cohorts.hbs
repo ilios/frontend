@@ -27,7 +27,7 @@
     }}
   {{else}}
     {{detail-cohort-list
-      cohorts=course.cohorts
+      cohorts=(await course.cohorts)
     }}
   {{/if}}
 </div>

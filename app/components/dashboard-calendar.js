@@ -2,9 +2,9 @@ import moment from 'moment';
 import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, isPresent, RSVP, Object:EmberObject, inject } = Ember;
+const { Component, computed, isPresent, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
 const { service } = inject;
-const { all, Promise } = RSVP;
+const { all, map, Promise } = RSVP;
 
 export default Component.extend({
   init() {
@@ -81,35 +81,29 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  cohorts: computed('selectedSchool', 'selectedAcademicYear', function(){
-    return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
-        this.get('selectedAcademicYear').then(year => {
-          school.getCohortsForYear(year.get('title')).then(cohorts => {
-            let proxies = [];
-            let promises = [];
-            cohorts.forEach(cohort => {
-              let proxy = EmberObject.create({
-                cohort,
-                displayTitle: null
-              });
-              proxies.pushObject(proxy);
-              promises.pushObject(cohort.get('displayTitle').then(displayTitle => {
-                proxy.set('displayTitle', displayTitle);
-              }));
-            });
-            all(promises).then(() => {
-              let sortedCohorts = [];
-              let sortedProxies = proxies.sortBy('displayTitle');
-              sortedProxies.forEach(proxy => {
-                sortedCohorts.pushObject(proxy.get('cohort'));
-              });
-              resolve(sortedCohorts);
-            });
-          });
-        });
+  cohorts: computed('selectedSchool', 'selectedAcademicYear', async function(){
+    const school = await this.get('selectedSchool');
+    const year = await this.get('selectedAcademicYear');
+    const cohorts = await school.getCohortsForYear(year.get('title'));
+    const cohortProxies = await map(cohorts.toArray(), async cohort => {
+      let displayTitle = cohort.get('title');
+      if (isEmpty(displayTitle)) {
+        const i18n = this.get('i18n');
+        const classOfYear = await cohort.get('classOfYear');
+
+        displayTitle = i18n.t('general.classOf', {year: classOfYear});
+      }
+
+      return EmberObject.create({
+        cohort,
+        displayTitle
       });
     });
+
+    const sortedProxies = cohortProxies.sortBy('displayTitle');
+    const sortedCohorts = sortedProxies.mapBy('cohort');
+
+    return sortedCohorts;
   }),
 
   /**
@@ -212,7 +206,12 @@ export default Component.extend({
           case 'cohort':
             hash.class = 'tag-cohort';
             hash.name = new Promise(resolve => {
-              filter.get('displayTitle').then(displayTitle => {
+              let displayTitle = filter.get('title');
+              const i18n = this.get('i18n');
+              filter.get('classOfYear').then(classOfYear => {
+                if (isEmpty(displayTitle)) {
+                  displayTitle = i18n.t('general.classOf', {year: classOfYear});
+                }
                 filter.get('programYear.program').then(program => {
                   resolve(`${displayTitle} ${program.get('title')}`);
                 });

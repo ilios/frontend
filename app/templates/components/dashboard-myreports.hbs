@@ -11,7 +11,7 @@
   </div>
 
   {{#liquid-if selectedReport class='crossFade'}}
-    <h3>{{await selectedReport.displayTitle}}</h3>
+    <h3>{{report-title selectedReport}}</h3>
     {{#if (is-fulfilled reportResultsList)}}
       {{#if (get (await reportResultsList) 'length')}}
         <ul>
@@ -53,7 +53,7 @@
                 <tr>
                   <td {{action 'selectReport' report}} class='link clickable' colspan=4>
                     {{fa-icon 'external-link-square'}}
-                    {{await report.displayTitle}}
+                    {{report-title report}}
                   </td>
                   <td class='text-right clickable remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>
                 </tr>

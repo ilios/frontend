@@ -1,6 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-i18n/helper";
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
@@ -9,12 +8,12 @@ const { resolve } = RSVP;
 
 let mockReports = [
   EmberObject.create({
-    displayTitle: resolve('all courses'),
+    title: 'all courses',
     subject: 'courses',
     user: 1
   }),
   EmberObject.create({
-    displayTitle: resolve('courses for session'),
+    title: 'courses for session',
     subject: 'courses',
     prepositionalObject: 'session',
     prepositionalObjectTableRowId: 11,
@@ -35,11 +34,7 @@ let reportingMockNoReports = Service.extend({
 });
 
 moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard myreports', {
-  integration: true,
-  beforeEach: function() {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
-  }
+  integration: true
 });
 
 test('list reports', function(assert) {
@@ -57,9 +52,7 @@ test('list reports', function(assert) {
   return wait().then(()=> {
     for (let i = 0; i < 2; i++) {
       let tds = this.$(`table tr:eq(${i}) td`);
-      mockReports[i].get('displayTitle').then(displayTitle => {
-        assert.equal(tds.eq(0).text().trim(), displayTitle);
-      });
+      assert.equal(tds.eq(0).text().trim(), mockReports[i].get('title'));
     }
     assert.equal(this.$(`table tr`).length, 2);
   });

@@ -24,8 +24,12 @@
       {{#each objective.parents as |parent|}}
         {{#if course.hasMultipleCohorts}}
           <strong>
-            {{parent.programYear.program.title}}&nbsp;
-            {{await parent.programYear.cohort.displayTitle}}
+            {{get (await parent.firstProgram) 'title'}}
+            {{#if (get (await parent.firstCohort) 'title')}}
+              {{get (await parent.firstCohort) 'title'}}
+            {{else}}
+              {{t 'general.classOf' year=(await (get (await parent.firstCohort) 'classOfYear'))}}
+            {{/if}}
           </strong>
           <br>
         {{/if}}

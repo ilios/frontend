@@ -341,7 +341,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
 
     assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
-    assert.equal(getTableDataText(0, 1).text(), 'cohort 0', 'cohort class year shown');
+    assert.equal(getTableDataText(0, 1).text().trim(), 'cohort 0', 'cohort class year shown');
     assert.equal(getTableDataText(0, 2).text().trim(), '3');
     assert.equal(getTableDataText(0, 3).text().trim(), '3');
     assert.equal(getTableDataText(0, 4).text().trim(), '3');
@@ -357,7 +357,7 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
       const academicYear = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
       assert.equal(getTableDataText(1, 0).text().trim(), academicYear, 'academic year shown');
       const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
-      assert.equal(getTableDataText(1, 1).text(), cohortClassYear, 'cohort class year shown');
+      assert.equal(getTableDataText(1, 1).text().trim(), cohortClassYear, 'cohort class year shown');
       assert.equal(getTableDataText(1, 2).text().trim(), '3', 'copied correctly from latest program-year');
       assert.equal(getTableDataText(1, 3).text().trim(), '3', 'copied correctly from latest program-year');
       assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
