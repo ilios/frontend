@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Helper, inject } = Ember;
 const { service } = inject;
@@ -12,12 +13,17 @@ export default Helper.extend({
     if (reportTitle) {
       return reportTitle;
     }
-    this.getReportTitle(report).then(title => {
-      this.set('reportTitle', title);
-      this.recompute();
-    });
-
+    this.get('loadTitle').perform(report);
   },
+  /**
+  * Done as a task so we don't call set on the destroyed Helper
+  * if the template is taken out of the DOM while the promise is still resolving
+  **/
+  loadTitle: task(function * (report) {
+    const title = yield this.getReportTitle(report);
+    this.set('reportTitle', title);
+    this.recompute();
+  }).restartable(),
   async getReportTitle(report){
     const title = report.get('title');
     if (title) {
