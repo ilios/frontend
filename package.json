@@ -75,7 +75,7 @@
     "ember-load": "0.0.11",
     "ember-load-initializers": "^1.0.0",
     "ember-metrics": "0.10.0",
-    "ember-modal-dialog": "0.9.1",
+    "ember-modal-dialog": "2.2.0",
     "ember-moment": "7.3.0",
     "ember-normalize": "1.0.0",
     "ember-noscript": "^2.0.0",
