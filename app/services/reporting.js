@@ -96,12 +96,42 @@ export default Service.extend({
 
     return query;
   },
-  coursesResults(results){
-    const canViewCourses = this.get('currentUser.canViewCourses');
+  canViewCourses: computed(
+    'currentUser.userIsCourseDirector',
+    'currentUser.userIsFaculty',
+    'currentUser.userIsDeveloper',
+    async function(){
+      const currentUser = this.get('currentUser');
+      const roles = await all([
+        currentUser.get('userIsCourseDirector'),
+        currentUser.get('userIsFaculty'),
+        currentUser.get('userIsDeveloper')
+      ]);
+
+      return roles.includes(true);
+    }
+  ),
+  canViewPrograms: computed(
+    'currentUser.userIsCourseDirector',
+    'currentUser.userIsDeveloper',
+    async function(){
+      const currentUser = this.get('currentUser');
+      const roles = await all([
+        currentUser.get('userIsCourseDirector'),
+        currentUser.get('userIsFaculty'),
+        currentUser.get('userIsDeveloper')
+      ]);
+
+      return roles.includes(true);
+    }
+  ),
+
+  async coursesResults(results){
+    const canView = await this.get('canViewCourses');
     let mappedResults = results.map(course => {
       let rhett = {};
       rhett.value = course.get('academicYear') + ' ' + course.get('title');
-      if(canViewCourses){
+      if(canView){
         rhett.route = 'course';
         rhett.model = course;
       }
@@ -111,64 +141,54 @@ export default Service.extend({
 
     return resolve(mappedResults);
   },
-  sessionsResults(results){
-    const canView = this.get('currentUser.canViewCourses');
-    let mappedResults = results.map(item => {
-      return new Promise(resolve => {
-        let rhett = {};
-        item.get('course').then(course => {
-          rhett.value = course.get('academicYear') + ' ' + course.get('title') + ' ' + item.get('title');
-          if(canView){
-            rhett.route = 'session';
-            rhett.model = course;
-            rhett.model2 = item;
-          }
-          resolve(rhett);
-        });
-      });
+  async sessionsResults(results){
+    const canView = await this.get('canViewCourses');
+    let mappedResults = await map(results.toArray(), async item => {
+      let rhett = {};
+      const course = await item.get('course');
+      rhett.value = course.get('academicYear') + ' ' + course.get('title') + ' ' + item.get('title');
+      if(canView){
+        rhett.route = 'session';
+        rhett.model = course;
+        rhett.model2 = item;
+      }
+
+      return rhett;
     });
 
-    return all(mappedResults);
+    return mappedResults;
   },
-  programsResults(results){
-    const canView = this.get('currentUser.canViewPrograms');
-    let mappedResults = results.map(item => {
-      return new Promise(resolve => {
-        let rhett = {};
-        item.get('school').then(school => {
-          rhett.value = school.get('title') + ': ' + item.get('title');
-          if(canView){
-            rhett.route = 'program';
-            rhett.model = item;
-          }
-          resolve(rhett);
-        });
-      });
+  async programsResults(results){
+    const canView = await this.get('canViewPrograms');
+    const mappedResults = await map(results.toArray(), async item => {
+      let rhett = {};
+      const school = await item.get('school');
+      rhett.value = school.get('title') + ': ' + item.get('title');
+      if(canView){
+        rhett.route = 'program';
+        rhett.model = item;
+      }
+      return rhett;
     });
 
-    return all(mappedResults);
+    return mappedResults;
   },
-  programYearsResults(results){
-    const canView = this.get('currentUser.canViewPrograms');
-    let mappedResults = results.map(item => {
-      return new Promise(resolve => {
-        let rhett = {};
-        item.get('program').then(program => {
-          program.get('school').then(school => {
-            rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + item.get('classOfYear');
-            if(canView){
-              rhett.route = 'programYear';
-              rhett.model = program;
-              rhett.model2 = item;
-            }
-            resolve(rhett);
-          });
-        });
-
-      });
+  async programYearsResults(results){
+    const canView = await this.get('canViewPrograms');
+    const mappedResults = await map(results.toArray(), async item => {
+      let rhett = {};
+      const program = await item.get('program');
+      const school = await program.get('school');
+      rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + item.get('classOfYear');
+      if(canView){
+        rhett.route = 'programYear';
+        rhett.model = program;
+        rhett.model2 = item;
+      }
+      return rhett;
     });
 
-    return all(mappedResults);
+    return mappedResults;
   },
   instructorsResults(results){
     let mappedResults = results.map( result => {
