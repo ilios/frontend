@@ -47,7 +47,7 @@ export default function() {
   this.delete('api/authentications/:id', 'authentication');
   this.post('api/authentications', 'authentication');
 
-  this.get('api/cohorts', (db, request) => {
+  this.get('api/cohorts', ({db}, request) => {
     const params = request.queryParams;
     const keys = Object.keys(params);
     const schoolKey = 'filters[schools]';
