@@ -2,8 +2,7 @@ import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
 import {
   module,
-  test,
-  skip
+  test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
@@ -20,7 +19,7 @@ module('Acceptance: Dashboard Calendar', {
     server.create('school', {
       sessionTypes: [1,2,3],
       programs: [1],
-      courses: [1]
+      courses: [1, 2]
     });
     server.create('program', {
       programYears: [1,2],
@@ -74,8 +73,6 @@ module('Acceptance: Dashboard Calendar', {
     });
     server.create('course', {
       sessions: [1,2],
-      level: 1,
-      school: 1,
       year: 2015
     });
     server.create('course', {
@@ -127,10 +124,10 @@ test('load month calendar', function(assert) {
   });
 });
 
-skip('load week calendar', function(assert) {
-  let today = moment().hour(8);
-  let startOfWeek = today.clone().startOf('week');
-  let endOfWeek = today.clone().endOf('week').hour(22).minute(59);
+test('load week calendar', async function(assert) {
+  const today = moment().hour(8);
+  const startOfWeek = today.clone().startOf('week');
+  const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
   server.create('userevent', {
     user: 4136,
     name: 'start of week',
@@ -143,20 +140,18 @@ skip('load week calendar', function(assert) {
     startDate: endOfWeek.format(),
     endDate: endOfWeek.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar');
-  andThen(function() {
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    let eventInfo = '';
-    eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
-    eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
-    assert.equal(getElementText(events), getText(eventInfo));
+  await visit('/dashboard?show=calendar');
 
-  });
+  assert.equal(currentPath(), 'dashboard');
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  let eventInfo = '';
+  eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
+  eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
+  assert.equal(getElementText(events), getText(eventInfo));
 });
 
-skip('load day calendar', function(assert) {
+test('load day calendar', function(assert) {
   let today = moment().hour(8);
   let tomorow = today.clone().add(1, 'day');
   let yesterday = today.clone().subtract(1, 'day');
@@ -190,7 +185,7 @@ skip('load day calendar', function(assert) {
   });
 });
 
-skip('click month day number and go to day', function(assert) {
+test('click month day number and go to day', function(assert) {
   let aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
   server.create('userevent', {
     user: 4136,
@@ -210,7 +205,7 @@ skip('click month day number and go to day', function(assert) {
   });
 });
 
-skip('click week day title and go to day', function(assert) {
+test('click week day title and go to day', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -227,7 +222,7 @@ skip('click week day title and go to day', function(assert) {
   });
 });
 
-skip('click forward on a day goes to next day', function(assert) {
+test('click forward on a day goes to next day', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -243,7 +238,7 @@ skip('click forward on a day goes to next day', function(assert) {
   });
 });
 
-skip('click forward on a week goes to next week', function(assert) {
+test('click forward on a week goes to next week', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -259,7 +254,7 @@ skip('click forward on a week goes to next week', function(assert) {
   });
 });
 
-skip('click forward on a month goes to next month', function(assert) {
+test('click forward on a month goes to next month', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -275,7 +270,7 @@ skip('click forward on a month goes to next month', function(assert) {
   });
 });
 
-skip('click back on a day goes to previous day', function(assert) {
+test('click back on a day goes to previous day', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -291,7 +286,7 @@ skip('click back on a day goes to previous day', function(assert) {
   });
 });
 
-skip('click back on a week goes to previous week', function(assert) {
+test('click back on a week goes to previous week', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -307,7 +302,7 @@ skip('click back on a week goes to previous week', function(assert) {
   });
 });
 
-skip('click back on a month goes to previous month', function(assert) {
+test('click back on a month goes to previous month', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -323,7 +318,7 @@ skip('click back on a month goes to previous month', function(assert) {
   });
 });
 
-skip('show user events', function(assert) {
+test('show user events', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -337,11 +332,9 @@ skip('show user events', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-  });
+  await visit('/dashboard?show=calendar');
+  let events = find('div.event');
+  assert.equal(events.length, 2);
 });
 
 let chooseSchoolEvents = function(){
@@ -349,7 +342,7 @@ let chooseSchoolEvents = function(){
     return click(find('.togglemyschedule span'));
   });
 };
-skip('show school events', function(assert) {
+test('show school events', function(assert) {
   let today = moment().hour(8);
   server.create('schoolevent', {
     school: 1,
@@ -382,7 +375,7 @@ let pickSessionType = function(i) {
   return click(find('li>span', types).eq(i));
 };
 
-skip('test session type filter', function(assert) {
+test('test session type filter', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -396,33 +389,24 @@ skip('test session type filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    pickSessionType(0).then(() => {
-      events = find('div.event');
-      assert.equal(events.length, 1);
-    });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  await pickSessionType(0);
+  events = find('div.event');
+  assert.equal(events.length, 1);
+  await pickSessionType(1);
 
-  });
-  andThen(function() {
-    pickSessionType(1).then(() => {
-      let events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    pickSessionType(0).then(() => {
-      pickSessionType(1).then(() => {
-        pickSessionType(2).then(() => {
-          let events = find('div.event');
-          assert.equal(events.length, 0);
-        });
-      });
-    });
-  });
+  events = find('div.event');
+  assert.equal(events.length, 2);
+
+  await pickSessionType(0);
+  await pickSessionType(1);
+  await pickSessionType(2);
+
+  events = find('div.event');
+  assert.equal(events.length, 0);
 });
 
 let pickCourseLevel = function(i) {
@@ -434,7 +418,7 @@ let clearCourseLevels = function() {
   return click(find('.checkbox:first', levels));
 };
 
-skip('test course level filter', function(assert) {
+test('test course level filter', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -478,7 +462,7 @@ let clearCohorts = function() {
   return click(find('.checkbox:first', cohorts));
 };
 
-skip('test cohort filter', function(assert) {
+test('test cohort filter', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -528,7 +512,7 @@ let clearCourses = function() {
   return click(find('.checkbox:first', courses));
 };
 
-skip('test course filter', function(assert) {
+test('test course filter', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -568,7 +552,7 @@ skip('test course filter', function(assert) {
   });
 });
 
-skip('test course and session type filter together', function(assert) {
+test('test course and session type filter together', function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -610,7 +594,7 @@ skip('test course and session type filter together', function(assert) {
   });
 });
 
-skip('agenda show next seven days of events', function(assert) {
+test('agenda show next seven days of events', function(assert) {
   let today = moment().hour(0).minute(2);
   server.create('userevent', {
     user: 4136,
@@ -849,4 +833,42 @@ test('week summary dispalys the whole week', async function(assert) {
   assert.equal(eventBLocks.length, 2);
   assert.equal(getElementText(eventBLocks.eq(0)), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
   assert.equal(getElementText(eventBLocks.eq(1)), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
+});
+
+test('draft, scheduled, and published events', async function(assert) {
+  let today = moment().hour(8);
+  server.create('userevent', {
+    user: 4136,
+    name: 'draft',
+    startDate: today.format(),
+    endDate: today.clone().add(1, 'hour').format(),
+    isPublished: false,
+    isScheduled: false
+  });
+  server.create('userevent', {
+    user: 4136,
+    name: 'scheduled',
+    startDate: today.clone().add(1, 'hour').format(),
+    endDate: today.clone().add(2, 'hour').format(),
+    isPublished: true,
+    isScheduled: true
+  });
+  server.create('userevent', {
+    user: 4136,
+    name: 'published',
+    startDate: today.clone().add(2, 'hour').format(),
+    endDate: today.clone().add(3, 'hour').format(),
+    isPublished: true,
+    isScheduled: false
+  });
+  await visit('/dashboard?show=calendar&view=day');
+  const events = 'div.event';
+  const draftEventIcon = `${events}:eq(0) i`;
+  const scheduledEventIcon = `${events}:eq(1) i`;
+  const publishedEventIcon = `${events}:eq(2) i`;
+  assert.equal(find(events).length, 3);
+  assert.ok(find(draftEventIcon).hasClass('fa-files-o'), 'draft icon is dispalyed');
+  assert.ok(find(scheduledEventIcon).hasClass('fa-clock-o'), 'scheduled icon is displayed');
+  assert.notOk(find(publishedEventIcon).hasClass('fa-files-o'), 'no draft icon');
+  assert.notOk(find(publishedEventIcon).hasClass('fa-clock-o'), 'no scheduled icon');
 });
