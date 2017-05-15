@@ -46,52 +46,52 @@ module('Acceptance: Session - Offerings', {
     });
 
     //users 2, 3
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 2,
       instructorGroups: [1],
       learnerGroups: [1],
     }));
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 3,
       instructorGroups: [1],
       learnerGroups: [1],
     }));
     //users 4
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 4,
       instructorGroups: [2],
       learnerGroups: [2],
     }));
 
     //users 5
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 5,
       instructorGroups: [2],
       learnerGroups: [2],
     }));
 
     //users 6,7
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 6,
       instructedOfferings: [1],
       instructorGroups: [1]
     }));
 
     //users 6,7
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 7,
       instructedOfferings: [1],
       instructorGroups: [1]
     }));
 
     //users 8,9
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 8,
       instructedOfferings: [1, 2],
     }));
 
     //users 8,9
-    fixtures.users.pushObjects(server.createList('user', 1, {
+    fixtures.users.pushObjects(server.create('user', {
       id: 9,
       instructedOfferings: [1, 2],
     }));
