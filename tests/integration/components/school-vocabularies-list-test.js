@@ -18,19 +18,19 @@ moduleForComponent('school-vocabularies-list', 'Integration | Component | school
 
 test('it renders', function(assert) {
   assert.expect(4);
-  let term1 = Object.create({
+  let term1 = EmberObject.create({
     id: 1,
     title: 'term1'
   });
-  let term2 = Object.create({
+  let term2 = EmberObject.create({
     id: 2,
     title: 'term2'
   });
-  let term3 = Object.create({
+  let term3 = EmberObject.create({
     id: 3,
     title: 'term3'
   });
-  let  vocabulary1 =  Object.create({
+  let  vocabulary1 =  EmberObject.create({
     id: 1,
     title: 'Vocabulary 1',
     terms: resolve([term1, term2]),
@@ -38,7 +38,7 @@ test('it renders', function(assert) {
   });
   term1.set('vocabulary', resolve(vocabulary1));
   term2.set('vocabulary', resolve(vocabulary1));
-  let  vocabulary2 =  Object.create({
+  let  vocabulary2 =  EmberObject.create({
     id: 2,
     title: 'Vocabulary 2',
     terms: resolve([term3]),
@@ -200,12 +200,12 @@ test('clicking delete removes the vocabulary', function(assert) {
 
 test('clicking edit fires the action to manage the vocab', function(assert) {
   assert.expect(1);
-  let vocabulary1 =  Object.create({
+  let vocabulary1 =  EmberObject.create({
     id: 1,
     title: 'Vocabulary 1',
     isNew: false
   });
-  let vocabulary2 =  Object.create({
+  let vocabulary2 =  EmberObject.create({
     id: 2,
     title: 'Vocabulary 2',
     isNew: false
