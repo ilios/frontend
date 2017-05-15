@@ -15,29 +15,24 @@ export default Ember.Service.extend(EventMixin, {
 
   namespace: reads('iliosConfig.apiNameSpace'),
 
-  getEvents(from, to){
-    var deferred = Ember.RSVP.defer();
-    this.get('currentUser.model').then(user => {
-      if( user ){
-        var url = '/' + this.get('namespace') + '/userevents/' +
-        user.get('id') + '?from=' + from + '&to=' + to;
-        const ajax = this.get('ajax');
-        ajax.request(url).then(data => {
-          let events = data.userEvents.map(event => {
-            event.isBlanked = !event.offering && !event.ilmSession;
-            event.slug = this.getSlugForEvent(event);
-            return event;
-          }).sortBy('startDate');
+  async getEvents(from, to){
+    const currentUser = this.get('currentUser');
+    const user = await currentUser.get('model');
 
-          deferred.resolve(events);
-        });
-      } else {
-        deferred.resolve([]);
-      }
+    if (!user) {
+      return [];
+    }
+    const url = '/' + this.get('namespace') + '/userevents/' +
+    user.get('id') + '?from=' + from + '&to=' + to;
+    const ajax = this.get('ajax');
+    const data = await ajax.request(url);
+    let events = data.userEvents.map(event => {
+      event.isBlanked = !event.offering && !event.ilmSession;
+      event.slug = this.getSlugForEvent(event);
+      return event;
+    }).sortBy('startDate');
 
-    });
-
-    return deferred.promise;
+    return events;
   },
   getEventForSlug(slug){
     let from = moment(slug.substring(1, 9), 'YYYYMMDD').hour(0);
