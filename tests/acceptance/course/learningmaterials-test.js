@@ -543,17 +543,17 @@ test('manage terms', function(assert) {
         }
         for (let i = 0; i < fixtures.meshDescriptors.length; i++){
           if(material.meshDescriptors.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
-            assert.ok($(searchResults[i]).hasClass('disabled'), '546');
+            assert.ok($(searchResults[i]).hasClass('disabled'), 'is disabled');
           } else {
-            assert.ok(!$(searchResults[i]).hasClass('disabled'), '548');
+            assert.ok(!$(searchResults[i]).hasClass('disabled'), 'is not disabled');
           }
         }
         click('.removable-list li:eq(0)', meshManager).then(function(){
-          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'), '552');
+          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'), 'is not disabled after being removed');
         });
         click(searchResults[0]);
         andThen(function(){
-          assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'), '556');
+          assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'), 'is disabled after being selected');
 
           let newExpectedMesh = [
             fixtures.meshDescriptors[0],
@@ -563,7 +563,7 @@ test('manage terms', function(assert) {
           assert.equal(removableItems.length, 2);
           for (let i = 0; i < 2; i++){
             let meshDescriptorName = find('.title', removableItems[i]).eq(0);
-            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name), '566');
+            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name), 'selected items are selected');
           }
         });
       });
