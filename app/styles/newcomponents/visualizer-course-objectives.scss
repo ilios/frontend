@@ -24,8 +24,22 @@
       margin-top: .5em;
     }
 
-    .meh-o {
-      font-size: 30em;
+    @include media($small-screen) {
+      .meh-o {
+        font-size: 15rem;
+      }
+    }
+
+    @include media($medium-screen) {
+      .meh-o {
+        font-size: 25rem;
+      }
+    }
+
+    @include media($large-screen) {
+      .meh-o {
+        font-size: 30rem;
+      }
     }
   }
 
