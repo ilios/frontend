@@ -484,7 +484,7 @@ export default {
     'sessionIs': 'Esta sesión es "{{type}}"',
     'sessionLearningMaterials': 'Materiales de Aprendizaje de la Sesión',
     'sessionObjectives': 'Objetivos de la Sesión',
-    'sessions': 'Sessiones',
+    'sessions': 'Sesiones',
     'sessionTitle': 'Titulo de Sesión',
     'sessionTitleFilterPlaceholder': 'Aplicar un Filtro por titulo, tipo, o estado de la publicación',
     'sessionTitlePlaceholder': 'Entre en un titulo para esta sesión',
