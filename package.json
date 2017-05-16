@@ -99,7 +99,7 @@
     "liquid-tether": "2.0.4",
     "loader.js": "^4.2.3",
     "normalize.css": "^7.0.0",
-    "pluralize": "^3.0.0",
+    "pluralize": "^5.0.0",
     "validator": "^7.0.0"
   },
   "engines": {

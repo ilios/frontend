@@ -12,7 +12,11 @@
   dependencies:
     "@glimmer/di" "^0.2.0"
 
-abbrev@1, abbrev@1.0.x:
+abbrev@1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"
+
+abbrev@1.0.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
 
@@ -301,8 +305,8 @@ autoprefixer@^6.0.0:
     postcss-value-parser "^3.2.3"
 
 aws-sdk@^2.1.48, aws-sdk@^2.6.12:
-  version "2.52.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.52.0.tgz#e4d090b845c3f5df13dd065e38a7243ba0a08b3b"
+  version "2.53.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.53.0.tgz#9b95e29ed44d2bc168a79524a2e8564961371f36"
   dependencies:
     buffer "5.0.6"
     crypto-browserify "1.0.9"
@@ -6856,9 +6860,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-pluralize@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-3.1.0.tgz#84213d0a12356069daa84060c559242633161368"
+pluralize@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-5.0.0.tgz#e8b9073af9a0cb02e4c2efa95b55bebbdbf01299"
 
 portfinder@^1.0.7:
   version "1.0.13"
