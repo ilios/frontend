@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import SortableByPosition from 'ilios/mixins/sortable-by-position';
+import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { computed, Mixin, RSVP } = Ember;
 const { alias } = computed;
