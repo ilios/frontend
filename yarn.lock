@@ -5220,6 +5220,12 @@ ilios-calendar@^11.0.0:
     ember-cli-htmlbars "^1.1.1"
     ember-cli-sass "^6.1.0"
 
+ilios-common@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-0.1.0.tgz#04ffcff7bf61a8e31927b3ae1a605ab86fb85a84"
+  dependencies:
+    ember-cli-babel "^6.0.0"
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
