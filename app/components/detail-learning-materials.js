@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { translationMacro as t } from "ember-i18n";
-import SortableByPosition from 'ilios/mixins/sortable-by-position';
+import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { isEmpty, Component, computed, inject, RSVP, ObjectProxy, Object:EmberObject } = Ember;
 const { notEmpty, or, not } = computed;
