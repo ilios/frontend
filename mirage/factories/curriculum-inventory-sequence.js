@@ -1,6 +1,6 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory, association } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   description: (i) => `descirption for sequence ${i} `,
-  report: (i) => (i+1),
+  report: association(),
 });

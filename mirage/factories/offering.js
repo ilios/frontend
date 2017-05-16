@@ -1,6 +1,6 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   room:  (i) => `room ${i}`,
   site: (i) => `site ${i}`,
 });

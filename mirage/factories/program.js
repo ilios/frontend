@@ -1,9 +1,9 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory, association } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   title: (i) => `program ${i}`,
   shortTitle: (i) => `short_${i}`,
-  school: (i) => (i+1),
+  school: association(),
   duration: 4,
   published: true,
   publishedAsTbd: false,

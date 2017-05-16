@@ -1,10 +1,10 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory, association } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   startYear: (i) => 2012 + i,
-  program: (i) => (i+1),
+  program: association(),
   published: true,
   publishedAsTbd: false,
-  cohort: (i) => (i+1),
+  cohort: association(),
   archived: false,
 });

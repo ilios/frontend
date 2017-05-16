@@ -53,7 +53,8 @@ export default function getAll({db}, request){
                 return (arr.indexOf(p.toString()) !== -1);
               });
             } else {
-              if(arr.indexOf(obj[param].toString()) === -1) {
+
+              if(!(param in obj) || arr.indexOf(obj[param].toString()) === -1) {
                 match = false;
               }
             }

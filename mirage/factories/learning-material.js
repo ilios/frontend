@@ -1,7 +1,7 @@
 import moment from 'moment';
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   title: (i) => `learning material ${i}`,
   description: (i) => ` ${i} lm description`,
   uploadDate: () => moment().format(),
