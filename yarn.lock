@@ -1989,7 +1989,7 @@ cli-width@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cli-width/-/cli-width-2.1.0.tgz#b234ca209b29ef66fc518d9b98d5847b00edf00a"
 
-clipboard@^1.5.10:
+clipboard@^1.6.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/clipboard/-/clipboard-1.6.1.tgz#65c5b654812466b0faab82dc6ba0f1d2f8e4be53"
   dependencies:
@@ -2814,12 +2814,12 @@ ember-cli-broccoli-sane-watcher@^2.0.4:
     rsvp "^3.0.18"
     sane "^1.1.1"
 
-ember-cli-clipboard@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-clipboard/-/ember-cli-clipboard-0.5.0.tgz#aa6de47e90f72c173a64277f32a66d0bb04f30e2"
+ember-cli-clipboard@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-clipboard/-/ember-cli-clipboard-0.6.0.tgz#5e5b54f8c5663789af30b62cfe46691e22072bce"
   dependencies:
     broccoli-funnel "^1.1.0"
-    clipboard "^1.5.10"
+    clipboard "^1.6.0"
     ember-cli-babel "^5.1.7"
     ember-cli-htmlbars "^1.1.1"
 
