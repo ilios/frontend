@@ -1,6 +1,10 @@
-# ilios-common
+# Ilios Common Code
 
-This README outlines the details of collaborating on this Ember addon.
+Addon to make sharing code between ember application easy.
+
+## Usage
+
+* `ember install ilios-common
 
 ## Installation
 

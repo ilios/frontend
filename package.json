@@ -1,17 +1,17 @@
 {
   "name": "ilios-common",
   "version": "0.2.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Common shared code for ilios ember apps.",
   "keywords": [
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "The Ilios Team",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/ilios/common",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -42,7 +42,6 @@
     "ember-moment": "^7.3.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.13.0",
-    "ember-welcome-page": "^3.0.0",
     "loader.js": "^4.2.3"
   },
   "engines": {
