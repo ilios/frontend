@@ -1,3 +1,3 @@
 /* eslint-env node */
 
-module.exports = 'v1.18';
+module.exports = 'v1.19';
