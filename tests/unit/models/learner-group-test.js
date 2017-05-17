@@ -238,69 +238,58 @@ test('check allinstructors', function(assert) {
   });
 });
 
-test('check allParents', function(assert) {
-  assert.expect(5);
-  let learnerGroup = this.subject();
+test('check allParents', async function(assert) {
+  assert.expect(3);
   let store = this.store();
 
-  return learnerGroup.get('allParents').then(groups => {
-    assert.equal(groups.length, 0);
-
-    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup});
+  run(async ()=>{
+    let subGroup1 = store.createRecord('learner-group');
     let subGroup2 = store.createRecord('learner-group', {parent: subGroup1});
     let subGroup3 = store.createRecord('learner-group', {parent: subGroup2});
 
-    return subGroup3.get('allParents').then(allParents => {
-      assert.equal(allParents.length, 3);
-      assert.equal(allParents[0], subGroup2);
-      assert.equal(allParents[1], subGroup1);
-      assert.equal(allParents[2], learnerGroup);
-    });
+    const allParents = await subGroup3.get('allParents');
+    assert.equal(allParents.length, 2);
+    assert.equal(allParents[0], subGroup2);
+    assert.equal(allParents[1], subGroup1);
   });
 });
 
 test('check filterTitle on top group', async function(assert) {
   assert.expect(2);
-  let learnerGroup = this.subject();
   let store = this.store();
 
   run( async () => {
 
-    learnerGroup.set('title', 'top group');
 
+    let learnerGroup = store.createRecord('learner-group', {title: 'top group'});
     let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
     let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
-    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
-    let subGroup4 = store.createRecord('learner-group', {title: 'subGroup5'});
-    subGroup3.get('children').pushObject(subGroup4);
+    store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
 
     const groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 4);
+    assert.equal(groups.length, 3);
     const filterTitle = await learnerGroup.get('filterTitle');
-    assert.equal(filterTitle, 'subGroup1subGroup2subGroup3subGroup5top group');
+    assert.equal(filterTitle, 'subGroup1subGroup2subGroup3top group');
   });
 });
 
-test('check filterTitle on sub group', function(assert) {
+test('check filterTitle on sub group', async function(assert) {
   assert.expect(2);
-  let learnerGroup = this.subject();
   let store = this.store();
 
-  run(() => {
-    learnerGroup.set('title', 'top group');
-    return learnerGroup.get('allDescendants').then(groups => {
-      assert.equal(groups.length, 0);
+  run( async () => {
 
-      let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
-      let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
-      store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
 
-      return subGroup2.get('filterTitle').then(filterTitle => {
-        assert.equal(filterTitle, 'subGroup3subGroup1top groupsubGroup2');
-      });
-    });
+    let learnerGroup = store.createRecord('learner-group', {title: 'top group'});
+    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
+    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+
+    const groups = await learnerGroup.get('allDescendants');
+    assert.equal(groups.length, 3);
+    const filterTitle = await subGroup3.get('filterTitle');
+    assert.equal(filterTitle, 'subGroup2subGroup1top groupsubGroup3');
   });
-
 });
 
 test('check sortTitle on top group', function(assert) {

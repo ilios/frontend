@@ -269,7 +269,7 @@ export default DS.Model.extend({
     }
     const allParents = await parent.get('allParents');
 
-    return [parent].pushObjects(allParents);
+    return [parent].concat(allParents);
   }),
   topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
     return new Ember.RSVP.Promise(
