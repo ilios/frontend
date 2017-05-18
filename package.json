@@ -47,7 +47,7 @@
     "ember-cli-js-cookie": "0.0.1",
     "ember-cli-mirage": "0.1.14",
     "ember-cli-moment-shim": "3.1.0",
-    "ember-cli-neat": "0.0.5",
+    "ember-cli-neat": "0.0.6",
     "ember-cli-password-strength": "1.0.2",
     "ember-cli-qunit": "^4.0.0",
     "ember-cli-sass": "6.1.3",
