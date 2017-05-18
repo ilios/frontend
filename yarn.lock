@@ -3449,9 +3449,9 @@ ember-cryptojs-shim@^4.0.0:
     crypto-js "^3.1.8"
     ember-cli-babel "^6.0.0"
 
-ember-d3@0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/ember-d3/-/ember-d3-0.3.2.tgz#14988346cd94104d1d4560c21fc6ba1f56135c0c"
+ember-d3@0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/ember-d3/-/ember-d3-0.3.3.tgz#fb895f97917d8acf54aa0286ec92b50cb548474c"
   dependencies:
     broccoli-filter "^1.2.4"
     broccoli-funnel "^1.0.3"
