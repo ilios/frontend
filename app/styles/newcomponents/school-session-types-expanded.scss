@@ -5,6 +5,10 @@
     @include detail-container-title;
   }
 
+  .actions {
+    @include detail-container-actions;
+  }
+
   .school-session-types-expanded-content {
     @include detail-container-content;
   }
