@@ -1,0 +1,31 @@
+{{dashboard-view-picker
+  show=show
+  change=setShow
+}}
+{{#liquid-spacer}}
+  {{#if (eq show 'calendar')}}
+    {{dashboard-calendar
+      selectedDate=selectedDate
+      selectedView=selectedView
+      mySchedule=mySchedule
+      showFilters=showFilters
+      changeDate=(action 'changeDate')
+      changeView=(action (mut view))
+      selectEvent=(action 'selectEvent')
+      toggleMySchedule=(action 'toggleMySchedule')
+      toggleShowFilters=(action 'toggleShowFilters')
+      academicYearSelectedByUser=selectedAcademicYear
+      schoolPickedByUser=selectedSchool
+      changeAcademicYear=(action (mut academicYear))
+      changeSchool=(action (mut school))
+      courseFilters=courseFilters
+      toggleCourseFilters=(action (toggle 'courseFilters' this))
+    }}
+  {{else if (eq show 'materials')}}
+    {{dashboard-materials}}
+  {{else if (eq show 'agenda')}}
+    {{dashboard-agenda}}
+  {{else if (eq show 'week')}}
+    {{dashboard-week}}
+  {{/if}}
+{{/liquid-spacer}}
