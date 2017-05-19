@@ -6,6 +6,7 @@
   assessment=(readonly sessionType.assessment)
   assessmentOption=(readonly (await sessionType.assessmentOption))
   assessmentOptions=(await assessmentOptions)
+  aamcMethod=(readonly await sessionType.first(aamcMethod))
   canEditTitle=(eq sessionType.sessionCount 0)
   canEditCalendarColor=true
   canEditAssessment=(eq sessionType.sessionCount 0)

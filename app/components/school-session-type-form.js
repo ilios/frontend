@@ -3,7 +3,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
-const { Component, inject } = Ember;
+const { computed, Component, inject, isPresent, isEmpty } = Ember;
 const { service } = inject;
 
 const Validations = buildValidations({
@@ -28,6 +28,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   calendarColor: null,
   assessment: null,
   assessmentOptionId: null,
+	aamcMethods: computed(function(){
+		const store = this.get('store');
+    	return store.findAll('aamc-method')
+	}),
   assessmentOptions: null,
   canEditTitle: false,
   canEditCalendarColor: false,
@@ -40,19 +44,44 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return;
     }
 
+	
     const title = this.get('title');
     const calendarColor = this.get('calendarColor');
     const assessment = this.get('assessment');
     const assessmentOptionId = this.get('assessmentOptionId');
+	const aamcMethodId = this.get('aamcMethodId');
     const assessmentOptions = this.get('assessmentOptions');
+	const aamcMethods = yield this.get('aamcMethods')
     const save = this.get('save');
     let assessmentOption = null;
-
+	
+	const aamcMethod = aamcMethodId?aamcMethods.findBy('id', aamcMethodId):aamcMethods.sortBy('description').get('firstObject');
+	
     if (assessment) {
       assessmentOption = assessmentOptionId?assessmentOptions.findBy('id', assessmentOptionId):assessmentOptions.sortBy('name').get('firstObject');
     }
 
-    yield save(title, calendarColor, assessment, assessmentOption);
+    yield save(title, calendarColor, assessment, assessmentOption, aamcMethod);
     this.send('clearErrorDisplay');
+  }),
+  selectedAamcMethod: computed('aamcMethods.[]', 'selectedAamcMethodId', function(){
+    return new Promise(resolve => {
+      let selectedAamcMethod;
+      this.get('aamcMethods').then(aamcMethods => {
+        const selectedAamcMethodId = this.get('selectedAamcMethodId');
+        if(isPresent(selectedAamcMethodId)){
+          selectedAamcMethod = aamcMethods.find(aamcMethod => {
+            return aamcMethod.get('id') === selectedAamcMethodId;
+          });
+        }
+
+        if(isEmpty(selectedAamcMethod)){
+          selectedAamcMethod = aamcMethods.get('firstObject');
+        }
+
+        resolve(selectedAamcMethod);
+
+      });
+    });
   }),
 });
