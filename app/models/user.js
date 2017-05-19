@@ -3,7 +3,7 @@ import DS from 'ember-data';
 
 const { computed, PromiseProxyMixin, Object:EmberObject, RSVP } = Ember;
 const { attr, belongsTo, hasMany, PromiseArray, Model } = DS;
-const { all, defer, Promise } = RSVP;
+const { all, defer, map, Promise } = RSVP;
 
 const ProxyContent = EmberObject.extend(PromiseProxyMixin);
 
@@ -144,82 +144,46 @@ export default Model.extend({
     'instructorGroupCourses.[]',
     'learnerIlmSessions.[]',
     'instructorIlmSessions.[]',
-    function(){
-      let deferred = defer();
-      let promises = [];
-      let allCourses = [];
-      promises.pushObject(new Promise(resolve => {
-        this.get('directedCourses').then(courses => {
-          allCourses.pushObjects(courses.toArray());
-          resolve();
+    async function(){
+      const learnerGroups = await this.get('learnerGroups');
+      const instructorGroups = await this.get('instructorGroups');
+
+      let toMapByCourses = [].pushObjects(learnerGroups).pushObjects(instructorGroups);
+      let mappedByCourse = await map(toMapByCourses, async arr => {
+        const trees = await map(arr.toArray(), async obj => {
+          return await obj.get('courses');
         });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('learnerGroups').then(groups => {
-          all(groups.mapBy('courses')).then(courses => {
-            courses.forEach(arr => {
-              allCourses.pushObjects(arr);
-            });
-            resolve();
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('instructorGroups').then(groups => {
-          all(groups.mapBy('courses')).then(courses => {
-            courses.forEach(arr => {
-              allCourses.pushObjects(arr);
-            });
-            resolve();
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('instructedOfferings').then(offerings => {
-          all(offerings.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('offerings').then(offerings => {
-          all(offerings.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('learnerIlmSessions').then(ilmSessions => {
-          all(ilmSessions.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('instructorIlmSessions').then(ilmSessions => {
-          all(ilmSessions.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      all(promises).then(()=>{
-        deferred.resolve(allCourses.uniq());
+        return trees.reduce((array, set) => {
+          return array.pushObjects(set.toArray());
+        }, []);
       });
-      return PromiseArray.create({
-        promise: deferred.promise
+
+      const instructedOfferings = await this.get('instructedOfferings');
+      const offerings = await this.get('offerings');
+      const learnerIlmSessions = await this.get('learnerIlmSessions');
+      const instructorIlmSessions = await this.get('instructorIlmSessions');
+      let toMapBySessions = []
+        .pushObjects(instructedOfferings)
+        .pushObjects(offerings)
+        .pushObjects(learnerIlmSessions)
+        .pushObjects(instructorIlmSessions);
+      let mappedBySession = await map(toMapBySessions, async arr => {
+        const sessions = await map(arr.toArray(), async obj => {
+          return await obj.get('session');
+        });
+        return await map(sessions, async session => {
+          return await session.get('course');
+        });
       });
+
+      let courses =  [].concat(mappedByCourse.toArray()).concat(mappedBySession.toArray()).reduce((array, set) => {
+        return array.pushObjects(set.toArray());
+      }, []);
+      const directedCourses = await this.get('directedCourses');
+
+      courses = courses.concat(directedCourses.toArray());
+
+      return courses.uniq();
     }
   ),
   absoluteIcsUri: computed('icsFeedKey', function(){

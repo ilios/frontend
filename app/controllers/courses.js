@@ -72,12 +72,12 @@ export default Controller.extend({
   },
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', function(){
-    return new Promise(resolve => {
-      this.get('currentUser.model').then(user => {
-        resolve(user.get('allRelatedCourses'));
-      });
-    });
+  allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function(){
+    const currentUser = this.get('currentUser');
+    const user = await currentUser.get('model');
+    const allRelatedCourses = await user.get('allRelatedCourses');
+
+    return allRelatedCourses;
   }),
 
   filteredCourses: computed(
@@ -85,35 +85,28 @@ export default Controller.extend({
     'courses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
-    function(){
-      return new Promise(resolve => {
-        let title = this.get('debouncedFilter');
-        let filterMyCourses = this.get('userCoursesOnly');
-        let exp = new RegExp(title, 'gi');
-        this.get('courses').then(courses => {
-          let filteredCourses;
-          if (isEmpty(title)) {
-            filteredCourses = courses.sortBy('title');
-          } else {
-            filteredCourses = courses.filter(course => {
-              return (isPresent(course.get('title')) && course.get('title').match(exp)) ||
-                (isPresent(course.get('externalId')) && course.get('externalId').match(exp));
-            }).sortBy('title');
-          }
+    async function(){
+      let title = this.get('debouncedFilter');
+      let filterMyCourses = this.get('userCoursesOnly');
+      let exp = new RegExp(title, 'gi');
+      const courses = await this.get('courses');
+      let filteredCourses;
+      if (isEmpty(title)) {
+        filteredCourses = courses.sortBy('title');
+      } else {
+        filteredCourses = courses.filter(course => {
+          return (isPresent(course.get('title')) && course.get('title').match(exp)) ||
+            (isPresent(course.get('externalId')) && course.get('externalId').match(exp));
+        }).sortBy('title');
+      }
+      if (filterMyCourses) {
+        const allRelatedCourses = await this.get('allRelatedCourses');
+        let myFilteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
 
-          if (filterMyCourses) {
-            this.get('allRelatedCourses').then(allRelatedCourses => {
-              let myFilteredCourses = filteredCourses.filter(course => {
-                return allRelatedCourses.includes(course);
-              });
-
-              resolve(myFilteredCourses);
-            });
-          } else {
-            resolve(filteredCourses);
-          }
-        });
-      });
+        return myFilteredCourses;
+      } else {
+        return filteredCourses;
+      }
     }
   ),
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
