@@ -18,7 +18,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "elemental-calendar": "0.0.9",
     "ember-ajax": "^3.0.0",
-    "ember-cli": "2.13.0",
+    "ember-cli": "2.13.2",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-autoprefixer": "0.7.0",
     "ember-cli-babel": "^6.0.0",
