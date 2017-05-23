@@ -12,11 +12,8 @@ env:
   - secure: kLY+xxJKxi/srSsyjphkaF8y2dagUTBBzBWjkO+uEtR5K5OxURHCFmCL9cuM4VbSBkvRaoPuzxNeeRP4Np3x1/Xiv1so60ZBo+XPW02W84HZWpSc2QxwlSLaU6KD/K7K7HZ+dh3ky91nQFTqlGPJcoWHy+aCJkLDlgWLYZwxc0Q=
   - secure: ITd6yf8q7kimvTFERMEXkGIWjI8g/SWgt6kP7iiTB+7IqBKY0pG2IdU3I/I8HifTnophUsZJEYbZ6Dj+OnAgWjTo1HSYoltlwXlO0qigw0exI9G8lmpJ1Ww8lSuGhUAop3YpUwrIVmE0PRPaEduTRJTCzUt6yKq4FjGHC3SSHFU=
   matrix:
-    - PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
-    - PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - PARTITION=2 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - FILTER='!acceptance'
+    - FILTER='acceptance'
 
 cache:
   yarn: true
@@ -31,7 +28,7 @@ before_install:
   - npm install -g bower
 
 install:
-  - yarn install
+  - yarn install --frozen-lockfile
   - bower install
 
 before_script:
@@ -40,8 +37,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - yarn check
-  - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
+  - ember test --filter=$FILTER
 
 after_success:
   - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate

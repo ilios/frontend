@@ -1,5 +1,5 @@
 {{#if isManaging}}
-  <div class='title'></div>
+  <div class='title'>{{t 'general.competencies'}}</div>
 {{else}}
   <div class='title {{if showCollapsible "collapsible clickable"}}' {{action 'collapse'}}>
     {{t 'general.competencies'}} ({{allDomains.length}}/{{allCompetencies.length}})

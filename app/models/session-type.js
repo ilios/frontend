@@ -8,6 +8,7 @@ const { htmlSafe } = EmberString;
 export default Model.extend({
   title: attr('string'),
   calendarColor: attr('string'),
+  active: attr('boolean'),
   assessment: attr('boolean'),
   assessmentOption: belongsTo('assessment-option', {async: true}),
   school: belongsTo('school', {async: true}),
@@ -25,7 +26,7 @@ export default Model.extend({
   }),
   sessionCount: computed('sessions.[]', function(){
     const sessons = this.hasMany('sessions');
-    
+
     return sessons.ids().length;
   })
 });
