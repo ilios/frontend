@@ -7,6 +7,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('login', { path: 'login/:token'});
+  this.route('login-error');
 });
 
 export default Router;

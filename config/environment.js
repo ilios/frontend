@@ -6,6 +6,20 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+    'ember-simple-auth': {
+      authorizer: 'authorizer:token'
+    },
+    'ember-simple-auth-token': {
+      serverTokenEndpoint: '/auth/login',
+      serverTokenRefreshEndpoint: '/auth/token',
+      tokenPropertyName: 'jwt',
+      authorizationHeaderName: 'X-JWT-Authorization',
+      authorizationPrefix: 'Token ',
+      refreshLeeway: 300
+    },
+    i18n: {
+      defaultLocale: 'en'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
