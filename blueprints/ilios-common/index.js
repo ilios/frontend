@@ -8,6 +8,8 @@ module.exports = {
   },
   afterInstall: function(/* options */) {
     return this.addAddonsToProject({ packages: [
+      'ember-font-awesome',
+      'ember-moment',
       'ember-simple-auth',
     ]});
   }
