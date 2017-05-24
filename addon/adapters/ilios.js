@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { inject, computed } = Ember;
+const { inject, computed, String:EmberString } = Ember;
 const { service } = inject;
 const { reads } = computed;
 const { RESTAdapter } = DS;
+const { pluralize } = EmberString;
 
 export default RESTAdapter.extend({
   iliosConfig: service(),
@@ -26,7 +27,7 @@ export default RESTAdapter.extend({
   },
 
   pathForType(type) {
-    return Ember.String.pluralize(type.camelize().toLowerCase());
+    return pluralize(type.camelize().toLowerCase());
   },
 
   sortQueryParams: false,
