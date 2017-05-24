@@ -11,7 +11,7 @@ export default Mixin.create({
     const currentUser = this.get('currentUser');
     const user = await currentUser.get('model');
     const schools = await user.get('schools');
-    const academicYears = store.findAll('academic-year');
+    const academicYears = await store.findAll('academic-year');
 
     return { schools, academicYears };
   },
