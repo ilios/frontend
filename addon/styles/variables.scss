@@ -1,0 +1,84 @@
+//default properties
+$white: #fff;
+$black: #000;
+$grey: #eee;
+$maroon: #800;
+
+$default-background-color: $white;
+$default-text-color: $black;
+
+// Font Sizes
+$base-font-size: 1em;
+$base-spacing: 1.5em;
+$h1-font-size: $base-font-size * 2.25;
+$h2-font-size: $base-font-size * 2;
+$h3-font-size: $base-font-size * 1.75;
+$h4-font-size: $base-font-size * 1.5;
+$h5-font-size: $base-font-size * 1.25;
+$h6-font-size: $base-font-size;
+
+$base-line-height: 1.5;
+$base-border-radius: 3px;
+
+$ilios-orange: #c60;
+$ilios-yellow: #ffc339;
+
+$background-grey: #fbfbfb;
+$toggle-background-grey: #eceeef;
+$light-grey: #fefefe;
+$dark-grey: #aaa;
+$darker-grey: darken($dark-grey, 20);
+$header-grey: #edecec;
+$header-blue: #00617f;
+$text-grey: #333;
+$text-blue: #00617f;
+$medium-grey: #666;
+$input-box-grey: #cbcbcb;
+$switch-label-blue: #5accef;
+$switch-blue: #47a8d8;
+$switch-green: #4fb845;
+$wave-loader-yellow: $ilios-yellow;
+
+$ilios-red: #d9360b;
+$ilios-green: #84c444;
+$ilios-blue: #009ccc;
+$published-green: $ilios-green;
+$notpublished-amber: $ilios-yellow;
+$scheduled-brown: #8c4600;
+
+$ilios-accent-color: $ilios-blue;
+$ilios-add-color: $ilios-green;
+$ilios-publish-color: $ilios-green;
+$ilios-remove-color: #aa443e;
+$remove-background-color: #f1dedd;
+$active-background-color: #effbff;
+$hover-border: #bce3ef;
+
+$success-color: $ilios-green;
+$warning-color: $ilios-yellow;
+$info-color: $ilios-blue;
+$alert-color: $ilios-red;
+
+$visual-grid: false;
+$visual-grid-index: front;
+$visual-grid-color: #add8e6;
+
+$publish-button-color: $ilios-green;
+
+$base-accent-color: $ilios-accent-color;
+$base-font-color: $text-grey;
+$base-border-color: $background-grey;
+$base-background-color: $background-grey;
+
+// Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+
+// Neat Breakpoints
+$small-screen: 320px;
+$medium-screen: 640px;
+$large-screen: 860px;
+$giant-screen: 1480px;
+
+$medium-screen-up: new-breakpoint(min-width $medium-screen 4);
+$large-screen-up: new-breakpoint(min-width $large-screen 8);

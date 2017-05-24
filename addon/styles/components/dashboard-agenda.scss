@@ -1,0 +1,28 @@
+.dashboard-agenda {
+  border: 1px solid $ilios-blue;
+  max-height: 15em;
+  overflow-y: scroll;
+  padding: 0 1em 1em;
+
+  table {
+    margin: 0;
+    padding: 0;
+
+    td:last-child {
+      width: 30px;
+    }
+  }
+
+  .event-date i {
+    color: $ilios-orange;
+  }
+
+  .ilm-due {
+    color: $ilios-orange;
+    font-weight: bold;
+  }
+
+  h3 {
+    @include ilios-heading-h5;
+  }
+}

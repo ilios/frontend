@@ -1,0 +1,11 @@
+.dashboard-week {
+  border: 1px solid $ilios-blue;
+  max-height: 40em;
+  overflow-y: scroll;
+  padding: 0 1em 1em;
+
+  .weeklylink {
+    clear: both;
+    float: right;
+  }
+}

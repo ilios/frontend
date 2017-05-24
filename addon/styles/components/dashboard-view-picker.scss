@@ -1,0 +1,16 @@
+.dashboard-view-picker {
+  li {
+    display: inline;
+  }
+
+  button {
+    @include ilios-button;
+    &.active {
+      background-color: $ilios-green;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
+}

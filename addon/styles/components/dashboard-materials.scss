@@ -1,0 +1,10 @@
+.dashboard-materials {
+  border: 1px solid $ilios-blue;
+  max-height: 15em;
+  overflow-y: scroll;
+  padding: 0 1em 1em;
+
+  h3 {
+    @include ilios-heading-h5;
+  }
+}
