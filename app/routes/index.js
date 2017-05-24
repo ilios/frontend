@@ -4,4 +4,4 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 const { Route } = Ember;
 
-export default Route.extend(AuthenticatedRouteMixin, DashboardRoute);
+export default Route.extend(DashboardRoute, AuthenticatedRouteMixin);

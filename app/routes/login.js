@@ -32,7 +32,7 @@ export default Route.extend({
     const url = `${apiHost}/auth/token`;
     const response = await fetch(url, {
       headers: {
-        'X-JWT-Authorization': ltiToken
+        'X-JWT-Authorization': `Token ${ltiToken}`
       }
     });
     if (response.ok) {
