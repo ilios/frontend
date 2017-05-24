@@ -1,14 +1,14 @@
 {
-  "name": "ltiapp",
+  "name": "lti-app",
   "version": "0.0.0",
-  "description": "Small description for ltiapp goes here",
+  "description": "LTI App for ilios integration",
   "license": "MIT",
-  "author": "",
+  "author": "The Ilios team <info@iliosproject.org>",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/ilios/lti-app",
   "scripts": {
     "build": "ember build",
     "start": "ember server",

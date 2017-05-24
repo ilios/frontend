@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'ltiapp',
+    modulePrefix: 'lti-app',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
