@@ -5,6 +5,7 @@ export default {
     'attendanceIsRequired': 'Attendance is required',
     'calendar': 'Calendar',
     'instructors': 'Instructors',
+    'loadingEvents': 'Loading Events',
     'materials': 'Materials',
     'none': 'None',
     'specialEquipment': 'Special Equipment',
