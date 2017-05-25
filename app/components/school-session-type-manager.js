@@ -16,8 +16,8 @@ export default Component.extend({
   save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod) {
     const sessionType = this.get('sessionType');
     const closeComponent = this.get('close');
-	const aamcMethods = [];
-	aamcMethods.pushObject(aamcMethod);
+    const aamcMethods = [];
+    aamcMethods.pushObject(aamcMethod);
     sessionType.setProperties({
       title,
       calendarColor,

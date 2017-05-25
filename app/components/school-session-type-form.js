@@ -3,7 +3,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
-const { computed, Component, inject, isPresent, isEmpty } = Ember;
+const { computed, Component, inject, isPresent, isEmpty, Promise } = Ember;
 const { service } = inject;
 
 const Validations = buildValidations({
@@ -28,10 +28,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   calendarColor: null,
   assessment: null,
   assessmentOptionId: null,
-	aamcMethods: computed(function(){
-		const store = this.get('store');
-    	return store.findAll('aamc-method')
-	}),
+  aamcMethods: computed(function(){
+    const store = this.get('store');
+    return store.findAll('aamc-method');
+  }),
   assessmentOptions: null,
   canEditTitle: false,
   canEditCalendarColor: false,
@@ -49,7 +49,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const assessment = this.get('assessment');
     const assessmentOptionId = this.get('assessmentOptionId');
     const assessmentOptions = this.get('assessmentOptions');
-	const aamcMethod = yield this.get('selectedAamcMethod');
+    const aamcMethod = yield this.get('selectedAamcMethod');
     const save = this.get('save');
     let assessmentOption = null;
 		

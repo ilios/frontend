@@ -30,7 +30,7 @@ export default Model.extend({
     return sessons.ids().length;
   }),
   firstAamcMethod: computed('aamcMethods.[]', async function(){
-	  const aamcMethods = await this.get('aamcMethods');
-	  return aamcMethods.get('firstObject');
+    const aamcMethods = await this.get('aamcMethods');
+    return aamcMethods.get('firstObject');
   }),
 });
