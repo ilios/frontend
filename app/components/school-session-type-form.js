@@ -44,19 +44,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return;
     }
 
-	
     const title = this.get('title');
     const calendarColor = this.get('calendarColor');
     const assessment = this.get('assessment');
     const assessmentOptionId = this.get('assessmentOptionId');
-	const aamcMethodId = this.get('aamcMethodId');
     const assessmentOptions = this.get('assessmentOptions');
-	const aamcMethods = yield this.get('aamcMethods')
+	const aamcMethod = yield this.get('selectedAamcMethod');
     const save = this.get('save');
     let assessmentOption = null;
-	
-	const aamcMethod = aamcMethodId?aamcMethods.findBy('id', aamcMethodId):aamcMethods.sortBy('description').get('firstObject');
-	
+		
     if (assessment) {
       assessmentOption = assessmentOptionId?assessmentOptions.findBy('id', assessmentOptionId):assessmentOptions.sortBy('name').get('firstObject');
     }
