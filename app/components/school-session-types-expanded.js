@@ -39,13 +39,15 @@ export default Component.extend({
     const sessionType = store.createRecord('sessionType');
     const closeComponent = this.get('setSchoolNewSessionType');
     const school = this.get('school');
+	const aamcMethods = [];
+	aamcMethods.pushObject(aamcMethod);
     sessionType.setProperties({
       school,
       title,
       calendarColor,
       assessment,
       assessmentOption,
-	  aamcMethod,
+	  aamcMethods,
     });
 
     yield sessionType.save();
