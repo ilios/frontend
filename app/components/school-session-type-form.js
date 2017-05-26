@@ -3,7 +3,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
-const { computed, Component, inject, isPresent, isEmpty, Promise } = Ember;
+const { computed, Component, inject, isPresent, isEmpty } = Ember;
 const { service } = inject;
 
 const Validations = buildValidations({
