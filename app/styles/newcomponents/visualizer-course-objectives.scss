@@ -60,3 +60,32 @@
     }
   }
 }
+
+.course-overview-actions {
+  .visualizer-course-objectives {
+
+  @include media($giant-screen) {
+    span {
+      position: absolute;
+      top: 116px;
+      }
+    }
+  }  
+
+  @include media($large-screen) {
+    .visualizer-course-objectives {
+      span {
+        top: 189px;
+      }
+    }
+  }
+
+
+  @include media($small-screen) {
+    .visualizer-course-objectives {
+      span {
+        top: 225px;
+      }
+    }
+  }
+}
