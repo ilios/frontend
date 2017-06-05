@@ -3,5 +3,37 @@
     text {
       font-size: .8 * $base-font-size;
     }
+
+    .svg-content-responsive {
+      display: block;
+      left: 0;
+      position: absolute;
+      top: 10px;
+    }
+  }
+
+  .svg-container {
+    overflow: visible;
+    padding-bottom: 100%; // aspect ratio
+    vertical-align: top;
+  }
+
+  @include media($small-screen) {
+    .svg-container {
+      padding-bottom: 26%; // aspect ratio
+      width: 50%;
+    }
+  }
+
+  @include media($medium-screen) {
+    .svg-container {
+      padding-bottom: 6%; // aspect ratio
+    }
+  }
+
+  @include media($large-screen) {
+    .svg-container {
+      padding-bottom: 100%; // aspect ratio
+    }
   }
 }

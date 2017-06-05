@@ -43,6 +43,14 @@ export default Component.extend({
       return;
     }
 
+    if (!isIcon) {
+      svg.classed("svg-container", true)
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox","0 0 " + width + " " + height)
+      //class to make it responsive
+      .classed("svg-content-responsive", true);
+    }
+
     let chart = svg.append('g').attr('class', 'pie').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
     let path = chart.selectAll('path').data(createPie(dataOrArray)).enter()
       .append('g').attr('class', 'slice')
