@@ -16,23 +16,17 @@
     overflow: visible;
     padding-bottom: 100%; // aspect ratio
     vertical-align: top;
-  }
 
-  @include media($small-screen) {
-    .svg-container {
+    @include media($small-screen) {
       padding-bottom: 26%; // aspect ratio
       width: 50%;
     }
-  }
 
-  @include media($medium-screen) {
-    .svg-container {
+    @include media($medium-screen) {
       padding-bottom: 6%; // aspect ratio
     }
-  }
 
-  @include media($large-screen) {
-    .svg-container {
+    @include media($large-screen) {
       padding-bottom: 100%; // aspect ratio
     }
   }
