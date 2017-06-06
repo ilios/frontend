@@ -33,7 +33,7 @@
     "ember-cli-deploy-gzip": "1.0.0",
     "ember-cli-deploy-json-config": "1.0.0",
     "ember-cli-deploy-revision-data": "1.0.0",
-    "ember-cli-deploy-s3": "1.0.0",
+    "ember-cli-deploy-s3": "1.1.0",
     "ember-cli-deploy-s3-index": "1.0.0",
     "ember-cli-deprecation-workflow": "0.2.3",
     "ember-cli-document-title": "0.3.3",
