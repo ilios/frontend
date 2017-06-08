@@ -1,4 +1,6 @@
 .ilios-chart {
+  padding-bottom: 100%;
+
   svg {
     text {
       font-size: .8 * $base-font-size;
@@ -7,6 +9,7 @@
 
   .svg-container {
     overflow: visible;
+    width: 100%;
     padding-bottom: 100%; // aspect ratio
     vertical-align: top;
 
