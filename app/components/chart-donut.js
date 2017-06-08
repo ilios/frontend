@@ -44,11 +44,9 @@ export default Component.extend({
     }
 
     if (!isIcon) {
-      svg.classed("svg-container", true)
+      svg.classed("svg-container", true) // responsive svg container
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox","0 0 " + width + " " + height)
-      //class to make it responsive
-      .classed("svg-content-responsive", true);
+      .attr("viewBox","0 0 " + width + " " + height);
     }
 
     let chart = svg.append('g').attr('class', 'pie').attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
