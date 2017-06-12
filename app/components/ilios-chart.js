@@ -16,7 +16,7 @@ export default Component.extend({
     const name = this.get('name');
     return `chart-${name}`;
   }),
-  style: computed('width', 'heigth', 'tooltip', function(){
+  style: computed('width', 'height', 'tooltip', function(){
     const height = get(this, 'height');
     const width = get(this, 'width');
 

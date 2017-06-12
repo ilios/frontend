@@ -4,4 +4,24 @@
       font-size: .8 * $base-font-size;
     }
   }
+
+  .svg-container {
+    overflow: visible;
+    padding-bottom: 100%; // aspect ratio
+    vertical-align: top;
+    width: 100%;
+
+    @include media($small-screen) {
+      padding-bottom: 26%; // aspect ratio
+      width: 50%;
+    }
+
+    @include media($medium-screen) {
+      padding-bottom: 6%; // aspect ratio
+    }
+
+    @include media($large-screen) {
+      padding-bottom: 100%; // aspect ratio
+    }
+  }
 }
