@@ -9,6 +9,10 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'en'
     },
+    'ember-simple-auth-token': {
+      tokenPropertyName: 'jwt',
+    },
+    serverVariables: {},
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

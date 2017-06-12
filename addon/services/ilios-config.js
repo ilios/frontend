@@ -17,7 +17,7 @@ export default Ember.Service.extend({
   itemFromConfig(key){
     return this.get('config').then(config => {
       const obj = config.config;
-      
+
       return key in obj?obj[key]:null;
     });
   },
