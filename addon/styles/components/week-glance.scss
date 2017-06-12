@@ -1,0 +1,75 @@
+.week-glance {
+  a {
+    @include ilios-link;
+  }
+
+  h3 {
+    @include ilios-heading-h4;
+    margin-bottom: 1em;
+  }
+
+  .collapsible {
+    &.collapsed {
+      &::after {
+        content: '\25BA';
+      }
+    }
+
+    &.expanded {
+      &::after {
+        content: '\25BC';
+      }
+    }
+  }
+
+  .event {
+    line-height: 1.5;
+    margin-bottom: 1em;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    h4 {
+      @include ilios-heading-h5;
+      font-weight: bolder;
+      margin-bottom: 0;
+
+      .date {
+        font-weight: normal;
+      }
+    }
+
+    ul {
+      list-style-position: inside;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      ul {
+        margin-left: 1em;
+      }
+    }
+
+    .sessiontype,
+    .location {
+      font-style: italic;
+    }
+
+    .learning-materials {
+      margin-left: 2em;
+
+      i {
+        color: $ilios-orange;
+        font-size: .8 * $base-font-size;
+      }
+    }
+
+    .instructors {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+}
