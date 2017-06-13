@@ -7,17 +7,6 @@ $course: #ddd1e7;
 $updated-color: #945c58;
 
 .dashboard {
-  .calendar-profile {
-    background-color: $grey;
-    border: 1px solid $ilios-blue;
-    color: $ilios-orange;
-    font-weight: bold;
-    padding: .5em;
-
-    .switch {
-      float: right;
-    }
-  }
 
   .calendar-controls {
     color: $ilios-blue;
