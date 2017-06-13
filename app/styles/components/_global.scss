@@ -15,19 +15,6 @@ a,
 }
 
 button {
-  appearance: none;
-  background-color: $base-link-color;
-  border: 0;
-  border-radius: $base-border-radius;
-  box-sizing: border-box;
-  color: $white;
-  cursor: pointer;
-  display: inline-block;
-  font-size: $base-font-size * .85;
-  padding: .3em 1em;
-  vertical-align: middle;
-  white-space: nowrap;
-
   &.bigadd {
     background-color: $ilios-green;
   }
