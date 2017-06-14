@@ -1,0 +1,30 @@
+@mixin ilios-list-reset() {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  ul,
+  ol {
+    margin-left: 1em;
+  }
+}
+@mixin ilios-static-list() {
+  @include ilios-list-reset;
+  background-color: $white;
+  border: 1px solid $input-box-grey;
+  border-radius: $base-border-radius;
+  padding: 1em 2em;
+  width: 80%;
+
+  li {
+    font-weight: bold;
+  }
+
+  ul {
+    margin-left: 1em;
+
+    li {
+      font-weight: normal;
+    }
+  }
+}

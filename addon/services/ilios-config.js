@@ -4,14 +4,14 @@ const { inject, computed, isPresent } = Ember;
 const { service } = inject;
 
 export default Ember.Service.extend({
-  ajax: service(),
+  commonAjax: service(),
   serverVariables: service(),
 
   config: computed('apiHost', function(){
     const apiHost = this.get('apiHost');
     const url = apiHost + '/application/config';
-    const ajax = this.get('ajax');
-    return ajax.request(url);
+    const commonAjax = this.get('commonAjax');
+    return commonAjax.request(url);
   }),
 
   itemFromConfig(key){

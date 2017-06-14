@@ -1,0 +1,43 @@
+{{#if proxiedLearningMaterials.length}}
+  <ul class='static-list fa-ul'>
+    {{#each proxiedLearningMaterials as |lm|}}
+      <li class='single-event-learningmaterial-item'>
+        {{fa-icon lm.icon listItem=true}}
+
+        <div class='single-event-learningmaterial-item-title'>
+          {{#if lm.required}}
+            {{fa-icon 'star' title=requiredPhrase}}
+          {{/if}}
+          {{#if lm.url}}
+            <a target='_blank' href='{{lm.url}}' rel='noopener'>{{lm.title}}</a>
+          {{else}}
+            {{lm.title}}
+          {{/if}}
+          <span class='single-event-learningmaterial-filesize'>
+            {{#if lm.filesize}} ({{filesize lm.filesize}}){{/if}}
+          </span>
+        </div>
+
+        {{#if lm.citation}}
+          <div class='single-event-learningmaterial-item-citation'>
+            {{lm.citation}}
+          </div>
+        {{/if}}
+
+        {{#if lm.description}}
+          <div class='single-event-learningmaterial-item-description'>
+            {{{lm.description}}}
+          </div>
+        {{/if}}
+
+        {{#if lm.notes}}
+          <div class='single-event-learningmaterial-item-notes'>
+            {{fa-icon 'pencil-square-o'}}<p>{{{lm.notes}}}</p>
+          </div>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p class="no-content">{{noContentPhrase}}</p>
+{{/if}}

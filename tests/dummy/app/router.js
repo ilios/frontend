@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('weeklyevents');
   this.route('login');
   this.route('events', {path: 'events/:slug'});
+  this.route('logout');
 });
 
 export default Router;

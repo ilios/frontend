@@ -10,9 +10,21 @@ module.exports = function(environment) {
       defaultLocale: 'en'
     },
     'ember-simple-auth-token': {
+      serverTokenEndpoint: '/auth/login',
+      serverTokenRefreshEndpoint: '/auth/token',
       tokenPropertyName: 'jwt',
+      authorizationHeaderName: 'X-JWT-Authorization',
+      authorizationPrefix: 'Token ',
+      refreshLeeway: 300
     },
-    serverVariables: {},
+    serverVariables: {
+      tagPrefix: 'iliosconfig',
+      vars: ['api-host', 'api-name-space'],
+      defaults: {
+        'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v1',
+        'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

@@ -1,0 +1,23 @@
+.single-event-learningmaterial-list {
+  a {
+    @include ilios-link;
+  }
+
+  .static-list {
+    @include ilios-static-list;
+  }
+
+  .single-event-learningmaterial-item-notes {
+    i {
+      display: inline;
+      font-size: .85em;
+      margin-right: 5px;
+    }
+
+    p {
+      display: inline;
+      font-size: .85em;
+      font-style: italic;
+    }
+  }
+}

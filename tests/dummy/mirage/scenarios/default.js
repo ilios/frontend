@@ -1,9 +1,13 @@
+/* eslint no-shadow: "off" */
 import moment from 'moment';
 
 export default function(server) {
   const user = server.create('user');
-  const offerings = server.createList('offering', 2);
-  const now = moment();
+  const session = server.create('session');
+  const offerings = server.createList('offering', 2, {
+    session
+  });
+  const now = moment().hour(8).minute(0).second(0);
   server.create('userEvent', {
     user,
     startDate: now.format(),

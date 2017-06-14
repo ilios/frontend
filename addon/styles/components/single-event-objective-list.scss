@@ -1,0 +1,47 @@
+.single-event-objective-list {
+
+  button {
+    &.active {
+      background-color: $ilios-green;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .tree {
+    @include ilios-list-reset;
+
+    li {
+      font-weight: bold;
+    }
+
+    ul {
+      margin-bottom: 1em;
+      margin-left: 1em;
+
+      li {
+        font-weight: normal;
+        list-style-type: disc;
+      }
+    }
+  }
+
+  .list-in-order {
+    @include ilios-list-reset;
+
+    list-style-type: disc;
+
+    li {
+      margin-left: 1em;
+      padding-bottom: .5em;
+    }
+
+    .details {
+      font-size: smaller;
+      font-weight: bold;
+    }
+  }
+
+}

@@ -8,8 +8,11 @@ moduleForComponent('common-dashboard', 'Integration | Component | common dashboa
 test('it renders', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{common-dashboard
+    show='week'
     setShow=(action nothing)
   }}`);
-
-  assert.equal(this.$().text().trim(), '');
+  assert.ok(this.$().text().includes('Week at a Glance'));
+  assert.ok(this.$().text().includes('Activities'));
+  assert.ok(this.$().text().includes('Materials'));
+  assert.ok(this.$().text().includes('Calendar'));
 });

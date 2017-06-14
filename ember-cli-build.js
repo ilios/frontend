@@ -7,6 +7,9 @@ module.exports = function(defaults) {
     'ember-cli-babel': {
       includePolyfill: true
     },
+    dotEnv: {
+      clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST']
+    }
   });
 
   /*

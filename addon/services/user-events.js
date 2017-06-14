@@ -10,7 +10,7 @@ export default Ember.Service.extend(EventMixin, {
   store: service(),
   currentUser: service(),
   session: service(),
-  ajax: service(),
+  commonAjax: service(),
   iliosConfig: service(),
 
   namespace: reads('iliosConfig.apiNameSpace'),
@@ -25,8 +25,8 @@ export default Ember.Service.extend(EventMixin, {
           url += '/' + namespace;
         }
         url += '/userevents/' + user.get('id') + '?from=' + from + '&to=' + to;
-        const ajax = this.get('ajax');
-        ajax.request(url).then(data => {
+        const commonAjax = this.get('commonAjax');
+        commonAjax.request(url).then(data => {
           let events = data.userEvents.map(event => {
             event.isBlanked = !event.offering && !event.ilmSession;
             event.slug = this.getSlugForEvent(event);
@@ -53,10 +53,10 @@ export default Ember.Service.extend(EventMixin, {
       this.getEvents(from.unix(), to.unix()).then(events => {
         let event = events.find( event => {
           if(type === 'O'){
-            return event.offering === id;
+            return parseInt(event.offering) === id;
           }
           if(type === 'I'){
-            return event.ilmSession === id;
+            return parseInt(event.ilmSession) === id;
           }
         });
 

@@ -6,6 +6,9 @@ const { empty, not } = computed;
 const { Promise, all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
 
+const inflector = Ember.Inflector.inflector;
+inflector.uncountable('aamc-pcrs');
+
 export default Model.extend({
   title: attr('string'),
   school: belongsTo('school', {async: true}),

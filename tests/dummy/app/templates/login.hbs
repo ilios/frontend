@@ -1,0 +1,8 @@
+<label>Token: </label>
+{{one-way-input
+  value=jwt
+  update=(action (mut jwt))
+}}
+<button {{action 'login'}}>Login</button>
+
+<p>{{error}}</p>

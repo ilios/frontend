@@ -1,0 +1,74 @@
+{{#if (and event (is-fulfilled courseObjectives) (is-fulfilled courseLearningMaterials) (is-fulfilled sessionObjectives) (is-fulfilled sessionLearningMaterials))}}
+  <div class='single-event-summary'>
+    <h1>
+      {{#if recentlyUpdated}}
+        {{fa-icon 'exclamation-circle' class="recently-updated-icon-event"}}
+      {{/if}}
+      {{get (await course) 'title'}} - <em>{{get (await session) 'title'}}</em>
+    </h1>
+    <div class='single-event-offered-at'>{{t 'general.offeredAt' date=(moment-format event.startDate 'dddd, MMMM Do YYYY, h:mm a')}}</div>
+    <div class='single-event-location'>{{event.location}}</div>
+    {{#if taughtBy}}
+      <div class='single-event-instructors'>{{taughtBy}}</div>
+    {{/if}}
+    <div class='single-event-session-is'>{{await sessionIs}}</div>
+    {{#if (get (await session) 'equipmentRequired')}}
+      <div class='single-event-equipment-required'>
+        {{{t 'general.specialEquipmentIs_Required_'}}} {{fa-icon 'flask'}}
+      </div>
+    {{/if}}
+    {{#if (get (await session) 'attireRequired')}}
+      <div class='single-event-attire-required'>
+        {{{t 'general.specialAttireIs_Required_'}}} {{fa-icon 'black-tie'}}
+      </div>
+    {{/if}}
+    {{#if (get (await session) 'attendanceRequired')}}
+      <div class='single-event-attendance-required'>
+        {{{t 'general.attendanceIs_Required_'}}} {{fa-icon 'calendar-check-o'}}
+      </div>
+    {{/if}}
+    {{#if (await description)}}{{await description}}<br>{{/if}}
+  </div>
+
+  <fieldset>
+    <div class='single-event-learningmaterial-list'>
+      <h2>{{t 'general.sessionLearningMaterials'}}</h2>
+      {{single-event-learningmaterial-list
+        learningMaterials=(await sessionLearningMaterials)
+        requiredPhrase=(t 'general.required')
+        noContentPhrase=(t 'general.none')
+      }}
+    </div>
+    <div class='single-event-objective-list'>
+      {{single-event-objective-list
+        objectives=(await sessionObjectives)
+        noContentPhrase=(t 'general.none')
+        groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
+        listByPriorityPhrase=(t 'general.listByPriority')
+        title=(t 'general.sessionObjectives')
+      }}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <div class='single-event-learningmaterial-list'>
+      <h2>{{t 'general.courseLearningMaterials'}}</h2>
+      {{single-event-learningmaterial-list
+        learningMaterials=(await courseLearningMaterials)
+        requiredPhrase=(t 'general.required')
+        noContentPhrase=(t 'general.none')
+      }}
+    </div>
+    <div class='single-event-objective-list'>
+      {{single-event-objective-list
+        objectives=(await courseObjectives)
+        groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
+        listByPriorityPhrase=(t 'general.listByPriority')
+        noContentPhrase=(t 'general.none')
+        title=(t 'general.courseObjectives')
+      }}
+    </div>
+  </fieldset>
+{{else}}
+  {{pulse-loader}}
+{{/if}}

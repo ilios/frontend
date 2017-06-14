@@ -1,0 +1,42 @@
+<h2>
+  {{title}}
+  {{#if showDisplayModeToggle}}
+    <button class={{if groupByCompetencies "active"}} {{action (toggle 'groupByCompetencies' this)}}>
+      {{#if groupByCompetencies}}
+        {{fa-icon 'indent' title=listByPriorityPhrase}}
+      {{else}}
+        {{fa-icon 'list' title=groupByCompetenciesPhrase}}
+      {{/if}}
+    </button>
+  {{/if}}
+</h2>
+
+{{#if groupByCompetencies}}
+  {{#if domains.length}}
+    <ul class='tree'>
+      {{#each domains as |domain|}}
+        <li>
+          {{domain.title}}
+          <ul>
+            {{#each domain.objectives as |title|}}
+              <li>{{{title}}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <li class="no-content">{{noContentPhrase}}</li>
+  {{/if}}
+{{else}}
+  <ul class='list-in-order'>
+    {{#each objectives as |objective|}}
+      <li>
+        {{objective.title}}
+        <span class="details">{{objective.domain}}</span>
+      </li>
+    {{else}}
+      <li class="no-content">{{noContentPhrase}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
