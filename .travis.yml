@@ -37,11 +37,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-<<<<<<< HEAD
-  - ember test --filter=$FILTER
-=======
   - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
->>>>>>> master
 
 after_success:
   - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
