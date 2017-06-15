@@ -1026,14 +1026,13 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bourbon-neat@~1.7.2:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/bourbon-neat/-/bourbon-neat-1.7.4.tgz#1a7accdfa87b6642024124ceab16b1a3d1f60ec1"
+bourbon-neat@^1.7.2:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/bourbon-neat/-/bourbon-neat-1.8.0.tgz#2ffd6dbfee45db5140f2fff280163302c73e7335"
   dependencies:
-    bourbon "^4.2"
     node-sass "^3.4"
 
-bourbon@^4.2, bourbon@^4.3.3:
+bourbon@^4.3.4:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/bourbon/-/bourbon-4.3.4.tgz#4da380029e92c0c8f9764c779451a134b11e7cc3"
 
@@ -1318,7 +1317,7 @@ broccoli-lint-eslint@^3.3.0:
     lodash.defaultsdeep "^4.6.0"
     md5-hex "^2.0.0"
 
-broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.4, broccoli-merge-trees@^1.2.1, broccoli-merge-trees@^1.2.4:
+broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.4, broccoli-merge-trees@^1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-1.2.4.tgz#a001519bb5067f06589d91afa2942445a2d0fdb5"
   dependencies:
@@ -2205,16 +2204,6 @@ ember-cli-moment-shim@^3.1.0:
     lodash.defaults "^4.2.0"
     moment "^2.18.1"
     moment-timezone "~0.5.11"
-
-ember-cli-neat@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/ember-cli-neat/-/ember-cli-neat-0.0.6.tgz#804346522f4f51a1b84148c37bd673aca75a5cb7"
-  dependencies:
-    bourbon "^4.3.3"
-    bourbon-neat "~1.7.2"
-    broccoli-funnel "^1.1.0"
-    broccoli-merge-trees "^1.2.4"
-    ember-cli-babel "^5.1.7"
 
 ember-cli-normalize-entity-name@^1.0.0:
   version "1.0.0"

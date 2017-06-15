@@ -1,0 +1,46 @@
+<h3>{{t 'general.upcomingMaterials' days=daysInAdvance}}</h3>
+{{#if (is-fulfilled materials)}}
+  {{#if (gt (get (await materials) 'length') 0)}}
+    <table>
+      <thead>
+        <tr>
+          <th colspan="3">{{t 'general.title'}}</th>
+          <th colspan="3">{{t 'general.course'}}</th>
+          <th colspan="3">{{t 'general.session'}}</th>
+          <th class='hide-from-small-screen'>{{t 'general.instructors'}}</th>
+          <th>{{t 'general.date'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sort-by 'firstOfferingDate' (await materials)) as |lmObject|}}
+          <tr>
+            <td colspan="3">
+              {{#if lmObject.absoluteFileUri}}
+                <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+              {{else if lmObject.link}}
+                <a href={{lmObject.link}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+              {{else}}
+                {{lmObject.title}}<br>
+                <small>{{lmObject.citation}}</small>
+              {{/if}}
+            </td>
+            <td colspan="3">{{lmObject.courseTitle}}</td>
+            <td colspan="3">{{lmObject.sessionTitle}}</td>
+            <td colspan="1" class='hide-from-small-screen'>{{big-text length=25 text=(join ', ' (sort-by (action 'sortString') lmObject.instructors))}}</td>
+            <td>
+              {{#if lmObject.firstOfferingDate}}
+                {{moment-format lmObject.firstOfferingDate 'L'}}
+              {{else}}
+                {{t 'general.none'}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>{{t 'general.none'}}</p>
+  {{/if}}
+{{else}}
+  <p>{{fa-icon 'spinner' spin=true}} {{t 'general.loadingMaterials'}}</p>
+{{/if}}

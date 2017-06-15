@@ -7,4 +7,12 @@
   h3 {
     @include ilios-heading-h5;
   }
+
+  a {
+    @include ilios-link;
+  }
+
+  table {
+    @include ilios-table;
+  }
 }

@@ -1,0 +1,6 @@
+<span class="clickable {{if renderHtml 'list-reset'}}" {{action 'click'}}>{{displayText}}</span>
+{{#if showIcons}}
+  <span class='clickable' {{action 'expand'}}>
+    {{fa-icon ellipsis classNames='text-bottom'}} {{fa-icon expandIcon}}
+  </span>
+{{/if}}
