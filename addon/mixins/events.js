@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
+const { Mixin } = Ember;
+
+export default Mixin.create({
   getSessionForEvent(event){
     let promise;
     if(event.offering){
@@ -13,7 +15,7 @@ export default Ember.Mixin.create({
         return ilmSession.get('session');
       });
     }
-    
+
     return promise;
   },
   getTermIdsForEvent(event){
@@ -79,5 +81,5 @@ export default Ember.Mixin.create({
     });
 
     return defer.promise;
-  }
+  },
 });

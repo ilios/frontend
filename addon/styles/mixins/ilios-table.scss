@@ -1,0 +1,42 @@
+@mixin ilios-table () {
+  border-collapse: collapse;
+  font-size: $base-font-size * .9;
+  margin: ($base-line-height * .5em) 0;
+  table-layout: fixed;
+  width: 100%;
+
+  thead {
+    background-color: $background-grey;
+  }
+
+
+  th {
+    border-bottom: 1px solid darken($base-border-color, 15);
+    font-weight: bold;
+    padding: ($base-line-height * .5em / 2) 0;
+    text-align: left;
+  }
+
+  td {
+    border: 0;
+    padding: ($base-line-height * .5em / 2) 0;
+  }
+
+  tr,
+  td,
+  th {
+    padding: 1em .5em .5em;
+    vertical-align: middle;
+  }
+
+  &.condensed {
+    font-size: .8em;
+
+    tr,
+    td,
+    th {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

@@ -4,12 +4,17 @@
   overflow-y: scroll;
   padding: 0 1em 1em;
 
+  a {
+    @include ilios-link;
+  }
+
   table {
+    @include ilios-table;
     margin: 0;
     padding: 0;
 
-    td:last-child {
-      width: 30px;
+    .fa-exclamation-circle {
+      color: $updated-color;
     }
   }
 

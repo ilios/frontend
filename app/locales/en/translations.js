@@ -19,6 +19,8 @@ export default {
     'specialEquipment': 'Special Equipment',
     'specialEquipmentIs_Required_': 'Special Equipment is <strong><em>required</em></strong>',
     'taughtBy': 'Taught By {{instructors}}',
+    'upcomingActivities': 'My Activities for the next {{days}} days',
+    'upcomingMaterials': 'My Learning Materials for the next {{days}} days',
     'weekAtAGlance': 'Week at a Glance',
     'whitecoatsSlashSpecialAttire': 'Whitecoats / special attire',
   }
