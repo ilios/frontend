@@ -25,17 +25,17 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
 	
 
-    didReceiveAttrs(){
-      this._super(...arguments);
-      const aamcMethod = this.get('aamcMethod');
-      if (isPresent(aamcMethod)) {
-        this.set('selectedAamcMethodId', this.get('aamcMethod').get('id'));
-      }
-    },
+  didReceiveAttrs(){
+    this._super(...arguments);
+    const aamcMethod = this.get('aamcMethod');
+    if (isPresent(aamcMethod)) {
+      this.set('selectedAamcMethodId', this.get('aamcMethod').get('id'));
+    }
+  },
 
   classNames: ['school-session-type-form'],
   title: null,
-	selectedAamcMethodId: null,
+  selectedAamcMethodId: null,
   calendarColor: null,
   assessment: null,
   assessmentOptionId: null,
