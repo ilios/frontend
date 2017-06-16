@@ -58,7 +58,7 @@
     "ember-cli-string-helpers": "1.3.0",
     "ember-cli-template-lint": "0.5.2",
     "ember-cli-uglify": "^1.2.0",
-    "ember-composable-helpers": "2.0.1",
+    "ember-composable-helpers": "^2.0.2",
     "ember-concurrency": "0.7.19",
     "ember-cp-validations": "^3.3.1",
     "ember-cryptojs-shim": "^4.0.0",
