@@ -17,6 +17,21 @@
     {{/if}}
   </div>
 
+  <div class='item'>
+    <label>{{t 'general.aamcMethod'}}</label>
+    {{#if (is-fulfilled aamcMethods)}}
+      <select onchange={{action (mut selectedAamcMethodId) value="target.value"}}>
+        {{#each (sort-by 'description' (await aamcMethods)) as |aamcMethod|}}
+          <option value="{{aamcMethod.id}}" selected={{eq aamcMethod.id (get (await selectedAamcMethod) 'id')}}>
+            {{aamcMethod.description}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+  </div>
+  
   <div class='item calendar-color'>
     <label>{{t 'general.color'}}:</label>
     {{#if canEditCalendarColor}}
