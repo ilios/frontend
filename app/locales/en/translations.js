@@ -1,5 +1,6 @@
 export default {
   'general': {
+    'aamcMethod': 'AAMC Method',
     'academicLevel': 'Academic Level',
     'academicLevels': 'Academic Levels',
     'academicYear': 'Academic Year',

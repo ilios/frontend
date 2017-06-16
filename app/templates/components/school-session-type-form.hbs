@@ -17,6 +17,29 @@
     {{/if}}
   </div>
 
+  <div class='item'>
+    <label>{{t 'general.aamcMethod'}}</label>
+    {{#if (is-fulfilled filteredAamcMethods)}}
+      {{#if canEditAamcMethod}}
+        <select onchange={{action (mut selectedAamcMethodId) value="target.value"}}>
+          <option selected={{not selectedAamcMethodId}}></option>
+          {{#each (sort-by 'description' (await filteredAamcMethods)) as |aamcMethod|}}
+            <option value="{{aamcMethod.id}}" selected={{eq aamcMethod.id selectedAamcMethodId}}>
+              {{aamcMethod.description}}
+            </option>
+          {{/each}}
+        </select>
+        {{#if (and (v-get this 'selectedAamcMethodId' 'isInvalid') (is-in showErrorsFor 'selectedAamcMethodId'))}}
+          <span class="message error">{{v-get this 'selectedAamcMethodId' 'message'}}</span>
+        {{/if}}
+      {{else}}
+        <span class='value'>{{get (await selectedAamcMethod) 'description'}}</span>
+      {{/if}}
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+  </div>
+
   <div class='item calendar-color'>
     <label>{{t 'general.color'}}:</label>
     {{#if canEditCalendarColor}}
@@ -40,7 +63,7 @@
   <div class='item'>
     <label>{{t 'general.assessment'}}:</label>
     {{#if canEditAssessment}}
-      {{toggle-yesno yes=assessment toggle=(action (mut assessment))}}
+      {{toggle-yesno yes=assessment toggle=(action 'updateAssessment')}}
     {{else}}
       <span class='value {{if assessment "yes" "no"}}'>
         {{#if assessment}}
@@ -52,19 +75,19 @@
     {{/if}}
   </div>
 
-  {{#if assessment}}
+  {{#if (and assessment (is-fulfilled assessmentOptions))}}
     <div class='item'>
       <label>{{t 'general.assessmentOption'}}:</label>
       {{#if canEditAssessmentOption}}
-        <select onchange={{action (mut assessmentOptionId) value="target.value"}}>
-          {{#each (sort-by 'name' assessmentOptions) as |option|}}
-            <option value={{option.id}} selected={{eq option.id assessmentOption.id}}>
+        <select onchange={{action (mut selectedAssessmentOptionId) value="target.value"}}>
+          {{#each (sort-by 'name' (await assessmentOptions)) as |option|}}
+            <option value={{option.id}} selected={{eq option.id selectedAssessmentOptionId}}>
               {{option.name}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        <span class='value'>{{assessmentOption.name}}</span>
+        <span class='value'>{{get (await selectedAssessmentOption) 'name'}}</span>
       {{/if}}
     </div>
   {{/if}}

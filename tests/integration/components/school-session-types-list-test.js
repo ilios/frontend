@@ -53,13 +53,13 @@ test('it renders', async function(assert) {
   const firstSessionCount = `${firstSessionType} td:eq(1)`;
   const firstAssessment = `${firstSessionType} td:eq(2) i`;
   const firstAssessmentOption = `${firstSessionType} td:eq(3)`;
-  const firstColorBox = `${firstSessionType} td:eq(4) .box`;
+  const firstColorBox = `${firstSessionType} td:eq(5) .box`;
   const secondSessionType = `${rows}:eq(1)`;
   const secondTitle = `${secondSessionType} td:eq(0)`;
   const secondSessionCount = `${secondSessionType} td:eq(1)`;
   const secondAssessment = `${secondSessionType} td:eq(2) i`;
   const secondAssessmentOption = `${secondSessionType} td:eq(3)`;
-  const secondColorBox = `${secondSessionType} td:eq(4) .box`;
+  const secondColorBox = `${secondSessionType} td:eq(5) .box`;
 
   assert.equal(this.$(firstTitle).text().trim(), 'first');
   assert.equal(this.$(firstSessionCount).text().trim(), '2');
@@ -98,7 +98,7 @@ test('clicking edit fires action', async function(assert) {
 
   await wait();
   const rows = 'table tbody tr';
-  const edit = `${rows}:eq(0) td:eq(5) .clickable`;
+  const edit = `${rows}:eq(0) td:eq(6) .clickable`;
 
   this.$(edit).click();
 });
