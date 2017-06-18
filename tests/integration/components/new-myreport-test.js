@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { moduleForComponent, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 const { RSVP, Service, Object:EmberObject } = Ember;
@@ -15,7 +15,7 @@ moduleForComponent('new-myreport', 'Integration | Component | new myreport', {
   }
 });
 
-skip('it renders', async function(assert) {
+test('it renders', async function(assert) {
   assert.expect(35);
 
   const mockSchools = [
@@ -131,7 +131,7 @@ let checkObjects = async function(context, assert, subjectNum, subjectVal, expec
   });
 };
 
-skip('choosing course selects correct objects', function(assert) {
+test('choosing course selects correct objects', function(assert) {
   return checkObjects(this, assert, 0, 'course', [
     'session',
     'program',
@@ -143,7 +143,7 @@ skip('choosing course selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing session selects correct objects', function(assert) {
+test('choosing session selects correct objects', function(assert) {
   return checkObjects(this, assert, 1, 'session', [
     'course',
     'program',
@@ -156,15 +156,15 @@ skip('choosing session selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing programs selects correct objects', function(assert) {
+test('choosing programs selects correct objects', function(assert) {
   return checkObjects(this, assert, 2, 'program', ['course', 'session']);
 });
 
-skip('choosing program years selects correct objects', function(assert) {
+test('choosing program years selects correct objects', function(assert) {
   return checkObjects(this, assert, 3, 'program year', ['course', 'session']);
 });
 
-skip('choosing instructor selects correct objects', function(assert) {
+test('choosing instructor selects correct objects', function(assert) {
   return checkObjects(this, assert, 4, 'instructor', [
     'course',
     'session',
@@ -174,7 +174,7 @@ skip('choosing instructor selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing instructor group selects correct objects', function(assert) {
+test('choosing instructor group selects correct objects', function(assert) {
   return checkObjects(this, assert, 5, 'instructor group', [
     'course',
     'session',
@@ -184,7 +184,7 @@ skip('choosing instructor group selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing learning material selects correct objects', function(assert) {
+test('choosing learning material selects correct objects', function(assert) {
   return checkObjects(this, assert, 6, 'learning material', [
     'course',
     'session',
@@ -195,7 +195,7 @@ skip('choosing learning material selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing competency selects correct objects', function(assert) {
+test('choosing competency selects correct objects', function(assert) {
   return checkObjects(this, assert, 7, 'competency', [
     'course',
     'session',
@@ -203,7 +203,7 @@ skip('choosing competency selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing mesh term selects correct objects', function(assert) {
+test('choosing mesh term selects correct objects', function(assert) {
   return checkObjects(this, assert, 8, 'mesh term', [
     'course',
     'session',
@@ -212,7 +212,7 @@ skip('choosing mesh term selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing term selects correct objects', function(assert) {
+test('choosing term selects correct objects', function(assert) {
   return checkObjects(this, assert, 9, 'term', [
     'course',
     'session',
@@ -225,7 +225,7 @@ skip('choosing term selects correct objects', function(assert) {
   ]);
 });
 
-skip('choosing session type selects correct objects', function(assert) {
+test('choosing session type selects correct objects', function(assert) {
   return checkObjects(this, assert, 10, 'session type', [
     'course',
     'program',
@@ -239,7 +239,7 @@ skip('choosing session type selects correct objects', function(assert) {
 });
 
 
-skip('can search for user #2506', async function(assert) {
+test('can search for user #2506', async function(assert) {
   assert.expect(8);
 
   const mockSchools = [
