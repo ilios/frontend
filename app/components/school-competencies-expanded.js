@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 const { Component, computed, inject, RSVP, isPresent, isEmpty } = Ember;
-const { filterBy } = computed;
 const { service } = inject;
 
 export default Component.extend({
@@ -11,17 +10,35 @@ export default Component.extend({
   school: null,
   isManaging: false,
   bufferedCompetencies: null,
-  allDomains: filterBy('school.competencies', 'isDomain'),
-  allCompetencies: filterBy('school.competencies', 'isNotDomain'),
+  competencies: computed('school.competencies.[]', async function(){
+    const school = this.get('school');
+    const competencies = await school.get('competencies');
+
+    return competencies;
+  }),
+  domains: computed('school.competencies.[]', async function(){
+    const competencies = await this.get('competencies');
+    const domains = competencies.filterBy('isDomain');
+
+    return domains;
+  }),
+  childCompetencies: computed('school.competencies.[]', async function(){
+    const competencies = await this.get('competencies');
+    const childCompetencies = competencies.filterBy('isNotDomain');
+
+    return childCompetencies;
+  }),
   showCollapsible: computed('isManaging', 'school.competencies.length', function(){
     const isManaging = this.get('isManaging');
-    const competencies = this.get('school.competencies');
-    return competencies.get('length') && ! isManaging;
+    const school = this.get('school');
+    const competencyIds = school.hasMany('competencies').ids();
+    return competencyIds.length && ! isManaging;
   }),
   didReceiveAttrs(){
     this._super(...arguments);
     if (this.get('isManaging') && isEmpty(this.get('bufferedCompetencies'))) {
-      this.get('school.competencies').then(competencies => {
+      const school = this.get('school');
+      school.get('competencies').then(competencies => {
         this.set('bufferedCompetencies', competencies.toArray());
       });
     }

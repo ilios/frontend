@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 const { computed, RSVP } = Ember;
-const { empty, not } = computed;
+const { not } = computed;
 const { Promise, all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
 
@@ -14,7 +14,10 @@ export default Model.extend({
   children: hasMany('competency', {async: true, inverse: 'parent'}),
   aamcPcrses: hasMany('aamc-pcrs', {async: true}),
   programYears: hasMany('program-year', {async: true}),
-  isDomain: empty('parent.content'),
+  isDomain: computed('parent', function(){
+    const parentId = this.belongsTo('parent').id();
+    return !parentId;
+  }),
   isNotDomain: not('isDomain'),
 
   domain: computed('parent', 'parent.domain', function() {
@@ -46,5 +49,9 @@ export default Model.extend({
         });
       });
     });
-  })
+  }),
+  childCount: computed('children.[]', function(){
+    const childrenIds = this.hasMany('children').ids();
+    return childrenIds.length;
+  }),
 });
