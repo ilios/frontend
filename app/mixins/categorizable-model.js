@@ -49,4 +49,8 @@ export default Ember.Mixin.create({
       });
     });
   }),
+  termCount: computed('terms.[]', function(){
+    const termIds = this.hasMany('terms').ids();
+    return termIds.length;
+  }),
 });
