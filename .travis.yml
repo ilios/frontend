@@ -29,18 +29,23 @@ matrix:
 
 before_install:
   - npm install -g bower
+  - yarn global add greenkeeper-lockfile@1
 
 install:
   - yarn install --frozen-lockfile
   - bower install
 
 before_script:
+  - greenkeeper-lockfile-update
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
 script:
   - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
+
+after_script:
+  - greenkeeper-lockfile-upload
 
 after_success:
   - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
