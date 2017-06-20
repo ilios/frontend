@@ -7,10 +7,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('weeklyevents');
   this.route('login');
   this.route('events', {path: 'events/:slug'});
   this.route('logout');
+  this.route('weeklyevents');
 });
 
 export default Router;
