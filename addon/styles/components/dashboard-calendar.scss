@@ -39,8 +39,8 @@
       width: 33%;
 
       h5 {
-        font-weight: bold;
-        margin: 0 0 .5em;
+        @include ilios-heading-h5;
+        padding-bottom: .25em;
       }
 
       ul {
@@ -49,7 +49,6 @@
         li {
           color: $ilios-blue;
           cursor: pointer;
-          font-size: 1.25em;
         }
       }
 
