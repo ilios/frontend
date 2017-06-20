@@ -12,14 +12,14 @@ export default Component.extend({
   secondLabel: null,
 
   actions: {
-    clickFirstButton(){
+    firstChoice(){
       const firstOptionSelected = this.get('firstOptionSelected');
       const toggle = this.get('toggle');
       if (!firstOptionSelected) {
         toggle(true);
       }
     },
-    clickSecondButton(){
+    secondChoice(){
       const firstOptionSelected = this.get('firstOptionSelected');
       const toggle = this.get('toggle');
       if (firstOptionSelected) {

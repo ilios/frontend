@@ -1,6 +1,16 @@
-<button class="{{if firstOptionSelected 'active'}}" {{action 'clickFirstButton'}}>
-  {{firstLabel}}
-</button>
-<button class="{{unless firstOptionSelected 'active'}}" {{action 'clickSecondButton'}}>
-  {{secondLabel}}
-</button>
+{{one-way-radio
+  value=firstOptionSelected
+  option=true
+  id=(concat 'first-toggle-' elementId)
+  name=(concat 'toggle-' elementId)
+  update=(action 'firstChoice')
+}}
+<label for={{concat 'first-toggle-' elementId}}>{{firstLabel}}</label>
+{{one-way-radio
+  value=firstOptionSelected
+  option=false
+  id=(concat 'second-toggle-' elementId)
+  name=(concat 'toggle-' elementId)
+  update=(action 'secondChoice')
+}}
+<label for={{concat 'second-toggle-' elementId}}>{{secondLabel}}</label>

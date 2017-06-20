@@ -6,31 +6,37 @@ moduleForComponent('toggle-buttons', 'Integration | Component | toggle buttons',
 });
 
 test('it renders', function(assert) {
-  assert.expect(4);
+  assert.expect(6);
 
-  const firstButton = 'button:eq(0)';
-  const secondButton = 'button:eq(1)';
-  const activeClass = 'active';
+  const firstLabel = 'label:eq(0)';
+  const firstRadio = 'input:eq(0)';
+  const secondLabel = 'label:eq(1)';
+  const secondRadio = 'input:eq(1)';
 
   this.set('nothing', parseInt);
   this.render(hbs`{{toggle-buttons
     action=(action nothing)
     firstOptionSelected=true
-    firstLabel='Left Button'
-    secondLabel='Right Button'
+    firstLabel='First'
+    firstIcon='user'
+    secondLabel='Second'
+    secondIcon='expand'
   }}`);
-  assert.equal(this.$(firstButton).text().trim(), 'Left Button', 'first button has correct text');
-  assert.equal(this.$(secondButton).text().trim(), 'Right Button', 'second button has correct text');
-  assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-  assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+  assert.equal(this.$(firstLabel).text().trim(), 'First', 'first label has correct text');
+  assert.ok(this.$(firstRadio).is(':checked'), 'first radio is checked');
+  assert.equal(this.$(firstLabel).attr('for'), this.$(firstRadio).attr('id'), 'first label is linked to radio correctly');
+
+  assert.equal(this.$(secondLabel).text().trim(), 'Second', 'second label has correct text');
+  assert.notOk(this.$(secondRadio).is(':checked'), 'second radio is not checked');
+  assert.equal(this.$(secondLabel).attr('for'), this.$(secondRadio).attr('id'), 'second label is linked to radio correctly');
+
 });
 
-test('click fires toggle action', function(assert) {
-  assert.expect(8);
+test('clicking radio fires toggle action', function(assert) {
+  assert.expect(2);
 
-  const firstButton = 'button:eq(0)';
-  const secondButton = 'button:eq(1)';
-  const activeClass = 'active';
+  const first = 'input:eq(0)';
+  const second = 'input:eq(1)';
 
   this.set('firstOptionSelected', true);
   let called = 0;
@@ -46,46 +52,30 @@ test('click fires toggle action', function(assert) {
   this.render(hbs`{{toggle-buttons
     toggle=(action toggle)
     firstOptionSelected=firstOptionSelected
-    firstLabel='Left Button'
-    secondLabel='Right Button'
+    firstLabel='Left'
+    secondLabel='Right'
   }}`);
 
-  assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-  assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
-
-  this.$(secondButton).click();
-
-  assert.notOk(this.$(firstButton).hasClass(activeClass), 'first button does not have active class');
-  assert.ok(this.$(secondButton).hasClass(activeClass), 'second button has active class');
-
-  this.$(firstButton).click();
-
-  assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-  assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+  this.$(second).click();
+  this.$(first).click();
 });
 
-test('clicking selected futton does not fire toggle action', function(assert) {
-  assert.expect(4);
+test('clicking selected radio does not fire toggle action', function(assert) {
+  assert.expect(1);
 
-  const firstButton = 'button:eq(0)';
-  const secondButton = 'button:eq(1)';
-  const activeClass = 'active';
+  const first = 'input:eq(0)';
 
+  this.set('firstOptionSelected', true);
   this.set('toggle', () => {
     assert.ok(false, 'this should not be fired');
   });
   this.render(hbs`{{toggle-buttons
     toggle=(action toggle)
-    firstOptionSelected=true
-    firstLabel='Left Button'
-    secondLabel='Right Button'
+    firstOptionSelected=firstOptionSelected
+    firstLabel='Left'
+    secondLabel='Right'
   }}`);
 
-  assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-  assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
-
-  this.$(firstButton).click();
-
-  assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-  assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+  this.$(first).click();
+  assert.equal(this.get('firstOptionSelected'), true);
 });

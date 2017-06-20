@@ -10,9 +10,9 @@
 
   <div class='calendar-options-control showfilters'>
     {{toggle-buttons
-      firstOptionSelected=showFilters
-      firstLabel=(t 'general.showFilters')
-      secondLabel=(t 'general.hideFilters')
+      firstOptionSelected=(not showFilters)
+      firstLabel=(t 'general.hideFilters')
+      secondLabel=(t 'general.showFilters')
       toggle=toggleShowFilters
     }}
   </div>

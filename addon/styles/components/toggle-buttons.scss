@@ -1,14 +1,39 @@
 .toggle-buttons {
-  button {
-    background-color: $ilios-blue;
-    border: 1px outset darken($ilios-blue, 50%);
-    color: $white;
-    cursor: pointer;
+  input {
+    @include ilios-off-screen;
+  }
 
-    &.active {
-      background-color: $ilios-green;
-      border: 1px inset darken($ilios-green, 50%);
-      color: $white;
+  label {
+    background-color: $grey;
+    border: 1px solid rgba($black, .2);
+    box-shadow: inset 0 1px 3px $dark-grey, 0 1px $light-grey;
+    color: $dark-grey;
+    display: inline-block;
+    float: left;
+    font-size: .8 * $base-font-size;
+    min-width: 3em;
+    padding: .25em .5em;
+    text-align: center;
+    text-shadow: none;
+    transition: all .1s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:first-of-type {
+      border-radius: 4px 0 0 4px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 4px 4px 0;
     }
   }
+
+  input:checked + label {
+    background-color: $ilios-green;
+    box-shadow: none;
+    color: $white;
+  }
+
 }
