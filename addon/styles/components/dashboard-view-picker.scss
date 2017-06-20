@@ -1,10 +1,22 @@
 .dashboard-view-picker {
-  li {
-    display: inline;
+  background-color: $header-grey;
+  border-bottom: 1px solid $ilios-blue;
+
+  margin: 0;
+  padding: .5em;
+  width: 100%;
+
+  ul {
+    @include ilios-list-reset;
+
+    li {
+      display: inline;
+    }
   }
 
   button {
     @include ilios-button;
+
     &.active {
       background-color: $ilios-green;
     }
