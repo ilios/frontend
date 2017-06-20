@@ -1,0 +1,17 @@
+.toggle-icons {
+  .accessible {
+    @include ilios-off-screen;
+  }
+
+  i {
+    cursor: pointer;
+
+    &.first {
+      color: $ilios-blue;
+    }
+
+    &.second {
+      color: $ilios-green;
+    }
+  }
+}

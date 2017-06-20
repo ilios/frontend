@@ -1,0 +1,25 @@
+<div class='accessible'>
+  {{one-way-radio
+    value=firstOptionSelected
+    option=true
+    id=(concat 'first-toggle-' elementId)
+    name=(concat 'toggle-' elementId)
+    update=(action 'firstChoice')
+  }}
+  <label for={{concat 'first-toggle-' elementId}}>{{firstLabel}}</label>
+  {{one-way-radio
+    value=firstOptionSelected
+    option=false
+    id=(concat 'second-toggle-' elementId)
+    name=(concat 'toggle-' elementId)
+    update=(action 'secondChoice')
+  }}
+  <label for={{concat 'second-toggle-' elementId}}>{{secondLabel}}</label>
+</div>
+<div class='icons'>
+  {{#if firstOptionSelected}}
+    {{fa-icon firstIcon class='first' title=secondLabel click=(action 'secondChoice')}}
+  {{else}}
+    {{fa-icon secondIcon class='second' title=firstLabel click=(action 'firstChoice')}}
+  {{/if}}
+</div>
