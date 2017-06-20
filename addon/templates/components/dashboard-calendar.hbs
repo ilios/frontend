@@ -1,32 +1,29 @@
 <section class='calendar-controls'>
   <div class='calendar-options-control togglemyschedule'>
-    {{toggle-wide
-      value=mySchedule
-      onLabel='general.mySchedule'
-      offLabel='general.allEvents'
-      action=toggleMySchedule
-      cssId='togglemyschedule'
+    {{toggle-buttons
+      firstOptionSelected=mySchedule
+      firstLabel=(t 'general.mySchedule')
+      secondLabel=(t 'general.allEvents')
+      toggle=toggleMySchedule
     }}
   </div>
 
   <div class='calendar-options-control showfilters'>
-    {{toggle-wide
-      value=showFilters
-      onLabel='general.showFilters'
-      offLabel='general.hideFilters'
-      action=toggleShowFilters
-      cssId='showfilters'
+    {{toggle-buttons
+      firstOptionSelected=showFilters
+      firstLabel=(t 'general.showFilters')
+      secondLabel=(t 'general.hideFilters')
+      toggle=toggleShowFilters
     }}
   </div>
 
   {{#if showFilters}}
     <div class='calendar-options-control togglecoursefilters'>
-      {{toggle-wide
-        value=courseFilters
-        onLabel='general.courseOrType'
-        offLabel='general.detail'
-        action=toggleCourseFilters
-        cssId='togglecoursefilters'
+      {{toggle-buttons
+        firstOptionSelected=courseFilters
+        firstLabel=(t 'general.courseOrType')
+        secondLabel=(t 'general.detail')
+        toggle=toggleCourseFilters
       }}
     </div>
 

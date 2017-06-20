@@ -1,0 +1,6 @@
+<button class="{{if firstOptionSelected 'active'}}" {{action 'clickFirstButton'}}>
+  {{firstLabel}}
+</button>
+<button class="{{unless firstOptionSelected 'active'}}" {{action 'clickSecondButton'}}>
+  {{secondLabel}}
+</button>

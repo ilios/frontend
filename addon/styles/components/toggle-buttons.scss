@@ -1,0 +1,14 @@
+.toggle-buttons {
+  button {
+    background-color: $ilios-blue;
+    border: 1px outset darken($ilios-blue, 50%);
+    color: $white;
+    cursor: pointer;
+
+    &.active {
+      background-color: $ilios-green;
+      border: 1px inset darken($ilios-green, 50%);
+      color: $white;
+    }
+  }
+}
