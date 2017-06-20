@@ -1,0 +1,14 @@
+.ilios-calendar-week {
+
+  .el-calendar {
+    span {
+      font-size: .8em;
+    }
+
+    .ilios-calendar-event {
+      .ilios-calendar-event-end {
+        display: none;
+      }
+    }
+  }
+}

@@ -53,7 +53,6 @@ test('displays `None` when provided no content', function(assert) {
   this.set('objectives', []);
   this.render(hbs`{{single-event-objective-list
     objectives=objectives
-    noContentPhrase='None'
   }}`);
 
   assert.equal(this.$('.no-content').text(), 'None');

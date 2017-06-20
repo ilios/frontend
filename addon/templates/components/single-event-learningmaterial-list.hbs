@@ -6,7 +6,7 @@
 
         <div class='single-event-learningmaterial-item-title'>
           {{#if lm.required}}
-            {{fa-icon 'star' title=requiredPhrase}}
+            {{fa-icon 'star' title=(t 'general.required')}}
           {{/if}}
           {{#if lm.url}}
             <a target='_blank' href='{{lm.url}}' rel='noopener'>{{lm.title}}</a>
@@ -39,5 +39,5 @@
     {{/each}}
   </ul>
 {{else}}
-  <p class="no-content">{{noContentPhrase}}</p>
+  <p class="no-content">{{t 'general.none'}}</p>
 {{/if}}

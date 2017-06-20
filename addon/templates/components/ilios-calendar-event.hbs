@@ -1,0 +1,56 @@
+{{#if event}}
+  <div>
+    {{#tooltip-on-element}}
+      {{{tooltipContent}}}
+    {{/tooltip-on-element}}
+    {{#if recentlyUpdated}}
+      {{fa-icon 'exclamation-circle' class="recently-updated-icon"}}
+    {{/if}}
+
+    {{#unless isMonth}}
+      {{#if (not event.isPublished)}}
+        {{fa-icon 'files-o'}}
+      {{else if event.isScheduled}}
+        {{fa-icon 'clock-o'}}
+      {{/if}}
+    {{/unless}}
+    <span class='ilios-calendar-event-time'>
+      {{#if isIlm}}
+        <span class='ilios-calendar-event-start'>
+          {{t 'general.ilmDue'}}: {{moment-format event.startDate 'h:mma'}}
+        </span>
+      {{else}}
+        <span class='ilios-calendar-event-start'>
+          {{moment-format event.startDate 'h:mma'}}
+        </span>
+        <span class='ilios-calendar-event-end'>
+          - {{moment-format event.endDate 'h:mma'}}
+        </span>
+      {{/if}}
+    </span>
+
+    {{#unless event.isMulti}}
+      <span class='ilios-calendar-event-location'>
+        {{#if event.location.length}}
+          {{event.location}}:
+        {{/if}}
+      </span>
+    {{/unless}}
+
+    <span class='ilios-calendar-event-name'>
+      {{event.name}}{{#if event.isMulti}}, <em>{{t 'general.multiple'}}</em>{{/if}}
+    </span>
+    {{! list instructors in day view, if available }}
+    {{#if isDay}}
+      {{#if event.instructors}}
+        <span class="ilios-calendar-event-instructors">
+          {{t 'general.taughtBy'}}
+          {{formattedInstructors}}
+        </span>
+      {{/if}}
+      {{#if event.courseTitle}}
+        <span class="ilios-calendar-event-coursetitle">{{event.courseTitle}}</span>
+      {{/if}}
+    {{/if}}
+  </div>
+{{/if}}

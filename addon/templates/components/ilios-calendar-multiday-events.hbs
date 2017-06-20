@@ -1,0 +1,10 @@
+{{#if events.length}}
+  <div class='ilios-calendar-multiday-events'>
+    <h4>{{t 'general.multidayEvents'}}</h4>
+    <ul>
+      {{#each events as |event|}}
+        {{ilios-calendar-multiday-event selectEvent=selectEvent event=event}}
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

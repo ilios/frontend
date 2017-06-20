@@ -7,7 +7,6 @@ export default Ember.Component.extend({
   layout: layout,
   classNames: ['single-event-learningmaterial-list'],
   learningMaterials: null,
-  requiredPhrase: null,
 
   proxiedLearningMaterials: computed('learningMaterials.[]', function(){
     let learningMaterials = this.get('learningMaterials');

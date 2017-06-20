@@ -1,0 +1,51 @@
+.ilios-calendar-month {
+  .el-calendar {
+    min-height: (6em * 7);
+
+    .week {
+      height: 6em;
+      overflow-y: hidden;
+      padding-top: .25em;
+    }
+
+    .day {
+      border: 1px solid $grey;
+      margin-right: .25em;
+      padding: .25em;
+
+      .events {
+        height: 4em;
+        padding-bottom: 2em;
+      }
+    }
+
+    .ilios-calendar-event.month-event {
+      height: 1.5em;
+      padding: 0 8px 0 0;
+      position: relative;
+
+      span {
+        background-color: transparent;
+        font-size: .5em;
+        font-weight: normal;
+      }
+
+      .ilios-calendar-event-time {
+        color: $black;
+        display: inline;
+      }
+
+      .ilios-calendar-event-end,
+      .ilios-calendar-event-location {
+        display: none;
+      }
+    }
+
+    .month-more-events {
+      display: block;
+      font-size: .8em;
+      text-align: right;
+      width: 100%;
+    }
+  }
+}

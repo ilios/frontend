@@ -1,0 +1,20 @@
+.ilios-calendar-day {
+  .el-calendar {
+    .ilios-calendar-event {
+      .ilios-calendar-event-location {
+        display: block;
+      }
+
+      .ilios-calendar-event-instructors {
+        display: block;
+        font-size: .9em;
+      }
+
+      .ilios-calendar-event-coursetitle {
+        display: block;
+        font-size: .85em;
+        font-style: italic;
+      }
+    }
+  }
+}

@@ -1,5 +1,10 @@
 @import 'variables';
 @import 'mixins';
+@import 'components/ilios-calendar';
+@import 'components/ilios-calendar-day';
+@import 'components/ilios-calendar-week';
+@import 'components/ilios-calendar-month';
+@import 'components/ilios-calendar-multiday-events';
 @import 'components/dashboard-agenda';
 @import 'components/dashboard-calendar';
 @import 'components/dashboard-materials';
@@ -9,4 +14,5 @@
 @import 'components/single-event';
 @import 'components/single-event-learningmaterial-list';
 @import 'components/single-event-objective-list';
+@import 'components/toggle-wide';
 @import 'components/week-glance';

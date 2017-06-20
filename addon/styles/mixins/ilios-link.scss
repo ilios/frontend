@@ -1,5 +1,6 @@
 @mixin ilios-link () {
   color: $ilios-blue;
+  cursor: pointer;
   text-decoration: none;
 
   &:visited {

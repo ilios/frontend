@@ -1,5 +1,6 @@
 import Ember from 'ember';
+import DashboardController from 'ilios-common/mixins/dashboard-controller';
 
-export default Ember.Controller.extend({
-  show: 'week',
-});
+const { Controller } = Ember;
+
+export default Controller.extend(DashboardController);

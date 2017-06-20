@@ -9,17 +9,17 @@
       selectedView=selectedView
       mySchedule=mySchedule
       showFilters=showFilters
-      changeDate=(action 'changeDate')
-      changeView=(action (mut view))
-      selectEvent=(action 'selectEvent')
-      toggleMySchedule=(action 'toggleMySchedule')
-      toggleShowFilters=(action 'toggleShowFilters')
+      changeDate=changeDate
+      changeView=changeView
+      selectEvent=selectEvent
+      toggleMySchedule=toggleMySchedule
+      toggleShowFilters=toggleShowFilters
       academicYearSelectedByUser=selectedAcademicYear
       schoolPickedByUser=selectedSchool
-      changeAcademicYear=(action (mut academicYear))
-      changeSchool=(action (mut school))
+      changeAcademicYear=changeAcademicYear
+      changeSchool=changeSchool
       courseFilters=courseFilters
-      toggleCourseFilters=(action (toggle 'courseFilters' this))
+      toggleCourseFilters=toggleCourseFilters
     }}
   {{else if (eq show 'materials')}}
     {{dashboard-materials}}

@@ -27,7 +27,6 @@ test('displays `None` when provided no content', function(assert) {
   this.set('learningMaterials', []);
   this.render(hbs`{{single-event-learningmaterial-list
     learningMaterials=learningMaterials
-    noContentPhrase='None'
   }}`);
 
   assert.equal(this.$('.no-content').text(), 'None');

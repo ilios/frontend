@@ -35,14 +35,11 @@
       <h2>{{t 'general.sessionLearningMaterials'}}</h2>
       {{single-event-learningmaterial-list
         learningMaterials=(await sessionLearningMaterials)
-        requiredPhrase=(t 'general.required')
-        noContentPhrase=(t 'general.none')
       }}
     </div>
     <div class='single-event-objective-list'>
       {{single-event-objective-list
         objectives=(await sessionObjectives)
-        noContentPhrase=(t 'general.none')
         groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
         listByPriorityPhrase=(t 'general.listByPriority')
         title=(t 'general.sessionObjectives')
@@ -55,8 +52,6 @@
       <h2>{{t 'general.courseLearningMaterials'}}</h2>
       {{single-event-learningmaterial-list
         learningMaterials=(await courseLearningMaterials)
-        requiredPhrase=(t 'general.required')
-        noContentPhrase=(t 'general.none')
       }}
     </div>
     <div class='single-event-objective-list'>
@@ -64,7 +59,6 @@
         objectives=(await courseObjectives)
         groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
         listByPriorityPhrase=(t 'general.listByPriority')
-        noContentPhrase=(t 'general.none')
         title=(t 'general.courseObjectives')
       }}
     </div>

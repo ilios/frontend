@@ -1,0 +1,150 @@
+@mixin border-top-radius($radii) {
+  border-top-left-radius: $radii;
+  border-top-right-radius: $radii;
+}
+
+@mixin border-right-radius($radii) {
+  border-bottom-right-radius: $radii;
+  border-top-right-radius: $radii;
+}
+
+@mixin border-bottom-radius($radii) {
+  border-bottom-left-radius: $radii;
+  border-bottom-right-radius: $radii;
+}
+
+@mixin border-left-radius($radii) {
+  border-bottom-left-radius: $radii;
+  border-top-left-radius: $radii;
+}
+
+.ilios-calendar {
+  .el-calendar {
+    .event {
+      overflow: hidden;
+      position: absolute;
+    }
+
+    .event-column {
+      border-left: 1px solid $grey;
+    }
+
+
+    .ilios-calendar-event {
+      border-bottom: 3px solid $white;
+      color: $black;
+      line-height: .9em;
+
+      .ilios-calendar-event-time {
+        color: $maroon;
+        display: block;
+        font-weight: bold;
+        padding-bottom: .5em;
+      }
+
+      .ilios-calendar-event-location {
+        display: inline;
+        font-weight: bold;
+      }
+
+      &.is-ilm {
+        border-top: 2px dotted $black;
+      }
+
+      &.day-event {
+        width: 100%;
+      }
+
+      &.single-event {
+        @include border-top-radius($base-border-radius);
+        @include border-bottom-radius($base-border-radius);
+        padding: 2em;
+        width: 100%;
+
+      }
+    }
+}
+
+  .ilios-calendar-event {
+    @include border-top-radius($base-border-radius);
+    @include border-bottom-radius($base-border-radius);
+    background-color: $background-grey;
+    border: 1px solid $grey;
+  }
+
+  .clickable {
+    color: $ilios-blue;
+    cursor: pointer;
+  }
+
+  .ilios-calendar-calendar {
+    clear: both;
+    position: relative;
+
+    h1 {
+      left: 4em;
+      opacity: 75;
+      position: absolute;
+      top: 2em;
+      transition: all .5s ease-in-out;
+
+      &.loaded {
+        opacity: 0;
+      }
+    }
+  }
+
+  .calendar-view-picker {
+    float: right;
+
+    .highlight {
+      color: $ilios-orange;
+      font-size: 1.25em;
+    }
+
+    .on {
+      color: $ilios-green;
+    }
+  }
+
+  .calendar-time-picker {
+    float: left;
+  }
+
+  ul {
+    &.inline,
+    &.inline li {
+      display: inline;
+      margin-bottom: 1em;
+    }
+
+    &.inline li {
+      margin-right: 2em;
+    }
+  }
+
+  .ilios-calendar-ics-feed {
+    border: 1px dotted $ilios-orange;
+    margin: auto;
+    margin-bottom: 1em;
+    padding: 2em;
+    width: 90%;
+
+    input {
+      padding: .25em;
+      width: 80%;
+    }
+
+    button {
+      background-color: $white;
+      color: $ilios-accent-color;
+      margin-left: .5em;
+      padding: 0;
+    }
+
+  }
+
+  .no-content {
+    list-style-type: none;
+  }
+}

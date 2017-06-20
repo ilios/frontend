@@ -1,0 +1,45 @@
+{{#el-weekly-calendar date=date events=singleDayEvents as |days|}}
+  <div class="row">
+    <div class="cell">
+    </div>
+    <div class="cell title">
+      {{t 'general.weekOf' date=weekOf}}
+    </div>
+  </div>
+  <div class="row week-titles">
+    <div class="cell"></div>
+    {{#each days as |day|}}
+      <div class="cell title clickable" {{action 'changeToDayView' day.date}}>
+        {{moment-format day.date 'ddd M/D'}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="week">
+    <ul class="week-hours">
+      {{#each days.firstObject.hours as |hour|}}
+        <li class="week-hour">{{hour.formattedHour}}</li>
+      {{/each}}
+    </ul>
+    {{#each days as |day|}}
+      <ul class="week-day">
+        <li class="event-column">
+          {{#each day.events as |event|}}
+            {{#if event.isMulti}}
+              {{ilios-calendar-event event=event selectEvent=(action 'changeToDayView' event.startDate) dueThisDay=dueThisDay}}
+            {{else}}
+              {{ilios-calendar-event event=event selectEvent=(action selectEvent event) dueThisDay=dueThisDay}}
+            {{/if}}
+          {{/each}}
+        </li>
+        {{! template-lint-disable unused-block-params }}
+        {{#each day.hours as |hour|}}
+          <li class="day-hour">
+            <div class="day-half-hour"></div>
+          </li>
+        {{/each}}
+      </ul>
+    {{/each}}
+  </div>
+{{/el-weekly-calendar}}
+
+{{ilios-calendar-multiday-events events=multiDayEventsList selectEvent=selectEvent}}

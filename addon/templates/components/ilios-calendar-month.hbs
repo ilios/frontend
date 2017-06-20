@@ -1,0 +1,47 @@
+{{#el-monthly-calendar date=date events=calendarEvents as |weeks|}}
+  <div class="row month-titles">
+    <div class="cell">
+    </div>
+    <div class="cell title">
+      {{moment-format date 'MMMM YYYY'}}
+    </div>
+  </div>
+  <div class="row">
+    {{#each weeks.firstObject.days as |day|}}
+      <div class="cell title">
+        {{day.dayName}}
+      </div>
+    {{/each}}
+  </div>
+  {{#each weeks as |week|}}
+    <div class="week">
+      {{#each week.days as |day|}}
+        <div class="day">
+          <span class='clickable' {{action 'changeToDayView' day.date}}>
+            {{moment-format day.date 'D'}}
+          </span>
+          <div class="events">
+            {{#if (gt day.events.length 2)}}
+              {{#each (slice 0 2 day.events) as |event|}}
+                {{#if event.isMulti}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate) dueThisDay=dueThisDay}}
+                {{else}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event) dueThisDay=dueThisDay}}
+                {{/if}}
+              {{/each}}
+              <span {{action 'changeToDayView' day.date}} class=' clickable link month-more-events'>{{fa-icon 'ellipse-h'}} {{showMore}} {{fa-icon 'angle-double-down'}}</span>
+            {{else}}
+              {{#each day.events as |event|}}
+                {{#if event.isMulti}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate) dueThisDay=dueThisDay}}
+                {{else}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event) dueThisDay=dueThisDay}}
+                {{/if}}
+              {{/each}}
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+{{/el-monthly-calendar}}
