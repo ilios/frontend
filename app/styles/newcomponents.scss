@@ -2,6 +2,7 @@
 @import 'newcomponents/new-user';
 @import 'newcomponents/my-profile';
 @import 'newcomponents/ilios-header';
+@import 'newcomponents/common-dashboard';
 @import 'newcomponents/course-overview';
 @import 'newcomponents/detail-learnergroups';
 @import 'newcomponents/collapsed-learnergroups';
@@ -9,6 +10,8 @@
 @import 'newcomponents/course-details';
 @import 'newcomponents/course-materials';
 @import 'newcomponents/course-summary-header';
+@import 'newcomponents/dashboard-mycourses';
+@import 'newcomponents/dashboard-myreports';
 @import 'newcomponents/detail-objectives';
 @import 'newcomponents/detail-learningmaterials';
 @import 'newcomponents/detail-mesh';
@@ -84,8 +87,6 @@
 @import 'newcomponents/learning-materials-sort-manager';
 @import 'newcomponents/ilios-users';
 @import 'newcomponents/objective-sort-manager';
-@import 'newcomponents/week-glance';
-@import 'newcomponents/weekly-events';
 @import 'newcomponents/course-visualize-objectives';
 @import 'newcomponents/visualizer-course-objectives';
 @import 'newcomponents/chart-bar';

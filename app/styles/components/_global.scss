@@ -1,5 +1,6 @@
 a,
 .link {
+  @include ilios-link;
   color: $base-link-color;
 
   &:visited {
@@ -15,6 +16,8 @@ a,
 }
 
 button {
+  @include ilios-button;
+
   &.bigadd {
     background-color: $ilios-green;
   }
