@@ -27,7 +27,9 @@
         {{{t 'general.attendanceIs_Required_'}}} {{fa-icon 'calendar-check-o'}}
       </div>
     {{/if}}
-    {{#if (await description)}}{{await description}}<br>{{/if}}
+    {{#if (and (is-fulfilled description) (gt (get (await description) 'length') 0))}}
+      {{{await description}}}<br>
+    {{/if}}
   </div>
 
   <fieldset>
