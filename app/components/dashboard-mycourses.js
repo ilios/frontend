@@ -7,7 +7,7 @@ const { all } = RSVP;
 export default Component.extend({
   currentUser: service(),
   tagName: 'div',
-  classNames: ['dashboard-block', 'dashboard-my-courses'],
+  classNames: ['dashboard-mycourses'],
   listOfCourses: computed('currentUser.activeRelatedCoursesInThisYearAndLastYear.[]', function(){
     return this.get('currentUser').get('activeRelatedCoursesInThisYearAndLastYear').then(courses => {
       return courses.sortBy('startDate');

@@ -5,7 +5,7 @@ const { inject } = Ember;
 const { service } = inject;
 
 export default JwtTokenAuthenticator.extend({
-  ajax: service(),
+  commonAjax: service(),
   /**
     Extend the JwtTokenAuthenticator to accept a token in liu of credentials
     This allows authentication of an already existing session.
@@ -54,7 +54,7 @@ export default JwtTokenAuthenticator.extend({
   },
 
   /**
-   * Extend the default make request in order to user our own ajax service
+   * Extend the default make request in order to user our own commonAjax service
    * Using our service allows us to use a custom hostname instead of just '/'
    *
    * @method makeRequest
@@ -64,7 +64,7 @@ export default JwtTokenAuthenticator.extend({
    * @return {Ember.RSVP.Promise} The result of the request.
   */
   makeRequest(url, data, providedHeaders) {
-    const ajax = this.get('ajax');
+    const commonAjax = this.get('commonAjax');
     let headers = this.headers;
     if (providedHeaders) {
       Object.keys(headers).forEach((key) => {
@@ -72,7 +72,7 @@ export default JwtTokenAuthenticator.extend({
       });
     }
 
-    return ajax.post(url, {
+    return commonAjax.post(url, {
       data: JSON.stringify(data),
       dataType: 'json',
       contentType: 'application/json',

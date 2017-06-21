@@ -81,7 +81,6 @@ export default Component.extend(NewUser, {
     this.set('savingAuthenticationErrors', []);
   },
   i18n: service(),
-  ajax: service(),
   flashMessages: service(),
   iliosConfig: service(),
 
