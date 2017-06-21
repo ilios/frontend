@@ -42,7 +42,7 @@ const Validations = buildValidations({
 
 export default Ember.Component.extend(NewUser, Validations, {
   i18n: service(),
-  ajax: service(),
+  commonAjax: service(),
   iliosConfig: service(),
 
   init(){
@@ -76,8 +76,8 @@ export default Ember.Component.extend(NewUser, Validations, {
     if (!isEmpty(searchTerms)) {
       this.set('isSearching', true);
       let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      const ajax = this.get('ajax');
-      let data = yield ajax.request(url);
+      const commonAjax = this.get('commonAjax');
+      let data = yield commonAjax.request(url);
       let mappedResults = data.results.map(result => {
         result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
         return result;

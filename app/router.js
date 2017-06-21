@@ -20,7 +20,7 @@ const Router = Ember.Router.extend({
     if (typeof tokens === 'string') {
       tokens = [tokens];
     }
-    
+
     this.get('headData').set('titleTokens', tokens);
   },
 

@@ -7,7 +7,7 @@ const { service } = inject;
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
   flashMessages: service(),
-  ajax: service(),
+  commonAjax: service(),
   i18n: service(),
   moment: service(),
 
@@ -26,7 +26,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   sessionInvalidated() {
     if (!Ember.testing) {
       let logoutUrl = '/auth/logout';
-      return this.get('ajax').request(logoutUrl).then(response => {
+      return this.get('commonAjax').request(logoutUrl).then(response => {
         if(response.status === 'redirect'){
           window.location.replace(response.logoutUrl);
         } else {
