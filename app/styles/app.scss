@@ -1,7 +1,6 @@
+@import 'ilios-common/styles';
 @import 'bourbon';
-@import 'variables';
 @import 'neat';
-@import 'font-awesome';
 @import 'ember-modal-dialog/ember-modal-structure';
 @import 'ember-modal-dialog/ember-modal-appearance';
 @import 'components/reset';
@@ -26,7 +25,6 @@
 @import 'components/tree-list';
 @import 'components/flashMessages';
 @import 'components/login-form';
-@import 'components/dashboard';
 @import 'components/initialpage';
 @import 'components/expand-collapse-button';
 @import 'components/error-display';

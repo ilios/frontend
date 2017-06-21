@@ -1,0 +1,9 @@
+.dashboard-mycourses {
+  @include dashboard-block;
+
+  .dashboard-block-body {
+    table {
+      width: auto;
+    }
+  }
+}
