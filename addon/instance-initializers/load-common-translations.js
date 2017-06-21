@@ -1,10 +1,14 @@
 import Ember from 'ember';
-import en from "ilios-common/locales/en/translation";
+import en from "ilios-common/locales/en/translations";
+import fr from "ilios-common/locales/fr/translations";
+import es from "ilios-common/locales/es/translations";
 const { typeOf } = Ember;
 
-export function initialize({ container }) {
-  const i18n = container.lookup('service:i18n');
+export function initialize(app) {
+  const i18n = app.lookup('service:i18n');
   i18n.addTranslations("en", withFlattenedKeys(en));
+  i18n.addTranslations("fr", withFlattenedKeys(fr));
+  i18n.addTranslations("es", withFlattenedKeys(es));
 }
 
 function withFlattenedKeys(object) {
