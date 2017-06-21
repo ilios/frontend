@@ -71,6 +71,10 @@ $base-font-color: $text-grey;
 $base-border-color: $background-grey;
 $base-background-color: $background-grey;
 
+// Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+
 // Neat Breakpoints
 $small-screen: 320px;
 $medium-screen: 640px;
