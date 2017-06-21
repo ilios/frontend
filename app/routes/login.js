@@ -8,7 +8,7 @@ const { service } = inject;
 export default Route.extend(UnauthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
-  ajax: service(),
+  commonAjax: service(),
   titleToken: 'general.login',
 
   noAccountExistsError: false,
@@ -22,7 +22,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     let defer = Ember.RSVP.defer();
     var configUrl = '/application/config';
     var loginUrl = '/auth/login';
-    this.get('ajax').request(configUrl).then(data => {
+    this.get('commonAjax').request(configUrl).then(data => {
       let config = data.config;
       if(config.type === 'form' || config.type === 'ldap'){
         defer.resolve();
@@ -30,7 +30,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       }
 
       if(config.type === 'shibboleth'){
-        this.get('ajax').request(loginUrl).then(response => {
+        this.get('commonAjax').request(loginUrl).then(response => {
           if(response.status === 'redirect'){
             let shibbolethLoginUrl = config.loginUrl;
             if(EmberConfig.redirectAfterShibLogin){
@@ -66,7 +66,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
         if (isPresent(queryParams.ticket)) {
           loginUrl += `&ticket=${queryParams.ticket}`;
         }
-        this.get('ajax').request(loginUrl).then(response => {
+        this.get('commonAjax').request(loginUrl).then(response => {
           if(response.status === 'redirect'){
             let casLoginUrl = config.casLoginUrl + `?service=${currentUrl}`;
             return window.location.replace(casLoginUrl);

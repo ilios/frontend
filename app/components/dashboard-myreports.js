@@ -10,7 +10,7 @@ export default Component.extend({
   currentUser: service(),
   reporting: service(),
   tagName: 'div',
-  classNames: ['dashboard-block', 'dashboard-double-block', 'dashboard-myreports'],
+  classNames: ['dashboard-myreports'],
   myReportEditorOn: false,
   selectedReport: null,
   user: null,

@@ -11,35 +11,37 @@
   </div>
 
   {{#liquid-if selectedReport class='crossFade'}}
-    <h3>{{report-title selectedReport}}</h3>
-    {{#if (is-fulfilled reportResultsList)}}
-      {{#if (get (await reportResultsList) 'length')}}
-        <ul>
-          {{#each (await reportResultsList) as |item|}}
-            {{#if item.model2}}
-              <li>
-                {{#link-to item.route item.model item.model2}}
-                  {{item.value}}
-                {{/link-to}}
-              </li>
-            {{else if item.model}}
-              <li>
-                {{#link-to item.route item.model}}
-                  {{item.value}}
-                {{/link-to}}
-              </li>
-            {{else}}
-              <li>{{item.value}}</li>
+    <div class='dashboard-block-body'>
+      <h3>{{report-title selectedReport}}</h3>
+      {{#if (is-fulfilled reportResultsList)}}
+        {{#if (get (await reportResultsList) 'length')}}
+          <ul>
+            {{#each (await reportResultsList) as |item|}}
+              {{#if item.model2}}
+                <li>
+                  {{#link-to item.route item.model item.model2}}
+                    {{item.value}}
+                  {{/link-to}}
+                </li>
+              {{else if item.model}}
+                <li>
+                  {{#link-to item.route item.model}}
+                    {{item.value}}
+                  {{/link-to}}
+                </li>
+              {{else}}
+                <li>{{item.value}}</li>
 
-            {{/if}}
-          {{/each}}
-        </ul>
+              {{/if}}
+            {{/each}}
+          </ul>
+        {{else}}
+          {{t 'general.none'}}
+        {{/if}}
       {{else}}
-        {{t 'general.none'}}
+        <h1>{{fa-icon 'spinner' spin=true}}</h1>
       {{/if}}
-    {{else}}
-      <h1>{{fa-icon 'spinner' spin=true}}</h1>
-    {{/if}}
+    </div>
   {{else}}
     <div class='dashboard-block-body'>
       {{#liquid-if myReportEditorOn class='vertical'}}
