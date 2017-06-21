@@ -12,14 +12,18 @@ export default Component.extend({
     const store = this.get('store');
     return await store.findAll('assessment-option');
   }),
-  save: task(function * (title, calendarColor, assessment, assessmentOption) {
+ 
+  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod) {
     const sessionType = this.get('sessionType');
     const closeComponent = this.get('close');
+    const aamcMethods = [];
+    aamcMethods.pushObject(aamcMethod);
     sessionType.setProperties({
       title,
       calendarColor,
       assessment,
-      assessmentOption
+      assessmentOption,
+      aamcMethods,
     });
 
     yield sessionType.save();
