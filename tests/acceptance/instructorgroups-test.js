@@ -250,7 +250,28 @@ test('cancel remove instructorgroup', function(assert) {
 
 test('confirmation of remove message', function(assert) {
   server.create('user', {id: 4136});
-  server.createList('user', 5, {
+  server.create('user', {
+    id: 2,
+    instructorGroups: [1]
+  });
+
+  server.create('user', {
+    id: 3,
+    instructorGroups: [1]
+  });
+
+  server.create('user', {
+    id: 4,
+    instructorGroups: [1]
+  });
+
+  server.create('user', {
+    id: 5,
+    instructorGroups: [1]
+  });
+
+  server.create('user', {
+    id: 6,
     instructorGroups: [1]
   });
   server.create('course', {
@@ -268,17 +289,21 @@ test('confirmation of remove message', function(assert) {
     offerings: [2]
   });
   server.create('offering', {
+    id: 1,
     instructorGroups: [1],
     session: 1
   });
   server.create('offering', {
+    id: 2,
     instructorGroups: [1],
     session: 2
   });
   server.create('school', {
+    id: 1,
     instructorGroups: [1]
   });
   server.create('instructorGroup', {
+    id: 1,
     school: 1,
     users: [2,3,4,5,6],
     offerings: [1,2]

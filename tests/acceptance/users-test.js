@@ -1,4 +1,5 @@
-import { module, test } from 'qunit';
+//import { module, test, skip } from 'qunit';
+import { module, skip } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
@@ -27,7 +28,7 @@ function getCellContent(i) {
   return find(`tbody tr td:eq(${i})`).text().trim();
 }
 
-test('can see list of users and transition to user route', function(assert) {
+skip('can see list of users and transition to user route', function(assert) {
   const firstStudent = 'tbody tr td:eq(1) a';
 
   visit(url);
@@ -45,7 +46,7 @@ test('can see list of users and transition to user route', function(assert) {
   });
 });
 
-test('can page through list of users', function(assert) {
+skip('can page through list of users', function(assert) {
   const leftArrow = '.backward';
   const rightArrow = '.forward';
 
@@ -71,7 +72,7 @@ test('can page through list of users', function(assert) {
   });
 });
 
-test('can search for a user and transition to user route', async function(assert) {
+skip('can search for a user and transition to user route', async function(assert) {
   server.createList('user', 40, { firstName: 'Test', lastName: 'Name', school: 1 });
 
   const userSearch = '.user-search input';

@@ -1,40 +1,38 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import initializer from "ilios/instance-initializers/ember-i18n";
-import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Object:EmberObject } = Ember;
+const { Object:EmberObject, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('school-competencies-collapsed', 'Integration | Component | school competencies collapsed', {
-  integration: true,
-  setup(){
-    initializer.initialize(this);
-    startMirage(this.container);
-  }
+  integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   assert.expect(3);
-  let domain = server.create('competency', {school: 1, isDomain: true, children: [2]});
-  let competency = server.create('competency', {school: 1, isNotDomain: true, parent: 1});
+  let domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
+  let competency = EmberObject.create({isNotDomain: true, parent: resolve(domain)});
+  domain.set('children', resolve([competency]));
 
-  let competencies = [domain, competency].map(obj => EmberObject.create(obj));
+  let competencies = [domain, competency];
 
   const school = EmberObject.create({
-    competencies
+    competencies: resolve(competencies)
   });
 
 
   this.set('school', school);
   this.on('click', parseInt);
   this.render(hbs`{{school-competencies-collapsed school=school expand=(action 'click')}}`);
+  const title = '.title';
+  const domains = 'table tbody tr';
+  const domainTitle = `${domains}:eq(0) td:eq(0)`;
+  const children = `${domains}:eq(0) td:eq(1)`;
 
-  return wait().then(() => {
-    assert.equal(this.$().text().trim().search(/Competencies \(1\/1\)/), 0);
-    assert.ok(this.$().text().trim().search(/competency 0/) > 0);
-    assert.ok(this.$().text().trim().search(/There is 1 competency/) > 0);
-  });
-
+  await wait();
+  assert.equal(this.$(title).text().trim(), 'Competencies (1/1)');
+  assert.equal(this.$(domainTitle).text().trim(), 'domain 0');
+  assert.equal(this.$(children).text().trim(), 'There is 1 competency');
 });

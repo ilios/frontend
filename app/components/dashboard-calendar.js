@@ -49,13 +49,21 @@ export default Component.extend({
     return this.get('i18n').t('general.icsInstructions');
   }),
   fromTimeStamp: computed('selectedDate', 'selectedView', function(){
-    return moment(this.get('selectedDate')).startOf(this.get('selectedView')).subtract(this.get('skew'), 'days').unix();
+    const selectedDate = this.get('selectedDate');
+    const selectedView = this.get('selectedView');
+    const skew = this.get('clockSkew');
+
+    return moment(selectedDate).startOf(selectedView).subtract(skew, 'days').unix();
   }),
   toTimeStamp: computed('selectedDate', 'selectedView', function(){
-    return moment(this.get('selectedDate')).endOf(this.get('selectedView')).add(this.get('skew'), 'days').unix();
+    const selectedDate = this.get('selectedDate');
+    const selectedView = this.get('selectedView');
+    const skew = this.get('clockSkew');
+
+    return moment(selectedDate).endOf(selectedView).add(skew, 'days').unix();
   }),
   clockSkew: computed('selectedView', function(){
-    if(this.set('selectedView') === 'month'){
+    if(this.get('selectedView') === 'month'){
       return 6;
     }
 
@@ -142,38 +150,25 @@ export default Component.extend({
    * @public
    */
   filteredEvents: computed(
-    'ourEvents.[]',
     'eventsWithSelectedSessionTypes.[]',
     'eventsWithSelectedCourseLevels.[]',
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
-    function() {
-      return new Promise(resolve => {
-        let promises = [];
-        let eventTypes = [
-          'eventsWithSelectedSessionTypes',
-          'eventsWithSelectedCourseLevels',
-          'eventsWithSelectedCohorts',
-          'eventsWithSelectedCourses',
-        ];
-        let allFilteredEvents = [];
-        eventTypes.forEach(name => {
-          promises.pushObject(this.get(name).then(events => {
-            allFilteredEvents.pushObject(events);
-          }));
-        });
+    async function() {
+      const eventsWithSelectedSessionTypes = await this.get('eventsWithSelectedSessionTypes');
+      const eventsWithSelectedCourseLevels = await this.get('eventsWithSelectedCourseLevels');
+      const eventsWithSelectedCohorts = await this.get('eventsWithSelectedCohorts');
+      const eventsWithSelectedCourses = await this.get('eventsWithSelectedCourses');
+      const ourEvents = await this.get('ourEvents');
 
-        all(promises).then(()=> {
-          this.get('ourEvents').then(events => {
-            let filteredEvents = events.filter(event => {
-              return allFilteredEvents.every(arr => {
-                return arr.includes(event);
-              });
-            });
-            resolve(filteredEvents);
-          });
-        });
+      const allFilteredEvents = ourEvents.filter(event => {
+        return eventsWithSelectedSessionTypes.includes(event) &&
+               eventsWithSelectedCourseLevels.includes(event) &&
+               eventsWithSelectedCohorts.includes(event) &&
+               eventsWithSelectedCourses.includes(event);
       });
+
+      return allFilteredEvents.uniq();
     }
   ),
 
@@ -328,24 +323,20 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
-    return new Promise(resolve => {
-      if(this.get('mySchedule')) {
-        this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp')).then(userEvents => {
-          resolve(userEvents);
-        });
-      } else {
-        this.get('selectedSchool').then(school => {
-          this.get('schoolEvents').getEvents(
-            school.get('id'),
-            this.get('fromTimeStamp'),
-            this.get('toTimeStamp')
-          ).then(schoolEvents => {
-            resolve(schoolEvents);
-          });
-        });
-      }
-    });
+  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', async function(){
+    if(this.get('mySchedule')) {
+      const userEvents = await this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'));
+      return userEvents;
+    } else {
+      const selectedSchool = await this.get('selectedSchool');
+      const schoolEvents = await this.get('schoolEvents').getEvents(
+        selectedSchool.get('id'),
+        this.get('fromTimeStamp'),
+        this.get('toTimeStamp')
+      );
+
+      return schoolEvents;
+    }
   }),
 
   /**

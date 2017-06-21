@@ -46,22 +46,53 @@ module('Acceptance: Session - Offerings', {
     });
 
     //users 2, 3
-    fixtures.users.pushObjects(server.createList('user', 2, {
+    fixtures.users.pushObjects(server.create('user', {
+      id: 2,
       instructorGroups: [1],
       learnerGroups: [1],
     }));
-    //users 4,5
-    fixtures.users.pushObjects(server.createList('user', 2, {
+    fixtures.users.pushObjects(server.create('user', {
+      id: 3,
+      instructorGroups: [1],
+      learnerGroups: [1],
+    }));
+    //users 4
+    fixtures.users.pushObjects(server.create('user', {
+      id: 4,
       instructorGroups: [2],
       learnerGroups: [2],
     }));
+
+    //users 5
+    fixtures.users.pushObjects(server.create('user', {
+      id: 5,
+      instructorGroups: [2],
+      learnerGroups: [2],
+    }));
+
     //users 6,7
-    fixtures.users.pushObjects(server.createList('user', 2, {
+    fixtures.users.pushObjects(server.create('user', {
+      id: 6,
       instructedOfferings: [1],
       instructorGroups: [1]
     }));
+
+    //users 6,7
+    fixtures.users.pushObjects(server.create('user', {
+      id: 7,
+      instructedOfferings: [1],
+      instructorGroups: [1]
+    }));
+
     //users 8,9
-    fixtures.users.pushObjects(server.createList('user', 2, {
+    fixtures.users.pushObjects(server.create('user', {
+      id: 8,
+      instructedOfferings: [1, 2],
+    }));
+
+    //users 8,9
+    fixtures.users.pushObjects(server.create('user', {
+      id: 9,
       instructedOfferings: [1, 2],
     }));
 
@@ -221,7 +252,7 @@ test('instructors', function(assert) {
     for(let i = 0; i < fixtures.offerings.length; i++){
       let instructors = find('.offering-block-time-offering-instructors li', dateBlocks.eq(i));
       let offeringInstructors = extractInstructorsFromOffering(i);
-      assert.equal(instructors.length, offeringInstructors.length);
+      assert.equal(instructors.length, offeringInstructors.length, 'number of instructors');
       for(let i = 0; i < offeringInstructors.length; i++){
         let instructor = fixtures.users[offeringInstructors[i] - 1];
         const middleInitial = instructor.middleName.charAt(0).toUpperCase();

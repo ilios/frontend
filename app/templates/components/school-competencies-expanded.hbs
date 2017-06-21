@@ -2,7 +2,7 @@
   <div class='title'>{{t 'general.competencies'}}</div>
 {{else}}
   <div class='title {{if showCollapsible "collapsible clickable"}}' {{action 'collapse'}}>
-    {{t 'general.competencies'}} ({{allDomains.length}}/{{allCompetencies.length}})
+    {{t 'general.competencies'}} ({{get (await domains) 'length'}}/{{get (await childCompetencies) 'length'}})
   </div>
 {{/if}}
 <div class='actions'>
@@ -24,7 +24,7 @@
     }}
   {{else}}
     {{school-competencies-list
-      competencies=school.competencies
+      domains=(await domains)
     }}
   {{/liquid-if}}
 </div>

@@ -2,9 +2,6 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import startMirage from '../../helpers/start-mirage';
-import Ember from 'ember';
-
-const { Object:EmberObject } = Ember;
 
 moduleForComponent('school-list', 'Integration | Component | school list', {
   integration: true,
@@ -18,7 +15,7 @@ test('it renders', function(assert) {
   let school1 = server.create('school');
   let school2 = server.create('school');
 
-  const schools = [school1, school2].map(obj => EmberObject.create(obj));
+  const schools = [school1, school2];
 
   this.set('schools', schools);
   this.render(hbs`{{school-list schools=schools}}`);

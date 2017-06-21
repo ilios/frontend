@@ -1,11 +1,7 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
-const { filterBy, sort } = computed;
+const { Component } = Ember;
 
 export default Component.extend({
-  competencies: [],
-  allDomains: filterBy('competencies', 'isDomain'),
-  sortDomainsBy: ['title'],
-  domains: sort('allDomains', 'sortDomainsBy'),
+  domains: null,
 });

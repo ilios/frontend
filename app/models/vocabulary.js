@@ -8,5 +8,5 @@ const { filterBy } = computed;
 export default DS.Model.extend(CategorizableModel, {
   title: DS.attr('string'),
   school: DS.belongsTo('school', {async: true}),
-  topLevelTerms: filterBy('terms', 'isTopLevel', true)
+  topLevelTerms: filterBy('terms', 'isTopLevel', true),
 });

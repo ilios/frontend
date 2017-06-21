@@ -15,13 +15,18 @@ moduleForComponent('collapsed-objectives', 'Integration | Component | collapsed 
 test('displays summary data', function(assert) {
   assert.expect(9);
   let hasMesh = server.create('objective', {
+    id: 1,
     hasMesh: true
   });
   let hasParents = server.create('objective', {
+    id: 2,
     hasParents: true
   });
-  let plain = server.create('objective');
-  let objectives = [hasMesh, hasParents, plain].map(obj => Ember.Object.create(obj));
+  let plain = server.create('objective', {
+    id: 3
+  });
+
+  let objectives = [hasMesh, hasParents, plain];
 
   const course = EmberObject.create({
     objectives
@@ -64,7 +69,7 @@ test('icons all parents correctly', function(assert) {
   let objective = server.create('objective', {
     hasParents: true
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives
@@ -86,7 +91,7 @@ test('icons no parents correctly', function(assert) {
   let objective = server.create('objective', {
     hasParents: false
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives
@@ -108,7 +113,7 @@ test('icons all mesh correctly', function(assert) {
   let objective = server.create('objective', {
     hasMesh: true
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives
@@ -130,7 +135,7 @@ test('icons no mesh correctly', function(assert) {
   let objective = server.create('objective', {
     hasMesh: false
   });
-  let objectives = [objective].map(obj => Ember.Object.create(obj));
+  let objectives = [objective];
 
   const course = EmberObject.create({
     objectives

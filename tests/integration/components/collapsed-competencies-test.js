@@ -1,28 +1,21 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import initializer from "ilios/instance-initializers/ember-i18n";
-import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
 const { Object:EmberObject, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('collapsed-competencies', 'Integration | Component | collapsed competencies', {
-  integration: true,
-  setup(){
-    initializer.initialize(this);
-    startMirage(this.container);
-  }
+  integration: true
 });
 
 test('it renders', function(assert) {
   assert.expect(4);
-  let schoolA = server.create('school', {title: 'Medicine'});
-  let schoolB = server.create('school', {title: 'Pharmacy'});
-  let competencyA = EmberObject.create(server.create('competency', { school: 1 }));
-  competencyA.school = RSVP.resolve(schoolA);
-  let competencyB = EmberObject.create(server.create('competency', { school: 2 }));
-  competencyB.school = RSVP.resolve(schoolB);
+  let schoolA = EmberObject.create({id: 1, title: 'Medicine'});
+  let schoolB = EmberObject.create({id: 2, title: 'Pharmacy'});
+  let competencyA = EmberObject.create({ school: resolve(schoolA) });
+  let competencyB = EmberObject.create({ school: resolve(schoolB) });
   let competencies = [competencyA, competencyB];
 
   const course = EmberObject.create({
@@ -43,16 +36,14 @@ test('it renders', function(assert) {
 
 test('clicking the header expands the list', function(assert) {
   assert.expect(2);
-  let schoolA = server.create('school', {title: 'Medicine'});
-  let schoolB = server.create('school', {title: 'Pharmacy'});
-  let competencyA = EmberObject.create(server.create('competency', { school: 1 }));
-  competencyA.school = RSVP.resolve(schoolA);
-  let competencyB = EmberObject.create(server.create('competency', { school: 2 }));
-  competencyB.school = RSVP.resolve(schoolB);
+  let schoolA = EmberObject.create({id: 1, title: 'Medicine'});
+  let schoolB = EmberObject.create({id: 2, title: 'Pharmacy'});
+  let competencyA = EmberObject.create({ school: resolve(schoolA) });
+  let competencyB = EmberObject.create({ school: resolve(schoolB) });
   let competencies = [competencyA, competencyB];
 
   const course = EmberObject.create({
-    competencies: RSVP.resolve(competencies)
+    competencies: resolve(competencies)
   });
 
   this.set('course', course);

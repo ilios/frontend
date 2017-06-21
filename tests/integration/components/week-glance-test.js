@@ -2,103 +2,101 @@ import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
 
 const { Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 const today = moment();
-
-const mockEvents = [
-  {
-    name: 'Learn to Learn',
-    startDate: today.format(),
-    location: 'Room 123',
-    sessionTypeTitle: 'Lecture',
-    courseExternalId: 'C1',
-    sessionDescription: 'Best <strong>Session</strong> For Sure',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    learningMaterials: [
-      {
-        title: 'Citation LM',
-        required: true,
-        publicNote: 'This is cool.',
-        citation: 'citationtext',
-      },
-      {
-        title: 'Link LM',
-        required: false,
-        link: 'http://myhost.com/url2',
-      },
-      {
-        title: 'File LM',
-        required: true,
-        absoluteFileUri: 'http://myhost.com/url1',
-      },
-    ],
-  },
-  {
-    name: 'Finding the Point in Life',
-    startDate: today.format(),
-    location: 'Room 456',
-    sessionTypeTitle: 'Independent Learning',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    learningMaterials: [
-      {
-        title: 'Great Slides',
-        required: true,
-        absoluteFileUri: 'http://myhost.com/url1',
-      },
-    ],
-    instructors: [
-      'Second Person',
-      'First Person',
-    ],
-  },
-  {
-    name: 'Blank',
-    isBlanked: true,
-  },
-  {
-    name: 'Not Published',
-    isBlanked: false,
-    isPublished: false,
-    isScheduled: false,
-  },
-  {
-    name: 'Scheduled',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: true,
-  },
-];
-const userEventsMock = Service.extend({
-  getEvents(){
-    return new resolve(mockEvents);
-  },
-  getSessionForEvent() {
-    return EmberObject.create({
-      attireRequired: false,
-      equipmentRequired: false,
-      attendanceRequired: false,
-    });
-  }
-});
-let blankEventsMock = Service.extend({
-  getEvents(){
-    return new resolve([]);
-  }
-});
+let mockEvents, userEventsMock, blankEventsMock;
 
 moduleForComponent('week-glance', 'Integration | Component | week glance', {
   integration: true,
-  setup(){
-    initializer.initialize(this);
+  beforeEach(){
+    mockEvents = [
+      {
+        name: 'Learn to Learn',
+        startDate: today.format(),
+        location: 'Room 123',
+        sessionTypeTitle: 'Lecture',
+        courseExternalId: 'C1',
+        sessionDescription: 'Best <strong>Session</strong> For Sure',
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        learningMaterials: [
+          {
+            title: 'Citation LM',
+            required: true,
+            publicNote: 'This is cool.',
+            citation: 'citationtext',
+          },
+          {
+            title: 'Link LM',
+            required: false,
+            link: 'http://myhost.com/url2',
+          },
+          {
+            title: 'File LM',
+            required: true,
+            absoluteFileUri: 'http://myhost.com/url1',
+          },
+        ],
+      },
+      {
+        name: 'Finding the Point in Life',
+        startDate: today.format(),
+        location: 'Room 456',
+        sessionTypeTitle: 'Independent Learning',
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        learningMaterials: [
+          {
+            title: 'Great Slides',
+            required: true,
+            absoluteFileUri: 'http://myhost.com/url1',
+          },
+        ],
+        instructors: [
+          'Second Person',
+          'First Person',
+        ],
+      },
+      {
+        name: 'Blank',
+        isBlanked: true,
+      },
+      {
+        name: 'Not Published',
+        isBlanked: false,
+        isPublished: false,
+        isScheduled: false,
+      },
+      {
+        name: 'Scheduled',
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: true,
+      },
+    ];
+    userEventsMock = Service.extend({
+      getEvents(){
+        return new resolve(mockEvents);
+      },
+      getSessionForEvent() {
+        return EmberObject.create({
+          attireRequired: false,
+          equipmentRequired: false,
+          attendanceRequired: false,
+        });
+      }
+    });
+    blankEventsMock = Service.extend({
+      getEvents(){
+        return new resolve([]);
+      }
+    });
   },
 });
 
@@ -311,16 +309,16 @@ test('changing passed properties re-renders', async function(assert) {
       const to = moment(toStamp, 'X');
       switch (count) {
       case 1:
-        assert.ok(from.isSame(today, 'year'));
-        assert.ok(to.isSame(today, 'year'));
-        assert.ok(from.isSame(today, 'isoWeek'));
-        assert.ok(to.isSame(today, 'isoWeek'));
+        assert.ok(from.isSame(today, 'year'), 'first from is right year');
+        assert.ok(to.isSame(today, 'year'), 'first to is right year');
+        assert.ok(from.isSame(today, 'isoWeek'), 'first from is right week');
+        assert.ok(to.isSame(today, 'isoWeek'), 'first to is right week');
         break;
       case 2:
-        assert.ok(from.isSame(nextYear, 'year'));
-        assert.ok(to.isSame(nextYear, 'year'));
-        assert.ok(from.isSame(nextYear, 'isoWeek'));
-        assert.ok(to.isSame(nextYear, 'isoWeek'));
+        assert.ok(from.isSame(nextYear, 'year'), 'second from is right year');
+        assert.ok(to.isSame(nextYear, 'year'), 'second to is right year');
+        assert.ok(from.isSame(nextYear, 'isoWeek'), 'second from is right week');
+        assert.ok(to.isSame(nextYear, 'isoWeek'), 'second to is right week');
         break;
       default:
         assert.notOk(true, 'Called too many times');
@@ -331,7 +329,6 @@ test('changing passed properties re-renders', async function(assert) {
   });
   this.register('service:user-events', blankEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
-
 
   let year = today.format('YYYY');
   this.set('year', year);
@@ -354,5 +351,5 @@ test('changing passed properties re-renders', async function(assert) {
 
   this.set('year', nextYear.format('YYYY'));
 
-  return wait();
+  await wait();
 });

@@ -1,22 +1,24 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import startMirage from '../../helpers/start-mirage';
 import wait from 'ember-test-helpers/wait';
 
 const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('unassigned-students-summary', 'Integration | Component | unassigned students summary', {
-  integration: true,
-  setup(){
-    startMirage(this.container);
-  }
+  integration: true
 });
 
 test('it renders', function(assert) {
-  let primarySchool = EmberObject.create(server.create('school'));
-  let secondarySchool = EmberObject.create(server.create('school'));
+  let primarySchool = EmberObject.create({
+    id: 1,
+    title: 'school 0'
+  });
+  let secondarySchool = EmberObject.create({
+    id: 2,
+    title: 'school 1'
+  });
   let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
@@ -38,7 +40,6 @@ test('it renders', function(assert) {
   this.register('service:store', storeMock);
 
   this.render(hbs`{{unassigned-students-summary}}`);
-
   return wait().then(() => {
     assert.equal(this.$().text().trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.$().text().trim().search(/There are 5 students needing assignment to a cohort/), -1);
@@ -55,7 +56,10 @@ test('it renders', function(assert) {
 });
 
 test('it renders empty', function(assert) {
-  let primarySchool = EmberObject.create(server.create('school'));
+  let primarySchool = EmberObject.create({
+    id: 1,
+    title: 'school 0'
+  });
   let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool])
