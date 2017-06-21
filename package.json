@@ -100,7 +100,7 @@
     "liquid-tether": "2.0.4",
     "loader.js": "^4.2.3",
     "normalize.css": "^7.0.0",
-    "validator": "^7.0.0"
+    "validator": "^7.1.0"
   },
   "engines": {
     "node": ">= 6"
@@ -119,5 +119,6 @@
       "ember-tether"
     ]
   },
-  "private": true
+  "private": true,
+  "dependencies": {}
 }

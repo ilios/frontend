@@ -10,7 +10,7 @@ WORKDIR /web
 ENV PATH=/web/node_modules/.bin:$PATH
 COPY . /web
 
-RUN yarn install && bower install --allow-root
+RUN npm install && bower install --allow-root
 
 CMD ["ember", "serve"]
 EXPOSE 4200
