@@ -1654,7 +1654,7 @@ broccoli-sri-hash@^2.1.0:
     sri-toolbox "^0.2.0"
     symlink-or-copy "^1.0.1"
 
-broccoli-stew@^1.1.1, broccoli-stew@^1.2.0, broccoli-stew@^1.3.2, broccoli-stew@^1.3.3, broccoli-stew@^1.4.2:
+broccoli-stew@^1.1.1, broccoli-stew@^1.2.0, broccoli-stew@^1.3.2, broccoli-stew@^1.3.3, broccoli-stew@^1.4.0, broccoli-stew@^1.4.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/broccoli-stew/-/broccoli-stew-1.5.0.tgz#d7af8c18511dce510e49d308a62e5977f461883c"
   dependencies:
@@ -3072,6 +3072,10 @@ ember-cli-htmlbars@^2.0.1:
     json-stable-stringify "^1.0.0"
     strip-bom "^3.0.0"
 
+ember-cli-import-polyfill@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-import-polyfill/-/ember-cli-import-polyfill-0.2.0.tgz#c1a08a8affb45c97b675926272fe78cf4ca166f2"
+
 ember-cli-inject-live-reload@^1.4.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/ember-cli-inject-live-reload/-/ember-cli-inject-live-reload-1.6.1.tgz#82b8f5be454815a75e7f6d42c9ce0bc883a914a3"
@@ -3122,6 +3126,21 @@ ember-cli-mirage@0.1.14:
     ember-cli-babel "^5.1.3"
     ember-inflector "^1.9.2"
     ember-lodash "0.0.6"
+
+ember-cli-moment-shim@^3.1.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.3.1.tgz#5868095247ca3df6cf24ee413889423342e39549"
+  dependencies:
+    broccoli-funnel "^1.1.0"
+    broccoli-merge-trees "^2.0.0"
+    broccoli-stew "^1.4.0"
+    chalk "^1.1.3"
+    ember-cli-babel "^5.1.7"
+    ember-cli-import-polyfill "^0.2.0"
+    exists-sync "^0.0.4"
+    lodash.defaults "^4.2.0"
+    moment "^2.18.1"
+    moment-timezone "~0.5.11"
 
 ember-cli-neat@0.0.6:
   version "0.0.6"
@@ -3221,7 +3240,7 @@ ember-cli-sass@6.0.0:
     ember-cli-version-checker "^1.0.2"
     merge "^1.2.0"
 
-ember-cli-sass@6.1.3, ember-cli-sass@^6.1.0, ember-cli-sass@^6.1.3:
+ember-cli-sass@6.1.3, ember-cli-sass@^6.1.0:
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-6.1.3.tgz#f5224ad4406dcb2815bdaab154ba5f4def49e9df"
   dependencies:
@@ -3260,7 +3279,7 @@ ember-cli-string-helpers@1.3.0:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^5.1.7"
 
-ember-cli-string-utils@^1.0.0:
+ember-cli-string-utils@^1.0.0, ember-cli-string-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-string-utils/-/ember-cli-string-utils-1.1.0.tgz#39b677fc2805f55173735376fcef278eaa4452a1"
 
@@ -3650,6 +3669,15 @@ ember-invoke-action@1.4.0:
   dependencies:
     ember-cli-babel "^5.1.6"
 
+ember-jwt-decode-shim@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-jwt-decode-shim/-/ember-jwt-decode-shim-1.0.0.tgz#66bf653d26d313ca52ab2ca12f56cd558ec92e5c"
+  dependencies:
+    broccoli-funnel "^1.1.0"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-babel "^6.0.0"
+    jwt-decode "^2.2.0"
+
 ember-k-codemod@^0.1.0:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/ember-k-codemod/-/ember-k-codemod-0.1.4.tgz#8e38e6db69f1d0bd858dd33d836ae66a759eded2"
@@ -3679,6 +3707,15 @@ ember-lodash@0.0.6:
     ember-cli-babel "^5.1.5"
     lodash-es "^3.10.0"
 
+ember-macro-helpers@^0.14.1:
+  version "0.14.5"
+  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-0.14.5.tgz#52b267db835c2dab25badfd44187e67d1f9c9e2c"
+  dependencies:
+    ember-cli-babel "^6.0.0"
+    ember-cli-string-utils "^1.1.0"
+    ember-cli-test-info "^1.0.0"
+    ember-weakmap "^2.0.0"
+
 ember-maybe-import-regenerator@^0.1.4, ember-maybe-import-regenerator@^0.1.5:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.6.tgz#35d41828afa6d6a59bc0da3ce47f34c573d776ca"
@@ -3705,6 +3742,13 @@ ember-modal-dialog@2.2.0:
     ember-cli-htmlbars "^2.0.1"
     ember-ignore-children-helper "^1.0.0"
     ember-wormhole "^0.5.1"
+
+ember-moment@^7.3.0:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/ember-moment/-/ember-moment-7.3.1.tgz#20cf679f4a10abd839633afead1dd816963bf3d2"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+    ember-macro-helpers "^0.14.1"
 
 ember-normalize@1.0.0:
   version "1.0.0"
@@ -3948,7 +3992,7 @@ ember-watson@^0.8.5:
     recast "^0.10.29"
     walk-sync "^0.1.3"
 
-ember-weakmap@2.0.0:
+ember-weakmap@2.0.0, ember-weakmap@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ember-weakmap/-/ember-weakmap-2.0.0.tgz#71c6819a8bfd0b077ae17ca1d9053fc5db06e4ac"
   dependencies:
@@ -4333,7 +4377,7 @@ exists-sync@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.3.tgz#b910000bedbb113b378b82f5f5a7638107622dcf"
 
-exists-sync@0.0.4:
+exists-sync@0.0.4, exists-sync@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.4.tgz#9744c2c428cc03b01060db454d4b12f0ef3c8879"
 
@@ -5223,17 +5267,19 @@ ilios-calendar@^11.0.0:
     ember-cli-htmlbars "^1.1.1"
     ember-cli-sass "^6.1.0"
 
-ilios-common@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-0.6.0.tgz#61a8a502a6076195f5ba341dbd0d7ba9616a0cdb"
+ilios-common@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-0.7.0.tgz#dabea25eb4e4bcc86c33e91284224e7c4c9f30b8"
   dependencies:
     elemental-calendar "^0.0.9"
     ember-cli-babel "^6.0.0"
     ember-cli-htmlbars "^1.1.1"
-    ember-cli-sass "^6.1.3"
+    ember-cli-moment-shim "^3.1.0"
     ember-composable-helpers "^2.0.1"
     ember-concurrency "^0.8.3"
     ember-i18n "^5.0.1"
+    ember-jwt-decode-shim "^1.0.0"
+    ember-moment "^7.3.0"
     ember-one-way-controls "^2.0.0"
     ember-promise-helpers "^1.0.3"
     ember-simple-auth "^1.3.0"
@@ -5723,6 +5769,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+
 kind-of@^3.0.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -5955,7 +6005,7 @@ lodash.debounce@^3.1.1:
   dependencies:
     lodash._getnative "^3.0.0"
 
-lodash.defaults@^4.0.1:
+lodash.defaults@^4.0.1, lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
@@ -6392,7 +6442,13 @@ mktemp@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/mktemp/-/mktemp-0.4.0.tgz#6d0515611c8a8c84e484aa2000129b98e981ff0b"
 
-moment@2.x, moment@^2.18.0:
+moment-timezone@~0.5.11:
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
+  dependencies:
+    moment ">= 2.9.0"
+
+moment@2.x, "moment@>= 2.9.0", moment@^2.18.0, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
