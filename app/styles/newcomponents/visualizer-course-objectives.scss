@@ -48,7 +48,7 @@
   }
 
   &.not-icon {
-    .ilios-chart {
+    .simple-chart {
       @include fill-parent;
       @include media($large-screen) {
         @include span-columns(5);
