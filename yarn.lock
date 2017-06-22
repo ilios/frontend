@@ -2321,7 +2321,7 @@ ember-cli-lodash-subset@^1.0.11, ember-cli-lodash-subset@^1.0.7:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/ember-cli-lodash-subset/-/ember-cli-lodash-subset-1.0.12.tgz#af2e77eba5dcb0d77f3308d3a6fd7d3450f6e537"
 
-ember-cli-moment-shim@^3.3.1:
+ember-cli-moment-shim@^3.1.0, ember-cli-moment-shim@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.3.1.tgz#5868095247ca3df6cf24ee413889423342e39549"
   dependencies:
@@ -2393,16 +2393,6 @@ ember-cli-sass@6.0.0:
     broccoli-merge-trees "^1.1.0"
     broccoli-sass-source-maps "^2.0.0"
     ember-cli-babel "5.1.10"
-    ember-cli-version-checker "^1.0.2"
-    merge "^1.2.0"
-
-ember-cli-sass@^6.1.3:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-6.2.0.tgz#e1f81289678e1e22d9cf9dbf7fa2de76a0de9a2f"
-  dependencies:
-    broccoli-funnel "^1.0.0"
-    broccoli-merge-trees "^1.1.0"
-    broccoli-sass-source-maps "^2.0.0"
     ember-cli-version-checker "^1.0.2"
     merge "^1.2.0"
 
@@ -2711,7 +2701,7 @@ ember-maybe-import-regenerator@^0.1.5:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-moment@^7.3.1:
+ember-moment@^7.3.0, ember-moment@^7.3.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/ember-moment/-/ember-moment-7.3.1.tgz#20cf679f4a10abd839633afead1dd816963bf3d2"
   dependencies:
@@ -3849,17 +3839,19 @@ ignore@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.0.tgz#3812d22cbe9125f2c2b4915755a1b8abd745a001"
 
-ilios-common@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-0.6.0.tgz#61a8a502a6076195f5ba341dbd0d7ba9616a0cdb"
+ilios-common@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-0.7.0.tgz#dabea25eb4e4bcc86c33e91284224e7c4c9f30b8"
   dependencies:
     elemental-calendar "^0.0.9"
     ember-cli-babel "^6.0.0"
     ember-cli-htmlbars "^1.1.1"
-    ember-cli-sass "^6.1.3"
+    ember-cli-moment-shim "^3.1.0"
     ember-composable-helpers "^2.0.1"
     ember-concurrency "^0.8.3"
     ember-i18n "^5.0.1"
+    ember-jwt-decode-shim "^1.0.0"
+    ember-moment "^7.3.0"
     ember-one-way-controls "^2.0.0"
     ember-promise-helpers "^1.0.3"
     ember-simple-auth "^1.3.0"
