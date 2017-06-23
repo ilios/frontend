@@ -1,5 +1,5 @@
 {{#if (or icon (gt (get (await objectiveWithHours) 'length') 0))}}
-  {{#ilios-chart
+  {{#simple-chart
     name='donut'
     width=width
     height=height
@@ -9,7 +9,7 @@
     as |chart|
   }}
     {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
-  {{/ilios-chart}}
+  {{/simple-chart}}
 
 {{else}}
     <div class='with-hours'>
