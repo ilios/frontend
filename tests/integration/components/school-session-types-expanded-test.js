@@ -82,7 +82,7 @@ test('it renders as manager', async function(assert) {
 
   assert.equal(this.$(title).text().trim(), 'Session Types');
   assert.equal(this.$(sessionTypeTitle).text().trim(), 'one');
-  assert.equal(this.$(items).length, 4);
+  assert.equal(this.$(items).length, 5);
 });
 
 test('editing session type fires action', async function(assert) {
@@ -103,7 +103,7 @@ test('editing session type fires action', async function(assert) {
 
   const table = 'table';
   const sessionTypes = `${table} tbody tr`;
-  const edit = `${sessionTypes}:eq(0) td:eq(5) .edit`;
+  const edit = `${sessionTypes}:eq(0) td:eq(6) .edit`;
 
   this.$(edit).click();
 });

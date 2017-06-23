@@ -30,21 +30,22 @@ export default Component.extend({
 
     return sessionType;
   }),
-  assessmentOptions: computed(async function(){
-    const store = this.get('store');
-    return await store.findAll('assessment-option');
-  }),
-  save: task(function * (title, calendarColor, assessment, assessmentOption) {
+  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod) {
     const store = this.get('store');
     const sessionType = store.createRecord('sessionType');
     const closeComponent = this.get('setSchoolNewSessionType');
     const school = this.get('school');
+    let aamcMethods = [];
+    if (aamcMethod) {
+      aamcMethods.pushObject(aamcMethod);
+    }
     sessionType.setProperties({
       school,
       title,
       calendarColor,
       assessment,
-      assessmentOption
+      assessmentOption,
+      aamcMethods,
     });
 
     yield sessionType.save();

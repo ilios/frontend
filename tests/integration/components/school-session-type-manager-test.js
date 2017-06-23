@@ -49,11 +49,11 @@ test('it renders', async function(assert) {
 
   const title = '.item:eq(0)';
   const titleInput = `${title} input`;
-  const color = '.item:eq(1)';
+  const color = '.item:eq(2)';
   const colorInput = `${color} input`;
-  const assessment = '.item:eq(2)';
+  const assessment = '.item:eq(3)';
   const assessmentInput = `${assessment} input`;
-  const assessmentOption = '.item:eq(3)';
+  const assessmentOption = '.item:eq(4)';
   const assessmentOptionSelect = `${assessmentOption} select`;
 
   assert.equal(this.$(titleInput).val().trim(), 'one');
@@ -62,7 +62,7 @@ test('it renders', async function(assert) {
   assert.equal(this.$(assessmentOptionSelect).val(), '2');
 });
 
-test('close fires action', function(assert) {
+test('close fires action', async function(assert) {
   assert.expect(1);
   const sessionType = EmberObject.create({
     title: 'one',
@@ -80,6 +80,8 @@ test('close fires action', function(assert) {
   }}`);
 
   const button = '.cancel';
+
+  await wait();
 
   this.$(button).click();
 });

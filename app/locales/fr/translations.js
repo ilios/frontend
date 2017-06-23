@@ -1,5 +1,6 @@
 export default {
   'general': {
+    'aamcMethod': 'AAMC Méthode',
     'academicLevel': 'Niveau scolaire',
     'academicLevels': 'Niveaux scolaire',
     'academicYear': "Année Scolaire",

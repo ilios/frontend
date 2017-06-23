@@ -5,6 +5,7 @@
       <th>{{t 'general.sessions'}}</th>
       <th>{{t 'general.assessment'}}</th>
       <th colspan=2>{{t 'general.assessmentOption'}}</th>
+      <th colspan=2>{{t 'general.aamcMethod'}}</th>
       <th>{{t 'general.color'}}</th>
       <th>{{t 'general.actions'}}</th>
     </tr>
@@ -26,6 +27,7 @@
           {{/if}}
         </td>
         <td colspan=2>{{get (await sessionType.assessmentOption) 'name'}}</td>
+        <td colspan=2>{{get (await sessionType.firstAamcMethod) 'description'}}</td>
         <td class='calendar-color'>
           <span class='box' style={{{concat 'background-color: ' sessionType.safeCalendarColor}}}></span>
         </td>
@@ -34,3 +36,4 @@
     {{/each}}
   </tbody>
 </table>
+
