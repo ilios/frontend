@@ -25,13 +25,14 @@ export default Component.extend({
   i18n: service(),
   classNames: ['dashboard-calendar'],
   activeFilters: null,
-  schoolPickedByUser: null,
+  selectedSchool: null,
   selectedDate: null,
   selectedView: null,
   selectedCohorts: null,
   selectedCourseLevels: null,
   selectedCourses: null,
   selectedSessionTypes: null,
+  selectedAcademicYear: null,
 
   dueTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('general.dueThisDay');
@@ -71,7 +72,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  academicYears: computed('allAcademicYears.[]', 'academicYearSelectedByUser', function(){
+  academicYears: computed('allAcademicYears.[]', function(){
     return new Promise(resolve => {
       this.get('allAcademicYears').then(years => {
         resolve(years.sortBy('title'));
@@ -84,9 +85,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  cohorts: computed('selectedSchool', 'selectedAcademicYear', async function(){
-    const school = await this.get('selectedSchool');
-    const year = await this.get('selectedAcademicYear');
+  cohorts: computed('bestSelectedSchool', 'bestSelectedAcademicYear', async function(){
+    const school = await this.get('bestSelectedSchool');
+    const year = await this.get('bestSelectedAcademicYear');
     const cohorts = await school.getCohortsForYear(year.get('title'));
     const cohortProxies = await map(cohorts.toArray(), async cohort => {
       let displayTitle = cohort.get('title');
@@ -121,10 +122,10 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  courses: computed('selectedSchool', 'selectedAcademicYear', function(){
+  courses: computed('bestSelectedSchool', 'bestSelectedAcademicYear', function(){
     return new Promise(resolve => {
-      this.get('selectedSchool').then((school) => {
-        this.get('selectedAcademicYear').then((year) => {
+      this.get('bestSelectedSchool').then(school => {
+        this.get('bestSelectedAcademicYear').then(year => {
           this.get('store').query('course', {
             filters: {
               school: school.get('id'),
@@ -245,11 +246,11 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedSchool: computed('schoolPickedByUser', 'currentUser.model.school', function(){
-    const schoolPickedByUser = this.get('schoolPickedByUser');
+  bestSelectedSchool: computed('selectedSchool', 'currentUser.model.school', function(){
+    const selectedSchool = this.get('selectedSchool');
     return new Promise(resolve => {
-      if (schoolPickedByUser)  {
-        resolve(schoolPickedByUser);
+      if (selectedSchool)  {
+        resolve(selectedSchool);
       } else {
         this.get('currentUser').get('model').then(user => {
           user.get('school').then(school => {
@@ -265,7 +266,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  schools: computed('allSchools.[]', 'selectedSchool', function(){
+  schools: computed('allSchools.[]', function(){
     return new Promise(resolve => {
       this.get('allSchools').then(schools => {
         resolve(schools.sortBy('title'));
@@ -274,15 +275,15 @@ export default Component.extend({
   }),
 
   /**
-   * @property selectedAcademicYear
+   * @property bestSelectedAcademicYear
    * @type {Ember.computed}
    * @public
    */
-  selectedAcademicYear: computed('academicYearSelectedByUser', 'allAcademicYears.[]', function(){
-    const academicYearSelectedByUser = this.get('academicYearSelectedByUser');
+  bestSelectedAcademicYear: computed('selectedAcademicYear', 'allAcademicYears.[]', function(){
+    const selectedAcademicYear = this.get('selectedAcademicYear');
     return new Promise(resolve => {
-      if (academicYearSelectedByUser)  {
-        resolve(academicYearSelectedByUser);
+      if (selectedAcademicYear)  {
+        resolve(selectedAcademicYear);
       } else {
         this.get('allAcademicYears').then(years => {
           const year = years.sortBy('title').get('lastObject');
@@ -297,9 +298,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  sessionTypes: computed('selectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
+  sessionTypes: computed('bestSelectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
     return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
+      this.get('bestSelectedSchool').then(school => {
         school.get('sessionTypes').then(types => {
           resolve(types.sortBy('title'));
         });
@@ -331,14 +332,14 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'selectedSchool', 'selectedView', function(){
+  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'bestSelectedSchool', 'selectedView', function(){
     return new Promise(resolve => {
       if(this.get('mySchedule')) {
         this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp')).then(userEvents => {
           resolve(userEvents);
         });
       } else {
-        this.get('selectedSchool').then(school => {
+        this.get('bestSelectedSchool').then(school => {
           this.get('schoolEvents').getEvents(
             school.get('id'),
             this.get('fromTimeStamp'),

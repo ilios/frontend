@@ -38,13 +38,13 @@
       {{#if (await hasMoreThanOneSchool)}}
         <select onchange={{action changeSchool value="target.value"}}>
           {{#each (await schools) as |school|}}
-            <option value="{{school.id}}" selected={{is-equal school (await selectedSchool)}}>
+            <option value="{{school.id}}" selected={{is-equal school (await bestSelectedSchool)}}>
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{get (await selectedSchool) 'title'}}
+        {{get (await bestSelectedSchool) 'title'}}
       {{/if}}
     </div>
   {{/unless}}
@@ -52,7 +52,7 @@
     <div id='calendar-year-picker' class='calendar-options-control calendar-year-picker'>
       <select onchange={{action changeAcademicYear value="target.value"}}>
         {{#each (await academicYears) as |year|}}
-          <option value="{{year.title}}" selected={{is-equal year (await selectedAcademicYear)}}>
+          <option value="{{year.title}}" selected={{is-equal year (await bestSelectedAcademicYear)}}>
             {{year.academicYearTitle}}
           </option>
         {{/each}}
@@ -64,7 +64,7 @@
     {{#liquid-if showFilters class='vertical'}}
       {{#liquid-if courseFilters class='crossFade'}}
         <div id='calendar-coursefilter' class='calendar-filter-list large-filter-list coursefilter'>
-          <h5>{{get (await selectedAcademicYear) 'academicYearTitle'}} {{t 'general.courses'}}</h5>
+          <h5>{{get (await bestSelectedAcademicYear) 'academicYearTitle'}} {{t 'general.courses'}}</h5>
           {{#if (is-fulfilled courses)}}
             <ul>
               {{#each (await courses) as |course|}}
@@ -122,7 +122,7 @@
           </ul>
         </div>
         <div id='calendar-cohortfilter' class='calendar-filter-list large-filter-list cohortfilter'>
-          <h5>{{get (await selectedAcademicYear) 'academicYearTitle'}} {{t 'general.programAndCohort'}}</h5>
+          <h5>{{get (await bestSelectedAcademicYear) 'academicYearTitle'}} {{t 'general.programAndCohort'}}</h5>
           {{#if (is-fulfilled cohorts)}}
             <ul>
               {{#each (await cohorts) as |cohort|}}
