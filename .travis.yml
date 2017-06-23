@@ -7,7 +7,9 @@ node_js:
 sudo: false
 
 cache:
-  yarn: true
+  directories:
+    - $HOME/.npm
+    - $HOME/.cache
 
 env:
   - EMBER_TRY_SCENARIO=ember-2.12
@@ -19,11 +21,8 @@ matrix:
   fast_finish: true
 
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-
-install:
-  - yarn install --frozen-lockfile
+  - if [[ `npm -v` != 5* ]]; then npm install -g npm@5; fi
+  - npm config set spin false
 
 before_script:
   - "export DISPLAY=:99.0"
@@ -31,6 +30,4 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  # Usually, it's ok to finish the test scenario without reverting
-  #  to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
