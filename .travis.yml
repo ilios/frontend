@@ -19,7 +19,6 @@ env:
     - PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
 
 cache:
-  yarn: true
   directories:
     - $HOME/.npm
     - $HOME/.cache
@@ -28,11 +27,13 @@ matrix:
   fast_finish: true
 
 before_install:
+  - if [[ `npm -v` != 5* ]]; then npm install -g npm@5; fi
+  - npm --version
   - npm install -g bower
-  - yarn global add greenkeeper-lockfile@1
+  - npm install -g greenkeeper-lockfile@1
 
 install:
-  - yarn install
+  - npm install
   - bower install
 
 before_script:
