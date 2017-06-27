@@ -78,17 +78,13 @@ test('list cohorts', function(assert) {
   });
 });
 
-test('manage cohorts', function(assert) {
+test('manage cohorts', async function(assert) {
   assert.expect(2);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-cohorts');
-    click(find('.actions button', container));
-    andThen(function(){
-      assert.equal(find('.removable-list li', container).length, 1);
-      assert.equal(getElementText(find('.selectable-list ul li', container)), getText('school 0 | program 0 | cohort 1'));
-    });
-  });
+  await visit(url);
+  let container = find('.detail-cohorts');
+  await click(find('.actions button', container));
+  assert.equal(find('.removable-list li', container).length, 1);
+  assert.equal(getElementText(find('.selectable-list ul li', container)), getText('school 0 | program 0 | cohort 1'));
 });
 
 test('save cohort chages', function(assert) {
