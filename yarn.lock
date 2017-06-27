@@ -1588,7 +1588,7 @@ broccoli-middleware@^1.0.0-beta.8:
     mime "^1.2.11"
 
 broccoli-persistent-filter@^1.0.1, broccoli-persistent-filter@^1.0.3, broccoli-persistent-filter@^1.0.8, broccoli-persistent-filter@^1.1.5, broccoli-persistent-filter@^1.1.6, broccoli-persistent-filter@^1.1.8, broccoli-persistent-filter@^1.2.0, broccoli-persistent-filter@^1.4.0:
-  version v1.4.1
+  version "1.4.1"
   resolved "https://registry.yarnpkg.com/broccoli-persistent-filter/-/broccoli-persistent-filter-1.4.1.tgz#fd585855f4a0148b9a5f8c7ced128ea8f5eaca06"
   dependencies:
     async-disk-cache "^1.2.1"
@@ -3982,9 +3982,9 @@ ember-validators@1.0.1:
     ember-cli-babel "^5.1.6"
     ember-require-module "0.1.1"
 
-ember-watson@^0.8.5:
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/ember-watson/-/ember-watson-0.8.5.tgz#2357e995930de26abd435827f1e2c07f7a1fd1f2"
+ember-watson@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/ember-watson/-/ember-watson-0.9.1.tgz#77ad64740c339b21d52fffd4487fca7c84173109"
   dependencies:
     babel-core "^5.8.22"
     chalk "^1.0.0"
