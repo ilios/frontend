@@ -89,7 +89,7 @@ export default Service.extend({
     const schools = await user.get('schools');
     const cohorts = await map(schools, async school => {
       const programs = await school.get('programs');
-      const schoolCohorts = await map(programs, async program => {
+      const schoolCohorts = await map(programs.toArray(), async program => {
         const programCohorts = await program.get('cohorts');
 
         return programCohorts;
