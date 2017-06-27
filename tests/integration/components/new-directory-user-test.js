@@ -85,7 +85,7 @@ test('initial search input fires search and fills input', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   let storeMock = Service.extend({
     query(){
       return resolve([]);
@@ -160,7 +160,7 @@ test('create new user', function(assert) {
 
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   let createRecordCalled = 0;
   let storeMock = Service.extend({
     query(what, {filters}){

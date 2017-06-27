@@ -706,19 +706,20 @@ test('filter tags work properly', async function(assert) {
 });
 
 test('query params work', async function(assert) {
-  const calendarPicker = '.calendar-view-picker button:eq(3)';
-  const scheduleSlider = '.switch-label:eq(0)';
-  const filterSlider = '.switch-label:eq(1)';
+  const calendarPicker = '.dashboard-view-picker button:eq(3)';
+  const schoolEvents = '.togglemyschedule label:eq(1)';
+  const showFiltersButton = '.showfilters label:eq(1)';
+  const hideFiltersButton = '.showfilters label:eq(0)';
   const academicYearDropdown = '.calendar-year-picker select';
 
   await visit('/dashboard');
   await click(calendarPicker);
   assert.equal(currentURL(), '/dashboard?show=calendar');
 
-  await click(scheduleSlider);
+  await click(schoolEvents);
   assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
-  await click(filterSlider);
+  await click(showFiltersButton);
   assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
   await chooseDetailFilter();
@@ -727,7 +728,7 @@ test('query params work', async function(assert) {
   await pickOption(academicYearDropdown, '2015 - 2016', assert);
   assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-  await click(filterSlider);
+  await click(hideFiltersButton);
   assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 });
 

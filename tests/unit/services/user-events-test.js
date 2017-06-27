@@ -1,7 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:user-events', 'Unit | Service | user events', {
-  needs: ['service:ajax', 'service:currentUser', 'service:iliosConfig', 'service:session'],
+  needs: ['service:commonAjax', 'service:currentUser', 'service:iliosConfig', 'service:session'],
 });
 
 // Replace this with your real tests.
