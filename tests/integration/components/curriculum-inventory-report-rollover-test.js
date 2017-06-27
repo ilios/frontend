@@ -73,7 +73,7 @@ test('rollover report', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   let storeMock = Service.extend({
     pushPayload(obj){
@@ -143,7 +143,7 @@ test('rollover report with new name, description and year', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   let storeMock = Service.extend({
     pushPayload(){},

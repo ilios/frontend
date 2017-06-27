@@ -115,7 +115,7 @@ test('generates token when asked with good expiration date', function(assert) {
       };
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   this.inject.service('ajax', { as: 'ajax' });
   this.set('nothing', parseInt);
   this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`);
@@ -141,7 +141,7 @@ test('clear and reset from new token screen', function(assert) {
       };
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   this.inject.service('ajax', { as: 'ajax' });
   this.set('toggle', ()=> {
     assert.ok(true);
@@ -191,7 +191,7 @@ test('Setting date changes request length', function(assert) {
       };
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   this.inject.service('ajax', { as: 'ajax' });
   this.set('nothing', parseInt);
   this.render(hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`);
@@ -227,7 +227,7 @@ test('invalidate tokens when asked', function(assert) {
       };
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   this.inject.service('ajax', { as: 'ajax' });
   let sessionMock = Service.extend({
     authenticate(how, obj){

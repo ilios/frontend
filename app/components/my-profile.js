@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     this.set('generatedJwt', null);
   },
   iliosConfig: service(),
-  ajax: service(),
+  commonAjax: service(),
   flashMessages: service(),
   session: service(),
 
@@ -65,17 +65,17 @@ export default Ember.Component.extend({
 
     let interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
 
-    const ajax = this.get('ajax');
+    const commonAjax = this.get('commonAjax');
     let url = '/auth/token?ttl=' + interval;
-    let data = yield ajax.request(url);
+    let data = yield commonAjax.request(url);
 
     this.set('generatedJwt', data.jwt);
   }),
   invalidateTokens: task(function * (){
     yield timeout(10); //small delay to allow rendering the spinner
-    const ajax = this.get('ajax');
+    const commonAjax = this.get('commonAjax');
     let url = '/auth/invalidatetokens';
-    let data = yield ajax.request(url);
+    let data = yield commonAjax.request(url);
 
     if (isPresent(data.jwt)) {
       const flashMessages = this.get('flashMessages');

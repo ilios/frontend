@@ -79,7 +79,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   currentUser: service(),
   iliosConfig: service(),
-  ajax: service(),
+  commonAjax: service(),
 
   init(){
     this._super(...arguments);
@@ -192,9 +192,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('syncComplete', false);
     const userId = this.get('user.id');
     let url = `/application/directory/find/${userId}`;
-    const ajax = this.get('ajax');
+    const commonAjax = this.get('commonAjax');
     try {
-      let data = yield ajax.request(url);
+      let data = yield commonAjax.request(url);
       let userData = data.result;
       const firstName = this.get('firstName');
       const lastName = this.get('lastName');

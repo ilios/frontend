@@ -1,19 +1,19 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import initializer from "ilios/instance-initializers/ember-i18n";
 import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject, RSVP } = Ember;
+const { getOwner, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-session-types-collapsed', 'Integration | Component | school session types collapsed', {
   integration: true,
   setup(){
-    initializer.initialize(this);
     startMirage(this.container);
-  }
+    initializer.initialize(getOwner(this));
+  },
 });
 
 test('it renders', async function(assert) {

@@ -11,7 +11,7 @@ export function initialize(instance) {
 
   if (currentEnv !== 'test') {
     const controller = instance.container.lookup('controller:application');
-    const ajax = instance.container.lookup('service:ajax');
+    const commonAjax = instance.container.lookup('service:commonAjax');
 
     // Global error handler in Ember run loop
     Ember.onerror = (error) => {
@@ -20,7 +20,7 @@ export function initialize(instance) {
 
         console.log(error);
         controller.addError(mappedError);
-        this.logError(mappedError, ajax);
+        this.logError(mappedError, commonAjax);
 
         if (error.stack) {
           console.error(error.stack);
@@ -35,7 +35,7 @@ export function initialize(instance) {
         if (mappedError.mainMessage !== 'TransitionAborted') {
           console.log(error);
           controller.addError(mappedError);
-          this.logError(mappedError, ajax);
+          this.logError(mappedError, commonAjax);
 
           if (error.stack) {
             console.error(error.stack);
@@ -91,10 +91,10 @@ export default {
     return diff > 1;
   },
 
-  logError(error, ajax) {
+  logError(error, commonAjax) {
     if(this.shouldWeSendAnotherError()){
       this.incrementLastErrorSent();
-      ajax.post('/errors', {
+      commonAjax.post('/errors', {
         data: {data: JSON.stringify(error)}
       }).catch(function(e){
         console.log('Error sending error message', e);

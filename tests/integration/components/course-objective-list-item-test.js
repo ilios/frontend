@@ -2,12 +2,16 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject, RSVP } = Ember;
+const { getOwner, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('course-objective-list-item', 'Integration | Component | course objective list item', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  }
 });
 
 test('it renders', function(assert) {

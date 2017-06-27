@@ -1,11 +1,15 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject } = Ember;
+const { getOwner, Object:EmberObject } = Ember;
 
 moduleForComponent('my-materials', 'Integration | Component | my materials', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
 });
 
 

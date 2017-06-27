@@ -2,8 +2,9 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { computed, Object:EmberObject, RSVP, Service } = Ember;
+const { computed, getOwner, Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let mockReports = [
@@ -34,7 +35,10 @@ let reportingMockNoReports = Service.extend({
 });
 
 moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard myreports', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  }
 });
 
 test('list reports', function(assert) {

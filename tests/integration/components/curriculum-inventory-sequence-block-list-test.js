@@ -4,18 +4,16 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
-import tHelper from "ember-i18n/helper";
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { RSVP, Object:EmberObject } = Ember;
+const { getOwner, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-list', 'Integration | Component | curriculum inventory sequence block list', {
   integration: true,
-
-  beforeEach: function () {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
-  }
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
 });
 
 test('it renders with top-level sequence blocks', function(assert) {

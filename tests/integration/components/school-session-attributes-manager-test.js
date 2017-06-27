@@ -1,8 +1,15 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+import initializer from "ilios/instance-initializers/load-common-translations";
+
+const { getOwner } = Ember;
 
 moduleForComponent('school-session-attributes-manager', 'Integration | Component | school session attributes manager', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  }
 });
 
 test('it renders', function(assert) {

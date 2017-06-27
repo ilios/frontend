@@ -493,7 +493,7 @@ test('sync user from directory', function(assert) {
       }});
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
   this.set('user', user);
   this.set('nothing', parseInt);
 

@@ -74,7 +74,7 @@ test('rollover course', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   storeMock.reopen({
     pushPayload(obj){
@@ -137,7 +137,7 @@ test('rollover course with new title', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   storeMock.reopen({
     pushPayload(){},
@@ -247,7 +247,7 @@ test('rollover course with new start date', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   storeMock.reopen({
     pushPayload(){},
@@ -340,7 +340,7 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   storeMock.reopen({
     pushPayload(){},
@@ -475,7 +475,7 @@ test('rollover course with no offerings', function(assert) {
       });
     }
   });
-  this.register('service:ajax', ajaxMock);
+  this.register('service:commonAjax', ajaxMock);
 
   storeMock.reopen({
     pushPayload(){},

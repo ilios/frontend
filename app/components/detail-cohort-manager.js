@@ -14,7 +14,7 @@ export default Component.extend({
   classNames: ['detail-block'],
   placeholder: t('general.filterPlaceholder'),
   filter: '',
-  selectedCohorts: [],
+  selectedCohorts: null,
   sortBy: ['title'],
   sortedCohorts: sort('selectedCohorts', 'sortBy'),
 
@@ -23,20 +23,19 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  availableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'selectedCohorts.[]', {
-    get(){
-      return new Promise(resolve => {
-        this.get('currentUser.cohortsInAllAssociatedSchools').then(usableCohorts => {
-          let availableCohorts = usableCohorts.filter(cohort => {
-            return (
-              this.get('selectedCohorts') && !this.get('selectedCohorts').includes(cohort)
-            );
-          });
-          resolve(availableCohorts);
+  availableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'selectedCohorts.[]', function(){
+    const currentUser = this.get('currentUser');
+    return new Promise(resolve => {
+      currentUser.get('cohortsInAllAssociatedSchools').then(usableCohorts => {
+        let availableCohorts = usableCohorts.filter(cohort => {
+          return (
+            this.get('selectedCohorts') && !this.get('selectedCohorts').includes(cohort)
+          );
         });
+        resolve(availableCohorts);
       });
-    }
-  }).readOnly(),
+    });
+  }),
 
   /**
    * All available cohorts, sorted by:
