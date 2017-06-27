@@ -89,7 +89,7 @@
     "ember-truth-helpers": "1.3.0",
     "ember-uploader": "1.2.3",
     "ember-watson": "^0.8.5",
-    "ilios-common": "^0.8.0",
+    "ilios-common": "^0.9.0",
     "liquid-fire": "0.27.3",
     "liquid-tether": "2.0.4",
     "loader.js": "^4.2.3",
