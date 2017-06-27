@@ -343,12 +343,10 @@ test('show user events', function(assert) {
   });
 });
 
-let chooseSchoolEvents = function(){
-  andThen(function(){
-    return click(find('.togglemyschedule span'));
-  });
+let chooseSchoolEvents = async function(){
+  return await click(find('.togglemyschedule label:eq(1)'));
 };
-test('show school events', function(assert) {
+test('show school events', async function(assert) {
   let today = moment().hour(8);
   server.create('schoolevent', {
     school: 1,
@@ -362,26 +360,22 @@ test('show school events', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  chooseSchoolEvents();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-  });
+  await visit('/dashboard?show=calendar');
+  await chooseSchoolEvents();
+  let events = find('div.event');
+  assert.equal(events.length, 2);
 });
 
-let showFilters = function(){
-  return andThen(function(){
-    return click(find('.showfilters span'));
-  });
+let showFilters = async function(){
+  return click(find('.showfilters label:eq(1)'));
 };
 
-let pickSessionType = function(i) {
+let pickSessionType = async function(i) {
   let types = find('.sessiontypefilter');
-  return click(find('li>span', types).eq(i));
+  return await click(find('li>span', types).eq(i));
 };
 
-test('test session type filter', function(assert) {
+test('test session type filter', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -395,45 +389,34 @@ test('test session type filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    pickSessionType(0).then(() => {
-      events = find('div.event');
-      assert.equal(events.length, 1);
-    });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  await pickSessionType(0);
+  events = find('div.event');
+  assert.equal(events.length, 1);
+  await pickSessionType(1);
+  events = find('div.event');
+  assert.equal(events.length, 2);
 
-  });
-  andThen(function() {
-    pickSessionType(1).then(() => {
-      let events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    pickSessionType(0).then(() => {
-      pickSessionType(1).then(() => {
-        pickSessionType(2).then(() => {
-          let events = find('div.event');
-          assert.equal(events.length, 0);
-        });
-      });
-    });
-  });
+  await pickSessionType(0);
+  await pickSessionType(1);
+  await pickSessionType(2);
+  events = find('div.event');
+  assert.equal(events.length, 0);
 });
 
-let pickCourseLevel = function(i) {
+let pickCourseLevel = async function(i) {
   let levels = find('.courselevelfilter');
-  return click(find('li>span', levels).eq(i));
+  return await click(find('li>span', levels).eq(i));
 };
-let clearCourseLevels = function() {
+let clearCourseLevels = async function() {
   let levels = find('.courselevelfilter');
-  return click(find('.checkbox:first', levels));
+  return await click(find('.checkbox:first', levels));
 };
 
-test('test course level filter', function(assert) {
+test('test course level filter', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -447,37 +430,26 @@ test('test course level filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  chooseDetailFilter();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    pickCourseLevel(0).then(() => {
-      events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    clearCourseLevels().then(() => {
-      pickCourseLevel(2).then(() => {
-        let events = find('div.event');
-        assert.equal(events.length, 0);
-      });
-    });
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  await chooseDetailFilter();
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  await pickCourseLevel(0);
+  events = find('div.event');
+  assert.equal(events.length, 2);
+  await clearCourseLevels();
+  await pickCourseLevel(2);
+  events = find('div.event');
+  assert.equal(events.length, 0);
 });
 
-let pickCohort = function(i) {
+let pickCohort = async function(i) {
   let cohorts = find('.cohortfilter');
-  return click(find('li>span', cohorts).eq(i));
-};
-let clearCohorts = function() {
-  let cohorts = find('.cohortfilter');
-  return click(find('.checkbox:first', cohorts));
+  return await click(find('li>span', cohorts).eq(i));
 };
 
-test('test cohort filter', function(assert) {
+test('test cohort filter', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -491,43 +463,35 @@ test('test cohort filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  chooseDetailFilter();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    pickCohort(0).then(() => {
-      events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    clearCohorts().then(() => {
-      pickCohort(1).then(() => {
-        let events = find('div.event');
-        assert.equal(events.length, 0);
-      });
-    });
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  await chooseDetailFilter();
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  await pickCohort(0);
+  events = find('div.event');
+  assert.equal(events.length, 2);
+
+  await pickCohort(0);
+  await pickCohort(1);
+  events = find('div.event');
+  assert.equal(events.length, 0);
 });
 
-let chooseDetailFilter = function(){
-  andThen(function(){
-    return click(find('.togglecoursefilters span'));
-  });
+let chooseDetailFilter = async function(){
+  return await click(find('.togglecoursefilters label:eq(1)'));
 };
 
-let pickCourse = function(i) {
+let pickCourse = async function(i) {
   let courses = find('.coursefilter');
-  return click(find('li>span', courses).eq(i));
+  return await click(find('li>span', courses).eq(i));
 };
-let clearCourses = function() {
+let clearCourses = async function() {
   let courses = find('.coursefilter');
-  return click(find('.checkbox:first', courses));
+  return await click(find('.checkbox:first', courses));
 };
 
-test('test course filter', function(assert) {
+test('test course filter', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -547,27 +511,20 @@ test('test course filter', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 3);
-    pickCourse(0).then(() => {
-      events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    clearCourses().then(() => {
-      pickCourse(1).then(() => {
-        let events = find('div.event');
-        assert.equal(events.length, 1);
-      });
-    });
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  let events = find('div.event');
+  assert.equal(events.length, 3);
+  await pickCourse(0);
+  events = find('div.event');
+  assert.equal(events.length, 2);
+  await clearCourses();
+  await pickCourse(1);
+  events = find('div.event');
+  assert.equal(events.length, 1);
 });
 
-test('test course and session type filter together', function(assert) {
+test('test course and session type filter together', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -587,29 +544,22 @@ test('test course and session type filter together', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 3);
-    pickCourse(0).then(() => {
-      events = find('div.event');
-      assert.equal(events.length, 2);
-    });
-  });
-  andThen(function() {
-    clearCourses().then(() => {
-      pickCourse(0).then(() => {
-        pickSessionType(0).then(() => {
-          let events = find('div.event');
-          assert.equal(events.length, 1);
-        });
-      });
-    });
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+
+  let events = find('div.event');
+  assert.equal(events.length, 3);
+  await pickCourse(0);
+  events = find('div.event');
+  assert.equal(events.length, 2);
+  await clearCourses();
+  await pickCourse(0);
+  await pickSessionType(0);
+  events = find('div.event');
+  assert.equal(events.length, 1);
 });
 
-test('agenda show next seven days of events', function(assert) {
+test('agenda show next seven days of events', async function(assert) {
   let today = moment().hour(0).minute(2);
   server.create('userevent', {
     user: 4136,
@@ -631,7 +581,7 @@ test('agenda show next seven days of events', function(assert) {
     endDate: yesterday.clone().add(1, 'hour').format(),
     offering: 3
   });
-  visit('/dashboard?show=agenda');
+  await visit('/dashboard?show=agenda');
   andThen(function() {
     let events = find('tr');
     assert.equal(events.length, 2);
@@ -640,7 +590,7 @@ test('agenda show next seven days of events', function(assert) {
   });
 });
 
-test('academic year filters cohort', function(assert) {
+test('academic year filters cohort', async function(assert) {
   server.create('academicYear', {
     id: 2014,
     title: 2014
@@ -658,24 +608,18 @@ test('academic year filters cohort', function(assert) {
   server.create('cohort', {
     programYear: 3
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  chooseDetailFilter();
-  andThen(() => {
-    pickOption('.calendar-year-picker select', '2015 - 2016', assert);
-    andThen(()=> {
-      let cohortFilter = find('.cohortfilter li');
-      assert.equal(cohortFilter.length, 3);
-    });
-    pickOption('.calendar-year-picker select', '2014 - 2015', assert);
-    andThen(()=> {
-      let cohortFilter = find('.cohortfilter li');
-      assert.equal(cohortFilter.length, 1);
-    });
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  await chooseDetailFilter();
+  await pickOption('.calendar-year-picker select', '2015 - 2016', assert);
+  let cohortFilter = find('.cohortfilter li');
+  assert.equal(cohortFilter.length, 3);
+  await pickOption('.calendar-year-picker select', '2014 - 2015', assert);
+  cohortFilter = find('.cohortfilter li');
+  assert.equal(cohortFilter.length, 1);
 });
 
-test('academic year filters courses', function(assert) {
+test('academic year filters courses', async function(assert) {
   server.create('academicYear', {
     id: 2014,
     title: 2014
@@ -683,55 +627,43 @@ test('academic year filters courses', function(assert) {
   server.create('course', {
     year: 2014
   });
-  visit('/dashboard?show=calendar');
-  showFilters();
-  andThen(() => {
-    pickOption('.calendar-year-picker select', '2015 - 2016', assert);
-    andThen(()=> {
-      let courseFilters = find('.coursefilter li');
-      assert.equal(courseFilters.length, 2);
-    });
-    pickOption('.calendar-year-picker select', '2014 - 2015', assert);
-    andThen(()=> {
-      let courseFilters = find('.coursefilter li');
-      assert.equal(courseFilters.length, 1);
-    });
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  await pickOption('.calendar-year-picker select', '2015 - 2016', assert);
+  let courseFilters = find('.coursefilter li');
+  assert.equal(courseFilters.length, 2);
+  await pickOption('.calendar-year-picker select', '2014 - 2015', assert);
+  courseFilters = find('.coursefilter li');
+  assert.equal(courseFilters.length, 1);
 });
 
-test('clear all filters', function(assert) {
+test('clear all filters', async function(assert) {
   const clearFilter = '.calendar-clear-filters';
   const sessiontype = '.sessiontypefilter li:first input';
   const courselevel = '.courselevelfilter li:first input';
   const cohort = '.cohortfilter li:first input';
 
-  visit('/dashboard?show=calendar');
-  showFilters();
-  chooseDetailFilter();
-  andThen(() => {
-    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  await chooseDetailFilter();
+  assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
 
-  click(sessiontype);
-  click(courselevel);
-  click(cohort);
-  andThen(() => {
-    assert.ok(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
-    assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
-    assert.ok(find(courselevel).prop('checked'), 'filter is checked');
-    assert.ok(find(cohort).prop('checked'), 'filter is checked');
-  });
+  await click(sessiontype);
+  await click(courselevel);
+  await click(cohort);
+  assert.ok(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
+  assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
+  assert.ok(find(courselevel).prop('checked'), 'filter is checked');
+  assert.ok(find(cohort).prop('checked'), 'filter is checked');
 
-  click(clearFilter);
-  andThen(() => {
-    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
-  });
+  await click(clearFilter);
+  assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+  assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
+  assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
+  assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
 });
 
-test('filter tags work properly', function(assert) {
+test('filter tags work properly', async function(assert) {
   const sessiontype = '.sessiontypefilter li:first input';
   const courselevel = '.courselevelfilter li:first input';
   const cohort = '.cohortfilter li:first input';
@@ -744,82 +676,59 @@ test('filter tags work properly', function(assert) {
   }
 
   function clickTag(n) {
-    click(`.filter-tag:eq(${n})`);
+    return click(`.filter-tag:eq(${n})`);
   }
 
-  visit('/dashboard?show=calendar');
-  showFilters();
-  chooseDetailFilter();
-  andThen(() => {
-    assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
-  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  await chooseDetailFilter();
+  assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
 
-  click(sessiontype);
-  click(courselevel);
-  click(cohort);
-  andThen(() => {
-    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'Course Level 1', 'filter tag is active');
-    assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
-  });
+  await click(sessiontype);
+  await click(courselevel);
+  await click(cohort);
+  assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+  assert.equal(getTagText(1), 'Course Level 1', 'filter tag is active');
+  assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
 
+  await clickTag(1);
+  assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
+  assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+  assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
 
-  clickTag(1);
-  andThen(() => {
-    assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
-    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
-  });
+  await clickTag(0);
+  assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
 
-  clickTag(0);
-  andThen(() => {
-    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
-  });
-
-  click(clearFilter);
-  andThen(() => {
-    assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
-    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
-  });
+  await click(clearFilter);
+  assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
+  assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
+  assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
 });
 
-test('query params work', function(assert) {
+test('query params work', async function(assert) {
   const calendarPicker = '.calendar-view-picker button:eq(3)';
   const scheduleSlider = '.switch-label:eq(0)';
   const filterSlider = '.switch-label:eq(1)';
   const academicYearDropdown = '.calendar-year-picker select';
 
-  visit('/dashboard');
-  click(calendarPicker);
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard?show=calendar');
-  });
+  await visit('/dashboard');
+  await click(calendarPicker);
+  assert.equal(currentURL(), '/dashboard?show=calendar');
 
-  click(scheduleSlider);
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
-  });
+  await click(scheduleSlider);
+  assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
-  click(filterSlider);
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
-  });
+  await click(filterSlider);
+  assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
-  chooseDetailFilter();
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
-  });
+  await chooseDetailFilter();
+  assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-  pickOption(academicYearDropdown, '2015 - 2016', assert);
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
-  });
+  await pickOption(academicYearDropdown, '2015 - 2016', assert);
+  assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-  click(filterSlider);
-  andThen(() => {
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
-  });
+  await click(filterSlider);
+  assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 });
 
 test('week summary dispalys the whole week', async function(assert) {
