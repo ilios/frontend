@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:server-variables', 'Unit | Service | server variables', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['service:session']
 });
 
 // Replace this with your real tests.
