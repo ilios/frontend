@@ -1,5 +1,7 @@
 # Ilios Common Code
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ilios/common.svg)](https://greenkeeper.io/)
+
 ## Shared code respotory for:
 
 - [Ilios Frontend](https://github.com/ilios/common)
