@@ -4,17 +4,18 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
-import tHelper from "ember-i18n/helper";
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { RSVP, Object:EmberObject, Service } = Ember;
+const { getOwner, RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
 moduleForComponent('curriculum-inventory-sequence-block-overview', 'Integration | Component | curriculum inventory sequence block overview', {
   integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
   beforeEach: function() {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
     storeMock = Service.extend({});
     this.register('service:store', storeMock);
   }

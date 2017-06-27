@@ -1,17 +1,17 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-i18n/helper";
-const { RSVP, Service, Object:EmberObject } = Ember;
+import initializer from "ilios/instance-initializers/load-common-translations";
+
+const { getOwner, RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('new-myreport', 'Integration | Component | new myreport', {
   integration: true,
-  beforeEach: function() {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+  setup(){
+    initializer.initialize(getOwner(this));
   }
 });
 

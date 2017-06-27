@@ -4,13 +4,17 @@ import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { RSVP, Object:EmberObject, Service } = Ember;
+const { getOwner, RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
 moduleForComponent('new-curriculum-inventory-sequence-block', 'Integration | Component | new curriculum inventory sequence block', {
   integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
   beforeEach(){
     storeMock = Service.extend({});
     this.register('service:store', storeMock);

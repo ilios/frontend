@@ -2,11 +2,15 @@ import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject } = Ember;
+const { getOwner, Object:EmberObject } = Ember;
 
 moduleForComponent('school-session-attributes', 'Integration | Component | school session attributes', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
 });
 
 test('it renders collapsed', async function(assert) {

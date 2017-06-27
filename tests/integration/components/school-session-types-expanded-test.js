@@ -2,8 +2,9 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject, RSVP, Service } = Ember;
+const { getOwner, Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
@@ -19,6 +20,9 @@ const assessmentOptions = [formative, summative];
 
 moduleForComponent('school-session-types-expanded', 'Integration | Component | school session types expanded', {
   integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
   beforeEach(){
     storeMock = Service.extend({
       findAll(what){

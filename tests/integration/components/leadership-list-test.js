@@ -1,12 +1,17 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject } = Ember;
+const { Object:EmberObject, getOwner } = Ember;
 
 moduleForComponent('leadership-list', 'Integration | Component | leadership list', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  }
 });
+
 
 test('it renders with data', function(assert) {
   assert.expect(5);

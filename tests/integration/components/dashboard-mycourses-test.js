@@ -1,10 +1,10 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-i18n/helper";
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { Object:EmberObject, run, RSVP, Service } = Ember;
+const { getOwner, Object:EmberObject, run, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let mockCourses = [
@@ -36,10 +36,9 @@ let currentUserMockUnprivileged = Service.extend({
 
 moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses', {
   integration: true,
-  beforeEach: function() {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
-  }
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
 });
 
 test('list courses for privileged users', async function(assert) {
