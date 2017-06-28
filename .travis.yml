@@ -7,10 +7,6 @@ node_js:
 sudo: false
 
 env:
-  global:
-    #AWS credentials for ilios travis-deploy user
-  - secure: kLY+xxJKxi/srSsyjphkaF8y2dagUTBBzBWjkO+uEtR5K5OxURHCFmCL9cuM4VbSBkvRaoPuzxNeeRP4Np3x1/Xiv1so60ZBo+XPW02W84HZWpSc2QxwlSLaU6KD/K7K7HZ+dh3ky91nQFTqlGPJcoWHy+aCJkLDlgWLYZwxc0Q=
-  - secure: ITd6yf8q7kimvTFERMEXkGIWjI8g/SWgt6kP7iiTB+7IqBKY0pG2IdU3I/I8HifTnophUsZJEYbZ6Dj+OnAgWjTo1HSYoltlwXlO0qigw0exI9G8lmpJ1Ww8lSuGhUAop3YpUwrIVmE0PRPaEduTRJTCzUt6yKq4FjGHC3SSHFU=
   matrix:
     - PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
     - PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
