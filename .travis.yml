@@ -19,3 +19,6 @@ install:
 
 script:
   - yarn test
+
+after_success:
+  - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
