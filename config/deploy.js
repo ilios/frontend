@@ -28,9 +28,8 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    // ENV.s3.bucket = process.env.PRODUCTION_BUCKET;
-    // ENV.s3.region = process.env.PRODUCTION_REGION;
-    // ENV.cloudfront.distribution = process.env.PRODUCTION_DISTRIBUTION;
+    ENV.s3.bucket = 'ilios-lti-app-production';
+    ENV.cloudfront.distribution = 'E33FMSW7332DVL';
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
