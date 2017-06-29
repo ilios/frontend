@@ -24,4 +24,5 @@ script: yarn test
 after_script: greenkeeper-lockfile-upload
 
 after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy staging --activate
   - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
