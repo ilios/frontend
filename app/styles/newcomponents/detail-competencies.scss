@@ -11,5 +11,9 @@
 
   .detail-competencies-content {
     @include detail-container-content;
+
+    .static-list {
+      @include ilios-static-list;
+    }
   }
 }
