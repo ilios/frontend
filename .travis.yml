@@ -11,14 +11,17 @@ cache:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
+  - yarn global add greenkeeper-lockfile@1
   - yarn global add phantomjs-prebuilt
   - phantomjs --version
 
-install:
-  - yarn install
+install: yarn install
 
-script:
-  - yarn test
+before_script: greenkeeper-lockfile-update
+
+script: yarn test
+
+after_script: greenkeeper-lockfile-upload
 
 after_success:
   - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
