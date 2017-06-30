@@ -33,16 +33,16 @@
             {{/if}}
             {{week-glance-session-attrs event=event}}
           </p>
-          {{#if event.sessionDescription.length}}
-            <p class='description'>
-              {{big-text text=event.sessionDescription length=50}}
-            </p>
-          {{/if}}
           {{#if event.instructors.length}}
             <div class='instructors'>
               <label>{{t 'general.instructors'}}:</label>
               {{join ', ' (sort-by (action 'sortString') event.instructors)}}
             </div>
+          {{/if}}
+          {{#if event.sessionDescription.length}}
+            <p class='description'>
+              {{big-text text=event.sessionDescription length=50}}
+            </p>
           {{/if}}
           <ul class='learning-materials'>
             {{#each event.learningMaterials as |lm|}}
