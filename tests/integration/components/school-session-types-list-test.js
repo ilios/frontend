@@ -98,7 +98,7 @@ test('clicking edit fires action', async function(assert) {
 
   await wait();
   const rows = 'table tbody tr';
-  const edit = `${rows}:eq(0) td:eq(6) .clickable`;
+  const edit = `${rows}:eq(0) td:eq(6) .fa-edit`;
 
   this.$(edit).click();
 });
@@ -128,4 +128,86 @@ test('clicking title fires action', async function(assert) {
   const title = `${rows}:eq(0) td:eq(0) a`;
 
   this.$(title).click();
+});
+
+test('session types without sessions can be deleted', async function(assert) {
+  assert.expect(4);
+  let  unlinkedSessionType = EmberObject.create({
+    id: 1,
+    school: 1,
+    title: 'unlinked',
+    assessment: false,
+    assessmentOption: resolve(null),
+    calendarColor: '#fff',
+    sessionCount: 0,
+    deleteRecord(){
+      assert.ok(true, 'was deleted');
+      return resolve();
+    }
+  });
+  let  linkedSessionType = EmberObject.create({
+    id: 1,
+    school: 1,
+    title: 'linked',
+    assessment: false,
+    assessmentOption: resolve(null),
+    calendarColor: '#fff',
+    sessionCount: 5,
+    deleteRecord(){
+      assert.ok(true, 'was deleted');
+      return resolve();
+    }
+  });
+
+  this.set('sessionTypes', [linkedSessionType, unlinkedSessionType]);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{school-session-types-list
+    sessionTypes=sessionTypes
+    manageSessionType=(action nothing)
+  }}`);
+
+  await wait();
+  const rows = 'table tbody tr';
+  const linkedTitle = `${rows}:eq(0) td:eq(0)`;
+  const unlinkedTitle = `${rows}:eq(1) td:eq(0)`;
+  const linkedTrash = `${rows}:eq(0) td:eq(6) .fa-trash`;
+  const unlinkedTrash = `${rows}:eq(1) td:eq(6) .fa-trash`;
+
+  assert.equal(this.$(linkedTitle).text().trim(), 'linked', 'linked is first');
+  assert.equal(this.$(unlinkedTitle).text().trim(), 'unlinked', 'unlinked is second');
+  assert.equal(this.$(linkedTrash).length, 0, 'linked has no trash can');
+  assert.equal(this.$(unlinkedTrash).length, 1, 'unlinked has a trash can');
+});
+
+test('clicking delete deletes the record', async function(assert) {
+  assert.expect(2);
+  let  sessionType = EmberObject.create({
+    id: 1,
+    school: 1,
+    title: 'first',
+    assessment: false,
+    assessmentOption: resolve(null),
+    calendarColor: '#fff',
+    sessionCount: 0,
+    deleteRecord(){
+      assert.ok(true, 'was deleted');
+    },
+    save(){
+      assert.ok(true, 'was deleted');
+      return resolve();
+    },
+  });
+
+  this.set('sessionTypes', [sessionType]);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{school-session-types-list
+    sessionTypes=sessionTypes
+    manageSessionType=(action nothing)
+  }}`);
+
+  await wait();
+  const rows = 'table tbody tr';
+  const trash = `${rows}:eq(0) td:eq(6) .fa-trash`;
+
+  this.$(trash).click();
 });

@@ -31,9 +31,17 @@
         <td class='calendar-color'>
           <span class='box' style={{{concat 'background-color: ' sessionType.safeCalendarColor}}}></span>
         </td>
-        <td>{{fa-icon 'edit' class='edit clickable' click=(action manageSessionType sessionType.id)}}</td>
+        <td>
+          {{fa-icon 'edit' class='edit clickable' click=(action manageSessionType sessionType.id)}}
+          {{#if (eq sessionType.sessionCount 0)}}
+            {{#if (contains sessionType.id deletedSessionTypes)}}
+              {{fa-icon 'spinner' spin=true}}
+            {{else}}
+              {{fa-icon 'trash' class=(if deleteSessionType.isRunning 'inactive' 'remove clickable') click=(perform deleteSessionType sessionType)}}
+            {{/if}}
+          {{/if}}
+        </td>
       </tr>
     {{/each}}
   </tbody>
 </table>
-
