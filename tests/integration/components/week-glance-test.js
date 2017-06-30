@@ -16,7 +16,7 @@ const mockEvents = [
     location: 'Room 123',
     sessionTypeTitle: 'Lecture',
     courseExternalId: 'C1',
-    sessionDescription: 'Best <strong>Session</strong> For Sure',
+    sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
     isBlanked: false,
     isPublished: true,
     isScheduled: false,
@@ -167,7 +167,7 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
   assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
   assert.equal(this.$(firstLocation).text().trim(), '- Room 123');
-  assert.equal(this.$(firstDescription).text().trim(), 'Best Session For Sure');
+  assert.equal(this.$(firstDescription).text().trim(), 'Best Session For SureLorem ipsum dolor sit amet, c');
   assert.equal(this.$(firstLm1).text().replace(/[\t\n\s]+/g, ""), 'CitationLMcitationtext');
   assert.equal(this.$(firstLm2).text().trim(), 'Link LM');
   assert.equal(this.$(firstLm2Link).attr('href'), 'http://myhost.com/url2');

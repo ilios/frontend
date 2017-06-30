@@ -33,9 +33,11 @@
             {{/if}}
             {{week-glance-session-attrs event=event}}
           </p>
-          <p class='description'>
-            {{{event.sessionDescription}}}
-          </p>
+          {{#if event.sessionDescription.length}}
+            <p class='description'>
+              {{big-text text=event.sessionDescription length=50}}
+            </p>
+          {{/if}}
           {{#if event.instructors.length}}
             <div class='instructors'>
               <label>{{t 'general.instructors'}}:</label>
