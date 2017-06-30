@@ -1,9 +1,9 @@
-{{#if (or icon (gt (get (await objectiveWithHours) 'length') 0))}}
+{{#if (or icon (gt (get (await objectiveWithMinutes) 'length') 0))}}
   {{#simple-chart
     name='donut'
     width=width
     height=height
-    data=(await objectiveWithHours)
+    data=(await objectiveWithMinutes)
     hover=(perform donutHover)
     leave=(perform donutHover)
     as |chart|
@@ -18,12 +18,12 @@
     </div>
 {{/if}}
 
-{{#unless (or icon (eq (get (await objectiveWithoutHours) 'length') 0))}}
+{{#unless (or icon (eq (get (await objectiveWithoutMinutes) 'length') 0))}}
   <div class='zero-hours'>
     <h4>{{fa-icon 'warning' class='warning'}} {{t 'general.unusedObjectives'}}:</h4>
     <p>{{t 'general.objectivesWithNoHours'}}</p>
     <ul>
-      {{#each (sort-by 'meta.courseObjective.title' (await objectiveWithoutHours)) as |obj|}}
+      {{#each (sort-by 'meta.courseObjective.title' (await objectiveWithoutMinutes)) as |obj|}}
         <li>{{{obj.meta.courseObjective.title}}}</li>
       {{/each}}
     </ul>

@@ -17,6 +17,7 @@ export default Component.extend({
     const sessions = await course.get('sessions');
     const sessionCourseObjectiveMap = await map(sessions.toArray(), async session => {
       const hours = await session.get('maxSingleOfferingDuration');
+      const minutes = Math.round(hours * 60);
       const sessionObjectives = await session.get('objectives');
       const sessionObjectivesWithParents = await filter(sessionObjectives.toArray(), async sessionObjective => {
         const parents = await sessionObjective.get('parents');
@@ -30,7 +31,7 @@ export default Component.extend({
       return {
         sessionTitle: session.get('title'),
         objectives: courseSessionObjectives,
-        hours
+        minutes
       };
 
     });
@@ -44,9 +45,9 @@ export default Component.extend({
     const sessionCourseObjectiveMap  = await this.get('objectiveData');
     const courseObjectives = await course.get('objectives');
     let mappedObjectives = courseObjectives.map(courseObjective => {
-      const hours = sessionCourseObjectiveMap.map(obj => {
+      const minutes = sessionCourseObjectiveMap.map(obj => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
-          return obj.hours;
+          return obj.minutes;
         } else {
           return 0;
         }
@@ -56,7 +57,7 @@ export default Component.extend({
         courseObjective,
         sessionObjectives
       };
-      const data = hours.reduce((accumulator, current) => accumulator + parseInt(current), 0);
+      const data = minutes.reduce((accumulator, current) => accumulator + parseInt(current), 0);
 
       return {
         data,
@@ -64,9 +65,9 @@ export default Component.extend({
       };
     });
 
-    const totalHours = mappedObjectives.mapBy('data').reduce((total, hours) => total + hours, 0);
+    const totalMinutes = mappedObjectives.mapBy('data').reduce((total, minutes) => total + minutes, 0);
     const mappedObjectivesWithLabel = mappedObjectives.map(obj => {
-      const percent = (obj.data / totalHours * 100).toFixed(1);
+      const percent = (obj.data / totalMinutes * 100).toFixed(1);
       obj.label = `${percent}%`;
       return obj;
     });
@@ -74,18 +75,18 @@ export default Component.extend({
     return mappedObjectivesWithLabel;
   }),
 
-  objectiveWithHours: computed('condensedObjectiveData.[]', async function(){
+  objectiveWithMinutes: computed('condensedObjectiveData.[]', async function(){
     const condensedObjectiveData = await this.get('condensedObjectiveData');
-    const objectiveWithHours = condensedObjectiveData.filter(obj => obj.data !== 0);
+    const objectiveWithMinutes = condensedObjectiveData.filter(obj => obj.data !== 0);
 
-    return objectiveWithHours;
+    return objectiveWithMinutes;
   }),
 
-  objectiveWithoutHours: computed('condensedObjectiveData.[]', async function(){
+  objectiveWithoutMinutes: computed('condensedObjectiveData.[]', async function(){
     const condensedObjectiveData = await this.get('condensedObjectiveData');
-    const objectiveWithoutHours = condensedObjectiveData.filterBy('data', 0);
+    const objectiveWithoutMinutes = condensedObjectiveData.filterBy('data', 0);
 
-    return objectiveWithoutHours;
+    return objectiveWithoutMinutes;
   }),
 
   async getTooltipData(obj){
