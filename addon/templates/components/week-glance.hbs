@@ -53,7 +53,12 @@
                   <a href={{lm.link}} target='_blank' rel='noopener'>{{fa-icon 'external-link-square'}} {{lm.title}}</a>
                 {{else}}
                   {{lm.title}}
-                  <ul><li><small>{{lm.citation}}</small></li></ul>
+                  <ul>
+                    <li><small>{{lm.citation}}</small></li>
+                  </ul>
+                {{/if}}
+                {{#if lm.publicNotes}}
+                  <p class='public-notes'>{{big-text text=lm.publicNotes length=50}}</p>
                 {{/if}}
               </li>
             {{/each}}

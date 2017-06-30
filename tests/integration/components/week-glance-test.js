@@ -24,7 +24,7 @@ const mockEvents = [
       {
         title: 'Citation LM',
         required: true,
-        publicNote: 'This is cool.',
+        publicNotes: 'This is cool.',
         citation: 'citationtext',
       },
       {
@@ -52,6 +52,7 @@ const mockEvents = [
         title: 'Great Slides',
         required: true,
         absoluteFileUri: 'http://myhost.com/url1',
+        publicNotes: 'slide notes',
       },
     ],
     instructors: [
@@ -120,7 +121,7 @@ const getTitle = function(fullTitle){
 };
 
 test('it renders with events', async function(assert) {
-  assert.expect(19);
+  assert.expect(22);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
   this.set('today', today);
@@ -142,7 +143,9 @@ test('it renders with events', async function(assert) {
   const firstDescription = `${firstEvent} .description`;
   const firstLearningMaterials = `${firstEvent} .learning-material`;
   const firstLm1 = `${firstLearningMaterials}:eq(0)`;
+  const firstLm1Notes = `${firstLm1} .public-notes`;
   const firstLm2 = `${firstLearningMaterials}:eq(1)`;
+  const firstLm2Notes = `${firstLm2} .public-notes`;
   const firstLm2Link = `${firstLm2} a`;
   const firstLm3 = `${firstLearningMaterials}:eq(2)`;
   const firstLm3Link = `${firstLm3} a`;
@@ -155,6 +158,7 @@ test('it renders with events', async function(assert) {
   const secondLearningMaterials = `${secondEvent} .learning-material`;
   const secondLm1 = `${secondLearningMaterials}:eq(0)`;
   const secondLm1Link = `${secondLm1} a`;
+  const secondLm1Notes = `${secondLm1} .public-notes`;
   const secondInstructors = `${secondEvent} .instructors`;
 
 
@@ -168,8 +172,10 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
   assert.equal(this.$(firstLocation).text().trim(), '- Room 123');
   assert.equal(this.$(firstDescription).text().trim(), 'Best Session For SureLorem ipsum dolor sit amet, c');
-  assert.equal(this.$(firstLm1).text().replace(/[\t\n\s]+/g, ""), 'CitationLMcitationtext');
+  assert.equal(this.$(firstLm1).text().replace(/[\t\n\s]+/g, ""), 'CitationLMcitationtextThisiscool.');
+  assert.equal(this.$(firstLm1Notes).text().replace(/[\t\n\s]+/g, ""), 'Thisiscool.');
   assert.equal(this.$(firstLm2).text().trim(), 'Link LM');
+  assert.equal(this.$(firstLm2Notes).length, 0);
   assert.equal(this.$(firstLm2Link).attr('href'), 'http://myhost.com/url2');
   assert.equal(this.$(firstLm3).text().trim(), 'File LM');
   assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1');
@@ -180,7 +186,8 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(secondSessionType).text().trim(), 'Independent Learning');
   assert.equal(this.$(secondLocation).text().trim(), '- Room 456');
   assert.equal(this.$(secondDescription).text().trim(), '', 'Emtpy Description is Empty');
-  assert.equal(this.$(secondLm1).text().trim(), 'Great Slides');
+  assert.equal(this.$(secondLm1Link).text().trim(), 'Great Slides');
+  assert.equal(this.$(secondLm1Notes).text().trim(), 'slide notes');
   assert.equal(this.$(secondLm1Link).attr('href'), 'http://myhost.com/url1');
   assert.equal(this.$(secondInstructors).text().replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
 });
