@@ -38,6 +38,9 @@ const mockEvents = [
         absoluteFileUri: 'http://myhost.com/url1',
       },
     ],
+    attireRequired: true,
+    equipmentRequired: true,
+    attendanceRequired: true,
   },
   {
     name: 'Finding the Point in Life',
@@ -59,6 +62,9 @@ const mockEvents = [
       'Second Person',
       'First Person',
     ],
+    attireRequired: false,
+    equipmentRequired: false,
+    attendanceRequired: false,
   },
   {
     name: 'Blank',
@@ -121,7 +127,7 @@ const getTitle = function(fullTitle){
 };
 
 test('it renders with events', async function(assert) {
-  assert.expect(22);
+  assert.expect(27);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
   this.set('today', today);
@@ -150,6 +156,7 @@ test('it renders with events', async function(assert) {
   const firstLm3 = `${firstLearningMaterials}:eq(2)`;
   const firstLm3Link = `${firstLm3} a`;
   const firstInstructors = `${firstEvent} .instructors`;
+  const firstAttributes = `${firstEvent} .session-attributes i`;
 
   const secondEventTitle = `${secondEvent} .title`;
   const secondSessionType = `${secondEvent} .sessiontype`;
@@ -160,6 +167,7 @@ test('it renders with events', async function(assert) {
   const secondLm1Link = `${secondLm1} a`;
   const secondLm1Notes = `${secondLm1} .public-notes`;
   const secondInstructors = `${secondEvent} .instructors`;
+  const secondAttributes = `${secondAttributes} .session-attributes i`;
 
 
   await wait();
@@ -180,7 +188,10 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(firstLm3).text().trim(), 'File LM');
   assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1');
   assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
-
+  assert.equal(this.$(firstAttributes).length, 3, 'All attributes flags show up');
+  assert.equal(this.$('.fa-black-tie').attr('title'), 'Whitecoats / special attire');
+  assert.equal(this.$('.fa-flask').attr('title'), 'Special Equipment');
+  assert.equal(this.$('.fa-calendar-check-o').attr('title'), 'Attendance is required');
 
   assert.equal(this.$(secondEventTitle).text().trim(), 'Finding the Point in Life');
   assert.equal(this.$(secondSessionType).text().trim(), 'Independent Learning');
@@ -190,6 +201,9 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(secondLm1Notes).text().trim(), 'slide notes');
   assert.equal(this.$(secondLm1Link).attr('href'), 'http://myhost.com/url1');
   assert.equal(this.$(secondInstructors).text().replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
+  assert.equal(this.$(secondAttributes).length, 0, 'no attributes flags show up');
+
+
 });
 
 test('it renders blank', async function(assert) {
