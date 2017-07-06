@@ -1,0 +1,9 @@
+.big-text {
+  .list-reset {
+    @include ilios-browser-defaults;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}

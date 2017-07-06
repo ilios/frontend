@@ -28,3 +28,33 @@
     }
   }
 }
+
+@mixin ilios-browser-defaults {
+  ul {
+    list-style-position: inside;
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-position: inside;
+    list-style-type: decimal;
+  }
+
+  ul ul,
+  ol ul {
+    list-style-position: inside;
+    list-style-type: circle;
+    margin-left: 15px;
+  }
+
+  ol ol,
+  ul ol {
+    list-style-position: inside;
+    list-style-type: lower-latin;
+    margin-left: 15px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
