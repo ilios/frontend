@@ -49,7 +49,7 @@
           close=(action 'revertNoteChanges')
           clickPrompt=(t 'general.clickToEdit')
         }}
-          {{froala-editor
+          {{html-editor
             content=notes
             update=(action (mut notes))
           }}
