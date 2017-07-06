@@ -57,7 +57,7 @@ const Validations = buildValidations({
         max: 100,
       }),
       validator('format', {
-        regex: /^[a-z0-9_\-()@\.]*$/i,
+        regex: /^[a-z0-9_\-()@.]*$/i,
       }),
     ]
   },
