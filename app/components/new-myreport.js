@@ -240,7 +240,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
     }
     if (
-        object && isEmpty(prepositionalObjectTableRowId)
+      object && isEmpty(prepositionalObjectTableRowId)
     ) {
       if (object === 'instructor') {
         flashMessages.alert('general.reportMissingInstructor');

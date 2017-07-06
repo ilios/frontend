@@ -251,8 +251,8 @@ test('save with defaults', function(assert) {
         newStartDate.format('YYYY-MM-DD'),
         'Given start date gets passed.'
       );
-      assert.equal(moment(
-        data.endDate).format('YYYY-MM-DD'),
+      assert.equal(
+        moment(data.endDate).format('YYYY-MM-DD'),
         newEndDate.format('YYYY-MM-DD'),
         'Given end date gets passed.'
       );

@@ -30,8 +30,8 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('.program label').text().trim(), 'Program:', 'program title is labeled correctly.');
   assert.equal(this.$('.program .form-data').text().trim(), program.title, 'Program title is displayed.');
-  assert.equal(this.$(
-    '.academic-year label').text().trim(),
+  assert.equal(
+    this.$('.academic-year label').text().trim(),
     'Academic Year:',
     'Academic year input is labeled correctly.'
   );

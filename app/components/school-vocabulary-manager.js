@@ -57,7 +57,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
               .filterBy('isNew', false)
               .filterBy('isDeleted', false)
               .sortBy('title')
-            );
+          );
         });
       }
     });

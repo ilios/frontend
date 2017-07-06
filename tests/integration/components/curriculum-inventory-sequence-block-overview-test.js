@@ -183,8 +183,8 @@ test('it renders', function(assert) {
     assert.equal(this.$('.course .editinplace').text().trim(), linkedCourse.get('title'), 'Course title is visible.');
     let details = this.$('.course > span').text().trim();
     assert.ok(details.indexOf('Level: ' + linkedCourse.get('level')) === 0, 'Level of linked course is visible.');
-    assert.ok(details.indexOf(
-      'Start Date: ' + moment(linkedCourse.get('startDate')).format('YYYY-MM-DD')) > 0,
+    assert.ok(
+      details.indexOf('Start Date: ' + moment(linkedCourse.get('startDate')).format('YYYY-MM-DD')) > 0,
       'Start date of linked course is visible.'
     );
     assert.ok(
@@ -476,8 +476,8 @@ test('change course', function(assert) {
         assert.ok(details.indexOf('Level: ' + linkableCourse1.get('level')) === 0,
           'Linked course details: level has been updated.'
         );
-        assert.ok(details.indexOf(
-          'Start Date: ' + moment(linkableCourse1.get('startDate')).format('YYYY-MM-DD')) > 0,
+        assert.ok(
+          details.indexOf('Start Date: ' + moment(linkableCourse1.get('startDate')).format('YYYY-MM-DD')) > 0,
           'Linked course details: start date has been updated.'
         );
         assert.ok(
@@ -1219,8 +1219,8 @@ test('finalized/read-only mode', function(assert) {
     assert.equal(this.$('.course > span:eq(0)').text().trim(), linkedCourse.get('title'), 'Course title is visible.');
     let details = this.$('.course > .details').text().trim();
     assert.ok(details.indexOf('Level: ' + linkedCourse.get('level')) === 0, 'Level of linked course is visible.');
-    assert.ok(details.indexOf(
-        'Start Date: ' + moment(linkedCourse.get('startDate')).format('YYYY-MM-DD')) > 0,
+    assert.ok(
+      details.indexOf('Start Date: ' + moment(linkedCourse.get('startDate')).format('YYYY-MM-DD')) > 0,
       'Start date of linked course is visible.'
     );
     assert.ok(
