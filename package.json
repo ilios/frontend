@@ -17,7 +17,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
-    "ember-cli": "2.13.3",
+    "ember-cli": "2.14.0",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-babel": "^6.0.0",
     "ember-cli-dependency-checker": "^2.0.1",
@@ -28,7 +28,7 @@
     "ember-cli-htmlbars-inline-precompile": "^0.4.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.0.0",
-    "ember-cli-sass": "^6.2.0",
+    "ember-cli-sass": "^7.0.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
@@ -40,8 +40,8 @@
     "ember-load": "^0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-source": "~2.13.0",
-    "ember-tether": "^0.3.1",
+    "ember-source": "~2.14.0",
+    "ember-tether": "^0.4.1",
     "ilios-common": "1.2.0",
     "loader.js": "^4.2.3"
   },
