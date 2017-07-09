@@ -1,0 +1,14 @@
+.learningmaterial-manager {
+  .learningmaterial-manager-form {
+    margin-left: 2em;
+
+    .item {
+      margin-bottom: .5em;
+
+      label {
+        @include ilios-label;
+        margin-right: .5em;
+      }
+    }
+  }
+}

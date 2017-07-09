@@ -461,7 +461,7 @@ test('edit learning material', function(assert) {
           find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
           click(find('.notes .done', container));
           andThen(function(){
-            assert.equal(getElementText(find('.notes', container)), getText(newNote));
+            assert.equal(getElementText(find('.notes', container)), getText(`InstructionalNotes: ${newNote}`));
           });
           click('.detail-learningmaterials button.bigadd');
           andThen(function(){
@@ -473,8 +473,8 @@ test('edit learning material', function(assert) {
             click('.detail-learningmaterials .detail-learningmaterials-content tbody tr:eq(0) td:eq(0)');
             andThen(function(){
               container = $('.learningmaterial-manager');
-              assert.equal(getElementText(find('.notes', container)), getText(newNote));
-              assert.equal(getElementText(find('.status', container)), getText('status 2'));
+              assert.equal(getElementText(find('.notes', container)), getText(`InstructionalNotes: ${newNote}`));
+              assert.equal(getElementText(find('.status', container)), getText('Status: status 2'));
             });
           });
         }, 100);
