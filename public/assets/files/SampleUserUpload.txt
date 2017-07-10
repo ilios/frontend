@@ -1,1 +1,0 @@
-First	Last	Middle	Phone	Email	CampusID	OtherID	Username	Password
