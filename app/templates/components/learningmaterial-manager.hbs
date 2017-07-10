@@ -50,7 +50,7 @@
         }}
       {{/editable-field}}
     {{else}}
-      <span class='list-reset'>{{{valueBuffer.notes}}}</span>
+      <span>{{{valueBuffer.notes}}}</span>
     {{/if}}
   </div>
   <div class="item publicnotes">
@@ -79,7 +79,7 @@
   </div>
   <div class="item">
     <label>{{t 'general.description'}}:</label>
-    <span class='description list-reset'>{{{ learningMaterial.learningMaterial.description }}}</span>
+    <span class='description'>{{{ learningMaterial.learningMaterial.description }}}</span>
   </div>
   {{#if learningMaterial.learningMaterial.copyrightPermission}}
     <div class="item">

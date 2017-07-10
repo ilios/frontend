@@ -86,6 +86,7 @@
   .sessiondescription {
     @include fill-parent;
     @include row;
+    @include ilios-browser-defaults;
   }
 
   .sessionassociatedgroups {

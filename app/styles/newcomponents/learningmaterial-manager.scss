@@ -10,5 +10,10 @@
         margin-right: .5em;
       }
     }
+
+    .notes,
+    .description {
+      @include ilios-browser-defaults;
+    }
   }
 }

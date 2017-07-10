@@ -1,5 +1,9 @@
 .objective-manager {
 
+  .objectivetitle {
+    @include ilios-browser-defaults;
+  }
+
   h2 {
     background-color: $background-grey;
     margin-bottom: 1em;
