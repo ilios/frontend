@@ -1,12 +1,14 @@
 /* eslint-env node */
+'use strict';
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
-  var env = EmberApp.env() || 'development';
-  var isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
-  var prependCloudfrontUrl = ['production', 'staging'].indexOf(env) > -1;
+  let env = EmberApp.env() || 'development';
+  let isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
+  let prependCloudfrontUrl = ['production', 'staging'].indexOf(env) > -1;
 
-  var app = new EmberApp(defaults, {
+  let app = new EmberApp(defaults, {
     fingerprint: {
       enabled: isProductionLikeBuild,
       prepend: prependCloudfrontUrl?'https://d26vzvixg52o0d.cloudfront.net/':null
