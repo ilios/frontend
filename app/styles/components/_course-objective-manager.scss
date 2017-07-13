@@ -1,5 +1,6 @@
 .course-objective-manager {
   .course-objective-title {
+    @include ilios-browser-defaults;
     margin-bottom: 1em;
   }
 

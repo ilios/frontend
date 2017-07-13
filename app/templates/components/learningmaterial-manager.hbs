@@ -1,160 +1,132 @@
-<div class="form-container">
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.displayName'}}:</label>
-    <div class="form-data"><span class='displayname'>{{learningMaterial.learningMaterial.title}}</span></div>
+<div class="learningmaterial-manager-form">
+  <div class="item">
+    <label>{{t 'general.displayName'}}:</label>
+    <span class='displayname'>{{learningMaterial.learningMaterial.title}}</span>
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.status'}}:</label>
-    <div class="form-data status">
-      {{#if editable}}
-        {{#editable-field
-          value=status.title
-          save=(action 'changeStatus')
-          close=(action 'revertStatusChanges')
+  <div class="item status">
+    <label>{{t 'general.status'}}:</label>
+    {{#if editable}}
+      {{#editable-field
+        value=status.title
+        save=(action 'changeStatus')
+        close=(action 'revertStatusChanges')
+      }}
+        {{one-way-select
+          status.id
+          options=(await statusOptions)
+          optionTargetPath="id"
+          optionLabelPath="title"
+          update=(action "setStatus")
         }}
-          {{one-way-select
-            status.id
-            options=(await statusOptions)
-            optionTargetPath="id"
-            optionLabelPath="title"
-            update=(action "setStatus")
-          }}
-        {{/editable-field}}
-      {{else}}
-        {{status.title}}
-      {{/if}}
-    </div>
+      {{/editable-field}}
+    {{else}}
+      {{status.title}}
+    {{/if}}
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.required'}}:</label>
-    <div class="form-data required">
-      {{#if editable}}
-        {{toggle-yesno yes=valueBuffer.required toggle=(action 'changeRequired')}}
+  <div class="item required">
+    <label>{{t 'general.required'}}:</label>
+    {{#if editable}}
+      {{toggle-yesno yes=valueBuffer.required toggle=(action 'changeRequired')}}
+    {{else}}
+      {{#if valueBuffer.required}}
+        <span class='add'>{{t 'general.yes'}}</span>
       {{else}}
-        {{#if valueBuffer.required}}
-          <span class='add'>{{t 'general.yes'}}</span>
-        {{else}}
-          <span class='remove'>{{t 'general.no'}}</span>
-        {{/if}}
+        <span class='remove'>{{t 'general.no'}}</span>
       {{/if}}
-    </div>
+    {{/if}}
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.instructionalNotes'}}:</label>
-    <div class="form-data notes">
-      {{#if editable}}
-        {{#editable-field
-          value=notes
-          save=(action 'saveNoteChanges' )
-          close=(action 'revertNoteChanges')
-          clickPrompt=(t 'general.clickToEdit')
+  <div class="item notes">
+    <label>{{t 'general.instructionalNotes'}}:</label>
+    {{#if editable}}
+      {{#editable-field
+        value=notes
+        save=(action 'saveNoteChanges' )
+        close=(action 'revertNoteChanges')
+        clickPrompt=(t 'general.clickToEdit')
+      }}
+        {{html-editor
+          content=notes
+          update=(action (mut notes))
         }}
-          {{html-editor
-            content=notes
-            update=(action (mut notes))
-          }}
-        {{/editable-field}}
+      {{/editable-field}}
+    {{else}}
+      <span>{{{valueBuffer.notes}}}</span>
+    {{/if}}
+  </div>
+  <div class="item publicnotes">
+    <label>{{t 'general.showNotesToStudents'}}:</label>
+    {{#if editable}}
+      {{toggle-yesno yes=valueBuffer.publicNotes toggle=(action 'changePublicNotes')}}
+    {{else}}
+      {{#if valueBuffer.publicNotes}}
+        <span class='add'>{{t 'general.yes'}}</span>
       {{else}}
-        <span class='list-reset'>{{{valueBuffer.notes}}}</span>
+        <span class='remove'>{{t 'general.no'}}</span>
       {{/if}}
-    </div>
+    {{/if}}
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.showNotesToStudents'}}:</label>
-    <div class="form-data publicnotes">
-      {{#if editable}}
-        {{toggle-yesno yes=valueBuffer.publicNotes toggle=(action 'changePublicNotes')}}
-      {{else}}
-        {{#if valueBuffer.publicNotes}}
-          <span class='add'>{{t 'general.yes'}}</span>
-        {{else}}
-          <span class='remove'>{{t 'general.no'}}</span>
-        {{/if}}
-      {{/if}}
-    </div>
+  <div class="item">
+    <label>{{t 'general.owner'}}:</label>
+    <span class='owninguser'>{{learningMaterial.learningMaterial.owningUser.fullName}}</span>
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.owner'}}:</label>
-    <div class="form-data">
-      <span class='owninguser'>{{learningMaterial.learningMaterial.owningUser.fullName}}</span>
-    </div>
+  <div class="item">
+    <label>{{t 'general.contentAuthor'}}:</label>
+    <span class='originalauthor'>{{learningMaterial.learningMaterial.originalAuthor}}</span>
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.contentAuthor'}}:</label>
-    <div class="form-data">
-      <span class='originalauthor'>{{learningMaterial.learningMaterial.originalAuthor}}</span>
-    </div>
+  <div class="item">
+    <label>{{t 'general.userRole'}}:</label>
+    <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
   </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.userRole'}}:</label>
-    <div class="form-data">
-      <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
-    </div>
-  </div>
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.description'}}:</label>
-    <div class="form-data">
-      <span class='description list-reset'>{{{ learningMaterial.learningMaterial.description }}}</span>
-    </div>
+  <div class="item">
+    <label>{{t 'general.description'}}:</label>
+    <span class='description'>{{{ learningMaterial.learningMaterial.description }}}</span>
   </div>
   {{#if learningMaterial.learningMaterial.copyrightPermission}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.copyrightPermission'}}:</label>
-      <div class="form-data">
-        {{#if learningMaterial.learningMaterial.copyrightPermission}}
-          <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
-        {{else}}
-          <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
-        {{/if}}
-      </div>
+    <div class="item">
+      <label>{{t 'general.copyrightPermission'}}:</label>
+      {{#if learningMaterial.learningMaterial.copyrightPermission}}
+        <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
+      {{else}}
+        <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
+      {{/if}}
     </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.copyrightRationale}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.copyrightRationale'}}:</label>
-      <div class="form-data">
-        <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
-      </div>
+    <div class="item">
+      <label>{{t 'general.copyrightRationale'}}:</label>
+      <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
     </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.isCitation}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.citation'}}:</label>
-      <div class="form-data">
-        <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
-      </div>
+    <div class="item">
+      <label>{{t 'general.citation'}}:</label>
+      <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
     </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.isLink}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.link'}}:</label>
-      <div class="form-data weblink">
-        <span class='link'>
-          <a href="{{learningMaterial.learningMaterial.link}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.link}}</a>
-          {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
-            {{fa-icon 'copy'}}
-          {{/copy-button}}
-        </span>
-      </div>
+    <div class="item weblink">
+      <label>{{t 'general.link'}}:</label>
+      <span class='link'>
+        <a href="{{learningMaterial.learningMaterial.link}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.link}}</a>
+        {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
+          {{fa-icon 'copy'}}
+        {{/copy-button}}
+      </span>
     </div>
   {{/if}}
   {{#if learningMaterial.learningMaterial.isFile}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.file'}}:</label>
-      <div class="form-data filename">
-        <span class='downloadurl'>
-          <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.filename}}</a>
-          {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
-            {{fa-icon 'copy'}}
-          {{/copy-button}}
-        </span>
-      </div>
+    <div class="item filename">
+      <label>{{t 'general.file'}}:</label>
+      <span class='downloadurl'>
+        <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.filename}}</a>
+        {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
+          {{fa-icon 'copy'}}
+        {{/copy-button}}
+      </span>
     </div>
   {{/if}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.uploadDate'}}:</label>
-    <div class="form-data">
-      <span class='upload-date'>{{moment-format learningMaterial.learningMaterial.uploadDate 'M-D-YYYY'}}</span>
-    </div>
+  <div class="item">
+    <label>{{t 'general.uploadDate'}}:</label>
+    <span class='upload-date'>{{moment-format learningMaterial.learningMaterial.uploadDate 'M-D-YYYY'}}</span>
   </div>
 </div> {{!-- /.form-container --}}
