@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import FroalaEditorComponent from 'ember-froala-editor/components/froala-editor';
 
-const { inject, computed } = Ember;
+const { Component, inject, computed } = Ember;
 const { service } = inject;
 
 const defaultButtons = [
@@ -14,13 +13,15 @@ const defaultButtons = [
   'insertLink',
   'html'
 ];
-export default FroalaEditorComponent.extend({
+export default Component.extend({
   i18n: service(),
+  content: '',
   options: computed('i18n.locale', function(){
     const i18n = this.get('i18n');
     const language = i18n.get('locale');
 
-    return {key   : 'vD1Ua1Mf1e1VSYKa1EPYD==',
+    return {
+      key   : 'vD1Ua1Mf1e1VSYKa1EPYD==',
       theme : 'gray',
       language,
       toolbarInline: false,

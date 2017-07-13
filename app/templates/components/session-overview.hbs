@@ -235,7 +235,7 @@
             isSaveDisabled=(and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))
             clickPrompt=(t 'general.clickToEdit')
           }}
-            {{froala-editor
+            {{html-editor
               content=description
               update=(action "changeDescription")
             }}
