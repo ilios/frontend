@@ -113,7 +113,7 @@ export default Component.extend(NewUser, {
   getFileContents(file){
     this.set('fileUploadError', false);
     return new Promise(resolve => {
-      let allowedFileTypes = ['text/plain', 'text/csv'];
+      let allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
         const i18n = this.get('i18n');
         this.set('fileUploadError', true);
@@ -251,6 +251,14 @@ export default Component.extend(NewUser, {
     this.set('proposedUsers', []);
 
   }).drop(),
+  sampleData: computed(function(){
+    const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
+
+    const str = sampleUploadFields.join("\t");
+    const encoded = window.btoa(str);
+
+    return encoded;
+  }),
   actions: {
     updateSelectedFile(files){
       // Check for the various File API support.
@@ -270,6 +278,6 @@ export default Component.extend(NewUser, {
       } else {
         selectedUsers.pushObject(obj);
       }
-    }
+    },
   }
 });

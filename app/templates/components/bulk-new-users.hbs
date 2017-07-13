@@ -38,7 +38,10 @@
   </div>
   <div class='upload-users'>
     <label>
-      {{t 'general.uploadUsers'}} (<a target='_blank' rel='noopener' href='/assets/files/SampleUserUpload.txt'>{{t 'general.sampleFile'}}</a>):
+      {{t 'general.uploadUsers'}}(
+      <a target='_blank' rel='noopener' download="SampleUserUpload.tsv" href='data:application/octet-stream;charset=utf-8;base64,{{sampleData}}'>
+        {{t 'general.sampleFile'}}
+      </a>):
     </label>
     <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}}>
   </div>
