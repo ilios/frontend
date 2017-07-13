@@ -1,10 +1,11 @@
 /* eslint-env node */
+'use strict';
 const API_VERSION = require('./api-version.js');
 
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'ilios',
-    environment: environment,
+    environment,
     rootURL: '/',
     locationType: 'auto',
     redirectAfterShibLogin: true,
