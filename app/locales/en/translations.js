@@ -190,7 +190,6 @@ export default {
     'hours': 'Hours',
     'icsAdminInstructions': "To add a user's Ilios calendar to another application or service, they will need to use this URL.  This URL is like a password. Anyone who knows it can view this user's calendar!",
     'icsFeed': 'ICS Feed',
-    'icsInstructions': 'To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!',
     'ilios': 'Ilios',
     'ilm': 'ILM',
     'include': 'Include',
