@@ -21,6 +21,7 @@ export default {
     'detail': 'Detail',
     'etAl': 'et al.',
     'hideFilters': 'Hide Filters',
+    'icsInstructions': 'To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!',
     'ilmDue': 'ILM - Due',
     'instructors': 'Instructors',
     'loadingEvents': 'Loading Events',
