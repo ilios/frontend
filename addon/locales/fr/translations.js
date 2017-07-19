@@ -21,6 +21,7 @@ export default {
     'detail': "Détail",
     'etAl': 'et al.',
     'hideFilters': "Cachez les Filtres",
+    'icsInstructions': "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!",
     'ilmDue': 'ILM - Échéance',
     'instructors': "Instructeurs",
     'loadingEvents': "Rassembler les événements...",
