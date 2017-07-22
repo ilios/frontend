@@ -1377,7 +1377,7 @@ broccoli-brocfile-loader@^0.18.0:
   dependencies:
     findup-sync "^0.4.2"
 
-broccoli-builder@^0.18.3:
+broccoli-builder@^0.18.8:
   version "0.18.8"
   resolved "https://registry.yarnpkg.com/broccoli-builder/-/broccoli-builder-0.18.8.tgz#fe54694d544c3cdfdb01028e802eeca65749a879"
   dependencies:
@@ -1633,7 +1633,7 @@ broccoli-merge-trees@^2.0.0:
     broccoli-plugin "^1.3.0"
     merge-trees "^1.0.1"
 
-broccoli-middleware@^1.0.0-beta.8:
+broccoli-middleware@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/broccoli-middleware/-/broccoli-middleware-1.0.0.tgz#92f4e1fb9a791ea986245a7077f35cc648dab097"
   dependencies:
@@ -3465,9 +3465,9 @@ ember-cli-version-checker@^2.0.0:
     rsvp "3.0.14"
     yuidocjs "^0.10.0"
 
-ember-cli@2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.14.0.tgz#9aff1414168883183e8677fa32626d1e3228ccbc"
+ember-cli@2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.14.1.tgz#22b5da78f85d72bff7e2e790fcf6b202c793f263"
   dependencies:
     amd-name-resolver "0.0.6"
     babel-plugin-transform-es2015-modules-amd "^6.24.0"
@@ -3475,14 +3475,14 @@ ember-cli@2.14.0:
     bower-endpoint-parser "0.2.2"
     broccoli-babel-transpiler "^6.0.0"
     broccoli-brocfile-loader "^0.18.0"
-    broccoli-builder "^0.18.3"
+    broccoli-builder "^0.18.8"
     broccoli-concat "^3.2.2"
     broccoli-config-loader "^1.0.0"
     broccoli-config-replace "^1.1.2"
     broccoli-funnel "^1.0.6"
     broccoli-funnel-reducer "^1.0.0"
     broccoli-merge-trees "^2.0.0"
-    broccoli-middleware "^1.0.0-beta.8"
+    broccoli-middleware "^1.0.0"
     broccoli-source "^1.1.0"
     broccoli-stew "^1.2.0"
     calculate-cache-key-for-tree "^1.0.0"
