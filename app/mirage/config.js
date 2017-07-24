@@ -229,13 +229,48 @@ export default function() {
   this.delete('api/meshpreviousindexings/:id', 'meshPreviousIndexing');
   this.post('api/meshpreviousindexings', 'meshPreviousIndexing');
 
-  this.get('api/objectives', getAll);
+  this.get('api/objectives', (db, request) => {
+    const params = request.queryParams;
+    const keys = Object.keys(params);
+    const courseKey = 'filters[courses]';
+    if (keys.includes(courseKey)) {
+      const coursesFilter = params[courseKey];
+      const objectives = db.objectives.filter(objective => {
+        const courseId = parseInt(objective.course);
+        return coursesFilter.includes(courseId.toString());
+      });
+
+      return {objectives};
+
+    } else {
+      return getAll(db, request);
+    }
+  });
   this.get('api/objectives/:id', 'objective');
   this.put('api/objectives/:id', 'objective');
   this.delete('api/objectives/:id', 'objective');
   this.post('api/objectives', 'objective');
 
-  this.get('api/offerings', getAll);
+  this.get('api/offerings', (db, request) => {
+    const params = request.queryParams;
+    const keys = Object.keys(params);
+    const courseKey = 'filters[courses]';
+    if (keys.includes(courseKey)) {
+      const coursesFilter = params[courseKey];
+      const offerings = db.offerings.filter(offering => {
+        const sessionId = parseInt(offering.session);
+        const session = db.sessions.find(sessionId);
+        const courseId = session.course;
+
+        return coursesFilter.includes(courseId.toString());
+      });
+
+      return {offerings};
+
+    } else {
+      return getAll(db, request);
+    }
+  });
   this.get('api/offerings/:id', 'offering');
   this.put('api/offerings/:id', 'offering');
   this.delete('api/offerings/:id', 'offering');
