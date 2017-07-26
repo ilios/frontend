@@ -11,6 +11,7 @@ const SessionProxy = ObjectProxy.extend({
   currentUser: null,
   expandOfferings: false,
   showRemoveConfirmation: false,
+  i18n: null,
   userCanDelete: computed('content.course', 'currentUser.model.directedCourses.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser.userIsDeveloper').then(isDeveloper => {
@@ -27,7 +28,24 @@ const SessionProxy = ObjectProxy.extend({
         }
       });
     });
-  })
+  }),
+  status: computed('i18n.locale', 'isPublished', 'publishedAsTbd', function(){
+    const i18n = this.get('i18n');
+    if(this.get('publishedAsTbd')){
+      return i18n.t('general.scheduled');
+    }
+    if(this.get('isPublished')){
+      return i18n.t('general.published');
+    }
+    return i18n.t('general.notPublished');
+  }),
+  searchString: computed('title', 'sessionType', 'status', function(){
+    const title = this.get('title');
+    const sessionType = this.get('sessionType');
+    const status = this.get('status');
+
+    return title  + sessionType + status;
+  }),
 });
 
 export default Component.extend({
@@ -47,6 +65,7 @@ export default Component.extend({
   course: null,
 
   proxiedSessions: computed('sessions.[]', function() {
+    const i18n = this.get('i18n');
     return new Promise(resolve => {
       this.get('sessions').then(sessions => {
         return map(sessions.toArray(), session => {
@@ -62,7 +81,8 @@ export default Component.extend({
               sessionType: sessionType.get('title'),
               firstOfferingDate,
               learnerGroupCount: associatedLearnerGroups.length,
-              offeringCount: offerings.get('length')
+              offeringCount: offerings.get('length'),
+              i18n,
             });
           });
         }).then((proxiedSessions => {
