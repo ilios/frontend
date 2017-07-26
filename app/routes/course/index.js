@@ -14,6 +14,14 @@ export default  Route.extend({
     const courses = [model.get('id')];
     const course = model.get('id');
     const sessions = model.hasMany('sessions').ids();
+    const existingSessionsInStore = store.peekAll('session');
+    const existingSessionIds = existingSessionsInStore.mapBy('id');
+    const unloadedSessions = sessions.filter(id => !existingSessionIds.includes(id));
+
+    //if we have already loaded all of these sessions we can just proceed normally
+    if (unloadedSessions.length === 0) {
+      return;
+    }
 
     return all([
       store.query('session', {filters: {course}, limit: 1000}),
