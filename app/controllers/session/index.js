@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-const { Controller, inject } = Ember;
-const { controller } = inject;
+const { Controller } = Ember;
 
 export default Controller.extend({
   queryParams: {

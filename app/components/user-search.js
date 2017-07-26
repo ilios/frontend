@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty } = Ember;
+const { Component, computed, isEmpty, inject } = Ember;
+const { service } = inject;
 const { oneWay } = computed;
 
 let userProxy = Ember.ObjectProxy.extend({
@@ -28,7 +29,8 @@ let instructorGroupProxy = Ember.ObjectProxy.extend({
 });
 
 export default Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
   classNames: ['user-search'],
   showMoreInputPrompt: false,
   searchReturned: false,
@@ -62,6 +64,7 @@ export default Component.extend({
       return userProxy.create({
         content: user,
         currentlyActiveUsers,
+        sortTerm: oneWay('content.fullName'),
       });
     });
 
@@ -81,8 +84,15 @@ export default Component.extend({
       });
 
       results.pushObjects(instructorGroupProxies);
-      results.sortBy('sortTerm');
     }
+    const i18n = this.get('i18n');
+    const locale = i18n.get('locale');
+    results.sort((a, b) => {
+      const sortTermA = a.get('sortTerm');
+      const sortTermB = b.get('sortTerm');
+
+      return sortTermA.localeCompare(sortTermB, locale, { numeric: true });
+    });
     this.set('searchReturned', true);
     return results;
   }).restartable(),

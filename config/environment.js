@@ -116,13 +116,13 @@ module.exports = function(environment) {
     ENV.moment.allowEmpty = true;
   }
 
-/*
+  /*
   if (environment === 'production') {
   }
 
   if (environment === 'staging') {
   }
-*/
+  */
 
   if (environment === 'preview') {
     ENV.IliosFeatures.accessCourseVisualizations = true;
