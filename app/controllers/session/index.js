@@ -17,9 +17,6 @@ export default Controller.extend({
   sessionLearnergroupDetails: false,
   showNewOfferingForm: false,
 
-  sessionController: controller('session'),
-  courseController: controller('course'),
-
   actions: {
     setSessionOffset(offset){
       this.set('sessionOffset', offset);

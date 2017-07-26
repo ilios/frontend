@@ -1,9 +1,9 @@
-<div class="backtolink backtosessionlink">{{#link-to 'course' courseController.model}}{{t 'general.backToSessionList'}}{{/link-to}}</div>
+<div class="backtolink backtosessionlink">{{#link-to 'course' (await model.course)}}{{t 'general.backToSessionList'}}{{/link-to}}</div>
 {{session-details
   session=model
-  course=courseController.model
-  programs=courseController.programs
-  sessionTypes=sessionController.sessionTypes
+  course=(await model.course)
+  programs=(await model.course)
+  sessionTypes=(await model.course.school.sessionTypes)
   sessionObjectiveDetails=sessionObjectiveDetails
   sessionTaxonomyDetails=sessionTaxonomyDetails
   setSessionObjectiveDetails=(action (mut sessionObjectiveDetails))
