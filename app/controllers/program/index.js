@@ -1,13 +1,8 @@
 import Ember from 'ember';
 
-const { computed, Controller, inject } = Ember;
-const { controller } = inject;
-const { alias } = computed;
+const { Controller } = Ember;
 
 export default Controller.extend({
-  programController: controller('program'),
-
-  program: alias('programController.model'),
   actions: {
     lockProgramYear: function(programYear){
       programYear.set('locked', true);

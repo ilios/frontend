@@ -1,1 +1,6 @@
-{{programyear-list programYears=model program=program lock=(action 'lockProgramYear') unlock=(action 'unlockProgramYear')}}
+{{programyear-list
+  programYears=(await model.programYears)
+  program=model
+  lock=(action 'lockProgramYear')
+  unlock=(action 'unlockProgramYear')
+}}
