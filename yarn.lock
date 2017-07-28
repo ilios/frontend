@@ -3064,13 +3064,12 @@ ember-cli-code-coverage@^0.4.1:
     source-map "0.5.6"
     string.prototype.startswith "^0.2.0"
 
-ember-cli-content-security-policy@0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-content-security-policy/-/ember-cli-content-security-policy-0.6.1.tgz#5040088f55213f5cf55839edc2d6039710c9577b"
+ember-cli-content-security-policy@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-content-security-policy/-/ember-cli-content-security-policy-0.6.2.tgz#15636998ce0dc224491b2a24f5d0e636a3f059a3"
   dependencies:
     body-parser "^1.12.3"
     chalk "^1.0.0"
-    ember-cli-babel "^5.0.0"
 
 ember-cli-dependency-checker@^2.0.0:
   version "2.0.1"
