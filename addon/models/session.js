@@ -130,10 +130,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
       });
     });
   }),
-
-  searchString: computed('title', 'sessionType.title', 'status', function(){
-    return this.get('title') + this.get('sessionType.title') + this.get('status');
-  }),
   optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed(
     'title',
