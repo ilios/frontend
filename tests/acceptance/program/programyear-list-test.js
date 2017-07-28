@@ -113,7 +113,7 @@ test('check directors', function(assert) {
   });
   server.create('programYear', {
     program: 1,
-    directors: [1,2,3,4,5]
+    directors: [2,3,4,5,6]
   });
   server.create('cohort');
   visit(url);

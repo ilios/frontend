@@ -22,6 +22,7 @@ test('generate new subgroups', function(assert) {
   server.create('cohort', {
     learnerGroups: [1, 2, 3]
   });
+  server.create('programYear');
   server.create('learnerGroup', {
     cohort: 1,
     parent: 1,
@@ -40,6 +41,9 @@ test('generate new subgroups', function(assert) {
   server.createList('learnerGroup', 2, {
     cohort: 1,
     parent: 2
+  });
+  server.createList('user', 2, {
+    learnerGroups: [2]
   });
 
   assert.expect(11);

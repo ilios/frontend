@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-const { Controller, inject } = Ember;
-const { controller } = inject;
+const { Controller } = Ember;
 
 export default Controller.extend({
   queryParams: {
@@ -16,9 +15,6 @@ export default Controller.extend({
   isManagingLearnerGroups: false,
   sessionLearnergroupDetails: false,
   showNewOfferingForm: false,
-
-  sessionController: controller('session'),
-  courseController: controller('course'),
 
   actions: {
     setSessionOffset(offset){

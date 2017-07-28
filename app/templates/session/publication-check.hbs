@@ -1,18 +1,18 @@
 <div class='detail-view session-publicationcheck-detail-view'>
   <div class='detail-view-details'>
     {{session-overview
-      course=courseController.model
-      session=sessionController.model
+      course=(await model.course)
+      session=model
       showCheckLink=false
-      sessionTypes=sessionController.sessionTypes
+      sessionTypes=(await model.course.school.sessionTypes)
     }}
 
     <div class='back-to-session'>
-      {{#link-to 'session.index' courseController.model sessionController.model}}
-        {{fa-icon 'rotate-left'}} {{t 'general.backToTitle' title=sessionController.model.title}}
+      {{#link-to 'session.index' (await model.course) model}}
+        {{fa-icon 'rotate-left'}} {{t 'general.backToTitle' title=model.title}}
       {{/link-to}}
     </div>
 
-    {{session-publicationcheck session=sessionController.model}}
+    {{session-publicationcheck session=model}}
   </div>
 </div>

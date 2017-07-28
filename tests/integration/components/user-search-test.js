@@ -141,3 +141,46 @@ test('click group fires add group', function(assert) {
     this.$('li:eq(1)').click();
   });
 });
+
+test('sorting is natural', async function(assert) {
+  let user1 = EmberObject.create({
+    fullName: 'person 20',
+    email: ''
+  });
+  let user2 = EmberObject.create({
+    fullName: 'person 10',
+    email: ''
+  });
+  let user3 = EmberObject.create({
+    fullName: 'person 3',
+    email: ''
+  });
+  let user4 = EmberObject.create({
+    fullName: 'person',
+    email: ''
+  });
+  let storeMock = Service.extend({
+    query(){
+      return resolve([user1, user2, user3, user4]);
+    }
+  });
+  this.register('service:store', storeMock);
+
+  this.render(hbs`{{user-search}}`);
+
+  this.$('input').val('person').trigger('change');
+
+  await wait();
+  const items = '.results li';
+  const first = `${items}:eq(0)`;
+  const second = `${items}:eq(1)`;
+  const third = `${items}:eq(2)`;
+  const fourth = `${items}:eq(3)`;
+  const fifth = `${items}:eq(4)`;
+
+  assert.equal(this.$(first).text().trim(), '4 Results');
+  assert.equal(this.$(second).text().trim(), 'person');
+  assert.equal(this.$(third).text().trim(), 'person 3');
+  assert.equal(this.$(fourth).text().trim(), 'person 10');
+  assert.equal(this.$(fifth).text().trim(), 'person 20');
+});

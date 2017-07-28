@@ -16,7 +16,7 @@ module('Acceptance: Session - Publication Check', {
     application = startApp();
     setupAuthentication(application);
     server.create('course', {
-      sessions: [1,2]
+      sessions: [1]
     });
     server.create('vocabulary', {
       terms: [1],
@@ -75,10 +75,11 @@ test('full session count', function(assert) {
 });
 
 test('empty session count', function(assert) {
-  //create 2 bucause the second one is empty
+  //create 2 because the second one is empty
   server.createList('session', 2, {
     course: 1
   });
+  server.db.courses.update(1, {sessions: [1, 2]});
   visit('/courses/1/sessions/2/publicationcheck');
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
