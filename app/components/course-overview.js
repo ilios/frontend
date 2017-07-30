@@ -3,10 +3,9 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, RSVP, isEmpty, inject } = Ember;
+const { Component, computed, RSVP, isEmpty} = Ember;
 const { not, reads } = computed;
 const { Promise, all } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   externalId: [
@@ -31,9 +30,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  currentUser: service(),
-  routing: service('-routing'),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
+  routing: Ember.inject.service('-routing'),
   editable: not('course.locked'),
   universalLocator: 'ILIOS',
   init(){

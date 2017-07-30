@@ -1,10 +1,9 @@
 import Ember from 'ember';
 
-const { Controller, computed, inject } = Ember;
-const { service } = inject;
+const { Controller, computed} = Ember;
 
 export default Controller.extend({
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   queryParams: ['unpublished'],
   unpublished: false,
   includeUnpublishedSessions: computed('unpublished', 'currentUser.canPrintUnpublishedCourse', function(){

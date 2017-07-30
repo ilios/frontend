@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-const { Component, inject, computed } = Ember;
-const { service } = inject;
+const { Component, computed } = Ember;
 
 const defaultButtons = [
   'bold',
@@ -14,7 +13,7 @@ const defaultButtons = [
   'html'
 ];
 export default Component.extend({
-  i18n: service(),
+  i18n: Ember.inject.service(),
   content: '',
 
   /**

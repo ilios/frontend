@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, RSVP, inject, computed } = Ember;
+const { Component, RSVP, computed } = Ember;
 const { all } = RSVP;
-const { service } = inject;
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   classNames: ['school-session-attributes'],
   school: null,
   isManaging: false,

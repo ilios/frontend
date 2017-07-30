@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
-const { Component, computed, inject, isEmpty, RSVP } = Ember;
+const { Component, computed, isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 
 
 export default Component.extend({
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   classNames: ['offering-manager'],
   offering: null,
   editable: true,

@@ -1,11 +1,10 @@
 import Ember from 'ember';
 
-const { Component, computed, inject, RSVP } = Ember;
-const { service } = inject;
+const { Component, computed, RSVP } = Ember;
 const { Promise, all } = RSVP;
 
 export default Component.extend({
-  i18n: service(),
+  i18n: Ember.inject.service(),
   classNames: ['learnergroup-selection-manager'],
   filter: '',
   sortBy: ['title'],

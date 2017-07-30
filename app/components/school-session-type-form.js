@@ -3,8 +3,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
-const { computed, Component, inject, isPresent } = Ember;
-const { service } = inject;
+const { computed, Component, isPresent } = Ember;
 
 const Validations = buildValidations({
   title: [
@@ -40,7 +39,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
+  store: Ember.inject.service(),
   classNames: ['school-session-type-form'],
   title: null,
   selectedAamcMethodId: null,

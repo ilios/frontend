@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { Component, computed, RSVP, ObjectProxy, inject } = Ember;
+const { Component, computed, RSVP, ObjectProxy} = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 
 export default Component.extend(SortableByPosition, {
-  store: service(),
+  store: Ember.inject.service(),
   course: null,
   includeUnpublishedSessions: false,
   tagName: 'section',

@@ -4,8 +4,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 import strength from 'password-strength';
 
-const { Component, inject, computed, isEmpty, RSVP } = Ember;
-const { service } = inject;
+const { Component, computed, isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -76,10 +75,10 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
-  currentUser: service(),
-  iliosConfig: service(),
-  commonAjax: service(),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
+  commonAjax: Ember.inject.service(),
 
   init(){
     this._super(...arguments);

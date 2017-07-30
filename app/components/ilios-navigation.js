@@ -1,13 +1,12 @@
 import Ember from 'ember';
 import config from 'ilios/config/environment';
 
-const { Component, inject, computed, RSVP } = Ember;
-const { service } = inject;
+const { Component, computed, RSVP } = Ember;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  i18n: service(),
-  currentUser: service(),
+  i18n: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   isMenuVisible: false,
   ciEnabled: config.IliosFeatures.curriculumInventory,
   //untranslated temporary string

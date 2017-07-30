@@ -4,12 +4,11 @@ import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_TIMEOUT = 250;
 
-const { Component, inject, computed } = Ember;
-const { service } = inject;
+const { Component, computed } = Ember;
 
 export default Component.extend({
-  store: service(),
-  iliosConfig: service(),
+  store: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
   classNames: ['ilios-users'],
   offset: null,
   limit: null,

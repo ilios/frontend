@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
-const { Component, computed, RSVP, inject } = Ember;
+const { Component, computed, RSVP} = Ember;
 const { equal } = computed;
-const { service } = inject;
 const { all, Promise } = RSVP;
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   isSaving: false,
   classNames: ['detail-view'],
   sessions: [],

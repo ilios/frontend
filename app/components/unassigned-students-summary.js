@@ -1,13 +1,12 @@
 import Ember from 'ember';
 
-const { Component, inject, RSVP, computed, isPresent, ArrayProxy, PromiseProxyMixin } = Ember;
-const { service } = inject;
+const { Component, RSVP, computed, isPresent, ArrayProxy, PromiseProxyMixin } = Ember;
 const { Promise } = RSVP;
 
 
 export default Component.extend({
-  store: service(),
-  currentUser: service(),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   tagName: 'div',
   classNameBindings: [':unassigned-students-summary', ':small-component', 'alert'],
   alert: computed.gt('unassignedStudentsProxy.length', 0),

@@ -2,8 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, inject } = Ember;
-const { service } = inject;
+const { Component} = Ember;
 
 const Validations = buildValidations({
   title: [
@@ -17,7 +16,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
+  store: Ember.inject.service(),
   tagName: 'section',
   classNames: ['new-program', 'new-result', 'form-container', 'resultslist-new'],
   title: null,

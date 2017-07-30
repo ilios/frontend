@@ -2,8 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, isPresent, inject, RSVP } = Ember;
-const { service } = inject;
+const { Component, computed, isPresent, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -33,7 +32,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
+  store: Ember.inject.service(),
   vocabulary: null,
   title: null,
   newTermTitle: null,

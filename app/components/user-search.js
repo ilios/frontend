@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty, inject } = Ember;
-const { service } = inject;
+const { Component, computed, isEmpty} = Ember;
 const { oneWay } = computed;
 
 let userProxy = Ember.ObjectProxy.extend({
@@ -29,8 +28,8 @@ let instructorGroupProxy = Ember.ObjectProxy.extend({
 });
 
 export default Component.extend({
-  store: service(),
-  i18n: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   classNames: ['user-search'],
   showMoreInputPrompt: false,
   searchReturned: false,

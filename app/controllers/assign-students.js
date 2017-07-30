@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
-const { Controller, computed, RSVP, inject, isPresent, isEmpty, isBlank } = Ember;
+const { Controller, computed, RSVP, isPresent, isEmpty, isBlank } = Ember;
 const { gt } = computed;
-const { service } = inject;
 const { Promise } = RSVP;
 
 export default Controller.extend({
-  store: service(),
+  store: Ember.inject.service(),
 
   queryParams: ['offset', 'limit', 'filter', 'school'],
   offset: 0,

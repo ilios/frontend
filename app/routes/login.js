@@ -2,14 +2,13 @@ import Ember from 'ember';
 import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-const { Route, inject, isPresent, RSVP }  = Ember;
-const { service } = inject;
+const { Route, isPresent, RSVP }  = Ember;
 const { Promise } = RSVP;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
-  currentUser: service(),
-  session: service(),
-  commonAjax: service(),
+  currentUser: Ember.inject.service(),
+  session: Ember.inject.service(),
+  commonAjax: Ember.inject.service(),
   titleToken: 'general.login',
 
   noAccountExistsError: false,

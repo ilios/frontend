@@ -4,8 +4,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
 import PapaParse from 'papaparse';
 
-const { Component, RSVP, inject, isPresent, computed, getOwner } = Ember;
-const { service } = inject;
+const { Component, RSVP, isPresent, computed, getOwner } = Ember;
 const { Promise, filter } = RSVP;
 const { reads, not } = computed;
 
@@ -80,9 +79,9 @@ export default Component.extend(NewUser, {
     this.set('savingUserErrors', []);
     this.set('savingAuthenticationErrors', []);
   },
-  i18n: service(),
-  flashMessages: service(),
-  iliosConfig: service(),
+  i18n: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
 
   classNames: ['bulk-new-users'],
   file: null,

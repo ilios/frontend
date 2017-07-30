@@ -1,13 +1,12 @@
 import Ember from 'ember';
 
-const { Component, inject, RSVP, computed, isPresent, ArrayProxy, PromiseProxyMixin } = Ember;
-const { service } = inject;
+const { Component, RSVP, computed, isPresent, ArrayProxy, PromiseProxyMixin } = Ember;
 const { Promise } = RSVP;
 const { reads, gt, sort } = computed;
 
 export default Component.extend({
-  store: service(),
-  currentUser: service(),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   tagName: 'div',
   classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
   alert: gt('_updatesProxy.length', 0),

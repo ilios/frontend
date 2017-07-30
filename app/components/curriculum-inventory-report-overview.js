@@ -2,10 +2,9 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, RSVP, computed, inject } = Ember;
+const { Component, RSVP, computed} = Ember;
 const { alias, reads } = computed;
 const { Promise } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   description: [
@@ -30,8 +29,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  currentUser: service(),
-  routing: service('-routing'),
+  currentUser: Ember.inject.service(),
+  routing: Ember.inject.service('-routing'),
   currentRoute: '',
   year: null,
 

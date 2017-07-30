@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, RSVP, computed, inject, isPresent, isEmpty } = Ember;
-const { service } = inject;
+const { Component, RSVP, computed, isPresent, isEmpty } = Ember;
 const { Promise, filter } = RSVP;
 
 export default Component.extend({
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
 
   didReceiveAttrs(){
     this._super(...arguments);

@@ -3,9 +3,8 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
 
-const { computed, RSVP, inject, isPresent } = Ember;
+const { computed, RSVP, isPresent } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 const { reads } = computed;
 
 
@@ -23,10 +22,10 @@ export default Ember.Component.extend({
     this.set('expiresAt', twoWeeksFromNow.toDate());
     this.set('generatedJwt', null);
   },
-  iliosConfig: service(),
-  commonAjax: service(),
-  flashMessages: service(),
-  session: service(),
+  iliosConfig: Ember.inject.service(),
+  commonAjax: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),

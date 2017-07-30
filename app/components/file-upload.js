@@ -4,8 +4,7 @@ import readableFileSize from 'ilios/utils/readable-file-size';
 import { task, timeout } from 'ember-concurrency';
 
 const { FileField, Uploader } = EmberUploader;
-const { inject, computed, isEmpty } = Ember;
-const { service } = inject;
+const { computed, isEmpty } = Ember;
 
 const MAXIMUM_UPLOAD_ATTEMPTS = 3;
 
@@ -20,9 +19,9 @@ let IliosUploader = Uploader.extend({
 });
 
 export default FileField.extend({
-  session: service(),
-  iliosConfig: service(),
-  i18n: service(),
+  session: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   url: '',
   headers: computed('session.isAuthenticated', function(){
     let headers = {};

@@ -1,11 +1,10 @@
 import Ember from 'ember';
 
-const { Component, computed, inject, RSVP } = Ember;
-const { service }= inject;
+const { Component, computed, RSVP } = Ember;
 const { all } = RSVP;
 
 export default Component.extend({
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   tagName: 'div',
   classNames: ['dashboard-mycourses'],
   listOfCourses: computed('currentUser.activeRelatedCoursesInThisYearAndLastYear.[]', function(){

@@ -1,9 +1,7 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
-
 export default Ember.Route.extend({
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   titleToken: 'general.admin',
   model(){
     return this.get('currentUser.model').then(user => {

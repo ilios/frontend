@@ -1,15 +1,14 @@
 import Ember from 'ember';
 
-const { inject, computed } = Ember;
-const { service } = inject;
+const { computed } = Ember;
 const { not, or } = computed;
 
 export default Ember.Mixin.create({
   publishTarget: null,
-  currentUser: service(),
-  flashMessages: service(),
-  store: service(),
-  i18n: service(),
+  currentUser: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   showCheckLink: true,
   menuTitle: computed('i18n.locale', 'publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
     const publishTarget = this.get('publishTarget');

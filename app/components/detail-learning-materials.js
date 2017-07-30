@@ -1,14 +1,13 @@
 import Ember from 'ember';
 
-const { isEmpty, Component, computed, inject, RSVP } = Ember;
+const { isEmpty, Component, computed, RSVP } = Ember;
 const { notEmpty, not } = computed;
-const { service } = inject;
 const { all, map } = RSVP;
 
 export default Component.extend({
-  currentUser: service(),
-  store: service(),
-  i18n: service(),
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   tagName: 'section',
   classNameBindings: [':detail-learningmaterials', 'displaySearchBox'],
   subject: null,

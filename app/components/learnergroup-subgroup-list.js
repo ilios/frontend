@@ -5,14 +5,13 @@ import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { Component, RSVP, inject } = Ember;
-const { service } = inject;
+const { Component, RSVP} = Ember;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  store: service(),
-  i18n: service(),
-  flashMessages: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
   parentGroup: null,
   classNames: ['learnergroup-subgroup-list'],
   tagName: 'section',

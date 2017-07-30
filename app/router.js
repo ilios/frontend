@@ -1,12 +1,10 @@
 import Ember from 'ember';
 import config from './config/environment';
 
-const { inject } = Ember;
-const { service } = inject;
 
 const Router = Ember.Router.extend({
-  iliosMetrics: service(),
-  headData: service(),
+  iliosMetrics: Ember.inject.service(),
+  headData: Ember.inject.service(),
 
   location: config.locationType,
   rootURL: config.rootURL,

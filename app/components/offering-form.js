@@ -4,8 +4,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, inject, computed, RSVP, isPresent, isEmpty } = Ember;
-const { service } = inject;
+const { Component, computed, RSVP, isPresent, isEmpty } = Ember;
 const { Promise, map, filter, hash } = RSVP;
 const { not } = computed;
 
@@ -61,7 +60,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   didReceiveAttrs(){
     this._super(...arguments);
     const offering = this.get('offering');

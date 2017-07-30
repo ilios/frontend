@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
+const { Component, computed, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
 const { all, map, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
-const { service } = inject;
 
 const competencyGroup = EmberObject.extend({
   title: '',
@@ -75,7 +74,7 @@ const cohortProxy = EmberObject.extend({
 });
 
 export default Component.extend({
-  i18n: service(),
+  i18n: Ember.inject.service(),
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,

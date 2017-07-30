@@ -2,14 +2,13 @@ import Ember from 'ember';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
 
-const { Component, computed, RSVP, inject, isEmpty } = Ember;
+const { Component, computed, RSVP, isEmpty } = Ember;
 const { reads } = computed;
-const { service } = inject;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  store: service(),
-  flashMessages: service(),
+  store: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
 
   init(){
     this._super(...arguments);

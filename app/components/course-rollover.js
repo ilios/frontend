@@ -4,8 +4,7 @@ import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, inject, computed, isPresent } = Ember;
-const { service } = inject;
+const { Component, computed, isPresent } = Ember;
 const { reads } = computed;
 
 const Validations = buildValidations({
@@ -22,10 +21,10 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  commonAjax: service(),
-  store: service(),
-  flashMessages: service(),
-  iliosConfig: service(),
+  commonAjax: Ember.inject.service(),
+  store: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
   didReceiveAttrs(){
     this._super(...arguments);
     let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));

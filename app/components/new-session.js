@@ -3,8 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { computed, Component, inject, isEmpty, isPresent, RSVP } = Ember;
-const { service } = inject;
+const { computed, Component, isEmpty, isPresent, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -19,7 +18,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
+  store: Ember.inject.service(),
   classNames: ['new-session', 'resultslist-new', 'form-container'],
 
   sessionTypes: null,

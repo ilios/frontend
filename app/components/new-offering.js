@@ -1,10 +1,9 @@
 import Ember from 'ember';
 
-const { Component, inject } = Ember;
-const { service } = inject;
+const { Component} = Ember;
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   classNames: ['new-offering'],
   session: null,
   courseStartDate: null,

@@ -1,14 +1,13 @@
 import Ember from 'ember';
 
-const { Service, RSVP, run, inject, isEmpty } = Ember;
-const { service } = inject;
+const { Service, RSVP, run, isEmpty } = Ember;
 const { scheduleOnce } = run;
 const { Promise } = RSVP;
 
 export default Service.extend({
-  metrics: service(),
-  currentUser: service(),
-  iliosConfig: service(),
+  metrics: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
 
   setup(){
     const iliosConfig = this.get('iliosConfig');

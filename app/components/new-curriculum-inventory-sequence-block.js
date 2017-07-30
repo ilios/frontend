@@ -3,8 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { inject, Component, isPresent, computed, RSVP } = Ember;
-const { service } = inject;
+const { Component, isPresent, computed, RSVP } = Ember;
 const { gt, reads } = computed;
 const { Promise } = RSVP;
 
@@ -69,8 +68,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  i18n: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,

@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
-const { Component, computed, inject } = Ember;
-const { service } = inject;
+const { Component, computed} = Ember;
 
 export default Component.extend({
-  store: service(),
-  i18n: service(),
-  flashMessages: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
   subject: null,
   bufferedTerms: [],
   tagName: 'section',

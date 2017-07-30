@@ -2,10 +2,9 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { inject, Component, computed, RSVP } = Ember;
+const { Component, computed, RSVP } = Ember;
 const { alias } = computed;
 const { Promise } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   blockTitle: [
@@ -22,7 +21,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this._super(...arguments);
     this.set('blockTitle', this.get('sequenceBlock.title'));
   },
-  store: service(),
+  store: Ember.inject.service(),
   classNames: ['curriculum-inventory-sequence-block-header'],
   report: null,
   reportName: null,

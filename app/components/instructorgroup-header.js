@@ -2,9 +2,8 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { inject, Component, RSVP } = Ember;
+const { Component, RSVP } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   title: [
@@ -21,7 +20,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this._super(...arguments);
     this.set('title', this.get('instructorGroup.title'));
   },
-  store: service(),
+  store: Ember.inject.service(),
   title: null,
   classNames: ['instructorgroup-header'],
   actions: {

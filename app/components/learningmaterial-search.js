@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, inject } = Ember;
-const { service } = inject;
+const { Component} = Ember;
 
 export default Component.extend({
-  store: service(),
-  i18n: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   classNames: ['learningmaterial-search'],
   currentMaterials: null,
   query: '',

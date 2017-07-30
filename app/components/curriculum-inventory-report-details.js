@@ -1,11 +1,10 @@
 import Ember from 'ember';
 
-const { Component, computed, inject } = Ember;
+const { Component, computed} = Ember;
 const { alias } = computed;
-const { service } = inject;
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   report: null,
   isFinalized: alias('report.isFinalized'),
   showFinalizeConfirmation: false,

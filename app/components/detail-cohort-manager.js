@@ -2,14 +2,13 @@ import Ember from 'ember';
 
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed, inject, RSVP, Object:EmberObject } = Ember;
-const { service } = inject;
+const { Component, computed, RSVP, Object:EmberObject } = Ember;
 const { sort } = computed;
 const { all, Promise } = RSVP;
 
 export default Component.extend({
-  i18n: service(),
-  currentUser: service(),
+  i18n: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   tagName: 'section',
   classNames: ['detail-block'],
   placeholder: t('general.filterPlaceholder'),

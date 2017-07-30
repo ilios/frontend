@@ -2,14 +2,13 @@ import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { Controller, computed, inject, isBlank, isEmpty, isPresent, RSVP } = Ember;
+const { Controller, computed, isBlank, isEmpty, isPresent, RSVP } = Ember;
 const { resolve } = RSVP;
-const { service } = inject;
 const { gt } = computed;
 
 export default Controller.extend({
-  currentUser: service(),
-  i18n: service(),
+  currentUser: Ember.inject.service(),
+  i18n: Ember.inject.service(),
 
   queryParams: {
     schoolId: 'school',

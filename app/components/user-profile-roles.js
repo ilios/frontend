@@ -1,13 +1,12 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, RSVP, inject, isEmpty, computed } = Ember;
-const { service } = inject;
+const { Component, RSVP, isEmpty, computed } = Ember;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  store: service(),
-  currentUser: service(),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
   classNameBindings: [':user-profile-roles', ':small-component', ':last', 'hasSavedRecently:has-saved:has-not-saved'],
 

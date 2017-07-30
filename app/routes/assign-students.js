@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { inject, Route } = Ember;
-const { service } = inject;
+const { Route } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   titleToken: 'general.admin',
   model(){
     return this.get('currentUser.model').then(user => {

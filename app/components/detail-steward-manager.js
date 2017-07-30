@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, RSVP, inject, isPresent } = Ember;
+const { Component, computed, RSVP, isPresent } = Ember;
 const { map, filter } = RSVP;
-const { service } = inject;
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   stewards: [],
   tagName: 'section',
   classNames: ['detail-steward-manager'],

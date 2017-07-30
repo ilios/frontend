@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, Object: EmberObject } = Ember;
-const { service } = inject;
+const { Component, computed, Object: EmberObject } = Ember;
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   sessionType: null,
   classNames: ['school-session-type-manager'],
   readonlySessionType: computed('sessionType', async function(){

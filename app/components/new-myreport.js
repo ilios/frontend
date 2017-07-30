@@ -3,9 +3,8 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, RSVP, isEmpty, isPresent, Object:EmberObject } = Ember;
+const { Component, computed, RSVP, isEmpty, isPresent, Object:EmberObject } = Ember;
 const { map, Promise } = RSVP;
-const { service } = inject;
 const { oneWay } = computed;
 
 const Validations = buildValidations({
@@ -52,10 +51,10 @@ const PrepositionObject = EmberObject.extend({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  i18n: service(),
-  currentUser: service(),
-  flashMessages: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
+  flashMessages: Ember.inject.service(),
   classNames: ['new-myreport', 'mesh-manager'],
   title: null,
   selectedSchool: null,

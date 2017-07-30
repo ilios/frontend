@@ -3,13 +3,12 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, isBlank, isEmpty, isPresent, inject } = Ember;
-const { service } = inject;
+const { computed, Controller, isBlank, isEmpty, isPresent } = Ember;
 const { gt, sort } = computed;
 
 export default Controller.extend({
-  i18n: service(),
-  currentUser: service(),
+  i18n: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',

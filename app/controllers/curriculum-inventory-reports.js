@@ -1,13 +1,12 @@
 import Ember from 'ember';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, inject } = Ember;
+const { computed, Controller, RSVP, isEmpty, isPresent} = Ember;
 const { Promise } = RSVP;
 const { gt, oneWay, sort } = computed;
-const { service } = inject;
 
 export default Controller.extend({
-  i18n: service(),
-  currentUser: service(),
+  i18n: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
   queryParams: {
     schoolId: 'school',

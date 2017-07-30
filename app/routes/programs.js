@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { RSVP, inject, Route } = Ember;
-const { service } = inject;
+const { RSVP, Route } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
   titleToken: 'general.programs',
   model() {
     let defer = RSVP.defer();

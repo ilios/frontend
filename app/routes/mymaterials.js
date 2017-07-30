@@ -1,15 +1,14 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { Route, RSVP, computed, inject } = Ember;
-const { service } = inject;
+const { Route, RSVP, computed} = Ember;
 const { Promise } = RSVP;
 const { reads } = computed;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
-  commonAjax: service(),
-  iliosConfig: service(),
+  currentUser: Ember.inject.service(),
+  commonAjax: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
   titleToken: 'general.learningMaterials',
 
   host: reads('iliosConfig.apiHost'),

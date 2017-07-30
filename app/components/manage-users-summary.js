@@ -2,15 +2,14 @@ import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios/utils/query-utils';
 
-const { Component, inject, isBlank } = Ember;
-const { service } = inject;
+const { Component, isBlank } = Ember;
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 export default Component.extend({
-  iliosConfig: service(),
-  i18n: service(),
-  store: service(),
-  routing: service('-routing'),
+  iliosConfig: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+  store: Ember.inject.service(),
+  routing: Ember.inject.service('-routing'),
   tagName: 'section',
   classNames: ['manage-users-summary', 'large-component'],
   searchValue: null,

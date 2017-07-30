@@ -1,13 +1,12 @@
 import Ember from 'ember';
 import { singularize, pluralize } from 'ember-inflector';
 
-const { inject, Service, RSVP, computed, isEmpty } = Ember;
-const { service } = inject;
+const { Service, RSVP, computed, isEmpty } = Ember;
 const { all, Promise, resolve, map } = RSVP;
 
 export default Service.extend({
-  store: service(),
-  currentUser: service(),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   reportsList: computed('currentUser.model.reports.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser').get('model').then( user => {

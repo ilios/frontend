@@ -2,13 +2,12 @@ import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
 
-const { computed, inject, Component, RSVP } = Ember;
-const { service } = inject;
+const { computed, Component, RSVP } = Ember;
 const { Promise, resolve } = RSVP;
 
 export default Component.extend({
-  currentUser: service(),
-  reporting: service(),
+  currentUser: Ember.inject.service(),
+  reporting: Ember.inject.service(),
   tagName: 'div',
   classNames: ['dashboard-myreports'],
   myReportEditorOn: false,

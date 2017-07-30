@@ -2,8 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, inject, RSVP } = Ember;
-const { service } = inject;
+const { Component, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -17,7 +16,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  flashMessages: service(),
+  flashMessages: Ember.inject.service(),
 
   didReceiveAttrs(){
     this._super(...arguments);

@@ -4,15 +4,14 @@ import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { computed, Controller, inject, isPresent, isEmpty, RSVP } = Ember;
-const { service } = inject;
+const { computed, Controller, isPresent, isEmpty, RSVP } = Ember;
 const { gt, oneWay, sort } = computed;
 const { PromiseArray, PromiseObject } = DS;
 
 export default Controller.extend({
-  currentUser: service(),
-  i18n: service(),
-  store: service(),
+  currentUser: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+  store: Ember.inject.service(),
 
   queryParams: {
     schoolId: 'school',

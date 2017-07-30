@@ -1,8 +1,7 @@
 import Ember from 'ember';
 
-const { computed, inject, ObjectProxy, Component, RSVP } = Ember;
+const { computed, ObjectProxy, Component, RSVP } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 const { alias, not } = computed;
 
 const ReportProxy = ObjectProxy.extend({
@@ -16,8 +15,8 @@ const ReportProxy = ObjectProxy.extend({
 });
 
 export default Component.extend({
-  currentUser: service(),
-  i18n: service(),
+  currentUser: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   program: null,
 
   /**

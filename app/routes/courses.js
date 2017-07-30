@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {RSVP, inject} = Ember;
-const {service} = inject;
+const { RSVP } = Ember;
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
-  store: service(),
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
   titleToken: 'general.coursesAndSessions',
   model() {
     let defer = RSVP.defer();

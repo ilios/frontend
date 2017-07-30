@@ -1,11 +1,9 @@
 import Ember from 'ember';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
-const { inject } = Ember;
-const { service } = inject;
 
 export default JwtTokenAuthenticator.extend({
-  commonAjax: service(),
+  commonAjax: Ember.inject.service(),
   /**
     Extend the JwtTokenAuthenticator to accept a token in liu of credentials
     This allows authentication of an already existing session.

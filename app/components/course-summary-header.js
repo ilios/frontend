@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
-const { Component, RSVP, computed, inject } = Ember;
-const { service } = inject;
+const { Component, RSVP, computed} = Ember;
 const { Promise, all } = RSVP;
 
 export default Component.extend({
-  currentUser: service(),
-  routing: service('-routing'),
+  currentUser: Ember.inject.service(),
+  routing: Ember.inject.service('-routing'),
   classNames: ['course-summary-header'],
   course: null,
 

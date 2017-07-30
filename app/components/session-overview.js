@@ -6,10 +6,9 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import config from '../config/environment';
 
 const { IliosFeatures: { schoolSessionAttributes } } = config;
-const { Component, computed, RSVP, isEmpty, inject } = Ember;
+const { Component, computed, RSVP, isEmpty} = Ember;
 const { oneWay, sort } = computed;
 const { Promise, all } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   title: [
@@ -38,8 +37,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
-  currentUser: service(),
-  routing: service('-routing'),
+  currentUser: Ember.inject.service(),
+  routing: Ember.inject.service('-routing'),
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('title', this.get('session.title'));

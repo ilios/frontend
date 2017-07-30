@@ -3,8 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 import NewUser from 'ilios/mixins/newuser';
 
-const { inject, computed, isEmpty, isPresent, RSVP } = Ember;
-const { service } = inject;
+const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -41,9 +40,9 @@ const Validations = buildValidations({
 });
 
 export default Ember.Component.extend(NewUser, Validations, {
-  i18n: service(),
-  commonAjax: service(),
-  iliosConfig: service(),
+  i18n: Ember.inject.service(),
+  commonAjax: Ember.inject.service(),
+  iliosConfig: Ember.inject.service(),
 
   init(){
     this._super(...arguments);
