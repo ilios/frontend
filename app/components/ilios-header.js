@@ -1,12 +1,12 @@
-import Ember from 'ember';
-
-const { Component, computed} = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  session: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  moment: Ember.inject.service(),
+  session: service(),
+  currentUser: service(),
+  i18n: service(),
+  moment: service(),
   classNames: ['ilios-header'],
   tagName: 'header',
   title: null,

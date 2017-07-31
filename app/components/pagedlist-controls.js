@@ -1,9 +1,8 @@
-import Ember from 'ember';
-
-const { computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 const { lte } = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['pagedlist-controls'],
   tagName: 'div',
   offset: null,

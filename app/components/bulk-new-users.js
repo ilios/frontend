@@ -1,10 +1,14 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { isPresent } from '@ember/utils';
+import EmberObject, { computed } from '@ember/object';
+import { getOwner } from '@ember/application';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
 import PapaParse from 'papaparse';
 
-const { Component, RSVP, isPresent, computed, getOwner } = Ember;
 const { Promise, filter } = RSVP;
 const { reads, not } = computed;
 
@@ -79,9 +83,9 @@ export default Component.extend(NewUser, {
     this.set('savingUserErrors', []);
     this.set('savingAuthenticationErrors', []);
   },
-  i18n: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
+  i18n: service(),
+  flashMessages: service(),
+  iliosConfig: service(),
 
   classNames: ['bulk-new-users'],
   file: null,
@@ -119,7 +123,7 @@ export default Component.extend(NewUser, {
         throw new Error(i18n.t('general.fileTypeError', {fileType: file.type}));
       }
 
-      let ProposedUser = Ember.Object.extend(getOwner(this).ownerInjection(), UserValidations, {
+      let ProposedUser = EmberObject.extend(getOwner(this).ownerInjection(), UserValidations, {
         email: null
       });
       let complete = ({data}) => {

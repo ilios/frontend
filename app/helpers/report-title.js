@@ -1,8 +1,7 @@
-import Ember from 'ember';
-import ReportTitleMixin from 'ilios/mixins/report-title';
+import Helper from '@ember/component/helper';
 import { task } from 'ember-concurrency';
-
-const { Helper, isNone } = Ember;
+import ReportTitleMixin from 'ilios/mixins/report-title';
+import { isNone } from '@ember/utils';
 
 export default Helper.extend(ReportTitleMixin, {
 

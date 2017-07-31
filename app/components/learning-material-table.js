@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import Table from 'ember-light-table';
 import { task } from 'ember-concurrency';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
-
-const { Component, computed } = Ember;
 
 export default Component.extend(SortableByPosition, {
   classNames: ['learning-material-table'],

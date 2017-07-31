@@ -1,10 +1,8 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { moduleForComponent } from 'ember-qunit';
 import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-
-const { Object:EmberObject } = Ember;
 
 moduleForComponent('curriculum-inventory-sequence-block-min-max-editor', 'Integration | Component | curriculum inventory sequence block min max editor', {
   integration: true

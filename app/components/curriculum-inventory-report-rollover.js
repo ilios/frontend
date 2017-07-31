@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed } = Ember;
 const { reads } = computed;
 
 const Validations = buildValidations({
@@ -18,10 +19,10 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  commonAjax: Ember.inject.service(),
-  store: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
+  commonAjax: service(),
+  store: service(),
+  flashMessages: service(),
+  iliosConfig: service(),
   didReceiveAttrs(){
     this._super(...arguments);
     const report = this.get('report');
@@ -32,7 +33,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     let years = [];
     for (let i = startYear; i < endYear; i++) {
       let title = i + ' - ' + (i + 1);
-      let year = Ember.Object.create({ 'id': i, 'title': title });
+      let year = EmberObject.create({ 'id': i, 'title': title });
       years.pushObject(year);
     }
     const selectedYear = years.findBy('id', startYear + 1);

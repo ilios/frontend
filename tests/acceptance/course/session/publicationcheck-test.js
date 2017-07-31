@@ -1,3 +1,4 @@
+import { run } from '@ember/runloop';
 import destroyApp from '../../../helpers/destroy-app';
 import moment from 'moment';
 import {
@@ -8,9 +9,6 @@ import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import wait from 'ember-test-helpers/wait';
-import Ember from 'ember';
-
-const { run } = Ember;
 var application;
 let url = '/courses/1/sessions/1/publicationcheck';
 module('Acceptance: Session - Publication Check', {

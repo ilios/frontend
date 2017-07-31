@@ -1,8 +1,6 @@
+import Component from '@ember/component';
 import moment from 'moment';
-import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
-
-const { Component } = Ember;
 
 export default Component.extend({
   classNames: ['time-picker'],

@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty} = Ember;
-
 export default Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
   linkedSessionsBuffer: [],
   linkableSessionsBuffer: [],
   classNames: ['curriculum-inventory-sequence-block-session-manager', 'resultslist'],

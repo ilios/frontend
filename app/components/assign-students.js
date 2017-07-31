@@ -1,14 +1,17 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
 
-const { Component, computed, RSVP, isEmpty } = Ember;
 const { reads } = computed;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  flashMessages: service(),
 
   init(){
     this._super(...arguments);

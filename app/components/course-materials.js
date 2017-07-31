@@ -1,7 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import EmberObject, { computed } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
 import SortableTable from 'ilios/mixins/sortable-table';
 
-const { Component, RSVP, Object:EmberObject, computed, isEmpty, isPresent } = Ember;
 const { Promise, map } = RSVP;
 
 export default Component.extend(SortableTable, {

@@ -1,10 +1,13 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import Service from '@ember/service';
+import EmberObject from '@ember/object';
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 
-const { RSVP, Service, Object:EmberObject, run } = Ember;
 const { resolve } = RSVP;
 const duration = 4;
 const program = EmberObject.create({id: 1, title: 'Program', duration});
@@ -48,7 +51,7 @@ moduleForComponent('bulk-new-users', 'Integration | Component | bulk new users',
       }
     });
     this.register('service:current-user', currentUserMock);
-    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(['success', 'warning']);
+    getOwner(this).lookup('service:flash-messages').registerTypes(['success', 'warning']);
     this.register('service:store', storeMock);
   }
 });

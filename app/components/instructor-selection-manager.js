@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed } = Ember;
 const { sort } = computed;
 
 export default Component.extend({
-  i18n: Ember.inject.service(),
+  i18n: service(),
   instructors: [],
   availableInstructorGroups: null,
   sortInstructorsBy: ['title'],

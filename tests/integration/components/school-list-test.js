@@ -1,10 +1,10 @@
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import startMirage from '../../helpers/start-mirage';
-import Ember from 'ember';
-
-const { Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-list', 'Integration | Component | school list', {

@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { isEmpty, isPresent } from '@ember/utils';
+import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import SHA256 from 'cryptojs/sha256';
 
-const { Component, isPresent, isEmpty, computed } = Ember;
 const { reads } = computed;
 
 export default Component.extend({
-  iliosConfig: Ember.inject.service(),
+  iliosConfig: service(),
 
   didReceiveAttrs(){
     this._super(...arguments);

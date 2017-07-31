@@ -1,19 +1,21 @@
-import Ember from 'ember';
+import { oneWay, sort } from '@ember/object/computed';
+import { all } from 'rsvp';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { translationMacro as t } from "ember-i18n";
 
-const { Component, computed } = Ember;
-
 export default Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
   classNames: ['detail-mesh'],
   tagName: 'section',
   placeholder: t('general.meshSearchPlaceholder'),
   subject: null,
-  terms: computed.oneWay('subject.meshDescriptors'),
+  terms: oneWay('subject.meshDescriptors'),
   isCourse: false,
   sortTerms: ['title'],
-  sortedTerms: computed.sort('terms', 'sortTerms'),
+  sortedTerms: sort('terms', 'sortTerms'),
   isSession: false,
   isManaging: false,
   editable: true,
@@ -41,7 +43,7 @@ export default Component.extend({
         }
       });
       promises.pushObject(subject.save());
-      Ember.RSVP.all(promises).then(()=> {
+      all(promises).then(()=> {
         this.set('isManaging', false);
       });
     },

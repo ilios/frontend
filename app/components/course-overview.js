@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, RSVP, isEmpty} = Ember;
 const { not, reads } = computed;
 const { Promise, all } = RSVP;
 
@@ -30,9 +33,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  routing: Ember.inject.service('-routing'),
+  store: service(),
+  currentUser: service(),
+  routing: service('-routing'),
   editable: not('course.locked'),
   universalLocator: 'ILIOS',
   init(){
@@ -43,7 +46,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     let levelOptions = [];
     for(let i=1;i<=5; i++){
-      levelOptions.pushObject(Ember.Object.create({
+      levelOptions.pushObject(EmberObject.create({
         id: i,
         title: i
       }));

@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-
-const { Object:EmberObject, ObjectProxy } = Ember;
 
 moduleForComponent('learnergroup-user-manager', 'Integration | Component | learnergroup user manager', {
   integration: true

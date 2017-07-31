@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
+import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
-const { Component, isPresent, computed } = Ember;
 const { oneWay } = computed;
 
 export default Component.extend({

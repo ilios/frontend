@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Component, computed, ObjectProxy } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
 
 export default Component.extend({
   programs: [],

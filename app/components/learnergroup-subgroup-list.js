@@ -1,17 +1,18 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
 import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { Component, RSVP} = Ember;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
+  flashMessages: service(),
   parentGroup: null,
   classNames: ['learnergroup-subgroup-list'],
   tagName: 'section',

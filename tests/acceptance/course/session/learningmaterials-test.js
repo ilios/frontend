@@ -1,3 +1,5 @@
+import { isPresent, isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -5,12 +7,10 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import Ember from 'ember';
 import moment from 'moment';
 import wait from 'ember-test-helpers/wait';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { isEmpty, isPresent, run } = Ember;
 const { later } = run;
 
 var application;

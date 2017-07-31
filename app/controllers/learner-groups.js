@@ -1,17 +1,20 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
+import { isEmpty, isPresent } from '@ember/utils';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { computed, Controller, isPresent, isEmpty, RSVP } = Ember;
 const { gt, oneWay, sort } = computed;
 const { PromiseArray, PromiseObject } = DS;
 
 export default Controller.extend({
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  store: Ember.inject.service(),
+  currentUser: service(),
+  i18n: service(),
+  store: service(),
 
   queryParams: {
     schoolId: 'school',

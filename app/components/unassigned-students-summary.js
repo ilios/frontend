@@ -1,15 +1,20 @@
-import Ember from 'ember';
-
-const { Component, RSVP, computed, isPresent, ArrayProxy, PromiseProxyMixin } = Ember;
+import { gt } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import ArrayProxy from '@ember/array/proxy';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 const { Promise } = RSVP;
 
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
   tagName: 'div',
   classNameBindings: [':unassigned-students-summary', ':small-component', 'alert'],
-  alert: computed.gt('unassignedStudentsProxy.length', 0),
+  alert: gt('unassignedStudentsProxy.length', 0),
   schoolId: null,
   schools: computed('currentUser.model.schools.[]', function(){
     return new Promise(resolve => {

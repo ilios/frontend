@@ -1,5 +1,5 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('curriculum-inventory-export', 'Unit | Serializer | curriculum inventory export', {
   // Specify the other units that are required for this test.
@@ -36,7 +36,7 @@ test('it serializes records', function(assert) {
 test('it removes all non postable fields', function(assert) {
   var record = this.subject();
   var store = this.store();
-  Ember.run(()=> {
+  run(()=> {
     var now = new Date();
     var doc = 'lorem ipsum';
     var user = store.createRecord('user', {});

@@ -1,10 +1,11 @@
-import Ember from 'ember';
-
-const { Component, computed, RSVP } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP, { all } from 'rsvp';
 const { Promise } = RSVP;
 
 export default Component.extend({
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
   tagName: 'section',
   classNames: ['detail-instructors'],
   ilmSession: null,
@@ -40,7 +41,7 @@ export default Component.extend({
         this.set('instructorBuffer', instructors.toArray());
       }));
 
-      Ember.RSVP.all(promises).then(()=>{
+      all(promises).then(()=>{
         this.set('isManaging', true);
       });
     },

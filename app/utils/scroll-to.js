@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { next } from '@ember/runloop';
+import { Promise as EmberPromise } from 'rsvp';
 
 export default function scrollTo(elementQuery, time) {
   time = typeof time !== 'undefined' ? time : 500;
 
-  var promise = new Ember.RSVP.Promise(function(resolve) {
-    Ember.run.next(()=>{
-      Ember.$('html, body').animate({
-        scrollTop: Ember.$(elementQuery).offset().top
+  var promise = new EmberPromise(function(resolve) {
+    next(()=>{
+      $('html, body').animate({
+        scrollTop: $(elementQuery).offset().top
       }, time, function(){
         resolve();
       });

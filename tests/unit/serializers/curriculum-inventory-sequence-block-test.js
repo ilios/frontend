@@ -1,5 +1,5 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('curriculum-inventory-sequence-block', 'Unit | Serializer | curriculum inventory sequence block', {
   // Specify the other units that are required for this test.
@@ -15,7 +15,7 @@ moduleForModel('curriculum-inventory-sequence-block', 'Unit | Serializer | curri
 
 test('start and end date are formatted during serialization', function(assert) {
   let record = this.subject();
-  Ember.run(()=> {
+  run(()=> {
     record.set('startDate', new Date());
     record.set('endDate', new Date());
     let serializedRecord = record.serialize();
@@ -27,7 +27,7 @@ test('start and end date are formatted during serialization', function(assert) {
 
 test('empty start and end date are not formatted during serialization', function(assert) {
   let record = this.subject();
-  Ember.run(()=> {
+  run(()=> {
     record.set('startDate', null);
     record.set('endDate', null);
     let serializedRecord = record.serialize();

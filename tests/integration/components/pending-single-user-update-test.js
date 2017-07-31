@@ -1,10 +1,10 @@
+import EmberObject from '@ember/object';
+import { resolve } from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import DS from 'ember-data';
 import wait from 'ember-test-helpers/wait';
 
-const { resolve } = Ember.RSVP;
 const { PromiseArray } = DS;
 
 moduleForComponent('pending-single-user-update', 'Integration | Component | pending single user update', {
@@ -21,7 +21,7 @@ test('it renders', function(assert) {
       value: 'directory-email',
     }
   ];
-  let user = Ember.Object.create({
+  let user = EmberObject.create({
     pendingUserUpdates: PromiseArray.create({
       promise: resolve(updates)
     }),

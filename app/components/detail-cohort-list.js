@@ -1,10 +1,12 @@
-import Ember from 'ember';
-
-const { Component, computed, Object:EmberObject, RSVP, isEmpty } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 const { map } = RSVP;
 
 export default Component.extend({
-  i18n: Ember.inject.service(),
+  i18n: service(),
   cohorts: [],
   /**
    * A list of cohorts, sorted by school and display title.

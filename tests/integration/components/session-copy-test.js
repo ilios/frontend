@@ -1,10 +1,11 @@
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('session-copy', 'Integration | Component | session copy', {
@@ -201,7 +202,7 @@ test('copy session', function(assert) {
     }
   });
   this.register('service:store', storeMock);
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(message){
       assert.equal(message, 'general.copySuccess');
     }
@@ -406,7 +407,7 @@ test('copy session into the first course in a different year year #2130', functi
     }
   });
   this.register('service:store', storeMock);
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(){
     }
   });

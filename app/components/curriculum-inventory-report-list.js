@@ -1,6 +1,8 @@
-import Ember from 'ember';
-
-const { computed, ObjectProxy, Component, RSVP } = Ember;
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
 const { Promise } = RSVP;
 const { alias, not } = computed;
 
@@ -15,8 +17,8 @@ const ReportProxy = ObjectProxy.extend({
 });
 
 export default Component.extend({
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  currentUser: service(),
+  i18n: service(),
   program: null,
 
   /**

@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
+import EmberObject, { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { Component, isPresent, computed, RSVP } = Ember;
 const { gt, reads } = computed;
 const { Promise } = RSVP;
 
@@ -68,8 +71,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,
@@ -124,14 +127,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     const i18n = this.get('i18n');
     const childSequenceOrderOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.unordered') }),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.parallel') })
+      EmberObject.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
+      EmberObject.create({ 'id' : 2, 'title': i18n.t('general.unordered') }),
+      EmberObject.create({ 'id' : 3, 'title': i18n.t('general.parallel') })
     ];
     const requiredOptions = [
-      Ember.Object.create({ 'id' : 1, 'title': i18n.t('general.required') }),
-      Ember.Object.create({ 'id' : 2, 'title': i18n.t('general.optionalElective') }),
-      Ember.Object.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack') })
+      EmberObject.create({ 'id' : 1, 'title': i18n.t('general.required') }),
+      EmberObject.create({ 'id' : 2, 'title': i18n.t('general.optionalElective') }),
+      EmberObject.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack') })
     ];
     const required = requiredOptions[0];
     const childSequenceOrder = childSequenceOrderOptions[0];

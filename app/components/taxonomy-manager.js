@@ -1,13 +1,15 @@
-import Ember from 'ember';
-
-const { Component, computed, isPresent, RSVP } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import RSVP from 'rsvp';
 const { Promise } = RSVP;
 const { sort } = computed;
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
+  flashMessages: service(),
   subject: null,
   classNames: ['taxonomy-manager'],
   tagName: 'section',

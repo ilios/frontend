@@ -1,10 +1,8 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import commonInitializer from "ilios/instance-initializers/load-common-translations";
 import moment from 'moment';
-
-const { getOwner } = Ember;
 
 moduleForComponent('session-table-first-offering', 'Integration | Component | session table first offering', {
   integration: true,

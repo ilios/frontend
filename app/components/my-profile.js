@@ -1,14 +1,17 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isPresent } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
 
-const { computed, RSVP, isPresent } = Ember;
 const { Promise } = RSVP;
 const { reads } = computed;
 
 
-export default Ember.Component.extend({
+export default Component.extend({
   init(){
     this._super(...arguments);
     this.reset();
@@ -22,10 +25,10 @@ export default Ember.Component.extend({
     this.set('expiresAt', twoWeeksFromNow.toDate());
     this.set('generatedJwt', null);
   },
-  iliosConfig: Ember.inject.service(),
-  commonAjax: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
-  session: Ember.inject.service(),
+  iliosConfig: service(),
+  commonAjax: service(),
+  flashMessages: service(),
+  session: service(),
 
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),

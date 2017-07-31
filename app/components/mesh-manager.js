@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import ObjectProxy from '@ember/object/proxy';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/mesh-manager';
 
-const { Component, computed } = Ember;
-
-var ProxiedDescriptors = Ember.ObjectProxy.extend({
+var ProxiedDescriptors = ObjectProxy.extend({
   terms: [],
   isActive: computed('content', 'terms.[]', function(){
     return !this.get('terms').includes(this.get('content'));
@@ -12,8 +13,8 @@ var ProxiedDescriptors = Ember.ObjectProxy.extend({
 });
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
   layout: layout,
   classNames: ['detail-block', 'mesh-manager'],
   terms: [],

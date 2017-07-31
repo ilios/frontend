@@ -1,4 +1,4 @@
-import {initialize} from 'ilios/initializers/inflector';
+import { initialize } from 'ilios/initializers/inflector';
 initialize();
 
 export default [

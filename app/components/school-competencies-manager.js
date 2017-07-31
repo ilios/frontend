@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Component, computed, isEmpty } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
   competencies: [],

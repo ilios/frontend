@@ -1,14 +1,14 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { cleanQuery } from '../utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_TIMEOUT = 250;
 
-const { Component, computed } = Ember;
-
 export default Component.extend({
-  store: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
+  store: service(),
+  iliosConfig: service(),
   classNames: ['ilios-users'],
   offset: null,
   limit: null,

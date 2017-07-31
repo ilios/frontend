@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';
 
-const { Component, computed } = Ember;
 const { alias } = computed;
 
 export default Component.extend(SortableObjectiveList, {

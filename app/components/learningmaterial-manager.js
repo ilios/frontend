@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/learningmaterial-manager';
 import moment from 'moment';
 
-const { Component, computed, inject } = Ember;
 const { equal, not, reads } = computed;
 
 const Validations = buildValidations({
@@ -23,7 +24,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: inject.service(),
+  store: service(),
   layout: layout,
   classNames: ['learningmaterial-manager'],
 

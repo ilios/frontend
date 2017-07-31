@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, RSVP } = Ember;
 const { Promise, map } = RSVP;
 
 export default Component.extend({

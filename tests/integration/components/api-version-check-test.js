@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+import jQuery from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import ENV from 'ilios/config/environment';
 
 const { apiVersion } = ENV.APP;
 
-const { Service, RSVP, $:jQuery } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('api-version-check', 'Integration | Component | api version check', {

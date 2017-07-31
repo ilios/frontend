@@ -1,14 +1,16 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
+import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, isBlank, isEmpty, isPresent } = Ember;
 const { gt, sort } = computed;
 
 export default Controller.extend({
-  i18n: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+  i18n: service(),
+  currentUser: service(),
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',

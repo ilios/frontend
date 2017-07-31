@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 import moment from 'moment';
 
 export function browserTimezone() {
   return moment.tz.guess();
 }
 
-export default Ember.Helper.helper(browserTimezone);
+export default helper(browserTimezone);

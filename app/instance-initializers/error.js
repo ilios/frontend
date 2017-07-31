@@ -1,4 +1,6 @@
 /*eslint no-console: 0*/
+import { on } from 'rsvp';
+
 import Ember from 'ember';
 import config from '../config/environment';
 import moment from 'moment';
@@ -29,7 +31,7 @@ export function initialize(instance) {
     };
 
     // Global error handler for promises
-    Ember.RSVP.on('error', (error) => {
+    on('error', (error) => {
       if (error) {
         const mappedError = this.mapError(error);
         if (mappedError.mainMessage !== 'TransitionAborted') {

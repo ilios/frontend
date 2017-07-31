@@ -1,14 +1,16 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import { isPresent } from '@ember/utils';
+import RSVP from 'rsvp';
 import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-const { Route, isPresent, RSVP }  = Ember;
 const { Promise } = RSVP;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
-  currentUser: Ember.inject.service(),
-  session: Ember.inject.service(),
-  commonAjax: Ember.inject.service(),
+  currentUser: service(),
+  session: service(),
+  commonAjax: service(),
   titleToken: 'general.login',
 
   noAccountExistsError: false,

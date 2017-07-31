@@ -1,10 +1,10 @@
-import Ember from 'ember';
-
-const { Route, RSVP} = Ember;
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
 const { all } = RSVP;
 
 export default  Route.extend({
-  store: Ember.inject.service(),
+  store: service(),
   /**
    * Prefetch related data to limit network requests
   */

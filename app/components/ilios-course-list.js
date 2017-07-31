@@ -1,6 +1,8 @@
-import Ember from 'ember';
-
-const { computed, RSVP, ObjectProxy, Component } = Ember;
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import ObjectProxy from '@ember/object/proxy';
+import Component from '@ember/component';
 const { Promise }= RSVP;
 
 const CourseProxy = ObjectProxy.extend({
@@ -72,8 +74,8 @@ const CourseProxy = ObjectProxy.extend({
   }),
 });
 export default Component.extend({
-  currentUser: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  currentUser: service(),
+  i18n: service(),
   courses: [],
   proxiedCourses: computed('courses.[]', function(){
     const i18n = this.get('i18n');

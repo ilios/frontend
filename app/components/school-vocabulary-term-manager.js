@@ -1,8 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty, isPresent } from '@ember/utils';
+import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, isPresent, isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -32,8 +35,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  flashMessages: service(),
   term: null,
   vocabulary: null,
   newTermTitle: null,

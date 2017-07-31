@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;
@@ -246,7 +247,7 @@ test('when some are selected check all checks all', function(assert) {
 });
 
 test('save sets primary cohort', function(assert) {
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(message){
       assert.equal(message, 'general.savedSuccessfully');
     }

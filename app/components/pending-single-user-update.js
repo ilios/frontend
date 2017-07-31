@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Component, computed, RSVP } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 const { reads } = computed;
 
 export default Component.extend({

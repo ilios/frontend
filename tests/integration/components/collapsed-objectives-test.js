@@ -1,10 +1,8 @@
+import EmberObject from '@ember/object';
+import { resolve } from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
-
-const { Object:EmberObject, RSVP } = Ember;
-const { resolve } = RSVP;
 
 let hasMesh, hasParents, plain;
 

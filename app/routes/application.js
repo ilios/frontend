@@ -1,13 +1,15 @@
 import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'ilios/config/environment';
 
 
-export default Ember.Route.extend(ApplicationRouteMixin, {
-  flashMessages: Ember.inject.service(),
-  commonAjax: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  moment: Ember.inject.service(),
+export default Route.extend(ApplicationRouteMixin, {
+  flashMessages: service(),
+  commonAjax: service(),
+  i18n: service(),
+  moment: service(),
 
   /**
   * Leave titles as an array

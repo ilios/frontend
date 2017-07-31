@@ -1,6 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import WeeklyeventsController from 'ilios-common/mixins/weeklyevents-controller';
-
-const { Controller } = Ember;
 
 export default Controller.extend(WeeklyeventsController);

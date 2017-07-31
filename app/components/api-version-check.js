@@ -1,13 +1,15 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
 import ENV from 'ilios/config/environment';
 
-const { Component, RSVP, computed} = Ember;
 const { Promise } = RSVP;
 
 const { apiVersion } = ENV.APP;
 
 export default Component.extend({
-  iliosConfig: Ember.inject.service(),
+  iliosConfig: service(),
   versionMismatch: computed('iliosConfig.apiVersion', function(){
     const iliosConfig = this.get('iliosConfig');
     return new Promise(resolve => {

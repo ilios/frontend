@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { Route, RSVP} = Ember;
 const { all, map } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  store: Ember.inject.service(),
+  store: service(),
   titleToken: 'general.coursesAndSessions',
   async afterModel(course){
     const sessions = await course.get('sessions');

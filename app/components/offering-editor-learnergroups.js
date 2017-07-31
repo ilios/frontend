@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Component, computed, isEmpty, isPresent } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
 const { sort } = computed;
 
 export default Component.extend({

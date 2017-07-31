@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
 import { task } from 'ember-concurrency';
 
-const { Component, RSVP, computed, isEmpty, isPresent, String:EmberString } = Ember;
 const { map, filter } = RSVP;
-const { htmlSafe } = EmberString;
 
 export default Component.extend({
   course: null,

@@ -1,17 +1,19 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import moment from 'moment';
 
-const { Mixin, computed, RSVP } = Ember;
 const { Promise } = RSVP;
 const { oneWay } = computed;
 
 
 export default Mixin.create(ValidationErrorDisplay, {
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
+  flashMessages: service(),
 
   init(){
     this._super(...arguments);

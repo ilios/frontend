@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, RSVP, isEmpty } = Ember;
 const { hash, all } = RSVP;
 
 const Validations = buildValidations({
@@ -17,8 +19,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  flashMessages: service(),
   init(){
     this._super(...arguments);
     this.get('loadYears').perform();

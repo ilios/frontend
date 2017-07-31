@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import Table from 'ember-light-table';
 import escapeRegExp from '../utils/escape-reg-exp';
 import { task, timeout } from 'ember-concurrency';
-
-const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   classNames: ['session-table'],

@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { Route, RSVP } = Ember;
 const { Promise, all } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
   titleToken: 'general.coursesAndSessions',
   beforeModel(){
     this.controllerFor('application').set('showHeader', false);

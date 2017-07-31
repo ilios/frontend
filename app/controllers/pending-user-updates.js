@@ -1,12 +1,14 @@
-import Ember from 'ember';
-
-const { Controller, computed, RSVP, isPresent, isEmpty } = Ember;
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty, isPresent } from '@ember/utils';
 const { sort, gt } = computed;
 const { all, Promise } = RSVP;
 
 export default Controller.extend({
-  store: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  flashMessages: service(),
   queryParams: ['offset', 'limit', 'filter', 'school'],
   offset: 0,
   limit: 25,

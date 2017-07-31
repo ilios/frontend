@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import Application from '@ember/application';
+import { run } from '@ember/runloop';
 import { initialize } from 'ilios/initializers/replace-promise';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
@@ -7,8 +8,8 @@ import RSVP from 'rsvp';
 
 module('Unit | Initializer | replace promise', {
   beforeEach() {
-    Ember.run(() => {
-      this.application = Ember.Application.create();
+    run(() => {
+      this.application = Application.create();
       this.application.deferReadiness();
     });
   },

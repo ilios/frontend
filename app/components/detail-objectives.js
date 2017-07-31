@@ -1,14 +1,17 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import scrollTo from '../utils/scroll-to';
 
-const { Component, computed, isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
 const { or, notEmpty, alias } = computed;
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  flashMessages: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
+  flashMessages: service(),
   subject: null,
   objectives:  alias('subject.objectives'),
   tagName: 'section',

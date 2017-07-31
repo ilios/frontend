@@ -1,16 +1,18 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios/utils/query-utils';
 
-const { Component, computed, isBlank } = Ember;
 const { mapBy } = computed;
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 
 export default Component.extend({
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
   classNames: ['leadership-search'],
   existingUsers: null,
   existingUserIds: mapBy('existingUsers', 'id'),

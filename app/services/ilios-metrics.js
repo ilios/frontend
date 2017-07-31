@@ -1,13 +1,14 @@
-import Ember from 'ember';
-
-const { Service, RSVP, run, isEmpty } = Ember;
+import Service, { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
 const { scheduleOnce } = run;
 const { Promise } = RSVP;
 
 export default Service.extend({
-  metrics: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
+  metrics: service(),
+  currentUser: service(),
+  iliosConfig: service(),
 
   setup(){
     const iliosConfig = this.get('iliosConfig');

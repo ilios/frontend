@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import EmberObject, { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, RSVP, computed} = Ember;
 const { alias, reads } = computed;
 const { Promise } = RSVP;
 
@@ -29,8 +31,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  currentUser: Ember.inject.service(),
-  routing: Ember.inject.service('-routing'),
+  currentUser: service(),
+  routing: service('-routing'),
   currentRoute: '',
   year: null,
 
@@ -46,10 +48,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const endDate = report.get('endDate');
 
     let yearOptions = [];
-    yearOptions.pushObject(Ember.Object.create({'id': year, 'title': yearLabel}));
+    yearOptions.pushObject(EmberObject.create({'id': year, 'title': yearLabel}));
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
       if (i != year) {
-        yearOptions.pushObject(Ember.Object.create({'id': i, 'title': i + ' - ' + (i + 1)}));
+        yearOptions.pushObject(EmberObject.create({'id': i, 'title': i + ' - ' + (i + 1)}));
       }
     }
 

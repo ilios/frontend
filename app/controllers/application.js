@@ -1,13 +1,14 @@
-import Ember from 'ember';
-
-const { Controller, computed, isPresent } = Ember;
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 const { alias } = computed;
 
 export default Controller.extend({
-  currentUser: Ember.inject.service(),
-  session: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  headData: Ember.inject.service(),
+  currentUser: service(),
+  session: service(),
+  i18n: service(),
+  headData: service(),
 
   showHeader: true,
   showNavigation: true,

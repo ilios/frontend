@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { set, computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, set } = Ember;
 const { equal, not, reads } = computed;
 
 const Validations = buildValidations({
@@ -65,9 +66,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
+  iliosConfig: service(),
   host: reads('iliosConfig.apiHost'),
   uploadPath: computed('host', function () {
     return this.get('host') + '/upload';

@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
@@ -6,7 +9,6 @@ import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { getOwner, RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;

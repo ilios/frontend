@@ -1,10 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 import wait from 'ember-test-helpers/wait';
-
-const { run } = Ember;
 
 moduleForComponent('search-box', 'Integration | Component | search box', {
   integration: true

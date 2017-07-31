@@ -1,9 +1,11 @@
-import Ember from 'ember';
-
-const { Component, computed, RSVP, isPresent, isEmpty } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty, isPresent } from '@ember/utils';
 
 export default Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
   tagName: 'section',
   classNames: ['school-competencies-expanded'],
   school: null,

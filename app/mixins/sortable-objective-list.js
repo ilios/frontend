@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { computed, Mixin, RSVP } = Ember;
 const { alias } = computed;
 const { all, Promise } = RSVP;
 

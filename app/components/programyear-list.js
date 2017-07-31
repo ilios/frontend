@@ -1,16 +1,21 @@
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { isEmpty, isPresent } from '@ember/utils';
 import moment from 'moment';
-import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, ObjectProxy, RSVP, run, isPresent, isEmpty } = Ember;
 const { mapBy, sort } = computed;
 const { Promise, hash } = RSVP;
 
 export default Component.extend({
   classNames: ['programyear-list'],
 
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
 
   program: null,
   programYears: [],

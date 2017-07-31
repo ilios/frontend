@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/objective-manage-descriptors';
-
-const { Component, computed } = Ember;
 
 export default Component.extend({
   layout: layout,

@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import ReportTitleMixin from 'ilios/mixins/report-title';
 import { task } from 'ember-concurrency';
 
 
-export default Ember.Component.extend(ReportTitleMixin, {
+export default Component.extend(ReportTitleMixin, {
   reporttitle: null,
   tagName: 'span',
 

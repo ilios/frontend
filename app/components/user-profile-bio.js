@@ -1,10 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 import strength from 'password-strength';
 
-const { Component, computed, isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -75,10 +78,10 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
-  commonAjax: Ember.inject.service(),
+  store: service(),
+  currentUser: service(),
+  iliosConfig: service(),
+  commonAjax: service(),
 
   init(){
     this._super(...arguments);

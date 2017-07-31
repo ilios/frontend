@@ -1,3 +1,4 @@
+import { isEmpty } from '@ember/utils';
 import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
 import {
@@ -6,9 +7,6 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import Ember from 'ember';
-
-const { isEmpty } = Ember;
 
 var application;
 

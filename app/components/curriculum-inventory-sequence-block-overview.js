@@ -1,12 +1,15 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty, isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
-const { Component, isPresent, computed, RSVP, isEmpty } = Ember;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  i18n: Ember.inject.service(),
-  store: Ember.inject.service(),
+  i18n: service(),
+  store: service(),
   classNames: ['curriculum-inventory-sequence-block-overview'],
   tagName: 'section',
   sequenceBlock: null,

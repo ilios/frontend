@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
 import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { Component, isPresent } = Ember;
 
 const Validations = buildValidations({
   title: [
@@ -47,8 +47,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
   classNames: ['new-course', 'new-result', 'form-container'],
 
-  i18n: Ember.inject.service(),
-  store: Ember.inject.service(),
+  i18n: service(),
+  store: service(),
 
   years: [],
 

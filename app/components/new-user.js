@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
-
-const { Component } = Ember;
 
 const Validations = buildValidations({
   firstName: [

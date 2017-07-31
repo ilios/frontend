@@ -1,7 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { isEmpty } from '@ember/utils';
+import EmberObject, { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
 const { all, map, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
@@ -74,7 +78,7 @@ const cohortProxy = EmberObject.extend({
 });
 
 export default Component.extend({
-  i18n: Ember.inject.service(),
+  i18n: service(),
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,

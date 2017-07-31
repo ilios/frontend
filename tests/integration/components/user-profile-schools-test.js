@@ -1,9 +1,10 @@
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object: EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 let user;

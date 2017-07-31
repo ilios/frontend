@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { Component, computed } = Ember;
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 const defaultButtons = [
   'bold',
@@ -13,7 +14,7 @@ const defaultButtons = [
   'html'
 ];
 export default Component.extend({
-  i18n: Ember.inject.service(),
+  i18n: service(),
   content: '',
 
   /**
@@ -22,7 +23,7 @@ export default Component.extend({
    */
   init() {
     this._super(...arguments);
-    Ember.$.FE.DT = true;
+    $.FE.DT = true;
   },
   options: computed('i18n.locale', function(){
     const i18n = this.get('i18n');
