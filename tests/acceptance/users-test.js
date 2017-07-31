@@ -27,48 +27,36 @@ function getCellContent(i) {
   return find(`tbody tr td:eq(${i})`).text().trim();
 }
 
-test('can see list of users and transition to user route', function(assert) {
+test('can see list of users and transition to user route', async function(assert) {
   const firstStudent = 'tbody tr td:eq(1) a';
 
-  visit(url);
-  andThen(() => {
-    assert.equal(getCellContent(0), '', 'user is a student');
-    assert.equal(getCellContent(1), '0 guy M. Mc0son', 'name is shown');
-    assert.equal(getCellContent(2), '123', 'campus ID is shown');
-    assert.equal(getCellContent(3), 'user@example.edu', 'email is shown');
-    assert.equal(getCellContent(4), 'school 0', 'primary school is shown');
-  });
+  await visit(url);
+  assert.equal(getCellContent(0), '', 'user is a student');
+  assert.equal(getCellContent(1), '0 guy M. Mc0son', 'name is shown');
+  assert.equal(getCellContent(2), '123', 'campus ID is shown');
+  assert.equal(getCellContent(3), 'user@example.edu', 'email is shown');
+  assert.equal(getCellContent(4), 'school 0', 'primary school is shown');
 
-  click(firstStudent);
-  andThen(() => {
-    assert.equal(currentURL(), '/users/4136', 'tranistioned to `user` route');
-  });
+  await click(firstStudent);
+  assert.equal(currentURL(), '/users/4136', 'tranistioned to `user` route');
 });
 
-test('can page through list of users', function(assert) {
+test('can page through list of users', async function(assert) {
   const leftArrow = '.backward';
   const rightArrow = '.forward';
 
-  visit(url);
-  click(rightArrow);
-  andThen(() => {
-    assert.equal(currentURL(), '/users?offset=25', 'query param shown');
-  });
+  await visit(url);
+  await click(rightArrow);
+  assert.equal(currentURL(), '/users?offset=25', 'query param shown');
 
-  click(rightArrow);
-  andThen(() => {
-    assert.equal(currentURL(), '/users?offset=50', 'query param shown');
-  });
+  await click(rightArrow);
+  assert.equal(currentURL(), '/users?offset=50', 'query param shown');
 
-  click(leftArrow);
-  andThen(() => {
-    assert.equal(currentURL(), '/users?offset=25', 'query param shown');
-  });
+  await click(leftArrow);
+  assert.equal(currentURL(), '/users?offset=25', 'query param shown');
 
-  click(leftArrow);
-  andThen(() => {
-    assert.equal(currentURL(), '/users', 'back to first page');
-  });
+  await click(leftArrow);
+  assert.equal(currentURL(), '/users', 'back to first page');
 });
 
 test('can search for a user and transition to user route', async function(assert) {

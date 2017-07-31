@@ -23,7 +23,7 @@ module('Acceptance: Course - Publish All Sessions', {
   }
 });
 
-test('published sessions do not appear in the cannot publish list #1658', function(assert) {
+test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
   server.create('offering', { session: 1 });
   server.create('offering', { session: 2 });
   server.create('offering', { session: 3 });
@@ -69,14 +69,11 @@ test('published sessions do not appear in the cannot publish list #1658', functi
     meshDescriptors: [1],
     terms: [1],
   });
-  visit('/courses/1/publishall');
+  await visit('/courses/1/publishall');
 
-  andThen(function() {
-    let publishable = find('.publish-all-sessions-publishable');
-    click(find('.clickable', publishable)).then(()=> {
-      assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)')), getText('session 0'));
-      assert.equal(getElementText(find('tbody tr:eq(1) td:eq(0)')), getText('session 1'));
-      assert.equal(getElementText(find('tbody tr:eq(2) td:eq(0)')), getText('session 2'));
-    });
-  });
+  let publishable = find('.publish-all-sessions-publishable');
+  await click(find('.clickable', publishable));
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)')), getText('session 0'));
+  assert.equal(getElementText(find('tbody tr:eq(1) td:eq(0)')), getText('session 1'));
+  assert.equal(getElementText(find('tbody tr:eq(2) td:eq(0)')), getText('session 2'));
 });

@@ -24,7 +24,7 @@ module('Acceptance: Program - ProgramYear List', {
   }
 });
 
-test('check list', function(assert) {
+test('check list', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1,2,3,4]
@@ -51,21 +51,19 @@ test('check list', function(assert) {
     archived: true
   });
   server.createList('cohort', 4);
-  visit(url);
-  andThen(function() {
-    var container = find('.programyear-list');
-    var rows = find('tbody tr', container);
-    assert.equal(rows.length, 3);
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText('2010 - 2011'));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), getText('cohort1'));
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))), getText('2011 - 2012'));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), getText('cohort2'));
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(2))), getText('2012 - 2013'));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(2))), getText('cohort0'));
-  });
+  await visit(url);
+  var container = find('.programyear-list');
+  var rows = find('tbody tr', container);
+  assert.equal(rows.length, 3);
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText('2010 - 2011'));
+  assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), getText('cohort1'));
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(1))), getText('2011 - 2012'));
+  assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), getText('cohort2'));
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(2))), getText('2012 - 2013'));
+  assert.equal(getElementText(find('td:eq(1)', rows.eq(2))), getText('cohort0'));
 });
 
-test('check competencies', function(assert) {
+test('check competencies', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1]
@@ -78,13 +76,11 @@ test('check competencies', function(assert) {
     competencies: [1,2,3,4,5]
   });
   server.create('cohort');
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(2)')), 5);
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(2)')), 5);
 });
 
-test('check objectives', function(assert) {
+test('check objectives', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1]
@@ -97,13 +93,11 @@ test('check objectives', function(assert) {
     objectives: [1,2,3,4,5]
   });
   server.create('cohort');
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(3)')), 5);
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(3)')), 5);
 });
 
-test('check directors', function(assert) {
+test('check directors', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1]
@@ -116,13 +110,11 @@ test('check directors', function(assert) {
     directors: [2,3,4,5,6]
   });
   server.create('cohort');
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(4)')), 5);
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(4)')), 5);
 });
 
-test('check terms', function(assert) {
+test('check terms', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1],
@@ -143,13 +135,11 @@ test('check terms', function(assert) {
     terms: [1,2,3,4,5]
   });
   server.create('cohort');
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(5)')), 5);
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(5)')), 5);
 });
 
-test('check warnings', function(assert) {
+test('check warnings', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1]
@@ -158,18 +148,16 @@ test('check warnings', function(assert) {
     program: 1,
   });
   server.create('cohort');
-  visit(url);
-  andThen(function() {
-    var tds = find('.programyear-list tbody tr:eq(0) td');
-    for(let i =2; i< 6; i++){
-      let icon = find('i', tds.eq(i));
-      assert.ok(icon);
-      assert.ok(icon.hasClass('warning'));
-    }
-  });
+  await visit(url);
+  var tds = find('.programyear-list tbody tr:eq(0) td');
+  for(let i =2; i< 6; i++){
+    let icon = find('i', tds.eq(i));
+    assert.ok(icon);
+    assert.ok(icon.hasClass('warning'));
+  }
 });
 
-test('check link', function(assert) {
+test('check link', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1]
@@ -178,14 +166,12 @@ test('check link', function(assert) {
     program: 1,
   });
   server.create('cohort');
-  visit(url);
-  click('.programyear-list tbody tr:eq(0) td:eq(0) a');
-  andThen(function() {
-    assert.equal(currentPath(), 'program.programYear.index');
-  });
+  await visit(url);
+  await click('.programyear-list tbody tr:eq(0) td:eq(0) a');
+  assert.equal(currentPath(), 'program.programYear.index');
 });
 
-test('can delete a program-year', function(assert) {
+test('can delete a program-year', async function(assert) {
   server.create('program', {
     school: 1,
     programYears: [1]
@@ -204,19 +190,15 @@ test('can delete a program-year', function(assert) {
   const confirmRemovalButton = '.confirm-message button.remove';
   const listRows = '.list tbody tr';
 
-  visit(url);
-  andThen(() => {
-    assert.ok(isPresent(find(listRows)), 'one program-year exists');
-  });
+  await visit(url);
+  assert.ok(isPresent(find(listRows)), 'one program-year exists');
 
-  click(deleteButton);
-  click(confirmRemovalButton);
-  andThen(() => {
-    assert.ok(isEmpty(find(listRows)), 'program was removed');
-  });
+  await click(deleteButton);
+  await click(confirmRemovalButton);
+  assert.ok(isEmpty(find(listRows)), 'program was removed');
 });
 
-test('canceling adding new program-year collapses select menu', function(assert) {
+test('canceling adding new program-year collapses select menu', async function(assert) {
   server.create('program', {
     school: 1,
   });
@@ -225,23 +207,19 @@ test('canceling adding new program-year collapses select menu', function(assert)
   const cancelButton = '.new-programyear .cancel';
   const selectField = '.startyear-select select';
 
-  visit(url);
-  click(expandButton);
-  andThen(() => {
-    assert.ok(isPresent(find(selectField)), 'select menu is shown');
-  });
+  await visit(url);
+  await click(expandButton);
+  assert.ok(isPresent(find(selectField)), 'select menu is shown');
 
-  click(cancelButton);
-  andThen(() => {
-    assert.ok(isEmpty(find(selectField)), 'select menu is hidden');
-  });
+  await click(cancelButton);
+  assert.ok(isEmpty(find(selectField)), 'select menu is hidden');
 });
 
 function getTableDataText(n, i, element = '') {
   return find(`.programyears .list tbody tr:eq(${n}) td:eq(${i}) ${element}`);
 }
 
-test('can add a program-year (with no pre-existing program-years)', function(assert) {
+test('can add a program-year (with no pre-existing program-years)', async function(assert) {
   server.create('program', {
     id: 1,
     school: 1,
@@ -252,31 +230,25 @@ test('can add a program-year (with no pre-existing program-years)', function(ass
   const selectField = '.startyear-select select';
   const saveButton = '.new-programyear .done';
 
-  visit(url);
-  andThen(() => {
-    assert.ok(isEmpty(find(listRows)), 'there are no pre-existing program-years');
-  });
+  await visit(url);
+  assert.ok(isEmpty(find(listRows)), 'there are no pre-existing program-years');
 
-  click(expandButton);
-  andThen(() => {
-    const thisYear = new Date().getFullYear();
-    find(selectField).eq(0).val(thisYear).change();
-    click(saveButton);
-    const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
-    andThen(() => {
-      assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
-      const classOfYear = `Class of ${(thisYear + 4).toString()}`;
-      assert.equal(getTableDataText(0, 1).text().trim(), classOfYear, 'cohort class year shown');
-      assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
-      assert.ok(getTableDataText(0, 3, 'i').hasClass('fa-warning'), 'warning label shown');
-      assert.ok(getTableDataText(0, 4, 'i').hasClass('fa-warning'), 'warning label shown');
-      assert.ok(getTableDataText(0, 5, 'i').hasClass('fa-warning'), 'warning label shown');
-      assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
-    });
-  });
+  await click(expandButton);
+  const thisYear = new Date().getFullYear();
+  find(selectField).eq(0).val(thisYear).change();
+  await click(saveButton);
+  const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
+  assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
+  const classOfYear = `Class of ${(thisYear + 4).toString()}`;
+  assert.equal(getTableDataText(0, 1).text().trim(), classOfYear, 'cohort class year shown');
+  assert.ok(getTableDataText(0, 2, 'i').hasClass('fa-warning'), 'warning label shown');
+  assert.ok(getTableDataText(0, 3, 'i').hasClass('fa-warning'), 'warning label shown');
+  assert.ok(getTableDataText(0, 4, 'i').hasClass('fa-warning'), 'warning label shown');
+  assert.ok(getTableDataText(0, 5, 'i').hasClass('fa-warning'), 'warning label shown');
+  assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
 });
 
-test('can add a program-year (with pre-existing program-year)', function(assert) {
+test('can add a program-year (with pre-existing program-year)', async function(assert) {
   server.createList('user', 3, {
     directedProgramYears: [1]
   });
@@ -336,38 +308,32 @@ test('can add a program-year (with pre-existing program-year)', function(assert)
   const saveButton = '.new-programyear .done';
   const thisYear = new Date().getFullYear();
 
-  visit(url);
-  andThen(() => {
-    const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
+  await visit(url);
+  const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
 
-    assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
-    assert.equal(getTableDataText(0, 1).text().trim(), 'cohort 0', 'cohort class year shown');
-    assert.equal(getTableDataText(0, 2).text().trim(), '3');
-    assert.equal(getTableDataText(0, 3).text().trim(), '3');
-    assert.equal(getTableDataText(0, 4).text().trim(), '3');
-    assert.equal(getTableDataText(0, 5).text().trim(), '3');
-    assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
-  });
+  assert.equal(getTableDataText(0, 0).text().trim(), academicYear, 'academic year shown');
+  assert.equal(getTableDataText(0, 1).text().trim(), 'cohort 0', 'cohort class year shown');
+  assert.equal(getTableDataText(0, 2).text().trim(), '3');
+  assert.equal(getTableDataText(0, 3).text().trim(), '3');
+  assert.equal(getTableDataText(0, 4).text().trim(), '3');
+  assert.equal(getTableDataText(0, 5).text().trim(), '3');
+  assert.equal(getTableDataText(0, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
 
-  click(expandButton);
-  andThen(() => {
-    find(selectField).eq(0).val(thisYear + 1).change();
-    click(saveButton);
-    andThen(() => {
-      const academicYear = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
-      assert.equal(getTableDataText(1, 0).text().trim(), academicYear, 'academic year shown');
-      const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
-      assert.equal(getTableDataText(1, 1).text().trim(), cohortClassYear, 'cohort class year shown');
-      assert.equal(getTableDataText(1, 2).text().trim(), '3', 'copied correctly from latest program-year');
-      assert.equal(getTableDataText(1, 3).text().trim(), '3', 'copied correctly from latest program-year');
-      assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
-      assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
-      assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
-    });
-  });
+  await click(expandButton);
+  find(selectField).eq(0).val(thisYear + 1).change();
+  await click(saveButton);
+  const academicYear2 = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
+  assert.equal(getTableDataText(1, 0).text().trim(), academicYear2, 'academic year shown');
+  const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
+  assert.equal(getTableDataText(1, 1).text().trim(), cohortClassYear, 'cohort class year shown');
+  assert.equal(getTableDataText(1, 2).text().trim(), '3', 'copied correctly from latest program-year');
+  assert.equal(getTableDataText(1, 3).text().trim(), '3', 'copied correctly from latest program-year');
+  assert.equal(getTableDataText(1, 4).text().trim(), '3', 'copied correctly from latest program-year');
+  assert.equal(getTableDataText(1, 5).text().trim(), '3', 'copied correctly from latest program-year');
+  assert.equal(getTableDataText(1, 6, 'span').text().trim(), 'Not Published', 'unpublished shown');
 });
 
-test('privileged users can lock and unlock program-year', function(assert) {
+test('privileged users can lock and unlock program-year', async function(assert) {
   assert.expect(6);
   const firstProgramYearRow = '.list tbody tr:eq(0)';
   const secondProgramYearRow = '.list tbody tr:eq(1)';
@@ -400,22 +366,18 @@ test('privileged users can lock and unlock program-year', function(assert) {
   });
   server.db.users.update(4136, {roles: [1]});
 
-  visit(url);
-  andThen(function() {
-    assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-lock'), 'first program year is locked');
-    assert.ok(find(firstProgramYearLockedIcon).hasClass('clickable'), 'first program year is clickable');
-    assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-unlock'), 'second program year is unlocked');
-    assert.ok(find(secondProgramYearLockedIcon).hasClass('clickable'), 'second program year is clickable');
-    click(firstProgramYearLockedIcon);
-    click(secondProgramYearLockedIcon);
-    andThen(()=>{
-      assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-unlock'), 'first program year is now unlocked');
-      assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-lock'), 'second program year is now locked');
-    });
-  });
+  await visit(url);
+  assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-lock'), 'first program year is locked');
+  assert.ok(find(firstProgramYearLockedIcon).hasClass('clickable'), 'first program year is clickable');
+  assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-unlock'), 'second program year is unlocked');
+  assert.ok(find(secondProgramYearLockedIcon).hasClass('clickable'), 'second program year is clickable');
+  await click(firstProgramYearLockedIcon);
+  await click(secondProgramYearLockedIcon);
+  assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-unlock'), 'first program year is now unlocked');
+  assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-lock'), 'second program year is now locked');
 });
 
-test('non-privileged users cannot lock and unlock course but can see the icon', function(assert) {
+test('non-privileged users cannot lock and unlock course but can see the icon', async function(assert) {
   assert.expect(4);
   const firstCourseRow = '.list tbody tr:eq(0)';
   const secondCourseRow = '.list tbody tr:eq(1)';
@@ -436,20 +398,16 @@ test('non-privileged users cannot lock and unlock course but can see the icon', 
     publishedAsTbd: true,
     locked: false,
   });
-  visit('/courses');
-  andThen(function() {
-    assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
-    assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
-    click(find(firstCourseLockedIcon));
-    click(find(secondCourseLockedIcon));
-    andThen(()=>{
-      assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is still locked');
-      assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is still unlocked');
-    });
-  });
+  await visit('/courses');
+  assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
+  assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
+  await click(find(firstCourseLockedIcon));
+  await click(find(secondCourseLockedIcon));
+  assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is still locked');
+  assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is still unlocked');
 });
 
-test('delete-button is not visible for program years with populated cohorts', function(assert) {
+test('delete-button is not visible for program years with populated cohorts', async function(assert) {
   server.create('user', {
     id: 1,
     cohorts: [1]
@@ -475,9 +433,7 @@ test('delete-button is not visible for program years with populated cohorts', fu
   const firstProgramYearRow = '.list tbody tr:eq(0)';
   const deleteButtonOnFirstRow = `${firstProgramYearRow} .remove`;
 
-  visit(url);
-  andThen(() => {
-    assert.ok(isPresent(find(firstProgramYearRow)), 'program year is visible');
-    assert.ok(isEmpty(find(deleteButtonOnFirstRow)), 'no delete-button is visible');
-  });
+  await visit(url);
+  assert.ok(isPresent(find(firstProgramYearRow)), 'program year is visible');
+  assert.ok(isEmpty(find(deleteButtonOnFirstRow)), 'no delete-button is visible');
 });

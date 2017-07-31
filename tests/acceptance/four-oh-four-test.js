@@ -23,19 +23,15 @@ module('Acceptance: FourOhFour', {
   }
 });
 
-test('visiting /four-oh-four', function(assert) {
-  visit('/four-oh-four');
+test('visiting /four-oh-four', async function(assert) {
+  await visit('/four-oh-four');
 
-  andThen(function() {
-    assert.equal(currentPath(), 'fourOhFour');
-    assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
-  });
+  assert.equal(currentPath(), 'fourOhFour');
+  assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
 });
 
-test('visiting /nothing', function(assert) {
-  visit('/nothing');
+test('visiting /nothing', async function(assert) {
+  await visit('/nothing');
 
-  andThen(function() {
-    assert.equal(currentPath(), 'fourOhFour');
-  });
+  assert.equal(currentPath(), 'fourOhFour');
 });

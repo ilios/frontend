@@ -20,17 +20,15 @@ module('Acceptance: Program - Overview', {
   }
 });
 
-test('check fields', function(assert) {
+test('check fields', async function(assert) {
   var program = server.create('program', {
     school: 1,
   });
-  visit(url);
-  andThen(function() {
-    assert.equal(currentPath(), 'program.index');
-    var container = find('.program-overview');
-    assert.equal(getElementText(find('.programtitleshort .editable', container)), getText(program.shortTitle));
-    assert.equal(getElementText(find('.programduration .editable', container)), program.duration);
-  });
+  await visit(url);
+  assert.equal(currentPath(), 'program.index');
+  var container = find('.program-overview');
+  assert.equal(getElementText(find('.programtitleshort .editable', container)), getText(program.shortTitle));
+  assert.equal(getElementText(find('.programduration .editable', container)), program.duration);
 });
 
 test('change title', async function(assert) {
@@ -96,7 +94,7 @@ test('change duration', async function(assert) {
   for(let i = 0; i < 10; i++){
     assert.equal(getElementText(durations.eq(i)), i+1);
   }
-  pickOption(select, '9', assert);
+  await pickOption(select, '9', assert);
   await click(done);
   assert.equal(getElementText(duration), '9');
 });

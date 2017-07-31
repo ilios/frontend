@@ -5,6 +5,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import wait from 'ember-test-helpers/wait';
 
 var application;
 var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
@@ -62,145 +63,119 @@ module('Acceptance: Session - Objective Mesh Descriptors', {
   }
 });
 
-test('list terms', function(assert) {
+test('list terms', async function(assert) {
   assert.expect(1 + fixtures.sessionObjectives.length * 3);
-  visit(url);
-  andThen(function() {
-    let extractObjectives = function(position){
-      return fixtures.meshDescriptors[position - 1].name;
-    };
-    let objectiveRows = find('.session-objective-list tbody tr');
-    assert.equal(objectiveRows.length, fixtures.sessionObjectives.length);
-    for(let i = 0; i < fixtures.sessionObjectives.length; i++){
-      let tds = find('td', objectiveRows.eq(i));
-      let objective = fixtures.sessionObjectives[i];
-      assert.equal(tds.length, 4);
-      let descriptors;
-      if('meshDescriptors' in objective){
-        descriptors = objective.meshDescriptors.map(extractObjectives).join('');
-      } else {
-        descriptors = 'Add New';
-      }
-
-      assert.equal(getElementText(tds.eq(0)), getText(objective.title));
-      assert.equal(getElementText(tds.eq(2)), getText(descriptors));
+  await visit(url);
+  let extractObjectives = function(position){
+    return fixtures.meshDescriptors[position - 1].name;
+  };
+  let objectiveRows = find('.session-objective-list tbody tr');
+  assert.equal(objectiveRows.length, fixtures.sessionObjectives.length);
+  for(let i = 0; i < fixtures.sessionObjectives.length; i++){
+    let tds = find('td', objectiveRows.eq(i));
+    let objective = fixtures.sessionObjectives[i];
+    assert.equal(tds.length, 4);
+    let descriptors;
+    if('meshDescriptors' in objective){
+      descriptors = objective.meshDescriptors.map(extractObjectives).join('');
+    } else {
+      descriptors = 'Add New';
     }
-  });
+
+    assert.equal(getElementText(tds.eq(0)), getText(objective.title));
+    assert.equal(getElementText(tds.eq(2)), getText(descriptors));
+  }
+  await wait();
 });
 
-test('manage terms', function(assert) {
+test('manage terms', async function(assert) {
   assert.expect(26);
-  visit(url);
-  andThen(function() {
-    let detailObjectives = find('.detail-objectives').eq(0);
-    click('.session-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives);
-    andThen(function() {
-      assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
-      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-      let objective = fixtures.sessionObjectives[1];
-      let removableItems = find('.removable-list li', meshManager);
-      assert.equal(removableItems.length, objective.meshDescriptors.length);
-      for (let i = 0; i < objective.meshDescriptors.length; i++){
-        let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
-        assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
-      }
+  await visit(url);
+  let detailObjectives = find('.detail-objectives').eq(0);
+  await click('.session-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives);
+  assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
+  let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+  let objective = fixtures.sessionObjectives[1];
+  let removableItems = find('.removable-list li', meshManager);
+  assert.equal(removableItems.length, objective.meshDescriptors.length);
+  for (let i = 0; i < objective.meshDescriptors.length; i++){
+    let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
+    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
+  }
 
-      let searchBox = find('.search-box', meshManager);
-      assert.equal(searchBox.length, 1);
-      searchBox = searchBox.eq(0);
-      let searchBoxInput = find('input', searchBox);
-      assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
-      fillIn(searchBoxInput, 'descriptor');
-      click('span.search-icon', searchBox);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
-        assert.equal(searchResults.length, fixtures.meshDescriptors.length);
+  let searchBox = find('.search-box', meshManager);
+  assert.equal(searchBox.length, 1);
+  searchBox = searchBox.eq(0);
+  let searchBoxInput = find('input', searchBox);
+  assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
+  await fillIn(searchBoxInput, 'descriptor');
+  await click('span.search-icon', searchBox);
+  let searchResults = find('.mesh-search-results li', meshManager);
+  assert.equal(searchResults.length, fixtures.meshDescriptors.length);
 
-        for(let i = 0; i < fixtures.meshDescriptors.length; i++){
-          let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
-          assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
-        }
+  for(let i = 0; i < fixtures.meshDescriptors.length; i++){
+    let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
+    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
+  }
 
-        for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-          if(objective.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
-            assert.ok($(searchResults[i]).hasClass('disabled'));
-          } else {
-            assert.ok(!$(searchResults[i]).hasClass('disabled'));
-          }
-        }
-        click('.removable-list li:eq(0)', meshManager).then(function(){
-          assert.ok(!$(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
-        });
-        click(searchResults[3]);
-        andThen(function(){
-          assert.ok($(find('.mesh-search-results li:eq(3)', meshManager)).hasClass('disabled'));
+  for (let i = 0; i < fixtures.meshDescriptors.length; i++){
+    if(objective.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
+      assert.ok($(searchResults[i]).hasClass('disabled'));
+    } else {
+      assert.ok(!$(searchResults[i]).hasClass('disabled'));
+    }
+  }
+  await click('.removable-list li:eq(0)', meshManager);
+  assert.ok(!$(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
+  await click(searchResults[3]);
+  assert.ok($(find('.mesh-search-results li:eq(3)', meshManager)).hasClass('disabled'));
 
-          let newExpectedMesh = [
-            fixtures.meshDescriptors[1],
-            fixtures.meshDescriptors[3]
-          ];
-          removableItems = find('.removable-list li', meshManager);
-          assert.equal(removableItems.length, 2);
-          for (let i = 0; i < 2; i++){
-            let meshDescriptorName = find('.title', removableItems[i]).eq(0);
-            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
-          }
-        });
-      });
-    });
-  });
+  let newExpectedMesh = [
+    fixtures.meshDescriptors[1],
+    fixtures.meshDescriptors[3]
+  ];
+  removableItems = find('.removable-list li', meshManager);
+  assert.equal(removableItems.length, 2);
+  for (let i = 0; i < 2; i++){
+    let meshDescriptorName = find('.title', removableItems[i]).eq(0);
+    assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
+  }
 });
 
-test('save terms', function(assert) {
+test('save terms', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    let detailObjectives = find('.detail-objectives').eq(0);
-    click('.session-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
-    andThen(function() {
-      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-      let searchBoxInput = find('.search-box input', meshManager);
-      fillIn(searchBoxInput, 'descriptor');
-      click('.search-box span.search-icon', meshManager);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
-        click('.removable-list li:eq(0)', meshManager);
-        click(searchResults[2]);
-        click('button.bigadd', detailObjectives);
-        andThen(function(){
-          let expectedMesh = fixtures.meshDescriptors[2].name;
-          let tds = find('.session-objective-list tbody tr:eq(0) td');
-          assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
-        });
-      });
-    });
-  });
+  await visit(url);
+  let detailObjectives = find('.detail-objectives').eq(0);
+  await click('.session-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
+  let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+  let searchBoxInput = find('.search-box input', meshManager);
+  await fillIn(searchBoxInput, 'descriptor');
+  await click('.search-box span.search-icon', meshManager);
+  let searchResults = find('.mesh-search-results li', meshManager);
+  await click('.removable-list li:eq(0)', meshManager);
+  await click(searchResults[2]);
+  await click('button.bigadd', detailObjectives);
+  let expectedMesh = fixtures.meshDescriptors[2].name;
+  let tds = find('.session-objective-list tbody tr:eq(0) td');
+  assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
 });
 
-test('cancel changes', function(assert) {
+test('cancel changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    let detailObjectives = find('.detail-objectives').eq(0);
-    click('.session-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
-    andThen(function() {
-      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-      let searchBoxInput = find('.search-box input', meshManager);
-      fillIn(searchBoxInput, 'descriptor');
-      click('.search-box span.search-icon', meshManager);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
-        click('.removable-list li:eq(0)', meshManager);
-        click(searchResults[1]);
-        click(searchResults[2]);
-        click(searchResults[3]);
-        click('button.bigcancel', detailObjectives);
-        andThen(function(){
-          let tds = find('.session-objective-list tbody tr:eq(0) td');
-          let expectedMesh = fixtures.meshDescriptors[fixtures.sessionObjectives[0].meshDescriptors[0] - 1].name;
-          assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
-        });
-      });
-    });
-  });
+  await visit(url);
+  let detailObjectives = find('.detail-objectives').eq(0);
+  await click('.session-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
+  let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+  let searchBoxInput = find('.search-box input', meshManager);
+  await fillIn(searchBoxInput, 'descriptor');
+  await click('.search-box span.search-icon', meshManager);
+  let searchResults = find('.mesh-search-results li', meshManager);
+  await click('.removable-list li:eq(0)', meshManager);
+  await click(searchResults[1]);
+  await click(searchResults[2]);
+  await click(searchResults[3]);
+  await click('button.bigcancel', detailObjectives);
+  let tds = find('.session-objective-list tbody tr:eq(0) td');
+  let expectedMesh = fixtures.meshDescriptors[fixtures.sessionObjectives[0].meshDescriptors[0] - 1].name;
+  assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
 });

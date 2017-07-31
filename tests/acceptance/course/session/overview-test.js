@@ -7,7 +7,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
-import Ember from 'ember';
 
 var application;
 var fixtures = {};
@@ -34,7 +33,7 @@ module('Acceptance: Session - Overview', {
   }
 });
 
-test('check fields', function(assert) {
+test('check fields', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -48,18 +47,16 @@ test('check fields', function(assert) {
     sessionType: 1,
     sessionDescription: 1,
   });
-  visit(url);
+  await visit(url);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
-    assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
-    assert.equal(find('.sessionilmhours', container).length, 0);
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  var container = find('.session-overview');
+  assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
+  assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
+  assert.equal(find('.sessionilmhours', container).length, 0);
 });
 
-test('check remove ilm', function(assert) {
+test('check remove ilm', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -70,25 +67,21 @@ test('check remove ilm', function(assert) {
     course: 1,
     ilmSession: 1
   });
-  visit(url);
+  await visit(url);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    assert.equal(find('.sessionilmhours', container).length, 1);
-    assert.equal(find('.sessionilmduedate', container).length, 1);
-    var dueDate = moment(ilmSession.dueDate).format('L');
-    assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
-    assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
-    click(find('.independentlearningcontrol .switch-handle', container));
-    andThen(function(){
-      assert.equal(find('.sessionilmhours', container).length, 0);
-      assert.equal(find('.sessionilmduedate', container).length, 0);
-    });
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  var container = find('.session-overview');
+  assert.equal(find('.sessionilmhours', container).length, 1);
+  assert.equal(find('.sessionilmduedate', container).length, 1);
+  var dueDate = moment(ilmSession.dueDate).format('L');
+  assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
+  assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
+  await click(find('.independentlearningcontrol .switch-handle', container));
+  assert.equal(find('.sessionilmhours', container).length, 0);
+  assert.equal(find('.sessionilmduedate', container).length, 0);
 });
 
-test('check add ilm', function(assert) {
+test('check add ilm', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -98,22 +91,18 @@ test('check add ilm', function(assert) {
     sessionType: 1,
     description: 'some text',
   });
-  visit(url);
+  await visit(url);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    click(find('.independentlearningcontrol .switch-handle', container));
-    andThen(function(){
-      assert.equal(find('.sessionilmhours', container).length, 1);
-      assert.equal(find('.sessionilmduedate', container).length, 1);
-      assert.equal(find('.sessionassociatedgroups', container).length, 0);
-      assert.equal(getElementText(find('.sessionilmhours .content', container)), 1);
-    });
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  var container = find('.session-overview');
+  await click(find('.independentlearningcontrol .switch-handle', container));
+  assert.equal(find('.sessionilmhours', container).length, 1);
+  assert.equal(find('.sessionilmduedate', container).length, 1);
+  assert.equal(find('.sessionassociatedgroups', container).length, 0);
+  assert.equal(getElementText(find('.sessionilmhours .content', container)), 1);
 });
 
-test('change ilm hours', function(assert) {
+test('change ilm hours', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -124,27 +113,21 @@ test('change ilm hours', function(assert) {
     course: 1,
     ilmSession: 1
   });
-  visit(url);
+  await visit(url);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find('.sessionilmhours', container).length, 1);
-    var container = find('.sessionilmhours');
-    assert.equal(getElementText(find('.content', container)), ilmSession.hours);
-    click(find('.editable', container));
-    andThen(function(){
-      var input = find('.editinplace input', container);
-      assert.equal(getText(input.val()), ilmSession.hours);
-      fillIn(input, 23);
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.content', container)), 23);
-      });
-    });
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  assert.equal(find('.sessionilmhours', container).length, 1);
+  var container = find('.sessionilmhours');
+  assert.equal(getElementText(find('.content', container)), ilmSession.hours);
+  await click(find('.editable', container));
+  var input = find('.editinplace input', container);
+  assert.equal(getText(input.val()), ilmSession.hours);
+  await fillIn(input, 23);
+  await click(find('.editinplace .actions .done', container));
+  assert.equal(getElementText(find('.content', container)), 23);
 });
 
-test('change ilm due date', function(assert) {
+test('change ilm due date', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -155,28 +138,22 @@ test('change ilm due date', function(assert) {
     course: 1,
     ilmSession: 1
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.sessionilmduedate');
-    var dueDate = moment(ilmSession.dueDate).format('L');
-    assert.equal(getElementText(find('.editable', container)), dueDate);
-    click(find('.editable', container));
-    andThen(function(){
-      var input = find('.editinplace input', container);
-      assert.equal(getText(input.val()), getText(dueDate));
-      var interactor = openDatepicker(find('input', container));
-      assert.equal(interactor.selectedYear(), moment(ilmSession.dueDate).format('YYYY'));
-      var newDate = moment(ilmSession.dueDate).add(1, 'year').add(1, 'month');
-      interactor.selectDate(newDate.toDate());
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.editable', container)), newDate.format('L'));
-      });
-    });
-  });
+  await visit(url);
+  var container = find('.sessionilmduedate');
+  var dueDate = moment(ilmSession.dueDate).format('L');
+  assert.equal(getElementText(find('.editable', container)), dueDate);
+  await click(find('.editable', container));
+  var input = find('.editinplace input', container);
+  assert.equal(getText(input.val()), getText(dueDate));
+  var interactor = openDatepicker(find('input', container));
+  assert.equal(interactor.selectedYear(), moment(ilmSession.dueDate).format('YYYY'));
+  var newDate = moment(ilmSession.dueDate).add(1, 'year').add(1, 'month');
+  interactor.selectDate(newDate.toDate());
+  await click(find('.editinplace .actions .done', container));
+  assert.equal(getElementText(find('.editable', container)), newDate.format('L'));
 });
 
-test('change title', function(assert) {
+test('change title', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -184,24 +161,18 @@ test('change title', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.session-header .title');
-    assert.equal(getElementText(container), getText('session 0'));
-    click(find('.editable', container));
-    andThen(function(){
-      var input = find('.editinplace input', container);
-      assert.equal(getText(input.val()), getText('session 0'));
-      fillIn(input, 'test new title');
-      click(find('.editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(container), getText('test new title'));
-      });
-    });
-  });
+  await visit(url);
+  var container = find('.session-header .title');
+  assert.equal(getElementText(container), getText('session 0'));
+  await click(find('.editable', container));
+  var input = find('.editinplace input', container);
+  assert.equal(getText(input.val()), getText('session 0'));
+  await fillIn(input, 'test new title');
+  await click(find('.editinplace .actions .done', container));
+  assert.equal(getElementText(container), getText('test new title'));
 });
 
-test('change type', function(assert) {
+test('change type', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -209,24 +180,18 @@ test('change type', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
-    click(find('.sessiontype .editable', container));
-    andThen(function(){
+  await visit(url);
+  var container = find('.session-overview');
+  assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
+  await click(find('.sessiontype .editable', container));
 
-      let options = find('.sessiontype select option', container);
-      assert.equal(options.length, 2);
-      assert.equal(getElementText(options.eq(0)), getText('session type 0'));
-      assert.equal(getElementText(options.eq(1)), getText('session type 1'));
-      pickOption(find('.sessiontype select', container), 'session type 1', assert);
-      click(find('.sessiontype .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
-      });
-    });
-  });
+  let options = find('.sessiontype select option', container);
+  assert.equal(options.length, 2);
+  assert.equal(getElementText(options.eq(0)), getText('session type 0'));
+  assert.equal(getElementText(options.eq(1)), getText('session type 1'));
+  await pickOption(find('.sessiontype select', container), 'session type 1', assert);
+  await click(find('.sessiontype .actions .done', container));
+  assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
 });
 
 test('session attributes are shown by school config', async assert => {
@@ -386,7 +351,7 @@ test('change attendance required', async assert => {
   await testAttributeToggle(assert, 'showSessionAttendanceRequired', 'sessionattendancerequired');
 });
 
-test('change description', function(assert) {
+test('change description', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -395,30 +360,21 @@ test('change description', function(assert) {
     sessionType: 1,
     sessionDescription: 1
   });
-  visit(url);
-  andThen(function() {
-    var description = getText(fixtures.sessionDescription.description);
-    var container = find('.sessiondescription');
-    assert.equal(getElementText(find('.content', container)), description);
-    click(find('.editable', container));
-    andThen(function(){
-      //wait for the editor to load
-      Ember.run.later(()=>{
-        let editor = find('.sessiondescription .fr-box');
-        let editorContents = editor.data('froala.editor').$el.text();
-        assert.equal(getText(editorContents), description);
-        editor.froalaEditor('html.set', 'test new description');
-        editor.froalaEditor('events.trigger', 'contentChanged');
-        click(find('.editinplace .actions .done', container));
-        andThen(function(){
-          assert.equal(getElementText(find('.content', container)), getText('test new description'));
-        });
-      }, 100);
-    });
-  });
+  await visit(url);
+  var description = getText(fixtures.sessionDescription.description);
+  var container = find('.sessiondescription');
+  assert.equal(getElementText(find('.content', container)), description);
+  await click(find('.editable', container));
+  let editor = find('.sessiondescription .fr-box');
+  let editorContents = editor.data('froala.editor').$el.text();
+  assert.equal(getText(editorContents), description);
+  editor.froalaEditor('html.set', 'test new description');
+  editor.froalaEditor('events.trigger', 'contentChanged');
+  await click(find('.editinplace .actions .done', container));
+  assert.equal(getElementText(find('.content', container)), getText('test new description'));
 });
 
-test('add description', function(assert) {
+test('add description', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -426,29 +382,20 @@ test('add description', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(url);
-  andThen(function() {
-    var container = find('.sessiondescription');
-    assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
-    click(find('.editable', container));
-    andThen(function(){
-      //wait for the editor to load
-      Ember.run.later(()=>{
-        let editor = find('.sessiondescription .fr-box');
-        let editorContents = editor.data('froala.editor').$el.text();
-        assert.equal(getText(editorContents), '');
-        editor.froalaEditor('html.set', 'test new description');
-        editor.froalaEditor('events.trigger', 'contentChanged');
-        click(find('.editinplace .actions .done', container));
-        andThen(function(){
-          assert.equal(getElementText(find('.content', container)), getText('test new description'));
-        });
-      }, 100);
-    });
-  });
+  await visit(url);
+  var container = find('.sessiondescription');
+  assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
+  await click(find('.editable', container));
+  let editor = find('.sessiondescription .fr-box');
+  let editorContents = editor.data('froala.editor').$el.text();
+  assert.equal(getText(editorContents), '');
+  editor.froalaEditor('html.set', 'test new description');
+  editor.froalaEditor('events.trigger', 'contentChanged');
+  await click(find('.editinplace .actions .done', container));
+  assert.equal(getElementText(find('.content', container)), getText('test new description'));
 });
 
-test('empty description removes description', function(assert) {
+test('empty description removes description', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -462,27 +409,18 @@ test('empty description removes description', function(assert) {
   const edit = `${container} .editable`;
   const save = `${container} .done`;
 
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(description), getText('Click to edit'));
-    click(edit);
-    andThen(function(){
-      //wait for the editor to load
-      Ember.run.later(()=>{
-        let editor = find(editorElement);
-        assert.equal(editor.data('froala.editor').$el.text(), '');
-        editor.froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
-        editor.froalaEditor('events.trigger', 'contentChanged');
-        click(save);
-        andThen(function(){
-          assert.equal(getElementText(description), getText('Click to edit'));
-        });
-      }, 100);
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(description), getText('Click to edit'));
+  await click(edit);
+  let editor = find(editorElement);
+  assert.equal(editor.data('froala.editor').$el.text(), '');
+  editor.froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
+  editor.froalaEditor('events.trigger', 'contentChanged');
+  await click(save);
+  assert.equal(getElementText(description), getText('Click to edit'));
 });
 
-test('remove description', function(assert) {
+test('remove description', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -497,29 +435,20 @@ test('remove description', function(assert) {
   const edit = `${container} .editable`;
   const save = `${container} .done`;
 
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(description), 'sessiondescription0');
-    click(edit);
-    andThen(function(){
-      //wait for the editor to load
-      Ember.run.later(()=>{
-        let editor = find(editorElement);
-        let editorContents = editor.data('froala.editor').$el.text();
-        assert.equal(getText(editorContents), 'sessiondescription0');
-        editor.froalaEditor('html.set', '');
-        editor.froalaEditor('events.trigger', 'contentChanged');
-        click(save);
-        andThen(function(){
-          assert.equal(getElementText(description), getText('Click to edit'));
-        });
-      }, 100);
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(description), 'sessiondescription0');
+  await click(edit);
+  let editor = find(editorElement);
+  let editorContents = editor.data('froala.editor').$el.text();
+  assert.equal(getText(editorContents), 'sessiondescription0');
+  editor.froalaEditor('html.set', '');
+  editor.froalaEditor('events.trigger', 'contentChanged');
+  await click(save);
+  assert.equal(getElementText(description), getText('Click to edit'));
 });
 
 
-test('click copy', function(assert) {
+test('click copy', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -534,15 +463,13 @@ test('click copy', function(assert) {
   });
 
   const copy = '.session-overview a.copy';
-  visit(url);
-  click(copy);
+  await visit(url);
+  await click(copy);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.copy');
-  });
+  assert.equal(currentPath(), 'course.session.copy');
 });
 
-test('copy hidden from instructors', function(assert) {
+test('copy hidden from instructors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -555,17 +482,15 @@ test('copy hidden from instructors', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(url);
+  await visit(url);
   const container = '.session-overview';
   const copy = `${container} a.copy`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 0);
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  assert.equal(find(copy).length, 0);
 });
 
-test('copy visible to developers', function(assert) {
+test('copy visible to developers', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -578,17 +503,15 @@ test('copy visible to developers', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(url);
+  await visit(url);
   const container = '.session-overview';
   const copy = `${container} a.copy`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 1);
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  assert.equal(find(copy).length, 1);
 });
 
-test('copy visible to course directors', function(assert) {
+test('copy visible to course directors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -601,17 +524,15 @@ test('copy visible to course directors', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(url);
+  await visit(url);
   const container = '.session-overview';
   const copy = `${container} a.copy`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 1);
-  });
+  assert.equal(currentPath(), 'course.session.index');
+  assert.equal(find(copy).length, 1);
 });
 
-test('copy hidden on copy route', function(assert) {
+test('copy hidden on copy route', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -624,12 +545,10 @@ test('copy hidden on copy route', function(assert) {
     course: 1,
     sessionType: 1
   });
-  visit(`${url}/copy`);
+  await visit(`${url}/copy`);
   const container = '.session-overview';
   const copy = `${container} a.copy`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.session.copy');
-    assert.equal(find(copy).length, 0);
-  });
+  assert.equal(currentPath(), 'course.session.copy');
+  assert.equal(find(copy).length, 0);
 });

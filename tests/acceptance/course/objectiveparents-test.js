@@ -72,97 +72,79 @@ module('Acceptance: Course - Objective Parents', {
   }
 });
 
-test('list parent objectives by competency', function(assert) {
+test('list parent objectives by competency', async function(assert) {
   assert.expect(16);
-  visit(url);
-  andThen(function() {
-    let tds = find('.course-objective-list tbody tr:eq(0) td');
-    assert.equal(tds.length, 4);
-    click('.link', tds.eq(1));
+  await visit(url);
+  let tds = find('.course-objective-list tbody tr:eq(0) td');
+  assert.equal(tds.length, 4);
+  await click('.link', tds.eq(1));
 
-    andThen(function() {
-      let objectiveManager = find('.objective-manager').eq(0);
-      let objective = fixtures.courseObjectives[0];
-      assert.equal(getElementText(find('.specific-title')), 'SelectParentObjective');
-      assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
-      let expectedCohortTitle = 'Select Parent For: ' + fixtures.program.title + fixtures.cohort.title;
-      assert.equal(getElementText(find('.group-picker', objectiveManager)), getText(expectedCohortTitle));
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      let competencyTitles = find('.competency-title', parentPicker);
-      assert.equal(competencyTitles.length, fixtures.competencies.length);
-      //every competency is in the list
-      for(let i = 0; i < fixtures.programYear.competencies.length; i++){
-        let competency = fixtures.competencies[fixtures.programYear.competencies[i] - 1];
-        assert.equal(getElementText(competencyTitles.eq(i)), getText(competency.title));
-        let ul = find('ul', parentPicker).eq(i);
-        let items = find('li', ul);
-        let cohortObjectives = competency.objectives;
-        assert.equal(cohortObjectives.length, cohortObjectives.length);
-        for (let j = 0; j < cohortObjectives.length; j++){
-          let li = items.eq(j);
-          assert.equal(getElementText(li), getText(fixtures.parentObjectives[cohortObjectives[j] - 1].title));
-          if(objective.parents.indexOf(cohortObjectives[j]) !== -1){
-            assert.ok(competencyTitles.eq(i).hasClass('selected'));
-            assert.ok($(li).hasClass('selected'));
-          } else {
-            assert.ok(!$(li).hasClass('selected'));
-          }
-        }
+  let objectiveManager = find('.objective-manager').eq(0);
+  let objective = fixtures.courseObjectives[0];
+  assert.equal(getElementText(find('.specific-title')), 'SelectParentObjective');
+  assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
+  let expectedCohortTitle = 'Select Parent For: ' + fixtures.program.title + fixtures.cohort.title;
+  assert.equal(getElementText(find('.group-picker', objectiveManager)), getText(expectedCohortTitle));
+  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+  let competencyTitles = find('.competency-title', parentPicker);
+  assert.equal(competencyTitles.length, fixtures.competencies.length);
+  //every competency is in the list
+  for(let i = 0; i < fixtures.programYear.competencies.length; i++){
+    let competency = fixtures.competencies[fixtures.programYear.competencies[i] - 1];
+    assert.equal(getElementText(competencyTitles.eq(i)), getText(competency.title));
+    let ul = find('ul', parentPicker).eq(i);
+    let items = find('li', ul);
+    let cohortObjectives = competency.objectives;
+    assert.equal(cohortObjectives.length, cohortObjectives.length);
+    for (let j = 0; j < cohortObjectives.length; j++){
+      let li = items.eq(j);
+      assert.equal(getElementText(li), getText(fixtures.parentObjectives[cohortObjectives[j] - 1].title));
+      if(objective.parents.indexOf(cohortObjectives[j]) !== -1){
+        assert.ok(competencyTitles.eq(i).hasClass('selected'));
+        assert.ok($(li).hasClass('selected'));
+      } else {
+        assert.ok(!$(li).hasClass('selected'));
       }
-    });
-  });
+    }
+  }
 });
 
-test('change course objective parent', function(assert) {
+test('change course objective parent', async function(assert) {
   assert.expect(4);
-  visit(url);
-  andThen(function() {
-    let tds = find('.course-objective-list tbody tr:eq(0) td');
-    click('.link', tds.eq(1));
-    andThen(function() {
-      let objectiveManager = find('.objective-manager').eq(0);
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      click('li:eq(1)', parentPicker);
-      andThen(function(){
-        assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
-        assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
-        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-        assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
-      });
-    });
-  });
+  await visit(url);
+  let tds = find('.course-objective-list tbody tr:eq(0) td');
+  await click('.link', tds.eq(1));
+  let objectiveManager = find('.objective-manager').eq(0);
+  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+  await click('li:eq(1)', parentPicker);
+  assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
+  assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
+  assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+  assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
 });
 
-test('save changes', function(assert) {
+test('save changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-    click('.detail-objectives:eq(0) button.bigadd');
-  });
-  andThen(function(){
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
-    assert.equal(getElementText(td), getText(
-      fixtures.parentObjectives[1].title +
-      '(' + fixtures.competencies[fixtures.parentObjectives[1].competency - 1].title + ')'
-    ));
-  });
+  await visit(url);
+  await click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
+  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+  await click('.detail-objectives:eq(0) button.bigadd');
+  let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+  assert.equal(getElementText(td), getText(
+    fixtures.parentObjectives[1].title +
+    '(' + fixtures.competencies[fixtures.parentObjectives[1].competency - 1].title + ')'
+  ));
 });
 
-test('cancel changes', function(assert) {
+test('cancel changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-    click('.detail-objectives:eq(0) button.bigcancel');
-  });
-  andThen(function(){
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
-    assert.equal(getElementText(td), getText(
-      fixtures.parentObjectives[0].title +
-      '(' + fixtures.competencies[fixtures.parentObjectives[0].competency - 1].title + ')'
-    ));
-  });
+  await visit(url);
+  await click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
+  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+  await click('.detail-objectives:eq(0) button.bigcancel');
+  let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+  assert.equal(getElementText(td), getText(
+    fixtures.parentObjectives[0].title +
+    '(' + fixtures.competencies[fixtures.parentObjectives[0].competency - 1].title + ')'
+  ));
 });

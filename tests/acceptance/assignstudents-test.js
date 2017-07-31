@@ -18,12 +18,10 @@ moduleForAcceptance('Acceptance | assign students', {
   }
 });
 
-test('visiting /admin/assignstudents', function(assert) {
-  visit('/admin/assignstudents');
+test('visiting /admin/assignstudents', async function(assert) {
+  await visit('/admin/assignstudents');
 
-  andThen(function() {
-    assert.equal(getElementText('#school-selection'), getText('school 0'));
+  assert.equal(getElementText('#school-selection'), getText('school 0'));
 
-    assert.equal(currentURL(), '/admin/assignstudents');
-  });
+  assert.equal(currentURL(), '/admin/assignstudents');
 });

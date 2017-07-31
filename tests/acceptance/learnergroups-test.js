@@ -6,6 +6,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
 
 const { isEmpty, isPresent } = Ember;
 
@@ -23,16 +24,14 @@ module('Acceptance: Learner Groups', {
   }
 });
 
-test('visiting /learnergroups', function(assert) {
+test('visiting /learnergroups', async function(assert) {
   server.create('user', {id: 4136});
   server.create('school');
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(currentPath(), 'learnerGroups');
-  });
+  await visit('/learnergroups');
+  assert.equal(currentPath(), 'learnerGroups');
 });
 
-test('single option filters', function(assert) {
+test('single option filters', async function(assert) {
   const schoolsFilter = '.schoolsfilter';
   const programsFilter = '.programsfilter';
   const programyearsfilter = '.programyearsfilter';
@@ -52,15 +51,13 @@ test('single option filters', function(assert) {
   server.create('cohort', {
     programYear: 1,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(getElementText(find(schoolsFilter)), getText('school 0'));
-    assert.equal(getElementText(find(programsFilter)), getText('program 0'));
-    assert.equal(getElementText(find(programyearsfilter)), getText('cohort 0'));
-  });
+  await visit('/learnergroups');
+  assert.equal(getElementText(find(schoolsFilter)), getText('school 0'));
+  assert.equal(getElementText(find(programsFilter)), getText('program 0'));
+  assert.equal(getElementText(find(programyearsfilter)), getText('cohort 0'));
 });
 
-test('multi-option filters', function(assert) {
+test('multi-option filters', async function(assert) {
   const schoolSelect = '.schoolsfilter select';
   const schoolsFilter = `${schoolSelect} option`;
   const programsFilter = '.programsfilter option';
@@ -98,19 +95,17 @@ test('multi-option filters', function(assert) {
   server.create('cohort', {
     programYear: 2,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(find(schoolsFilter).length, 2);
-    assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
-    assert.equal(find(schoolSelect).val(), '1', 'default school is selected');
-    assert.equal(find(programsFilter).length, 3);
-    assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
-    assert.equal(find(programyearsfilter).length, 2);
-    assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
-  });
+  await visit('/learnergroups');
+  assert.equal(find(schoolsFilter).length, 2);
+  assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
+  assert.equal(find(schoolSelect).val(), '1', 'default school is selected');
+  assert.equal(find(programsFilter).length, 3);
+  assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
+  assert.equal(find(programyearsfilter).length, 2);
+  assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
 });
 
-test('primary school is selected by default', function(assert) {
+test('primary school is selected by default', async function(assert) {
   const schoolsFilter = '.schoolsfilter option:selected';
   assert.expect(1);
   server.create('permission', {
@@ -124,13 +119,11 @@ test('primary school is selected by default', function(assert) {
   server.create('school', {
     users: [1]
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(getElementText(find(schoolsFilter)), getText('school 1'));
-  });
+  await visit('/learnergroups');
+  assert.equal(getElementText(find(schoolsFilter)), getText('school 1'));
 });
 
-test('multi-option filters', function(assert) {
+test('multi-option filters', async function(assert) {
   const schoolsFilter = '.schoolsfilter option';
   const programsFilter = '.programsfilter option';
   const programyearsfilter = '.programyearsfilter option';
@@ -167,18 +160,16 @@ test('multi-option filters', function(assert) {
   server.create('cohort', {
     programYear: 2,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(find(schoolsFilter).length, 2);
-    assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
-    assert.equal(find(programsFilter).length, 3);
-    assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
-    assert.equal(find(programyearsfilter).length, 2);
-    assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
-  });
+  await visit('/learnergroups');
+  assert.equal(find(schoolsFilter).length, 2);
+  assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
+  assert.equal(find(programsFilter).length, 3);
+  assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
+  assert.equal(find(programyearsfilter).length, 2);
+  assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
 });
 
-test('multiple programs filter', function(assert) {
+test('multiple programs filter', async function(assert) {
   const selectedProgram = '.programsfilter select option:selected';
   const programOptions = '.programsfilter select option';
   const programSelectList = '.programsfilter select';
@@ -218,25 +209,19 @@ test('multiple programs filter', function(assert) {
   var secondLearnergroup = server.create('learnerGroup', {
     cohort: 2
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
-    andThen(function(){
-      assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
-      var options = find(programOptions);
-      assert.equal(options.length, 3);
-      assert.equal(getElementText(options.eq(0)), getText('Select a Program'));
-      assert.equal(getElementText(options.eq(1)), getText('program 0'));
-      assert.equal(getElementText(options.eq(2)), getText('program 1'));
-      pickOption(programSelectList, 'program 1', assert);
-      andThen(() => {
-        assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
-      });
-    });
-  });
+  await visit('/learnergroups');
+  assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
+  assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
+  var options = find(programOptions);
+  assert.equal(options.length, 3);
+  assert.equal(getElementText(options.eq(0)), getText('Select a Program'));
+  assert.equal(getElementText(options.eq(1)), getText('program 0'));
+  assert.equal(getElementText(options.eq(2)), getText('program 1'));
+  await pickOption(programSelectList, 'program 1', assert);
+  assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
 });
 
-test('multiple program years filter', function(assert) {
+test('multiple program years filter', async function(assert) {
   const selectedProgramYear = '.programyearsfilter select option:selected';
   const programYearOptions = '.programyearsfilter select option';
   const programYearSelectList = '.programyearsfilter select';
@@ -272,22 +257,18 @@ test('multiple program years filter', function(assert) {
   var secondLearnergroup = server.create('learnerGroup', {
     cohort: 2
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(getElementText(find(selectedProgramYear)), getText('cohort 1'));
-    assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
-    var options = find(programYearOptions);
-    assert.equal(options.length, 2);
-    assert.equal(getElementText(options.eq(0)), getText('cohort 1'));
-    assert.equal(getElementText(options.eq(1)), getText('cohort 0'));
-    pickOption(programYearSelectList, 'cohort 0', assert);
-    andThen(function(){
-      assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
-    });
-  });
+  await visit('/learnergroups');
+  assert.equal(getElementText(find(selectedProgramYear)), getText('cohort 1'));
+  assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
+  var options = find(programYearOptions);
+  assert.equal(options.length, 2);
+  assert.equal(getElementText(options.eq(0)), getText('cohort 1'));
+  assert.equal(getElementText(options.eq(1)), getText('cohort 0'));
+  await pickOption(programYearSelectList, 'cohort 0', assert);
+  assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
 });
 
-test('list groups', function(assert) {
+test('list groups', async function(assert) {
   server.create('user', {id: 4136});
   server.createList('user', 5, {
     learnerGroups: [1]
@@ -339,22 +320,20 @@ test('list groups', function(assert) {
     users: [11,12]
   });
 
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(2, find('.list tbody tr').length);
-    var rows = find('.list tbody tr');
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstLearnergroup.title));
-    // Assertion below needs to be fixed (issue #1157)
-    // assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 11);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
+  await visit('/learnergroups');
+  assert.equal(2, find('.list tbody tr').length);
+  var rows = find('.list tbody tr');
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstLearnergroup.title));
+  // Assertion below needs to be fixed (issue #1157)
+  // assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 11);
+  assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
 
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondLearnergroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
-  });
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondLearnergroup.title));
+  assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
+  assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
 });
 
-test('filters by title', function(assert) {
+test('filters by title', async function(assert) {
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
@@ -384,52 +363,46 @@ test('filters by title', function(assert) {
     cohort: 1
   });
   assert.expect(15);
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(find('.list tbody tr').length, 3);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
+  await visit('/learnergroups');
+  assert.equal(find('.list tbody tr').length, 3);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
 
-    //put these in nested later blocks because there is a 500ms debounce on the title filter
-    fillIn('.titlefilter input', 'first');
-    Ember.run.later(function(){
+  //put these in nested later blocks because there is a 500ms debounce on the title filter
+  await fillIn('.titlefilter input', 'first');
+  Ember.run.later(async () => {
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
+    await fillIn('.titlefilter input', 'second');
+    Ember.run.later(async () => {
       assert.equal(1, find('.list tbody tr').length);
-      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-      fillIn('.titlefilter input', 'second');
-      andThen(function(){
-        Ember.run.later(function(){
-          assert.equal(1, find('.list tbody tr').length);
-          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
-          fillIn('.titlefilter input', 'special');
-          andThen(function(){
-            Ember.run.later(function(){
-              assert.equal(2, find('.list tbody tr').length);
-              assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-              assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
+      await fillIn('.titlefilter input', 'special');
+      Ember.run.later(async () => {
+        assert.equal(2, find('.list tbody tr').length);
+        assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
+        assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
 
-              fillIn('.titlefilter input', '');
-              andThen(function(){
-                Ember.run.later(function(){
-                  assert.equal(3, find('.list tbody tr').length);
-                  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-                  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-                  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
-                }, 750);
-              });
-            }, 750);
-          });
+        await fillIn('.titlefilter input', '');
+        Ember.run.later(async () => {
+          assert.equal(3, find('.list tbody tr').length);
+          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
+          assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
+          assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
         }, 750);
-      });
+      }, 750);
     }, 750);
-  });
+  }, 750);
+
+  await wait();
 });
 
 function getCellData(row, cell) {
   return find(`.list tbody tr:eq(${row}) td:eq(${cell})`).text().trim();
 }
 
-test('add new learnergroup', function(assert) {
+test('add new learnergroup', async function(assert) {
   assert.expect(3);
 
   server.create('user', { id: 4136 });
@@ -451,18 +424,16 @@ test('add new learnergroup', function(assert) {
   const done = '.new-learnergroup .done';
 
   let newTitle = 'A New Test Title';
-  visit(url);
-  click(expandButton);
-  fillIn(input, newTitle);
-  click(done);
-  andThen(() => {
-    assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
-    assert.equal(getCellData(0, 1), 0, 'member count is correct');
-    assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully', 'Success message is shown.'));
-  });
+  await visit(url);
+  await click(expandButton);
+  await fillIn(input, newTitle);
+  await click(done);
+  assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
+  assert.equal(getCellData(0, 1), 0, 'member count is correct');
+  assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully', 'Success message is shown.'));
 });
 
-test('cancel adding new learnergroup', function(assert) {
+test('cancel adding new learnergroup', async function(assert) {
   assert.expect(8);
 
   server.create('user', {id: 4136});
@@ -490,30 +461,24 @@ test('cancel adding new learnergroup', function(assert) {
   const cancelButton = '.new-learnergroup .cancel';
   const component = '.new-learnergroup';
 
-  visit(url);
-  click(expandButton);
-  andThen(() => {
-    assert.ok(isPresent(find(collapseButton)), 'collapse button is visible');
-    assert.ok(isPresent(find(component)), '`new-learnergroup` component is visible');
-  });
+  await visit(url);
+  await click(expandButton);
+  assert.ok(isPresent(find(collapseButton)), 'collapse button is visible');
+  assert.ok(isPresent(find(component)), '`new-learnergroup` component is visible');
 
-  click(cancelButton);
-  andThen(() => {
-    assert.ok(isPresent(find(expandButton)), 'expand button is visible');
-    assert.ok(isEmpty(find(component)), '`new-learnergroup` component is not visible');
-    assert.equal(getCellData(0, 0), 'learner group 0');
-  });
+  await click(cancelButton);
+  assert.ok(isPresent(find(expandButton)), 'expand button is visible');
+  assert.ok(isEmpty(find(component)), '`new-learnergroup` component is not visible');
+  assert.equal(getCellData(0, 0), 'learner group 0');
 
-  click(expandButton);
-  click(collapseButton);
-  andThen(() => {
-    assert.ok(isPresent(find(expandButton)), 'expand button is visible');
-    assert.ok(isEmpty(find(component)), '`new-learnergroup` component is not visible');
-    assert.equal(getCellData(0, 0), 'learner group 0');
-  });
+  await click(expandButton);
+  await click(collapseButton);
+  assert.ok(isPresent(find(expandButton)), 'expand button is visible');
+  assert.ok(isEmpty(find(component)), '`new-learnergroup` component is not visible');
+  assert.equal(getCellData(0, 0), 'learner group 0');
 });
 
-test('remove learnergroup', function(assert) {
+test('remove learnergroup', async function(assert) {
   assert.expect(3);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -534,18 +499,15 @@ test('remove learnergroup', function(assert) {
   server.create('learnerGroup', {
     cohort: 1,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.list tbody tr:eq(0) td:eq(3) .remove');
-    click('.list tbody tr:eq(1) .remove').then(()=>{
-      assert.equal(0, find('.list tbody tr').length);
-    });
-  });
+  await visit('/learnergroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+  await click('.list tbody tr:eq(0) td:eq(3) .remove');
+  await click('.list tbody tr:eq(1) .remove');
+  assert.equal(0, find('.list tbody tr').length);
 });
 
-test('cancel remove learnergroup', function(assert) {
+test('cancel remove learnergroup', async function(assert) {
   assert.expect(4);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -566,19 +528,16 @@ test('cancel remove learnergroup', function(assert) {
   server.create('learnerGroup', {
     cohort: 1,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.list tbody tr:eq(0) td:eq(3) .remove');
-    click('.list tbody tr:eq(1) .done').then(()=>{
-      assert.equal(1, find('.list tbody tr').length);
-      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    });
-  });
+  await visit('/learnergroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+  await click('.list tbody tr:eq(0) td:eq(3) .remove');
+  await click('.list tbody tr:eq(1) .done');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
 });
 
-test('confirmation of remove message', function(assert) {
+test('confirmation of remove message', async function(assert) {
   server.create('user', {id: 4136});
   server.createList('user', 5, {
     learnerGroups: [1]
@@ -607,19 +566,16 @@ test('confirmation of remove message', function(assert) {
     parent: 1
   });
   assert.expect(5);
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
-    click('.list tbody tr:eq(0) td:eq(3) .remove').then(()=>{
-      assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
-      assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
-      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
-    });
-  });
+  await visit('/learnergroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+  await click('.list tbody tr:eq(0) td:eq(3) .remove');
+  assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
+  assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
+  assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
 });
 
-test('populated learner groups are not deletable', function(assert) {
+test('populated learner groups are not deletable', async function(assert) {
   server.create('user', {id: 4136});
   server.createList('user', 5, {
     learnerGroups: [1]
@@ -646,15 +602,13 @@ test('populated learner groups are not deletable', function(assert) {
   });
 
   assert.expect(3);
-  visit('/learnergroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText('learnergroup 0'));
-    assert.notOk(find('.list tbody tr:eq(0) td:eq(3) .remove').length, 'No delete action is available');
-  });
+  await visit('/learnergroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText('learnergroup 0'));
+  assert.notOk(find('.list tbody tr:eq(0) td:eq(3) .remove').length, 'No delete action is available');
 });
 
-test('click title takes you to learnergroup route', function(assert) {
+test('click title takes you to learnergroup route', async function(assert) {
   assert.expect(1);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -675,16 +629,12 @@ test('click title takes you to learnergroup route', function(assert) {
   server.create('learnerGroup', {
     cohort: 1,
   });
-  visit('/learnergroups');
-  andThen(function() {
-    click('.list tbody tr:eq(0) td:eq(0) a');
-  });
-  andThen(function(){
-    assert.equal(currentURL(), '/learnergroups/1');
-  });
+  await visit('/learnergroups');
+  await click('.list tbody tr:eq(0) td:eq(0) a');
+  assert.equal(currentURL(), '/learnergroups/1');
 });
 
-test('add new learnergroup with full cohort', function(assert) {
+test('add new learnergroup with full cohort', async function(assert) {
   assert.expect(2);
 
   server.create('user', { id: 4136 });
@@ -708,27 +658,23 @@ test('add new learnergroup with full cohort', function(assert) {
   const addFullCohort = '.new-learnergroup .clickable:eq(0)';
   const done = '.new-learnergroup .done';
 
-  visit(url);
-  click(expandButton);
-  fillIn(input, 'A New Test Title');
-  click(addFullCohort);
-  click(done);
-  andThen(() => {
-    assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
-    assert.equal(getCellData(0, 1), 5, 'member count is correct');
-  });
+  await visit(url);
+  await click(expandButton);
+  await fillIn(input, 'A New Test Title');
+  await click(addFullCohort);
+  await click(done);
+  assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
+  assert.equal(getCellData(0, 1), 5, 'member count is correct');
 });
 
-test('no add button when there is no cohort', function(assert) {
+test('no add button when there is no cohort', async function(assert) {
   server.create('user', {id: 4136});
   server.create('school');
-  visit('/learnergroups');
+  await visit('/learnergroups');
   const expandNewButton = '.actions .expand-button';
 
-  andThen(function() {
-    assert.equal(currentPath(), 'learnerGroups');
-    assert.equal(find(expandNewButton).length, 0);
-  });
+  assert.equal(currentPath(), 'learnerGroups');
+  assert.equal(find(expandNewButton).length, 0);
 });
 
 test('title filter escapes regex', async function(assert) {
