@@ -53,9 +53,9 @@
               <li class='learning-material'>
                 {{lm-type-icon lm=lm}}
                 {{#if lm.absoluteFileUri}}
-                  <a href={{lm.absoluteFileUri}} target='_blank' rel='noopener'> {{fa-icon 'external-link-square'}} {{lm.title}}</a>
+                  <a href={{lm.absoluteFileUri}} target='_blank' rel='noopener'>{{lm.title}}</a>
                 {{else if lm.link}}
-                  <a href={{lm.link}} target='_blank' rel='noopener'>{{fa-icon 'external-link-square'}} {{lm.title}}</a>
+                  <a href={{lm.link}} target='_blank' rel='noopener'>{{lm.title}}</a>
                 {{else}}
                   {{lm.title}}
                   <ul>
