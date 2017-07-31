@@ -87,7 +87,7 @@ export default Component.extend({
   }),
 
   actions: {
-    remove: function (term) {
+    remove(term) {
       if (this.get('canEdit')) {
         this.sendAction('remove', term);
       }

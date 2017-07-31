@@ -63,13 +63,13 @@ export default Component.extend({
   }),
 
   actions: {
-    addParent: function(parentProxy){
+    addParent(parentProxy) {
       let newParent = parentProxy.get('content');
       let sessionObjective = this.get('sessionObjective');
       sessionObjective.get('parents').addObject(newParent);
       newParent.get('children').addObject(sessionObjective);
     },
-    removeParent: function(parentProxy){
+    removeParent(parentProxy) {
       let removingParent = parentProxy.get('content');
       let sessionObjective = this.get('sessionObjective');
       sessionObjective.get('parents').removeObject(removingParent);

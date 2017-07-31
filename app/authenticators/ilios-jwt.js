@@ -16,7 +16,7 @@ export default JwtTokenAuthenticator.extend({
                                  successfully acquired from the server and rejects
                                  otherwise
   */
-  authenticate: function(credentials, headers) {
+  authenticate(credentials, headers) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       if(this.tokenPropertyName in credentials){
         const token = Ember.get(credentials, this.tokenPropertyName);

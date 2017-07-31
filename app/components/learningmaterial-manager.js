@@ -50,19 +50,19 @@ export default Component.extend({
         this.set('status', status);
       });
     },
-    changeStatus: function(){
+    changeStatus() {
       this.sendAction('changeStatus', this.get('status'));
     },
     revertStatusChanges(){
       this.set('status', this.get('valueBuffer').get('status'));
     },
-    changeRequired: function(value){
+    changeRequired(value) {
       this.sendAction('changeRequired', value);
     },
-    changePublicNotes: function(value){
+    changePublicNotes(value) {
       this.sendAction('changePublicNotes', value);
     },
-    saveNoteChanges: function(){
+    saveNoteChanges() {
       const notes = this.get('notes');
       return this.get('changeNotes')(notes);
     },

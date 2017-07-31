@@ -4,11 +4,11 @@ const { Controller } = Ember;
 
 export default Controller.extend({
   actions: {
-    lockProgramYear: function(programYear){
+    lockProgramYear(programYear) {
       programYear.set('locked', true);
       return programYear.save();
     },
-    unlockProgramYear: function(programYear){
+    unlockProgramYear(programYear) {
       programYear.set('locked', false);
       return programYear.save();
     },

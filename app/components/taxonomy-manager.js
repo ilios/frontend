@@ -67,10 +67,10 @@ export default Component.extend({
   }),
 
   actions: {
-    add: function (term) {
+    add(term) {
       this.sendAction('add', term);
     },
-    remove: function (term) {
+    remove(term) {
       this.sendAction('remove', term);
     },
     changeSelectedVocabulary(vocabId) {

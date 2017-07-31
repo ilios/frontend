@@ -37,7 +37,7 @@ export default Controller.extend({
     debounce(this, this.setFilter, 500);
   }),
 
-  setFilter: function(){
+  setFilter() {
     const titleFilter = this.get('titleFilter');
     const clean = escapeRegExp(titleFilter);
     this.set('debouncedFilter', clean);

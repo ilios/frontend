@@ -27,7 +27,7 @@ export default Component.extend({
     });
   }),
   actions: {
-    toggleMenuVisibility: function(){
+    toggleMenuVisibility() {
       this.toggleProperty('isMenuVisible');
     }
   }

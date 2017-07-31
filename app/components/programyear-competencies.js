@@ -88,11 +88,11 @@ export default Component.extend({
   }),
 
   actions: {
-    cancel: function(){
+    cancel() {
       this.get('loadSelectedCompetencies').perform();
       this.get('setIsManaging')(false);
     },
-    addCompetencyToBuffer: function(competency){
+    addCompetencyToBuffer(competency) {
       let selectedCompetencies = this.get('selectedCompetencies').toArray();
       selectedCompetencies.addObject(competency);
       competency.get('children').then(children => {
@@ -100,7 +100,7 @@ export default Component.extend({
       });
       this.set('selectedCompetencies', selectedCompetencies);
     },
-    removeCompetencyFromBuffer: function(competency){
+    removeCompetencyFromBuffer(competency) {
       let selectedCompetencies = this.get('selectedCompetencies').toArray();
       selectedCompetencies.removeObject(competency);
       competency.get('children').then(children => {

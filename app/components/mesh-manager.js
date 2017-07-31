@@ -59,7 +59,7 @@ export default Component.extend({
 
 
   actions: {
-    search: function(query){
+    search(query) {
       this.set('searchReturned', false);
       this.set('searching', true);
       this.set('query', query);
@@ -85,7 +85,7 @@ export default Component.extend({
       });
     },
 
-    clear: function(){
+    clear() {
       this.set('searchResults', []);
       this.set('searchReturned', false);
       this.set('searching', false);
@@ -93,10 +93,10 @@ export default Component.extend({
       this.set('hasMoreSearchResults', false);
       this.set('query', '');
     },
-    add: function(term){
+    add(term) {
       this.sendAction('add', term.get('content'));
     },
-    remove: function(term){
+    remove(term) {
       this.sendAction('remove', term);
     }
   }

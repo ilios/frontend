@@ -7,7 +7,7 @@ const { isEmpty } = Ember;
 export default RESTSerializer.extend({
   isNewSerializerAPI: true,
   primaryKey: 'user',
-  serialize: function (snapshot, options) {
+  serialize(snapshot, options) {
     var json = this._super(snapshot, options);
 
     //don't persist empty passwords

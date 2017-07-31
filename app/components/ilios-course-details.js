@@ -12,7 +12,7 @@ export default Component.extend({
   courseTaxonomyDetails: null,
   courseCompetencyDetails: null,
   actions: {
-    collapse: function(){
+    collapse() {
       this.get('setShowDetails')(false);
       //when the button is clicked to collapse, animate the focus to the top of the page
       scrollTo("body");

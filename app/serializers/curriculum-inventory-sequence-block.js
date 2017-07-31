@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export default DS.RESTSerializer.extend({
   isNewSerializerAPI: true,
-  serialize: function(snapshot, options) {
+  serialize(snapshot, options) {
     var json = this._super(snapshot, options);
     if (json.startDate) {
       json.startDate = moment.utc(json.startDate).local().format('YYYY-MM-DD');
@@ -13,7 +13,7 @@ export default DS.RESTSerializer.extend({
     }
     return json;
   },
-  normalize: function(modelClass, resourceHash, prop) {
+  normalize(modelClass, resourceHash, prop) {
     if (resourceHash.startDate) {
       let startDate = moment.utc(resourceHash.startDate).format('YYYY-MM-DD');
       let localStartDate = moment(startDate, 'YYYY-MM-DD');

@@ -24,7 +24,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   isSaving: false,
 
   actions: {
-    save: function(){
+    save() {
       this.set('isSaving', true);
       this.send('addErrorDisplayFor', 'title');
       this.validate().then(({validations}) => {

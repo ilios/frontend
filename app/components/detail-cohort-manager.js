@@ -114,10 +114,10 @@ export default Component.extend({
   }),
 
   actions: {
-    add: function(cohort){
+    add(cohort) {
       this.sendAction('add', cohort);
     },
-    remove: function(cohort){
+    remove(cohort) {
       this.sendAction('remove', cohort);
     }
   }

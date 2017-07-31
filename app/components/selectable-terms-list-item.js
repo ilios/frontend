@@ -14,7 +14,7 @@ export default Component.extend({
     return selectedTerms.includes(term);
   }),
 
-  click: function() {
+  click() {
     let term = this.get('term');
     if (this.get('isSelected')) {
       this.sendAction('remove', term);

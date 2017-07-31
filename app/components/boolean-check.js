@@ -9,7 +9,7 @@ export default Component.extend({
 
   value: false,
 
-  click: function() {
+  click() {
     return false;
   }
 });

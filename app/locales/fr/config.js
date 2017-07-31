@@ -3,7 +3,7 @@
 * but it does not so we shouldn't use one.
 **/
 export default {
-  pluralForm: function frenchWithoutZero(n) {
+  pluralForm(n) {
     if (n === 1) { return 'one'; }
     return 'other';
   }

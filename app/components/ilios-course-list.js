@@ -113,13 +113,13 @@ export default Component.extend({
     return sortBy.search(/desc/) === -1;
   }),
   actions: {
-    remove: function(courseProxy){
+    remove(courseProxy) {
       this.sendAction('remove', courseProxy.get('content'));
     },
-    cancelRemove: function(courseProxy){
+    cancelRemove(courseProxy) {
       courseProxy.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(courseProxy){
+    confirmRemove(courseProxy) {
       courseProxy.set('showRemoveConfirmation', true);
     },
     unlockCourse(courseProxy){

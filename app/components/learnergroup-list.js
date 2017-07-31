@@ -6,10 +6,10 @@ export default Component.extend({
   learnerGroups: [],
   learnerGroupsForRemovalConfirmation: [],
   actions: {
-    cancelRemove: function(learnerGroup){
+    cancelRemove(learnerGroup) {
       this.get('learnerGroupsForRemovalConfirmation').removeObject(learnerGroup);
     },
-    confirmRemove: function(learnerGroup){
+    confirmRemove(learnerGroup) {
       this.get('learnerGroupsForRemovalConfirmation').pushObject(learnerGroup);
     },
   }

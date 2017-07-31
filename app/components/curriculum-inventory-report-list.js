@@ -46,16 +46,16 @@ export default Component.extend({
     return sortBy.search(/desc/) === -1;
   }),
   actions: {
-    edit: function(proxy){
+    edit(proxy) {
       this.sendAction('edit', proxy.get('content'));
     },
-    remove: function(proxy){
+    remove(proxy) {
       this.sendAction('remove', proxy.get('content'));
     },
-    cancelRemove: function(proxy){
+    cancelRemove(proxy) {
       proxy.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(proxy){
+    confirmRemove(proxy) {
       proxy.set('showRemoveConfirmation', true);
     },
     sortBy(what){

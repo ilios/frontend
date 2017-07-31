@@ -7,7 +7,7 @@ export default Component.extend({
   layout: layout,
   classNames: ['toggle-mycourses'],
   actions: {
-    toggleMyCourses: function(){
+    toggleMyCourses() {
       this.sendAction('toggleMyCourses');
     }
   }

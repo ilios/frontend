@@ -11,11 +11,11 @@ export default Component.extend({
   sortOrder: ['title'],
   sortedTerms: sort('terms', 'sortOrder'),
   actions: {
-    add: function(term) {
+    add(term) {
       this.sendAction('add', term);
 
     },
-    remove: function(term) {
+    remove(term) {
       this.sendAction('remove', term);
     }
   }

@@ -19,14 +19,14 @@ export default Component.extend({
   editable: true,
   bufferTerms: [],
   actions: {
-    manage: function(){
+    manage() {
       var self = this;
       this.get('terms').then(function(terms){
         self.set('bufferTerms', terms.toArray());
         self.set('isManaging', true);
       });
     },
-    save: function(){
+    save() {
       let subject = this.get('subject');
       let terms = subject.get('meshDescriptors');
       let promises = [];
@@ -45,14 +45,14 @@ export default Component.extend({
         this.set('isManaging', false);
       });
     },
-    cancel: function(){
+    cancel() {
       this.set('bufferTerms', []);
       this.set('isManaging', false);
     },
-    addTermToBuffer: function(term){
+    addTermToBuffer(term) {
       this.get('bufferTerms').addObject(term);
     },
-    removeTermFromBuffer: function(term){
+    removeTermFromBuffer(term) {
       this.get('bufferTerms').removeObject(term);
     }
   }

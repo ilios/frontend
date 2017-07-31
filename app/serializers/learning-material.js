@@ -5,7 +5,7 @@ const { get } = Ember;
 
 export default DS.RESTSerializer.extend({
   isNewSerializerAPI: true,
-  serialize: function(snapshot, options) {
+  serialize(snapshot, options) {
     var json = this._super(snapshot, options);
 
     //When POSTing new file learningMaterials we need to include the file hash

@@ -45,7 +45,7 @@ export default Component.extend({
   }),
 
   actions: {
-    removeOffering: function(offering){
+    removeOffering(offering) {
       let session = this.get('session');
       session.get('offerings').then(offerings => {
         offerings.removeObject(offering);
@@ -59,7 +59,7 @@ export default Component.extend({
 let OfferingBlock = EmberObject.extend({
   //we have to init the offerins array because otherwise it gets passed by reference
   //and shared among isntances
-  init: function(){
+  init() {
     this._super(...arguments);
     this.set('offerings', []);
   },

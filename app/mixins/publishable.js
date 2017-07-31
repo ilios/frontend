@@ -69,7 +69,7 @@ export default Ember.Mixin.create({
     return 'notpublished';
   }),
   actions: {
-    unpublish: function(){
+    unpublish() {
       let publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', false);
@@ -77,7 +77,7 @@ export default Ember.Mixin.create({
         this.get('flashMessages').success('general.unPublishedSuccessfully');
       });
     },
-    publishAsTbd: function(){
+    publishAsTbd() {
       let publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', true);
       publishTarget.set('published', true);
@@ -85,7 +85,7 @@ export default Ember.Mixin.create({
         this.get('flashMessages').success('general.scheduledSuccessfully');
       });
     },
-    publish: function(){
+    publish() {
       let publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', true);

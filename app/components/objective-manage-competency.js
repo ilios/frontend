@@ -99,10 +99,10 @@ export default Component.extend({
     });
   }),
   actions: {
-    changeCompetency: function(competency){
+    changeCompetency(competency) {
       this.get('objective').set('competency', competency);
     },
-    removeCurrentCompetency: function(){
+    removeCurrentCompetency() {
       this.get('objective').set('competency', null);
     }
   }

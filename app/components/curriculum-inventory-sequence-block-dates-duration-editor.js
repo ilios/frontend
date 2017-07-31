@@ -60,10 +60,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeStartDate: function(startDate) {
+    changeStartDate(startDate) {
       this.set('startDate', startDate);
     },
-    changeEndDate: function(endDate) {
+    changeEndDate(endDate) {
       this.set('endDate', endDate);
     },
 

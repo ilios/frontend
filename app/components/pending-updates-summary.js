@@ -82,7 +82,7 @@ export default Component.extend({
   }),
 
   actions: {
-    changeSelectedSchool: function(schoolId){
+    changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
     },
   }

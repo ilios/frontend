@@ -87,7 +87,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
 
     return defer.promise;
   },
-  setupController: function(controller){
+  setupController(controller) {
     controller.set('noAccountExistsError', this.get('noAccountExistsError'));
     controller.set('noAccountExistsAccount', this.get('noAccountExistsAccount'));
   },

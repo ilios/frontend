@@ -96,13 +96,13 @@ export default Component.extend({
   }),
 
   actions: {
-    remove: function(proxy){
+    remove(proxy) {
       this.sendAction('remove', proxy.get('content'));
     },
-    cancelRemove: function(proxy){
+    cancelRemove(proxy) {
       proxy.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(proxy){
+    confirmRemove(proxy) {
       proxy.set('showRemoveConfirmation', true);
     },
     toggleEditor() {

@@ -191,13 +191,13 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-    changeRequired: function(){
+    changeRequired() {
       let block = this.get('sequenceBlock');
       block.set('required', parseInt(this.get('required'), 10));
       block.save();
     },
 
-    revertRequiredChanges: function(){
+    revertRequiredChanges() {
       let block = this.get('sequenceBlock');
       this.set('required', '' + block.get('required'));
     },
@@ -212,7 +212,7 @@ export default Component.extend({
       this.set('course', block.get('course'));
     },
 
-    changeTrack: function(value){
+    changeTrack(value) {
       let block = this.get('sequenceBlock');
       block.set('track', value);
       block.save();
@@ -240,7 +240,7 @@ export default Component.extend({
       });
     },
 
-    revertChildSequenceOrderChanges: function(){
+    revertChildSequenceOrderChanges() {
       let block = this.get('sequenceBlock');
       this.set('childSequenceOrder', '' + block.get('childSequenceOrder'));
     },

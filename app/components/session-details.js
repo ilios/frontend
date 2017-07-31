@@ -13,13 +13,13 @@ export default Component.extend({
   sessionObjectiveDetails: null,
   sessionTaxonomyDetails: null,
 
-  didInsertElement: function(){
+  didInsertElement() {
     const id = this.$().attr('id');
 
     scrollTo(`#${id}`);
   },
   actions: {
-    save: function(){
+    save() {
       const  session = this.get('session');
       session.save();
     },
