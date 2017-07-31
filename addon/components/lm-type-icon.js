@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import layout from '../templates/components/lm-type-icon';
 
+const { computed } = Ember;
 
-const { Component, computed } = Ember;
-
-export default Component.extend({
+export default Ember.Component.extend({
   layout,
   listItem: false,
   lm: null,
