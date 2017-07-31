@@ -6,7 +6,7 @@ moduleForComponent('single-event-learningmaterial-list', 'Integration | Componen
 });
 
 test('it renders', function(assert) {
-  assert.expect(4);
+  assert.expect(6);
 
   this.set('learningMaterials', [
     {title: 'first one', mimetype: 'pdf', url: 'http://firstlink'},
@@ -15,9 +15,11 @@ test('it renders', function(assert) {
   this.render(hbs`{{single-event-learningmaterial-list learningMaterials=learningMaterials}}`);
 
   assert.equal(this.$('li:eq(0)').text().trim().search(/^first one/), 0);
+  assert.equal(this.$('li:eq(0) i.fa-file-pdf-o').length, 1, 'LM type icon is present.');
   assert.equal(this.$('li:eq(0) a').attr('href').trim(), 'http://firstlink');
 
   assert.equal(this.$('li:eq(1)').text().trim().search(/^second one/), 0);
+  assert.equal(this.$('li:eq(1) i.fa-file-audio-o').length, 1, 'LM type icon is present.');
   assert.equal(this.$('li:eq(1) a').attr('href').trim(), 'http://secondlink');
 });
 
