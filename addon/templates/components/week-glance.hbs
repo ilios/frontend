@@ -51,7 +51,7 @@
           <ul class='learning-materials'>
             {{#each event.learningMaterials as |lm|}}
               <li class='learning-material'>
-                {{lm-type-icon lm=lm}}
+                {{lm-type-icon type=lm.type mimetype=lm.mimetype}}
                 {{#if lm.absoluteFileUri}}
                   <a href={{lm.absoluteFileUri}} target='_blank' rel='noopener'>{{lm.title}}</a>
                 {{else if lm.link}}

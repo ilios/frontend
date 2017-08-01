@@ -9,7 +9,7 @@ test('link', function(assert) {
   assert.expect(1);
   let lm = { type: 'link' };
   this.set('lm', lm);
-  this.render(hbs`{{lm-type-icon lm=lm}}`);
+  this.render(hbs`{{lm-type-icon type=lm.type}}`);
   assert.equal(this.$('i.fa-link').length, 1, 'Correct type icon is used.');
 });
 
@@ -17,7 +17,7 @@ test('citation', function(assert) {
   assert.expect(1);
   let lm = { type: 'citation' };
   this.set('lm', lm);
-  this.render(hbs`{{lm-type-icon lm=lm}}`);
+  this.render(hbs`{{lm-type-icon type=lm.type}}`);
   assert.equal(this.$('i.fa-paragraph').length, 1, 'Correct type icon is used.');
 });
 
@@ -44,7 +44,7 @@ test('file', function(assert) {
   fixtures.forEach(fixture => {
     let lm = fixture.lm;
     this.set('lm', lm);
-    this.render(hbs`{{lm-type-icon lm=lm}}`);
+    this.render(hbs`{{lm-type-icon type=lm.type mimetype=lm.mimetype}}`);
     assert.equal(this.$(`i.${fixture.icon}`).length, 1, 'Correct type icon is used.');
   });
 });
@@ -53,7 +53,7 @@ test('listItem', function(assert){
   assert.expect(1);
   let lm = { type: 'link' };
   this.set('lm', lm);
-  this.render(hbs`{{lm-type-icon lm=lm listItem=true}}`);
+  this.render(hbs`{{lm-type-icon type=lm.type listItem=true}}`);
   assert.equal(this.$('i.fa-li').length, 1, 'List icon is applied.');
 });
 
@@ -62,9 +62,9 @@ test('no listItem', function(assert) {
   let lm = { type: 'link' };
   this.set('lm', lm);
 
-  this.render(hbs`{{lm-type-icon lm=lm}}`);
+  this.render(hbs`{{lm-type-icon type=lm.type}}`);
   assert.equal(this.$('i.fa-li').length, 0, 'List icon class is not applied by default.');
 
-  this.render(hbs`{{lm-type-icon lm=lm listItem=false}}`);
+  this.render(hbs`{{lm-type-icon type=lm.type listItem=false}}`);
   assert.equal(this.$('i.fa-li').length, 0, 'List icon class is not applied.');
 });

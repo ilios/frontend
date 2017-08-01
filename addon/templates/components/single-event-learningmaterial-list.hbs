@@ -2,8 +2,7 @@
   <ul class='static-list fa-ul'>
     {{#each learningMaterials as |lm|}}
       <li class='single-event-learningmaterial-item'>
-        {{lm-type-icon lm=lm listItem=true}}
-
+        {{lm-type-icon type=lm.type mimetype=lm.mimetype listItem=true}}
         <div class='single-event-learningmaterial-item-title'>
           {{#if lm.required}}
             {{fa-icon 'star' title=(t 'general.required')}}

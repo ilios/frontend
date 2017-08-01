@@ -15,7 +15,7 @@
         {{#each (sort-by 'firstOfferingDate' (await materials)) as |lmObject|}}
           <tr>
             <td colspan="3">
-              {{lm-type-icon lm=lmObject}}
+              {{lm-type-icon type=lm.type mimetype=lm.mimetype}}
               {{#if lmObject.absoluteFileUri}}
                 <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
               {{else if lmObject.link}}

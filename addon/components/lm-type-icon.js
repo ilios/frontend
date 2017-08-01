@@ -1,30 +1,32 @@
 import Ember from 'ember';
 import layout from '../templates/components/lm-type-icon';
 
-const { computed } = Ember;
+const { computed, RSVP } = Ember;
 
 export default Ember.Component.extend({
   layout,
   listItem: false,
-  lm: null,
+  type: null,
+  mimetype: null,
   tagName: 'span',
-  icon: computed('lm', function() {
-    let lm = this.get('lm');
-    if(lm.type === 'link'){
+  icon: computed('type', 'mimetype', function() {
+    let type = this.get('type');
+    let mimetype = this.get('mimetype') || '';
+    if(type === 'link'){
       return 'fa-link';
-    } else if(lm.type === 'citation'){
+    } else if(type === 'citation'){
       return 'fa-paragraph';
     } else {
-      if(lm.mimetype.search(/pdf/) !== -1){
+      if(mimetype.search(/pdf/) !== -1){
         return 'fa-file-pdf-o';
       }
-      if(lm.mimetype.search(/ppt|keynote|pps|ppx/) !== -1){
+      if(mimetype.search(/ppt|keynote|pps|ppx/) !== -1){
         return 'fa-file-powerpoint-o';
       }
-      if(lm.mimetype.search(/mp4|mpg|mpeg|mov/) !== -1){
+      if(mimetype.search(/mp4|mpg|mpeg|mov/) !== -1){
         return 'fa-file-movie-o';
       }
-      if(lm.mimetype.search(/wav|mp3|aac|flac/) !== -1){
+      if(mimetype.search(/wav|mp3|aac|flac/) !== -1){
         return 'fa-file-audio-o';
       }
     }
