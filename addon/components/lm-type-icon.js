@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/lm-type-icon';
 
-const { computed, RSVP } = Ember;
+const { computed } = Ember;
 
 export default Ember.Component.extend({
   layout,
