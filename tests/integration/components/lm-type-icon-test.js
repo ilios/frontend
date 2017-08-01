@@ -5,21 +5,66 @@ moduleForComponent('lm-type-icon', 'Integration | Component | lm type icon', {
   integration: true
 });
 
-test('it renders', function(assert) {
+test('link', function(assert) {
+  assert.expect(1);
+  let lm = { type: 'link' };
+  this.set('lm', lm);
+  this.render(hbs`{{lm-type-icon lm=lm}}`);
+  assert.equal(this.$('i.fa-link').length, 1, 'Correct type icon is used.');
+});
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+test('citation', function(assert) {
+  assert.expect(1);
+  let lm = { type: 'citation' };
+  this.set('lm', lm);
+  this.render(hbs`{{lm-type-icon lm=lm}}`);
+  assert.equal(this.$('i.fa-paragraph').length, 1, 'Correct type icon is used.');
+});
 
-  this.render(hbs`{{lm-type-icon}}`);
+test('file', function(assert) {
+  assert.expect(15);
+  let fixtures = [
+    { lm: { type: 'file', mimetype: 'pdf' }, icon: 'fa-file-pdf-o' },
+    { lm: { type: 'file', mimetype: 'ppt' }, icon: 'fa-file-powerpoint-o' },
+    { lm: { type: 'file', mimetype: 'keynote' }, icon: 'fa-file-powerpoint-o' },
+    { lm: { type: 'file', mimetype: 'pps' }, icon: 'fa-file-powerpoint-o' },
+    { lm: { type: 'file', mimetype: 'ppx' }, icon: 'fa-file-powerpoint-o' },
+    { lm: { type: 'file', mimetype: 'mp4' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'mpg' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'mpeg' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'mov' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'wav' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'mp3' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'aac' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'flac' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: '' }, icon: 'fa-file' },
+    { lm: { type: 'file', mimetype: 'xyz' }, icon: 'fa-file' },
+  ];
 
-  assert.equal(this.$().text().trim(), '');
+  fixtures.forEach(fixture => {
+    let lm = fixture.lm;
+    this.set('lm', lm);
+    this.render(hbs`{{lm-type-icon lm=lm}}`);
+    assert.equal(this.$(`i.${fixture.icon}`).length, 1, 'Correct type icon is used.');
+  });
+});
 
-  // Template block usage:
-  this.render(hbs`
-    {{#lm-type-icon}}
-      template block text
-    {{/lm-type-icon}}
-  `);
+test('listItem', function(assert){
+  assert.expect(1);
+  let lm = { type: 'link' };
+  this.set('lm', lm);
+  this.render(hbs`{{lm-type-icon lm=lm listItem=true}}`);
+  assert.equal(this.$('i.fa-li').length, 1, 'List icon is applied.');
+});
 
-  assert.equal(this.$().text().trim(), 'template block text');
+test('no listItem', function(assert) {
+  assert.expect(2);
+  let lm = { type: 'link' };
+  this.set('lm', lm);
+
+  this.render(hbs`{{lm-type-icon lm=lm}}`);
+  assert.equal(this.$('i.fa-li').length, 0, 'List icon class is not applied by default.');
+
+  this.render(hbs`{{lm-type-icon lm=lm listItem=false}}`);
+  assert.equal(this.$('i.fa-li').length, 0, 'List icon class is not applied.');
 });
