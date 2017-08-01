@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   type: null,
   mimetype: null,
   tagName: 'span',
+  classNames: ['lm-type-icon'],
   icon: computed('type', 'mimetype', function() {
     let type = this.get('type');
     let mimetype = this.get('mimetype') || '';
