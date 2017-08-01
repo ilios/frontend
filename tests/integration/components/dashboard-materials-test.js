@@ -19,7 +19,8 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       absoluteFileUri: 'http://myhost.com/url1',
       sessionTitle: 'session1title',
       course: '1',
-      type: 'link',
+      type: 'file',
+      mimetype: 'pdf',
       courseTitle: 'course1title',
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: today.toDate(),
@@ -85,7 +86,7 @@ test('it renders with materials', async function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
   const firstLmLink = `${firstLmTitle} a`;
-  const firstLmTypeIcon = `${firstLmTitle} i.fa-link`;
+  const firstLmTypeIcon = `${firstLmTitle} i.fa-file-pdf-o`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(2)`;
   const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
