@@ -22,6 +22,8 @@ let createMaterials = function(){
     courseTitle: 'course1title',
     instructors: ['Instructor1name', 'Instructor2name'],
     firstOfferingDate: new Date(2003, 1, 2, 12),
+    type: 'file',
+    mimetype: 'pdf'
   });
   let lm2 = EmberObject.create({
     title: 'title2',
@@ -31,6 +33,7 @@ let createMaterials = function(){
     courseTitle: 'course2title',
     instructors: ['Instructor1name', 'Instructor2name'],
     firstOfferingDate: new Date(2016, 1, 2, 12),
+    type: 'link',
   });
   let lm3 = EmberObject.create({
     title: 'title3',
@@ -39,6 +42,7 @@ let createMaterials = function(){
     course: '3',
     courseTitle: 'course3title',
     firstOfferingDate: new Date(2020, 1, 2, 12),
+    type: 'citation'
   });
 
   return [lm1, lm2, lm3];
@@ -57,6 +61,7 @@ test('it renders empty', function(assert) {
 });
 
 test('it renders with materials', function(assert) {
+  assert.expect(26);
   this.set('materials', createMaterials());
   this.set('nothing', parseInt);
   this.render(hbs`{{my-materials
@@ -70,6 +75,7 @@ test('it renders with materials', function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
   const firstLmLink = `${firstLmTitle} a`;
+  const firstLmTypeIcon = `${firstLmTitle} i.fa-file-pdf-o`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(0)`;
   const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
@@ -77,6 +83,8 @@ test('it renders with materials', function(assert) {
 
   const secondLmTitle = `${materials}:eq(1) td:eq(2)`;
   const secondLmLink = `${secondLmTitle} a`;
+  const secondLmTypeIcon = `${secondLmTitle} i.fa-link`;
+
   const secondLmCourseTitle = `${materials}:eq(1) td:eq(1)`;
   const secondLmSessionTitle = `${materials}:eq(1) td:eq(0)`;
   const secondLmInstructor = `${materials}:eq(1) td:eq(3)`;
@@ -84,6 +92,7 @@ test('it renders with materials', function(assert) {
 
   const thirdLmTitle = `${materials}:eq(2) td:eq(2)`;
   const thirdLmLink = `${thirdLmTitle} a`;
+  const thirdLmTypeIcon = `${thirdLmTitle} i.fa-paragraph`;
   const thirdLmCourseTitle = `${materials}:eq(2) td:eq(1)`;
   const thirdLmSessionTitle = `${materials}:eq(2) td:eq(0)`;
   const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
@@ -97,6 +106,7 @@ test('it renders with materials', function(assert) {
 
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
   assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1');
+  assert.equal(this.$(firstLmTypeIcon).length, 1, 'LM type icon is present.');
   assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
   assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
   assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
@@ -104,6 +114,7 @@ test('it renders with materials', function(assert) {
 
   assert.equal(this.$(secondLmTitle).text().trim(), 'title2');
   assert.equal(this.$(secondLmLink).prop('href').trim(), 'http://myhost.com/url2');
+  assert.equal(this.$(secondLmTypeIcon).length, 1, 'LM type icon is present.');
   assert.equal(this.$(secondLmSessionTitle).text().trim(), 'session2title');
   assert.equal(this.$(secondLmCourseTitle).text().trim(), 'course2title');
   assert.equal(this.$(secondLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
@@ -111,6 +122,7 @@ test('it renders with materials', function(assert) {
 
   assert.equal(this.$(thirdLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
   assert.equal(this.$(thirdLmLink).length, 0);
+  assert.equal(this.$(thirdLmTypeIcon).length, 1, 'LM type icon is present.');
   assert.equal(this.$(thirdLmSessionTitle).text().trim(), 'session3title');
   assert.equal(this.$(thirdLmCourseTitle).text().trim(), 'course3title');
   assert.equal(this.$(thirdLmInstructor).text().trim(), '');
