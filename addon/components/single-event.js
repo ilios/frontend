@@ -124,7 +124,7 @@ export default Component.extend(SortableByPosition, {
           map(sortedMaterials, clm => {
             return new Promise(resolve => {
               clm.get('learningMaterial').then(learningMaterial => {
-                const { required, storedNotes, publicNotes } = clm.getProperties('required', 'notes', 'publicNotes');
+                const { required, notes: storedNotes, publicNotes } = clm.getProperties('required', 'notes', 'publicNotes');
                 const notes = publicNotes?storedNotes:'';
                 const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
                   'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
@@ -204,7 +204,7 @@ export default Component.extend(SortableByPosition, {
           map(sortedMaterials, slm => {
             return new Promise(resolve => {
               slm.get('learningMaterial').then(learningMaterial => {
-                const { required, storedNotes, publicNotes } = slm.getProperties('required', 'notes', 'publicNotes');
+                const { required, notes: storedNotes, publicNotes } = slm.getProperties('required', 'notes', 'publicNotes');
                 const notes = publicNotes?storedNotes:'';
                 const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
                   'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
