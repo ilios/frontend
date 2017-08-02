@@ -647,6 +647,7 @@ test('find and add learning material', function(assert) {
         let searchResults = find('.lm-search-results > li', container);
         assert.equal(searchResults.length, 1);
         assert.equal(getElementText($('.lm-search-results > li:eq(0) h4')), getText('Letter to Doc Brown'));
+        assert.equal(find('.lm-search-results > li:eq(0) h4 .lm-type-icon .fa-file').length, 1, 'Shows LM type icon.');
         let addlProps = find('.lm-search-results > li:eq(0) .learning-material-properties li', container);
         assert.equal(addlProps.length, 3);
         assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)')),
