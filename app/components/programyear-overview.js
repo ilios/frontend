@@ -11,7 +11,7 @@ export default Component.extend({
   directorsWithFullName: filterBy('programYear.directors', 'fullName'),
   sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
   actions: {
-    addDirector: function(user){
+    addDirector(user) {
       let programYear = this.get('programYear');
       programYear.get('directors').then(directors => {
         directors.addObject(user);
@@ -19,7 +19,7 @@ export default Component.extend({
         programYear.save();
       });
     },
-    removeDirector: function(user){
+    removeDirector(user) {
       let programYear = this.get('programYear');
       programYear.get('directors').then(directors => {
         directors.removeObject(user);

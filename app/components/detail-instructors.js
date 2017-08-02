@@ -30,7 +30,7 @@ export default Component.extend({
   }),
 
   actions: {
-    manage: function(){
+    manage() {
       let promises = [];
       promises.pushObject(this.get('ilmSession.instructorGroups').then(instructorGroups => {
         this.set('instructorGroupBuffer', instructorGroups.toArray());
@@ -44,7 +44,7 @@ export default Component.extend({
         this.set('isManaging', true);
       });
     },
-    save: function(){
+    save() {
       var ilmSession = this.get('ilmSession.content');
 
       let instructorGroups = ilmSession.get('instructorGroups');

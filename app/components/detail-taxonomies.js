@@ -51,14 +51,14 @@ export default Component.extend({
         });
       });
     },
-    cancel: function () {
+    cancel() {
       this.set('bufferedTerms', []);
       this.set('isManaging', false);
     },
-    addTermToBuffer: function (term) {
+    addTermToBuffer(term) {
       this.get('bufferedTerms').addObject(term);
     },
-    removeTermFromBuffer: function (term) {
+    removeTermFromBuffer(term) {
       this.get('bufferedTerms').removeObject(term);
     }
   }

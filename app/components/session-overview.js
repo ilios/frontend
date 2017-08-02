@@ -128,7 +128,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   }),
 
   actions: {
-    saveIndependentLearning: function(value){
+    saveIndependentLearning(value) {
       var session = this.get('session');
       if(!value){
         session.get('ilmSession').then(function(ilmSession){
@@ -183,31 +183,31 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       this.set('sessionType', type);
     },
 
-    changeSessionType: function(){
+    changeSessionType() {
       let session = this.get('session');
       let type = this.get('sessionType');
       session.set('sessionType', type);
       session.save();
     },
 
-    revertSessionTypeChanges: function(){
+    revertSessionTypeChanges() {
       this.get('session').get('sessionType').then(sessionType => {
         this.set('sessionType', sessionType);
       });
     },
-    changeSupplemental: function(value){
+    changeSupplemental(value) {
       this.get('session').set('supplemental', value);
       this.get('session').save();
     },
-    changeSpecialEquipment: function(value){
+    changeSpecialEquipment(value) {
       this.get('session').set('equipmentRequired', value);
       this.get('session').save();
     },
-    changeSpecialAttire: function(value){
+    changeSpecialAttire(value) {
       this.get('session').set('attireRequired', value);
       this.get('session').save();
     },
-    changeAttendanceRequired: function(value){
+    changeAttendanceRequired(value) {
       this.get('session').set('attendanceRequired', value);
       this.get('session').save();
     },
@@ -269,7 +269,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         }
       });
     },
-    saveDescription: function(){
+    saveDescription() {
       const session = this.get('session');
       const store = this.get('store');
       const newDescription = this.get('description');

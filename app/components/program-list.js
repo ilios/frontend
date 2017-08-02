@@ -13,16 +13,16 @@ export default Component.extend({
     });
   }),
   actions: {
-    edit: function(programProxy){
+    edit(programProxy) {
       this.sendAction('edit', programProxy.get('content'));
     },
-    remove: function(programProxy){
+    remove(programProxy) {
       this.sendAction('remove', programProxy.get('content'));
     },
-    cancelRemove: function(programProxy){
+    cancelRemove(programProxy) {
       programProxy.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(programProxy){
+    confirmRemove(programProxy) {
       programProxy.set('showRemoveConfirmation', true);
     },
   }

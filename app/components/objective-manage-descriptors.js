@@ -14,11 +14,11 @@ export default Component.extend({
     return objective.get('meshDescriptors');
   }),
   actions: {
-    add: function(descriptor){
+    add(descriptor) {
       var objective = this.get('objective');
       objective.get('meshDescriptors').addObject(descriptor);
     },
-    remove: function(descriptor){
+    remove(descriptor) {
       var objective = this.get('objective');
       objective.get('meshDescriptors').removeObject(descriptor);
     }

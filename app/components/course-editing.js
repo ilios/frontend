@@ -9,7 +9,7 @@ export default Component.extend({
   courseTaxonomyDetails: false,
   courseCompetencyDetails: false,
   actions: {
-    save: function(){
+    save() {
       const course = this.get('course');
       course.save();
     },

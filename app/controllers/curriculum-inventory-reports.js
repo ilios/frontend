@@ -120,7 +120,7 @@ export default Controller.extend({
       });
     },
 
-    changeSelectedSchool: function(schoolId){
+    changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
       this.set('programId', null);
       this.set('showNewCurriculumInventoryReportForm', false);

@@ -125,7 +125,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   fileUploadErrorMessage: false,
 
   actions: {
-    save: function(){
+    save() {
       this.set('isSaving', true);
       this.send('addErrorDisplayFor', 'title');
       this.send('addErrorDisplayFor', 'originalAuthor');

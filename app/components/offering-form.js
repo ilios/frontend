@@ -363,7 +363,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('endDate', endDate);
   }).restartable(),
   actions: {
-    addLearnerGroup: function(learnerGroup){
+    addLearnerGroup(learnerGroup) {
       let learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.addObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
@@ -372,7 +372,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       //re-create the object so we trigger downstream didReceiveAttrs
       this.set('learnerGroups', learnerGroups);
     },
-    removeLearnerGroup: function(learnerGroup){
+    removeLearnerGroup(learnerGroup) {
       let learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.removeObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){

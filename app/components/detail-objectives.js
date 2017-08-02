@@ -47,27 +47,27 @@ export default Component.extend({
   }),
 
   actions: {
-    manageParents: function(objective){
+    manageParents(objective) {
       objective.get('parents').then((parents) => {
         this.set('initialStateForManageParentsObjective', parents.toArray());
         this.set('mangeParentsObjective', objective);
       });
     },
-    manageDescriptors: function(objective){
+    manageDescriptors(objective) {
       objective.get('meshDescriptors').then((meshDescriptors) => {
         scrollTo(".detail-objectives");
         this.set('initialStateForManageMeshObjective', meshDescriptors.toArray());
         this.set('manageDescriptorsObjective', objective);
       });
     },
-    manageCompetency: function(objective){
+    manageCompetency(objective) {
       objective.get('competency').then((competency) => {
         scrollTo(".detail-objectives");
         this.set('initialStateForManageCompetencyObjective', competency);
         this.set('manageCompetencyObjective', objective);
       });
     },
-    save: function(){
+    save() {
       if(this.get('isManagingParents')){
         let objective = this.get('mangeParentsObjective');
         objective.get('parents').then(newParents => {
@@ -118,7 +118,7 @@ export default Component.extend({
         });
       }
     },
-    cancel: function(){
+    cancel() {
       var self = this;
       if(this.get('isManagingParents')){
         let objective = this.get('mangeParentsObjective');
@@ -144,7 +144,7 @@ export default Component.extend({
         scrollTo("#objective-" + objective.get('id'));
       }
     },
-    saveNewObjective: function(title){
+    saveNewObjective(title) {
       return new Promise(resolve => {
         let newObjective = this.get('store').createRecord('objective');
         let subject = this.get('subject');

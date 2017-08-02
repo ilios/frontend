@@ -97,7 +97,7 @@ export default Component.extend({
     return results;
   }).restartable(),
   actions: {
-    addUser: function(user){
+    addUser(user) {
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
       const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
@@ -105,7 +105,7 @@ export default Component.extend({
         this.sendAction('addUser', user);
       }
     },
-    addInstructorGroup: function(group){
+    addInstructorGroup(group) {
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
       const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');

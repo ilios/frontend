@@ -184,7 +184,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   actions: {
-    save: function(){
+    save() {
       this.set('isSaving', true);
       this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
       this.validate().then(({validations}) => {
@@ -222,22 +222,22 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         }
       });
     },
-    cancel: function(){
+    cancel() {
       this.sendAction('cancel');
     },
-    changeRequired: function(required) {
+    changeRequired(required) {
       this.set('required', required);
     },
-    changeTrack: function(track) {
+    changeTrack(track) {
       this.set('track', track);
     },
-    changeStartDate: function(startDate) {
+    changeStartDate(startDate) {
       this.set('startDate', startDate);
     },
-    changeEndDate: function(endDate) {
+    changeEndDate(endDate) {
       this.set('endDate', endDate);
     },
-    clearDates: function() {
+    clearDates() {
       this.set('startDate', null);
       this.set('endDate', null);
     }

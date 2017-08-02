@@ -65,7 +65,7 @@ export default Controller.extend({
   watchFilter: observer('titleFilter', function(){
     debounce(this, this.setFilter, 500);
   }),
-  setFilter: function(){
+  setFilter() {
     const titleFilter = this.get('titleFilter');
     const clean = escapeRegExp(titleFilter);
     this.set('debouncedFilter', clean);
@@ -170,27 +170,27 @@ export default Controller.extend({
         });
       });
     },
-    changeSelectedYear: function(yearTitle){
+    changeSelectedYear(yearTitle) {
       this.set('yearTitle', yearTitle);
     },
-    changeSelectedSchool: function(schoolId){
+    changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
     },
     //called by the 'toggle-mycourses' component
-    toggleMyCourses: function(){
+    toggleMyCourses() {
       //get the current userCoursesOnly status and flip it
       let newStatus = (! this.get('userCoursesOnly'));
       //then set it to the new status
       this.set('userCoursesOnly', newStatus);
     },
-    toggleNewCourseForm: function(){
+    toggleNewCourseForm() {
       this.set('showNewCourseForm', !this.get('showNewCourseForm'));
     },
-    lockCourse: function(course){
+    lockCourse(course) {
       course.set('locked', true);
       return course.save();
     },
-    unlockCourse: function(course){
+    unlockCourse(course) {
       course.set('locked', false);
       return course.save();
     },

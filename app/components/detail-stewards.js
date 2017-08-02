@@ -85,17 +85,17 @@ export default Component.extend({
         this.get('collapse')();
       }
     },
-    cancel: function(){
+    cancel() {
       this.set('isManaging', false);
       this.set('bufferStewards', []);
     },
-    addStewardToBuffer: function(steward){
+    addStewardToBuffer(steward) {
       //copy the array to didReceiveAttrs gets called on detail-steward-manager
       let bufferStewards = this.get('bufferStewards').toArray();
       bufferStewards.pushObject(steward);
       this.set('bufferStewards', bufferStewards);
     },
-    removeStewardFromBuffer: function(steward){
+    removeStewardFromBuffer(steward) {
       //copy the array to didReceiveAttrs gets called on detail-steward-manager
       let bufferStewards = this.get('bufferStewards').toArray();
       bufferStewards.removeObject(steward);

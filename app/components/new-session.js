@@ -54,7 +54,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   actions: {
-    save: function(){
+    save() {
       this.set('isSaving', true);
       this.send('addErrorDisplayFor', 'title');
       this.validate().then(({validations}) => {
@@ -71,7 +71,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         }
       });
     },
-    cancel: function() {
+    cancel() {
       this.sendAction('cancel');
     }
   }

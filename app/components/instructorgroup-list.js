@@ -13,16 +13,16 @@ export default Component.extend({
     });
   }),
   actions: {
-    edit: function(instructorGroupProxy){
+    edit(instructorGroupProxy) {
       this.sendAction('edit', instructorGroupProxy.get('content'));
     },
-    remove: function(instructorGroupProxy){
+    remove(instructorGroupProxy) {
       this.sendAction('remove', instructorGroupProxy.get('content'));
     },
-    cancelRemove: function(instructorGroupProxy){
+    cancelRemove(instructorGroupProxy) {
       instructorGroupProxy.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(instructorGroupProxy){
+    confirmRemove(instructorGroupProxy) {
       instructorGroupProxy.set('showRemoveConfirmation', true);
     },
   }

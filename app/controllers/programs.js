@@ -30,7 +30,7 @@ export default Controller.extend({
     debounce(this, this.setFilter, 500);
   }),
 
-  setFilter: function(){
+  setFilter() {
     const titleFilter = this.get('titleFilter');
     const clean = escapeRegExp(titleFilter);
     this.set('debouncedFilter', clean);
@@ -144,7 +144,7 @@ export default Controller.extend({
       this.set('editorOn', false);
     },
 
-    changeSelectedSchool: function(schoolId){
+    changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
     },
   }

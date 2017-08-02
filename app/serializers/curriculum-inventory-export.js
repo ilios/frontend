@@ -2,7 +2,7 @@ import DS from 'ember-data';
 
 export default DS.RESTSerializer.extend({
   isNewSerializerAPI: true,
-  serialize: function (snapshot, options) {
+  serialize(snapshot, options) {
     var json = this._super(snapshot, options);
 
     //don't persist this, it is handled by the server

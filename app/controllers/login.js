@@ -10,7 +10,7 @@ export default Controller.extend({
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   actions: {
-    authenticate: function() {
+    authenticate() {
       let credentials = this.getProperties('identification', 'password');
       let authenticator = 'authenticator:ilios-jwt';
       this.set('errors', []);

@@ -7,7 +7,7 @@ export default Component.extend({
   layout: layout,
   block: null,
   actions: {
-    removeOffering: function(offering){
+    removeOffering(offering) {
       this.sendAction('removeOffering', offering);
     },
   }

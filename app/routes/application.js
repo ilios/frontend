@@ -43,7 +43,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   actions: {
-    willTransition: function() {
+    willTransition() {
       let controller = this.controllerFor('application');
       controller.set('errors', []);
       controller.set('showErrorDisplay', false);

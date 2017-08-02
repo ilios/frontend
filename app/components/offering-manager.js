@@ -53,13 +53,13 @@ export default Component.extend({
 
       return offering.save();
     },
-    remove: function(){
+    remove() {
       this.sendAction('remove', this.get('offering'));
     },
-    cancelRemove: function(){
+    cancelRemove() {
       this.set('showRemoveConfirmation', false);
     },
-    confirmRemove: function(){
+    confirmRemove() {
       this.set('showRemoveConfirmation', true);
     },
   }
