@@ -487,6 +487,7 @@ export default {
     'termCount': { 'one': 'Il y a 1 terme', 'other': 'Il y a {{count}} termes' },
     'terms': 'Termes',
     'termsManageTitle': 'Manager des Termes',
+    'thisReportIsNoLongerAvailable': "Ce rapport n'est plus disponsible.",
     'thursday': 'Jeudi',
     'time': "Temps",
     'tokenInfo': "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{{apiDocsUrl}}\">{{apiDocsUrl}}</a>.",

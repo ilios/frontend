@@ -53,9 +53,8 @@
             <tbody>
               {{#each (await sortedReports) as |report|}}
                 <tr>
-                  <td {{action 'selectReport' report}} class='link clickable' colspan=4>
-                    {{fa-icon 'external-link-square'}}
-                    {{report-title report}}
+                  <td colspan=4>
+                    {{myreports-list-item report=report selectReport='selectReport'}}
                   </td>
                   <td class='text-right clickable remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>
                 </tr>
