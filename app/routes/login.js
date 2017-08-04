@@ -18,74 +18,76 @@ export default Route.extend(UnauthenticatedRouteMixin, {
 
     return this.attemptSSOAuth();
   },
-  attemptSSOAuth(){
-    let defer = Ember.RSVP.defer();
-    var configUrl = '/application/config';
-    var loginUrl = '/auth/login';
-    this.get('commonAjax').request(configUrl).then(data => {
-      let config = data.config;
-      if(config.type === 'form' || config.type === 'ldap'){
-        defer.resolve();
-        return;
+  async attemptSSOAuth(){
+    const configUrl = '/application/config';
+    const commonAjax = this.get('commonAjax');
+    const data = await commonAjax.request(configUrl);
+    const config = data.config;
+    const type = config.type;
+    if(type === 'form' || type === 'ldap'){
+      return;
+    }
+    if(type === 'shibboleth'){
+      return await this.shibbolethAuth(config);
+    }
+
+    if(config.type === 'cas'){
+      return await this.casLogin(config);
+    }
+  },
+  async casLogin(config){
+    const commonAjax = this.get('commonAjax');
+    let loginUrl = '/auth/login?service=${currentUrl}';
+
+    let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
+    let queryParams = {};
+    if (window.location.search.length > 1) {
+      window.location.search.substr(1).split('&').forEach(str => {
+        let arr = str.split('=');
+        queryParams[arr[0]] = arr[1];
+      });
+    }
+
+    if (isPresent(queryParams.ticket)) {
+      loginUrl += `&ticket=${queryParams.ticket}`;
+    }
+    const response = await commonAjax.request(loginUrl);
+    if(response.status === 'redirect'){
+      let casLoginUrl = config.casLoginUrl + `?service=${currentUrl}`;
+      return window.location.replace(casLoginUrl);
+    }
+    if(response.status === 'noAccountExists'){
+      this.set('noAccountExistsError', true);
+      this.set('noAccountExistsAccount', response.userId);
+      return;
+    }
+    if(response.status === 'success'){
+      let authenticator = 'authenticator:ilios-jwt';
+      this.get('session').authenticate(authenticator, {jwt: response.jwt});
+    }
+  },
+  async shibbolethAuth(config){
+    const commonAjax = this.get('commonAjax');
+    const loginUrl = '/auth/login';
+    const response = await commonAjax.request(loginUrl);
+    const status = response.status;
+    if(status === 'redirect'){
+      let shibbolethLoginUrl = config.loginUrl;
+      if(EmberConfig.redirectAfterShibLogin){
+        let attemptedRoute = encodeURIComponent(window.location.href);
+        shibbolethLoginUrl += '?target=' + attemptedRoute;
       }
-
-      if(config.type === 'shibboleth'){
-        this.get('commonAjax').request(loginUrl).then(response => {
-          if(response.status === 'redirect'){
-            let shibbolethLoginUrl = config.loginUrl;
-            if(EmberConfig.redirectAfterShibLogin){
-              let attemptedRoute = encodeURIComponent(window.location.href);
-              shibbolethLoginUrl += '?target=' + attemptedRoute;
-            }
-            window.location.replace(shibbolethLoginUrl);
-          }
-          if(response.status === 'noAccountExists'){
-            this.set('noAccountExistsError', true);
-            this.set('noAccountExistsAccount', response.userId);
-            defer.resolve();
-            return;
-          }
-          if(response.status === 'success'){
-            let authenticator = 'authenticator:ilios-jwt';
-            this.get('session').authenticate(authenticator, {jwt: response.jwt});
-          }
-        });
-      }
-
-      if(config.type === 'cas'){
-        let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
-        let queryParams = {};
-        if (window.location.search.length > 1) {
-          window.location.search.substr(1).split('&').forEach(str => {
-            let arr = str.split('=');
-            queryParams[arr[0]] = arr[1];
-          });
-        }
-
-        loginUrl += `?service=${currentUrl}`;
-        if (isPresent(queryParams.ticket)) {
-          loginUrl += `&ticket=${queryParams.ticket}`;
-        }
-        this.get('commonAjax').request(loginUrl).then(response => {
-          if(response.status === 'redirect'){
-            let casLoginUrl = config.casLoginUrl + `?service=${currentUrl}`;
-            return window.location.replace(casLoginUrl);
-          }
-          if(response.status === 'noAccountExists'){
-            this.set('noAccountExistsError', true);
-            this.set('noAccountExistsAccount', response.userId);
-            defer.resolve();
-            return;
-          }
-          if(response.status === 'success'){
-            let authenticator = 'authenticator:ilios-jwt';
-            this.get('session').authenticate(authenticator, {jwt: response.jwt});
-          }
-        });
-      }
-    });
-
-    return defer.promise;
+      window.location.replace(shibbolethLoginUrl);
+    }
+    if(status === 'noAccountExists'){
+      this.set('noAccountExistsError', true);
+      this.set('noAccountExistsAccount', response.userId);
+      return;
+    }
+    if(status === 'success'){
+      let authenticator = 'authenticator:ilios-jwt';
+      this.get('session').authenticate(authenticator, {jwt: response.jwt});
+    }
   },
   setupController(controller) {
     controller.set('noAccountExistsError', this.get('noAccountExistsError'));
