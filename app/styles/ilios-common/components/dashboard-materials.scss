@@ -14,4 +14,8 @@
   table {
     @include ilios-table;
   }
+
+  .lm-type-icon {
+    color: $dark-grey;
+  }
 }

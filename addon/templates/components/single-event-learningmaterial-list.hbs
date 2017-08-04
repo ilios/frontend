@@ -1,9 +1,8 @@
-{{#if proxiedLearningMaterials.length}}
+{{#if learningMaterials.length}}
   <ul class='static-list fa-ul'>
-    {{#each proxiedLearningMaterials as |lm|}}
+    {{#each learningMaterials as |lm|}}
       <li class='single-event-learningmaterial-item'>
-        {{fa-icon lm.icon listItem=true}}
-
+        {{lm-type-icon type=lm.type mimetype=lm.mimetype listItem=true}}
         <div class='single-event-learningmaterial-item-title'>
           {{#if lm.required}}
             {{fa-icon 'star' title=(t 'general.required')}}

@@ -19,6 +19,8 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       absoluteFileUri: 'http://myhost.com/url1',
       sessionTitle: 'session1title',
       course: '1',
+      type: 'file',
+      mimetype: 'pdf',
       courseTitle: 'course1title',
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: today.toDate(),
@@ -28,6 +30,7 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       link: 'http://myhost.com/url2',
       sessionTitle: 'session2title',
       course: '2',
+      type: 'link',
       courseTitle: 'course2title',
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: tomorrow.toDate(),
@@ -36,6 +39,7 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       title: 'title3',
       citation: 'citationtext',
       sessionTitle: 'session3title',
+      type: 'citation',
       course: '3',
       courseTitle: 'course3title',
       firstOfferingDate: today.toDate(),
@@ -48,7 +52,7 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
 
 
 test('it renders with materials', async function(assert) {
-  assert.expect(23);
+  assert.expect(26);
   const currentUserMock = Service.extend({
     currentUserId: 11
   });
@@ -82,6 +86,7 @@ test('it renders with materials', async function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
   const firstLmLink = `${firstLmTitle} a`;
+  const firstLmTypeIcon = `${firstLmTitle} i.fa-file-pdf-o`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(2)`;
   const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
@@ -89,6 +94,7 @@ test('it renders with materials', async function(assert) {
 
   const secondLmTitle = `${materials}:eq(1) td:eq(0)`;
   const secondLmLink = `${secondLmTitle} a`;
+  const secondLmTypeIcon = `${secondLmTitle} i.fa-paragraph`;
   const secondLmCourseTitle = `${materials}:eq(1) td:eq(1)`;
   const secondLmSessionTitle = `${materials}:eq(1) td:eq(2)`;
   const secondLmInstructor = `${materials}:eq(1) td:eq(3)`;
@@ -96,6 +102,7 @@ test('it renders with materials', async function(assert) {
 
   const thirdLmTitle = `${materials}:eq(2) td:eq(0)`;
   const thirdLmLink = `${thirdLmTitle} a`;
+  const thirdLmTypeIcon = `${thirdLmTitle} i.fa-link`;
   const thirdLmCourseTitle = `${materials}:eq(2) td:eq(1)`;
   const thirdLmSessionTitle = `${materials}:eq(2) td:eq(2)`;
   const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
@@ -105,6 +112,7 @@ test('it renders with materials', async function(assert) {
   assert.equal(this.$(title).text().trim(), 'My Learning Materials for the next 60 days');
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
   assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1');
+  assert.equal(this.$(firstLmTypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
   assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
   assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
@@ -112,6 +120,7 @@ test('it renders with materials', async function(assert) {
 
   assert.equal(this.$(secondLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
   assert.equal(this.$(secondLmLink).length, 0);
+  assert.equal(this.$(secondLmTypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(secondLmSessionTitle).text().trim(), 'session3title');
   assert.equal(this.$(secondLmCourseTitle).text().trim(), 'course3title');
   assert.equal(this.$(secondLmInstructor).text().trim(), '');
@@ -119,6 +128,7 @@ test('it renders with materials', async function(assert) {
 
   assert.equal(this.$(thirdLmTitle).text().trim(), 'title2');
   assert.equal(this.$(thirdLmLink).prop('href').trim(), 'http://myhost.com/url2');
+  assert.equal(this.$(thirdLmTypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(thirdLmSessionTitle).text().trim(), 'session2title');
   assert.equal(this.$(thirdLmCourseTitle).text().trim(), 'course2title');
   assert.equal(this.$(thirdLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
