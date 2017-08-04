@@ -14,6 +14,8 @@ let sessionType;
 let sessionDescription;
 let offering;
 let storeMock;
+let sessionLearningMaterial;
+let learningMaterial;
 moduleForComponent('single-event', 'Integration | Component | ilios calendar single event', {
   integration: true,
   beforeEach() {
@@ -58,6 +60,23 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
       offering: 1,
     });
 
+    learningMaterial = EmberObject.create({
+      title: 'Lecture Notes',
+      description: 'Lecture Notes in PDF format',
+      url: 'http://example.edu/notes.pdf',
+      type: 'file',
+      mimetype: 'application/pdf',
+      filesize: 1000,
+      citation: null
+    });
+
+    sessionLearningMaterial = EmberObject.create({
+      learningMaterial: resolve(learningMaterial),
+      required: true,
+      notes: 'Lorem Ipsum',
+      publicNotes: true,
+    });
+
     storeMock = Service.extend({
       findRecord(what){
         if (what === 'offering') {
@@ -65,7 +84,9 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
         }
       },
       query(what){
-        if (['sessionLearningMaterial', 'courseLearningMaterial'].includes(what)) {
+        if ('sessionLearningMaterial' === what) {
+          return resolve([sessionLearningMaterial]);
+        } else if ('courseLearningMaterial' === what) {
           return resolve([]);
         }
         throw new Error(`${what} isn't a valid query term`);
@@ -76,7 +97,7 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
 });
 
 test('it renders', async function(assert) {
-  assert.expect(6);
+  assert.expect(9);
   this.set('event', ourEvent);
   this.render(hbs`{{single-event event=event}}`);
   await wait();
@@ -87,4 +108,8 @@ test('it renders', async function(assert) {
   assert.ok(this.$('.single-event-instructors').text().includes('Taught By Great Teacher'), 'instructors are displayed');
   assert.ok(this.$('.single-event-session-is').text().includes('This session is "test type"'), 'session type is displayed');
   assert.ok(this.$('.single-event-summary').text().includes('test description'), 'session description is displayed');
+  const $sessionLm = this.$('.single-event-learningmaterial-list:eq(0) .single-event-learningmaterial-item:eq(0)');
+  assert.equal(this.$('.single-event-learningmaterial-item-notes', $sessionLm).text().trim(), sessionLearningMaterial.get('notes'));
+  assert.equal(this.$('.single-event-learningmaterial-item-description', $sessionLm).text().trim(), learningMaterial.get('description'));
+  assert.ok(this.$('.single-event-learningmaterial-item-title', $sessionLm).text().includes(learningMaterial.get('title')));
 });
