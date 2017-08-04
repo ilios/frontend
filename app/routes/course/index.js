@@ -30,6 +30,15 @@ export default  Route.extend({
       //temporarily disabled to fix #3173
       // store.query('objective', {filters: {courses}, limit: 1000}),
       // store.query('objective', {filters: {sessions}, limit: 1000}),
+      store.query('session-type', {filters: {sessions}, limit: 1000}),
     ]);
+  },
+  queryParams: {
+    sortSessionsBy: {
+      replace: true
+    },
+    filterSessionsBy: {
+      replace: true
+    },
   }
 });

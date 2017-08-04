@@ -1,0 +1,22 @@
+<div class="filter">
+  {{one-way-input
+    value=filterBy
+    update=(queue (action (mut filterBy)) setFilterBy)
+    placeholder=(t 'general.sessionTitleFilterPlaceholder')
+  }}
+</div>
+{{#light-table table height='65vh' responsive=true as |t|}}
+  {{t.head
+    onColumnClick=(action 'columnClicked')
+    iconAscending='fa fa-sort-asc'
+    iconDescending='fa fa-sort-desc'
+    fixed=true
+  }}
+
+  {{#t.body
+    canSelect=false
+    as |body|
+  }}
+  {{/t.body}}
+
+{{/light-table}}

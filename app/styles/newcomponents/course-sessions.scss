@@ -1,0 +1,17 @@
+.course-sessions {
+  @include detail-container($ilios-orange);
+
+  background-color: $active-background-color;
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .course-sessions-content {
+    @include detail-container-content;
+  }
+}

@@ -1,0 +1,15 @@
+<div class='title'>
+  {{t 'general.sessions'}} ({{sessionsCount}})
+</div>
+<div class='actions'>
+
+</div>
+<div class='course-sessions-content'>
+  {{session-table
+    sessions=(await sessionObjects)
+    setSortBy=setSortBy
+    sortBy=sortBy
+    setFilterBy=setFilterBy
+    filterBy=filterBy
+  }}
+</div>
