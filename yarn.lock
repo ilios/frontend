@@ -3553,9 +3553,9 @@ ember-cli-version-checker@^2.0.0:
     rsvp "3.0.14"
     yuidocjs "^0.10.0"
 
-ember-cli@2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.14.1.tgz#22b5da78f85d72bff7e2e790fcf6b202c793f263"
+ember-cli@2.14.2:
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.14.2.tgz#f2c8c75d486ce6cc6b7ffbc22ebef8b32bb242b7"
   dependencies:
     amd-name-resolver "0.0.6"
     babel-plugin-transform-es2015-modules-amd "^6.24.0"
