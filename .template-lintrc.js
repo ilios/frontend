@@ -17,5 +17,6 @@ module.exports = {
     'triple-curlies': false,
     'deprecated-each-syntax': true,
     'deprecated-inline-view-helper': false,
+    'simple-unless': false
   }
 };
