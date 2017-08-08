@@ -11,8 +11,8 @@ export default Component.extend({
 
   userEvents: service(),
 
-  startOfWeek: 1,
-  endOfWeek: 7,
+  startOfWeek: 0,
+  endOfWeek: 6,
 
   year: null,
   week: null,

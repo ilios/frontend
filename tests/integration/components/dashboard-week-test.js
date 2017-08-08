@@ -105,8 +105,8 @@ moduleForComponent('dashboard-week', 'Integration | Component | dashboard week',
 });
 
 const getTitle = function(){
-  const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
-  const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
+  const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
+  const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
 
   let expectedTitle;
   if (startOfWeek.month() != endOfWeek.month()) {
