@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ReportTitleMixin from 'ilios/mixins/report-title';
 import { task } from 'ember-concurrency';
 
-const { Helper } = Ember;
+const { Helper, isNone } = Ember;
 
 export default Helper.extend(ReportTitleMixin, {
 
@@ -10,7 +10,7 @@ export default Helper.extend(ReportTitleMixin, {
 
   compute([report]) {
     const reportTitle = this.get('reportTitle');
-    if (reportTitle) {
+    if (! isNone(reportTitle)) {
       return reportTitle;
     }
     this.get('loadTitle').perform(report);
