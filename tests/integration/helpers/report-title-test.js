@@ -42,8 +42,8 @@ test('all competencies in all schools', function(assert) {
 test('all competencies in school X', function(assert) {
   assert.expect(1);
   const school = EmberObject.create({
-    'title': 'School X'
-  })
+    'title': 'School of Schools'
+  });
   const report = EmberObject.create({
     'prepositionalObject': null,
     'school': resolve(school),
@@ -56,5 +56,72 @@ test('all competencies in school X', function(assert) {
   this.render(hbs`{{report-title report}}`);
   return wait().then(()=>{
     assert.equal(this.$().text().trim(), 'All Competencies in ' + school.get('title'));
+  });
+});
+
+test('all competencies for user X in school Y', function(assert) {
+  assert.expect(3);
+  const school = EmberObject.create({
+    'title': 'School of Schools'
+  });
+  const pObject = EmberObject.create({
+    dasherize(){
+      return 'user';
+    }
+  });
+  const userRecord = EmberObject.create({
+    fullName: 'Chip Whitley',
+  });
+  const report = EmberObject.create({
+    'prepositionalObject': pObject,
+    'school': resolve(school),
+    'subject': 'competency',
+    'title': null,
+    'prepositionalObjectTableRowId': 1,
+  });
+
+  const storeMock = Service.extend({
+    query(model, params) {
+      assert.equal(model, 'user');
+      assert.equal(params.filter.id, 1);
+      return resolve(new Ember.A([userRecord]));
+    }
+  });
+
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{report-title report}}`);
+  return wait().then(()=>{
+    assert.equal(this.$().text().trim(), 'All Competencies for ' + userRecord.get('fullName') +  ' in ' + school.get('title'));
+  });
+});
+
+test('broken report', function(assert) {
+  assert.expect(1);
+  const school = EmberObject.create({
+    'title': 'School of Schools'
+  });
+  const pObject = EmberObject.create({
+    dasherize(){
+      return 'user';
+    }
+  });
+  const report = EmberObject.create({
+    'prepositionalObject': pObject,
+    'school': resolve(school),
+    'subject': 'competency',
+    'title': null,
+    'prepositionalObjectTableRowId': 1,
+  });
+  const storeMock = Service.extend({
+    query() {
+      return resolve(new Ember.A());
+    }
+  });
+  this.register('service:store', storeMock);
+  this.set('report', report);
+  this.render(hbs`{{report-title report}}`);
+  return wait().then(()=>{
+    assert.equal(this.$().text().trim(), '');
   });
 });
