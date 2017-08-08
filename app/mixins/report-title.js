@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject } = Ember;
+const { inject, isEmpty } = Ember;
 const { service } = inject;
 
 
@@ -32,13 +32,17 @@ export default Ember.Mixin.create({
         model = 'mesh-descriptor';
       }
       const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
-      let record;
-      try {
-        record = await store.findRecord(model, prepositionalObjectTableRowId);
-      } catch (e) {
+      const records = await store.query(model, {
+        filter: {
+          id: prepositionalObjectTableRowId
+        }
+      });
+
+      if (isEmpty(records)) {
         return '';
       }
 
+      const record = records.get('firstObject');
       let object;
       if(model === 'user'){
         object = record.get('fullName');
