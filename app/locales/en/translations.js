@@ -487,6 +487,7 @@ export default {
     'termCount': { 'one': 'There is 1 term', 'other': 'There are {{count}} terms' },
     'terms': 'Terms',
     'termsManageTitle': 'Manage Terms',
+    'thisReportIsNoLongerAvailable': 'This report is no longer available.',
     'thursday': 'Thursday',
     'time': 'Time',
     'tokenInfo': 'API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>.',

@@ -487,6 +487,7 @@
     'termCount': { 'one': 'Hay 1 término', 'other': 'Hay {{count}} términos' },
     'terms': 'Términos',
     'termsManageTitle': 'Maneje Términos',
+    'thisReportIsNoLongerAvailable': 'Este informe ya no está disponible.',
     'thursday': 'Jueves',
     'time': 'Hora',
     'tokenInfo': 'Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>.',
