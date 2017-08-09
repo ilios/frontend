@@ -112,8 +112,8 @@ moduleForComponent('week-glance', 'Integration | Component | week glance', {
 });
 
 const getTitle = function(fullTitle){
-  const startOfWeek = today.clone().day(1).hour(0).minute(0).second(0);
-  const endOfWeek = today.clone().day(7).hour(23).minute(59).second(59);
+  const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
+  const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
 
   let expectedTitle;
   if (startOfWeek.month() != endOfWeek.month()) {
@@ -342,14 +342,14 @@ test('changing passed properties re-renders', async function(assert) {
       case 1:
         assert.ok(from.isSame(today, 'year'));
         assert.ok(to.isSame(today, 'year'));
-        assert.ok(from.isSame(today, 'isoWeek'));
-        assert.ok(to.isSame(today, 'isoWeek'));
+        assert.ok(from.isSame(today, 'week'));
+        assert.ok(to.isSame(today, 'week'));
         break;
       case 2:
         assert.ok(from.isSame(nextYear, 'year'));
         assert.ok(to.isSame(nextYear, 'year'));
-        assert.ok(from.isSame(nextYear, 'isoWeek'));
-        assert.ok(to.isSame(nextYear, 'isoWeek'));
+        assert.ok(from.isSame(nextYear, 'week'));
+        assert.ok(to.isSame(nextYear, 'week'));
         break;
       default:
         assert.notOk(true, 'Called too many times');
