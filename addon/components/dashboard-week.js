@@ -2,10 +2,16 @@ import Ember from 'ember';
 import layout from '../templates/components/dashboard-week';
 import moment from 'moment';
 
-const { Component } = Ember;
+const { Component, computed } = Ember;
 
 export default Component.extend({
   layout,
   classNames: ['dashboard-week'],
-  today: moment().day(1),
+  expanded: computed(function(){
+    const lastSunday = moment().day(1).subtract(1, 'week').format('W');
+    const thisSunday = moment().day(1).format('W');
+    const nextSunday = moment().day(1).add(1, 'week').format('W');
+
+    return `${lastSunday}-${thisSunday}-${nextSunday}`;
+  }),
 });

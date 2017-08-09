@@ -1,4 +1,8 @@
-{{#link-to 'weeklyevents' (query-params expanded=(moment-format today 'W')) class='weeklylink'}}{{t 'general.allWeeks'}}{{/link-to}}
+{{#link-to
+  'weeklyevents'
+  (query-params expanded=expanded)
+  class='weeklylink'
+}}{{t 'general.allWeeks'}}{{/link-to}}
 {{week-glance
   collapsible=false
   collapsed=false
