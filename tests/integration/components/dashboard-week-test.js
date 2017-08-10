@@ -130,7 +130,7 @@ test('it renders with events', async function(assert) {
 
   this.render(hbs`{{dashboard-week}}`);
   const title = 'h3';
-  const allWeeks = '.weeklylink';
+  const allWeeks = '.weeklylink a';
   const events = '.event';
   const firstEvent = `${events}:eq(0)`;
   const secondEvent = `${events}:eq(1)`;
@@ -167,7 +167,7 @@ test('it renders with events', async function(assert) {
 
   const expectedTitle = getTitle();
   assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-  assert.equal(this.$(allWeeks).text().trim(), 'All Weeks');
+  assert.equal(this.$(allWeeks).text().trim(), 'Last Week / Next Week / All Weeks');
   assert.equal(this.$(events).length, 2, 'Blank events are not shown');
 
   assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
