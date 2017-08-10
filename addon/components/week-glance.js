@@ -10,6 +10,7 @@ export default Component.extend({
   classNames: ['week-glance'],
 
   userEvents: service(),
+  i18n: service(),
 
   startOfWeek: 0,
   endOfWeek: 6,
@@ -20,14 +21,16 @@ export default Component.extend({
   collapsed: true,
   showFullTitle: false,
 
-  midnightAtTheStartOfThisWeek: computed('year', 'week', 'startOfWeek', function(){
+  midnightAtTheStartOfThisWeek: computed('i18n.locale', 'year', 'week', 'startOfWeek', function(){
+    this.get('i18n'); //we need to use the service so the CP will re-fire
     const year = this.get('year');
     const week = this.get('week');
     const startOfWeek = this.get('startOfWeek');
     const targetDate = moment().year(year).isoWeek(week);
     return targetDate.day(startOfWeek).hour(0).minute(0);
   }),
-  midnightAtTheEndOfThisWeek: computed('year', 'week', 'endOfWeek', async function(){
+  midnightAtTheEndOfThisWeek: computed('i18n.locale', 'year', 'week', 'endOfWeek', async function(){
+    this.get('i18n'); //we need to use the service so the CP will re-fire
     const year = this.get('year');
     const week = this.get('week');
     const endOfWeek = this.get('endOfWeek');
