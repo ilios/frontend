@@ -4,9 +4,11 @@
   padding: 0 1em 1em;
 
   .weeklylink {
-    @include ilios-link;
-
     clear: both;
     float: right;
+
+    a {
+      @include ilios-link;
+    }
   }
 }
