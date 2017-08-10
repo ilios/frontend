@@ -514,19 +514,21 @@ test('renders when an offering is provided', function(assert) {
   assert.equal(this.$(durationMinutes).val(), '0');
 
   let interactor = openDatepicker(this.$(startDate));
-  assert.equal(
-    interactor.selectedYear(),
-    2005,
-    'Selected year initialized to offering start date year.'
-  );
-  assert.equal(
-    interactor.selectedMonth(),
-    '5',
-    'Selected month initialized to offering start date month.'
-  );
-  assert.equal(
-    interactor.selectedDay(),
-    '24',
-    'Selected day initialized to offering start date day.'
-  );
+  return wait().then(()=> {
+    assert.equal(
+      interactor.selectedYear(),
+      2005,
+      'Selected year initialized to offering start date year.'
+    );
+    assert.equal(
+      interactor.selectedMonth(),
+      '5',
+      'Selected month initialized to offering start date month.'
+    );
+    assert.equal(
+      interactor.selectedDay(),
+      '24',
+      'Selected day initialized to offering start date day.'
+    );
+  });
 });

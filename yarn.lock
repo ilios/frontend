@@ -3223,13 +3223,24 @@ ember-cli-neat@0.0.6:
     broccoli-merge-trees "^1.2.4"
     ember-cli-babel "^5.1.7"
 
-ember-cli-node-assets@^0.1.4, ember-cli-node-assets@^0.1.6:
+ember-cli-node-assets@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-cli-node-assets/-/ember-cli-node-assets-0.1.6.tgz#6488a2949048c801ad6d9e33753c7bce32fc1146"
   dependencies:
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^1.1.1"
     broccoli-unwatched-tree "^0.1.1"
+    debug "^2.2.0"
+    lodash "^4.5.1"
+    resolve "^1.1.7"
+
+ember-cli-node-assets@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-node-assets/-/ember-cli-node-assets-0.2.2.tgz#d2d55626e7cc6619f882d7fe55751f9266022708"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    broccoli-merge-trees "^1.1.1"
+    broccoli-source "^1.1.0"
     debug "^2.2.0"
     lodash "^4.5.1"
     resolve "^1.1.7"
@@ -3840,14 +3851,15 @@ ember-papaparse@0.0.3:
   dependencies:
     ember-cli-babel "^5.1.5"
 
-ember-pikaday@2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/ember-pikaday/-/ember-pikaday-2.2.2.tgz#5ab1e5c26e4016f007f52247f8e6d9018c3aa59a"
+ember-pikaday@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/ember-pikaday/-/ember-pikaday-2.2.3.tgz#791c5fa69cf625f8767a76031eaa8820acec5feb"
   dependencies:
-    ember-cli-babel "^5.1.6"
-    ember-cli-htmlbars "^1.0.3"
-    ember-cli-node-assets "^0.1.4"
-    pikaday "^1.4.0"
+    ember-cli-babel "^5.1.7"
+    ember-cli-htmlbars "^1.1.1"
+    ember-cli-node-assets "^0.2.2"
+    fastboot-transform "^0.1.1"
+    pikaday "^1.5.1"
 
 ember-promise-helpers@1.0.3, ember-promise-helpers@^1.0.3:
   version "1.0.3"
@@ -4547,6 +4559,12 @@ fast-sourcemap-concat@^1.0.1:
 fastboot-transform@0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/fastboot-transform/-/fastboot-transform-0.1.1.tgz#de55550d85644ec94cb11264c2ba883e3ea3b255"
+  dependencies:
+    broccoli-stew "^1.5.0"
+
+fastboot-transform@^0.1.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/fastboot-transform/-/fastboot-transform-0.1.2.tgz#f910d666ab93e75604492ea655270d1804bc8de7"
   dependencies:
     broccoli-stew "^1.5.0"
 
@@ -6849,7 +6867,7 @@ pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
 
-pikaday@^1.4.0:
+pikaday@^1.5.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/pikaday/-/pikaday-1.6.1.tgz#b91bcb9b8539cedd8d6d08e4e7465e12095671b0"
   optionalDependencies:
