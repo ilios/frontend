@@ -209,7 +209,7 @@
     'invalidDatetimes': 'Fecha/Hora Inválida',
     'isSelective': 'Es selectivo',
     'isTrack': 'Es la Pista',
-    'language': { 'en': 'Inglés (en)', 'es': 'Español (es)', 'fr': 'Français (fr)' },
+    'language': { 'en': 'English (en)', 'es': 'Español (es)', 'fr': 'Français (fr)' },
     'lastName': 'Apellido',
     'learnerAssignments': '{{groupTitle}} Asignaciónes de Aprendedores',
     'learnerGroups': 'Grupos de Aprendedores',
