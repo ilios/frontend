@@ -732,8 +732,8 @@ test('query params work', async function(assert) {
   assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 });
 
-test('week summary dispalys the whole week', async function(assert) {
-  let startOfTheWeek = moment().day(1).hour(0).minute(2);
+test('week summary displays the whole week', async function(assert) {
+  let startOfTheWeek = moment().day(0).hour(0).minute(2);
   server.create('userevent', {
     user: 4136,
     startDate: startOfTheWeek.format(),
@@ -741,7 +741,7 @@ test('week summary dispalys the whole week', async function(assert) {
     offering: 1,
     isPublished: true,
   });
-  let endOfTheWeek = moment().day(7).hour(22).minute(5);
+  let endOfTheWeek = moment().day(6).hour(22).minute(5);
   server.create('userevent', {
     user: 4136,
     startDate: endOfTheWeek.format(),
