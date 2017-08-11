@@ -26,20 +26,26 @@ export default Component.extend({
     const year = this.get('year');
     const week = this.get('week');
     const startOfWeek = this.get('startOfWeek');
-    const targetDate = moment().year(year).isoWeek(week);
-    return targetDate.day(startOfWeek).hour(0).minute(0);
+    const targetDate = moment();
+    targetDate.year(year);
+    targetDate.isoWeek(week);
+    targetDate.day(startOfWeek);
+    return targetDate.hour(0).minute(0);
   }),
-  midnightAtTheEndOfThisWeek: computed('i18n.locale', 'year', 'week', 'endOfWeek', async function(){
+  midnightAtTheEndOfThisWeek: computed('i18n.locale', 'year', 'week', 'endOfWeek', function(){
     this.get('i18n'); //we need to use the service so the CP will re-fire
     const year = this.get('year');
     const week = this.get('week');
     const endOfWeek = this.get('endOfWeek');
-    const targetDate = moment().year(year).isoWeek(week);
-    return targetDate.day(endOfWeek).hour(23).minute(59).second(59);
+    const targetDate = moment();
+    targetDate.year(year);
+    targetDate.isoWeek(week);
+    targetDate.day(endOfWeek);
+    return targetDate.hour(23).minute(59).second(59);
   }),
-  title: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', async function(){
-    const midnightAtTheStartOfThisWeek = await this.get('midnightAtTheStartOfThisWeek');
-    const midnightAtTheEndOfThisWeek = await this.get('midnightAtTheEndOfThisWeek');
+  title: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', function(){
+    const midnightAtTheStartOfThisWeek = this.get('midnightAtTheStartOfThisWeek');
+    const midnightAtTheEndOfThisWeek = this.get('midnightAtTheEndOfThisWeek');
     const from = midnightAtTheStartOfThisWeek.format('MMMM D');
 
     let to;
@@ -52,13 +58,11 @@ export default Component.extend({
 
       return `${from}-${to}`;
     }
-
-
   }),
 
   weekEvents: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', async function() {
-    const midnightAtTheStartOfThisWeek = await this.get('midnightAtTheStartOfThisWeek');
-    const midnightAtTheEndOfThisWeek = await this.get('midnightAtTheEndOfThisWeek');
+    const midnightAtTheStartOfThisWeek = this.get('midnightAtTheStartOfThisWeek');
+    const midnightAtTheEndOfThisWeek = this.get('midnightAtTheEndOfThisWeek');
 
     const from = midnightAtTheStartOfThisWeek.unix();
     const to = midnightAtTheEndOfThisWeek.unix();
