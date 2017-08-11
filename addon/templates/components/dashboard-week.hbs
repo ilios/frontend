@@ -1,8 +1,12 @@
-{{#link-to
-  'weeklyevents'
-  (query-params expanded=expanded)
-  class='weeklylink'
-}}{{t 'general.allWeeks'}}{{/link-to}}
+<span class='weeklylink'>
+  {{t 'general.view'}}:
+  {{#link-to
+    'weeklyevents'
+    (query-params expanded=expanded)
+  }}
+    {{t 'general.lastNextAllWeeks'}}
+  {{/link-to}}
+</span>
 {{week-glance
   collapsible=false
   collapsed=false
