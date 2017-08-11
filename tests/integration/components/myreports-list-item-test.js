@@ -4,7 +4,7 @@ import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
 const { Service, RSVP, Object:EmberObject } = Ember;
-const { resolve } = RSVP;
+const { resolve, reject } = RSVP;
 
 moduleForComponent('myreports-list-item', 'Integration | Component | myreports list item', {
   integration: true
@@ -92,10 +92,10 @@ test('all competencies for user X in school Y', function(assert) {
   });
 
   const storeMock = Service.extend({
-    query(model, params) {
+    findRecord(model, id) {
       assert.equal(model, 'user');
-      assert.equal(params.filter.id, 1);
-      return resolve(new Ember.A([userRecord]));
+      assert.equal(id, 1);
+      return resolve(userRecord);
     }
   });
 
@@ -126,8 +126,8 @@ test('broken report', function(assert) {
     'prepositionalObjectTableRowId': 1,
   });
   const storeMock = Service.extend({
-    query() {
-      return resolve(new Ember.A());
+    findRecord() {
+      return reject(new Error('not found'));
     }
   });
   this.register('service:store', storeMock);
