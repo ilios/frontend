@@ -732,8 +732,8 @@ test('query params work', async function(assert) {
   assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 });
 
-test('week summary dispalys the whole week', async function(assert) {
-  let startOfTheWeek = moment().day(1).hour(0).minute(2);
+test('week summary displays the whole week', async function(assert) {
+  let startOfTheWeek = moment().day(0).hour(0).minute(2);
   server.create('userevent', {
     user: 4136,
     startDate: startOfTheWeek.format(),
@@ -741,7 +741,7 @@ test('week summary dispalys the whole week', async function(assert) {
     offering: 1,
     isPublished: true,
   });
-  let endOfTheWeek = moment().day(7).hour(22).minute(5);
+  let endOfTheWeek = moment().day(6).hour(22).minute(5);
   server.create('userevent', {
     user: 4136,
     startDate: endOfTheWeek.format(),
@@ -755,6 +755,13 @@ test('week summary dispalys the whole week', async function(assert) {
   await visit('/dashboard?show=week');
 
   let eventBLocks = find(events);
+  // KLUDGE!
+  // for reasons yet to be determined, the locales on these moment objects is set to 'es'.
+  // force it back to English.
+  // @todo figure out what is going on. [ST 2017/08/11]
+  startOfTheWeek.locale('en');
+  endOfTheWeek.locale('en');
+
   assert.equal(eventBLocks.length, 2);
   assert.equal(getElementText(eventBLocks.eq(0)), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
   assert.equal(getElementText(eventBLocks.eq(1)), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
