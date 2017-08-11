@@ -755,6 +755,13 @@ test('week summary displays the whole week', async function(assert) {
   await visit('/dashboard?show=week');
 
   let eventBLocks = find(events);
+  // KLUDGE!
+  // for reasons yet to be determined, the locales on these moment objects is set to 'es'.
+  // force it back to English.
+  // @todo figure out what is going on. [ST 2017/08/11]
+  startOfTheWeek.locale('en');
+  endOfTheWeek.locale('en');
+
   assert.equal(eventBLocks.length, 2);
   assert.equal(getElementText(eventBLocks.eq(0)), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
   assert.equal(getElementText(eventBLocks.eq(1)), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
