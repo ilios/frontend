@@ -2,7 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/ilios/common.svg)](https://greenkeeper.io/)
 
-## Shared code respotory for:
+## Shared code repository for:
 
 - [Ilios Frontend](https://github.com/ilios/common)
 - [Ilios LTI App](https://github.com/ilios/lti-app)
