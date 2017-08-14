@@ -4,6 +4,7 @@
     <table>
       <tbody>
         {{#each (await weeksEvents) as |event|}}
+          {{log event}}
           {{#if event.isBlanked}}
             <tr>
               <td colspan=4 class='event-date'>
@@ -20,6 +21,9 @@
               </td>
               <td colspan=2>{{event.location}}</td>
               <td colspan=1>
+                {{#if event.attireRequired}}{{fa-icon 'black-tie' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
+                {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
+                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o'title=(t 'general.attendanceIsRequired')}}{{/if}}
                 {{#if (is-same-or-after event.lastModified sixDaysAgo precision='day')}}
                   {{fa-icon 'exclamation-circle'}}
                 {{/if}}
@@ -45,6 +49,9 @@
               </td>
               <td colspan=2>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
               <td colspan=1>
+                {{#if event.attireRequired}}{{fa-icon 'black-tie' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
+                {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
+                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o'title=(t 'general.attendanceIsRequired')}}{{/if}}
                 {{#if (is-same-or-after event.lastModified sixDaysAgo precision='day')}}
                   {{fa-icon 'exclamation-circle'}}
                 {{/if}}
