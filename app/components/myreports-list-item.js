@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 
 
 export default Ember.Component.extend(ReportTitleMixin, {
-  reportTitle: null,
+  reporttitle: null,
   tagName: 'span',
 
   didReceiveAttrs() {
@@ -15,7 +15,7 @@ export default Ember.Component.extend(ReportTitleMixin, {
 
   loadTitle: task(function * (report) {
     const title = yield this.getReportTitle(report);
-    this.set('reportTitle', title);
+    this.set('reporttitle', title);
   }).restartable(),
 
   actions: {
