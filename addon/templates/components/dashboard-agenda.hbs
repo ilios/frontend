@@ -23,9 +23,9 @@
               <td colspan=1>
                 {{#if event.attireRequired}}{{fa-icon 'black-tie' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
                 {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
-                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o'title=(t 'general.attendanceIsRequired')}}{{/if}}
+                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o' title=(t 'general.attendanceIsRequired')}}{{/if}}
                 {{#if (is-same-or-after event.lastModified sixDaysAgo precision='day')}}
-                  {{fa-icon 'exclamation-circle'}}
+                  {{fa-icon 'exclamation-circle' title=(t 'general.newUpdates')}}
                 {{/if}}
               </td>
             </tr>
@@ -51,9 +51,9 @@
               <td colspan=1>
                 {{#if event.attireRequired}}{{fa-icon 'black-tie' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
                 {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
-                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o'title=(t 'general.attendanceIsRequired')}}{{/if}}
+                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o' title=(t 'general.attendanceIsRequired')}}{{/if}}
                 {{#if (is-same-or-after event.lastModified sixDaysAgo precision='day')}}
-                  {{fa-icon 'exclamation-circle'}}
+                  {{fa-icon 'exclamation-circle' title=(t 'general.newUpdates')}}
                 {{/if}}
               </td>
             </tr>
