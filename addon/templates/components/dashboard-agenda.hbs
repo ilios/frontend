@@ -4,7 +4,6 @@
     <table>
       <tbody>
         {{#each (await weeksEvents) as |event|}}
-          {{log event}}
           {{#if event.isBlanked}}
             <tr>
               <td colspan=4 class='event-date'>
