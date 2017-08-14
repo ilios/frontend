@@ -42,6 +42,8 @@ module('Acceptance: Course - Learning Materials', {
       status: 1,
       userRole: 1,
       copyrightPermission: true,
+      filename: 'something.pdf',
+      absoluteFileUri: 'http://somethingsomething.com/something.pdf',
       courseLearningMaterials: [1],
       uploadDate: new Date('2015-02-12'),
     }));
@@ -82,6 +84,8 @@ module('Acceptance: Course - Learning Materials', {
       copyrightPermission: true,
       courseLearningMaterials: [],
       uploadDate: new Date('2016-03-03'),
+      filename: 'letter.txt',
+      absoluteFileUri: 'http://bttf.com/letter.txt'
     }));
     fixtures.courseLearningMaterials = [];
     fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
@@ -135,6 +139,8 @@ test('list learning materials', function(assert) {
       let courseLm = fixtures.courseLearningMaterials[fixtures.course.learningMaterials[i] - 1];
       let lm = fixtures.learningMaterials[courseLm.learningMaterial - 1];
       assert.equal(getElementText(find('td:eq(0)', row)), getText(lm.title));
+      // TODO: not checking for exact type icon yet, see comment below [ST 2017/08/01]
+      assert.equal(find('td:eq(0) .lm-type-icon i.fa', row).length, 1, 'LM type icon is present.');
       //TODO: we are no longer populating for 'type', so we need to pull all these tests out
       //of the loop and test individually
       //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
@@ -641,6 +647,7 @@ test('find and add learning material', function(assert) {
         let searchResults = find('.lm-search-results > li', container);
         assert.equal(searchResults.length, 1);
         assert.equal(getElementText($('.lm-search-results > li:eq(0) h4')), getText('Letter to Doc Brown'));
+        assert.equal(find('.lm-search-results > li:eq(0) h4 .lm-type-icon .fa-file').length, 1, 'Shows LM type icon.');
         let addlProps = find('.lm-search-results > li:eq(0) .learning-material-properties li', container);
         assert.equal(addlProps.length, 3);
         assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)')),

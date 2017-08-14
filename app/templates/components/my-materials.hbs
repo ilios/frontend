@@ -66,6 +66,7 @@
             <td colspan="3">{{lmObject.sessionTitle}}</td>
             <td colspan="3">{{lmObject.courseTitle}}</td>
             <td colspan="3">
+              {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
               {{#if lmObject.absoluteFileUri}}
                 <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
               {{else if lmObject.link}}

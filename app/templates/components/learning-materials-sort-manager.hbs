@@ -18,7 +18,10 @@
         }}
           {{fa-icon 'arrows'}}
           <span class="draggable-object-content">
-            <span class="title">{{get (await item.learningMaterial) 'title'}}</span>
+            <span class="title">
+              {{lm-type-icon type=(get (await item.learningMaterial) 'type') mimetype=(get (await item.learningMaterial) 'mimetype')}}
+              {{get (await item.learningMaterial) 'title'}}
+            </span>
             <span class="details">
               {{capitalize item.learningMaterial.type}},
               {{t 'general.ownedBy' owner=item.learningMaterial.owningUser.fullName}},

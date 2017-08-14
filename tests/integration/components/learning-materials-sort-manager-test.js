@@ -18,7 +18,7 @@ moduleForComponent('learning-materials-sort-manager', 'Integration | Component |
 });
 
 test('it renders', function(assert) {
-  assert.expect(7);
+  assert.expect(9);
 
   let owner1 = EmberObject.create({
     id: 1,
@@ -44,7 +44,8 @@ test('it renders', function(assert) {
     title: 'Lorem Ipsum',
     status: status1,
     owningUser: owner1,
-    type: 'file'
+    type: 'file',
+    mimetype: 'application/pdf'
   });
 
   let lm2 = EmberObject.create({
@@ -79,12 +80,16 @@ test('it renders', function(assert) {
   return wait().then(() => {
     assert.equal(this.$('.draggable-object').length, 2);
     assert.equal(this.$('.draggable-object:eq(0) .title').text().trim(), lm2.get('title'));
+    assert.equal(this.$('.draggable-object:eq(0) .lm-type-icon .fa-paragraph').length, 1, 'Shows LM type icon.');
+
     assert.equal(
       this.$('.draggable-object:eq(0) .details').text().replace(/[\s\n\t]+/g, ''),
       `${lm2.type.capitalize()}, owned by ${owner2.fullName}, Status: ${status2.title}`.replace(/[\s\n\t]+/g, '')
     );
 
     assert.equal(this.$('.draggable-object:eq(1) .title').text().trim(), lm1.get('title'));
+    assert.equal(this.$('.draggable-object:eq(1) .lm-type-icon .fa-file-pdf-o').length, 1, 'Shows LM type icon.');
+
     assert.equal(
       this.$('.draggable-object:eq(1) .details').text().replace(/[\s\n\t]+/g, ''),
       `${lm1.type.capitalize()}, owned by ${owner1.fullName}, Status: ${status1.title}`.replace(/[\s\n\t]+/g, '')

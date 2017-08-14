@@ -95,7 +95,7 @@
           {{#each (await proxyMaterials) as |lmProxy|}}
             <tr class="{{if lmProxy.showRemoveConfirmation 'confirm-removal'}}">
               <td class='text-left clickable link' colspan=3 {{action 'manageMaterial' lmProxy.content}}>
-                {{fa-icon 'external-link-square'}} {{lmProxy.learningMaterial.title}}
+                {{lm-type-icon type=lmProxy.learningMaterial.type mimetype=lmProxy.learningMaterial.mimetype}} {{lmProxy.learningMaterial.title}}
               </td>
               <td class='text-center' colspan=2>{{lmProxy.learningMaterial.type}}</td>
               <td class='text-center' colspan=2>{{lmProxy.learningMaterial.owningUser.fullName}}</td>
