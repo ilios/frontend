@@ -32,6 +32,7 @@ export default {
     'multidayEvents': 'Événements de plusieurs jours',
     'multiple': 'Multiple',
     'mySchedule': "Mon Calendrier (liste)",
+    'newUpdates': 'Nouvelles mises à jour',
     'none': "Nul",
     'offeredAt': "À {{date}}",
     'programAndCohort': "Diplôme et Cohortes",

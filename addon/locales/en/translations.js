@@ -31,6 +31,7 @@ export default {
     'month': 'Month',
     'multidayEvents': 'Multiday Events',
     'multiple': 'Multiple',
+    'newUpdates': 'new updates',
     'mySchedule': 'My Schedule',
     'none': 'None',
     'offeredAt': 'On {{date}}',
