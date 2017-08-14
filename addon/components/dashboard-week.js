@@ -14,4 +14,10 @@ export default Component.extend({
 
     return `${lastSunday}-${thisSunday}-${nextSunday}`;
   }),
+  year: computed(function(){
+    return moment().year();
+  }),
+  week: computed(function(){
+    return moment().isoWeek();
+  })
 });
