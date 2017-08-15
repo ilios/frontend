@@ -1316,7 +1316,7 @@ bluebird@^3.1.1, bluebird@^3.4.6:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
-body-parser@^1.12.3, body-parser@^1.15.0:
+body-parser@^1.15.0, body-parser@^1.17.0:
   version "1.17.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.17.2.tgz#f8892abc8f9e627d42aedafbca66bf5ab99104ee"
   dependencies:
@@ -2933,12 +2933,12 @@ ember-cli-code-coverage@^0.4.1:
     source-map "0.5.6"
     string.prototype.startswith "^0.2.0"
 
-ember-cli-content-security-policy@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-content-security-policy/-/ember-cli-content-security-policy-0.6.2.tgz#15636998ce0dc224491b2a24f5d0e636a3f059a3"
+ember-cli-content-security-policy@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-content-security-policy/-/ember-cli-content-security-policy-1.0.0.tgz#4f7d72997d4209cd59f10d3b0070fdb39593ed2d"
   dependencies:
-    body-parser "^1.12.3"
-    chalk "^1.0.0"
+    body-parser "^1.17.0"
+    chalk "^2.0.0"
 
 ember-cli-dependency-checker@^2.0.0:
   version "2.0.1"
