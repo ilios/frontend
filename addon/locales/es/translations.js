@@ -32,6 +32,7 @@ export default {
     'multidayEvents': 'Eventos de Varios Días',
     'multiple': 'Múltiple ',
     'mySchedule': 'Mi Horario',
+    'newUpdates': 'Nuevas actualizaciones',
     'none': 'Ningún',
     'offeredAt': 'en {{date}}',
     'programAndCohort': 'Programa/Clase de La Graduación',

@@ -2,7 +2,7 @@
   <div class='single-event-summary'>
     <h1>
       {{#if recentlyUpdated}}
-        {{fa-icon 'exclamation-circle' class="recently-updated-icon-event"}}
+        {{fa-icon 'exclamation-circle' class="recently-updated-icon-event" title=(t 'general.newUpdates')}}
       {{/if}}
       {{get (await course) 'title'}} - <em>{{get (await session) 'title'}}</em>
     </h1>
@@ -14,17 +14,17 @@
     <div class='single-event-session-is'>{{await sessionIs}}</div>
     {{#if (get (await session) 'equipmentRequired')}}
       <div class='single-event-equipment-required'>
-        {{{t 'general.specialEquipmentIs_Required_'}}} {{fa-icon 'flask'}}
+        {{{t 'general.specialEquipmentIs_Required_'}}} {{fa-icon 'flask' title=(t 'general.specialEquipment')}}
       </div>
     {{/if}}
     {{#if (get (await session) 'attireRequired')}}
       <div class='single-event-attire-required'>
-        {{{t 'general.specialAttireIs_Required_'}}} {{fa-icon 'black-tie'}}
+        {{{t 'general.specialAttireIs_Required_'}}} {{fa-icon 'black-tie' title=(t 'general.whitecoatsSlashSpecialAttire')}}
       </div>
     {{/if}}
     {{#if (get (await session) 'attendanceRequired')}}
       <div class='single-event-attendance-required'>
-        {{{t 'general.attendanceIs_Required_'}}} {{fa-icon 'calendar-check-o'}}
+        {{{t 'general.attendanceIs_Required_'}}} {{fa-icon 'calendar-check-o' title=(t 'general.attendanceIsRequired')}}
       </div>
     {{/if}}
     {{#if (and (is-fulfilled description) (gt (get (await description) 'length') 0))}}

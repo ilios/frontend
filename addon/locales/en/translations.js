@@ -32,6 +32,7 @@ export default {
     'multidayEvents': 'Multiday Events',
     'multiple': 'Multiple',
     'mySchedule': 'My Schedule',
+    'newUpdates': 'new updates',
     'none': 'None',
     'offeredAt': 'On {{date}}',
     'programAndCohort': 'Program/Cohort',
