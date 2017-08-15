@@ -3,6 +3,6 @@ import Ember from 'ember';
 const { Component } = Ember;
 
 export default Component.extend({
-  classNames: ['session-publication-check'],
+  classNames: ['session-publicationcheck'],
   session: null,
 });

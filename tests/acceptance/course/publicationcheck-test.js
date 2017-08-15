@@ -54,7 +54,7 @@ test('full course count', function(assert) {
   visit('/courses/' + fixtures.fullCourse.id + '/publicationcheck');
   andThen(function() {
     assert.equal(currentPath(), 'course.publicationCheck');
-    var items = find('.course-publication-check .detail-content table tbody td');
+    var items = find('.course-publicationcheck table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('course 0'));
     assert.equal(getElementText(items.eq(1)), getText('Yes (1)'));
     assert.equal(getElementText(items.eq(2)), getText('Yes (1)'));
@@ -67,7 +67,7 @@ test('empty course count', function(assert) {
   visit('/courses/' + fixtures.emptyCourse.id + '/publicationcheck');
   andThen(function() {
     assert.equal(currentPath(), 'course.publicationCheck');
-    var items = find('.course-publication-check .detail-content table tbody td');
+    var items = find('.course-publicationcheck table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('course 1'));
     assert.equal(getElementText(items.eq(1)), getText('No'));
     assert.equal(getElementText(items.eq(2)), getText('No'));

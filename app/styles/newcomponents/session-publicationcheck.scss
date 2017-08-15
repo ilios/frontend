@@ -1,0 +1,26 @@
+.session-publicationcheck {
+  background-color: $active-background-color;
+
+  .back-to-session {
+    border-top: 1px solid $ilios-orange;
+    padding: 1em 0;
+  }
+
+  .results {
+    background-color: $active-background-color;
+    @include detail-container($ilios-orange);
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .session-publicationcheck-content {
+      @include detail-container-content;
+
+      thead {
+        background-color: $header-blue;
+        color: $white;
+      }
+    }
+  }
+}

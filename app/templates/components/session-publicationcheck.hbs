@@ -1,8 +1,20 @@
-<section class='detail-block'>
-  <div class='detail-title'>
+{{session-overview
+  course=(await session.course)
+  session=session
+  showCheckLink=false
+  sessionTypes=(await session.course.school.sessionTypes)
+}}
+<div class='back-to-session'>
+  {{#link-to 'session.index' (await session.course) session}}
+    {{fa-icon 'rotate-left'}} {{t 'general.backToTitle' title=session.title}}
+  {{/link-to}}
+</div>
+
+<div class='results'>
+  <div class='title'>
     {{t 'general.missingItems'}} ({{session.allPublicationIssuesLength}})
   </div>
-  <div class='detail-content'>
+  <div class='session-publicationcheck-content'>
     <table>
       <thead>
         <tr>
@@ -40,4 +52,4 @@
       </tbody>
     </table>
   </div>
-</section>
+</div>
