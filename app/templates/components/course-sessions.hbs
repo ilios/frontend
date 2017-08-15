@@ -2,8 +2,33 @@
   {{t 'general.sessions'}} ({{sessionsCount}})
 </div>
 <div class='actions'>
-
+  {{#if editable}}
+    {{expand-collapse-button value=showNewSessionForm action=(toggle 'showNewSessionForm' this)}}
+    {{#if (gt sessionsCount 0)}}
+      {{#link-to 'course.publishall' course}}
+        <button>{{t 'general.publishAllSessions' sessionCount=sessionsCount}}</button>
+      {{/link-to}}
+    {{/if}}
+  {{/if}}
 </div>
+{{#if showNewSessionForm}}
+  <div class='new-session-form'>
+    {{new-session
+      sessionTypes=sessionTypes
+      save=(perform saveSession)
+      cancel=(toggle 'showNewSessionForm' this)
+    }}
+  </div>
+{{/if}}
+
+{{#if saveSession.lastSuccessful.value}}
+  <div class='save-result'>
+    {{#link-to 'session.index' course saveSession.lastSuccessful.value}}
+      {{fa-icon 'external-link-square'}} {{get saveSession.lastSuccessful.value 'title'}}
+    {{/link-to}}
+    {{t 'general.savedSuccessfully'}}
+  </div>
+{{/if}}
 <div class='course-sessions-content'>
   {{session-table
     sessions=(await sessionObjects)

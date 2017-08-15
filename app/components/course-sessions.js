@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 const { Component, computed, inject, RSVP } = Ember;
 const { map } = RSVP;
+const { not } = computed;
 
 export default Component.extend({
   i18n: inject.service(),
@@ -11,6 +13,7 @@ export default Component.extend({
   course: null,
   sortBy: null,
   filterBy: null,
+  editable: not('course.locked'),
   sessionsCount: computed('course.sessions.[]', function(){
     const course = this.get('course');
     const sessionIds = course.hasMany('sessions').ids();
@@ -70,5 +73,20 @@ export default Component.extend({
     });
 
     return sessionObjects;
+  }),
+
+  saveSession: task(function * (session) {
+    const course = this.get('course');
+    session.set('course', course);
+
+    return yield session.save();
+  }),
+
+  sessionTypes: computed('course.school.sessionTypes.[]', async function(){
+    const course = this.get('course');
+    const school = await course.get('school');
+    const sessionTypes = await school.get('sessionTypes');
+
+    return sessionTypes;
   }),
 });

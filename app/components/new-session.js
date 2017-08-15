@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import { task } from 'ember-concurrency';
 
 const { computed, Component, inject, isEmpty, isPresent, RSVP } = Ember;
 const { service } = inject;
@@ -58,26 +59,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     });
   }),
 
-  actions: {
-    save() {
-      this.set('isSaving', true);
-      this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          this.get('selectedSessionType').then(sessionType => {
-            let session = this.get('store').createRecord('session', {
-              title: this.get('title'),
-              sessionType
-            });
-            this.get('save')(session).finally(()=>{
-              this.sendAction('cancel');
-            });
-          });
-        }
+  saveNewSession: task(function * () {
+    const save = this.get('save');
+    this.send('addErrorDisplayFor', 'title');
+    const { validations } = yield this.validate();
+    if (validations.get('isValid')) {
+      const sessionType = yield this.get('selectedSessionType');
+      let session = this.get('store').createRecord('session', {
+        title: this.get('title'),
+        sessionType
       });
-    },
-    cancel() {
+      yield save(session);
       this.sendAction('cancel');
     }
-  }
+  }),
 });

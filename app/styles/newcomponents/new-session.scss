@@ -1,0 +1,27 @@
+.new-session {
+  @include detail-container($ilios-orange);
+  margin: auto;
+  width: 80%;
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .new-session-content {
+    @include ilios-form;
+    @include fill-parent;
+    display: block;
+
+    .item {
+      @include ilios-form-item;
+
+      &.last {
+        @include ilios-form-last-item;
+      }
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+}

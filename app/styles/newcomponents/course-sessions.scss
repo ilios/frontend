@@ -11,6 +11,14 @@
     @include detail-container-actions;
   }
 
+  .save-result {
+    @include fill-parent;
+    border: 1px solid $ilios-green;
+    clear: both;
+    margin-top: 1em;
+    padding: .75em;
+  }
+
   .course-sessions-content {
     @include detail-container-content;
   }
