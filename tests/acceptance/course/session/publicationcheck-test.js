@@ -65,7 +65,7 @@ test('full session count', function(assert) {
   visit(url);
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
-    var items = find('.session-publication-check .detail-content table tbody td');
+    var items = find('.session-publicationcheck table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('session 0'));
     assert.equal(getElementText(items.eq(1)), getText('Yes (1)'));
     assert.equal(getElementText(items.eq(2)), getText('Yes (1)'));
@@ -83,7 +83,7 @@ test('empty session count', function(assert) {
   visit('/courses/1/sessions/2/publicationcheck');
   andThen(function() {
     assert.equal(currentPath(), 'course.session.publicationCheck');
-    var items = find('.session-publication-check .detail-content table tbody td');
+    var items = find('.session-publicationcheck table tbody td');
     assert.equal(getElementText(items.eq(0)), getText('session 1'));
     assert.equal(getElementText(items.eq(1)), getText('No'));
     assert.equal(getElementText(items.eq(2)), getText('No'));

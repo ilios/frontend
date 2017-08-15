@@ -3,6 +3,6 @@ import Ember from 'ember';
 const { Component } = Ember;
 
 export default Component.extend({
-  classNames: ['course-publication-check', 'detail-view'],
+  classNames: ['course-publicationcheck'],
   course: null
 });
