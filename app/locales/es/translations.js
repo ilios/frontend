@@ -141,7 +141,6 @@
     'downloadingCurriculumInventoryReport': 'Informe descarga ha comenzado. Esto puede tardar un rato...',
     'draft': 'Borrador',
     'dueBy': 'Debido Por',
-    'dueThisDay': 'Debido por esta fecha',
     'duration': 'Duración',
     'durationInDays': 'Duración (en Días)',
     'durationInYears': 'Duración (en Años)',

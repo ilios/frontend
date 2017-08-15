@@ -141,7 +141,6 @@ export default {
     'downloadingCurriculumInventoryReport': 'Report download has started. This may take a while...',
     'draft': 'Draft',
     'dueBy': 'Due By',
-    'dueThisDay': 'Due this day',
     'duration': 'Duration',
     'durationInDays': 'Duration (in Days)',
     'durationInYears': 'Duration (in Years)',
