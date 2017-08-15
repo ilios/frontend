@@ -16,7 +16,7 @@ test('it renders', function(assert) {
 });
 
 test('clicking on a day header fires the correct events', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
   let date = new Date('2015-09-30T12:00:00');
   this.set('date', date);
   this.on('changeDate', newDate => {
@@ -33,6 +33,33 @@ test('clicking on a day header fires the correct events', function(assert) {
     changeView=(action 'changeView')
   }}`);
 
+  const weekTitles = '.week-titles .cell';
+  const sunday = `${weekTitles}:eq(1)`;
 
-  this.$('.week-titles .clickable').eq(0).click();
+  assert.ok(this.$(sunday).hasClass('clickable'));
+
+  this.$(sunday).click();
+});
+
+test('clicking on a day header does nothing when areDaysSelectable is false', function(assert) {
+  assert.expect(1);
+  let date = new Date('2015-09-30T12:00:00');
+  this.set('date', date);
+  this.set('nothing', () => {
+    assert.ok(false, 'this should never be called');
+  });
+
+  this.render(hbs`{{ilios-calendar-week
+    date=date
+    areDaysSelectable=false
+    changeDate=(action nothing)
+    changeView=(action nothing)
+  }}`);
+
+  const weekTitles = '.week-titles .cell';
+  const sunday = `${weekTitles}:eq(1)`;
+
+  assert.notOk(this.$(sunday).hasClass('clickable'));
+
+  this.$(sunday).click();
 });
