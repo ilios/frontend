@@ -7,8 +7,4 @@ module.exports = {
   included: function() {
     this._super.included.apply(this, arguments);
   },
-
-  isDevelopingAddon: function() {
-    return true;
-  }
 };
