@@ -9,6 +9,8 @@ export default Component.extend({
   classNames: ['ilios-calendar-week'],
   date: null,
   calendarEvents: [],
+  areEventsSelectable: true,
+  areDaysSelectable: true,
   weekOf: computed('date', function(){
     return moment(this.get('date')).startOf('week').format('MMMM Do YYYY');
   }),
@@ -37,8 +39,20 @@ export default Component.extend({
   }),
   actions: {
     changeToDayView(date){
-      this.get('changeDate')(date);
-      this.get('changeView')('day');
+      const changeDate = this.get('changeDate');
+      const changeView = this.get('changeView');
+      const areDaysSelectable = this.get('areDaysSelectable');
+      if (areDaysSelectable && changeDate && changeView) {
+        changeDate(date);
+        changeView('day');
+      }
+    },
+    selectEvent(evt){
+      const selectEvent = this.get('selectEvent');
+      const areEventsSelectable = this.get('areEventsSelectable');
+      if (areEventsSelectable && selectEvent) {
+        selectEvent(evt);
+      }
     }
   }
 });
