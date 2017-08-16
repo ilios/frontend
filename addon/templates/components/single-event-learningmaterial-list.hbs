@@ -10,7 +10,7 @@
           {{#if lm.url}}
             {{#if (eq lm.mimetype 'application/pdf')}}
               <a href='{{lm.url}}?inline'>{{lm.title}}</a>
-              <a target='_blank' href='{{lm.url}}?inline' rel='noopener'>{{fa-icon 'download' title=(t 'general.download')}}</a>
+              <a target='_blank' href='{{lm.url}}' rel='noopener'>{{fa-icon 'download' title=(t 'general.download')}}</a>
             {{else}}
               <a target='_blank' href='{{lm.url}}' rel='noopener'>{{lm.title}}</a>
             {{/if}}
