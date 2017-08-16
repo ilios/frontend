@@ -69,7 +69,7 @@ export default Component.extend({
       labelKey: 'general.status',
       valuePath: 'status',
       sortable: true,
-      width: '100px',
+      width: '65px',
       breakpoints: ['mediumScreen', 'largeScreen', 'giantScreen'],
     };
 

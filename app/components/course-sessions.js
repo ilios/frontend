@@ -61,9 +61,11 @@ export default Component.extend({
       sessionObject.learnerGroupCount = learnerGroupCount;
       let status = i18n.t('general.notPublished');
       if(session.get('isPublished')){
+        sessionObject.isPublished = true;
         status = i18n.t('general.published');
       }
       if(session.get('publishedAsTbd')){
+        sessionObject.publishedAsTbd = true;
         status = i18n.t('general.scheduled');
       }
       sessionObject.status = status.toString();
