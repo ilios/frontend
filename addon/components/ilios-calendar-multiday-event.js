@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   isIlm: notEmpty('event.ilmSession'),
   isOffering: notEmpty('event.offering'),
   clickable: or('isIlm', 'isOffering'),
+  isEventSelectable: true,
   actions: {
     selectEvent(){
       if (this.get('clickable')) {

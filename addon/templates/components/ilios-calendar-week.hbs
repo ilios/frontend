@@ -42,4 +42,4 @@
   </div>
 {{/el-weekly-calendar}}
 
-{{ilios-calendar-multiday-events events=multiDayEventsList selectEvent=selectEvent}}
+{{ilios-calendar-multiday-events events=multiDayEventsList selectEvent=(action 'selectEvent') areEventsSelectable=areDaysSelectable}}

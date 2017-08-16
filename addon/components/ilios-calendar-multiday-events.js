@@ -5,4 +5,5 @@ export default Ember.Component.extend({
   layout,
   events: null,
   multidayEvents: null,
+  areEventsSelectable: true,
 });

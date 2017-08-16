@@ -3,7 +3,7 @@
     <h4>{{t 'general.multidayEvents'}}</h4>
     <ul>
       {{#each events as |event|}}
-        {{ilios-calendar-multiday-event selectEvent=selectEvent event=event}}
+        {{ilios-calendar-multiday-event isEventSelectable=areEventsSelectable selectEvent=selectEvent event=event}}
       {{/each}}
     </ul>
   </div>

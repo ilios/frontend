@@ -59,3 +59,20 @@ test('action does not fire for scheduled events', function(assert) {
 
   this.$('.clickable').click();
 });
+
+test('action does not fire for unslecatbleEvents events', function(assert) {
+  let event = getEvent();
+  event.offering = 1;
+
+  this.set('event', event);
+  assert.expect(1);
+  this.on('handleAction', () => {
+    //this should never get called
+    assert.ok(false);
+  });
+  this.render(hbs`{{ilios-calendar-multiday-event event=event isEventSelectable=false selectEvent=(action 'handleAction')}}`);
+  assert.ok(this.$().text().search(/Cheramie is born/) > 0);
+
+
+  this.$('.clickable').click();
+});
