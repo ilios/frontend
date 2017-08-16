@@ -37,9 +37,10 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   },
   async casLogin(config){
     const commonAjax = this.get('commonAjax');
-    let loginUrl = '/auth/login?service=${currentUrl}';
 
     let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
+    let loginUrl = `/auth/login?service=${currentUrl}`;
+
     let queryParams = {};
     if (window.location.search.length > 1) {
       window.location.search.substr(1).split('&').forEach(str => {
