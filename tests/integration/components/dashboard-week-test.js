@@ -124,7 +124,7 @@ const getTitle = function(){
 };
 
 test('it renders with events', async function(assert) {
-  assert.expect(24);
+  assert.expect(25);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
 
@@ -146,7 +146,9 @@ test('it renders with events', async function(assert) {
   const firstLm2Link = `${firstLm2} a`;
   const firstLm2TypeIcon = `${firstLm2} i.fa-link`;
   const firstLm3 = `${firstLearningMaterials}:eq(2)`;
-  const firstLm3Link = `${firstLm3} a`;
+  const firstLm3Link = `${firstLm3} a:eq(0)`;
+  const firstLm3DownloadLink = `${firstLm3} a:eq(1)`;
+
   const firstLm3TypeIcon = `${firstLm3} i.fa-file-pdf-o`;
 
   const firstInstructors = `${firstEvent} .instructors`;
@@ -180,7 +182,8 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(firstLm2Link).attr('href'), 'http://myhost.com/url2');
   assert.equal(this.$(firstLm2TypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(firstLm3).text().trim(), 'File LM');
-  assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1');
+  assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1?inline');
+  assert.equal(this.$(firstLm3DownloadLink).attr('href'), 'http://myhost.com/url1');
   assert.equal(this.$(firstLm3TypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
 
