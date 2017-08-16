@@ -53,7 +53,18 @@
               <li class='learning-material'>
                 {{lm-type-icon type=lm.type mimetype=lm.mimetype}}
                 {{#if lm.absoluteFileUri}}
-                  <a href={{lm.absoluteFileUri}} target='_blank' rel='noopener'>{{lm.title}}</a>
+                  {{#if (eq lm.mimetype 'application/pdf')}}
+                    <a href="{{lm.absoluteFileUri}}?inline">
+                      {{lm.title}}
+                    </a>
+                    <a href="{{lm.absoluteFileUri}}" target="_blank" rel="noopener">
+                      {{fa-icon 'download' title=(t 'general.download')}}
+                    </a>
+                  {{else}}
+                    <a href="{{lm.absoluteFileUri}}" target="_blank" rel="noopener">
+                      {{lm.title}}
+                    </a>
+                  {{/if}}
                 {{else if lm.link}}
                   <a href={{lm.link}} target='_blank' rel='noopener'>{{lm.title}}</a>
                 {{else}}
