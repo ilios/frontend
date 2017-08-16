@@ -23,7 +23,7 @@ let createMaterials = function(){
     instructors: ['Instructor1name', 'Instructor2name'],
     firstOfferingDate: new Date(2003, 1, 2, 12),
     type: 'file',
-    mimetype: 'pdf'
+    mimetype: 'application/pdf'
   });
   let lm2 = EmberObject.create({
     title: 'title2',
@@ -44,8 +44,19 @@ let createMaterials = function(){
     firstOfferingDate: new Date(2020, 1, 2, 12),
     type: 'citation'
   });
+  let lm4 = EmberObject.create({
+    title: 'title4',
+    absoluteFileUri: 'http://myhost.com/document.txt',
+    sessionTitle: 'session4title',
+    course: '4',
+    courseTitle: 'course4title',
+    instructors: ['Instructor3name', 'Instructor4name'],
+    firstOfferingDate: new Date(2030, 1, 2, 12),
+    type: 'file',
+    mimetype: 'plain/text'
+  });
 
-  return [lm1, lm2, lm3];
+  return [lm1, lm2, lm3, lm4];
 };
 
 test('it renders empty', function(assert) {
@@ -61,7 +72,7 @@ test('it renders empty', function(assert) {
 });
 
 test('it renders with materials', function(assert) {
-  assert.expect(26);
+  assert.expect(35);
   this.set('materials', createMaterials());
   this.set('nothing', parseInt);
   this.render(hbs`{{my-materials
@@ -73,13 +84,15 @@ test('it renders with materials', function(assert) {
 
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
+
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
-  const firstLmLink = `${firstLmTitle} a`;
+  const firstLmLink = `${firstLmTitle} a:eq(0)`;
   const firstLmTypeIcon = `${firstLmTitle} i.fa-file-pdf-o`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(0)`;
   const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
   const firstLmFirstOffering = `${materials}:eq(0) td:eq(4)`;
+  const firstLmDownloadLink = `${firstLmTitle} a:eq(1)`;
 
   const secondLmTitle = `${materials}:eq(1) td:eq(2)`;
   const secondLmLink = `${secondLmTitle} a`;
@@ -98,19 +111,31 @@ test('it renders with materials', function(assert) {
   const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
   const thirdLmFirstOffering = `${materials}:eq(2) td:eq(4)`;
 
+  const fourthLmTitle = `${materials}:eq(3) td:eq(2)`;
+  const fourthLmLink = `${fourthLmTitle} a`;
+  const fourthLmTypeIcon = `${fourthLmTitle} i.fa-file`;
+  const fourthLmCourseTitle = `${materials}:eq(3) td:eq(1)`;
+  const fourthLmSessionTitle = `${materials}:eq(3) td:eq(0)`;
+  const fourthLmInstructor = `${materials}:eq(3) td:eq(3)`;
+  const fourthLmFirstOffering = `${materials}:eq(3) td:eq(4)`;
+
   const courseListOptions = '.course-filter option';
   const allCourses = `${courseListOptions}:eq(0)`;
   const firstCourse = `${courseListOptions}:eq(1)`;
   const secondCourse = `${courseListOptions}:eq(2)`;
   const thirdCourse = `${courseListOptions}:eq(3)`;
+  const fourthCourse = `${courseListOptions}:eq(4)`;
+
 
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
-  assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1');
+  assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1?inline');
   assert.equal(this.$(firstLmTypeIcon).length, 1, 'LM type icon is present.');
   assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
   assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
   assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
   assert.equal(this.$(firstLmFirstOffering).text().trim(), '02/02/2003');
+  assert.equal(this.$(firstLmDownloadLink).prop('href').trim(), 'http://myhost.com/url1');
+
 
   assert.equal(this.$(secondLmTitle).text().trim(), 'title2');
   assert.equal(this.$(secondLmLink).prop('href').trim(), 'http://myhost.com/url2');
@@ -128,11 +153,20 @@ test('it renders with materials', function(assert) {
   assert.equal(this.$(thirdLmInstructor).text().trim(), '');
   assert.equal(this.$(thirdLmFirstOffering).text().trim(), '02/02/2020');
 
-  assert.equal(this.$(courseListOptions).length, 4);
+  assert.equal(this.$(fourthLmTitle).text().trim(), 'title4');
+  assert.equal(this.$(fourthLmLink).prop('href').trim(), 'http://myhost.com/document.txt');
+  assert.equal(this.$(fourthLmTypeIcon).length, 1, 'LM type icon is present.');
+  assert.equal(this.$(fourthLmSessionTitle).text().trim(), 'session4title');
+  assert.equal(this.$(fourthLmCourseTitle).text().trim(), 'course4title');
+  assert.equal(this.$(fourthLmInstructor).text().trim(), 'Instructor3name, Instructor4name');
+  assert.equal(this.$(fourthLmFirstOffering).text().trim(), '02/02/2030');
+
+  assert.equal(this.$(courseListOptions).length, 5);
   assert.equal(this.$(allCourses).text().trim(), 'All Courses');
   assert.equal(this.$(firstCourse).text().trim(), 'course1title');
   assert.equal(this.$(secondCourse).text().trim(), 'course2title');
   assert.equal(this.$(thirdCourse).text().trim(), 'course3title');
+  assert.equal(this.$(fourthCourse).text().trim(), 'course4title');
 });
 
 test('filter by title', function(assert) {
@@ -151,7 +185,7 @@ test('filter by title', function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
-  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(materials).length, 4);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
 
   this.set('filter', 'title2');
@@ -177,7 +211,7 @@ test('filter by instructor', function(assert) {
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
   const secondLmTitle = `${materials}:eq(1) td:eq(2)`;
 
-  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(materials).length, 4);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
 
   this.set('filter', 'instructor1name');
@@ -203,7 +237,7 @@ test('filter by session title', function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
-  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(materials).length, 4);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
 
   this.set('filter', 'session2');
@@ -228,7 +262,7 @@ test('filter by course title', function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
-  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(materials).length, 4);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
 
   this.set('filter', 'course2');
@@ -253,7 +287,7 @@ test('filter by course', function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
-  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(materials).length, 4);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
 
   this.set('courseIdFilter', '2');
@@ -359,7 +393,7 @@ test('find with slash does not blow up on regex error', function(assert) {
   const materials = `${table} tbody tr`;
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
 
-  assert.equal(this.$(materials).length, 3);
+  assert.equal(this.$(materials).length, 4);
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
 
   this.set('filter', "course2\\");
