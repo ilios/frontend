@@ -24,19 +24,19 @@ test('citation', function(assert) {
 test('file', function(assert) {
   assert.expect(15);
   let fixtures = [
-    { lm: { type: 'file', mimetype: 'pdf' }, icon: 'fa-file-pdf-o' },
+    { lm: { type: 'file', mimetype: 'application/pdf' }, icon: 'fa-file-pdf-o' },
     { lm: { type: 'file', mimetype: 'ppt' }, icon: 'fa-file-powerpoint-o' },
     { lm: { type: 'file', mimetype: 'keynote' }, icon: 'fa-file-powerpoint-o' },
     { lm: { type: 'file', mimetype: 'pps' }, icon: 'fa-file-powerpoint-o' },
     { lm: { type: 'file', mimetype: 'ppx' }, icon: 'fa-file-powerpoint-o' },
-    { lm: { type: 'file', mimetype: 'mp4' }, icon: 'fa-file-movie-o' },
-    { lm: { type: 'file', mimetype: 'mpg' }, icon: 'fa-file-movie-o' },
-    { lm: { type: 'file', mimetype: 'mpeg' }, icon: 'fa-file-movie-o' },
-    { lm: { type: 'file', mimetype: 'mov' }, icon: 'fa-file-movie-o' },
-    { lm: { type: 'file', mimetype: 'wav' }, icon: 'fa-file-audio-o' },
-    { lm: { type: 'file', mimetype: 'mp3' }, icon: 'fa-file-audio-o' },
-    { lm: { type: 'file', mimetype: 'aac' }, icon: 'fa-file-audio-o' },
-    { lm: { type: 'file', mimetype: 'flac' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'video/mp4' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'video/mpg' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'video/mpeg' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'video/mov' }, icon: 'fa-file-movie-o' },
+    { lm: { type: 'file', mimetype: 'audio/wav' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'audio/mp3' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'audio/aac' }, icon: 'fa-file-audio-o' },
+    { lm: { type: 'file', mimetype: 'audio/flac' }, icon: 'fa-file-audio-o' },
     { lm: { type: 'file', mimetype: '' }, icon: 'fa-file' },
     { lm: { type: 'file', mimetype: 'xyz' }, icon: 'fa-file' },
   ];

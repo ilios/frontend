@@ -39,7 +39,7 @@ const mockEvents = [
         required: true,
         absoluteFileUri: 'http://myhost.com/url1',
         type: 'file',
-        mimetype: 'pdf'
+        mimetype: 'application/pdf'
       },
     ],
   },

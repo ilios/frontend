@@ -9,8 +9,8 @@ test('it renders', function(assert) {
   assert.expect(6);
 
   this.set('learningMaterials', [
-    {title: 'first one', mimetype: 'pdf', url: 'http://firstlink'},
-    {title: 'second one', mimetype: 'wav', url: 'http://secondlink'},
+    {title: 'first one', mimetype: 'application/pdf', url: 'http://firstlink'},
+    {title: 'second one', mimetype: 'audio/wav', url: 'http://secondlink'},
   ]);
   this.render(hbs`{{single-event-learningmaterial-list learningMaterials=learningMaterials}}`);
 

@@ -37,7 +37,7 @@ const mockEvents = [
       {
         title: 'File LM',
         type: 'file',
-        mimetype: 'pdf',
+        mimetype: 'application/pdf',
         required: true,
         absoluteFileUri: 'http://myhost.com/url1',
       },
@@ -59,7 +59,7 @@ const mockEvents = [
         title: 'Great Slides',
         required: true,
         type: 'file',
-        mimetype: 'pdf',
+        mimetype: 'application/pdf',
         absoluteFileUri: 'http://myhost.com/url1',
         publicNotes: 'slide notes',
       },
