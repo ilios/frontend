@@ -26,6 +26,8 @@ export default Component.extend({
     const expand = {
       cellComponent: 'session-table-expand',
       width: '40px',
+      sortable: false,
+      align: 'center',
       breakpoints: ['smallScreen', 'mediumScreen', 'largeScreen', 'giantScreen'],
     };
     const title = {
@@ -34,7 +36,6 @@ export default Component.extend({
       labelKey: 'general.title',
       valuePath: 'title',
       sortable: true,
-      width: '300px',
       breakpoints: ['smallScreen', 'mediumScreen', 'largeScreen', 'giantScreen'],
     };
     const type = {
@@ -42,6 +43,7 @@ export default Component.extend({
       labelKey: 'general.type',
       valuePath: 'sessionTypeTitle',
       sortable: true,
+      width: '250px',
       breakpoints: ['giantScreen'],
     };
     const groups = {
@@ -49,7 +51,8 @@ export default Component.extend({
       labelKey: 'general.groups',
       valuePath: 'learnerGroupCount',
       sortable: true,
-      width: '75px',
+      width: '90px',
+      align: 'center',
       breakpoints: ['largeScreen', 'giantScreen'],
     };
     const firstOffering = {
@@ -58,6 +61,7 @@ export default Component.extend({
       labelKey: 'general.firstOffering',
       valuePath: 'firstOfferingDate',
       sortable: true,
+      width: '175px',
       breakpoints: ['largeScreen', 'giantScreen'],
     };
     const offerings = {
@@ -66,6 +70,7 @@ export default Component.extend({
       valuePath: 'offeringCount',
       sortable: true,
       width: '100px',
+      align: 'center',
       breakpoints: ['mediumScreen', 'largeScreen', 'giantScreen'],
     };
     const status = {
@@ -74,7 +79,8 @@ export default Component.extend({
       labelKey: 'general.status',
       valuePath: 'status',
       sortable: true,
-      width: '65px',
+      width: '90px',
+      align: 'center',
       breakpoints: ['mediumScreen', 'largeScreen', 'giantScreen'],
     };
 
@@ -85,6 +91,13 @@ export default Component.extend({
     sortColumn.ascending = !sortInfo.descending;
 
     return columns;
+  }),
+
+  height: computed('sessions.length', function(){
+    const sessions = this.get('sessions');
+    const count = sessions?sessions.length:0;
+
+    return count < 10?'25vh':'75vh';
   }),
   filteredSessions: computed('sessions.[]', 'filterBy', function(){
     const sessions = this.get('sessions');
