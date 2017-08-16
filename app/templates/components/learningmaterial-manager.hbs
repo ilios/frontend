@@ -109,7 +109,7 @@
       <span class='link'>
         <a href="{{learningMaterial.learningMaterial.link}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.link}}</a>
         {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
-          {{fa-icon 'copy'}}
+          {{fa-icon 'copy' title=(t 'general.copyLink')}}
         {{/copy-button}}
       </span>
     </div>
@@ -131,7 +131,7 @@
           </a>
         {{/if}}
         {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
-          {{fa-icon 'copy' title=(t 'general.}}
+          {{fa-icon 'copy' title=(t 'general.copyLink')}}
         {{/copy-button}}
       </span>
     </div>
