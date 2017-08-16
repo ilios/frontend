@@ -7,7 +7,7 @@ import wait from 'ember-test-helpers/wait';
 const { Service, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
-let lm1, lm2, lm3, userMaterials;
+let lm1, lm2, lm3, lm4, userMaterials;
 let today = moment();
 let tomorrow = moment().add(1, 'day');
 
@@ -20,7 +20,7 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       sessionTitle: 'session1title',
       course: '1',
       type: 'file',
-      mimetype: 'pdf',
+      mimetype: 'application/pdf',
       courseTitle: 'course1title',
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: today.toDate(),
@@ -44,15 +44,25 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       courseTitle: 'course3title',
       firstOfferingDate: today.toDate(),
     });
-
-    userMaterials = [lm1, lm2, lm3];
+    lm4 = EmberObject.create({
+      title: 'title4',
+      absoluteFileUri: 'http://myhost.com/document.txt',
+      sessionTitle: 'session4title',
+      course: '1',
+      type: 'file',
+      mimetype: 'text/plain',
+      courseTitle: 'course4title',
+      instructors: ['Instructor3name', 'Instructor4name'],
+      firstOfferingDate: tomorrow.toDate(),
+    });
+    userMaterials = [lm1, lm2, lm3, lm4];
   }
 });
 
 
 
 test('it renders with materials', async function(assert) {
-  assert.expect(26);
+  assert.expect(33);
   const currentUserMock = Service.extend({
     currentUserId: 11
   });
@@ -84,13 +94,15 @@ test('it renders with materials', async function(assert) {
   const title = 'h3';
   const table = 'table:eq(0)';
   const materials = `${table} tbody tr`;
+
   const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
-  const firstLmLink = `${firstLmTitle} a`;
+  const firstLmLink = `${firstLmTitle} a:eq(0)`;
   const firstLmTypeIcon = `${firstLmTitle} i.fa-file-pdf-o`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(2)`;
   const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
   const firstLmFirstOffering = `${materials}:eq(0) td:eq(4)`;
+  const firstLmDownloadLink = `${firstLmTitle} a:eq(1)`;
 
   const secondLmTitle = `${materials}:eq(1) td:eq(0)`;
   const secondLmLink = `${secondLmTitle} a`;
@@ -108,15 +120,25 @@ test('it renders with materials', async function(assert) {
   const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
   const thirdLmFirstOffering = `${materials}:eq(2) td:eq(4)`;
 
+  const fourthLmTitle = `${materials}:eq(3) td:eq(0)`;
+  const fourthLmLink = `${fourthLmTitle} a:eq(0)`;
+  const fourthLmTypeIcon = `${fourthLmTitle} i.fa-file`;
+  const fourthLmCourseTitle = `${materials}:eq(3) td:eq(1)`;
+  const fourthLmSessionTitle = `${materials}:eq(3) td:eq(2)`;
+  const fourthLmInstructor = `${materials}:eq(3) td:eq(3)`;
+  const fourthLmFirstOffering = `${materials}:eq(3) td:eq(4)`;
+
   await wait();
   assert.equal(this.$(title).text().trim(), 'My Learning Materials for the next 60 days');
+
   assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
-  assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1');
+  assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1?inline');
   assert.equal(this.$(firstLmTypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
   assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
   assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
   assert.equal(this.$(firstLmFirstOffering).text().trim(), today.format('L'));
+  assert.equal(this.$(firstLmDownloadLink).prop('href').trim(), 'http://myhost.com/url1');
 
   assert.equal(this.$(secondLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
   assert.equal(this.$(secondLmLink).length, 0);
@@ -134,6 +156,12 @@ test('it renders with materials', async function(assert) {
   assert.equal(this.$(thirdLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
   assert.equal(this.$(thirdLmFirstOffering).text().trim(), tomorrow.format('L'));
 
+  assert.equal(this.$(fourthLmLink).prop('href').trim(), 'http://myhost.com/document.txt');
+  assert.equal(this.$(fourthLmTypeIcon).length, 1, 'LM type icon is present');
+  assert.equal(this.$(fourthLmSessionTitle).text().trim(), 'session4title');
+  assert.equal(this.$(fourthLmCourseTitle).text().trim(), 'course4title');
+  assert.equal(this.$(fourthLmInstructor).text().trim(), 'Instructor3name, Instructor4name');
+  assert.equal(this.$(fourthLmFirstOffering).text().trim(), tomorrow.format('L'));
 });
 
 test('it renders blank', async function(assert) {
