@@ -93,6 +93,7 @@
     'confirmVocabularyRemoval': '¿Está seguro que desea eliminar este vocabulario?',
     'contentAuthor': 'Autor del Contenido',
     'copiedSuccessfully': 'Copiado con Éxito',
+    'copyLink': 'Copiar el enlace',
     'copyrightAgreement': "El archivo que estoy subiendo es mío o tengo permiso expreso para reproducir y / o distribuir este artículo, o su uso aquí ha sido evaluado como permisible por la doctrina del uso justo. Este archivo no contiene ninguna información protegida de la salud, y su utilización aquí está en conformidad con las políticas del gobierno y Universidad sobre derechos de autor y de seguridad de la información y las directrices de mi institución para la conducta profesional.",
     'copyrightPermission': 'Permisos de Derechos de Autor',
     'copyrightRationale':'Justificación para Derechos de Autor',

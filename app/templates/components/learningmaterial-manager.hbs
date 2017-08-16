@@ -109,7 +109,7 @@
       <span class='link'>
         <a href="{{learningMaterial.learningMaterial.link}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.link}}</a>
         {{#copy-button clipboardText=learningMaterial.learningMaterial.link}}
-          {{fa-icon 'copy'}}
+          {{fa-icon 'copy' title=(t 'general.copyLink')}}
         {{/copy-button}}
       </span>
     </div>
@@ -118,9 +118,20 @@
     <div class="item filename">
       <label>{{t 'general.file'}}:</label>
       <span class='downloadurl'>
-        <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank" rel="noopener">{{learningMaterial.learningMaterial.filename}}</a>
+        {{#if (eq learningMaterial.learningMaterial.mimetype 'application/pdf')}}
+          <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}?inline">
+            {{learningMaterial.learningMaterial.filename}}
+          </a>
+          <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank" rel="noopener">
+            {{fa-icon 'download' title=(t 'general.download')}}
+          </a>
+        {{else}}
+          <a href="{{learningMaterial.learningMaterial.absoluteFileUri}}" target="_blank" rel="noopener">
+            {{learningMaterial.learningMaterial.filename}}
+          </a>
+        {{/if}}
         {{#copy-button clipboardText=learningMaterial.learningMaterial.absoluteFileUri}}
-          {{fa-icon 'copy'}}
+          {{fa-icon 'copy' title=(t 'general.copyLink')}}
         {{/copy-button}}
       </span>
     </div>

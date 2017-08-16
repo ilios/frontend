@@ -93,6 +93,7 @@ export default {
     'confirmVocabularyRemoval': 'Are you sure you want to delete this vocabulary?',
     'contentAuthor': 'Content Author',
     'copiedSuccessfully': 'Copied Successfully',
+    'copyLink': 'Copy link',
     'copyrightAgreement': "The file I am uploading is my own or I have express permission to reproduce and/or distribute this item, or use of it here has been assessed as allowable by the legal doctrine of Fair Use. This file does not contain protected health information, and use of it here is in compliance with Government and University policies on copyright and information security and my institution’s guidelines for professional conduct.",
     'copyrightPermission': 'Copyright Permission',
     'copyrightRationale':'Copyright Rationale',
