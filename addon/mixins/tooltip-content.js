@@ -43,7 +43,7 @@ export default Ember.Mixin.create({
     const name = this.get('event.name');
     const startTime = moment(this.get('event.startDate')).format(this.get('timeFormat'));
     const endTime = moment(this.get('event.endDate')).format(this.get('timeFormat'));
-    const dueThisDay = this.get('dueThisDay');
+    const dueThisDay = i18n.t('general.dueThisDay');
     const instructors = this.get('event.instructors') || [];
     const courseTitle = this.get('event.courseTitle');
     const isMulti = this.get('event.isMulti');

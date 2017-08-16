@@ -19,6 +19,7 @@ export default {
     'date': 'Fecha',
     'day': 'Día',
     'detail': 'Detalle',
+    'dueThisDay': 'Debido por esta fecha',
     'etAl': 'et al.',
     'hideFilters': 'Esconde Filtros',
     'icsInstructions': 'Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!',

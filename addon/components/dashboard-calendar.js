@@ -34,9 +34,6 @@ export default Component.extend({
   selectedSessionTypes: null,
   selectedAcademicYear: null,
 
-  dueTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.dueThisDay');
-  }),
   dayTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('general.day');
   }),

@@ -24,18 +24,18 @@
             {{#if (gt day.events.length 2)}}
               {{#each (slice 0 2 day.events) as |event|}}
                 {{#if event.isMulti}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate) dueThisDay=dueThisDay}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate)}}
                 {{else}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event) dueThisDay=dueThisDay}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event)}}
                 {{/if}}
               {{/each}}
               <span {{action 'changeToDayView' day.date}} class=' clickable link month-more-events'>{{fa-icon 'ellipse-h'}} {{showMore}} {{fa-icon 'angle-double-down'}}</span>
             {{else}}
               {{#each day.events as |event|}}
                 {{#if event.isMulti}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate) dueThisDay=dueThisDay}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate)}}
                 {{else}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event) dueThisDay=dueThisDay}}
+                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event)}}
                 {{/if}}
               {{/each}}
             {{/if}}

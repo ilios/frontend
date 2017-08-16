@@ -25,9 +25,9 @@
         <li class="event-column">
           {{#each day.events as |event|}}
             {{#if event.isMulti}}
-              {{ilios-calendar-event event=event selectEvent=(action 'changeToDayView' event.startDate) dueThisDay=dueThisDay clickable=areEventsSelectable}}
+              {{ilios-calendar-event event=event selectEvent=(action 'changeToDayView' event.startDate) clickable=areEventsSelectable}}
             {{else}}
-              {{ilios-calendar-event event=event selectEvent=(action 'selectEvent' event) dueThisDay=dueThisDay clickable=areEventsSelectable}}
+              {{ilios-calendar-event event=event selectEvent=(action 'selectEvent' event) clickable=areEventsSelectable}}
             {{/if}}
           {{/each}}
         </li>

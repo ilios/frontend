@@ -19,6 +19,7 @@ export default {
     'date': "Date",
     'day': "Jour",
     'detail': "Détail",
+    'dueThisDay': "Dû ce jour-là",
     'etAl': 'et al.',
     'hideFilters': "Cachez les Filtres",
     'icsInstructions': "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!",
