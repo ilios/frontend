@@ -23,6 +23,11 @@ export default Component.extend({
 
   columns: computed('sortInfo', function(){
     const sortInfo = this.get('sortInfo');
+    const expand = {
+      cellComponent: 'session-table-expand',
+      width: '40px',
+      breakpoints: ['smallScreen', 'mediumScreen', 'largeScreen', 'giantScreen'],
+    };
     const title = {
       type: 'translatable-table-column',
       cellComponent: 'session-table-title',
@@ -73,7 +78,7 @@ export default Component.extend({
       breakpoints: ['mediumScreen', 'largeScreen', 'giantScreen'],
     };
 
-    let columns =  [title, type, groups, firstOffering, offerings, status];
+    let columns =  [expand, title, type, groups, firstOffering, offerings, status];
 
     let sortColumn = columns.findBy('valuePath', sortInfo.column);
     sortColumn.sorted = true;
