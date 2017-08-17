@@ -1,9 +1,8 @@
-# lti-app
+# LTI Dashboard
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ilios/lti-app.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/ilios/lti-dashboard.svg)](https://greenkeeper.io/)
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Learning Tools Interoperability (LTI) application for the Ilios dashboard.
 
 ## Prerequisites
 
