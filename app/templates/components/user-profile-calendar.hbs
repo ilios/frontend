@@ -1,0 +1,16 @@
+<h2 class='title'>{{t 'general.calendar'}}</h2>
+
+<ul class='inline calendar-time-picker'>
+  <li class='clickable' {{action 'goBack'}}>{{fa-icon 'backward'}}</li>
+  <li class='clickable' {{action 'gotoToday'}}>{{t 'general.today'}}</li>
+  <li class='clickable' {{action 'goForward'}}>{{fa-icon 'forward'}}</li>
+</ul>
+<div class='ilios-calendar'>
+  {{ilios-calendar-week
+    calendarEvents=(await calendarEvents)
+    date=date
+    areEventsSelectable=false
+    areDaysSelectable=false
+  }}
+</div>
+<span class="loding-indicator {{if (is-fulfilled calendarEvents) 'loaded'}}">{{fa-icon 'spinner' spin=true}} {{t 'general.loadingEvents'}}...</span>
