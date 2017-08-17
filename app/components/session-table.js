@@ -1,14 +1,11 @@
 import Ember from 'ember';
 import Table from 'ember-light-table';
+import escapeRegExp from '../utils/escape-reg-exp';
 
 const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   classNames: ['session-table'],
-  init(){
-    this._super(...arguments);
-    this.set('sessions', []);
-  },
   sortBy: null,
   filterBy: null,
   sessions: null,
@@ -147,6 +144,12 @@ export default Component.extend({
   }),
 
   actions: {
+    cleanFilter(str){
+      const setFilterBy = this.get('setFilterBy');
+      const clean = escapeRegExp(str);
+      this.set('filterBy', clean);
+      setFilterBy(clean);
+    },
     columnClicked(column){
       const what = column.get('valuePath');
       const direction = column.ascending ? '' : ':desc';

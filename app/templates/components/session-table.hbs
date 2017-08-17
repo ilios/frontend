@@ -1,7 +1,7 @@
 <div class="filter">
   {{one-way-input
     value=filterBy
-    update=(queue (action (mut filterBy)) setFilterBy)
+    update=(action 'cleanFilter')
     placeholder=(t 'general.sessionTitleFilterPlaceholder')
   }}
 </div>

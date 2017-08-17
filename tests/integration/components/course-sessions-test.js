@@ -1,25 +1,34 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+
+const { Object:EmberObject } = Ember;
 
 moduleForComponent('course-sessions', 'Integration | Component | course sessions', {
   integration: true
 });
 
 test('it renders', function(assert) {
+  const title = '.title';
+  const course = EmberObject.create({
+    hasMany() {
+      return {
+        ids(){
+          return [];
+        }
+      };
+    }
+  });
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  this.set('course', course);
+  this.set('nothing', ()=>{});
+  this.render(hbs`{{course-sessions
+    course=course
+    sortBy='title'
+    setSortBy=(action nothing)
+    filterBy=null
+    setFilterBy=(action nothing)
+  }}`);
 
-  this.render(hbs`{{course-sessions}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#course-sessions}}
-      template block text
-    {{/course-sessions}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$(title).text().trim(), 'Sessions (0)');
 });
