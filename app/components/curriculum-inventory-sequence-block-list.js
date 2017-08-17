@@ -10,7 +10,7 @@ const SequenceBlockProxy = ObjectProxy.extend({
 });
 
 export default Component.extend({
-  classNames: ['detail-view', 'curriculum-inventory-sequence-block-list'],
+  classNames: ['curriculum-inventory-sequence-block-list'],
   parent: null,
   report: null,
   sequenceBlocks: [],

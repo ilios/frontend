@@ -1,8 +1,6 @@
-<div class='list'>
-  {{#if (is-fulfilled model.topLevelSequenceBlocks)}}
-    {{curriculum-inventory-sequence-block-list
-    report=(await model)
-    remove='removeSequenceBlock'
-    }}
-  {{/if}}
-</div>
+{{#if (is-fulfilled model.topLevelSequenceBlocks)}}
+  {{curriculum-inventory-sequence-block-list
+  report=(await model)
+  remove='removeSequenceBlock'
+  }}
+{{/if}}

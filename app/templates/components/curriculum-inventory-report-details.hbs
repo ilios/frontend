@@ -1,25 +1,19 @@
-<div class='detail-view'>
-  <div class='detail-view-main-title'>
-    {{curriculum-inventory-report-header
-      report=report finalize=(action 'confirmFinalization')
-      isFinalizing=isFinalizing
-    }}
-  </div>
-  {{#if showFinalizeConfirmation}}
-    <div class='confirm-finalize'>
-      <div class='confirm-message'>
-        {{t 'general.finalizeReportConfirmation'}} <br>
-        <div class="confirm-buttons">
-          <button {{action 'finalize'}} class='finalize text'>{{t 'general.yes'}}</button>
-          <button {{action 'cancelFinalization'}} class='done text'>{{t 'general.cancel'}}</button>
-        </div>
+{{curriculum-inventory-report-header
+  report=report finalize=(action 'confirmFinalization')
+  isFinalizing=isFinalizing
+}}
+{{#if showFinalizeConfirmation}}
+  <div class='confirm-finalize'>
+    <div class='confirm-message'>
+      {{t 'general.finalizeReportConfirmation'}} <br>
+      <div class="confirm-buttons">
+        <button {{action 'finalize'}} class='finalize text'>{{t 'general.yes'}}</button>
+        <button {{action 'cancelFinalization'}} class='done text'>{{t 'general.cancel'}}</button>
       </div>
     </div>
-  {{/if}}
-  <div class='detail-view-details'>
-    {{curriculum-inventory-report-overview report=report}}
   </div>
-</div>
+{{/if}}
+{{curriculum-inventory-report-overview report=report}}
 {{#liquid-if isFinalizing class='crossFade'}}
   {{#modal-dialog translucentOverlay=true}}
     {{pulse-loader}}
