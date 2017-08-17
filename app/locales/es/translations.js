@@ -138,7 +138,6 @@
     'displayName': 'Nombre de Mostrar',
     'domain': 'Dominio',
     'done': 'Acabado',
-    'download': 'Descargar',
     'downloadingCurriculumInventoryReport': 'Informe descarga ha comenzado. Esto puede tardar un rato...',
     'draft': 'Borrador',
     'dueBy': 'Debido Por',

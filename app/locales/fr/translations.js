@@ -138,7 +138,6 @@ export default {
     'displayName': "Nom d’Affichage",
     'domain': 'Domaine',
     'done': "Fini",
-    'download': 'Télécharger',
     'downloadingCurriculumInventoryReport': 'Rapport téléchargement a commencé. Cela peut prendre un peu de temps...',
     'draft': 'Provisoire',
     'dueBy': "Avant",

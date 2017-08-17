@@ -138,7 +138,6 @@ export default {
     'displayName': 'Display Name',
     'domain': 'Domain',
     'done': 'Done',
-    'download': 'Download',
     'downloadingCurriculumInventoryReport': 'Report download has started. This may take a while...',
     'draft': 'Draft',
     'dueBy': 'Due By',
