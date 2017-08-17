@@ -19,6 +19,7 @@ export default {
     'date': 'Date',
     'day': 'Day',
     'detail': 'Detail',
+    'download': 'Download',
     'dueThisDay':'Due this day',
     'etAl': 'et al.',
     'hideFilters': 'Hide Filters',

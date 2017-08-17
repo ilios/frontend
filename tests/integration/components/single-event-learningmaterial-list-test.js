@@ -6,17 +6,20 @@ moduleForComponent('single-event-learningmaterial-list', 'Integration | Componen
 });
 
 test('it renders', function(assert) {
-  assert.expect(6);
+  assert.expect(8);
 
   this.set('learningMaterials', [
-    {title: 'first one', mimetype: 'pdf', url: 'http://firstlink'},
-    {title: 'second one', mimetype: 'wav', url: 'http://secondlink'},
+    {title: 'first one', mimetype: 'application/pdf', url: 'http://firstlink'},
+    {title: 'second one', mimetype: 'audio/wav', url: 'http://secondlink'},
   ]);
   this.render(hbs`{{single-event-learningmaterial-list learningMaterials=learningMaterials}}`);
 
   assert.equal(this.$('li:eq(0)').text().trim().search(/^first one/), 0);
   assert.equal(this.$('li:eq(0) i.fa-file-pdf-o').length, 1, 'LM type icon is present.');
-  assert.equal(this.$('li:eq(0) a').attr('href').trim(), 'http://firstlink');
+  assert.equal(this.$('li:eq(0) a:eq(0)').attr('href').trim(), 'http://firstlink?inline');
+  assert.equal(this.$('li:eq(0) a:eq(1)').attr('href').trim(), 'http://firstlink');
+  assert.equal(this.$('li:eq(0) a:eq(1) i.fa-download').length, 1);
+
 
   assert.equal(this.$('li:eq(1)').text().trim().search(/^second one/), 0);
   assert.equal(this.$('li:eq(1) i.fa-file-audio-o').length, 1, 'LM type icon is present.');
