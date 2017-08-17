@@ -13,7 +13,7 @@ export default Component.extend({
     if (!sessionType) {
       return null;
     }
-    const { title, calendarColor, assessment } = sessionType.getProperties('title', 'calendarColor', 'assessment');
+    const { title, calendarColor, assessment, active: isActive } = sessionType.getProperties('title', 'calendarColor', 'assessment', 'active');
     const assessmentOption = await sessionType.get('assessmentOption');
     const selectedAssessmentOptionId = assessmentOption?assessmentOption.get('id'):null;
     const firstAamcMethod = await sessionType.get('firstAamcMethod');
@@ -23,13 +23,14 @@ export default Component.extend({
       calendarColor,
       assessment,
       selectedAssessmentOptionId,
-      selectedAamcMethodId
+      selectedAamcMethodId,
+      isActive
     });
 
     return readonlySessionType;
   }),
 
-  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod) {
+  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
     const sessionType = this.get('sessionType');
     const closeComponent = this.get('close');
     let aamcMethods = [];
@@ -42,6 +43,7 @@ export default Component.extend({
       assessment,
       assessmentOption,
       aamcMethods,
+      active: isActive,
     });
 
     yield sessionType.save();

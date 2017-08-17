@@ -6,6 +6,7 @@ export default {
     'academicYear': "Année Scolaire",
     'accountEnabled': 'Compte Activé',
     'actions': "Actions",
+    'active': 'Activé',
     'add': "Ajouté",
     'addCohort': 'Ajouté cohorte',
     'addNew': "Ajouté Neuf",

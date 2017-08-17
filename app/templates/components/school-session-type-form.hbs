@@ -92,6 +92,10 @@
     </div>
   {{/if}}
 
+  <div class='item'>
+    <label>{{t 'general.activated'}}:</label>
+    {{toggle-yesno yes=isActive toggle=(action (mut isActive))}}
+  </div>
 
   <div class='buttons'>
     <button class='done text' {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>

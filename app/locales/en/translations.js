@@ -6,6 +6,7 @@ export default {
     'academicYear': 'Academic Year',
     'accountEnabled': 'Account Enabled',
     'actions': 'Actions',
+    'activated': 'Activated',
     'add': 'Add',
     'addCohort': 'Add Cohort',
     'addNew': 'Add New',

@@ -46,6 +46,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   selectedAamcMethodId: null,
   calendarColor: null,
   assessment: false,
+  isActive: true,
   selectedAssessmentOptionId: null,
   canEditTitle: false,
   canEditAamcMethod: false,
@@ -64,9 +65,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const assessment = this.get('assessment');
     const aamcMethod = yield this.get('selectedAamcMethod');
     const assessmentOption = yield this.get('selectedAssessmentOption');
+    const isActive = this.get('isActive');
     const save = this.get('save');
 
-    yield save(title, calendarColor, assessment, assessmentOption, aamcMethod);
+    yield save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive);
     this.send('clearErrorDisplay');
   }),
   assessmentOptions: computed(async function(){

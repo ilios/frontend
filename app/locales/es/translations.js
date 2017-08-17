@@ -6,6 +6,7 @@
     'academicYear': 'Año Academico',
     'accountEnabled': 'Cuenta Activa',
     'actions': 'Acciones',
+    'activated': 'Activado',
     'add': 'Agregue',
     'addCohort': 'Agregar Cohorte',
     'addNew': 'Agregue Nuevo',
