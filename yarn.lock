@@ -2839,6 +2839,12 @@ ember-assign-polyfill@^2.0.1:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^1.2.0"
 
+ember-chrome-devtools@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/ember-chrome-devtools/-/ember-chrome-devtools-0.1.3.tgz#ae9ce774860f0ff0d905c5897b21a80438ca5f89"
+  dependencies:
+    ember-cli-babel "^6.0.0"
+
 ember-cli-app-version@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-3.0.0.tgz#d67a33aeec7bd03187fbe72c5663dadec4c3368a"
