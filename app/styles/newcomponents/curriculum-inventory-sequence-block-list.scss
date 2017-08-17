@@ -1,0 +1,27 @@
+.curriculum-inventory-sequence-block-list {
+  @include main-list;
+
+  .header {
+    @include main-list-box-header;
+
+    h2 {
+      @include ilios-heading;
+    }
+
+    .title {
+      @include main-list-box-header-title;
+    }
+
+    .actions {
+      @include main-list-box-header-actions;
+    }
+  }
+
+  .list {
+    @include main-list-box-table;
+
+    i {
+      margin-left: .25em;
+    }
+  }
+}

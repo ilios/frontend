@@ -21,8 +21,8 @@ test('it renders', function(assert) {
   this.render(hbs`{{curriculum-inventory-report-header report=report}}`);
   assert.equal(this.$('.title').text().trim(), report.name, 'Report name shows.');
   assert.equal(this.$('.editable').length, 1, 'Report name is editable.');
-  assert.equal(this.$(`.header-actions .finalize`).length, 1, 'Finalize button shows.');
-  assert.equal(this.$(`.header-actions .download`).length, 1, 'Download button shows.');
+  assert.equal(this.$(`.actions .finalize`).length, 1, 'Finalize button shows.');
+  assert.equal(this.$(`.actions .download`).length, 1, 'Download button shows.');
 });
 
 test('finalized reports render in read-only mode.', function(assert) {
@@ -35,8 +35,8 @@ test('finalized reports render in read-only mode.', function(assert) {
   this.render(hbs`{{curriculum-inventory-report-header report=report}}`);
   assert.equal(this.$('.title .fa-lock').length, 1, 'Lock icon is showing in title.');
   assert.equal(this.$('.editable').length, 0, 'Report name is not editable.');
-  assert.equal(this.$('.header-actions .download').length, 1, 'Download button shows.');
-  assert.equal(this.$(`.header-actions .finalize`).length, 0, 'Finalize button is not showing.');
+  assert.equal(this.$('.actions .download').length, 1, 'Download button shows.');
+  assert.equal(this.$(`.actions .finalize`).length, 0, 'Finalize button is not showing.');
 });
 
 test('change name', function(assert) {

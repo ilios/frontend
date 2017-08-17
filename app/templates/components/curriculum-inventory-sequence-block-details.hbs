@@ -1,21 +1,15 @@
-<div class='detail-view'>
-  <div class='detail-view-main-title'>
-    {{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}
+{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}
+{{#if (is-fulfilled sequenceBlock.allParents)}}
+  <div class='breadcrumbs'>
+    <span>
+      {{#link-to 'curriculumInventoryReport' sequenceBlock.report}}
+        {{t 'general.curriculumInventoryReport'}}
+      {{/link-to}}
+    </span>
+    {{#each (reverse (await sequenceBlock.allParents)) as |parent|}}
+      <span>{{#link-to 'curriculumInventorySequenceBlock' parent}}{{parent.title}}{{/link-to}}</span>
+    {{/each}}
+    <span>{{sequenceBlock.title}}</span>
   </div>
-  {{#if (is-fulfilled sequenceBlock.allParents)}}
-    <div class='breadcrumbs'>
-      <span>
-        {{#link-to 'curriculumInventoryReport' sequenceBlock.report}}
-          {{t 'general.curriculumInventoryReport'}}
-        {{/link-to}}
-      </span>
-      {{#each (reverse (await sequenceBlock.allParents)) as |parent|}}
-        <span>{{#link-to 'curriculumInventorySequenceBlock' parent}}{{parent.title}}{{/link-to}}</span>
-      {{/each}}
-      <span>{{sequenceBlock.title}}</span>
-    </div>
-  {{/if}}
-  <div class='detail-view-details'>
-    {{curriculum-inventory-sequence-block-overview sequenceBlock=sequenceBlock sortBy=sortSessionsBy setSortBy=setSortSessionBy}}
-  </div>
-</div>
+{{/if}}
+{{curriculum-inventory-sequence-block-overview sequenceBlock=sequenceBlock sortBy=sortSessionsBy setSortBy=setSortSessionBy}}

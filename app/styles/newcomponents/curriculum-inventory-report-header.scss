@@ -9,11 +9,7 @@
   }
 
   .title {
-    @include fill-parent;
-
-    @include media($large-screen) {
-      @include span-columns(8 of 12);
-    }
+    @include detail-container-title;
 
     .editable,
     h4 {
@@ -21,14 +17,7 @@
     }
   }
 
-  .header-actions {
-    @include fill-parent;
-
-    @include media($large-screen) {
-      @include span-columns(3 of 12);
-      @include shift(1);
-      @include omega;
-      text-align: right;
-    }
+  .actions {
+    @include detail-container-actions;
   }
 }

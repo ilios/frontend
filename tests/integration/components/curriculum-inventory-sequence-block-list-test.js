@@ -74,10 +74,10 @@ test('it renders with top-level sequence blocks', function(assert) {
   this.set('removeSequenceBlock', function() {});
   this.render(hbs`{{curriculum-inventory-sequence-block-list report=report remove='removeSequenceBlock'}}`);
   return wait().then(() => {
-    assert.equal(this.$('.detail-title').text().trim(), `Sequence Blocks (${blocks.length})`,
+    assert.equal(this.$('.title').text().trim(), `Sequence Blocks (${blocks.length})`,
       'Component title is correct, and show the correct number of blocks.'
     );
-    assert.equal(this.$('.detail-actions .expand-button').length, 1, 'Add new button is visible.');
+    assert.equal(this.$('.actions .expand-button').length, 1, 'Add new button is visible.');
 
     assert.equal(this.$('thead th:eq(0)').text().trim(), 'Sequence Block', 'Table column header has correct label.');
     assert.equal(this.$('thead th:eq(1)').text().trim(), 'Level', 'Table column header has correct label.');
@@ -183,10 +183,10 @@ test('it renders with nested blocks', function(assert) {
   this.set('removeSequenceBlock', function() {});
   this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent remove='removeSequenceBlock'}}`);
   return wait().then(() => {
-    assert.equal(this.$('.detail-title').text().trim(), `Sequence Blocks (${nestedBlocks.length})`,
+    assert.equal(this.$('.title').text().trim(), `Sequence Blocks (${nestedBlocks.length})`,
       'Component title is correct, and show the correct number of nested blocks.'
     );
-    assert.equal(this.$('.detail-actions .expand-button').length, 1, 'Add new button is visible.');
+    assert.equal(this.$('.actions .expand-button').length, 1, 'Add new button is visible.');
 
     assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), block1.get('title'));
     assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), academicLevel1.get('level'));
@@ -246,7 +246,7 @@ test('finalized/read-only mode', function(assert){
   this.set('removeSequenceBlock', function() {});
   this.render(hbs`{{curriculum-inventory-sequence-block-list report=report remove='removeSequenceBlock'}}`);
   return wait().then(() => {
-    assert.equal(this.$('.detail-actions .expand-button').length, 0, 'Add new button is not visible.');
+    assert.equal(this.$('.actions .expand-button').length, 0, 'Add new button is not visible.');
     assert.equal(this.$('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
     assert.equal(this.$('tbody tr:eq(0) td:eq(6) .remove').length, 0, 'Remove link is not visible.');
   });
@@ -374,7 +374,7 @@ test('empty top level blocks list', function(assert) {
   this.set('report', report);
   this.render(hbs`{{curriculum-inventory-sequence-block-list report=report}}`);
   return wait().then(() => {
-    assert.equal(this.$('.detail-title').text().trim(), `Sequence Blocks (0)`,
+    assert.equal(this.$('.title').text().trim(), `Sequence Blocks (0)`,
       'Component title is correct, and show the correct number of blocks.'
     );
     assert.equal(
@@ -423,7 +423,7 @@ test('empty nested blocks list', function(assert) {
   this.set('parent', parentBlock);
   this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent}}`);
   return wait().then(() => {
-    assert.equal(this.$('.detail-title').text().trim(), `Sequence Blocks (0)`,
+    assert.equal(this.$('.title').text().trim(), `Sequence Blocks (0)`,
       'Component title is correct, and show the correct number of blocks.'
     );
     assert.equal(

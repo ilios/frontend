@@ -1,7 +1,6 @@
 <div class="backtolink">
   {{#link-to 'curriculumInventoryReports'}}{{t 'general.backToReports'}}{{/link-to}}
 </div>
-<section class='full-width curriculum-inventory-report'>
-  {{curriculum-inventory-report-details report=model}}
-  {{liquid-outlet}}
-</section>
+
+{{curriculum-inventory-report-details report=model}}
+{{outlet}}

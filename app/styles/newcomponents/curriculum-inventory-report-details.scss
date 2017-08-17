@@ -1,4 +1,10 @@
 .curriculum-inventory-report-details {
+  @include detail-container($ilios-orange);
+
+  .title {
+    @include detail-container-title;
+  }
+
   .confirm-finalize {
     @include fill-parent;
     background-color: $remove-background-color;
