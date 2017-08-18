@@ -2853,7 +2853,7 @@ ember-ajax@^3.0.0:
   dependencies:
     ember-cli-babel "^6.0.0"
 
-ember-assign-polyfill@^2.0.1:
+ember-assign-polyfill@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.0.2.tgz#95e37513beaabc4356d56a844c742509b0b7e7f1"
   dependencies:
@@ -3659,18 +3659,18 @@ ember-font-awesome@^3.0.5:
     ember-cli-htmlbars "^1.1.1"
     font-awesome "^4.7.0"
 
-ember-froala-editor@2.6.4:
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.6.4.tgz#3c6e1c9ceae4686758eea75e51293e14df98a906"
+ember-froala-editor@2.6.5:
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.6.5.tgz#e73d8924d09467bacd9cb5e09ad9bb88fa47c6f8"
   dependencies:
     broccoli-funnel "^1.2.0"
     broccoli-merge-trees "^2.0.0"
-    ember-assign-polyfill "^2.0.1"
+    ember-assign-polyfill "^2.0.2"
     ember-cli-babel "^6.3.0"
     ember-cli-htmlbars "^2.0.1"
     ember-cli-version-checker "^2.0.0"
-    ember-string-ishtmlsafe-polyfill "^1.1.0"
-    froala-editor "~2.6.4"
+    ember-string-ishtmlsafe-polyfill "^2.0.0"
+    froala-editor "^2.6.3"
 
 ember-get-config@^0.2.2:
   version "0.2.3"
@@ -4066,6 +4066,12 @@ ember-string-ishtmlsafe-polyfill@^1.1.0:
   resolved "https://registry.yarnpkg.com/ember-string-ishtmlsafe-polyfill/-/ember-string-ishtmlsafe-polyfill-1.1.0.tgz#ecde33419ff912b91dd8acf0640eb74b9758408e"
   dependencies:
     ember-cli-babel "^5.1.7"
+    ember-cli-version-checker "^1.2.0"
+
+ember-string-ishtmlsafe-polyfill@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-string-ishtmlsafe-polyfill/-/ember-string-ishtmlsafe-polyfill-2.0.0.tgz#38f17038c3451999e9f1db748e424d8831e85863"
+  dependencies:
     ember-cli-version-checker "^1.2.0"
 
 ember-template-lint@^0.8.1:
@@ -4809,7 +4815,7 @@ fresh@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.0.tgz#f474ca5e6a9246d6fd8e0953cfa9b9c805afa78e"
 
-froala-editor@~2.6.4:
+froala-editor@^2.6.3:
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/froala-editor/-/froala-editor-2.6.5.tgz#5bbc62ad1d66a7c7558221ceba672c5100a8afd2"
   dependencies:
