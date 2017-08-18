@@ -124,6 +124,7 @@ export default {
     'curriculumInventoryReports': "Rapports d'inventaire des programmes d'études",
     'dashboard': "Tableau de Bord",
     'dateTime': "Date/Temps",
+    'deactivated': 'désactivé',
     'defaultInstructors': "Instructeurs par Défaut",
     'defaultInstructorsNotLoaded': "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)",
     'defaultLocation': "Localisation par Défaut",

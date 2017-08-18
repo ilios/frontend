@@ -124,6 +124,7 @@ export default {
     'curriculumInventoryReports': 'Curriculum Inventory Reports',
     'dashboard': 'Dashboard',
     'dateTime': 'Date/Time',
+    'deactivated': 'deactivated',
     'defaultInstructors': 'Default Instructors',
     'defaultInstructorsNotLoaded': '(Default Instructors will not be loaded: please enter desired value.)',
     'defaultLocation': 'Default Location',

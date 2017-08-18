@@ -11,12 +11,15 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (sort-by 'title' sessionTypes) as |sessionType|}}
+    {{#each (sort-by 'active:desc' 'title' sessionTypes) as |sessionType|}}
       <tr>
         <td colspan=3>
           <a class='clickable' {{action manageSessionType sessionType.id}}>
             {{sessionType.title}}
           </a>
+          {{#unless sessionType.active}}
+            <em>({{t 'general.deactivated'}})</em>
+          {{/unless}}
         </td>
         <td>{{sessionType.sessionCount}}</td>
         <td>

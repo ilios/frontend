@@ -124,6 +124,7 @@
     'curriculumInventoryReports': "Informes de Inventario de Plan de Estudios",
     'dashboard': 'Tablero',
     'dateTime': 'Fecha/Hora',
+    'deactivated': 'desactivado',
     'defaultInstructors': 'Instructores Predeterminados',
     'defaultInstructorsNotLoaded': '(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)',
     'defaultLocation': 'Ubicación Predeterminada',
