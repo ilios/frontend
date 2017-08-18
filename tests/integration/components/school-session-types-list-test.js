@@ -12,22 +12,23 @@ moduleForComponent('school-session-types-list', 'Integration | Component | schoo
 });
 
 test('it renders', async function(assert) {
-  assert.expect(12);
+  assert.expect(19);
   let assessmentOption = EmberObject.create({
     id: 1,
     name: 'formative'
   });
-  let  sessionType1 = EmberObject.create({
+  let sessionType1 = EmberObject.create({
     id: 1,
     school: 1,
-    title: 'first',
+    title: 'not needed anymore',
     assessment: false,
     assessmentOption: resolve(null),
     safeCalendarColor: htmlSafe('#ffffff'),
     sessionCount: 2,
+    active: false,
   });
 
-  let  sessionType2 = EmberObject.create({
+  let sessionType2 = EmberObject.create({
     id: 2,
     school: 1,
     title: 'second',
@@ -35,10 +36,21 @@ test('it renders', async function(assert) {
     assessmentOption: resolve(assessmentOption),
     safeCalendarColor: htmlSafe('#123456'),
     sessionCount: 0,
+    active: true,
+  });
+  let sessionType3 = EmberObject.create({
+    id: 2,
+    school: 1,
+    title: 'first',
+    assessment: false,
+    assessmentOption: resolve(null),
+    safeCalendarColor: htmlSafe('#cccccc'),
+    sessionCount: 2,
+    active: true,
   });
 
 
-  this.set('sessionTypes', [sessionType1, sessionType2]);
+  this.set('sessionTypes', [sessionType1, sessionType2, sessionType3]);
   this.set('nothing', parseInt);
   this.render(hbs`{{school-session-types-list
     sessionTypes=sessionTypes
@@ -60,13 +72,19 @@ test('it renders', async function(assert) {
   const secondAssessment = `${secondSessionType} td:eq(2) i`;
   const secondAssessmentOption = `${secondSessionType} td:eq(3)`;
   const secondColorBox = `${secondSessionType} td:eq(5) .box`;
+  const thirdSessionType = `${rows}:eq(2)`;
+  const thirdTitle = `${thirdSessionType} td:eq(0)`;
+  const thirdSessionCount = `${thirdSessionType} td:eq(1)`;
+  const thirdAssessment = `${thirdSessionType} td:eq(2) i`;
+  const thirdAssessmentOption = `${thirdSessionType} td:eq(3)`;
+  const thirdColorBox = `${thirdSessionType} td:eq(5) .box`;
 
   assert.equal(this.$(firstTitle).text().trim(), 'first');
   assert.equal(this.$(firstSessionCount).text().trim(), '2');
   assert.ok(this.$(firstAssessment).hasClass('no'));
   assert.ok(this.$(firstAssessment).hasClass('fa-ban'));
   assert.equal(this.$(firstAssessmentOption).text().trim(), '');
-  assert.equal(this.$(firstColorBox).css('background-color').trim(), ('rgb(255, 255, 255)'));
+  assert.equal(this.$(firstColorBox).css('background-color').trim(), ('rgb(204, 204, 204)'));
 
   assert.equal(this.$(secondTitle).text().trim(), 'second');
   assert.equal(this.$(secondSessionCount).text().trim(), '0');
@@ -74,6 +92,14 @@ test('it renders', async function(assert) {
   assert.ok(this.$(secondAssessment).hasClass('fa-check'));
   assert.equal(this.$(secondAssessmentOption).text().trim(), 'formative');
   assert.equal(this.$(secondColorBox).css('background-color').trim(), ('rgb(18, 52, 86)'));
+
+  assert.ok(this.$(thirdTitle).text().trim().startsWith('not needed anymore'));
+  assert.ok(this.$(thirdTitle).text().trim().endsWith('(inactive)'));
+  assert.equal(this.$(thirdSessionCount).text().trim(), '2');
+  assert.ok(this.$(thirdAssessment).hasClass('no'));
+  assert.ok(this.$(thirdAssessment).hasClass('fa-ban'));
+  assert.equal(this.$(thirdAssessmentOption).text().trim(), '');
+  assert.equal(this.$(thirdColorBox).css('background-color').trim(), ('rgb(255, 255, 255)'));
 });
 
 test('clicking edit fires action', async function(assert) {
@@ -136,6 +162,7 @@ test('session types without sessions can be deleted', async function(assert) {
     id: 1,
     school: 1,
     title: 'unlinked',
+    active: true,
     assessment: false,
     assessmentOption: resolve(null),
     calendarColor: '#fff',
@@ -149,6 +176,7 @@ test('session types without sessions can be deleted', async function(assert) {
     id: 1,
     school: 1,
     title: 'linked',
+    active: true,
     assessment: false,
     assessmentOption: resolve(null),
     calendarColor: '#fff',

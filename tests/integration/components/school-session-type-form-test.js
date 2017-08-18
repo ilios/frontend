@@ -21,6 +21,7 @@ moduleForComponent('school-session-type-form', 'Integration | Component | school
 });
 
 test('it renders', async function(assert) {
+  assert.expect(9);
   let aamcMethodMockAssessmentMethod = EmberObject.create({
     id: 'AM001',
     description: "lorem ipsum"
@@ -62,6 +63,7 @@ test('it renders', async function(assert) {
     title='one'
     calendarColor='#ffffff'
     assessment=true
+    isActive=true
     selectedAssessmentOptionId=2
     save=(action nothing)
     close=(action nothing)
@@ -80,7 +82,8 @@ test('it renders', async function(assert) {
   const assessmentInput = `${assessment} input`;
   const assessmentOption = '.item:eq(4)';
   const assessmentOptionSelect = `${assessmentOption} select`;
-
+  const isActive = '.item:eq(5)';
+  const isActiveInput = `${isActive} input`;
   await wait();
 
   assert.equal(this.$(titleInput).val().trim(), 'one', 'title is correct');
@@ -88,8 +91,9 @@ test('it renders', async function(assert) {
   assert.equal(this.$(aamcMethodOptions).length, 2, 'right number of aamcMethod options');
   assert.equal(this.$(firstAamcMethodOption).val(), '', 'first aamcMethod is blank');
   assert.equal(this.$(secondAamcMethodOption).val(), 'AM001', 'second aamcMethod is filtered correctly');
-  assert.equal(this.$(colorInput).val().trim(), '#ffffff', 'collor is correct');
+  assert.equal(this.$(colorInput).val().trim(), '#ffffff', 'color is correct');
   assert.ok(this.$(assessmentInput).is(':checked'), 'assessment is selected');
+  assert.ok(this.$(isActiveInput).is(':checked'), 'active is selected');
   assert.equal(this.$(assessmentOptionSelect).val(), '2', 'correct assessment option is selected');
 });
 
@@ -177,7 +181,7 @@ test('assessment option hidden when assessment is false', async function(assert)
   const title = '.item:eq(0)';
   const color = '.item:eq(2)';
   const assessment = '.item:eq(3)';
-  const assessmentOption = '.item:eq(4)';
+  const assessmentOption = '.item:eq(5)';
 
   await wait();
 
@@ -213,7 +217,7 @@ test('close fires action', async function(assert) {
 });
 
 test('save fires save', async function(assert) {
-  assert.expect(5);
+  assert.expect(9);
 
   const aamcMethodMock = EmberObject.create({
     id: 'AM001',
@@ -237,12 +241,13 @@ test('save fires save', async function(assert) {
   });
 
   this.set('nothing', parseInt);
-  this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod) => {
+  this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
     assert.equal(title, 'new title', 'title is correct');
     assert.equal(calendarColor, '#a1b2c3', 'color is correct');
     assert.equal(assessment, true, 'assessment is picked');
     assert.equal(assessmentOption, assessmentOptionMock, 'correct assessmentOption is sent');
     assert.equal(aamcMethod, aamcMethodMock, 'correct aamcMethod is sent');
+    assert.equal(isActive, false, 'correct isActive value is sent');
   });
   this.render(hbs`{{school-session-type-form
     title='one'
@@ -253,6 +258,7 @@ test('save fires save', async function(assert) {
     canEditCalendarColor=true
     canEditAssessment=true
     canEditAssessmentOption=true
+    isActive=true
     save=(action save)
     close=(action nothing)
   }}`);
@@ -265,14 +271,23 @@ test('save fires save', async function(assert) {
   const colorInput = `${color} input`;
   const assessmentOption = '.item:eq(4)';
   const assessmentOptionSelect = `${assessmentOption} select`;
+  const isActive = '.item:eq(5)';
+  const isActiveInput = `${isActive} input`;
+  const isActiveControl = `${isActive} .switch`;
   const button = '.done';
 
   await wait();
+
+  assert.ok(this.$(isActiveInput).is(':checked'), 'active is selected');
 
   this.$(titleInput).val('new title').change();
   this.$(aamcMethodSelect).val(aamcMethodMock.get('id')).change();
   this.$(colorInput).val('#a1b2c3').change();
   this.$(assessmentOptionSelect).val('1').change();
+
+  assert.ok(this.$(isActiveInput).is(':checked'), 'active is selected');
+  this.$(isActiveControl).click();
+  assert.notOk(this.$(isActiveInput).is(':checked'), 'active is not selected');
 
   this.$(button).click();
 
