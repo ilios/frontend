@@ -82,12 +82,12 @@
               }}
             {{/editable-field}}
             {{#unless sessionType.active}}
-              <em>({{t 'general.deactivated'}})</em>
+              <em>({{t 'general.inactive'}})</em>
             {{/unless}}
           {{else}}
             {{session.sessionType.title}}
             {{#unless sessionType.active}}
-              <em>({{t 'general.deactivated'}})</em>
+              <em>({{t 'general.inactive'}})</em>
             {{/unless}}
           {{/if}}
         </span>
