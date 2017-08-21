@@ -7,7 +7,7 @@
     expand=(action this.attrs.setCourseObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives subject=course expand=(action this.attrs.setCourseObjectiveDetails true)}}
+  {{collapsed-objectives subject=course expand=(action setCourseObjectiveDetails true)}}
 {{/if}}
 
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
