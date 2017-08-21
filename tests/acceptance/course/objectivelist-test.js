@@ -52,7 +52,7 @@ test('list objectives', function(assert) {
   }));
   fixtures.courseObjectives = [];
   fixtures.courseObjectives.pushObject(server.create('objective', {
-    courses: [1],
+    courses: [1, 2],
     parents: [1],
     meshDecriptors: [1]
   }));

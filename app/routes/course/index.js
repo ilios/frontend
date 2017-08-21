@@ -27,8 +27,9 @@ export default  Route.extend({
       store.query('session', {filters: {course}, limit: 1000}),
       store.query('offering', {filters: {courses}, limit: 1000}),
       store.query('ilm-session', {filters: {courses}, limit: 1000}),
-      store.query('objective', {filters: {courses}, limit: 1000}),
-      store.query('objective', {filters: {sessions}, limit: 1000}),
+      //temporarily disabled to fix #3173
+      // store.query('objective', {filters: {courses}, limit: 1000}),
+      // store.query('objective', {filters: {sessions}, limit: 1000}),
     ]);
   }
 });
