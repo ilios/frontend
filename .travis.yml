@@ -7,6 +7,7 @@ node_js:
 sudo: false
 
 cache:
+  yarn: true
   directories:
     - $HOME/.npm
     - $HOME/.cache
@@ -21,9 +22,12 @@ matrix:
   fast_finish: true
 
 before_install:
-  - if [[ `npm -v` != 5* ]]; then npm install -g npm@5; fi
-  - npm install -g greenkeeper-lockfile@1
-  - npm config set spin false
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+  - yarn global add greenkeeper-lockfile@1
+
+install:
+  - yarn install
 
 before_script:
   - "export DISPLAY=:99.0"
