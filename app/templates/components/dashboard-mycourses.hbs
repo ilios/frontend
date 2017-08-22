@@ -11,7 +11,14 @@
             {{#if (await canEditCourses)}}
               <tr class='clickable'>
                 <td>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.academicYear}}{{/link-to}}</td>
-                <td>{{#link-to 'course' course}}{{course.title}}{{/link-to}}</td>
+                <td>
+                  {{#link-to 'course' course}}
+                    {{course.title}}
+                    {{#if course.externalId}}
+                      ({{course.externalId}})
+                    {{/if}}
+                  {{/link-to}}
+                </td>
               </tr>
             {{else}}
               <tr>
