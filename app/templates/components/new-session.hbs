@@ -23,9 +23,9 @@
     <div class="form-label">{{t 'general.sessionType'}}:</div>
 
     <div class="form-data form-data-select form-input-row">
-      {{#if (is-fulfilled sessionTypes)}}
+      {{#if (is-fulfilled activeSessionTypes)}}
         <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
-          {{#each (sort-by 'title' (await sessionTypes)) as |sessionType|}}
+          {{#each (sort-by 'title' (await activeSessionTypes)) as |sessionType|}}
             <option value="{{sessionType.id}}" selected={{eq sessionType.id (get (await selectedSessionType) 'id')}}>
               {{sessionType.title}}
             </option>

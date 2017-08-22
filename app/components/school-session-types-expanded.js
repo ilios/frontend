@@ -30,7 +30,7 @@ export default Component.extend({
 
     return sessionType;
   }),
-  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod) {
+  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
     const store = this.get('store');
     const sessionType = store.createRecord('sessionType');
     const closeComponent = this.get('setSchoolNewSessionType');
@@ -46,6 +46,7 @@ export default Component.extend({
       assessment,
       assessmentOption,
       aamcMethods,
+      active: isActive
     });
 
     yield sessionType.save();

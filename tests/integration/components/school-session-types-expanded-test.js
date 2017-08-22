@@ -86,7 +86,7 @@ test('it renders as manager', async function(assert) {
 
   assert.equal(this.$(title).text().trim(), 'Session Types');
   assert.equal(this.$(sessionTypeTitle).text().trim(), 'one');
-  assert.equal(this.$(items).length, 5);
+  assert.equal(this.$(items).length, 6);
 });
 
 test('editing session type fires action', async function(assert) {
@@ -125,7 +125,7 @@ test('clicking expand new session fires action', async function(assert) {
     expand=(action nothing)
     managedSessionTypeId=null
     setSchoolManagedSessionType=(action nothing)
-	setSchoolNewSessionType=(action click)
+  setSchoolNewSessionType=(action click)
   }}`);
   await wait();
 

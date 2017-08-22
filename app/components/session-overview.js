@@ -70,9 +70,17 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   sortTypes: ['title'],
   sessionTypes: [],
   sessionType: null,
-  sortedSessionTypes: sort('sessionTypes', 'sortTypes'),
+  sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   showCheckLink: true,
   isSaving: false,
+
+  filteredSessionTypes: computed('sessionTypes.[]', function() {
+    const selectedSessionType = this.get('sessionType');
+    const selectedSessionTypeId = isEmpty(selectedSessionType) ? -1 : selectedSessionType.get('id');
+    return this.get('sessionTypes').filter(sessionType => {
+      return (sessionType.get('active') || sessionType.get('id') === selectedSessionTypeId);
+    });
+  }),
 
   showCopy: computed('currentUser', 'routing.currentRouteName', function(){
     return new Promise(resolve => {

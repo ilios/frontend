@@ -41,6 +41,13 @@ const PrepositionObject = EmberObject.extend({
         resolve(model.get('title'));
       }
     });
+  }),
+  active: computed('model', 'type', function() {
+    const type = this.get('type');
+    if (type === 'session type') {
+      return this.get('model').get('active');
+    }
+    return true;
   })
 });
 
@@ -143,7 +150,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return await map(values, async obj => {
       const label = await obj.get('label');
       const value = obj.get('value');
-      return {value, label};
+      const active = obj.get('active');
+      return {value, label, active};
     });
   }),
 

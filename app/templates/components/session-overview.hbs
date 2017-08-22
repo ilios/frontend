@@ -81,8 +81,14 @@
                 update=(action "setSessionType")
               }}
             {{/editable-field}}
+            {{#unless sessionType.active}}
+              <em>({{t 'general.inactive'}})</em>
+            {{/unless}}
           {{else}}
-            {{session.sessionType.title}}&nbsp;
+            {{session.sessionType.title}}
+            {{#unless sessionType.active}}
+              <em>({{t 'general.inactive'}})</em>
+            {{/unless}}
           {{/if}}
         </span>
       </div>

@@ -27,7 +27,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   selectedSessionTypeId: null,
   isSaving: false,
 
-  selectedSessionType: computed('sessionTypes.[]', 'selectedSessionTypeId', function(){
+  activeSessionTypes: computed('sessionTypes.[]', async function() {
+    const sessionTypes = await this.get('sessionTypes');
+    return sessionTypes.filterBy('active', true);
+  }),
+
+  selectedSessionType: computed('activeSessionTypes.[]', 'selectedSessionTypeId', function(){
     return new Promise(resolve => {
       let selectedSessionType;
       this.get('sessionTypes').then(sessionTypes => {
