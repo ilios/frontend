@@ -70,7 +70,12 @@
               {{#each (await courses) as |course|}}
                 <li class='clickable'>
                   <input {{action 'toggleCourse' course on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourses course}}>
-                  <span {{action 'toggleCourse' course}} class="list-indentation">{{course.title}}</span>
+                  <span {{action 'toggleCourse' course}} class="list-indentation">
+                    {{course.title}}
+                    {{#if course.externalId}}
+                      ({{course.externalId}})
+                    {{/if}}
+                  </span>
                 </li>
               {{/each}}
             </ul>
