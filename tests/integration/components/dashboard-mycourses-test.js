@@ -8,9 +8,31 @@ const { getOwner, Object:EmberObject, run, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let mockCourses = [
-  EmberObject.create({title: 'first', level: 4, academicYear: '2012-2013', locked: false, archived: false}),
-  EmberObject.create({title: 'second', level: 1, academicYear: '2013-2014', locked: false, archived: false}),
-  EmberObject.create({title: 'third', level: 1, academicYear: '2012-2013', locked: false, archived: false}),
+  EmberObject.create({
+    title: 'first',
+    level: 4,
+    academicYear: '2012-2013',
+    locked: false,
+    archived: false,
+    externalId: 'ABC123'
+  }),
+  EmberObject.create({
+    title: 'second',
+    level: 1,
+    academicYear: '2013-2014',
+    locked: false,
+    archived: false,
+    externalId: null
+  }),
+  EmberObject.create({
+    title: 'third',
+    level: 1,
+    academicYear: '2012-2013',
+    locked: false,
+    archived: false,
+    externalId: null
+
+  }),
 ];
 
 let currentUserMock = Service.extend({
@@ -42,7 +64,7 @@ moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard m
 });
 
 test('list courses for privileged users', async function(assert) {
-  assert.expect(8);
+  assert.expect(9);
   this.register('service:currentUser', currentUserMock);
   this.render(hbs`{{dashboard-mycourses}}`);
   const header = '.dashboard-block-header';
@@ -52,11 +74,11 @@ test('list courses for privileged users', async function(assert) {
   for(let i = 0; i < 2; i++){
     let a = this.$(`table a:eq(${i})`);
     assert.equal(a.length, 1);
-    let tds = this.$(`table tr:eq(${i}) td`);
-    assert.equal(tds.eq(0).text().trim(), mockCourses[i].academicYear);
-    assert.equal(tds.eq(1).text().trim(), mockCourses[i].title);
+    let links = this.$(`table tr:eq(${i}) td`);
+    assert.equal(links.eq(0).text().trim(), mockCourses[i].academicYear);
+    assert.ok(links.eq(1).text().trim().startsWith(mockCourses[i].title));
   }
-
+  assert.ok(this.$('table tr:eq(0) td:eq(1)').text().trim().endsWith('(' + mockCourses[0].externalId + ')'));
   assert.equal(this.$(`table tr`).length, 3);
 
 });
