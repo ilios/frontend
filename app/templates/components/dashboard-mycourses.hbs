@@ -14,10 +14,10 @@
                 <td>
                   {{#link-to 'course' course}}
                     {{course.title}}
+                    {{# if course.externalId}}
+                      ({{course.externalId}})
+                    {{/if}}
                   {{/link-to}}
-                  {{# if course.externalId}}
-                    ({{course.externalId}})
-                  {{/if}}
                 </td>
               </tr>
             {{else}}
