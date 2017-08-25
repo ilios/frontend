@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Table from 'ember-light-table';
 import escapeRegExp from '../utils/escape-reg-exp';
+import { task, timeout } from 'ember-concurrency';
 
 const { Component, computed, isEmpty } = Ember;
 
@@ -8,6 +9,7 @@ export default Component.extend({
   classNames: ['session-table'],
   sortBy: null,
   filterBy: null,
+  filterByLocalCache: null,
   sessions: null,
 
   table: computed('sortedSessions.[]', 'columns.[]', function(){
@@ -142,14 +144,27 @@ export default Component.extend({
 
     return { column, descending, sortBy };
   }),
+  filterByDebounced: computed('filterByLocalCache', 'filterBy', function(){
+    const filterBy = this.get('filterBy');
+    const filterByLocalCache = this.get('filterByLocalCache');
+    const changeFilterBy = this.get('changeFilterBy');
+
+    if (changeFilterBy.get('isIdle')) {
+      return filterBy;
+    }
+
+    return filterByLocalCache;
+  }),
+
+  changeFilterBy: task(function * (value){
+    const setFilterBy = this.get('setFilterBy');
+    const clean = escapeRegExp(value);
+    this.set('filterByLocalCache', clean);
+    yield timeout(250);
+    setFilterBy(clean);
+  }).restartable(),
 
   actions: {
-    cleanFilter(str){
-      const setFilterBy = this.get('setFilterBy');
-      const clean = escapeRegExp(str);
-      this.set('filterBy', clean);
-      setFilterBy(clean);
-    },
     columnClicked(column){
       const what = column.get('valuePath');
       const direction = column.ascending ? '' : ':desc';
