@@ -17,10 +17,27 @@
   {{#t.body
     canExpand=false
     canSelect=false
+    rowComponent=(component 'removeable-row')
     as |body|
   }}
     {{#body.expanded-row as |row|}}
-      {{#if (gt row.offeringCount 0)}}
+      {{#if row.confirmDelete}}
+        <div class='confirm-removal'>
+          <p>
+            {{t 'general.confirmSessionRemoval'}}
+            <div class="confirm-buttons">
+              <button {{action (perform removeSession row.session)}} class='remove {{if removeSession.isIdle "clickable"}}'>
+                {{#if removeSession.isRunning}}
+                  {{fa-icon 'spinner' spin=true}}
+                {{else}}
+                  {{t 'general.yes'}}
+                {{/if}}
+              </button>
+              <button {{action 'cancelRemove' row}} class='done text'>{{t 'general.cancel'}}</button>
+            </div>
+          </p>
+        </div>
+      {{else if (gt row.offeringCount 0)}}
         {{session-offerings-list session=row.session editable=false}}
       {{else}}
         <p>{{t 'general.noOfferings'}}</p>

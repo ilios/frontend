@@ -280,3 +280,22 @@ test('title filter escapes regex', async function(assert) {
   await fillIn(titleFilter, '\\');
   assert.equal(find(sessions).length, 0);
 });
+
+test('delete session', async function(assert) {
+  await visit(url);
+  const table = '.session-table table';
+  const rows = `${table} tbody tr`;
+  const firstTitle = `${rows}:eq(0) td:eq(1)`;
+  const secondTitle = `${rows}:eq(1) td:eq(1)`;
+  const deleteAction = `${rows}:eq(0) td:eq(7) i.fa-trash`;
+  const confirmDelete = `.confirm-removal button.remove`;
+
+  assert.equal(find(rows).length, 4);
+  assert.equal(getElementText(firstTitle), getText('session0'));
+  assert.equal(getElementText(secondTitle), getText('session1'));
+  await click(deleteAction);
+  await click(confirmDelete);
+
+  assert.equal(find(rows).length, 3);
+  assert.equal(getElementText(firstTitle), getText('session1'));
+});

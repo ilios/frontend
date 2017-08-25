@@ -82,8 +82,15 @@ export default Component.extend({
       align: 'center',
       breakpoints: ['mediumScreen', 'largeScreen', 'giantScreen'],
     };
+    const actions = {
+      cellComponent: 'session-table-actions',
+      width: '40px',
+      sortable: false,
+      align: 'center',
+      breakpoints: ['smallScreen', 'mediumScreen', 'largeScreen', 'giantScreen'],
+    };
 
-    let columns =  [expand, title, type, groups, firstOffering, offerings, status];
+    let columns =  [expand, title, type, groups, firstOffering, offerings, status, actions];
 
     let sortColumn = columns.findBy('valuePath', sortInfo.column);
     sortColumn.sorted = true;
@@ -155,7 +162,7 @@ export default Component.extend({
 
     return filterByLocalCache;
   }),
-
+  
   changeFilterBy: task(function * (value){
     const setFilterBy = this.get('setFilterBy');
     const clean = escapeRegExp(value);
@@ -163,12 +170,27 @@ export default Component.extend({
     yield timeout(250);
     setFilterBy(clean);
   }).restartable(),
+  
+  removeSession: task(function * (session){
+    session.deleteRecord();
+    yield session.save();
+  }).drop(),
 
   actions: {
     columnClicked(column){
-      const what = column.get('valuePath');
-      const direction = column.ascending ? '' : ':desc';
-      this.get('setSortBy')(`${what}${direction}`);
+      if (column.get('sortable')) {
+        const what = column.get('valuePath');
+        const direction = column.ascending ? '' : ':desc';
+        this.get('setSortBy')(`${what}${direction}`);
+      }
+    },
+    remove(session){
+      session.deleteRecord();
+      session.save();
+    },
+    cancelRemove(row){
+      row.set('confirmDelete', false);
+      row.set('expanded', false);
     },
   }
 });
