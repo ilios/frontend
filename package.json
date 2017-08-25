@@ -42,7 +42,7 @@
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.14.0",
     "ember-tether": "^0.4.1",
-    "ilios-common": "1.6.1",
+    "ilios-common": "1.7.0",
     "loader.js": "^4.2.3"
   },
   "engines": {
