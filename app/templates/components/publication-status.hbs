@@ -1,21 +1,7 @@
 {{#if showIcon}}
-  {{#if isScheduled}}
-    {{fa-icon 'clock-o'}}
-  {{else}}
-    {{#if isPublished}}
-      {{fa-icon 'star'}}
-    {{else}}
-      {{fa-icon 'star-half-full'}}
-    {{/if}}
-  {{/if}}
+  {{fa-icon iconKey title=(t textKey)}}
 {{/if}}
 
-{{#if isScheduled}}
-  {{t scheduledLangKey}}
-{{else}}
-  {{#if isPublished}}
-    {{t publishedLangKey}}
-  {{else}}
-    {{t notPublishedLangKey}}
-  {{/if}}
+{{#if showText}}
+  {{t textKey}}
 {{/if}}

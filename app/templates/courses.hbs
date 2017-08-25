@@ -40,7 +40,7 @@
       </div>
     </div>
     <section class='new'>
-      {{#if showNewCourseForm}}
+      {{#if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
         {{new-course
           currentSchool=selectedSchool
           currentYear=selectedYear

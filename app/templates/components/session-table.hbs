@@ -1,0 +1,31 @@
+<div class="filter">
+  {{one-way-input
+    value=filterBy
+    update=(action 'cleanFilter')
+    placeholder=(t 'general.sessionTitleFilterPlaceholder')
+  }}
+</div>
+{{#light-table table height=height responsive=true as |t|}}
+  {{t.head
+    onColumnClick=(action 'columnClicked')
+    iconAscending='fa fa-sort-asc'
+    iconDescending='fa fa-sort-desc'
+    iconSortable='fa fa-sort'
+    fixed=true
+  }}
+
+  {{#t.body
+    canExpand=false
+    canSelect=false
+    as |body|
+  }}
+    {{#body.expanded-row as |row|}}
+      {{#if (gt row.offeringCount 0)}}
+        {{session-offerings-list session=row.session editable=false}}
+      {{else}}
+        <p>{{t 'general.noOfferings'}}</p>
+      {{/if}}
+    {{/body.expanded-row}}
+  {{/t.body}}
+
+{{/light-table}}

@@ -1,50 +1,44 @@
-<div class="new-result-title">{{t 'general.newSession'}}</div>
+<div class="title">{{t 'general.newSession'}}</div>
 
-<div class="detail-content">
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.title'}}:</div>
+<div class="new-session-content">
+  <div class="item">
+    <label>{{t 'general.title'}}:</label>
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      onenter=(perform saveNewSession)
+      onescape=(action cancel)
+      focusOut=(action 'addErrorDisplayFor' 'title')
+      class=(if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  </div>
 
-    <div class="form-data form-data-text form-input-row">
-      {{one-way-input
-        value=title
-        update=(action (mut title))
-        onenter=(action 'save')
-        onescape=(action this.attrs.cancel)
-        focusOut=(action 'addErrorDisplayFor' 'title')
-        class=(if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error')
-      }}
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-      {{/if}}
-    </div>
-  </label>
+  <div class="item">
+    <label>{{t 'general.sessionType'}}:</label>
+    {{#if (is-fulfilled activeSessionTypes)}}
+      <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
+        {{#each (sort-by 'title' (await activeSessionTypes)) as |sessionType|}}
+          <option value="{{sessionType.id}}" selected={{eq sessionType.id (get (await selectedSessionType) 'id')}}>
+            {{sessionType.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      {{fa-icon 'spinner' spin=true}}
+    {{/if}}
+  </div>
 
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.sessionType'}}:</div>
-
-    <div class="form-data form-data-select form-input-row">
-      {{#if (is-fulfilled activeSessionTypes)}}
-        <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
-          {{#each (sort-by 'title' (await activeSessionTypes)) as |sessionType|}}
-            <option value="{{sessionType.id}}" selected={{eq sessionType.id (get (await selectedSessionType) 'id')}}>
-              {{sessionType.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{fa-icon 'spinner' spin=true}}
-      {{/if}}
-    </div>
-  </label>
-
-  <div class="form-col-6 form-data-submit">
-    <button class='done text' {{action 'save'}}>
-      {{#if isSaving}}
+  <div class="buttons">
+    <button class='done text' {{action (perform saveNewSession)}}>
+      {{#if saveNewSession.isRunning}}
         {{fa-icon 'spinner' spin=true}}
       {{else}}
         {{t 'general.save'}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+    <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
   </div>
 </div>

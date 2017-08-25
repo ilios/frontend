@@ -1,0 +1,42 @@
+.session-table {
+  margin-bottom: 2em;
+  padding: 1em;
+
+  .filter {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+
+    @include media($large-screen) {
+      text-align: right;
+    }
+
+    input {
+      width: 90%;
+      @include media($large-screen) {
+        width: 300px;
+      }
+    }
+  }
+
+  table {
+    tr,
+    td {
+      padding: .25em .5em;
+    }
+
+    .lt-head {
+      background-color: $header-blue;
+      color: $white;
+    }
+
+    tbody {
+      .session-table-expand {
+        i {
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+
+}

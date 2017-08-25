@@ -9,15 +9,45 @@ export default Component.extend({
   notPublishedLangKey: 'general.notPublished',
 
   showIcon: true,
+  showText: true,
   tagName: 'span',
   classNameBindings: [
     ':status',
     'publicationStatus'
   ],
+  textKey: computed('publishedLangKey', 'scheduledLangKey',  'notPublishedLangKey', 'isPublished', 'isScheduled', function(){
+    const isPublished = this.get('isPublished');
+    const isScheduled = this.get('isScheduled');
+    const publishedLangKey = this.get('publishedLangKey');
+    const scheduledLangKey = this.get('scheduledLangKey');
+    const notPublishedLangKey = this.get('notPublishedLangKey');
+    if (isScheduled) {
+      return scheduledLangKey;
+    }
+    if (isPublished) {
+      return publishedLangKey;
+    }
+
+    return notPublishedLangKey;
+  }),
+  iconKey: computed('isPublished', 'isScheduled', function(){
+    const isPublished = this.get('isPublished');
+    const isScheduled = this.get('isScheduled');
+    if (isScheduled) {
+      return 'clock-o';
+    }
+    if (isPublished) {
+      return 'star';
+    }
+
+    return 'star-half-full';
+  }),
   publicationStatus: computed('isPublished', 'isScheduled', function(){
-    if(this.get('isScheduled')){
+    const isPublished = this.get('isPublished');
+    const isScheduled = this.get('isScheduled');
+    if(isScheduled){
       return 'scheduled';
-    } else if (this.get('isPublished')){
+    } else if (isPublished){
       return 'published';
     }
 
