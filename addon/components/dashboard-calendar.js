@@ -128,7 +128,6 @@ export default Component.extend({
               school: school.get('id'),
               year: year.get('title')
             },
-            limit: 1000
           }).then((courses) => {
             resolve(courses.sortBy('title'));
           });

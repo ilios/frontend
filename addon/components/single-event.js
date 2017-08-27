@@ -118,7 +118,6 @@ export default Component.extend(SortableByPosition, {
           filters: {
             course: course.get('id')
           },
-          limit: 1000
         }).then((courseLearningMaterials) => {
           let sortedMaterials = courseLearningMaterials.toArray().sort(this.positionSortingCallback);
           map(sortedMaterials, clm => {
@@ -198,7 +197,6 @@ export default Component.extend(SortableByPosition, {
           filters: {
             session: session.get('id')
           },
-          limit: 1000
         }).then((sessionLearningMaterials) => {
           let sortedMaterials = sessionLearningMaterials.toArray().sort(this.positionSortingCallback);
           map(sortedMaterials, slm => {

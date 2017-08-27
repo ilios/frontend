@@ -29,7 +29,6 @@ export default Model.extend({
         filters: {
           schools: [this.get('id')]
         },
-        limit: 1000
       });
     }
   }).readOnly(),

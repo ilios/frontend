@@ -22,7 +22,6 @@ export default RESTAdapter.extend(DataAdapterMixin, {
     return this.ajax(url, 'GET', {
       data: {
         filters: { id: ids },
-        limit: 1000000
       }
     });
   },
