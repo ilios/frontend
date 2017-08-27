@@ -35,7 +35,6 @@ export default Controller.extend({
     return new Promise(resolve => {
       let school = this.get('selectedSchool');
       this.get('store').query('pending-user-update', {
-        limit: 1000,
         filters: {
           schools: [school.get('id')]
         }

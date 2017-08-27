@@ -24,13 +24,13 @@ export default  Route.extend({
     }
 
     return all([
-      store.query('session', {filters: {course}, limit: 1000}),
-      store.query('offering', {filters: {courses}, limit: 1000}),
-      store.query('ilm-session', {filters: {courses}, limit: 1000}),
+      store.query('session', {filters: {course}}),
+      store.query('offering', {filters: {courses}}),
+      store.query('ilm-session', {filters: {courses}}),
       //temporarily disabled to fix #3173
-      // store.query('objective', {filters: {courses}, limit: 1000}),
-      // store.query('objective', {filters: {sessions}, limit: 1000}),
-      store.query('session-type', {filters: {sessions}, limit: 1000}),
+      // store.query('objective', {filters: {courses}}),
+      // store.query('objective', {filters: {sessions}}),
+      store.query('session-type', {filters: {sessions}}),
     ]);
   },
   queryParams: {

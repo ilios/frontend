@@ -54,10 +54,8 @@ test('it renders', function(assert) {
   ];
 
   storeMock.reopen({
-    query(what, {filters, limit}){
-
+    query(what, {filters}){
       assert.equal('cohort', what);
-      assert.equal(1000, limit);
       assert.equal(1, filters.schools[0]);
       return resolve([cohort]);
     }

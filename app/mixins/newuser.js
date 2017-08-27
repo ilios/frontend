@@ -92,8 +92,7 @@ export default Mixin.create(ValidationErrorDisplay, {
     let cohorts = yield this.get('store').query('cohort', {
       filters: {
         schools: [school.get('id')],
-      },
-      limit: 1000,
+      }
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.

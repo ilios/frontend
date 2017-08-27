@@ -72,7 +72,6 @@ export default Component.extend({
     const store = this.get('store');
     const school = await this.get('selectedSchool');
     const updates = await store.query('pending-user-update', {
-      limit: 1000,
       filters: {
         schools: [school.get('id')]
       }
