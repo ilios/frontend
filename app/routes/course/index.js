@@ -27,9 +27,8 @@ export default  Route.extend({
       store.query('session', {filters: {course}}),
       store.query('offering', {filters: {courses}}),
       store.query('ilm-session', {filters: {courses}}),
-      //temporarily disabled to fix #3173
-      // store.query('objective', {filters: {courses}}),
-      // store.query('objective', {filters: {sessions}}),
+      store.query('objective', {filters: {courses}}),
+      store.query('objective', {filters: {sessions}}),
       store.query('session-type', {filters: {sessions}}),
     ]);
   },
