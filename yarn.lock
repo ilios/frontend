@@ -3583,9 +3583,9 @@ ember-d3@0.3.3:
     ember-cli-babel "^5.1.6"
     recast "^0.11.13"
 
-ember-data@~2.14.6:
+ember-data@jrjohnson/data#release:
   version "2.14.10"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.14.10.tgz#acf66ffffb062a7fc999f9d989d0e0d2e3858cd3"
+  resolved "https://codeload.github.com/jrjohnson/data/tar.gz/d62ae1a34b5e6393b1c1e5a3332862a2574aa882"
   dependencies:
     amd-name-resolver "0.0.7"
     babel-plugin-feature-flags "^0.3.1"
