@@ -1,0 +1,31 @@
+.user-profile-calendar {
+  @include fill-parent;
+  @include omega;
+  border: 1px solid $black;
+  border-radius: 5px;
+  box-sizing: border-box;
+  clear: both;
+  margin-bottom: 1em;
+  min-height: 5em;
+  padding: .25em 2em .75em;
+  position: relative;
+
+  h2 {
+    @include ilios-heading;
+    font-size: 1.25 * $base-font-size;
+    margin-bottom: 1em;
+  }
+
+  .loding-indicator {
+    @include ilios-heading-h1;
+    left: 4em;
+    opacity: 75;
+    position: absolute;
+    top: 5em;
+    transition: all .5s ease-in-out;
+
+    &.loaded {
+      opacity: 0;
+    }
+  }
+}
