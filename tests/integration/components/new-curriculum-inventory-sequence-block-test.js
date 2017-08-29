@@ -22,7 +22,7 @@ moduleForComponent('new-curriculum-inventory-sequence-block', 'Integration | Com
 });
 
 test('it renders', function(assert) {
-  assert.expect(75);
+  assert.expect(74);
   let school = EmberObject.create({ id() { return 1; }});
   let academicLevels = [];
   for (let i = 0; i < 10; i++) {
@@ -45,13 +45,12 @@ test('it renders', function(assert) {
   });
 
   storeMock.reopen({
-    query(what, {limit, filters}){
+    query(what, {filters}){
       assert.equal(what, 'course', 'Store is queried for courses.');
       assert.equal(filters.school.length, 1, 'One school id was passed.');
       assert.equal(filters.school[0], school.id(), 'The correct school id was passed.');
       assert.equal(filters.year, report.get('year'), 'The correct year was passed.');
       assert.equal(filters.published, true, 'The correct published value was passed.');
-      assert.equal(limit, 10000, 'The correct record limit was passed.');
       return resolve([course1, course2, course3 ]);
     },
   });

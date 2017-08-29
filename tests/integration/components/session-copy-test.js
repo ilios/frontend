@@ -40,11 +40,10 @@ test('it renders', function(assert) {
   });
 
   let storeMock = Service.extend({
-    query(what, {limit, filters}){
+    query(what, {filters}){
       assert.equal(what, 'course');
       assert.equal(filters.school, 1);
       assert.equal(filters.year, lastYear);
-      assert.equal(limit, 10000);
 
       return [course1, course2];
     },

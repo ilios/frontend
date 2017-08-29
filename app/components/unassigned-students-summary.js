@@ -42,7 +42,6 @@ export default Component.extend({
     return new Promise(resolve => {
       this.get('selectedSchool').then(school => {
         this.get('store').query('user', {
-          limit: 1000,
           filters: {
             roles: [4],
             school: school.get('id'),

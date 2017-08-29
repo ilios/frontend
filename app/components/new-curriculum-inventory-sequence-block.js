@@ -168,8 +168,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             school: [schoolId],
             published: true,
             year: report.get('year'),
-          },
-          limit: 10000
+          }
         }).then(allLinkableCourses => {
           report.get('linkedCourses').then(linkedCourses => {
             // Filter out all courses that are linked to (sequence blocks in) this report.

@@ -130,7 +130,6 @@ export default Component.extend({
             course: course.get('id'),
             published: true
           },
-          limit: 10000,
         }).then(sessions => {
           // filter out ILM sessions
           let filteredSessions = sessions.toArray().filter(function(session) {
@@ -162,7 +161,6 @@ export default Component.extend({
             published: true,
             year: report.get('year'),
           },
-          limit: 10000
         }).then(allLinkableCourses => {
           report.get('linkedCourses').then(linkedCourses => {
             // Filter out all courses that are linked to (sequence blocks in) this report.

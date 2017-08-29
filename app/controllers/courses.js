@@ -51,8 +51,7 @@ export default Controller.extend({
             school: schoolId,
             year: yearTitle,
             archived: false
-          },
-          limit: 500
+          }
         }).then(courses => {
           resolve(courses.toArray());
         });

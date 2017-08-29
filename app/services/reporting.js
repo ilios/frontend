@@ -56,19 +56,6 @@ export default Service.extend({
       filters: {}
     };
 
-    /**
-     * EXTRAWURST!
-     * For reports targeting users and MeSH terms as their primary subjects,
-     * explicitly do not limit on the returned result record.
-     * Otherwise, unintentional truncation will occur due to query construction on the server side.
-     * [ST 2016/03/31]
-     */
-    if (subject === 'instructor' || subject === 'mesh term') {
-      query.limit = 0;
-    } else {
-      query.limit = 1000;
-    }
-
     if(object && objectId){
       let what = pluralize(object.camelize());
       if(object === 'mesh term'){

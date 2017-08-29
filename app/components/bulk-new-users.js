@@ -98,7 +98,7 @@ export default Component.extend(NewUser, {
   existingUsernames(){
     const store = this.get('store');
     return new Promise(resolve => {
-      store.query('authentication', {limit: 10000000}).then(authentications => {
+      store.query('authentication').then(authentications => {
         resolve(authentications.mapBy('username'));
       });
     });

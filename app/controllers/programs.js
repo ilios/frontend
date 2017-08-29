@@ -88,8 +88,7 @@ export default Controller.extend({
         this.get('store').query('program', {
           filters: {
             school: schoolId
-          },
-          limit: 500
+          }
         }).then(programs => {
           defer.resolve(programs);
         });

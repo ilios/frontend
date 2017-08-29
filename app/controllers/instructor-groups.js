@@ -29,8 +29,7 @@ export default Controller.extend({
       this.get('store').query('instructor-group', {
         filters: {
           school: schoolId
-        },
-        limit: 500
+        }
       }).then(instructorGroups => {
         defer.resolve(instructorGroups);
       });
