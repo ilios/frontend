@@ -96,7 +96,7 @@ test('clicking forward goes to next week', async function(assert) {
   await wait();
 });
 
-test('clicking forward goes to next week', async function(assert) {
+test('clicking backward goes to last week', async function(assert) {
   assert.expect(2);
   let called = 0;
   commonAjaxMock.reopen({
