@@ -1,4 +1,6 @@
 {{#unless loadAttrsFromOffering.isRunning}}
+  {{offering-calendar startDate=startDate endDate=endDate learnerGroups=learnerGroups session=session}}
+
   <div class='item start-date'>
     <label>{{t 'general.startDate'}}:</label>
     {{pikaday-input value=startDate onSelection=(action 'updateStartDate') format='M/D/YYYY'}}
