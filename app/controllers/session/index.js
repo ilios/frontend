@@ -15,13 +15,4 @@ export default Controller.extend({
   isManagingLearnerGroups: false,
   sessionLearnergroupDetails: false,
   showNewOfferingForm: false,
-
-  actions: {
-    setSessionOffset(offset){
-      this.set('sessionOffset', offset);
-    },
-    setSessionLimit(limit){
-      this.set('sessionLimit', limit);
-    },
-  }
 });
