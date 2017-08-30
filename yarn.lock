@@ -1405,7 +1405,7 @@ broccoli-autoprefixer@^5.0.0:
     broccoli-persistent-filter "^1.1.6"
     postcss "^6.0.1"
 
-broccoli-babel-transpiler@^5.6.2:
+broccoli-babel-transpiler@^5.5.0, broccoli-babel-transpiler@^5.6.2:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-5.7.2.tgz#756c30544775144e984333b7115f42c916ba08e0"
   dependencies:
@@ -1668,7 +1668,7 @@ broccoli-merge-trees@^0.2.1:
     debug "^2.2.0"
     symlink-or-copy "^1.0.0"
 
-broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.1, broccoli-merge-trees@^1.1.2, broccoli-merge-trees@^1.2.4:
+broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.1, broccoli-merge-trees@^1.1.2, broccoli-merge-trees@^1.2.1, broccoli-merge-trees@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-1.2.4.tgz#a001519bb5067f06589d91afa2942445a2d0fdb5"
   dependencies:
@@ -1730,6 +1730,13 @@ broccoli-plugin@^1.0.0, broccoli-plugin@^1.1.0, broccoli-plugin@^1.2.0, broccoli
     quick-temp "^0.1.3"
     rimraf "^2.3.4"
     symlink-or-copy "^1.1.8"
+
+broccoli-rollup@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/broccoli-rollup/-/broccoli-rollup-0.0.4.tgz#d23b2ef8fbd80e85dbb47d350fdab72902cd17c4"
+  dependencies:
+    broccoli-caching-writer "^2.2.0"
+    rollup "^0.26.2"
 
 broccoli-rollup@^1.2.0:
   version "1.3.0"
@@ -1816,7 +1823,7 @@ broccoli-templater@^1.0.0:
     broccoli-stew "^1.2.0"
     lodash.template "^3.3.2"
 
-broccoli-uglify-sourcemap@^1.0.0:
+broccoli-uglify-sourcemap@^1.0.0, broccoli-uglify-sourcemap@^1.5.1:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/broccoli-uglify-sourcemap/-/broccoli-uglify-sourcemap-1.5.2.tgz#04f84ab0db539031fa868ccfa563c9932d50cedb"
   dependencies:
@@ -2131,6 +2138,10 @@ cliui@^3.2.0:
 clone@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/clone/-/clone-0.2.0.tgz#c6126a90ad4f72dbf5acdb243cc37724fe93fc1f"
+
+clone@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.2.tgz#260b7a99ebb1edfe247538175f783243cb19d149"
 
 clone@^2.0.0:
   version "2.1.1"
@@ -3954,6 +3965,41 @@ ember-scrollable@^0.4.7:
     ember-element-resize-detector "0.1.5"
     ember-lifeline "^1.0.4"
 
+ember-service-worker-asset-cache@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/ember-service-worker-asset-cache/-/ember-service-worker-asset-cache-0.6.1.tgz#48faa17ec49fd2444b36dbb354b8cf44cca557a7"
+  dependencies:
+    broccoli-filter "^1.2.3"
+    broccoli-merge-trees "1.1.1"
+    broccoli-plugin "^1.3.0"
+    ember-cli-babel "^5.1.6"
+    glob "^7.1.1"
+
+ember-service-worker-index@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/ember-service-worker-index/-/ember-service-worker-index-0.6.2.tgz#9b2d4a344c56ae74f50863a7213e00b8cb9db657"
+  dependencies:
+    broccoli-merge-trees "^1.2.1"
+    broccoli-plugin "^1.3.0"
+
+ember-service-worker@^0.6.8:
+  version "0.6.8"
+  resolved "https://registry.yarnpkg.com/ember-service-worker/-/ember-service-worker-0.6.8.tgz#2a8de37c46e54b3ef2467a54577c25699113c9a8"
+  dependencies:
+    broccoli-babel-transpiler "^5.5.0"
+    broccoli-file-creator "^1.1.1"
+    broccoli-funnel "^1.0.3"
+    broccoli-merge-trees "1.1.1"
+    broccoli-plugin "^1.3.0"
+    broccoli-rollup "0.0.4"
+    broccoli-uglify-sourcemap "^1.5.1"
+    clone "^1.0.2"
+    ember-cli-babel "^5.1.6"
+    exists-sync "0.0.3"
+    glob "^7.1.1"
+    hash-for-dep "^1.0.2"
+    rollup-plugin-replace "^1.1.1"
+
 ember-simple-auth-token@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ember-simple-auth-token/-/ember-simple-auth-token-2.1.0.tgz#0b48cf643638816632f5d4d1e500adec0a2dc100"
@@ -4407,6 +4453,10 @@ estraverse@^1.9.1:
 estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1, estraverse@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.2.0.tgz#0dee3fed31fcd469618ce7342099fc1afa0bdb13"
+
+estree-walker@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.2.1.tgz#bdafe8095383d8414d5dc2ecf4c9173b6db9412e"
 
 esutils@^2.0.0, esutils@^2.0.2:
   version "2.0.2"
@@ -6316,6 +6366,12 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+magic-string@^0.15.2:
+  version "0.15.2"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.15.2.tgz#0681d7388741bbc3addaa65060992624c6c09e9c"
+  dependencies:
+    vlq "^0.2.1"
+
 make-dir@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.0.0.tgz#97a011751e91dd87cfadef58832ebb04936de978"
@@ -7491,6 +7547,29 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
+rollup-plugin-replace@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-replace/-/rollup-plugin-replace-1.1.1.tgz#396315ded050a6ce43b9518a886a3f60efb1ea33"
+  dependencies:
+    magic-string "^0.15.2"
+    minimatch "^3.0.2"
+    rollup-pluginutils "^1.5.0"
+
+rollup-pluginutils@^1.5.0:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-1.5.2.tgz#1e156e778f94b7255bfa1b3d0178be8f5c552408"
+  dependencies:
+    estree-walker "^0.2.1"
+    minimatch "^3.0.2"
+
+rollup@^0.26.2:
+  version "0.26.7"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.26.7.tgz#12875bc83a0ee8ddcf4b3bcf30f2b77d60652dd7"
+  dependencies:
+    chalk "^1.1.1"
+    minimist "^1.2.0"
+    source-map-support "^0.4.0"
+
 rollup@^0.41.4:
   version "0.41.6"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.41.6.tgz#e0d05497877a398c104d816d2733a718a7a94e2a"
@@ -8426,6 +8505,10 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+vlq@^0.2.1:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.2.tgz#e316d5257b40b86bb43cb8d5fea5d7f54d6b0ca1"
 
 walk-sync@0.3.1:
   version "0.3.1"

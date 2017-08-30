@@ -30,7 +30,14 @@ module.exports = function(defaults) {
       languages: ['fr','es'],
       plugins: ['lists', 'code_view', 'link'],
       themes: 'gray'
-    }
+    },
+    'asset-cache': {
+      version: '2',
+      include: [
+        'assets/**/*',
+        'ilios-prerender/*'
+      ]
+    },
   });
 
   return app.toTree();
